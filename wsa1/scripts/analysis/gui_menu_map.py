@@ -150,7 +150,7 @@ class Tree:
                         continue
                     if c.startswith("keymap_begin"):
                         cur = []
-                    elif c.startswith("keymap_end"):
+                    elif c.startswith("keymap_end") or c.startswith("fieldops_end"):
                         rows.append(cur)
                         cur = None
                         nn = strip_comment(L[j + 1]).strip() if j + 1 < len(L) else ""

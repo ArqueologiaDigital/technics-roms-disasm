@@ -1269,15 +1269,15 @@ ButtonTable_Edit_0C10Zero:
 	on_key	KEY_Code0E,		ButtonTable_Edit_0C10Zero_Nop13
 	on_key	KEY_Exit,		ExitKey_Edit_0C10Zero
 	on_key	KEY_Page,		PageKey_Edit_0C10Zero
-	on_key	KEY_Code11,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code12,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code13,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code14,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code15,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code16,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code17,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code18,		ButtonTable_Edit_0C10Zero_Nop17
-	on_key	KEY_Code19,		PageKey_Edit_0C10Zero
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Edit_0C10Zero_Nop17
+	on_key	KEY_PageAlt,		PageKey_Edit_0C10Zero
 	on_key	KEY_Code1A,		ButtonTable_Edit_0C10Zero_Nop17
 	on_key	KEY_NumberPad,		ButtonTable_Edit_0C10Zero_Nop17
 	on_key	KEY_Code1C,		ButtonTable_Edit_0C10Zero_Nop17
@@ -1317,15 +1317,15 @@ ButtonTable_Edit_0C10NonZero:
 	on_key	KEY_Code0E,		ButtonTable_Edit_0C10NonZero_Nop13
 	on_key	KEY_Exit,		ExitKey_Edit_0C10NonZero
 	on_key	KEY_Page,		PageKey_Edit_0C10NonZero
-	on_key	KEY_Code11,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code12,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code13,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code14,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code15,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code16,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code17,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code18,		ButtonTable_Edit_0C10NonZero_Nop17
-	on_key	KEY_Code19,		PageKey_Edit_0C10NonZero
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Edit_0C10NonZero_Nop17
+	on_key	KEY_PageAlt,		PageKey_Edit_0C10NonZero
 	on_key	KEY_Code1A,		ButtonTable_Edit_0C10NonZero_Nop17
 	on_key	KEY_NumberPad,		ButtonTable_Edit_0C10NonZero_Nop17
 	on_key	KEY_Code1C,		ButtonTable_Edit_0C10NonZero_Nop17
@@ -1365,15 +1365,15 @@ ButtonTable_SongClear:
 	on_key	KEY_Code0E,		ButtonTable_SongClear_Nop13
 	on_key	KEY_Exit,		ExitKey_SongClear
 	on_key	KEY_Page,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code11,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code12,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code13,		SoftKeyCol3_SongClear
-	on_key	KEY_Code14,		SoftKeyCol4_SongClear
-	on_key	KEY_Code15,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code16,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code17,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code18,		ButtonTable_SongClear_Nop16
-	on_key	KEY_Code19,		ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_SongClear
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_SongClear
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_SongClear_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_SongClear_Nop16
 	on_key	KEY_Code1A,		ButtonTable_SongClear_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_SongClear_Nop16
 	on_key	KEY_Code1C,		ButtonTable_SongClear_Nop16
@@ -1413,15 +1413,15 @@ ButtonTable_TrackClear_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackClear_StageZero_Nop10
 	on_key	KEY_Exit,		ExitKey_TrackClear_StageZero
 	on_key	KEY_Page,		ButtonTable_TrackClear_StageZero_Nop16
-	on_key	KEY_Code11,		SoftKeyCol1_TrackClear_StageZero
-	on_key	KEY_Code12,		SoftKeyCol2_TrackClear_StageZero
-	on_key	KEY_Code13,		SoftKeyCol3_TrackClear_StageZero
-	on_key	KEY_Code14,		SoftKeyCol4_TrackClear_StageZero
-	on_key	KEY_Code15,		SoftKeyCol5_TrackClear_StageZero
-	on_key	KEY_Code16,		SoftKeyCol6_TrackClear_StageZero
-	on_key	KEY_Code17,		SoftKeyCol7_TrackClear_StageZero
-	on_key	KEY_Code18,		SoftKeyCol8_TrackClear_StageZero
-	on_key	KEY_Code19,		ButtonTable_TrackClear_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_TrackClear_StageZero
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_TrackClear_StageZero
+	on_key	KEY_PageAlt,		ButtonTable_TrackClear_StageZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackClear_StageZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackClear_StageZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackClear_StageZero_Nop16
@@ -1461,15 +1461,15 @@ ButtonTable_TrackClear_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackClear_StageNonZero_Nop11
 	on_key	KEY_Exit,		ExitKey_TrackClear_StageNonZero
 	on_key	KEY_Page,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_TrackClear_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackClear_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackClear_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackClear_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackClear_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackClear_StageNonZero_Nop16
@@ -1509,15 +1509,15 @@ ButtonTable_TrackAssign_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackAssign_StageZero_Nop13
 	on_key	KEY_Exit,		ExitKey_TrackAssign_StageZero
 	on_key	KEY_Page,		ButtonTable_TrackAssign_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackAssign_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackAssign_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackAssign_StageZero_Nop16
-	on_key	KEY_Code14,		SoftKeyCol4_TrackAssign_StageZero
-	on_key	KEY_Code15,		SoftKeyCol5_TrackAssign_StageZero
-	on_key	KEY_Code16,		ButtonTable_TrackAssign_StageZero_Nop5
-	on_key	KEY_Code17,		SoftKeyCol7_TrackAssign_StageZero
-	on_key	KEY_Code18,		ButtonTable_TrackAssign_StageZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackAssign_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackAssign_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackAssign_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackAssign_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_TrackAssign_StageZero
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_TrackAssign_StageZero
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackAssign_StageZero_Nop5
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_TrackAssign_StageZero
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackAssign_StageZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackAssign_StageZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackAssign_StageZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackAssign_StageZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackAssign_StageZero_Nop16
@@ -1557,15 +1557,15 @@ ButtonTable_TrackAssign_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackAssign_StageNonZero_Nop11
 	on_key	KEY_Exit,		ExitKey_TrackAssign_StageNonZero
 	on_key	KEY_Page,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_TrackAssign_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackAssign_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackAssign_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackAssign_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackAssign_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackAssign_StageNonZero_Nop16
@@ -1605,15 +1605,15 @@ ButtonTable_TrackAssignPresets:
 	on_key	KEY_Code0E,		sub_F7E758
 	on_key	KEY_Exit,		ExitKey_TrackAssignPresets
 	on_key	KEY_Page,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code14,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code15,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code16,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code17,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code18,		ButtonTable_TrackAssignPresets_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackAssignPresets_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackAssignPresets_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackAssignPresets_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackAssignPresets_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackAssignPresets_Nop16
@@ -1653,15 +1653,15 @@ ButtonTable_TrackMerge_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackMerge_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_TrackMerge_StageZero
 	on_key	KEY_Page,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_TrackMerge_StageZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackMerge_StageZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackMerge_StageZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackMerge_StageZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackMerge_StageZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackMerge_StageZero_Nop16
@@ -1701,15 +1701,15 @@ ButtonTable_TrackMerge_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_TrackMerge_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_TrackMerge_StageNonZero
 	on_key	KEY_Page,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_TrackMerge_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_TrackMerge_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_TrackMerge_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_TrackMerge_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_TrackMerge_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_TrackMerge_StageNonZero_Nop16
@@ -1749,15 +1749,15 @@ ButtonTable_MeasureDelete_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureDelete_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureDelete_StageZero
 	on_key	KEY_Page,		ButtonTable_MeasureDelete_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureDelete_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureDelete_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureDelete_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureDelete_StageZero_Nop16
-	on_key	KEY_Code15,		MeasureDelete_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_MeasureDelete_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_MeasureDelete_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_MeasureDelete_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_MeasureDelete_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureDelete_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureDelete_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureDelete_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureDelete_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	MeasureDelete_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureDelete_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureDelete_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureDelete_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_MeasureDelete_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_MeasureDelete_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_MeasureDelete_StageZero
 	on_key	KEY_Code1C,		ButtonTable_MeasureDelete_StageZero_Nop28
@@ -1797,15 +1797,15 @@ ButtonTable_MeasureDelete_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureDelete_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureDelete_StageNonZero
 	on_key	KEY_Page,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_MeasureDelete_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureDelete_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_MeasureDelete_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_MeasureDelete_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_MeasureDelete_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_MeasureDelete_StageNonZero_Nop16
@@ -1845,15 +1845,15 @@ ButtonTable_MeasureErase_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureErase_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureErase_StageZero
 	on_key	KEY_Page,		ButtonTable_MeasureErase_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureErase_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureErase_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureErase_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureErase_StageZero_Nop16
-	on_key	KEY_Code15,		MeasureErase_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_MeasureErase_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_MeasureErase_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_MeasureErase_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_MeasureErase_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureErase_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureErase_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureErase_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureErase_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	MeasureErase_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureErase_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureErase_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureErase_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_MeasureErase_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_MeasureErase_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_MeasureErase_StageZero
 	on_key	KEY_Code1C,		ButtonTable_MeasureErase_StageZero_Nop28
@@ -1893,15 +1893,15 @@ ButtonTable_MeasureErase_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureErase_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureErase_StageNonZero
 	on_key	KEY_Page,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_MeasureErase_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureErase_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_MeasureErase_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_MeasureErase_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_MeasureErase_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_MeasureErase_StageNonZero_Nop16
@@ -1941,15 +1941,15 @@ ButtonTable_Quantize_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_Quantize_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Quantize_StageZero
 	on_key	KEY_Page,		ButtonTable_Quantize_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Quantize_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Quantize_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Quantize_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Quantize_StageZero_Nop16
-	on_key	KEY_Code15,		Quantize_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_Quantize_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_Quantize_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_Quantize_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_Quantize_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Quantize_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Quantize_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Quantize_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Quantize_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Quantize_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Quantize_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Quantize_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Quantize_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_Quantize_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_Quantize_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_Quantize_StageZero
 	on_key	KEY_Code1C,		ButtonTable_Quantize_StageZero_Nop28
@@ -1989,15 +1989,15 @@ ButtonTable_Quantize_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_Quantize_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Quantize_StageNonZero
 	on_key	KEY_Page,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_Quantize_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Quantize_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_Quantize_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_Quantize_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_Quantize_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_Quantize_StageNonZero_Nop16
@@ -2037,15 +2037,15 @@ ButtonTable_Vel0cityChange_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_Vel0cityChange_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Vel0cityChange_StageZero
 	on_key	KEY_Page,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_Code15,		Vel0cityChange_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_Vel0cityChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Vel0cityChange_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_Vel0cityChange_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_Vel0cityChange_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_Vel0cityChange_StageZero
 	on_key	KEY_Code1C,		ButtonTable_Vel0cityChange_StageZero_Nop28
@@ -2085,15 +2085,15 @@ ButtonTable_Vel0cityChange_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_Vel0cityChange_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Vel0cityChange_StageNonZero
 	on_key	KEY_Page,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
@@ -2133,15 +2133,15 @@ ButtonTable_Transp0se_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_Transp0se_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Transp0se_StageZero
 	on_key	KEY_Page,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_Code15,		Transp0se_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_Transp0se_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transp0se_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transp0se_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transp0se_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transp0se_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Transp0se_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transp0se_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transp0se_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transp0se_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_Transp0se_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_Transp0se_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_Transp0se_StageZero
 	on_key	KEY_Code1C,		ButtonTable_Transp0se_StageZero_Nop28
@@ -2181,15 +2181,15 @@ ButtonTable_Transp0se_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_Transp0se_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_Transp0se_StageNonZero
 	on_key	KEY_Page,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_Transp0se_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_Transp0se_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_Transp0se_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_Transp0se_StageNonZero_Nop16
@@ -2229,15 +2229,15 @@ ButtonTable_AdvanceDelay_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_AdvanceDelay_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_AdvanceDelay_StageZero
 	on_key	KEY_Page,		ButtonTable_AdvanceDelay_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_AdvanceDelay_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_AdvanceDelay_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_AdvanceDelay_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_AdvanceDelay_StageZero_Nop16
-	on_key	KEY_Code15,		AdvanceDelay_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_AdvanceDelay_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_AdvanceDelay_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_AdvanceDelay_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_AdvanceDelay_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_AdvanceDelay_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_AdvanceDelay_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_AdvanceDelay_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_AdvanceDelay_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	AdvanceDelay_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_AdvanceDelay_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_AdvanceDelay_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_AdvanceDelay_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_AdvanceDelay_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_AdvanceDelay_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_AdvanceDelay_StageZero
 	on_key	KEY_Code1C,		ButtonTable_AdvanceDelay_StageZero_Nop28
@@ -2277,15 +2277,15 @@ ButtonTable_AdvanceDelay_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_AdvanceDelay_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_AdvanceDelay_StageNonZero
 	on_key	KEY_Page,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_AdvanceDelay_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_AdvanceDelay_StageNonZero_Nop16
@@ -2325,15 +2325,15 @@ ButtonTable_S0ngC0py_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_S0ngC0py_StageZero_Nop10
 	on_key	KEY_Exit,		ExitKey_S0ngC0py_StageZero
 	on_key	KEY_Page,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Code11,		SoftKeyCol1_S0ngC0py_StageZero
-	on_key	KEY_Code12,		SoftKeyCol2_S0ngC0py_StageZero
-	on_key	KEY_Code13,		SoftKeyCol3_S0ngC0py_StageZero
-	on_key	KEY_Code14,		SoftKeyCol4_S0ngC0py_StageZero
-	on_key	KEY_Code15,		SoftKeyCol5_S0ngC0py_StageZero
-	on_key	KEY_Code16,		SoftKeyCol6_S0ngC0py_StageZero
-	on_key	KEY_Code17,		SoftKeyCol7_S0ngC0py_StageZero
-	on_key	KEY_Code18,		SoftKeyCol8_S0ngC0py_StageZero
-	on_key	KEY_Code19,		ButtonTable_S0ngC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_S0ngC0py_StageZero
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_S0ngC0py_StageZero
+	on_key	KEY_PageAlt,		ButtonTable_S0ngC0py_StageZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_S0ngC0py_StageZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_S0ngC0py_StageZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_S0ngC0py_StageZero_Nop16
@@ -2373,15 +2373,15 @@ ButtonTable_S0ngC0py_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_S0ngC0py_StageNonZero_Nop11
 	on_key	KEY_Exit,		ExitKey_S0ngC0py_StageNonZero
 	on_key	KEY_Page,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_S0ngC0py_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_S0ngC0py_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_S0ngC0py_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_S0ngC0py_StageNonZero_Nop16
@@ -2421,15 +2421,15 @@ ButtonTable_N0teChange_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_N0teChange_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_N0teChange_StageZero
 	on_key	KEY_Page,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_Code15,		N0teChange_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_N0teChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_N0teChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_N0teChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_N0teChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_N0teChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	N0teChange_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_N0teChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_N0teChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_N0teChange_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_N0teChange_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_N0teChange_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_N0teChange_StageZero
 	on_key	KEY_Code1C,		ButtonTable_N0teChange_StageZero_Nop28
@@ -2469,15 +2469,15 @@ ButtonTable_N0teChange_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_N0teChange_StageNonZero_Nop13
 	on_key	KEY_Exit,		ExitKey_N0teChange_StageNonZero
 	on_key	KEY_Page,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_N0teChange_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_N0teChange_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_N0teChange_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_N0teChange_StageNonZero_Nop16
@@ -2517,15 +2517,15 @@ ButtonTable_MeasureC0py_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureC0py_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureC0py_StageZero
 	on_key	KEY_Page,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_Code15,		MeasureC0py_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_MeasureC0py_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	MeasureC0py_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_MeasureC0py_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_MeasureC0py_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_MeasureC0py_StageZero
 	on_key	KEY_Code1C,		ButtonTable_MeasureC0py_StageZero_Nop28
@@ -2565,15 +2565,15 @@ ButtonTable_MeasureC0py_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureC0py_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureC0py_StageNonZero
 	on_key	KEY_Page,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_MeasureC0py_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_MeasureC0py_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_MeasureC0py_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_MeasureC0py_StageNonZero_Nop16
@@ -2613,15 +2613,15 @@ ButtonTable_MeasureInsert_StageZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureInsert_StageZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureInsert_StageZero
 	on_key	KEY_Page,		ButtonTable_MeasureInsert_StageZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureInsert_StageZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureInsert_StageZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureInsert_StageZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureInsert_StageZero_Nop16
-	on_key	KEY_Code15,		MeasureInsert_StageZero_Button21
-	on_key	KEY_Code16,		ButtonTable_MeasureInsert_StageZero_Nop22
-	on_key	KEY_Code17,		ButtonTable_MeasureInsert_StageZero_Nop22
-	on_key	KEY_Code18,		ButtonTable_MeasureInsert_StageZero_Nop22
-	on_key	KEY_Code19,		ButtonTable_MeasureInsert_StageZero_Nop22
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureInsert_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureInsert_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureInsert_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureInsert_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	MeasureInsert_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureInsert_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureInsert_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureInsert_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_MeasureInsert_StageZero_Nop22
 	on_key	KEY_Code1A,		ButtonTable_MeasureInsert_StageZero_Nop22
 	on_key	KEY_NumberPad,		NumberPadKey_MeasureInsert_StageZero
 	on_key	KEY_Code1C,		ButtonTable_MeasureInsert_StageZero_Nop28
@@ -2661,15 +2661,15 @@ ButtonTable_MeasureInsert_StageNonZero:
 	on_key	KEY_Code0E,		ButtonTable_MeasureInsert_StageNonZero_Nop14
 	on_key	KEY_Exit,		ExitKey_MeasureInsert_StageNonZero
 	on_key	KEY_Page,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code11,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code12,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code13,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code14,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code15,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code16,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code17,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code18,		ButtonTable_MeasureInsert_StageNonZero_Nop16
-	on_key	KEY_Code19,		ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureInsert_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_MeasureInsert_StageNonZero_Nop16
 	on_key	KEY_Code1A,		ButtonTable_MeasureInsert_StageNonZero_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_MeasureInsert_StageNonZero_Nop16
 	on_key	KEY_Code1C,		ButtonTable_MeasureInsert_StageNonZero_Nop16
@@ -2709,15 +2709,15 @@ ButtonTable_StepRecordPartSelect:
 	on_key	KEY_Code0E,		ButtonTable_StepRecordPartSelect_Nop9
 	on_key	KEY_Exit,		ExitKey_StepRecordPartSelect
 	on_key	KEY_Page,		ButtonTable_StepRecordPartSelect_Nop16
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordPartSelect
-	on_key	KEY_Code12,		SoftKeyCol2_StepRecordPartSelect
-	on_key	KEY_Code13,		SoftKeyCol3_StepRecordPartSelect
-	on_key	KEY_Code14,		SoftKeyCol4_StepRecordPartSelect
-	on_key	KEY_Code15,		SoftKeyCol5_StepRecordPartSelect
-	on_key	KEY_Code16,		SoftKeyCol6_StepRecordPartSelect
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecordPartSelect
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecordPartSelect
-	on_key	KEY_Code19,		ButtonTable_StepRecordPartSelect_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecordPartSelect
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecordPartSelect
+	on_key	KEY_PageAlt,		ButtonTable_StepRecordPartSelect_Nop16
 	on_key	KEY_Code1A,		ButtonTable_StepRecordPartSelect_Nop16
 	on_key	KEY_NumberPad,		ButtonTable_StepRecordPartSelect_Nop16
 	on_key	KEY_Code1C,		ButtonTable_StepRecordPartSelect_Nop16
@@ -2757,15 +2757,15 @@ ButtonTable_SequencerMedley:
 	on_key	KEY_Code0E,		ButtonTable_SequencerMedley_Nop12
 	on_key	KEY_Exit,		ExitKey_SequencerMedley
 	on_key	KEY_Page,		ButtonTable_SequencerMedley_Nop12
-	on_key	KEY_Code11,		ButtonTable_SequencerMedley_Nop12
-	on_key	KEY_Code12,		SoftKeyCol2_SequencerMedley
-	on_key	KEY_Code13,		SoftKeyCol3_SequencerMedley
-	on_key	KEY_Code14,		ButtonTable_SequencerMedley_Nop3
-	on_key	KEY_Code15,		SoftKeyCol5_SequencerMedley
-	on_key	KEY_Code16,		ButtonTable_SequencerMedley_Nop12
-	on_key	KEY_Code17,		SoftKeyCol7_SequencerMedley
-	on_key	KEY_Code18,		SoftKeyCol8_SequencerMedley
-	on_key	KEY_Code19,		ButtonTable_SequencerMedley_Nop12
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_SequencerMedley_Nop12
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_SequencerMedley
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_SequencerMedley
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_SequencerMedley_Nop3
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_SequencerMedley
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_SequencerMedley_Nop12
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_SequencerMedley
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_SequencerMedley
+	on_key	KEY_PageAlt,		ButtonTable_SequencerMedley_Nop12
 	on_key	KEY_Code1A,		ButtonTable_SequencerMedley_Nop12
 	on_key	KEY_NumberPad,		NumberPadKey_SequencerMedley
 	on_key	KEY_Code1C,		ButtonTable_SequencerMedley_Nop28

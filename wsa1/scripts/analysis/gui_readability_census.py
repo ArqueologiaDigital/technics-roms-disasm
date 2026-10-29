@@ -20,7 +20,8 @@ QUESTION IT ANSWERS
   odd_geom         macro records whose position decodes outside the 320 x 240 panel (x > 320 or y > 240):
                    not wrong bytes, but a field whose meaning is not the one the macro gives it -- TODO
   keymap_entries   panel key-map entries: `named` = `on_key KEY_*, Handler`; `indexed` = a `.long Handler`
-                   line of a 32-entry key map (its key only an index in a comment)
+                   line of a 32-entry key map or of a 17-entry tone-edit field-operation table (its key only an
+                   index in a comment)
   keymap_numeric   key-map entries whose handler is a number
   screen_numeric   PanelScreen_VtableTable / _ViewB entries spelled as a number
 
@@ -48,6 +49,17 @@ IMAGES = {
     "prom_d": sorted(glob.glob(os.path.join(ROOT, "prom_d", "*.s"))),
 }
 MACRO = re.compile(r'^\s*(dlb?_\w+)\s+(.*?)\s*(;.*)?$')
+OPTABLE_NAME = re.compile(r'^(PanelOpTable_\w+|ToneEditPage_\w+_OpTable)$')
+
+
+def header(lines, i):
+    """the comment block right above line i"""
+    k = i - 1
+    while k >= 0 and (lines[k].lstrip().startswith(";") or not lines[k].strip()):
+        k -= 1
+    return "\n".join(lines[k + 1:i])
+
+
 KEYMAP_NAME = re.compile(r'(Button|ButtonTable|ButtonHandlers|ButtonRow|^Dispatch_FF3[89A-D])')
 
 # operand fields of a raw record, by (interpreter, opcode): what the handler reads
@@ -131,7 +143,7 @@ def census():
                 while j < len(lines) and re.match(r'^\s*;', lines[j]):
                     j += 1
                 if j < len(lines) and re.match(r'^\s*keymap_begin\b', lines[j]):
-                    while j < len(lines) and re.match(r'^\s*(keymap_begin|keymap_end|on_key)\b|^\s*;', lines[j]):
+                    while j < len(lines) and re.match(r'^\s*(keymap_begin|keymap_end|fieldops_end|on_key)\b|^\s*;', lines[j]):
                         mm = re.match(r'^\s*on_key\s+\w+\s*,\s*(\S+)', lines[j])
                         if mm:
                             c["keymap_named"] += 1
@@ -146,7 +158,11 @@ def census():
                     j += 1
                 if name in ("PanelScreen_VtableTable", "PanelScreen_VtableTable_ViewB"):
                     c["screen_numeric"] += sum(1 for v in longs if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', v))
-                elif longs and len(longs) % 32 == 0 and KEYMAP_NAME.search(name) and "Mask" not in name:
+                elif len(longs) == 18 and OPTABLE_NAME.match(name) and re.match(r'^0x0+$', longs[17]):
+                    c["keymap_indexed"] += 17
+                    c["keymap_numeric"] += sum(1 for v in longs[:17] if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', v))
+                elif longs and len(longs) % 32 == 0 and (KEYMAP_NAME.search(name) or "BUTTON CODE" in header(lines, i)) \
+                        and "Mask" not in name:
                     c["keymap_indexed"] += len(longs)
                     c["keymap_numeric"] += sum(1 for v in longs if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', v))
                 i = j if j > i + 1 else i + 1

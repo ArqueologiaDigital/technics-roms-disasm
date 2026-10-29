@@ -670,15 +670,15 @@ ScreenButtons_RealtimeRecordScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F56510	; -> Nop_Ret_F56510
 	on_key	KEY_Exit,		ExitKey_RealtimeRecordScreen	; -> ExitKey_RealtimeRecordScreen
 	on_key	KEY_Page,		Nop_Ret_F56524	; -> Nop_Ret_F56524
-	on_key	KEY_Code11,		SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code12,		SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code13,		SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code14,		SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code15,		SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code16,		SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code17,		SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code18,		SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code19,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_PageAlt,		Nop_Ret_F56524	; -> Nop_Ret_F56524
 	on_key	KEY_Code1A,		Nop_Ret_F56524	; -> Nop_Ret_F56524
 	on_key	KEY_NumberPad,		Nop_Ret_F56524	; -> Nop_Ret_F56524
 	on_key	KEY_Code1C,		Nop_Ret_F56524	; -> Nop_Ret_F56524
@@ -731,15 +731,15 @@ ScreenButtons_MetronomeBalanceScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F56649	; -> Nop_Ret_F56649
 	on_key	KEY_Exit,		ExitKey_MetronomeBalanceScreen	; -> ExitKey_MetronomeBalanceScreen
 	on_key	KEY_Page,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code11,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code12,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code13,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code14,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code15,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code16,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code17,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code18,		Nop_Ret_F56649	; -> Nop_Ret_F56649
-	on_key	KEY_Code19,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol1Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol2Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol3Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol4Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol5Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol6Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol7Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol8Alt,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_PageAlt,		Nop_Ret_F56649	; -> Nop_Ret_F56649
 	on_key	KEY_Code1A,		Nop_Ret_F56649	; -> Nop_Ret_F56649
 	on_key	KEY_NumberPad,		Nop_Ret_F56649	; -> Nop_Ret_F56649
 	on_key	KEY_Code1C,		Nop_Ret_F56649	; -> Nop_Ret_F56649
@@ -793,15 +793,15 @@ ScreenButtons_CycleRecordScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F567C8	; -> Nop_Ret_F567C8
 	on_key	KEY_Exit,		ExitKey_CycleRecordScreen	; -> ExitKey_CycleRecordScreen
 	on_key	KEY_Page,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code11,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code12,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code13,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code14,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code15,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code16,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code17,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code18,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
-	on_key	KEY_Code19,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol1Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol2Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol3Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol4Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol5Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol6Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol7Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_SoftKeyCol8Alt,	Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_PageAlt,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
 	on_key	KEY_Code1A,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
 	on_key	KEY_NumberPad,		NumberPadKey_CycleRecordScreen	; -> NumberPadKey_CycleRecordScreen
 	on_key	KEY_Code1C,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
@@ -855,15 +855,15 @@ ScreenButtons_SeqPlayScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F56DD8	; -> Nop_Ret_F56DD8
 	on_key	KEY_Exit,		ExitKey_SeqPlayScreen	; -> ExitKey_SeqPlayScreen
 	on_key	KEY_Page,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
-	on_key	KEY_Code11,		SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code12,		SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code13,		SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code14,		SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code15,		SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code16,		SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code17,		SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code18,		SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
-	on_key	KEY_Code19,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_PageAlt,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
 	on_key	KEY_Code1A,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
 	on_key	KEY_NumberPad,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
 	on_key	KEY_Code1C,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
@@ -916,15 +916,15 @@ ScreenButtons_CyclePlayScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F56EF3	; -> Nop_Ret_F56EF3
 	on_key	KEY_Exit,		ExitKey_CyclePlayScreen	; -> ExitKey_CyclePlayScreen
 	on_key	KEY_Page,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code11,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code12,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code13,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code14,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code15,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code16,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code17,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code18,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
-	on_key	KEY_Code19,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol1Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol2Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol3Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol4Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol5Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol6Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol7Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_SoftKeyCol8Alt,	Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_PageAlt,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
 	on_key	KEY_Code1A,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
 	on_key	KEY_NumberPad,		NumberPadKey_CyclePlayScreen	; -> NumberPadKey_CyclePlayScreen
 	on_key	KEY_Code1C,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
@@ -977,15 +977,15 @@ ScreenButtons_CyclePlayEditScreen:
 	on_key	KEY_Code0E,		Nop_Ret_F5736A	; -> Nop_Ret_F5736A
 	on_key	KEY_Exit,		ExitKey_CyclePlayEditScreen	; -> ExitKey_CyclePlayEditScreen
 	on_key	KEY_Page,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code11,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code12,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code13,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code14,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code15,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code16,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code17,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code18,		Nop_Ret_F57381	; -> Nop_Ret_F57381
-	on_key	KEY_Code19,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol1Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol2Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol3Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol4Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol5Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol6Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol7Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_SoftKeyCol8Alt,	Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_PageAlt,		Nop_Ret_F57381	; -> Nop_Ret_F57381
 	on_key	KEY_Code1A,		Nop_Ret_F57381	; -> Nop_Ret_F57381
 	on_key	KEY_NumberPad,		Fwd_F5737D	; -> Fwd_F5737D
 	on_key	KEY_Code1C,		Nop_Ret_F57381	; -> Nop_Ret_F57381
@@ -1038,15 +1038,15 @@ ScreenButtons_CyclePlayEditScreen29:
 	on_key	KEY_Code0E,		Nop_Ret_F57429	; -> Nop_Ret_F57429
 	on_key	KEY_Exit,		ExitKey_CyclePlayEditScreen29	; -> ExitKey_CyclePlayEditScreen29
 	on_key	KEY_Page,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code11,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code12,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code13,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code14,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code15,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code16,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code17,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code18,		Nop_Ret_F57432	; -> Nop_Ret_F57432
-	on_key	KEY_Code19,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol1Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol2Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol3Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol4Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol5Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol6Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol7Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_SoftKeyCol8Alt,	Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_PageAlt,		Nop_Ret_F57432	; -> Nop_Ret_F57432
 	on_key	KEY_Code1A,		Nop_Ret_F57432	; -> Nop_Ret_F57432
 	on_key	KEY_NumberPad,		Fwd_F5742E	; -> Fwd_F5742E
 	on_key	KEY_Code1C,		Nop_Ret_F57432	; -> Nop_Ret_F57432

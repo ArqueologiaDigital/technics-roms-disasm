@@ -279,15 +279,15 @@ ScreenButtonRow_SysexBulkDump:
 	on_key	KEY_Code0E,		ScreenButtonRow_SysexBulkDump_Nop14
 	on_key	KEY_Exit,		ExitKey_SysexBulkDump
 	on_key	KEY_Page,		ScreenButtonRow_SysexBulkDump_Nop16
-	on_key	KEY_Code11,		ScreenButtonRow_SysexBulkDump_Nop17
-	on_key	KEY_Code12,		ScreenButtonRow_SysexBulkDump_Nop18
-	on_key	KEY_Code13,		ScreenButtonRow_SysexBulkDump_Nop19
-	on_key	KEY_Code14,		ScreenButtonRow_SysexBulkDump_Nop20
-	on_key	KEY_Code15,		ScreenButtonRow_SysexBulkDump_Nop21
-	on_key	KEY_Code16,		ScreenButtonRow_SysexBulkDump_Nop22
-	on_key	KEY_Code17,		ScreenButtonRow_SysexBulkDump_Nop23
-	on_key	KEY_Code18,		ScreenButtonRow_SysexBulkDump_Nop24
-	on_key	KEY_Code19,		ScreenButtonRow_SysexBulkDump_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	ScreenButtonRow_SysexBulkDump_Nop17
+	on_key	KEY_SoftKeyCol2Alt,	ScreenButtonRow_SysexBulkDump_Nop18
+	on_key	KEY_SoftKeyCol3Alt,	ScreenButtonRow_SysexBulkDump_Nop19
+	on_key	KEY_SoftKeyCol4Alt,	ScreenButtonRow_SysexBulkDump_Nop20
+	on_key	KEY_SoftKeyCol5Alt,	ScreenButtonRow_SysexBulkDump_Nop21
+	on_key	KEY_SoftKeyCol6Alt,	ScreenButtonRow_SysexBulkDump_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ScreenButtonRow_SysexBulkDump_Nop23
+	on_key	KEY_SoftKeyCol8Alt,	ScreenButtonRow_SysexBulkDump_Nop24
+	on_key	KEY_PageAlt,		ScreenButtonRow_SysexBulkDump_Nop25
 	on_key	KEY_Code1A,		ScreenButtonRow_SysexBulkDump_Nop26
 	on_key	KEY_NumberPad,		ScreenButtonRow_SysexBulkDump_Nop27
 	on_key	KEY_Code1C,		ScreenButtonRow_SysexBulkDump_Nop28
@@ -323,15 +323,15 @@ ScreenButtonRow_GeneralMidi_Page0:
 	on_key	KEY_Code0E,		ScreenButtonRow_GeneralMidi_Page0_Nop14
 	on_key	KEY_Exit,		ExitKey_GeneralMidiMode_Page0
 	on_key	KEY_Page,		ScreenButtonRow_GeneralMidi_Page0_Nop16
-	on_key	KEY_Code11,		ScreenButtonRow_GeneralMidi_Page0_Nop17
-	on_key	KEY_Code12,		ScreenButtonRow_GeneralMidi_Page0_Nop18
-	on_key	KEY_Code13,		ScreenButtonRow_GeneralMidi_Page0_Nop19
-	on_key	KEY_Code14,		ScreenButtonRow_GeneralMidi_Page0_Nop20
-	on_key	KEY_Code15,		ScreenButtonRow_GeneralMidi_Page0_Nop21
-	on_key	KEY_Code16,		ScreenButtonRow_GeneralMidi_Page0_Nop22
-	on_key	KEY_Code17,		ScreenButtonRow_GeneralMidi_Page0_Nop23
-	on_key	KEY_Code18,		ScreenButtonRow_GeneralMidi_Page0_Nop24
-	on_key	KEY_Code19,		ScreenButtonRow_GeneralMidi_Page0_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop17
+	on_key	KEY_SoftKeyCol2Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop18
+	on_key	KEY_SoftKeyCol3Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop19
+	on_key	KEY_SoftKeyCol4Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop20
+	on_key	KEY_SoftKeyCol5Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop21
+	on_key	KEY_SoftKeyCol6Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop23
+	on_key	KEY_SoftKeyCol8Alt,	ScreenButtonRow_GeneralMidi_Page0_Nop24
+	on_key	KEY_PageAlt,		ScreenButtonRow_GeneralMidi_Page0_Nop25
 	on_key	KEY_Code1A,		ScreenButtonRow_GeneralMidi_Page0_Nop26
 	on_key	KEY_NumberPad,		ScreenButtonRow_GeneralMidi_Page0_Nop27
 	on_key	KEY_Code1C,		ScreenButtonRow_GeneralMidi_Page0_Nop28
@@ -365,15 +365,15 @@ ScreenButtonRow_GeneralMidi_YesNo:
 	on_key	KEY_Code0E,		ScreenButtonRow_GeneralMidi_YesNo_Nop14
 	on_key	KEY_Exit,		ExitKey_GeneralMidiYesNo
 	on_key	KEY_Page,		ScreenButtonRow_GeneralMidi_YesNo_Nop16
-	on_key	KEY_Code11,		ScreenButtonRow_GeneralMidi_YesNo_Nop17
-	on_key	KEY_Code12,		ScreenButtonRow_GeneralMidi_YesNo_Nop18
-	on_key	KEY_Code13,		ScreenButtonRow_GeneralMidi_YesNo_Nop19
-	on_key	KEY_Code14,		ScreenButtonRow_GeneralMidi_YesNo_Nop20
-	on_key	KEY_Code15,		ScreenButtonRow_GeneralMidi_YesNo_Nop21
-	on_key	KEY_Code16,		ScreenButtonRow_GeneralMidi_YesNo_Nop22
-	on_key	KEY_Code17,		ScreenButtonRow_GeneralMidi_YesNo_Nop23
-	on_key	KEY_Code18,		ScreenButtonRow_GeneralMidi_YesNo_Nop24
-	on_key	KEY_Code19,		ScreenButtonRow_GeneralMidi_YesNo_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop17
+	on_key	KEY_SoftKeyCol2Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop18
+	on_key	KEY_SoftKeyCol3Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop19
+	on_key	KEY_SoftKeyCol4Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop20
+	on_key	KEY_SoftKeyCol5Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop21
+	on_key	KEY_SoftKeyCol6Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop23
+	on_key	KEY_SoftKeyCol8Alt,	ScreenButtonRow_GeneralMidi_YesNo_Nop24
+	on_key	KEY_PageAlt,		ScreenButtonRow_GeneralMidi_YesNo_Nop25
 	on_key	KEY_Code1A,		ScreenButtonRow_GeneralMidi_YesNo_Nop26
 	on_key	KEY_NumberPad,		ScreenButtonRow_GeneralMidi_YesNo_Nop27
 	on_key	KEY_Code1C,		ScreenButtonRow_GeneralMidi_YesNo_Nop28
@@ -1265,38 +1265,40 @@ ScreenButton_MidiMenu:
 ; Six distinct arms among the 32 slots.
 ; ---------------------------------------------------------------------
 JumpTable_F99F96:
-	.long IgnoredKeys_MidiMenu                                 ; F99F96  [  0]
-	.long IgnoredKeys_MidiMenu                                 ; F99F9A  [  1]
-	.long IgnoredKeys_MidiMenu                                 ; F99F9E  [  2]
-	.long IgnoredKeys_MidiMenu                                 ; F99FA2  [  3]
-	.long IgnoredKeys_MidiMenu                                 ; F99FA6  [  4]
-	.long IgnoredKeys_MidiMenu                                 ; F99FAA  [  5]
-	.long IgnoredKeys_MidiMenu                                 ; F99FAE  [  6]
-	.long IgnoredKeys_MidiMenu                                 ; F99FB2  [  7]
-	.long LcdKeyRow1_MidiMenu                                 ; F99FB6  [  8]
-	.long LcdKeyRow2_MidiMenu                                 ; F99FBA  [  9]
-	.long LcdKeyRow3_MidiMenu                                 ; F99FBE  [ 10]
-	.long LcdKeyRow4_MidiMenu                                 ; F99FC2  [ 11]
-	.long IgnoredKeys_MidiMenu                                 ; F99FC6  [ 12]
-	.long IgnoredKeys_MidiMenu                                 ; F99FCA  [ 13]
-	.long IgnoredKeys_MidiMenu                                 ; F99FCE  [ 14]
-	.long ExitKey_MidiMenu                                 ; F99FD2  [ 15]
-	.long IgnoredKeys_MidiMenu                                 ; F99FD6  [ 16]
-	.long IgnoredKeys_MidiMenu                                 ; F99FDA  [ 17]
-	.long IgnoredKeys_MidiMenu                                 ; F99FDE  [ 18]
-	.long IgnoredKeys_MidiMenu                                 ; F99FE2  [ 19]
-	.long IgnoredKeys_MidiMenu                                 ; F99FE6  [ 20]
-	.long IgnoredKeys_MidiMenu                                 ; F99FEA  [ 21]
-	.long IgnoredKeys_MidiMenu                                 ; F99FEE  [ 22]
-	.long IgnoredKeys_MidiMenu                                 ; F99FF2  [ 23]
-	.long IgnoredKeys_MidiMenu                                 ; F99FF6  [ 24]
-	.long IgnoredKeys_MidiMenu                                 ; F99FFA  [ 25]
-	.long IgnoredKeys_MidiMenu                                 ; F99FFE  [ 26]
-	.long IgnoredKeys_MidiMenu                                 ; F9A002  [ 27]
-	.long IgnoredKeys_MidiMenu                                 ; F9A006  [ 28]
-	.long IgnoredKeys_MidiMenu                                 ; F9A00A  [ 29]
-	.long IgnoredKeys_MidiMenu                                 ; F9A00E  [ 30]
-	.long IgnoredKeys_MidiMenu                                 ; F9A012  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol2,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol3,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol4,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol5,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol6,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol7,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol8,	IgnoredKeys_MidiMenu
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiMenu
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiMenu
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiMenu
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiMenu
+	on_key	KEY_LcdRow5,		IgnoredKeys_MidiMenu
+	on_key	KEY_MinusPlus,		IgnoredKeys_MidiMenu
+	on_key	KEY_Code0E,		IgnoredKeys_MidiMenu
+	on_key	KEY_Exit,		ExitKey_MidiMenu
+	on_key	KEY_Page,		IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol1Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol2Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol3Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol4Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol5Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol6Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol7Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_SoftKeyCol8Alt,	IgnoredKeys_MidiMenu
+	on_key	KEY_PageAlt,		IgnoredKeys_MidiMenu
+	on_key	KEY_Code1A,		IgnoredKeys_MidiMenu
+	on_key	KEY_NumberPad,		IgnoredKeys_MidiMenu
+	on_key	KEY_Code1C,		IgnoredKeys_MidiMenu
+	on_key	KEY_Code1D,		IgnoredKeys_MidiMenu
+	on_key	KEY_Compare,		IgnoredKeys_MidiMenu
+	on_key	KEY_Code1F,		IgnoredKeys_MidiMenu
+	keymap_end
 ; LcdKeyRow1_MidiMenu -- switch arm of ScreenButton_MidiMenu for code 0x08 (LCD row 1):
 ;   MidiMenu_RequestRow1Screen(H)
 ; Evidence: JumpTable_F99F96 entry [8], its only slot; the arm ends `jr 0xF9A041` into ScreenButton_MidiMenu's own
@@ -1757,15 +1759,15 @@ ScreenButtonHandlers_MidiTotalMode:
 	on_key	KEY_Code0E,		IgnoredKeys_MidiTotalMode
 	on_key	KEY_Exit,		ScreenButtonHandlers_MidiTotalMode__F9A327
 	on_key	KEY_Page,		IgnoredKeys_MidiTotalMode
-	on_key	KEY_Code11,		ItemKeys_MidiTotalMode
-	on_key	KEY_Code12,		ItemKeys_MidiTotalMode
-	on_key	KEY_Code13,		ItemKeys_MidiTotalMode
-	on_key	KEY_Code14,		ItemKeys_MidiTotalMode
-	on_key	KEY_Code15,		ValueKeys_MidiTotalMode
-	on_key	KEY_Code16,		ValueKeys_MidiTotalMode
-	on_key	KEY_Code17,		ValueKeys_MidiTotalMode
-	on_key	KEY_Code18,		ValueKeys_MidiTotalMode
-	on_key	KEY_Code19,		IgnoredKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol1Alt,	ItemKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol2Alt,	ItemKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol3Alt,	ItemKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol4Alt,	ItemKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol5Alt,	ValueKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol6Alt,	ValueKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol7Alt,	ValueKeys_MidiTotalMode
+	on_key	KEY_SoftKeyCol8Alt,	ValueKeys_MidiTotalMode
+	on_key	KEY_PageAlt,		IgnoredKeys_MidiTotalMode
 	on_key	KEY_Code1A,		IgnoredKeys_MidiTotalMode
 	on_key	KEY_NumberPad,		IgnoredKeys_MidiTotalMode
 	on_key	KEY_Code1C,		IgnoredKeys_MidiTotalMode
@@ -2483,15 +2485,15 @@ ScreenButtonHandlers_MidiRealtimeMessages:
 	on_key	KEY_Code0E,		IgnoredKeys_MidiRealtimeMessages
 	on_key	KEY_Exit,		ExitKey_MidiRealtimeMessages
 	on_key	KEY_Page,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code11,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code12,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code13,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code14,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code15,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code16,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code17,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code18,		IgnoredKeys_MidiRealtimeMessages
-	on_key	KEY_Code19,		IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol1Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol2Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol3Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol4Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol5Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol6Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol7Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_SoftKeyCol8Alt,	IgnoredKeys_MidiRealtimeMessages
+	on_key	KEY_PageAlt,		IgnoredKeys_MidiRealtimeMessages
 	on_key	KEY_Code1A,		IgnoredKeys_MidiRealtimeMessages
 	on_key	KEY_NumberPad,		IgnoredKeys_MidiRealtimeMessages
 	on_key	KEY_Code1C,		IgnoredKeys_MidiRealtimeMessages
@@ -2870,15 +2872,15 @@ ScreenButtonHandlers_MidiInputOutputFilter:
 	on_key	KEY_Code0E,		IgnoredKeys_MidiInputOutputFilter
 	on_key	KEY_Exit,		ExitKey_MidiInputOutputFilter
 	on_key	KEY_Page,		IgnoredKeys_MidiInputOutputFilter
-	on_key	KEY_Code11,		ItemKeys_MidiInputOutputFilter
-	on_key	KEY_Code12,		ItemKeys_MidiInputOutputFilter
-	on_key	KEY_Code13,		ItemKeys_MidiInputOutputFilter
-	on_key	KEY_Code14,		ItemKeys_MidiInputOutputFilter
-	on_key	KEY_Code15,		ValueKeys_MidiInputOutputFilter
-	on_key	KEY_Code16,		ValueKeys_MidiInputOutputFilter
-	on_key	KEY_Code17,		ValueKeys_MidiInputOutputFilter
-	on_key	KEY_Code18,		ValueKeys_MidiInputOutputFilter
-	on_key	KEY_Code19,		IgnoredKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol1Alt,	ItemKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol2Alt,	ItemKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol3Alt,	ItemKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol4Alt,	ItemKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol5Alt,	ValueKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol6Alt,	ValueKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol7Alt,	ValueKeys_MidiInputOutputFilter
+	on_key	KEY_SoftKeyCol8Alt,	ValueKeys_MidiInputOutputFilter
+	on_key	KEY_PageAlt,		IgnoredKeys_MidiInputOutputFilter
 	on_key	KEY_Code1A,		IgnoredKeys_MidiInputOutputFilter
 	on_key	KEY_NumberPad,		IgnoredKeys_MidiInputOutputFilter
 	on_key	KEY_Code1C,		IgnoredKeys_MidiInputOutputFilter
@@ -3728,15 +3730,15 @@ ScreenButtonHandlers_MidiOutProgramChange:
 	on_key	KEY_Code0E,		IgnoredKeys_MidiOutProgramChange
 	on_key	KEY_Exit,		ExitKey_MidiOutProgramChange
 	on_key	KEY_Page,		IgnoredKeys_MidiOutProgramChange
-	on_key	KEY_Code11,		ItemKeys_MidiOutProgramChange
-	on_key	KEY_Code12,		ItemKeys_MidiOutProgramChange
-	on_key	KEY_Code13,		ItemKeys_MidiOutProgramChange
-	on_key	KEY_Code14,		ItemKeys_MidiOutProgramChange
-	on_key	KEY_Code15,		ValueKeys_MidiOutProgramChange
-	on_key	KEY_Code16,		ValueKeys_MidiOutProgramChange
-	on_key	KEY_Code17,		ValueKeys_MidiOutProgramChange
-	on_key	KEY_Code18,		ValueKeys_MidiOutProgramChange
-	on_key	KEY_Code19,		IgnoredKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol1Alt,	ItemKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol2Alt,	ItemKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol3Alt,	ItemKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol4Alt,	ItemKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol5Alt,	ValueKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol6Alt,	ValueKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol7Alt,	ValueKeys_MidiOutProgramChange
+	on_key	KEY_SoftKeyCol8Alt,	ValueKeys_MidiOutProgramChange
+	on_key	KEY_PageAlt,		IgnoredKeys_MidiOutProgramChange
 	on_key	KEY_Code1A,		IgnoredKeys_MidiOutProgramChange
 	on_key	KEY_NumberPad,		NumberPadKey_MidiOutProgramChange
 	on_key	KEY_Code1C,		IgnoredKeys_MidiOutProgramChange

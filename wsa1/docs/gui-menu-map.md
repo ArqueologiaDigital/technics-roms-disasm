@@ -32,8 +32,8 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | mode   | 0x15 | `ModeEnter_SoundCopy_Call`                    | MIDI FILE LOAD / MIDI FILE SAVE / LOAD                       | 0    |                                                        |
 | mode   | 0x16 | `CombiEdit_Begin`                             |                                                              | 0    |                                                        |
 | mode   | 0x17 | `ModeEnter_SoundEdit`                         |                                                              | 0    |                                                        |
-| mode   | 0x21 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 0    |                                                        |
-| screen | 0x01 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 0    | screen 0xA1, screen 0xA6                               |
+| mode   | 0x21 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   |                                                        |
+| screen | 0x01 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   | screen 0xA1, screen 0xA6                               |
 | mode   | 0x22 | `InstallPainter_C0mbinati0nM0de_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    |                                                        |
 | screen | 0x02 | `InstallPainter_C0mbinati0nM0de_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    | screen 0xA1, screen 0xA5, screen 0xA6                  |
 | mode   | 0x24 | `Paint_Sequencer`                             | SEQUENCER / REALTIME / EDIT                                  | 14   |                                                        |
@@ -118,51 +118,51 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x6C | `Screen_ReMapEdit_Enter`                      |                                                              | 0    |                                                        |
 | screen | 0x6D | `Screen_SoundCombinationManager_Enter`        |                                                              | 0    |                                                        |
 | screen | 0x6E | `Screen_MemoryProtect_Enter`                  |                                                              | 0    |                                                        |
-| screen | 0x70 | `Paint_MidiMenu`                              | ITEM / VALUE                                                 | 0    |                                                        |
+| screen | 0x70 | `Paint_MidiMenu`                              | ITEM / VALUE                                                 | 5    |                                                        |
 | screen | 0x71 | `T_F41660_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0x72 | `T_F41680_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0x73 | `T_F41670_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0x75 | `Paint_MidiRealtimeMessages`                  | REALTIME MESSAGES / MIDI / REALTIME COMMANDS :               | 4    |                                                        |
 | screen | 0x76 | `T_F416B0_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0x78 | `T_F41700_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0x79 | `Paint_SysexBulkDump_Entry`                   | SYSEX BULK DUMP / MIDI / TOTAL KEYBOARD                      | 6    |                                                        |
-| screen | 0x7A | `Paint_GeneralMidiMode_Entry`                 | OK                                                           | 4    |                                                        |
+| screen | 0x79 | `Paint_SysexBulkDump_Entry`                   | SYSEX BULK DUMP / MIDI / TOTAL KEYBOARD                      | 6    | screen 0x70                                            |
+| screen | 0x7A | `Paint_GeneralMidiMode_Entry`                 | OK                                                           | 4    | screen 0x70                                            |
 | screen | 0x7B | `T_F416A0_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0x7C | `T_F416C0_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0x7D | `Paint_MidiTotalMode`                         | LOCAL TOTAL     :                                            | 17   |                                                        |
-| screen | 0x7E | `Paint_MidiInputOutputFilter`                 | INPUT&OUTPUT / FILTER / MIDI                                 | 17   |                                                        |
+| screen | 0x7D | `Paint_MidiTotalMode`                         | LOCAL TOTAL     :                                            | 17   | screen 0x70                                            |
+| screen | 0x7E | `Paint_MidiInputOutputFilter`                 | INPUT&OUTPUT / FILTER / MIDI                                 | 17   | screen 0x70                                            |
 | screen | 0x7F | `Paint_MidiOutProgramChange`                  | PROGRAM / CHANGE / MIDI                                      | 19   |                                                        |
 | screen | 0x80 | `ScreenEnter_SoundEditMenu`                   |                                                              | 0    |                                                        |
-| screen | 0x82 | `ScreenEnter_SoundEditModelingToneTemplate`   |                                                              | 0    |                                                        |
-| screen | 0x83 | `ScreenEnter_SoundEditToneLayerPanning`       |                                                              | 0    |                                                        |
-| screen | 0x84 | `ScreenEnter_SoundEditToneLayerKeyLayer`      |                                                              | 0    |                                                        |
-| screen | 0x85 | `ScreenEnter_SoundEditToneLayerVelocityLayer` |                                                              | 0    |                                                        |
-| screen | 0x86 | `ScreenEnter_SoundEditModelingDriverWaveform` |                                                              | 0    |                                                        |
-| screen | 0x87 | `ScreenEnter_SoundEditPitchTune`              |                                                              | 0    |                                                        |
-| screen | 0x88 | `ScreenEnter_SoundEditPitchEnvelope1`         |                                                              | 0    |                                                        |
-| screen | 0x89 | `ScreenEnter_SoundEditPitchEnvelope2`         |                                                              | 0    |                                                        |
-| screen | 0x8A | `ScreenEnter_SoundEditPitchLfo`               |                                                              | 0    |                                                        |
-| screen | 0x8B | `ScreenEnter_SoundEditAmpLevel1`              |                                                              | 0    |                                                        |
-| screen | 0x8C | `ScreenEnter_SoundEditAmpLevel2`              |                                                              | 0    |                                                        |
-| screen | 0x8D | `ScreenEnter_SoundEditAmpEnvelope1`           |                                                              | 0    |                                                        |
-| screen | 0x8E | `ScreenEnter_SoundEditAmpEnvelope2`           |                                                              | 0    |                                                        |
-| screen | 0x8F | `ScreenEnter_SoundEditAmpLfo`                 |                                                              | 0    |                                                        |
-| screen | 0x90 | `ScreenEnter_SoundEditFilterLpf12`            |                                                              | 0    |                                                        |
-| screen | 0x91 | `ScreenEnter_SoundEditFilterHpf12`            |                                                              | 0    |                                                        |
-| screen | 0x92 | `ScreenEnter_SoundEditFilterLpf24`            |                                                              | 0    |                                                        |
-| screen | 0x93 | `ScreenEnter_SoundEditFilterHpf24`            |                                                              | 0    |                                                        |
-| screen | 0x94 | `ScreenEnter_SoundEditFilterBpf`              |                                                              | 0    |                                                        |
-| screen | 0x95 | `ScreenEnter_SoundEditFilterThrough`          |                                                              | 0    |                                                        |
-| screen | 0x96 | `ScreenEnter_SoundEditFilterKeyFollow`        |                                                              | 0    |                                                        |
-| screen | 0x97 | `ScreenEnter_SoundEditFilterEnvelope1`        |                                                              | 0    |                                                        |
-| screen | 0x98 | `ScreenEnter_SoundEditFilterEnvelope2`        |                                                              | 0    |                                                        |
-| screen | 0x99 | `ScreenEnter_SoundEditFilterLfo`              |                                                              | 0    |                                                        |
-| screen | 0x9A | `ScreenEnter_SoundEditDigitalEffect`          |                                                              | 0    |                                                        |
-| screen | 0x9B | `ScreenEnter_SoundEditControllerPage2`        |                                                              | 0    |                                                        |
-| screen | 0x9C | `ScreenEnter_SoundEditDigitalEffectFromMenu`  |                                                              | 0    |                                                        |
-| screen | 0x9D | `ScreenEnter_SoundEditCopy`                   |                                                              | 0    |                                                        |
-| screen | 0x9E | `ScreenEnter_SoundEditMemoryWrite`            |                                                              | 0    |                                                        |
-| screen | 0x9F | `ScreenEnter_SoundEditNaming`                 |                                                              | 0    |                                                        |
+| screen | 0x82 | `ScreenEnter_SoundEditModelingToneTemplate`   |                                                              | 11   |                                                        |
+| screen | 0x83 | `ScreenEnter_SoundEditToneLayerPanning`       |                                                              | 9    |                                                        |
+| screen | 0x84 | `ScreenEnter_SoundEditToneLayerKeyLayer`      |                                                              | 10   |                                                        |
+| screen | 0x85 | `ScreenEnter_SoundEditToneLayerVelocityLayer` |                                                              | 10   |                                                        |
+| screen | 0x86 | `ScreenEnter_SoundEditModelingDriverWaveform` |                                                              | 10   |                                                        |
+| screen | 0x87 | `ScreenEnter_SoundEditPitchTune`              |                                                              | 10   |                                                        |
+| screen | 0x88 | `ScreenEnter_SoundEditPitchEnvelope1`         |                                                              | 14   |                                                        |
+| screen | 0x89 | `ScreenEnter_SoundEditPitchEnvelope2`         |                                                              | 13   |                                                        |
+| screen | 0x8A | `ScreenEnter_SoundEditPitchLfo`               |                                                              | 13   |                                                        |
+| screen | 0x8B | `ScreenEnter_SoundEditAmpLevel1`              |                                                              | 13   |                                                        |
+| screen | 0x8C | `ScreenEnter_SoundEditAmpLevel2`              |                                                              | 11   |                                                        |
+| screen | 0x8D | `ScreenEnter_SoundEditAmpEnvelope1`           |                                                              | 15   |                                                        |
+| screen | 0x8E | `ScreenEnter_SoundEditAmpEnvelope2`           |                                                              | 15   |                                                        |
+| screen | 0x8F | `ScreenEnter_SoundEditAmpLfo`                 |                                                              | 13   |                                                        |
+| screen | 0x90 | `ScreenEnter_SoundEditFilterLpf12`            |                                                              | 14   |                                                        |
+| screen | 0x91 | `ScreenEnter_SoundEditFilterHpf12`            |                                                              | 14   |                                                        |
+| screen | 0x92 | `ScreenEnter_SoundEditFilterLpf24`            |                                                              | 11   |                                                        |
+| screen | 0x93 | `ScreenEnter_SoundEditFilterHpf24`            |                                                              | 11   |                                                        |
+| screen | 0x94 | `ScreenEnter_SoundEditFilterBpf`              |                                                              | 13   |                                                        |
+| screen | 0x95 | `ScreenEnter_SoundEditFilterThrough`          |                                                              | 7    |                                                        |
+| screen | 0x96 | `ScreenEnter_SoundEditFilterKeyFollow`        |                                                              | 11   |                                                        |
+| screen | 0x97 | `ScreenEnter_SoundEditFilterEnvelope1`        |                                                              | 14   |                                                        |
+| screen | 0x98 | `ScreenEnter_SoundEditFilterEnvelope2`        |                                                              | 13   |                                                        |
+| screen | 0x99 | `ScreenEnter_SoundEditFilterLfo`              |                                                              | 13   |                                                        |
+| screen | 0x9A | `ScreenEnter_SoundEditDigitalEffect`          |                                                              | 11   |                                                        |
+| screen | 0x9B | `ScreenEnter_SoundEditControllerPage2`        |                                                              | 13   |                                                        |
+| screen | 0x9C | `ScreenEnter_SoundEditDigitalEffectFromMenu`  |                                                              | 11   |                                                        |
+| screen | 0x9D | `ScreenEnter_SoundEditCopy`                   |                                                              | 7    |                                                        |
+| screen | 0x9E | `ScreenEnter_SoundEditMemoryWrite`            |                                                              | 5    |                                                        |
+| screen | 0x9F | `ScreenEnter_SoundEditNaming`                 |                                                              | 11   |                                                        |
 | screen | 0xA0 | `InstallPainter_SoundGroupMenu_Entry`         | SOUND / GROUP / MENU                                         | 0    | screen 0xA1                                            |
 | screen | 0xA1 | `InstallPainter_GroupSoundDisplayHold_Entry`  | GROUP: / SOUND / DISPLAY                                     | 23   | screen 0xA1                                            |
 | screen | 0xA2 | `InstallPainter_CombinationGroupMenu_Entry`   | COMBINATION GROUP MENU / 1. / 9.                             | 0    |                                                        |
@@ -170,7 +170,7 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0xA5 | `InstallPainter_CombinationGroupMenu_Entry`   | COMBINATION GROUP MENU / 1. / 9.                             | 12   | screen 0xA6                                            |
 | screen | 0xA6 | `InstallPainter_GroupCombiDisplayHold_Entry`  | GROUP: / COMBI. / DISPLAY                                    | 19   | screen 0xA5                                            |
 | screen | 0xA7 | `UiEvent_MarkRedrawFromPartClass`             |                                                              | 0    |                                                        |
-| screen | 0xAA | `ScreenEnter_PowerOnSplash`                   |                                                              | 0    |                                                        |
+| screen | 0xAA | `ScreenEnter_PowerOnSplash`                   |                                                              | 1    |                                                        |
 | screen | 0xAB | `InstallPainter_MessageScreen`                |                                                              | 0    | mode 0x26, mode 0x28, screen 0x06, screen 0x08 +15     |
 | screen | 0xAD | `ScreenEnter_CreatorSelectController`         |                                                              | 0    |                                                        |
 | screen | 0xB0 | `ScreenEnter_CombiEditPartMenu`               | C0MBINATI0N EDIT / INTERNAL / CONFIGURE                      | 0    |                                                        |
@@ -179,21 +179,21 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0xB3 | `ScreenEnter_WriteProtectError`               | ERR0R! / The S0UND or C0MBINATI0N / memories are write prote | 0    |                                                        |
 | screen | 0xB4 | `ScreenEnter_CombiEditInternalSound_B4`       | C0MBINATI0N EDIT / INTERNAL / CONFIGURE                      | 0    |                                                        |
 | screen | 0xB5 | `ScreenEnter_CombiEditInternalSound_B5`       | C0MBINATI0N EDIT / INTERNAL / CONFIGURE                      | 0    |                                                        |
-| screen | 0xB6 | `ScreenEnter_Effect2OutputConflict`           | ERR0R! / The S0UND or C0MBINATI0N / memories are write prote | 0    |                                                        |
+| screen | 0xB6 | `ScreenEnter_Effect2OutputConflict`           | ERR0R! / The S0UND or C0MBINATI0N / memories are write prote | 0    | mode 0x21, screen 0x01                                 |
 | screen | 0xB7 | `ScreenEnterBody_CombiEditMixer`              | MIXER / SOUND:                                               | 0    | mode 0x26, screen 0x06, screen 0x12                    |
-| screen | 0xC0 | `ToneEditPage_A0_ModelingTop`                 |                                                              | 0    |                                                        |
+| screen | 0xC0 | `ToneEditPage_A0_ModelingTop`                 |                                                              | 11   |                                                        |
 | screen | 0xC1 | `T_F41F7C_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0xC2 | `T_F41F8C_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0xC3 | `ToneEditPage_A3_PositionParameter`           |                                                              | 0    |                                                        |
-| screen | 0xC4 | `ToneEditPage_A4_PositionMovement`            |                                                              | 0    |                                                        |
-| screen | 0xC5 | `ToneEditPage_A5_FittingMutingTuning`         |                                                              | 0    |                                                        |
-| screen | 0xC6 | `ToneEditPage_A6_TouchDepth`                  |                                                              | 0    |                                                        |
-| screen | 0xC7 | `ToneEditPage_A7_ResoModeKeyFollow`           |                                                              | 0    |                                                        |
-| screen | 0xC8 | `ToneEditPage_A8_SerialParallel`              |                                                              | 0    |                                                        |
+| screen | 0xC3 | `ToneEditPage_A3_PositionParameter`           |                                                              | 11   |                                                        |
+| screen | 0xC4 | `ToneEditPage_A4_PositionMovement`            |                                                              | 11   |                                                        |
+| screen | 0xC5 | `ToneEditPage_A5_FittingMutingTuning`         |                                                              | 13   |                                                        |
+| screen | 0xC6 | `ToneEditPage_A6_TouchDepth`                  |                                                              | 12   |                                                        |
+| screen | 0xC7 | `ToneEditPage_A7_ResoModeKeyFollow`           |                                                              | 13   |                                                        |
+| screen | 0xC8 | `ToneEditPage_A8_SerialParallel`              |                                                              | 8    |                                                        |
 | screen | 0xCA | `ScreenEnter_SoundEditDspEffect`              | SEND                                                         | 0    |                                                        |
-| screen | 0xCB | `ScreenEnter_SoundEditDrumMenu`               |                                                              | 0    |                                                        |
+| screen | 0xCB | `ScreenEnter_SoundEditDrumMenu`               |                                                              | 9    |                                                        |
 | screen | 0xCC | `T_F42340_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0xCD | `ScreenEnter_SoundEditControllerPage1`        |                                                              | 0    |                                                        |
+| screen | 0xCD | `ScreenEnter_SoundEditControllerPage1`        |                                                              | 11   |                                                        |
 | screen | 0xCE | `T_F433E0_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0xD8 | `Paint_GateArrayCheck`                        | PANEL CPU CHECK / Please check the CPU port / LED flash.     | 0    |                                                        |
 | screen | 0xD9 | `Paint_PanelCpuCheck`                         | SINE WAVE CHECK / CHECK MODE / (1) SINE WAVE & ROM CHECK     | 0    |                                                        |
@@ -340,6 +340,30 @@ Draws:
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
+Keys (`DisplayListPtrs_F90CD8`):
+
+| key map                  | key                  | handler                                 | requests                                                |
+|--------------------------|----------------------|-----------------------------------------|---------------------------------------------------------|
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_Oct`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_LvlVol`                    |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_Pan`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_Eff1`                      |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Eff2`                      | request screen 0xB6 (ScreenEnter_Effect2OutputConflict) |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_Rev`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_Int`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_Midi`                      |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow1`        | `LcdKeyRow1_SoundMode`                  |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrC0mbinati0nM0de` |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_Exit`           | `ExitKey_SoundMode`                     |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_Oct_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_LvlVol_AltCode`            |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_Pan_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_Eff1_AltCode`              |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_Eff2_AltCode`              | request screen 0xB6 (ScreenEnter_Effect2OutputConflict) |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_Rev_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_Int_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_Midi_AltCode`              |                                                         |
+
 ## screen 0x01: `InstallPainter_SoundMode_Entry`
 
 Object `T_InstallPainter_SoundMode_Entry` (`PanelScreen_VtableTable` entry 33). Enter `InstallPainter_SoundMode_Entry`, Leave `ScreenLeave_SoundMode`, Button `ScreenButton_SoundMode`.
@@ -366,7 +390,31 @@ Draws:
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
-Reached from: screen 0xA1 `KEY_Code11` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code12` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code13` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code14` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code15` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_Exit` (`ExitKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow1` (`LcdKeyRow1_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow2` (`LcdKeyRow2_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow3` (`LcdKeyRow3_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow4` (`LcdKeyRow4_GroupSoundDisplayHold`); screen 0xA1 `KEY_NumberPad` (`NumberPadKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA6 `KEY_LcdRow1` (`LcdKeyRow1_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow2` (`LcdKeyRow2_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow3` (`LcdKeyRow3_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow4` (`LcdKeyRow4_GroupCombiDisplayHold`); screen 0xA6 `KEY_NumberPad` (`NumberPadKey_GroupCombiDisplayHold`).
+Keys (`DisplayListPtrs_F90CD8`):
+
+| key map                  | key                  | handler                                 | requests                                                |
+|--------------------------|----------------------|-----------------------------------------|---------------------------------------------------------|
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_Oct`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_LvlVol`                    |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_Pan`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_Eff1`                      |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Eff2`                      | request screen 0xB6 (ScreenEnter_Effect2OutputConflict) |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_Rev`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_Int`                       |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_Midi`                      |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow1`        | `LcdKeyRow1_SoundMode`                  |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrC0mbinati0nM0de` |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_Exit`           | `ExitKey_SoundMode`                     |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_Oct_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_LvlVol_AltCode`            |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_Pan_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_Eff1_AltCode`              |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_Eff2_AltCode`              | request screen 0xB6 (ScreenEnter_Effect2OutputConflict) |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_Rev_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_Int_AltCode`               |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_Midi_AltCode`              |                                                         |
+
+Reached from: screen 0xA1 `KEY_Exit` (`ExitKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow1` (`LcdKeyRow1_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow2` (`LcdKeyRow2_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow3` (`LcdKeyRow3_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow4` (`LcdKeyRow4_GroupSoundDisplayHold`); screen 0xA1 `KEY_NumberPad` (`NumberPadKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2Alt` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3Alt` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4Alt` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA6 `KEY_LcdRow1` (`LcdKeyRow1_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow2` (`LcdKeyRow2_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow3` (`LcdKeyRow3_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow4` (`LcdKeyRow4_GroupCombiDisplayHold`); screen 0xA6 `KEY_NumberPad` (`NumberPadKey_GroupCombiDisplayHold`).
 
 ## mode 0x22: `InstallPainter_C0mbinati0nM0de_Entry`
 
@@ -420,7 +468,7 @@ Draws:
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
-Reached from: screen 0xA1 `KEY_Code11` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code12` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code13` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code14` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow1` (`LcdKeyRow1_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow2` (`LcdKeyRow2_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow3` (`LcdKeyRow3_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow4` (`LcdKeyRow4_GroupSoundDisplayHold`); screen 0xA1 `KEY_NumberPad` (`NumberPadKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA5 `KEY_Exit` (`ExitKey_CombinationGroupMenu`); screen 0xA6 `KEY_Exit` (`ExitKey_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow1` (`LcdKeyRow1_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow2` (`LcdKeyRow2_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow3` (`LcdKeyRow3_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow4` (`LcdKeyRow4_GroupCombiDisplayHold`); screen 0xA6 `KEY_NumberPad` (`NumberPadKey_GroupCombiDisplayHold`).
+Reached from: screen 0xA1 `KEY_LcdRow1` (`LcdKeyRow1_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow2` (`LcdKeyRow2_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow3` (`LcdKeyRow3_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow4` (`LcdKeyRow4_GroupSoundDisplayHold`); screen 0xA1 `KEY_NumberPad` (`NumberPadKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2Alt` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3Alt` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4Alt` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA5 `KEY_Exit` (`ExitKey_CombinationGroupMenu`); screen 0xA6 `KEY_Exit` (`ExitKey_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow1` (`LcdKeyRow1_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow2` (`LcdKeyRow2_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow3` (`LcdKeyRow3_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow4` (`LcdKeyRow4_GroupCombiDisplayHold`); screen 0xA6 `KEY_NumberPad` (`NumberPadKey_GroupCombiDisplayHold`).
 
 ## mode 0x24: `Paint_Sequencer`
 
@@ -510,28 +558,28 @@ Object `T_ScreenEnter_RealtimeRecordScreen_Fwd` (`PanelScreen_VtableTable` entry
 
 Keys (`ScreenButtons_RealtimeRecordScreen`):
 
-| key map                              | key               | handler                                    | requests                                                                                                  |
-|--------------------------------------|-------------------|--------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow1`     | `LcdKeyRow1_RealtimeRecordScreen`          | go to screen 0x1E (ScreenEnter_Quantize); request screen 0x0C (ScreenEnter_MetronomeBalanceScreen_Fwd)    |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow2`     | `LcdKeyRow2_RealtimeRecordScreen`          | go to screen 0x08 (ScreenEnter_CycleRecordScreen_Fwd); request screen 0xAB (InstallPainter_MessageScreen) |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow3`     | `LcdKeyRow3_RealtimeRecordScreen`          | request screen 0xB7 (ScreenEnterBody_CombiEditMixer)                                                      |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Exit`        | `ExitKey_RealtimeRecordScreen`             | mode change 0x03                                                                                          |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code11`      | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code12`      | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code13`      | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code14`      | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code15`      | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code16`      | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code17`      | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code18`      | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| key map                              | key                  | handler                                    | requests                                                                                                  |
+|--------------------------------------|----------------------|--------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow1`        | `LcdKeyRow1_RealtimeRecordScreen`          | go to screen 0x1E (ScreenEnter_Quantize); request screen 0x0C (ScreenEnter_MetronomeBalanceScreen_Fwd)    |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow2`        | `LcdKeyRow2_RealtimeRecordScreen`          | go to screen 0x08 (ScreenEnter_CycleRecordScreen_Fwd); request screen 0xAB (InstallPainter_MessageScreen) |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow3`        | `LcdKeyRow3_RealtimeRecordScreen`          | request screen 0xB7 (ScreenEnterBody_CombiEditMixer)                                                      |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_Exit`           | `ExitKey_RealtimeRecordScreen`             | mode change 0x03                                                                                          |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
 
 ## screen 0x06: `ScreenEnter_RealtimeRecordScreen_Fwd`
 
@@ -539,28 +587,28 @@ Object `T_ScreenEnter_RealtimeRecordScreen_Fwd` (`PanelScreen_VtableTable` entry
 
 Keys (`ScreenButtons_RealtimeRecordScreen`):
 
-| key map                              | key               | handler                                    | requests                                                                                                  |
-|--------------------------------------|-------------------|--------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow1`     | `LcdKeyRow1_RealtimeRecordScreen`          | go to screen 0x1E (ScreenEnter_Quantize); request screen 0x0C (ScreenEnter_MetronomeBalanceScreen_Fwd)    |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow2`     | `LcdKeyRow2_RealtimeRecordScreen`          | go to screen 0x08 (ScreenEnter_CycleRecordScreen_Fwd); request screen 0xAB (InstallPainter_MessageScreen) |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow3`     | `LcdKeyRow3_RealtimeRecordScreen`          | request screen 0xB7 (ScreenEnterBody_CombiEditMixer)                                                      |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Exit`        | `ExitKey_RealtimeRecordScreen`             | mode change 0x03                                                                                          |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code11`      | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code12`      | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code13`      | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code14`      | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code15`      | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code16`      | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code17`      | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
-| `ScreenButtons_RealtimeRecordScreen` | `KEY_Code18`      | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| key map                              | key                  | handler                                    | requests                                                                                                  |
+|--------------------------------------|----------------------|--------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow1`        | `LcdKeyRow1_RealtimeRecordScreen`          | go to screen 0x1E (ScreenEnter_Quantize); request screen 0x0C (ScreenEnter_MetronomeBalanceScreen_Fwd)    |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow2`        | `LcdKeyRow2_RealtimeRecordScreen`          | go to screen 0x08 (ScreenEnter_CycleRecordScreen_Fwd); request screen 0xAB (InstallPainter_MessageScreen) |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_LcdRow3`        | `LcdKeyRow3_RealtimeRecordScreen`          | request screen 0xB7 (ScreenEnterBody_CombiEditMixer)                                                      |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_Exit`           | `ExitKey_RealtimeRecordScreen`             | mode change 0x03                                                                                          |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
+| `ScreenButtons_RealtimeRecordScreen` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                                                                           |
 
 Reached from: mode 0x28 `KEY_Exit` (`ExitKey_CycleRecordScreen`); mode 0x28 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x08 `KEY_Exit` (`ExitKey_CycleRecordScreen`); screen 0x08 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x1E `KEY_Exit` (`ExitKey_Quantize_StageZero`).
 
@@ -744,25 +792,25 @@ Draws:
 
 Keys (`ButtonTable_StepRecordPartSelect`):
 
-| key map                            | key               | handler                            | requests                            |
-|------------------------------------|-------------------|------------------------------------|-------------------------------------|
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1` | `SoftKeyCol1_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2` | `SoftKeyCol2_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3` | `SoftKeyCol3_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4` | `SoftKeyCol4_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5` | `SoftKeyCol5_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6` | `SoftKeyCol6_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7` | `SoftKeyCol7_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8` | `SoftKeyCol8_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Exit`        | `ExitKey_StepRecordPartSelect`     | go to screen 0x04 (Paint_Sequencer) |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code11`      | `SoftKeyCol1_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code12`      | `SoftKeyCol2_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code13`      | `SoftKeyCol3_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code14`      | `SoftKeyCol4_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code15`      | `SoftKeyCol5_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code16`      | `SoftKeyCol6_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code17`      | `SoftKeyCol7_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code18`      | `SoftKeyCol8_StepRecordPartSelect` |                                     |
+| key map                            | key                  | handler                            | requests                            |
+|------------------------------------|----------------------|------------------------------------|-------------------------------------|
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_Exit`           | `ExitKey_StepRecordPartSelect`     | go to screen 0x04 (Paint_Sequencer) |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_StepRecordPartSelect` |                                     |
 
 ## screen 0x0F: `ScreenEnter_StepRecordPartSelect`
 
@@ -780,25 +828,25 @@ Draws:
 
 Keys (`ButtonTable_StepRecordPartSelect`):
 
-| key map                            | key               | handler                            | requests                            |
-|------------------------------------|-------------------|------------------------------------|-------------------------------------|
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1` | `SoftKeyCol1_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2` | `SoftKeyCol2_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3` | `SoftKeyCol3_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4` | `SoftKeyCol4_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5` | `SoftKeyCol5_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6` | `SoftKeyCol6_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7` | `SoftKeyCol7_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8` | `SoftKeyCol8_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Exit`        | `ExitKey_StepRecordPartSelect`     | go to screen 0x04 (Paint_Sequencer) |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code11`      | `SoftKeyCol1_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code12`      | `SoftKeyCol2_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code13`      | `SoftKeyCol3_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code14`      | `SoftKeyCol4_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code15`      | `SoftKeyCol5_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code16`      | `SoftKeyCol6_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code17`      | `SoftKeyCol7_StepRecordPartSelect` |                                     |
-| `ButtonTable_StepRecordPartSelect` | `KEY_Code18`      | `SoftKeyCol8_StepRecordPartSelect` |                                     |
+| key map                            | key                  | handler                            | requests                            |
+|------------------------------------|----------------------|------------------------------------|-------------------------------------|
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_Exit`           | `ExitKey_StepRecordPartSelect`     | go to screen 0x04 (Paint_Sequencer) |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_StepRecordPartSelect` |                                     |
+| `ButtonTable_StepRecordPartSelect` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_StepRecordPartSelect` |                                     |
 
 ## screen 0x10: `ScreenEnter_TrackAssign`
 
@@ -819,23 +867,23 @@ Draws:
 
 Keys (`ButtonTable_TrackAssign_StageZero`, `ButtonTable_TrackAssign_StageNonZero`):
 
-| key map                                | key               | handler                               | requests                                           |
-|----------------------------------------|-------------------|---------------------------------------|----------------------------------------------------|
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol4` | `SoftKeyCol4_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol7` | `SoftKeyCol7_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_TrackAssign_StageZero`    |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_TrackAssign_StageZero`    |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_TrackAssign_StageZero`    |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_TrackAssign_StageZero`    |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow5`     | `LcdKeyRow5_TrackAssign_StageZero`    | go to screen 0x11 (ScreenEnter_TrackAssignPresets) |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_Exit`        | `ExitKey_TrackAssign_StageZero`       | go to screen 0x04 (Paint_Sequencer)                |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_Code14`      | `SoftKeyCol4_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_Code15`      | `SoftKeyCol5_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageZero`    | `KEY_Code17`      | `SoftKeyCol7_TrackAssign_StageZero`   |                                                    |
-| `ButtonTable_TrackAssign_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_TrackAssign_StageNonZero` |                                                    |
-| `ButtonTable_TrackAssign_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_TrackAssign_StageNonZero` |                                                    |
-| `ButtonTable_TrackAssign_StageNonZero` | `KEY_Exit`        | `ExitKey_TrackAssign_StageNonZero`    |                                                    |
+| key map                                | key                  | handler                               | requests                                           |
+|----------------------------------------|----------------------|---------------------------------------|----------------------------------------------------|
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol4`    | `SoftKeyCol4_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol7`    | `SoftKeyCol7_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_TrackAssign_StageZero`    |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_TrackAssign_StageZero`    |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_TrackAssign_StageZero`    |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_TrackAssign_StageZero`    |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_LcdRow5`        | `LcdKeyRow5_TrackAssign_StageZero`    | go to screen 0x11 (ScreenEnter_TrackAssignPresets) |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_Exit`           | `ExitKey_TrackAssign_StageZero`       | go to screen 0x04 (Paint_Sequencer)                |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageZero`    | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_TrackAssign_StageZero`   |                                                    |
+| `ButtonTable_TrackAssign_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_TrackAssign_StageNonZero` |                                                    |
+| `ButtonTable_TrackAssign_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_TrackAssign_StageNonZero` |                                                    |
+| `ButtonTable_TrackAssign_StageNonZero` | `KEY_Exit`           | `ExitKey_TrackAssign_StageNonZero`    |                                                    |
 
 Reached from: mode 0x24 `KEY_LcdRow2` (`LcdKeyRow2_Sequencer`); screen 0x04 `KEY_LcdRow2` (`LcdKeyRow2_Sequencer`); screen 0x11 `KEY_Exit` (`ExitKey_TrackAssignPresets`).
 
@@ -883,28 +931,28 @@ Object `T_ScreenEnter_SeqPlayScreen_Fwd` (`PanelScreen_VtableTable` entry 50). E
 
 Keys (`ScreenButtons_SeqPlayScreen`):
 
-| key map                       | key               | handler                                    | requests                                             |
-|-------------------------------|-------------------|--------------------------------------------|------------------------------------------------------|
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow1`     | `LcdKeyRow1_SeqPlayScreen`                 | go to screen 0x14 (ScreenEnter_CyclePlayScreen_Fwd)  |
-| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow2`     | `LcdKeyRow2_SeqPlayScreen`                 | mode change 0x05                                     |
-| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow3`     | `LcdKeyRow3_SeqPlayScreen`                 | request screen 0xB7 (ScreenEnterBody_CombiEditMixer) |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Exit`        | `ExitKey_SeqPlayScreen`                    | mode change 0x01                                     |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code11`      | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code12`      | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code13`      | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code14`      | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code15`      | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code16`      | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code17`      | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                      |
-| `ScreenButtons_SeqPlayScreen` | `KEY_Code18`      | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                      |
+| key map                       | key                  | handler                                    | requests                                             |
+|-------------------------------|----------------------|--------------------------------------------|------------------------------------------------------|
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_SeqPlayAndRealtimeRecord`     |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow1`        | `LcdKeyRow1_SeqPlayScreen`                 | go to screen 0x14 (ScreenEnter_CyclePlayScreen_Fwd)  |
+| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow2`        | `LcdKeyRow2_SeqPlayScreen`                 | mode change 0x05                                     |
+| `ScreenButtons_SeqPlayScreen` | `KEY_LcdRow3`        | `LcdKeyRow3_SeqPlayScreen`                 | request screen 0xB7 (ScreenEnterBody_CombiEditMixer) |
+| `ScreenButtons_SeqPlayScreen` | `KEY_Exit`           | `ExitKey_SeqPlayScreen`                    | mode change 0x01                                     |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7Held_SeqPlayAndRealtimeRecord` |                                                      |
+| `ScreenButtons_SeqPlayScreen` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8Held_SeqPlayAndRealtimeRecord` |                                                      |
 
 Reached from: screen 0x14 `KEY_Exit` (`ExitKey_CyclePlayScreen`); screen 0x14 `KEY_LcdRow5` (`LcdKeyRow5_CyclePlayScreen`).
 
@@ -926,23 +974,23 @@ Draws:
 
 Keys (`ButtonTable_SequencerMedley`):
 
-| key map                       | key               | handler                        | requests                                           |
-|-------------------------------|-------------------|--------------------------------|----------------------------------------------------|
-| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_LcdRow2`     | `LcdKeyRow2_SequencerMedley`   |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_LcdRow3`     | `LcdKeyRow3_SequencerMedley`   |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_LcdRow4`     | `LcdKeyRow4_SequencerMedley`   | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_SequencerMedley` | `KEY_Exit`        | `ExitKey_SequencerMedley`      | go to screen 0x04 (Paint_Sequencer)                |
-| `ButtonTable_SequencerMedley` | `KEY_Code12`      | `SoftKeyCol2_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_Code13`      | `SoftKeyCol3_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_Code15`      | `SoftKeyCol5_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_Code17`      | `SoftKeyCol7_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_Code18`      | `SoftKeyCol8_SequencerMedley`  |                                                    |
-| `ButtonTable_SequencerMedley` | `KEY_NumberPad`   | `NumberPadKey_SequencerMedley` |                                                    |
+| key map                       | key                  | handler                        | requests                                           |
+|-------------------------------|----------------------|--------------------------------|----------------------------------------------------|
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_LcdRow2`        | `LcdKeyRow2_SequencerMedley`   |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_LcdRow3`        | `LcdKeyRow3_SequencerMedley`   |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_LcdRow4`        | `LcdKeyRow4_SequencerMedley`   | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_SequencerMedley` | `KEY_Exit`           | `ExitKey_SequencerMedley`      | go to screen 0x04 (Paint_Sequencer)                |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_SequencerMedley`  |                                                    |
+| `ButtonTable_SequencerMedley` | `KEY_NumberPad`      | `NumberPadKey_SequencerMedley` |                                                    |
 
 Reached from: mode 0x24 `KEY_LcdRow3` (`LcdKeyRow3_Sequencer`); screen 0x04 `KEY_LcdRow3` (`LcdKeyRow3_Sequencer`).
 
@@ -988,7 +1036,7 @@ Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
 | `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow5` | `LcdKeyRow5_Edit_0C10Zero`    | go to screen 0x1D (ScreenEnter_Vel0cityChange); go to screen 0x2E (ScreenEnter_PanelWrite)    |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_Exit`    | `ExitKey_Edit_0C10Zero`       | mode change 0x03                                                                              |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_Page`    | `PageKey_Edit_0C10Zero`       |                                                                                               |
-| `ButtonTable_Edit_0C10Zero`    | `KEY_Code19`  | `PageKey_Edit_0C10Zero`       |                                                                                               |
+| `ButtonTable_Edit_0C10Zero`    | `KEY_PageAlt` | `PageKey_Edit_0C10Zero`       |                                                                                               |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow1` | `LcdKeyRow1_Edit_0C10NonZero` | go to screen 0x21 (ScreenEnter_MeasureC0py); go to screen 0x2A (ScreenEnter_S0ngC0py)         |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow2` | `LcdKeyRow2_Edit_0C10NonZero` | go to screen 0x20 (ScreenEnter_MeasureErase)                                                  |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow3` | `LcdKeyRow3_Edit_0C10NonZero` | go to screen 0x1F (ScreenEnter_TrackMerge); go to screen 0x23 (ScreenEnter_MeasureDelete)     |
@@ -996,7 +1044,7 @@ Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow5` | `LcdKeyRow5_Edit_0C10NonZero` |                                                                                               |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_Exit`    | `ExitKey_Edit_0C10NonZero`    |                                                                                               |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_Page`    | `PageKey_Edit_0C10NonZero`    |                                                                                               |
-| `ButtonTable_Edit_0C10NonZero` | `KEY_Code19`  | `PageKey_Edit_0C10NonZero`    |                                                                                               |
+| `ButtonTable_Edit_0C10NonZero` | `KEY_PageAlt` | `PageKey_Edit_0C10NonZero`    |                                                                                               |
 
 Reached from: screen 0x1B `KEY_Exit` (`ExitKey_SongClear`); screen 0x1B `KEY_LcdRow5` (`LcdKeyRow5_SongClear`); screen 0x1C `KEY_Exit` (`ExitKey_TrackClear_StageZero`); screen 0x1D `KEY_Exit` (`ExitKey_Vel0cityChange_StageZero`); screen 0x1E `KEY_Exit` (`ExitKey_Quantize_StageZero`); screen 0x1F `KEY_Exit` (`ExitKey_TrackMerge_StageZero`); screen 0x20 `KEY_Exit` (`ExitKey_MeasureErase_StageZero`); screen 0x21 `KEY_Exit` (`ExitKey_MeasureC0py_StageZero`); screen 0x22 `KEY_Exit` (`ExitKey_MeasureInsert_StageZero`); screen 0x23 `KEY_Exit` (`ExitKey_MeasureDelete_StageZero`); screen 0x24 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x27 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x2A `KEY_Exit` (`ExitKey_S0ngC0py_StageZero`); screen 0x2B `KEY_Exit` (`ExitKey_Transp0se_StageZero`); screen 0x2C `KEY_Exit` (`ExitKey_AdvanceDelay_StageZero`); screen 0x2D `KEY_Exit` (`ExitKey_N0teChange_StageZero`).
 
@@ -1021,15 +1069,15 @@ Enter requests: mode change 0x01.
 
 Keys (`ButtonTable_SongClear`):
 
-| key map                 | key               | handler                 | requests                                           |
-|-------------------------|-------------------|-------------------------|----------------------------------------------------|
-| `ButtonTable_SongClear` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SongClear` |                                                    |
-| `ButtonTable_SongClear` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SongClear` |                                                    |
-| `ButtonTable_SongClear` | `KEY_LcdRow4`     | `LcdKeyRow4_SongClear`  | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_SongClear` | `KEY_LcdRow5`     | `LcdKeyRow5_SongClear`  | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_SongClear` | `KEY_Exit`        | `ExitKey_SongClear`     | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_SongClear` | `KEY_Code13`      | `SoftKeyCol3_SongClear` |                                                    |
-| `ButtonTable_SongClear` | `KEY_Code14`      | `SoftKeyCol4_SongClear` |                                                    |
+| key map                 | key                  | handler                 | requests                                           |
+|-------------------------|----------------------|-------------------------|----------------------------------------------------|
+| `ButtonTable_SongClear` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SongClear` |                                                    |
+| `ButtonTable_SongClear` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SongClear` |                                                    |
+| `ButtonTable_SongClear` | `KEY_LcdRow4`        | `LcdKeyRow4_SongClear`  | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_SongClear` | `KEY_LcdRow5`        | `LcdKeyRow5_SongClear`  | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_SongClear` | `KEY_Exit`           | `ExitKey_SongClear`     | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_SongClear` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_SongClear` |                                                    |
+| `ButtonTable_SongClear` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_SongClear` |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10Zero`).
 
@@ -1051,29 +1099,29 @@ Draws:
 
 Keys (`ButtonTable_TrackClear_StageZero`, `ButtonTable_TrackClear_StageNonZero`):
 
-| key map                               | key               | handler                              | requests                                           |
-|---------------------------------------|-------------------|--------------------------------------|----------------------------------------------------|
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol1` | `SoftKeyCol1_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol2` | `SoftKeyCol2_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol3` | `SoftKeyCol3_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol4` | `SoftKeyCol4_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol6` | `SoftKeyCol6_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol7` | `SoftKeyCol7_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol8` | `SoftKeyCol8_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_TrackClear_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Exit`        | `ExitKey_TrackClear_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code11`      | `SoftKeyCol1_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code12`      | `SoftKeyCol2_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code13`      | `SoftKeyCol3_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code14`      | `SoftKeyCol4_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code15`      | `SoftKeyCol5_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code16`      | `SoftKeyCol6_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code17`      | `SoftKeyCol7_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageZero`    | `KEY_Code18`      | `SoftKeyCol8_TrackClear_StageZero`   |                                                    |
-| `ButtonTable_TrackClear_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_TrackClear_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_TrackClear_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_TrackClear_StageNonZero` |                                                    |
-| `ButtonTable_TrackClear_StageNonZero` | `KEY_Exit`        | `ExitKey_TrackClear_StageNonZero`    |                                                    |
+| key map                               | key                  | handler                              | requests                                           |
+|---------------------------------------|----------------------|--------------------------------------|----------------------------------------------------|
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol1`    | `SoftKeyCol1_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol2`    | `SoftKeyCol2_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol3`    | `SoftKeyCol3_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol4`    | `SoftKeyCol4_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol6`    | `SoftKeyCol6_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol7`    | `SoftKeyCol7_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol8`    | `SoftKeyCol8_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_TrackClear_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_Exit`           | `ExitKey_TrackClear_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageZero`    | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_TrackClear_StageZero`   |                                                    |
+| `ButtonTable_TrackClear_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_TrackClear_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_TrackClear_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_TrackClear_StageNonZero` |                                                    |
+| `ButtonTable_TrackClear_StageNonZero` | `KEY_Exit`           | `ExitKey_TrackClear_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10Zero`).
 
@@ -1092,19 +1140,19 @@ Draws:
 
 Keys (`ButtonTable_Vel0cityChange_StageZero`, `ButtonTable_Vel0cityChange_StageNonZero`):
 
-| key map                                   | key               | handler                                  | requests                                           |
-|-------------------------------------------|-------------------|------------------------------------------|----------------------------------------------------|
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_Vel0cityChange_StageZero`   |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_Vel0cityChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_Exit`        | `ExitKey_Vel0cityChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_Code15`      | `Vel0cityChange_StageZero_Button21`      |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_Vel0cityChange_StageZero`  |                                                    |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_Vel0cityChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_Vel0cityChange_StageNonZero` |                                                    |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_Exit`        | `ExitKey_Vel0cityChange_StageNonZero`    |                                                    |
+| key map                                   | key                  | handler                                  | requests                                           |
+|-------------------------------------------|----------------------|------------------------------------------|----------------------------------------------------|
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Vel0cityChange_StageZero`   |                                                    |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Vel0cityChange_StageZero`    |                                                    |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Vel0cityChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Vel0cityChange_StageZero`    |                                                    |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Vel0cityChange_StageZero`    |                                                    |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_Exit`           | `ExitKey_Vel0cityChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `Vel0cityChange_StageZero_Button21`      |                                                    |
+| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Vel0cityChange_StageZero`  |                                                    |
+| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_Vel0cityChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Vel0cityChange_StageNonZero` |                                                    |
+| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_Exit`           | `ExitKey_Vel0cityChange_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow5` (`LcdKeyRow5_Edit_0C10Zero`).
 
@@ -1126,19 +1174,19 @@ Enter requests: go to screen 0x06 (ScreenEnter_RealtimeRecordScreen_Fwd); go to 
 
 Keys (`ButtonTable_Quantize_StageZero`, `ButtonTable_Quantize_StageNonZero`):
 
-| key map                             | key               | handler                            | requests                                                                                       |
-|-------------------------------------|-------------------|------------------------------------|------------------------------------------------------------------------------------------------|
-| `ButtonTable_Quantize_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_Quantize_StageZero`   |                                                                                                |
-| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_Quantize_StageZero`    |                                                                                                |
-| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_Quantize_StageZero`    |                                                                                                |
-| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_Quantize_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen)                                             |
-| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_Quantize_StageZero`    |                                                                                                |
-| `ButtonTable_Quantize_StageZero`    | `KEY_Exit`        | `ExitKey_Quantize_StageZero`       | go to screen 0x06 (ScreenEnter_RealtimeRecordScreen_Fwd); go to screen 0x1A (ScreenEnter_Edit) |
-| `ButtonTable_Quantize_StageZero`    | `KEY_Code15`      | `Quantize_StageZero_Button21`      |                                                                                                |
-| `ButtonTable_Quantize_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_Quantize_StageZero`  |                                                                                                |
-| `ButtonTable_Quantize_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_Quantize_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen)                                             |
-| `ButtonTable_Quantize_StageNonZero` | `KEY_LcdRow4`     | `LcdKeyRow4_Quantize_StageNonZero` |                                                                                                |
-| `ButtonTable_Quantize_StageNonZero` | `KEY_Exit`        | `ExitKey_Quantize_StageNonZero`    |                                                                                                |
+| key map                             | key                  | handler                            | requests                                                                                       |
+|-------------------------------------|----------------------|------------------------------------|------------------------------------------------------------------------------------------------|
+| `ButtonTable_Quantize_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Quantize_StageZero`   |                                                                                                |
+| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Quantize_StageZero`    |                                                                                                |
+| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Quantize_StageZero`    |                                                                                                |
+| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Quantize_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen)                                             |
+| `ButtonTable_Quantize_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Quantize_StageZero`    |                                                                                                |
+| `ButtonTable_Quantize_StageZero`    | `KEY_Exit`           | `ExitKey_Quantize_StageZero`       | go to screen 0x06 (ScreenEnter_RealtimeRecordScreen_Fwd); go to screen 0x1A (ScreenEnter_Edit) |
+| `ButtonTable_Quantize_StageZero`    | `KEY_SoftKeyCol5Alt` | `Quantize_StageZero_Button21`      |                                                                                                |
+| `ButtonTable_Quantize_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Quantize_StageZero`  |                                                                                                |
+| `ButtonTable_Quantize_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Quantize_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen)                                             |
+| `ButtonTable_Quantize_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_Quantize_StageNonZero` |                                                                                                |
+| `ButtonTable_Quantize_StageNonZero` | `KEY_Exit`           | `ExitKey_Quantize_StageNonZero`    |                                                                                                |
 
 Reached from: mode 0x26 `KEY_LcdRow1` (`LcdKeyRow1_RealtimeRecordScreen`); screen 0x06 `KEY_LcdRow1` (`LcdKeyRow1_RealtimeRecordScreen`); screen 0x1A `KEY_LcdRow3` (`LcdKeyRow3_Edit_0C10Zero`).
 
@@ -1186,19 +1234,19 @@ Draws:
 
 Keys (`ButtonTable_MeasureErase_StageZero`, `ButtonTable_MeasureErase_StageNonZero`):
 
-| key map                                 | key               | handler                                | requests                                           |
-|-----------------------------------------|-------------------|----------------------------------------|----------------------------------------------------|
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_MeasureErase_StageZero`   |                                                    |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_MeasureErase_StageZero`    |                                                    |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_MeasureErase_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureErase_StageZero`    |                                                    |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_MeasureErase_StageZero`    |                                                    |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_Exit`        | `ExitKey_MeasureErase_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_Code15`      | `MeasureErase_StageZero_Button21`      |                                                    |
-| `ButtonTable_MeasureErase_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_MeasureErase_StageZero`  |                                                    |
-| `ButtonTable_MeasureErase_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_MeasureErase_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureErase_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureErase_StageNonZero` |                                                    |
-| `ButtonTable_MeasureErase_StageNonZero` | `KEY_Exit`        | `ExitKey_MeasureErase_StageNonZero`    |                                                    |
+| key map                                 | key                  | handler                                | requests                                           |
+|-----------------------------------------|----------------------|----------------------------------------|----------------------------------------------------|
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureErase_StageZero`   |                                                    |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureErase_StageZero`    |                                                    |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureErase_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureErase_StageZero`    |                                                    |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureErase_StageZero`    |                                                    |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureErase_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureErase_StageZero_Button21`      |                                                    |
+| `ButtonTable_MeasureErase_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureErase_StageZero`  |                                                    |
+| `ButtonTable_MeasureErase_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureErase_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureErase_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureErase_StageNonZero` |                                                    |
+| `ButtonTable_MeasureErase_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureErase_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10NonZero`).
 
@@ -1219,19 +1267,19 @@ Draws:
 
 Keys (`ButtonTable_MeasureC0py_StageZero`, `ButtonTable_MeasureC0py_StageNonZero`):
 
-| key map                                | key               | handler                               | requests                                           |
-|----------------------------------------|-------------------|---------------------------------------|----------------------------------------------------|
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_MeasureC0py_StageZero`   |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_MeasureC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_Exit`        | `ExitKey_MeasureC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_Code15`      | `MeasureC0py_StageZero_Button21`      |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_MeasureC0py_StageZero`  |                                                    |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow1`     | `LcdKeyRow1_MeasureC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow5`     | `LcdKeyRow5_MeasureC0py_StageNonZero` |                                                    |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_Exit`        | `ExitKey_MeasureC0py_StageNonZero`    |                                                    |
+| key map                                | key                  | handler                               | requests                                           |
+|----------------------------------------|----------------------|---------------------------------------|----------------------------------------------------|
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureC0py_StageZero`   |                                                    |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureC0py_StageZero`    |                                                    |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureC0py_StageZero`    |                                                    |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureC0py_StageZero`    |                                                    |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureC0py_StageZero_Button21`      |                                                    |
+| `ButtonTable_MeasureC0py_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureC0py_StageZero`  |                                                    |
+| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_MeasureC0py_StageNonZero` |                                                    |
+| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureC0py_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10NonZero`).
 
@@ -1252,19 +1300,19 @@ Draws:
 
 Keys (`ButtonTable_MeasureInsert_StageZero`, `ButtonTable_MeasureInsert_StageNonZero`):
 
-| key map                                  | key               | handler                                 | requests                                           |
-|------------------------------------------|-------------------|-----------------------------------------|----------------------------------------------------|
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_MeasureInsert_StageZero`   |                                                    |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_MeasureInsert_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_MeasureInsert_StageZero`    |                                                    |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureInsert_StageZero`    |                                                    |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_MeasureInsert_StageZero`    |                                                    |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_Exit`        | `ExitKey_MeasureInsert_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_Code15`      | `MeasureInsert_StageZero_Button21`      |                                                    |
-| `ButtonTable_MeasureInsert_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_MeasureInsert_StageZero`  |                                                    |
-| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_LcdRow1`     | `LcdKeyRow1_MeasureInsert_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_LcdRow5`     | `LcdKeyRow5_MeasureInsert_StageNonZero` |                                                    |
-| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_Exit`        | `ExitKey_MeasureInsert_StageNonZero`    |                                                    |
+| key map                                  | key                  | handler                                 | requests                                           |
+|------------------------------------------|----------------------|-----------------------------------------|----------------------------------------------------|
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureInsert_StageZero`   |                                                    |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureInsert_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureInsert_StageZero`    |                                                    |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureInsert_StageZero`    |                                                    |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureInsert_StageZero`    |                                                    |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureInsert_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureInsert_StageZero_Button21`      |                                                    |
+| `ButtonTable_MeasureInsert_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureInsert_StageZero`  |                                                    |
+| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureInsert_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_MeasureInsert_StageNonZero` |                                                    |
+| `ButtonTable_MeasureInsert_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureInsert_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow4` (`LcdKeyRow4_Edit_0C10NonZero`).
 
@@ -1285,18 +1333,18 @@ Draws:
 
 Keys (`ButtonTable_MeasureDelete_StageZero`, `ButtonTable_MeasureDelete_StageNonZero`):
 
-| key map                                  | key               | handler                                 | requests                                           |
-|------------------------------------------|-------------------|-----------------------------------------|----------------------------------------------------|
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_MeasureDelete_StageZero`   |                                                    |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_MeasureDelete_StageZero`    |                                                    |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureDelete_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_MeasureDelete_StageZero`    |                                                    |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_Exit`        | `ExitKey_MeasureDelete_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_Code15`      | `MeasureDelete_StageZero_Button21`      |                                                    |
-| `ButtonTable_MeasureDelete_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_MeasureDelete_StageZero`  |                                                    |
-| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_MeasureDelete_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_LcdRow4`     | `LcdKeyRow4_MeasureDelete_StageNonZero` |                                                    |
-| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_Exit`        | `ExitKey_MeasureDelete_StageNonZero`    |                                                    |
+| key map                                  | key                  | handler                                 | requests                                           |
+|------------------------------------------|----------------------|-----------------------------------------|----------------------------------------------------|
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureDelete_StageZero`   |                                                    |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureDelete_StageZero`    |                                                    |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureDelete_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureDelete_StageZero`    |                                                    |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureDelete_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureDelete_StageZero_Button21`      |                                                    |
+| `ButtonTable_MeasureDelete_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureDelete_StageZero`  |                                                    |
+| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureDelete_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureDelete_StageNonZero` |                                                    |
+| `ButtonTable_MeasureDelete_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureDelete_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow3` (`LcdKeyRow3_Edit_0C10NonZero`).
 
@@ -1314,27 +1362,27 @@ Draws:
 
 Keys (`EditPartSelect_ButtonTable`):
 
-| key map                      | key               | handler                      | requests                             |
-|------------------------------|-------------------|------------------------------|--------------------------------------|
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1` | `SoftKeyCol1_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2` | `SoftKeyCol2_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3` | `SoftKeyCol3_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4` | `SoftKeyCol4_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5` | `SoftKeyCol5_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6` | `SoftKeyCol6_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7` | `SoftKeyCol7_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8` | `SoftKeyCol8_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Exit`        | `ExitKey_EditPartSelect`     | go to screen 0x1A (ScreenEnter_Edit) |
-| `EditPartSelect_ButtonTable` | `KEY_Code11`      | `SoftKeyCol1_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code12`      | `SoftKeyCol2_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code13`      | `SoftKeyCol3_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code14`      | `SoftKeyCol4_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code15`      | `SoftKeyCol5_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code16`      | `SoftKeyCol6_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code17`      | `SoftKeyCol7_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code18`      | `SoftKeyCol8_EditPartSelect` |                                      |
+| key map                      | key                  | handler                      | requests                             |
+|------------------------------|----------------------|------------------------------|--------------------------------------|
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_Exit`           | `ExitKey_EditPartSelect`     | go to screen 0x1A (ScreenEnter_Edit) |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_EditPartSelect` |                                      |
 
-Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10Zero`); screen 0x25 `KEY_Code11` (`NoteEdit_Button17`); screen 0x25 `KEY_Code12` (`NoteEdit_Button18`); screen 0x25 `KEY_Code13` (`NoteEdit_Button19`); screen 0x25 `KEY_Code14` (`NoteEdit_Button20`); screen 0x25 `KEY_Code15` (`NoteEdit_Button21`); screen 0x25 `KEY_Code16` (`NoteEdit_Button22`); screen 0x25 `KEY_Code17` (`NoteEdit_Button23`); screen 0x25 `KEY_Code18` (`NoteEdit_Button24`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Code11` (`DrumEdit_Button17`); screen 0x28 `KEY_Code12` (`DrumEdit_Button18`); screen 0x28 `KEY_Code13` (`DrumEdit_Button19`); screen 0x28 `KEY_Code14` (`DrumEdit_Button20`); screen 0x28 `KEY_Code15` (`DrumEdit_Button21`); screen 0x28 `KEY_Code16` (`DrumEdit_Button22`); screen 0x28 `KEY_Code17` (`DrumEdit_Button23`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
+Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10Zero`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1Alt` (`NoteEdit_Button17`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2Alt` (`NoteEdit_Button18`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3Alt` (`NoteEdit_Button19`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4Alt` (`NoteEdit_Button20`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5Alt` (`NoteEdit_Button21`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6Alt` (`NoteEdit_Button22`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7Alt` (`NoteEdit_Button23`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8Alt` (`NoteEdit_Button24`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1Alt` (`DrumEdit_Button17`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2Alt` (`DrumEdit_Button18`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3Alt` (`DrumEdit_Button19`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4Alt` (`DrumEdit_Button20`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5Alt` (`DrumEdit_Button21`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6Alt` (`DrumEdit_Button22`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7Alt` (`DrumEdit_Button23`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
 
 ## screen 0x25: `EditScreen_EnterNoteEdit`
 
@@ -1364,29 +1412,29 @@ Enter requests: go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 
 
 Keys (`NoteEdit_ButtonTable`):
 
-| key map                | key               | handler                | requests                                                                                                                                                                                                                 |
-|------------------------|-------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol1` | `SoftKeyCol1_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol2` | `SoftKeyCol2_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol3` | `SoftKeyCol3_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol4` | `SoftKeyCol4_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol5` | `SoftKeyCol5_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol6` | `SoftKeyCol6_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol7` | `SoftKeyCol7_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol8` | `SoftKeyCol8_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_LcdRow1`     | `LcdKeyRow1_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_LcdRow2`     | `LcdKeyRow2_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_LcdRow3`     | `LcdKeyRow3_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Exit`        | `ExitKey_NoteEdit`     | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code11`      | `NoteEdit_Button17`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code12`      | `NoteEdit_Button18`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code13`      | `NoteEdit_Button19`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code14`      | `NoteEdit_Button20`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code15`      | `NoteEdit_Button21`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code16`      | `NoteEdit_Button22`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code17`      | `NoteEdit_Button23`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `NoteEdit_ButtonTable` | `KEY_Code18`      | `NoteEdit_Button24`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| key map                | key                  | handler                | requests                                                                                                                                                                                                                 |
+|------------------------|----------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_NoteEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_LcdRow1`        | `LcdKeyRow1_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_LcdRow2`        | `LcdKeyRow2_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_LcdRow3`        | `LcdKeyRow3_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_LcdRow4`        | `LcdKeyRow4_NoteEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_Exit`           | `ExitKey_NoteEdit`     | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol1Alt` | `NoteEdit_Button17`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol2Alt` | `NoteEdit_Button18`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol3Alt` | `NoteEdit_Button19`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol4Alt` | `NoteEdit_Button20`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol5Alt` | `NoteEdit_Button21`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol6Alt` | `NoteEdit_Button22`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol7Alt` | `NoteEdit_Button23`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `NoteEdit_ButtonTable` | `KEY_SoftKeyCol8Alt` | `NoteEdit_Button24`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
 
 Reached from: screen 0x26 `KEY_Exit` (`ExitKey_CyclePlayEditScreen`); screen 0x26 `KEY_LcdRow1` (`LcdKeyRow1_CyclePlayEditScreen`); screen 0x29 `KEY_Exit` (`ExitKey_CyclePlayEditScreen29`); screen 0x29 `KEY_LcdRow1` (`LcdKeyRow1_CyclePlayEditScreen29`).
 
@@ -1405,7 +1453,7 @@ Keys (`ScreenButtons_CyclePlayEditScreen`):
 | `ScreenButtons_CyclePlayEditScreen` | `KEY_Exit`      | `ExitKey_CyclePlayEditScreen`    | go to screen 0x25 (EditScreen_EnterNoteEdit); go to screen 0x28 (EditScreen_EnterDrumEdit) |
 | `ScreenButtons_CyclePlayEditScreen` | `KEY_NumberPad` | `Fwd_F5737D`                     |                                                                                            |
 
-Reached from: screen 0x25 `KEY_Code11` (`NoteEdit_Button17`); screen 0x25 `KEY_Code12` (`NoteEdit_Button18`); screen 0x25 `KEY_Code13` (`NoteEdit_Button19`); screen 0x25 `KEY_Code14` (`NoteEdit_Button20`); screen 0x25 `KEY_Code15` (`NoteEdit_Button21`); screen 0x25 `KEY_Code16` (`NoteEdit_Button22`); screen 0x25 `KEY_Code17` (`NoteEdit_Button23`); screen 0x25 `KEY_Code18` (`NoteEdit_Button24`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Code11` (`DrumEdit_Button17`); screen 0x28 `KEY_Code12` (`DrumEdit_Button18`); screen 0x28 `KEY_Code13` (`DrumEdit_Button19`); screen 0x28 `KEY_Code14` (`DrumEdit_Button20`); screen 0x28 `KEY_Code15` (`DrumEdit_Button21`); screen 0x28 `KEY_Code16` (`DrumEdit_Button22`); screen 0x28 `KEY_Code17` (`DrumEdit_Button23`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
+Reached from: screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1Alt` (`NoteEdit_Button17`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2Alt` (`NoteEdit_Button18`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3Alt` (`NoteEdit_Button19`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4Alt` (`NoteEdit_Button20`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5Alt` (`NoteEdit_Button21`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6Alt` (`NoteEdit_Button22`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7Alt` (`NoteEdit_Button23`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8Alt` (`NoteEdit_Button24`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1Alt` (`DrumEdit_Button17`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2Alt` (`DrumEdit_Button18`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3Alt` (`DrumEdit_Button19`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4Alt` (`DrumEdit_Button20`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5Alt` (`DrumEdit_Button21`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6Alt` (`DrumEdit_Button22`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7Alt` (`DrumEdit_Button23`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
 
 ## screen 0x27: `ShowScreen_DrumEditPartSelect`
 
@@ -1419,27 +1467,27 @@ Draws:
 
 Keys (`EditPartSelect_ButtonTable`):
 
-| key map                      | key               | handler                      | requests                             |
-|------------------------------|-------------------|------------------------------|--------------------------------------|
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1` | `SoftKeyCol1_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2` | `SoftKeyCol2_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3` | `SoftKeyCol3_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4` | `SoftKeyCol4_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5` | `SoftKeyCol5_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6` | `SoftKeyCol6_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7` | `SoftKeyCol7_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8` | `SoftKeyCol8_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Exit`        | `ExitKey_EditPartSelect`     | go to screen 0x1A (ScreenEnter_Edit) |
-| `EditPartSelect_ButtonTable` | `KEY_Code11`      | `SoftKeyCol1_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code12`      | `SoftKeyCol2_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code13`      | `SoftKeyCol3_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code14`      | `SoftKeyCol4_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code15`      | `SoftKeyCol5_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code16`      | `SoftKeyCol6_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code17`      | `SoftKeyCol7_EditPartSelect` |                                      |
-| `EditPartSelect_ButtonTable` | `KEY_Code18`      | `SoftKeyCol8_EditPartSelect` |                                      |
+| key map                      | key                  | handler                      | requests                             |
+|------------------------------|----------------------|------------------------------|--------------------------------------|
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_Exit`           | `ExitKey_EditPartSelect`     | go to screen 0x1A (ScreenEnter_Edit) |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_EditPartSelect` |                                      |
+| `EditPartSelect_ButtonTable` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_EditPartSelect` |                                      |
 
-Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10Zero`); screen 0x25 `KEY_Code11` (`NoteEdit_Button17`); screen 0x25 `KEY_Code12` (`NoteEdit_Button18`); screen 0x25 `KEY_Code13` (`NoteEdit_Button19`); screen 0x25 `KEY_Code14` (`NoteEdit_Button20`); screen 0x25 `KEY_Code15` (`NoteEdit_Button21`); screen 0x25 `KEY_Code16` (`NoteEdit_Button22`); screen 0x25 `KEY_Code17` (`NoteEdit_Button23`); screen 0x25 `KEY_Code18` (`NoteEdit_Button24`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Code11` (`DrumEdit_Button17`); screen 0x28 `KEY_Code12` (`DrumEdit_Button18`); screen 0x28 `KEY_Code13` (`DrumEdit_Button19`); screen 0x28 `KEY_Code14` (`DrumEdit_Button20`); screen 0x28 `KEY_Code15` (`DrumEdit_Button21`); screen 0x28 `KEY_Code16` (`DrumEdit_Button22`); screen 0x28 `KEY_Code17` (`DrumEdit_Button23`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
+Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10Zero`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1Alt` (`NoteEdit_Button17`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2Alt` (`NoteEdit_Button18`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3Alt` (`NoteEdit_Button19`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4Alt` (`NoteEdit_Button20`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5Alt` (`NoteEdit_Button21`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6Alt` (`NoteEdit_Button22`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7Alt` (`NoteEdit_Button23`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8Alt` (`NoteEdit_Button24`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1Alt` (`DrumEdit_Button17`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2Alt` (`DrumEdit_Button18`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3Alt` (`DrumEdit_Button19`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4Alt` (`DrumEdit_Button20`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5Alt` (`DrumEdit_Button21`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6Alt` (`DrumEdit_Button22`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7Alt` (`DrumEdit_Button23`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
 
 ## screen 0x28: `EditScreen_EnterDrumEdit`
 
@@ -1447,28 +1495,28 @@ Object `T_EditScreen_EnterDrumEdit` (`PanelScreen_VtableTable` entry 72). Enter 
 
 Keys (`DrumEdit_ButtonTable`):
 
-| key map                | key               | handler                | requests                                                                                                                                                                                                                 |
-|------------------------|-------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol1` | `SoftKeyCol1_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol2` | `SoftKeyCol2_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol3` | `SoftKeyCol3_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol4` | `SoftKeyCol4_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol5` | `SoftKeyCol5_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol6` | `SoftKeyCol6_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol7` | `SoftKeyCol7_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol8` | `SoftKeyCol8_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_LcdRow1`     | `LcdKeyRow1_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_LcdRow2`     | `LcdKeyRow2_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_LcdRow3`     | `LcdKeyRow3_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Exit`        | `ExitKey_DrumEdit`     | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code11`      | `DrumEdit_Button17`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code12`      | `DrumEdit_Button18`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code13`      | `DrumEdit_Button19`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code14`      | `DrumEdit_Button20`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code15`      | `DrumEdit_Button21`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code16`      | `DrumEdit_Button22`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
-| `DrumEdit_ButtonTable` | `KEY_Code17`      | `DrumEdit_Button23`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| key map                | key                  | handler                | requests                                                                                                                                                                                                                 |
+|------------------------|----------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_DrumEdit` | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_LcdRow1`        | `LcdKeyRow1_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_LcdRow2`        | `LcdKeyRow2_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_LcdRow3`        | `LcdKeyRow3_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_LcdRow4`        | `LcdKeyRow4_DrumEdit`  | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_Exit`           | `ExitKey_DrumEdit`     | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol1Alt` | `DrumEdit_Button17`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol2Alt` | `DrumEdit_Button18`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol3Alt` | `DrumEdit_Button19`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol4Alt` | `DrumEdit_Button20`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol5Alt` | `DrumEdit_Button21`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol6Alt` | `DrumEdit_Button22`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
+| `DrumEdit_ButtonTable` | `KEY_SoftKeyCol7Alt` | `DrumEdit_Button23`    | go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd) |
 
 Reached from: screen 0x26 `KEY_Exit` (`ExitKey_CyclePlayEditScreen`); screen 0x26 `KEY_LcdRow1` (`LcdKeyRow1_CyclePlayEditScreen`); screen 0x29 `KEY_Exit` (`ExitKey_CyclePlayEditScreen29`); screen 0x29 `KEY_LcdRow1` (`LcdKeyRow1_CyclePlayEditScreen29`).
 
@@ -1487,7 +1535,7 @@ Keys (`ScreenButtons_CyclePlayEditScreen29`):
 | `ScreenButtons_CyclePlayEditScreen29` | `KEY_Exit`      | `ExitKey_CyclePlayEditScreen29`    | go to screen 0x25 (EditScreen_EnterNoteEdit); go to screen 0x28 (EditScreen_EnterDrumEdit) |
 | `ScreenButtons_CyclePlayEditScreen29` | `KEY_NumberPad` | `Fwd_F5742E`                       |                                                                                            |
 
-Reached from: screen 0x25 `KEY_Code11` (`NoteEdit_Button17`); screen 0x25 `KEY_Code12` (`NoteEdit_Button18`); screen 0x25 `KEY_Code13` (`NoteEdit_Button19`); screen 0x25 `KEY_Code14` (`NoteEdit_Button20`); screen 0x25 `KEY_Code15` (`NoteEdit_Button21`); screen 0x25 `KEY_Code16` (`NoteEdit_Button22`); screen 0x25 `KEY_Code17` (`NoteEdit_Button23`); screen 0x25 `KEY_Code18` (`NoteEdit_Button24`); screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Code11` (`DrumEdit_Button17`); screen 0x28 `KEY_Code12` (`DrumEdit_Button18`); screen 0x28 `KEY_Code13` (`DrumEdit_Button19`); screen 0x28 `KEY_Code14` (`DrumEdit_Button20`); screen 0x28 `KEY_Code15` (`DrumEdit_Button21`); screen 0x28 `KEY_Code16` (`DrumEdit_Button22`); screen 0x28 `KEY_Code17` (`DrumEdit_Button23`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
+Reached from: screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1Alt` (`NoteEdit_Button17`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2Alt` (`NoteEdit_Button18`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3Alt` (`NoteEdit_Button19`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4Alt` (`NoteEdit_Button20`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5Alt` (`NoteEdit_Button21`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6Alt` (`NoteEdit_Button22`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7Alt` (`NoteEdit_Button23`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8Alt` (`NoteEdit_Button24`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1Alt` (`DrumEdit_Button17`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2Alt` (`DrumEdit_Button18`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3Alt` (`DrumEdit_Button19`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4Alt` (`DrumEdit_Button20`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5Alt` (`DrumEdit_Button21`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6Alt` (`DrumEdit_Button22`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7Alt` (`DrumEdit_Button23`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
 
 ## screen 0x2A: `ScreenEnter_S0ngC0py`
 
@@ -1513,29 +1561,29 @@ Draws:
 
 Keys (`ButtonTable_S0ngC0py_StageZero`, `ButtonTable_S0ngC0py_StageNonZero`):
 
-| key map                             | key               | handler                            | requests                                           |
-|-------------------------------------|-------------------|------------------------------------|----------------------------------------------------|
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol1` | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol2` | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol3` | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol4` | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol6` | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol7` | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol8` | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_S0ngC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Exit`        | `ExitKey_S0ngC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code11`      | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code12`      | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code13`      | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code14`      | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code15`      | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code16`      | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code17`      | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Code18`      | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_S0ngC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_S0ngC0py_StageNonZero` |                                                    |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_Exit`        | `ExitKey_S0ngC0py_StageNonZero`    |                                                    |
+| key map                             | key                  | handler                            | requests                                           |
+|-------------------------------------|----------------------|------------------------------------|----------------------------------------------------|
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol1`    | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol2`    | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol3`    | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol4`    | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol6`    | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol7`    | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol8`    | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_S0ngC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Exit`           | `ExitKey_S0ngC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
+| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_S0ngC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_S0ngC0py_StageNonZero` |                                                    |
+| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_Exit`           | `ExitKey_S0ngC0py_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10NonZero`).
 
@@ -1556,19 +1604,19 @@ Enter requests: go to screen 0x1A (ScreenEnter_Edit).
 
 Keys (`ButtonTable_Transp0se_StageZero`, `ButtonTable_Transp0se_StageNonZero`):
 
-| key map                              | key               | handler                             | requests                                           |
-|--------------------------------------|-------------------|-------------------------------------|----------------------------------------------------|
-| `ButtonTable_Transp0se_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_Transp0se_StageZero`   |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_Transp0se_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_Exit`        | `ExitKey_Transp0se_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_Code15`      | `Transp0se_StageZero_Button21`      |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_Transp0se_StageZero`  |                                                    |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow2`     | `LcdKeyRow2_Transp0se_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_Transp0se_StageNonZero` |                                                    |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_Exit`        | `ExitKey_Transp0se_StageNonZero`    |                                                    |
+| key map                              | key                  | handler                             | requests                                           |
+|--------------------------------------|----------------------|-------------------------------------|----------------------------------------------------|
+| `ButtonTable_Transp0se_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Transp0se_StageZero`   |                                                    |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Transp0se_StageZero`    |                                                    |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Transp0se_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Transp0se_StageZero`    |                                                    |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Transp0se_StageZero`    |                                                    |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_Exit`           | `ExitKey_Transp0se_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_SoftKeyCol5Alt` | `Transp0se_StageZero_Button21`      |                                                    |
+| `ButtonTable_Transp0se_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Transp0se_StageZero`  |                                                    |
+| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_Transp0se_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Transp0se_StageNonZero` |                                                    |
+| `ButtonTable_Transp0se_StageNonZero` | `KEY_Exit`           | `ExitKey_Transp0se_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow4` (`LcdKeyRow4_Edit_0C10Zero`).
 
@@ -1588,19 +1636,19 @@ Draws:
 
 Keys (`ButtonTable_AdvanceDelay_StageZero`, `ButtonTable_AdvanceDelay_StageNonZero`):
 
-| key map                                 | key               | handler                                | requests                                           |
-|-----------------------------------------|-------------------|----------------------------------------|----------------------------------------------------|
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_AdvanceDelay_StageZero`   |                                                    |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow1`     | `LcdKeyRow1_AdvanceDelay_StageZero`    |                                                    |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_AdvanceDelay_StageZero`    |                                                    |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_AdvanceDelay_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_AdvanceDelay_StageZero`    |                                                    |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_Exit`        | `ExitKey_AdvanceDelay_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_Code15`      | `AdvanceDelay_StageZero_Button21`      |                                                    |
-| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_AdvanceDelay_StageZero`  |                                                    |
-| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_LcdRow3`     | `LcdKeyRow3_AdvanceDelay_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_LcdRow4`     | `LcdKeyRow4_AdvanceDelay_StageNonZero` |                                                    |
-| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_Exit`        | `ExitKey_AdvanceDelay_StageNonZero`    |                                                    |
+| key map                                 | key                  | handler                                | requests                                           |
+|-----------------------------------------|----------------------|----------------------------------------|----------------------------------------------------|
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_AdvanceDelay_StageZero`   |                                                    |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_AdvanceDelay_StageZero`    |                                                    |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_AdvanceDelay_StageZero`    |                                                    |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_AdvanceDelay_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_AdvanceDelay_StageZero`    |                                                    |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_Exit`           | `ExitKey_AdvanceDelay_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_SoftKeyCol5Alt` | `AdvanceDelay_StageZero_Button21`      |                                                    |
+| `ButtonTable_AdvanceDelay_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_AdvanceDelay_StageZero`  |                                                    |
+| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_AdvanceDelay_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_AdvanceDelay_StageNonZero` |                                                    |
+| `ButtonTable_AdvanceDelay_StageNonZero` | `KEY_Exit`           | `ExitKey_AdvanceDelay_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow4` (`LcdKeyRow4_Edit_0C10Zero`).
 
@@ -1620,18 +1668,18 @@ Draws:
 
 Keys (`ButtonTable_N0teChange_StageZero`, `ButtonTable_N0teChange_StageNonZero`):
 
-| key map                               | key               | handler                              | requests                                           |
-|---------------------------------------|-------------------|--------------------------------------|----------------------------------------------------|
-| `ButtonTable_N0teChange_StageZero`    | `KEY_SoftKeyCol5` | `SoftKeyCol5_N0teChange_StageZero`   |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow2`     | `LcdKeyRow2_N0teChange_StageZero`    |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow3`     | `LcdKeyRow3_N0teChange_StageZero`    |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow4`     | `LcdKeyRow4_N0teChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_Exit`        | `ExitKey_N0teChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_Code15`      | `N0teChange_StageZero_Button21`      |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_NumberPad`   | `NumberPadKey_N0teChange_StageZero`  |                                                    |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow4`     | `LcdKeyRow4_N0teChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow5`     | `LcdKeyRow5_N0teChange_StageNonZero` |                                                    |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_Exit`        | `ExitKey_N0teChange_StageNonZero`    |                                                    |
+| key map                               | key                  | handler                              | requests                                           |
+|---------------------------------------|----------------------|--------------------------------------|----------------------------------------------------|
+| `ButtonTable_N0teChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_N0teChange_StageZero`   |                                                    |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_N0teChange_StageZero`    |                                                    |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_N0teChange_StageZero`    |                                                    |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_N0teChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_Exit`           | `ExitKey_N0teChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `N0teChange_StageZero_Button21`      |                                                    |
+| `ButtonTable_N0teChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_N0teChange_StageZero`  |                                                    |
+| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_N0teChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_N0teChange_StageNonZero` |                                                    |
+| `ButtonTable_N0teChange_StageNonZero` | `KEY_Exit`           | `ExitKey_N0teChange_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow3` (`LcdKeyRow3_Edit_0C10Zero`).
 
@@ -1726,28 +1774,28 @@ Draws:
 
 Keys (`ScreenButtons_CombinationNamingWrite`):
 
-| key map                                | key               | handler                             | requests |
-|----------------------------------------|-------------------|-------------------------------------|----------|
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol1` | `SoundEditNaming_SoftKeyCol1`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol2` | `SoundEditNaming_SoftKeyCol2`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol3` | `SoundEditNaming_SoftKeyCol3`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol4` | `SoundEditNaming_SoftKeyCol4`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol5` | `SoundEditNaming_SoftKeyCol5`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol6` | `SoundEditNaming_SoftKeyCol6`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol7` | `SoundEditNaming_SoftKeyCol7`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol8` | `SoundEditNaming_SoftKeyCol8`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_LcdRow1`     | `LcdKeyRow1_CombinationNamingWrite` |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_LcdRow2`     | `LcdKeyRow2_CombinationNamingWrite` |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Exit`        | `ExitKey_CombinationNamingWrite`    |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code11`      | `SoundEditNaming_SoftKeyCol1`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code12`      | `SoundEditNaming_SoftKeyCol2`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code13`      | `SoundEditNaming_SoftKeyCol3`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code14`      | `SoundEditNaming_SoftKeyCol4`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code15`      | `SoundEditNaming_SoftKeyCol5`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code16`      | `SoundEditNaming_SoftKeyCol6`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code17`      | `SoundEditNaming_SoftKeyCol7`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Code18`      | `SoundEditNaming_SoftKeyCol8`       |          |
-| `ScreenButtons_CombinationNamingWrite` | `KEY_Compare`     | `CompareKey_CombiEdit`              |          |
+| key map                                | key                  | handler                             | requests |
+|----------------------------------------|----------------------|-------------------------------------|----------|
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol1`    | `SoundEditNaming_SoftKeyCol1`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol2`    | `SoundEditNaming_SoftKeyCol2`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol3`    | `SoundEditNaming_SoftKeyCol3`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol4`    | `SoundEditNaming_SoftKeyCol4`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol5`    | `SoundEditNaming_SoftKeyCol5`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol6`    | `SoundEditNaming_SoftKeyCol6`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol7`    | `SoundEditNaming_SoftKeyCol7`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol8`    | `SoundEditNaming_SoftKeyCol8`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_LcdRow1`        | `LcdKeyRow1_CombinationNamingWrite` |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_LcdRow2`        | `LcdKeyRow2_CombinationNamingWrite` |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_Exit`           | `ExitKey_CombinationNamingWrite`    |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol1Alt` | `SoundEditNaming_SoftKeyCol1`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol2Alt` | `SoundEditNaming_SoftKeyCol2`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol3Alt` | `SoundEditNaming_SoftKeyCol3`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol4Alt` | `SoundEditNaming_SoftKeyCol4`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol5Alt` | `SoundEditNaming_SoftKeyCol5`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol6Alt` | `SoundEditNaming_SoftKeyCol6`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol7Alt` | `SoundEditNaming_SoftKeyCol7`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_SoftKeyCol8Alt` | `SoundEditNaming_SoftKeyCol8`       |          |
+| `ScreenButtons_CombinationNamingWrite` | `KEY_Compare`        | `CompareKey_CombiEdit`              |          |
 
 ## screen 0x37: `ScreenEnter_CombiEditInternalSound_37`
 
@@ -2006,71 +2054,71 @@ Enter requests: repaint.
 
 Keys (`Dispatch_FF3A29`):
 
-| key map                 | key               | handler                          | requests |
-|-------------------------|-------------------|----------------------------------|----------|
-| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol1` | `SoftKeyCol1_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol2` | `SoftKeyCol2_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol4` | `SoftKeyCol4_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol5` | `SoftKeyCol5_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol7` | `SoftKeyCol7_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_LcdRow1`     | `LcdKeyRow1_DiskSaveFile_Page0`  | repaint  |
-| `Dispatch_FF3A29` row 0 | `KEY_LcdRow4`     | `LcdKeyRow4_DiskSaveFile_Page0`  | repaint  |
-| `Dispatch_FF3A29` row 0 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Page0`     |          |
-| `Dispatch_FF3A29` row 0 | `KEY_Code11`      | `SoftKeyCol1_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_Code12`      | `SoftKeyCol2_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_Code14`      | `SoftKeyCol4_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_Code15`      | `SoftKeyCol5_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 0 | `KEY_Code17`      | `SoftKeyCol7_DiskSaveFile_Page0` |          |
-| `Dispatch_FF3A29` row 1 | `KEY_SoftKeyCol4` | `SoftKeyCol4_DiskSaveFile_Page1` | repaint  |
-| `Dispatch_FF3A29` row 1 | `KEY_LcdRow1`     | `LcdKeyRow1_DiskSaveFile_Page1`  | repaint  |
-| `Dispatch_FF3A29` row 1 | `KEY_LcdRow2`     | `LcdKeyRow2_DiskSaveFile_Page1`  |          |
-| `Dispatch_FF3A29` row 1 | `KEY_LcdRow3`     | `LcdKeyRow3_DiskSaveFile_Page1`  |          |
-| `Dispatch_FF3A29` row 1 | `KEY_LcdRow4`     | `LcdKeyRow4_DiskSaveFile_Page1`  |          |
-| `Dispatch_FF3A29` row 1 | `KEY_LcdRow5`     | `LcdKeyRow5_DiskSaveFile_Page1`  |          |
-| `Dispatch_FF3A29` row 1 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Page1`     |          |
-| `Dispatch_FF3A29` row 1 | `KEY_Code14`      | `SoftKeyCol4_DiskSaveFile_Page1` | repaint  |
-| `Dispatch_FF3A29` row 2 | `KEY_LcdRow3`     | `LcdKeyRow3_DiskSaveFile_Page2`  | repaint  |
-| `Dispatch_FF3A29` row 2 | `KEY_LcdRow4`     | `LcdKeyRow4_DiskSaveFile_Page2`  |          |
-| `Dispatch_FF3A29` row 2 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Page2`     |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol1` | `SoundEditNaming_SoftKeyCol1`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol2` | `SoundEditNaming_SoftKeyCol2`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol3` | `SoundEditNaming_SoftKeyCol3`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol4` | `SoundEditNaming_SoftKeyCol4`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol5` | `SoundEditNaming_SoftKeyCol5`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol6` | `SoundEditNaming_SoftKeyCol6`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol7` | `SoundEditNaming_SoftKeyCol7`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol8` | `SoundEditNaming_SoftKeyCol8`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_LcdRow1`     | `LcdKeyRow1_DiskSaveFile_Page3`  |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Pages3_4`  |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code11`      | `SoundEditNaming_SoftKeyCol1`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code12`      | `SoundEditNaming_SoftKeyCol2`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code13`      | `SoundEditNaming_SoftKeyCol3`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code14`      | `SoundEditNaming_SoftKeyCol4`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code15`      | `SoundEditNaming_SoftKeyCol5`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code16`      | `SoundEditNaming_SoftKeyCol6`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code17`      | `SoundEditNaming_SoftKeyCol7`    |          |
-| `Dispatch_FF3A29` row 3 | `KEY_Code18`      | `SoundEditNaming_SoftKeyCol8`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol1` | `SoundEditNaming_SoftKeyCol1`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol2` | `SoundEditNaming_SoftKeyCol2`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol3` | `SoundEditNaming_SoftKeyCol3`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol4` | `SoundEditNaming_SoftKeyCol4`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol5` | `SoundEditNaming_SoftKeyCol5`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol6` | `SoundEditNaming_SoftKeyCol6`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol7` | `SoundEditNaming_SoftKeyCol7`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol8` | `SoundEditNaming_SoftKeyCol8`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_LcdRow1`     | `LcdKeyRow1_DiskSaveFile_Page4`  |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Pages3_4`  |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code11`      | `SoundEditNaming_SoftKeyCol1`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code12`      | `SoundEditNaming_SoftKeyCol2`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code13`      | `SoundEditNaming_SoftKeyCol3`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code14`      | `SoundEditNaming_SoftKeyCol4`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code15`      | `SoundEditNaming_SoftKeyCol5`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code16`      | `SoundEditNaming_SoftKeyCol6`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code17`      | `SoundEditNaming_SoftKeyCol7`    |          |
-| `Dispatch_FF3A29` row 4 | `KEY_Code18`      | `SoundEditNaming_SoftKeyCol8`    |          |
-| `Dispatch_FF3A29` row 5 | `KEY_LcdRow3`     | `LcdKeyRow3_DiskSaveFile_Page5`  |          |
-| `Dispatch_FF3A29` row 5 | `KEY_LcdRow4`     | `LcdKeyRow4_DiskSaveFile_Page5`  |          |
-| `Dispatch_FF3A29` row 5 | `KEY_Exit`        | `ExitKey_DiskSaveFile_Page5`     |          |
+| key map                 | key                  | handler                          | requests |
+|-------------------------|----------------------|----------------------------------|----------|
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_DiskSaveFile_Page0`  | repaint  |
+| `Dispatch_FF3A29` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_DiskSaveFile_Page0`  | repaint  |
+| `Dispatch_FF3A29` row 0 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Page0`     |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_DiskSaveFile_Page0` |          |
+| `Dispatch_FF3A29` row 1 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_DiskSaveFile_Page1` | repaint  |
+| `Dispatch_FF3A29` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_DiskSaveFile_Page1`  | repaint  |
+| `Dispatch_FF3A29` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_DiskSaveFile_Page1`  |          |
+| `Dispatch_FF3A29` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_DiskSaveFile_Page1`  |          |
+| `Dispatch_FF3A29` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_DiskSaveFile_Page1`  |          |
+| `Dispatch_FF3A29` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_DiskSaveFile_Page1`  |          |
+| `Dispatch_FF3A29` row 1 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Page1`     |          |
+| `Dispatch_FF3A29` row 1 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_DiskSaveFile_Page1` | repaint  |
+| `Dispatch_FF3A29` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_DiskSaveFile_Page2`  | repaint  |
+| `Dispatch_FF3A29` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_DiskSaveFile_Page2`  |          |
+| `Dispatch_FF3A29` row 2 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Page2`     |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol1`    | `SoundEditNaming_SoftKeyCol1`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol2`    | `SoundEditNaming_SoftKeyCol2`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol3`    | `SoundEditNaming_SoftKeyCol3`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol4`    | `SoundEditNaming_SoftKeyCol4`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol5`    | `SoundEditNaming_SoftKeyCol5`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol6`    | `SoundEditNaming_SoftKeyCol6`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol7`    | `SoundEditNaming_SoftKeyCol7`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol8`    | `SoundEditNaming_SoftKeyCol8`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_LcdRow1`        | `LcdKeyRow1_DiskSaveFile_Page3`  |          |
+| `Dispatch_FF3A29` row 3 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Pages3_4`  |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol1Alt` | `SoundEditNaming_SoftKeyCol1`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol2Alt` | `SoundEditNaming_SoftKeyCol2`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol3Alt` | `SoundEditNaming_SoftKeyCol3`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol4Alt` | `SoundEditNaming_SoftKeyCol4`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol5Alt` | `SoundEditNaming_SoftKeyCol5`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol6Alt` | `SoundEditNaming_SoftKeyCol6`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol7Alt` | `SoundEditNaming_SoftKeyCol7`    |          |
+| `Dispatch_FF3A29` row 3 | `KEY_SoftKeyCol8Alt` | `SoundEditNaming_SoftKeyCol8`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol1`    | `SoundEditNaming_SoftKeyCol1`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol2`    | `SoundEditNaming_SoftKeyCol2`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol3`    | `SoundEditNaming_SoftKeyCol3`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol4`    | `SoundEditNaming_SoftKeyCol4`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol5`    | `SoundEditNaming_SoftKeyCol5`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol6`    | `SoundEditNaming_SoftKeyCol6`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol7`    | `SoundEditNaming_SoftKeyCol7`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol8`    | `SoundEditNaming_SoftKeyCol8`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_LcdRow1`        | `LcdKeyRow1_DiskSaveFile_Page4`  |          |
+| `Dispatch_FF3A29` row 4 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Pages3_4`  |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol1Alt` | `SoundEditNaming_SoftKeyCol1`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol2Alt` | `SoundEditNaming_SoftKeyCol2`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol3Alt` | `SoundEditNaming_SoftKeyCol3`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol4Alt` | `SoundEditNaming_SoftKeyCol4`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol5Alt` | `SoundEditNaming_SoftKeyCol5`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol6Alt` | `SoundEditNaming_SoftKeyCol6`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol7Alt` | `SoundEditNaming_SoftKeyCol7`    |          |
+| `Dispatch_FF3A29` row 4 | `KEY_SoftKeyCol8Alt` | `SoundEditNaming_SoftKeyCol8`    |          |
+| `Dispatch_FF3A29` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_DiskSaveFile_Page5`  |          |
+| `Dispatch_FF3A29` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_DiskSaveFile_Page5`  |          |
+| `Dispatch_FF3A29` row 5 | `KEY_Exit`           | `ExitKey_DiskSaveFile_Page5`     |          |
 
 ## screen 0x4E: `PageDispatch_MidiFileSave`
 
@@ -2098,41 +2146,41 @@ Draws:
 
 Keys (`Dispatch_FF3D39`):
 
-| key map                 | key               | handler                             | requests |
-|-------------------------|-------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code11`      | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code12`      | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code14`      | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code15`      | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code17`      | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`     | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`     | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Code15`      | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                 | key                  | handler                             | requests |
+|-------------------------|----------------------|-------------------------------------|----------|
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
 
 ## screen 0x50: `Paint_FloppyDiskFormatSelectType`
 
@@ -2147,41 +2195,41 @@ Draws:
 
 Keys (`Dispatch_FF3D39`):
 
-| key map                 | key               | handler                             | requests |
-|-------------------------|-------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code11`      | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code12`      | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code14`      | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code15`      | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code17`      | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`     | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`     | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Code15`      | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                 | key                  | handler                             | requests |
+|-------------------------|----------------------|-------------------------------------|----------|
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
 
 ## screen 0x51: `Paint_FloppyDiskFormatAreYouSure`
 
@@ -2200,41 +2248,41 @@ Draws:
 
 Keys (`Dispatch_FF3D39`):
 
-| key map                 | key               | handler                             | requests |
-|-------------------------|-------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code11`      | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code12`      | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code14`      | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code15`      | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_Code17`      | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`     | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`     | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`     | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`        | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Code15`      | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`     | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`     | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`        | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                 | key                  | handler                             | requests |
+|-------------------------|----------------------|-------------------------------------|----------|
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
+| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
+| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
+| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
+| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
+| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
+| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
+| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
 
 ## screen 0x53: `PageDispatch_L0adSingleC0mbination`
 
@@ -2433,6 +2481,16 @@ Draws:
 - `DL_RealtimeMessageInput0utput`: "REALTIME"; "MESSAGE"; "INPUT&0UTPUT"; "FILTER"
 - `DL_Input0utputFilterMidiT0talM0de`: "INPUT&0UTPUT"; "FILTER"
 
+Keys (`JumpTable_F99F96`):
+
+| key map            | key           | handler               | requests                                                                                                                                                                                                                     |
+|--------------------|---------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `JumpTable_F99F96` | `KEY_LcdRow1` | `LcdKeyRow1_MidiMenu` | go to screen 0x79 (Paint_SysexBulkDump_Entry); go to screen 0x7A (Paint_GeneralMidiMode_Entry); go to screen 0x7D (Paint_MidiTotalMode); go to screen 0x7E (Paint_MidiInputOutputFilter); mode change 0x01; mode change 0x12 |
+| `JumpTable_F99F96` | `KEY_LcdRow2` | `LcdKeyRow2_MidiMenu` | go to screen 0x79 (Paint_SysexBulkDump_Entry); go to screen 0x7A (Paint_GeneralMidiMode_Entry); go to screen 0x7E (Paint_MidiInputOutputFilter); mode change 0x01; mode change 0x12                                          |
+| `JumpTable_F99F96` | `KEY_LcdRow3` | `LcdKeyRow3_MidiMenu` | go to screen 0x79 (Paint_SysexBulkDump_Entry); go to screen 0x7A (Paint_GeneralMidiMode_Entry); go to screen 0x7E (Paint_MidiInputOutputFilter); mode change 0x01; mode change 0x12                                          |
+| `JumpTable_F99F96` | `KEY_LcdRow4` | `LcdKeyRow4_MidiMenu` | go to screen 0x7A (Paint_GeneralMidiMode_Entry); mode change 0x01; mode change 0x12                                                                                                                                          |
+| `JumpTable_F99F96` | `KEY_Exit`    | `ExitKey_MidiMenu`    | mode change 0x01; mode change 0x12                                                                                                                                                                                           |
+
 ## screen 0x71: `T_F41660_Nop`
 
 Object `T_F41660` (`PanelScreen_VtableTable` entry 145). Enter `T_F41660_Nop`, Leave `T_F41660_Nop`, Button `T_F41660_Nop`.
@@ -2495,6 +2553,8 @@ Keys (`ScreenButtonRow_SysexBulkDump`):
 | `ScreenButtonRow_SysexBulkDump` | `KEY_LcdRow5` | `LcdKeyRow5_SysexBulkDump`         |                  |
 | `ScreenButtonRow_SysexBulkDump` | `KEY_Exit`    | `ExitKey_SysexBulkDump`            | mode change 0x12 |
 
+Reached from: screen 0x70 `KEY_LcdRow1` (`LcdKeyRow1_MidiMenu`); screen 0x70 `KEY_LcdRow2` (`LcdKeyRow2_MidiMenu`); screen 0x70 `KEY_LcdRow3` (`LcdKeyRow3_MidiMenu`).
+
 ## screen 0x7A: `Paint_GeneralMidiMode_Entry`
 
 Object `T_Paint_GeneralMidiMode_Entry` (`PanelScreen_VtableTable` entry 154). Enter `Paint_GeneralMidiMode_Entry`, Leave `ScreenLeave_GeneralMidiMode_Entry`, Button `ScreenButton_GeneralMidiMode_Entry`.
@@ -2516,6 +2576,8 @@ Keys (`ScreenButtonRow_GeneralMidi_Page0`):
 | `ScreenButtonRow_GeneralMidi_Page0` | `KEY_LcdRow3` | `LcdKeyRow3_GeneralMidiMode_Page0` |                  |
 | `ScreenButtonRow_GeneralMidi_Page0` | `KEY_LcdRow4` | `LcdKeyRow4_GeneralMidiMode_Page0` |                  |
 | `ScreenButtonRow_GeneralMidi_Page0` | `KEY_Exit`    | `ExitKey_GeneralMidiMode_Page0`    | mode change 0x12 |
+
+Reached from: screen 0x70 `KEY_LcdRow1` (`LcdKeyRow1_MidiMenu`); screen 0x70 `KEY_LcdRow2` (`LcdKeyRow2_MidiMenu`); screen 0x70 `KEY_LcdRow3` (`LcdKeyRow3_MidiMenu`); screen 0x70 `KEY_LcdRow4` (`LcdKeyRow4_MidiMenu`).
 
 ## screen 0x7B: `T_F416A0_Nop`
 
@@ -2544,25 +2606,27 @@ Draws:
 
 Keys (`ScreenButtonHandlers_MidiTotalMode`):
 
-| key map                              | key               | handler                                      | requests         |
-|--------------------------------------|-------------------|----------------------------------------------|------------------|
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol1` | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol2` | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol3` | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol4` | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol5` | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol6` | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol7` | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol8` | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Exit`        | `ScreenButtonHandlers_MidiTotalMode__F9A327` | mode change 0x12 |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code11`      | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code12`      | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code13`      | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code14`      | `ItemKeys_MidiTotalMode`                     |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code15`      | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code16`      | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code17`      | `ValueKeys_MidiTotalMode`                    |                  |
-| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Code18`      | `ValueKeys_MidiTotalMode`                    |                  |
+| key map                              | key                  | handler                                      | requests         |
+|--------------------------------------|----------------------|----------------------------------------------|------------------|
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol1`    | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol2`    | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol3`    | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol4`    | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol5`    | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol6`    | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol7`    | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol8`    | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_Exit`           | `ScreenButtonHandlers_MidiTotalMode__F9A327` | mode change 0x12 |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol1Alt` | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol2Alt` | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol3Alt` | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol4Alt` | `ItemKeys_MidiTotalMode`                     |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol5Alt` | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol6Alt` | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol7Alt` | `ValueKeys_MidiTotalMode`                    |                  |
+| `ScreenButtonHandlers_MidiTotalMode` | `KEY_SoftKeyCol8Alt` | `ValueKeys_MidiTotalMode`                    |                  |
+
+Reached from: screen 0x70 `KEY_LcdRow1` (`LcdKeyRow1_MidiMenu`).
 
 ## screen 0x7E: `Paint_MidiInputOutputFilter`
 
@@ -2585,25 +2649,27 @@ Draws:
 
 Keys (`ScreenButtonHandlers_MidiInputOutputFilter`):
 
-| key map                                      | key               | handler                           | requests         |
-|----------------------------------------------|-------------------|-----------------------------------|------------------|
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol1` | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol2` | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol3` | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol4` | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol5` | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol6` | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol7` | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol8` | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Exit`        | `ExitKey_MidiInputOutputFilter`   | mode change 0x12 |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code11`      | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code12`      | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code13`      | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code14`      | `ItemKeys_MidiInputOutputFilter`  |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code15`      | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code16`      | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code17`      | `ValueKeys_MidiInputOutputFilter` |                  |
-| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Code18`      | `ValueKeys_MidiInputOutputFilter` |                  |
+| key map                                      | key                  | handler                           | requests         |
+|----------------------------------------------|----------------------|-----------------------------------|------------------|
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol1`    | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol2`    | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol3`    | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol4`    | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol5`    | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol6`    | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol7`    | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol8`    | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_Exit`           | `ExitKey_MidiInputOutputFilter`   | mode change 0x12 |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol1Alt` | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol2Alt` | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol3Alt` | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol4Alt` | `ItemKeys_MidiInputOutputFilter`  |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol5Alt` | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol6Alt` | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol7Alt` | `ValueKeys_MidiInputOutputFilter` |                  |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | `KEY_SoftKeyCol8Alt` | `ValueKeys_MidiInputOutputFilter` |                  |
+
+Reached from: screen 0x70 `KEY_LcdRow1` (`LcdKeyRow1_MidiMenu`); screen 0x70 `KEY_LcdRow2` (`LcdKeyRow2_MidiMenu`); screen 0x70 `KEY_LcdRow3` (`LcdKeyRow3_MidiMenu`).
 
 ## screen 0x7F: `Paint_MidiOutProgramChange`
 
@@ -2625,27 +2691,27 @@ Draws:
 
 Keys (`ScreenButtonHandlers_MidiOutProgramChange`):
 
-| key map                                     | key               | handler                             | requests         |
-|---------------------------------------------|-------------------|-------------------------------------|------------------|
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol1` | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol2` | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol3` | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol4` | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol5` | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol6` | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol7` | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol8` | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_LcdRow2`     | `LcdKeyRow2_MidiOutProgramChange`   |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Exit`        | `ExitKey_MidiOutProgramChange`      | mode change 0x12 |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code11`      | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code12`      | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code13`      | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code14`      | `ItemKeys_MidiOutProgramChange`     |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code15`      | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code16`      | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code17`      | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Code18`      | `ValueKeys_MidiOutProgramChange`    |                  |
-| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_NumberPad`   | `NumberPadKey_MidiOutProgramChange` |                  |
+| key map                                     | key                  | handler                             | requests         |
+|---------------------------------------------|----------------------|-------------------------------------|------------------|
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol1`    | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol2`    | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol3`    | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol4`    | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol5`    | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol6`    | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol7`    | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol8`    | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_LcdRow2`        | `LcdKeyRow2_MidiOutProgramChange`   |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_Exit`           | `ExitKey_MidiOutProgramChange`      | mode change 0x12 |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol1Alt` | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol2Alt` | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol3Alt` | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol4Alt` | `ItemKeys_MidiOutProgramChange`     |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol5Alt` | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol6Alt` | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol7Alt` | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_SoftKeyCol8Alt` | `ValueKeys_MidiOutProgramChange`    |                  |
+| `ScreenButtonHandlers_MidiOutProgramChange` | `KEY_NumberPad`      | `NumberPadKey_MidiOutProgramChange` |                  |
 
 ## screen 0x80: `ScreenEnter_SoundEditMenu`
 
@@ -2655,121 +2721,617 @@ Object `T_ScreenEnter_SoundEditMenu` (`PanelScreen_VtableTable` entry 160). Ente
 
 Object `T_ScreenEnter_SoundEditModelingToneTemplate` (`PanelScreen_VtableTable` entry 162). Enter `ScreenEnter_SoundEditModelingToneTemplate`, Leave `ScreenLeave_SoundEditModelingToneTemplate`, Button `ScreenButton_SoundEditModelingToneTemplate`.
 
+Keys (`PanelOpTable_FCF80C`):
+
+| key map               | key               | handler                                     | requests |
+|-----------------------|-------------------|---------------------------------------------|----------|
+| `PanelOpTable_FCF80C` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditModelingToneTemplate` |          |
+| `PanelOpTable_FCF80C` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditModelingToneTemplate` |          |
+| `PanelOpTable_FCF80C` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditModelingToneTemplate` |          |
+| `PanelOpTable_FCF80C` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditModelingToneTemplate` |          |
+| `PanelOpTable_FCF80C` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditModelingToneTemplate` |          |
+| `PanelOpTable_FCF80C` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditModelingToneTemplate`  |          |
+| `PanelOpTable_FCF80C` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditModelingToneTemplate`  |          |
+| `PanelOpTable_FCF80C` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditModelingToneTemplate`  |          |
+| `PanelOpTable_FCF80C` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditModelingToneTemplate`  |          |
+| `PanelOpTable_FCF80C` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditModelingToneTemplate`  |          |
+| `PanelOpTable_FCF80C` | `KEY_Exit`        | `ExitKey_SoundEditModelingToneTemplate`     |          |
+
 ## screen 0x83: `ScreenEnter_SoundEditToneLayerPanning`
 
 Object `T_ScreenEnter_SoundEditToneLayerPanning` (`PanelScreen_VtableTable` entry 163). Enter `ScreenEnter_SoundEditToneLayerPanning`, Leave `ScreenLeave_SoundEditToneLayerPanning`, Button `ScreenButton_SoundEditToneLayerPanning`.
+
+Keys (`PanelOpTable_FCF854`):
+
+| key map               | key               | handler                                 | requests |
+|-----------------------|-------------------|-----------------------------------------|----------|
+| `PanelOpTable_FCF854` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditToneLayerPanning` |          |
+| `PanelOpTable_FCF854` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditToneLayerPanning` |          |
+| `PanelOpTable_FCF854` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditToneLayerPanning` |          |
+| `PanelOpTable_FCF854` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditToneLayerPanning`  |          |
+| `PanelOpTable_FCF854` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditToneLayerPanning`  |          |
+| `PanelOpTable_FCF854` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditToneLayerPanning`  |          |
+| `PanelOpTable_FCF854` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditToneLayerPanning`  |          |
+| `PanelOpTable_FCF854` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditToneLayerPanning`  |          |
+| `PanelOpTable_FCF854` | `KEY_Exit`        | `ExitKey_SoundEditToneLayerPanning`     |          |
 
 ## screen 0x84: `ScreenEnter_SoundEditToneLayerKeyLayer`
 
 Object `T_ScreenEnter_SoundEditToneLayerKeyLayer` (`PanelScreen_VtableTable` entry 164). Enter `ScreenEnter_SoundEditToneLayerKeyLayer`, Leave `ScreenLeave_SoundEditToneLayerKeyLayer`, Button `ScreenButton_SoundEditToneLayerKeyLayer`.
 
+Keys (`PanelOpTable_FCF89C`):
+
+| key map               | key               | handler                                  | requests |
+|-----------------------|-------------------|------------------------------------------|----------|
+| `PanelOpTable_FCF89C` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditToneLayerKeyLayer` |          |
+| `PanelOpTable_FCF89C` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditToneLayerKeyLayer` |          |
+| `PanelOpTable_FCF89C` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditToneLayerKeyLayer` |          |
+| `PanelOpTable_FCF89C` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditToneLayerKeyLayer` |          |
+| `PanelOpTable_FCF89C` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditToneLayerKeyLayer`  |          |
+| `PanelOpTable_FCF89C` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditToneLayerKeyLayer`  |          |
+| `PanelOpTable_FCF89C` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditToneLayerKeyLayer`  |          |
+| `PanelOpTable_FCF89C` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditToneLayerKeyLayer`  |          |
+| `PanelOpTable_FCF89C` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditToneLayerKeyLayer`  |          |
+| `PanelOpTable_FCF89C` | `KEY_Exit`        | `ExitKey_SoundEditToneLayerKeyLayer`     |          |
+
 ## screen 0x85: `ScreenEnter_SoundEditToneLayerVelocityLayer`
 
 Object `T_ScreenEnter_SoundEditToneLayerVelocityLayer` (`PanelScreen_VtableTable` entry 165). Enter `ScreenEnter_SoundEditToneLayerVelocityLayer`, Leave `ScreenLeave_SoundEditToneLayerVelocityLayer`, Button `ScreenButton_SoundEditToneLayerVelocityLayer`.
+
+Keys (`PanelOpTable_FCF8E4`):
+
+| key map               | key               | handler                                       | requests |
+|-----------------------|-------------------|-----------------------------------------------|----------|
+| `PanelOpTable_FCF8E4` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditToneLayerVelocityLayer` |          |
+| `PanelOpTable_FCF8E4` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditToneLayerVelocityLayer` |          |
+| `PanelOpTable_FCF8E4` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditToneLayerVelocityLayer` |          |
+| `PanelOpTable_FCF8E4` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditToneLayerVelocityLayer` |          |
+| `PanelOpTable_FCF8E4` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditToneLayerVelocityLayer`  |          |
+| `PanelOpTable_FCF8E4` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditToneLayerVelocityLayer`  |          |
+| `PanelOpTable_FCF8E4` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditToneLayerVelocityLayer`  |          |
+| `PanelOpTable_FCF8E4` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditToneLayerVelocityLayer`  |          |
+| `PanelOpTable_FCF8E4` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditToneLayerVelocityLayer`  |          |
+| `PanelOpTable_FCF8E4` | `KEY_Exit`        | `ExitKey_SoundEditToneLayerVelocityLayer`     |          |
 
 ## screen 0x86: `ScreenEnter_SoundEditModelingDriverWaveform`
 
 Object `T_ScreenEnter_SoundEditModelingDriverWaveform` (`PanelScreen_VtableTable` entry 166). Enter `ScreenEnter_SoundEditModelingDriverWaveform`, Leave `ScreenLeave_SoundEditModelingDriverWaveform`, Button `ScreenButton_SoundEditModelingDriverWaveform`.
 
+Keys (`PanelOpTable_FCF92C`):
+
+| key map               | key               | handler                                       | requests |
+|-----------------------|-------------------|-----------------------------------------------|----------|
+| `PanelOpTable_FCF92C` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditModelingDriverWaveform` |          |
+| `PanelOpTable_FCF92C` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditModelingDriverWaveform` |          |
+| `PanelOpTable_FCF92C` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditModelingDriverWaveform` |          |
+| `PanelOpTable_FCF92C` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditModelingDriverWaveform` |          |
+| `PanelOpTable_FCF92C` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditModelingDriverWaveform`  |          |
+| `PanelOpTable_FCF92C` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditModelingDriverWaveform`  |          |
+| `PanelOpTable_FCF92C` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditModelingDriverWaveform`  |          |
+| `PanelOpTable_FCF92C` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditModelingDriverWaveform`  |          |
+| `PanelOpTable_FCF92C` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditModelingDriverWaveform`  |          |
+| `PanelOpTable_FCF92C` | `KEY_Exit`        | `ExitKey_SoundEditModelingDriverWaveform`     |          |
+
 ## screen 0x87: `ScreenEnter_SoundEditPitchTune`
 
 Object `T_ScreenEnter_SoundEditPitchTune` (`PanelScreen_VtableTable` entry 167). Enter `ScreenEnter_SoundEditPitchTune`, Leave `ScreenLeave_SoundEditPitchTune`, Button `ScreenButton_SoundEditPitchTune`.
+
+Keys (`PanelOpTable_FCF383`):
+
+| key map               | key               | handler                          | requests |
+|-----------------------|-------------------|----------------------------------|----------|
+| `PanelOpTable_FCF383` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditPitchTune` |          |
+| `PanelOpTable_FCF383` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditPitchTune` |          |
+| `PanelOpTable_FCF383` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditPitchTune` |          |
+| `PanelOpTable_FCF383` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditPitchTune` |          |
+| `PanelOpTable_FCF383` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditPitchTune`  |          |
+| `PanelOpTable_FCF383` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditPitchTune`  |          |
+| `PanelOpTable_FCF383` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditPitchTune`  |          |
+| `PanelOpTable_FCF383` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditPitchTune`  |          |
+| `PanelOpTable_FCF383` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditPitchTune`  |          |
+| `PanelOpTable_FCF383` | `KEY_Exit`        | `ExitKey_SoundEditPitchTune`     |          |
 
 ## screen 0x88: `ScreenEnter_SoundEditPitchEnvelope1`
 
 Object `T_ScreenEnter_SoundEditPitchEnvelope1` (`PanelScreen_VtableTable` entry 168). Enter `ScreenEnter_SoundEditPitchEnvelope1`, Leave `ScreenLeave_SoundEditPitchEnvelope1`, Button `ScreenButton_SoundEditPitchEnvelope1`.
 
+Keys (`PanelOpTable_FCF3CB`):
+
+| key map               | key               | handler                               | requests |
+|-----------------------|-------------------|---------------------------------------|----------|
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditPitchEnvelope1` |          |
+| `PanelOpTable_FCF3CB` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditPitchEnvelope1`  |          |
+| `PanelOpTable_FCF3CB` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditPitchEnvelope1`  |          |
+| `PanelOpTable_FCF3CB` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditPitchEnvelope1`  |          |
+| `PanelOpTable_FCF3CB` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditPitchEnvelope1`  |          |
+| `PanelOpTable_FCF3CB` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditPitchEnvelope1`  |          |
+| `PanelOpTable_FCF3CB` | `KEY_Exit`        | `ExitKey_SoundEditPitchEnvelope1`     |          |
+| `PanelOpTable_FCF3CB` | `KEY_Page`        | `PageKey_SoundEditPitchEnvelope1`     |          |
+
 ## screen 0x89: `ScreenEnter_SoundEditPitchEnvelope2`
 
 Object `T_ScreenEnter_SoundEditPitchEnvelope2` (`PanelScreen_VtableTable` entry 169). Enter `ScreenEnter_SoundEditPitchEnvelope2`, Leave `ScreenLeave_SoundEditPitchEnvelope2`, Button `ScreenButton_SoundEditPitchEnvelope2`.
+
+Keys (`PanelOpTable_FCF413`):
+
+| key map               | key               | handler                               | requests |
+|-----------------------|-------------------|---------------------------------------|----------|
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditPitchEnvelope2` |          |
+| `PanelOpTable_FCF413` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditPitchEnvelope2`  |          |
+| `PanelOpTable_FCF413` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditPitchEnvelope2`  |          |
+| `PanelOpTable_FCF413` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditPitchEnvelope2`  |          |
+| `PanelOpTable_FCF413` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditPitchEnvelope2`  |          |
+| `PanelOpTable_FCF413` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditPitchEnvelope2`  |          |
+| `PanelOpTable_FCF413` | `KEY_Exit`        | `ExitKey_SoundEditPitchEnvelope2`     |          |
+| `PanelOpTable_FCF413` | `KEY_Page`        | `PageKey_SoundEditPitchEnvelope2`     |          |
 
 ## screen 0x8A: `ScreenEnter_SoundEditPitchLfo`
 
 Object `T_ScreenEnter_SoundEditPitchLfo` (`PanelScreen_VtableTable` entry 170). Enter `ScreenEnter_SoundEditPitchLfo`, Leave `ScreenLeave_SoundEditPitchLfo`, Button `ScreenButton_SoundEditPitchLfo`.
 
+Keys (`PanelOpTable_FCF45B`):
+
+| key map               | key               | handler                         | requests |
+|-----------------------|-------------------|---------------------------------|----------|
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditPitchLfo` |          |
+| `PanelOpTable_FCF45B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditPitchLfo`  |          |
+| `PanelOpTable_FCF45B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditPitchLfo`  |          |
+| `PanelOpTable_FCF45B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditPitchLfo`  |          |
+| `PanelOpTable_FCF45B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditPitchLfo`  |          |
+| `PanelOpTable_FCF45B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditPitchLfo`  |          |
+| `PanelOpTable_FCF45B` | `KEY_Exit`        | `ExitKey_SoundEditPitchLfo`     |          |
+
 ## screen 0x8B: `ScreenEnter_SoundEditAmpLevel1`
 
 Object `T_ScreenEnter_SoundEditAmpLevel1` (`PanelScreen_VtableTable` entry 171). Enter `ScreenEnter_SoundEditAmpLevel1`, Leave `ScreenLeave_SoundEditAmpLevel1`, Button `ScreenButton_SoundEditAmpLevel1`.
+
+Keys (`PanelOpTable_FCF21B`):
+
+| key map               | key               | handler                          | requests |
+|-----------------------|-------------------|----------------------------------|----------|
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditAmpLevel1` |          |
+| `PanelOpTable_FCF21B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditAmpLevel1`  |          |
+| `PanelOpTable_FCF21B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditAmpLevel1`  |          |
+| `PanelOpTable_FCF21B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditAmpLevel1`  |          |
+| `PanelOpTable_FCF21B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditAmpLevel1`  |          |
+| `PanelOpTable_FCF21B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditAmpLevel1`  |          |
+| `PanelOpTable_FCF21B` | `KEY_Exit`        | `ExitKey_SoundEditAmpLevel1`     |          |
+| `PanelOpTable_FCF21B` | `KEY_Page`        | `PageKey_SoundEditAmpLevel1`     |          |
 
 ## screen 0x8C: `ScreenEnter_SoundEditAmpLevel2`
 
 Object `T_ScreenEnter_SoundEditAmpLevel2` (`PanelScreen_VtableTable` entry 172). Enter `ScreenEnter_SoundEditAmpLevel2`, Leave `ScreenLeave_SoundEditAmpLevel2`, Button `ScreenButton_SoundEditAmpLevel2`.
 
+Keys (`PanelOpTable_FCF263`):
+
+| key map               | key               | handler                          | requests |
+|-----------------------|-------------------|----------------------------------|----------|
+| `PanelOpTable_FCF263` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditAmpLevel2` |          |
+| `PanelOpTable_FCF263` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditAmpLevel2` |          |
+| `PanelOpTable_FCF263` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditAmpLevel2` |          |
+| `PanelOpTable_FCF263` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditAmpLevel2` |          |
+| `PanelOpTable_FCF263` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditAmpLevel2`  |          |
+| `PanelOpTable_FCF263` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditAmpLevel2`  |          |
+| `PanelOpTable_FCF263` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditAmpLevel2`  |          |
+| `PanelOpTable_FCF263` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditAmpLevel2`  |          |
+| `PanelOpTable_FCF263` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditAmpLevel2`  |          |
+| `PanelOpTable_FCF263` | `KEY_Exit`        | `ExitKey_SoundEditAmpLevel2`     |          |
+| `PanelOpTable_FCF263` | `KEY_Page`        | `PageKey_SoundEditAmpLevel2`     |          |
+
 ## screen 0x8D: `ScreenEnter_SoundEditAmpEnvelope1`
 
 Object `T_ScreenEnter_SoundEditAmpEnvelope1` (`PanelScreen_VtableTable` entry 173). Enter `ScreenEnter_SoundEditAmpEnvelope1`, Leave `ScreenLeave_SoundEditAmpEnvelope1`, Button `ScreenButton_SoundEditAmpEnvelope1`.
+
+Keys (`PanelOpTable_FCF2AB`):
+
+| key map               | key               | handler                             | requests |
+|-----------------------|-------------------|-------------------------------------|----------|
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditAmpEnvelope1` |          |
+| `PanelOpTable_FCF2AB` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditAmpEnvelope1`  |          |
+| `PanelOpTable_FCF2AB` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditAmpEnvelope1`  |          |
+| `PanelOpTable_FCF2AB` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditAmpEnvelope1`  |          |
+| `PanelOpTable_FCF2AB` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditAmpEnvelope1`  |          |
+| `PanelOpTable_FCF2AB` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditAmpEnvelope1`  |          |
+| `PanelOpTable_FCF2AB` | `KEY_Exit`        | `ExitKey_SoundEditAmpEnvelope1`     |          |
+| `PanelOpTable_FCF2AB` | `KEY_Page`        | `PageKey_SoundEditAmpEnvelope1`     |          |
 
 ## screen 0x8E: `ScreenEnter_SoundEditAmpEnvelope2`
 
 Object `T_ScreenEnter_SoundEditAmpEnvelope2` (`PanelScreen_VtableTable` entry 174). Enter `ScreenEnter_SoundEditAmpEnvelope2`, Leave `ScreenLeave_SoundEditAmpEnvelope2`, Button `ScreenButton_SoundEditAmpEnvelope2`.
 
+Keys (`PanelOpTable_FCF2F3`):
+
+| key map               | key               | handler                             | requests |
+|-----------------------|-------------------|-------------------------------------|----------|
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditAmpEnvelope2` |          |
+| `PanelOpTable_FCF2F3` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditAmpEnvelope2`  |          |
+| `PanelOpTable_FCF2F3` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditAmpEnvelope2`  |          |
+| `PanelOpTable_FCF2F3` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditAmpEnvelope2`  |          |
+| `PanelOpTable_FCF2F3` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditAmpEnvelope2`  |          |
+| `PanelOpTable_FCF2F3` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditAmpEnvelope2`  |          |
+| `PanelOpTable_FCF2F3` | `KEY_Exit`        | `ExitKey_SoundEditAmpEnvelope2`     |          |
+| `PanelOpTable_FCF2F3` | `KEY_Page`        | `PageKey_SoundEditAmpEnvelope2`     |          |
+
 ## screen 0x8F: `ScreenEnter_SoundEditAmpLfo`
 
 Object `T_ScreenEnter_SoundEditAmpLfo` (`PanelScreen_VtableTable` entry 175). Enter `ScreenEnter_SoundEditAmpLfo`, Leave `ScreenLeave_SoundEditAmpLfo`, Button `ScreenButton_SoundEditAmpLfo`.
+
+Keys (`PanelOpTable_FCF33B`):
+
+| key map               | key               | handler                       | requests |
+|-----------------------|-------------------|-------------------------------|----------|
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditAmpLfo` |          |
+| `PanelOpTable_FCF33B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditAmpLfo`  |          |
+| `PanelOpTable_FCF33B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditAmpLfo`  |          |
+| `PanelOpTable_FCF33B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditAmpLfo`  |          |
+| `PanelOpTable_FCF33B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditAmpLfo`  |          |
+| `PanelOpTable_FCF33B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditAmpLfo`  |          |
+| `PanelOpTable_FCF33B` | `KEY_Exit`        | `ExitKey_SoundEditAmpLfo`     |          |
 
 ## screen 0x90: `ScreenEnter_SoundEditFilterLpf12`
 
 Object `T_ScreenEnter_SoundEditFilterLpf12` (`PanelScreen_VtableTable` entry 176). Enter `ScreenEnter_SoundEditFilterLpf12`, Leave `ScreenLeave_SoundEditFilterLpf12`, Button `ScreenButton_SoundEditFilterLpf12`.
 
+Keys (`PanelOpTable_FCF4A3`):
+
+| key map               | key               | handler                            | requests |
+|-----------------------|-------------------|------------------------------------|----------|
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditFilterLpf12` |          |
+| `PanelOpTable_FCF4A3` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterLpf12`  |          |
+| `PanelOpTable_FCF4A3` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterLpf12`  |          |
+| `PanelOpTable_FCF4A3` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterLpf12`  |          |
+| `PanelOpTable_FCF4A3` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterLpf12`  |          |
+| `PanelOpTable_FCF4A3` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterLpf12`  |          |
+| `PanelOpTable_FCF4A3` | `KEY_Exit`        | `ExitKey_SoundEditFilterLpf12`     |          |
+| `PanelOpTable_FCF4A3` | `KEY_Page`        | `PageKey_SoundEditFilterLpf12`     |          |
+
 ## screen 0x91: `ScreenEnter_SoundEditFilterHpf12`
 
 Object `T_ScreenEnter_SoundEditFilterHpf12` (`PanelScreen_VtableTable` entry 177). Enter `ScreenEnter_SoundEditFilterHpf12`, Leave `ScreenLeave_SoundEditFilterHpf12`, Button `ScreenButton_SoundEditFilterHpf12`.
+
+Keys (`PanelOpTable_FCF4EB`):
+
+| key map               | key               | handler                            | requests |
+|-----------------------|-------------------|------------------------------------|----------|
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditFilterHpf12` |          |
+| `PanelOpTable_FCF4EB` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterHpf12`  |          |
+| `PanelOpTable_FCF4EB` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterHpf12`  |          |
+| `PanelOpTable_FCF4EB` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterHpf12`  |          |
+| `PanelOpTable_FCF4EB` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterHpf12`  |          |
+| `PanelOpTable_FCF4EB` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterHpf12`  |          |
+| `PanelOpTable_FCF4EB` | `KEY_Exit`        | `ExitKey_SoundEditFilterHpf12`     |          |
+| `PanelOpTable_FCF4EB` | `KEY_Page`        | `PageKey_SoundEditFilterHpf12`     |          |
 
 ## screen 0x92: `ScreenEnter_SoundEditFilterLpf24`
 
 Object `T_ScreenEnter_SoundEditFilterLpf24` (`PanelScreen_VtableTable` entry 178). Enter `ScreenEnter_SoundEditFilterLpf24`, Leave `ScreenLeave_SoundEditFilterLpf24`, Button `ScreenButton_SoundEditFilterLpf24`.
 
+Keys (`PanelOpTable_FCF533`):
+
+| key map               | key               | handler                            | requests |
+|-----------------------|-------------------|------------------------------------|----------|
+| `PanelOpTable_FCF533` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterLpf24` |          |
+| `PanelOpTable_FCF533` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterLpf24` |          |
+| `PanelOpTable_FCF533` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterLpf24` |          |
+| `PanelOpTable_FCF533` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterLpf24` |          |
+| `PanelOpTable_FCF533` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterLpf24`  |          |
+| `PanelOpTable_FCF533` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterLpf24`  |          |
+| `PanelOpTable_FCF533` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterLpf24`  |          |
+| `PanelOpTable_FCF533` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterLpf24`  |          |
+| `PanelOpTable_FCF533` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterLpf24`  |          |
+| `PanelOpTable_FCF533` | `KEY_Exit`        | `ExitKey_SoundEditFilterLpf24`     |          |
+| `PanelOpTable_FCF533` | `KEY_Page`        | `PageKey_SoundEditFilterLpf24`     |          |
+
 ## screen 0x93: `ScreenEnter_SoundEditFilterHpf24`
 
 Object `T_ScreenEnter_SoundEditFilterHpf24` (`PanelScreen_VtableTable` entry 179). Enter `ScreenEnter_SoundEditFilterHpf24`, Leave `ScreenLeave_SoundEditFilterHpf24`, Button `ScreenButton_SoundEditFilterHpf24`.
+
+Keys (`PanelOpTable_FCF57B`):
+
+| key map               | key               | handler                            | requests |
+|-----------------------|-------------------|------------------------------------|----------|
+| `PanelOpTable_FCF57B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterHpf24` |          |
+| `PanelOpTable_FCF57B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterHpf24` |          |
+| `PanelOpTable_FCF57B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterHpf24` |          |
+| `PanelOpTable_FCF57B` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterHpf24` |          |
+| `PanelOpTable_FCF57B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterHpf24`  |          |
+| `PanelOpTable_FCF57B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterHpf24`  |          |
+| `PanelOpTable_FCF57B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterHpf24`  |          |
+| `PanelOpTable_FCF57B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterHpf24`  |          |
+| `PanelOpTable_FCF57B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterHpf24`  |          |
+| `PanelOpTable_FCF57B` | `KEY_Exit`        | `ExitKey_SoundEditFilterHpf24`     |          |
+| `PanelOpTable_FCF57B` | `KEY_Page`        | `PageKey_SoundEditFilterHpf24`     |          |
 
 ## screen 0x94: `ScreenEnter_SoundEditFilterBpf`
 
 Object `T_ScreenEnter_SoundEditFilterBpf` (`PanelScreen_VtableTable` entry 180). Enter `ScreenEnter_SoundEditFilterBpf`, Leave `ScreenLeave_SoundEditFilterBpf`, Button `ScreenButton_SoundEditFilterBpf`.
 
+Keys (`PanelOpTable_FCF5C3`):
+
+| key map               | key               | handler                          | requests |
+|-----------------------|-------------------|----------------------------------|----------|
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterBpf` |          |
+| `PanelOpTable_FCF5C3` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterBpf`  |          |
+| `PanelOpTable_FCF5C3` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterBpf`  |          |
+| `PanelOpTable_FCF5C3` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterBpf`  |          |
+| `PanelOpTable_FCF5C3` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterBpf`  |          |
+| `PanelOpTable_FCF5C3` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterBpf`  |          |
+| `PanelOpTable_FCF5C3` | `KEY_Exit`        | `ExitKey_SoundEditFilterBpf`     |          |
+| `PanelOpTable_FCF5C3` | `KEY_Page`        | `PageKey_SoundEditFilterBpf`     |          |
+
 ## screen 0x95: `ScreenEnter_SoundEditFilterThrough`
 
 Object `T_ScreenEnter_SoundEditFilterThrough` (`PanelScreen_VtableTable` entry 181). Enter `ScreenEnter_SoundEditFilterThrough`, Leave `ScreenLeave_SoundEditFilterThrough`, Button `ScreenButton_SoundEditFilterThrough`.
+
+Keys (`PanelOpTable_FCF60B`):
+
+| key map               | key           | handler                             | requests |
+|-----------------------|---------------|-------------------------------------|----------|
+| `PanelOpTable_FCF60B` | `KEY_LcdRow1` | `LcdKeyRow1_SoundEditFilterThrough` |          |
+| `PanelOpTable_FCF60B` | `KEY_LcdRow2` | `LcdKeyRow2_SoundEditFilterThrough` |          |
+| `PanelOpTable_FCF60B` | `KEY_LcdRow3` | `LcdKeyRow3_SoundEditFilterThrough` |          |
+| `PanelOpTable_FCF60B` | `KEY_LcdRow4` | `LcdKeyRow4_SoundEditFilterThrough` |          |
+| `PanelOpTable_FCF60B` | `KEY_LcdRow5` | `LcdKeyRow5_SoundEditFilterThrough` |          |
+| `PanelOpTable_FCF60B` | `KEY_Exit`    | `ExitKey_SoundEditFilterThrough`    |          |
+| `PanelOpTable_FCF60B` | `KEY_Page`    | `PageKey_SoundEditFilterThrough`    |          |
 
 ## screen 0x96: `ScreenEnter_SoundEditFilterKeyFollow`
 
 Object `T_ScreenEnter_SoundEditFilterKeyFollow` (`PanelScreen_VtableTable` entry 182). Enter `ScreenEnter_SoundEditFilterKeyFollow`, Leave `ScreenLeave_SoundEditFilterKeyFollow`, Button `ScreenButton_SoundEditFilterKeyFollow`.
 
+Keys (`PanelOpTable_FCF653`):
+
+| key map               | key               | handler                                | requests |
+|-----------------------|-------------------|----------------------------------------|----------|
+| `PanelOpTable_FCF653` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterKeyFollow` |          |
+| `PanelOpTable_FCF653` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterKeyFollow` |          |
+| `PanelOpTable_FCF653` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterKeyFollow` |          |
+| `PanelOpTable_FCF653` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterKeyFollow` |          |
+| `PanelOpTable_FCF653` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterKeyFollow`  |          |
+| `PanelOpTable_FCF653` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterKeyFollow`  |          |
+| `PanelOpTable_FCF653` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterKeyFollow`  |          |
+| `PanelOpTable_FCF653` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterKeyFollow`  |          |
+| `PanelOpTable_FCF653` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterKeyFollow`  |          |
+| `PanelOpTable_FCF653` | `KEY_Exit`        | `ExitKey_SoundEditFilterKeyFollow`     |          |
+| `PanelOpTable_FCF653` | `KEY_Page`        | `PageKey_SoundEditFilterKeyFollow`     |          |
+
 ## screen 0x97: `ScreenEnter_SoundEditFilterEnvelope1`
 
 Object `T_ScreenEnter_SoundEditFilterEnvelope1` (`PanelScreen_VtableTable` entry 183). Enter `ScreenEnter_SoundEditFilterEnvelope1`, Leave `ScreenLeave_SoundEditFilterEnvelope1`, Button `ScreenButton_SoundEditFilterEnvelope1`.
+
+Keys (`PanelOpTable_FCF69B`):
+
+| key map               | key               | handler                                | requests |
+|-----------------------|-------------------|----------------------------------------|----------|
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterEnvelope1` |          |
+| `PanelOpTable_FCF69B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterEnvelope1`  |          |
+| `PanelOpTable_FCF69B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterEnvelope1`  |          |
+| `PanelOpTable_FCF69B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterEnvelope1`  |          |
+| `PanelOpTable_FCF69B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterEnvelope1`  |          |
+| `PanelOpTable_FCF69B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterEnvelope1`  |          |
+| `PanelOpTable_FCF69B` | `KEY_Exit`        | `ExitKey_SoundEditFilterEnvelope1`     |          |
+| `PanelOpTable_FCF69B` | `KEY_Page`        | `PageKey_SoundEditFilterEnvelope1`     |          |
 
 ## screen 0x98: `ScreenEnter_SoundEditFilterEnvelope2`
 
 Object `T_ScreenEnter_SoundEditFilterEnvelope2` (`PanelScreen_VtableTable` entry 184). Enter `ScreenEnter_SoundEditFilterEnvelope2`, Leave `ScreenLeave_SoundEditFilterEnvelope2`, Button `ScreenButton_SoundEditFilterEnvelope2`.
 
+Keys (`PanelOpTable_FCF6E3`):
+
+| key map               | key               | handler                                | requests |
+|-----------------------|-------------------|----------------------------------------|----------|
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditFilterEnvelope2` |          |
+| `PanelOpTable_FCF6E3` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterEnvelope2`  |          |
+| `PanelOpTable_FCF6E3` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterEnvelope2`  |          |
+| `PanelOpTable_FCF6E3` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterEnvelope2`  |          |
+| `PanelOpTable_FCF6E3` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterEnvelope2`  |          |
+| `PanelOpTable_FCF6E3` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterEnvelope2`  |          |
+| `PanelOpTable_FCF6E3` | `KEY_Exit`        | `ExitKey_SoundEditFilterEnvelope2`     |          |
+| `PanelOpTable_FCF6E3` | `KEY_Page`        | `PageKey_SoundEditFilterEnvelope2`     |          |
+
 ## screen 0x99: `ScreenEnter_SoundEditFilterLfo`
 
 Object `T_ScreenEnter_SoundEditFilterLfo` (`PanelScreen_VtableTable` entry 185). Enter `ScreenEnter_SoundEditFilterLfo`, Leave `ScreenLeave_SoundEditFilterLfo`, Button `ScreenButton_SoundEditFilterLfo`.
+
+Keys (`PanelOpTable_FCF72B`):
+
+| key map               | key               | handler                          | requests |
+|-----------------------|-------------------|----------------------------------|----------|
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditFilterLfo` |          |
+| `PanelOpTable_FCF72B` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditFilterLfo`  |          |
+| `PanelOpTable_FCF72B` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditFilterLfo`  |          |
+| `PanelOpTable_FCF72B` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditFilterLfo`  |          |
+| `PanelOpTable_FCF72B` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditFilterLfo`  |          |
+| `PanelOpTable_FCF72B` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditFilterLfo`  |          |
+| `PanelOpTable_FCF72B` | `KEY_Exit`        | `ExitKey_SoundEditFilterLfo`     |          |
 
 ## screen 0x9A: `ScreenEnter_SoundEditDigitalEffect`
 
 Object `T_ScreenEnter_SoundEditDigitalEffect` (`PanelScreen_VtableTable` entry 186). Enter `ScreenEnter_SoundEditDigitalEffect`, Leave `ScreenLeave_SoundEditDigitalEffect`, Button `ScreenButton_SoundEditDigitalEffect`.
 
+Keys (`PanelOpTable_FCFBFC`):
+
+| key map               | key               | handler                              | requests |
+|-----------------------|-------------------|--------------------------------------|----------|
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditDigitalEffect`  |          |
+| `PanelOpTable_FCFBFC` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditDigitalEffect`  |          |
+| `PanelOpTable_FCFBFC` | `KEY_Exit`        | `ExitKey_SoundEditDigitalEffect`     |          |
+
 ## screen 0x9B: `ScreenEnter_SoundEditControllerPage2`
 
 Object `T_ScreenEnter_SoundEditControllerPage2` (`PanelScreen_VtableTable` entry 187). Enter `ScreenEnter_SoundEditControllerPage2`, Leave `ScreenLeave_SoundEditControllerPage2`, Button `ScreenButton_SoundEditControllerPage2`.
+
+Keys (`PanelOpTable_FCF7BB`):
+
+| key map               | key               | handler                                | requests |
+|-----------------------|-------------------|----------------------------------------|----------|
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditControllerPage2` |          |
+| `PanelOpTable_FCF7BB` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditControllerPage2`  |          |
+| `PanelOpTable_FCF7BB` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditControllerPage2`  |          |
+| `PanelOpTable_FCF7BB` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditControllerPage2`  |          |
+| `PanelOpTable_FCF7BB` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditControllerPage2`  |          |
+| `PanelOpTable_FCF7BB` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditControllerPage2`  |          |
+| `PanelOpTable_FCF7BB` | `KEY_Exit`        | `ExitKey_SoundEditControllerPage2`     |          |
+| `PanelOpTable_FCF7BB` | `KEY_Page`        | `PageKey_SoundEditControllerPage2`     |          |
 
 ## screen 0x9C: `ScreenEnter_SoundEditDigitalEffectFromMenu`
 
 Object `T_ScreenEnter_SoundEditDigitalEffectFromMenu` (`PanelScreen_VtableTable` entry 188). Enter `ScreenEnter_SoundEditDigitalEffectFromMenu`, Leave `ScreenLeave_SoundEditDigitalEffectFromMenu`, Button `ScreenButton_SoundEditDigitalEffectFromMenu`.
 
+Keys (`PanelOpTable_FCFBFC`):
+
+| key map               | key               | handler                              | requests |
+|-----------------------|-------------------|--------------------------------------|----------|
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditDigitalEffect` |          |
+| `PanelOpTable_FCFBFC` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditDigitalEffect`  |          |
+| `PanelOpTable_FCFBFC` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditDigitalEffect`  |          |
+| `PanelOpTable_FCFBFC` | `KEY_Exit`        | `ExitKey_SoundEditDigitalEffect`     |          |
+
 ## screen 0x9D: `ScreenEnter_SoundEditCopy`
 
 Object `T_ScreenEnter_SoundEditCopy` (`PanelScreen_VtableTable` entry 189). Enter `ScreenEnter_SoundEditCopy`, Leave `ScreenLeave_SoundEditCopy`, Button `ScreenButton_SoundEditCopy`.
+
+Keys (`PanelOpTable_FCFC44`):
+
+| key map               | key               | handler                     | requests |
+|-----------------------|-------------------|-----------------------------|----------|
+| `PanelOpTable_FCFC44` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditCopy` |          |
+| `PanelOpTable_FCFC44` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditCopy` |          |
+| `PanelOpTable_FCFC44` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditCopy` |          |
+| `PanelOpTable_FCFC44` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditCopy` |          |
+| `PanelOpTable_FCFC44` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditCopy` |          |
+| `PanelOpTable_FCFC44` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditCopy`  |          |
+| `PanelOpTable_FCFC44` | `KEY_Exit`        | `ExitKey_SoundEditCopy`     |          |
 
 ## screen 0x9E: `ScreenEnter_SoundEditMemoryWrite`
 
 Object `T_ScreenEnter_SoundEditMemoryWrite` (`PanelScreen_VtableTable` entry 190). Enter `ScreenEnter_SoundEditMemoryWrite`, Leave `T_F42364_Nop`, Button `ScreenButton_SoundEditMemoryWrite`.
 
+Keys (`PanelOpTable_FCFB6C`):
+
+| key map               | key           | handler                           | requests |
+|-----------------------|---------------|-----------------------------------|----------|
+| `PanelOpTable_FCFB6C` | `KEY_LcdRow1` | `LcdKeyRow1_SoundEditMemoryWrite` |          |
+| `PanelOpTable_FCFB6C` | `KEY_LcdRow3` | `LcdKeyRow3_SoundEditMemoryWrite` |          |
+| `PanelOpTable_FCFB6C` | `KEY_LcdRow4` | `LcdKeyRow4_SoundEditMemoryWrite` |          |
+| `PanelOpTable_FCFB6C` | `KEY_LcdRow5` | `LcdKeyRow5_SoundEditMemoryWrite` |          |
+| `PanelOpTable_FCFB6C` | `KEY_Exit`    | `ExitKey_SoundEditMemoryWrite`    |          |
+
 ## screen 0x9F: `ScreenEnter_SoundEditNaming`
 
 Object `T_ScreenEnter_SoundEditNaming` (`PanelScreen_VtableTable` entry 191). Enter `ScreenEnter_SoundEditNaming`, Leave `T_F42374_Nop`, Button `ScreenButton_SoundEditNaming`.
+
+Keys (`PanelOpTable_FCFBB4`):
+
+| key map               | key               | handler                       | requests |
+|-----------------------|-------------------|-------------------------------|----------|
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol1` | `SoftKeyCol1_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditNaming` |          |
+| `PanelOpTable_FCFBB4` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditNaming`  |          |
+| `PanelOpTable_FCFBB4` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditNaming`  |          |
+| `PanelOpTable_FCFBB4` | `KEY_Exit`        | `ExitKey_SoundEditNaming`     |          |
 
 ## screen 0xA0: `InstallPainter_SoundGroupMenu_Entry`
 
@@ -2797,7 +3359,7 @@ Draws:
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
-Reached from: screen 0xA1 `KEY_Code16` (`SoftKeyCol6_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol6` (`SoftKeyCol6_GroupSoundDisplayHold`).
+Reached from: screen 0xA1 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol6` (`SoftKeyCol6_GroupSoundDisplayHold`).
 
 ## screen 0xA1: `InstallPainter_GroupSoundDisplayHold_Entry`
 
@@ -2827,33 +3389,33 @@ Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen
 
 Keys (`ScreenButtonHandlers_GroupSoundDisplayHold`):
 
-| key map                                      | key               | handler                              | requests                                                                                                                                                                     |
-|----------------------------------------------|-------------------|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1` | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2` | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3` | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4` | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol5` | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol6` | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol7` | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol8` | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow1`     | `LcdKeyRow1_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow2`     | `LcdKeyRow2_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow3`     | `LcdKeyRow3_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow4`     | `LcdKeyRow4_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow5`     | `.LF92FC6`                           |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Exit`        | `ExitKey_GroupSoundDisplayHold`      | go to screen 0x01 (InstallPainter_SoundMode_Entry)                                                                                                                           |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code11`      | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code12`      | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code13`      | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code14`      | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code15`      | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code16`      | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code17`      | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Code18`      | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_NumberPad`   | `NumberPadKey_GroupSoundDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| key map                                      | key                  | handler                              | requests                                                                                                                                                                     |
+|----------------------------------------------|----------------------|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow5`        | `.LF92FC6`                           |                                                                                                                                                                              |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Exit`           | `ExitKey_GroupSoundDisplayHold`      | go to screen 0x01 (InstallPainter_SoundMode_Entry)                                                                                                                           |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupSoundDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
 
-Reached from: screen 0xA1 `KEY_Code11` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code12` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code13` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code14` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_Code15` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`).
+Reached from: screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2Alt` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3Alt` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4Alt` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`).
 
 ## screen 0xA2: `InstallPainter_CombinationGroupMenu_Entry`
 
@@ -2930,22 +3492,22 @@ Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen
 
 Keys (`ScreenButtonHandlers_CombinationGroupMenu`):
 
-| key map                                     | key               | handler                            | requests                                                       |
-|---------------------------------------------|-------------------|------------------------------------|----------------------------------------------------------------|
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol1` | `SoftKeyCol1_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol4` | `SoftKeyCol4_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol5` | `SoftKeyCol5_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol6` | `SoftKeyCol6_CombinationGroupMenu` | go to screen 0xA6 (InstallPainter_GroupCombiDisplayHold_Entry) |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow1`     | `LcdKeyRow1_CombinationGroupMenu`  |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow2`     | `LcdKeyRow2_CombinationGroupMenu`  |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow3`     | `LcdKeyRow3_CombinationGroupMenu`  |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Exit`        | `ExitKey_CombinationGroupMenu`     | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)       |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Code11`      | `SoftKeyCol1_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Code14`      | `SoftKeyCol4_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Code15`      | `SoftKeyCol5_CombinationGroupMenu` |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Code16`      | `SoftKeyCol6_CombinationGroupMenu` | go to screen 0xA6 (InstallPainter_GroupCombiDisplayHold_Entry) |
+| key map                                     | key                  | handler                            | requests                                                       |
+|---------------------------------------------|----------------------|------------------------------------|----------------------------------------------------------------|
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_CombinationGroupMenu` | go to screen 0xA6 (InstallPainter_GroupCombiDisplayHold_Entry) |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow1`        | `LcdKeyRow1_CombinationGroupMenu`  |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow2`        | `LcdKeyRow2_CombinationGroupMenu`  |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow3`        | `LcdKeyRow3_CombinationGroupMenu`  |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Exit`           | `ExitKey_CombinationGroupMenu`     | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)       |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_CombinationGroupMenu` |                                                                |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_CombinationGroupMenu` | go to screen 0xA6 (InstallPainter_GroupCombiDisplayHold_Entry) |
 
-Reached from: screen 0xA6 `KEY_Code16` (`SoftKeyCol6_GroupCombiDisplayHold`); screen 0xA6 `KEY_SoftKeyCol6` (`SoftKeyCol6_GroupCombiDisplayHold`).
+Reached from: screen 0xA6 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_GroupCombiDisplayHold`); screen 0xA6 `KEY_SoftKeyCol6` (`SoftKeyCol6_GroupCombiDisplayHold`).
 
 ## screen 0xA6: `InstallPainter_GroupCombiDisplayHold_Entry`
 
@@ -2975,29 +3537,29 @@ Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen
 
 Keys (`ScreenButtonHandlers_GroupCombiDisplayHold`):
 
-| key map                                      | key               | handler                              | requests                                                                                                     |
-|----------------------------------------------|-------------------|--------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol1` | `SoftKeyCol1_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol4` | `SoftKeyCol4_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol5` | `SoftKeyCol5_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol6` | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol7` | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol8` | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow1`     | `LcdKeyRow1_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow2`     | `LcdKeyRow2_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow3`     | `LcdKeyRow3_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow4`     | `LcdKeyRow4_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow5`     | `.LF93B75`                           |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Exit`        | `ExitKey_GroupCombiDisplayHold`      | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                     |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code11`      | `SoftKeyCol1_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code14`      | `SoftKeyCol4_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code15`      | `SoftKeyCol5_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code16`      | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code17`      | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Code18`      | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_NumberPad`   | `NumberPadKey_GroupCombiDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| key map                                      | key                  | handler                              | requests                                                                                                     |
+|----------------------------------------------|----------------------|--------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow5`        | `.LF93B75`                           |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Exit`           | `ExitKey_GroupCombiDisplayHold`      | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                     |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupCombiDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
 
-Reached from: screen 0xA5 `KEY_Code16` (`SoftKeyCol6_CombinationGroupMenu`); screen 0xA5 `KEY_SoftKeyCol6` (`SoftKeyCol6_CombinationGroupMenu`).
+Reached from: screen 0xA5 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_CombinationGroupMenu`); screen 0xA5 `KEY_SoftKeyCol6` (`SoftKeyCol6_CombinationGroupMenu`).
 
 ## screen 0xA7: `UiEvent_MarkRedrawFromPartClass`
 
@@ -3007,7 +3569,11 @@ Object `T_F41590` (`PanelScreen_VtableTable` entry 199). Enter `UiEvent_MarkRedr
 
 Object `T_ScreenEnter_PowerOnSplash` (`PanelScreen_VtableTable` entry 202). Enter `ScreenEnter_PowerOnSplash`, Leave `ScreenLeave_PowerOnSplash`, Button `ScreenButton_PowerOnSplash`.
 
-Enter requests: mode change 0x01; mode change 0x02.
+Keys (`DisplayListPtrs_F9408E`):
+
+| key map                  | key        | handler                 | requests                           |
+|--------------------------|------------|-------------------------|------------------------------------|
+| `DisplayListPtrs_F9408E` | `KEY_Exit` | `ExitKey_PowerOnSplash` | mode change 0x01; mode change 0x02 |
 
 ## screen 0xAB: `InstallPainter_MessageScreen`
 
@@ -3157,6 +3723,8 @@ Draws:
 - `ExitKey_Effect2OutputConflict_DL`
 - `DL_Err0rTheS0undOrC0mbinati0n`: "ERR0R!"; "The S0UND or C0MBINATI0N"; "memories are write protected."; "YES"
 
+Reached from: mode 0x21 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_Eff2_AltCode`); mode 0x21 `KEY_SoftKeyCol5` (`SoftKeyCol5_Eff2`); screen 0x01 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_Eff2_AltCode`); screen 0x01 `KEY_SoftKeyCol5` (`SoftKeyCol5_Eff2`).
+
 ## screen 0xB7: `ScreenEnterBody_CombiEditMixer`
 
 Object `T_ScreenEnterBody_CombiEditMixer` (`PanelScreen_VtableTable` entry 215). Enter `ScreenEnterBody_CombiEditMixer`, Leave `ScreenLeaveBody_CombiEditMixer`, Button `ScreenButtonBody_CombiEditMixer`.
@@ -3187,6 +3755,22 @@ Reached from: mode 0x26 `KEY_LcdRow3` (`LcdKeyRow3_RealtimeRecordScreen`); scree
 
 Object `T_ToneEditPage_A0_ModelingTop` (`PanelScreen_VtableTable` entry 224). Enter `ToneEditPage_A0_ModelingTop`, Leave `ToneEditPage_A0_Leave`, Button `ToneEditPage_A0_KeyDispatch`.
 
+Keys (`ToneEditPage_A0_OpTable`):
+
+| key map                   | key               | handler                          | requests |
+|---------------------------|-------------------|----------------------------------|----------|
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol1` | `ToneEditPage_A0_Op0`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol2` | `ToneEditPage_A0_Op1`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol3` | `ToneEditPage_A0_Op2`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A0_ResonatorType` |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol7` | `ToneEditField_A0_Group`         |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A0_Op8`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A0_Op9`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A0_Op10`           |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A0_Op11`           |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A0_Op12`           |          |
+| `ToneEditPage_A0_OpTable` | `KEY_Exit`        | `ToneEditPage_A0_Op15`           |          |
+
 ## screen 0xC1: `T_F41F7C_Nop`
 
 Object `T_F41F7C` (`PanelScreen_VtableTable` entry 225). Enter `T_F41F7C_Nop`, Leave `ToneEditPage_A1_Leave`, Button `T_F41F84_Nop`.
@@ -3199,25 +3783,123 @@ Object `T_F41F8C` (`PanelScreen_VtableTable` entry 226). Enter `T_F41F8C_Nop`, L
 
 Object `T_ToneEditPage_A3_PositionParameter` (`PanelScreen_VtableTable` entry 227). Enter `ToneEditPage_A3_PositionParameter`, Leave `ToneEditPage_A3_Leave`, Button `ToneEditPage_A3_KeyDispatch`.
 
+Keys (`ToneEditPage_A3_OpTable`):
+
+| key map                   | key               | handler                            | requests |
+|---------------------------|-------------------|------------------------------------|----------|
+| `ToneEditPage_A3_OpTable` | `KEY_SoftKeyCol2` | `ToneEditField_A3_Position`        |          |
+| `ToneEditPage_A3_OpTable` | `KEY_SoftKeyCol3` | `ToneEditField_A3_Depth`           |          |
+| `ToneEditPage_A3_OpTable` | `KEY_SoftKeyCol4` | `ToneEditField_A3_Formant`         |          |
+| `ToneEditPage_A3_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A3_InteractionGain` |          |
+| `ToneEditPage_A3_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A3_Op8`              |          |
+| `ToneEditPage_A3_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A3_Op9`              |          |
+| `ToneEditPage_A3_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A3_Op10`             |          |
+| `ToneEditPage_A3_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A3_Op11`             |          |
+| `ToneEditPage_A3_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A3_Op12`             |          |
+| `ToneEditPage_A3_OpTable` | `KEY_Exit`        | `ToneEditPage_A3_Op15`             |          |
+| `ToneEditPage_A3_OpTable` | `KEY_Page`        | `ToneEditPage_A3_Op16`             |          |
+
 ## screen 0xC4: `ToneEditPage_A4_PositionMovement`
 
 Object `T_ToneEditPage_A4_PositionMovement` (`PanelScreen_VtableTable` entry 228). Enter `ToneEditPage_A4_PositionMovement`, Leave `ToneEditPage_A4_Leave`, Button `ToneEditPage_A4_KeyDispatch`.
+
+Keys (`ToneEditPage_A4_OpTable`):
+
+| key map                   | key               | handler                       | requests |
+|---------------------------|-------------------|-------------------------------|----------|
+| `ToneEditPage_A4_OpTable` | `KEY_SoftKeyCol2` | `ToneEditField_A4_Width`      |          |
+| `ToneEditPage_A4_OpTable` | `KEY_SoftKeyCol3` | `ToneEditField_A4_Speed`      |          |
+| `ToneEditPage_A4_OpTable` | `KEY_SoftKeyCol4` | `ToneEditField_A4_SampleHold` |          |
+| `ToneEditPage_A4_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A4_Touch`      |          |
+| `ToneEditPage_A4_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A4_Op8`         |          |
+| `ToneEditPage_A4_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A4_Op9`         |          |
+| `ToneEditPage_A4_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A4_Op10`        |          |
+| `ToneEditPage_A4_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A4_Op11`        |          |
+| `ToneEditPage_A4_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A4_Op12`        |          |
+| `ToneEditPage_A4_OpTable` | `KEY_Exit`        | `ToneEditPage_A4_Op15`        |          |
+| `ToneEditPage_A4_OpTable` | `KEY_Page`        | `ToneEditPage_A4_Op16`        |          |
 
 ## screen 0xC5: `ToneEditPage_A5_FittingMutingTuning`
 
 Object `T_ToneEditPage_A5_FittingMutingTuning` (`PanelScreen_VtableTable` entry 229). Enter `ToneEditPage_A5_FittingMutingTuning`, Leave `ToneEditPage_A5_Leave`, Button `ToneEditPage_A5_KeyDispatch`.
 
+Keys (`ToneEditPage_A5_OpTable`):
+
+| key map                   | key               | handler                            | requests |
+|---------------------------|-------------------|------------------------------------|----------|
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol2` | `ToneEditField_A5_Fitting`         |          |
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol3` | `ToneEditField_A5_Muting`          |          |
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol4` | `ToneEditField_A5_KeyShift`        |          |
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol5` | `ToneEditField_A5_Detune`          |          |
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A5_ResoScale`       |          |
+| `ToneEditPage_A5_OpTable` | `KEY_SoftKeyCol7` | `ToneEditPage_ToggleRowFocus_Call` |          |
+| `ToneEditPage_A5_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A5_Op8`              |          |
+| `ToneEditPage_A5_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A5_Op9`              |          |
+| `ToneEditPage_A5_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A5_Op10`             |          |
+| `ToneEditPage_A5_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A5_Op11`             |          |
+| `ToneEditPage_A5_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A5_Op12`             |          |
+| `ToneEditPage_A5_OpTable` | `KEY_Exit`        | `ToneEditPage_A5_Op15`             |          |
+| `ToneEditPage_A5_OpTable` | `KEY_Page`        | `ToneEditPage_A5_Op16`             |          |
+
 ## screen 0xC6: `ToneEditPage_A6_TouchDepth`
 
 Object `T_ToneEditPage_A6_TouchDepth` (`PanelScreen_VtableTable` entry 230). Enter `ToneEditPage_A6_TouchDepth`, Leave `ToneEditPage_A6_Leave`, Button `ToneEditPage_A6_KeyDispatch`.
+
+Keys (`ToneEditPage_A6_OpTable`):
+
+| key map                   | key               | handler                              | requests |
+|---------------------------|-------------------|--------------------------------------|----------|
+| `ToneEditPage_A6_OpTable` | `KEY_SoftKeyCol2` | `ToneEditField_A6_FittingTouchDepth` |          |
+| `ToneEditPage_A6_OpTable` | `KEY_SoftKeyCol3` | `ToneEditField_A6_MutingTouchDepth`  |          |
+| `ToneEditPage_A6_OpTable` | `KEY_SoftKeyCol5` | `ToneEditField_A6_SubGainTouchDepth` |          |
+| `ToneEditPage_A6_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A6_SubGain`           |          |
+| `ToneEditPage_A6_OpTable` | `KEY_SoftKeyCol7` | `ToneEditPage_ToggleRowFocus_Call_2` |          |
+| `ToneEditPage_A6_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A6_Op8`                |          |
+| `ToneEditPage_A6_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A6_Op9`                |          |
+| `ToneEditPage_A6_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A6_Op10`               |          |
+| `ToneEditPage_A6_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A6_Op11`               |          |
+| `ToneEditPage_A6_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A6_Op12`               |          |
+| `ToneEditPage_A6_OpTable` | `KEY_Exit`        | `ToneEditPage_A6_Op15`               |          |
+| `ToneEditPage_A6_OpTable` | `KEY_Page`        | `ToneEditPage_A6_Op16`               |          |
 
 ## screen 0xC7: `ToneEditPage_A7_ResoModeKeyFollow`
 
 Object `T_ToneEditPage_A7_ResoModeKeyFollow` (`PanelScreen_VtableTable` entry 231). Enter `ToneEditPage_A7_ResoModeKeyFollow`, Leave `ToneEditPage_A7_Leave`, Button `ToneEditPage_A7_KeyDispatch`.
 
+Keys (`ToneEditPage_A7_OpTable`):
+
+| key map                   | key               | handler                              | requests |
+|---------------------------|-------------------|--------------------------------------|----------|
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol2` | `ToneEditField_A7_ResoMode`          |          |
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol3` | `ToneEditField_A7_MutingSlope`       |          |
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol4` | `ToneEditField_A7_KeyFollowLow`      |          |
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol5` | `ToneEditField_A7_KeyFollowBreak`    |          |
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A7_KeyFollowHigh`     |          |
+| `ToneEditPage_A7_OpTable` | `KEY_SoftKeyCol7` | `ToneEditPage_ToggleRowFocus_Call_3` |          |
+| `ToneEditPage_A7_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A7_Op8`                |          |
+| `ToneEditPage_A7_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A7_Op9`                |          |
+| `ToneEditPage_A7_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A7_Op10`               |          |
+| `ToneEditPage_A7_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A7_Op11`               |          |
+| `ToneEditPage_A7_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A7_Op12`               |          |
+| `ToneEditPage_A7_OpTable` | `KEY_Exit`        | `ToneEditPage_A7_Op15`               |          |
+| `ToneEditPage_A7_OpTable` | `KEY_Page`        | `ToneEditPage_A7_Op16`               |          |
+
 ## screen 0xC8: `ToneEditPage_A8_SerialParallel`
 
 Object `T_ToneEditPage_A8_SerialParallel` (`PanelScreen_VtableTable` entry 232). Enter `ToneEditPage_A8_SerialParallel`, Leave `ToneEditPage_A8_Leave`, Button `ToneEditPage_A8_KeyDispatch`.
+
+Keys (`ToneEditPage_A8_OpTable`):
+
+| key map                   | key               | handler                | requests |
+|---------------------------|-------------------|------------------------|----------|
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol2` | `ToneEditPage_A8_Op1`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol3` | `ToneEditPage_A8_Op2`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol4` | `ToneEditPage_A8_Op3`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol5` | `ToneEditPage_A8_Op4`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol6` | `ToneEditPage_A8_Op5`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol7` | `ToneEditPage_A8_Op6`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_SoftKeyCol8` | `ToneEditPage_A8_Op7`  |          |
+| `ToneEditPage_A8_OpTable` | `KEY_Exit`        | `ToneEditPage_A8_Op15` |          |
 
 ## screen 0xCA: `ScreenEnter_SoundEditDspEffect`
 
@@ -3247,6 +3929,20 @@ Draws:
 
 Object `T_ScreenEnter_SoundEditDrumMenu` (`PanelScreen_VtableTable` entry 235). Enter `ScreenEnter_SoundEditDrumMenu`, Leave `ScreenLeave_SoundEditDrumMenu`, Button `ScreenButton_SoundEditDrumMenu`.
 
+Keys (`PanelOpTable_FCFC8C`):
+
+| key map               | key               | handler                         | requests |
+|-----------------------|-------------------|---------------------------------|----------|
+| `PanelOpTable_FCFC8C` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditDrumMenu` |          |
+| `PanelOpTable_FCFC8C` | `KEY_SoftKeyCol3` | `SoftKeyCol3_SoundEditDrumMenu` |          |
+| `PanelOpTable_FCFC8C` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditDrumMenu` |          |
+| `PanelOpTable_FCFC8C` | `KEY_LcdRow1`     | `LcdKeyRow1_SoundEditDrumMenu`  |          |
+| `PanelOpTable_FCFC8C` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditDrumMenu`  |          |
+| `PanelOpTable_FCFC8C` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditDrumMenu`  |          |
+| `PanelOpTable_FCFC8C` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditDrumMenu`  |          |
+| `PanelOpTable_FCFC8C` | `KEY_LcdRow5`     | `LcdKeyRow5_SoundEditDrumMenu`  |          |
+| `PanelOpTable_FCFC8C` | `KEY_Exit`        | `ExitKey_SoundEditDrumMenu`     |          |
+
 ## screen 0xCC: `T_F42340_Nop`
 
 Object `T_F42340` (`PanelScreen_VtableTable` entry 236). Enter `T_F42340_Nop`, Leave `ScreenLeave_CodeCC`, Button `T_F42348_Nop`.
@@ -3254,6 +3950,22 @@ Object `T_F42340` (`PanelScreen_VtableTable` entry 236). Enter `T_F42340_Nop`, L
 ## screen 0xCD: `ScreenEnter_SoundEditControllerPage1`
 
 Object `T_ScreenEnter_SoundEditControllerPage1` (`PanelScreen_VtableTable` entry 237). Enter `ScreenEnter_SoundEditControllerPage1`, Leave `ScreenLeave_SoundEditControllerPage1`, Button `ScreenButton_SoundEditControllerPage1`.
+
+Keys (`PanelOpTable_FCF773`):
+
+| key map               | key               | handler                                | requests |
+|-----------------------|-------------------|----------------------------------------|----------|
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol2` | `SoftKeyCol2_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol7` | `SoftKeyCol7_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_SoftKeyCol8` | `SoftKeyCol8_SoundEditControllerPage1` |          |
+| `PanelOpTable_FCF773` | `KEY_LcdRow2`     | `LcdKeyRow2_SoundEditControllerPage1`  |          |
+| `PanelOpTable_FCF773` | `KEY_LcdRow3`     | `LcdKeyRow3_SoundEditControllerPage1`  |          |
+| `PanelOpTable_FCF773` | `KEY_LcdRow4`     | `LcdKeyRow4_SoundEditControllerPage1`  |          |
+| `PanelOpTable_FCF773` | `KEY_Exit`        | `ExitKey_SoundEditControllerPage1`     |          |
+| `PanelOpTable_FCF773` | `KEY_Page`        | `PageKey_SoundEditControllerPage1`     |          |
 
 ## screen 0xCE: `T_F433E0_Nop`
 
@@ -3292,16 +4004,16 @@ Draws:
 
 Keys (`ScreenButtonHandlers_SineWaveCheckMode`):
 
-| key map                                  | key               | handler                                    | requests |
-|------------------------------------------|-------------------|--------------------------------------------|----------|
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol4` | `SoftKeyCol4_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol5` | `SoftKeyCol5_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol6` | `SoftKeyCol6_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_Exit`        | `ExitKey_SineWaveCheckModeAndDebugMonitor` |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_Code14`      | `SoftKeyCol4_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_Code15`      | `SoftKeyCol5_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_Code16`      | `SoftKeyCol6_SineWaveCheckMode`            |          |
-| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_NumberPad`   | `NumberPadKey_SineWaveCheckMode`           |          |
+| key map                                  | key                  | handler                                    | requests |
+|------------------------------------------|----------------------|--------------------------------------------|----------|
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_Exit`           | `ExitKey_SineWaveCheckModeAndDebugMonitor` |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_SineWaveCheckMode`            |          |
+| `ScreenButtonHandlers_SineWaveCheckMode` | `KEY_NumberPad`      | `NumberPadKey_SineWaveCheckMode`           |          |
 
 ## screen 0xDB: `Paint_PanelSwLedCheck`
 
@@ -3321,18 +4033,18 @@ Object `T_ScreenEnter_DebugMonitor` (`PanelScreen_VtableTable` entry 253). Enter
 
 Keys (`ScreenObjF40130_ButtonHandlers`):
 
-| key map                          | key               | handler                                    | requests |
-|----------------------------------|-------------------|--------------------------------------------|----------|
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol1` | `SoftKeyCol1_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol2` | `SoftKeyCol2_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol3` | `SoftKeyCol3_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol4` | `SoftKeyCol4_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol5` | `SoftKeyCol5_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol6` | `SoftKeyCol6_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Exit`        | `ExitKey_SineWaveCheckModeAndDebugMonitor` |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code11`      | `SoftKeyCol1_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code12`      | `SoftKeyCol2_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code13`      | `SoftKeyCol3_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code14`      | `SoftKeyCol4_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code15`      | `SoftKeyCol5_DebugMonitor`                 |          |
-| `ScreenObjF40130_ButtonHandlers` | `KEY_Code16`      | `SoftKeyCol6_DebugMonitor`                 |          |
+| key map                          | key                  | handler                                    | requests |
+|----------------------------------|----------------------|--------------------------------------------|----------|
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_Exit`           | `ExitKey_SineWaveCheckModeAndDebugMonitor` |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_DebugMonitor`                 |          |
+| `ScreenObjF40130_ButtonHandlers` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_DebugMonitor`                 |          |

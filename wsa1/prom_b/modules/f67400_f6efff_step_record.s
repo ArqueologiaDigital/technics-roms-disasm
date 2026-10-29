@@ -789,38 +789,40 @@ SoftKeyCol1_StepRecord_Skip:
 ; Unknown: what the handlers do.
 ; --------------------------------------------------------------------------
 DispatchTable_F67616:
-	.long	SoftKeyCol1_StepRecord	; F67616  [0] -> 0xF67604
-	.long	StepRecord_NoAction	; F6761A  [1] -> ret stub
-	.long	StepRecord_NoAction	; F6761E  [2] -> ret stub
-	.long	StepRecord_NoAction	; F67622  [3] -> ret stub
-	.long	StepRecord_NoAction	; F67626  [4] -> ret stub
-	.long	StepRecord_NoAction	; F6762A  [5] -> ret stub
-	.long	StepRecord_NoAction	; F6762E  [6] -> ret stub
-	.long	StepRecord_NoAction	; F67632  [7] -> ret stub
-	.long	StepRecord_NoAction	; F67636  [8] -> ret stub
-	.long	StepRecord_NoAction	; F6763A  [9] -> ret stub
-	.long	StepRecord_NoAction	; F6763E  [10] -> ret stub
-	.long	LcdKeyRow4_StepRecord	; F67642  [11] -> 0xF688F0
-	.long	StepRecord_NoAction	; F67646  [12] -> ret stub
-	.long	StepRecord_NoAction	; F6764A  [13] -> ret stub
-	.long	StepRecord_NoAction	; F6764E  [14] -> ret stub
-	.long	ExitKey_StepRecord	; F67652  [15] -> 0xF67696
-	.long	StepRecord_NoAction	; F67656  [16] -> ret stub
-	.long	SoftKeyCol1_StepRecord	; F6765A  [17] -> 0xF67604
-	.long	StepRecord_NoAction	; F6765E  [18] -> ret stub
-	.long	StepRecord_NoAction	; F67662  [19] -> ret stub
-	.long	StepRecord_NoAction	; F67666  [20] -> ret stub
-	.long	StepRecord_NoAction	; F6766A  [21] -> ret stub
-	.long	StepRecord_NoAction	; F6766E  [22] -> ret stub
-	.long	StepRecord_NoAction	; F67672  [23] -> ret stub
-	.long	StepRecord_NoAction	; F67676  [24] -> ret stub
-	.long	StepRecord_NoAction	; F6767A  [25] -> ret stub
-	.long	StepRecord_NoAction	; F6767E  [26] -> ret stub
-	.long	StepRecord_NoAction	; F67682  [27] -> ret stub
-	.long	StepRecord_NoAction	; F67686  [28] -> ret stub
-	.long	StepRecord_NoAction	; F6768A  [29] -> ret stub
-	.long	StepRecord_NoAction	; F6768E  [30] -> ret stub
-	.long	StepRecord_NoAction	; F67692  [31] -> ret stub
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_StepRecord
+	on_key	KEY_SoftKeyCol2,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol8,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_LcdRow1,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_LcdRow2,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_LcdRow3,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_LcdRow4,		LcdKeyRow4_StepRecord
+	on_key	KEY_LcdRow5,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_MinusPlus,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Exit,		ExitKey_StepRecord
+	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecord
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol8Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Code1D,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Compare,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_Code1F,		StepRecord_NoAction	; -> ret stub
+	keymap_end
 
 ; ExitKey_StepRecord: the EXIT key; StepRecordSub00_ButtonTable slot 0x0F; StepRecordSub01_ButtonTable slot 0x0F; StepRecordSub02_ButtonTable slot 0x0F; StepRecordSub03_ButtonTable slot 0x0F; StepRecordSub04_ButtonTable slot 0x0F; StepRecordSub05_ButtonTable slot 0x0F; StepRecordSub07_ButtonTable slot 0x0F; StepRecordSub08_ButtonTable slot 0x0F; StepRecordSub09_ButtonTable slot 0x0F; StepRecordSub10_ButtonTable slot 0x0F; StepRecordSub11_ButtonTable slot 0x0F; StepRecordSub16_ButtonTable slot 0x0F; StepRecordSub17_ButtonTable slot 0x0F.  Slot -> control: wave7_panel_names_round11.CONTROL.
 ExitKey_StepRecord:
@@ -1046,15 +1048,15 @@ StepRecordSub00_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		SoftKeyCol2_StepRecordSub00	; -> 0xF69867
-	on_key	KEY_Code13,		SoftKeyCol3_StepRecordSub00	; -> 0xF69AB0
-	on_key	KEY_Code14,		SoftKeyCol4_StepRecordSub00	; -> 0xF6786F
-	on_key	KEY_Code15,		SoftKeyCol5_StepRecordSub00	; -> 0xF6788C
-	on_key	KEY_Code16,		SoftKeyCol6_StepRecordSub00	; -> 0xF678A9
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_StepRecordSub00	; -> 0xF69867
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_StepRecordSub00	; -> 0xF69AB0
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_StepRecordSub00	; -> 0xF6786F
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_StepRecordSub00	; -> 0xF6788C
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_StepRecordSub00	; -> 0xF678A9
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1242,15 +1244,15 @@ StepRecordSub01_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1325,15 +1327,15 @@ StepRecordSub02_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1417,15 +1419,15 @@ StepRecordSub03_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		SoftKeyCol5_StepRecordSub03	; -> 0xF67A6D
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_StepRecordSub03	; -> 0xF67A6D
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1500,15 +1502,15 @@ StepRecordSub04_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1583,15 +1585,15 @@ StepRecordSub05_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		SoftKeyCol3_StepRecordSub05	; -> 0xF6CD8C
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_StepRecordSub05	; -> 0xF6CD8C
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1675,15 +1677,15 @@ StepRecordSub07_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		SoftKeyCol4_StepRecord	; -> 0xF67C48
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_StepRecord	; -> 0xF67C48
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1758,15 +1760,15 @@ StepRecordSub08_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		SoftKeyCol3_StepRecordSub08	; -> 0xF6CD3D
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_StepRecordSub08	; -> 0xF6CD3D
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -1906,15 +1908,15 @@ StepRecordSub09_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		SoftKeyCol5_StepRecordSub09	; -> 0xF67E69
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_StepRecordSub09	; -> 0xF67E69
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -2123,15 +2125,15 @@ StepRecordSub10_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		SoftKeyCol5_StepRecordSub10	; -> 0xF68016
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_StepRecordSub10	; -> 0xF68016
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -2472,15 +2474,15 @@ StepRecordKind3Sub12_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		SoftKeyCol6_StepRecordSub17	; -> 0xF6A1BB
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecordSub17	; -> 0xF6A1B4
-	on_key	KEY_Code18,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_StepRecordSub17	; -> 0xF6A1BB
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecordSub17	; -> 0xF6A1B4
+	on_key	KEY_SoftKeyCol8Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -3016,15 +3018,15 @@ StepRecordSub16_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code18,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol8Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -3099,15 +3101,15 @@ StepRecordSub17_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		SoftKeyCol4_StepRecord	; -> 0xF67C48
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		SoftKeyCol6_StepRecordSub17	; -> 0xF6A1BB
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecordSub17	; -> 0xF6A1B4
-	on_key	KEY_Code18,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub16	; -> SoftKeyCol1_StepRecordSub16
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_StepRecord	; -> 0xF67C48
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_StepRecordSub17	; -> 0xF6A1BB
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecordSub17	; -> 0xF6A1B4
+	on_key	KEY_SoftKeyCol8Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -3182,15 +3184,15 @@ StepRecordSub18_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code12,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code18,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol2Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol8Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub
@@ -13510,15 +13512,15 @@ StepRecordSub11_ButtonTable:
 	on_key	KEY_Code0E,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Exit,		ExitKey_StepRecord	; -> 0xF67696
 	on_key	KEY_Page,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code11,		SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
-	on_key	KEY_Code12,		SoftKeyCol2_StepRecordSub11	; -> 0xF6CAE7
-	on_key	KEY_Code13,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code14,		SoftKeyCol4_StepRecordSub11	; -> 0xF6CB13
-	on_key	KEY_Code15,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code16,		StepRecord_NoAction	; -> ret stub
-	on_key	KEY_Code17,		SoftKeyCol7_StepRecord	; -> 0xF6748D
-	on_key	KEY_Code18,		SoftKeyCol8_StepRecord	; -> 0xF6749D
-	on_key	KEY_Code19,		StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_StepRecordSub00	; -> 0xF678F8
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_StepRecordSub11	; -> 0xF6CAE7
+	on_key	KEY_SoftKeyCol3Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_StepRecordSub11	; -> 0xF6CB13
+	on_key	KEY_SoftKeyCol5Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol6Alt,	StepRecord_NoAction	; -> ret stub
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_StepRecord	; -> 0xF6748D
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_StepRecord	; -> 0xF6749D
+	on_key	KEY_PageAlt,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1A,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_NumberPad,		StepRecord_NoAction	; -> ret stub
 	on_key	KEY_Code1C,		StepRecord_NoAction	; -> ret stub

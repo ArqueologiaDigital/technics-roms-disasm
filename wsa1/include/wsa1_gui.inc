@@ -504,15 +504,15 @@
 	.equ KEY_Code0E,	0x0e	; TODO: nothing on this panel raises code 0x0E (no template emits it)
 	.equ KEY_Exit,		0x0f	; EXIT (position 1 only); the one slot all 32 prom_b ButtonTable_* maps fill, with an ExitKey_* handler
 	.equ KEY_Page,		0x10	; the PAGE v / PAGE ^ pair; position 0 = v, 1 = ^
-	.equ KEY_Code11,	0x11	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code12,	0x12	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound; round 12 lists the number pad's remapped slot here
-	.equ KEY_Code13,	0x13	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code14,	0x14	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code15,	0x15	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code16,	0x16	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code17,	0x17	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code18,	0x18	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
-	.equ KEY_Code19,	0x19	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_SoftKeyCol1Alt,	0x11	; the soft-key column's SECOND event: PanelEvent_ToFieldIndex (prom_a) folds codes 0x11-0x18 onto ops 0-7, the codes of KEY_SoftKeyCol1-8, and sets bit 7 of its flag byte; in the 87 key maps 182 of these slots repeat the column's own handler, 41 differ.  TODO: which physical action raises it -- no prom_a panel template emits it
+	.equ KEY_SoftKeyCol2Alt,	0x12	; as KEY_SoftKeyCol1Alt, for column 2
+	.equ KEY_SoftKeyCol3Alt,	0x13	; as KEY_SoftKeyCol1Alt, for column 3
+	.equ KEY_SoftKeyCol4Alt,	0x14	; as KEY_SoftKeyCol1Alt, for column 4
+	.equ KEY_SoftKeyCol5Alt,	0x15	; as KEY_SoftKeyCol1Alt, for column 5
+	.equ KEY_SoftKeyCol6Alt,	0x16	; as KEY_SoftKeyCol1Alt, for column 6
+	.equ KEY_SoftKeyCol7Alt,	0x17	; as KEY_SoftKeyCol1Alt, for column 7
+	.equ KEY_SoftKeyCol8Alt,	0x18	; as KEY_SoftKeyCol1Alt, for column 8
+	.equ KEY_PageAlt,	0x19	; PAGE's second event: PanelEvent_ToFieldIndex folds code 0x19 onto op 0x10, KEY_Page's.  TODO: as KEY_SoftKeyCol1Alt
 	.equ KEY_Code1A,	0x1a	; TODO: no template emits this code and no control is known for it
 	.equ KEY_NumberPad,	0x1b	; the number pad, the whole field
 	.equ KEY_Code1C,	0x1c	; TODO: no template emits this code and no control is known for it
@@ -534,6 +534,24 @@
 	.if _keymap_next <> 32
 	.error "keymap_end: a key map has exactly 32 entries, one per key code"
 	.endif
+.endm
+
+; ---- a tone-edit page's FIELD OPERATION table: the same idea, 17 entries.
+;      PanelEvent_ToFieldIndex (prom_a 0xFD7905) turns the key code into an
+;      operation 0..16 before the page dispatches: codes 0x00-0x10 are their own
+;      operation (`cp DE,0x0010 / jr ugt`, 0xFD7946), 0x11-0x18 become 0-7 with
+;      bit 7 of the flag byte set (`sub C,0x11` / `or (XIX),0x80`, 0xFD796A),
+;      0x19 becomes 0x10 (0xFD7986), and every other code is refused.  So entry k
+;      is the handler of KEY code k for k = 0..16, and the table ends in a zero
+;      word no reader can index.
+;	keymap_begin
+;	on_key	KEY_SoftKeyCol1,	...	(17 entries, KEY_SoftKeyCol1 .. KEY_Page)
+;	fieldops_end
+.macro fieldops_end
+	.if _keymap_next <> 17
+	.error "fieldops_end: a field-operation table has exactly 17 entries, key codes 0x00-0x10"
+	.endif
+	.long 0
 .endm
 
 .endif

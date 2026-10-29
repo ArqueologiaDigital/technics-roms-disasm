@@ -192,15 +192,15 @@ Sequencer_ButtonTable:
 	on_key	KEY_Code0E,		Sequencer_ButtonTable_Nop13
 	on_key	KEY_Exit,		ExitKey_Sequencer
 	on_key	KEY_Page,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code11,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code12,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code13,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code14,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code15,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code16,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code17,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code18,		Sequencer_ButtonTable_Nop16
-	on_key	KEY_Code19,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_PageAlt,		Sequencer_ButtonTable_Nop16
 	on_key	KEY_Code1A,		Sequencer_ButtonTable_Nop16
 	on_key	KEY_NumberPad,		Sequencer_ButtonTable_Nop16
 	on_key	KEY_Code1C,		Sequencer_ButtonTable_Nop16
@@ -1080,15 +1080,15 @@ EditPartSelect_ButtonTable:
 	on_key	KEY_Code0E,		SoftKeyCol8_EditPartSelect_Nop8
 	on_key	KEY_Exit,		ExitKey_EditPartSelect
 	on_key	KEY_Page,		SoftKeyCol8_EditPartSelect_Nop8
-	on_key	KEY_Code11,		SoftKeyCol1_EditPartSelect
-	on_key	KEY_Code12,		SoftKeyCol2_EditPartSelect
-	on_key	KEY_Code13,		SoftKeyCol3_EditPartSelect
-	on_key	KEY_Code14,		SoftKeyCol4_EditPartSelect
-	on_key	KEY_Code15,		SoftKeyCol5_EditPartSelect
-	on_key	KEY_Code16,		SoftKeyCol6_EditPartSelect
-	on_key	KEY_Code17,		SoftKeyCol7_EditPartSelect
-	on_key	KEY_Code18,		SoftKeyCol8_EditPartSelect
-	on_key	KEY_Code19,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_EditPartSelect
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_EditPartSelect
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_EditPartSelect
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_EditPartSelect
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_EditPartSelect
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_EditPartSelect
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_EditPartSelect
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_EditPartSelect
+	on_key	KEY_PageAlt,		ExitKey_EditPartSelect_Nop25
 	on_key	KEY_Code1A,		ExitKey_EditPartSelect_Nop25
 	on_key	KEY_NumberPad,		ExitKey_EditPartSelect_Nop25
 	on_key	KEY_Code1C,		ExitKey_EditPartSelect_Nop25
@@ -3245,15 +3245,15 @@ NoteEdit_ButtonTable:
 	on_key	KEY_Code0E,		LcdKeyRow4_NoteEdit_Nop12
 	on_key	KEY_Exit,		ExitKey_NoteEdit
 	on_key	KEY_Page,		LcdKeyRow4_NoteEdit_Nop12
-	on_key	KEY_Code11,		NoteEdit_Button17
-	on_key	KEY_Code12,		NoteEdit_Button18
-	on_key	KEY_Code13,		NoteEdit_Button19
-	on_key	KEY_Code14,		NoteEdit_Button20
-	on_key	KEY_Code15,		NoteEdit_Button21
-	on_key	KEY_Code16,		NoteEdit_Button22
-	on_key	KEY_Code17,		NoteEdit_Button23
-	on_key	KEY_Code18,		NoteEdit_Button24
-	on_key	KEY_Code19,		NoteEdit_Button24_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	NoteEdit_Button17
+	on_key	KEY_SoftKeyCol2Alt,	NoteEdit_Button18
+	on_key	KEY_SoftKeyCol3Alt,	NoteEdit_Button19
+	on_key	KEY_SoftKeyCol4Alt,	NoteEdit_Button20
+	on_key	KEY_SoftKeyCol5Alt,	NoteEdit_Button21
+	on_key	KEY_SoftKeyCol6Alt,	NoteEdit_Button22
+	on_key	KEY_SoftKeyCol7Alt,	NoteEdit_Button23
+	on_key	KEY_SoftKeyCol8Alt,	NoteEdit_Button24
+	on_key	KEY_PageAlt,		NoteEdit_Button24_Nop25
 	on_key	KEY_Code1A,		NoteEdit_Button24_Nop25
 	on_key	KEY_NumberPad,		NoteEdit_Button24_Nop25
 	on_key	KEY_Code1C,		NoteEdit_Button24_Nop25
@@ -3422,15 +3422,15 @@ DrumEdit_ButtonTable:
 	on_key	KEY_Code0E,		LcdKeyRow4_DrumEdit_Nop12
 	on_key	KEY_Exit,		ExitKey_DrumEdit
 	on_key	KEY_Page,		LcdKeyRow4_DrumEdit_Nop12
-	on_key	KEY_Code11,		DrumEdit_Button17
-	on_key	KEY_Code12,		DrumEdit_Button18
-	on_key	KEY_Code13,		DrumEdit_Button19
-	on_key	KEY_Code14,		DrumEdit_Button20
-	on_key	KEY_Code15,		DrumEdit_Button21
-	on_key	KEY_Code16,		DrumEdit_Button22
-	on_key	KEY_Code17,		DrumEdit_Button23
-	on_key	KEY_Code18,		DrumEdit_Button23_Nop24
-	on_key	KEY_Code19,		DrumEdit_Button23_Nop25
+	on_key	KEY_SoftKeyCol1Alt,	DrumEdit_Button17
+	on_key	KEY_SoftKeyCol2Alt,	DrumEdit_Button18
+	on_key	KEY_SoftKeyCol3Alt,	DrumEdit_Button19
+	on_key	KEY_SoftKeyCol4Alt,	DrumEdit_Button20
+	on_key	KEY_SoftKeyCol5Alt,	DrumEdit_Button21
+	on_key	KEY_SoftKeyCol6Alt,	DrumEdit_Button22
+	on_key	KEY_SoftKeyCol7Alt,	DrumEdit_Button23
+	on_key	KEY_SoftKeyCol8Alt,	DrumEdit_Button23_Nop24
+	on_key	KEY_PageAlt,		DrumEdit_Button23_Nop25
 	on_key	KEY_Code1A,		DrumEdit_Button23_Nop25
 	on_key	KEY_NumberPad,		DrumEdit_Button23_Nop25
 	on_key	KEY_Code1C,		DrumEdit_Button23_Nop25

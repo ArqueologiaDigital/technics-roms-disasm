@@ -6711,38 +6711,40 @@ sub_F90CD4:
 ; ---------------------------------------------------------------------
 
 DisplayListPtrs_F90CD8:
-	.long SoftKeyCol1_Oct                                 ; F90CD8  [  0]
-	.long SoftKeyCol2_LvlVol                                 ; F90CDC  [  1]
-	.long SoftKeyCol3_Pan                                 ; F90CE0  [  2]
-	.long SoftKeyCol4_Eff1                                 ; F90CE4  [  3]
-	.long SoftKeyCol5_Eff2                                 ; F90CE8  [  4]
-	.long SoftKeyCol6_Rev                                 ; F90CEC  [  5]
-	.long SoftKeyCol7_Int                                 ; F90CF0  [  6]
-	.long SoftKeyCol8_Midi                                 ; F90CF4  [  7]
-	.long LcdKeyRow1_SoundMode                                 ; F90CF8  [  8]
-	.long DisplayListPtrs_F90CD8_Nop9                                 ; F90CFC  [  9]
-	.long DisplayListPtrs_F90CD8_Nop10                                 ; F90D00  [ 10]
-	.long LcdKeyRow4_SoundModeOrC0mbinati0nM0de                                 ; F90D04  [ 11]
-	.long DisplayListPtrs_F90CD8_Nop12                                 ; F90D08  [ 12]
-	.long DisplayListPtrs_F90CD8_Nop13                                 ; F90D0C  [ 13]
-	.long DisplayListPtrs_F90CD8_Nop14                                 ; F90D10  [ 14]
-	.long ExitKey_SoundMode                                 ; F90D14  [ 15]
-	.long DisplayListPtrs_F90CD8_Nop16                                 ; F90D18  [ 16]
-	.long SoftKeyCol1_Oct_AltCode                                 ; F90D1C  [ 17]
-	.long SoftKeyCol2_LvlVol_AltCode                                 ; F90D20  [ 18]
-	.long SoftKeyCol3_Pan_AltCode                                 ; F90D24  [ 19]
-	.long SoftKeyCol4_Eff1_AltCode                                 ; F90D28  [ 20]
-	.long SoftKeyCol5_Eff2_AltCode                                 ; F90D2C  [ 21]
-	.long SoftKeyCol6_Rev_AltCode                                 ; F90D30  [ 22]
-	.long SoftKeyCol7_Int_AltCode                                 ; F90D34  [ 23]
-	.long SoftKeyCol8_Midi_AltCode                                 ; F90D38  [ 24]
-	.long DisplayListPtrs_F90CD8_Nop25                                 ; F90D3C  [ 25]
-	.long DisplayListPtrs_F90CD8_Nop26                                 ; F90D40  [ 26]
-	.long DisplayListPtrs_F90CD8_Nop27                                 ; F90D44  [ 27]
-	.long DisplayListPtrs_F90CD8_Nop28                                 ; F90D48  [ 28]
-	.long DisplayListPtrs_F90CD8_Nop29                                 ; F90D4C  [ 29]
-	.long DisplayListPtrs_F90CD8_Nop30                                 ; F90D50  [ 30]
-	.long DisplayListPtrs_F90CD8_Nop31                                 ; F90D54  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_Oct
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_LvlVol
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_Pan
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_Eff1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_Eff2
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_Rev
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_Int
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_Midi
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundMode
+	on_key	KEY_LcdRow2,		DisplayListPtrs_F90CD8_Nop9
+	on_key	KEY_LcdRow3,		DisplayListPtrs_F90CD8_Nop10
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundModeOrC0mbinati0nM0de
+	on_key	KEY_LcdRow5,		DisplayListPtrs_F90CD8_Nop12
+	on_key	KEY_MinusPlus,		DisplayListPtrs_F90CD8_Nop13
+	on_key	KEY_Code0E,		DisplayListPtrs_F90CD8_Nop14
+	on_key	KEY_Exit,		ExitKey_SoundMode
+	on_key	KEY_Page,		DisplayListPtrs_F90CD8_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_Oct_AltCode
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_LvlVol_AltCode
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_Pan_AltCode
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_Eff1_AltCode
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_Eff2_AltCode
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_Rev_AltCode
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_Int_AltCode
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_Midi_AltCode
+	on_key	KEY_PageAlt,		DisplayListPtrs_F90CD8_Nop25
+	on_key	KEY_Code1A,		DisplayListPtrs_F90CD8_Nop26
+	on_key	KEY_NumberPad,		DisplayListPtrs_F90CD8_Nop27
+	on_key	KEY_Code1C,		DisplayListPtrs_F90CD8_Nop28
+	on_key	KEY_Code1D,		DisplayListPtrs_F90CD8_Nop29
+	on_key	KEY_Compare,		DisplayListPtrs_F90CD8_Nop30
+	on_key	KEY_Code1F,		DisplayListPtrs_F90CD8_Nop31
+	keymap_end
 ; InstallPainter_SoundMode -- set up screen 1 and install its painters (Paint_SoundMode, Paint_SoundModeFields)
 ; Evidence: when (0x207C) != (0x207D): T_CallbackQueue_ResetAndRestartTask2, (0x2666) = (0x266A) = 0xFFFFFFFF,
 ;   (0x209B) = 0x0181, or (0x2075),0x01.  Then T_CallbackQueue_Post of Paint_SoundMode (skipped while (0x2095) bit 4
@@ -10435,15 +10437,15 @@ ScreenButtonHandlers_GroupSoundDisplayHold:
 	on_key	KEY_Code0E,		ScreenButtonHandlers_GroupSoundDisplayHold_Nop14
 	on_key	KEY_Exit,		ExitKey_GroupSoundDisplayHold
 	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
-	on_key	KEY_Code11,		SoftKeyCol1_GroupSoundDisplayHold
-	on_key	KEY_Code12,		SoftKeyCol2_GroupSoundDisplayHold
-	on_key	KEY_Code13,		SoftKeyCol3_GroupSoundDisplayHold
-	on_key	KEY_Code14,		SoftKeyCol4_GroupSoundDisplayHold
-	on_key	KEY_Code15,		SoftKeyCol5_GroupSoundDisplayHold
-	on_key	KEY_Code16,		SoftKeyCol6_GroupSoundDisplayHold
-	on_key	KEY_Code17,		SoftKeyCol7_GroupSoundDisplayHold
-	on_key	KEY_Code18,		SoftKeyCol8_GroupSoundDisplayHold
-	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_GroupSoundDisplayHold
+	on_key	KEY_PageAlt,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_NumberPad,		NumberPadKey_GroupSoundDisplayHold
 	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
@@ -11609,15 +11611,15 @@ ScreenButtonHandlers_CombinationGroupMenu:
 	on_key	KEY_Code0E,		ScreenButtonHandlers_CombinationGroupMenu_Nop14
 	on_key	KEY_Exit,		ExitKey_CombinationGroupMenu
 	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
-	on_key	KEY_Code11,		SoftKeyCol1_CombinationGroupMenu
-	on_key	KEY_Code12,		ScreenButtonHandlers_CombinationGroupMenu_Nop1
-	on_key	KEY_Code13,		ScreenButtonHandlers_CombinationGroupMenu_Nop2
-	on_key	KEY_Code14,		SoftKeyCol4_CombinationGroupMenu
-	on_key	KEY_Code15,		SoftKeyCol5_CombinationGroupMenu
-	on_key	KEY_Code16,		SoftKeyCol6_CombinationGroupMenu
-	on_key	KEY_Code17,		ScreenButtonHandlers_CombinationGroupMenu_Nop6
-	on_key	KEY_Code18,		ScreenButtonHandlers_CombinationGroupMenu_Nop7
-	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol2Alt,	ScreenButtonHandlers_CombinationGroupMenu_Nop1
+	on_key	KEY_SoftKeyCol3Alt,	ScreenButtonHandlers_CombinationGroupMenu_Nop2
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol7Alt,	ScreenButtonHandlers_CombinationGroupMenu_Nop6
+	on_key	KEY_SoftKeyCol8Alt,	ScreenButtonHandlers_CombinationGroupMenu_Nop7
+	on_key	KEY_PageAlt,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_NumberPad,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
@@ -12018,15 +12020,15 @@ ScreenButtonHandlers_GroupCombiDisplayHold:
 	on_key	KEY_Code0E,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop14
 	on_key	KEY_Exit,		ExitKey_GroupCombiDisplayHold
 	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
-	on_key	KEY_Code11,		SoftKeyCol1_GroupCombiDisplayHold
-	on_key	KEY_Code12,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop1
-	on_key	KEY_Code13,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop2
-	on_key	KEY_Code14,		SoftKeyCol4_GroupCombiDisplayHold
-	on_key	KEY_Code15,		SoftKeyCol5_GroupCombiDisplayHold
-	on_key	KEY_Code16,		SoftKeyCol6_GroupCombiDisplayHold
-	on_key	KEY_Code17,		SoftKeyCol7_GroupCombiDisplayHold
-	on_key	KEY_Code18,		SoftKeyCol8_GroupCombiDisplayHold
-	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol2Alt,	ScreenButtonHandlers_GroupCombiDisplayHold_Nop1
+	on_key	KEY_SoftKeyCol3Alt,	ScreenButtonHandlers_GroupCombiDisplayHold_Nop2
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_GroupCombiDisplayHold
+	on_key	KEY_PageAlt,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
 	on_key	KEY_NumberPad,		NumberPadKey_GroupCombiDisplayHold
 	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
@@ -13042,38 +13044,40 @@ sub_F9408A:
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.
 ; ---------------------------------------------------------------------
 DisplayListPtrs_F9408E:
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F9408E  [  0]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F94092  [  1]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F94096  [  2]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F9409A  [  3]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F9409E  [  4]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940A2  [  5]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940A6  [  6]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940AA  [  7]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940AE  [  8]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940B2  [  9]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940B6  [ 10]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940BA  [ 11]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940BE  [ 12]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940C2  [ 13]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940C6  [ 14]
-	.long ExitKey_PowerOnSplash                                 ; F940CA  [ 15]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940CE  [ 16]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940D2  [ 17]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940D6  [ 18]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940DA  [ 19]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940DE  [ 20]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940E2  [ 21]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940E6  [ 22]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940EA  [ 23]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940EE  [ 24]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940F2  [ 25]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940F6  [ 26]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940FA  [ 27]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F940FE  [ 28]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F94102  [ 29]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F94106  [ 30]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F9410A  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol2,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol3,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol4,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol5,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol6,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol7,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol8,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_LcdRow1,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_LcdRow2,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_LcdRow3,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_LcdRow4,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_LcdRow5,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_MinusPlus,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code0E,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Exit,		ExitKey_PowerOnSplash
+	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol1Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol2Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol3Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol4Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol5Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol6Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol7Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_SoftKeyCol8Alt,	DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_PageAlt,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_NumberPad,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1D,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Compare,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1F,		DisplayListPtrs_F914FB_Nop8
+	keymap_end
 ; Paint_PowerOnSplash_Entry -- a PURE WRAPPER for Paint_PowerOnSplash: `calr 0xF94112 / ret`, named for it
 ; Evidence: its only caller is ScreenEnter_PowerOnSplash (0xF94078); the extent ends at 0xF94112, where Paint_PowerOnSplash begins.
 Paint_PowerOnSplash_Entry:

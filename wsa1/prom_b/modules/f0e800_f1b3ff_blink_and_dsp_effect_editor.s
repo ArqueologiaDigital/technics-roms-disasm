@@ -22245,15 +22245,15 @@ ScreenButtons_CombinationNamingWrite:
 	on_key	KEY_Code0E,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
 	on_key	KEY_Exit,		ExitKey_CombinationNamingWrite	; -> prom_a 0xFBF2AB
 	on_key	KEY_Page,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
-	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
-	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
-	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
-	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
-	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
-	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
-	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
-	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
-	on_key	KEY_Code19,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
+	on_key	KEY_PageAlt,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
 	on_key	KEY_Code1A,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
 	on_key	KEY_NumberPad,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
 	on_key	KEY_Code1C,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235

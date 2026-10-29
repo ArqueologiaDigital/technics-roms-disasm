@@ -141,15 +141,15 @@ Dispatch_FF3800:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskMenu
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -212,15 +212,15 @@ Dispatch_FF3880:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileDirectPlay
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -283,15 +283,15 @@ Dispatch_FF3900:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskL0adFile
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -354,15 +354,15 @@ Dispatch_FF3980:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileL0ad
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -471,15 +471,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page0
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		SoftKeyCol1_DiskSaveFile_Page0
-	on_key	KEY_Code12,		SoftKeyCol2_DiskSaveFile_Page0
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		SoftKeyCol4_DiskSaveFile_Page0
-	on_key	KEY_Code15,		SoftKeyCol5_DiskSaveFile_Page0
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		SoftKeyCol7_DiskSaveFile_Page0
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -506,15 +506,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page1
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		SoftKeyCol4_DiskSaveFile_Page1
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_DiskSaveFile_Page1
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -541,15 +541,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page2
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -576,15 +576,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1
-	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2
-	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3
-	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4
-	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5
-	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6
-	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7
-	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -611,15 +611,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1
-	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2
-	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3
-	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4
-	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5
-	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6
-	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7
-	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -646,15 +646,15 @@ Dispatch_FF3A29:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page5
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -744,15 +744,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		SoftKeyCol1_MidiFileSave_Page0
-	on_key	KEY_Code12,		SoftKeyCol2_MidiFileSave_Page0
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		SoftKeyCol4_MidiFileSave_Page0
-	on_key	KEY_Code15,		SoftKeyCol5_MidiFileSave_Page0
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		SoftKeyCol7_MidiFileSave_Page0
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -779,15 +779,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -814,15 +814,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -849,15 +849,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -884,15 +884,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page4
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		sub_FF657B
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	sub_FF657B
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
@@ -919,15 +919,15 @@ Dispatch_FF3D39:
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
 	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page5
 	on_key	KEY_Page,		DispatchMatrix_NoAction
-	on_key	KEY_Code11,		DispatchMatrix_NoAction
-	on_key	KEY_Code12,		DispatchMatrix_NoAction
-	on_key	KEY_Code13,		DispatchMatrix_NoAction
-	on_key	KEY_Code14,		DispatchMatrix_NoAction
-	on_key	KEY_Code15,		DispatchMatrix_NoAction
-	on_key	KEY_Code16,		DispatchMatrix_NoAction
-	on_key	KEY_Code17,		DispatchMatrix_NoAction
-	on_key	KEY_Code18,		DispatchMatrix_NoAction
-	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
 	on_key	KEY_Code1A,		DispatchMatrix_NoAction
 	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
 	on_key	KEY_Code1C,		DispatchMatrix_NoAction
