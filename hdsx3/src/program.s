@@ -10,6 +10,7 @@
 .mnbase 0x97800000
 .include "src/symbols.inc"
 .include "src/labels.inc"
+.include "src/program/data/gui_code_ids.inc"
 
 	.byte	0x58, 0x41, 0x50, 0x52	# "XAPR"
 	.long	XaprTrailerSignature
@@ -6912,56 +6913,56 @@ func_97803C8A_entry_L110:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000f, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_OptionSelectDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880017, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_GetSelectedDir, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01a80026, d1
+	mov	SelectedDirectory_id, d0
+	mov	MT_PsSetArea, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880011, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetDirBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880015, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880013, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	clr	d0
 	call	func_97802F04, 0, 0
@@ -16733,7 +16734,7 @@ PfDoubleToDecimal_entry:
 	mov	sp, a2
 	add	0x68, a2
 	mov	a2, (4, sp)
-	mov	data_9783E698, a1
+	mov	PfDoubleToDecimal_Table, a1
 	mov	sp, a0
 	add	0x44, a0
 	mov	-5, d1
@@ -17312,7 +17313,7 @@ LibI32ToF64_L55:
 
 LibF64Zero:
 	add	-8, sp
-	mov	data_9783E6AC, a0
+	mov	LibF64Zero_Table, a0
 	mov	sp, a1
 	mov	(a0), d1
 	mov	(4, a0), d0
@@ -19565,7 +19566,7 @@ func_9780A414:
 	add	-0x2c, sp
 
 func_9780A414_entry:
-	mov	0x01600004, d0
+	mov	CLASS_Class, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19582,7 +19583,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x0160000c, d0
+	mov	CLASS_ResEvent, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19599,7 +19600,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x0160000d, d0
+	mov	CLASS_ResMethod, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19616,7 +19617,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600002, d0
+	mov	CLASS_ApFunction, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19633,7 +19634,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600002, d0
+	mov	CLASS_ApFunction, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19650,7 +19651,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600001, d0
+	mov	CLASS_Function, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19667,7 +19668,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600001, d0
+	mov	CLASS_Function, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19684,7 +19685,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600003, d0
+	mov	CLASS_MainFunction, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19701,7 +19702,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600003, d0
+	mov	CLASS_MainFunction, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19718,7 +19719,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x01600010, d0
+	mov	CLASS_Viewable, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19735,7 +19736,7 @@ func_9780A414_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	0x0160000f, d0
+	mov	CLASS_ResName, d0
 	mov	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -19768,33 +19769,33 @@ func_9780A414_entry:
 BitmapDirsel:
 	mov	d1, (0xc, sp)
 	mov	d1, d0
-	cmp	0x1a00094, d0
+	cmp	MT_GetBitmapData, d0
 	bne	BitmapDirsel_Ld
 	bra	BitmapDirsel_L3f
 BitmapDirsel_Ld:
 	mov	(0xc, sp), d0
-	cmp	0x1a00095, d0
+	cmp	MT_GetBitmapWidth, d0
 	bne	BitmapDirsel_L19
 	bra	BitmapDirsel_L47
 BitmapDirsel_L19:
 	mov	(0xc, sp), d0
-	cmp	0x1a00096, d0
+	cmp	MT_GetBitmapHeight, d0
 	bne	BitmapDirsel_L25
 	bra	BitmapDirsel_L4b
 BitmapDirsel_L25:
 	mov	(0xc, sp), d0
-	cmp	0x1a000af, d0
+	cmp	MT_GetBitCount, d0
 	bne	BitmapDirsel_L31
 	bra	BitmapDirsel_L4f
 BitmapDirsel_L31:
 	mov	(0xc, sp), d0
-	cmp	0x1a00097, d0
+	cmp	MT_GetBitmapPalette, d0
 	bne	BitmapDirsel_L3d
 	bra	BitmapDirsel_L53
 BitmapDirsel_L3d:
 	bra	BitmapDirsel_L5b
 BitmapDirsel_L3f:
-	mov	data_978518BC, d0
+	mov	BitmapDirsel_Pixels, d0
 	bra	BitmapDirsel_L5c
 BitmapDirsel_L47:
 	mov	0x64, d0
@@ -19806,7 +19807,7 @@ BitmapDirsel_L4f:
 	mov	8, d0
 	bra	BitmapDirsel_L5c
 BitmapDirsel_L53:
-	mov	data_978514BC, d0
+	mov	BitmapDirsel_Palette, d0
 	bra	BitmapDirsel_L5c
 BitmapDirsel_L5b:
 	clr	d0
@@ -19816,33 +19817,33 @@ BitmapDirsel_L5c:
 BitmapBg001:
 	mov	d1, (0xc, sp)
 	mov	d1, d0
-	cmp	0x1a00094, d0
+	cmp	MT_GetBitmapData, d0
 	bne	BitmapBg001_Ld
 	bra	BitmapBg001_L3f
 BitmapBg001_Ld:
 	mov	(0xc, sp), d0
-	cmp	0x1a00095, d0
+	cmp	MT_GetBitmapWidth, d0
 	bne	BitmapBg001_L19
 	bra	BitmapBg001_L47
 BitmapBg001_L19:
 	mov	(0xc, sp), d0
-	cmp	0x1a00096, d0
+	cmp	MT_GetBitmapHeight, d0
 	bne	BitmapBg001_L25
 	bra	BitmapBg001_L4c
 BitmapBg001_L25:
 	mov	(0xc, sp), d0
-	cmp	0x1a000af, d0
+	cmp	MT_GetBitCount, d0
 	bne	BitmapBg001_L31
 	bra	BitmapBg001_L51
 BitmapBg001_L31:
 	mov	(0xc, sp), d0
-	cmp	0x1a00097, d0
+	cmp	MT_GetBitmapPalette, d0
 	bne	BitmapBg001_L3d
 	bra	BitmapBg001_L55
 BitmapBg001_L3d:
 	bra	BitmapBg001_L5d
 BitmapBg001_L3f:
-	mov	data_9785248C, d0
+	mov	BitmapBg001_Pixels, d0
 	bra	BitmapBg001_L5e
 BitmapBg001_L47:
 	mov	0x280, d0
@@ -19854,7 +19855,7 @@ BitmapBg001_L51:
 	mov	8, d0
 	bra	BitmapBg001_L5e
 BitmapBg001_L55:
-	mov	data_9785208C, d0
+	mov	BitmapBg001_Palette, d0
 	bra	BitmapBg001_L5e
 BitmapBg001_L5d:
 	clr	d0
@@ -19864,33 +19865,33 @@ BitmapBg001_L5e:
 BitmapBg002:
 	mov	d1, (0xc, sp)
 	mov	d1, d0
-	cmp	0x1a00094, d0
+	cmp	MT_GetBitmapData, d0
 	bne	BitmapBg002_Ld
 	bra	BitmapBg002_L3f
 BitmapBg002_Ld:
 	mov	(0xc, sp), d0
-	cmp	0x1a00095, d0
+	cmp	MT_GetBitmapWidth, d0
 	bne	BitmapBg002_L19
 	bra	BitmapBg002_L47
 BitmapBg002_L19:
 	mov	(0xc, sp), d0
-	cmp	0x1a00096, d0
+	cmp	MT_GetBitmapHeight, d0
 	bne	BitmapBg002_L25
 	bra	BitmapBg002_L4c
 BitmapBg002_L25:
 	mov	(0xc, sp), d0
-	cmp	0x1a000af, d0
+	cmp	MT_GetBitCount, d0
 	bne	BitmapBg002_L31
 	bra	BitmapBg002_L51
 BitmapBg002_L31:
 	mov	(0xc, sp), d0
-	cmp	0x1a00097, d0
+	cmp	MT_GetBitmapPalette, d0
 	bne	BitmapBg002_L3d
 	bra	BitmapBg002_L55
 BitmapBg002_L3d:
 	bra	BitmapBg002_L5d
 BitmapBg002_L3f:
-	mov	data_9787808C, d0
+	mov	BitmapBg002_Pixels, d0
 	bra	BitmapBg002_L5e
 BitmapBg002_L47:
 	mov	0x280, d0
@@ -19902,7 +19903,7 @@ BitmapBg002_L51:
 	mov	8, d0
 	bra	BitmapBg002_L5e
 BitmapBg002_L55:
-	mov	data_97877C8C, d0
+	mov	BitmapBg002_Palette, d0
 	bra	BitmapBg002_L5e
 BitmapBg002_L5d:
 	clr	d0
@@ -20057,7 +20058,7 @@ func_9780A912:
 	add	0x1c, a0
 	mov	a0, (0x10, sp)
 	mov	0x00ff001a, d0
-	mov	0x0180001d, d1
+	mov	EV_MEMODRAW, d1
 	calls	(a1)
 	ret	0, 0x14
 
@@ -20294,17 +20295,17 @@ Debug_Wind_RW:
 	mov	d0, (0x1cc, sp)
 	mov	d1, (0x1d0, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	Debug_Wind_RW_L17
 	bra	Debug_Wind_RW_L36
 Debug_Wind_RW_L17:
 	mov	(0x1d0, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	Debug_Wind_RW_L25
 	bra	Debug_Wind_RW_L3b
 Debug_Wind_RW_L25:
 	mov	(0x1d0, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	Debug_Wind_RW_L33
 	bra	Debug_Wind_RW_L7f
 Debug_Wind_RW_L33:
@@ -20327,7 +20328,7 @@ Debug_Wind_RW_L3b:
 	mov	Str_PCLK, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1cc, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	Debug_Wind_RW_L381
@@ -20338,7 +20339,7 @@ Debug_Wind_RW_L7f:
 	mov	(0x1d4, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	Debug_Wind_RW_La7
@@ -20700,16 +20701,16 @@ func_9780AEBC_entry:
 	mov	(0x108, a0), a0
 	mov	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x0077022b, d0
-	mov	0x0180001d, d1
+	mov	DebRwMemo_id, d0
+	mov	EV_MEMODRAW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077022b, d0
-	mov	0x01a000b6, d1
+	mov	DebRwMemo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -20763,17 +20764,17 @@ TestSevKSSBoxProc:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	TestSevKSSBoxProc_L12
 	bra	TestSevKSSBoxProc_L2c
 TestSevKSSBoxProc_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	TestSevKSSBoxProc_L1e
 	bra	TestSevKSSBoxProc_L30
 TestSevKSSBoxProc_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	TestSevKSSBoxProc_L2a
 	bra	TestSevKSSBoxProc_L6b
 TestSevKSSBoxProc_L2a:
@@ -20796,7 +20797,7 @@ TestSevKSSBoxProc_L30:
 	mov	Str_TSKB, d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	TestSevKSSBoxProc_La7
@@ -20807,7 +20808,7 @@ TestSevKSSBoxProc_L6b:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	d0, (0x14, sp)
 TestSevKSSBoxProc_L8d:
@@ -20829,92 +20830,92 @@ KSSPsDirBoxProc:
 	mov	d0, (0x110, sp)
 	mov	d1, (0x114, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KSSPsDirBoxProc_L1a
 	jmp	KSSPsDirBoxProc_L11c
 KSSPsDirBoxProc_L1a:
 	mov	(0x114, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSPsDirBoxProc_L29
 	jmp	KSSPsDirBoxProc_L13f
 KSSPsDirBoxProc_L29:
 	mov	(0x114, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KSSPsDirBoxProc_L38
 	jmp	KSSPsDirBoxProc_L294
 KSSPsDirBoxProc_L38:
 	mov	(0x114, sp), d0
-	cmp	0x188000f, d0
+	cmp	EV_OptionSelectDraw, d0
 	bne	KSSPsDirBoxProc_L47
 	jmp	KSSPsDirBoxProc_L4f2
 KSSPsDirBoxProc_L47:
 	mov	(0x114, sp), d0
-	cmp	0x1880010, d0
+	cmp	EV_SetDirBoxInit, d0
 	bne	KSSPsDirBoxProc_L56
 	jmp	KSSPsDirBoxProc_L611
 KSSPsDirBoxProc_L56:
 	mov	(0x114, sp), d0
-	cmp	0x188000d, d0
+	cmp	EV_SetFileSfx, d0
 	bne	KSSPsDirBoxProc_L65
 	jmp	KSSPsDirBoxProc_L67a
 KSSPsDirBoxProc_L65:
 	mov	(0x114, sp), d0
-	cmp	0x188001b, d0
+	cmp	EV_SetSelectedBankNumber, d0
 	bne	KSSPsDirBoxProc_L74
 	jmp	KSSPsDirBoxProc_L9c2
 KSSPsDirBoxProc_L74:
 	mov	(0x114, sp), d0
-	cmp	0x1880013, d0
+	cmp	EV_SetFileBoxParam, d0
 	bne	KSSPsDirBoxProc_L83
 	jmp	KSSPsDirBoxProc_Ld18
 KSSPsDirBoxProc_L83:
 	mov	(0x114, sp), d0
-	cmp	0x1880014, d0
+	cmp	EV_SetSelectedNumber, d0
 	bne	KSSPsDirBoxProc_L92
 	jmp	KSSPsDirBoxProc_Le38
 KSSPsDirBoxProc_L92:
 	mov	(0x114, sp), d0
-	cmp	0x1880017, d0
+	cmp	EV_GetSelectedDir, d0
 	bne	KSSPsDirBoxProc_La1
 	jmp	KSSPsDirBoxProc_Le57
 KSSPsDirBoxProc_La1:
 	mov	(0x114, sp), d0
-	cmp	0x1880018, d0
+	cmp	EV_SetSelectedArea, d0
 	bne	KSSPsDirBoxProc_Lb0
 	jmp	KSSPsDirBoxProc_Leda
 KSSPsDirBoxProc_Lb0:
 	mov	(0x114, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSPsDirBoxProc_Lbf
 	jmp	KSSPsDirBoxProc_Lef9
 KSSPsDirBoxProc_Lbf:
 	mov	(0x114, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KSSPsDirBoxProc_Lce
 	jmp	KSSPsDirBoxProc_Lef9
 KSSPsDirBoxProc_Lce:
 	mov	(0x114, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSPsDirBoxProc_Ldd
 	jmp	KSSPsDirBoxProc_Lfb5
 KSSPsDirBoxProc_Ldd:
 	mov	(0x114, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KSSPsDirBoxProc_Lec
 	jmp	KSSPsDirBoxProc_Lfb5
 KSSPsDirBoxProc_Lec:
 	mov	(0x114, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KSSPsDirBoxProc_Lfb
 	jmp	KSSPsDirBoxProc_L107d
 KSSPsDirBoxProc_Lfb:
 	mov	(0x114, sp), d0
-	cmp	0x1880004, d0
+	cmp	EV_TimerBack, d0
 	bne	KSSPsDirBoxProc_L10a
 	jmp	KSSPsDirBoxProc_L10b9
 KSSPsDirBoxProc_L10a:
 	mov	(0x114, sp), d0
-	cmp	0x1880005, d0
+	cmp	EV_NOTPARADRAW, d0
 	bne	KSSPsDirBoxProc_L119
 	jmp	KSSPsDirBoxProc_L110a
 KSSPsDirBoxProc_L119:
@@ -20974,7 +20975,7 @@ KSSPsDirBoxProc_L18d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -20982,7 +20983,7 @@ KSSPsDirBoxProc_L18d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L256
 KSSPsDirBoxProc_L1ca:
@@ -21000,7 +21001,7 @@ KSSPsDirBoxProc_L1e0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21008,7 +21009,7 @@ KSSPsDirBoxProc_L1e0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L256
 KSSPsDirBoxProc_L21c:
@@ -21018,7 +21019,7 @@ KSSPsDirBoxProc_L21c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21026,7 +21027,7 @@ KSSPsDirBoxProc_L21c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L256:
 	mov	(data_979126B4), a0
@@ -21074,7 +21075,7 @@ KSSPsDirBoxProc_L2d4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0188000f, d1
+	mov	EV_OptionSelectDraw, d1
 	calls	(a0)
 KSSPsDirBoxProc_L2f1:
 	mov	(0x28, sp), a0
@@ -21201,7 +21202,7 @@ KSSPsDirBoxProc_L3ef:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21209,7 +21210,7 @@ KSSPsDirBoxProc_L3ef:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L4b8
 KSSPsDirBoxProc_L42c:
@@ -21227,7 +21228,7 @@ KSSPsDirBoxProc_L442:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21235,7 +21236,7 @@ KSSPsDirBoxProc_L442:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L4b8
 KSSPsDirBoxProc_L47e:
@@ -21245,7 +21246,7 @@ KSSPsDirBoxProc_L47e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21253,7 +21254,7 @@ KSSPsDirBoxProc_L47e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L4b8:
 	mov	(data_979126B4), a0
@@ -21271,7 +21272,7 @@ KSSPsDirBoxProc_L4ca:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a1)
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
@@ -21291,7 +21292,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	(0x28, a1), d0
 	mov	1, d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8002a, d1
+	mov	MT_PsSetSelect, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21300,7 +21301,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	(0x28, a1), d0
 	mov	1, d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80026, d1
+	mov	MT_PsSetArea, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21310,7 +21311,7 @@ KSSPsDirBoxProc_L4f2:
 	movhu	(0x30, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80025, d1
+	mov	MT_PsSetMaxArea, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -21321,7 +21322,7 @@ KSSPsDirBoxProc_L4f2:
 	movhu	(0x2c, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80023, d1
+	mov	MT_PsSetColumn, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -21332,7 +21333,7 @@ KSSPsDirBoxProc_L4f2:
 	movhu	(0x2e, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80024, d1
+	mov	MT_PsSetRow, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21342,7 +21343,7 @@ KSSPsDirBoxProc_L4f2:
 	movhu	(0x32, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80029, d1
+	mov	MT_PsSetTotalEnt, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(0x28, sp), a0
@@ -21362,7 +21363,7 @@ KSSPsDirBoxProc_L4f2:
 	movhu	(0x97913abc), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80028, d1
+	mov	MT_PsSetEntPerPage, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
@@ -21384,7 +21385,7 @@ KSSPsDirBoxProc_L611:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8002a, d1
+	mov	MT_PsSetSelect, d1
 	mov	d2, d0
 	calls	(a1)
 	mov	(data_979126B4), a0
@@ -21396,7 +21397,7 @@ KSSPsDirBoxProc_L611:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80026, d1
+	mov	MT_PsSetArea, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -21418,14 +21419,14 @@ KSSPsDirBoxProc_L69a:
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L69e:
 	mov	(0x110, sp), d0
-	cmp	0x770253, d0
+	cmp	SelectedDirectory_id, d0
 	beq	KSSPsDirBoxProc_L6ac
 	bra	KSSPsDirBoxProc_L6c6
 KSSPsDirBoxProc_L6ac:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077026b, d0
+	mov	SelectedCopyDest_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_L6de
@@ -21433,7 +21434,7 @@ KSSPsDirBoxProc_L6c6:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770253, d0
+	mov	SelectedDirectory_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 KSSPsDirBoxProc_L6de:
@@ -21490,7 +21491,7 @@ KSSPsDirBoxProc_L706:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007701f5, d0
+	mov	SelectedDirInFile_id, d0
 	calls	(a0)
 	mov	a0, (0x34, sp)
 	mov	(0x34, a0), a0
@@ -21507,8 +21508,8 @@ KSSPsDirBoxProc_L706:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01a8002a, d1
+	mov	SelectedDirInFile_id, d0
+	mov	MT_PsSetSelect, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -21518,8 +21519,8 @@ KSSPsDirBoxProc_L706:
 	movhu	(a0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01a80027, d1
+	mov	SelectedDirInFile_id, d0
+	mov	MT_PsSetDir, d1
 	calls	(a1)
 KSSPsDirBoxProc_L7cc:
 	mov	(data_979126B4), a0
@@ -21528,7 +21529,7 @@ KSSPsDirBoxProc_L7cc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01880010, d1
+	mov	EV_SetDirBoxInit, d1
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L80e
 KSSPsDirBoxProc_L7eb:
@@ -21736,7 +21737,7 @@ KSSPsDirBoxProc_L9a1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x0188001b, d1
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
@@ -22101,7 +22102,7 @@ KSSPsDirBoxProc_Ld18:
 	calls	(a0)
 	mov	a0, (0x28, sp)
 	mov	(0x110, sp), d0
-	cmp	0x770253, d0
+	cmp	SelectedDirectory_id, d0
 	beq	KSSPsDirBoxProc_Ld3c
 	bra	KSSPsDirBoxProc_Ld5d
 KSSPsDirBoxProc_Ld3c:
@@ -22110,7 +22111,7 @@ KSSPsDirBoxProc_Ld3c:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077026b, d0
+	mov	SelectedCopyDest_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_Ld75
@@ -22118,7 +22119,7 @@ KSSPsDirBoxProc_Ld5d:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770253, d0
+	mov	SelectedDirectory_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 KSSPsDirBoxProc_Ld75:
@@ -22135,7 +22136,7 @@ KSSPsDirBoxProc_Ld75:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007701f5, d0
+	mov	SelectedDirInFile_id, d0
 	calls	(a0)
 	mov	a0, (0x34, sp)
 	mov	(0x34, a0), a0
@@ -22152,8 +22153,8 @@ KSSPsDirBoxProc_Ld75:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01a8002a, d1
+	mov	SelectedDirInFile_id, d0
+	mov	MT_PsSetSelect, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22163,8 +22164,8 @@ KSSPsDirBoxProc_Ld75:
 	movhu	(a0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01a80027, d1
+	mov	SelectedDirInFile_id, d0
+	mov	MT_PsSetDir, d1
 	calls	(a1)
 	mov	(0x118, sp), d0
 	mov	1, d1
@@ -22179,7 +22180,7 @@ KSSPsDirBoxProc_Ld75:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
@@ -22202,14 +22203,14 @@ KSSPsDirBoxProc_Le57:
 	calls	(a0)
 	mov	a0, (0x28, sp)
 	mov	(0x110, sp), d0
-	cmp	0x770253, d0
+	cmp	SelectedDirectory_id, d0
 	beq	KSSPsDirBoxProc_Le7b
 	bra	KSSPsDirBoxProc_Le95
 KSSPsDirBoxProc_Le7b:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077026b, d0
+	mov	SelectedCopyDest_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_Lead
@@ -22217,7 +22218,7 @@ KSSPsDirBoxProc_Le95:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770253, d0
+	mov	SelectedDirectory_id, d0
 	calls	(a0)
 	mov	a0, (0x30, sp)
 KSSPsDirBoxProc_Lead:
@@ -22285,7 +22286,7 @@ KSSPsDirBoxProc_Lf57:
 	bra	KSSPsDirBoxProc_Lfb1
 KSSPsDirBoxProc_Lf61:
 	mov	(0x114, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KSSPsDirBoxProc_Lf6f
 	bra	KSSPsDirBoxProc_Lf91
 KSSPsDirBoxProc_Lf6f:
@@ -22295,7 +22296,7 @@ KSSPsDirBoxProc_Lf6f:
 	mov	(0x118, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800011, d1
+	mov	EV_INDEXSW_UP_AIC, d1
 	calls	(a0)
 	bra	KSSPsDirBoxProc_Lfb1
 KSSPsDirBoxProc_Lf91:
@@ -22305,7 +22306,7 @@ KSSPsDirBoxProc_Lf91:
 	mov	(0x118, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x110, sp), d0
-	mov	0x01800012, d1
+	mov	EV_INDEXSW_DOWN_AIC, d1
 	calls	(a0)
 KSSPsDirBoxProc_Lfb1:
 	clr	d0
@@ -22343,7 +22344,7 @@ KSSPsDirBoxProc_Lffd:
 	bra	KSSPsDirBoxProc_L105b
 KSSPsDirBoxProc_L1009:
 	mov	(0x114, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	beq	KSSPsDirBoxProc_L1017
 	bra	KSSPsDirBoxProc_L103a
 KSSPsDirBoxProc_L1017:
@@ -22354,7 +22355,7 @@ KSSPsDirBoxProc_L1017:
 	mov	(0x28, a1), d0
 	mov	(0x118, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L105b
 KSSPsDirBoxProc_L103a:
@@ -22365,7 +22366,7 @@ KSSPsDirBoxProc_L103a:
 	mov	(0x28, a1), d0
 	mov	(0x118, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L105b:
 	mov	(data_979126B4), a0
@@ -22480,47 +22481,47 @@ KssDirBoxFunc:
 	add	-0x14, sp
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a80023, d0
+	cmp	MT_PsSetColumn, d0
 	bne	KssDirBoxFunc_L12
 	bra	KssDirBoxFunc_L75
 KssDirBoxFunc_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a80024, d0
+	cmp	MT_PsSetRow, d0
 	bne	KssDirBoxFunc_L1e
 	bra	KssDirBoxFunc_L81
 KssDirBoxFunc_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1a80025, d0
+	cmp	MT_PsSetMaxArea, d0
 	bne	KssDirBoxFunc_L2a
 	bra	KssDirBoxFunc_L8d
 KssDirBoxFunc_L2a:
 	mov	(0x24, sp), d0
-	cmp	0x1a80026, d0
+	cmp	MT_PsSetArea, d0
 	bne	KssDirBoxFunc_L36
 	bra	KssDirBoxFunc_L99
 KssDirBoxFunc_L36:
 	mov	(0x24, sp), d0
-	cmp	0x1a80028, d0
+	cmp	MT_PsSetEntPerPage, d0
 	bne	KssDirBoxFunc_L42
 	bra	KssDirBoxFunc_La5
 KssDirBoxFunc_L42:
 	mov	(0x24, sp), d0
-	cmp	0x1a80029, d0
+	cmp	MT_PsSetTotalEnt, d0
 	bne	KssDirBoxFunc_L4e
 	bra	KssDirBoxFunc_Lb1
 KssDirBoxFunc_L4e:
 	mov	(0x24, sp), d0
-	cmp	0x1a8002a, d0
+	cmp	MT_PsSetSelect, d0
 	bne	KssDirBoxFunc_L5a
 	bra	KssDirBoxFunc_Lbd
 KssDirBoxFunc_L5a:
 	mov	(0x24, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssDirBoxFunc_L66
 	bra	KssDirBoxFunc_Lc9
 KssDirBoxFunc_L66:
 	mov	(0x24, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssDirBoxFunc_L72
 	bra	KssDirBoxFunc_Lc9
 KssDirBoxFunc_L72:
@@ -22589,7 +22590,7 @@ KssDirBoxFunc_Lf5:
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_Lf8:
 	mov	(0x24, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	beq	KssDirBoxFunc_L105
 	jmp	KssDirBoxFunc_L2b2
 KssDirBoxFunc_L105:
@@ -22611,8 +22612,8 @@ KssDirBoxFunc_L119:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22620,8 +22621,8 @@ KssDirBoxFunc_L119:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22629,8 +22630,8 @@ KssDirBoxFunc_L119:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -22660,8 +22661,8 @@ KssDirBoxFunc_L1cf:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22669,8 +22670,8 @@ KssDirBoxFunc_L1cf:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22678,8 +22679,8 @@ KssDirBoxFunc_L1cf:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L24f:
@@ -22688,29 +22689,29 @@ KssDirBoxFunc_L24f:
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188001b, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188001b, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188001b, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L2b2:
 	mov	(0x24, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KssDirBoxFunc_L2bf
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L2bf:
@@ -22730,8 +22731,8 @@ KssDirBoxFunc_L2cd:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22739,8 +22740,8 @@ KssDirBoxFunc_L2cd:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22748,8 +22749,8 @@ KssDirBoxFunc_L2cd:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -22780,8 +22781,8 @@ KssDirBoxFunc_L386:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22789,8 +22790,8 @@ KssDirBoxFunc_L386:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22798,8 +22799,8 @@ KssDirBoxFunc_L386:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L407:
@@ -22808,24 +22809,24 @@ KssDirBoxFunc_L407:
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188001b, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188001b, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188001b, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L46a:
@@ -22849,8 +22850,8 @@ KssDirBoxFunc_L47e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22858,8 +22859,8 @@ KssDirBoxFunc_L47e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22867,8 +22868,8 @@ KssDirBoxFunc_L47e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -22899,8 +22900,8 @@ KssDirBoxFunc_L53e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22908,8 +22909,8 @@ KssDirBoxFunc_L53e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22917,8 +22918,8 @@ KssDirBoxFunc_L53e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L5bf:
@@ -22927,24 +22928,24 @@ KssDirBoxFunc_L5bf:
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188001b, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188001b, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188001b, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L622:
@@ -22971,8 +22972,8 @@ KssDirBoxFunc_L63e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22980,8 +22981,8 @@ KssDirBoxFunc_L63e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -22989,8 +22990,8 @@ KssDirBoxFunc_L63e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -23020,8 +23021,8 @@ KssDirBoxFunc_L6fb:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23029,8 +23030,8 @@ KssDirBoxFunc_L6fb:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23038,8 +23039,8 @@ KssDirBoxFunc_L6fb:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L77b:
@@ -23048,24 +23049,24 @@ KssDirBoxFunc_L77b:
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188001b, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188001b, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188001b, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L7de:
@@ -23089,8 +23090,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23098,8 +23099,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23107,8 +23108,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -23125,8 +23126,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23134,8 +23135,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23143,8 +23144,8 @@ KssDirBoxFunc_L7f2:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L910:
@@ -23166,8 +23167,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23175,8 +23176,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23184,8 +23185,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x01880013, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
 	movhu	d0, (data_97910C1C)
@@ -23202,8 +23203,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x0188000d, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23211,8 +23212,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x0188000d, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23220,8 +23221,8 @@ KssDirBoxFunc_L91e:
 	movhu	(0x97913ac8), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ce, d0
-	mov	0x0188000d, d1
+	mov	SelectedFLSDest_id, d0
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 KssDirBoxFunc_La3b:
 	clr	d0
@@ -23237,92 +23238,92 @@ KSSPsFileBoxProc:
 	mov	d0, (0x108, sp)
 	mov	d1, (0x10c, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KSSPsFileBoxProc_L1a
 	jmp	KSSPsFileBoxProc_L11c
 KSSPsFileBoxProc_L1a:
 	mov	(0x10c, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSPsFileBoxProc_L29
 	jmp	KSSPsFileBoxProc_L145
 KSSPsFileBoxProc_L29:
 	mov	(0x10c, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KSSPsFileBoxProc_L38
 	jmp	KSSPsFileBoxProc_L338
 KSSPsFileBoxProc_L38:
 	mov	(0x10c, sp), d0
-	cmp	0x1880011, d0
+	cmp	EV_SetDirBoxParam, d0
 	bne	KSSPsFileBoxProc_L47
 	jmp	KSSPsFileBoxProc_L596
 KSSPsFileBoxProc_L47:
 	mov	(0x10c, sp), d0
-	cmp	0x1880012, d0
+	cmp	EV_SetFileBoxInit, d0
 	bne	KSSPsFileBoxProc_L56
 	jmp	KSSPsFileBoxProc_L6b6
 KSSPsFileBoxProc_L56:
 	mov	(0x10c, sp), d0
-	cmp	0x188000d, d0
+	cmp	EV_SetFileSfx, d0
 	bne	KSSPsFileBoxProc_L65
 	jmp	KSSPsFileBoxProc_L71f
 KSSPsFileBoxProc_L65:
 	mov	(0x10c, sp), d0
-	cmp	0x188001b, d0
+	cmp	EV_SetSelectedBankNumber, d0
 	bne	KSSPsFileBoxProc_L74
 	jmp	KSSPsFileBoxProc_Lc43
 KSSPsFileBoxProc_L74:
 	mov	(0x10c, sp), d0
-	cmp	0x1880013, d0
+	cmp	EV_SetFileBoxParam, d0
 	bne	KSSPsFileBoxProc_L83
 	jmp	KSSPsFileBoxProc_Lf33
 KSSPsFileBoxProc_L83:
 	mov	(0x10c, sp), d0
-	cmp	0x1880014, d0
+	cmp	EV_SetSelectedNumber, d0
 	bne	KSSPsFileBoxProc_L92
 	jmp	KSSPsFileBoxProc_Lf81
 KSSPsFileBoxProc_L92:
 	mov	(0x10c, sp), d0
-	cmp	0x1880015, d0
+	cmp	EV_GetSelectedNumber, d0
 	bne	KSSPsFileBoxProc_La1
 	jmp	KSSPsFileBoxProc_Lfa0
 KSSPsFileBoxProc_La1:
 	mov	(0x10c, sp), d0
-	cmp	0x1880016, d0
+	cmp	EV_SetSelectedDir, d0
 	bne	KSSPsFileBoxProc_Lb0
 	jmp	KSSPsFileBoxProc_Lfee
 KSSPsFileBoxProc_Lb0:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSPsFileBoxProc_Lbf
 	jmp	KSSPsFileBoxProc_L100d
 KSSPsFileBoxProc_Lbf:
 	mov	(0x10c, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KSSPsFileBoxProc_Lce
 	jmp	KSSPsFileBoxProc_L100d
 KSSPsFileBoxProc_Lce:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSPsFileBoxProc_Ldd
 	jmp	KSSPsFileBoxProc_L10c9
 KSSPsFileBoxProc_Ldd:
 	mov	(0x10c, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KSSPsFileBoxProc_Lec
 	jmp	KSSPsFileBoxProc_L10c9
 KSSPsFileBoxProc_Lec:
 	mov	(0x10c, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KSSPsFileBoxProc_Lfb
 	jmp	KSSPsFileBoxProc_L1191
 KSSPsFileBoxProc_Lfb:
 	mov	(0x10c, sp), d0
-	cmp	0x1880004, d0
+	cmp	EV_TimerBack, d0
 	bne	KSSPsFileBoxProc_L10a
 	jmp	KSSPsFileBoxProc_L11cd
 KSSPsFileBoxProc_L10a:
 	mov	(0x10c, sp), d0
-	cmp	0x1880005, d0
+	cmp	EV_NOTPARADRAW, d0
 	bne	KSSPsFileBoxProc_L119
 	jmp	KSSPsFileBoxProc_L121e
 KSSPsFileBoxProc_L119:
@@ -23381,7 +23382,7 @@ KSSPsFileBoxProc_L18b:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23389,7 +23390,7 @@ KSSPsFileBoxProc_L18b:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L254
 KSSPsFileBoxProc_L1c8:
@@ -23407,7 +23408,7 @@ KSSPsFileBoxProc_L1de:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23415,7 +23416,7 @@ KSSPsFileBoxProc_L1de:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L254
 KSSPsFileBoxProc_L21a:
@@ -23425,7 +23426,7 @@ KSSPsFileBoxProc_L21a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23433,7 +23434,7 @@ KSSPsFileBoxProc_L21a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L254:
 	mov	(data_979126B4), a0
@@ -23452,7 +23453,7 @@ KSSPsFileBoxProc_L266:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01880016, d1
+	mov	EV_SetSelectedDir, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
 	mov	(data_979126B4), a0
@@ -23461,7 +23462,7 @@ KSSPsFileBoxProc_L266:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01880014, d1
+	mov	EV_SetSelectedNumber, d1
 	calls	(a0)
 	mov	d0, (0x34, sp)
 	mov	(data_979126B4), a0
@@ -23470,7 +23471,7 @@ KSSPsFileBoxProc_L266:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880015, d1
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23478,7 +23479,7 @@ KSSPsFileBoxProc_L266:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_97910C64), d0
 	cmp	0, d0
@@ -23491,7 +23492,7 @@ KSSPsFileBoxProc_L2f3:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800012, d1
+	mov	EV_INDEXSW_DOWN_AIC, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (data_97910C64)
@@ -23531,7 +23532,7 @@ KSSPsFileBoxProc_L378:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01880011, d1
+	mov	EV_SetDirBoxParam, d1
 	calls	(a0)
 KSSPsFileBoxProc_L395:
 	mov	(0x28, sp), a0
@@ -23658,7 +23659,7 @@ KSSPsFileBoxProc_L493:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23666,7 +23667,7 @@ KSSPsFileBoxProc_L493:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L55c
 KSSPsFileBoxProc_L4d0:
@@ -23684,7 +23685,7 @@ KSSPsFileBoxProc_L4e6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23692,7 +23693,7 @@ KSSPsFileBoxProc_L4e6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L55c
 KSSPsFileBoxProc_L522:
@@ -23702,7 +23703,7 @@ KSSPsFileBoxProc_L522:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23710,7 +23711,7 @@ KSSPsFileBoxProc_L522:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L55c:
 	mov	(data_979126B4), a0
@@ -23728,7 +23729,7 @@ KSSPsFileBoxProc_L56e:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a1)
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
@@ -23748,7 +23749,7 @@ KSSPsFileBoxProc_L596:
 	mov	(0x28, a1), d0
 	mov	1, d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8002a, d1
+	mov	MT_PsSetSelect, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23757,7 +23758,7 @@ KSSPsFileBoxProc_L596:
 	mov	(0x28, a1), d0
 	mov	1, d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80027, d1
+	mov	MT_PsSetDir, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -23767,7 +23768,7 @@ KSSPsFileBoxProc_L596:
 	movhu	(0x30, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80025, d1
+	mov	MT_PsSetMaxArea, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -23778,7 +23779,7 @@ KSSPsFileBoxProc_L596:
 	movhu	(0x2c, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80023, d1
+	mov	MT_PsSetColumn, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -23789,7 +23790,7 @@ KSSPsFileBoxProc_L596:
 	movhu	(0x2e, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80024, d1
+	mov	MT_PsSetRow, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -23800,7 +23801,7 @@ KSSPsFileBoxProc_L596:
 	movhu	(0x32, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80029, d1
+	mov	MT_PsSetTotalEnt, d1
 	calls	(a0)
 	mov	(0x28, sp), a0
 	movhu	(0x2e, a0), d2
@@ -23819,7 +23820,7 @@ KSSPsFileBoxProc_L596:
 	movhu	(0x97913ad0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80028, d1
+	mov	MT_PsSetEntPerPage, d1
 	mov	d2, d0
 	calls	(a0)
 	clr	d0
@@ -23842,7 +23843,7 @@ KSSPsFileBoxProc_L6b6:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8002a, d1
+	mov	MT_PsSetSelect, d1
 	mov	d2, d0
 	calls	(a1)
 	mov	(data_979126B4), a0
@@ -23854,7 +23855,7 @@ KSSPsFileBoxProc_L6b6:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80027, d1
+	mov	MT_PsSetDir, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -23908,7 +23909,7 @@ KSSPsFileBoxProc_L785:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01880012, d1
+	mov	EV_SetFileBoxInit, d1
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L7b9
 KSSPsFileBoxProc_L7a4:
@@ -23925,7 +23926,7 @@ KSSPsFileBoxProc_L7b9:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
-	mov	0x007701f3, d0
+	mov	DirActualTitle_id, d0
 	mov	sp, a0
 	add	0x44, a0
 	calls	(a1)
@@ -24009,7 +24010,7 @@ KSSPsFileBoxProc_L7b9:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
-	mov	0x007701f4, d0
+	mov	DirNextTitle_id, d0
 	mov	sp, a0
 	add	0x44, a0
 	calls	(a1)
@@ -24428,7 +24429,7 @@ KSSPsFileBoxProc_Lc22:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0188001b, d1
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
@@ -24720,8 +24721,8 @@ KSSPsFileBoxProc_Lda9:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
@@ -24746,7 +24747,7 @@ KSSPsFileBoxProc_Lf33:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
@@ -24782,7 +24783,7 @@ KSSPsFileBoxProc_Lfa0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
@@ -24833,7 +24834,7 @@ KSSPsFileBoxProc_L106b:
 	bra	KSSPsFileBoxProc_L10c5
 KSSPsFileBoxProc_L1075:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KSSPsFileBoxProc_L1083
 	bra	KSSPsFileBoxProc_L10a5
 KSSPsFileBoxProc_L1083:
@@ -24843,7 +24844,7 @@ KSSPsFileBoxProc_L1083:
 	mov	(0x110, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800011, d1
+	mov	EV_INDEXSW_UP_AIC, d1
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L10c5
 KSSPsFileBoxProc_L10a5:
@@ -24853,7 +24854,7 @@ KSSPsFileBoxProc_L10a5:
 	mov	(0x110, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800012, d1
+	mov	EV_INDEXSW_DOWN_AIC, d1
 	calls	(a0)
 KSSPsFileBoxProc_L10c5:
 	clr	d0
@@ -24891,7 +24892,7 @@ KSSPsFileBoxProc_L1111:
 	bra	KSSPsFileBoxProc_L116f
 KSSPsFileBoxProc_L111d:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	beq	KSSPsFileBoxProc_L112b
 	bra	KSSPsFileBoxProc_L114e
 KSSPsFileBoxProc_L112b:
@@ -24902,7 +24903,7 @@ KSSPsFileBoxProc_L112b:
 	mov	(0x28, a1), d0
 	mov	(0x110, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L116f
 KSSPsFileBoxProc_L114e:
@@ -24913,7 +24914,7 @@ KSSPsFileBoxProc_L114e:
 	mov	(0x28, a1), d0
 	mov	(0x110, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L116f:
 	mov	(data_979126B4), a0
@@ -25027,47 +25028,47 @@ KssFileBoxFunc:
 	add	-0x14, sp
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a80023, d0
+	cmp	MT_PsSetColumn, d0
 	bne	KssFileBoxFunc_L10
 	bra	KssFileBoxFunc_L73
 KssFileBoxFunc_L10:
 	mov	(0x20, sp), d0
-	cmp	0x1a80024, d0
+	cmp	MT_PsSetRow, d0
 	bne	KssFileBoxFunc_L1c
 	bra	KssFileBoxFunc_L7f
 KssFileBoxFunc_L1c:
 	mov	(0x20, sp), d0
-	cmp	0x1a80025, d0
+	cmp	MT_PsSetMaxArea, d0
 	bne	KssFileBoxFunc_L28
 	bra	KssFileBoxFunc_L8b
 KssFileBoxFunc_L28:
 	mov	(0x20, sp), d0
-	cmp	0x1a80028, d0
+	cmp	MT_PsSetEntPerPage, d0
 	bne	KssFileBoxFunc_L34
 	bra	KssFileBoxFunc_L97
 KssFileBoxFunc_L34:
 	mov	(0x20, sp), d0
-	cmp	0x1a80029, d0
+	cmp	MT_PsSetTotalEnt, d0
 	bne	KssFileBoxFunc_L40
 	bra	KssFileBoxFunc_La3
 KssFileBoxFunc_L40:
 	mov	(0x20, sp), d0
-	cmp	0x1a8002a, d0
+	cmp	MT_PsSetSelect, d0
 	bne	KssFileBoxFunc_L4c
 	bra	KssFileBoxFunc_Laf
 KssFileBoxFunc_L4c:
 	mov	(0x20, sp), d0
-	cmp	0x1a80027, d0
+	cmp	MT_PsSetDir, d0
 	bne	KssFileBoxFunc_L58
 	bra	KssFileBoxFunc_Lbb
 KssFileBoxFunc_L58:
 	mov	(0x20, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssFileBoxFunc_L64
 	bra	KssFileBoxFunc_Lc7
 KssFileBoxFunc_L64:
 	mov	(0x20, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssFileBoxFunc_L70
 	bra	KssFileBoxFunc_Lc7
 KssFileBoxFunc_L70:
@@ -25126,7 +25127,7 @@ KssFileBoxFunc_Le1:
 	jmp	KssFileBoxFunc_L42e
 KssFileBoxFunc_Le4:
 	mov	(0x20, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	beq	KssFileBoxFunc_Lf1
 	jmp	KssFileBoxFunc_L1f6
 KssFileBoxFunc_Lf1:
@@ -25149,7 +25150,7 @@ KssFileBoxFunc_L104:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25157,7 +25158,7 @@ KssFileBoxFunc_L104:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188001b, d1
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssFileBoxFunc_L42e
 KssFileBoxFunc_L152:
@@ -25182,7 +25183,7 @@ KssFileBoxFunc_L166:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880015, d1
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25191,7 +25192,7 @@ KssFileBoxFunc_L166:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25200,7 +25201,7 @@ KssFileBoxFunc_L166:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
 	movhu	d0, (data_97910C1C)
@@ -25209,7 +25210,7 @@ KssFileBoxFunc_L166:
 	jmp	KssFileBoxFunc_L42e
 KssFileBoxFunc_L1f6:
 	mov	(0x20, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KssFileBoxFunc_L203
 	jmp	KssFileBoxFunc_L42e
 KssFileBoxFunc_L203:
@@ -25230,7 +25231,7 @@ KssFileBoxFunc_L210:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25238,7 +25239,7 @@ KssFileBoxFunc_L210:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188001b, d1
+	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
 	jmp	KssFileBoxFunc_L42e
 KssFileBoxFunc_L25f:
@@ -25261,7 +25262,7 @@ KssFileBoxFunc_L26d:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880015, d1
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25270,7 +25271,7 @@ KssFileBoxFunc_L26d:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25279,7 +25280,7 @@ KssFileBoxFunc_L26d:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
 	movhu	d0, (data_97910C1C)
@@ -25304,7 +25305,7 @@ KssFileBoxFunc_L30c:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880015, d1
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25313,7 +25314,7 @@ KssFileBoxFunc_L30c:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25322,7 +25323,7 @@ KssFileBoxFunc_L30c:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
 	movhu	d0, (data_97910C1C)
@@ -25349,7 +25350,7 @@ KssFileBoxFunc_L3a9:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880015, d1
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25358,7 +25359,7 @@ KssFileBoxFunc_L3a9:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880013, d1
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -25367,7 +25368,7 @@ KssFileBoxFunc_L3a9:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0188000d, d1
+	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
 	movhu	d0, (data_97910C1C)
@@ -25387,37 +25388,37 @@ KssPsMenuBoxProc:
 	mov	d0, (0x74, sp)
 	mov	d1, (0x78, sp)
 	mov	d1, d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssPsMenuBoxProc_L14
 	bra	KssPsMenuBoxProc_L64
 KssPsMenuBoxProc_L14:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssPsMenuBoxProc_L20
 	bra	KssPsMenuBoxProc_L6d
 KssPsMenuBoxProc_L20:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsMenuBoxProc_L2d
 	jmp	KssPsMenuBoxProc_Lb3
 KssPsMenuBoxProc_L2d:
 	mov	(0x78, sp), d0
-	cmp	0x1a00051, d0
+	cmp	MT_CheckEditSw, d0
 	bne	KssPsMenuBoxProc_L3a
 	jmp	KssPsMenuBoxProc_L4fa
 KssPsMenuBoxProc_L3a:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssPsMenuBoxProc_L47
 	jmp	KssPsMenuBoxProc_L55a
 KssPsMenuBoxProc_L47:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b0, d0
+	cmp	MT_GetFontColor, d0
 	bne	KssPsMenuBoxProc_L54
 	jmp	KssPsMenuBoxProc_L573
 KssPsMenuBoxProc_L54:
 	mov	(0x78, sp), d0
-	cmp	0x1a000ba, d0
+	cmp	MT_GetIcon, d0
 	bne	KssPsMenuBoxProc_L61
 	jmp	KssPsMenuBoxProc_L58d
 KssPsMenuBoxProc_L61:
@@ -25482,7 +25483,7 @@ KssPsMenuBoxProc_Lf9:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a0003a, d1
+	mov	MT_GetString, d1
 	calls	(a0)
 	mov	(0x24, sp), a0
 	movbu	(a0), d1
@@ -25513,7 +25514,7 @@ KssPsMenuBoxProc_L150:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a000b1, d1
+	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(data_979126B4), a0
@@ -25522,7 +25523,7 @@ KssPsMenuBoxProc_L150:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a000b0, d1
+	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
 	mov	(data_979126B4), a0
@@ -25531,7 +25532,7 @@ KssPsMenuBoxProc_L150:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a000ba, d1
+	mov	MT_GetIcon, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
 	mov	(data_979126B4), a0
@@ -25933,7 +25934,7 @@ KssPsMenuBoxProc_L512:
 	mov	(0x7c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	movhu	(0x28, a0), d1
@@ -25987,22 +25988,22 @@ KssAcTitleMenuProc:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssAcTitleMenuProc_L14
 	bra	KssAcTitleMenuProc_L3d
 KssAcTitleMenuProc_L14:
 	mov	(0x28, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssAcTitleMenuProc_L20
 	bra	KssAcTitleMenuProc_L74
 KssAcTitleMenuProc_L20:
 	mov	(0x28, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssAcTitleMenuProc_L2d
 	jmp	KssAcTitleMenuProc_L1dc
 KssAcTitleMenuProc_L2d:
 	mov	(0x28, sp), d0
-	cmp	0x1a000ba, d0
+	cmp	MT_GetIcon, d0
 	bne	KssAcTitleMenuProc_L3a
 	jmp	KssAcTitleMenuProc_L1fd
 KssAcTitleMenuProc_L3a:
@@ -26022,7 +26023,7 @@ KssAcTitleMenuProc_L3d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssAcTitleMenuProc_L22e
@@ -26039,7 +26040,7 @@ KssAcTitleMenuProc_L74:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a00051, d1
+	mov	MT_CheckEditSw, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssAcTitleMenuProc_Lab
@@ -26054,10 +26055,10 @@ KssAcTitleMenuProc_Lb7:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600035, d0
+	mov	CLASS_AcTitleMenu, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	1, d0
 	beq	KssAcTitleMenuProc_Ldd
@@ -26075,10 +26076,10 @@ KssAcTitleMenuProc_Lf6:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600046, d0
+	mov	CLASS_AcModeMenu, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	1, d0
 	beq	KssAcTitleMenuProc_L11c
@@ -26096,10 +26097,10 @@ KssAcTitleMenuProc_L135:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600047, d0
+	mov	CLASS_AcScreenMenu, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	1, d0
 	beq	KssAcTitleMenuProc_L15b
@@ -26112,17 +26113,17 @@ KssAcTitleMenuProc_L15b:
 	mov	(0x34, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssAcTitleMenuProc_L1bf
 KssAcTitleMenuProc_L17b:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600048, d0
+	mov	CLASS_AcWindowMenu, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	1, d0
 	beq	KssAcTitleMenuProc_L1a1
@@ -26135,7 +26136,7 @@ KssAcTitleMenuProc_L1a1:
 	mov	(0x34, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssAcTitleMenuProc_L1bf:
 	clr	d0
@@ -26188,22 +26189,22 @@ KssAcIndexEditSwProc:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssAcIndexEditSwProc_L12
 	bra	KssAcIndexEditSwProc_L3c
 KssAcIndexEditSwProc_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a8002b, d0
+	cmp	MT_ChangeStyle, d0
 	bne	KssAcIndexEditSwProc_L1f
 	jmp	KssAcIndexEditSwProc_Le6
 KssAcIndexEditSwProc_L1f:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssAcIndexEditSwProc_L2c
 	jmp	KssAcIndexEditSwProc_L17a
 KssAcIndexEditSwProc_L2c:
 	mov	(0x30, sp), d0
-	cmp	0x1800028, d0
+	cmp	EV_SWBOTH, d0
 	bne	KssAcIndexEditSwProc_L39
 	jmp	KssAcIndexEditSwProc_L355
 KssAcIndexEditSwProc_L39:
@@ -26220,10 +26221,10 @@ KssAcIndexEditSwProc_L3c:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600038, d0
+	mov	CLASS_PsWideESBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssAcIndexEditSwProc_L7a
@@ -26242,7 +26243,7 @@ KssAcIndexEditSwProc_L7a:
 	movbu	(0x30, a1), d1
 	mov	d1, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_Le2
 KssAcIndexEditSwProc_Laf:
@@ -26259,7 +26260,7 @@ KssAcIndexEditSwProc_Laf:
 	movbu	(0x2c, a1), d1
 	mov	d1, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssAcIndexEditSwProc_Le2:
 	clr	d0
@@ -26268,10 +26269,10 @@ KssAcIndexEditSwProc_Le6:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600038, d0
+	mov	CLASS_PsWideESBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssAcIndexEditSwProc_L10c
@@ -26291,7 +26292,7 @@ KssAcIndexEditSwProc_L10c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L176
 KssAcIndexEditSwProc_L142:
@@ -26309,7 +26310,7 @@ KssAcIndexEditSwProc_L142:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 KssAcIndexEditSwProc_L176:
 	clr	d0
@@ -26330,7 +26331,7 @@ KssAcIndexEditSwProc_L193:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a00051, d1
+	mov	MT_CheckEditSw, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssAcIndexEditSwProc_L1b6
@@ -26342,7 +26343,7 @@ KssAcIndexEditSwProc_L1b6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	movhu	d0, (0x20, sp)
 	movhu	(0x20, sp), d0
@@ -26354,10 +26355,10 @@ KssAcIndexEditSwProc_L1df:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600038, d0
+	mov	CLASS_PsWideESBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssAcIndexEditSwProc_L205
@@ -26465,7 +26466,7 @@ KssAcIndexEditSwProc_L2b8:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L2d8:
@@ -26476,7 +26477,7 @@ KssAcIndexEditSwProc_L2d8:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L2f8:
@@ -26487,7 +26488,7 @@ KssAcIndexEditSwProc_L2f8:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L318:
@@ -26498,7 +26499,7 @@ KssAcIndexEditSwProc_L318:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KssAcIndexEditSwProc_L336:
 	clr	d0
@@ -26529,7 +26530,7 @@ KssAcIndexEditSwProc_L36e:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a00051, d1
+	mov	MT_CheckEditSw, d1
 	calls	(a0)
 	mov	d0, a0
 	cmp	0, a0
@@ -26542,7 +26543,7 @@ KssAcIndexEditSwProc_L393:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	movhu	d0, (0x20, sp)
 	movhu	(0x20, sp), d0
@@ -26557,7 +26558,7 @@ KssAcIndexEditSwProc_L3bb:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800007, d1
+	mov	EV_SWOFF, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -26566,7 +26567,7 @@ KssAcIndexEditSwProc_L3bb:
 	or	0x80, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800007, d1
+	mov	EV_SWOFF, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -26575,7 +26576,7 @@ KssAcIndexEditSwProc_L3bb:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800029, d1
+	mov	EV_INDEXSW_BOTH, d1
 	calls	(a0)
 KssAcIndexEditSwProc_L414:
 	clr	d0
@@ -26608,42 +26609,42 @@ KssPsToggleBoxProc:
 	mov	d0, (0x4c, sp)
 	mov	d1, (0x50, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssPsToggleBoxProc_L14
 	bra	KssPsToggleBoxProc_L72
 KssPsToggleBoxProc_L14:
 	mov	(0x50, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsToggleBoxProc_L21
 	jmp	KssPsToggleBoxProc_Lfc
 KssPsToggleBoxProc_L21:
 	mov	(0x50, sp), d0
-	cmp	0x1a00051, d0
+	cmp	MT_CheckEditSw, d0
 	bne	KssPsToggleBoxProc_L2e
 	jmp	KssPsToggleBoxProc_L272
 KssPsToggleBoxProc_L2e:
 	mov	(0x50, sp), d0
-	cmp	0x1a00063, d0
+	cmp	MT_ToggleParam, d0
 	bne	KssPsToggleBoxProc_L3b
 	jmp	KssPsToggleBoxProc_L2d4
 KssPsToggleBoxProc_L3b:
 	mov	(0x50, sp), d0
-	cmp	0x1a0003b, d0
+	cmp	MT_SetParam, d0
 	bne	KssPsToggleBoxProc_L48
 	jmp	KssPsToggleBoxProc_L334
 KssPsToggleBoxProc_L48:
 	mov	(0x50, sp), d0
-	cmp	0x1a00062, d0
+	cmp	MT_GetParam, d0
 	bne	KssPsToggleBoxProc_L55
 	jmp	KssPsToggleBoxProc_L374
 KssPsToggleBoxProc_L55:
 	mov	(0x50, sp), d0
-	cmp	0x1a0008f, d0
+	cmp	MT_SetVisible, d0
 	bne	KssPsToggleBoxProc_L62
 	jmp	KssPsToggleBoxProc_L38f
 KssPsToggleBoxProc_L62:
 	mov	(0x50, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssPsToggleBoxProc_L6f
 	jmp	KssPsToggleBoxProc_L45b
 KssPsToggleBoxProc_L6f:
@@ -26693,7 +26694,7 @@ KssPsToggleBoxProc_Ld8:
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	clr	d0
 	jmp	KssPsToggleBoxProc_L48c
@@ -26718,7 +26719,7 @@ KssPsToggleBoxProc_Lfc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b1, d1
+	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x24, sp)
 	mov	(0x20, sp), a0
@@ -26870,7 +26871,7 @@ KssPsToggleBoxProc_L29e:
 	mov	(0x54, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	movhu	(0x28, a0), d1
@@ -26903,7 +26904,7 @@ KssPsToggleBoxProc_L2f2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	KssPsToggleBoxProc_L32b
 KssPsToggleBoxProc_L30f:
@@ -26913,7 +26914,7 @@ KssPsToggleBoxProc_L30f:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssPsToggleBoxProc_L32b:
 	mov	(0x20, sp), a0
@@ -26940,7 +26941,7 @@ KssPsToggleBoxProc_L354:
 	mov	(0x54, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssPsToggleBoxProc_L370:
 	clr	d0
@@ -26979,7 +26980,7 @@ KssPsToggleBoxProc_L3bf:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01800009, d1
+	mov	EV_PAINT, d1
 	calls	(a0)
 	bra	KssPsToggleBoxProc_L458
 KssPsToggleBoxProc_L3dd:
@@ -27059,37 +27060,37 @@ KssTtlScreenProc:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssTtlScreenProc_L12
 	bra	KssTtlScreenProc_L63
 KssTtlScreenProc_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssTtlScreenProc_L1f
 	jmp	KssTtlScreenProc_La5
 KssTtlScreenProc_L1f:
 	mov	(0x34, sp), d0
-	cmp	0x1800014, d0
+	cmp	EV_MMMDATA, d0
 	bne	KssTtlScreenProc_L2c
 	jmp	KssTtlScreenProc_L150
 KssTtlScreenProc_L2c:
 	mov	(0x34, sp), d0
-	cmp	0x1a000dd, d0
+	cmp	MT_SetPageObject, d0
 	bne	KssTtlScreenProc_L39
 	jmp	KssTtlScreenProc_L16b
 KssTtlScreenProc_L39:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssTtlScreenProc_L46
 	jmp	KssTtlScreenProc_L176
 KssTtlScreenProc_L46:
 	mov	(0x34, sp), d0
-	cmp	0x1a000ba, d0
+	cmp	MT_GetIcon, d0
 	bne	KssTtlScreenProc_L53
 	jmp	KssTtlScreenProc_L179
 KssTtlScreenProc_L53:
 	mov	(0x34, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssTtlScreenProc_L60
 	jmp	KssTtlScreenProc_L192
 KssTtlScreenProc_L60:
@@ -27098,10 +27099,10 @@ KssTtlScreenProc_L63:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600022, d0
+	mov	CLASS_PsPageBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a00024, d1
+	mov	MT_SearchClass, d1
 	calls	(a0)
 	mov	d0, (0x97913ae4)
 	mov	(data_979126B4), a0
@@ -27136,7 +27137,7 @@ KssTtlScreenProc_La5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000ba, d1
+	mov	MT_GetIcon, d1
 	calls	(a0)
 	mov	d0, (0x14, sp)
 	mov	(data_979126B4), a0
@@ -27151,7 +27152,7 @@ KssTtlScreenProc_La5:
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a0003a, d1
+	mov	MT_GetString, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x107c, a0), a0
@@ -27164,7 +27165,7 @@ KssTtlScreenProc_La5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KssTtlScreenProc_L1cb
@@ -27225,32 +27226,32 @@ KssBgScreenProc:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssBgScreenProc_L12
 	bra	KssBgScreenProc_L55
 KssBgScreenProc_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssBgScreenProc_L1e
 	bra	KssBgScreenProc_L97
 KssBgScreenProc_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1800014, d0
+	cmp	EV_MMMDATA, d0
 	bne	KssBgScreenProc_L2b
 	jmp	KssBgScreenProc_Lb2
 KssBgScreenProc_L2b:
 	mov	(0x24, sp), d0
-	cmp	0x1a000dd, d0
+	cmp	MT_SetPageObject, d0
 	bne	KssBgScreenProc_L38
 	jmp	KssBgScreenProc_Lcd
 KssBgScreenProc_L38:
 	mov	(0x24, sp), d0
-	cmp	0x1a000ba, d0
+	cmp	MT_GetIcon, d0
 	bne	KssBgScreenProc_L45
 	jmp	KssBgScreenProc_Ld8
 KssBgScreenProc_L45:
 	mov	(0x24, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssBgScreenProc_L52
 	jmp	KssBgScreenProc_Lf1
 KssBgScreenProc_L52:
@@ -27259,10 +27260,10 @@ KssBgScreenProc_L55:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600022, d0
+	mov	CLASS_PsPageBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01a00024, d1
+	mov	MT_SearchClass, d1
 	calls	(a0)
 	mov	d0, (0x97913ae8)
 	mov	(data_979126B4), a0
@@ -27341,32 +27342,32 @@ KssPsMultiLangTextBoxProc:
 	mov	d0, (0x7c, sp)
 	mov	d1, (0x80, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssPsMultiLangTextBoxProc_L14
 	bra	KssPsMultiLangTextBoxProc_L57
 KssPsMultiLangTextBoxProc_L14:
 	mov	(0x80, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsMultiLangTextBoxProc_L20
 	bra	KssPsMultiLangTextBoxProc_L8e
 KssPsMultiLangTextBoxProc_L20:
 	mov	(0x80, sp), d0
-	cmp	0x1a0007f, d0
+	cmp	MT_GetStrPtr, d0
 	bne	KssPsMultiLangTextBoxProc_L2d
 	jmp	KssPsMultiLangTextBoxProc_L6c4
 KssPsMultiLangTextBoxProc_L2d:
 	mov	(0x80, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssPsMultiLangTextBoxProc_L3a
 	jmp	KssPsMultiLangTextBoxProc_L738
 KssPsMultiLangTextBoxProc_L3a:
 	mov	(0x80, sp), d0
-	cmp	0x1a000b0, d0
+	cmp	MT_GetFontColor, d0
 	bne	KssPsMultiLangTextBoxProc_L47
 	jmp	KssPsMultiLangTextBoxProc_L751
 KssPsMultiLangTextBoxProc_L47:
 	mov	(0x80, sp), d0
-	cmp	0x1a8002c, d0
+	cmp	MT_GetBackFontColor, d0
 	bne	KssPsMultiLangTextBoxProc_L54
 	jmp	KssPsMultiLangTextBoxProc_L76b
 KssPsMultiLangTextBoxProc_L54:
@@ -27386,7 +27387,7 @@ KssPsMultiLangTextBoxProc_L57:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x7c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssPsMultiLangTextBoxProc_L79d
@@ -27411,7 +27412,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x7c, sp), d0
-	mov	0x01a000b1, d1
+	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(data_979126B4), a0
@@ -27420,7 +27421,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x7c, sp), d0
-	mov	0x01a000b0, d1
+	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x4c, sp)
 	mov	(data_979126B4), a0
@@ -27429,7 +27430,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x7c, sp), d0
-	mov	0x01a8002c, d1
+	mov	MT_GetBackFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x4e, sp)
 	mov	(data_979126B4), a0
@@ -27445,7 +27446,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x7c, sp), d0
-	mov	0x01a0007f, d1
+	mov	MT_GetStrPtr, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(0x2c, sp), a0
@@ -27521,7 +27522,7 @@ KssPsMultiLangTextBoxProc_L153:
 	jmp	KssPsMultiLangTextBoxProc_L6a0
 KssPsMultiLangTextBoxProc_L1f5:
 	mov	(0x7c, sp), d0
-	cmp	0x770163, d0
+	cmp	FileNameTtlLBNBox_id, d0
 	bne	KssPsMultiLangTextBoxProc_L201
 	bra	KssPsMultiLangTextBoxProc_L20c
 KssPsMultiLangTextBoxProc_L201:
@@ -27534,8 +27535,8 @@ KssPsMultiLangTextBoxProc_L20c:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80054, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x3c, sp)
 	mov	(data_979126B4), a0
@@ -27543,8 +27544,8 @@ KssPsMultiLangTextBoxProc_L20c:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80054, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x40, sp)
 	mov	(0x3c, sp), d0
@@ -28158,17 +28159,17 @@ KssAcLanguageTextProc:
 	mov	d0, (0x58, sp)
 	mov	d1, (0x5c, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KssAcLanguageTextProc_L12
 	bra	KssAcLanguageTextProc_L2c
 KssAcLanguageTextProc_L12:
 	mov	(0x5c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssAcLanguageTextProc_L1e
 	bra	KssAcLanguageTextProc_L30
 KssAcLanguageTextProc_L1e:
 	mov	(0x5c, sp), d0
-	cmp	0x1a0007f, d0
+	cmp	MT_GetStrPtr, d0
 	bne	KssAcLanguageTextProc_L2a
 	bra	KssAcLanguageTextProc_L93
 KssAcLanguageTextProc_L2a:
@@ -28230,12 +28231,12 @@ KssLanguageCheck:
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	d1, d0
-	cmp	0x1a00092, d0
+	cmp	MT_GetLanguagePtr, d0
 	bne	KssLanguageCheck_Lf
 	bra	KssLanguageCheck_L29
 KssLanguageCheck_Lf:
 	mov	(0xc, sp), d0
-	cmp	0x1a000b3, d0
+	cmp	MT_IsEucCode, d0
 	bne	KssLanguageCheck_L1b
 	bra	KssLanguageCheck_L31
 KssLanguageCheck_L1b:
@@ -28267,22 +28268,22 @@ KssPsWarnBoxProc:
 	mov	d0, (0x74, sp)
 	mov	d1, (0x78, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssPsWarnBoxProc_L14
 	bra	KssPsWarnBoxProc_L3d
 KssPsWarnBoxProc_L14:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsWarnBoxProc_L20
 	bra	KssPsWarnBoxProc_L74
 KssPsWarnBoxProc_L20:
 	mov	(0x78, sp), d0
-	cmp	0x1a8002d, d0
+	cmp	MT_SetParameterBlock, d0
 	bne	KssPsWarnBoxProc_L2d
 	jmp	KssPsWarnBoxProc_Lac0
 KssPsWarnBoxProc_L2d:
 	mov	(0x78, sp), d0
-	cmp	0x1a8002e, d0
+	cmp	MT_SetRetScreen, d0
 	bne	KssPsWarnBoxProc_L3a
 	jmp	KssPsWarnBoxProc_Lb1b
 KssPsWarnBoxProc_L3a:
@@ -28302,7 +28303,7 @@ KssPsWarnBoxProc_L3d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssPsWarnBoxProc_Lb4f
@@ -29600,8 +29601,8 @@ func_97810A48_entry_L39:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077035e, d0
-	mov	0x01800001, d1
+	mov	ATTENTION_ALL_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -29610,17 +29611,17 @@ KssCatch_WarnBox:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_WarnBox_L12
 	bra	KssCatch_WarnBox_L2d
 KssCatch_WarnBox_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_WarnBox_L1e
 	bra	KssCatch_WarnBox_L32
 KssCatch_WarnBox_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_WarnBox_L2a
 	bra	KssCatch_WarnBox_L6e
 KssCatch_WarnBox_L2a:
@@ -29643,7 +29644,7 @@ KssCatch_WarnBox_L32:
 	mov	Str_WARN, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_WarnBox_L125
@@ -29654,7 +29655,7 @@ KssCatch_WarnBox_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssCatch_WarnBox_L94
@@ -29725,8 +29726,8 @@ KssCatch_WarnBox_Lee:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001c, d0
-	mov	0x01800001, d1
+	mov	SETUP_TOOLS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_WarnBox_L10d:
 	mov	(data_979126B4), a0
@@ -29746,22 +29747,22 @@ KssPsAskBoxProc:
 	mov	d0, (0x74, sp)
 	mov	d1, (0x78, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssPsAskBoxProc_L14
 	bra	KssPsAskBoxProc_L3d
 KssPsAskBoxProc_L14:
 	mov	(0x78, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsAskBoxProc_L20
 	bra	KssPsAskBoxProc_L74
 KssPsAskBoxProc_L20:
 	mov	(0x78, sp), d0
-	cmp	0x1a8002d, d0
+	cmp	MT_SetParameterBlock, d0
 	bne	KssPsAskBoxProc_L2d
 	jmp	KssPsAskBoxProc_Lacc
 KssPsAskBoxProc_L2d:
 	mov	(0x78, sp), d0
-	cmp	0x1a8002e, d0
+	cmp	MT_SetRetScreen, d0
 	bne	KssPsAskBoxProc_L3a
 	jmp	KssPsAskBoxProc_Lb27
 KssPsAskBoxProc_L3a:
@@ -29781,7 +29782,7 @@ KssPsAskBoxProc_L3d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x74, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssPsAskBoxProc_Lb5b
@@ -31085,8 +31086,8 @@ func_97811734_entry_L52:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077036e, d0
-	mov	0x01800001, d1
+	mov	ASK_ALL_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -31095,17 +31096,17 @@ KssCatch_AskBox:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_AskBox_L12
 	bra	KssCatch_AskBox_L2d
 KssCatch_AskBox_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_AskBox_L1e
 	bra	KssCatch_AskBox_L32
 KssCatch_AskBox_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_AskBox_L2a
 	bra	KssCatch_AskBox_L6e
 KssCatch_AskBox_L2a:
@@ -31128,7 +31129,7 @@ KssCatch_AskBox_L32:
 	mov	Str_ASK, d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_AskBox_L17d
@@ -31139,7 +31140,7 @@ KssCatch_AskBox_L6e:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	3, d0
 	bne	KssCatch_AskBox_L94
@@ -31185,8 +31186,8 @@ KssCatch_AskBox_Le1:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770289, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_NAMING_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_AskBox_L165
 KssCatch_AskBox_L10a:
@@ -31206,8 +31207,8 @@ KssCatch_AskBox_L125:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_AskBox_L165
 KssCatch_AskBox_L146:
@@ -31217,7 +31218,7 @@ KssCatch_AskBox_L146:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_97910C9C), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_AskBox_L165:
 	mov	(data_979126B4), a0
@@ -31237,37 +31238,37 @@ KssTimerShowProc:
 	mov	d0, (0x84, sp)
 	mov	d1, (0x88, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KssTimerShowProc_L14
 	bra	KssTimerShowProc_L64
 KssTimerShowProc_L14:
 	mov	(0x88, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssTimerShowProc_L20
 	bra	KssTimerShowProc_L68
 KssTimerShowProc_L20:
 	mov	(0x88, sp), d0
-	cmp	0x1a80031, d0
+	cmp	MT_StartFrmtAction, d0
 	bne	KssTimerShowProc_L2d
 	jmp	KssTimerShowProc_L13a
 KssTimerShowProc_L2d:
 	mov	(0x88, sp), d0
-	cmp	0x1a80032, d0
+	cmp	MT_NextMsgLineDraw, d0
 	bne	KssTimerShowProc_L3a
 	jmp	KssTimerShowProc_L24d
 KssTimerShowProc_L3a:
 	mov	(0x88, sp), d0
-	cmp	0x1a80033, d0
+	cmp	MT_NextResLineDraw, d0
 	bne	KssTimerShowProc_L47
 	jmp	KssTimerShowProc_L2e8
 KssTimerShowProc_L47:
 	mov	(0x88, sp), d0
-	cmp	0x1a80034, d0
+	cmp	MT_DoFormatHardDisk, d0
 	bne	KssTimerShowProc_L54
 	jmp	KssTimerShowProc_L3d7
 KssTimerShowProc_L54:
 	mov	(0x88, sp), d0
-	cmp	0x1a80035, d0
+	cmp	MT_FormatStep, d0
 	bne	KssTimerShowProc_L61
 	jmp	KssTimerShowProc_L3fe
 KssTimerShowProc_L61:
@@ -31350,7 +31351,7 @@ KssTimerShowProc_L113:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80031, d1
+	mov	MT_StartFrmtAction, d1
 	calls	(a0)
 KssTimerShowProc_L136:
 	clr	d0
@@ -31422,7 +31423,7 @@ KssTimerShowProc_L13a:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80034, d0
+	mov	MT_DoFormatHardDisk, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -31580,7 +31581,7 @@ KssTimerShowProc_L3d7:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -31652,7 +31653,7 @@ KssTimerShowProc_L46a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	Str_Partition_3, d0
 	mov	d0, (0x18, sp)
@@ -31674,7 +31675,7 @@ KssTimerShowProc_L4ba:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	1, d0
 	mov	d0, (0x18, sp)
@@ -31701,7 +31702,7 @@ KssTimerShowProc_L4fa:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -31709,7 +31710,7 @@ KssTimerShowProc_L4fa:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_97910C58), d0
 	movbu	d0, (0x97913b04)
@@ -31718,7 +31719,7 @@ KssTimerShowProc_L4fa:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	1, d0
 	mov	d0, (0x18, sp)
@@ -31733,7 +31734,7 @@ KssTimerShowProc_L564:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	call	func_978035F0, 0, 0
 	extbu	d0
@@ -31773,7 +31774,7 @@ KssTimerShowProc_L5b9:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -31789,7 +31790,7 @@ KssTimerShowProc_L603:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -31812,7 +31813,7 @@ KssTimerShowProc_L640:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -31824,14 +31825,14 @@ KssTimerShowProc_L640:
 	add	2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	2, d0
 	mov	d0, (0x18, sp)
@@ -31867,7 +31868,7 @@ KssTimerShowProc_L6e0:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	sp, a0
 	mov	a0, d0
@@ -31886,7 +31887,7 @@ KssTimerShowProc_L6e0:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -31911,7 +31912,7 @@ KssTimerShowProc_L761:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -31923,14 +31924,14 @@ KssTimerShowProc_L761:
 	add	3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	3, d0
 	mov	d0, (0x18, sp)
@@ -31966,7 +31967,7 @@ KssTimerShowProc_L801:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	sp, a0
 	mov	a0, d0
@@ -31985,7 +31986,7 @@ KssTimerShowProc_L801:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -32009,7 +32010,7 @@ KssTimerShowProc_L87c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -32021,14 +32022,14 @@ KssTimerShowProc_L87c:
 	add	4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	d0, (0x18, sp)
@@ -32064,7 +32065,7 @@ KssTimerShowProc_L91c:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	sp, a0
 	mov	a0, d0
@@ -32083,7 +32084,7 @@ KssTimerShowProc_L91c:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -32130,7 +32131,7 @@ KssTimerShowProc_L9d2:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	call	func_978035F0, 0, 0
 	extbu	d0
@@ -32170,7 +32171,7 @@ KssTimerShowProc_La27:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -32195,7 +32196,7 @@ KssTimerShowProc_La81:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -32207,14 +32208,14 @@ KssTimerShowProc_La81:
 	add	5, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	5, d0
 	mov	d0, (0x18, sp)
@@ -32229,7 +32230,7 @@ KssTimerShowProc_Lae8:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	call	func_978035F0, 0, 0
 	extbu	d0
@@ -32269,7 +32270,7 @@ KssTimerShowProc_Lb3d:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -32293,7 +32294,7 @@ KssTimerShowProc_Lb9d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	movbu	(0x97913b04), d0
 	inc	d0
@@ -32314,14 +32315,14 @@ KssTimerShowProc_Lbd6:
 	inc	d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	1, d0
 	mov	d0, (0x18, sp)
@@ -32336,14 +32337,14 @@ KssTimerShowProc_Lc21:
 	mov	0x10, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80032, d1
+	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x15, d0
 	mov	d0, (0x18, sp)
@@ -32358,7 +32359,7 @@ KssTimerShowProc_Lc64:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x84, sp), d0
-	mov	0x01a80033, d1
+	mov	MT_NextResLineDraw, d1
 	calls	(a0)
 	call	func_978035F0, 0, 0
 	extbu	d0
@@ -32398,7 +32399,7 @@ KssTimerShowProc_Lcb9:
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80035, d0
+	mov	MT_FormatStep, d0
 	mov	d0, (0x14, sp)
 	mov	0x14, d0
 	mov	d0, (0x18, sp)
@@ -32473,8 +32474,8 @@ func_97812681_entry_L39:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770365, d0
-	mov	0x01800001, d1
+	mov	TheTimerScreen_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -32484,17 +32485,17 @@ KssInitialWaitProc:
 	mov	d0, (0x48, sp)
 	mov	d1, (0x4c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssInitialWaitProc_L14
 	bra	KssInitialWaitProc_L31
 KssInitialWaitProc_L14:
 	mov	(0x4c, sp), d0
-	cmp	0x1a80037, d0
+	cmp	MT_ShowMainPage, d0
 	bne	KssInitialWaitProc_L21
 	jmp	KssInitialWaitProc_Lea
 KssInitialWaitProc_L21:
 	mov	(0x4c, sp), d0
-	cmp	0x1a80036, d0
+	cmp	MT_GetInitialPart, d0
 	bne	KssInitialWaitProc_L2e
 	jmp	KssInitialWaitProc_Lee
 KssInitialWaitProc_L2e:
@@ -32560,7 +32561,7 @@ KssInitialWaitProc_L31:
 	mov	(0x3e4, a0), a0
 	mov	(0x48, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80036, d0
+	mov	MT_GetInitialPart, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -32619,7 +32620,7 @@ KssInitialWaitProc_L149:
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
 	mov	d0, (0x18, sp)
-	mov	0x007700cb, d0
+	mov	HDD_FORMATSCR_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	mov	-1, d0
@@ -32661,16 +32662,16 @@ KssInitialWaitProc_L193:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	call	func_97839B9F_entry, 0, 0x10
@@ -32687,23 +32688,23 @@ KssInitialWaitProc_L193:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
-	mov	0x01800001, d0
+	mov	EV_SHOW, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -32748,8 +32749,8 @@ func_978129A4_entry_Le:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770369, d0
-	mov	0x01800002, d1
+	mov	TheInitialWaitScreen_id, d0
+	mov	EV_HIDE, d1
 	calls	(a0)
 	mov	(0x20, sp), d0
 	cmp	0, d0
@@ -32762,7 +32763,7 @@ func_978129A4_entry_L35:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_978129A4_entry_L50:
 	movbu	(0x1c, sp), d0
@@ -32775,8 +32776,8 @@ func_978129A4_entry_L59:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770369, d0
-	mov	0x01800001, d1
+	mov	TheInitialWaitScreen_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_978129A4_entry_L78:
 	movbu	(0x1c, sp), d0
@@ -32790,7 +32791,7 @@ func_978129A4_entry_L81:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00770000, d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_978129A4_entry_La0:
 	ret	0, 0x14
@@ -32800,37 +32801,37 @@ KssCatch_FormatBox:
 	mov	d0, (0x48, sp)
 	mov	d1, (0x4c, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_FormatBox_L12
 	bra	KssCatch_FormatBox_L62
 KssCatch_FormatBox_L12:
 	mov	(0x4c, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_FormatBox_L1e
 	bra	KssCatch_FormatBox_L67
 KssCatch_FormatBox_L1e:
 	mov	(0x4c, sp), d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KssCatch_FormatBox_L2b
 	jmp	KssCatch_FormatBox_L4ab
 KssCatch_FormatBox_L2b:
 	mov	(0x4c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssCatch_FormatBox_L38
 	jmp	KssCatch_FormatBox_L4ab
 KssCatch_FormatBox_L38:
 	mov	(0x4c, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_FormatBox_L45
 	jmp	KssCatch_FormatBox_L598
 KssCatch_FormatBox_L45:
 	mov	(0x4c, sp), d0
-	cmp	0x1a8002f, d0
+	cmp	MT_FrmtAddNumber, d0
 	bne	KssCatch_FormatBox_L52
 	jmp	KssCatch_FormatBox_Lb24
 KssCatch_FormatBox_L52:
 	mov	(0x4c, sp), d0
-	cmp	0x1a80030, d0
+	cmp	MT_ResetFrmtNr, d0
 	bne	KssCatch_FormatBox_L5f
 	jmp	KssCatch_FormatBox_Lc4b
 KssCatch_FormatBox_L5f:
@@ -32856,37 +32857,37 @@ KssCatch_FormatBox_L8f:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700d7, d0
+	mov	FormatPart1_id, d0
 	clr	d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700d6, d0
+	mov	FormatPart2_id, d0
 	clr	d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700d9, d0
+	mov	FormatPart3_id, d0
 	clr	d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700d8, d0
+	mov	FormatPartAll_id, d0
 	clr	d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700da, d0
+	mov	FormatModeFastButton_id, d0
 	clr	d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700db, d0
+	mov	FormatModeNormalButton_id, d0
 	clr	d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_L266
@@ -33142,7 +33143,7 @@ KssCatch_FormatBox_L266:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a80030, d1
+	mov	MT_ResetFrmtNr, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
@@ -33602,7 +33603,7 @@ KssCatch_FormatBox_L9d1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a80030, d1
+	mov	MT_ResetFrmtNr, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_L9ef:
@@ -33612,7 +33613,7 @@ KssCatch_FormatBox_L9ef:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La0e:
@@ -33622,7 +33623,7 @@ KssCatch_FormatBox_La0e:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La2d:
@@ -33632,7 +33633,7 @@ KssCatch_FormatBox_La2d:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La4c:
@@ -33642,7 +33643,7 @@ KssCatch_FormatBox_La4c:
 	mov	7, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La6b:
@@ -33652,7 +33653,7 @@ KssCatch_FormatBox_La6b:
 	mov	9, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La8a:
@@ -33662,7 +33663,7 @@ KssCatch_FormatBox_La8a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Laa8:
@@ -33672,7 +33673,7 @@ KssCatch_FormatBox_Laa8:
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lac7:
@@ -33682,7 +33683,7 @@ KssCatch_FormatBox_Lac7:
 	mov	4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lae6:
@@ -33692,7 +33693,7 @@ KssCatch_FormatBox_Lae6:
 	mov	6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lb05:
@@ -33702,7 +33703,7 @@ KssCatch_FormatBox_Lb05:
 	mov	8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a8002f, d1
+	mov	MT_FrmtAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lb24:
@@ -33718,7 +33719,7 @@ KssCatch_FormatBox_Lb37:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a80030, d1
+	mov	MT_ResetFrmtNr, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
@@ -33758,8 +33759,8 @@ KssCatch_FormatBox_Lb56:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700d0, d0
-	mov	0x01a000b4, d1
+	mov	FormatNrStr_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -33767,8 +33768,8 @@ KssCatch_FormatBox_Lb56:
 	mov	sp, a0
 	add	0x34, a0
 	mov	a0, (0x10, sp)
-	mov	0x007700d0, d0
-	mov	0x01a000b6, d1
+	mov	FormatNrStr_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	0x97913b08, a0
 	call	LibStrlen, 0, 0
@@ -33789,7 +33790,7 @@ KssCatch_FormatBox_Lc27:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
-	mov	0x007700cb, d0
+	mov	HDD_FORMATSCR_id, d0
 	clr	d1
 	call	func_97812681_entry, 0, 0x14
 	bra	KssCatch_FormatBox_Lca2
@@ -33809,8 +33810,8 @@ KssCatch_FormatBox_Lc4b:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700d0, d0
-	mov	0x01a000b4, d1
+	mov	FormatNrStr_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -33818,8 +33819,8 @@ KssCatch_FormatBox_Lc4b:
 	mov	sp, a0
 	add	0x34, a0
 	mov	a0, (0x10, sp)
-	mov	0x007700d0, d0
-	mov	0x01a000b6, d1
+	mov	FormatNrStr_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 KssCatch_FormatBox_Lca2:
 	mov	(data_979126B4), a0
@@ -33838,7 +33839,7 @@ KssCatch_LBNEntryBox:
 	add	-0x48, sp
 	mov	d0, (0x54, sp)
 	mov	d1, (0x58, sp)
-	mov	data_978A0604, a1
+	mov	KssCatch_LBNEntryBox_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	mov	-8, d1
@@ -33852,42 +33853,42 @@ KssCatch_LBNEntryBox_L14:
 	bra	KssCatch_LBNEntryBox_L14
 KssCatch_LBNEntryBox_L1f:
 	mov	(0x58, sp), d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_LBNEntryBox_L2b
 	bra	KssCatch_LBNEntryBox_L88
 KssCatch_LBNEntryBox_L2b:
 	mov	(0x58, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_LBNEntryBox_L37
 	bra	KssCatch_LBNEntryBox_L8d
 KssCatch_LBNEntryBox_L37:
 	mov	(0x58, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_LBNEntryBox_L44
 	jmp	KssCatch_LBNEntryBox_Leb
 KssCatch_LBNEntryBox_L44:
 	mov	(0x58, sp), d0
-	cmp	0x1a8004a, d0
+	cmp	MT_LoadActionLBNNr, d0
 	bne	KssCatch_LBNEntryBox_L51
 	jmp	KssCatch_LBNEntryBox_L480
 KssCatch_LBNEntryBox_L51:
 	mov	(0x58, sp), d0
-	cmp	0x1a8004b, d0
+	cmp	MT_ResetLBNNr, d0
 	bne	KssCatch_LBNEntryBox_L5e
 	jmp	KssCatch_LBNEntryBox_L683
 KssCatch_LBNEntryBox_L5e:
 	mov	(0x58, sp), d0
-	cmp	0x1a8004e, d0
+	cmp	MT_LBNAddNumber, d0
 	bne	KssCatch_LBNEntryBox_L6b
 	jmp	KssCatch_LBNEntryBox_L693
 KssCatch_LBNEntryBox_L6b:
 	mov	(0x58, sp), d0
-	cmp	0x1a8004f, d0
+	cmp	MT_LBNSwitchLeft, d0
 	bne	KssCatch_LBNEntryBox_L78
 	jmp	KssCatch_LBNEntryBox_L9a7
 KssCatch_LBNEntryBox_L78:
 	mov	(0x58, sp), d0
-	cmp	0x1a80050, d0
+	cmp	MT_LBNSwitchRight, d0
 	bne	KssCatch_LBNEntryBox_L85
 	jmp	KssCatch_LBNEntryBox_L9c8
 KssCatch_LBNEntryBox_L85:
@@ -33922,7 +33923,7 @@ KssCatch_LBNEntryBox_L8d:
 	mov	Str_LBND, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_LBNEntryBox_L9ff
@@ -33933,7 +33934,7 @@ KssCatch_LBNEntryBox_Leb:
 	mov	(0x5c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	KssCatch_LBNEntryBox_L111
@@ -33949,7 +33950,7 @@ KssCatch_LBNEntryBox_L117:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004a, d1
+	mov	MT_LoadActionLBNNr, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L132:
 	mov	(data_979126B4), a0
@@ -33957,8 +33958,8 @@ KssCatch_LBNEntryBox_L132:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001b, d0
-	mov	0x01a00054, d1
+	mov	LoadOptionWndLBNPg_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x3c, sp)
 	movhu	(0x3c, sp), d0
@@ -34075,7 +34076,7 @@ KssCatch_LBNEntryBox_L22a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L248:
@@ -34085,7 +34086,7 @@ KssCatch_LBNEntryBox_L248:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L267:
@@ -34095,7 +34096,7 @@ KssCatch_LBNEntryBox_L267:
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L286:
@@ -34105,7 +34106,7 @@ KssCatch_LBNEntryBox_L286:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2a5:
@@ -34115,7 +34116,7 @@ KssCatch_LBNEntryBox_L2a5:
 	mov	4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2c4:
@@ -34125,7 +34126,7 @@ KssCatch_LBNEntryBox_L2c4:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2e3:
@@ -34135,7 +34136,7 @@ KssCatch_LBNEntryBox_L2e3:
 	mov	6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L302:
@@ -34145,7 +34146,7 @@ KssCatch_LBNEntryBox_L302:
 	mov	7, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L321:
@@ -34155,7 +34156,7 @@ KssCatch_LBNEntryBox_L321:
 	mov	8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L340:
@@ -34165,7 +34166,7 @@ KssCatch_LBNEntryBox_L340:
 	mov	9, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004e, d1
+	mov	MT_LBNAddNumber, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L35f:
@@ -34175,7 +34176,7 @@ KssCatch_LBNEntryBox_L35f:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004f, d1
+	mov	MT_LBNSwitchLeft, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L37e:
@@ -34185,7 +34186,7 @@ KssCatch_LBNEntryBox_L37e:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a80050, d1
+	mov	MT_LBNSwitchRight, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L39d:
@@ -34195,7 +34196,7 @@ KssCatch_LBNEntryBox_L39d:
 	mov	(0x5c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x14, d0
 	bne	KssCatch_LBNEntryBox_L3c3
@@ -34213,23 +34214,23 @@ KssCatch_LBNEntryBox_L3cc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004b, d1
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L428:
@@ -34247,8 +34248,8 @@ KssCatch_LBNEntryBox_L43c:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L45e:
@@ -34257,8 +34258,8 @@ KssCatch_LBNEntryBox_L45e:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L480:
@@ -34272,16 +34273,16 @@ KssCatch_LBNEntryBox_L48d:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770165, d0
-	mov	0x01a8003e, d1
+	mov	LoadOptionLBN_id, d0
+	mov	MT_GetSfxLoad, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80054, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34294,24 +34295,24 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880015, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
 	mov	(0x28, sp), d0
 	mov	0x30, d1
@@ -34328,8 +34329,8 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880017, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_GetSelectedDir, d1
 	calls	(a2)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -34341,16 +34342,16 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880017, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_GetSelectedDir, d1
 	calls	(a2)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80054, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34368,15 +34369,15 @@ KssCatch_LBNEntryBox_L5cf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880013, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	call	func_97802ECA_entry, 0, 0x10
 	cmp	0, d0
@@ -34408,7 +34409,7 @@ KssCatch_LBNEntryBox_L642:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x00770015, d1
+	mov	SELECT_NUMBER_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L683:
@@ -34456,8 +34457,8 @@ KssCatch_LBNEntryBox_L6e7:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L706:
 	mov	(data_979126B4), a0
@@ -34465,8 +34466,8 @@ KssCatch_LBNEntryBox_L706:
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80052, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_AddDigit, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34480,23 +34481,23 @@ KssCatch_LBNEntryBox_L731:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004b, d1
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_LBNEntryBox_L9ff
@@ -34506,8 +34507,8 @@ KssCatch_LBNEntryBox_L78f:
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80052, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_AddDigit, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34521,23 +34522,23 @@ KssCatch_LBNEntryBox_L7b9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004b, d1
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	1, d0
 	mov	d0, (data_97910CC0)
@@ -34554,8 +34555,8 @@ KssCatch_LBNEntryBox_L82c:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80054, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34565,8 +34566,8 @@ KssCatch_LBNEntryBox_L82c:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80054, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x34, sp)
 	mov	(0x34, sp), d0
@@ -34579,8 +34580,8 @@ KssCatch_LBNEntryBox_L82c:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077012a, d0
-	mov	0x01a000b6, d1
+	mov	SfxDispLBN_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	3, d0
 	mov	sp, a0
@@ -34597,7 +34598,7 @@ KssCatch_LBNEntryBox_L8bf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004a, d1
+	mov	MT_LoadActionLBNNr, d1
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L8dd:
@@ -34607,23 +34608,23 @@ KssCatch_LBNEntryBox_L8dd:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004b, d1
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	1, d0
 	mov	d0, (data_97910CC4)
@@ -34632,8 +34633,8 @@ KssCatch_LBNEntryBox_L8dd:
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80052, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_AddDigit, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -34647,15 +34648,15 @@ KssCatch_LBNEntryBox_L969:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x54, sp), d0
-	mov	0x01a8004b, d1
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	clr	d0
 	bra	KssCatch_LBNEntryBox_L9ff
@@ -34665,8 +34666,8 @@ KssCatch_LBNEntryBox_L9a7:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80056, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_DecrDigit, d1
 	calls	(a0)
 	bra	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L9c8:
@@ -34675,8 +34676,8 @@ KssCatch_LBNEntryBox_L9c8:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80055, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_IncrDigit, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L9e7:
 	mov	(data_979126B4), a0
@@ -34696,47 +34697,47 @@ KssVwDigitBoxProc:
 	mov	d0, (0x70, sp)
 	mov	d1, (0x74, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssVwDigitBoxProc_L14
 	bra	KssVwDigitBoxProc_L7f
 KssVwDigitBoxProc_L14:
 	mov	(0x74, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssVwDigitBoxProc_L21
 	jmp	KssVwDigitBoxProc_Lca
 KssVwDigitBoxProc_L21:
 	mov	(0x74, sp), d0
-	cmp	0x1a80051, d0
+	cmp	MT_ResetDigitBox, d0
 	bne	KssVwDigitBoxProc_L2e
 	jmp	KssVwDigitBoxProc_L234
 KssVwDigitBoxProc_L2e:
 	mov	(0x74, sp), d0
-	cmp	0x1a80052, d0
+	cmp	MT_AddDigit, d0
 	bne	KssVwDigitBoxProc_L3b
 	jmp	KssVwDigitBoxProc_L2df
 KssVwDigitBoxProc_L3b:
 	mov	(0x74, sp), d0
-	cmp	0x1a80055, d0
+	cmp	MT_IncrDigit, d0
 	bne	KssVwDigitBoxProc_L48
 	jmp	KssVwDigitBoxProc_L3c1
 KssVwDigitBoxProc_L48:
 	mov	(0x74, sp), d0
-	cmp	0x1a80056, d0
+	cmp	MT_DecrDigit, d0
 	bne	KssVwDigitBoxProc_L55
 	jmp	KssVwDigitBoxProc_L4ae
 KssVwDigitBoxProc_L55:
 	mov	(0x74, sp), d0
-	cmp	0x1a8004d, d0
+	cmp	MT_GetLBNString, d0
 	bne	KssVwDigitBoxProc_L62
 	jmp	KssVwDigitBoxProc_L59c
 KssVwDigitBoxProc_L62:
 	mov	(0x74, sp), d0
-	cmp	0x1a80053, d0
+	cmp	MT_SetDigitValue, d0
 	bne	KssVwDigitBoxProc_L6f
 	jmp	KssVwDigitBoxProc_L6ab
 KssVwDigitBoxProc_L6f:
 	mov	(0x74, sp), d0
-	cmp	0x1a80054, d0
+	cmp	MT_GetDigitValue, d0
 	bne	KssVwDigitBoxProc_L7c
 	jmp	KssVwDigitBoxProc_L714
 KssVwDigitBoxProc_L7c:
@@ -34762,7 +34763,7 @@ KssVwDigitBoxProc_L7f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
@@ -34900,7 +34901,7 @@ KssVwDigitBoxProc_L1d7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a8004d, d1
+	mov	MT_GetLBNString, d1
 	calls	(a0)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
@@ -34951,10 +34952,10 @@ KssVwDigitBoxProc_L234:
 	mov	(0x78, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x70, sp), d0
-	cmp	0x770145, d0
+	cmp	DirNumberLBN_id, d0
 	beq	KssVwDigitBoxProc_L27f
 	bra	KssVwDigitBoxProc_L287
 KssVwDigitBoxProc_L27f:
@@ -34962,7 +34963,7 @@ KssVwDigitBoxProc_L27f:
 	call	func_9781EA47, 0, 0
 KssVwDigitBoxProc_L287:
 	mov	(0x70, sp), d0
-	cmp	0x770146, d0
+	cmp	FileNumberLBN_id, d0
 	beq	KssVwDigitBoxProc_L293
 	bra	KssVwDigitBoxProc_L29b
 KssVwDigitBoxProc_L293:
@@ -34970,12 +34971,12 @@ KssVwDigitBoxProc_L293:
 	call	func_9781EA52, 0, 0
 KssVwDigitBoxProc_L29b:
 	mov	(0x70, sp), d0
-	cmp	0x770145, d0
+	cmp	DirNumberLBN_id, d0
 	bne	KssVwDigitBoxProc_L2a7
 	bra	KssVwDigitBoxProc_L2b3
 KssVwDigitBoxProc_L2a7:
 	mov	(0x70, sp), d0
-	cmp	0x770146, d0
+	cmp	FileNumberLBN_id, d0
 	beq	KssVwDigitBoxProc_L2b3
 	bra	KssVwDigitBoxProc_L2db
 KssVwDigitBoxProc_L2b3:
@@ -34987,8 +34988,8 @@ KssVwDigitBoxProc_L2b3:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077012a, d0
-	mov	0x01a000b6, d1
+	mov	SfxDispLBN_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssVwDigitBoxProc_L2db:
 	clr	d0
@@ -35082,7 +35083,7 @@ KssVwDigitBoxProc_L381:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x28, sp), d0
 	jmp	KssVwDigitBoxProc_L748
@@ -35093,7 +35094,7 @@ KssVwDigitBoxProc_L3a2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
@@ -35144,15 +35145,15 @@ KssVwDigitBoxProc_L403:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80054, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -35162,8 +35163,8 @@ KssVwDigitBoxProc_L403:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80054, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(0x2c, sp), d0
@@ -35176,8 +35177,8 @@ KssVwDigitBoxProc_L403:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077012a, d0
-	mov	0x01a000b6, d1
+	mov	SfxDispLBN_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
@@ -35228,15 +35229,15 @@ KssVwDigitBoxProc_L4f0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80054, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
@@ -35246,8 +35247,8 @@ KssVwDigitBoxProc_L4f0:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80054, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(0x2c, sp), d0
@@ -35260,8 +35261,8 @@ KssVwDigitBoxProc_L4f0:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077012a, d0
-	mov	0x01a000b6, d1
+	mov	SfxDispLBN_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
@@ -35319,7 +35320,7 @@ KssVwDigitBoxProc_L61e:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770145, d0
+	mov	DirNumberLBN_id, d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
 	mov	(0x34, a0), a0
@@ -35405,7 +35406,7 @@ KssVwDigitBoxProc_L6ed:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KssVwDigitBoxProc_L748
@@ -35796,47 +35797,47 @@ KssParaEditEntryProc:
 	mov	d0, (0x80, sp)
 	mov	d1, (0x84, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KssParaEditEntryProc_L14
 	bra	KssParaEditEntryProc_L7f
 KssParaEditEntryProc_L14:
 	mov	(0x84, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssParaEditEntryProc_L21
 	jmp	KssParaEditEntryProc_Laf
 KssParaEditEntryProc_L21:
 	mov	(0x84, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssParaEditEntryProc_L2e
 	jmp	KssParaEditEntryProc_L2d0
 KssParaEditEntryProc_L2e:
 	mov	(0x84, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssParaEditEntryProc_L3b
 	jmp	KssParaEditEntryProc_L3a3
 KssParaEditEntryProc_L3b:
 	mov	(0x84, sp), d0
-	cmp	0x1a0003d, d0
+	cmp	MT_CalcParam, d0
 	bne	KssParaEditEntryProc_L48
 	jmp	KssParaEditEntryProc_L583
 KssParaEditEntryProc_L48:
 	mov	(0x84, sp), d0
-	cmp	0x1a0007f, d0
+	cmp	MT_GetStrPtr, d0
 	bne	KssParaEditEntryProc_L55
 	jmp	KssParaEditEntryProc_L633
 KssParaEditEntryProc_L55:
 	mov	(0x84, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssParaEditEntryProc_L62
 	jmp	KssParaEditEntryProc_L681
 KssParaEditEntryProc_L62:
 	mov	(0x84, sp), d0
-	cmp	0x1a000b0, d0
+	cmp	MT_GetFontColor, d0
 	bne	KssParaEditEntryProc_L6f
 	jmp	KssParaEditEntryProc_L6b5
 KssParaEditEntryProc_L6f:
 	mov	(0x84, sp), d0
-	cmp	0x1a8002c, d0
+	cmp	MT_GetBackFontColor, d0
 	bne	KssParaEditEntryProc_L7c
 	jmp	KssParaEditEntryProc_L6e9
 KssParaEditEntryProc_L7c:
@@ -35952,7 +35953,7 @@ KssParaEditEntryProc_L1cf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x80, sp), d0
-	mov	0x01a0007f, d1
+	mov	MT_GetStrPtr, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	sp, a0
@@ -36042,7 +36043,7 @@ KssParaEditEntryProc_L2b0:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x80, sp), d0
-	mov	0x01a0003b, d1
+	mov	MT_SetParam, d1
 	calls	(a0)
 KssParaEditEntryProc_L2cc:
 	clr	d0
@@ -36147,8 +36148,8 @@ KssParaEditEntryProc_L3a3:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770026, d0
-	mov	0x01a00054, d1
+	mov	SET_TOOLS_PAGECTRL_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
 	mov	(data_979126B4), a0
@@ -36157,7 +36158,7 @@ KssParaEditEntryProc_L3a3:
 	mov	(0x88, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x90, d0
 	bne	KssParaEditEntryProc_L3ed
@@ -36210,8 +36211,8 @@ KssParaEditEntryProc_L437:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770097, d0
-	mov	0x01a000b4, d1
+	mov	IndexSwitch_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (data_97910CCC)
@@ -36833,32 +36834,32 @@ KssVwBoxProc:
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssVwBoxProc_L12
 	bra	KssVwBoxProc_L56
 KssVwBoxProc_L12:
 	mov	(0x38, sp), d0
-	cmp	0x1a0004b, d0
+	cmp	MT_DrawSelected, d0
 	bne	KssVwBoxProc_L1f
 	jmp	KssVwBoxProc_L16a
 KssVwBoxProc_L1f:
 	mov	(0x38, sp), d0
-	cmp	0x1a0004e, d0
+	cmp	MT_GetIndex, d0
 	bne	KssVwBoxProc_L2c
 	jmp	KssVwBoxProc_L1e3
 KssVwBoxProc_L2c:
 	mov	(0x38, sp), d0
-	cmp	0x1a0004d, d0
+	cmp	MT_CheckIndex, d0
 	bne	KssVwBoxProc_L39
 	jmp	KssVwBoxProc_L1fd
 KssVwBoxProc_L39:
 	mov	(0x38, sp), d0
-	cmp	0x1a000a4, d0
+	cmp	MT_GetBoxBorder, d0
 	bne	KssVwBoxProc_L46
 	jmp	KssVwBoxProc_L226
 KssVwBoxProc_L46:
 	mov	(0x38, sp), d0
-	cmp	0x1a000a5, d0
+	cmp	MT_GetBoxColor, d0
 	bne	KssVwBoxProc_L53
 	jmp	KssVwBoxProc_L240
 KssVwBoxProc_L53:
@@ -36878,7 +36879,7 @@ KssVwBoxProc_L56:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x34, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x1c, sp)
 	mov	(data_979126B4), a0
@@ -36887,16 +36888,16 @@ KssVwBoxProc_L56:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x34, sp), d0
-	mov	0x01a000a4, d1
+	mov	MT_GetBoxBorder, d1
 	calls	(a0)
 	movhu	d0, (0x1e, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600021, d0
+	mov	CLASS_PsEditSwBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0x34, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssVwBoxProc_Ld0
@@ -36942,7 +36943,7 @@ KssVwBoxProc_L118:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x34, sp), d0
-	mov	0x01a000b0, d1
+	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x20, sp)
 	mov	(data_979126B4), a0
@@ -36972,7 +36973,7 @@ KssVwBoxProc_L16a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x34, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x1c, sp)
 	mov	(0x3c, sp), a0
@@ -37074,22 +37075,22 @@ KssPsParaBoxProc:
 	mov	d0, (0x4c, sp)
 	mov	d1, (0x50, sp)
 	mov	d1, d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssPsParaBoxProc_L14
 	bra	KssPsParaBoxProc_L3e
 KssPsParaBoxProc_L14:
 	mov	(0x50, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssPsParaBoxProc_L21
 	jmp	KssPsParaBoxProc_L194
 KssPsParaBoxProc_L21:
 	mov	(0x50, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssPsParaBoxProc_L2e
 	jmp	KssPsParaBoxProc_L19c
 KssPsParaBoxProc_L2e:
 	mov	(0x50, sp), d0
-	cmp	0x1a000b0, d0
+	cmp	MT_GetFontColor, d0
 	bne	KssPsParaBoxProc_L3b
 	jmp	KssPsParaBoxProc_L1b5
 KssPsParaBoxProc_L3b:
@@ -37130,7 +37131,7 @@ KssPsParaBoxProc_L3e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b1, d1
+	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(data_979126B4), a0
@@ -37139,7 +37140,7 @@ KssPsParaBoxProc_L3e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x30, sp)
 	mov	(data_979126B4), a0
@@ -37148,7 +37149,7 @@ KssPsParaBoxProc_L3e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b0, d1
+	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x32, sp)
 	mov	(data_979126B4), a0
@@ -37168,7 +37169,7 @@ KssPsParaBoxProc_L10b:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a0003a, d1
+	mov	MT_GetString, d1
 	calls	(a0)
 	mov	(0x2c, sp), a0
 	movbu	(a0), d1
@@ -37257,7 +37258,7 @@ KssUserBitmapProc:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	beq	KssUserBitmapProc_L14
 	bra	KssUserBitmapProc_L65
 KssUserBitmapProc_L14:
@@ -37275,7 +37276,7 @@ KssUserBitmapProc_L14:
 	movhu	(0x1c, a1), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01880019, d1
+	mov	EV_GetSelectedArea, d1
 	mov	d2, d0
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -37306,32 +37307,32 @@ KssParaTextEntryProc:
 	mov	d0, (0x78, sp)
 	mov	d1, (0x7c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssParaTextEntryProc_L14
 	bra	KssParaTextEntryProc_L58
 KssParaTextEntryProc_L14:
 	mov	(0x7c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssParaTextEntryProc_L21
 	jmp	KssParaTextEntryProc_L16d
 KssParaTextEntryProc_L21:
 	mov	(0x7c, sp), d0
-	cmp	0x1a0007f, d0
+	cmp	MT_GetStrPtr, d0
 	bne	KssParaTextEntryProc_L2e
 	jmp	KssParaTextEntryProc_L259
 KssParaTextEntryProc_L2e:
 	mov	(0x7c, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	KssParaTextEntryProc_L3b
 	jmp	KssParaTextEntryProc_L2a7
 KssParaTextEntryProc_L3b:
 	mov	(0x7c, sp), d0
-	cmp	0x1a000b0, d0
+	cmp	MT_GetFontColor, d0
 	bne	KssParaTextEntryProc_L48
 	jmp	KssParaTextEntryProc_L2db
 KssParaTextEntryProc_L48:
 	mov	(0x7c, sp), d0
-	cmp	0x1a8002c, d0
+	cmp	MT_GetBackFontColor, d0
 	bne	KssParaTextEntryProc_L55
 	jmp	KssParaTextEntryProc_L30f
 KssParaTextEntryProc_L55:
@@ -37357,7 +37358,7 @@ KssParaTextEntryProc_L58:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x78, sp), d0
-	mov	0x01a0007f, d1
+	mov	MT_GetStrPtr, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	sp, a0
@@ -37437,7 +37438,7 @@ KssParaTextEntryProc_Lda:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x78, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssParaTextEntryProc_L35b
@@ -38491,8 +38492,8 @@ func_97816515_Lf:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800001, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	func_97816515_L4f
 func_97816515_L30:
@@ -38501,8 +38502,8 @@ func_97816515_L30:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800002, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_HIDE, d1
 	calls	(a0)
 func_97816515_L4f:
 	ret	0, 0x14
@@ -38513,32 +38514,32 @@ AcKssPleaseWaitProc:
 	mov	d0, (0x40, sp)
 	mov	d1, (0x44, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	AcKssPleaseWaitProc_L14
 	bra	AcKssPleaseWaitProc_L57
 AcKssPleaseWaitProc_L14:
 	mov	(0x44, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	AcKssPleaseWaitProc_L20
 	bra	AcKssPleaseWaitProc_L7a
 AcKssPleaseWaitProc_L20:
 	mov	(0x44, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	AcKssPleaseWaitProc_L2d
 	jmp	AcKssPleaseWaitProc_Lb9
 AcKssPleaseWaitProc_L2d:
 	mov	(0x44, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	AcKssPleaseWaitProc_L3a
 	jmp	AcKssPleaseWaitProc_Lf0
 AcKssPleaseWaitProc_L3a:
 	mov	(0x44, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	AcKssPleaseWaitProc_L47
 	jmp	AcKssPleaseWaitProc_L1dc
 AcKssPleaseWaitProc_L47:
 	mov	(0x44, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	AcKssPleaseWaitProc_L54
 	jmp	AcKssPleaseWaitProc_L2b3
 AcKssPleaseWaitProc_L54:
@@ -38562,7 +38563,7 @@ AcKssPleaseWaitProc_L7a:
 	mov	(0x3ec, a0), a0
 	mov	(0x40, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a000b6, d0
+	mov	MT_ParaDraw, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -38594,7 +38595,7 @@ AcKssPleaseWaitProc_Lb9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	AcKssPleaseWaitProc_L2e9
@@ -38612,7 +38613,7 @@ AcKssPleaseWaitProc_Lf0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
 	mov	(data_979126B4), a0
@@ -38636,7 +38637,7 @@ AcKssPleaseWaitProc_Lf0:
 	mov	(0x3ec, a0), a0
 	mov	(0x40, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a000b6, d0
+	mov	MT_ParaDraw, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -38654,7 +38655,7 @@ AcKssPleaseWaitProc_L182:
 	mov	(0x3e4, a0), a0
 	mov	(0x40, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a000b6, d0
+	mov	MT_ParaDraw, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -38668,7 +38669,7 @@ AcKssPleaseWaitProc_L1a7:
 	mov	(0x3e4, a0), a0
 	mov	(0x40, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a000b6, d0
+	mov	MT_ParaDraw, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -38825,8 +38826,8 @@ func_97816853_entry:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770173, d0
-	mov	0x01800001, d1
+	mov	KSS_EDIT_NAME_WND_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -38836,97 +38837,97 @@ KssNamingWindowProc:
 	mov	d0, (0x70, sp)
 	mov	d1, (0x74, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssNamingWindowProc_L15
 	jmp	KssNamingWindowProc_L102
 KssNamingWindowProc_L15:
 	mov	(0x74, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KssNamingWindowProc_L22
 	jmp	KssNamingWindowProc_L35c
 KssNamingWindowProc_L22:
 	mov	(0x74, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssNamingWindowProc_L2f
 	jmp	KssNamingWindowProc_L3d0
 KssNamingWindowProc_L2f:
 	mov	(0x74, sp), d0
-	cmp	0x1a000b5, d0
+	cmp	MT_SeleDraw, d0
 	bne	KssNamingWindowProc_L3c
 	jmp	KssNamingWindowProc_L407
 KssNamingWindowProc_L3c:
 	mov	(0x74, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssNamingWindowProc_L49
 	jmp	KssNamingWindowProc_L67f
 KssNamingWindowProc_L49:
 	mov	(0x74, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KssNamingWindowProc_L56
 	jmp	KssNamingWindowProc_L6ed
 KssNamingWindowProc_L56:
 	mov	(0x74, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssNamingWindowProc_L63
 	jmp	KssNamingWindowProc_L6ed
 KssNamingWindowProc_L63:
 	mov	(0x74, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KssNamingWindowProc_L70
 	jmp	KssNamingWindowProc_L6ed
 KssNamingWindowProc_L70:
 	mov	(0x74, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssNamingWindowProc_L7d
 	jmp	KssNamingWindowProc_L6ed
 KssNamingWindowProc_L7d:
 	mov	(0x74, sp), d0
-	cmp	0x1800035, d0
+	cmp	EV_INDEXSW_ON, d0
 	bne	KssNamingWindowProc_L8a
 	jmp	KssNamingWindowProc_L1006
 KssNamingWindowProc_L8a:
 	mov	(0x74, sp), d0
-	cmp	0x1800036, d0
+	cmp	EV_INDEXSW_OFF, d0
 	bne	KssNamingWindowProc_L97
 	jmp	KssNamingWindowProc_L1006
 KssNamingWindowProc_L97:
 	mov	(0x74, sp), d0
-	cmp	0x1800038, d0
+	cmp	EV_NAMINGCHARA, d0
 	bne	KssNamingWindowProc_La4
 	jmp	KssNamingWindowProc_L106d
 KssNamingWindowProc_La4:
 	mov	(0x74, sp), d0
-	cmp	0x1a0007c, d0
+	cmp	MT_SetString, d0
 	bne	KssNamingWindowProc_Lb1
 	jmp	KssNamingWindowProc_L115a
 KssNamingWindowProc_Lb1:
 	mov	(0x74, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssNamingWindowProc_Lbe
 	jmp	KssNamingWindowProc_L1188
 KssNamingWindowProc_Lbe:
 	mov	(0x74, sp), d0
-	cmp	0x1a00072, d0
+	cmp	MT_SetApFunction, d0
 	bne	KssNamingWindowProc_Lcb
 	jmp	KssNamingWindowProc_L119b
 KssNamingWindowProc_Lcb:
 	mov	(0x74, sp), d0
-	cmp	0x1a00076, d0
+	cmp	MT_SetPage, d0
 	bne	KssNamingWindowProc_Ld8
 	jmp	KssNamingWindowProc_L11a7
 KssNamingWindowProc_Ld8:
 	mov	(0x74, sp), d0
-	cmp	0x1a00077, d0
+	cmp	MT_SetCursor, d0
 	bne	KssNamingWindowProc_Le5
 	jmp	KssNamingWindowProc_L1203
 KssNamingWindowProc_Le5:
 	mov	(0x74, sp), d0
-	cmp	0x1a00078, d0
+	cmp	MT_SetChara, d0
 	bne	KssNamingWindowProc_Lf2
 	jmp	KssNamingWindowProc_L12d9
 KssNamingWindowProc_Lf2:
 	mov	(0x74, sp), d0
-	cmp	0x1800021, d0
+	cmp	EV_IAMSELECTED, d0
 	bne	KssNamingWindowProc_Lff
 	jmp	KssNamingWindowProc_L130c
 KssNamingWindowProc_Lff:
@@ -38969,7 +38970,7 @@ KssNamingWindowProc_L12f:
 	beq	KssNamingWindowProc_L14d
 	bra	KssNamingWindowProc_L159
 KssNamingWindowProc_L14d:
-	mov	0x01280011, d0
+	mov	FN_KssNamingCheck, d0
 	mov	d0, (0x97913ba4)
 KssNamingWindowProc_L159:
 	clr	d0
@@ -38982,7 +38983,7 @@ KssNamingWindowProc_L159:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913ba4), d0
-	mov	0x01a00073, d1
+	mov	MT_GetStringLength, d1
 	calls	(a0)
 	movhu	d0, (0x97913ba8)
 	movhu	(0x97913ba8), d0
@@ -38999,7 +39000,7 @@ KssNamingWindowProc_L1a5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913ba4), d0
-	mov	0x01a0007a, d1
+	mov	MT_GetNamingMode, d1
 	calls	(a0)
 	movhu	d0, (0x97913bb8)
 	movhu	(0x97913bb8), d0
@@ -39077,7 +39078,7 @@ KssNamingWindowProc_L281:
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913ba4), d0
-	mov	0x01a0003a, d1
+	mov	MT_GetString, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39085,7 +39086,7 @@ KssNamingWindowProc_L281:
 	mov	0x6c, d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01800013, d1
+	mov	EV_INDEXSELECT, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39093,7 +39094,7 @@ KssNamingWindowProc_L281:
 	mov	0x006c0000, d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01800022, d1
+	mov	EV_YOUARESELECTED, d1
 	calls	(a0)
 	bra	KssNamingWindowProc_L2f6
 KssNamingWindowProc_L2e3:
@@ -39115,7 +39116,7 @@ KssNamingWindowProc_L2f6:
 	mov	0x65, d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39123,7 +39124,7 @@ KssNamingWindowProc_L2f6:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39143,7 +39144,7 @@ KssNamingWindowProc_L35c:
 	movhu	(0x97913bac), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39159,7 +39160,7 @@ KssNamingWindowProc_L35c:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
@@ -39472,7 +39473,7 @@ KssNamingWindowProc_L6a1:
 	add	d2, d1
 	mov	d1, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800037, d1
+	mov	EV_NAMINGPAGE, d1
 	calls	(a0)
 	movhu	(0x97913bac), d0
 	movhu	d0, (0x97913bae)
@@ -39564,7 +39565,7 @@ KssNamingWindowProc_L780:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39592,7 +39593,7 @@ KssNamingWindowProc_L7dc:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39637,8 +39638,8 @@ KssNamingWindowProc_L831:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39646,7 +39647,7 @@ KssNamingWindowProc_L831:
 	movhu	(0x97913bb4), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b5, d1
+	mov	MT_SeleDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39700,8 +39701,8 @@ KssNamingWindowProc_L902:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39709,7 +39710,7 @@ KssNamingWindowProc_L902:
 	movhu	(0x97913bb4), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b5, d1
+	mov	MT_SeleDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39756,8 +39757,8 @@ KssNamingWindowProc_L9e8:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39765,7 +39766,7 @@ KssNamingWindowProc_L9e8:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_La45:
@@ -39804,8 +39805,8 @@ KssNamingWindowProc_La7a:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39813,7 +39814,7 @@ KssNamingWindowProc_La7a:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lad9:
@@ -39988,8 +39989,8 @@ KssNamingWindowProc_Lc65:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -39997,7 +39998,7 @@ KssNamingWindowProc_Lc65:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lcac:
@@ -40028,16 +40029,16 @@ KssNamingWindowProc_Lcdd:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a00077, d1
+	mov	KssCursBox_id, d0
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40045,7 +40046,7 @@ KssNamingWindowProc_Lcdd:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_Ld3e:
@@ -40063,8 +40064,8 @@ KssNamingWindowProc_Ld4a:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40073,7 +40074,7 @@ KssNamingWindowProc_Ld4a:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 KssNamingWindowProc_Lda1:
 	movbu	(0x97913f88), d0
@@ -40090,8 +40091,8 @@ KssNamingWindowProc_Ldad:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssNamingWindowProc_Lde6:
 	movbu	(0x97913f88), d0
@@ -40108,8 +40109,8 @@ KssNamingWindowProc_Ldf3:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_Le2f:
@@ -40130,8 +40131,8 @@ KssNamingWindowProc_Le3b:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a4, d0
-	mov	0x01800001, d1
+	mov	HDD_SAVE_OPTIONS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssNamingWindowProc_Le7b:
 	movbu	(0x97913f88), d0
@@ -40162,14 +40163,14 @@ KssNamingWindowProc_Led1:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x64, d0
-	mov	0x007700e1, d1
+	mov	BigFont_DirSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssNamingWindowProc_Lefd
 KssNamingWindowProc_Lee8:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x64, d0
-	mov	0x00770250, d1
+	mov	HDD_DIR_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KssNamingWindowProc_Lefd:
 	movbu	(0x97913f88), d0
@@ -40191,7 +40192,7 @@ KssNamingWindowProc_Lf0a:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x68, d0
-	mov	0x00770046, d1
+	mov	HDD_FLS_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lf58:
@@ -40209,8 +40210,8 @@ KssNamingWindowProc_Lf6c:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lf8d:
@@ -40219,8 +40220,8 @@ KssNamingWindowProc_Lf8d:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lfae:
@@ -40238,8 +40239,8 @@ KssNamingWindowProc_Lfc2:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lfe3:
@@ -40248,8 +40249,8 @@ KssNamingWindowProc_Lfe3:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssNamingWindowProc_L1002:
 	clr	d0
@@ -40269,7 +40270,7 @@ KssNamingWindowProc_L1006:
 	bra	KssNamingWindowProc_L1069
 KssNamingWindowProc_L1026:
 	mov	(0x74, sp), d0
-	cmp	0x1800035, d0
+	cmp	EV_INDEXSW_ON, d0
 	bne	KssNamingWindowProc_L1032
 	bra	KssNamingWindowProc_L1035
 KssNamingWindowProc_L1032:
@@ -40285,7 +40286,7 @@ KssNamingWindowProc_L1037:
 	movhu	(0x97913bac), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00076, d1
+	mov	MT_SetPage, d1
 	calls	(a0)
 	movhu	(0x97913bb0), d0
 	movhu	d0, (0x97913bb2)
@@ -40326,8 +40327,8 @@ KssNamingWindowProc_L1094:
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40335,7 +40336,7 @@ KssNamingWindowProc_L1094:
 	movhu	(0x97913bb4), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b5, d1
+	mov	MT_SeleDraw, d1
 	calls	(a0)
 	movhu	(0x97913baa), d0
 	inc	d0
@@ -40353,7 +40354,7 @@ KssNamingWindowProc_L1111:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40376,7 +40377,7 @@ KssNamingWindowProc_L115a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
@@ -40407,7 +40408,7 @@ KssNamingWindowProc_L11bb:
 	add	0x6c0000, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800022, d1
+	mov	EV_YOUARESELECTED, d1
 	calls	(a0)
 KssNamingWindowProc_L11df:
 	mov	(data_979126B4), a0
@@ -40416,7 +40417,7 @@ KssNamingWindowProc_L11df:
 	movhu	(0x97913bac), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
@@ -40428,16 +40429,16 @@ KssNamingWindowProc_L1203:
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a00077, d1
+	mov	KssCursBox_id, d0
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077019f, d0
-	mov	0x01a000b6, d1
+	mov	KssCursBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x34, sp)
@@ -40486,7 +40487,7 @@ KssNamingWindowProc_L12b5:
 	movhu	(0x97913bb4), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a000b5, d1
+	mov	MT_SeleDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
@@ -40501,7 +40502,7 @@ KssNamingWindowProc_L12d9:
 	movhu	(0x97913baa), d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00077, d1
+	mov	MT_SetCursor, d1
 	calls	(a0)
 	clr	d0
 	bra	KssNamingWindowProc_L136d
@@ -40529,7 +40530,7 @@ KssNamingWindowProc_L1334:
 	exthu	d0
 	mov	d0, (0x10, sp)
 	mov	(0x70, sp), d0
-	mov	0x01a00076, d1
+	mov	MT_SetPage, d1
 	calls	(a0)
 KssNamingWindowProc_L1352:
 	clr	d0
@@ -40585,13 +40586,13 @@ func_97817C21_entry_L43:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077036c, d0
-	mov	0x01800001, d1
+	mov	LoadSaveWnd_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800001, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_SHOW, d1
 	call	WaitingFunc_entry, [d2,a2], 0xa0
 func_97817C21_entry_L78:
 	ret	0, 0x14
@@ -40618,7 +40619,7 @@ CheckWetherPlaceIsFree_L2b:
 	bhi	CheckWetherPlaceIsFree_L3e
 	bra	CheckWetherPlaceIsFree_L66
 CheckWetherPlaceIsFree_L3e:
-	mov	0x01800001, d0
+	mov	EV_SHOW, d0
 	mov	d0, (0x10, sp)
 	mov	0x65, d0
 	mov	d0, (0x14, sp)
@@ -40627,8 +40628,8 @@ CheckWetherPlaceIsFree_L3e:
 	mov	d0, (0x1c, sp)
 	mov	d0, (0x20, sp)
 	mov	d0, (0x24, sp)
-	mov	0x0077036c, d0
-	mov	0x00770249, d1
+	mov	LoadSaveWnd_id, d0
+	mov	HDD_FILE_SELECT_id, d1
 	call	func_97811734_entry, 0, 0x14
 	bra	CheckWetherPlaceIsFree_La6
 CheckWetherPlaceIsFree_L66:
@@ -40637,8 +40638,8 @@ CheckWetherPlaceIsFree_L66:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770289, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_NAMING_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	CheckWetherPlaceIsFree_La6
 CheckWetherPlaceIsFree_L87:
@@ -40647,8 +40648,8 @@ CheckWetherPlaceIsFree_L87:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770289, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_NAMING_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 CheckWetherPlaceIsFree_La6:
 	clr	d0
@@ -40672,8 +40673,8 @@ CheckWetherPlaceIsFull_L2a:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770052, d0
-	mov	0x01800001, d1
+	mov	FILE_DEL_OPTIONS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 CheckWetherPlaceIsFull_L49:
 	clr	d0
@@ -40685,27 +40686,27 @@ KssLoadSaveDel_DISPProc:
 	mov	d0, (0x124, sp)
 	mov	d1, (0x128, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssLoadSaveDel_DISPProc_L19
 	bra	KssLoadSaveDel_DISPProc_L58
 KssLoadSaveDel_DISPProc_L19:
 	mov	(0x128, sp), d0
-	cmp	0x1a80042, d0
+	cmp	MT_DoAction, d0
 	bne	KssLoadSaveDel_DISPProc_L28
 	jmp	KssLoadSaveDel_DISPProc_L3fc
 KssLoadSaveDel_DISPProc_L28:
 	mov	(0x128, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssLoadSaveDel_DISPProc_L37
 	jmp	KssLoadSaveDel_DISPProc_L927
 KssLoadSaveDel_DISPProc_L37:
 	mov	(0x128, sp), d0
-	cmp	0x1a80043, d0
+	cmp	MT_Success, d0
 	bne	KssLoadSaveDel_DISPProc_L46
 	jmp	KssLoadSaveDel_DISPProc_L1d95
 KssLoadSaveDel_DISPProc_L46:
 	mov	(0x128, sp), d0
-	cmp	0x1a80044, d0
+	cmp	MT_Failed, d0
 	bne	KssLoadSaveDel_DISPProc_L55
 	jmp	KssLoadSaveDel_DISPProc_L2134
 KssLoadSaveDel_DISPProc_L55:
@@ -40758,7 +40759,7 @@ KssLoadSaveDel_DISPProc_Lbb:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40766,14 +40767,14 @@ KssLoadSaveDel_DISPProc_Lbb:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -40800,7 +40801,7 @@ KssLoadSaveDel_DISPProc_L13c:
 	mov	8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40808,14 +40809,14 @@ KssLoadSaveDel_DISPProc_L13c:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -40846,7 +40847,7 @@ KssLoadSaveDel_DISPProc_L1e6:
 	mov	0x12c, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x97913bc0), d0
 	and	0x0400, d0
@@ -40860,7 +40861,7 @@ KssLoadSaveDel_DISPProc_L217:
 	mov	0x6b, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	KssLoadSaveDel_DISPProc_L255
 KssLoadSaveDel_DISPProc_L237:
@@ -40870,7 +40871,7 @@ KssLoadSaveDel_DISPProc_L237:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L255:
 	mov	(data_979126B4), a0
@@ -40878,7 +40879,7 @@ KssLoadSaveDel_DISPProc_L255:
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -40920,14 +40921,14 @@ KssLoadSaveDel_DISPProc_L280:
 	mov	0x190, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -40943,7 +40944,7 @@ KssLoadSaveDel_DISPProc_L349:
 	mov	7, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -40951,14 +40952,14 @@ KssLoadSaveDel_DISPProc_L349:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -40974,14 +40975,14 @@ KssLoadSaveDel_DISPProc_L3b0:
 	mov	0xd4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
@@ -41060,14 +41061,14 @@ KssLoadSaveDel_DISPProc_L4a8:
 	mov	0xd3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41083,14 +41084,14 @@ KssLoadSaveDel_DISPProc_L4f3:
 	mov	0xc8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41141,14 +41142,14 @@ KssLoadSaveDel_DISPProc_L5b0:
 	mov	0xd3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41164,14 +41165,14 @@ KssLoadSaveDel_DISPProc_L5fb:
 	mov	0xc8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41218,14 +41219,14 @@ KssLoadSaveDel_DISPProc_L6a5:
 	mov	0xd5, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41241,14 +41242,14 @@ KssLoadSaveDel_DISPProc_L6f0:
 	mov	0xc9, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41274,14 +41275,14 @@ KssLoadSaveDel_DISPProc_L75d:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41307,14 +41308,14 @@ KssLoadSaveDel_DISPProc_L7c3:
 	mov	0xca, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41348,14 +41349,14 @@ KssLoadSaveDel_DISPProc_L839:
 	mov	0xd7, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41374,14 +41375,14 @@ KssLoadSaveDel_DISPProc_L884:
 	mov	0xcb, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -41397,14 +41398,14 @@ KssLoadSaveDel_DISPProc_L8d8:
 	mov	0xd2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x124, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -43040,7 +43041,7 @@ KssLoadSaveDel_DISPProc_L1dbc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913f70), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
@@ -43055,8 +43056,8 @@ KssLoadSaveDel_DISPProc_L1df2:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01880002, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_AfterLoad, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1e11:
 	mov	0xff, d0
@@ -43192,8 +43193,8 @@ KssLoadSaveDel_DISPProc_L1f67:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770036, d0
-	mov	0x01800001, d1
+	mov	CUSTOM_LYRICS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1f86:
 	mov	(data_979125A0), d0
@@ -43206,8 +43207,8 @@ KssLoadSaveDel_DISPProc_L1f92:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01880002, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_AfterLoad, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1fb1:
 	mov	(0x28, sp), d0
@@ -43292,8 +43293,8 @@ KssLoadSaveDel_DISPProc_L2080:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770036, d0
-	mov	0x01800001, d1
+	mov	CUSTOM_LYRICS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
@@ -43313,7 +43314,7 @@ KssLoadSaveDel_DISPProc_L20b7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913f70), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssLoadSaveDel_DISPProc_L2155
@@ -43329,7 +43330,7 @@ KssLoadSaveDel_DISPProc_L20e1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913f70), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssLoadSaveDel_DISPProc_L2155
@@ -43344,8 +43345,8 @@ KssLoadSaveDel_DISPProc_L210f:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01880002, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_AfterLoad, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L212e:
 	clr	d0
@@ -43374,17 +43375,17 @@ KssNamingCheck:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssNamingCheck_L12
 	bra	KssNamingCheck_L2d
 KssNamingCheck_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a0007a, d0
+	cmp	MT_GetNamingMode, d0
 	bne	KssNamingCheck_L1e
 	bra	KssNamingCheck_L8d
 KssNamingCheck_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1a00073, d0
+	cmp	MT_GetStringLength, d0
 	bne	KssNamingCheck_L2a
 	bra	KssNamingCheck_L90
 KssNamingCheck_L2a:
@@ -43464,22 +43465,22 @@ KssNamingEditSwProc:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssNamingEditSwProc_L12
 	bra	KssNamingEditSwProc_L3c
 KssNamingEditSwProc_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssNamingEditSwProc_L1f
 	jmp	KssNamingEditSwProc_L12b
 KssNamingEditSwProc_L1f:
 	mov	(0x34, sp), d0
-	cmp	0x1800037, d0
+	cmp	EV_NAMINGPAGE, d0
 	bne	KssNamingEditSwProc_L2c
 	jmp	KssNamingEditSwProc_L22f
 KssNamingEditSwProc_L2c:
 	mov	(0x34, sp), d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	KssNamingEditSwProc_L39
 	jmp	KssNamingEditSwProc_L27f
 KssNamingEditSwProc_L39:
@@ -43497,7 +43498,7 @@ KssNamingEditSwProc_L3c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	movhu	d0, (0x18, sp)
 	mov	(0x14, sp), a0
@@ -43529,7 +43530,7 @@ KssNamingEditSwProc_L8c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	KssNamingEditSwProc_L127
 KssNamingEditSwProc_Lc1:
@@ -43584,7 +43585,7 @@ KssNamingEditSwProc_L12b:
 	mov	(0x38, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a00051, d1
+	mov	MT_CheckEditSw, d1
 	calls	(a0)
 	mov	d0, a0
 	cmp	0, a0
@@ -43603,7 +43604,7 @@ KssNamingEditSwProc_L150:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	movhu	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
@@ -43638,7 +43639,7 @@ KssNamingEditSwProc_L1a1:
 	mov	(d0, a0), d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800038, d1
+	mov	EV_NAMINGCHARA, d1
 	calls	(a1)
 	clr	d0
 	jmp	KssNamingEditSwProc_L2eb
@@ -43664,7 +43665,7 @@ KssNamingEditSwProc_L1e0:
 	mov	(d0, a0), d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800038, d1
+	mov	EV_NAMINGCHARA, d1
 	calls	(a1)
 	clr	d0
 	jmp	KssNamingEditSwProc_L2eb
@@ -43702,7 +43703,7 @@ KssNamingEditSwProc_L22f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	bra	KssNamingEditSwProc_L2eb
@@ -43719,7 +43720,7 @@ KssNamingEditSwProc_L27f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	movhu	d0, (0x18, sp)
 	mov	(0x14, sp), a0
@@ -43754,22 +43755,22 @@ KssCursorBoxProc:
 	mov	d0, (0x268, sp)
 	mov	d1, (0x26c, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssCursorBoxProc_L19
 	bra	KssCursorBoxProc_L48
 KssCursorBoxProc_L19:
 	mov	(0x26c, sp), d0
-	cmp	0x1a000b5, d0
+	cmp	MT_SeleDraw, d0
 	bne	KssCursorBoxProc_L27
 	bra	KssCursorBoxProc_L87
 KssCursorBoxProc_L27:
 	mov	(0x26c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssCursorBoxProc_L36
 	jmp	KssCursorBoxProc_Ldc
 KssCursorBoxProc_L36:
 	mov	(0x26c, sp), d0
-	cmp	0x1a00077, d0
+	cmp	MT_SetCursor, d0
 	bne	KssCursorBoxProc_L45
 	jmp	KssCursorBoxProc_L564
 KssCursorBoxProc_L45:
@@ -43845,7 +43846,7 @@ KssCursorBoxProc_Lfc:
 	add	0x40, d1
 	mov	d1, (0x10, sp)
 	mov	(0x268, sp), d0
-	mov	0x01a0003a, d1
+	mov	MT_GetString, d1
 	calls	(a0)
 	movbu	(0x40, sp), d0
 	cmp	0, d0
@@ -43903,7 +43904,7 @@ KssCursorBoxProc_L193:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x268, sp), d0
-	mov	0x01a000b1, d1
+	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(data_979126B4), a0
@@ -43912,7 +43913,7 @@ KssCursorBoxProc_L193:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x268, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
 	mov	(data_979126B4), a0
@@ -43921,7 +43922,7 @@ KssCursorBoxProc_L193:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x268, sp), d0
-	mov	0x01a000b0, d1
+	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x36, sp)
 	mov	(data_979126B4), a0
@@ -44296,17 +44297,17 @@ KSSDirNameScreen:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSDirNameScreen_L12
 	bra	KSSDirNameScreen_L2c
 KSSDirNameScreen_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSDirNameScreen_L1e
 	bra	KSSDirNameScreen_L30
 KSSDirNameScreen_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSDirNameScreen_L2a
 	bra	KSSDirNameScreen_L6b
 KSSDirNameScreen_L2a:
@@ -44329,7 +44330,7 @@ KSSDirNameScreen_L30:
 	mov	Str_DNSC_2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KSSDirNameScreen_Laa
@@ -44342,7 +44343,7 @@ KSSDirNameScreen_L6b:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	0x00770250, d0
+	mov	HDD_DIR_SELECT_id, d0
 	clr	d1
 	call	func_97816853_entry, 0, 0x14
 	clr	d0
@@ -44364,17 +44365,17 @@ KSSFlsNameScreen:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSFlsNameScreen_L12
 	bra	KSSFlsNameScreen_L2c
 KSSFlsNameScreen_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSFlsNameScreen_L1e
 	bra	KSSFlsNameScreen_L30
 KSSFlsNameScreen_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSFlsNameScreen_L2a
 	bra	KSSFlsNameScreen_L6b
 KSSFlsNameScreen_L2a:
@@ -44397,7 +44398,7 @@ KSSFlsNameScreen_L30:
 	mov	Str_DNSC, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KSSFlsNameScreen_Lab
@@ -44410,7 +44411,7 @@ KSSFlsNameScreen_L6b:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	0x00770046, d0
+	mov	HDD_FLS_SELECT_id, d0
 	mov	2, d1
 	call	func_97816853_entry, 0, 0x14
 	clr	d0
@@ -44432,17 +44433,17 @@ KSSFileNameScreen:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSFileNameScreen_L12
 	bra	KSSFileNameScreen_L2c
 KSSFileNameScreen_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSFileNameScreen_L1e
 	bra	KSSFileNameScreen_L30
 KSSFileNameScreen_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSFileNameScreen_L2a
 	bra	KSSFileNameScreen_L6b
 KSSFileNameScreen_L2a:
@@ -44465,7 +44466,7 @@ KSSFileNameScreen_L30:
 	mov	Str_FNSC, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KSSFileNameScreen_Lab
@@ -44478,7 +44479,7 @@ KSSFileNameScreen_L6b:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	0x00770249, d0
+	mov	HDD_FILE_SELECT_id, d0
 	mov	1, d1
 	call	func_97816853_entry, 0, 0x14
 	clr	d0
@@ -44500,17 +44501,17 @@ KSSSETUPTOOLSP1TitleSwCatch:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSSETUPTOOLSP1TitleSwCatch_L12
 	bra	KSSSETUPTOOLSP1TitleSwCatch_L2d
 KSSSETUPTOOLSP1TitleSwCatch_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSSETUPTOOLSP1TitleSwCatch_L1e
 	bra	KSSSETUPTOOLSP1TitleSwCatch_L32
 KSSSETUPTOOLSP1TitleSwCatch_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KSSSETUPTOOLSP1TitleSwCatch_L2a
 	bra	KSSSETUPTOOLSP1TitleSwCatch_L6e
 KSSSETUPTOOLSP1TitleSwCatch_L2a:
@@ -44533,7 +44534,7 @@ KSSSETUPTOOLSP1TitleSwCatch_L32:
 	mov	Str_CcSt, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSSETUPTOOLSP1TitleSwCatch_L10b
@@ -44544,7 +44545,7 @@ KSSSETUPTOOLSP1TitleSwCatch_L6e:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x92, d0
 	beq	KSSSETUPTOOLSP1TitleSwCatch_L96
@@ -44573,7 +44574,7 @@ KSSSETUPTOOLSP1TitleSwCatch_Lc1:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	KSSSETUPTOOLSP1TitleSwCatch_Lf3
@@ -44583,7 +44584,7 @@ KSSSETUPTOOLSP1TitleSwCatch_Ldb:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 KSSSETUPTOOLSP1TitleSwCatch_Lf3:
@@ -44603,17 +44604,17 @@ KSSSETUPTOOLSP2TitleSwCatch:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSSETUPTOOLSP2TitleSwCatch_L12
 	bra	KSSSETUPTOOLSP2TitleSwCatch_L2d
 KSSSETUPTOOLSP2TitleSwCatch_L12:
 	mov	(0x28, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSSETUPTOOLSP2TitleSwCatch_L1e
 	bra	KSSSETUPTOOLSP2TitleSwCatch_L32
 KSSSETUPTOOLSP2TitleSwCatch_L1e:
 	mov	(0x28, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KSSSETUPTOOLSP2TitleSwCatch_L2a
 	bra	KSSSETUPTOOLSP2TitleSwCatch_L6d
 KSSSETUPTOOLSP2TitleSwCatch_L2a:
@@ -44636,7 +44637,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L32:
 	mov	Str_CcS2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KSSSETUPTOOLSP2TitleSwCatch_Lc3
@@ -44647,7 +44648,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L6d:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x13, d0
 	beq	KSSSETUPTOOLSP2TitleSwCatch_L93
@@ -44658,7 +44659,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L93:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 KSSSETUPTOOLSP2TitleSwCatch_Lab:
@@ -44678,17 +44679,17 @@ CheckCPActionCatch:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	CheckCPActionCatch_L12
 	bra	CheckCPActionCatch_L2d
 CheckCPActionCatch_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	CheckCPActionCatch_L1e
 	bra	CheckCPActionCatch_L32
 CheckCPActionCatch_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	CheckCPActionCatch_L2a
 	bra	CheckCPActionCatch_L6e
 CheckCPActionCatch_L2a:
@@ -44711,7 +44712,7 @@ CheckCPActionCatch_L32:
 	mov	Str_CcCA, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	CheckCPActionCatch_L17f
@@ -44722,7 +44723,7 @@ CheckCPActionCatch_L6e:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	beq	CheckCPActionCatch_L95
@@ -44752,17 +44753,17 @@ CheckCPActionCatch_Lc9:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x00770268, d0
+	mov	CP_HD_SELDIR_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	CheckCPActionCatch_Lfe
 CheckCPActionCatch_Le3:
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
 	mov	d0, (0x14, sp)
 	mov	0x78, d0
-	mov	0x0077001c, d1
+	mov	SETUP_TOOLS_id, d1
 	call	func_978237D9_entry, 0, 0x14
 CheckCPActionCatch_Lfe:
 	movbu	(data_97910CD0), d0
@@ -44789,17 +44790,17 @@ CheckCPActionCatch_L132:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x00770268, d0
+	mov	CP_HD_SELDIR_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	CheckCPActionCatch_L167
 CheckCPActionCatch_L14c:
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
 	mov	d0, (0x14, sp)
 	mov	0x78, d0
-	mov	0x0077001c, d1
+	mov	SETUP_TOOLS_id, d1
 	call	func_978246FC_entry, 0, 0x14
 CheckCPActionCatch_L167:
 	mov	(data_979126B4), a0
@@ -44817,32 +44818,32 @@ KssCopyToHDScreen:
 	add	-0x20, sp
 	mov	d1, (0x2c, sp)
 	mov	d1, d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCopyToHDScreen_L11
 	jmp	KssCopyToHDScreen_L144
 KssCopyToHDScreen_L11:
 	mov	(0x2c, sp), d0
-	cmp	0x1a80059, d0
+	cmp	MT_SelectAll, d0
 	bne	KssCopyToHDScreen_L1d
 	bra	KssCopyToHDScreen_L53
 KssCopyToHDScreen_L1d:
 	mov	(0x2c, sp), d0
-	cmp	0x1a80009, d0
+	cmp	MT_SelectOK, d0
 	bne	KssCopyToHDScreen_L29
 	bra	KssCopyToHDScreen_L8f
 KssCopyToHDScreen_L29:
 	mov	(0x2c, sp), d0
-	cmp	0x1a8000b, d0
+	cmp	MT_SelectSAVE, d0
 	bne	KssCopyToHDScreen_L36
 	jmp	KssCopyToHDScreen_Ld6
 KssCopyToHDScreen_L36:
 	mov	(0x2c, sp), d0
-	cmp	0x1a8005a, d0
+	cmp	MT_SwitchToSmf, d0
 	bne	KssCopyToHDScreen_L43
 	jmp	KssCopyToHDScreen_L116
 KssCopyToHDScreen_L43:
 	mov	(0x2c, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	KssCopyToHDScreen_L50
 	jmp	KssCopyToHDScreen_L13f
 KssCopyToHDScreen_L50:
@@ -44887,8 +44888,8 @@ KssCopyToHDScreen_L9b:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770268, d0
-	mov	0x01800001, d1
+	mov	CP_HD_SELDIR_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCopyToHDScreen_L144
 KssCopyToHDScreen_Lbd:
@@ -44897,7 +44898,7 @@ KssCopyToHDScreen_Lbd:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x00770275, d0
+	mov	COPY_FD_TO_HDD_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	KssCopyToHDScreen_L144
@@ -44937,8 +44938,8 @@ KssCopyToHDScreen_L116:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770378, d0
-	mov	0x01800001, d1
+	mov	CP_SMF_HDD_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCopyToHDScreen_L144
 KssCopyToHDScreen_L13f:
@@ -44951,42 +44952,42 @@ KssCopySMFToHDScreen:
 	add	-0x24, sp
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCopySMFToHDScreen_L11
 	jmp	KssCopySMFToHDScreen_L1df
 KssCopySMFToHDScreen_L11:
 	mov	(0x30, sp), d0
-	cmp	0x1a80059, d0
+	cmp	MT_SelectAll, d0
 	bne	KssCopySMFToHDScreen_L1d
 	bra	KssCopySMFToHDScreen_L6e
 KssCopySMFToHDScreen_L1d:
 	mov	(0x30, sp), d0
-	cmp	0x1a80009, d0
+	cmp	MT_SelectOK, d0
 	bne	KssCopySMFToHDScreen_L2a
 	jmp	KssCopySMFToHDScreen_Lbc
 KssCopySMFToHDScreen_L2a:
 	mov	(0x30, sp), d0
-	cmp	0x1a8000b, d0
+	cmp	MT_SelectSAVE, d0
 	bne	KssCopySMFToHDScreen_L37
 	jmp	KssCopySMFToHDScreen_L104
 KssCopySMFToHDScreen_L37:
 	mov	(0x30, sp), d0
-	cmp	0x1a8005a, d0
+	cmp	MT_SwitchToSmf, d0
 	bne	KssCopySMFToHDScreen_L44
 	jmp	KssCopySMFToHDScreen_L169
 KssCopySMFToHDScreen_L44:
 	mov	(0x30, sp), d0
-	cmp	0x1a8005b, d0
+	cmp	MT_SetSmfImpFilter, d0
 	bne	KssCopySMFToHDScreen_L51
 	jmp	KssCopySMFToHDScreen_L192
 KssCopySMFToHDScreen_L51:
 	mov	(0x30, sp), d0
-	cmp	0x1a8005c, d0
+	cmp	MT_IncSmfImpFilter, d0
 	bne	KssCopySMFToHDScreen_L5e
 	jmp	KssCopySMFToHDScreen_L1ac
 KssCopySMFToHDScreen_L5e:
 	mov	(0x30, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	KssCopySMFToHDScreen_L6b
 	jmp	KssCopySMFToHDScreen_L1da
 KssCopySMFToHDScreen_L6b:
@@ -45041,8 +45042,8 @@ KssCopySMFToHDScreen_Lc8:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770268, d0
-	mov	0x01800001, d1
+	mov	CP_HD_SELDIR_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCopySMFToHDScreen_L1df
 KssCopySMFToHDScreen_Lea:
@@ -45051,7 +45052,7 @@ KssCopySMFToHDScreen_Lea:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x00770378, d0
+	mov	CP_SMF_HDD_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	jmp	KssCopySMFToHDScreen_L1df
@@ -45111,8 +45112,8 @@ KssCopySMFToHDScreen_L169:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770275, d0
-	mov	0x01800001, d1
+	mov	COPY_FD_TO_HDD_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCopySMFToHDScreen_L1df
 KssCopySMFToHDScreen_L192:
@@ -45165,8 +45166,8 @@ func_9781B0DD_entry:
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770281, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	0x97913bfc, a0
 	mov	Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1, a1
@@ -45177,32 +45178,32 @@ func_9781B0DD_entry:
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a8000c, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_SetStrAdr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770285, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE1_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770284, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE2_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	0x97913f46, a0
 	clr	d0
@@ -45239,8 +45240,8 @@ func_9781B1EA_entry:
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770384, d0
-	mov	0x01a000b6, d1
+	mov	CP_SMF_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (0x14, sp)
@@ -45462,8 +45463,8 @@ func_9781B37B_entry_L31:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770275, d0
-	mov	0x01800001, d1
+	mov	COPY_FD_TO_HDD_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	call	func_9781B0DD_entry, 0, 0x14
 	call	func_9781B1EA_entry, 0, 0x18
@@ -45505,16 +45506,16 @@ func_9781B37B_entry_L100:
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770281, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770384, d0
-	mov	0x01a000b6, d1
+	mov	CP_SMF_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x107c, a0), a0
@@ -45789,32 +45790,32 @@ func_9781B37B_entry_L3ef:
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a8000c, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_SetStrAdr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770285, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE1_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770284, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE2_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	func_9781B37B_entry_L478
 func_9781B37B_entry_L473:
@@ -45887,8 +45888,8 @@ func_9781B868_entry:
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770281, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x14, sp)
@@ -45934,32 +45935,32 @@ func_9781B868_entry_L75:
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a8000c, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_SetStrAdr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770283, d0
-	mov	0x01a000b6, d1
+	mov	CP_FD_LIST_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770285, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE1_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770284, d0
-	mov	0x01a000b4, d1
+	mov	CP_FD_LINE2_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	ret	0, 0x18
 
@@ -45969,27 +45970,27 @@ KssAcParaStrBoxProc:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssAcParaStrBoxProc_L14
 	bra	KssAcParaStrBoxProc_L4a
 KssAcParaStrBoxProc_L14:
 	mov	(0x28, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KssAcParaStrBoxProc_L20
 	bra	KssAcParaStrBoxProc_L7f
 KssAcParaStrBoxProc_L20:
 	mov	(0x28, sp), d0
-	cmp	0x1880022, d0
+	cmp	EV_InitFDFileSelect, d0
 	bne	KssAcParaStrBoxProc_L2d
 	jmp	KssAcParaStrBoxProc_Lca
 KssAcParaStrBoxProc_L2d:
 	mov	(0x28, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssAcParaStrBoxProc_L3a
 	jmp	KssAcParaStrBoxProc_L10b
 KssAcParaStrBoxProc_L3a:
 	mov	(0x28, sp), d0
-	cmp	0x1880004, d0
+	cmp	EV_TimerBack, d0
 	bne	KssAcParaStrBoxProc_L47
 	jmp	KssAcParaStrBoxProc_L13e
 KssAcParaStrBoxProc_L47:
@@ -46061,7 +46062,7 @@ KssAcParaStrBoxProc_Lec:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_L10b:
@@ -46131,7 +46132,7 @@ SmfFilterFunc:
 	add	-0x18, sp
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	beq	SmfFilterFunc_L10
 	bra	SmfFilterFunc_L47
 SmfFilterFunc_L10:
@@ -46145,8 +46146,8 @@ SmfFilterFunc_L10:
 	mov	ptrs_978A22AC, a1
 	mov	(d0, a1), d0
 	mov	d0, (0x10, sp)
-	mov	0x0077038f, d0
-	mov	0x01880022, d1
+	mov	SMFFilterBox_id, d0
+	mov	EV_InitFDFileSelect, d1
 	calls	(a0)
 	clr	d0
 	bra	SmfFilterFunc_L48
@@ -46160,27 +46161,27 @@ KssAcActualDFStrBoxProc:
 	mov	d0, (0x28, sp)
 	mov	d1, (0x2c, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssAcActualDFStrBoxProc_L12
 	bra	KssAcActualDFStrBoxProc_L48
 KssAcActualDFStrBoxProc_L12:
 	mov	(0x2c, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KssAcActualDFStrBoxProc_L1e
 	bra	KssAcActualDFStrBoxProc_L7d
 KssAcActualDFStrBoxProc_L1e:
 	mov	(0x2c, sp), d0
-	cmp	0x1880023, d0
+	cmp	EV_DRWSTRG, d0
 	bne	KssAcActualDFStrBoxProc_L2b
 	jmp	KssAcActualDFStrBoxProc_Lb4
 KssAcActualDFStrBoxProc_L2b:
 	mov	(0x2c, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssAcActualDFStrBoxProc_L38
 	jmp	KssAcActualDFStrBoxProc_L132
 KssAcActualDFStrBoxProc_L38:
 	mov	(0x2c, sp), d0
-	cmp	0x1880004, d0
+	cmp	EV_TimerBack, d0
 	bne	KssAcActualDFStrBoxProc_L45
 	jmp	KssAcActualDFStrBoxProc_L165
 KssAcActualDFStrBoxProc_L45:
@@ -46219,7 +46220,7 @@ KssAcActualDFStrBoxProc_L7d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssAcActualDFStrBoxProc_L1c4
@@ -46262,7 +46263,7 @@ KssAcActualDFStrBoxProc_Ld6:
 	mov	0x97913bd8, d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_L132:
@@ -46337,72 +46338,72 @@ func_9781BD17_entry:
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770384, d0
-	mov	0x01a000b6, d1
+	mov	CP_SMF_FD_VOLLABEL_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077038f, d0
-	mov	0x01800009, d1
+	mov	SMFFilterBox_id, d0
+	mov	EV_PAINT, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770389, d0
-	mov	0x01a000b6, d1
+	mov	CP_SMF_SelectList_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077038b, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE1_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077038a, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE2_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077038c, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE3_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770390, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE4_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770391, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE5_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770392, d0
-	mov	0x01a000b4, d1
+	mov	CP_SMF_FD_LINE6_id, d0
+	mov	MT_Draw, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -46662,17 +46663,17 @@ func_9781BF69_entry_L9e:
 	add	-0x1c, sp
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	func_9781BF69_entry_Lb5
 	bra	func_9781BF69_entry_Lcf
 func_9781BF69_entry_Lb5:
 	mov	(0x28, sp), d0
-	cmp	0x1a80009, d0
+	cmp	MT_SelectOK, d0
 	bne	func_9781BF69_entry_Lc1
 	bra	func_9781BF69_entry_Lf5
 func_9781BF69_entry_Lc1:
 	mov	(0x28, sp), d0
-	cmp	0x1a8000b, d0
+	cmp	MT_SelectSAVE, d0
 	bne	func_9781BF69_entry_Lcd
 	bra	func_9781BF69_entry_L117
 func_9781BF69_entry_Lcd:
@@ -46684,7 +46685,7 @@ func_9781BF69_entry_Lcf:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	d0, (0x18, sp)
 	mov	d0, (0x14, sp)
@@ -46717,17 +46718,17 @@ AttenCpToHDSwCatch:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	AttenCpToHDSwCatch_L12
 	bra	AttenCpToHDSwCatch_L2d
 AttenCpToHDSwCatch_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	AttenCpToHDSwCatch_L1e
 	bra	AttenCpToHDSwCatch_L32
 AttenCpToHDSwCatch_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	AttenCpToHDSwCatch_L2a
 	bra	AttenCpToHDSwCatch_L6e
 AttenCpToHDSwCatch_L2a:
@@ -46750,7 +46751,7 @@ AttenCpToHDSwCatch_L32:
 	mov	Str_CpWp, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	AttenCpToHDSwCatch_L128
@@ -46761,7 +46762,7 @@ AttenCpToHDSwCatch_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	AttenCpToHDSwCatch_L94
@@ -46832,8 +46833,8 @@ AttenCpToHDSwCatch_Lee:
 	mov	(0x10c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001c, d0
-	mov	0x01800001, d1
+	mov	SETUP_TOOLS_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 AttenCpToHDSwCatch_L10d:
 	clr	d0
@@ -46855,17 +46856,17 @@ AttenCpToMarkSwCatch:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	AttenCpToMarkSwCatch_L12
 	bra	AttenCpToMarkSwCatch_L2d
 AttenCpToMarkSwCatch_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	AttenCpToMarkSwCatch_L1e
 	bra	AttenCpToMarkSwCatch_L32
 AttenCpToMarkSwCatch_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	AttenCpToMarkSwCatch_L2a
 	bra	AttenCpToMarkSwCatch_L6e
 AttenCpToMarkSwCatch_L2a:
@@ -46888,7 +46889,7 @@ AttenCpToMarkSwCatch_L32:
 	mov	Str_CpHD, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	AttenCpToMarkSwCatch_L128
@@ -46899,7 +46900,7 @@ AttenCpToMarkSwCatch_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	AttenCpToMarkSwCatch_L94
@@ -46970,8 +46971,8 @@ AttenCpToMarkSwCatch_Lee:
 	mov	(0x10c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770275, d0
-	mov	0x01800001, d1
+	mov	COPY_FD_TO_HDD_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 AttenCpToMarkSwCatch_L10d:
 	clr	d0
@@ -46993,17 +46994,17 @@ AttenCpToNoDirNameSwCatch:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	AttenCpToNoDirNameSwCatch_L12
 	bra	AttenCpToNoDirNameSwCatch_L2d
 AttenCpToNoDirNameSwCatch_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	AttenCpToNoDirNameSwCatch_L1e
 	bra	AttenCpToNoDirNameSwCatch_L32
 AttenCpToNoDirNameSwCatch_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	AttenCpToNoDirNameSwCatch_L2a
 	bra	AttenCpToNoDirNameSwCatch_L6e
 AttenCpToNoDirNameSwCatch_L2a:
@@ -47026,7 +47027,7 @@ AttenCpToNoDirNameSwCatch_L32:
 	mov	Str_CpNn, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	AttenCpToNoDirNameSwCatch_L128
@@ -47037,7 +47038,7 @@ AttenCpToNoDirNameSwCatch_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	AttenCpToNoDirNameSwCatch_L94
@@ -47108,8 +47109,8 @@ AttenCpToNoDirNameSwCatch_Lee:
 	mov	(0x10c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770268, d0
-	mov	0x01800001, d1
+	mov	CP_HD_SELDIR_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 AttenCpToNoDirNameSwCatch_L10d:
 	clr	d0
@@ -47131,17 +47132,17 @@ SetupToolsP2SwCatch:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	SetupToolsP2SwCatch_L12
 	bra	SetupToolsP2SwCatch_L2d
 SetupToolsP2SwCatch_L12:
 	mov	(0x28, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	SetupToolsP2SwCatch_L1e
 	bra	SetupToolsP2SwCatch_L32
 SetupToolsP2SwCatch_L1e:
 	mov	(0x28, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	SetupToolsP2SwCatch_L2a
 	bra	SetupToolsP2SwCatch_L6e
 SetupToolsP2SwCatch_L2a:
@@ -47164,7 +47165,7 @@ SetupToolsP2SwCatch_L32:
 	mov	Str_CpS2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	SetupToolsP2SwCatch_L5c3
@@ -47174,8 +47175,8 @@ SetupToolsP2SwCatch_L6e:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770026, d0
-	mov	0x01a00054, d1
+	mov	SET_TOOLS_PAGECTRL_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
@@ -47219,7 +47220,7 @@ SetupToolsP2SwCatch_Ld7:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770098, d0
+	mov	HDD_SETTOOLSPAR_1_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47233,15 +47234,15 @@ SetupToolsP2SwCatch_Lf9:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770098, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_1_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L11c:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770099, d0
+	mov	HDD_SETTOOLSPAR_2_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47255,15 +47256,15 @@ SetupToolsP2SwCatch_L13e:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770099, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_2_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L161:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009a, d0
+	mov	HDD_SETTOOLSPAR_3_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47277,15 +47278,15 @@ SetupToolsP2SwCatch_L183:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009a, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_3_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L1a6:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009b, d0
+	mov	HDD_SETTOOLSPAR_4_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47299,15 +47300,15 @@ SetupToolsP2SwCatch_L1c8:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009b, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_4_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L1eb:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009c, d0
+	mov	HDD_SETTOOLSPAR_5_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47321,15 +47322,15 @@ SetupToolsP2SwCatch_L20d:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009c, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_5_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L230:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009d, d0
+	mov	HDD_SETTOOLSPAR_6_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47343,15 +47344,15 @@ SetupToolsP2SwCatch_L252:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009d, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_6_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L275:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009e, d0
+	mov	HDD_SETTOOLSPAR_7_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47365,14 +47366,14 @@ SetupToolsP2SwCatch_L297:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009e, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_7_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 SetupToolsP2SwCatch_L2b7:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700a0, d0
+	mov	HDD_SETTOOLSPAR_8_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47386,15 +47387,15 @@ SetupToolsP2SwCatch_L2d9:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700a0, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_8_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L2fc:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700a1, d0
+	mov	HDD_SETTOOLSPAR_12_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47408,15 +47409,15 @@ SetupToolsP2SwCatch_L31f:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700a1, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_12_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L342:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770098, d0
+	mov	HDD_SETTOOLSPAR_1_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47430,15 +47431,15 @@ SetupToolsP2SwCatch_L364:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770098, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_1_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L387:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x00770099, d0
+	mov	HDD_SETTOOLSPAR_2_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47452,15 +47453,15 @@ SetupToolsP2SwCatch_L3a9:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770099, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_2_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L3cc:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009a, d0
+	mov	HDD_SETTOOLSPAR_3_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47474,15 +47475,15 @@ SetupToolsP2SwCatch_L3ee:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009a, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_3_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L411:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009b, d0
+	mov	HDD_SETTOOLSPAR_4_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47496,15 +47497,15 @@ SetupToolsP2SwCatch_L433:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009b, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_4_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L456:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009c, d0
+	mov	HDD_SETTOOLSPAR_5_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47518,15 +47519,15 @@ SetupToolsP2SwCatch_L478:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009c, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_5_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L49b:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009d, d0
+	mov	HDD_SETTOOLSPAR_6_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47540,15 +47541,15 @@ SetupToolsP2SwCatch_L4bd:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009d, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_6_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L4e0:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x0077009e, d0
+	mov	HDD_SETTOOLSPAR_7_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47562,14 +47563,14 @@ SetupToolsP2SwCatch_L502:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077009e, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_7_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 SetupToolsP2SwCatch_L522:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700a0, d0
+	mov	HDD_SETTOOLSPAR_8_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47583,15 +47584,15 @@ SetupToolsP2SwCatch_L544:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700a0, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_8_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	bra	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L566:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700a1, d0
+	mov	HDD_SETTOOLSPAR_12_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -47605,8 +47606,8 @@ SetupToolsP2SwCatch_L588:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700a1, d0
-	mov	0x01a0003d, d1
+	mov	HDD_SETTOOLSPAR_12_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 SetupToolsP2SwCatch_L5a8:
 	clr	d0
@@ -47656,22 +47657,22 @@ func_9781CA15:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0003a, d0
+	cmp	MT_GetString, d0
 	bne	func_9781CA15_L12
 	bra	func_9781CA15_L38
 func_9781CA15_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a0007c, d0
+	cmp	MT_SetString, d0
 	bne	func_9781CA15_L1e
 	bra	func_9781CA15_L4d
 func_9781CA15_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1a0007a, d0
+	cmp	MT_GetNamingMode, d0
 	bne	func_9781CA15_L2a
 	bra	func_9781CA15_L62
 func_9781CA15_L2a:
 	mov	(0x20, sp), d0
-	cmp	0x1a00073, d0
+	cmp	MT_GetStringLength, d0
 	bne	func_9781CA15_L36
 	bra	func_9781CA15_L65
 func_9781CA15_L36:
@@ -47706,17 +47707,17 @@ func_9781CA82:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	func_9781CA82_L12
 	bra	func_9781CA82_L2c
 func_9781CA82_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	func_9781CA82_L1e
 	bra	func_9781CA82_L30
 func_9781CA82_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	func_9781CA82_L2a
 	bra	func_9781CA82_L6b
 func_9781CA82_L2a:
@@ -47739,7 +47740,7 @@ func_9781CA82_L30:
 	mov	Str_WrCn, d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	func_9781CA82_La7
@@ -47750,7 +47751,7 @@ func_9781CA82_L6b:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	d0, (0x14, sp)
 func_9781CA82_L8d:
@@ -47786,79 +47787,79 @@ func_9781CB2C_entry_L15:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x0077025f, d0
+	mov	ScrBut_EditDirName_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007700eb, d0
+	mov	ScrBut_EditDirNameBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x0077004a, d0
+	mov	ScrBut_EditFlsName_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x00770295, d0
+	mov	ScrBut_EditFLS_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007701ff, d0
+	mov	WP_OBJ_LINE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007701fe, d0
+	mov	WP_OBJ_DELDIR_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x00770200, d0
+	mov	WP_OBJ_DELFILE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007703a6, d0
+	mov	WP_OBJ_DelFileBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007703c0, d0
+	mov	WP_OBJ_DelDirBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x007703b5, d0
+	mov	WP_OBJ_SaveFileBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x00770202, d0
+	mov	WP_OBJ_SAVEFILE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x0077039b, d0
+	mov	WP_OBJ_FRMTHD_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
-	mov	0x00770398, d0
+	mov	WP_OBJ_SAVESET_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
 	ret	0, 0x14
@@ -47869,62 +47870,62 @@ FDFileSelectProc:
 	mov	d0, (0xa4, sp)
 	mov	d1, (0xa8, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	FDFileSelectProc_L16
 	jmp	FDFileSelectProc_La8
 FDFileSelectProc_L16:
 	mov	(0xa8, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	FDFileSelectProc_L23
 	jmp	FDFileSelectProc_L10e
 FDFileSelectProc_L23:
 	mov	(0xa8, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	FDFileSelectProc_L30
 	jmp	FDFileSelectProc_L1f5
 FDFileSelectProc_L30:
 	mov	(0xa8, sp), d0
-	cmp	0x1a8005d, d0
+	cmp	MT_DrawFDText, d0
 	bne	FDFileSelectProc_L3d
 	jmp	FDFileSelectProc_L211
 FDFileSelectProc_L3d:
 	mov	(0xa8, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	FDFileSelectProc_L4a
 	jmp	FDFileSelectProc_L42f
 FDFileSelectProc_L4a:
 	mov	(0xa8, sp), d0
-	cmp	0x1a8005e, d0
+	cmp	MT_FdFreshUp, d0
 	bne	FDFileSelectProc_L57
 	jmp	FDFileSelectProc_L625
 FDFileSelectProc_L57:
 	mov	(0xa8, sp), d0
-	cmp	0x1a8005f, d0
+	cmp	MT_FdInfo, d0
 	bne	FDFileSelectProc_L64
 	jmp	FDFileSelectProc_L679
 FDFileSelectProc_L64:
 	mov	(0xa8, sp), d0
-	cmp	0x1a80060, d0
+	cmp	MT_FdLoadLyric, d0
 	bne	FDFileSelectProc_L71
 	jmp	FDFileSelectProc_L67d
 FDFileSelectProc_L71:
 	mov	(0xa8, sp), d0
-	cmp	0x1a80061, d0
+	cmp	MT_FdSaveLyric, d0
 	bne	FDFileSelectProc_L7e
 	jmp	FDFileSelectProc_L681
 FDFileSelectProc_L7e:
 	mov	(0xa8, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	FDFileSelectProc_L8b
 	jmp	FDFileSelectProc_L685
 FDFileSelectProc_L8b:
 	mov	(0xa8, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	FDFileSelectProc_L98
 	jmp	FDFileSelectProc_L6bc
 FDFileSelectProc_L98:
 	mov	(0xa8, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	FDFileSelectProc_La5
 	jmp	FDFileSelectProc_L6f4
 FDFileSelectProc_La5:
@@ -47950,7 +47951,7 @@ FDFileSelectProc_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a8005d, d1
+	mov	MT_DrawFDText, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -47958,7 +47959,7 @@ FDFileSelectProc_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	FDFileSelectProc_L961
@@ -47983,7 +47984,7 @@ FDFileSelectProc_L10e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -47991,7 +47992,7 @@ FDFileSelectProc_L10e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -48007,7 +48008,7 @@ FDFileSelectProc_L10e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a8005e, d1
+	mov	MT_FdFreshUp, d1
 	calls	(a0)
 	mov	0x21, d0
 	movhu	d0, (0x97913bf0)
@@ -48467,7 +48468,7 @@ FDFileSelectProc_L685:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800005, d1
+	mov	EV_SWIN, d1
 	calls	(a0)
 	jmp	FDFileSelectProc_L949
 FDFileSelectProc_L6bc:
@@ -48485,7 +48486,7 @@ FDFileSelectProc_L6bc:
 	mov	0x83, d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800005, d1
+	mov	EV_SWIN, d1
 	calls	(a0)
 	jmp	FDFileSelectProc_L949
 FDFileSelectProc_L6f4:
@@ -48604,7 +48605,7 @@ FDFileSelectProc_L7cf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	FDFileSelectProc_L823
 FDFileSelectProc_L7fa:
@@ -48617,7 +48618,7 @@ FDFileSelectProc_L7fa:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 FDFileSelectProc_L823:
 	mov	(data_979126B4), a0
@@ -48657,7 +48658,7 @@ FDFileSelectProc_L86f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	FDFileSelectProc_L8c1
 FDFileSelectProc_L899:
@@ -48670,7 +48671,7 @@ FDFileSelectProc_L899:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 FDFileSelectProc_L8c1:
 	mov	(data_979126B4), a0
@@ -49132,8 +49133,8 @@ func_9781D9B5_entry:
 	mov	(0x108, a0), a0
 	mov	2, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -49152,8 +49153,8 @@ func_9781D9DB_entry_Lc:
 	mov	(0x108, a0), a0
 	mov	4, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 func_9781D9DB_entry_L2c:
 	movbu	(0x1c, sp), d0
@@ -49166,8 +49167,8 @@ func_9781D9DB_entry_L35:
 	mov	(0x108, a0), a0
 	mov	5, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 func_9781D9DB_entry_L55:
 	ret	0, 0x14
@@ -49178,27 +49179,27 @@ KssCOMM_DISPProc:
 	mov	d0, (0xc8, sp)
 	mov	d1, (0xcc, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssCOMM_DISPProc_L15
 	bra	KssCOMM_DISPProc_L4b
 KssCOMM_DISPProc_L15:
 	mov	(0xcc, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssCOMM_DISPProc_L21
 	bra	KssCOMM_DISPProc_L80
 KssCOMM_DISPProc_L21:
 	mov	(0xcc, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCOMM_DISPProc_L2e
 	jmp	KssCOMM_DISPProc_Lb4
 KssCOMM_DISPProc_L2e:
 	mov	(0xcc, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssCOMM_DISPProc_L3b
 	jmp	KssCOMM_DISPProc_L19e
 KssCOMM_DISPProc_L3b:
 	mov	(0xcc, sp), d0
-	cmp	0x1a80058, d0
+	cmp	MT_GetPPInt, d0
 	bne	KssCOMM_DISPProc_L48
 	jmp	KssCOMM_DISPProc_L4d7
 KssCOMM_DISPProc_L48:
@@ -49307,7 +49308,7 @@ KssCOMM_DISPProc_Lb4:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xc8, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCOMM_DISPProc_L4f9
@@ -49607,17 +49608,17 @@ KssCatch_USBPP:
 	mov	d0, (0x60, sp)
 	mov	d1, (0x64, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_USBPP_L12
 	bra	KssCatch_USBPP_L2d
 KssCatch_USBPP_L12:
 	mov	(0x64, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_USBPP_L1e
 	bra	KssCatch_USBPP_L32
 KssCatch_USBPP_L1e:
 	mov	(0x64, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_USBPP_L2a
 	bra	KssCatch_USBPP_L6e
 KssCatch_USBPP_L2a:
@@ -49640,7 +49641,7 @@ KssCatch_USBPP_L32:
 	mov	Str_USPP, d0
 	mov	d0, (0x10, sp)
 	mov	(0x60, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_USBPP_L41d
@@ -49651,7 +49652,7 @@ KssCatch_USBPP_L6e:
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	KssCatch_USBPP_L94
@@ -49743,8 +49744,8 @@ KssCatch_USBPP_L13a:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L15c:
@@ -49772,16 +49773,16 @@ KssCatch_USBPP_L175:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L1da:
@@ -49792,8 +49793,8 @@ KssCatch_USBPP_L1da:
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L204:
@@ -49819,8 +49820,8 @@ KssCatch_USBPP_L21e:
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L25b:
@@ -49948,16 +49949,16 @@ KssCatch_USBPP_L3a3:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssCatch_USBPP_L405:
 	mov	(data_979126B4), a0
@@ -49977,12 +49978,12 @@ KssFileSfx_DISPProc:
 	mov	d0, (0x50, sp)
 	mov	d1, (0x54, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssFileSfx_DISPProc_L14
 	bra	KssFileSfx_DISPProc_L23
 KssFileSfx_DISPProc_L14:
 	mov	(0x54, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssFileSfx_DISPProc_L20
 	bra	KssFileSfx_DISPProc_L7e
 KssFileSfx_DISPProc_L20:
@@ -49997,7 +49998,7 @@ KssFileSfx_DISPProc_L23:
 	mov	(0x54, sp), d1
 	calls	(a0)
 	mov	(0x50, sp), d0
-	cmp	0x77012a, d0
+	cmp	SfxDispLBN_id, d0
 	bne	KssFileSfx_DISPProc_L47
 	bra	KssFileSfx_DISPProc_L4e
 KssFileSfx_DISPProc_L47:
@@ -50014,7 +50015,7 @@ KssFileSfx_DISPProc_L5f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x50, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssFileSfx_DISPProc_L544
@@ -50034,7 +50035,7 @@ KssFileSfx_DISPProc_L7e:
 	calls	(a0)
 	mov	a0, (0x20, sp)
 	mov	(0x50, sp), d0
-	cmp	0x77012a, d0
+	cmp	SfxDispLBN_id, d0
 	bne	KssFileSfx_DISPProc_Lb6
 	bra	KssFileSfx_DISPProc_Lc1
 KssFileSfx_DISPProc_Lb6:
@@ -50518,17 +50519,17 @@ KssCatch_DirSelectScreen:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_DirSelectScreen_L12
 	bra	KssCatch_DirSelectScreen_L2d
 KssCatch_DirSelectScreen_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_DirSelectScreen_L1e
 	bra	KssCatch_DirSelectScreen_L32
 KssCatch_DirSelectScreen_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_DirSelectScreen_L2a
 	bra	KssCatch_DirSelectScreen_L6e
 KssCatch_DirSelectScreen_L2a:
@@ -50551,7 +50552,7 @@ KssCatch_DirSelectScreen_L32:
 	mov	Str_CDIR, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_DirSelectScreen_L199
@@ -50562,7 +50563,7 @@ KssCatch_DirSelectScreen_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	KssCatch_DirSelectScreen_L94
@@ -50583,16 +50584,16 @@ KssCatch_DirSelectScreen_La3:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_DirSelectScreen_L181
 KssCatch_DirSelectScreen_Le5:
@@ -50601,40 +50602,40 @@ KssCatch_DirSelectScreen_Le5:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001b, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndLBNPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770018, d0
-	mov	0x01a8004b, d1
+	mov	LBNCatching_id, d0
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770015, d0
-	mov	0x01800001, d1
+	mov	SELECT_NUMBER_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_DirSelectScreen_L181:
 	mov	(data_979126B4), a0
@@ -51191,57 +51192,57 @@ KssSetSfx_DISPProc:
 	mov	d0, (0x58, sp)
 	mov	d1, (0x5c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssSetSfx_DISPProc_L15
 	jmp	KssSetSfx_DISPProc_L9a
 KssSetSfx_DISPProc_L15:
 	mov	(0x5c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssSetSfx_DISPProc_L22
 	jmp	KssSetSfx_DISPProc_L50f
 KssSetSfx_DISPProc_L22:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003f, d0
+	cmp	MT_GetSfxSave, d0
 	bne	KssSetSfx_DISPProc_L2f
 	jmp	KssSetSfx_DISPProc_Lb8b
 KssSetSfx_DISPProc_L2f:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003e, d0
+	cmp	MT_GetSfxLoad, d0
 	bne	KssSetSfx_DISPProc_L3c
 	jmp	KssSetSfx_DISPProc_Ld3b
 KssSetSfx_DISPProc_L3c:
 	mov	(0x5c, sp), d0
-	cmp	0x1a80040, d0
+	cmp	MT_GetSfxDel, d0
 	bne	KssSetSfx_DISPProc_L49
 	jmp	KssSetSfx_DISPProc_Leeb
 KssSetSfx_DISPProc_L49:
 	mov	(0x5c, sp), d0
-	cmp	0x1a80041, d0
+	cmp	MT_GetSfxLBN, d0
 	bne	KssSetSfx_DISPProc_L56
 	jmp	KssSetSfx_DISPProc_L10be
 KssSetSfx_DISPProc_L56:
 	mov	(0x5c, sp), d0
-	cmp	0x1a80039, d0
+	cmp	MT_SetPreference, d0
 	bne	KssSetSfx_DISPProc_L63
 	jmp	KssSetSfx_DISPProc_L10d6
 KssSetSfx_DISPProc_L63:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003a, d0
+	cmp	MT_SetEnable, d0
 	bne	KssSetSfx_DISPProc_L70
 	jmp	KssSetSfx_DISPProc_L112b
 KssSetSfx_DISPProc_L70:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003b, d0
+	cmp	MT_SetYesNo, d0
 	bne	KssSetSfx_DISPProc_L7d
 	jmp	KssSetSfx_DISPProc_L119e
 KssSetSfx_DISPProc_L7d:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003c, d0
+	cmp	MT_LetEnable, d0
 	bne	KssSetSfx_DISPProc_L8a
 	jmp	KssSetSfx_DISPProc_L1208
 KssSetSfx_DISPProc_L8a:
 	mov	(0x5c, sp), d0
-	cmp	0x1a8003d, d0
+	cmp	MT_LetYesNo, d0
 	bne	KssSetSfx_DISPProc_L97
 	jmp	KssSetSfx_DISPProc_L126e
 KssSetSfx_DISPProc_L97:
@@ -51702,7 +51703,7 @@ KssSetSfx_DISPProc_L4f0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a80039, d1
+	mov	MT_SetPreference, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
@@ -52961,7 +52962,7 @@ KssSetSfx_DISPProc_L10d6:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
@@ -53014,7 +53015,7 @@ KssSetSfx_DISPProc_L117e:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssSetSfx_DISPProc_L119a:
 	clr	d0
@@ -53063,7 +53064,7 @@ KssSetSfx_DISPProc_L11e8:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssSetSfx_DISPProc_L1204:
 	clr	d0
@@ -53110,7 +53111,7 @@ KssSetSfx_DISPProc_L124e:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssSetSfx_DISPProc_L126a:
 	clr	d0
@@ -53167,7 +53168,7 @@ KssSetSfx_DISPProc_L12c5:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x58, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssSetSfx_DISPProc_L12e1:
 	clr	d0
@@ -53189,17 +53190,17 @@ KssCatch_SetSfx:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_SetSfx_L12
 	bra	KssCatch_SetSfx_L2d
 KssCatch_SetSfx_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_SetSfx_L1e
 	bra	KssCatch_SetSfx_L32
 KssCatch_SetSfx_L1e:
 	mov	(0x34, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_SetSfx_L2a
 	bra	KssCatch_SetSfx_L6e
 KssCatch_SetSfx_L2a:
@@ -53222,7 +53223,7 @@ KssCatch_SetSfx_L32:
 	mov	Str_SSFX_2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_SetSfx_L398
@@ -53241,8 +53242,8 @@ KssCatch_SetSfx_L82:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700fa, d0
-	mov	0x01a00054, d1
+	mov	LoadOptionWndPgBF_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
 	bra	KssCatch_SetSfx_Lc8
@@ -53252,8 +53253,8 @@ KssCatch_SetSfx_La6:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00054, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
 KssCatch_SetSfx_Lc8:
@@ -53413,8 +53414,8 @@ KssCatch_SetSfx_L1e5:
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770224, d0
-	mov	0x01a8003b, d1
+	mov	FileLoadSetSfxBox_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	bra	KssCatch_SetSfx_L24c
 KssCatch_SetSfx_L207:
@@ -53446,8 +53447,8 @@ KssCatch_SetSfx_L22c:
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770224, d0
-	mov	0x01a8003d, d1
+	mov	FileLoadSetSfxBox_id, d0
+	mov	MT_LetYesNo, d1
 	calls	(a0)
 KssCatch_SetSfx_L24c:
 	mov	(data_979126B4), a0
@@ -53466,7 +53467,7 @@ KssCatch_SetSfx_L267:
 	mov	(0x38, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x90, d0
 	bne	KssCatch_SetSfx_L28f
@@ -53491,8 +53492,8 @@ KssCatch_SetSfx_L2a4:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077030b, d0
-	mov	0x01800001, d1
+	mov	WARNING_DIR_DEL_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L2c6:
@@ -53503,8 +53504,8 @@ KssCatch_SetSfx_L2c6:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L2f0:
@@ -53520,8 +53521,8 @@ KssCatch_SetSfx_L305:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770224, d0
-	mov	0x01a8003e, d1
+	mov	FileLoadSetSfxBox_id, d0
+	mov	MT_GetSfxLoad, d1
 	calls	(a0)
 	call	func_9781F07B, 0, 0
 	cmp	0, d0
@@ -53545,14 +53546,14 @@ KssCatch_SetSfx_L350:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007700f3, d1
+	mov	BigFont_FileSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L369:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x00770249, d1
+	mov	HDD_FILE_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SetSfx_L380:
 	mov	(data_979126B4), a0
@@ -53571,17 +53572,17 @@ KssxCatch_DeleteDirectory:
 	mov	d0, (0x44, sp)
 	mov	d1, (0x48, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssxCatch_DeleteDirectory_L12
 	bra	KssxCatch_DeleteDirectory_L2d
 KssxCatch_DeleteDirectory_L12:
 	mov	(0x48, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssxCatch_DeleteDirectory_L1e
 	bra	KssxCatch_DeleteDirectory_L32
 KssxCatch_DeleteDirectory_L1e:
 	mov	(0x48, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssxCatch_DeleteDirectory_L2a
 	bra	KssxCatch_DeleteDirectory_L6e
 KssxCatch_DeleteDirectory_L2a:
@@ -53604,7 +53605,7 @@ KssxCatch_DeleteDirectory_L32:
 	mov	Str_DLCF_2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssxCatch_DeleteDirectory_L2ea
@@ -53615,7 +53616,7 @@ KssxCatch_DeleteDirectory_L6e:
 	mov	(0x4c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	3, d0
 	bne	KssxCatch_DeleteDirectory_L94
@@ -53646,8 +53647,8 @@ KssxCatch_DeleteDirectory_Lb2:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800001, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	1, d0
 	mov	d0, (data_97912588)
@@ -53660,8 +53661,8 @@ KssxCatch_DeleteDirectory_Le8:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800001, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	movhu	(0x20, sp), d0
 	exthu	d0
@@ -53715,8 +53716,8 @@ KssxCatch_DeleteDirectory_L14a:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800002, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_HIDE, d1
 	calls	(a0)
 	mov	8, d0
 	mov	sp, a0
@@ -53732,8 +53733,8 @@ KssxCatch_DeleteDirectory_L1c9:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L209
 KssxCatch_DeleteDirectory_L1ea:
@@ -53742,8 +53743,8 @@ KssxCatch_DeleteDirectory_L1ea:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssxCatch_DeleteDirectory_L209:
 	mov	6, d0
@@ -53772,8 +53773,8 @@ KssxCatch_DeleteDirectory_L23c:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L2d2
 KssxCatch_DeleteDirectory_L25d:
@@ -53782,8 +53783,8 @@ KssxCatch_DeleteDirectory_L25d:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L2d2
 KssxCatch_DeleteDirectory_L27e:
@@ -53801,8 +53802,8 @@ KssxCatch_DeleteDirectory_L292:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L2d2
 KssxCatch_DeleteDirectory_L2b3:
@@ -53811,8 +53812,8 @@ KssxCatch_DeleteDirectory_L2b3:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssxCatch_DeleteDirectory_L2d2:
 	mov	(data_979126B4), a0
@@ -53831,17 +53832,17 @@ KssCatch_SetLBNSfx:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_SetLBNSfx_L12
 	bra	KssCatch_SetLBNSfx_L2d
 KssCatch_SetLBNSfx_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_SetLBNSfx_L1e
 	bra	KssCatch_SetLBNSfx_L32
 KssCatch_SetLBNSfx_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_SetLBNSfx_L2a
 	bra	KssCatch_SetLBNSfx_L6e
 KssCatch_SetLBNSfx_L2a:
@@ -53864,7 +53865,7 @@ KssCatch_SetLBNSfx_L32:
 	mov	Str_SLSF, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_SetLBNSfx_L291
@@ -53874,8 +53875,8 @@ KssCatch_SetLBNSfx_L6e:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001b, d0
-	mov	0x01a00054, d1
+	mov	LoadOptionWndLBNPg_id, d0
+	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x20, sp)
 	movhu	(0x20, sp), d0
@@ -54034,8 +54035,8 @@ KssCatch_SetLBNSfx_L1ad:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770165, d0
-	mov	0x01a8003b, d1
+	mov	LoadOptionLBN_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	bra	KssCatch_SetLBNSfx_L214
 KssCatch_SetLBNSfx_L1cf:
@@ -54067,8 +54068,8 @@ KssCatch_SetLBNSfx_L1f4:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770165, d0
-	mov	0x01a8003d, d1
+	mov	LoadOptionLBN_id, d0
+	mov	MT_LetYesNo, d1
 	calls	(a0)
 KssCatch_SetLBNSfx_L214:
 	mov	(data_979126B4), a0
@@ -54087,7 +54088,7 @@ KssCatch_SetLBNSfx_L22e:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	KssCatch_SetLBNSfx_L254
@@ -54102,8 +54103,8 @@ KssCatch_SetLBNSfx_L25a:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770165, d0
-	mov	0x01a8003e, d1
+	mov	LoadOptionLBN_id, d0
+	mov	MT_GetSfxLoad, d1
 	calls	(a0)
 KssCatch_SetLBNSfx_L279:
 	mov	(data_979126B4), a0
@@ -54122,17 +54123,17 @@ KssCatch_SetSfxSave:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_SetSfxSave_L12
 	bra	KssCatch_SetSfxSave_L2d
 KssCatch_SetSfxSave_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_SetSfxSave_L1e
 	bra	KssCatch_SetSfxSave_L32
 KssCatch_SetSfxSave_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_SetSfxSave_L2a
 	bra	KssCatch_SetSfxSave_L6e
 KssCatch_SetSfxSave_L2a:
@@ -54155,7 +54156,7 @@ KssCatch_SetSfxSave_L32:
 	mov	Str_SSFX, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_SetSfxSave_L48c
@@ -54340,8 +54341,8 @@ KssCatch_SetSfxSave_L1c7:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a8003b, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L1ea:
@@ -54385,8 +54386,8 @@ KssCatch_SetSfxSave_L225:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a8003b, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L250:
@@ -54406,8 +54407,8 @@ KssCatch_SetSfxSave_L268:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a8003d, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_LetYesNo, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L28b:
@@ -54417,7 +54418,7 @@ KssCatch_SetSfxSave_L28b:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x17, d0
 	bne	KssCatch_SetSfxSave_L2b1
@@ -54459,8 +54460,8 @@ KssCatch_SetSfxSave_L2ec:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L30e:
@@ -54469,8 +54470,8 @@ KssCatch_SetSfxSave_L30e:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L330:
@@ -54485,8 +54486,8 @@ KssCatch_SetSfxSave_L330:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a80039, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetPreference, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L36a:
@@ -54500,8 +54501,8 @@ KssCatch_SetSfxSave_L36a:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a80039, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetPreference, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L3a2:
@@ -54516,8 +54517,8 @@ KssCatch_SetSfxSave_L3a2:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a80039, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetPreference, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L3dd:
@@ -54530,8 +54531,8 @@ KssCatch_SetSfxSave_L3dd:
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a80039, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_SetPreference, d1
 	calls	(a0)
 	bra	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L411:
@@ -54540,8 +54541,8 @@ KssCatch_SetSfxSave_L411:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701a6, d0
-	mov	0x01a8003f, d1
+	mov	FileSaveSetSfxBox_id, d0
+	mov	MT_GetSfxSave, d1
 	calls	(a0)
 	mov	8, d0
 	mov	sp, a0
@@ -54555,14 +54556,14 @@ KssCatch_SetSfxSave_L444:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x65, d0
-	mov	0x007700f3, d1
+	mov	BigFont_FileSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L45d:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x65, d0
-	mov	0x00770249, d1
+	mov	HDD_FILE_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SetSfxSave_L474:
 	mov	(data_979126B4), a0
@@ -54581,17 +54582,17 @@ KssCatch_SetSfxDel:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_SetSfxDel_L12
 	bra	KssCatch_SetSfxDel_L2d
 KssCatch_SetSfxDel_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_SetSfxDel_L1e
 	bra	KssCatch_SetSfxDel_L32
 KssCatch_SetSfxDel_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_SetSfxDel_L2a
 	bra	KssCatch_SetSfxDel_L6e
 KssCatch_SetSfxDel_L2a:
@@ -54614,7 +54615,7 @@ KssCatch_SetSfxDel_L32:
 	mov	Str_DSFX, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_SetSfxDel_L375
@@ -54769,8 +54770,8 @@ KssCatch_SetSfxDel_L180:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770065, d0
-	mov	0x01a8003b, d1
+	mov	FileDelSetSfxBox_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L1a3:
@@ -54802,8 +54803,8 @@ KssCatch_SetSfxDel_L1c8:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770065, d0
-	mov	0x01a8003d, d1
+	mov	FileDelSetSfxBox_id, d0
+	mov	MT_LetYesNo, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L1eb:
@@ -54813,7 +54814,7 @@ KssCatch_SetSfxDel_L1eb:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	KssCatch_SetSfxDel_L211
@@ -54838,8 +54839,8 @@ KssCatch_SetSfxDel_L228:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770065, d0
-	mov	0x01a80040, d1
+	mov	FileDelSetSfxBox_id, d0
+	mov	MT_GetSfxDel, d1
 	calls	(a0)
 	call	func_9781F08D, 0, 0
 	mov	d0, (0x97913f90)
@@ -54852,8 +54853,8 @@ KssCatch_SetSfxDel_L228:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770352, d0
-	mov	0x01800001, d1
+	mov	WARNING_FILE_DEL_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L28e:
@@ -54868,8 +54869,8 @@ KssCatch_SetSfxDel_L297:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770065, d0
-	mov	0x01a8003b, d1
+	mov	FileDelSetSfxBox_id, d0
+	mov	MT_SetYesNo, d1
 	calls	(a0)
 	mov	(0x14, sp), d0
 	add	d0, d0
@@ -54896,8 +54897,8 @@ KssCatch_SetSfxDel_L2d5:
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x00770065, d0
-	mov	0x01a8003d, d1
+	mov	FileDelSetSfxBox_id, d0
+	mov	MT_LetYesNo, d1
 	calls	(a0)
 	mov	(0x14, sp), d0
 	add	d0, d0
@@ -54927,8 +54928,8 @@ KssCatch_SetSfxDel_L31d:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L33e:
@@ -54937,8 +54938,8 @@ KssCatch_SetSfxDel_L33e:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_SetSfxDel_L35d:
 	mov	(data_979126B4), a0
@@ -54957,17 +54958,17 @@ KssCatch_DeleteConfirm:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_DeleteConfirm_L12
 	bra	KssCatch_DeleteConfirm_L2d
 KssCatch_DeleteConfirm_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_DeleteConfirm_L1e
 	bra	KssCatch_DeleteConfirm_L32
 KssCatch_DeleteConfirm_L1e:
 	mov	(0x34, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_DeleteConfirm_L2a
 	bra	KssCatch_DeleteConfirm_L6e
 KssCatch_DeleteConfirm_L2a:
@@ -54990,7 +54991,7 @@ KssCatch_DeleteConfirm_L32:
 	mov	Str_DLCF, d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_DeleteConfirm_L1d8
@@ -55001,7 +55002,7 @@ KssCatch_DeleteConfirm_L6e:
 	mov	(0x38, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	3, d0
 	bne	KssCatch_DeleteConfirm_L94
@@ -55028,8 +55029,8 @@ KssCatch_DeleteConfirm_Lab:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800001, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(0x97913f90), d0
 	mov	d0, (0x10, sp)
@@ -55046,8 +55047,8 @@ KssCatch_DeleteConfirm_Lab:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770368, d0
-	mov	0x01800002, d1
+	mov	WaitingWindow_id, d0
+	mov	EV_HIDE, d1
 	calls	(a0)
 	mov	8, d0
 	mov	sp, a0
@@ -55063,8 +55064,8 @@ KssCatch_DeleteConfirm_L12a:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_L14b:
@@ -55073,8 +55074,8 @@ KssCatch_DeleteConfirm_L14b:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_L16c:
@@ -55092,8 +55093,8 @@ KssCatch_DeleteConfirm_L180:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_L1a1:
@@ -55102,8 +55103,8 @@ KssCatch_DeleteConfirm_L1a1:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_DeleteConfirm_L1c0:
 	mov	(data_979126B4), a0
@@ -55123,42 +55124,42 @@ KssTitleFunc:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	d1, d0
-	cmp	0x180000b, d0
+	cmp	EV_ACTIVATE, d0
 	bne	KssTitleFunc_L13
 	bra	KssTitleFunc_L71
 KssTitleFunc_L13:
 	mov	(0x28, sp), d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	KssTitleFunc_L20
 	jmp	KssTitleFunc_L1a2
 KssTitleFunc_L20:
 	mov	(0x28, sp), d0
-	cmp	0x1a000d5, d0
+	cmp	MT_IgnoreChangeTitle, d0
 	bne	KssTitleFunc_L2d
 	jmp	KssTitleFunc_L1a2
 KssTitleFunc_L2d:
 	mov	(0x28, sp), d0
-	cmp	0x1a000d6, d0
+	cmp	MT_IgnoreInterruptTitle, d0
 	bne	KssTitleFunc_L3a
 	jmp	KssTitleFunc_L1a2
 KssTitleFunc_L3a:
 	mov	(0x28, sp), d0
-	cmp	0x1a0003b, d0
+	cmp	MT_SetParam, d0
 	bne	KssTitleFunc_L47
 	jmp	KssTitleFunc_L1a2
 KssTitleFunc_L47:
 	mov	(0x28, sp), d0
-	cmp	0x1a000da, d0
+	cmp	MT_GetIntTitleType, d0
 	bne	KssTitleFunc_L54
 	jmp	KssTitleFunc_L193
 KssTitleFunc_L54:
 	mov	(0x28, sp), d0
-	cmp	0x1a00090, d0
+	cmp	MT_GetInterruptTime, d0
 	bne	KssTitleFunc_L61
 	jmp	KssTitleFunc_L198
 KssTitleFunc_L61:
 	mov	(0x28, sp), d0
-	cmp	0x1800014, d0
+	cmp	EV_MMMDATA, d0
 	bne	KssTitleFunc_L6e
 	jmp	KssTitleFunc_L19e
 KssTitleFunc_L6e:
@@ -55233,13 +55234,13 @@ KssTitleFunc_Led:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01800001, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -55247,7 +55248,7 @@ KssTitleFunc_Led:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
 	bra	KssTitleFunc_L1a2
@@ -55300,17 +55301,17 @@ Main_Wind_KSS:
 	mov	d0, (0x28, sp)
 	mov	d1, (0x2c, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	Main_Wind_KSS_L12
 	bra	Main_Wind_KSS_L2d
 Main_Wind_KSS_L12:
 	mov	(0x2c, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	Main_Wind_KSS_L1e
 	bra	Main_Wind_KSS_L32
 Main_Wind_KSS_L1e:
 	mov	(0x2c, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	Main_Wind_KSS_L2a
 	bra	Main_Wind_KSS_L6e
 Main_Wind_KSS_L2a:
@@ -55333,7 +55334,7 @@ Main_Wind_KSS_L32:
 	mov	Str_MWKS, d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	Main_Wind_KSS_L139
@@ -55344,7 +55345,7 @@ Main_Wind_KSS_L6e:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x94, d0
 	bne	Main_Wind_KSS_L97
@@ -55382,8 +55383,8 @@ Main_Wind_KSS_Lc7:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	Main_Wind_KSS_L121
 Main_Wind_KSS_Le8:
@@ -55392,8 +55393,8 @@ Main_Wind_KSS_Le8:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	Main_Wind_KSS_L121
 Main_Wind_KSS_L109:
@@ -55478,8 +55479,8 @@ func_97821976_entry_L65:
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880017, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_GetSelectedDir, d1
 	calls	(a2)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -55491,8 +55492,8 @@ func_97821976_entry_L65:
 	mov	d0, d1
 	inc	d1
 	mov	d1, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880017, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_GetSelectedDir, d1
 	calls	(a2)
 func_97821976_entry_Ld6:
 	movbu	(0x15, sp), d0
@@ -55504,8 +55505,8 @@ func_97821976_entry_Ld6:
 	movbu	(0x15, sp), d1
 	inc	d1
 	mov	d1, (0x10, sp)
-	mov	0x00770253, d0
-	mov	0x01880013, d1
+	mov	SelectedDirectory_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -55513,8 +55514,8 @@ func_97821976_entry_Ld6:
 	movbu	(0x15, sp), d1
 	inc	d1
 	mov	d1, (0x10, sp)
-	mov	0x0077026b, d0
-	mov	0x01880013, d1
+	mov	SelectedCopyDest_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	clr	d0
 	call	func_97802F34, 0, 0
@@ -55525,16 +55526,16 @@ func_97821976_entry_Ld6:
 	inc	d0
 	mov	d0, a0
 	mov	a0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880015, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_GetSelectedNumber, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880013, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -55542,7 +55543,7 @@ func_97821976_entry_Ld6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 	jmp	func_97821976_entry_L218
 func_97821976_entry_L18f:
@@ -55553,16 +55554,16 @@ func_97821976_entry_L18f:
 	mov	d0, a0
 	add	2, a0
 	mov	a0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880013, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetFileBoxParam, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f5, d0
-	mov	0x01880012, d1
+	mov	SelectedDirInFile_id, d0
+	mov	EV_SetFileBoxInit, d1
 	calls	(a0)
 	bra	func_97821976_entry_L218
 func_97821976_entry_L1d5:
@@ -55581,7 +55582,7 @@ func_97821976_entry_L1d5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01880023, d1
+	mov	EV_DRWSTRG, d1
 	calls	(a0)
 func_97821976_entry_L218:
 	ret	[d2,a2], 0x20
@@ -55634,8 +55635,8 @@ func_97821B96_entry_L58:
 	mov	(0x12c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	8, d0
 	mov	sp, a0
@@ -55651,8 +55652,8 @@ func_97821B96_entry_La3:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700f3, d0
-	mov	0x01800001, d1
+	mov	BigFont_FileSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_Lc5:
@@ -55661,8 +55662,8 @@ func_97821B96_entry_Lc5:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770249, d0
-	mov	0x01800001, d1
+	mov	HDD_FILE_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_Le7:
@@ -55673,48 +55674,48 @@ func_97821B96_entry_Le7:
 	mov	(0x12c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077001b, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndLBNPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770018, d0
-	mov	0x01a8004b, d1
+	mov	LBNCatching_id, d0
+	mov	MT_ResetLBNNr, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770145, d0
-	mov	0x01a80051, d1
+	mov	DirNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770146, d0
-	mov	0x01a80051, d1
+	mov	FileNumberLBN_id, d0
+	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770015, d0
-	mov	0x01800001, d1
+	mov	SELECT_NUMBER_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770124, d0
-	mov	0x01800001, d1
+	mov	LBN_1_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_L1ac:
@@ -55730,16 +55731,16 @@ func_97821B96_entry_L1ac:
 	mov	(0x12c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01800001, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_L205:
@@ -55755,16 +55756,16 @@ func_97821B96_entry_L205:
 	mov	(0x12c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	func_97821B96_entry_L2b3
 func_97821B96_entry_L25d:
@@ -55780,16 +55781,16 @@ func_97821B96_entry_L25d:
 	mov	(0x12c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077024f, d0
-	mov	0x01a00076, d1
+	mov	LoadOptionWndPg_id, d0
+	mov	MT_SetPage, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701cd, d0
-	mov	0x01800001, d1
+	mov	ALPHA_SORTED_LIST_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_97821B96_entry_L2b3:
 	ret	0, 0x18
@@ -55950,67 +55951,67 @@ SelectFDCPListProc:
 	mov	d0, (0xb0, sp)
 	mov	d1, (0xb4, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	SelectFDCPListProc_L16
 	jmp	SelectFDCPListProc_Ldc
 SelectFDCPListProc_L16:
 	mov	(0xb4, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	SelectFDCPListProc_L23
 	jmp	SelectFDCPListProc_L114
 SelectFDCPListProc_L23:
 	mov	(0xb4, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	SelectFDCPListProc_L30
 	jmp	SelectFDCPListProc_L1c5
 SelectFDCPListProc_L30:
 	mov	(0xb4, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	SelectFDCPListProc_L3d
 	jmp	SelectFDCPListProc_L1fa
 SelectFDCPListProc_L3d:
 	mov	(0xb4, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	SelectFDCPListProc_L4a
 	jmp	SelectFDCPListProc_L2eb
 SelectFDCPListProc_L4a:
 	mov	(0xb4, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	SelectFDCPListProc_L57
 	jmp	SelectFDCPListProc_L660
 SelectFDCPListProc_L57:
 	mov	(0xb4, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	SelectFDCPListProc_L64
 	jmp	SelectFDCPListProc_L711
 SelectFDCPListProc_L64:
 	mov	(0xb4, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	SelectFDCPListProc_L71
 	jmp	SelectFDCPListProc_L79e
 SelectFDCPListProc_L71:
 	mov	(0xb4, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	SelectFDCPListProc_L7e
 	jmp	SelectFDCPListProc_L7da
 SelectFDCPListProc_L7e:
 	mov	(0xb4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	SelectFDCPListProc_L8b
 	jmp	SelectFDCPListProc_L7f8
 SelectFDCPListProc_L8b:
 	mov	(0xb4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	SelectFDCPListProc_L98
 	jmp	SelectFDCPListProc_L7f8
 SelectFDCPListProc_L98:
 	mov	(0xb4, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	SelectFDCPListProc_La5
 	jmp	SelectFDCPListProc_L7f8
 SelectFDCPListProc_La5:
 	mov	(0xb4, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	SelectFDCPListProc_Lb2
 	jmp	SelectFDCPListProc_L7f8
 SelectFDCPListProc_Lb2:
@@ -56020,12 +56021,12 @@ SelectFDCPListProc_Lb2:
 	jmp	SelectFDCPListProc_La02
 SelectFDCPListProc_Lbf:
 	mov	(0xb4, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	SelectFDCPListProc_Lcc
 	jmp	SelectFDCPListProc_La02
 SelectFDCPListProc_Lcc:
 	mov	(0xb4, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	SelectFDCPListProc_Ld9
 	jmp	SelectFDCPListProc_La02
 SelectFDCPListProc_Ld9:
@@ -56045,7 +56046,7 @@ SelectFDCPListProc_Ldc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPListProc_La49
@@ -56079,7 +56080,7 @@ SelectFDCPListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -56087,7 +56088,7 @@ SelectFDCPListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -56102,7 +56103,7 @@ SelectFDCPListProc_L199:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	call	func_9781B1D4_entry, 0, 0x14
 	call	func_9781B868_entry, 0, 0x18
@@ -56648,7 +56649,7 @@ SelectFDCPListProc_L692:
 	movhu	(0x3c, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80001, d1
+	mov	MT_UnderFlow, d1
 	calls	(a0)
 	bra	SelectFDCPListProc_L70d
 SelectFDCPListProc_L6b5:
@@ -56685,7 +56686,7 @@ SelectFDCPListProc_L6ef:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 SelectFDCPListProc_L70d:
 	clr	d0
@@ -56711,7 +56712,7 @@ SelectFDCPListProc_L711:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -56722,7 +56723,7 @@ SelectFDCPListProc_L711:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -56733,7 +56734,7 @@ SelectFDCPListProc_L711:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -56754,7 +56755,7 @@ SelectFDCPListProc_L79e:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -56788,7 +56789,7 @@ SelectFDCPListProc_L7f8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
 	mov	(data_979126B4), a0
@@ -56804,12 +56805,12 @@ SelectFDCPListProc_L7f8:
 	bra	SelectFDCPListProc_L876
 SelectFDCPListProc_L84e:
 	mov	(0xb4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	SelectFDCPListProc_L85a
 	bra	SelectFDCPListProc_L866
 SelectFDCPListProc_L85a:
 	mov	(0xb4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	SelectFDCPListProc_L866
 	bra	SelectFDCPListProc_L86e
 SelectFDCPListProc_L866:
@@ -56864,7 +56865,7 @@ SelectFDCPListProc_L8b0:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80009, d1
+	mov	MT_SelectOK, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -56886,7 +56887,7 @@ SelectFDCPListProc_L8e3:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000b, d1
+	mov	MT_SelectSAVE, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -56906,7 +56907,7 @@ SelectFDCPListProc_L916:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80059, d1
+	mov	MT_SelectAll, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPListProc_La49
@@ -56925,7 +56926,7 @@ SelectFDCPListProc_L943:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8005a, d1
+	mov	MT_SwitchToSmf, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPListProc_La49
@@ -56940,7 +56941,7 @@ SelectFDCPListProc_L969:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	mov	(0x3c, a0), d1
@@ -56969,7 +56970,7 @@ SelectFDCPListProc_L9b5:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -56977,7 +56978,7 @@ SelectFDCPListProc_L9b5:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -57093,17 +57094,17 @@ KssXCustomLyricsSetupCatch:
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssXCustomLyricsSetupCatch_L12
 	bra	KssXCustomLyricsSetupCatch_L2d
 KssXCustomLyricsSetupCatch_L12:
 	mov	(0x24, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssXCustomLyricsSetupCatch_L1e
 	bra	KssXCustomLyricsSetupCatch_L32
 KssXCustomLyricsSetupCatch_L1e:
 	mov	(0x24, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssXCustomLyricsSetupCatch_L2a
 	bra	KssXCustomLyricsSetupCatch_L6e
 KssXCustomLyricsSetupCatch_L2a:
@@ -57126,7 +57127,7 @@ KssXCustomLyricsSetupCatch_L32:
 	mov	Str_ClO, d0
 	mov	d0, (0x10, sp)
 	mov	(0x20, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssXCustomLyricsSetupCatch_L148
@@ -57166,7 +57167,7 @@ KssXCustomLyricsSetupCatch_La7:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700b7, d0
+	mov	CLPARA4_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -57180,15 +57181,15 @@ KssXCustomLyricsSetupCatch_Lc9:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700b7, d0
-	mov	0x01a0003d, d1
+	mov	CLPARA4_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 	bra	KssXCustomLyricsSetupCatch_L12d
 KssXCustomLyricsSetupCatch_Leb:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007700b7, d0
+	mov	CLPARA4_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(0x34, a0), a0
@@ -57202,8 +57203,8 @@ KssXCustomLyricsSetupCatch_L10d:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700b7, d0
-	mov	0x01a0003d, d1
+	mov	CLPARA4_id, d0
+	mov	MT_CalcParam, d1
 	calls	(a0)
 KssXCustomLyricsSetupCatch_L12d:
 	clr	d0
@@ -57254,67 +57255,67 @@ SelectFDCPSMFListProc:
 	mov	d0, (0xac, sp)
 	mov	d1, (0xb0, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	SelectFDCPSMFListProc_L16
 	jmp	SelectFDCPSMFListProc_Ldc
 SelectFDCPSMFListProc_L16:
 	mov	(0xb0, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	SelectFDCPSMFListProc_L23
 	jmp	SelectFDCPSMFListProc_L114
 SelectFDCPSMFListProc_L23:
 	mov	(0xb0, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	SelectFDCPSMFListProc_L30
 	jmp	SelectFDCPSMFListProc_L1e3
 SelectFDCPSMFListProc_L30:
 	mov	(0xb0, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	SelectFDCPSMFListProc_L3d
 	jmp	SelectFDCPSMFListProc_L218
 SelectFDCPSMFListProc_L3d:
 	mov	(0xb0, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	SelectFDCPSMFListProc_L4a
 	jmp	SelectFDCPSMFListProc_L308
 SelectFDCPSMFListProc_L4a:
 	mov	(0xb0, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	SelectFDCPSMFListProc_L57
 	jmp	SelectFDCPSMFListProc_L723
 SelectFDCPSMFListProc_L57:
 	mov	(0xb0, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	SelectFDCPSMFListProc_L64
 	jmp	SelectFDCPSMFListProc_L7d5
 SelectFDCPSMFListProc_L64:
 	mov	(0xb0, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	SelectFDCPSMFListProc_L71
 	jmp	SelectFDCPSMFListProc_L862
 SelectFDCPSMFListProc_L71:
 	mov	(0xb0, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	SelectFDCPSMFListProc_L7e
 	jmp	SelectFDCPSMFListProc_L89e
 SelectFDCPSMFListProc_L7e:
 	mov	(0xb0, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	SelectFDCPSMFListProc_L8b
 	jmp	SelectFDCPSMFListProc_L8bc
 SelectFDCPSMFListProc_L8b:
 	mov	(0xb0, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	SelectFDCPSMFListProc_L98
 	jmp	SelectFDCPSMFListProc_L8bc
 SelectFDCPSMFListProc_L98:
 	mov	(0xb0, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	SelectFDCPSMFListProc_La5
 	jmp	SelectFDCPSMFListProc_L8bc
 SelectFDCPSMFListProc_La5:
 	mov	(0xb0, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	SelectFDCPSMFListProc_Lb2
 	jmp	SelectFDCPSMFListProc_L8bc
 SelectFDCPSMFListProc_Lb2:
@@ -57324,12 +57325,12 @@ SelectFDCPSMFListProc_Lb2:
 	jmp	SelectFDCPSMFListProc_Laf3
 SelectFDCPSMFListProc_Lbf:
 	mov	(0xb0, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	SelectFDCPSMFListProc_Lcc
 	jmp	SelectFDCPSMFListProc_Laf3
 SelectFDCPSMFListProc_Lcc:
 	mov	(0xb0, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	SelectFDCPSMFListProc_Ld9
 	jmp	SelectFDCPSMFListProc_Laf3
 SelectFDCPSMFListProc_Ld9:
@@ -57349,7 +57350,7 @@ SelectFDCPSMFListProc_Ldc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
@@ -57383,7 +57384,7 @@ SelectFDCPSMFListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -57391,7 +57392,7 @@ SelectFDCPSMFListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -57406,7 +57407,7 @@ SelectFDCPSMFListProc_L199:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -57415,7 +57416,7 @@ SelectFDCPSMFListProc_L199:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8005b, d1
+	mov	MT_SetSmfImpFilter, d1
 	calls	(a0)
 	call	func_97822C70_entry, 0, 4
 	call	func_9781BD17_entry, 0, 0x14
@@ -58010,7 +58011,7 @@ SelectFDCPSMFListProc_L755:
 	movhu	(0x38, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80001, d1
+	mov	MT_UnderFlow, d1
 	mov	d2, d0
 	calls	(a0)
 	bra	SelectFDCPSMFListProc_L7d1
@@ -58048,7 +58049,7 @@ SelectFDCPSMFListProc_L7b3:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 SelectFDCPSMFListProc_L7d1:
 	clr	d0
@@ -58074,7 +58075,7 @@ SelectFDCPSMFListProc_L7d5:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -58085,7 +58086,7 @@ SelectFDCPSMFListProc_L7d5:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -58096,7 +58097,7 @@ SelectFDCPSMFListProc_L7d5:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -58117,7 +58118,7 @@ SelectFDCPSMFListProc_L862:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -58151,7 +58152,7 @@ SelectFDCPSMFListProc_L8bc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
 	mov	(data_979126B4), a0
@@ -58167,12 +58168,12 @@ SelectFDCPSMFListProc_L8bc:
 	bra	SelectFDCPSMFListProc_L93a
 SelectFDCPSMFListProc_L912:
 	mov	(0xb0, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	SelectFDCPSMFListProc_L91e
 	bra	SelectFDCPSMFListProc_L92a
 SelectFDCPSMFListProc_L91e:
 	mov	(0xb0, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	SelectFDCPSMFListProc_L92a
 	bra	SelectFDCPSMFListProc_L932
 SelectFDCPSMFListProc_L92a:
@@ -58227,7 +58228,7 @@ SelectFDCPSMFListProc_L974:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80009, d1
+	mov	MT_SelectOK, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -58249,7 +58250,7 @@ SelectFDCPSMFListProc_L9a7:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000b, d1
+	mov	MT_SelectSAVE, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -58269,7 +58270,7 @@ SelectFDCPSMFListProc_L9da:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80059, d1
+	mov	MT_SelectAll, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
@@ -58288,7 +58289,7 @@ SelectFDCPSMFListProc_La07:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8005a, d1
+	mov	MT_SwitchToSmf, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
@@ -58307,7 +58308,7 @@ SelectFDCPSMFListProc_La34:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8005c, d1
+	mov	MT_IncSmfImpFilter, d1
 	calls	(a0)
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
@@ -58322,7 +58323,7 @@ SelectFDCPSMFListProc_La5a:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	mov	(0x3c, a0), d1
@@ -58351,7 +58352,7 @@ SelectFDCPSMFListProc_Laa6:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -58359,7 +58360,7 @@ SelectFDCPSMFListProc_Laa6:
 	mov	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xac, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -58420,8 +58421,8 @@ func_978237D9_entry_L2b:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770376, d0
-	mov	0x01800001, d1
+	mov	CPFD2HD_Display_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_978237D9_entry_L4a:
 	ret	0, 0x14
@@ -58432,37 +58433,37 @@ KssCopyFdToHD_DISPProc:
 	mov	d0, (0x68, sp)
 	mov	d1, (0x6c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCopyFdToHD_DISPProc_L14
 	bra	KssCopyFdToHD_DISPProc_L65
 KssCopyFdToHD_DISPProc_L14:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80042, d0
+	cmp	MT_DoAction, d0
 	bne	KssCopyFdToHD_DISPProc_L21
 	jmp	KssCopyFdToHD_DISPProc_L317
 KssCopyFdToHD_DISPProc_L21:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80063, d0
+	cmp	MT_DoLoadASongFD, d0
 	bne	KssCopyFdToHD_DISPProc_L2e
 	jmp	KssCopyFdToHD_DISPProc_L448
 KssCopyFdToHD_DISPProc_L2e:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80062, d0
+	cmp	MT_DoSaveASongHD, d0
 	bne	KssCopyFdToHD_DISPProc_L3b
 	jmp	KssCopyFdToHD_DISPProc_L5e9
 KssCopyFdToHD_DISPProc_L3b:
 	mov	(0x6c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssCopyFdToHD_DISPProc_L48
 	jmp	KssCopyFdToHD_DISPProc_L6cc
 KssCopyFdToHD_DISPProc_L48:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80043, d0
+	cmp	MT_Success, d0
 	bne	KssCopyFdToHD_DISPProc_L55
 	jmp	KssCopyFdToHD_DISPProc_Laa2
 KssCopyFdToHD_DISPProc_L55:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80044, d0
+	cmp	MT_Failed, d0
 	bne	KssCopyFdToHD_DISPProc_L62
 	jmp	KssCopyFdToHD_DISPProc_Lacb
 KssCopyFdToHD_DISPProc_L62:
@@ -58654,14 +58655,14 @@ KssCopyFdToHD_DISPProc_L288:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58677,14 +58678,14 @@ KssCopyFdToHD_DISPProc_L2d1:
 	mov	0xd4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
@@ -58718,14 +58719,14 @@ KssCopyFdToHD_DISPProc_L345:
 	mov	0xd3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58749,15 +58750,15 @@ KssCopyFdToHD_DISPProc_L389:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770395, d0
-	mov	0x01800009, d1
+	mov	TheActualDF_id, d0
+	mov	EV_PAINT, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80063, d0
+	mov	MT_DoLoadASongFD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58772,14 +58773,14 @@ KssCopyFdToHD_DISPProc_L400:
 	mov	0xd2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58808,14 +58809,14 @@ KssCopyFdToHD_DISPProc_L46e:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58837,14 +58838,14 @@ KssCopyFdToHD_DISPProc_L4bf:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58866,14 +58867,14 @@ KssCopyFdToHD_DISPProc_L510:
 	mov	0xcb, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58894,14 +58895,14 @@ KssCopyFdToHD_DISPProc_L560:
 	mov	0x65, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80062, d0
+	mov	MT_DoSaveASongHD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58916,14 +58917,14 @@ KssCopyFdToHD_DISPProc_L5a1:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -58942,7 +58943,7 @@ KssCopyFdToHD_DISPProc_L5e9:
 	mov	0x12e, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	1, d0
 	mov	d0, (data_97912588)
@@ -58981,15 +58982,15 @@ KssCopyFdToHD_DISPProc_L65e:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770395, d0
-	mov	0x01800009, d1
+	mov	TheActualDF_id, d0
+	mov	EV_PAINT, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80063, d0
+	mov	MT_DoLoadASongFD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59311,7 +59312,7 @@ KssCopyFdToHD_DISPProc_Laa2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916ec4), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssCopyFdToHD_DISPProc_Lb0c
@@ -59324,7 +59325,7 @@ KssCopyFdToHD_DISPProc_Lacb:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916ec8), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssCopyFdToHD_DISPProc_Lb0c
@@ -59664,8 +59665,8 @@ func_978246FC_entry_L2b:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770393, d0
-	mov	0x01800001, d1
+	mov	CPFDSmf2HD_Display_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_978246FC_entry_L4a:
 	ret	0, 0x14
@@ -59676,37 +59677,37 @@ KssCopySmfFdToHD_DISPProc:
 	mov	d0, (0x68, sp)
 	mov	d1, (0x6c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCopySmfFdToHD_DISPProc_L14
 	bra	KssCopySmfFdToHD_DISPProc_L65
 KssCopySmfFdToHD_DISPProc_L14:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80042, d0
+	cmp	MT_DoAction, d0
 	bne	KssCopySmfFdToHD_DISPProc_L21
 	jmp	KssCopySmfFdToHD_DISPProc_L11d
 KssCopySmfFdToHD_DISPProc_L21:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80063, d0
+	cmp	MT_DoLoadASongFD, d0
 	bne	KssCopySmfFdToHD_DISPProc_L2e
 	jmp	KssCopySmfFdToHD_DISPProc_L222
 KssCopySmfFdToHD_DISPProc_L2e:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80062, d0
+	cmp	MT_DoSaveASongHD, d0
 	bne	KssCopySmfFdToHD_DISPProc_L3b
 	jmp	KssCopySmfFdToHD_DISPProc_L36b
 KssCopySmfFdToHD_DISPProc_L3b:
 	mov	(0x6c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssCopySmfFdToHD_DISPProc_L48
 	jmp	KssCopySmfFdToHD_DISPProc_L43d
 KssCopySmfFdToHD_DISPProc_L48:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80043, d0
+	cmp	MT_Success, d0
 	bne	KssCopySmfFdToHD_DISPProc_L55
 	jmp	KssCopySmfFdToHD_DISPProc_La0d
 KssCopySmfFdToHD_DISPProc_L55:
 	mov	(0x6c, sp), d0
-	cmp	0x1a80044, d0
+	cmp	MT_Failed, d0
 	bne	KssCopySmfFdToHD_DISPProc_L62
 	jmp	KssCopySmfFdToHD_DISPProc_La36
 KssCopySmfFdToHD_DISPProc_L62:
@@ -59736,14 +59737,14 @@ KssCopySmfFdToHD_DISPProc_L95:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80042, d0
+	mov	MT_DoAction, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59759,14 +59760,14 @@ KssCopySmfFdToHD_DISPProc_Ld7:
 	mov	0xd4, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
@@ -59800,14 +59801,14 @@ KssCopySmfFdToHD_DISPProc_L14b:
 	mov	0xd3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59829,7 +59830,7 @@ KssCopySmfFdToHD_DISPProc_L18f:
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80063, d0
+	mov	MT_DoLoadASongFD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59844,14 +59845,14 @@ KssCopySmfFdToHD_DISPProc_L1da:
 	mov	0xd2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59879,14 +59880,14 @@ KssCopySmfFdToHD_DISPProc_L242:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59908,14 +59909,14 @@ KssCopySmfFdToHD_DISPProc_L293:
 	mov	0xd6, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80044, d0
+	mov	MT_Failed, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59937,14 +59938,14 @@ KssCopySmfFdToHD_DISPProc_L2e4:
 	mov	0xcb, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80043, d0
+	mov	MT_Success, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59960,14 +59961,14 @@ KssCopySmfFdToHD_DISPProc_L328:
 	mov	0x65, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80062, d0
+	mov	MT_DoSaveASongHD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -59983,7 +59984,7 @@ KssCopySmfFdToHD_DISPProc_L36b:
 	mov	0x12e, d0
 	mov	d0, (0x10, sp)
 	mov	(0x68, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	1, d0
 	mov	d0, (data_97912588)
@@ -60032,7 +60033,7 @@ KssCopySmfFdToHD_DISPProc_L408:
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
 	mov	d0, (0x10, sp)
-	mov	0x01a80063, d0
+	mov	MT_DoLoadASongFD, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -60532,7 +60533,7 @@ KssCopySmfFdToHD_DISPProc_La0d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916ed0), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssCopySmfFdToHD_DISPProc_La77
@@ -60545,7 +60546,7 @@ KssCopySmfFdToHD_DISPProc_La36:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916ed4), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssCopySmfFdToHD_DISPProc_La77
@@ -60844,17 +60845,17 @@ KssCatch_SaveOptionsAndPassWords:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_SaveOptionsAndPassWords_L12
 	bra	KssCatch_SaveOptionsAndPassWords_L2d
 KssCatch_SaveOptionsAndPassWords_L12:
 	mov	(0x28, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssCatch_SaveOptionsAndPassWords_L1e
 	bra	KssCatch_SaveOptionsAndPassWords_L32
 KssCatch_SaveOptionsAndPassWords_L1e:
 	mov	(0x28, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssCatch_SaveOptionsAndPassWords_L2a
 	bra	KssCatch_SaveOptionsAndPassWords_L6e
 KssCatch_SaveOptionsAndPassWords_L2a:
@@ -60877,7 +60878,7 @@ KssCatch_SaveOptionsAndPassWords_L32:
 	mov	Str_SOPW, d0
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssCatch_SaveOptionsAndPassWords_L101
@@ -60888,7 +60889,7 @@ KssCatch_SaveOptionsAndPassWords_L6e:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x91, d0
 	bne	KssCatch_SaveOptionsAndPassWords_L96
@@ -60921,12 +60922,12 @@ KssCatch_SaveOptionsAndPassWords_Lb8:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x007700b9, d0
+	mov	PROTECT_OPTIONS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	KssCatch_SaveOptionsAndPassWords_Le9
 KssCatch_SaveOptionsAndPassWords_Ld2:
-	mov	0x007700b9, d0
+	mov	PROTECT_OPTIONS_id, d0
 	mov	d0, (0x10, sp)
 	mov	0x67, d0
 	mov	0x00770000, d1
@@ -61050,62 +61051,62 @@ KssAudioOutputProc:
 	mov	d0, (0x3c, sp)
 	mov	d1, (0x40, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssAudioOutputProc_L15
 	jmp	KssAudioOutputProc_La7
 KssAudioOutputProc_L15:
 	mov	(0x40, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssAudioOutputProc_L22
 	jmp	KssAudioOutputProc_L130
 KssAudioOutputProc_L22:
 	mov	(0x40, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssAudioOutputProc_L2f
 	jmp	KssAudioOutputProc_L165
 KssAudioOutputProc_L2f:
 	mov	(0x40, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssAudioOutputProc_L3c
 	jmp	KssAudioOutputProc_L3b4
 KssAudioOutputProc_L3c:
 	mov	(0x40, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KssAudioOutputProc_L49
 	jmp	KssAudioOutputProc_La67
 KssAudioOutputProc_L49:
 	mov	(0x40, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssAudioOutputProc_L56
 	jmp	KssAudioOutputProc_La67
 KssAudioOutputProc_L56:
 	mov	(0x40, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KssAudioOutputProc_L63
 	jmp	KssAudioOutputProc_La67
 KssAudioOutputProc_L63:
 	mov	(0x40, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssAudioOutputProc_L70
 	jmp	KssAudioOutputProc_La67
 KssAudioOutputProc_L70:
 	mov	(0x40, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssAudioOutputProc_L7d
 	jmp	KssAudioOutputProc_Lb36
 KssAudioOutputProc_L7d:
 	mov	(0x40, sp), d0
-	cmp	0x1a80045, d0
+	cmp	MT_IncrData, d0
 	bne	KssAudioOutputProc_L8a
 	jmp	KssAudioOutputProc_L101c
 KssAudioOutputProc_L8a:
 	mov	(0x40, sp), d0
-	cmp	0x1a80046, d0
+	cmp	MT_DecrData, d0
 	bne	KssAudioOutputProc_L97
 	jmp	KssAudioOutputProc_L1120
 KssAudioOutputProc_L97:
 	mov	(0x40, sp), d0
-	cmp	0x1a80047, d0
+	cmp	MT_SetData, d0
 	bne	KssAudioOutputProc_La4
 	jmp	KssAudioOutputProc_L1235
 KssAudioOutputProc_La4:
@@ -61140,7 +61141,7 @@ KssAudioOutputProc_Le4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -61148,7 +61149,7 @@ KssAudioOutputProc_Le4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -61196,7 +61197,7 @@ KssAudioOutputProc_L165:
 	mov	data_978A4138, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A3FCC), a0
+	mov	(KssAudioOutputProc_Table_2), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -61367,7 +61368,7 @@ KssAudioOutputProc_L165:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
@@ -61864,7 +61865,7 @@ KssAudioOutputProc_L8a4:
 	movbu	(0x97916f53), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -61914,7 +61915,7 @@ KssAudioOutputProc_L92a:
 	movbu	(0x97916f54), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -61964,7 +61965,7 @@ KssAudioOutputProc_L9b0:
 	movbu	(0x97916f55), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -62014,7 +62015,7 @@ KssAudioOutputProc_La36:
 	movbu	(0x97916f56), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -62055,7 +62056,7 @@ KssAudioOutputProc_La9c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -62063,7 +62064,7 @@ KssAudioOutputProc_La9c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -62072,7 +62073,7 @@ KssAudioOutputProc_La9c:
 	calls	(a0)
 KssAudioOutputProc_Lae4:
 	mov	(0x40, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	beq	KssAudioOutputProc_Laf0
 	bra	KssAudioOutputProc_Lb0b
 KssAudioOutputProc_Laf0:
@@ -62082,11 +62083,11 @@ KssAudioOutputProc_Laf0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 KssAudioOutputProc_Lb0b:
 	mov	(0x40, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KssAudioOutputProc_Lb17
 	bra	KssAudioOutputProc_Lb32
 KssAudioOutputProc_Lb17:
@@ -62096,7 +62097,7 @@ KssAudioOutputProc_Lb17:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80046, d1
+	mov	MT_DecrData, d1
 	calls	(a0)
 KssAudioOutputProc_Lb32:
 	clr	d0
@@ -62122,7 +62123,7 @@ KssAudioOutputProc_Lb36:
 	mov	(0x44, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x91, d0
 	bne	KssAudioOutputProc_Lb8a
@@ -62184,7 +62185,7 @@ KssAudioOutputProc_Lbde:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc05:
@@ -62194,7 +62195,7 @@ KssAudioOutputProc_Lc05:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc23:
@@ -62216,7 +62217,7 @@ KssAudioOutputProc_Lc31:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc59:
@@ -62226,7 +62227,7 @@ KssAudioOutputProc_Lc59:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc77:
@@ -62248,7 +62249,7 @@ KssAudioOutputProc_Lc85:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lcad:
@@ -62258,7 +62259,7 @@ KssAudioOutputProc_Lcad:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lccb:
@@ -62280,7 +62281,7 @@ KssAudioOutputProc_Lcd9:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld01:
@@ -62290,7 +62291,7 @@ KssAudioOutputProc_Ld01:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld1f:
@@ -62312,7 +62313,7 @@ KssAudioOutputProc_Ld2d:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld55:
@@ -62322,7 +62323,7 @@ KssAudioOutputProc_Ld55:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld73:
@@ -62344,7 +62345,7 @@ KssAudioOutputProc_Ld81:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lda9:
@@ -62360,7 +62361,7 @@ KssAudioOutputProc_Ldb6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80046, d1
+	mov	MT_DecrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ldd4:
@@ -62370,7 +62371,7 @@ KssAudioOutputProc_Ldd4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ldf2:
@@ -62392,7 +62393,7 @@ KssAudioOutputProc_Le00:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Le28:
@@ -62408,7 +62409,7 @@ KssAudioOutputProc_Le35:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80046, d1
+	mov	MT_DecrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Le53:
@@ -62418,7 +62419,7 @@ KssAudioOutputProc_Le53:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Le71:
@@ -62440,7 +62441,7 @@ KssAudioOutputProc_Le7f:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lea7:
@@ -62456,7 +62457,7 @@ KssAudioOutputProc_Leb4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80046, d1
+	mov	MT_DecrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Led2:
@@ -62466,7 +62467,7 @@ KssAudioOutputProc_Led2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lef0:
@@ -62488,7 +62489,7 @@ KssAudioOutputProc_Lefe:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lf26:
@@ -62504,7 +62505,7 @@ KssAudioOutputProc_Lf33:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80046, d1
+	mov	MT_DecrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lf51:
@@ -62514,7 +62515,7 @@ KssAudioOutputProc_Lf51:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a80045, d1
+	mov	MT_IncrData, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lf6f:
@@ -62553,7 +62554,7 @@ KssAudioOutputProc_Lf6f:
 	mov	-3, d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_L101c:
@@ -62598,7 +62599,7 @@ KssAudioOutputProc_L104f:
 	mov	(0x24, a0), a0
 	movhu	(a0), d1
 	exth	d1
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d1, a0), d1
 	inc	d0
 	cmp	d1, d0
@@ -62647,7 +62648,7 @@ KssAudioOutputProc_L10ca:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0x24, sp), a0
 	mov	(0x24, a0), a0
@@ -62712,7 +62713,7 @@ KssAudioOutputProc_L117c:
 	mov	(0x24, a0), a0
 	movhu	(a0), d1
 	exth	d1
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d1, a0), d1
 	extbu	d0
 	add	-1, d1
@@ -62760,7 +62761,7 @@ KssAudioOutputProc_L11df:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0x24, sp), a0
 	mov	(0x24, a0), a0
@@ -62805,7 +62806,7 @@ KssAudioOutputProc_L1268:
 	mov	(0x24, a0), a0
 	movhu	(a0), d0
 	exth	d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0x44, sp), d0
 	extbu	d0
@@ -62849,7 +62850,7 @@ KssAudioOutputProc_L1286:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0x24, sp), a0
 	mov	(0x24, a0), a0
@@ -62878,7 +62879,7 @@ KssAudioOutputProc_L1325:
 
 func_97826A43:
 	add	-0x28, sp
-	mov	data_978A41AC, a1
+	mov	func_97826A43_Table, a1
 	mov	sp, a0
 	add	0xc, a0
 	mov	-0x19, d1
@@ -63056,7 +63057,7 @@ func_97826B0B_L92:
 	jmp	func_97826B0B_L1ad
 func_97826B0B_L98:
 	movbu	(8, sp), d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0xc, sp), d0
 	inc	d0
@@ -63126,7 +63127,7 @@ func_97826B0B_L118:
 	jmp	func_97826B0B_L1ad
 func_97826B0B_L120:
 	movbu	(8, sp), d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0xc, sp), d0
 	add	2, d0
@@ -65048,7 +65049,7 @@ func_97827D4A_entry:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a80007, d1
+	mov	MT_GetSelNum, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -65189,32 +65190,32 @@ KssCatch_NewClsScreen:
 	mov	d0, (0xbc, sp)
 	mov	d1, (0xc0, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssCatch_NewClsScreen_L15
 	bra	KssCatch_NewClsScreen_L58
 KssCatch_NewClsScreen_L15:
 	mov	(0xc0, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssCatch_NewClsScreen_L21
 	bra	KssCatch_NewClsScreen_L5d
 KssCatch_NewClsScreen_L21:
 	mov	(0xc0, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KssCatch_NewClsScreen_L2e
 	jmp	KssCatch_NewClsScreen_L110
 KssCatch_NewClsScreen_L2e:
 	mov	(0xc0, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssCatch_NewClsScreen_L3b
 	jmp	KssCatch_NewClsScreen_L110
 KssCatch_NewClsScreen_L3b:
 	mov	(0xc0, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KssCatch_NewClsScreen_L48
 	jmp	KssCatch_NewClsScreen_L110
 KssCatch_NewClsScreen_L48:
 	mov	(0xc0, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssCatch_NewClsScreen_L55
 	jmp	KssCatch_NewClsScreen_L110
 KssCatch_NewClsScreen_L55:
@@ -65259,7 +65260,7 @@ KssCatch_NewClsScreen_La5:
 	mov	Str_empty_433, d0
 	mov	d0, (0x1c, sp)
 KssCatch_NewClsScreen_Lad:
-	mov	0x007703e1, d0
+	mov	NewClsList_id, d0
 	mov	(0x18, sp), d1
 	mov	(0x1c, sp), a0
 	call	func_97827CF4_entry, 0, 0x10
@@ -65284,13 +65285,13 @@ KssCatch_NewClsScreen_Lc9:
 	mov	a1, d1
 	add	0x38, d1
 	mov	d1, (0x10, sp)
-	mov	0x007703e2, d0
-	mov	0x01a000b6, d1
+	mov	NewClsNameLabel_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x28, sp), d1
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
-	mov	0x007703df, d0
+	mov	NewClsSfx_id, d0
 	call	func_97833A24, 0, 0
 KssCatch_NewClsScreen_L110:
 	mov	(data_979126B4), a0
@@ -65318,10 +65319,10 @@ KssCatch_NewClsScreen_L110:
 	mov	sp, a0
 	add	0x6c, a0
 	mov	a0, (0x10, sp)
-	mov	0x007703e2, d0
-	mov	0x01a000b6, d1
+	mov	NewClsNameLabel_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a1)
-	mov	0x007703e1, d0
+	mov	NewClsList_id, d0
 	call	func_97827D4A_entry, 0, 0x14
 	mov	d0, (0x24, sp)
 	mov	(data_97910DF8), d0
@@ -65365,13 +65366,13 @@ KssCatch_NewClsScreen_L1da:
 	mov	sp, a0
 	add	0x6c, a0
 	mov	a0, (0x10, sp)
-	mov	0x007703e3, d0
-	mov	0x01a000b6, d1
+	mov	NewClsLocationLabel_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0xa0, sp), d1
 	mov	(0xa4, sp), a0
 	mov	a0, (0x10, sp)
-	mov	0x007703df, d0
+	mov	NewClsSfx_id, d0
 	call	func_97833A24, 0, 0
 	clr	d0
 	bra	KssCatch_NewClsScreen_L229
@@ -65393,67 +65394,67 @@ KSSSelectListProc:
 	mov	d0, (0xec, sp)
 	mov	d1, (0xf0, sp)
 	mov	d1, d0
-	cmp	0x1a000b8, d0
+	cmp	MT_ChangeProperty, d0
 	bne	KSSSelectListProc_L16
 	jmp	KSSSelectListProc_Lb5
 KSSSelectListProc_L16:
 	mov	(0xf0, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSSelectListProc_L23
 	jmp	KSSSelectListProc_L1da
 KSSSelectListProc_L23:
 	mov	(0xf0, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KSSSelectListProc_L30
 	jmp	KSSSelectListProc_L2cb
 KSSSelectListProc_L30:
 	mov	(0xf0, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KSSSelectListProc_L3d
 	jmp	KSSSelectListProc_L2e6
 KSSSelectListProc_L3d:
 	mov	(0xf0, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSSelectListProc_L4a
 	jmp	KSSSelectListProc_L301
 KSSSelectListProc_L4a:
 	mov	(0xf0, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KSSSelectListProc_L57
 	jmp	KSSSelectListProc_L41c
 KSSSelectListProc_L57:
 	mov	(0xf0, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	KSSSelectListProc_L64
 	jmp	KSSSelectListProc_L832
 KSSSelectListProc_L64:
 	mov	(0xf0, sp), d0
-	cmp	0x1a80007, d0
+	cmp	MT_GetSelNum, d0
 	bne	KSSSelectListProc_L71
 	jmp	KSSSelectListProc_L9b9
 KSSSelectListProc_L71:
 	mov	(0xf0, sp), d0
-	cmp	0x1a80005, d0
+	cmp	MT_SetBigStatus, d0
 	bne	KSSSelectListProc_L7e
 	jmp	KSSSelectListProc_L9d9
 KSSSelectListProc_L7e:
 	mov	(0xf0, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSSelectListProc_L8b
 	jmp	KSSSelectListProc_La0c
 KSSSelectListProc_L8b:
 	mov	(0xf0, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSSelectListProc_L98
 	jmp	KSSSelectListProc_La0c
 KSSSelectListProc_L98:
 	mov	(0xf0, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KSSSelectListProc_La5
 	jmp	KSSSelectListProc_La0c
 KSSSelectListProc_La5:
 	mov	(0xf0, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KSSSelectListProc_Lb2
 	jmp	KSSSelectListProc_La0c
 KSSSelectListProc_Lb2:
@@ -65571,7 +65572,7 @@ KSSSelectListProc_L1b1:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a1)
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
@@ -65620,7 +65621,7 @@ KSSSelectListProc_L23b:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a80005, d1
+	mov	MT_SetBigStatus, d1
 	calls	(a0)
 	bra	KSSSelectListProc_L274
 KSSSelectListProc_L259:
@@ -65630,7 +65631,7 @@ KSSSelectListProc_L259:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a80005, d1
+	mov	MT_SetBigStatus, d1
 	calls	(a0)
 KSSSelectListProc_L274:
 	mov	(0x28, sp), a0
@@ -65645,7 +65646,7 @@ KSSSelectListProc_L27f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -65653,7 +65654,7 @@ KSSSelectListProc_L27f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -65800,7 +65801,7 @@ KSSSelectListProc_L3fc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
@@ -66401,7 +66402,7 @@ KSSSelectListProc_L955:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -66413,7 +66414,7 @@ KSSSelectListProc_L955:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	bra	KSSSelectListProc_L9b5
 KSSSelectListProc_L99a:
@@ -66423,7 +66424,7 @@ KSSSelectListProc_L99a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 KSSSelectListProc_L9b5:
 	clr	d0
@@ -66453,7 +66454,7 @@ KSSSelectListProc_L9d9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
@@ -66478,7 +66479,7 @@ KSSSelectListProc_La0c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
 	mov	(0x28, sp), a0
@@ -66505,12 +66506,12 @@ KSSSelectListProc_La7a:
 	bra	KSSSelectListProc_Laea
 KSSSelectListProc_La7c:
 	mov	(0xf0, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSSelectListProc_La88
 	bra	KSSSelectListProc_La94
 KSSSelectListProc_La88:
 	mov	(0xf0, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	beq	KSSSelectListProc_La94
 	bra	KSSSelectListProc_Laa5
 KSSSelectListProc_La94:
@@ -66575,7 +66576,7 @@ KSSSelectListProc_Lafc:
 	mov	(0x34, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 KSSSelectListProc_Lb18:
 	mov	(0x28, sp), a0
@@ -66605,7 +66606,7 @@ KSSSelectListProc_Lb46:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -66613,7 +66614,7 @@ KSSSelectListProc_Lb46:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xec, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -66643,32 +66644,32 @@ KssSelectListTestFunc:
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	d1, d0
-	cmp	0x1a8000d, d0
+	cmp	MT_SetObjectID, d0
 	bne	KssSelectListTestFunc_L12
 	bra	KssSelectListTestFunc_L55
 KssSelectListTestFunc_L12:
 	mov	(0x30, sp), d0
-	cmp	0x1a80002, d0
+	cmp	MT_ChangePage, d0
 	bne	KssSelectListTestFunc_L1e
 	bra	KssSelectListTestFunc_L6a
 KssSelectListTestFunc_L1e:
 	mov	(0x30, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KssSelectListTestFunc_L2b
 	jmp	KssSelectListTestFunc_Ld2
 KssSelectListTestFunc_L2b:
 	mov	(0x30, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssSelectListTestFunc_L38
 	jmp	KssSelectListTestFunc_Ld2
 KssSelectListTestFunc_L38:
 	mov	(0x30, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KssSelectListTestFunc_L45
 	jmp	KssSelectListTestFunc_Ld2
 KssSelectListTestFunc_L45:
 	mov	(0x30, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssSelectListTestFunc_L52
 	jmp	KssSelectListTestFunc_Ld2
 KssSelectListTestFunc_L52:
@@ -66711,7 +66712,7 @@ KssSelectListTestFunc_L6a:
 	mov	0x97913ff0, d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913fec), d0
-	mov	0x01a8000c, d1
+	mov	MT_SetStrAdr, d1
 	calls	(a0)
 	clr	d0
 	bra	KssSelectListTestFunc_L14d
@@ -66728,7 +66729,7 @@ KssSelectListTestFunc_Ld2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913fec), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x18, sp)
 	mov	(data_979126B4), a0
@@ -66737,7 +66738,7 @@ KssSelectListTestFunc_Ld2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x97913fec), d0
-	mov	0x01a80007, d1
+	mov	MT_GetSelNum, d1
 	calls	(a0)
 	mov	d0, (0x1c, sp)
 	mov	(0x34, sp), d0
@@ -66768,67 +66769,67 @@ KSSCLSListProc:
 	mov	d0, (0xe0, sp)
 	mov	d1, (0xe4, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSCLSListProc_L16
 	jmp	KSSCLSListProc_Ldc
 KSSCLSListProc_L16:
 	mov	(0xe4, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSCLSListProc_L23
 	jmp	KSSCLSListProc_L114
 KSSCLSListProc_L23:
 	mov	(0xe4, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KSSCLSListProc_L30
 	jmp	KSSCLSListProc_L210
 KSSCLSListProc_L30:
 	mov	(0xe4, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KSSCLSListProc_L3d
 	jmp	KSSCLSListProc_L245
 KSSCLSListProc_L3d:
 	mov	(0xe4, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KSSCLSListProc_L4a
 	jmp	KSSCLSListProc_L336
 KSSCLSListProc_L4a:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	KSSCLSListProc_L57
 	jmp	KSSCLSListProc_L6b7
 KSSCLSListProc_L57:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	KSSCLSListProc_L64
 	jmp	KSSCLSListProc_L824
 KSSCLSListProc_L64:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	KSSCLSListProc_L71
 	jmp	KSSCLSListProc_L8d9
 KSSCLSListProc_L71:
 	mov	(0xe4, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	KSSCLSListProc_L7e
 	jmp	KSSCLSListProc_L915
 KSSCLSListProc_L7e:
 	mov	(0xe4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSCLSListProc_L8b
 	jmp	KSSCLSListProc_L933
 KSSCLSListProc_L8b:
 	mov	(0xe4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSCLSListProc_L98
 	jmp	KSSCLSListProc_L933
 KSSCLSListProc_L98:
 	mov	(0xe4, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KSSCLSListProc_La5
 	jmp	KSSCLSListProc_L933
 KSSCLSListProc_La5:
 	mov	(0xe4, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KSSCLSListProc_Lb2
 	jmp	KSSCLSListProc_L933
 KSSCLSListProc_Lb2:
@@ -66838,12 +66839,12 @@ KSSCLSListProc_Lb2:
 	jmp	KSSCLSListProc_Lb7c
 KSSCLSListProc_Lbf:
 	mov	(0xe4, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	KSSCLSListProc_Lcc
 	jmp	KSSCLSListProc_Lb7c
 KSSCLSListProc_Lcc:
 	mov	(0xe4, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	KSSCLSListProc_Ld9
 	jmp	KSSCLSListProc_Lb7c
 KSSCLSListProc_Ld9:
@@ -66863,7 +66864,7 @@ KSSCLSListProc_Ldc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
@@ -66897,7 +66898,7 @@ KSSCLSListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -66905,7 +66906,7 @@ KSSCLSListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -66950,7 +66951,7 @@ KSSCLSListProc_L1ee:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
@@ -67499,7 +67500,7 @@ KSSCLSListProc_L700:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	KSSCLSListProc_L820
 KSSCLSListProc_L721:
@@ -67535,7 +67536,7 @@ KSSCLSListProc_L737:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -67544,7 +67545,7 @@ KSSCLSListProc_L737:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	KSSCLSListProc_L820
 KSSCLSListProc_L798:
@@ -67590,7 +67591,7 @@ KSSCLSListProc_L7c2:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -67599,7 +67600,7 @@ KSSCLSListProc_L7c2:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 KSSCLSListProc_L820:
 	clr	d0
@@ -67625,7 +67626,7 @@ KSSCLSListProc_L824:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -67636,7 +67637,7 @@ KSSCLSListProc_L824:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d2
@@ -67665,7 +67666,7 @@ KSSCLSListProc_L824:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67686,7 +67687,7 @@ KSSCLSListProc_L8d9:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67720,7 +67721,7 @@ KSSCLSListProc_L933:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
 	mov	(data_979126B4), a0
@@ -67736,12 +67737,12 @@ KSSCLSListProc_L933:
 	bra	KSSCLSListProc_L9b1
 KSSCLSListProc_L989:
 	mov	(0xe4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSCLSListProc_L995
 	bra	KSSCLSListProc_L9a1
 KSSCLSListProc_L995:
 	mov	(0xe4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KSSCLSListProc_L9a1
 	bra	KSSCLSListProc_L9a9
 KSSCLSListProc_L9a1:
@@ -67796,7 +67797,7 @@ KSSCLSListProc_L9eb:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80009, d1
+	mov	MT_SelectOK, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67818,7 +67819,7 @@ KSSCLSListProc_La1e:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000b, d1
+	mov	MT_SelectSAVE, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67840,7 +67841,7 @@ KSSCLSListProc_La51:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80010, d1
+	mov	MT_SelectDelFile, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67862,7 +67863,7 @@ KSSCLSListProc_La84:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000a, d1
+	mov	MT_SelectOK2, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67884,7 +67885,7 @@ KSSCLSListProc_Lab7:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000f, d1
+	mov	MT_SelectDEL, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -67900,7 +67901,7 @@ KSSCLSListProc_Lae3:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	mov	(0x3c, a0), d1
@@ -67929,7 +67930,7 @@ KSSCLSListProc_Lb2f:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -67937,7 +67938,7 @@ KSSCLSListProc_Lb2f:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -67980,12 +67981,12 @@ KSSXCatch_FlsLink:
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KSSXCatch_FlsLink_L12
 	bra	KSSXCatch_FlsLink_L20
 KSSXCatch_FlsLink_L12:
 	mov	(0x28, sp), d0
-	cmp	0x1800006, d0
+	cmp	EV_SWON, d0
 	bne	KSSXCatch_FlsLink_L1e
 	bra	KSSXCatch_FlsLink_L24
 KSSXCatch_FlsLink_L1e:
@@ -67997,7 +67998,7 @@ KSSXCatch_FlsLink_L24:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
-	mov	0x007702d6, d0
+	mov	FLSLink_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
 	mov	(data_979126B4), a0
@@ -68006,7 +68007,7 @@ KSSXCatch_FlsLink_L24:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	mov	d0, (0x18, sp)
 	mov	(0x14, sp), a0
@@ -68039,27 +68040,27 @@ func_97829A0E:
 	mov	0xa, d0
 	mov	d0, (0x1c, sp)
 	mov	d1, d0
-	cmp	0x1a000b7, d0
+	cmp	MT_Init, d0
 	bne	func_97829A0E_L16
 	bra	func_97829A0E_L4d
 func_97829A0E_L16:
 	mov	(0x58, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	func_97829A0E_L23
 	jmp	func_97829A0E_Ld9
 func_97829A0E_L23:
 	mov	(0x58, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	func_97829A0E_L30
 	jmp	func_97829A0E_Ld9
 func_97829A0E_L30:
 	mov	(0x58, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	func_97829A0E_L3d
 	jmp	func_97829A0E_Ld9
 func_97829A0E_L3d:
 	mov	(0x58, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	func_97829A0E_L4a
 	jmp	func_97829A0E_Ld9
 func_97829A0E_L4a:
@@ -68189,7 +68190,7 @@ func_97829B61_entry:
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	-1, d0
-	mov	0x0180000d, d1
+	mov	EV_CHANGE_TITLE, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -68198,7 +68199,7 @@ func_97829B61_entry:
 	add	0x1f00000, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x0180000d, d1
+	mov	EV_CHANGE_TITLE, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -68208,67 +68209,67 @@ KSSCLSFileListProc:
 	mov	d0, (0x228, sp)
 	mov	d1, (0x22c, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KSSCLSFileListProc_L1a
 	jmp	KSSCLSFileListProc_L11a
 KSSCLSFileListProc_L1a:
 	mov	(0x22c, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KSSCLSFileListProc_L29
 	jmp	KSSCLSFileListProc_L2a5
 KSSCLSFileListProc_L29:
 	mov	(0x22c, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KSSCLSFileListProc_L38
 	jmp	KSSCLSFileListProc_L2e2
 KSSCLSFileListProc_L38:
 	mov	(0x22c, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KSSCLSFileListProc_L47
 	jmp	KSSCLSFileListProc_L491
 KSSCLSFileListProc_L47:
 	mov	(0x22c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KSSCLSFileListProc_L56
 	jmp	KSSCLSFileListProc_L53e
 KSSCLSFileListProc_L56:
 	mov	(0x22c, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	KSSCLSFileListProc_L65
 	jmp	KSSCLSFileListProc_Lb0d
 KSSCLSFileListProc_L65:
 	mov	(0x22c, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	KSSCLSFileListProc_L74
 	jmp	KSSCLSFileListProc_Lbc4
 KSSCLSFileListProc_L74:
 	mov	(0x22c, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	KSSCLSFileListProc_L83
 	jmp	KSSCLSFileListProc_Lda5
 KSSCLSFileListProc_L83:
 	mov	(0x22c, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	KSSCLSFileListProc_L92
 	jmp	KSSCLSFileListProc_Ldeb
 KSSCLSFileListProc_L92:
 	mov	(0x22c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSCLSFileListProc_La1
 	jmp	KSSCLSFileListProc_Le0d
 KSSCLSFileListProc_La1:
 	mov	(0x22c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KSSCLSFileListProc_Lb0
 	jmp	KSSCLSFileListProc_Le0d
 KSSCLSFileListProc_Lb0:
 	mov	(0x22c, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KSSCLSFileListProc_Lbf
 	jmp	KSSCLSFileListProc_Le0d
 KSSCLSFileListProc_Lbf:
 	mov	(0x22c, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KSSCLSFileListProc_Lce
 	jmp	KSSCLSFileListProc_Le0d
 KSSCLSFileListProc_Lce:
@@ -68278,12 +68279,12 @@ KSSCLSFileListProc_Lce:
 	jmp	KSSCLSFileListProc_L159f
 KSSCLSFileListProc_Ldd:
 	mov	(0x22c, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	KSSCLSFileListProc_Lec
 	jmp	KSSCLSFileListProc_L1685
 KSSCLSFileListProc_Lec:
 	mov	(0x22c, sp), d0
-	cmp	0x1880002, d0
+	cmp	EV_AfterLoad, d0
 	bne	KSSCLSFileListProc_Lfb
 	jmp	KSSCLSFileListProc_L16a2
 KSSCLSFileListProc_Lfb:
@@ -68293,7 +68294,7 @@ KSSCLSFileListProc_Lfb:
 	jmp	KSSCLSFileListProc_L16ac
 KSSCLSFileListProc_L108:
 	mov	(0x22c, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	KSSCLSFileListProc_L117
 	jmp	KSSCLSFileListProc_L16ac
 KSSCLSFileListProc_L117:
@@ -68373,7 +68374,7 @@ KSSCLSFileListProc_L1e4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -68381,7 +68382,7 @@ KSSCLSFileListProc_L1e4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -68400,7 +68401,7 @@ KSSCLSFileListProc_L23c:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (data_97910DFC)
@@ -68411,7 +68412,7 @@ KSSCLSFileListProc_L261:
 	mov	(data_97910E00), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -68420,7 +68421,7 @@ KSSCLSFileListProc_L261:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -68548,7 +68549,7 @@ KSSCLSFileListProc_L3c4:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007702af, d0
+	mov	CLS_NAME2_id, d0
 	mov	sp, a0
 	add	0xcc, a0
 	calls	(a1)
@@ -68597,7 +68598,7 @@ KSSCLSFileListProc_L3c4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -68652,7 +68653,7 @@ KSSCLSFileListProc_L51d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80030, d1
+	mov	MT_ResetFrmtNr, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -69290,7 +69291,7 @@ KSSCLSFileListProc_Lb42:
 	movhu	(0xb6, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80001, d1
+	mov	MT_UnderFlow, d1
 	mov	d2, d0
 	calls	(a0)
 	bra	KSSCLSFileListProc_Lbc0
@@ -69328,7 +69329,7 @@ KSSCLSFileListProc_Lba0:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 KSSCLSFileListProc_Lbc0:
 	clr	d0
@@ -69353,7 +69354,7 @@ KSSCLSFileListProc_Lbc4:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x2c, sp), a0
 	mov	(0x34, a0), a0
@@ -69384,8 +69385,8 @@ KSSCLSFileListProc_Lbc4:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077029c, d0
-	mov	0x01a000b6, d1
+	mov	CLSFileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x184, sp), d0
 	cmp	0x3e8, d0
@@ -69422,14 +69423,14 @@ KSSCLSFileListProc_Lcd0:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x00770294, d0
+	mov	LOC_DIR_FILE1_id, d0
 	mov	sp, a0
 	add	0xcc, a0
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007702b1, d0
+	mov	LOC_DIR_FILE2_id, d0
 	mov	sp, a0
 	add	0xcc, a0
 	calls	(a1)
@@ -69483,7 +69484,7 @@ KSSCLSFileListProc_Lcd0:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -69504,7 +69505,7 @@ KSSCLSFileListProc_Lda5:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -69541,7 +69542,7 @@ KSSCLSFileListProc_Le0d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x60, sp)
 	mov	(data_979126B4), a0
@@ -69562,7 +69563,7 @@ KSSCLSFileListProc_Le71:
 	mov	(0x3ec, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x01880001, d0
+	mov	EV_SeqStop, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -69580,7 +69581,7 @@ KSSCLSFileListProc_Le71:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -69590,7 +69591,7 @@ KSSCLSFileListProc_Lece:
 	beq	KSSCLSFileListProc_Leda
 	bra	KSSCLSFileListProc_Lee9
 KSSCLSFileListProc_Leda:
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	call	func_9782B2AB_entry, 0, 0x14
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -69607,7 +69608,7 @@ KSSCLSFileListProc_Lef6:
 	beq	KSSCLSFileListProc_Lf02
 	bra	KSSCLSFileListProc_Lf0f
 KSSCLSFileListProc_Lf02:
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	call	func_9782B423_entry, 0, 0x14
 	bra	KSSCLSFileListProc_Lf2e
 KSSCLSFileListProc_Lf0f:
@@ -69616,8 +69617,8 @@ KSSCLSFileListProc_Lf0f:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770046, d0
-	mov	0x01800001, d1
+	mov	HDD_FLS_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KSSCLSFileListProc_Lf2e:
 	mov	(0x230, sp), d0
@@ -69627,12 +69628,12 @@ KSSCLSFileListProc_Lf2e:
 	bra	KSSCLSFileListProc_Lf65
 KSSCLSFileListProc_Lf39:
 	mov	(0x22c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KSSCLSFileListProc_Lf47
 	bra	KSSCLSFileListProc_Lf55
 KSSCLSFileListProc_Lf47:
 	mov	(0x22c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	KSSCLSFileListProc_Lf55
 	bra	KSSCLSFileListProc_Lf5d
 KSSCLSFileListProc_Lf55:
@@ -69683,8 +69684,8 @@ KSSCLSFileListProc_Lfa5:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077004e, d0
-	mov	0x01a80003, d1
+	mov	CLS_Dir_List_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	0x20, d0
 	movhu	d0, (0xba, sp)
@@ -69694,7 +69695,7 @@ KSSCLSFileListProc_Lfa5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01800009, d1
+	mov	EV_PAINT, d1
 	calls	(a0)
 	jmp	KSSCLSFileListProc_L14f1
 KSSCLSFileListProc_Lfea:
@@ -69710,8 +69711,8 @@ KSSCLSFileListProc_Lff7:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077004e, d0
-	mov	0x01a80003, d1
+	mov	CLS_Dir_List_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	-0x20, d0
 	movhu	d0, (0xba, sp)
@@ -69721,7 +69722,7 @@ KSSCLSFileListProc_Lff7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01800009, d1
+	mov	EV_PAINT, d1
 	calls	(a0)
 	jmp	KSSCLSFileListProc_L14f1
 KSSCLSFileListProc_L103c:
@@ -69758,7 +69759,7 @@ KSSCLSFileListProc_L107d:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x0077028e, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	mov	(0x1a8, sp), d0
 	cmp	0, d0
@@ -69792,7 +69793,7 @@ KSSCLSFileListProc_L10fa:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x0077028e, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KSSCLSFileListProc_L110d:
 	clr	d0
@@ -69808,7 +69809,7 @@ KSSCLSFileListProc_L111e:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x68, d0
-	mov	0x0077028e, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	call	func_9780279E, 0, 0
 	clr	d0
@@ -69822,7 +69823,7 @@ KSSCLSFileListProc_L111e:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000b, d1
+	mov	MT_SelectSAVE, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -69865,7 +69866,7 @@ KSSCLSFileListProc_L1175:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -69876,7 +69877,7 @@ KSSCLSFileListProc_L1175:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80010, d1
+	mov	MT_SelectDelFile, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -69953,7 +69954,7 @@ KSSCLSFileListProc_L1272:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -69961,7 +69962,7 @@ KSSCLSFileListProc_L1272:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -70031,7 +70032,7 @@ KSSCLSFileListProc_L1341:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -70039,7 +70040,7 @@ KSSCLSFileListProc_L1341:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -70101,7 +70102,7 @@ KSSCLSFileListProc_L1414:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -70163,7 +70164,7 @@ KSSCLSFileListProc_L14ad:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
@@ -70178,7 +70179,7 @@ KSSCLSFileListProc_L14f1:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x2c, sp), a0
 	mov	(0x3c, a0), d1
@@ -70207,7 +70208,7 @@ KSSCLSFileListProc_L1545:
 	mov	(0x60, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -70215,7 +70216,7 @@ KSSCLSFileListProc_L1545:
 	mov	(0x60, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -70271,7 +70272,7 @@ KSSCLSFileListProc_L15df:
 	movhu	(data_9791259A), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(0xa0, sp), d0
 	cmp	0, d0
@@ -70290,7 +70291,7 @@ KSSCLSFileListProc_L1656:
 	mov	(0x3e4, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x01880001, d0
+	mov	EV_SeqStop, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -70304,7 +70305,7 @@ KSSCLSFileListProc_L1685:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x0077028e, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	clr	d0
 	bra	KSSCLSFileListProc_L16ff
@@ -70352,8 +70353,8 @@ func_9782B2AB_entry:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007703cb, d0
-	mov	0x01800001, d1
+	mov	WarningClsRunning_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -70362,17 +70363,17 @@ KssxCatch_FlsRunning:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssxCatch_FlsRunning_L12
 	bra	KssxCatch_FlsRunning_L2d
 KssxCatch_FlsRunning_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssxCatch_FlsRunning_L1e
 	bra	KssxCatch_FlsRunning_L32
 KssxCatch_FlsRunning_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssxCatch_FlsRunning_L2a
 	bra	KssxCatch_FlsRunning_L6e
 KssxCatch_FlsRunning_L2a:
@@ -70395,7 +70396,7 @@ KssxCatch_FlsRunning_L32:
 	mov	Str_FLSR, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssxCatch_FlsRunning_L148
@@ -70406,7 +70407,7 @@ KssxCatch_FlsRunning_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	3, d0
 	bne	KssxCatch_FlsRunning_L94
@@ -70437,7 +70438,7 @@ KssxCatch_FlsRunning_La9:
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916f68), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssxCatch_FlsRunning_L148
@@ -70448,7 +70449,7 @@ KssxCatch_FlsRunning_Le2:
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x97916f68), d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979125A8), d0
 	cmp	1, d0
@@ -70460,8 +70461,8 @@ KssxCatch_FlsRunning_L10e:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01880001, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_SeqStop, d1
 	calls	(a0)
 KssxCatch_FlsRunning_L12d:
 	clr	d0
@@ -70489,8 +70490,8 @@ func_9782B423_entry:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007702ff, d0
-	mov	0x01800001, d1
+	mov	WarningClsNotSaved_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x14
 
@@ -70499,17 +70500,17 @@ KssxCatch_ClsNotSaved:
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	KssxCatch_ClsNotSaved_L12
 	bra	KssxCatch_ClsNotSaved_L2d
 KssxCatch_ClsNotSaved_L12:
 	mov	(0x20, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssxCatch_ClsNotSaved_L1e
 	bra	KssxCatch_ClsNotSaved_L32
 KssxCatch_ClsNotSaved_L1e:
 	mov	(0x20, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssxCatch_ClsNotSaved_L2a
 	bra	KssxCatch_ClsNotSaved_L6e
 KssxCatch_ClsNotSaved_L2a:
@@ -70532,7 +70533,7 @@ KssxCatch_ClsNotSaved_L32:
 	mov	Str_NOTS, d0
 	mov	d0, (0x10, sp)
 	mov	(0x1c, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssxCatch_ClsNotSaved_L11a
@@ -70543,7 +70544,7 @@ KssxCatch_ClsNotSaved_L6e:
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	3, d0
 	bne	KssxCatch_ClsNotSaved_L94
@@ -70566,7 +70567,7 @@ KssxCatch_ClsNotSaved_La8:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x68, d0
-	mov	0x0077028e, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	call	func_9780279E, 0, 0
 	clr	d0
@@ -70582,8 +70583,8 @@ KssxCatch_ClsNotSaved_Lcb:
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01800001, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssxCatch_ClsNotSaved_L11a
@@ -70606,27 +70607,27 @@ KssxJukeBoxProc:
 	mov	1, d0
 	mov	d0, (0x24, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssxJukeBoxProc_L16
 	bra	KssxJukeBoxProc_L4d
 KssxJukeBoxProc_L16:
 	mov	(0x48, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssxJukeBoxProc_L23
 	jmp	KssxJukeBoxProc_Lfa
 KssxJukeBoxProc_L23:
 	mov	(0x48, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssxJukeBoxProc_L30
 	jmp	KssxJukeBoxProc_L13c
 KssxJukeBoxProc_L30:
 	mov	(0x48, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssxJukeBoxProc_L3d
 	jmp	KssxJukeBoxProc_L3ca
 KssxJukeBoxProc_L3d:
 	mov	(0x48, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssxJukeBoxProc_L4a
 	jmp	KssxJukeBoxProc_L7ad
 KssxJukeBoxProc_L4a:
@@ -70661,7 +70662,7 @@ KssxJukeBoxProc_L8a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -70669,7 +70670,7 @@ KssxJukeBoxProc_L8a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -70904,7 +70905,7 @@ KssxJukeBoxProc_L13c:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssxJukeBoxProc_Lf0c
@@ -71242,7 +71243,7 @@ KssxJukeBoxProc_L7ad:
 	mov	(0x4c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x90, d0
 	bne	KssxJukeBoxProc_L802
@@ -71307,7 +71308,7 @@ KssxJukeBoxProc_L859:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71336,7 +71337,7 @@ KssxJukeBoxProc_L8a2:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_L8e7:
@@ -71351,7 +71352,7 @@ KssxJukeBoxProc_L8e7:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_L916:
@@ -71368,7 +71369,7 @@ KssxJukeBoxProc_L916:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71397,7 +71398,7 @@ KssxJukeBoxProc_L95f:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_L9a4:
@@ -71412,7 +71413,7 @@ KssxJukeBoxProc_L9a4:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_L9d3:
@@ -71429,7 +71430,7 @@ KssxJukeBoxProc_L9d3:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71458,7 +71459,7 @@ KssxJukeBoxProc_La1c:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_La61:
@@ -71473,7 +71474,7 @@ KssxJukeBoxProc_La61:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_La90:
@@ -71490,7 +71491,7 @@ KssxJukeBoxProc_La90:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71519,7 +71520,7 @@ KssxJukeBoxProc_Lad9:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lb1e:
@@ -71534,7 +71535,7 @@ KssxJukeBoxProc_Lb1e:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lb4d:
@@ -71545,7 +71546,7 @@ KssxJukeBoxProc_Lb4d:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lb71:
@@ -71562,7 +71563,7 @@ KssxJukeBoxProc_Lb71:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71591,7 +71592,7 @@ KssxJukeBoxProc_Lbba:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lbff:
@@ -71606,7 +71607,7 @@ KssxJukeBoxProc_Lbff:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lc2e:
@@ -71623,7 +71624,7 @@ KssxJukeBoxProc_Lc2e:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71652,7 +71653,7 @@ KssxJukeBoxProc_Lc77:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lcbc:
@@ -71667,7 +71668,7 @@ KssxJukeBoxProc_Lcbc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lceb:
@@ -71684,7 +71685,7 @@ KssxJukeBoxProc_Lceb:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71713,7 +71714,7 @@ KssxJukeBoxProc_Ld34:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Ld79:
@@ -71728,7 +71729,7 @@ KssxJukeBoxProc_Ld79:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lda8:
@@ -71745,7 +71746,7 @@ KssxJukeBoxProc_Lda8:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x979a2460), d0
 	cmp	0, d0
@@ -71774,7 +71775,7 @@ KssxJukeBoxProc_Ldf1:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701e0, d1
+	mov	JUKE_BOX_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Le36:
@@ -71789,7 +71790,7 @@ KssxJukeBoxProc_Le36:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x44, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Le65:
@@ -71807,8 +71808,8 @@ KssxJukeBoxProc_Le79:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701cd, d0
-	mov	0x01800001, d1
+	mov	ALPHA_SORTED_LIST_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssxJukeBoxProc_Le98:
 	mov	(0x34, sp), d0
@@ -71830,8 +71831,8 @@ KssxJukeBoxProc_Leb4:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Led5:
@@ -71840,8 +71841,8 @@ KssxJukeBoxProc_Led5:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 KssxJukeBoxProc_Lef4:
 	mov	(data_979126B4), a0
@@ -72073,17 +72074,17 @@ KssxAlphabetBoxProc:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssxAlphabetBoxProc_L12
 	bra	KssxAlphabetBoxProc_L2f
 KssxAlphabetBoxProc_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssxAlphabetBoxProc_L1f
 	jmp	KssxAlphabetBoxProc_Lb8
 KssxAlphabetBoxProc_L1f:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssxAlphabetBoxProc_L2c
 	jmp	KssxAlphabetBoxProc_Led
 KssxAlphabetBoxProc_L2c:
@@ -72118,7 +72119,7 @@ KssxAlphabetBoxProc_L6c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72126,7 +72127,7 @@ KssxAlphabetBoxProc_L6c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72488,7 +72489,7 @@ KssxAlphabetBoxProc_Led:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	bra	KssxAlphabetBoxProc_L538
@@ -72510,72 +72511,72 @@ HamaAlphabeticFileListProc:
 	mov	d0, (0x108, sp)
 	mov	d1, (0x10c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	HamaAlphabeticFileListProc_L1a
 	jmp	HamaAlphabeticFileListProc_L10d
 HamaAlphabeticFileListProc_L1a:
 	mov	(0x10c, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	HamaAlphabeticFileListProc_L29
 	jmp	HamaAlphabeticFileListProc_L14d
 HamaAlphabeticFileListProc_L29:
 	mov	(0x10c, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	HamaAlphabeticFileListProc_L38
 	jmp	HamaAlphabeticFileListProc_L23b
 HamaAlphabeticFileListProc_L38:
 	mov	(0x10c, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	HamaAlphabeticFileListProc_L47
 	jmp	HamaAlphabeticFileListProc_L278
 HamaAlphabeticFileListProc_L47:
 	mov	(0x10c, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	HamaAlphabeticFileListProc_L56
 	jmp	HamaAlphabeticFileListProc_L373
 HamaAlphabeticFileListProc_L56:
 	mov	(0x10c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	HamaAlphabeticFileListProc_L65
 	jmp	HamaAlphabeticFileListProc_L780
 HamaAlphabeticFileListProc_L65:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	HamaAlphabeticFileListProc_L74
 	jmp	HamaAlphabeticFileListProc_Ld41
 HamaAlphabeticFileListProc_L74:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	HamaAlphabeticFileListProc_L83
 	jmp	HamaAlphabeticFileListProc_Lf2c
 HamaAlphabeticFileListProc_L83:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	HamaAlphabeticFileListProc_L92
 	jmp	HamaAlphabeticFileListProc_L10c1
 HamaAlphabeticFileListProc_L92:
 	mov	(0x10c, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	HamaAlphabeticFileListProc_La1
 	jmp	HamaAlphabeticFileListProc_L10ff
 HamaAlphabeticFileListProc_La1:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaAlphabeticFileListProc_Lb0
 	jmp	HamaAlphabeticFileListProc_L1121
 HamaAlphabeticFileListProc_Lb0:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	HamaAlphabeticFileListProc_Lbf
 	jmp	HamaAlphabeticFileListProc_L1121
 HamaAlphabeticFileListProc_Lbf:
 	mov	(0x10c, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	HamaAlphabeticFileListProc_Lce
 	jmp	HamaAlphabeticFileListProc_L1121
 HamaAlphabeticFileListProc_Lce:
 	mov	(0x10c, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	HamaAlphabeticFileListProc_Ldd
 	jmp	HamaAlphabeticFileListProc_L1121
 HamaAlphabeticFileListProc_Ldd:
@@ -72585,12 +72586,12 @@ HamaAlphabeticFileListProc_Ldd:
 	jmp	HamaAlphabeticFileListProc_L13a7
 HamaAlphabeticFileListProc_Lec:
 	mov	(0x10c, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	HamaAlphabeticFileListProc_Lfb
 	jmp	HamaAlphabeticFileListProc_L13a7
 HamaAlphabeticFileListProc_Lfb:
 	mov	(0x10c, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	HamaAlphabeticFileListProc_L10a
 	jmp	HamaAlphabeticFileListProc_L13a7
 HamaAlphabeticFileListProc_L10a:
@@ -72610,7 +72611,7 @@ HamaAlphabeticFileListProc_L10d:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
@@ -72644,7 +72645,7 @@ HamaAlphabeticFileListProc_L192:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72652,7 +72653,7 @@ HamaAlphabeticFileListProc_L192:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72676,7 +72677,7 @@ HamaAlphabeticFileListProc_L1fc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72685,7 +72686,7 @@ HamaAlphabeticFileListProc_L1fc:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
@@ -72821,7 +72822,7 @@ HamaAlphabeticFileListProc_L373:
 	mov	(0x110, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x10, d0
 	bne	HamaAlphabeticFileListProc_L39b
@@ -72839,7 +72840,7 @@ HamaAlphabeticFileListProc_L3ae:
 	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
-	mov	0x007701cd, d1
+	mov	ALPHA_SORTED_LIST_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -72850,7 +72851,7 @@ HamaAlphabeticFileListProc_L3ae:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80009, d1
+	mov	MT_SelectOK, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -73133,7 +73134,7 @@ HamaAlphabeticFileListProc_L6f6:
 	sub	d1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -73141,7 +73142,7 @@ HamaAlphabeticFileListProc_L6f6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	jmp	HamaAlphabeticFileListProc_L13dc
 HamaAlphabeticFileListProc_L780:
@@ -73741,7 +73742,7 @@ HamaAlphabeticFileListProc_Lccf:
 	bge	HamaAlphabeticFileListProc_Lce6
 	jmp	HamaAlphabeticFileListProc_L81a
 HamaAlphabeticFileListProc_Lce6:
-	mov	data_978A47F0, a0
+	mov	HamaAlphabeticFileListProc_Table, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	(0x20, sp), a0
@@ -73770,7 +73771,7 @@ HamaAlphabeticFileListProc_Ld17:
 	sub	d1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaAlphabeticFileListProc_Ld3d:
 	clr	d0
@@ -73832,7 +73833,7 @@ HamaAlphabeticFileListProc_Ld84:
 	mov	d2, a0
 	mov	a0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -73840,7 +73841,7 @@ HamaAlphabeticFileListProc_Ld84:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -73848,7 +73849,7 @@ HamaAlphabeticFileListProc_Ld84:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 HamaAlphabeticFileListProc_Le11:
 	mov	(0x20, sp), a0
@@ -73881,7 +73882,7 @@ HamaAlphabeticFileListProc_Le36:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -73889,7 +73890,7 @@ HamaAlphabeticFileListProc_Le36:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -73897,7 +73898,7 @@ HamaAlphabeticFileListProc_Le36:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 HamaAlphabeticFileListProc_Le9f:
 	movhu	(0x5c, sp), d0
@@ -73914,7 +73915,7 @@ HamaAlphabeticFileListProc_Lea9:
 	movhu	(0x5c, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80001, d1
+	mov	MT_UnderFlow, d1
 	mov	d2, d0
 	calls	(a0)
 	bra	HamaAlphabeticFileListProc_Lf28
@@ -73953,7 +73954,7 @@ HamaAlphabeticFileListProc_Lf08:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 HamaAlphabeticFileListProc_Lf28:
 	clr	d0
@@ -73979,7 +73980,7 @@ HamaAlphabeticFileListProc_Lf2c:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (0x30, sp)
@@ -74095,8 +74096,8 @@ HamaAlphabeticFileListProc_L1029:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74107,7 +74108,7 @@ HamaAlphabeticFileListProc_L1029:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74118,7 +74119,7 @@ HamaAlphabeticFileListProc_L1029:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -74139,7 +74140,7 @@ HamaAlphabeticFileListProc_L10c1:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -74173,7 +74174,7 @@ HamaAlphabeticFileListProc_L1121:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x4c, sp)
 	mov	(data_979126B4), a0
@@ -74189,12 +74190,12 @@ HamaAlphabeticFileListProc_L1121:
 	bra	HamaAlphabeticFileListProc_L11af
 HamaAlphabeticFileListProc_L1183:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaAlphabeticFileListProc_L1191
 	bra	HamaAlphabeticFileListProc_L119f
 HamaAlphabeticFileListProc_L1191:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	HamaAlphabeticFileListProc_L119f
 	bra	HamaAlphabeticFileListProc_L11a7
 HamaAlphabeticFileListProc_L119f:
@@ -74236,7 +74237,7 @@ HamaAlphabeticFileListProc_L11c9:
 	add	-1, d2
 	mov	d2, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74244,7 +74245,7 @@ HamaAlphabeticFileListProc_L11c9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74252,7 +74253,7 @@ HamaAlphabeticFileListProc_L11c9:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	HamaAlphabeticFileListProc_L1302
 HamaAlphabeticFileListProc_L1243:
@@ -74277,7 +74278,7 @@ HamaAlphabeticFileListProc_L125f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74285,7 +74286,7 @@ HamaAlphabeticFileListProc_L125f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74293,7 +74294,7 @@ HamaAlphabeticFileListProc_L125f:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	HamaAlphabeticFileListProc_L1302
 HamaAlphabeticFileListProc_L12c6:
@@ -74311,8 +74312,8 @@ HamaAlphabeticFileListProc_L12d3:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
@@ -74327,7 +74328,7 @@ HamaAlphabeticFileListProc_L1302:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	mov	(0x3c, a0), d1
@@ -74356,7 +74357,7 @@ HamaAlphabeticFileListProc_L1356:
 	mov	(0x4c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74364,7 +74365,7 @@ HamaAlphabeticFileListProc_L1356:
 	mov	(0x4c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74783,67 +74784,67 @@ HamaSelectListProc:
 	mov	d0, (0xe0, sp)
 	mov	d1, (0xe4, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	HamaSelectListProc_L16
 	jmp	HamaSelectListProc_Ldc
 HamaSelectListProc_L16:
 	mov	(0xe4, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	HamaSelectListProc_L23
 	jmp	HamaSelectListProc_L114
 HamaSelectListProc_L23:
 	mov	(0xe4, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	HamaSelectListProc_L30
 	jmp	HamaSelectListProc_L20e
 HamaSelectListProc_L30:
 	mov	(0xe4, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	HamaSelectListProc_L3d
 	jmp	HamaSelectListProc_L243
 HamaSelectListProc_L3d:
 	mov	(0xe4, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	HamaSelectListProc_L4a
 	jmp	HamaSelectListProc_L333
 HamaSelectListProc_L4a:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	HamaSelectListProc_L57
 	jmp	HamaSelectListProc_L6b4
 HamaSelectListProc_L57:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	HamaSelectListProc_L64
 	jmp	HamaSelectListProc_L821
 HamaSelectListProc_L64:
 	mov	(0xe4, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	HamaSelectListProc_L71
 	jmp	HamaSelectListProc_L8de
 HamaSelectListProc_L71:
 	mov	(0xe4, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	HamaSelectListProc_L7e
 	jmp	HamaSelectListProc_L91a
 HamaSelectListProc_L7e:
 	mov	(0xe4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaSelectListProc_L8b
 	jmp	HamaSelectListProc_L938
 HamaSelectListProc_L8b:
 	mov	(0xe4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	HamaSelectListProc_L98
 	jmp	HamaSelectListProc_L938
 HamaSelectListProc_L98:
 	mov	(0xe4, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	HamaSelectListProc_La5
 	jmp	HamaSelectListProc_L938
 HamaSelectListProc_La5:
 	mov	(0xe4, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	HamaSelectListProc_Lb2
 	jmp	HamaSelectListProc_L938
 HamaSelectListProc_Lb2:
@@ -74853,12 +74854,12 @@ HamaSelectListProc_Lb2:
 	jmp	HamaSelectListProc_Laaa
 HamaSelectListProc_Lbf:
 	mov	(0xe4, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	HamaSelectListProc_Lcc
 	jmp	HamaSelectListProc_Laaa
 HamaSelectListProc_Lcc:
 	mov	(0xe4, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	HamaSelectListProc_Ld9
 	jmp	HamaSelectListProc_Laaa
 HamaSelectListProc_Ld9:
@@ -74878,7 +74879,7 @@ HamaSelectListProc_Ldc:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
@@ -74912,7 +74913,7 @@ HamaSelectListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74920,7 +74921,7 @@ HamaSelectListProc_L151:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -74965,7 +74966,7 @@ HamaSelectListProc_L1ec:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
@@ -75513,7 +75514,7 @@ HamaSelectListProc_L6fd:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	HamaSelectListProc_L81d
 HamaSelectListProc_L71e:
@@ -75549,7 +75550,7 @@ HamaSelectListProc_L734:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -75558,7 +75559,7 @@ HamaSelectListProc_L734:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	HamaSelectListProc_L81d
 HamaSelectListProc_L795:
@@ -75604,7 +75605,7 @@ HamaSelectListProc_L7bf:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -75613,7 +75614,7 @@ HamaSelectListProc_L7bf:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 HamaSelectListProc_L81d:
 	clr	d0
@@ -75639,7 +75640,7 @@ HamaSelectListProc_L821:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -75650,7 +75651,7 @@ HamaSelectListProc_L821:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d2
@@ -75681,7 +75682,7 @@ HamaSelectListProc_L821:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -75702,7 +75703,7 @@ HamaSelectListProc_L8de:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -75736,7 +75737,7 @@ HamaSelectListProc_L938:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
 	mov	(data_979126B4), a0
@@ -75752,12 +75753,12 @@ HamaSelectListProc_L938:
 	bra	HamaSelectListProc_L9b4
 HamaSelectListProc_L98e:
 	mov	(0xe4, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaSelectListProc_L99a
 	bra	HamaSelectListProc_L9a6
 HamaSelectListProc_L99a:
 	mov	(0xe4, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	HamaSelectListProc_L9a6
 	bra	HamaSelectListProc_L9ad
 HamaSelectListProc_L9a6:
@@ -75831,7 +75832,7 @@ HamaSelectListProc_La11:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x20, sp), a0
 	mov	(0x3c, a0), d1
@@ -75860,7 +75861,7 @@ HamaSelectListProc_La5d:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -75868,7 +75869,7 @@ HamaSelectListProc_La5d:
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0xe0, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -75912,67 +75913,67 @@ HamaSelectFileListProc:
 	mov	d0, (0x108, sp)
 	mov	d1, (0x10c, sp)
 	mov	d1, d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	HamaSelectFileListProc_L1a
 	jmp	HamaSelectFileListProc_L116
 HamaSelectFileListProc_L1a:
 	mov	(0x10c, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	HamaSelectFileListProc_L29
 	jmp	HamaSelectFileListProc_L156
 HamaSelectFileListProc_L29:
 	mov	(0x10c, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	HamaSelectFileListProc_L38
 	jmp	HamaSelectFileListProc_L276
 HamaSelectFileListProc_L38:
 	mov	(0x10c, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	HamaSelectFileListProc_L47
 	jmp	HamaSelectFileListProc_L2b3
 HamaSelectFileListProc_L47:
 	mov	(0x10c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	HamaSelectFileListProc_L56
 	jmp	HamaSelectFileListProc_L50d
 HamaSelectFileListProc_L56:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80003, d0
+	cmp	MT_ChangeSelNum, d0
 	bne	HamaSelectFileListProc_L65
 	jmp	HamaSelectFileListProc_La1a
 HamaSelectFileListProc_L65:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80004, d0
+	cmp	MT_SetSelNum, d0
 	bne	HamaSelectFileListProc_L74
 	jmp	HamaSelectFileListProc_Ld08
 HamaSelectFileListProc_L74:
 	mov	(0x10c, sp), d0
-	cmp	0x1a80006, d0
+	cmp	MT_ReqSelNum, d0
 	bne	HamaSelectFileListProc_L83
 	jmp	HamaSelectFileListProc_Lde0
 HamaSelectFileListProc_L83:
 	mov	(0x10c, sp), d0
-	cmp	0x1a8000c, d0
+	cmp	MT_SetStrAdr, d0
 	bne	HamaSelectFileListProc_L92
 	jmp	HamaSelectFileListProc_Le1e
 HamaSelectFileListProc_L92:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaSelectFileListProc_La1
 	jmp	HamaSelectFileListProc_Le40
 HamaSelectFileListProc_La1:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	HamaSelectFileListProc_Lb0
 	jmp	HamaSelectFileListProc_Le40
 HamaSelectFileListProc_Lb0:
 	mov	(0x10c, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	HamaSelectFileListProc_Lbf
 	jmp	HamaSelectFileListProc_Le40
 HamaSelectFileListProc_Lbf:
 	mov	(0x10c, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	HamaSelectFileListProc_Lce
 	jmp	HamaSelectFileListProc_Le40
 HamaSelectFileListProc_Lce:
@@ -75992,12 +75993,12 @@ HamaSelectFileListProc_Le6:
 	jmp	HamaSelectFileListProc_L1240
 HamaSelectFileListProc_Lf5:
 	mov	(0x10c, sp), d0
-	cmp	0x1880001, d0
+	cmp	EV_SeqStop, d0
 	bne	HamaSelectFileListProc_L104
 	jmp	HamaSelectFileListProc_L1240
 HamaSelectFileListProc_L104:
 	mov	(0x10c, sp), d0
-	cmp	0x1880003, d0
+	cmp	EV_AutoStart, d0
 	bne	HamaSelectFileListProc_L113
 	jmp	HamaSelectFileListProc_L1240
 HamaSelectFileListProc_L113:
@@ -76017,7 +76018,7 @@ HamaSelectFileListProc_L116:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
@@ -76051,7 +76052,7 @@ HamaSelectFileListProc_L19b:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76059,7 +76060,7 @@ HamaSelectFileListProc_L19b:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76078,7 +76079,7 @@ HamaSelectFileListProc_L1f3:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (data_97910E0C)
@@ -76096,8 +76097,8 @@ HamaSelectFileListProc_L218:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76106,7 +76107,7 @@ HamaSelectFileListProc_L218:
 	mov	(0x28, a1), d0
 	clr	d1
 	mov	d1, (0x10, sp)
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
@@ -76252,7 +76253,7 @@ HamaSelectFileListProc_L3bc:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007703b1, d0
+	mov	BigFont_DirBox2_id, d0
 	mov	sp, a0
 	add	0x54, a0
 	calls	(a1)
@@ -76300,7 +76301,7 @@ HamaSelectFileListProc_L3bc:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007703b0, d0
+	mov	BigFont_DirNr_id, d0
 	mov	sp, a0
 	add	0x54, a0
 	calls	(a1)
@@ -76729,7 +76730,7 @@ HamaSelectFileListProc_L87b:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007703b1, d0
+	mov	BigFont_DirBox2_id, d0
 	mov	sp, a0
 	add	0x54, a0
 	calls	(a1)
@@ -76793,7 +76794,7 @@ HamaSelectFileListProc_L87b:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
-	mov	0x007703b0, d0
+	mov	BigFont_DirNr_id, d0
 	mov	sp, a0
 	add	0x54, a0
 	calls	(a1)
@@ -76902,8 +76903,8 @@ HamaSelectFileListProc_La5d:
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e4, d0
-	mov	0x01a80003, d1
+	mov	DIR_SelectBig_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x2c, sp), a0
 	movhu	(0x30, a0), d2
@@ -76922,7 +76923,7 @@ HamaSelectFileListProc_La5d:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76938,7 +76939,7 @@ HamaSelectFileListProc_La5d:
 	add	-1, d2
 	mov	d2, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76946,7 +76947,7 @@ HamaSelectFileListProc_La5d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_Lb08:
 	mov	(data_97910DDC), d0
@@ -76976,8 +76977,8 @@ HamaSelectFileListProc_Lb2f:
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e4, d0
-	mov	0x01a80003, d1
+	mov	DIR_SelectBig_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x4c, sp)
@@ -76987,7 +76988,7 @@ HamaSelectFileListProc_Lb2f:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -76995,7 +76996,7 @@ HamaSelectFileListProc_Lb2f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77003,7 +77004,7 @@ HamaSelectFileListProc_Lb2f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_Lbb8:
 	movhu	(0x4c, sp), d0
@@ -77033,7 +77034,7 @@ HamaSelectFileListProc_Lbd9:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	HamaSelectFileListProc_Ld04
 HamaSelectFileListProc_Lbfc:
@@ -77070,7 +77071,7 @@ HamaSelectFileListProc_Lc12:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77079,7 +77080,7 @@ HamaSelectFileListProc_Lc12:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 	jmp	HamaSelectFileListProc_Ld04
 HamaSelectFileListProc_Lc78:
@@ -77125,7 +77126,7 @@ HamaSelectFileListProc_Lca2:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77134,7 +77135,7 @@ HamaSelectFileListProc_Lca2:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80004, d1
+	mov	MT_SetSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_Ld04:
 	clr	d0
@@ -77160,7 +77161,7 @@ HamaSelectFileListProc_Ld08:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77171,7 +77172,7 @@ HamaSelectFileListProc_Ld08:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	movhu	(data_97910DDC), d0
 	exthu	d0
@@ -77187,8 +77188,8 @@ HamaSelectFileListProc_Ld08:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77199,7 +77200,7 @@ HamaSelectFileListProc_Ld08:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -77220,7 +77221,7 @@ HamaSelectFileListProc_Lde0:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80008, d1
+	mov	MT_AckSelNum, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -77254,7 +77255,7 @@ HamaSelectFileListProc_Le40:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a0004e, d1
+	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x3c, sp)
 	mov	(data_979126B4), a0
@@ -77270,12 +77271,12 @@ HamaSelectFileListProc_Le40:
 	bra	HamaSelectFileListProc_Lece
 HamaSelectFileListProc_Lea2:
 	mov	(0x10c, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	HamaSelectFileListProc_Leb0
 	bra	HamaSelectFileListProc_Lebe
 HamaSelectFileListProc_Leb0:
 	mov	(0x10c, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	beq	HamaSelectFileListProc_Lebe
 	bra	HamaSelectFileListProc_Lec6
 HamaSelectFileListProc_Lebe:
@@ -77349,7 +77350,7 @@ HamaSelectFileListProc_Lf34:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8000b, d1
+	mov	MT_SelectSAVE, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -77371,7 +77372,7 @@ HamaSelectFileListProc_Lf69:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80010, d1
+	mov	MT_SelectDelFile, d1
 	mov	d2, d0
 	calls	(a1)
 	clr	d0
@@ -77391,8 +77392,8 @@ HamaSelectFileListProc_Lf9e:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
@@ -77427,8 +77428,8 @@ HamaSelectFileListProc_Lfe4:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77436,15 +77437,15 @@ HamaSelectFileListProc_Lfe4:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e4, d0
-	mov	0x01a80003, d1
+	mov	DIR_SelectBig_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_L1075:
 	clr	d0
@@ -77479,8 +77480,8 @@ HamaSelectFileListProc_L1096:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701f6, d0
-	mov	0x01a000b6, d1
+	mov	FileSfxBox_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77488,15 +77489,15 @@ HamaSelectFileListProc_L1096:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e4, d0
-	mov	0x01a80003, d1
+	mov	DIR_SelectBig_id, d0
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_L1124:
 	clr	d0
@@ -77512,7 +77513,7 @@ HamaSelectFileListProc_L112c:
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01a80003, d1
+	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	mov	(0x2c, sp), a0
 	mov	(0x3c, a0), d1
@@ -77541,7 +77542,7 @@ HamaSelectFileListProc_L1180:
 	mov	(0x3c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77549,7 +77550,7 @@ HamaSelectFileListProc_L1180:
 	mov	(0x3c, sp), d0
 	mov	d0, (0x10, sp)
 	mov	(0x108, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77565,8 +77566,8 @@ HamaSelectFileListProc_L11d2:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077030b, d0
-	mov	0x01800001, d1
+	mov	WARNING_DIR_DEL_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -77577,7 +77578,7 @@ HamaSelectFileListProc_L11d2:
 	movhu	(a0), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	0x01a80010, d1
+	mov	MT_SelectDelFile, d1
 	mov	d2, d0
 	calls	(a1)
 	bra	HamaSelectFileListProc_L1275
@@ -77589,8 +77590,8 @@ HamaSelectFileListProc_L1217:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	HamaSelectFileListProc_L1275
 HamaSelectFileListProc_L1240:
@@ -77627,12 +77628,12 @@ AboutNHelpScreen:
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	mov	d1, d0
-	cmp	0x1a0007b, d0
+	cmp	MT_AreYouClassProc, d0
 	bne	AboutNHelpScreen_L12
 	bra	AboutNHelpScreen_L21
 AboutNHelpScreen_L12:
 	mov	(0x38, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	AboutNHelpScreen_L1e
 	bra	AboutNHelpScreen_L26
 AboutNHelpScreen_L1e:
@@ -77657,8 +77658,8 @@ AboutNHelpScreen_L26:
 	mov	(0x108, a0), a0
 	mov	0x97916808, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770119, d0
-	mov	0x01a0007c, d1
+	mov	LabelHDModelNo_id, d0
+	mov	MT_SetString, d1
 	calls	(a0)
 	mov	0x9791683a, a0
 	mov	0x32, d0
@@ -77673,8 +77674,8 @@ AboutNHelpScreen_L26:
 	mov	d0, a0
 	add	0x9791683a, a0
 	mov	a0, (0x10, sp)
-	mov	0x00770111, d0
-	mov	0x01a0007c, d1
+	mov	LabelHDSerialNo_id, d0
+	mov	MT_SetString, d1
 	calls	(a1)
 	call	func_97800FB2, 0, 0
 	mov	d0, (0x20, sp)
@@ -77698,8 +77699,8 @@ AboutNHelpScreen_L26:
 	mov	(0x108, a0), a0
 	mov	0x9791686c, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770112, d0
-	mov	0x01a0007c, d1
+	mov	LabelHDParameter_id, d0
+	mov	MT_SetString, d1
 	calls	(a0)
 AboutNHelpScreen_L11d:
 	mov	(data_979126B4), a0
@@ -77719,22 +77720,22 @@ KssLabelProc:
 	mov	d0, (0x48, sp)
 	mov	d1, (0x4c, sp)
 	mov	d1, d0
-	cmp	0x1a000b8, d0
+	cmp	MT_ChangeProperty, d0
 	bne	KssLabelProc_L14
 	bra	KssLabelProc_L3e
 KssLabelProc_L14:
 	mov	(0x4c, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssLabelProc_L21
 	jmp	KssLabelProc_Le4
 KssLabelProc_L21:
 	mov	(0x4c, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssLabelProc_L2e
 	jmp	KssLabelProc_L12a
 KssLabelProc_L2e:
 	mov	(0x4c, sp), d0
-	cmp	0x1a0007c, d0
+	cmp	MT_SetString, d0
 	bne	KssLabelProc_L3b
 	jmp	KssLabelProc_L23d
 KssLabelProc_L3b:
@@ -77982,7 +77983,7 @@ KssLabelProc_L273:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x48, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 KssLabelProc_L28e:
 	clr	d0
@@ -78005,27 +78006,27 @@ KssTextProc:
 	mov	d0, (0x488, sp)
 	mov	d1, (0x48c, sp)
 	mov	d1, d0
-	cmp	0x1a000b8, d0
+	cmp	MT_ChangeProperty, d0
 	bne	KssTextProc_L19
 	bra	KssTextProc_L57
 KssTextProc_L19:
 	mov	(0x48c, sp), d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssTextProc_L27
 	bra	KssTextProc_L96
 KssTextProc_L27:
 	mov	(0x48c, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssTextProc_L36
 	jmp	KssTextProc_Le6
 KssTextProc_L36:
 	mov	(0x48c, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	KssTextProc_L45
 	jmp	KssTextProc_L147
 KssTextProc_L45:
 	mov	(0x48c, sp), d0
-	cmp	0x1a0007c, d0
+	cmp	MT_SetString, d0
 	bne	KssTextProc_L54
 	jmp	KssTextProc_L534
 KssTextProc_L54:
@@ -78103,7 +78104,7 @@ KssTextProc_Le6:
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
 	mov	(0x488, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	clr	d0
 	jmp	KssTextProc_L588
@@ -78133,7 +78134,7 @@ KssTextProc_L184:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x488, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 KssTextProc_L1a1:
 	mov	1, d0
@@ -78698,82 +78699,82 @@ KssXLyricsBoxProc:
 	mov	d0, (0x4c, sp)
 	mov	d1, (0x50, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssXLyricsBoxProc_L15
 	jmp	KssXLyricsBoxProc_Ldb
 KssXLyricsBoxProc_L15:
 	mov	(0x50, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssXLyricsBoxProc_L22
 	jmp	KssXLyricsBoxProc_L128
 KssXLyricsBoxProc_L22:
 	mov	(0x50, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	KssXLyricsBoxProc_L2f
 	jmp	KssXLyricsBoxProc_L150
 KssXLyricsBoxProc_L2f:
 	mov	(0x50, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssXLyricsBoxProc_L3c
 	jmp	KssXLyricsBoxProc_L1ca
 KssXLyricsBoxProc_L3c:
 	mov	(0x50, sp), d0
-	cmp	0x188002a, d0
+	cmp	EV_Initlyrics, d0
 	bne	KssXLyricsBoxProc_L49
 	jmp	KssXLyricsBoxProc_L2e8
 KssXLyricsBoxProc_L49:
 	mov	(0x50, sp), d0
-	cmp	0x188002b, d0
+	cmp	EV_Alldraw, d0
 	bne	KssXLyricsBoxProc_L56
 	jmp	KssXLyricsBoxProc_L54a
 KssXLyricsBoxProc_L56:
 	mov	(0x50, sp), d0
-	cmp	0x1880024, d0
+	cmp	EV_DRWSTRGACT, d0
 	bne	KssXLyricsBoxProc_L63
 	jmp	KssXLyricsBoxProc_L5df
 KssXLyricsBoxProc_L63:
 	mov	(0x50, sp), d0
-	cmp	0x1880029, d0
+	cmp	EV_SETPOSITION, d0
 	bne	KssXLyricsBoxProc_L70
 	jmp	KssXLyricsBoxProc_L80a
 KssXLyricsBoxProc_L70:
 	mov	(0x50, sp), d0
-	cmp	0x1880025, d0
+	cmp	EV_INITLYRICPARAM, d0
 	bne	KssXLyricsBoxProc_L7d
 	jmp	KssXLyricsBoxProc_L8b1
 KssXLyricsBoxProc_L7d:
 	mov	(0x50, sp), d0
-	cmp	0x1880026, d0
+	cmp	EV_TICKS, d0
 	bne	KssXLyricsBoxProc_L8a
 	jmp	KssXLyricsBoxProc_L934
 KssXLyricsBoxProc_L8a:
 	mov	(0x50, sp), d0
-	cmp	0x1880027, d0
+	cmp	EV_BEATMESSAGE, d0
 	bne	KssXLyricsBoxProc_L97
 	jmp	KssXLyricsBoxProc_L9c1
 KssXLyricsBoxProc_L97:
 	mov	(0x50, sp), d0
-	cmp	0x1800011, d0
+	cmp	EV_INDEXSW_UP_AIC, d0
 	bne	KssXLyricsBoxProc_La4
 	jmp	KssXLyricsBoxProc_La08
 KssXLyricsBoxProc_La4:
 	mov	(0x50, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	KssXLyricsBoxProc_Lb1
 	jmp	KssXLyricsBoxProc_La08
 KssXLyricsBoxProc_Lb1:
 	mov	(0x50, sp), d0
-	cmp	0x1800012, d0
+	cmp	EV_INDEXSW_DOWN_AIC, d0
 	bne	KssXLyricsBoxProc_Lbe
 	jmp	KssXLyricsBoxProc_La08
 KssXLyricsBoxProc_Lbe:
 	mov	(0x50, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	KssXLyricsBoxProc_Lcb
 	jmp	KssXLyricsBoxProc_La08
 KssXLyricsBoxProc_Lcb:
 	mov	(0x50, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssXLyricsBoxProc_Ld8
 	jmp	KssXLyricsBoxProc_La08
 KssXLyricsBoxProc_Ld8:
@@ -78836,7 +78837,7 @@ KssXLyricsBoxProc_L174:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01880024, d1
+	mov	EV_DRWSTRGACT, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -78844,7 +78845,7 @@ KssXLyricsBoxProc_L174:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01880029, d1
+	mov	EV_SETPOSITION, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -78852,7 +78853,7 @@ KssXLyricsBoxProc_L174:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x0188002a, d1
+	mov	EV_Initlyrics, d1
 	calls	(a0)
 KssXLyricsBoxProc_L1c6:
 	clr	d0
@@ -78877,7 +78878,7 @@ KssXLyricsBoxProc_L1ee:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x0188002a, d1
+	mov	EV_Initlyrics, d1
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_L2e4
 KssXLyricsBoxProc_L20c:
@@ -78886,48 +78887,48 @@ KssXLyricsBoxProc_L20c:
 	mov	(0x108, a0), a0
 	mov	Str_No_Custom_Lyrics_loaded, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770038, d0
-	mov	0x01a000b6, d1
+	mov	TlxSongName_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_416, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770039, d0
-	mov	0x01a000b6, d1
+	mov	TlxInterpreter_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_415, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003c, d0
-	mov	0x01a000b6, d1
+	mov	TlxTimeSig_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_414, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003a, d0
-	mov	0x01a000b6, d1
+	mov	TlxInfo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_413, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770042, d0
-	mov	0x01a000b6, d1
+	mov	TlxChord_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_412, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003b, d0
-	mov	0x01a000b6, d1
+	mov	TlxMeasure_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssXLyricsBoxProc_L2e4:
 	clr	d0
@@ -78945,7 +78946,7 @@ KssXLyricsBoxProc_L2e8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x30, sp)
@@ -79068,48 +79069,48 @@ KssXLyricsBoxProc_L46e:
 	mov	(0x108, a0), a0
 	mov	0x979a3e3d, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770038, d0
-	mov	0x01a000b6, d1
+	mov	TlxSongName_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3dd9, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770039, d0
-	mov	0x01a000b6, d1
+	mov	TlxInterpreter_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3f9b, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003c, d0
-	mov	0x01a000b6, d1
+	mov	TlxTimeSig_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003a, d0
-	mov	0x01a000b6, d1
+	mov	TlxInfo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3dd2, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770042, d0
-	mov	0x01a000b6, d1
+	mov	TlxChord_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003b, d0
-	mov	0x01a000b6, d1
+	mov	TlxMeasure_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssXLyricsBoxProc_L546:
 	clr	d0
@@ -79383,7 +79384,7 @@ KssXLyricsBoxProc_L829:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, (0x979a3fc0)
@@ -79402,7 +79403,7 @@ KssXLyricsBoxProc_L87c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01800009, d1
+	mov	EV_PAINT, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssXLyricsBoxProc_Lafe
@@ -79437,7 +79438,7 @@ KssXLyricsBoxProc_L8d8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x01880026, d1
+	mov	EV_TICKS, d1
 	calls	(a0)
 KssXLyricsBoxProc_L917:
 	movhu	(0x979a2cb2), d0
@@ -79479,8 +79480,8 @@ KssXLyricsBoxProc_L973:
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003b, d0
-	mov	0x01a000b6, d1
+	mov	TlxMeasure_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L9c1:
@@ -79490,7 +79491,7 @@ KssXLyricsBoxProc_L9c1:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01880029, d1
+	mov	EV_SETPOSITION, d1
 	calls	(a0)
 	clr	d0
 	mov	d0, d1
@@ -79502,7 +79503,7 @@ KssXLyricsBoxProc_L9c1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_La08:
@@ -79512,7 +79513,7 @@ KssXLyricsBoxProc_La08:
 	mov	(0x54, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x17, d0
 	bne	KssXLyricsBoxProc_La2e
@@ -79541,7 +79542,7 @@ KssXLyricsBoxProc_La49:
 	beq	KssXLyricsBoxProc_La55
 	bra	KssXLyricsBoxProc_La64
 KssXLyricsBoxProc_La55:
-	mov	0x00770036, d0
+	mov	CUSTOM_LYRICS_id, d0
 	call	func_9782B2AB_entry, 0, 0x14
 	clr	d0
 	jmp	KssXLyricsBoxProc_Lafe
@@ -79552,7 +79553,7 @@ KssXLyricsBoxProc_La64:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00770000, d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	KssXLyricsBoxProc_Lafe
@@ -79580,7 +79581,7 @@ KssXLyricsBoxProc_Lab1:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x00770036, d0
+	mov	CUSTOM_LYRICS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	bra	KssXLyricsBoxProc_Lae3
@@ -79590,7 +79591,7 @@ KssXLyricsBoxProc_Lacb:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	0x0077001c, d0
+	mov	SETUP_TOOLS_id, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 KssXLyricsBoxProc_Lae3:
@@ -79680,8 +79681,8 @@ func_97831613_entry_L2f:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003d, d0
-	mov	0x01880027, d1
+	mov	TlxBox_id, d0
+	mov	EV_BEATMESSAGE, d1
 	calls	(a0)
 func_97831613_entry_L4e:
 	mov	(0x18, sp), d0
@@ -79742,48 +79743,48 @@ func_97831613_entry_Lbd:
 	mov	(0x108, a0), a0
 	mov	0x97916ce4, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770038, d0
-	mov	0x01a000b6, d1
+	mov	TlxSongName_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_409, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770039, d0
-	mov	0x01a000b6, d1
+	mov	TlxInterpreter_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_408, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770042, d0
-	mov	0x01a000b6, d1
+	mov	TlxChord_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_407, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003a, d0
-	mov	0x01a000b6, d1
+	mov	TlxInfo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_406, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003b, d0
-	mov	0x01a000b6, d1
+	mov	TlxMeasure_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_405, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003c, d0
-	mov	0x01a000b6, d1
+	mov	TlxTimeSig_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5fd
 func_97831613_entry_L1bb:
@@ -79846,7 +79847,7 @@ func_97831613_entry_L23a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x0188002a, d1
+	mov	EV_Initlyrics, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5fd
 func_97831613_entry_L25c:
@@ -79903,7 +79904,7 @@ func_97831613_entry_L2e6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x0188002a, d1
+	mov	EV_Initlyrics, d1
 	calls	(a0)
 func_97831613_entry_L305:
 	movbu	(0x979a2cae), d0
@@ -79939,7 +79940,7 @@ func_97831613_entry_L363:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x0188002b, d1
+	mov	EV_Alldraw, d1
 	calls	(a0)
 func_97831613_entry_L382:
 	movhu	(0x979a2c98), d1
@@ -79992,7 +79993,7 @@ func_97831613_entry_L3f7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x0188002a, d1
+	mov	EV_Initlyrics, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5e3
 func_97831613_entry_L419:
@@ -80052,8 +80053,8 @@ func_97831613_entry_L495:
 	mov	(0x108, a0), a0
 	mov	0x979a3f9b, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003c, d0
-	mov	0x01a000b6, d1
+	mov	TlxTimeSig_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5e3
 func_97831613_entry_L4e3:
@@ -80083,8 +80084,8 @@ func_97831613_entry_L517:
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003a, d0
-	mov	0x01a000b6, d1
+	mov	TlxInfo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5e3
 func_97831613_entry_L560:
@@ -80102,8 +80103,8 @@ func_97831613_entry_L573:
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003a, d0
-	mov	0x01a000b6, d1
+	mov	TlxInfo_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	func_97831613_entry_L5e3
 func_97831613_entry_L5ac:
@@ -80115,8 +80116,8 @@ func_97831613_entry_L5ac:
 	mov	(0x108, a0), a0
 	mov	0x979a3dd2, d0
 	mov	d0, (0x10, sp)
-	mov	0x00770042, d0
-	mov	0x01a000b6, d1
+	mov	TlxChord_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 func_97831613_entry_L5e3:
 	mov	(0x979a2c04), d0
@@ -80346,8 +80347,8 @@ func_97831CA9_entry_L1d4:
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077003b, d0
-	mov	0x01a000b6, d1
+	mov	TlxMeasure_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	0x979a3dd2, a0
 	mov	Str_empty_404, a1
@@ -81189,62 +81190,62 @@ LFDFileSelectProc:
 	mov	d0, (0xa4, sp)
 	mov	d1, (0xa8, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	LFDFileSelectProc_L16
 	jmp	LFDFileSelectProc_La8
 LFDFileSelectProc_L16:
 	mov	(0xa8, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	LFDFileSelectProc_L23
 	jmp	LFDFileSelectProc_L14e
 LFDFileSelectProc_L23:
 	mov	(0xa8, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	LFDFileSelectProc_L30
 	jmp	LFDFileSelectProc_L16a
 LFDFileSelectProc_L30:
 	mov	(0xa8, sp), d0
-	cmp	0x188002d, d0
+	cmp	EV_Scrollline, d0
 	bne	LFDFileSelectProc_L3d
 	jmp	LFDFileSelectProc_L1d0
 LFDFileSelectProc_L3d:
 	mov	(0xa8, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	LFDFileSelectProc_L4a
 	jmp	LFDFileSelectProc_L3f2
 LFDFileSelectProc_L4a:
 	mov	(0xa8, sp), d0
-	cmp	0x1a8005e, d0
+	cmp	MT_FdFreshUp, d0
 	bne	LFDFileSelectProc_L57
 	jmp	LFDFileSelectProc_L5ea
 LFDFileSelectProc_L57:
 	mov	(0xa8, sp), d0
-	cmp	0x1a8005f, d0
+	cmp	MT_FdInfo, d0
 	bne	LFDFileSelectProc_L64
 	jmp	LFDFileSelectProc_L63e
 LFDFileSelectProc_L64:
 	mov	(0xa8, sp), d0
-	cmp	0x1a80060, d0
+	cmp	MT_FdLoadLyric, d0
 	bne	LFDFileSelectProc_L71
 	jmp	LFDFileSelectProc_L642
 LFDFileSelectProc_L71:
 	mov	(0xa8, sp), d0
-	cmp	0x1a80061, d0
+	cmp	MT_FdSaveLyric, d0
 	bne	LFDFileSelectProc_L7e
 	jmp	LFDFileSelectProc_L646
 LFDFileSelectProc_L7e:
 	mov	(0xa8, sp), d0
-	cmp	0x180000f, d0
+	cmp	EV_INDEXSW_UP, d0
 	bne	LFDFileSelectProc_L8b
 	jmp	LFDFileSelectProc_L64a
 LFDFileSelectProc_L8b:
 	mov	(0xa8, sp), d0
-	cmp	0x1800010, d0
+	cmp	EV_INDEXSW_DOWN, d0
 	bne	LFDFileSelectProc_L98
 	jmp	LFDFileSelectProc_L681
 LFDFileSelectProc_L98:
 	mov	(0xa8, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	LFDFileSelectProc_La5
 	jmp	LFDFileSelectProc_L6b9
 LFDFileSelectProc_La5:
@@ -81270,7 +81271,7 @@ LFDFileSelectProc_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -81278,7 +81279,7 @@ LFDFileSelectProc_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -81294,7 +81295,7 @@ LFDFileSelectProc_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a8005e, d1
+	mov	MT_FdFreshUp, d1
 	calls	(a0)
 	clr	d0
 	jmp	LFDFileSelectProc_L942
@@ -81330,7 +81331,7 @@ LFDFileSelectProc_L16a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x0188002d, d1
+	mov	EV_Scrollline, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -81338,7 +81339,7 @@ LFDFileSelectProc_L16a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	LFDFileSelectProc_L942
@@ -81771,7 +81772,7 @@ LFDFileSelectProc_L64a:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800005, d1
+	mov	EV_SWIN, d1
 	calls	(a0)
 	jmp	LFDFileSelectProc_L92a
 LFDFileSelectProc_L681:
@@ -81789,7 +81790,7 @@ LFDFileSelectProc_L681:
 	mov	0x83, d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01800005, d1
+	mov	EV_SWIN, d1
 	calls	(a0)
 	jmp	LFDFileSelectProc_L92a
 LFDFileSelectProc_L6b9:
@@ -81908,7 +81909,7 @@ LFDFileSelectProc_L794:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	LFDFileSelectProc_L7e8
 LFDFileSelectProc_L7bf:
@@ -81921,7 +81922,7 @@ LFDFileSelectProc_L7bf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 LFDFileSelectProc_L7e8:
 	mov	(data_979126B4), a0
@@ -81961,7 +81962,7 @@ LFDFileSelectProc_L834:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	LFDFileSelectProc_L886
 LFDFileSelectProc_L85e:
@@ -81974,7 +81975,7 @@ LFDFileSelectProc_L85e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 LFDFileSelectProc_L886:
 	mov	(data_979126B4), a0
@@ -82029,7 +82030,7 @@ LFDFileSelectProc_L90c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 LFDFileSelectProc_L927:
 	clr	d0
@@ -82451,12 +82452,12 @@ WaitingFunc:
 WaitingFunc_entry:
 	mov	d1, (0xac, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	WaitingFunc_entry_Ld
 	bra	WaitingFunc_entry_L1c
 WaitingFunc_entry_Ld:
 	mov	(0xac, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	WaitingFunc_entry_L19
 	bra	WaitingFunc_entry_L2e
 WaitingFunc_entry_L19:
@@ -82504,7 +82505,7 @@ WaitingFunc_entry_L2e:
 	mov	d1, (0x10, sp)
 	mov	(0xb0, sp), a0
 	mov	a0, d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 	clr	d0
 	bra	WaitingFunc_entry_La6
@@ -82519,37 +82520,37 @@ AcRotStrBoxProc:
 	mov	d0, (0x3c, sp)
 	mov	d1, (0x40, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	AcRotStrBoxProc_L14
 	bra	AcRotStrBoxProc_L65
 AcRotStrBoxProc_L14:
 	mov	(0x40, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	AcRotStrBoxProc_L21
 	jmp	AcRotStrBoxProc_Lb8
 AcRotStrBoxProc_L21:
 	mov	(0x40, sp), d0
-	cmp	0x1800009, d0
+	cmp	EV_PAINT, d0
 	bne	AcRotStrBoxProc_L2e
 	jmp	AcRotStrBoxProc_L113
 AcRotStrBoxProc_L2e:
 	mov	(0x40, sp), d0
-	cmp	0x1a8001a, d0
+	cmp	MT_WakeUpNow, d0
 	bne	AcRotStrBoxProc_L3b
 	jmp	AcRotStrBoxProc_L15f
 AcRotStrBoxProc_L3b:
 	mov	(0x40, sp), d0
-	cmp	0x1a000b6, d0
+	cmp	MT_ParaDraw, d0
 	bne	AcRotStrBoxProc_L48
 	jmp	AcRotStrBoxProc_L196
 AcRotStrBoxProc_L48:
 	mov	(0x40, sp), d0
-	cmp	0x1880004, d0
+	cmp	EV_TimerBack, d0
 	bne	AcRotStrBoxProc_L55
 	jmp	AcRotStrBoxProc_L26c
 AcRotStrBoxProc_L55:
 	mov	(0x40, sp), d0
-	cmp	0x1a000b1, d0
+	cmp	MT_GetFont, d0
 	bne	AcRotStrBoxProc_L62
 	jmp	AcRotStrBoxProc_L2b3
 AcRotStrBoxProc_L62:
@@ -82609,7 +82610,7 @@ AcRotStrBoxProc_Lb8:
 	movhu	(0x2c, a1), d0
 	mov	(0x3c, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8001a, d1
+	mov	MT_WakeUpNow, d1
 	mov	d1, (0x14, sp)
 	clr	d1
 	mov	d1, (0x18, sp)
@@ -82658,7 +82659,7 @@ AcRotStrBoxProc_L15f:
 	mov	(0x28, a1), d0
 	mov	(0x3c, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01800009, d1
+	mov	EV_PAINT, d1
 	calls	(a0)
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
@@ -82676,7 +82677,7 @@ AcRotStrBoxProc_L196:
 	movhu	(0x2c, a1), d0
 	mov	(0x3c, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8001a, d1
+	mov	MT_WakeUpNow, d1
 	mov	d1, (0x14, sp)
 	clr	d1
 	mov	d1, (0x18, sp)
@@ -82705,7 +82706,7 @@ AcRotStrBoxProc_L1e0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x3c, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
 	mov	(data_979126B4), a0
@@ -82731,7 +82732,7 @@ AcRotStrBoxProc_L1e0:
 	movhu	(0x2c, a1), d0
 	mov	(0x3c, sp), d1
 	mov	d1, (0x10, sp)
-	mov	0x01a8001a, d1
+	mov	MT_WakeUpNow, d1
 	mov	d1, (0x14, sp)
 	clr	d1
 	mov	d1, (0x18, sp)
@@ -82899,8 +82900,8 @@ func_9783384D_L65:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700e1, d0
-	mov	0x01800001, d1
+	mov	BigFont_DirSelect_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	bra	func_9783384D_La5
 func_9783384D_L86:
@@ -82909,8 +82910,8 @@ func_9783384D_L86:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770250, d0
-	mov	0x01800001, d1
+	mov	HDD_DIR_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 func_9783384D_La5:
 	clr	d0
@@ -82926,8 +82927,8 @@ func_9783384D_Lb1:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770015, d0
-	mov	0x01800001, d1
+	mov	SELECT_NUMBER_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	jmp	func_9783384D_L160
@@ -82942,8 +82943,8 @@ func_9783384D_Ldc:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x00770046, d0
-	mov	0x01800001, d1
+	mov	HDD_FLS_SELECT_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	func_9783384D_L160
@@ -82958,8 +82959,8 @@ func_9783384D_L106:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701e0, d0
-	mov	0x01800001, d1
+	mov	JUKE_BOX_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	func_9783384D_L160
@@ -82974,8 +82975,8 @@ func_9783384D_L130:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007701cd, d0
-	mov	0x01800001, d1
+	mov	ALPHA_SORTED_LIST_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
 	bra	func_9783384D_L160
@@ -82996,7 +82997,7 @@ func_978339B0:
 	add	-0x24, sp
 
 func_978339B0_entry:
-	mov	data_978A4D98, a1
+	mov	func_978339B0_Table, a1
 	mov	sp, a0
 	add	0x14, a0
 	mov	-0x10, d1
@@ -83015,7 +83016,7 @@ func_978339B0_entry_L16:
 	mov	sp, a0
 	add	0x14, a0
 	mov	a0, (0x10, sp)
-	mov	0x014f0093, d0
+	mov	FN_MainSEQ_ApcToSmfCnv_SE, d0
 	clr	d1
 	calls	(a1)
 	mov	(data_979126B4), a0
@@ -83030,7 +83031,7 @@ func_978339B0_entry_L16:
 	mov	(0x100c, a0), a0
 	mov	(0x5a4, a0), a0
 	mov	0x00a8000a, d0
-	mov	0x01800001, d1
+	mov	EV_SHOW, d1
 	calls	(a0)
 	ret	0, 0x24
 
@@ -83038,7 +83039,7 @@ func_97833A24:
 	add	-0x16c, sp
 	mov	d0, (0x174, sp)
 	mov	d1, (0x178, sp)
-	mov	data_978A4E47, a1
+	mov	func_97833A24_Table, a1
 	mov	sp, a0
 	add	0x1c, a0
 	mov	-0x38, d1
@@ -83084,7 +83085,7 @@ func_97833A24_L5b:
 	add	0x54, d1
 	mov	d1, (0x10, sp)
 	mov	(0x174, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	(0x14, sp), d0
 	cmp	0, d0
@@ -83097,7 +83098,7 @@ func_97833A24_L84:
 	mov	Str_No_Entry, d0
 	mov	d0, (0x10, sp)
 	mov	(0x174, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	bra	func_97833A24_L10d
 func_97833A24_La8:
@@ -83144,7 +83145,7 @@ func_97833A24_Lee:
 	add	0x54, a0
 	mov	a0, (0x10, sp)
 	mov	(0x174, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a1)
 func_97833A24_L10d:
 	add	0x16c, sp
@@ -83615,7 +83616,7 @@ func_97833E69:
 
 func_97833E69_entry:
 	mov	d0, (0xa4, sp)
-	mov	data_978AECAC, a1
+	mov	func_97833E69_Table, a1
 	mov	sp, a0
 	add	0x1c, a0
 	mov	-0x80, d1
@@ -83712,7 +83713,7 @@ func_97833F31:
 func_97833F31_entry:
 	mov	a1, (0xa0, sp)
 	mov	a0, (0x9c, sp)
-	mov	data_978AED8A, a1
+	mov	func_97833F31_Table, a1
 	mov	sp, a0
 	add	0x14, a0
 	mov	-0x80, d1
@@ -84517,7 +84518,7 @@ func_978343AC_L1a0:
 	beq	func_978343AC_L1c4
 	jmp	func_978343AC_L324
 func_978343AC_L1c4:
-	mov	data_978AF120, a1
+	mov	func_978343AC_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	mov	-0x14, d1
@@ -84776,7 +84777,7 @@ func_97834719_entry_L2a:
 	nop
 	nop
 	mulu	d1, d0
-	mov	data_979117D0, a0
+	mov	func_97834719_Table, a0
 	mov	(d0, a0), a1
 	mov	0x97917d34, a0
 	mov	(0x14, sp), d0
@@ -84784,7 +84785,7 @@ func_97834719_entry_L2a:
 	nop
 	nop
 	mulu	d1, d0
-	add	data_979117D0, d0
+	add	func_97834719_Table, d0
 	call	func_9783403D_entry, [d3], 0x18
 	mov	(0x14, sp), d0
 	inc	d0
@@ -84795,7 +84796,7 @@ func_97834719_entry_L58:
 	nop
 	nop
 	mulu	d1, d0
-	mov	data_979117D0, a0
+	mov	func_97834719_Table, a0
 	mov	(d0, a0), a0
 	movbu	(a0), d0
 	extb	d0
@@ -85467,7 +85468,7 @@ func_97834BA2_entry_L178:
 	beq	func_97834BA2_entry_L191
 	jmp	func_97834BA2_entry_L359
 func_97834BA2_entry_L191:
-	mov	data_978AF3E8, a1
+	mov	func_97834BA2_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	movbu	(a1), d0
@@ -86418,47 +86419,47 @@ func_978355D3:
 	mov	d0, (0xb0, sp)
 	mov	d1, (0xb4, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	func_978355D3_L15
 	bra	func_978355D3_L80
 func_978355D3_L15:
 	mov	(0xb4, sp), d0
-	cmp	0x1a000b8, d0
+	cmp	MT_ChangeProperty, d0
 	bne	func_978355D3_L22
 	jmp	func_978355D3_L110
 func_978355D3_L22:
 	mov	(0xb4, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	func_978355D3_L2f
 	jmp	func_978355D3_L17a
 func_978355D3_L2f:
 	mov	(0xb4, sp), d0
-	cmp	0x1a0004b, d0
+	cmp	MT_DrawSelected, d0
 	bne	func_978355D3_L3c
 	jmp	func_978355D3_L416
 func_978355D3_L3c:
 	mov	(0xb4, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	func_978355D3_L49
 	jmp	func_978355D3_L495
 func_978355D3_L49:
 	mov	(0xb4, sp), d0
-	cmp	0x1a0004d, d0
+	cmp	MT_CheckIndex, d0
 	bne	func_978355D3_L56
 	jmp	func_978355D3_La7d
 func_978355D3_L56:
 	mov	(0xb4, sp), d0
-	cmp	0x1a0004e, d0
+	cmp	MT_GetIndex, d0
 	bne	func_978355D3_L63
 	jmp	func_978355D3_Laa3
 func_978355D3_L63:
 	mov	(0xb4, sp), d0
-	cmp	0x1a000a4, d0
+	cmp	MT_GetBoxBorder, d0
 	bne	func_978355D3_L70
 	jmp	func_978355D3_Labd
 func_978355D3_L70:
 	mov	(0xb4, sp), d0
-	cmp	0x1a000a5, d0
+	cmp	MT_GetBoxColor, d0
 	bne	func_978355D3_L7d
 	jmp	func_978355D3_Lad7
 func_978355D3_L7d:
@@ -86504,7 +86505,7 @@ func_978355D3_Lda:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	clr	d0
 	jmp	func_978355D3_Lb09
@@ -86540,7 +86541,7 @@ func_978355D3_L110:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L17a:
-	mov	data_978AF4C0, a1
+	mov	func_978355D3_Table, a1
 	mov	sp, a0
 	add	0x68, a0
 	mov	-0x10, d1
@@ -86580,7 +86581,7 @@ func_978355D3_L190:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x58, sp)
 	mov	(data_979126B4), a0
@@ -86589,16 +86590,16 @@ func_978355D3_L190:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000a4, d1
+	mov	MT_GetBoxBorder, d1
 	calls	(a0)
 	movhu	d0, (0x5a, sp)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	0x01600021, d0
+	mov	CLASS_PsEditSwBox, d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a00014, d1
+	mov	MT_CheckClass, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	func_978355D3_L233
@@ -86825,7 +86826,7 @@ func_978355D3_L416:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000a5, d1
+	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x5c, sp)
 	mov	(0xb8, sp), a0
@@ -86866,7 +86867,7 @@ func_978355D3_L495:
 	mov	(0xb8, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0x91, d0
 	bne	func_978355D3_L4be
@@ -86964,7 +86965,7 @@ func_978355D3_L558:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 func_978355D3_L581:
 	clr	d0
@@ -86986,7 +86987,7 @@ func_978355D3_L598:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 func_978355D3_L5c0:
 	clr	d0
@@ -87042,7 +87043,7 @@ func_978355D3_L645:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	jmp	func_978355D3_Lb09
@@ -87102,7 +87103,7 @@ func_978355D3_L6f6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
 	jmp	func_978355D3_Lb09
@@ -87128,7 +87129,7 @@ func_978355D3_L72c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87136,7 +87137,7 @@ func_978355D3_L72c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L780:
@@ -87162,7 +87163,7 @@ func_978355D3_L798:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87170,7 +87171,7 @@ func_978355D3_L798:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L7ee:
@@ -87196,7 +87197,7 @@ func_978355D3_L806:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87204,7 +87205,7 @@ func_978355D3_L806:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L85c:
@@ -87230,7 +87231,7 @@ func_978355D3_L874:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87238,7 +87239,7 @@ func_978355D3_L874:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L8ca:
@@ -87264,7 +87265,7 @@ func_978355D3_L8e2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87272,7 +87273,7 @@ func_978355D3_L8e2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L938:
@@ -87298,7 +87299,7 @@ func_978355D3_L950:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87306,7 +87307,7 @@ func_978355D3_L950:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	jmp	func_978355D3_La7d
 func_978355D3_L9a6:
@@ -87332,7 +87333,7 @@ func_978355D3_L9be:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87340,7 +87341,7 @@ func_978355D3_L9be:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 	bra	func_978355D3_La7d
 func_978355D3_La13:
@@ -87366,7 +87367,7 @@ func_978355D3_La2a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b8, d1
+	mov	MT_ChangeProperty, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87374,7 +87375,7 @@ func_978355D3_La2a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0xb0, sp), d0
-	mov	0x01a000b4, d1
+	mov	MT_Draw, d1
 	calls	(a0)
 func_978355D3_La7d:
 	mov	(data_979126B4), a0
@@ -87446,22 +87447,22 @@ KssXRegisterLineProc:
 	mov	d0, (0x30, sp)
 	mov	d1, (0x34, sp)
 	mov	d1, d0
-	cmp	0x1800001, d0
+	cmp	EV_SHOW, d0
 	bne	KssXRegisterLineProc_L12
 	bra	KssXRegisterLineProc_L3c
 KssXRegisterLineProc_L12:
 	mov	(0x34, sp), d0
-	cmp	0x1800002, d0
+	cmp	EV_HIDE, d0
 	bne	KssXRegisterLineProc_L1f
 	jmp	KssXRegisterLineProc_Lc5
 KssXRegisterLineProc_L1f:
 	mov	(0x34, sp), d0
-	cmp	0x1a000b4, d0
+	cmp	MT_Draw, d0
 	bne	KssXRegisterLineProc_L2c
 	jmp	KssXRegisterLineProc_Lfa
 KssXRegisterLineProc_L2c:
 	mov	(0x34, sp), d0
-	cmp	0x1800005, d0
+	cmp	EV_SWIN, d0
 	bne	KssXRegisterLineProc_L39
 	jmp	KssXRegisterLineProc_L2fa
 KssXRegisterLineProc_L39:
@@ -87496,7 +87497,7 @@ KssXRegisterLineProc_L79:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01800010, d1
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87504,7 +87505,7 @@ KssXRegisterLineProc_L79:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x0180000f, d1
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -87681,7 +87682,7 @@ KssXRegisterLineProc_Lfa:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x30, sp), d0
-	mov	0x01a000b6, d1
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 	clr	d0
 	jmp	KssXRegisterLineProc_L1227
@@ -87692,7 +87693,7 @@ KssXRegisterLineProc_L2fa:
 	mov	(0x38, sp), d0
 	mov	d0, (0x10, sp)
 	mov	0x01c00024, d0
-	mov	0x01a00029, d1
+	mov	MT_MakeEditSwID, d1
 	calls	(a0)
 	cmp	0, d0
 	bne	KssXRegisterLineProc_L320
@@ -89973,7 +89974,7 @@ func_97837D7C_entry_L374:
 	bra	func_97837D7C_entry_L393
 func_97837D7C_entry_L37a:
 	movbu	(4, sp), d0
-	mov	data_979125B4, a0
+	mov	func_97837D7C_Table, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90024,7 +90025,7 @@ func_97837D7C_entry_L3fb:
 	bra	func_97837D7C_entry_L41a
 func_97837D7C_entry_L401:
 	movbu	(4, sp), d0
-	mov	data_979125C6, a0
+	mov	func_97837D7C_Table_2, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90081,7 +90082,7 @@ func_97837D7C_entry_L491:
 	bra	func_97837D7C_entry_L4b0
 func_97837D7C_entry_L497:
 	movbu	(4, sp), d0
-	mov	data_979125E6, a0
+	mov	func_97837D7C_Table_3, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90131,7 +90132,7 @@ func_97837D7C_entry_L516:
 	bra	func_97837D7C_entry_L535
 func_97837D7C_entry_L51c:
 	movbu	(4, sp), d0
-	mov	data_979125EA, a0
+	mov	func_97837D7C_Table_4, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90182,7 +90183,7 @@ func_97837D7C_entry_L59d:
 	bra	func_97837D7C_entry_L5bc
 func_97837D7C_entry_L5a3:
 	movbu	(4, sp), d0
-	mov	data_9791260D, a0
+	mov	func_97837D7C_Table_5, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90233,7 +90234,7 @@ func_97837D7C_entry_L624:
 	bra	func_97837D7C_entry_L643
 func_97837D7C_entry_L62a:
 	movbu	(4, sp), d0
-	mov	data_9791262C, a0
+	mov	func_97837D7C_Table_6, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90923,7 +90924,7 @@ func_97838A05_entry_Ldf:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_Lff
 func_97838A05_entry_Le9:
-	mov	data_979125B4, a0
+	mov	func_97837D7C_Table, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90948,7 +90949,7 @@ func_97838A05_entry_L115:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L135
 func_97838A05_entry_L11f:
-	mov	data_979125C6, a0
+	mov	func_97837D7C_Table_2, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90973,7 +90974,7 @@ func_97838A05_entry_L14b:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L16b
 func_97838A05_entry_L155:
-	mov	data_979125E6, a0
+	mov	func_97837D7C_Table_3, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90998,7 +90999,7 @@ func_97838A05_entry_L181:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L1a1
 func_97838A05_entry_L18b:
-	mov	data_979125EA, a0
+	mov	func_97837D7C_Table_4, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -91023,7 +91024,7 @@ func_97838A05_entry_L1b7:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L1d7
 func_97838A05_entry_L1c1:
-	mov	data_9791260D, a0
+	mov	func_97837D7C_Table_5, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -91048,7 +91049,7 @@ func_97838A05_entry_L1ed:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L20d
 func_97838A05_entry_L1f7:
-	mov	data_9791262C, a0
+	mov	func_97837D7C_Table_6, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -91992,8 +91993,8 @@ func_97839372_L129:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a80058, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_GetPPInt, d1
 	calls	(a0)
 func_97839372_L151:
 	ret	0, 0x18
@@ -92588,8 +92589,8 @@ func_978398C5_entry_La6:
 	mov	(0x12c, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x007700ae, d0
-	mov	0x01a000b6, d1
+	mov	COMM_DISP_id, d0
+	mov	MT_ParaDraw, d1
 	calls	(a0)
 func_978398C5_entry_Lc6:
 	mov	(0x28, sp), d0
@@ -93316,7 +93317,7 @@ func_97839FA8_L13:
 func_97839FA8_L1c:
 	movbu	(0x10, sp), d0
 	add	d0, d0
-	mov	data_97912664, a0
+	mov	func_97839FA8_Table, a0
 	movhu	(d0, a0), d0
 	mov	(0xc, sp), a0
 	movhu	(a0), d1
@@ -93327,7 +93328,7 @@ func_97839FA8_L32:
 	movbu	(0x10, sp), d0
 	mov	d0, a0
 	add	a0, a0
-	mov	data_97912684, a1
+	mov	func_97839FA8_Table_2, a1
 	mov	a0, d0
 	movhu	(d0, a1), d2
 	mov	(0xc, sp), a0
@@ -93351,7 +93352,7 @@ func_97839FF6_L11:
 func_97839FF6_L14:
 	movbu	(0x10, sp), d0
 	add	d0, d0
-	mov	data_97912664, a0
+	mov	func_97839FA8_Table, a0
 	movhu	(d0, a0), d2
 	movbu	(0x10, sp), d0
 	add	d0, d0
@@ -93384,7 +93385,7 @@ func_9783A02E_L11:
 	bra	func_9783A02E_L2f
 func_9783A02E_L1a:
 	movbu	(0xc, sp), d0
-	mov	data_979126A4, a0
+	mov	func_9783A02E_Table, a0
 	movbu	(d0, a0), d0
 	mov	(8, sp), a0
 	movbu	(a0), d1
@@ -93393,7 +93394,7 @@ func_9783A02E_L1a:
 	bra	func_9783A02E_L42
 func_9783A02E_L2f:
 	movbu	(0xc, sp), d0
-	mov	data_979126AC, a0
+	mov	func_9783A02E_Table_2, a0
 	movbu	(d0, a0), d0
 	mov	(8, sp), a0
 	movbu	(a0), d1
@@ -93417,7 +93418,7 @@ func_9783A073_entry_Lf:
 	bra	func_9783A073_entry_L31
 func_9783A073_entry_L12:
 	movbu	(0x10, sp), d0
-	mov	data_979126A4, a0
+	mov	func_9783A02E_Table, a0
 	movbu	(d0, a0), d2
 	movbu	(0x10, sp), d0
 	movbu	(d0, a0), d1
@@ -99342,13 +99343,13 @@ func_9783D8E3_entry_L34:
 	clr	d0
 	mov	d0, (0x10, sp)
 	clr	d0
-	mov	0x01a00094, d1
+	mov	MT_GetBitmapData, d1
 	call	BitmapBg001, 0, 0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
 	clr	d0
-	mov	0x01a00097, d1
+	mov	MT_GetBitmapPalette, d1
 	call	BitmapBg001, 0, 0
 	mov	d0, (0x18, sp)
 	clr	d0
@@ -99731,7 +99732,7 @@ func_9783DBC9:
 	mov	d0, (0x10, sp)
 	mov	0x77, d0
 	mov	d0, (0x14, sp)
-	mov	0x0180000d, d0
+	mov	EV_CHANGE_TITLE, d0
 	mov	d0, (0x18, sp)
 	clr	d0
 	mov	d0, (0x1c, sp)
@@ -99810,7 +99811,7 @@ func_9783DC78_L7e:
 	mov	0x97941e74, d0
 	mov	d0, (0x10, sp)
 	mov	(data_979125B0), d0
-	mov	0x01880025, d1
+	mov	EV_INITLYRICPARAM, d1
 	calls	(a0)
 func_9783DC78_Lb5:
 	mov	(data_979126B4), a0
@@ -99841,7 +99842,7 @@ func_9783DC78_L103:
 	mov	(0x280, a0), a0
 	calls	(a0)
 	mov	d0, a0
-	cmp	0x1f00077, a0
+	cmp	TT_HDDEXT, a0
 	bne	func_9783DC78_L11f
 	bra	func_9783DC78_L131
 func_9783DC78_L11f:
@@ -99856,13 +99857,13 @@ func_9783DC78_L131:
 	mov	(0x12c, a0), a0
 	mov	3, d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
-	mov	0x01800001, d1
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
+	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
@@ -99870,7 +99871,7 @@ func_9783DC78_L131:
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	0x0077028e, d0
+	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
 func_9783DC78_L18c:
@@ -99886,16 +99887,16 @@ func_9783DE07_entry:
 	mov	(0x25c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x01500011, d0
-	mov	0x0180000f, d1
+	mov	FN_FmmSaveFilterFunc, d0
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x01500011, d0
-	mov	0x0180000f, d1
+	mov	FN_FmmSaveFilterFunc, d0
+	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
@@ -99907,8 +99908,8 @@ func_9783DE07_entry_L4c:
 	mov	(0x25c, a0), a0
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	0x01500011, d0
-	mov	0x01800010, d1
+	mov	FN_FmmSaveFilterFunc, d0
+	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 func_9783DE07_entry_L6c:
 	mov	(data_979126B4), a0

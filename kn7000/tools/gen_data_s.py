@@ -95,7 +95,11 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           code="src/program.s", prog="src/program.s",
                           syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
-                          model="KN2400", functions_sym=True,
+                          model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
+                          string_arrays=True,
+                          # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
+                          # stated, since the typed code spells the copy's source as a data label
+                          raminit=(0x485DD334, 0x50000010, 0x6E78),
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A")
@@ -111,6 +115,7 @@ PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="s
                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
                          base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
+                         bitmaps=True, code_ids=True, text_strict=True, string_arrays=True,
                          raminit=(0x978B3E84, 0x97910000, 0x26D8))
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
@@ -199,7 +204,8 @@ def host_model(name):
     configure(name)
     hm = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
                   sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
-                  label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")])
+                  label_paths=[os.path.join(KN7, OUTDIR, "labels.sym"),
+                               os.path.join(KN7, OUTDIR, "gui_code_ids.inc")])
     r = hm.by_slot[0x100]
     calls = {}
     for i in range(r["count"]):
@@ -216,6 +222,15 @@ def host_model(name):
             if nm:
                 ids.setdefault((slot << 16) | i, "FN_" + sanitize(nm, 60))
     hm.id_names = ids
+    # its event and method names (a plug-in's procedures answer the host's methods)
+    ev = {}
+    for slot, r in hm.by_slot.items():
+        if r.get("kind") in ("Event", "Method", "ResEvent", "ResMethod"):
+            for i in range(r["count"]):
+                nm = hm.cstr(hm.u32(r["table"] + 4 * i))
+                if nm:
+                    ev.setdefault((slot << 16) | i, sanitize(nm, 60))
+    hm.ev_names = ev
     configure(cur)
     return hm, calls
 
@@ -339,7 +354,11 @@ class Gen:
         """The label of CPU address `a` (creating it as `base` if new)."""
         if a in self.label_at:
             return self.label_at[a]
-        n = self.fixed.get(a) or self.uniq(base)
+        n = self.fixed.get(a)
+        if n and "root" in P and n.startswith(("Str_", "ptrs_")) and not base.startswith(n.split("_")[0] + "_") \
+                and n in self.prev_data_label:
+            n = None     # (a sibling) a generated name of what the bytes were taken for before
+        n = n or self.uniq(base)
         self.label_at[a] = n
         return n
 
@@ -955,7 +974,7 @@ class Gen:
         func, cpu = None, None
         for i, ln in enumerate(lines):
             m = re.match(r"^([A-Za-z_]\w*):", ln)
-            if m and not m.group(1).startswith("loc_"):
+            if m and not m.group(1).startswith("loc_") and not re.search(r"_L[0-9a-f]+_*$", m.group(1)):
                 func = m.group(1)
             m = re.match(r"# \S+\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if m:
@@ -1471,6 +1490,9 @@ class Gen:
         (4-bit) or 256 entries of 0x00BBGGRR, typed."""
         import table_png as TP
         ids = {v: k for k, v in self.ev_name.items()}
+        if self.host is not None:
+            for k, v in self.host.ev_names.items():
+                ids.setdefault(v, k)
         meth = {ids[n]: f for n, f in self.BITMAP_METHODS.items() if n in ids}
         if len(meth) < 4:
             return
@@ -1478,6 +1500,10 @@ class Gen:
         by_name.update(self.prev_data_label)
         by_name.update({n: a for a, n in self.fixed.items()})
         by_name.update({n: i for i, n in self.ev_name.items()})
+        if self.host is not None:
+            # (a plug-in) the code names the host's method ids (gui_code_ids.inc)
+            for i, n in self.host.ev_names.items():
+                by_name.setdefault(n, i)
 
         def val(t):
             t = t.strip()
@@ -1496,7 +1522,11 @@ class Gen:
                     if func and len(body) < 400:
                         txt = "\n".join(body)
                         r = {}
-                        for c, lab in re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt):
+                        # `cmp ID, d1 / beq L` (the KN6000), or `cmp ID, d0 / bne N / bra L`
+                        # (the XAPR plug-in's compiler)
+                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt) + re.findall(
+                            r"cmp\s+(\S+), d[01]\n\s+bne\s+\w+\n\s+bra\s+(\w+)", txt)
+                        for c, lab in pairs:
                             k = meth.get(val(c))
                             m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
                             if k and m2:
@@ -1642,6 +1672,35 @@ class Gen:
         words = range(o + (-o % 4), e - 3, 4)
         hits = sum(1 for k in words if BASE <= int.from_bytes(self.rom[k:k + 4], "little") < BASE + len(self.rom))
         return hits > 0 and 2 * hits >= len(words)
+
+    def string_arrays(self):
+        """(`string_arrays` profiles) Fixed-width text tables: >= 8 back-to-back
+        NUL-terminated strings of printable ASCII, all of one length, in bytes no
+        item holds (value names such as "  1.0 s ", " 16k Hz": the code indexes
+        them with a stride, so a row is not a label of its own).  Each table is
+        one item, a row per string."""
+        rom = self.rom
+        rx = re.compile(rb"(?:[\x20-\x7e]{1,40}\x00){8,}")
+        for mo in rx.finditer(rom, R1_END, DATA_END):
+            o = mo.start()
+            parts = mo.group(0).split(b"\0")[:-1]
+            i = 0
+            while i < len(parts):
+                j = i
+                while j < len(parts) and len(parts[j]) == len(parts[i]):
+                    j += 1
+                L = len(parts[i]) + 1
+                if j - i >= 8 and L >= 3:
+                    a = self.addr_of(o)
+                    rows = parts[i:j]
+                    if self.free(a, L * len(rows)) and sum(1 for c in b"".join(rows) if c > 0x20) >= len(rows):
+                        lab = self.name_at(a, "Text_" + (sanitize(rows[0].decode("latin-1"), 24) or "table"))
+                        self.add(a, L * len(rows), lab, "text table",
+                                 lambda g, it, rows=rows, L=L: [
+                                     f"{it.label}:\t# {len(rows)} strings of {L - 1} characters, NUL-terminated"]
+                                 + [f'\t.asciz\t"{c_escape(r)}"' for r in rows])
+                o += L * (j - i)
+                i = j
 
     def text_runs(self):
         """NUL-terminated printable strings (>= 4 characters) in the bytes no
@@ -1861,7 +1920,14 @@ class Gen:
         seen = set()
         # (siblings, NAKA layout: their event and method ids are in the ResEvent / ResMethod
         # tables of every module, slots 0x180.., not in gui_event_ids.inc's slots 5 / 6)
-        evs = ((("events and methods", self.ev_name),) if P.get("scheme") == "naka" else ())
+        evs = ((("events and methods", self.ev_name),) if P.get("scheme") == "naka" or "root" in P else ())
+        if self.host is not None:
+            # (a plug-in) the host's ids its code passes and compares: its events, methods,
+            # functions, titles and modes (the host's registry, not tables of this image)
+            evs = ((f"the {P['host'].upper()}'s events and methods",
+                    {i: n for i, n in self.host.ev_names.items() if n not in self.names}),
+                   (f"the {P['host'].upper()}'s functions, titles and modes",
+                    {i: n for i, n in self.host.id_names.items() if n not in self.names})) + evs
         for title, d in evs + (("titles, modes, OT blocks", self.id_name),
                          ("classes", {self.cid_value(c): n for c, n in self.cls_id.items()}),
                          ("functions", self.fn_name),
@@ -2031,6 +2097,8 @@ class Gen:
         self.name_value_tables()
         self.doubles()
         self.panel_memories()
+        if P.get("string_arrays"):
+            self.string_arrays()
         self.text_runs()
         self.reader_tables()
         self.short_strings()

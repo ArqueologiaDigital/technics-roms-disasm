@@ -10,6 +10,7 @@
 .include "../kn7000/src/include/kn_song.inc"
 .include "../kn7000/src/include/panel_memory.inc"
 .include "../kn7000/src/include/kn_panel_extra.inc"
+.include "../kn7000/src/include/data_tables.inc"
 .include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"
 .include "src/program/data/gui_classes.inc"

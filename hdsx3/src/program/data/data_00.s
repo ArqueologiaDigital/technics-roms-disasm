@@ -6,10 +6,10 @@
 	.align	4, 0xFF
 
 Str_Error_u_3:	.asciz "Error : %u"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Error_u_3
 Str_empty_489:	.asciz "                          "
 data_9783DEFF:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_empty_489
 
 ptrs_9783DF00:
 	.long	Str_empty_489
@@ -19,98 +19,98 @@ Str_Pio_Time_in_ns_u:	.asciz "Pio Time in ns : %u"
 Str_KEY_SOFT_SERVICE:	.asciz "KEY SOFT SERVICE               "
 Str_Pointstyle:	.asciz "Pointstyle                     "
 Str_empty_488:	.asciz "                                                "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_488
 Str_Directory_000_03li:	.asciz "Directory 000%03li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Directory_000_03li
 Str_Song_Name_01234567890_04li:	.asciz "Song Name 01234567890 %04li"
 Str_Rdy_x_x_Drq_x_x_MasterFaults_lu:	.asciz "Rdy %x-%x   Drq %x-%x   MasterFaults : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Rdy_x_x_Drq_x_x_MasterFaults_lu
 Str_Error_u_2:	.asciz "Error : %u"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Error_u_2
 Str_ChkStat_TO:	.asciz "ChkStat TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ChkStat_TO
 Str_Error_u:	.asciz "Error : %u"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Error_u
 Str_ChkDrq_TO:	.asciz "ChkDrq TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ChkDrq_TO
 Str_ChkDsc_TO:	.asciz "ChkDsc TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ChkDsc_TO
 Str_ChkReady_TO:	.asciz "ChkReady TO"
 Str_lRet_li:	.asciz "lRet : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_lRet_li
 Str_Bad_Reset:	.asciz "Bad Reset"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Reset
 Str_Bad_Reset_2:	.asciz "Bad Reset(2)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Reset_2
 Str_Result_of_lu_li_li_good_lu_bad_lu:	.asciz "Result of : %lu(%li-%li) -> good : %lu  - bad %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Result_of_lu_li_li_good_lu_bad_lu
 Str_Best_Result_of_lu_lu:	.asciz "Best Result of : %lu -> %lu"
 Str_Time_Out_lu_l_li_k_li:	.asciz "Time Out(%lu) l : %li k : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Time_Out_lu_l_li_k_li
 Str_MaxCluster_lu_k_li_l_li:	.asciz "MaxCluster : %lu k : %li l : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MaxCluster_lu_k_li_l_li
 Str_Time_Out_lu_l_li:	.asciz "Time Out(%lu) l : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Time_Out_lu_l_li
 Str_Total_Faults_li:	.asciz "Total Faults : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Total_Faults_li
 Str_Read_FatCluster_bad:	.asciz "Read FatCluster bad"
 data_9783E130:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E130, 0x03E134
 Str_Bad_MLFinishSave:	.asciz "Bad MLFinishSave"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_MLFinishSave
 Str_Bad_AskForHDFinishSave:	.asciz "Bad AskForHDFinishSave"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_AskForHDFinishSave
 Str_Bad_MLPrepSaveHDSong:	.asciz "Bad MLPrepSaveHDSong"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_MLPrepSaveHDSong
 Str_Bad_MLFinishLoad:	.asciz "Bad MLFinishLoad"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_MLFinishLoad
 Str_Bad_MLPrepLoadHDSong:	.asciz "Bad MLPrepLoadHDSong"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_MLPrepLoadHDSong
 Str_GetActualPartition_bad_2:	.asciz "GetActualPartition bad"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GetActualPartition_bad_2
 Str_CLSaveClusterLine_bad_li_2:	.asciz "CLSaveClusterLine bad : %li"
 Str_StartAdress_lu_2:	.asciz "StartAdress : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_StartAdress_lu_2
 Str_EndAdress_lu_2:	.asciz "EndAdress : %lu"
 data_9783E1FC:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E1FC, 0x03E200
 Str_Fault_3_2:	.asciz "Fault -3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_3_2
 Str_Fault_4_2:	.asciz "Fault -4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_4_2
 Str_Fault_5_2:	.asciz "Fault -5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_5_2
 Str_Overflow:	.asciz "Overflow"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Overflow
 Str_GetActualPartition_bad:	.asciz "GetActualPartition bad"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GetActualPartition_bad
 Str_CLSaveClusterLine_bad_li:	.asciz "CLSaveClusterLine bad : %li"
 Str_StartAdress_lu:	.asciz "StartAdress : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_StartAdress_lu
 Str_EndAdress_lu:	.asciz "EndAdress : %lu"
 Str_SUPFATWriteFatCluster_bad_li:	.asciz "SUPFATWriteFatCluster bad : %li"
 Str_WriteFileSystemBlock_bad_li:	.asciz "WriteFileSystemBlock bad : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WriteFileSystemBlock_bad_li
 Str_s_fAbortSaveCycle_TRUE:	.asciz "s_fAbortSaveCycle TRUE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_fAbortSaveCycle_TRUE
 Str_g_ulHDTransFault_0:	.asciz "g_ulHDTransFault != 0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_g_ulHDTransFault_0
 Str_MLSaveHDBuff_bad_li_sizeof_lu:	.asciz "MLSaveHDBuff bad : %li, sizeof : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MLSaveHDBuff_bad_li_sizeof_lu
 Str_SUPFATGetNextFreeFat_bad_li_2:	.asciz "SUPFATGetNextFreeFat bad : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SUPFATGetNextFreeFat_bad_li_2
 Str_SUPFATGetNextFreeFat_bad_li:	.asciz "SUPFATGetNextFreeFat bad : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SUPFATGetNextFreeFat_bad_li
 Str_Fault_exit_2:	.asciz "Fault, exit"
 Str_12345678_xxx:	.asciz "12345678.xxx"
 Str_wb_13:	.asciz "wb"
 Str_Fault_exit:	.asciz "Fault, exit"
 Str_Files_0_i_i_1_i_i_2_i_i_3_i_i_4_i_i_5_i:	.asciz "Files->0:%i-%i/1:%i-%i/2:%i-%i/3:%i-%i/4:%i-%i/5:%i-%i/6:%i-%i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Files_0_i_i_1_i_i_2_i_i_3_i_i_4_i_i_5_i
 Str_Fat_X_X_X_X_X_X_X_X_X_X_X_X_X_X_X_X_X_X:	.asciz " Fat->%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X-%X"
 Str_0x:	.asciz "0x"
 Str_0X:	.asciz "0X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0X
 
 ptrs_9783E40C:
 	.long	loc_97808109
@@ -192,15 +192,17 @@ data_9783E56D:
 	.space	128, 0x00
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E671, 0x03E674
 Str_Infinity_3:	.asciz "Infinity"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Infinity_3
 Str_Infinity_2:	.asciz "Infinity"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Infinity_2
 Str_Infinity:	.asciz "Infinity"
-	.align	4, 0xFF
-data_9783E698:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E698, 0x03E6AC
-data_9783E6AC:
-	.space	8, 0x00
+	.align	4, 0xFF	# pad after Str_Infinity
+
+PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal_entry : `mov	(a1), d0`
+	tab_u32	1, 0, 0, 0, 0
+LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
+	tab_u32	0, 0
+
 FnName_Debug_Wind_RW:	.asciz "Debug_Wind_RW"
 FnName_KssCatch_USBPP:	.asciz "KssCatch_USBPP"
 FnName_KssCatch_SetSfx:	.asciz "KssCatch_SetSfx"
@@ -245,7 +247,7 @@ FnName_KssxCatch_FlsRunning:	.asciz "KssxCatch_FlsRunning"
 FnName_KssXCustomLyricsSetupCatch:	.asciz "KssXCustomLyricsSetupCatch"
 FnName_KssCatch_NewClsScreen:	.asciz "KssCatch_NewClsScreen"
 FnName_KssxCatch_ClsNotSaved:	.asciz "KssxCatch_ClsNotSaved"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_KssxCatch_ClsNotSaved
 Field_KssVwBox_color:	.asciz "color"
 Field_KssVwBox_border:	.asciz "border"
 Field_KssVwBox_index:	.asciz "index"
@@ -790,7 +792,7 @@ ClassName_LFDFileSelect:	.asciz "LFDFileSelect"
 ClassSig_LFDFileSelect:	.asciz "Gnn"
 ClassName_AcRotStrBox:	.asciz "AcRotStrBox"
 ClassSig_AcRotStrBox:	.asciz "jBBm"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after ClassSig_AcRotStrBox
 
 Str_EV_APCReset:	.asciz "EV_APCReset"
 Str_EV_SeqStop:	.asciz "EV_SeqStop"
@@ -940,7 +942,7 @@ Str_MT_FdLoadLyric:	.asciz "MT_FdLoadLyric"
 Str_MT_FdSaveLyric:	.asciz "MT_FdSaveLyric"
 Str_MT_DoSaveASongHD:	.asciz "MT_DoSaveASongHD"
 Str_MT_DoLoadASongFD:	.asciz "MT_DoLoadASongFD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MT_DoLoadASongFD
 
 FnName_KssTextProc:	.asciz "KssTextProc"
 FnName_KssLabelProc:	.asciz "KssLabelProc"
@@ -1004,23 +1006,23 @@ FnName_SmfFilterFunc:	.asciz "SmfFilterFunc"
 FnName_KssSelectListTestFunc:	.asciz "KssSelectListTestFunc"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x040A85, 0x040A88
 Str_empty:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty
 
 	KssBgScreen	HDD_MAIN_MENU, sub=BackGnd2, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=HDD_MAIN_MENU_window, title=Str_empty	# title ""
 		KssUserBitmap	BackGnd2, super=HDD_MAIN_MENU, sub=BackGnd2_ScreenMenu_SETUP_TOOLS, next=HDD_MAIN_MENU_KssAcLanguageText1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg001
 
 Str_SETUP_TOOLS:	.asciz "SETUP & TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SETUP_TOOLS
 
 			AcScreenMenu	BackGnd2_ScreenMenu_SETUP_TOOLS, super=BackGnd2, next=BackGnd2_ScreenMenu_CUSTOM_LYRICS, flag=VF_Const, X=8, Y=71, W=200, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Left2, selected=BackGnd2_ScreenMenu_SETUP_TOOLS_selected, str=Str_SETUP_TOOLS, screen=SETUP_TOOLS_id, icon=53	# str "SETUP & TOOLS"
 
 Str_CUSTOM_LYRICS:	.asciz "CUSTOM LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_LYRICS
 
 			AcScreenMenu	BackGnd2_ScreenMenu_CUSTOM_LYRICS, super=BackGnd2, next=BackGnd2_ScreenMenu_OUTPUT_MIXER, prev=BackGnd2_ScreenMenu_SETUP_TOOLS, flag=VF_Const, X=8, Y=114, W=200, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Left3, selected=BackGnd2_ScreenMenu_CUSTOM_LYRICS_selected, str=Str_CUSTOM_LYRICS, screen=CUSTOM_LYRICS_id, icon=162	# str "CUSTOM LYRICS"
 
 Str_OUTPUT_MIXER:	.asciz "OUTPUT MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OUTPUT_MIXER
 
 			AcScreenMenu	BackGnd2_ScreenMenu_OUTPUT_MIXER, super=BackGnd2, next=BackGnd2_ScreenMenu_SELECT_SONG, prev=BackGnd2_ScreenMenu_CUSTOM_LYRICS, flag=VF_Const, X=8, Y=157, W=200, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Left4, selected=BackGnd2_ScreenMenu_OUTPUT_MIXER_selected, str=Str_OUTPUT_MIXER, screen=SEPARATE_OUTPUT_MIXER_id, icon=33	# str "OUTPUT MIXER"
 
@@ -1033,7 +1035,7 @@ Str_SELECT_JUKE_BOX:	.asciz "SELECT JUKE BOX"
 			AcScreenMenu	BackGnd2_ScreenMenu_SELECT_JUKE_BOX, super=BackGnd2, next=BackGnd2_ScreenMenu_SELECT_C_L_S, prev=BackGnd2_ScreenMenu_SELECT_SONG, flag=VF_Const, X=418, Y=114, W=214, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Right3, selected=BackGnd2_ScreenMenu_SELECT_JUKE_BOX_selected, str=Str_SELECT_JUKE_BOX, screen=JUKE_BOX_id, icon=121	# str "SELECT JUKE BOX"
 
 Str_SELECT_C_L_S:	.asciz "SELECT C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_C_L_S
 
 			AcScreenMenu	BackGnd2_ScreenMenu_SELECT_C_L_S, super=BackGnd2, next=BackGnd2_CatchEvent1, prev=BackGnd2_ScreenMenu_SELECT_JUKE_BOX, flag=VF_Const, X=418, Y=157, W=214, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Right4, selected=BackGnd2_ScreenMenu_SELECT_C_L_S_selected, str=Str_SELECT_C_L_S, screen=HDD_FLS_SELECT_id, icon=175	# str "SELECT C.L.S."
 			IvCatchEvent	BackGnd2_CatchEvent1, super=BackGnd2, next=BackGnd2_KssPsMultiLangTextBox1, prev=BackGnd2_ScreenMenu_SELECT_C_L_S, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_Main_Wind_KSS
@@ -1045,13 +1047,13 @@ Str_empty_5:	.asciz ""
 Str_empty_6:	.asciz ""
 Str_empty_7:	.asciz ""
 Str_empty_8:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_8
 
 			KssPsMultiLangTextBox	BackGnd2_KssPsMultiLangTextBox1, super=BackGnd2, prev=BackGnd2_CatchEvent1, flag=VF_Const, X=0, Y=60, W=640, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Yellow, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_empty_2, strGerman=Str_empty_3, strFrench=Str_empty_4, strSpanish=Str_empty_5, strItalian=Str_empty_6, strIndones=Str_empty_7, strJapan=Str_empty_8	# strEnglish ""; strGerman ""; strFrench ""; strSpanish ""; strItalian ""; strIndones ""; strJapan ""
 		KssAcLanguageText	HDD_MAIN_MENU_KssAcLanguageText1, super=HDD_MAIN_MENU, next=HDD_MAIN_MENU_TextBox1, prev=BackGnd2, flag=VF_Const, X=0, Y=0, W=0, H=0, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=1, func=FN_KssLanguageCheck
 
 Str_empty_9:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_9
 
 		VwTextBox	HDD_MAIN_MENU_TextBox1, super=HDD_MAIN_MENU, sub=WRT_PROT_DISP, next=SEL_PART_DISP, prev=HDD_MAIN_MENU_KssAcLanguageText1, flag=VF_Const, X=218, Y=78, W=200, H=130, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_9	# text ""
 
@@ -1105,7 +1107,7 @@ Str_DISPLAY_MODE_4:	.asciz "DISPLAY MODE"
 			KssParaTextEntry	DSP_MODE_DISP, super=HDD_MAIN_MENU_TextBox1, next=HDD_MAIN_MENU_TextBox2, prev=JMP_LOAD_DISP, flag=VF_Const, X=220, Y=175, W=200, H=15, fontTitle=3, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=20, fontPara=3, fontcolorPara=CL_Red, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=140, index=8, strEnglish=Str_DISPLAY_MODE, strGerman=Str_DISPLAY_MODE_2, strFrench=Str_DISPLAY_MODE_3, strSpanish=Str_DISPLAY_MODE_4	# strEnglish "DISPLAY MODE"; strGerman "DISPLAY MODE"; strFrench "DISPLAY MODE"; strSpanish "DISPLAY MODE"
 
 Str_empty_10:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_10
 
 		VwTextBox	HDD_MAIN_MENU_TextBox2, super=HDD_MAIN_MENU, sub=FRE_PART_DISP, prev=DSP_MODE_DISP, flag=VF_Const, X=218, Y=208, W=200, H=22, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_10	# text ""
 
@@ -1117,7 +1119,7 @@ Str_FREE_PARTITION_SPACE_4:	.asciz "FREE PARTITION SPACE"
 			KssParaTextEntry	FRE_PART_DISP, super=HDD_MAIN_MENU_TextBox2, flag=VF_Const, X=220, Y=212, W=190, H=15, fontTitle=3, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=20, fontPara=3, fontcolorPara=CL_Red, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=135, index=7, strEnglish=Str_FREE_PARTITION_SPACE, strGerman=Str_FREE_PARTITION_SPACE_2, strFrench=Str_FREE_PARTITION_SPACE_3, strSpanish=Str_FREE_PARTITION_SPACE_4	# strEnglish "FREE PARTITION SPACE"; strGerman "FREE PARTITION SPACE"; strFrench "FREE PARTITION SPACE"; strSpanish "FREE PARTITION SPACE"
 
 Str_SELECT_BY_NUMBER:	.asciz "SELECT BY NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_BY_NUMBER
 
 	KssBgScreen	SELECT_NUMBER, sub=SELECT_NUMBER_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SELECT_NUMBER_window, title=Str_SELECT_BY_NUMBER, icon=174	# title "SELECT BY NUMBER"
 		KssUserBitmap	SELECT_NUMBER_KssUserBitmap1, super=SELECT_NUMBER, sub=SELECT_NUMBER_CatchEvent1, next=LoadOptionWndLBNPg, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1128,7 +1130,7 @@ Str_SELECT_BY_NUMBER:	.asciz "SELECT BY NUMBER"
 		AcWindowPage	LoadOptionWndLBNPg, super=SELECT_NUMBER, prev=SELECT_NUMBER_KssUserBitmap1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=LoadOptionWndLBNPg_page, pagemin=1, pagemax=2
 
 Str_SETUP_TOOLS_2:	.asciz "SETUP & TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SETUP_TOOLS_2
 
 	KssBgScreen	SETUP_TOOLS, sub=SETUP_TOOLS_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SETUP_TOOLS_window, title=Str_SETUP_TOOLS_2, icon=53	# title "SETUP & TOOLS"
 		IvExitScreen	SETUP_TOOLS_ExitScreen1, super=SETUP_TOOLS, next=SETUP_TOOLS_PageControl1, flag=VF_Const|VF_InvisibleBox, X=220, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -1143,7 +1145,7 @@ Str_SETUP_AND_TOOLS_4:	.asciz "SETUP AND TOOLS"
 Str_empty_11:	.asciz ""
 Str_empty_12:	.asciz ""
 Str_empty_13:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_13
 
 			KssPsMultiLangTextBox	SETUP_TOOLS_KssPsMultiLangTextBox1, super=SETUP_TOOLS_KssUserBitmap1, sub=SETUP_TOOLS_CatchEvent1, next=SET_TOOLS_PAGECTRL, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_SETUP_AND_TOOLS, strGerman=Str_SETUP_AND_TOOLS_2, strFrench=Str_SETUP_AND_TOOLS_3, strSpanish=Str_SETUP_AND_TOOLS_4, strItalian=Str_empty_11, strIndones=Str_empty_12, strJapan=Str_empty_13	# strEnglish "SETUP AND TOOLS"; strGerman "SETUP AND TOOLS"; strFrench "SETUP AND TOOLS"; strSpanish "SETUP AND TOOLS"; strItalian ""; strIndones ""; strJapan ""
 				IvCatchEvent	SETUP_TOOLS_CatchEvent1, super=SETUP_TOOLS_KssPsMultiLangTextBox1, next=SETUP_TOOLS_PageControl3, flag=VF_Const|VF_InvisibleBox, X=296, Y=0, W=32, H=32, func=FN_SetupToolsP2SwCatch
@@ -1153,7 +1155,7 @@ Str_empty_13:	.asciz ""
 			AcWindowPage	SET_TOOLS_PAGECTRL, super=SETUP_TOOLS_KssUserBitmap1, prev=SETUP_TOOLS_KssPsMultiLangTextBox1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, page=SET_TOOLS_PAGECTRL_page, pagemin=1, pagemax=3
 
 Str_SEPARATE_OUTPUT_MIXER:	.asciz "SEPARATE OUTPUT MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEPARATE_OUTPUT_MIXER
 
 	KssBgScreen	SEPARATE_OUTPUT_MIXER, sub=SEPARATE_OUTPUT_MIXER_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SEPARATE_OUTPUT_MIXER_window, title=Str_SEPARATE_OUTPUT_MIXER, icon=99	# title "SEPARATE OUTPUT MIXER"
 		KssUserBitmap	SEPARATE_OUTPUT_MIXER_KssUserBitmap1, super=SEPARATE_OUTPUT_MIXER, sub=SEPARATE_OUTPUT_MIXER_ExitScreen1, next=CANEL1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1166,12 +1168,12 @@ Str_Please_note_Write_does_not_save_the_Outp_3:	.asciz "Please note: Write does 
 Str_empty_14:	.asciz ""
 Str_empty_15:	.asciz ""
 Str_empty_16:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_16
 
 			KssAudioOutput	SEPARATE_OUTPUT_MIXER_KssAudioOutput1, super=SEPARATE_OUTPUT_MIXER_KssUserBitmap1, next=TENT_WRITE, prev=TENT_INFO, flag=VF_Const, X=8, Y=70, W=624, H=164, color=CL_Transparent, index=0xFFFF, dial=1, sel_num=SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num, en_paradraw=SEPARATE_OUTPUT_MIXER_KssAudioOutput1_en_paradraw
 
 Str_WRITE:	.asciz "WRITE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WRITE
 
 		PsMenuBox	CANEL1, super=SEPARATE_OUTPUT_MIXER, next=CANEL2, prev=SEPARATE_OUTPUT_MIXER_KssUserBitmap1, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, selected=CANEL1_selected
 		PsMenuBox	CANEL2, super=SEPARATE_OUTPUT_MIXER, next=CANEL3, prev=CANEL1, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, selected=CANEL2_selected
@@ -1189,18 +1191,18 @@ Str_OUTPUT_SETTING_4:	.asciz "OUTPUT SETTING"
 Str_empty_17:	.asciz ""
 Str_empty_18:	.asciz ""
 Str_empty_19:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_19
 
 		KssPsMultiLangTextBox	SEPARATE_OUTPUT_MIXER_KssPsMultiLangTextBox1, super=SEPARATE_OUTPUT_MIXER, prev=EXP_PEDAL2, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_OUTPUT_SETTING, strGerman=Str_OUTPUT_SETTING_2, strFrench=Str_OUTPUT_SETTING_3, strSpanish=Str_OUTPUT_SETTING_4, strItalian=Str_empty_17, strIndones=Str_empty_18, strJapan=Str_empty_19	# strEnglish "OUTPUT SETTING"; strGerman "OUTPUT SETTING"; strFrench "OUTPUT SETTING"; strSpanish "OUTPUT SETTING"; strItalian ""; strIndones ""; strJapan ""
 
 Str_CUSTOM_LYRICS_2:	.asciz "CUSTOM LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_LYRICS_2
 
 	KssBgScreen	CUSTOM_LYRICS, sub=CUSTOM_LYRICS_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CUSTOM_LYRICS_window, title=Str_CUSTOM_LYRICS_2, icon=162	# title "CUSTOM LYRICS"
 		KssUserBitmap	CUSTOM_LYRICS_KssUserBitmap1, super=CUSTOM_LYRICS, sub=TlxSongName, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_SongName:	.asciz "SongName"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SongName
 
 			KssText	TlxSongName, super=CUSTOM_LYRICS_KssUserBitmap1, next=TlxInterpreter, flag=VF_Const, X=8, Y=2, W=372, H=24, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Navy, align=1, init_str=Str_SongName, str_adr=TlxSongName_str_adr	# init_str "SongName"
 
@@ -1209,7 +1211,7 @@ Str_Interpreter:	.asciz "Interpreter"
 			KssText	TlxInterpreter, super=CUSTOM_LYRICS_KssUserBitmap1, next=TlxInfo, prev=TlxSongName, flag=VF_Const, X=8, Y=26, W=372, H=24, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Navy, align=1, init_str=Str_Interpreter, str_adr=TlxInterpreter_str_adr	# init_str "Interpreter"
 
 Str_Info:	.asciz "Info"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Info
 
 			KssText	TlxInfo, super=CUSTOM_LYRICS_KssUserBitmap1, next=TlxMeasure, prev=TlxInterpreter, flag=VF_Const, X=8, Y=50, W=372, H=24, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Navy, align=1, init_str=Str_Info, str_adr=TlxInfo_str_adr	# init_str "Info"
 
@@ -1223,7 +1225,7 @@ Str_TimeSig:	.asciz "TimeSig"
 			KssXLyricsBox	TlxBox, super=CUSTOM_LYRICS_KssUserBitmap1, next=CUSTOM_LYRICS_WideESBox_Copy_TLX_to_HD, prev=TlxTimeSig, flag=VF_Const, X=8, Y=77, W=624, H=132, color=CL_White, border=BD_Round5, index=0xFFFF, pEnable=TlxBox_pEnable
 
 Str_Copy_TLX_to_HD:	.asciz "Copy TLX to HD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Copy_TLX_to_HD
 
 			VwWideESBox	CUSTOM_LYRICS_WideESBox_Copy_TLX_to_HD, super=CUSTOM_LYRICS_KssUserBitmap1, next=CUSTOM_LYRICS_ChordBox1, prev=TlxBox, flag=VF_Const, X=480, Y=212, W=152, H=24, color=CL_Silver, border=BD_3D_UP1, index=1, font=5, fontcolor=CL_Navy, editsw=ES_Bottom13, editsw2=ES_Bottom16, str=Str_Copy_TLX_to_HD	# str "Copy TLX to HD"
 			AcChordBox	CUSTOM_LYRICS_ChordBox1, super=CUSTOM_LYRICS_KssUserBitmap1, sub=CUSTOM_LYRICS_TextBox_APC_CHORDS, next=CUSTOM_LYRICS_KssVwBox1, prev=CUSTOM_LYRICS_WideESBox_Copy_TLX_to_HD, flag=VF_Const, X=340, Y=213, W=120, H=22, color=CL_Silver, index=0xFFFF, font=4, fontcolor=CL_Black
@@ -1238,7 +1240,7 @@ Str_CHORD:	.asciz "-CHORD-"
 				KssText	TlxChord, super=CUSTOM_LYRICS_KssVwBox1, next=CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS, flag=VF_Const, X=382, Y=20, W=132, H=48, color=CL_White, border=BD_Round5, index=0xFFFF, font=10, fontcolor=CL_Black, init_str=Str_CHORD, str_adr=TlxChord_str_adr	# init_str "-CHORD-"
 
 Str_CUSTOM_LYRICS_CHORDS:	.asciz "CUSTOM LYRICS CHORDS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_LYRICS_CHORDS
 
 				KssLabel	CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS, super=CUSTOM_LYRICS_KssVwBox1, next=TlxTempo, prev=TlxChord, flag=VF_Const, X=383, Y=5, W=125, H=13, font=3, fontcolor=CL_Black, bgcolor=CL_Silver, align=1, adjust_box=1, main_func=FN_DefMainFunction, str=Str_CUSTOM_LYRICS_CHORDS, str_adr=CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS_str_adr	# str "CUSTOM LYRICS CHORDS"
 				AcTempoBox	TlxTempo, super=CUSTOM_LYRICS_KssVwBox1, prev=CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS, flag=VF_Const, X=514, Y=20, W=116, H=48, color=CL_Silver, index=0xFFFF, font=11, fontcolor=CL_DarkGray
@@ -1256,22 +1258,22 @@ Str_C_L_S_SELECT_4:	.asciz "C.L.S. SELECT"
 Str_empty_20:	.asciz ""
 Str_empty_21:	.asciz ""
 Str_empty_22:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_22
 
 			KssPsMultiLangTextBox	HDD_FLS_SELECT_KssPsMultiLangTextBox1, super=HDD_FLS_SELECT_KssUserBitmap1, next=HDD_FLS_SELECT_ScreenMenu_OK, flag=VF_Const, X=2, Y=4, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_C_L_S_SELECT, strGerman=Str_C_L_S_SELECT_2, strFrench=Str_C_L_S_SELECT_3, strSpanish=Str_C_L_S_SELECT_4, strItalian=Str_empty_20, strIndones=Str_empty_21, strJapan=Str_empty_22	# strEnglish "C.L.S. SELECT"; strGerman "C.L.S. SELECT"; strFrench "C.L.S. SELECT"; strSpanish "C.L.S. SELECT"; strItalian ""; strIndones ""; strJapan ""
 
 Str_OK:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK
 
 			AcScreenMenu	HDD_FLS_SELECT_ScreenMenu_OK, super=HDD_FLS_SELECT_KssUserBitmap1, next=ScrBut_EditFlsName, prev=HDD_FLS_SELECT_KssPsMultiLangTextBox1, flag=VF_Const, X=581, Y=28, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=HDD_FLS_SELECT_ScreenMenu_OK_selected, str=Str_OK, screen=CLS_FILE_LOAD_SCREEN_id	# str "OK"
 
 Str_EDIT:	.asciz "EDIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EDIT
 
 			VwLine	HDD_FLS_SELECT_Line1, super=HDD_FLS_SELECT_KssUserBitmap1, next=HDD_FLS_SELECT_ScreenMenu1, prev=ScrBut_EditFlsName, flag=VF_Const, X=633, Y=41, W=1, H=54, color=CL_FireRed, linemode=1
 
 Str_empty_23:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_23
 
 			AcScreenMenu	HDD_FLS_SELECT_ScreenMenu1, super=HDD_FLS_SELECT_KssUserBitmap1, next=HDD_FLS_SELECT_ExitScreen1, prev=HDD_FLS_SELECT_Line1, flag=VF_Const, X=581, Y=71, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=HDD_FLS_SELECT_ScreenMenu1_selected, str=Str_empty_23, screen=CLS_FILE_LOAD_SCREEN_id	# str ""
 			IvExitScreen	HDD_FLS_SELECT_ExitScreen1, super=HDD_FLS_SELECT_KssUserBitmap1, next=CLS_Dir_List, prev=HDD_FLS_SELECT_ScreenMenu1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -1281,7 +1283,7 @@ Str_empty_23:	.asciz ""
 			AcIndexEditSw	HDD_FLS_SELECT_IndexEditSw2, super=HDD_FLS_SELECT_KssUserBitmap1, prev=HDD_FLS_SELECT_IndexWideES1, flag=VF_Const, X=404, Y=214, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=8
 
 Str_KssBg:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg
 
 	KssBgScreen	FILE_DEL_OPTIONS, sub=FILE_DEL_OPTIONS_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=FILE_DEL_OPTIONS_window, title=Str_KssBg, icon=1	# title "KssBg"
 		KssUserBitmap	FILE_DEL_OPTIONS_KssUserBitmap1, super=FILE_DEL_OPTIONS, sub=FILE_DEL_OPTIONS_IndexEditSw1, next=FILE_DEL_OPTIONS_Label_PANEL, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1303,7 +1305,7 @@ Str_ALL_OFF:	.asciz "ALL OFF"
 				AcIndexEditSw	FILE_DEL_OPTIONS_IndexEditSw12, super=FILE_DEL_OPTIONS_Label_ALL_OFF, flag=VF_Const, X=560, Y=165, W=70, H=22, color=CL_Transparent, border=BD_3D_UP1, index=12, font=4, fontcolor=CL_Black, editsw=ES_Right4
 
 Str_DELETE:	.asciz "DELETE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DELETE
 
 			AcScreenMenu	FILE_DEL_OPTIONS_ScreenMenu_DELETE, super=FILE_DEL_OPTIONS_KssUserBitmap1, next=FILE_DEL_OPTIONS_IndexEditSw13, prev=FILE_DEL_OPTIONS_Label_ALL_OFF, flag=VF_Const, X=560, Y=38, W=70, H=20, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_FireRed, editsw=ES_Right1, selected=FILE_DEL_OPTIONS_ScreenMenu_DELETE_selected, str=Str_DELETE, screen=0xFFFFFFFF	# str "DELETE"
 			AcIndexEditSw	FILE_DEL_OPTIONS_IndexEditSw13, super=FILE_DEL_OPTIONS_KssUserBitmap1, sub=FILE_DEL_OPTIONS_Label_ALL_DEL, next=FILE_DEL_OPTIONS_IndexEditSw14, prev=FILE_DEL_OPTIONS_ScreenMenu_DELETE, flag=VF_Const, X=560, Y=122, W=70, H=22, color=CL_Transparent, border=BD_3D_UP1, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right3
@@ -1321,7 +1323,7 @@ Str_FILE_NAME_4:	.asciz "FILE NAME :"
 Str_empty_24:	.asciz ""
 Str_empty_25:	.asciz ""
 Str_empty_26:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_26
 
 			KssPsMultiLangTextBox	FileNameTtlDelBox, super=FILE_DEL_OPTIONS_KssUserBitmap1, next=FILE_DEL_OPTIONS_KssPsMultiLangTextBox1, prev=FileDelSetSfxBox, flag=VF_Const, X=85, Y=46, W=473, H=24, color=CL_SilverB, border=BD_3D_UP1, index=101, fontcolor=CL_Black, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=2, strEnglish=Str_FILE_NAME, strGerman=Str_FILE_NAME_2, strFrench=Str_FILE_NAME_3, strSpanish=Str_FILE_NAME_4, strItalian=Str_empty_24, strIndones=Str_empty_25, strJapan=Str_empty_26	# strEnglish "FILE NAME :"; strGerman "FILE NAME :"; strFrench "FILE NAME :"; strSpanish "FILE NAME :"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1332,18 +1334,18 @@ Str_FILE_DELETE_OPTIONS_4:	.asciz "FILE DELETE OPTIONS"
 Str_empty_27:	.asciz ""
 Str_empty_28:	.asciz ""
 Str_empty_29:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_29
 
 			KssPsMultiLangTextBox	FILE_DEL_OPTIONS_KssPsMultiLangTextBox1, super=FILE_DEL_OPTIONS_KssUserBitmap1, next=FILE_DEL_OPTIONS_CatchEvent1, prev=FileNameTtlDelBox, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_DELETE_OPTIONS, strGerman=Str_FILE_DELETE_OPTIONS_2, strFrench=Str_FILE_DELETE_OPTIONS_3, strSpanish=Str_FILE_DELETE_OPTIONS_4, strItalian=Str_empty_27, strIndones=Str_empty_28, strJapan=Str_empty_29	# strEnglish "FILE DELETE OPTIONS"; strGerman "FILE DELETE OPTIONS"; strFrench "FILE DELETE OPTIONS"; strSpanish "FILE DELETE OPTIONS"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	FILE_DEL_OPTIONS_CatchEvent1, super=FILE_DEL_OPTIONS_KssUserBitmap1, prev=FILE_DEL_OPTIONS_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, func=FN_KssCatch_SetSfxDel
 
 Str_PANEL:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL
 
 		VwLabel	FILE_DEL_OPTIONS_Label_PANEL, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_P_MEM, prev=FILE_DEL_OPTIONS_KssUserBitmap1, flag=VF_Const, X=82, Y=204, W=34, H=11, str=Str_PANEL, font=3, fontcolor=CL_Black	# str "PANEL"
 
 Str_P_MEM:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM
 
 		VwLabel	FILE_DEL_OPTIONS_Label_P_MEM, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_SEQ, prev=FILE_DEL_OPTIONS_Label_PANEL, flag=VF_Const, X=122, Y=204, W=34, H=11, str=Str_P_MEM, font=3, fontcolor=CL_Black	# str "P.MEM"
 
@@ -1352,27 +1354,27 @@ Str_SEQ:	.asciz "SEQ"
 		VwLabel	FILE_DEL_OPTIONS_Label_SEQ, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_COMP, prev=FILE_DEL_OPTIONS_Label_P_MEM, flag=VF_Const, X=167, Y=204, W=22, H=11, str=Str_SEQ, font=3, fontcolor=CL_Black	# str "SEQ"
 
 Str_COMP:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP
 
 		VwLabel	FILE_DEL_OPTIONS_Label_COMP, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_SOUND, prev=FILE_DEL_OPTIONS_Label_SEQ, flag=VF_Const, X=205, Y=204, W=28, H=11, str=Str_COMP, font=3, fontcolor=CL_Black	# str "COMP"
 
 Str_SOUND:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND
 
 		VwLabel	FILE_DEL_OPTIONS_Label_SOUND, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_PADS, prev=FILE_DEL_OPTIONS_Label_COMP, flag=VF_Const, X=242, Y=204, W=34, H=11, str=Str_SOUND, font=3, fontcolor=CL_Black	# str "SOUND"
 
 Str_PADS:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS
 
 		VwLabel	FILE_DEL_OPTIONS_Label_PADS, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_EFFECT, prev=FILE_DEL_OPTIONS_Label_SOUND, flag=VF_Const, X=285, Y=204, W=28, H=11, str=Str_PADS, font=3, fontcolor=CL_Black	# str "PADS"
 
 Str_EFFECT:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT
 
 		VwLabel	FILE_DEL_OPTIONS_Label_EFFECT, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_MIDI, prev=FILE_DEL_OPTIONS_Label_PADS, flag=VF_Const, X=320, Y=204, W=40, H=11, str=Str_EFFECT, font=3, fontcolor=CL_Black	# str "EFFECT"
 
 Str_MIDI:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI
 
 		VwLabel	FILE_DEL_OPTIONS_Label_MIDI, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_FAV, prev=FILE_DEL_OPTIONS_Label_EFFECT, flag=VF_Const, X=365, Y=204, W=28, H=11, str=Str_MIDI, font=3, fontcolor=CL_Black	# str "MIDI"
 
@@ -1381,28 +1383,28 @@ Str_FAV:	.asciz "FAV"
 		VwLabel	FILE_DEL_OPTIONS_Label_FAV, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_H_PAGE, prev=FILE_DEL_OPTIONS_Label_MIDI, flag=VF_Const, X=408, Y=204, W=22, H=11, str=Str_FAV, font=3, fontcolor=CL_Black	# str "FAV"
 
 Str_H_PAGE:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE
 
 		VwLabel	FILE_DEL_OPTIONS_Label_H_PAGE, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_CUSTOM, prev=FILE_DEL_OPTIONS_Label_FAV, flag=VF_Const, X=439, Y=204, W=40, H=11, str=Str_H_PAGE, font=3, fontcolor=CL_Black	# str "H.PAGE"
 
 Str_CUSTOM:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM
 
 		VwLabel	FILE_DEL_OPTIONS_Label_CUSTOM, super=FILE_DEL_OPTIONS, next=FILE_DEL_OPTIONS_Label_LYRICS, prev=FILE_DEL_OPTIONS_Label_H_PAGE, flag=VF_Const, X=480, Y=204, W=40, H=11, str=Str_CUSTOM, font=3, fontcolor=CL_Black	# str "CUSTOM"
 
 Str_LYRICS:	.asciz "LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS
 
 		VwLabel	FILE_DEL_OPTIONS_Label_LYRICS, super=FILE_DEL_OPTIONS, next=ExitFileDelOptions, prev=FILE_DEL_OPTIONS_Label_CUSTOM, flag=VF_Const, X=520, Y=204, W=40, H=11, str=Str_LYRICS, font=3, fontcolor=CL_Black	# str "LYRICS"
 		AcIndexEditSw	ExitFileDelOptions, super=FILE_DEL_OPTIONS, prev=FILE_DEL_OPTIONS_Label_LYRICS, flag=VF_Const, X=420, Y=0, W=32, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit
 
 Str_SELECT_ALPHABETIC_SORTED:	.asciz "SELECT ALPHABETIC SORTED "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_ALPHABETIC_SORTED
 
 	KssBgScreen	SORTED_LIST, sub=SORTED_LIST_TextBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SORTED_LIST_window, title=Str_SELECT_ALPHABETIC_SORTED, icon=1	# title "SELECT ALPHABETIC SORTED "
 
 Str_empty_30:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_30
 
 		VwTextBox	SORTED_LIST_TextBox1, super=SORTED_LIST, sub=SORTED_LIST_Label_W_X, next=SORTED_LIST_TextBox2, flag=VF_Const, X=440, Y=216, W=40, H=24, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_30	# text ""
 
@@ -1411,7 +1413,7 @@ Str_W_X:	.asciz "W/X"
 			VwLabel	SORTED_LIST_Label_W_X, super=SORTED_LIST_TextBox1, flag=VF_Const, X=446, Y=220, W=28, H=19, str=Str_W_X, fontcolor=CL_Black	# str "W/X"
 
 Str_empty_31:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_31
 
 		VwTextBox	SORTED_LIST_TextBox2, super=SORTED_LIST, sub=SORTED_LIST_Label_Y_Z, next=SORTED_LIST_KssUserBitmap1, prev=SORTED_LIST_TextBox1, flag=VF_Const, X=480, Y=216, W=40, H=24, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_31	# text ""
 
@@ -1421,17 +1423,17 @@ Str_Y_Z:	.asciz "Y/Z"
 		KssUserBitmap	SORTED_LIST_KssUserBitmap1, super=SORTED_LIST, sub=SORTED_LIST_TextBox3, prev=SORTED_LIST_TextBox2, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_empty_32:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_32
 
 			VwTextBox	SORTED_LIST_TextBox3, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_S, next=SORTED_LIST_TextBox4, flag=VF_Const, X=120, Y=216, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_32	# text ""
 
 Str_S:	.asciz "S"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S
 
 				VwLabel	SORTED_LIST_Label_S, super=SORTED_LIST_TextBox3, flag=VF_Const, X=134, Y=220, W=12, H=19, str=Str_S, fontcolor=CL_Black	# str "S"
 
 Str_empty_33:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_33
 
 			VwTextBox	SORTED_LIST_TextBox4, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_B_C, next=SORTED_LIST_TextBox5, prev=SORTED_LIST_TextBox3, flag=VF_Const, X=80, Y=192, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_33	# text ""
 
@@ -1440,17 +1442,17 @@ Str_B_C:	.asciz "B/C"
 				VwLabel	SORTED_LIST_Label_B_C, super=SORTED_LIST_TextBox4, flag=VF_Const, X=86, Y=196, W=28, H=19, str=Str_B_C, fontcolor=CL_Black	# str "B/C"
 
 Str_empty_34:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_34
 
 			VwTextBox	SORTED_LIST_TextBox5, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_R, next=SORTED_LIST_TextBox6, prev=SORTED_LIST_TextBox4, flag=VF_Const, X=80, Y=216, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_34	# text ""
 
 Str_R:	.asciz "R"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_R
 
 				VwLabel	SORTED_LIST_Label_R, super=SORTED_LIST_TextBox5, flag=VF_Const, X=94, Y=220, W=12, H=19, str=Str_R, fontcolor=CL_Black	# str "R"
 
 Str_empty_35:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_35
 
 			VwTextBox	SORTED_LIST_TextBox6, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_P_Q, next=SORTED_LIST_TextBox7, prev=SORTED_LIST_TextBox5, flag=VF_Const, X=40, Y=216, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_35	# text ""
 
@@ -1459,55 +1461,55 @@ Str_P_Q:	.asciz "P/Q"
 				VwLabel	SORTED_LIST_Label_P_Q, super=SORTED_LIST_TextBox6, flag=VF_Const, X=46, Y=220, W=28, H=19, str=Str_P_Q, fontcolor=CL_Black	# str "P/Q"
 
 Str_empty_36:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_36
 
 			VwTextBox	SORTED_LIST_TextBox7, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_A, next=SORTED_LIST_TextBox9, prev=SORTED_LIST_TextBox6, flag=VF_Const, X=0, Y=216, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_36	# text ""
 
 Str_A:	.asciz "A"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A
 
 				VwLabel	SORTED_LIST_Label_A, super=SORTED_LIST_TextBox7, sub=SORTED_LIST_TextBox8, flag=VF_Const, X=54, Y=196, W=12, H=19, str=Str_A, fontcolor=CL_Black	# str "A"
 
 Str_empty_37:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_37
 
 					VwTextBox	SORTED_LIST_TextBox8, super=SORTED_LIST_Label_A, flag=VF_Const, X=40, Y=192, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_37	# text ""
 
 Str_empty_38:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_38
 
 			VwTextBox	SORTED_LIST_TextBox9, super=SORTED_LIST_KssUserBitmap1, sub=SORTED_LIST_Label_1_9, next=SORTED_LIST_TextBox10, prev=SORTED_LIST_TextBox7, flag=VF_Const, X=0, Y=192, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_38	# text ""
 
 Str_1_9:	.asciz "1..9"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_9
 
 				VwLabel	SORTED_LIST_Label_1_9, super=SORTED_LIST_TextBox9, flag=VF_Const, X=6, Y=196, W=29, H=19, str=Str_1_9, font=5, fontcolor=CL_Black	# str "1..9"
 
 Str_empty_39:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_39
 
 			VwTextBox	SORTED_LIST_TextBox10, super=SORTED_LIST_KssUserBitmap1, next=V_HDD_MAIN_MENU_Label_E, prev=SORTED_LIST_TextBox9, flag=VF_Const, X=160, Y=216, W=40, H=24, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_39	# text ""
 
 Str_E:	.asciz "E"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_E
 
 	VwLabel	V_HDD_MAIN_MENU_Label_E, flag=VF_Const, X=174, Y=196, W=12, H=19, str=Str_E, fontcolor=CL_Black	# str "E"
 
 	Window	SETUP_TOOL1, sub=SETUP_TOOL1_ScreenMenu1, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Transparent, index=0xFFFF, parent=SETUP_TOOL1_parent, child=SETUP_TOOL1_child
 
 Str_empty_40:	.asciz "  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_40
 
 		AcScreenMenu	SETUP_TOOL1_ScreenMenu1, super=SETUP_TOOL1, sub=SETUP_TOOL1_TextBox_PC_DATA_LINK, next=CCST, flag=VF_Const, X=492, Y=117, W=140, H=32, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right3, selected=SETUP_TOOL1_ScreenMenu1_selected, str=Str_empty_40, screen=DATA_LINK_id, icon=135	# str "  "
 
 Str_PC_DATA_LINK:	.asciz "     PC DATA LINK "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PC_DATA_LINK
 
 			VwTextBox	SETUP_TOOL1_TextBox_PC_DATA_LINK, super=SETUP_TOOL1_ScreenMenu1, flag=VF_Const, X=488, Y=119, W=120, H=34, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=2, lines=2, text=Str_PC_DATA_LINK	# text "     PC DATA LINK "
 		IvCatchEvent	CCST, super=SETUP_TOOL1, next=SETUP_TOOL1_ScreenMenu_COPY_FLOPPY_TO_HARD, prev=SETUP_TOOL1_ScreenMenu1, flag=VF_Const|VF_InvisibleBox, X=328, Y=0, W=32, H=32, func=FN_KSSSETUPTOOLSP1TitleSwCatch
 
 Str_COPY_FLOPPY_TO_HARD_DISK:	.asciz "COPY FLOPPY TO HARD DISK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_FLOPPY_TO_HARD_DISK
 
 		AcScreenMenu	SETUP_TOOL1_ScreenMenu_COPY_FLOPPY_TO_HARD, super=SETUP_TOOL1, next=SETUP_TOOL1_KssPsMultiLangTextBox1, prev=CCST, flag=VF_Const, X=8, Y=117, W=140, H=32, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Left3, selected=SETUP_TOOL1_ScreenMenu_COPY_FLOPPY_TO_HARD_selected, str=Str_COPY_FLOPPY_TO_HARD_DISK, screen=0xFFFFFFFF, icon=115	# str "COPY FLOPPY TO HARD DISK"
 
@@ -1518,7 +1520,7 @@ Str_ATTENTION_3:	.asciz "!! ATTENTION !!"
 Str_empty_41:	.asciz ""
 Str_empty_42:	.asciz ""
 Str_empty_43:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_43
 
 		KssPsMultiLangTextBox	SETUP_TOOL1_KssPsMultiLangTextBox1, super=SETUP_TOOL1, sub=SETUP_TOOL1_KssVwBox1, next=SETUP_TOOL1_ScreenMenu_HELP_PAGE, prev=SETUP_TOOL1_ScreenMenu_COPY_FLOPPY_TO_HARD, flag=VF_Const, X=160, Y=80, W=320, H=30, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_ATTENTION, strGerman=Str_ACHTUNG, strFrench=Str_ATTENTION_2, strSpanish=Str_ATTENTION_3, strItalian=Str_empty_41, strIndones=Str_empty_42, strJapan=Str_empty_43	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 			KssVwBox	SETUP_TOOL1_KssVwBox1, super=SETUP_TOOL1_KssPsMultiLangTextBox1, sub=SETUP_TOOL1_KssPsMultiLangTextBox2, flag=VF_Const, X=160, Y=72, W=320, H=112, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF
@@ -1530,7 +1532,7 @@ Str_ATTENTION_5:	.asciz "!! ATTENTION !!"
 Str_empty_44:	.asciz ""
 Str_empty_45:	.asciz ""
 Str_empty_46:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_46
 
 				KssPsMultiLangTextBox	SETUP_TOOL1_KssPsMultiLangTextBox2, super=SETUP_TOOL1_KssVwBox1, next=SETUP_TOOL1_KssPsMultiLangTextBox3, flag=VF_Const, X=160, Y=146, W=320, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Maroon, backfontcolor=CL_Silver, lines=2, Dim3d=1, strEnglish=Str_So_don_t_use_these_functions_on_stage, strGerman=Str_Benuetzen_sie_diese_Funktionen_also_nich, strFrench=Str_ATTENTION_4, strSpanish=Str_ATTENTION_5, strItalian=Str_empty_44, strIndones=Str_empty_45, strJapan=Str_empty_46	# strEnglish "So don't use these functions on stage."; strGerman "Benuetzen sie diese Funktionen also nich"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1541,19 +1543,19 @@ Str_If_you_press_one_of_this_buttons_your_mu_3:	.asciz "If you press one of this
 Str_empty_47:	.asciz ""
 Str_empty_48:	.asciz ""
 Str_empty_49:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_49
 
 				KssPsMultiLangTextBox	SETUP_TOOL1_KssPsMultiLangTextBox3, super=SETUP_TOOL1_KssVwBox1, prev=SETUP_TOOL1_KssPsMultiLangTextBox2, flag=VF_Const, X=160, Y=110, W=320, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Maroon, backfontcolor=CL_Silver, lines=2, Dim3d=1, strEnglish=Str_If_you_press_one_of_this_buttons_your_mu, strGerman=Str_Wenn_Sie_einen_dieser_Kn_pfe_dr_cken_wir, strFrench=Str_If_you_press_one_of_this_buttons_your_mu_2, strSpanish=Str_If_you_press_one_of_this_buttons_your_mu_3, strItalian=Str_empty_47, strIndones=Str_empty_48, strJapan=Str_empty_49	# strEnglish "If you press one of this buttons your mu"; strGerman "Wenn Sie einen dieser Kn\xF6pfe dr\xFCck"; strFrench "If you press one of this buttons your mu"; strSpanish "If you press one of this buttons your mu"; strItalian ""; strIndones ""; strJapan ""
 
 Str_HELP_PAGE:	.asciz "HELP-PAGE "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_PAGE
 
 		AcScreenMenu	SETUP_TOOL1_ScreenMenu_HELP_PAGE, super=SETUP_TOOL1, prev=SETUP_TOOL1_KssPsMultiLangTextBox1, flag=VF_Const, X=8, Y=204, W=140, H=32, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Left5, selected=SETUP_TOOL1_ScreenMenu_HELP_PAGE_selected, str=Str_HELP_PAGE, screen=HELP_WORKSHOP_id, icon=39	# str "HELP-PAGE "
 
 	Window	SETUP_TOOL2, sub=SETUP_TOOL2_ScreenMenu_ABOUT_HELP, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Transparent, index=0xFFFF, parent=SETUP_TOOL2_parent, child=SETUP_TOOL2_child
 
 Str_ABOUT_HELP:	.asciz "ABOUT & HELP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ABOUT_HELP
 
 		AcScreenMenu	SETUP_TOOL2_ScreenMenu_ABOUT_HELP, super=SETUP_TOOL2, sub=IndexSwitch, next=HDD_SETTOOLSPAR_1, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, editsw=ES_Right5, selected=SETUP_TOOL2_ScreenMenu_ABOUT_HELP_selected, str=Str_ABOUT_HELP, screen=ABOUT_HELP_id, icon=91	# str "ABOUT & HELP"
 			AcIndexWideES	IndexSwitch, super=SETUP_TOOL2_ScreenMenu_ABOUT_HELP, flag=VF_Const, X=320, Y=212, W=120, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
@@ -1563,7 +1565,7 @@ Str_WRITE_PROTECT:	.asciz "WRITE PROTECT"
 Str_WRITE_PROTECT_2:	.asciz "WRITE PROTECT"
 Str_WRITE_PROTECT_3:	.asciz "WRITE PROTECT"
 Str_WRITE_PROTECT_4:	.asciz "WRITE PROTECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WRITE_PROTECT_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_1, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_2, prev=SETUP_TOOL2_ScreenMenu_ABOUT_HELP, flag=VF_Const, X=10, Y=32, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_50, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left1, dial=1, selected=HDD_SETTOOLSPAR_1_selected, num=HDD_SETTOOLSPAR_1_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=6, posx=215, strEnglish=Str_WRITE_PROTECT, strGerman=Str_WRITE_PROTECT_2, strFrench=Str_WRITE_PROTECT_3, strSpanish=Str_WRITE_PROTECT_4	# caption ""; strEnglish "WRITE PROTECT"; strGerman "WRITE PROTECT"; strFrench "WRITE PROTECT"; strSpanish "WRITE PROTECT"
 
@@ -1572,7 +1574,7 @@ Str_WRITE_CONFIRMATION:	.asciz "WRITE CONFIRMATION"
 Str_WRITE_CONFIRMATION_2:	.asciz "WRITE CONFIRMATION"
 Str_WRITE_CONFIRMATION_3:	.asciz "WRITE CONFIRMATION"
 Str_WRITE_CONFIRMATION_4:	.asciz "WRITE CONFIRMATION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WRITE_CONFIRMATION_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_2, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_3, prev=HDD_SETTOOLSPAR_1, flag=VF_Const, X=10, Y=75, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_51, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left2, dial=1, selected=HDD_SETTOOLSPAR_2_selected, num=HDD_SETTOOLSPAR_2_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=6, posx=215, indexPara=1, strEnglish=Str_WRITE_CONFIRMATION, strGerman=Str_WRITE_CONFIRMATION_2, strFrench=Str_WRITE_CONFIRMATION_3, strSpanish=Str_WRITE_CONFIRMATION_4	# caption ""; strEnglish "WRITE CONFIRMATION"; strGerman "WRITE CONFIRMATION"; strFrench "WRITE CONFIRMATION"; strSpanish "WRITE CONFIRMATION"
 
@@ -1581,7 +1583,7 @@ Str_SELECTED_PARTITION_5:	.asciz "SELECTED PARTITION"
 Str_SELECTED_PARTITION_6:	.asciz "SELECTED PARTITION"
 Str_SELECTED_PARTITION_7:	.asciz "SELECTED PARTITION"
 Str_SELECTED_PARTITION_8:	.asciz "SELECTED PARTITION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECTED_PARTITION_8
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_3, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_4, prev=HDD_SETTOOLSPAR_2, flag=VF_Const, X=10, Y=118, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_52, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left3, dial=1, selected=HDD_SETTOOLSPAR_3_selected, num=HDD_SETTOOLSPAR_3_num, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=6, posx=205, indexPara=2, strEnglish=Str_SELECTED_PARTITION_5, strGerman=Str_SELECTED_PARTITION_6, strFrench=Str_SELECTED_PARTITION_7, strSpanish=Str_SELECTED_PARTITION_8	# caption ""; strEnglish "SELECTED PARTITION"; strGerman "SELECTED PARTITION"; strFrench "SELECTED PARTITION"; strSpanish "SELECTED PARTITION"
 
@@ -1590,7 +1592,7 @@ Str_LOAD_BY_NUMBER_MODE_5:	.asciz "LOAD BY NUMBER MODE"
 Str_LOAD_BY_NUMBER_MODE_6:	.asciz "LOAD BY NUMBER MODE"
 Str_LOAD_BY_NUMBER_MODE_7:	.asciz "LOAD BY NUMBER MODE"
 Str_LOAD_BY_NUMBER_MODE_8:	.asciz "LOAD BY NUMBER MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_BY_NUMBER_MODE_8
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_4, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_5, prev=HDD_SETTOOLSPAR_3, flag=VF_Const, X=10, Y=161, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_53, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left4, dial=1, selected=HDD_SETTOOLSPAR_4_selected, num=HDD_SETTOOLSPAR_4_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=10, posx=190, indexPara=3, strEnglish=Str_LOAD_BY_NUMBER_MODE_5, strGerman=Str_LOAD_BY_NUMBER_MODE_6, strFrench=Str_LOAD_BY_NUMBER_MODE_7, strSpanish=Str_LOAD_BY_NUMBER_MODE_8	# caption ""; strEnglish "LOAD BY NUMBER MODE"; strGerman "LOAD BY NUMBER MODE"; strFrench "LOAD BY NUMBER MODE"; strSpanish "LOAD BY NUMBER MODE"
 
@@ -1599,7 +1601,7 @@ Str_QUICK_LOAD_MODE_5:	.asciz "QUICK LOAD MODE"
 Str_QUICK_LOAD_MODE_6:	.asciz "QUICK LOAD MODE"
 Str_QUICK_LOAD_MODE_7:	.asciz "QUICK LOAD MODE"
 Str_QUICK_LOAD_MODE_8:	.asciz "QUICK LOAD MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_QUICK_LOAD_MODE_8
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_5, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_6, prev=HDD_SETTOOLSPAR_4, flag=VF_Const, X=10, Y=204, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_54, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left5, dial=1, selected=HDD_SETTOOLSPAR_5_selected, num=HDD_SETTOOLSPAR_5_num, max=4, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=11, posx=184, indexPara=4, strEnglish=Str_QUICK_LOAD_MODE_5, strGerman=Str_QUICK_LOAD_MODE_6, strFrench=Str_QUICK_LOAD_MODE_7, strSpanish=Str_QUICK_LOAD_MODE_8	# caption ""; strEnglish "QUICK LOAD MODE"; strGerman "QUICK LOAD MODE"; strFrench "QUICK LOAD MODE"; strSpanish "QUICK LOAD MODE"
 
@@ -1608,7 +1610,7 @@ Str_JUMP_AFTER_LOAD_MODE:	.asciz "JUMP AFTER LOAD MODE"
 Str_JUMP_AFTER_LOAD_MODE_2:	.asciz "JUMP AFTER LOAD MODE"
 Str_JUMP_AFTER_LOAD_MODE_3:	.asciz "JUMP AFTER LOAD MODE"
 Str_JUMP_AFTER_LOAD_MODE_4:	.asciz "JUMP AFTER LOAD MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUMP_AFTER_LOAD_MODE_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_6, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_7, prev=HDD_SETTOOLSPAR_5, flag=VF_Const, X=350, Y=32, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_55, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Right1, dial=1, selected=HDD_SETTOOLSPAR_6_selected, num=HDD_SETTOOLSPAR_6_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Silver, alignmentPara=1, lenPara=9, posx=195, indexPara=5, strEnglish=Str_JUMP_AFTER_LOAD_MODE, strGerman=Str_JUMP_AFTER_LOAD_MODE_2, strFrench=Str_JUMP_AFTER_LOAD_MODE_3, strSpanish=Str_JUMP_AFTER_LOAD_MODE_4	# caption ""; strEnglish "JUMP AFTER LOAD MODE"; strGerman "JUMP AFTER LOAD MODE"; strFrench "JUMP AFTER LOAD MODE"; strSpanish "JUMP AFTER LOAD MODE"
 
@@ -1617,7 +1619,7 @@ Str_STOP_HD_MOTOR:	.asciz "STOP HD MOTOR"
 Str_STOP_HD_MOTOR_2:	.asciz "STOP HD MOTOR"
 Str_STOP_HD_MOTOR_3:	.asciz "STOP HD MOTOR"
 Str_STOP_HD_MOTOR_4:	.asciz "STOP HD MOTOR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STOP_HD_MOTOR_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_7, super=SETUP_TOOL2, next=SETUP_TOOL2_CatchEvent1, prev=HDD_SETTOOLSPAR_6, flag=VF_Const, X=350, Y=75, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_56, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Right2, dial=1, selected=HDD_SETTOOLSPAR_7_selected, num=HDD_SETTOOLSPAR_7_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Silver, alignmentPara=1, lenPara=6, posx=215, indexPara=6, strEnglish=Str_STOP_HD_MOTOR, strGerman=Str_STOP_HD_MOTOR_2, strFrench=Str_STOP_HD_MOTOR_3, strSpanish=Str_STOP_HD_MOTOR_4	# caption ""; strEnglish "STOP HD MOTOR"; strGerman "STOP HD MOTOR"; strFrench "STOP HD MOTOR"; strSpanish "STOP HD MOTOR"
 		IvCatchEvent	SETUP_TOOL2_CatchEvent1, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_8, prev=HDD_SETTOOLSPAR_7, flag=VF_Const|VF_InvisibleBox, X=328, Y=0, W=32, H=32, func=FN_KSSSETUPTOOLSP1TitleSwCatch
@@ -1627,7 +1629,7 @@ Str_DISPLAY_FONT_SIZE:	.asciz "DISPLAY FONT SIZE"
 Str_DISPLAY_FONT_SIZE_2:	.asciz "DISPLAY FONT SIZE"
 Str_DISPLAY_FONT_SIZE_3:	.asciz "DISPLAY FONT SIZE"
 Str_DISPLAY_FONT_SIZE_4:	.asciz "DISPLAY FONT SIZE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISPLAY_FONT_SIZE_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_8, super=SETUP_TOOL2, next=HDD_SETTOOLSPAR_12, prev=SETUP_TOOL2_CatchEvent1, flag=VF_Const, X=350, Y=118, W=280, H=30, color=CL_Silver, border=BD_3D_UP1, caption=Str_empty_57, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Right3, dial=1, selected=HDD_SETTOOLSPAR_8_selected, num=HDD_SETTOOLSPAR_8_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Silver, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Silver, alignmentPara=1, lenPara=7, posx=200, indexPara=8, strEnglish=Str_DISPLAY_FONT_SIZE, strGerman=Str_DISPLAY_FONT_SIZE_2, strFrench=Str_DISPLAY_FONT_SIZE_3, strSpanish=Str_DISPLAY_FONT_SIZE_4	# caption ""; strEnglish "DISPLAY FONT SIZE"; strGerman "DISPLAY FONT SIZE"; strFrench "DISPLAY FONT SIZE"; strSpanish "DISPLAY FONT SIZE"
 
@@ -1636,12 +1638,12 @@ Str_TAB_TEMPO_ACCESS:	.asciz "TAB TEMPO ACCESS"
 Str_TAB_TEMPO_ACCESS_2:	.asciz "TAB TEMPO ACCESS"
 Str_TAB_TEMPO_ACCESS_3:	.asciz "TAB TEMPO ACCESS"
 Str_TAB_TEMPO_ACCESS_4:	.asciz "TAB TEMPO ACCESS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TAB_TEMPO_ACCESS_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_12, super=SETUP_TOOL2, prev=HDD_SETTOOLSPAR_8, flag=VF_Const, X=350, Y=161, W=280, H=30, color=CL_Silver, border=BD_3D_UP1, caption=Str_empty_58, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Right4, dial=1, selected=HDD_SETTOOLSPAR_12_selected, num=HDD_SETTOOLSPAR_12_num, max=5, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Silver, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Silver, alignmentPara=1, lenPara=11, posx=184, indexPara=16, strEnglish=Str_TAB_TEMPO_ACCESS, strGerman=Str_TAB_TEMPO_ACCESS_2, strFrench=Str_TAB_TEMPO_ACCESS_3, strSpanish=Str_TAB_TEMPO_ACCESS_4	# caption ""; strEnglish "TAB TEMPO ACCESS"; strGerman "TAB TEMPO ACCESS"; strFrench "TAB TEMPO ACCESS"; strSpanish "TAB TEMPO ACCESS"
 
 Str_PC_DATA_LINK_2:	.asciz "PC DATA LINK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PC_DATA_LINK_2
 
 	KssBgScreen	DATA_LINK, sub=DATA_LINK_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=DATA_LINK_window, title=Str_PC_DATA_LINK_2, icon=1	# title "PC DATA LINK"
 		KssUserBitmap	DATA_LINK_KssUserBitmap1, super=DATA_LINK, sub=DATA_LINK_CatchEvent1, next=DATA_LINK_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1649,12 +1651,12 @@ Str_PC_DATA_LINK_2:	.asciz "PC DATA LINK"
 			AcIndexWideES	DATA_LINK_IndexWideES1, super=DATA_LINK_KssUserBitmap1, sub=DATA_LINK_Label_START, next=DATA_LINK_MenuBox_TEST_COMMUNICATION, prev=DATA_LINK_CatchEvent1, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3
 
 Str_START:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START
 
 				VwLabel	DATA_LINK_Label_START, super=DATA_LINK_IndexWideES1, flag=VF_Const, X=38, Y=220, W=44, H=19, str=Str_START, fontcolor=CL_Black	# str "START"
 
 Str_TEST_COMMUNICATION:	.asciz "TEST COMMUNICATION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TEST_COMMUNICATION
 
 			VwMenuBox	DATA_LINK_MenuBox_TEST_COMMUNICATION, super=DATA_LINK_KssUserBitmap1, next=DATA_LINK_KssPsMultiLangTextBox1, prev=DATA_LINK_IndexWideES1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=DATA_LINK_MenuBox_TEST_COMMUNICATION_selected, str=Str_TEST_COMMUNICATION, icon=36	# str "TEST COMMUNICATION"
 
@@ -1665,26 +1667,26 @@ Str_PC_DATA_LINK_6:	.asciz "PC DATA LINK"
 Str_empty_59:	.asciz ""
 Str_empty_60:	.asciz ""
 Str_empty_61:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_61
 
 			KssPsMultiLangTextBox	DATA_LINK_KssPsMultiLangTextBox1, super=DATA_LINK_KssUserBitmap1, prev=DATA_LINK_MenuBox_TEST_COMMUNICATION, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_PC_DATA_LINK_3, strGerman=Str_PC_DATA_LINK_4, strFrench=Str_PC_DATA_LINK_5, strSpanish=Str_PC_DATA_LINK_6, strItalian=Str_empty_59, strIndones=Str_empty_60, strJapan=Str_empty_61	# strEnglish "PC DATA LINK"; strGerman "PC DATA LINK"; strFrench "PC DATA LINK"; strSpanish "PC DATA LINK"; strItalian ""; strIndones ""; strJapan ""
 		IvExitScreen	DATA_LINK_ExitScreen1, super=DATA_LINK, next=DATA_LINK_IndexWideES2, prev=DATA_LINK_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=352, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 		AcIndexWideES	DATA_LINK_IndexWideES2, super=DATA_LINK, sub=DATA_LINK_Label_STOP, next=DATA_LINK_IndexWideES3, prev=DATA_LINK_ExitScreen1, flag=VF_Const, X=524, Y=216, W=112, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom16
 
 Str_STOP:	.asciz "STOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STOP
 
 			VwLabel	DATA_LINK_Label_STOP, super=DATA_LINK_IndexWideES2, flag=VF_Const, X=565, Y=220, W=36, H=19, str=Str_STOP, fontcolor=CL_Black	# str "STOP"
 		AcIndexWideES	DATA_LINK_IndexWideES3, super=DATA_LINK, sub=DATA_LINK_Label_RESET, next=COMM_DISP, prev=DATA_LINK_IndexWideES2, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6
 
 Str_RESET:	.asciz "RESET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RESET
 
 			VwLabel	DATA_LINK_Label_RESET, super=DATA_LINK_IndexWideES3, flag=VF_Const, X=158, Y=220, W=44, H=19, str=Str_RESET, fontcolor=CL_Black	# str "RESET"
 		KssCOMM_DISP	COMM_DISP, super=DATA_LINK, prev=DATA_LINK_IndexWideES3, flag=VF_Const, X=4, Y=62, W=632, H=152, color=CL_DarkGray, border=BD_3D_UP1, index=0xFFFF, fontStatus=2, fontcolorStatus=CL_Black, fontbackcolorStatus=CL_Transparent, fontInfo=3, fontcolorInfo=CL_Red, fontbackcolorInfo=CL_Transparent, paintok=COMM_DISP_paintok
 
 Str_CUSTOM_LYRICS_OPTIONS:	.asciz "CUSTOM LYRICS OPTIONS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_LYRICS_OPTIONS
 
 	KssBgScreen	CUSTOM_LYRICS_OPTION, sub=CUSTOM_LYRICS_OPTION_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CUSTOM_LYRICS_OPTION_window, title=Str_CUSTOM_LYRICS_OPTIONS, icon=1	# title "CUSTOM LYRICS OPTIONS"
 		KssUserBitmap	CUSTOM_LYRICS_OPTION_KssUserBitmap1, super=CUSTOM_LYRICS_OPTION, sub=LyricsPassiveColor, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1694,7 +1696,7 @@ Str_COLOR_PASSIVE:	.asciz "COLOR PASSIVE"
 Str_COLOR_PASSIVE_2:	.asciz "COLOR PASSIVE"
 Str_COLOR_PASSIVE_3:	.asciz "COLOR PASSIVE"
 Str_COLOR_PASSIVE_4:	.asciz "COLOR PASSIVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COLOR_PASSIVE_4
 
 			KssParaEditEntry	LyricsPassiveColor, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, next=LyricsActiveColor, flag=VF_Const, X=4, Y=161, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_62, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left4, dial=1, selected=LyricsPassiveColor_selected, num=LyricsPassiveColor_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=190, indexPara=17, strEnglish=Str_COLOR_PASSIVE, strGerman=Str_COLOR_PASSIVE_2, strFrench=Str_COLOR_PASSIVE_3, strSpanish=Str_COLOR_PASSIVE_4	# caption ""; strEnglish "COLOR PASSIVE"; strGerman "COLOR PASSIVE"; strFrench "COLOR PASSIVE"; strSpanish "COLOR PASSIVE"
 
@@ -1703,7 +1705,7 @@ Str_COLOR_ACTIVE:	.asciz "COLOR ACTIVE"
 Str_COLOR_ACTIVE_2:	.asciz "COLOR ACTIVE"
 Str_COLOR_ACTIVE_3:	.asciz "COLOR ACTIVE"
 Str_COLOR_ACTIVE_4:	.asciz "COLOR ACTIVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COLOR_ACTIVE_4
 
 			KssParaEditEntry	LyricsActiveColor, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, next=CUSTOM_LYRICS_OPTION_KssPsMultiLangTextBox1, prev=LyricsPassiveColor, flag=VF_Const, X=8, Y=118, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_63, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left3, dial=1, selected=LyricsActiveColor_selected, num=LyricsActiveColor_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=190, indexPara=16, strEnglish=Str_COLOR_ACTIVE, strGerman=Str_COLOR_ACTIVE_2, strFrench=Str_COLOR_ACTIVE_3, strSpanish=Str_COLOR_ACTIVE_4	# caption ""; strEnglish "COLOR ACTIVE"; strGerman "COLOR ACTIVE"; strFrench "COLOR ACTIVE"; strSpanish "COLOR ACTIVE"
 
@@ -1714,7 +1716,7 @@ Str_CUSTOM_LYRICS_OPTIONS_5:	.asciz "CUSTOM LYRICS OPTIONS"
 Str_empty_64:	.asciz ""
 Str_empty_65:	.asciz ""
 Str_empty_66:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_66
 
 			KssPsMultiLangTextBox	CUSTOM_LYRICS_OPTION_KssPsMultiLangTextBox1, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, sub=CUSTOM_LYRICS_OPTION_CatchEvent1, next=CUSTOM_LYRICS_OPTION_ExitScreen1, prev=LyricsActiveColor, flag=VF_Const, X=4, Y=2, W=400, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_CUSTOM_LYRICS_OPTIONS_2, strGerman=Str_CUSTOM_LYRICS_OPTIONS_3, strFrench=Str_CUSTOM_LYRICS_OPTIONS_4, strSpanish=Str_CUSTOM_LYRICS_OPTIONS_5, strItalian=Str_empty_64, strIndones=Str_empty_65, strJapan=Str_empty_66	# strEnglish "CUSTOM LYRICS OPTIONS"; strGerman "CUSTOM LYRICS OPTIONS"; strFrench "CUSTOM LYRICS OPTIONS"; strSpanish "CUSTOM LYRICS OPTIONS"; strItalian ""; strIndones ""; strJapan ""
 				IvCatchEvent	CUSTOM_LYRICS_OPTION_CatchEvent1, super=CUSTOM_LYRICS_OPTION_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=372, Y=0, W=32, H=32, func=FN_KssXCustomLyricsSetupCatch
@@ -1725,7 +1727,7 @@ Str_LYRICS_LOAD_MODE:	.asciz "LYRICS LOAD MODE"
 Str_LYRICS_LOAD_MODE_2:	.asciz "LYRICS LOAD MODE"
 Str_LYRICS_LOAD_MODE_3:	.asciz "LYRICS LOAD MODE"
 Str_LYRICS_LOAD_MODE_4:	.asciz "LYRICS LOAD MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS_LOAD_MODE_4
 
 			KssParaEditEntry	LyricsLoadMode, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, next=CLPARA4, prev=CUSTOM_LYRICS_OPTION_ExitScreen1, flag=VF_Const, X=8, Y=75, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_67, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left2, dial=1, selected=LyricsLoadMode_selected, num=LyricsLoadMode_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=190, indexPara=15, strEnglish=Str_LYRICS_LOAD_MODE, strGerman=Str_LYRICS_LOAD_MODE_2, strFrench=Str_LYRICS_LOAD_MODE_3, strSpanish=Str_LYRICS_LOAD_MODE_4	# caption ""; strEnglish "LYRICS LOAD MODE"; strGerman "LYRICS LOAD MODE"; strFrench "LYRICS LOAD MODE"; strSpanish "LYRICS LOAD MODE"
 
@@ -1734,7 +1736,7 @@ Str_SELECT_FONT_SIZE:	.asciz "SELECT FONT SIZE"
 Str_SELECT_FONT_SIZE_2:	.asciz "SELECT FONT SIZE"
 Str_SELECT_FONT_SIZE_3:	.asciz "SELECT FONT SIZE"
 Str_SELECT_FONT_SIZE_4:	.asciz "SELECT FONT SIZE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_FONT_SIZE_4
 
 			KssParaEditEntry	CLPARA4, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, next=CUSTOM_LYRICS_OPTION_IndexWideES1, prev=LyricsLoadMode, flag=VF_Const, X=8, Y=204, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, caption=Str_empty_68, font=4, fontcolor=CL_Transparent, align=1, length=4, editsw=ES_Left5, dial=1, selected=CLPARA4_selected, num=CLPARA4_num, max=2, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_Transparent, alignmentPara=1, lenPara=7, posx=190, indexPara=12, strEnglish=Str_SELECT_FONT_SIZE, strGerman=Str_SELECT_FONT_SIZE_2, strFrench=Str_SELECT_FONT_SIZE_3, strSpanish=Str_SELECT_FONT_SIZE_4	# caption ""; strEnglish "SELECT FONT SIZE"; strGerman "SELECT FONT SIZE"; strFrench "SELECT FONT SIZE"; strSpanish "SELECT FONT SIZE"
 			AcIndexWideES	CUSTOM_LYRICS_OPTION_IndexWideES1, super=CUSTOM_LYRICS_OPTION_KssUserBitmap1, prev=CLPARA4, flag=VF_Const, X=320, Y=212, W=120, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
@@ -1752,7 +1754,7 @@ Str_This_will_prevent_your_data_for_uncontro_3:	.asciz "This will prevent your d
 Str_empty_69:	.asciz ""
 Str_empty_70:	.asciz ""
 Str_empty_71:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_71
 
 				KssPsMultiLangTextBox	PROTECT_OPTIONS_KssPsMultiLangTextBox1, super=PROTECT_OPTIONS_KssVwBox1, next=PROTECT_OPTIONS_KssPsMultiLangTextBox2, flag=VF_Const, X=150, Y=126, W=320, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_Silver, lines=2, Dim3d=1, strEnglish=Str_This_will_prevent_your_data_for_uncontro, strGerman=Str_So_bleiben_Ihre_Daten_vor_Unbefugten_ges, strFrench=Str_This_will_prevent_your_data_for_uncontro_2, strSpanish=Str_This_will_prevent_your_data_for_uncontro_3, strItalian=Str_empty_69, strIndones=Str_empty_70, strJapan=Str_empty_71	# strEnglish "This will prevent your data for uncontro"; strGerman "So bleiben Ihre Daten vor Unbefugten ges"; strFrench "This will prevent your data for uncontro"; strSpanish "This will prevent your data for uncontro"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1773,7 +1775,7 @@ Str_But_please_use_PASSWORD_carefully_3:	.asciz "But please use PASSWORD careful
 Str_empty_75:	.asciz ""
 Str_empty_76:	.asciz ""
 Str_empty_77:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_77
 
 				KssPsMultiLangTextBox	PROTECT_OPTIONS_KssPsMultiLangTextBox3, super=PROTECT_OPTIONS_KssVwBox1, next=PROTECT_OPTIONS_KssPsMultiLangTextBox4, prev=PROTECT_OPTIONS_KssPsMultiLangTextBox2, flag=VF_Const, X=150, Y=166, W=320, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_FireRed, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_But_please_use_PASSWORD_carefully, strGerman=Str_Aber_vorichtig_mit_Passwoertern, strFrench=Str_But_please_use_PASSWORD_carefully_2, strSpanish=Str_But_please_use_PASSWORD_carefully_3, strItalian=Str_empty_75, strIndones=Str_empty_76, strJapan=Str_empty_77	# strEnglish "But please use PASSWORD carefully!"; strGerman "Aber vorichtig mit Passwoertern!"; strFrench "But please use PASSWORD carefully!"; strSpanish "But please use PASSWORD carefully!"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1784,7 +1786,7 @@ Str_ATTENTION_7:	.asciz "!! ATTENTION !!"
 Str_empty_78:	.asciz ""
 Str_empty_79:	.asciz ""
 Str_empty_80:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_80
 
 				KssPsMultiLangTextBox	PROTECT_OPTIONS_KssPsMultiLangTextBox4, super=PROTECT_OPTIONS_KssVwBox1, prev=PROTECT_OPTIONS_KssPsMultiLangTextBox3, flag=VF_Const, X=150, Y=186, W=320, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_Silver, lines=2, Dim3d=1, strEnglish=Str_Lost_password_need_to_format_HDD_or_a_pa, strGerman=Str_Haben_Sie_Ihr_Passwort_vergessen_muss_fo, strFrench=Str_ATTENTION_6, strSpanish=Str_ATTENTION_7, strItalian=Str_empty_78, strIndones=Str_empty_79, strJapan=Str_empty_80	# strEnglish "Lost password need to format HDD or a pa"; strGerman "Haben Sie Ihr Passwort vergessen, muss f"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 			KssVwBox	PROTECT_OPTIONS_KssVwBox2, super=PROTECT_OPTIONS_KssUserBitmap1, sub=PROTECT_OPTIONS_KssPsMultiLangTextBox5, next=PROTECT_OPTIONS_KssVwBox3, prev=PROTECT_OPTIONS_KssVwBox1, flag=VF_Const, X=150, Y=50, W=320, H=32, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF
@@ -1796,7 +1798,7 @@ Str_ATTENTION_10:	.asciz "!! ATTENTION !!"
 Str_empty_81:	.asciz ""
 Str_empty_82:	.asciz ""
 Str_empty_83:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_83
 
 				KssPsMultiLangTextBox	PROTECT_OPTIONS_KssPsMultiLangTextBox5, super=PROTECT_OPTIONS_KssVwBox2, flag=VF_Const, X=150, Y=54, W=320, H=30, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_8, strGerman=Str_ACHTUNG_2, strFrench=Str_ATTENTION_9, strSpanish=Str_ATTENTION_10, strItalian=Str_empty_81, strIndones=Str_empty_82, strJapan=Str_empty_83	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 			KssVwBox	PROTECT_OPTIONS_KssVwBox3, super=PROTECT_OPTIONS_KssUserBitmap1, sub=PROTECT_OPTIONS_ScreenMenu_PROTECT_HDD, next=PROTECT_OPTIONS_ScreenMenu_SAVE_OPTIONS, prev=PROTECT_OPTIONS_KssVwBox2, flag=VF_Const, X=486, Y=50, W=146, H=184, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF
@@ -1816,7 +1818,7 @@ Str_USER_PASSWORD_4:	.asciz "USER/PASSWORD"
 Str_empty_84:	.asciz ""
 Str_empty_85:	.asciz ""
 Str_empty_86:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_86
 
 				KssPsMultiLangTextBox	PROTECT_OPTIONS_KssPsMultiLangTextBox6, super=PROTECT_OPTIONS_KssVwBox3, next=PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_2, prev=PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_1, flag=VF_Const, X=500, Y=58, W=120, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_USER_PASSWORD, strGerman=Str_USER_PASSWORD_2, strFrench=Str_USER_PASSWORD_3, strSpanish=Str_USER_PASSWORD_4, strItalian=Str_empty_84, strIndones=Str_empty_85, strJapan=Str_empty_86	# strEnglish "USER/PASSWORD"; strGerman "USER/PASSWORD"; strFrench "USER/PASSWORD"; strSpanish "USER/PASSWORD"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1829,14 +1831,14 @@ Str_PROTECT_Part_3:	.asciz "PROTECT Part. 3"
 				AcScreenMenu	PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_3, super=PROTECT_OPTIONS_KssVwBox3, prev=PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_2, flag=VF_Const, X=490, Y=210, W=140, H=20, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=5, fontcolor=CL_Gray, editsw=ES_Right5, selected=PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_3_selected, str=Str_PROTECT_Part_3, screen=0xFFFFFFFF	# str "PROTECT Part. 3"
 
 Str_SAVE_OPTIONS:	.asciz "SAVE OPTIONS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_OPTIONS
 
 			AcScreenMenu	PROTECT_OPTIONS_ScreenMenu_SAVE_OPTIONS, super=PROTECT_OPTIONS_KssUserBitmap1, next=PROTECT_OPTIONS_ExitScreen1, prev=PROTECT_OPTIONS_KssVwBox3, flag=VF_Const, X=8, Y=206, W=130, H=28, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Left5, selected=PROTECT_OPTIONS_ScreenMenu_SAVE_OPTIONS_selected, str=Str_SAVE_OPTIONS, screen=0xFFFFFFFF	# str "SAVE OPTIONS"
 			IvExitScreen	PROTECT_OPTIONS_ExitScreen1, super=PROTECT_OPTIONS_KssUserBitmap1, next=PROTECT_OPTIONS_CatchEvent1, prev=PROTECT_OPTIONS_ScreenMenu_SAVE_OPTIONS, flag=VF_Const|VF_InvisibleBox, X=324, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 			IvCatchEvent	PROTECT_OPTIONS_CatchEvent1, super=PROTECT_OPTIONS_KssUserBitmap1, prev=PROTECT_OPTIONS_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssCatch_SaveOptionsAndPassWords
 
 Str_HD_FORMAT:	.asciz "HD FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HD_FORMAT
 
 	KssBgScreen	HDD_FORMATSCR, sub=HDD_FORMATSCR_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_FORMATSCR_window, title=Str_HD_FORMAT, icon=1	# title "HD FORMAT"
 		KssUserBitmap	HDD_FORMATSCR_KssUserBitmap1, super=HDD_FORMATSCR, sub=HDD_FORMATSCR_KssVwBox1, next=AllPartButton, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -1849,7 +1851,7 @@ Str_HDD_Format_will_erase_all_files_at_once_3:	.asciz "HDD Format will erase all
 Str_empty_87:	.asciz ""
 Str_empty_88:	.asciz ""
 Str_empty_89:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_89
 
 				KssPsMultiLangTextBox	HDD_FORMATSCR_KssPsMultiLangTextBox1, super=HDD_FORMATSCR_KssVwBox1, next=HDD_FORMATSCR_KssPsMultiLangTextBox2, flag=VF_Const, X=80, Y=60, W=480, H=24, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Red, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_HDD_Format_will_erase_all_files_at_once, strGerman=Str_Format_loescht_alle_Daten_unwideruflich, strFrench=Str_HDD_Format_will_erase_all_files_at_once_2, strSpanish=Str_HDD_Format_will_erase_all_files_at_once_3, strItalian=Str_empty_87, strIndones=Str_empty_88, strJapan=Str_empty_89	# strEnglish "HDD Format will erase all files at once."; strGerman "Format loescht alle Daten unwideruflich!"; strFrench "HDD Format will erase all files at once."; strSpanish "HDD Format will erase all files at once."; strItalian ""; strIndones ""; strJapan ""
 
@@ -1860,7 +1862,7 @@ Str_ATTENTION_13:	.asciz "!! ATTENTION !!"
 Str_empty_90:	.asciz ""
 Str_empty_91:	.asciz ""
 Str_empty_92:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_92
 
 				KssPsMultiLangTextBox	HDD_FORMATSCR_KssPsMultiLangTextBox2, super=HDD_FORMATSCR_KssVwBox1, next=FormatNrStr, prev=HDD_FORMATSCR_KssPsMultiLangTextBox1, flag=VF_Const, X=110, Y=38, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_11, strGerman=Str_ACHTUNG_3, strFrench=Str_ATTENTION_12, strSpanish=Str_ATTENTION_13, strItalian=Str_empty_90, strIndones=Str_empty_91, strJapan=Str_empty_92	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 				PsParaBox	FormatNrStr, super=HDD_FORMATSCR_KssVwBox1, next=HDD_FORMATSCR_KssPsMultiLangTextBox3, prev=HDD_FORMATSCR_KssPsMultiLangTextBox2, flag=VF_Const, X=158, Y=90, W=319, H=23, color=CL_White, border=BD_3D_DOWN1, font=5, fontcolor=CL_Black
@@ -1872,7 +1874,7 @@ Str_Select_which_partition_to_be_formatted_o_3:	.asciz "Select which partition t
 Str_empty_93:	.asciz ""
 Str_empty_94:	.asciz ""
 Str_empty_95:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_95
 
 				KssPsMultiLangTextBox	HDD_FORMATSCR_KssPsMultiLangTextBox3, super=HDD_FORMATSCR_KssVwBox1, prev=FormatNrStr, flag=VF_Const, X=84, Y=120, W=480, H=68, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_White, lines=4, Dim3d=1, strEnglish=Str_Select_which_partition_to_be_formatted_o, strGerman=Str_Waehlen_Sie_die_zu_formatierende_Partiti, strFrench=Str_Select_which_partition_to_be_formatted_o_2, strSpanish=Str_Select_which_partition_to_be_formatted_o_3, strItalian=Str_empty_93, strIndones=Str_empty_94, strJapan=Str_empty_95	# strEnglish "Select which partition to be formatted o"; strGerman "Waehlen Sie die zu formatierende Partiti"; strFrench "Select which partition to be formatted o"; strSpanish "Select which partition to be formatted o"; strItalian ""; strIndones ""; strJapan ""
 
@@ -1883,7 +1885,7 @@ Str_HDD_FORMAT_4:	.asciz "HDD FORMAT"
 Str_empty_96:	.asciz ""
 Str_empty_97:	.asciz ""
 Str_empty_98:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_98
 
 			KssPsMultiLangTextBox	HDD_FORMATSCR_KssPsMultiLangTextBox4, super=HDD_FORMATSCR_KssUserBitmap1, sub=HDD_FORMATSCR_CatchEvent1, next=HDD_FORMATSCR_ExitScreen1, prev=HDD_FORMATSCR_KssVwBox1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_HDD_FORMAT, strGerman=Str_HDD_FORMAT_2, strFrench=Str_HDD_FORMAT_3, strSpanish=Str_HDD_FORMAT_4, strItalian=Str_empty_96, strIndones=Str_empty_97, strJapan=Str_empty_98	# strEnglish "HDD FORMAT"; strGerman "HDD FORMAT"; strFrench "HDD FORMAT"; strSpanish "HDD FORMAT"; strItalian ""; strIndones ""; strJapan ""
 				IvCatchEvent	HDD_FORMATSCR_CatchEvent1, super=HDD_FORMATSCR_KssPsMultiLangTextBox4, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, func=FN_KssCatch_FormatBox
@@ -1893,7 +1895,7 @@ Str_empty_98:	.asciz ""
 				AcIndexEditSw	FormatPart1, super=HDD_FORMATSCR_IndexEditSw1, next=FormatPartAll, prev=FormatPart2, flag=VF_Invisible|VF_Const, X=480, Y=214, W=30, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom14
 
 Str_empty_99:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_99
 
 				VwMenuBox	FormatPartAll, super=HDD_FORMATSCR_IndexEditSw1, sub=FormatPart3, prev=FormatPart1, flag=VF_Invisible|VF_Const, X=580, Y=200, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_FireRed, editsw=ES_Right5, selected=FormatPartAll_selected, str=Str_empty_99	# str ""
 					AcIndexEditSw	FormatPart3, super=FormatPartAll, flag=VF_Invisible|VF_Const, X=560, Y=214, W=30, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom16
@@ -1904,13 +1906,13 @@ Str_empty_99:	.asciz ""
 			AcIndexEditSw	AllPartButton_IndexEditSw2, super=AllPartButton, next=AllPartButton_MenuBox1, prev=AllPartButton_IndexEditSw1, flag=VF_Invisible|VF_Const, X=480, Y=214, W=30, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom14
 
 Str_empty_100:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_100
 
 			VwMenuBox	AllPartButton_MenuBox1, super=AllPartButton, sub=AllPartButton_IndexEditSw3, prev=AllPartButton_IndexEditSw2, flag=VF_Invisible|VF_Const, X=580, Y=200, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_FireRed, editsw=ES_Right5, selected=AllPartButton_MenuBox1_selected, str=Str_empty_100	# str ""
 				AcIndexEditSw	AllPartButton_IndexEditSw3, super=AllPartButton_MenuBox1, flag=VF_Invisible|VF_Const, X=560, Y=214, W=30, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom16
 
 Str_SONG_TO_STLYLE_CONVERT:	.asciz "SONG TO STLYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SONG_TO_STLYLE_CONVERT
 
 	KssBgScreen	BigFont_DirSelect, sub=BigFont_DirSelect_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=BigFont_DirSelect_window, title=Str_SONG_TO_STLYLE_CONVERT, icon=1	# title "SONG TO STLYLE CONVERT"
 		IvExitScreen	BigFont_DirSelect_ExitScreen1, super=BigFont_DirSelect, next=BigFont_DirSelect_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=308, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -1921,12 +1923,12 @@ Str_SONG_TO_STLYLE_CONVERT:	.asciz "SONG TO STLYLE CONVERT"
 			AcIndexEditSw	BigFont_DirSelect_IndexEditSw2, super=BigFont_DirSelect_KssUserBitmap1, next=BigFont_DirSelect_ScreenMenu1, prev=BigFont_DirSelect_IndexEditSw1, flag=VF_Const, X=404, Y=213, W=32, H=24, color=CL_Silver, border=BD_3D_UP1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=8
 
 Str_empty_101:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_101
 
 			AcScreenMenu	BigFont_DirSelect_ScreenMenu1, super=BigFont_DirSelect_KssUserBitmap1, next=BigFont_DirSelect_ScreenMenu_OK, prev=BigFont_DirSelect_IndexEditSw2, flag=VF_Const, X=550, Y=71, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=BigFont_DirSelect_ScreenMenu1_selected, str=Str_empty_101, screen=BigFont_FileSelect_id	# str ""
 
 Str_OK_2:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_2
 
 			AcScreenMenu	BigFont_DirSelect_ScreenMenu_OK, super=BigFont_DirSelect_KssUserBitmap1, next=BigFont_DirSelect_KssPsMultiLangTextBox1, prev=BigFont_DirSelect_ScreenMenu1, flag=VF_Const, X=570, Y=30, W=60, H=34, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=BigFont_DirSelect_ScreenMenu_OK_selected, str=Str_OK_2, screen=BigFont_FileSelect_id	# str "OK"
 
@@ -1937,18 +1939,18 @@ Str_DIRECTORY_SELECT_4:	.asciz "DIRECTORY SELECT"
 Str_empty_102:	.asciz ""
 Str_empty_103:	.asciz ""
 Str_empty_104:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_104
 
 			KssPsMultiLangTextBox	BigFont_DirSelect_KssPsMultiLangTextBox1, super=BigFont_DirSelect_KssUserBitmap1, next=ScrBut_EditDirNameBF, prev=BigFont_DirSelect_ScreenMenu_OK, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_DarkGray, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_DIRECTORY_SELECT, strGerman=Str_DIRECTORY_SELECT_2, strFrench=Str_DIRECTORY_SELECT_3, strSpanish=Str_DIRECTORY_SELECT_4, strItalian=Str_empty_102, strIndones=Str_empty_103, strJapan=Str_empty_104	# strEnglish "DIRECTORY SELECT"; strGerman "DIRECTORY SELECT"; strFrench "DIRECTORY SELECT"; strSpanish "DIRECTORY SELECT"; strItalian ""; strIndones ""; strJapan ""
 
 Str_Edit:	.asciz "Edit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Edit
 
 			AcIndexEditSw	BigFont_DirSelect_IndexEditSw3, super=BigFont_DirSelect_KssUserBitmap1, next=BigFont_DirSelect_IndexEditSw4, prev=ScrBut_EditDirNameBF, flag=VF_Const, X=444, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=9, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, style=16
 			AcIndexEditSw	BigFont_DirSelect_IndexEditSw4, super=BigFont_DirSelect_KssUserBitmap1, next=BigFont_DirSelect_ScreenMenu2, prev=BigFont_DirSelect_IndexEditSw3, flag=VF_Const, X=164, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=8, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=15
 
 Str_empty_105:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_105
 
 			AcScreenMenu	BigFont_DirSelect_ScreenMenu2, super=BigFont_DirSelect_KssUserBitmap1, sub=BigFont_DirSelect_TextBox_ALPHAB_SORTED, prev=BigFont_DirSelect_IndexEditSw4, flag=VF_Const, X=550, Y=158, W=80, H=38, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=7, fontcolor=CL_Red, editsw=ES_Right4, selected=BigFont_DirSelect_ScreenMenu2_selected, str=Str_empty_105, screen=ALPHA_SORTED_LIST_id	# str ""
 
@@ -1957,7 +1959,7 @@ Str_ALPHAB_SORTED:	.asciz "ALPHAB. SORTED "
 				VwTextBox	BigFont_DirSelect_TextBox_ALPHAB_SORTED, super=BigFont_DirSelect_ScreenMenu2, flag=VF_Const, X=564, Y=160, W=72, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=2, lines=2, text=Str_ALPHAB_SORTED	# text "ALPHAB. SORTED "
 
 Str_empty_106:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_106
 
 		AcScreenMenu	BigFont_DirSelect_ScreenMenu3, super=BigFont_DirSelect, next=BigFont_DirSelect_TextBox_LOAD_BY_NUMBER, prev=BigFont_DirSelect_KssUserBitmap1, flag=VF_Const, X=550, Y=114, W=80, H=38, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=7, fontcolor=CL_Black, editsw=ES_Right3, selected=BigFont_DirSelect_ScreenMenu3_selected, str=Str_empty_106, screen=SELECT_NUMBER_id	# str ""
 
@@ -1967,7 +1969,7 @@ Str_LOAD_BY_NUMBER:	.asciz "LOAD BY NUMBER "
 		VwLine	BigFont_DirSelect_Line1, super=BigFont_DirSelect, prev=BigFont_DirSelect_TextBox_LOAD_BY_NUMBER, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
 
 Str_SPECIAL_LYRICS_CONVERT:	.asciz "SPECIAL LYRICS CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SPECIAL_LYRICS_CONVERT
 
 	KssBgScreen	BigFont_FileSelect, sub=BigFont_FileSelect_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=BigFont_FileSelect_window, title=Str_SPECIAL_LYRICS_CONVERT, icon=1	# title "SPECIAL LYRICS CONVERT"
 		IvExitScreen	BigFont_FileSelect_ExitScreen1, super=BigFont_FileSelect, next=BigFont_FileSelect_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=324, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -1979,7 +1981,7 @@ Str_SPECIAL_LYRICS_CONVERT:	.asciz "SPECIAL LYRICS CONVERT"
 			AcWindowPage	LoadOptionWndPgBF, super=BigFont_FileSelect_KssUserBitmap1, prev=BigFont_FileSelect_CatchEvent1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=LoadOptionWndPgBF_page, pagemin=1, pagemax=2
 
 Str_HELP_WORKSHOP:	.asciz "HELP WORKSHOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_WORKSHOP
 
 	KssBgScreen	HELP_WORKSHOP, sub=HELP_WORKSHOP_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HELP_WORKSHOP_window, title=Str_HELP_WORKSHOP, icon=1	# title "HELP WORKSHOP"
 		KssUserBitmap	HELP_WORKSHOP_KssUserBitmap1, super=HELP_WORKSHOP, sub=HELP_WORKSHOP_ExitScreen1, next=HELP_WORKSHOP_KssXRegisterLine1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -2021,22 +2023,22 @@ Str_Mr_T_Hamaguchi_4:	.asciz "Mr. T. Hamaguchi"
 Str_empty_110:	.asciz ""
 Str_empty_111:	.asciz ""
 Str_empty_112:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_112
 
 				KssPsMultiLangTextBox	Hama, super=SpecialThanks, next=HDSerialNoFrame, flag=VF_Const, X=204, Y=220, W=150, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_Silver, alignment=1, lines=1, Dim3d=1, strEnglish=Str_Mr_T_Hamaguchi, strGerman=Str_Mr_T_Hamaguchi_2, strFrench=Str_Mr_T_Hamaguchi_3, strSpanish=Str_Mr_T_Hamaguchi_4, strItalian=Str_empty_110, strIndones=Str_empty_111, strJapan=Str_empty_112	# strEnglish "Mr. T. Hamaguchi"; strGerman "Mr. T. Hamaguchi"; strFrench "Mr. T. Hamaguchi"; strSpanish "Mr. T. Hamaguchi"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_113:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_113
 
 				VwStrBox	HDSerialNoFrame, super=SpecialThanks, sub=LabelHDSerialNo, prev=Hama, flag=VF_Const, X=388, Y=220, W=150, H=16, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, str=Str_empty_113	# str ""
 
 Str_Serial:	.asciz "--- Serial ---"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Serial
 
 					KssLabel	LabelHDSerialNo, super=HDSerialNoFrame, flag=VF_Const, X=388, Y=222, W=140, H=13, font=3, fontcolor=CL_Navy, bgcolor=CL_Transparent, align=1, main_func=FN_DefMainFunction, str=Str_Serial, str_adr=LabelHDSerialNo_str_adr	# str "--- Serial ---"
 
 Str_Parameter:	.asciz "--- Parameter ---"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Parameter
 
 			KssLabel	LabelHDParameter, super=ABOUT_HELP_KssUserBitmap1, next=ABOUT_HELP_CatchEvent1, prev=SpecialThanks, flag=VF_Const, X=388, Y=198, W=150, H=13, font=3, fontcolor=CL_Navy, bgcolor=CL_Transparent, align=1, main_func=FN_DefMainFunction, str=Str_Parameter, str_adr=LabelHDParameter_str_adr	# str "--- Parameter ---"
 			IvCatchEvent	ABOUT_HELP_CatchEvent1, super=ABOUT_HELP_KssUserBitmap1, next=OPSBox, prev=LabelHDParameter, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_AboutNHelpScreen
@@ -2049,7 +2051,7 @@ Str_Version_1_1_REV3_Date_07_21_2001_3:	.asciz "Version: 1.1 (REV3)     Date:   
 Str_empty_114:	.asciz ""
 Str_empty_115:	.asciz ""
 Str_empty_116:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_116
 
 				KssPsMultiLangTextBox	OPSystem, super=OPSBox, flag=VF_Const, X=105, Y=180, W=210, H=40, color=CL_Transparent, index=0xFFFF, fontcolor=CL_Red, backfontcolor=CL_White, alignment=1, lines=2, Dim3d=1, strEnglish=Str_Version_1_1_REV3_Date_07_21_2001, strGerman=Str_Version_1_1_REV3_Datum_21_07_2001, strFrench=Str_Version_1_1_REV3_Date_07_21_2001_2, strSpanish=Str_Version_1_1_REV3_Date_07_21_2001_3, strItalian=Str_empty_114, strIndones=Str_empty_115, strJapan=Str_empty_116	# strEnglish "Version: 1.1 (REV3)     Date:    07-21-2"; strGerman "Version: 1.1 (REV3) Datum:   21-07-2001 "; strFrench "Version: 1.1 (REV3)     Date:    07-21-2"; strSpanish "Version: 1.1 (REV3)     Date:    07-21-2"; strItalian ""; strIndones ""; strJapan ""
 			KssVwBox	HarwareBox, super=ABOUT_HELP_KssUserBitmap1, sub=HD_ParamLabel, next=OPS_HWText, prev=OPSBox, flag=VF_Const, X=314, Y=178, W=226, H=36, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF
@@ -2061,22 +2063,22 @@ Str_Hard_Disk_Parameter_3:	.asciz "Hard Disk:        Parameter:"
 Str_empty_117:	.asciz ""
 Str_empty_118:	.asciz ""
 Str_empty_119:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_119
 
 				KssPsMultiLangTextBox	HD_ParamLabel, super=HarwareBox, next=HDModelFrame, flag=VF_Const, X=316, Y=182, W=120, H=30, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Navy, backfontcolor=CL_Silver, alignment=1, lines=2, Dim3d=1, strEnglish=Str_Hard_Disk_Parameter, strGerman=Str_Harddisk_Parameter, strFrench=Str_Hard_Disk_Parameter_2, strSpanish=Str_Hard_Disk_Parameter_3, strItalian=Str_empty_117, strIndones=Str_empty_118, strJapan=Str_empty_119	# strEnglish "Hard Disk:        Parameter:"; strGerman "Harddisk:         Parameter:"; strFrench "Hard Disk:        Parameter:"; strSpanish "Hard Disk:        Parameter:"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_120:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_120
 
 				VwStrBox	HDModelFrame, super=HarwareBox, sub=LabelHDModelNo, next=HDParamFrame, prev=HD_ParamLabel, flag=VF_Const, X=388, Y=182, W=150, H=14, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, str=Str_empty_120	# str ""
 
 Str_Model:	.asciz "--- Model ---"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Model
 
 					KssLabel	LabelHDModelNo, super=HDModelFrame, flag=VF_Const, X=388, Y=182, W=150, H=13, font=3, fontcolor=CL_Navy, bgcolor=CL_Transparent, align=1, main_func=FN_DefMainFunction, str=Str_Model, str_adr=LabelHDModelNo_str_adr	# str "--- Model ---"
 
 Str_empty_121:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_121
 
 				VwStrBox	HDParamFrame, super=HarwareBox, prev=HDModelFrame, flag=VF_Const, X=388, Y=198, W=150, H=14, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, str=Str_empty_121	# str ""
 
@@ -2087,7 +2089,7 @@ Str_Operation_system_Hardware_informations_3:	.asciz "Operation system:         
 Str_empty_122:	.asciz ""
 Str_empty_123:	.asciz ""
 Str_empty_124:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_124
 
 			KssPsMultiLangTextBox	OPS_HWText, super=ABOUT_HELP_KssUserBitmap1, prev=HarwareBox, flag=VF_Const, X=105, Y=164, W=440, H=16, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, backfontcolor=CL_Silver, alignment=1, lines=1, Dim3d=1, strEnglish=Str_Operation_system_Hardware_informations, strGerman=Str_Betriebssystem_Hardware, strFrench=Str_Operation_system_Hardware_informations_2, strSpanish=Str_Operation_system_Hardware_informations_3, strItalian=Str_empty_122, strIndones=Str_empty_123, strJapan=Str_empty_124	# strEnglish "Operation system:                  Hardw"; strGerman "Betriebssystem:                    Hardw"; strFrench "Operation system:                  Hardw"; strSpanish "Operation system:                  Hardw"; strItalian ""; strIndones ""; strJapan ""
 
@@ -2098,7 +2100,7 @@ Str_Hardware_Software_Development:	.asciz "Hardware & Software Development:"
 Str_empty_125:	.asciz ""
 Str_empty_126:	.asciz ""
 Str_empty_127:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_127
 
 		KssPsMultiLangTextBox	Hardware_Softw, super=ABOUT_HELP, sub=MainBox, next=Titel, prev=ABOUT_HELP_KssUserBitmap1, flag=VF_Const, X=105, Y=24, W=320, H=100, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Navy, backfontcolor=CL_Silver, alignment=1, lines=2, Dim3d=1, strEnglish=Str_Hardware_Software_Development_All_rights, strGerman=Str_Hardware_Software_Entwicklung_Alle_Recht, strFrench=Str_Hardware_Software_Development_All_rights_2, strSpanish=Str_Hardware_Software_Development, strItalian=Str_empty_125, strIndones=Str_empty_126, strJapan=Str_empty_127	# strEnglish "Hardware & Software Development:        "; strGerman "Hardware & Software Entwicklung:        "; strFrench "Hardware & Software Development:        "; strSpanish "Hardware & Software Development:"; strItalian ""; strIndones ""; strJapan ""
 			KssVwBox	MainBox, super=Hardware_Softw, sub=Entwickler, flag=VF_Const, X=100, Y=36, W=440, H=124, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF
@@ -2110,7 +2112,7 @@ Str_POINTSTYLE_CH_Buttisholz_F_Kaufmann_CH_W_4:	.asciz "POINTSTYLE, CH-Buttishol
 Str_empty_128:	.asciz ""
 Str_empty_129:	.asciz ""
 Str_empty_130:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_130
 
 				KssPsMultiLangTextBox	Entwickler, super=MainBox, next=KSS, flag=VF_Const, X=105, Y=54, W=470, H=44, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_Silver, alignment=1, lines=2, Dim3d=1, strEnglish=Str_POINTSTYLE_CH_Buttisholz_F_Kaufmann_CH_W, strGerman=Str_POINTSTYLE_CH_Buttisholz_F_Kaufmann_CH_W_2, strFrench=Str_POINTSTYLE_CH_Buttisholz_F_Kaufmann_CH_W_3, strSpanish=Str_POINTSTYLE_CH_Buttisholz_F_Kaufmann_CH_W_4, strItalian=Str_empty_128, strIndones=Str_empty_129, strJapan=Str_empty_130	# strEnglish "POINTSTYLE, CH-Buttisholz & F. Kaufmann,"; strGerman "POINTSTYLE, CH-Buttisholz & F. Kaufmann,"; strFrench "POINTSTYLE, CH-Buttisholz & F. Kaufmann,"; strSpanish "POINTSTYLE, CH-Buttisholz & F. Kaufmann,"; strItalian ""; strIndones ""; strJapan ""
 
@@ -2121,7 +2123,7 @@ Str_KEY_SOFT_SERVICE_CH_Schenkon_4:	.asciz "KEY SOFT SERVICE, CH-Schenkon"
 Str_empty_131:	.asciz ""
 Str_empty_132:	.asciz ""
 Str_empty_133:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_133
 
 				KssPsMultiLangTextBox	KSS, super=MainBox, sub=Concept, next=MainBox_Line1, prev=Entwickler, flag=VF_Const, X=105, Y=128, W=250, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, backfontcolor=CL_Silver, alignment=1, lines=1, Dim3d=1, strEnglish=Str_KEY_SOFT_SERVICE_CH_Schenkon, strGerman=Str_KEY_SOFT_SERVICE_CH_Schenkon_2, strFrench=Str_KEY_SOFT_SERVICE_CH_Schenkon_3, strSpanish=Str_KEY_SOFT_SERVICE_CH_Schenkon_4, strItalian=Str_empty_131, strIndones=Str_empty_132, strJapan=Str_empty_133	# strEnglish "KEY SOFT SERVICE, CH-Schenkon"; strGerman "KEY SOFT SERVICE, CH-Schenkon"; strFrench "KEY SOFT SERVICE, CH-Schenkon"; strSpanish "KEY SOFT SERVICE, CH-Schenkon"; strItalian ""; strIndones ""; strJapan ""
 
@@ -2132,7 +2134,7 @@ Str_Conception_marketing_sales_and_service_F_3:	.asciz "Conception, marketing, s
 Str_empty_134:	.asciz ""
 Str_empty_135:	.asciz ""
 Str_empty_136:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_136
 
 					KssPsMultiLangTextBox	Concept, super=KSS, flag=VF_Const, X=105, Y=106, W=370, H=60, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Navy, backfontcolor=CL_Silver, alignment=1, lines=2, Dim3d=1, strEnglish=Str_Conception_marketing_sales_and_service_F, strGerman=Str_Konzeption_Marketing_Verkauf_und_Service, strFrench=Str_Conception_marketing_sales_and_service_F_2, strSpanish=Str_Conception_marketing_sales_and_service_F_3, strItalian=Str_empty_134, strIndones=Str_empty_135, strJapan=Str_empty_136	# strEnglish "Conception, marketing, sales and service"; strGerman "Konzeption, Marketing, Verkauf und Servi"; strFrench "Conception, marketing, sales and service"; strSpanish "Conception, marketing, sales and service"; strItalian ""; strIndones ""; strJapan ""
 				VwLine	MainBox_Line1, super=MainBox, prev=KSS, flag=VF_Const, X=105, Y=110, W=430, H=1, color=CL_DarkGray, linemode=1
@@ -2144,7 +2146,7 @@ Str_ABOUT_HELP_4:	.asciz "ABOUT & HELP"
 Str_empty_137:	.asciz ""
 Str_empty_138:	.asciz ""
 Str_empty_139:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_139
 
 		KssPsMultiLangTextBox	Titel, super=ABOUT_HELP, sub=Titel_ExitScreen1, prev=Hardware_Softw, flag=VF_Const, X=100, Y=4, W=440, H=35, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_DarkGray, alignment=1, lines=1, Dim3d=1, strEnglish=Str_ABOUT_HELP_INFORMATIONS, strGerman=Str_ABOUT_HELP_2, strFrench=Str_ABOUT_HELP_3, strSpanish=Str_ABOUT_HELP_4, strItalian=Str_empty_137, strIndones=Str_empty_138, strJapan=Str_empty_139	# strEnglish "ABOUT, HELP & INFORMATIONS"; strGerman "ABOUT & HELP"; strFrench "ABOUT & HELP"; strSpanish "ABOUT & HELP"; strItalian ""; strIndones ""; strJapan ""
 			IvExitScreen	Titel_ExitScreen1, super=Titel, flag=VF_Const|VF_InvisibleBox, X=312, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -2152,7 +2154,7 @@ Str_empty_139:	.asciz ""
 	Window	LBN_1, sub=LBN_1_ScreenMenu_LOAD, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Transparent, index=0xFFFF, parent=LBN_1_parent, child=LBN_1_child
 
 Str_LOAD:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD
 
 		AcScreenMenu	LBN_1_ScreenMenu_LOAD, super=LBN_1, next=LBN_1_KssPsMultiLangTextBox1, flag=VF_Const, X=551, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, editsw=ES_Right1, selected=LBN_1_ScreenMenu_LOAD_selected, str=Str_LOAD, screen=0xFFFFFFFF	# str "LOAD"
 
@@ -2163,7 +2165,7 @@ Str_LOAD_BY_NUMBER_5:	.asciz "LOAD BY NUMBER"
 Str_empty_140:	.asciz ""
 Str_empty_141:	.asciz ""
 Str_empty_142:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_142
 
 		KssPsMultiLangTextBox	LBN_1_KssPsMultiLangTextBox1, super=LBN_1, sub=LBN_1_KssPsMultiLangTextBox2, next=LBN_1_KssPsMultiLangTextBox3, prev=LBN_1_ScreenMenu_LOAD, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_LOAD_BY_NUMBER_2, strGerman=Str_LOAD_BY_NUMBER_3, strFrench=Str_LOAD_BY_NUMBER_4, strSpanish=Str_LOAD_BY_NUMBER_5, strItalian=Str_empty_140, strIndones=Str_empty_141, strJapan=Str_empty_142	# strEnglish "LOAD BY NUMBER"; strGerman "LOAD BY NUMBER"; strFrench "LOAD BY NUMBER"; strSpanish "LOAD BY NUMBER"; strItalian ""; strIndones ""; strJapan ""
 
@@ -2178,7 +2180,7 @@ Str_empty_145:	.asciz ""
 			KssPsMultiLangTextBox	LBN_1_KssPsMultiLangTextBox2, super=LBN_1_KssPsMultiLangTextBox1, sub=LBN_1_StrBox1, flag=VF_Const, X=104, Y=118, W=120, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_LOADED_SONG, strGerman=Str_SONG_GELADEN, strFrench=Str_LOAD_BY_NUMBER_6, strSpanish=Str_LOAD_BY_NUMBER_7, strItalian=Str_empty_143, strIndones=Str_empty_144, strJapan=Str_empty_145	# strEnglish "LOADED SONG:"; strGerman "SONG GELADEN:"; strFrench "LOAD BY NUMBER"; strSpanish "LOAD BY NUMBER"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_146:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_146
 
 				VwStrBox	LBN_1_StrBox1, super=LBN_1_KssPsMultiLangTextBox2, flag=VF_Const, X=101, Y=116, W=343, H=18, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, str=Str_empty_146	# str ""
 
@@ -2200,13 +2202,13 @@ Str_reset_4:	.asciz "reset"
 Str_empty_150:	.asciz ""
 Str_empty_151:	.asciz ""
 Str_empty_152:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_152
 
 			KssPsMultiLangTextBox	ClearLBN_KssPsMultiLangTextBox1, super=ClearLBN, flag=VF_Const, X=560, Y=213, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=7, fontcolor=CL_Red, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_reset, strGerman=Str_reset_2, strFrench=Str_reset_3, strSpanish=Str_reset_4, strItalian=Str_empty_150, strIndones=Str_empty_151, strJapan=Str_empty_152	# strEnglish "reset"; strGerman "reset"; strFrench "reset"; strSpanish "reset"; strItalian ""; strIndones ""; strJapan ""
 		VwLine	LBN_1_Line1, super=LBN_1, next=LBN_1_ScreenMenu1, prev=ClearLBN, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
 
 Str_empty_153:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_153
 
 		AcScreenMenu	LBN_1_ScreenMenu1, super=LBN_1, next=LBN_1_IndexEditSw1, prev=LBN_1_Line1, flag=VF_Const, X=620, Y=71, W=10, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=LBN_1_ScreenMenu1_selected, str=Str_empty_153, screen=0xFFFFFFFF	# str ""
 		AcIndexEditSw	LBN_1_IndexEditSw1, super=LBN_1, next=LBN_1_IndexEditSw2, prev=LBN_1_ScreenMenu1, flag=VF_Const, X=124, Y=214, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, style=7
@@ -2215,14 +2217,14 @@ Str_empty_153:	.asciz ""
 		AcIndexEditSw	LBN_1_IndexEditSw4, super=LBN_1, sub=LBN_1_Label_1, next=LBN_1_IndexEditSw5, prev=LBN_1_IndexEditSw3, flag=VF_Const, X=164, Y=186, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5
 
 Str_1:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1
 
 			VwLabel	LBN_1_Label_1, super=LBN_1_IndexEditSw4, flag=VF_Const, X=172, Y=190, W=15, H=19, str=Str_1, font=9, fontcolor=CL_Black	# str "1"
 		AcIndexEditSw	LBN_1_IndexEditSw5, super=LBN_1, next=LBN_1_IndexEditSw6, prev=LBN_1_IndexEditSw4, flag=VF_Const, X=204, Y=214, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6
 		AcIndexEditSw	LBN_1_IndexEditSw6, super=LBN_1, sub=LBN_1_Label_3, next=LBN_1_IndexEditSw7, prev=LBN_1_IndexEditSw5, flag=VF_Const, X=204, Y=186, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom6
 
 Str_3:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3
 
 			VwLabel	LBN_1_Label_3, super=LBN_1_IndexEditSw6, flag=VF_Const, X=212, Y=190, W=15, H=19, str=Str_3, font=4, fontcolor=CL_Black	# str "3"
 		AcIndexEditSw	LBN_1_IndexEditSw7, super=LBN_1, next=LBN_1_IndexEditSw8, prev=LBN_1_IndexEditSw6, flag=VF_Const, X=244, Y=214, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7
@@ -2233,42 +2235,42 @@ Str_3:	.asciz "3"
 		AcIndexEditSw	LBN_1_IndexEditSw12, super=LBN_1, next=LBN_1_Label_0, prev=LBN_1_IndexEditSw11, flag=VF_Const, X=324, Y=186, W=32, H=23, color=CL_Transparent, border=BD_3D_DOWN1, index=9, font=4, fontcolor=CL_Black, editsw=ES_Bottom9
 
 Str_0:	.asciz "0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0
 
 		VwLabel	LBN_1_Label_0, super=LBN_1, next=LBN_1_Label_2, prev=LBN_1_IndexEditSw12, flag=VF_Const, X=172, Y=218, W=15, H=19, str=Str_0, font=4, fontcolor=CL_Black	# str "0"
 
 Str_2:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2
 
 		VwLabel	LBN_1_Label_2, super=LBN_1, next=LBN_1_Label_4, prev=LBN_1_Label_0, flag=VF_Const, X=212, Y=218, W=15, H=19, str=Str_2, font=4, fontcolor=CL_Black	# str "2"
 
 Str_4:	.asciz "4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_4
 
 		VwLabel	LBN_1_Label_4, super=LBN_1, next=LBN_1_Label_5, prev=LBN_1_Label_2, flag=VF_Const, X=252, Y=218, W=15, H=19, str=Str_4, font=4, fontcolor=CL_Black	# str "4"
 
 Str_5:	.asciz "5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_5
 
 		VwLabel	LBN_1_Label_5, super=LBN_1, next=LBN_1_Label_6, prev=LBN_1_Label_4, flag=VF_Const, X=252, Y=190, W=15, H=19, str=Str_5, font=4, fontcolor=CL_Black	# str "5"
 
 Str_6:	.asciz "6"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_6
 
 		VwLabel	LBN_1_Label_6, super=LBN_1, next=LBN_1_Label_7, prev=LBN_1_Label_5, flag=VF_Const, X=292, Y=218, W=15, H=19, str=Str_6, font=4, fontcolor=CL_Black	# str "6"
 
 Str_7:	.asciz "7"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7
 
 		VwLabel	LBN_1_Label_7, super=LBN_1, next=LBN_1_Label_8, prev=LBN_1_Label_6, flag=VF_Const, X=292, Y=190, W=15, H=19, str=Str_7, font=4, fontcolor=CL_Black	# str "7"
 
 Str_8:	.asciz "8"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8
 
 		VwLabel	LBN_1_Label_8, super=LBN_1, next=LBN_1_Label_9, prev=LBN_1_Label_7, flag=VF_Const, X=332, Y=218, W=15, H=19, str=Str_8, font=4, fontcolor=CL_Black	# str "8"
 
 Str_9:	.asciz "9"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_9
 
 		VwLabel	LBN_1_Label_9, super=LBN_1, next=DirNumberLBN, prev=LBN_1_Label_8, flag=VF_Const, X=332, Y=190, W=15, H=19, str=Str_9, font=4, fontcolor=CL_Black	# str "9"
 		KssVwDigitBox	DirNumberLBN, super=LBN_1, next=FileNumberLBN, prev=LBN_1_Label_9, flag=VF_Const, X=100, Y=62, W=344, H=24, color=CL_Gray, border=BD_3D_UP1, index=0xFFFF, font=1, fontcolor=CL_Red, backcolor=CL_White, d3dbackcolor=CL_DarkGray, max_digits=3, min_val=1, max_val=240, val=DirNumberLBN_val, count_digits=DirNumberLBN_count_digits
@@ -2291,7 +2293,7 @@ Str_9:	.asciz "9"
 		AcIndexEditSw	LBN_2_IndexEditSw13, super=LBN_2, next=LBN_2_Label_PANEL, prev=LBN_2_IndexEditSw12, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, style=3
 
 Str_PANEL_2:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_2
 
 		VwLabel	LBN_2_Label_PANEL, super=LBN_2, next=LBN_2_Label_SEQ, prev=LBN_2_IndexEditSw13, flag=VF_Const, X=82, Y=204, W=34, H=11, str=Str_PANEL_2, font=3, fontcolor=CL_Black	# str "PANEL"
 
@@ -2300,32 +2302,32 @@ Str_SEQ_2:	.asciz "SEQ"
 		VwLabel	LBN_2_Label_SEQ, super=LBN_2, next=LBN_2_Label_P_MEM, prev=LBN_2_Label_PANEL, flag=VF_Const, X=167, Y=204, W=22, H=11, str=Str_SEQ_2, font=3, fontcolor=CL_Black	# str "SEQ"
 
 Str_P_MEM_2:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM_2
 
 		VwLabel	LBN_2_Label_P_MEM, super=LBN_2, next=LBN_2_Label_COMP, prev=LBN_2_Label_SEQ, flag=VF_Const, X=122, Y=204, W=34, H=11, str=Str_P_MEM_2, font=3, fontcolor=CL_Black	# str "P.MEM"
 
 Str_COMP_2:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP_2
 
 		VwLabel	LBN_2_Label_COMP, super=LBN_2, next=LBN_2_Label_SOUND, prev=LBN_2_Label_P_MEM, flag=VF_Const, X=205, Y=204, W=28, H=11, str=Str_COMP_2, font=3, fontcolor=CL_Black	# str "COMP"
 
 Str_SOUND_2:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_2
 
 		VwLabel	LBN_2_Label_SOUND, super=LBN_2, next=LBN_2_Label_PADS, prev=LBN_2_Label_COMP, flag=VF_Const, X=242, Y=204, W=34, H=11, str=Str_SOUND_2, font=3, fontcolor=CL_Black	# str "SOUND"
 
 Str_PADS_2:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS_2
 
 		VwLabel	LBN_2_Label_PADS, super=LBN_2, next=LBN_2_Label_EFFECT, prev=LBN_2_Label_SOUND, flag=VF_Const, X=285, Y=204, W=28, H=11, str=Str_PADS_2, font=3, fontcolor=CL_Black	# str "PADS"
 
 Str_EFFECT_2:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_2
 
 		VwLabel	LBN_2_Label_EFFECT, super=LBN_2, next=LBN_2_Label_MIDI, prev=LBN_2_Label_PADS, flag=VF_Const, X=320, Y=204, W=40, H=11, str=Str_EFFECT_2, font=3, fontcolor=CL_Black	# str "EFFECT"
 
 Str_MIDI_2:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_2
 
 		VwLabel	LBN_2_Label_MIDI, super=LBN_2, next=LBN_2_Label_FAV, prev=LBN_2_Label_EFFECT, flag=VF_Const, X=365, Y=204, W=28, H=11, str=Str_MIDI_2, font=3, fontcolor=CL_Black	# str "MIDI"
 
@@ -2334,17 +2336,17 @@ Str_FAV_2:	.asciz "FAV"
 		VwLabel	LBN_2_Label_FAV, super=LBN_2, next=LBN_2_Label_H_PAGE, prev=LBN_2_Label_MIDI, flag=VF_Const, X=408, Y=204, W=22, H=11, str=Str_FAV_2, font=3, fontcolor=CL_Black	# str "FAV"
 
 Str_H_PAGE_2:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE_2
 
 		VwLabel	LBN_2_Label_H_PAGE, super=LBN_2, next=LBN_2_Label_CUSTOM, prev=LBN_2_Label_FAV, flag=VF_Const, X=439, Y=204, W=40, H=11, str=Str_H_PAGE_2, font=3, fontcolor=CL_Black	# str "H.PAGE"
 
 Str_CUSTOM_2:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_2
 
 		VwLabel	LBN_2_Label_CUSTOM, super=LBN_2, next=LBN_2_Label_LYRICS, prev=LBN_2_Label_H_PAGE, flag=VF_Const, X=480, Y=204, W=40, H=11, str=Str_CUSTOM_2, font=3, fontcolor=CL_Black	# str "CUSTOM"
 
 Str_LYRICS_2:	.asciz "LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS_2
 
 		VwLabel	LBN_2_Label_LYRICS, super=LBN_2, next=LBN_2_Line1, prev=LBN_2_Label_CUSTOM, flag=VF_Const, X=520, Y=204, W=40, H=11, str=Str_LYRICS_2, font=3, fontcolor=CL_Black	# str "LYRICS"
 		VwLine	LBN_2_Line1, super=LBN_2, next=FileNameTtlLBNBox, prev=LBN_2_Label_LYRICS, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
@@ -2363,20 +2365,20 @@ Str_FILE_LOAD_OPTION_4:	.asciz "FILE LOAD OPTION"
 Str_empty_157:	.asciz ""
 Str_empty_158:	.asciz ""
 Str_empty_159:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_159
 
 		KssPsMultiLangTextBox	LBN_2_KssPsMultiLangTextBox1, super=LBN_2, next=LoadOptionLBN, prev=FileNameTtlLBNBox, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_LOAD_OPTION, strGerman=Str_FILE_LOAD_OPTION_2, strFrench=Str_FILE_LOAD_OPTION_3, strSpanish=Str_FILE_LOAD_OPTION_4, strItalian=Str_empty_157, strIndones=Str_empty_158, strJapan=Str_empty_159	# strEnglish "FILE LOAD OPTION"; strGerman "FILE LOAD OPTION"; strFrench "FILE LOAD OPTION"; strSpanish "FILE LOAD OPTION"; strItalian ""; strIndones ""; strJapan ""
 		KssSetSfx_DISP	LoadOptionLBN, super=LBN_2, next=LBN_2_KssAcIndexEditSw1, prev=LBN_2_KssPsMultiLangTextBox1, flag=VF_Const, X=84, Y=71, W=474, H=130, color=CL_SilverB, border=BD_3D_UP1, index=2, fontcolorStatus=CL_White, fontbackcolorStatus=CL_Transparent, fontcolorInfo=CL_Black, fontbackcolorInfo=CL_Transparent, pulSelectable=LoadOptionLBN_pulSelectable, pulYesNo=LoadOptionLBN_pulYesNo, ucPmBank=2
 		KssAcIndexEditSw	LBN_2_KssAcIndexEditSw1, super=LBN_2, sub=LBN_2_Label_LOAD, next=LBN_2_KssAcIndexEditSw2, prev=LoadOptionLBN, flag=VF_Const, X=572, Y=36, W=60, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_2:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_2
 
 			VwLabel	LBN_2_Label_LOAD, super=LBN_2_KssAcIndexEditSw1, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_LOAD_2, font=4, fontcolor=CL_Black	# str "LOAD"
 		KssAcIndexEditSw	LBN_2_KssAcIndexEditSw2, super=LBN_2, prev=LBN_2_KssAcIndexEditSw1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2
 
 Str_SELECT_PLUG_IN_V2:	.asciz "SELECT PLUG-IN V2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_PLUG_IN_V2
 
 	KssBgScreen	SELECT_PLUG2, sub=SELECT_PLUG2_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SELECT_PLUG2_window, title=Str_SELECT_PLUG_IN_V2, icon=1	# title "SELECT PLUG-IN V2"
 		KssUserBitmap	SELECT_PLUG2_KssUserBitmap1, super=SELECT_PLUG2, sub=SELECT_PLUG2_IndexWideES1, next=SELECT_PLUG2_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg001, index=1
@@ -2388,22 +2390,22 @@ Str_Plug_in_name_max_26_char:	.asciz "Plug-in name, max. 26 char."
 		AcListBox	SELECT_PLUG2_ListBox1, super=SELECT_PLUG2, sub=SELECT_PLUG2_TextBox_FEATURE_DEMO_free_WA, next=SELECT_PLUG2_TextBox1, prev=SELECT_PLUG2_ExitScreen1, flag=VF_Const, X=204, Y=30, W=232, H=182, color=CL_WallPattern, border=BD_3D_UP1, index=0xFFFF, font=1, fontcolor=CL_White, row=8, selected=SELECT_PLUG2_ListBox1_selected, list=Str_Plug_in_name_max_26_char, dial=1	# list "Plug-in name, max. 26 char."
 
 Str_FEATURE_DEMO_free_WALLPAPER_ARCHIVE_free:	.asciz "FEATURE DEMO           free WALLPAPER ARCHIVE      free STYLE CONVERT          free SONG TO STYLE CONVERT extra LYRICS CONVERT        extra HELP WORKSHOP         extra FUTURE PLUG-IN        extra "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FEATURE_DEMO_free_WALLPAPER_ARCHIVE_free
 
 			VwTextBox	SELECT_PLUG2_TextBox_FEATURE_DEMO_free_WA, super=SELECT_PLUG2_ListBox1, flag=VF_Const, X=206, Y=56, W=236, H=152, color=CL_Transparent, index=0xFFFF, font=8, fontcolor=CL_White, alignment=1, lines=7, text=Str_FEATURE_DEMO_free_WALLPAPER_ARCHIVE_free	# text "FEATURE DEMO           free WALLPAPER AR"
 
 Str_empty_160:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_160
 
 		VwTextBox	SELECT_PLUG2_TextBox1, super=SELECT_PLUG2, sub=SELECT_PLUG2_ScreenMenu_LOAD, next=SELECT_PLUG2_ScreenMenu1, prev=SELECT_PLUG2_ListBox1, flag=VF_Const, X=534, Y=28, W=96, H=34, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_160	# text ""
 
 Str_LOAD_3:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_3
 
 			AcScreenMenu	SELECT_PLUG2_ScreenMenu_LOAD, super=SELECT_PLUG2_TextBox1, flag=VF_Const, X=570, Y=28, W=60, H=34, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=SELECT_PLUG2_ScreenMenu_LOAD_selected, str=Str_LOAD_3, screen=0xFFFFFFFF	# str "LOAD"
 
 Str_empty_161:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_161
 
 		AcScreenMenu	SELECT_PLUG2_ScreenMenu1, super=SELECT_PLUG2, next=SELECT_PLUG2_Line1, prev=SELECT_PLUG2_TextBox1, flag=VF_Const, X=620, Y=71, W=10, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=SELECT_PLUG2_ScreenMenu1_selected, str=Str_empty_161, screen=0xFFFFFFFF	# str ""
 		VwLine	SELECT_PLUG2_Line1, super=SELECT_PLUG2, prev=SELECT_PLUG2_ScreenMenu1, flag=VF_Const, X=633, Y=46, W=1, H=40, color=CL_FireRed, linemode=1
@@ -2459,7 +2461,7 @@ Str_8d_8b:	.asciz "~8d ~8b"
 		AcIndexEditSw	KSS_EDIT_NAME_WND_IndexEditSw6, super=KSS_EDIT_NAME_WND, next=KSS_EDIT_NAME_WND_Label_POSITION, prev=KSS_EDIT_NAME_WND_IndexEditSw5, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
 
 Str_POSITION:	.asciz "POSITION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_POSITION
 
 		VwLabel	KSS_EDIT_NAME_WND_Label_POSITION, super=KSS_EDIT_NAME_WND, next=KSS_EDIT_NAME_WND_IndexToggle_ABC, prev=KSS_EDIT_NAME_WND_IndexEditSw6, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION, fontcolor=CL_Black	# str "POSITION"
 
@@ -2468,7 +2470,7 @@ Str_ABC_2:	.asciz "ABC"
 Str_123:	.asciz "123"
 Str_123_2:	.asciz "123"
 Str_SHIFT:	.asciz "SHIFT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SHIFT
 
 		VwLabel	KSS_EDIT_NAME_WND_Label_SHIFT, super=KSS_EDIT_NAME_WND, next=KSS_EDIT_NAME_WND_IndexPushSw1, prev=KSS_EDIT_NAME_WND_IndexToggle_123, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT, fontcolor=CL_Black	# str "SHIFT"
 		AcIndexPushSw	KSS_EDIT_NAME_WND_IndexPushSw1, super=KSS_EDIT_NAME_WND, next=KSS_EDIT_NAME_WND_IndexEditSw7, prev=KSS_EDIT_NAME_WND_Label_SHIFT, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=KSS_EDIT_NAME_WND_IndexPushSw1_sw
@@ -2481,14 +2483,14 @@ Str_LST:	.asciz "LST"
 		AcIndexEditSw	KSS_EDIT_NAME_WND_IndexEditSw8, super=KSS_EDIT_NAME_WND, sub=KSS_EDIT_NAME_WND_Label_SAVE, next=Exit_Dir_Naming, prev=KssCursBox, flag=VF_Const, X=560, Y=165, W=72, H=22, color=CL_Transparent, border=BD_3D_UP1, index=111, font=4, fontcolor=CL_Black, editsw=ES_Right4
 
 Str_SAVE:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE
 
 			VwLabel	KSS_EDIT_NAME_WND_Label_SAVE, super=KSS_EDIT_NAME_WND_IndexEditSw8, flag=VF_Const, X=582, Y=168, W=48, H=19, str=Str_SAVE, font=4, fontcolor=CL_FireRed	# str "SAVE"
 		AcIndexEditSw	Exit_Dir_Naming, super=KSS_EDIT_NAME_WND, sub=Exit_File_Naming, prev=KSS_EDIT_NAME_WND_IndexEditSw8, flag=VF_Const, X=416, Y=0, W=32, H=23, color=CL_Transparent, index=113, font=4, fontcolor=CL_Black, editsw=ES_Exit
 			AcIndexEditSw	Exit_File_Naming, super=Exit_Dir_Naming, flag=VF_Const, X=420, Y=0, W=32, H=23, color=CL_Transparent, index=114, font=4, fontcolor=CL_Black, editsw=ES_Exit
 
 Str_KssBg_2:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_2
 
 	KssBgScreen	HDD_SAVE_OPTIONS, sub=HDD_SAVE_OPTIONS_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_SAVE_OPTIONS_window, title=Str_KssBg_2, icon=1	# title "KssBg"
 		KssUserBitmap	HDD_SAVE_OPTIONS_KssUserBitmap1, super=HDD_SAVE_OPTIONS, sub=FileSaveSetSfxBox, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw11, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -2501,7 +2503,7 @@ Str_FILE_NAME_12:	.asciz "FILE NAME :"
 Str_empty_162:	.asciz ""
 Str_empty_163:	.asciz ""
 Str_empty_164:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_164
 
 			KssPsMultiLangTextBox	HDD_SAVE_OPTIONS_KssPsMultiLangTextBox1, super=HDD_SAVE_OPTIONS_KssUserBitmap1, next=HDD_SAVE_OPTIONS_CatchEvent1, prev=FileSaveSetSfxBox, flag=VF_Const, X=85, Y=46, W=473, H=24, color=CL_SilverB, border=BD_3D_UP1, index=101, fontcolor=CL_Black, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=3, strEnglish=Str_FILE_NAME_9, strGerman=Str_FILE_NAME_10, strFrench=Str_FILE_NAME_11, strSpanish=Str_FILE_NAME_12, strItalian=Str_empty_162, strIndones=Str_empty_163, strJapan=Str_empty_164	# strEnglish "FILE NAME :"; strGerman "FILE NAME :"; strFrench "FILE NAME :"; strSpanish "FILE NAME :"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	HDD_SAVE_OPTIONS_CatchEvent1, super=HDD_SAVE_OPTIONS_KssUserBitmap1, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw1, prev=HDD_SAVE_OPTIONS_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_KssCatch_SetSfxSave
@@ -2517,14 +2519,14 @@ Str_PERFORM:	.asciz "PERFORM"
 			KssAcIndexEditSw	HDD_SAVE_OPTIONS_KssAcIndexEditSw6, super=HDD_SAVE_OPTIONS_KssUserBitmap1, sub=HDD_SAVE_OPTIONS_Label_BACKUP, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw7, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw5, flag=VF_Const, X=568, Y=165, W=64, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4
 
 Str_BACKUP:	.asciz "BACKUP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BACKUP
 
 				VwLabel	HDD_SAVE_OPTIONS_Label_BACKUP, super=HDD_SAVE_OPTIONS_KssAcIndexEditSw6, flag=VF_Const, X=574, Y=168, W=52, H=19, str=Str_BACKUP, font=7, fontcolor=CL_Black	# str "BACKUP"
 			KssAcIndexEditSw	HDD_SAVE_OPTIONS_KssAcIndexEditSw7, super=HDD_SAVE_OPTIONS_KssUserBitmap1, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw8, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw6, flag=VF_Const, X=8, Y=208, W=64, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5
 			KssAcIndexEditSw	HDD_SAVE_OPTIONS_KssAcIndexEditSw8, super=HDD_SAVE_OPTIONS_KssUserBitmap1, sub=HDD_SAVE_OPTIONS_Label_SAVE, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw9, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw7, flag=VF_Const, X=572, Y=36, W=60, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_2:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_2
 
 				VwLabel	HDD_SAVE_OPTIONS_Label_SAVE, super=HDD_SAVE_OPTIONS_KssAcIndexEditSw8, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_SAVE_2, font=4, fontcolor=CL_FireRed	# str "SAVE"
 			KssAcIndexEditSw	HDD_SAVE_OPTIONS_KssAcIndexEditSw9, super=HDD_SAVE_OPTIONS_KssUserBitmap1, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw10, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw8, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, style=3
@@ -2535,7 +2537,7 @@ Str_ALL_OFF_2:	.asciz "ALL OFF"
 			VwLabel	HDD_SAVE_OPTIONS_Label_ALL_OFF, super=HDD_SAVE_OPTIONS_KssUserBitmap1, next=HDD_SAVE_OPTIONS_Label_ALL_ON, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw10, flag=VF_Const, X=570, Y=211, W=60, H=19, str=Str_ALL_OFF_2, font=7, fontcolor=CL_Black	# str "ALL OFF"
 
 Str_ALL_ON:	.asciz "ALL ON"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_ON
 
 			VwLabel	HDD_SAVE_OPTIONS_Label_ALL_ON, super=HDD_SAVE_OPTIONS_KssUserBitmap1, prev=HDD_SAVE_OPTIONS_Label_ALL_OFF, flag=VF_Const, X=12, Y=211, W=52, H=19, str=Str_ALL_ON, font=7, fontcolor=CL_Black	# str "ALL ON"
 		KssAcIndexEditSw	HDD_SAVE_OPTIONS_KssAcIndexEditSw11, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_KssAcIndexEditSw12, prev=HDD_SAVE_OPTIONS_KssUserBitmap1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=3
@@ -2553,27 +2555,27 @@ Str_FILE_SAVE_OPTIONS_4:	.asciz "FILE SAVE OPTIONS"
 Str_empty_165:	.asciz ""
 Str_empty_166:	.asciz ""
 Str_empty_167:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_167
 
 		KssPsMultiLangTextBox	HDD_SAVE_OPTIONS_KssPsMultiLangTextBox2, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_PANEL, prev=HDD_SAVE_OPTIONS_KssAcIndexEditSw17, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_SAVE_OPTIONS, strGerman=Str_FILE_SAVE_OPTIONS_2, strFrench=Str_FILE_SAVE_OPTIONS_3, strSpanish=Str_FILE_SAVE_OPTIONS_4, strItalian=Str_empty_165, strIndones=Str_empty_166, strJapan=Str_empty_167	# strEnglish "FILE SAVE OPTIONS"; strGerman "FILE SAVE OPTIONS"; strFrench "FILE SAVE OPTIONS"; strSpanish "FILE SAVE OPTIONS"; strItalian ""; strIndones ""; strJapan ""
 
 Str_PANEL_3:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_PANEL, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_LYRICS, prev=HDD_SAVE_OPTIONS_KssPsMultiLangTextBox2, flag=VF_Const, X=82, Y=204, W=34, H=11, str=Str_PANEL_3, font=3, fontcolor=CL_Black	# str "PANEL"
 
 Str_LYRICS_3:	.asciz "LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_LYRICS, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_CUSTOM, prev=HDD_SAVE_OPTIONS_Label_PANEL, flag=VF_Const, X=520, Y=204, W=40, H=11, str=Str_LYRICS_3, font=3, fontcolor=CL_Black	# str "LYRICS"
 
 Str_CUSTOM_3:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_CUSTOM, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_H_PAGE, prev=HDD_SAVE_OPTIONS_Label_LYRICS, flag=VF_Const, X=480, Y=204, W=40, H=11, str=Str_CUSTOM_3, font=3, fontcolor=CL_Black	# str "CUSTOM"
 
 Str_H_PAGE_3:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_H_PAGE, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_FAV, prev=HDD_SAVE_OPTIONS_Label_CUSTOM, flag=VF_Const, X=439, Y=204, W=40, H=11, str=Str_H_PAGE_3, font=3, fontcolor=CL_Black	# str "H.PAGE"
 
@@ -2582,32 +2584,32 @@ Str_FAV_3:	.asciz "FAV"
 		VwLabel	HDD_SAVE_OPTIONS_Label_FAV, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_MIDI, prev=HDD_SAVE_OPTIONS_Label_H_PAGE, flag=VF_Const, X=408, Y=204, W=22, H=11, str=Str_FAV_3, font=3, fontcolor=CL_Black	# str "FAV"
 
 Str_MIDI_3:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_MIDI, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_EFFECT, prev=HDD_SAVE_OPTIONS_Label_FAV, flag=VF_Const, X=365, Y=204, W=28, H=11, str=Str_MIDI_3, font=3, fontcolor=CL_Black	# str "MIDI"
 
 Str_EFFECT_3:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_EFFECT, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_P_MEM, prev=HDD_SAVE_OPTIONS_Label_MIDI, flag=VF_Const, X=320, Y=204, W=40, H=11, str=Str_EFFECT_3, font=3, fontcolor=CL_Black	# str "EFFECT"
 
 Str_P_MEM_3:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_P_MEM, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_PADS, prev=HDD_SAVE_OPTIONS_Label_EFFECT, flag=VF_Const, X=122, Y=204, W=34, H=11, str=Str_P_MEM_3, font=3, fontcolor=CL_Black	# str "P.MEM"
 
 Str_PADS_3:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_PADS, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_SOUND, prev=HDD_SAVE_OPTIONS_Label_P_MEM, flag=VF_Const, X=285, Y=204, W=28, H=11, str=Str_PADS_3, font=3, fontcolor=CL_Black	# str "PADS"
 
 Str_SOUND_3:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_SOUND, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_COMP, prev=HDD_SAVE_OPTIONS_Label_PADS, flag=VF_Const, X=242, Y=204, W=34, H=11, str=Str_SOUND_3, font=3, fontcolor=CL_Black	# str "SOUND"
 
 Str_COMP_3:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP_3
 
 		VwLabel	HDD_SAVE_OPTIONS_Label_COMP, super=HDD_SAVE_OPTIONS, next=HDD_SAVE_OPTIONS_Label_SEQ, prev=HDD_SAVE_OPTIONS_Label_SOUND, flag=VF_Const, X=205, Y=204, W=28, H=11, str=Str_COMP_3, font=3, fontcolor=CL_Black	# str "COMP"
 
@@ -2617,7 +2619,7 @@ Str_SEQ_3:	.asciz "SEQ"
 		AcIndexEditSw	ExitFileSaveOption, super=HDD_SAVE_OPTIONS, prev=HDD_SAVE_OPTIONS_Label_SEQ, flag=VF_Const, X=420, Y=0, W=32, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit
 
 Str_ALPHA_SORTED_LIST:	.asciz "ALPHA_SORTED_LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHA_SORTED_LIST
 
 	KssTtlScreen	ALPHA_SORTED_LIST, sub=ALPHA_SORTED_LIST_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=ALPHA_SORTED_LIST_window, title=Str_ALPHA_SORTED_LIST, icon=1	# title "ALPHA_SORTED_LIST"
 		KssUserBitmap	ALPHA_SORTED_LIST_KssUserBitmap1, super=ALPHA_SORTED_LIST, sub=ALPHA_SORTED_LIST_KssFileSfx_DISP1, next=ALPHA_SORTED_LIST_Line2, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -2637,7 +2639,7 @@ Str_ALPHABETIC_SORTED_4:	.asciz "ALPHABETIC SORTED"
 Str_empty_168:	.asciz ""
 Str_empty_169:	.asciz ""
 Str_empty_170:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_170
 
 			KssPsMultiLangTextBox	ALPHA_SORTED_LIST_KssPsMultiLangTextBox1, super=ALPHA_SORTED_LIST_KssUserBitmap1, next=ALPHA_SORTED_LIST_Line1, prev=ALPHA_SORTED_LIST_HamaAlphabeticFileList1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Blue, backfontcolor=CL_Gray, alignment=1, lines=1, Dim3d=1, strEnglish=Str_ALPHABETIC_SORTED, strGerman=Str_ALPHABETIC_SORTED_2, strFrench=Str_ALPHABETIC_SORTED_3, strSpanish=Str_ALPHABETIC_SORTED_4, strItalian=Str_empty_168, strIndones=Str_empty_169, strJapan=Str_empty_170	# strEnglish "ALPHABETIC SORTED"; strGerman "ALPHABETIC SORTED"; strFrench "ALPHABETIC SORTED"; strSpanish "ALPHABETIC SORTED"; strItalian ""; strIndones ""; strJapan ""
 			VwLine	ALPHA_SORTED_LIST_Line1, super=ALPHA_SORTED_LIST_KssUserBitmap1, prev=ALPHA_SORTED_LIST_KssPsMultiLangTextBox1, flag=VF_Const, X=12, Y=116, W=60, H=1, color=CL_Gray, linemode=1
@@ -2645,7 +2647,7 @@ Str_empty_170:	.asciz ""
 		KssAcIndexEditSw	ALPHA_SORTED_LIST_KssAcIndexEditSw1, super=ALPHA_SORTED_LIST, sub=ALPHA_SORTED_LIST_Label_LOAD, next=ALPHA_SORTED_LIST_KssAcIndexEditSw2, prev=ALPHA_SORTED_LIST_Line2, flag=VF_Const, X=572, Y=36, W=60, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_4:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_4
 
 			VwLabel	ALPHA_SORTED_LIST_Label_LOAD, super=ALPHA_SORTED_LIST_KssAcIndexEditSw1, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_LOAD_4, font=4, fontcolor=CL_Black	# str "LOAD"
 		KssAcIndexEditSw	ALPHA_SORTED_LIST_KssAcIndexEditSw2, super=ALPHA_SORTED_LIST, next=ALPHA_SORTED_LIST_Line3, prev=ALPHA_SORTED_LIST_KssAcIndexEditSw1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -2653,7 +2655,7 @@ Str_LOAD_4:	.asciz "LOAD"
 		AcIndexEditSw	ALPHA_SORTED_LIST_IndexEditSw3, super=ALPHA_SORTED_LIST, next=ALPHA_SORTED_LIST_TextBox_LINK_TO_JUKE_BOX, prev=ALPHA_SORTED_LIST_Line3, flag=VF_Const, X=8, Y=122, W=39, H=22, color=CL_Transparent, index=7, font=4, fontcolor=CL_Black, editsw=ES_Left3
 
 Str_LINK_TO_JUKE_BOX:	.asciz "LINK TO JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LINK_TO_JUKE_BOX
 
 		VwTextBox	ALPHA_SORTED_LIST_TextBox_LINK_TO_JUKE_BOX, super=ALPHA_SORTED_LIST, prev=ALPHA_SORTED_LIST_IndexEditSw3, flag=VF_Const, X=12, Y=118, W=56, H=30, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, alignment=1, lines=2, text=Str_LINK_TO_JUKE_BOX	# text "LINK TO JUKE BOX"
 
@@ -2664,42 +2666,42 @@ Str_CUSTOM_JUKE_BOX:	.asciz "CUSTOM JUKE BOX"
 		KssUserBitmap	JUKE_BOX_KssUserBitmap1, super=JUKE_BOX, sub=JUKE_BOX_ScreenMenu1, next=JUKE_BOX_MenuBox1, prev=JUKE_BOX_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_empty_171:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_171
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu1, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu2, flag=VF_Const, X=8, Y=157, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=JUKE_BOX_ScreenMenu1_selected, str=Str_empty_171, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_172:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_172
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu2, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu3, prev=JUKE_BOX_ScreenMenu1, flag=VF_Const, X=8, Y=114, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=JUKE_BOX_ScreenMenu2_selected, str=Str_empty_172, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_173:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_173
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu3, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu4, prev=JUKE_BOX_ScreenMenu2, flag=VF_Const, X=8, Y=71, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=JUKE_BOX_ScreenMenu3_selected, str=Str_empty_173, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_174:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_174
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu4, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu5, prev=JUKE_BOX_ScreenMenu3, flag=VF_Const, X=8, Y=200, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=JUKE_BOX_ScreenMenu4_selected, str=Str_empty_174, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_175:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_175
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu5, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu6, prev=JUKE_BOX_ScreenMenu4, flag=VF_Const, X=580, Y=157, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=JUKE_BOX_ScreenMenu5_selected, str=Str_empty_175, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_176:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_176
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu6, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu7, prev=JUKE_BOX_ScreenMenu5, flag=VF_Const, X=580, Y=200, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=JUKE_BOX_ScreenMenu6_selected, str=Str_empty_176, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_177:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_177
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu7, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_ScreenMenu8, prev=JUKE_BOX_ScreenMenu6, flag=VF_Const, X=580, Y=114, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=JUKE_BOX_ScreenMenu7_selected, str=Str_empty_177, screen=0xFFFFFFFF, icon=1	# str ""
 
 Str_empty_178:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_178
 
 			AcScreenMenu	JUKE_BOX_ScreenMenu8, super=JUKE_BOX_KssUserBitmap1, next=JUKE_BOX_KssxJukeBox1, prev=JUKE_BOX_ScreenMenu7, flag=VF_Const, X=580, Y=71, W=50, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=JUKE_BOX_ScreenMenu8_selected, str=Str_empty_178, screen=0xFFFFFFFF, icon=1	# str ""
 			KssxJukeBox	JUKE_BOX_KssxJukeBox1, super=JUKE_BOX_KssUserBitmap1, prev=JUKE_BOX_ScreenMenu8, flag=VF_Const, X=8, Y=4, W=624, H=230, color=CL_Transparent, index=0xFFFF, dial=1, sel_num=JUKE_BOX_KssxJukeBox1_sel_num, en_paradraw=JUKE_BOX_KssxJukeBox1_en_paradraw
@@ -2707,7 +2709,7 @@ Str_empty_178:	.asciz ""
 		PsMenuBox	JUKE_BOX_MenuBox2, super=JUKE_BOX, next=JUKE_BOX_ScreenMenu_CLEAR_ALL, prev=JUKE_BOX_MenuBox1, flag=VF_Const, X=8, Y=28, W=60, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, selected=JUKE_BOX_MenuBox2_selected
 
 Str_CLEAR_ALL:	.asciz "CLEAR ALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CLEAR_ALL
 
 		AcScreenMenu	JUKE_BOX_ScreenMenu_CLEAR_ALL, super=JUKE_BOX, prev=JUKE_BOX_MenuBox2, flag=VF_Const, X=540, Y=35, W=90, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Red, editsw=ES_Right1, selected=JUKE_BOX_ScreenMenu_CLEAR_ALL_selected, str=Str_CLEAR_ALL, screen=0xFFFFFFFF	# str "CLEAR ALL"
 
@@ -2715,22 +2717,22 @@ Str_CLEAR_ALL:	.asciz "CLEAR ALL"
 		VwLine	FILE_SELECT_WIN1_Line1, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_StrBox1, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
 
 Str_empty_179:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_179
 
 		VwStrBox	FILE_SELECT_WIN1_StrBox1, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_StrBox2, prev=FILE_SELECT_WIN1_Line1, flag=VF_Const, X=132, Y=6, W=190, H=20, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontcolor=CL_Black, str=Str_empty_179	# str ""
 
 Str_empty_180:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_180
 
 		VwStrBox	FILE_SELECT_WIN1_StrBox2, super=FILE_SELECT_WIN1, next=DirActualTitle, prev=FILE_SELECT_WIN1_StrBox1, flag=VF_Const, X=322, Y=6, W=190, H=20, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontcolor=CL_Gray, str=Str_empty_180	# str ""
 
 Str_empty_181:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_181
 
 		VwStrBox	DirActualTitle, super=FILE_SELECT_WIN1, next=DirNextTitle, prev=FILE_SELECT_WIN1_StrBox2, flag=VF_Const, X=132, Y=6, W=190, H=20, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontcolor=CL_Gray, str=Str_empty_181	# str ""
 
 Str_empty_182:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_182
 
 		VwStrBox	DirNextTitle, super=FILE_SELECT_WIN1, next=SelectedDirInFile, prev=DirActualTitle, flag=VF_Const, X=322, Y=6, W=190, H=20, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontcolor=CL_Gray, str=Str_empty_182	# str ""
 		KSSPsFileBox	SelectedDirInFile, super=FILE_SELECT_WIN1, next=FileSfxBox, prev=DirNextTitle, flag=VF_Const, X=132, Y=26, W=380, H=184, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontactivcolor=CL_LightGreen, fontcolor=CL_Black, main_func=FN_KssFileBoxFunc, column=2, row=16, maxarea=240, totalent=240, sel_num=SelectedDirInFile_sel_num, sel_dir=SelectedDirInFile_sel_dir, dial=1, auto_inc=1, paintok=SelectedDirInFile_paintok, aicok=SelectedDirInFile_aicok
@@ -2743,7 +2745,7 @@ Str_FILE_SELECT_4:	.asciz "FILE SELECT"
 Str_empty_183:	.asciz ""
 Str_empty_184:	.asciz ""
 Str_empty_185:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_185
 
 		KssPsMultiLangTextBox	FILE_SELECT_WIN1_KssPsMultiLangTextBox1, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_IndexEditSw1, prev=FileSfxBox, flag=VF_Const, X=4, Y=74, W=120, H=68, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=2, Dim3d=1, strEnglish=Str_FILE_SELECT, strGerman=Str_FILE_SELECT_2, strFrench=Str_FILE_SELECT_3, strSpanish=Str_FILE_SELECT_4, strItalian=Str_empty_183, strIndones=Str_empty_184, strJapan=Str_empty_185	# strEnglish "FILE SELECT"; strGerman "FILE SELECT"; strFrench "FILE SELECT"; strSpanish "FILE SELECT"; strItalian ""; strIndones ""; strJapan ""
 		AcIndexEditSw	FILE_SELECT_WIN1_IndexEditSw1, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_IndexWideES1, prev=FILE_SELECT_WIN1_KssPsMultiLangTextBox1, flag=VF_Const, X=206, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
@@ -2752,7 +2754,7 @@ Str_empty_185:	.asciz ""
 		KssAcIndexEditSw	FILE_SELECT_WIN1_KssAcIndexEditSw1, super=FILE_SELECT_WIN1, sub=FILE_SELECT_WIN1_Label_LOAD, next=FILE_SELECT_WIN1_KssAcIndexEditSw2, prev=FILE_SELECT_WIN1_IndexEditSw2, flag=VF_Const, X=572, Y=36, W=60, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_5:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_5
 
 			VwLabel	FILE_SELECT_WIN1_Label_LOAD, super=FILE_SELECT_WIN1_KssAcIndexEditSw1, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_LOAD_5, font=4, fontcolor=CL_Black	# str "LOAD"
 		KssAcIndexEditSw	FILE_SELECT_WIN1_KssAcIndexEditSw2, super=FILE_SELECT_WIN1, next=WP_OBJ_DELDIR, prev=FILE_SELECT_WIN1_KssAcIndexEditSw1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -2761,7 +2763,7 @@ Str_DEL_DIR:	.asciz "DEL. DIR."
 Str_DEL_TITLE:	.asciz "DEL. TITLE"
 Str_SAVE_TITLE:	.asciz "SAVE TITLE"
 Str_SET_TO_JUKE_BOX:	.asciz "  SET TO JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SET_TO_JUKE_BOX
 
 		AcScreenMenu	FILE_SELECT_WIN1_ScreenMenu_SET_TO_JUKE_BOX, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_Line2, prev=WP_OBJ_SAVEFILE, flag=VF_Const, X=454, Y=213, W=70, H=22, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Gray, editsw=ES_Bottom13, selected=FILE_SELECT_WIN1_ScreenMenu_SET_TO_JUKE_BOX_selected, str=Str_SET_TO_JUKE_BOX, screen=0xFFFFFFFF	# str "  SET TO JUKE BOX"
 		VwLine	FILE_SELECT_WIN1_Line2, super=FILE_SELECT_WIN1, next=FILE_SELECT_WIN1_Line3, prev=FILE_SELECT_WIN1_ScreenMenu_SET_TO_JUKE_BOX, flag=VF_Const, X=511, Y=213, W=1, H=21, color=CL_Gray, linemode=1
@@ -2783,7 +2785,7 @@ Str_SET_TO_JUKE_BOX:	.asciz "  SET TO JUKE BOX"
 		AcIndexEditSw	FILE_SELECT_WIN2_IndexEditSw13, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_PANEL, prev=FILE_SELECT_WIN2_IndexEditSw12, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, style=3
 
 Str_PANEL_4:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_PANEL, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_SEQ, prev=FILE_SELECT_WIN2_IndexEditSw13, flag=VF_Const, X=82, Y=204, W=34, H=11, str=Str_PANEL_4, font=3, fontcolor=CL_Black	# str "PANEL"
 
@@ -2792,32 +2794,32 @@ Str_SEQ_4:	.asciz "SEQ"
 		VwLabel	FILE_SELECT_WIN2_Label_SEQ, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_P_MEM, prev=FILE_SELECT_WIN2_Label_PANEL, flag=VF_Const, X=167, Y=204, W=22, H=11, str=Str_SEQ_4, font=3, fontcolor=CL_Black	# str "SEQ"
 
 Str_P_MEM_4:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_P_MEM, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_COMP, prev=FILE_SELECT_WIN2_Label_SEQ, flag=VF_Const, X=122, Y=204, W=34, H=11, str=Str_P_MEM_4, font=3, fontcolor=CL_Black	# str "P.MEM"
 
 Str_COMP_4:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_COMP, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_SOUND, prev=FILE_SELECT_WIN2_Label_P_MEM, flag=VF_Const, X=205, Y=204, W=28, H=11, str=Str_COMP_4, font=3, fontcolor=CL_Black	# str "COMP"
 
 Str_SOUND_4:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_SOUND, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_PADS, prev=FILE_SELECT_WIN2_Label_COMP, flag=VF_Const, X=242, Y=204, W=34, H=11, str=Str_SOUND_4, font=3, fontcolor=CL_Black	# str "SOUND"
 
 Str_PADS_4:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_PADS, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_EFFECT, prev=FILE_SELECT_WIN2_Label_SOUND, flag=VF_Const, X=285, Y=204, W=28, H=11, str=Str_PADS_4, font=3, fontcolor=CL_Black	# str "PADS"
 
 Str_EFFECT_4:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_EFFECT, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_MIDI, prev=FILE_SELECT_WIN2_Label_PADS, flag=VF_Const, X=320, Y=204, W=40, H=11, str=Str_EFFECT_4, font=3, fontcolor=CL_Black	# str "EFFECT"
 
 Str_MIDI_4:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_MIDI, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_FAV, prev=FILE_SELECT_WIN2_Label_EFFECT, flag=VF_Const, X=365, Y=204, W=28, H=11, str=Str_MIDI_4, font=3, fontcolor=CL_Black	# str "MIDI"
 
@@ -2826,17 +2828,17 @@ Str_FAV_4:	.asciz "FAV"
 		VwLabel	FILE_SELECT_WIN2_Label_FAV, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_H_PAGE, prev=FILE_SELECT_WIN2_Label_MIDI, flag=VF_Const, X=408, Y=204, W=22, H=11, str=Str_FAV_4, font=3, fontcolor=CL_Black	# str "FAV"
 
 Str_H_PAGE_4:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_H_PAGE, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_CUSTOM, prev=FILE_SELECT_WIN2_Label_FAV, flag=VF_Const, X=439, Y=204, W=40, H=11, str=Str_H_PAGE_4, font=3, fontcolor=CL_Black	# str "H.PAGE"
 
 Str_CUSTOM_4:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_CUSTOM, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Label_LYRICS, prev=FILE_SELECT_WIN2_Label_H_PAGE, flag=VF_Const, X=480, Y=204, W=40, H=11, str=Str_CUSTOM_4, font=3, fontcolor=CL_Black	# str "CUSTOM"
 
 Str_LYRICS_4:	.asciz "LYRICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS_4
 
 		VwLabel	FILE_SELECT_WIN2_Label_LYRICS, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_Line1, prev=FILE_SELECT_WIN2_Label_CUSTOM, flag=VF_Const, X=520, Y=204, W=40, H=11, str=Str_LYRICS_4, font=3, fontcolor=CL_Black	# str "LYRICS"
 		VwLine	FILE_SELECT_WIN2_Line1, super=FILE_SELECT_WIN2, next=FileNameTtlBox, prev=FILE_SELECT_WIN2_Label_LYRICS, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
@@ -2848,7 +2850,7 @@ Str_FILE_NAME_16:	.asciz "FILE NAME :"
 Str_empty_186:	.asciz ""
 Str_empty_187:	.asciz ""
 Str_empty_188:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_188
 
 		KssPsMultiLangTextBox	FileNameTtlBox, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_KssPsMultiLangTextBox1, prev=FILE_SELECT_WIN2_Line1, flag=VF_Const, X=85, Y=46, W=473, H=24, color=CL_SilverB, border=BD_3D_UP1, index=101, fontcolor=CL_Black, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=2, strEnglish=Str_FILE_NAME_13, strGerman=Str_FILE_NAME_14, strFrench=Str_FILE_NAME_15, strSpanish=Str_FILE_NAME_16, strItalian=Str_empty_186, strIndones=Str_empty_187, strJapan=Str_empty_188	# strEnglish "FILE NAME :"; strGerman "FILE NAME :"; strFrench "FILE NAME :"; strSpanish "FILE NAME :"; strItalian ""; strIndones ""; strJapan ""
 
@@ -2859,20 +2861,20 @@ Str_FILE_LOAD_OPTION_8:	.asciz "FILE LOAD OPTION"
 Str_empty_189:	.asciz ""
 Str_empty_190:	.asciz ""
 Str_empty_191:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_191
 
 		KssPsMultiLangTextBox	FILE_SELECT_WIN2_KssPsMultiLangTextBox1, super=FILE_SELECT_WIN2, next=FileLoadSetSfxBox, prev=FileNameTtlBox, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_LOAD_OPTION_5, strGerman=Str_FILE_LOAD_OPTION_6, strFrench=Str_FILE_LOAD_OPTION_7, strSpanish=Str_FILE_LOAD_OPTION_8, strItalian=Str_empty_189, strIndones=Str_empty_190, strJapan=Str_empty_191	# strEnglish "FILE LOAD OPTION"; strGerman "FILE LOAD OPTION"; strFrench "FILE LOAD OPTION"; strSpanish "FILE LOAD OPTION"; strItalian ""; strIndones ""; strJapan ""
 		KssSetSfx_DISP	FileLoadSetSfxBox, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_KssAcIndexEditSw1, prev=FILE_SELECT_WIN2_KssPsMultiLangTextBox1, flag=VF_Const, X=84, Y=71, W=474, H=130, color=CL_SilverB, border=BD_3D_UP1, index=1, fontcolorStatus=CL_White, fontbackcolorStatus=CL_Transparent, fontcolorInfo=CL_Black, fontbackcolorInfo=CL_Transparent, pulSelectable=FileLoadSetSfxBox_pulSelectable, pulYesNo=FileLoadSetSfxBox_pulYesNo, ucPmBank=2
 		KssAcIndexEditSw	FILE_SELECT_WIN2_KssAcIndexEditSw1, super=FILE_SELECT_WIN2, sub=FILE_SELECT_WIN2_Label_LOAD, next=FILE_SELECT_WIN2_KssAcIndexEditSw2, prev=FileLoadSetSfxBox, flag=VF_Const, X=572, Y=36, W=60, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_6:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_6
 
 			VwLabel	FILE_SELECT_WIN2_Label_LOAD, super=FILE_SELECT_WIN2_KssAcIndexEditSw1, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_LOAD_6, font=4, fontcolor=CL_Black	# str "LOAD"
 		KssAcIndexEditSw	FILE_SELECT_WIN2_KssAcIndexEditSw2, super=FILE_SELECT_WIN2, next=FILE_SELECT_WIN2_KssAcActualDFStrBox1, prev=FILE_SELECT_WIN2_KssAcIndexEditSw1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2
 
 Str_Deb_Window_RW:	.asciz "Deb Window RW"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Deb_Window_RW
 
 	KssBgScreen	DbWndRW, sub=DbWndRW_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=DbWndRW_window, title=Str_Deb_Window_RW, icon=1	# title "Deb Window RW"
 		IvExitScreen	DbWndRW_ExitScreen1, super=DbWndRW, next=DebRwMemo, flag=VF_Const|VF_InvisibleBox, X=228, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -2881,7 +2883,7 @@ Str_Deb_Window_RW:	.asciz "Deb Window RW"
 		AcIndexWideES	DbWndRW_IndexWideES1, super=DbWndRW, sub=DbWndRW_Label_Read_Mid, next=DbWndRW_IndexWideES2, prev=DbWndRW_CatchEvent1, flag=VF_Const, X=0, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2
 
 Str_Read_Mid:	.asciz "Read Mid"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Read_Mid
 
 			VwLabel	DbWndRW_Label_Read_Mid, super=DbWndRW_IndexWideES1, flag=VF_Const, X=6, Y=220, W=67, H=19, str=Str_Read_Mid, font=5, fontcolor=CL_Black	# str "Read Mid"
 		AcIndexWideES	DbWndRW_IndexWideES2, super=DbWndRW, sub=DbWndRW_Label_Read_PP, next=DbWndRW_IndexWideES3, prev=DbWndRW_IndexWideES1, flag=VF_Const, X=80, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4
@@ -2892,13 +2894,13 @@ Str_Read_PP:	.asciz "Read PP"
 		AcIndexWideES	DbWndRW_IndexWideES3, super=DbWndRW, sub=DbWndRW_Label_MotorOff, next=DbWndRW_IndexWideES4, prev=DbWndRW_IndexWideES2, flag=VF_Const, X=160, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6
 
 Str_MotorOff:	.asciz "MotorOff"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MotorOff
 
 			VwLabel	DbWndRW_Label_MotorOff, super=DbWndRW_IndexWideES3, flag=VF_Const, X=166, Y=220, W=67, H=19, str=Str_MotorOff, font=5, fontcolor=CL_Black	# str "MotorOff"
 		AcIndexWideES	DbWndRW_IndexWideES4, super=DbWndRW, sub=DbWndRW_Label_GetError, next=DbWndRW_IndexWideES5, prev=DbWndRW_IndexWideES3, flag=VF_Const, X=240, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8
 
 Str_GetError:	.asciz "GetError"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GetError
 
 			VwLabel	DbWndRW_Label_GetError, super=DbWndRW_IndexWideES4, flag=VF_Const, X=246, Y=220, W=67, H=19, str=Str_GetError, font=5, fontcolor=CL_Black	# str "GetError"
 		AcIndexWideES	DbWndRW_IndexWideES5, super=DbWndRW, sub=DbWndRW_Label_Destroy, next=DbWndRW_IndexWideES6, prev=DbWndRW_IndexWideES4, flag=VF_Const, X=560, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16
@@ -2909,19 +2911,19 @@ Str_Destroy:	.asciz "Destroy"
 		AcIndexWideES	DbWndRW_IndexWideES6, super=DbWndRW, sub=DbWndRW_Label_Reset_Ext, next=DbWndRW_IndexWideES7, prev=DbWndRW_IndexWideES5, flag=VF_Const, X=320, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10
 
 Str_Reset_Ext:	.asciz "Reset Ext"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Reset_Ext
 
 			VwLabel	DbWndRW_Label_Reset_Ext, super=DbWndRW_IndexWideES6, flag=VF_Const, X=323, Y=220, W=74, H=19, str=Str_Reset_Ext, font=5, fontcolor=CL_Black	# str "Reset Ext"
 		AcIndexWideES	DbWndRW_IndexWideES7, super=DbWndRW, sub=DbWndRW_Label_Check_Ext, next=DbWndRW_IndexWideES8, prev=DbWndRW_IndexWideES6, flag=VF_Const, X=400, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10
 
 Str_Check_Ext:	.asciz "Check Ext"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Check_Ext
 
 			VwLabel	DbWndRW_Label_Check_Ext, super=DbWndRW_IndexWideES7, flag=VF_Const, X=402, Y=220, W=75, H=19, str=Str_Check_Ext, font=5, fontcolor=CL_Black	# str "Check Ext"
 		AcIndexWideES	DbWndRW_IndexWideES8, super=DbWndRW, sub=DbWndRW_Label_Get_Clust, next=DbWndRW_MenuBox_Read_TO, prev=DbWndRW_IndexWideES7, flag=VF_Const, X=480, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10
 
 Str_Get_Clust:	.asciz "Get Clust"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Get_Clust
 
 			VwLabel	DbWndRW_Label_Get_Clust, super=DbWndRW_IndexWideES8, flag=VF_Const, X=483, Y=220, W=72, H=19, str=Str_Get_Clust, font=5, fontcolor=CL_Black	# str "Get Clust"
 
@@ -2930,7 +2932,7 @@ Str_Read_TO:	.asciz "Read TO"
 		VwMenuBox	DbWndRW_MenuBox_Read_TO, super=DbWndRW, next=DbWndRW_MenuBox_Get_Id, prev=DbWndRW_IndexWideES8, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=DbWndRW_MenuBox_Read_TO_selected, str=Str_Read_TO, icon=28	# str "Read TO"
 
 Str_Get_Id:	.asciz "Get Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Get_Id
 
 		VwMenuBox	DbWndRW_MenuBox_Get_Id, super=DbWndRW, next=DbWndRW_MenuBox_Res, prev=DbWndRW_MenuBox_Read_TO, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=DbWndRW_MenuBox_Get_Id_selected, str=Str_Get_Id, icon=28	# str "Get Id"
 
@@ -2939,7 +2941,7 @@ Str_Res:	.asciz "Res"
 		VwMenuBox	DbWndRW_MenuBox_Res, super=DbWndRW, next=DbWndRW_MenuBox_Stat, prev=DbWndRW_MenuBox_Get_Id, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=DbWndRW_MenuBox_Res_selected, str=Str_Res, icon=28	# str "Res"
 
 Str_Stat:	.asciz "Stat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Stat
 
 		VwMenuBox	DbWndRW_MenuBox_Stat, super=DbWndRW, next=DbWndRW_MenuBox_Err, prev=DbWndRW_MenuBox_Res, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=DbWndRW_MenuBox_Stat_selected, str=Str_Stat, icon=28	# str "Stat"
 
@@ -2948,7 +2950,7 @@ Str_Err:	.asciz "Err"
 		VwMenuBox	DbWndRW_MenuBox_Err, super=DbWndRW, next=DbWndRW_MenuBox_NR, prev=DbWndRW_MenuBox_Stat, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=DbWndRW_MenuBox_Err_selected, str=Str_Err, icon=28	# str "Err"
 
 Str_NR:	.asciz "NR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NR
 
 		VwMenuBox	DbWndRW_MenuBox_NR, super=DbWndRW, next=DbWndRW_MenuBox_Nop, prev=DbWndRW_MenuBox_Err, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=DbWndRW_MenuBox_NR_selected, str=Str_NR, icon=28	# str "NR"
 
@@ -2957,13 +2959,13 @@ Str_Nop:	.asciz "Nop"
 		VwMenuBox	DbWndRW_MenuBox_Nop, super=DbWndRW, prev=DbWndRW_MenuBox_NR, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=DbWndRW_MenuBox_Nop_selected, str=Str_Nop, icon=28	# str "Nop"
 
 Str_TEST_WINDOW_USB_PPORT:	.asciz "TEST WINDOW USB/PPORT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TEST_WINDOW_USB_PPORT
 
 	KssBgScreen	TestUSBPPScreen, sub=TestUSBPPScreen_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TestUSBPPScreen_window, title=Str_TEST_WINDOW_USB_PPORT, icon=104	# title "TEST WINDOW USB/PPORT"
 		IvExitScreen	TestUSBPPScreen_ExitScreen1, super=TestUSBPPScreen, next=TestUSBPPInfo, flag=VF_Const|VF_InvisibleBox, X=356, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 
 Str_empty_192:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_192
 
 		VwTextBox	TestUSBPPInfo, super=TestUSBPPScreen, next=TestUSBPPScreen_IndexWideES1, prev=TestUSBPPScreen_ExitScreen1, flag=VF_Const, X=4, Y=34, W=636, H=148, color=CL_DarkGray, border=BD_3D_UP2, index=0xFFFF, font=11, fontcolor=CL_Yellow, lines=3, text=Str_empty_192	# text ""
 		AcIndexWideES	TestUSBPPScreen_IndexWideES1, super=TestUSBPPScreen, sub=TestUSBPPScreen_Label_Send_PP, prev=TestUSBPPInfo, flag=VF_Const, X=0, Y=216, W=80, H=23, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2
@@ -2973,7 +2975,7 @@ Str_Send_PP:	.asciz "Send PP"
 			VwLabel	TestUSBPPScreen_Label_Send_PP, super=TestUSBPPScreen_IndexWideES1, flag=VF_Const, X=8, Y=220, W=60, H=19, str=Str_Send_PP, font=5, fontcolor=CL_Black	# str "Send PP"
 
 Str_KssBg_3:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_3
 
 	KssBgScreen	HDD_FILE_SELECT, sub=HDD_FILE_SELECT_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_FILE_SELECT_window, title=Str_KssBg_3, icon=1	# title "KssBg"
 		KssUserBitmap	HDD_FILE_SELECT_KssUserBitmap1, super=HDD_FILE_SELECT, sub=HDD_FILE_SELECT_PageControl1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -2984,7 +2986,7 @@ Str_KssBg_3:	.asciz "KssBg"
 			AcWindowPage	LoadOptionWndPg, super=HDD_FILE_SELECT_KssUserBitmap1, prev=HDD_FILE_SELECT_ExitScreen1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=LoadOptionWndPg_page, pagemin=1, pagemax=2
 
 Str_SELECT_DIRECTORY:	.asciz "SELECT DIRECTORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_DIRECTORY
 
 	KssBgScreen	HDD_DIR_SELECT, sub=HDD_DIR_SELECT_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_DIR_SELECT_window, title=Str_SELECT_DIRECTORY, icon=1	# title "SELECT DIRECTORY"
 		IvExitScreen	HDD_DIR_SELECT_ExitScreen1, super=HDD_DIR_SELECT, next=HDD_DIR_SELECT_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -2992,7 +2994,7 @@ Str_SELECT_DIRECTORY:	.asciz "SELECT DIRECTORY"
 			KSSPsDirBox	SelectedDirectory, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_ScreenMenu_OK, flag=VF_Const, X=8, Y=32, W=528, H=177, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, font=3, fontactivcolor=CL_LightGreen, fontcolor=CL_Black, main_func=FN_KssDirBoxFunc, column=4, row=12, maxarea=5, totalent=240, sel_num=SelectedDirectory_sel_num, sel_area=SelectedDirectory_sel_area, dial=1, auto_inc=1, paintok=SelectedDirectory_paintok, aicok=SelectedDirectory_aicok
 
 Str_OK_3:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_3
 
 			AcScreenMenu	HDD_DIR_SELECT_ScreenMenu_OK, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_KssPsMultiLangTextBox1, prev=SelectedDirectory, flag=VF_Const, X=570, Y=32, W=60, H=34, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=HDD_DIR_SELECT_ScreenMenu_OK_selected, str=Str_OK_3, screen=0xFFFFFFFF	# str "OK"
 
@@ -3003,12 +3005,12 @@ Str_DIRECTORY_SELECT_8:	.asciz "DIRECTORY SELECT"
 Str_empty_193:	.asciz ""
 Str_empty_194:	.asciz ""
 Str_empty_195:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_195
 
 			KssPsMultiLangTextBox	HDD_DIR_SELECT_KssPsMultiLangTextBox1, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_ScreenMenu1, prev=HDD_DIR_SELECT_ScreenMenu_OK, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_DIRECTORY_SELECT_5, strGerman=Str_DIRECTORY_SELECT_6, strFrench=Str_DIRECTORY_SELECT_7, strSpanish=Str_DIRECTORY_SELECT_8, strItalian=Str_empty_193, strIndones=Str_empty_194, strJapan=Str_empty_195	# strEnglish "DIRECTORY SELECT"; strGerman "DIRECTORY SELECT"; strFrench "DIRECTORY SELECT"; strSpanish "DIRECTORY SELECT"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_196:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_196
 
 			AcScreenMenu	HDD_DIR_SELECT_ScreenMenu1, super=HDD_DIR_SELECT_KssUserBitmap1, sub=HDD_DIR_SELECT_TextBox_LOAD_BY_NUMBER, next=HDD_DIR_SELECT_IndexWideES1, prev=HDD_DIR_SELECT_KssPsMultiLangTextBox1, flag=VF_Const, X=550, Y=114, W=80, H=38, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=7, fontcolor=CL_Black, editsw=ES_Right3, selected=HDD_DIR_SELECT_ScreenMenu1_selected, str=Str_empty_196, screen=0xFFFFFFFF	# str ""
 
@@ -3019,7 +3021,7 @@ Str_LOAD_BY_NUMBER_8:	.asciz "LOAD BY NUMBER "
 			AcIndexEditSw	HDD_DIR_SELECT_IndexEditSw1, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_ScreenMenu2, prev=HDD_DIR_SELECT_IndexWideES1, flag=VF_Const, X=206, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
 
 Str_empty_197:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_197
 
 			AcScreenMenu	HDD_DIR_SELECT_ScreenMenu2, super=HDD_DIR_SELECT_KssUserBitmap1, sub=HDD_DIR_SELECT_TextBox_ALPHAB_SORTED, next=HDD_DIR_SELECT_Line1, prev=HDD_DIR_SELECT_IndexEditSw1, flag=VF_Const, X=550, Y=158, W=80, H=38, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=7, fontcolor=CL_Red, editsw=ES_Right4, selected=HDD_DIR_SELECT_ScreenMenu2_selected, str=Str_empty_197, screen=ALPHA_SORTED_LIST_id	# str ""
 
@@ -3029,20 +3031,20 @@ Str_ALPHAB_SORTED_2:	.asciz "ALPHAB. SORTED "
 			VwLine	HDD_DIR_SELECT_Line1, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_ScreenMenu3, prev=HDD_DIR_SELECT_ScreenMenu2, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
 
 Str_empty_198:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_198
 
 			AcScreenMenu	HDD_DIR_SELECT_ScreenMenu3, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_CatchEvent1, prev=HDD_DIR_SELECT_Line1, flag=VF_Const, X=550, Y=71, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=HDD_DIR_SELECT_ScreenMenu3_selected, str=Str_empty_198, screen=0xFFFFFFFF	# str ""
 			IvCatchEvent	HDD_DIR_SELECT_CatchEvent1, super=HDD_DIR_SELECT_KssUserBitmap1, next=ScrBut_EditDirName, prev=HDD_DIR_SELECT_ScreenMenu3, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, func=FN_KssCatch_DirSelectScreen
 
 Str_Edit_2:	.asciz "Edit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Edit_2
 
 			AcIndexEditSw	HDD_DIR_SELECT_IndexEditSw2, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_IndexEditSw3, prev=ScrBut_EditDirName, flag=VF_Const, X=404, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=8
 			AcIndexEditSw	HDD_DIR_SELECT_IndexEditSw3, super=HDD_DIR_SELECT_KssUserBitmap1, next=HDD_DIR_SELECT_IndexEditSw4, prev=HDD_DIR_SELECT_IndexEditSw2, flag=VF_Const, X=164, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=15
 			AcIndexEditSw	HDD_DIR_SELECT_IndexEditSw4, super=HDD_DIR_SELECT_KssUserBitmap1, prev=HDD_DIR_SELECT_IndexEditSw3, flag=VF_Const, X=444, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, style=16
 
 Str_KssBg_4:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_4
 
 	KssBgScreen	HDD_DIR_NAMING, sub=HDD_DIR_NAMING_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_DIR_NAMING_window, title=Str_KssBg_4, icon=1	# title "KssBg"
 		KssUserBitmap	HDD_DIR_NAMING_KssUserBitmap1, super=HDD_DIR_NAMING, sub=HDD_DIR_NAMING_ExitScreen1, next=HDD_DIR_NAMING_KssPsMultiLangTextBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3056,12 +3058,12 @@ Str_DIRECTORY_NAMING_4:	.asciz "DIRECTORY NAMING"
 Str_empty_199:	.asciz ""
 Str_empty_200:	.asciz ""
 Str_empty_201:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_201
 
 		KssPsMultiLangTextBox	HDD_DIR_NAMING_KssPsMultiLangTextBox1, super=HDD_DIR_NAMING, prev=HDD_DIR_NAMING_KssUserBitmap1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_DIRECTORY_NAMING, strGerman=Str_DIRECTORY_NAMING_2, strFrench=Str_DIRECTORY_NAMING_3, strSpanish=Str_DIRECTORY_NAMING_4, strItalian=Str_empty_199, strIndones=Str_empty_200, strJapan=Str_empty_201	# strEnglish "DIRECTORY NAMING"; strGerman "DIRECTORY NAMING"; strFrench "DIRECTORY NAMING"; strSpanish "DIRECTORY NAMING"; strItalian ""; strIndones ""; strJapan ""
 
 Str_SELECT_DIRECTORY_2:	.asciz "SELECT DIRECTORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_DIRECTORY_2
 
 	KssBgScreen	CP_HD_SELDIR, sub=CP_HD_SELDIR_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CP_HD_SELDIR_window, title=Str_SELECT_DIRECTORY_2, icon=1	# title "SELECT DIRECTORY"
 		IvExitScreen	CP_HD_SELDIR_ExitScreen1, super=CP_HD_SELDIR, next=CP_HD_SELDIR_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=SETUP_TOOLS_id
@@ -3075,14 +3077,14 @@ Str_COPY_DESTINATION_4:	.asciz "COPY DESTINATION"
 Str_empty_202:	.asciz ""
 Str_empty_203:	.asciz ""
 Str_empty_204:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_204
 
 			KssPsMultiLangTextBox	CP_HD_SELDIR_KssPsMultiLangTextBox1, super=CP_HD_SELDIR_KssUserBitmap1, sub=CheckCPAction, next=CP_HD_SELDIR_IndexEditSw1, prev=SelectedCopyDest, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_COPY_DESTINATION, strGerman=Str_COPY_DESTINATION_2, strFrench=Str_COPY_DESTINATION_3, strSpanish=Str_COPY_DESTINATION_4, strItalian=Str_empty_202, strIndones=Str_empty_203, strJapan=Str_empty_204	# strEnglish "COPY DESTINATION"; strGerman "COPY DESTINATION"; strFrench "COPY DESTINATION"; strSpanish "COPY DESTINATION"; strItalian ""; strIndones ""; strJapan ""
 				IvCatchEvent	CheckCPAction, super=CP_HD_SELDIR_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CheckCPActionCatch
 			AcIndexEditSw	CP_HD_SELDIR_IndexEditSw1, super=CP_HD_SELDIR_KssUserBitmap1, sub=CP_HD_SELDIR_Label_COPY, next=CP_HD_SELDIR_IndexEditSw2, prev=CP_HD_SELDIR_KssPsMultiLangTextBox1, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_COPY:	.asciz "COPY !"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY
 
 				VwLabel	CP_HD_SELDIR_Label_COPY, super=CP_HD_SELDIR_IndexEditSw1, flag=VF_Const, X=555, Y=39, W=70, H=19, str=Str_COPY, font=4, fontcolor=CL_Black	# str "COPY !"
 			AcIndexEditSw	CP_HD_SELDIR_IndexEditSw2, super=CP_HD_SELDIR_KssUserBitmap1, next=CP_HD_SELDIR_IndexWideES1, prev=CP_HD_SELDIR_IndexEditSw1, flag=VF_Const, X=404, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=8
@@ -3092,7 +3094,7 @@ Str_COPY:	.asciz "COPY !"
 		AcIndexEditSw	CP_HD_SELDIR_IndexEditSw5, super=CP_HD_SELDIR, prev=CP_HD_SELDIR_IndexEditSw4, flag=VF_Const, X=164, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=15
 
 Str_COPY_FD_TO_HARD_DISK_DRIVE:	.asciz "COPY FD TO HARD DISK DRIVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_FD_TO_HARD_DISK_DRIVE
 
 	KssBgScreen	COPY_FD_TO_HDD, sub=COPY_FD_TO_HDD_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=COPY_FD_TO_HDD_window, title=Str_COPY_FD_TO_HARD_DISK_DRIVE, icon=115	# title "COPY FD TO HARD DISK DRIVE"
 		IvExitScreen	COPY_FD_TO_HDD_ExitScreen1, super=COPY_FD_TO_HDD, next=COPY_FD_TO_HDD_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=340, Y=0, W=32, H=32, screen=SETUP_TOOLS_id
@@ -3100,13 +3102,13 @@ Str_COPY_FD_TO_HARD_DISK_DRIVE:	.asciz "COPY FD TO HARD DISK DRIVE"
 			AcIndexEditSw	COPY_FD_TO_HDD_IndexEditSw1, super=COPY_FD_TO_HDD_KssUserBitmap1, sub=COPY_FD_TO_HDD_Label_SELECT_ALL, next=COPY_FD_TO_HDD_IndexEditSw2, flag=VF_Const, X=544, Y=165, W=88, H=22, color=CL_Transparent, border=BD_3D_UP1, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4
 
 Str_SELECT_ALL:	.asciz "SELECT ALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_ALL
 
 				VwLabel	COPY_FD_TO_HDD_Label_SELECT_ALL, super=COPY_FD_TO_HDD_IndexEditSw1, flag=VF_Const, X=546, Y=168, W=84, H=19, str=Str_SELECT_ALL, font=7, fontcolor=CL_Selected	# str "SELECT ALL"
 			AcIndexEditSw	COPY_FD_TO_HDD_IndexEditSw2, super=COPY_FD_TO_HDD_KssUserBitmap1, sub=COPY_FD_TO_HDD_Label_SELECT, next=COPY_FD_TO_HDD_IndexEditSw3, prev=COPY_FD_TO_HDD_IndexEditSw1, flag=VF_Const, X=544, Y=210, W=88, H=19, color=CL_Transparent, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Right5
 
 Str_SELECT:	.asciz "SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT
 
 				VwLabel	COPY_FD_TO_HDD_Label_SELECT, super=COPY_FD_TO_HDD_IndexEditSw2, flag=VF_Const, X=566, Y=212, W=52, H=19, str=Str_SELECT, font=7, fontcolor=CL_Selected	# str "SELECT"
 			AcIndexEditSw	COPY_FD_TO_HDD_IndexEditSw3, super=COPY_FD_TO_HDD_KssUserBitmap1, next=COPY_FD_TO_HDD_IndexWideES1, prev=COPY_FD_TO_HDD_IndexEditSw2, flag=VF_Const, X=206, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_DOWN1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
@@ -3115,7 +3117,7 @@ Str_SELECT:	.asciz "SELECT"
 			AcIndexEditSw	COPY_FD_TO_HDD_IndexEditSw5, super=COPY_FD_TO_HDD_KssUserBitmap1, sub=COPY_FD_TO_HDD_Label_COPY_TO, next=CP_FD_VOLLABEL, prev=COPY_FD_TO_HDD_IndexEditSw4, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_Transparent, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_COPY_TO:	.asciz "COPY * TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_TO
 
 				VwLabel	COPY_FD_TO_HDD_Label_COPY_TO, super=COPY_FD_TO_HDD_IndexEditSw5, flag=VF_Const, X=520, Y=39, W=103, H=19, str=Str_COPY_TO, font=4, fontcolor=CL_Black	# str "COPY * TO"
 
@@ -3139,12 +3141,12 @@ Str_COPY_FD_TO_HDD_TECH_4:	.asciz "COPY FD TO HDD TECH"
 Str_empty_206:	.asciz ""
 Str_empty_207:	.asciz ""
 Str_empty_208:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_208
 
 			KssPsMultiLangTextBox	COPY_FD_TO_HDD_KssPsMultiLangTextBox1, super=COPY_FD_TO_HDD_KssUserBitmap1, prev=COPY_FD_TO_HDD_IndexEditSw6, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_COPY_FD_TO_HDD_TECH, strGerman=Str_COPY_FD_TO_HDD_TECH_2, strFrench=Str_COPY_FD_TO_HDD_TECH_3, strSpanish=Str_COPY_FD_TO_HDD_TECH_4, strItalian=Str_empty_206, strIndones=Str_empty_207, strJapan=Str_empty_208	# strEnglish "COPY FD TO HDD TECH"; strGerman "COPY FD TO HDD TECH"; strFrench "COPY FD TO HDD TECH"; strSpanish "COPY FD TO HDD TECH"; strItalian ""; strIndones ""; strJapan ""
 
 Str_KssBg_5:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_5
 
 	KssBgScreen	HDD_FILE_NAMING, sub=HDD_FILE_NAMING_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_FILE_NAMING_window, title=Str_KssBg_5, icon=1	# title "KssBg"
 		KssUserBitmap	HDD_FILE_NAMING_KssUserBitmap1, super=HDD_FILE_NAMING, sub=HDD_FILE_NAMING_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3157,7 +3159,7 @@ Str_FILE_TITLE_NAMING_4:	.asciz "FILE/TITLE NAMING"
 Str_empty_209:	.asciz ""
 Str_empty_210:	.asciz ""
 Str_empty_211:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_211
 
 			KssPsMultiLangTextBox	HDD_FILE_NAMING_KssPsMultiLangTextBox1, super=HDD_FILE_NAMING_KssUserBitmap1, next=HDD_FILE_NAMING_CatchEvent1, prev=HDD_FILE_NAMING_ExitScreen1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_TITLE_NAMING, strGerman=Str_FILE_TITLE_NAMING_2, strFrench=Str_FILE_TITLE_NAMING_3, strSpanish=Str_FILE_TITLE_NAMING_4, strItalian=Str_empty_209, strIndones=Str_empty_210, strJapan=Str_empty_211	# strEnglish "FILE/TITLE NAMING"; strGerman "FILE/TITLE NAMING"; strFrench "FILE/TITLE NAMING"; strSpanish "FILE/TITLE NAMING"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	HDD_FILE_NAMING_CatchEvent1, super=HDD_FILE_NAMING_KssUserBitmap1, prev=HDD_FILE_NAMING_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_KSSFileNameScreen
@@ -3174,7 +3176,7 @@ Str_C_L_S_SELECT_7:	.asciz "C.L.S. SELECT"
 Str_empty_212:	.asciz ""
 Str_empty_213:	.asciz ""
 Str_empty_214:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_214
 
 			KssPsMultiLangTextBox	CLS_FILE_LOAD_SCREEN_KssPsMultiLangTextBox1, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, sub=CLS_FILE_LOAD_SCREEN_KssPsParaBox1, next=ScrBut_EditFLS, flag=VF_Const, X=2, Y=4, W=120, H=100, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=3, Dim3d=1, strEnglish=Str_C_L_S_FILE_LOAD, strGerman=Str_C_L_S_SELECT_5, strFrench=Str_C_L_S_SELECT_6, strSpanish=Str_C_L_S_SELECT_7, strItalian=Str_empty_212, strIndones=Str_empty_213, strJapan=Str_empty_214	# strEnglish "C.L.S. FILE LOAD"; strGerman "C.L.S. SELECT"; strFrench "C.L.S. SELECT"; strSpanish "C.L.S. SELECT"; strItalian ""; strIndones ""; strJapan ""
 				KssPsParaBox	CLS_FILE_LOAD_SCREEN_KssPsParaBox1, super=CLS_FILE_LOAD_SCREEN_KssPsMultiLangTextBox1, sub=CLS_FILE_LOAD_SCREEN_Label_C_L_S_NAME_LOCATION, flag=VF_Const, X=104, Y=4, W=432, H=24, color=CL_Navy, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black
@@ -3184,17 +3186,17 @@ Str_C_L_S_NAME_LOCATION:	.asciz "C.L.S. NAME:                          LOCATION:
 					VwLabel	CLS_FILE_LOAD_SCREEN_Label_C_L_S_NAME_LOCATION, super=CLS_FILE_LOAD_SCREEN_KssPsParaBox1, sub=CLS_NAME, next=LOC_DIR_FILE1, flag=VF_Const, X=108, Y=8, W=365, H=19, str=Str_C_L_S_NAME_LOCATION, font=5, fontcolor=CL_White	# str "C.L.S. NAME:                          LO"
 
 Str_0123456789123456:	.asciz "0123456789123456"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0123456789123456
 
 						VwLabel	CLS_NAME, super=CLS_FILE_LOAD_SCREEN_Label_C_L_S_NAME_LOCATION, flag=VF_Const, X=200, Y=10, W=130, H=19, str=Str_0123456789123456, font=5, fontcolor=CL_Navy	# str "0123456789123456"
 
 Str_123456:	.asciz "123456"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_123456
 
 					VwLabel	LOC_DIR_FILE1, super=CLS_FILE_LOAD_SCREEN_KssPsParaBox1, prev=CLS_FILE_LOAD_SCREEN_Label_C_L_S_NAME_LOCATION, flag=VF_Const, X=475, Y=6, W=51, H=19, str=Str_123456, font=5, fontcolor=CL_Silver	# str "123456"
 
 Str_EDIT_2:	.asciz "EDIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EDIT_2
 
 			AcIndexEditSw	CLS_FILE_LOAD_SCREEN_IndexEditSw1, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, next=CLS_FILE_LOAD_SCREEN_IndexWideES1, prev=ScrBut_EditFLS, flag=VF_Const, X=206, Y=214, W=32, H=23, color=CL_Silver, border=BD_3D_UP1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
 			AcIndexWideES	CLS_FILE_LOAD_SCREEN_IndexWideES1, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, next=CLS_FILE_LOAD_SCREEN_IndexEditSw2, prev=CLS_FILE_LOAD_SCREEN_IndexEditSw1, flag=VF_Const, X=244, Y=214, W=152, H=23, color=CL_Silver, border=BD_3D_UP1, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
@@ -3202,7 +3204,7 @@ Str_EDIT_2:	.asciz "EDIT"
 			AcIndexEditSw	CLS_FILE_LOAD_SCREEN_IndexEditSw3, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, sub=CLS_FILE_LOAD_SCREEN_Label_LOAD, next=CLS_FILE_LOAD_SCREEN_IndexEditSw4, prev=CLS_FILE_LOAD_SCREEN_IndexEditSw2, flag=VF_Const, X=540, Y=36, W=90, H=20, color=CL_Transparent, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_7:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_7
 
 				VwLabel	CLS_FILE_LOAD_SCREEN_Label_LOAD, super=CLS_FILE_LOAD_SCREEN_IndexEditSw3, flag=VF_Const, X=580, Y=38, W=48, H=19, str=Str_LOAD_7, font=4, fontcolor=CL_Black	# str "LOAD"
 			AcIndexEditSw	CLS_FILE_LOAD_SCREEN_IndexEditSw4, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, next=CLSFileSfxBox, prev=CLS_FILE_LOAD_SCREEN_IndexEditSw3, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -3216,7 +3218,7 @@ Str_PANIC_4:	.asciz "PANIC"
 Str_empty_215:	.asciz ""
 Str_empty_216:	.asciz ""
 Str_empty_217:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_217
 
 				KssPsMultiLangTextBox	CLS_FILE_LOAD_SCREEN_KssPsMultiLangTextBox2, super=CLS_FILE_LOAD_SCREEN_IndexEditSw5, flag=VF_Const, X=18, Y=215, W=60, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_PANIC, strGerman=Str_PANIC_2, strFrench=Str_PANIC_3, strSpanish=Str_PANIC_4, strItalian=Str_empty_215, strIndones=Str_empty_216, strJapan=Str_empty_217	# strEnglish "PANIC"; strGerman "PANIC"; strFrench "PANIC"; strSpanish "PANIC"; strItalian ""; strIndones ""; strJapan ""
 			AcIndexEditSw	CLS_FILE_LOAD_SCREEN_IndexEditSw6, super=CLS_FILE_LOAD_SCREEN_KssUserBitmap1, next=CLS_FILE_BOX, prev=CLS_FILE_LOAD_SCREEN_IndexEditSw5, flag=VF_Const, X=8, Y=168, W=32, H=23, color=CL_Transparent, index=8, font=4, fontcolor=CL_Black, align=1, editsw=ES_Exit
@@ -3226,7 +3228,7 @@ Str_empty_217:	.asciz ""
 		AcIndexEditSw	CLS_FILE_LOAD_SCREEN_IndexEditSw8, super=CLS_FILE_LOAD_SCREEN, prev=CLS_FILE_LOAD_SCREEN_IndexEditSw7, flag=VF_Const, X=164, Y=214, W=32, H=23, color=CL_SilverB, border=BD_3D_UP1, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=15
 
 Str_KssBg_6:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_6
 
 	KssBgScreen	CLS_NAMING, sub=CLS_NAMING_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CLS_NAMING_window, title=Str_KssBg_6, icon=1	# title "KssBg"
 		KssUserBitmap	CLS_NAMING_KssUserBitmap1, super=CLS_NAMING, sub=CLS_NAMING_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3241,7 +3243,7 @@ Str_C_L_S_NAMING_4:	.asciz "C.L.S. NAMING"
 Str_empty_218:	.asciz ""
 Str_empty_219:	.asciz ""
 Str_empty_220:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_220
 
 			KssPsMultiLangTextBox	CLS_NAMING_KssPsMultiLangTextBox1, super=CLS_NAMING_KssUserBitmap1, next=CLS_NAMING_CatchEvent1, prev=CLS_NAMING_PageControl1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_C_L_S_NAMING, strGerman=Str_C_L_S_NAMING_2, strFrench=Str_C_L_S_NAMING_3, strSpanish=Str_C_L_S_NAMING_4, strItalian=Str_empty_218, strIndones=Str_empty_219, strJapan=Str_empty_220	# strEnglish "C.L.S. NAMING"; strGerman "C.L.S. NAMING"; strFrench "C.L.S. NAMING"; strSpanish "C.L.S. NAMING"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	CLS_NAMING_CatchEvent1, super=CLS_NAMING_KssUserBitmap1, prev=CLS_NAMING_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=512, Y=0, W=32, H=32, func=FN_KSSFlsNameScreen
@@ -3258,18 +3260,18 @@ Str_C_L_S_EDIT_4:	.asciz "C.L.S. EDIT"
 Str_empty_221:	.asciz ""
 Str_empty_222:	.asciz ""
 Str_empty_223:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_223
 
 			KssPsMultiLangTextBox	CLS_EDIT_KssPsMultiLangTextBox1, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_KssPsParaBox1, next=CLS_EDIT_ScreenMenu_SEARCH, flag=VF_Const, X=2, Y=4, W=120, H=100, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=3, Dim3d=1, strEnglish=Str_C_L_S_EDIT, strGerman=Str_C_L_S_EDIT_2, strFrench=Str_C_L_S_EDIT_3, strSpanish=Str_C_L_S_EDIT_4, strItalian=Str_empty_221, strIndones=Str_empty_222, strJapan=Str_empty_223	# strEnglish "C.L.S. EDIT"; strGerman "C.L.S. EDIT"; strFrench "C.L.S. EDIT"; strSpanish "C.L.S. EDIT"; strItalian ""; strIndones ""; strJapan ""
 				KssPsParaBox	CLS_EDIT_KssPsParaBox1, super=CLS_EDIT_KssPsMultiLangTextBox1, sub=CLS_NAME2, flag=VF_Const, X=104, Y=4, W=432, H=24, color=CL_Navy, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black
 
 Str_empty_224:	.asciz "                             "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_224
 
 					VwLabel	CLS_NAME2, super=CLS_EDIT_KssPsParaBox1, next=CLS_EDIT_StrBox1, flag=VF_Const, X=206, Y=8, W=236, H=19, str=Str_empty_224, font=5, fontcolor=CL_Black	# str "                             "
 
 Str_empty_225:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_225
 
 					VwStrBox	CLS_EDIT_StrBox1, super=CLS_EDIT_KssPsParaBox1, sub=LOC_DIR_FILE2, prev=CLS_NAME2, flag=VF_Const, X=400, Y=5, W=135, H=22, color=CL_Navy, border=BD_3D_DOWN1, index=0xFFFF, font=4, fontcolor=CL_Black, str=Str_empty_225	# str ""
 
@@ -3282,7 +3284,7 @@ Str_C_L_S_NAME_LOCATION_2:	.asciz "C.L.S. NAME:                          LOCATIO
 						VwLabel	CLS_EDIT_Label_C_L_S_NAME_LOCATION, super=CLS_EDIT_StrBox1, prev=LOC_DIR_FILE2, flag=VF_Const, X=108, Y=8, W=365, H=19, str=Str_C_L_S_NAME_LOCATION_2, font=5, fontcolor=CL_White	# str "C.L.S. NAME:                          LO"
 
 Str_SEARCH:	.asciz "SEARCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEARCH
 
 			AcScreenMenu	CLS_EDIT_ScreenMenu_SEARCH, super=CLS_EDIT_KssUserBitmap1, next=CLS_EDIT_IndexEditSw1, prev=CLS_EDIT_KssPsMultiLangTextBox1, flag=VF_Const, X=551, Y=38, W=80, H=19, color=CL_Transparent, index=12, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=CLS_EDIT_ScreenMenu_SEARCH_selected, str=Str_SEARCH, screen=CLS_DIR_SEL_id	# str "SEARCH"
 			AcIndexEditSw	CLS_EDIT_IndexEditSw1, super=CLS_EDIT_KssUserBitmap1, next=CLS_EDIT_IndexWideES1, prev=CLS_EDIT_ScreenMenu_SEARCH, flag=VF_Const, X=206, Y=213, W=32, H=24, color=CL_Silver, border=BD_3D_UP1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
@@ -3291,52 +3293,52 @@ Str_SEARCH:	.asciz "SEARCH"
 			AcIndexEditSw	CLS_EDIT_IndexEditSw3, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_INS, next=CLS_EDIT_IndexEditSw4, prev=CLS_EDIT_IndexEditSw2, flag=VF_Const, X=162, Y=213, W=36, H=24, color=CL_Silver, border=BD_3D_UP1, index=9, font=4, fontcolor=CL_Black, editsw=ES_Bottom5
 
 Str_INS_2:	.asciz "INS."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INS_2
 
 				VwLabel	CLS_EDIT_Label_INS, super=CLS_EDIT_IndexEditSw3, flag=VF_Const, X=168, Y=221, W=28, H=11, str=Str_INS_2, font=3, fontcolor=CL_DarkGray	# str "INS."
 			AcIndexEditSw	CLS_EDIT_IndexEditSw4, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_ERASE, next=CLS_EDIT_IndexEditSw5, prev=CLS_EDIT_IndexEditSw3, flag=VF_Const, X=82, Y=213, W=36, H=24, color=CL_Silver, border=BD_3D_UP1, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom3
 
 Str_ERASE:	.asciz "ERASE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ERASE
 
 				VwLabel	CLS_EDIT_Label_ERASE, super=CLS_EDIT_IndexEditSw4, flag=VF_Const, X=83, Y=221, W=34, H=11, str=Str_ERASE, font=3, fontcolor=CL_Black	# str "ERASE"
 			AcIndexEditSw	CLS_EDIT_IndexEditSw5, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_DEL, next=CLS_EDIT_IndexEditSw6, prev=CLS_EDIT_IndexEditSw4, flag=VF_Const, X=122, Y=213, W=36, H=24, color=CL_Silver, border=BD_3D_UP1, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom4
 
 Str_DEL_2:	.asciz "DEL."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DEL_2
 
 				VwLabel	CLS_EDIT_Label_DEL, super=CLS_EDIT_IndexEditSw5, flag=VF_Const, X=128, Y=221, W=28, H=11, str=Str_DEL_2, font=3, fontcolor=CL_DarkGray	# str "DEL."
 			AcIndexEditSw	CLS_EDIT_IndexEditSw6, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_A_S, next=CLS_EDIT_IndexEditSw7, prev=CLS_EDIT_IndexEditSw5, flag=VF_Const, X=444, Y=213, W=32, H=24, color=CL_Silver, border=BD_3D_UP1, index=11, font=4, fontcolor=CL_Black, editsw=ES_Bottom12
 
 Str_A_S:	.asciz "A.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_S
 
 				VwLabel	CLS_EDIT_Label_A_S, super=CLS_EDIT_IndexEditSw6, flag=VF_Const, X=448, Y=221, W=28, H=11, str=Str_A_S, font=3, fontcolor=CL_DarkGray	# str "A.S."
 			AcIndexEditSw	CLS_EDIT_IndexEditSw7, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_A_L, next=CLS_EDIT_IndexEditSw8, prev=CLS_EDIT_IndexEditSw6, flag=VF_Const, X=484, Y=213, W=32, H=24, color=CL_Silver, border=BD_3D_UP1, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom13
 
 Str_A_L:	.asciz "A.L."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_L
 
 				VwLabel	CLS_EDIT_Label_A_L, super=CLS_EDIT_IndexEditSw7, flag=VF_Const, X=488, Y=221, W=28, H=11, str=Str_A_L, font=3, fontcolor=CL_DarkGray	# str "A.L."
 			AcIndexEditSw	CLS_EDIT_IndexEditSw8, super=CLS_EDIT_KssUserBitmap1, next=CLS_EDIT_IndexEditSw9, prev=CLS_EDIT_IndexEditSw7, flag=VF_Const, X=4, Y=212, W=32, H=23, color=CL_Transparent, index=8, font=4, fontcolor=CL_Black, editsw=ES_Exit
 			AcIndexEditSw	CLS_EDIT_IndexEditSw9, super=CLS_EDIT_KssUserBitmap1, sub=CLS_EDIT_Label_SAVE_CLS, next=CLS_EDIT_KssFileSfx_DISP1, prev=CLS_EDIT_IndexEditSw8, flag=VF_Const, X=540, Y=213, W=90, H=24, color=CL_Transparent, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Right5
 
 Str_SAVE_CLS:	.asciz "SAVE CLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_CLS
 
 				VwLabel	CLS_EDIT_Label_SAVE_CLS, super=CLS_EDIT_IndexEditSw9, flag=VF_Const, X=558, Y=217, W=68, H=19, str=Str_SAVE_CLS, font=5, fontcolor=CL_Red	# str "SAVE CLS"
 			KssFileSfx_DISP	CLS_EDIT_KssFileSfx_DISP1, super=CLS_EDIT_KssUserBitmap1, next=CLS_EDIT_BOX, prev=CLS_EDIT_IndexEditSw9, flag=VF_Const, X=540, Y=60, W=90, H=148, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, fontStatus=3, fontcolorStatus=CL_Silver, fontbackcolorStatus=CL_Silver, fontInfo=3, fontcolorInfo=CL_Silver, fontbackcolorInfo=CL_Silver
 			KSSCLSFileList	CLS_EDIT_BOX, super=CLS_EDIT_KssUserBitmap1, prev=CLS_EDIT_KssFileSfx_DISP1, flag=VF_Const, X=104, Y=30, W=432, H=180, color=CL_Navy, border=BD_3D_UP1, font=3, fontcolor=CL_White, main_func=FN_DefMainFunction, str_adr=CLS_EDIT_BOX_str_adr, column=2, row=16, sel_num=CLS_EDIT_BOX_sel_num, dial=1, auto_inc=1, en_paradraw=CLS_EDIT_BOX_en_paradraw
 
 Str_SELECT_DIRECTORY_3:	.asciz "SELECT DIRECTORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_DIRECTORY_3
 
 	KssBgScreen	CLS_DIR_SEL, sub=CLS_DIR_SEL_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CLS_DIR_SEL_window, title=Str_SELECT_DIRECTORY_3, icon=1	# title "SELECT DIRECTORY"
 		IvExitScreen	CLS_DIR_SEL_ExitScreen1, super=CLS_DIR_SEL, next=CLS_DIR_SEL_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 		KssUserBitmap	CLS_DIR_SEL_KssUserBitmap1, super=CLS_DIR_SEL, sub=CLS_DIR_SEL_ScreenMenu_OK, next=CLS_DIR_SEL_ExitScreen2, prev=CLS_DIR_SEL_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_OK_4:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_4
 
 			AcScreenMenu	CLS_DIR_SEL_ScreenMenu_OK, super=CLS_DIR_SEL_KssUserBitmap1, next=CLS_DIR_SEL_KssPsMultiLangTextBox1, flag=VF_Const, X=570, Y=38, W=60, H=19, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=CLS_DIR_SEL_ScreenMenu_OK_selected, str=Str_OK_4, screen=CLS_FILE_SELECT_id	# str "OK"
 
@@ -3347,7 +3349,7 @@ Str_DIR_SELECT_FOR_C_L_S_4:	.asciz "DIR SELECT FOR C.L.S."
 Str_empty_226:	.asciz ""
 Str_empty_227:	.asciz ""
 Str_empty_228:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_228
 
 			KssPsMultiLangTextBox	CLS_DIR_SEL_KssPsMultiLangTextBox1, super=CLS_DIR_SEL_KssUserBitmap1, next=CLS_DIR_SEL_IndexWideES1, prev=CLS_DIR_SEL_ScreenMenu_OK, flag=VF_Const, X=2, Y=4, W=480, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_DIR_SELECT_FOR_C_L_S, strGerman=Str_DIR_SELECT_FOR_C_L_S_2, strFrench=Str_DIR_SELECT_FOR_C_L_S_3, strSpanish=Str_DIR_SELECT_FOR_C_L_S_4, strItalian=Str_empty_226, strIndones=Str_empty_227, strJapan=Str_empty_228	# strEnglish "DIR SELECT FOR C.L.S."; strGerman "DIR SELECT FOR C.L.S."; strFrench "DIR SELECT FOR C.L.S."; strSpanish "DIR SELECT FOR C.L.S."; strItalian ""; strIndones ""; strJapan ""
 			AcIndexWideES	CLS_DIR_SEL_IndexWideES1, super=CLS_DIR_SEL_KssUserBitmap1, next=CLS_DIR_SEL_IndexEditSw1, prev=CLS_DIR_SEL_KssPsMultiLangTextBox1, flag=VF_Const, X=244, Y=213, W=152, H=24, color=CL_SilverB, border=BD_3D_UP1, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
@@ -3359,7 +3361,7 @@ Str_empty_228:	.asciz ""
 		IvExitScreen	CLS_DIR_SEL_ExitScreen2, super=CLS_DIR_SEL, prev=CLS_DIR_SEL_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=CLS_EDIT_id
 
 Str_KssBg_7:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_7
 
 	KssBgScreen	CLS_FILE_SELECT, sub=CLS_FILE_SELECT_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CLS_FILE_SELECT_window, title=Str_KssBg_7, icon=1	# title "KssBg"
 		IvExitScreen	CLS_FILE_SELECT_ExitScreen1, super=CLS_FILE_SELECT, next=CLS_FILE_SELECT_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
@@ -3372,7 +3374,7 @@ Str_FILE_SELECT_FOR_C_L_S_4:	.asciz "FILE SELECT FOR C.L.S."
 Str_empty_229:	.asciz ""
 Str_empty_230:	.asciz ""
 Str_empty_231:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_231
 
 			KssPsMultiLangTextBox	CLS_FILE_SELECT_KssPsMultiLangTextBox1, super=CLS_FILE_SELECT_KssUserBitmap1, next=FLSLink, flag=VF_Const, X=2, Y=0, W=400, H=28, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_SELECT_FOR_C_L_S, strGerman=Str_FILE_SELECT_FOR_C_L_S_2, strFrench=Str_FILE_SELECT_FOR_C_L_S_3, strSpanish=Str_FILE_SELECT_FOR_C_L_S_4, strItalian=Str_empty_229, strIndones=Str_empty_230, strJapan=Str_empty_231	# strEnglish "FILE SELECT FOR C.L.S."; strGerman "FILE SELECT FOR C.L.S."; strFrench "FILE SELECT FOR C.L.S."; strSpanish "FILE SELECT FOR C.L.S."; strItalian ""; strIndones ""; strJapan ""
 
@@ -3392,7 +3394,7 @@ Str_DIR_NAME:	.asciz "DIR.      NAME:"
 				VwLabel	CLS_FILE_SELECT_Label_DIR_NAME, super=CLS_FILE_SELECT_KssPsParaBox1, sub=CLS_FILE_SELECT_Label_0123, next=CLS_FILE_SELECT_KssPsMultiLangTextBox2, flag=VF_Const, X=144, Y=35, W=119, H=19, str=Str_DIR_NAME, font=5, fontcolor=CL_DarkGray	# str "DIR.      NAME:"
 
 Str_0123:	.asciz "0123"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0123
 
 					VwLabel	CLS_FILE_SELECT_Label_0123, super=CLS_FILE_SELECT_Label_DIR_NAME, flag=VF_Const, X=178, Y=34, W=35, H=19, str=Str_0123, font=5, fontcolor=CL_Silver	# str "0123"
 
@@ -3403,20 +3405,20 @@ Str_empty_235:	.asciz ""
 Str_empty_236:	.asciz ""
 Str_empty_237:	.asciz ""
 Str_empty_238:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_238
 
 				KssPsMultiLangTextBox	CLS_FILE_SELECT_KssPsMultiLangTextBox2, super=CLS_FILE_SELECT_KssPsParaBox1, next=CLS_FILE_SELECT_IndexEditSw3, prev=CLS_FILE_SELECT_Label_DIR_NAME, flag=VF_Const, X=266, Y=34, W=140, H=19, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_empty_232, strGerman=Str_empty_233, strFrench=Str_empty_234, strSpanish=Str_empty_235, strItalian=Str_empty_236, strIndones=Str_empty_237, strJapan=Str_empty_238	# strEnglish ""; strGerman ""; strFrench ""; strSpanish ""; strItalian ""; strIndones ""; strJapan ""
 				AcIndexEditSw	CLS_FILE_SELECT_IndexEditSw3, super=CLS_FILE_SELECT_KssPsParaBox1, prev=CLS_FILE_SELECT_KssPsMultiLangTextBox2, flag=VF_Invisible|VF_Const, X=384, Y=36, W=100, H=22, color=CL_Transparent, border=BD_3D_UP1, index=8, font=4, fontcolor=CL_Black, editsw=ES_Left1
 		IvExitScreen	CLS_FILE_SELECT_ExitScreen2, super=CLS_FILE_SELECT, prev=CLS_FILE_SELECT_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, screen=CLS_DIR_SEL_id
 
 Str_KssBg_8:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_8
 
 	KssBgScreen	WARNING_YESNO, sub=WARNING_YESNO_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WARNING_YESNO_window, title=Str_KssBg_8, icon=1	# title "KssBg"
 		KssUserBitmap	WARNING_YESNO_KssUserBitmap1, super=WARNING_YESNO, sub=WARNING_YESNO_WideESBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_empty_239:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_239
 
 			VwWideESBox	WARNING_YESNO_WideESBox1, super=WARNING_YESNO_KssUserBitmap1, sub=WARNING_YESNO_KssPsMultiLangTextBox1, next=WARNING_YESNO_WideESBox2, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_239	# str ""
 
@@ -3427,12 +3429,12 @@ Str_YES_4:	.asciz "YES"
 Str_empty_240:	.asciz ""
 Str_empty_241:	.asciz ""
 Str_empty_242:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_242
 
 				KssPsMultiLangTextBox	WARNING_YESNO_KssPsMultiLangTextBox1, super=WARNING_YESNO_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_YES, strGerman=Str_YES_2, strFrench=Str_YES_3, strSpanish=Str_YES_4, strItalian=Str_empty_240, strIndones=Str_empty_241, strJapan=Str_empty_242	# strEnglish "YES"; strGerman "YES"; strFrench "YES"; strSpanish "YES"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_243:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_243
 
 			VwWideESBox	WARNING_YESNO_WideESBox2, super=WARNING_YESNO_KssUserBitmap1, sub=WARNING_YESNO_KssPsMultiLangTextBox2, next=WARNING_YESNO_CatchEvent1, prev=WARNING_YESNO_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_243	# str ""
 
@@ -3443,14 +3445,14 @@ Str_NO_4:	.asciz "NO"
 Str_empty_244:	.asciz ""
 Str_empty_245:	.asciz ""
 Str_empty_246:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_246
 
 				KssPsMultiLangTextBox	WARNING_YESNO_KssPsMultiLangTextBox2, super=WARNING_YESNO_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO, strGerman=Str_NO_2, strFrench=Str_NO_3, strSpanish=Str_NO_4, strItalian=Str_empty_244, strIndones=Str_empty_245, strJapan=Str_empty_246	# strEnglish "NO"; strGerman "NO"; strFrench "NO"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WARNING_YESNO_CatchEvent1, super=WARNING_YESNO_KssUserBitmap1, next=WARNING_YESNO_KssPsWarnBox1, prev=WARNING_YESNO_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DefaultFunction
 			KssPsWarnBox	WARNING_YESNO_KssPsWarnBox1, super=WARNING_YESNO_KssUserBitmap1, prev=WARNING_YESNO_CatchEvent1, flag=VF_Const, X=114, Y=40, W=420, H=155, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, retScreen=HDD_MAIN_MENU_id, fontTitle=2, fontcolorTitle=CL_Black, backfontcolorTitle=CL_White, rectTitle_X=120, rectTitle_Y=60, rectTitle_W=400, rectTitle_H=20, linesTitle=1, Dim3dTitle=1, fontWarn1=4, fontcolorWarn1=CL_FireRed, backfontcolorWarn1=CL_DarkGray, rectWarn1_X=120, rectWarn1_Y=92, rectWarn1_W=400, rectWarn1_H=48, linesWarn1=2, Dim3dWarn1=1, fontWarn2=5, fontcolorWarn2=CL_DarkGray, backfontcolorWarn2=CL_White, rectWarn2_X=120, rectWarn2_Y=150, rectWarn2_W=400, rectWarn2_H=40, linesWarn2=2, Dim3dWarn2=1
 
 Str_KssBg_9:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_9
 
 	KssBgScreen	WARNING_DNO_FAULT, sub=WARNING_DNO_FAULT_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WARNING_DNO_FAULT_window, title=Str_KssBg_9, icon=1	# title "KssBg"
 		KssUserBitmap	WARNING_DNO_FAULT_KssUserBitmap1, super=WARNING_DNO_FAULT, sub=WARNING_DNO_FAULT_KssVwBox1, next=WARNING_DNO_FAULT_WideESBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3463,7 +3465,7 @@ Str_Press_CANCEL_and_try_again_001_240_is_al_3:	.asciz "Press CANCEL and try aga
 Str_empty_247:	.asciz ""
 Str_empty_248:	.asciz ""
 Str_empty_249:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_249
 
 				KssPsMultiLangTextBox	WARNING_DNO_FAULT_KssPsMultiLangTextBox1, super=WARNING_DNO_FAULT_KssVwBox1, next=WARNING_DNO_FAULT_KssPsMultiLangTextBox2, flag=VF_Const, X=120, Y=150, W=400, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, backfontcolor=CL_White, lines=2, Dim3d=1, strEnglish=Str_Press_CANCEL_and_try_again_001_240_is_al, strGerman=Str_Dr_cken_Sie_CANCEL_und_versuchen_Sie_es, strFrench=Str_Press_CANCEL_and_try_again_001_240_is_al_2, strSpanish=Str_Press_CANCEL_and_try_again_001_240_is_al_3, strItalian=Str_empty_247, strIndones=Str_empty_248, strJapan=Str_empty_249	# strEnglish "Press CANCEL and try again (001 - 240 is"; strGerman "Dr\xFCcken Sie CANCEL und versuchen Sie "; strFrench "Press CANCEL and try again (001 - 240 is"; strSpanish "Press CANCEL and try again (001 - 240 is"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3474,7 +3476,7 @@ Str_The_directory_number_is_out_of_range_3:	.asciz "The directory number is out 
 Str_empty_250:	.asciz ""
 Str_empty_251:	.asciz ""
 Str_empty_252:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_252
 
 				KssPsMultiLangTextBox	WARNING_DNO_FAULT_KssPsMultiLangTextBox2, super=WARNING_DNO_FAULT_KssVwBox1, next=WARNING_DNO_FAULT_KssPsMultiLangTextBox3, prev=WARNING_DNO_FAULT_KssPsMultiLangTextBox1, flag=VF_Const, X=120, Y=92, W=400, H=48, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=2, Dim3d=1, strEnglish=Str_The_directory_number_is_out_of_range, strGerman=Str_Die_eingegebene_Nummer_existiert_nicht, strFrench=Str_The_directory_number_is_out_of_range_2, strSpanish=Str_The_directory_number_is_out_of_range_3, strItalian=Str_empty_250, strIndones=Str_empty_251, strJapan=Str_empty_252	# strEnglish "The directory number is out of range!"; strGerman "Die eingegebene Nummer existiert nicht!"; strFrench "The directory number is out of range!"; strSpanish "The directory number is out of range!"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3485,24 +3487,24 @@ Str_ATTENTION_16:	.asciz "!! ATTENTION !!"
 Str_empty_253:	.asciz ""
 Str_empty_254:	.asciz ""
 Str_empty_255:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_255
 
 				KssPsMultiLangTextBox	WARNING_DNO_FAULT_KssPsMultiLangTextBox3, super=WARNING_DNO_FAULT_KssVwBox1, prev=WARNING_DNO_FAULT_KssPsMultiLangTextBox2, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_14, strGerman=Str_ACHTUNG_4, strFrench=Str_ATTENTION_15, strSpanish=Str_ATTENTION_16, strItalian=Str_empty_253, strIndones=Str_empty_254, strJapan=Str_empty_255	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WARNING_DNO_FAULT_CatchEvent1, super=WARNING_DNO_FAULT_KssUserBitmap1, next=WARNING_DNO_FAULT_ExitScreen1, prev=WARNING_DNO_FAULT_KssVwBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DefaultFunction
 			IvExitScreen	WARNING_DNO_FAULT_ExitScreen1, super=WARNING_DNO_FAULT_KssUserBitmap1, prev=WARNING_DNO_FAULT_CatchEvent1, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, screen=CP_HD_SELDIR_id
 
 Str_empty_256:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_256
 
 		VwWideESBox	WARNING_DNO_FAULT_WideESBox1, super=WARNING_DNO_FAULT, sub=WARNING_DNO_FAULT_Label_CANCEL, prev=WARNING_DNO_FAULT_KssUserBitmap1, flag=VF_Const, X=4, Y=216, W=632, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom16, str=Str_empty_256	# str ""
 
 Str_CANCEL:	.asciz "CANCEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CANCEL
 
 			VwLabel	WARNING_DNO_FAULT_Label_CANCEL, super=WARNING_DNO_FAULT_WideESBox1, flag=VF_Const, X=296, Y=220, W=52, H=19, str=Str_CANCEL, font=5, fontcolor=CL_Black	# str "CANCEL"
 
 Str_KssBg_10:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_10
 
 	KssBgScreen	WARNING_FNO_FAULT, sub=WARNING_FNO_FAULT_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WARNING_FNO_FAULT_window, title=Str_KssBg_10, icon=1	# title "KssBg"
 		KssUserBitmap	WARNING_FNO_FAULT_KssUserBitmap1, super=WARNING_FNO_FAULT, sub=WARNING_FNO_FAULT_KssVwBox1, next=WARNING_FNO_FAULT_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3535,24 +3537,24 @@ Str_ATTENTION_19:	.asciz "!! ATTENTION !!"
 Str_empty_263:	.asciz ""
 Str_empty_264:	.asciz ""
 Str_empty_265:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_265
 
 				KssPsMultiLangTextBox	WARNING_FNO_FAULT_KssPsMultiLangTextBox3, super=WARNING_FNO_FAULT_KssVwBox1, prev=WARNING_FNO_FAULT_KssPsMultiLangTextBox2, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_17, strGerman=Str_ACHTUNG_5, strFrench=Str_ATTENTION_18, strSpanish=Str_ATTENTION_19, strItalian=Str_empty_263, strIndones=Str_empty_264, strJapan=Str_empty_265	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WARNING_FNO_FAULT_CatchEvent1, super=WARNING_FNO_FAULT_KssUserBitmap1, prev=WARNING_FNO_FAULT_KssVwBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DefaultFunction
 		IvExitScreen	WARNING_FNO_FAULT_ExitScreen1, super=WARNING_FNO_FAULT, next=WARNING_FNO_FAULT_WideESBox1, prev=WARNING_FNO_FAULT_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, screen=CP_HD_SELDIR_id
 
 Str_empty_266:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_266
 
 		VwWideESBox	WARNING_FNO_FAULT_WideESBox1, super=WARNING_FNO_FAULT, sub=WARNING_FNO_FAULT_Label_CANCEL, prev=WARNING_FNO_FAULT_ExitScreen1, flag=VF_Const, X=4, Y=216, W=632, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom16, str=Str_empty_266	# str ""
 
 Str_CANCEL_2:	.asciz "CANCEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CANCEL_2
 
 			VwLabel	WARNING_FNO_FAULT_Label_CANCEL, super=WARNING_FNO_FAULT_WideESBox1, flag=VF_Const, X=300, Y=220, W=52, H=19, str=Str_CANCEL_2, font=5, fontcolor=CL_Black	# str "CANCEL"
 
 Str_KssBg_11:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_11
 
 	KssBgScreen	WarningClsNotSaved, sub=WarningClsNotSaved_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WarningClsNotSaved_window, title=Str_KssBg_11, icon=1	# title "KssBg"
 		KssUserBitmap	WarningClsNotSaved_KssUserBitmap1, super=WarningClsNotSaved, sub=WarningClsNotSaved_KssVwBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3565,7 +3567,7 @@ Str_Press_SAVE_to_store_the_C_L_S_press_NO_t_3:	.asciz "Press SAVE to store the 
 Str_empty_267:	.asciz ""
 Str_empty_268:	.asciz ""
 Str_empty_269:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_269
 
 				KssPsMultiLangTextBox	WarningClsNotSaved_KssPsMultiLangTextBox1, super=WarningClsNotSaved_KssVwBox1, next=WarningClsNotSaved_KssPsMultiLangTextBox2, flag=VF_Const, X=120, Y=150, W=400, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, backfontcolor=CL_White, lines=2, Dim3d=1, strEnglish=Str_Press_SAVE_to_store_the_C_L_S_press_NO_t, strGerman=Str_Dr_cken_Sie_SAVE_um_zu_speichern_NO_um_d, strFrench=Str_Press_SAVE_to_store_the_C_L_S_press_NO_t_2, strSpanish=Str_Press_SAVE_to_store_the_C_L_S_press_NO_t_3, strItalian=Str_empty_267, strIndones=Str_empty_268, strJapan=Str_empty_269	# strEnglish "Press SAVE to store the C.L.S. --- press"; strGerman "Dr\xFCcken Sie SAVE um zu speichern --- "; strFrench "Press SAVE to store the C.L.S. --- press"; strSpanish "Press SAVE to store the C.L.S. --- press"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3576,7 +3578,7 @@ Str_You_are_going_to_overwrite_an_already_ex_2:	.asciz "You are going to overwri
 Str_empty_270:	.asciz ""
 Str_empty_271:	.asciz ""
 Str_empty_272:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_272
 
 				KssPsMultiLangTextBox	WarningClsNotSaved_KssPsMultiLangTextBox2, super=WarningClsNotSaved_KssVwBox1, next=WarningClsNotSaved_KssPsMultiLangTextBox3, prev=WarningClsNotSaved_KssPsMultiLangTextBox1, flag=VF_Const, X=110, Y=92, W=420, H=48, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=2, Dim3d=1, strEnglish=Str_You_are_going_to_leafe_the_C_L_S_without, strGerman=Str_Sie_wollen_die_C_L_S_verlassen_ohne_zu_s, strFrench=Str_You_are_going_to_overwrite_an_already_ex, strSpanish=Str_You_are_going_to_overwrite_an_already_ex_2, strItalian=Str_empty_270, strIndones=Str_empty_271, strJapan=Str_empty_272	# strEnglish "You are going to leafe the C.L.S. withou"; strGerman "Sie wollen die C.L.S. verlassen ohne zu "; strFrench "You are going to overwrite an already ex"; strSpanish "You are going to overwrite an already ex"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3587,12 +3589,12 @@ Str_ATTENTION_22:	.asciz "!! ATTENTION !!"
 Str_empty_273:	.asciz ""
 Str_empty_274:	.asciz ""
 Str_empty_275:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_275
 
 				KssPsMultiLangTextBox	WarningClsNotSaved_KssPsMultiLangTextBox3, super=WarningClsNotSaved_KssVwBox1, prev=WarningClsNotSaved_KssPsMultiLangTextBox2, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_20, strGerman=Str_ACHTUNG_6, strFrench=Str_ATTENTION_21, strSpanish=Str_ATTENTION_22, strItalian=Str_empty_273, strIndones=Str_empty_274, strJapan=Str_empty_275	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_276:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_276
 
 			VwWideESBox	WarningClsNotSaved_WideESBox1, super=WarningClsNotSaved_KssUserBitmap1, sub=WarningClsNotSaved_KssPsMultiLangTextBox4, next=WarningClsNotSaved_WideESBox2, prev=WarningClsNotSaved_KssVwBox1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=17, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_276	# str ""
 
@@ -3603,12 +3605,12 @@ Str_SAVE_6:	.asciz "SAVE"
 Str_empty_277:	.asciz ""
 Str_empty_278:	.asciz ""
 Str_empty_279:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_279
 
 				KssPsMultiLangTextBox	WarningClsNotSaved_KssPsMultiLangTextBox4, super=WarningClsNotSaved_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_SAVE_3, strGerman=Str_SAVE_4, strFrench=Str_SAVE_5, strSpanish=Str_SAVE_6, strItalian=Str_empty_277, strIndones=Str_empty_278, strJapan=Str_empty_279	# strEnglish "SAVE"; strGerman "SAVE"; strFrench "SAVE"; strSpanish "SAVE"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_280:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_280
 
 			VwWideESBox	WarningClsNotSaved_WideESBox2, super=WarningClsNotSaved_KssUserBitmap1, sub=WarningClsNotSaved_KssPsMultiLangTextBox5, next=WarningClsNotSaved_CatchEvent1, prev=WarningClsNotSaved_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=18, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_280	# str ""
 
@@ -3619,14 +3621,14 @@ Str_NO_8:	.asciz "NO"
 Str_empty_281:	.asciz ""
 Str_empty_282:	.asciz ""
 Str_empty_283:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_283
 
 				KssPsMultiLangTextBox	WarningClsNotSaved_KssPsMultiLangTextBox5, super=WarningClsNotSaved_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO_5, strGerman=Str_NO_6, strFrench=Str_NO_7, strSpanish=Str_NO_8, strItalian=Str_empty_281, strIndones=Str_empty_282, strJapan=Str_empty_283	# strEnglish "NO"; strGerman "NO"; strFrench "NO"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WarningClsNotSaved_CatchEvent1, super=WarningClsNotSaved_KssUserBitmap1, next=WarningClsNotSaved_ExitScreen1, prev=WarningClsNotSaved_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssxCatch_ClsNotSaved
 			IvExitScreen	WarningClsNotSaved_ExitScreen1, super=WarningClsNotSaved_KssUserBitmap1, prev=WarningClsNotSaved_CatchEvent1, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, screen=CLS_EDIT_id
 
 Str_KssBg_12:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_12
 
 	KssBgScreen	WARNING_DIR_DEL, sub=WARNING_DIR_DEL_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WARNING_DIR_DEL_window, title=Str_KssBg_12, icon=1	# title "KssBg"
 		KssUserBitmap	WARNING_DIR_DEL_KssUserBitmap1, super=WARNING_DIR_DEL, sub=WARNING_DIR_DEL_KssVwBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3649,7 +3651,7 @@ Str_Would_you_really_want_to_delete_the_actu_3:	.asciz "Would you really want to
 Str_empty_287:	.asciz ""
 Str_empty_288:	.asciz ""
 Str_empty_289:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_289
 
 				KssPsMultiLangTextBox	WARNING_DIR_DEL_KssPsMultiLangTextBox2, super=WARNING_DIR_DEL_KssVwBox1, next=WARNING_DIR_DEL_KssPsMultiLangTextBox3, prev=WARNING_DIR_DEL_KssPsMultiLangTextBox1, flag=VF_Const, X=110, Y=88, W=420, H=48, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=2, Dim3d=1, strEnglish=Str_Would_you_really_want_to_delete_the_actu, strGerman=Str_Soll_das_aktuelle_Verzeichnis_wirklich_g, strFrench=Str_Would_you_really_want_to_delete_the_actu_2, strSpanish=Str_Would_you_really_want_to_delete_the_actu_3, strItalian=Str_empty_287, strIndones=Str_empty_288, strJapan=Str_empty_289	# strEnglish "Would you really want to delete the actu"; strGerman "Soll das aktuelle Verzeichnis wirklich g"; strFrench "Would you really want to delete the actu"; strSpanish "Would you really want to delete the actu"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3660,12 +3662,12 @@ Str_ATTENTION_25:	.asciz "!! ATTENTION !!"
 Str_empty_290:	.asciz ""
 Str_empty_291:	.asciz ""
 Str_empty_292:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_292
 
 				KssPsMultiLangTextBox	WARNING_DIR_DEL_KssPsMultiLangTextBox3, super=WARNING_DIR_DEL_KssVwBox1, prev=WARNING_DIR_DEL_KssPsMultiLangTextBox2, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_23, strGerman=Str_ACHTUNG_7, strFrench=Str_ATTENTION_24, strSpanish=Str_ATTENTION_25, strItalian=Str_empty_290, strIndones=Str_empty_291, strJapan=Str_empty_292	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_293:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_293
 
 			VwWideESBox	WARNING_DIR_DEL_WideESBox1, super=WARNING_DIR_DEL_KssUserBitmap1, sub=WARNING_DIR_DEL_KssPsMultiLangTextBox4, next=WARNING_DIR_DEL_WideESBox2, prev=WARNING_DIR_DEL_KssVwBox1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_293	# str ""
 
@@ -3676,12 +3678,12 @@ Str_YES_8:	.asciz "YES"
 Str_empty_294:	.asciz ""
 Str_empty_295:	.asciz ""
 Str_empty_296:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_296
 
 				KssPsMultiLangTextBox	WARNING_DIR_DEL_KssPsMultiLangTextBox4, super=WARNING_DIR_DEL_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_YES_5, strGerman=Str_YES_6, strFrench=Str_YES_7, strSpanish=Str_YES_8, strItalian=Str_empty_294, strIndones=Str_empty_295, strJapan=Str_empty_296	# strEnglish "YES"; strGerman "YES"; strFrench "YES"; strSpanish "YES"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_297:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_297
 
 			VwWideESBox	WARNING_DIR_DEL_WideESBox2, super=WARNING_DIR_DEL_KssUserBitmap1, sub=WARNING_DIR_DEL_KssPsMultiLangTextBox5, next=WARNING_DIR_DEL_ExitScreen1, prev=WARNING_DIR_DEL_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_297	# str ""
 
@@ -3692,14 +3694,14 @@ Str_NO_12:	.asciz "NO"
 Str_empty_298:	.asciz ""
 Str_empty_299:	.asciz ""
 Str_empty_300:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_300
 
 				KssPsMultiLangTextBox	WARNING_DIR_DEL_KssPsMultiLangTextBox5, super=WARNING_DIR_DEL_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO_9, strGerman=Str_NO_10, strFrench=Str_NO_11, strSpanish=Str_NO_12, strItalian=Str_empty_298, strIndones=Str_empty_299, strJapan=Str_empty_300	# strEnglish "NO"; strGerman "NO"; strFrench "NO"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 			IvExitScreen	WARNING_DIR_DEL_ExitScreen1, super=WARNING_DIR_DEL_KssUserBitmap1, next=WARNING_DIR_DEL_CatchEvent1, prev=WARNING_DIR_DEL_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 			IvCatchEvent	WARNING_DIR_DEL_CatchEvent1, super=WARNING_DIR_DEL_KssUserBitmap1, prev=WARNING_DIR_DEL_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssxCatch_DeleteDirectory
 
 Str_KssBg_13:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_13
 
 	KssBgScreen	HDD_PASSWORD_NAMING, sub=HDD_PASSWORD_NAMING_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_PASSWORD_NAMING_window, title=Str_KssBg_13, icon=1	# title "KssBg"
 		KssUserBitmap	HDD_PASSWORD_NAMING_KssUserBitmap1, super=HDD_PASSWORD_NAMING, sub=HDD_PASSWORD_NAMING_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3712,7 +3714,7 @@ Str_HDD_PASSWORD_NAMING_4:	.asciz "HDD PASSWORD NAMING"
 Str_empty_301:	.asciz ""
 Str_empty_302:	.asciz ""
 Str_empty_303:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_303
 
 			KssPsMultiLangTextBox	HDD_PASSWORD_NAMING_KssPsMultiLangTextBox1, super=HDD_PASSWORD_NAMING_KssUserBitmap1, next=HDD_PASSWORD_NAMING_PageControl1, prev=HDD_PASSWORD_NAMING_ExitScreen1, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_HDD_PASSWORD_NAMING, strGerman=Str_HDD_PASSWORD_NAMING_2, strFrench=Str_HDD_PASSWORD_NAMING_3, strSpanish=Str_HDD_PASSWORD_NAMING_4, strItalian=Str_empty_301, strIndones=Str_empty_302, strJapan=Str_empty_303	# strEnglish "HDD PASSWORD NAMING"; strGerman "HDD PASSWORD NAMING"; strFrench "HDD PASSWORD NAMING"; strSpanish "HDD PASSWORD NAMING"; strItalian ""; strIndones ""; strJapan ""
 			IvPageControl	HDD_PASSWORD_NAMING_PageControl1, super=HDD_PASSWORD_NAMING_KssUserBitmap1, next=HDD_PASSWORD_NAMING_FixWin1, prev=HDD_PASSWORD_NAMING_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, page=1, window=PASSWORD_NAMING_id
@@ -3774,7 +3776,7 @@ Str_8d_8b_2:	.asciz "~8d ~8b"
 		AcIndexEditSw	PASSWORD_NAMING_IndexEditSw6, super=PASSWORD_NAMING, next=PASSWORD_NAMING_Label_POSITION, prev=PASSWORD_NAMING_IndexEditSw5, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
 
 Str_POSITION_2:	.asciz "POSITION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_POSITION_2
 
 		VwLabel	PASSWORD_NAMING_Label_POSITION, super=PASSWORD_NAMING, next=PASSWORD_NAMING_IndexToggle_ABC, prev=PASSWORD_NAMING_IndexEditSw6, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION_2, fontcolor=CL_Black	# str "POSITION"
 
@@ -3783,14 +3785,14 @@ Str_ABC_4:	.asciz "ABC"
 Str_123_3:	.asciz "123"
 Str_123_4:	.asciz "123"
 Str_SHIFT_2:	.asciz "SHIFT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SHIFT_2
 
 		VwLabel	PASSWORD_NAMING_Label_SHIFT, super=PASSWORD_NAMING, next=PASSWORD_NAMING_IndexPushSw1, prev=PASSWORD_NAMING_IndexToggle_123, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT_2, fontcolor=CL_Black	# str "SHIFT"
 		AcIndexPushSw	PASSWORD_NAMING_IndexPushSw1, super=PASSWORD_NAMING, next=PASSWORD_NAMING_KssNamingEditSw1, prev=PASSWORD_NAMING_Label_SHIFT, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=PASSWORD_NAMING_IndexPushSw1_sw
 		KssNamingEditSw	PASSWORD_NAMING_KssNamingEditSw1, super=PASSWORD_NAMING, next=PASSWORD_NAMING_ScreenMenu_SAVE, prev=PASSWORD_NAMING_IndexPushSw1, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, sign=1, page=PASSWORD_NAMING_KssNamingEditSw1_page
 
 Str_SAVE_7:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_7
 
 		AcScreenMenu	PASSWORD_NAMING_ScreenMenu_SAVE, super=PASSWORD_NAMING, next=PASSWORD_NAMING_KssPsMultiLangTextBox1, prev=PASSWORD_NAMING_KssNamingEditSw1, flag=VF_Const, X=550, Y=157, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, editsw=ES_Right4, selected=PASSWORD_NAMING_ScreenMenu_SAVE_selected, str=Str_SAVE_7, screen=0xFFFFFFFF	# str "SAVE"
 
@@ -3801,12 +3803,12 @@ Str_max_6_character_3:	.asciz "max. 6 character"
 Str_empty_304:	.asciz ""
 Str_empty_305:	.asciz ""
 Str_empty_306:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_306
 
 		KssPsMultiLangTextBox	PASSWORD_NAMING_KssPsMultiLangTextBox1, super=PASSWORD_NAMING, prev=PASSWORD_NAMING_ScreenMenu_SAVE, flag=VF_Const, X=160, Y=50, W=320, H=28, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=1, Dim3d=1, strEnglish=Str_max_6_character, strGerman=Str_max_6_Zeichen, strFrench=Str_max_6_character_2, strSpanish=Str_max_6_character_3, strItalian=Str_empty_304, strIndones=Str_empty_305, strJapan=Str_empty_306	# strEnglish "max. 6 character"; strGerman "max. 6 Zeichen"; strFrench "max. 6 character"; strSpanish "max. 6 character"; strItalian ""; strIndones ""; strJapan ""
 
 Str_KssBg_14:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_14
 
 	KssBgScreen	PART1_NAMING, sub=PART1_NAMING_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=PART1_NAMING_window, title=Str_KssBg_14, icon=1	# title "KssBg"
 		KssUserBitmap	PART1_NAMING_KssUserBitmap1, super=PART1_NAMING, sub=PART1_NAMING_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3819,14 +3821,14 @@ Str_PASSWORD_NAMING_PARTITION_1_4:	.asciz "PASSWORD NAMING PARTITION 1"
 Str_empty_307:	.asciz ""
 Str_empty_308:	.asciz ""
 Str_empty_309:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_309
 
 			KssPsMultiLangTextBox	PART1_NAMING_KssPsMultiLangTextBox1, super=PART1_NAMING_KssUserBitmap1, next=PART1_NAMING_PageControl1, prev=PART1_NAMING_ExitScreen1, flag=VF_Const, X=4, Y=2, W=480, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_PASSWORD_NAMING_PARTITION_1, strGerman=Str_PASSWORD_NAMING_PARTITION_1_2, strFrench=Str_PASSWORD_NAMING_PARTITION_1_3, strSpanish=Str_PASSWORD_NAMING_PARTITION_1_4, strItalian=Str_empty_307, strIndones=Str_empty_308, strJapan=Str_empty_309	# strEnglish "PASSWORD NAMING PARTITION 1"; strGerman "PASSWORD NAMING PARTITION 1"; strFrench "PASSWORD NAMING PARTITION 1"; strSpanish "PASSWORD NAMING PARTITION 1"; strItalian ""; strIndones ""; strJapan ""
 			IvPageControl	PART1_NAMING_PageControl1, super=PART1_NAMING_KssUserBitmap1, next=PART1_NAMING_FixWin1, prev=PART1_NAMING_KssPsMultiLangTextBox1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, page=1, window=PASSWORD_NAMING_id
 			IvFixWin	PART1_NAMING_FixWin1, super=PART1_NAMING_KssUserBitmap1, prev=PART1_NAMING_PageControl1, flag=VF_Const|VF_InvisibleBox, X=544, Y=0, W=32, H=32, window=PASSWORD_NAMING_id
 
 Str_KssBg_15:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_15
 
 	KssBgScreen	WARNING_FILE_DEL, sub=WARNING_FILE_DEL_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WARNING_FILE_DEL_window, title=Str_KssBg_15, icon=1	# title "KssBg"
 		KssUserBitmap	WARNING_FILE_DEL_KssUserBitmap1, super=WARNING_FILE_DEL, sub=WARNING_FILE_DEL_KssVwBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3849,7 +3851,7 @@ Str_Would_you_really_want_to_delete_the_sele_3:	.asciz "Would you really want to
 Str_empty_313:	.asciz ""
 Str_empty_314:	.asciz ""
 Str_empty_315:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_315
 
 				KssPsMultiLangTextBox	WARNING_FILE_DEL_KssPsMultiLangTextBox2, super=WARNING_FILE_DEL_KssVwBox1, next=WARNING_FILE_DEL_KssPsMultiLangTextBox3, prev=WARNING_FILE_DEL_KssPsMultiLangTextBox1, flag=VF_Const, X=110, Y=88, W=420, H=48, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=2, Dim3d=1, strEnglish=Str_Would_you_really_want_to_delete_the_sele, strGerman=Str_Soll_der_selektierte_Titel_Song_wirklich, strFrench=Str_Would_you_really_want_to_delete_the_sele_2, strSpanish=Str_Would_you_really_want_to_delete_the_sele_3, strItalian=Str_empty_313, strIndones=Str_empty_314, strJapan=Str_empty_315	# strEnglish "Would you really want to delete the sele"; strGerman "Soll der selektierte Titel/Song wirklich"; strFrench "Would you really want to delete the sele"; strSpanish "Would you really want to delete the sele"; strItalian ""; strIndones ""; strJapan ""
 
@@ -3860,12 +3862,12 @@ Str_ATTENTION_28:	.asciz "!! ATTENTION !!"
 Str_empty_316:	.asciz ""
 Str_empty_317:	.asciz ""
 Str_empty_318:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_318
 
 				KssPsMultiLangTextBox	WARNING_FILE_DEL_KssPsMultiLangTextBox3, super=WARNING_FILE_DEL_KssVwBox1, prev=WARNING_FILE_DEL_KssPsMultiLangTextBox2, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_26, strGerman=Str_ACHTUNG_8, strFrench=Str_ATTENTION_27, strSpanish=Str_ATTENTION_28, strItalian=Str_empty_316, strIndones=Str_empty_317, strJapan=Str_empty_318	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_319:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_319
 
 			VwWideESBox	WARNING_FILE_DEL_WideESBox1, super=WARNING_FILE_DEL_KssUserBitmap1, sub=WARNING_FILE_DEL_KssPsMultiLangTextBox4, next=WARNING_FILE_DEL_WideESBox2, prev=WARNING_FILE_DEL_KssVwBox1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_319	# str ""
 
@@ -3876,12 +3878,12 @@ Str_YES_12:	.asciz "YES"
 Str_empty_320:	.asciz ""
 Str_empty_321:	.asciz ""
 Str_empty_322:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_322
 
 				KssPsMultiLangTextBox	WARNING_FILE_DEL_KssPsMultiLangTextBox4, super=WARNING_FILE_DEL_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_YES_9, strGerman=Str_YES_10, strFrench=Str_YES_11, strSpanish=Str_YES_12, strItalian=Str_empty_320, strIndones=Str_empty_321, strJapan=Str_empty_322	# strEnglish "YES"; strGerman "YES"; strFrench "YES"; strSpanish "YES"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_323:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_323
 
 			VwWideESBox	WARNING_FILE_DEL_WideESBox2, super=WARNING_FILE_DEL_KssUserBitmap1, sub=WARNING_FILE_DEL_KssPsMultiLangTextBox5, next=WARNING_FILE_DEL_CatchEvent1, prev=WARNING_FILE_DEL_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_323	# str ""
 
@@ -3892,20 +3894,20 @@ Str_NO_16:	.asciz "NO"
 Str_empty_324:	.asciz ""
 Str_empty_325:	.asciz ""
 Str_empty_326:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_326
 
 				KssPsMultiLangTextBox	WARNING_FILE_DEL_KssPsMultiLangTextBox5, super=WARNING_FILE_DEL_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO_13, strGerman=Str_NO_14, strFrench=Str_NO_15, strSpanish=Str_NO_16, strItalian=Str_empty_324, strIndones=Str_empty_325, strJapan=Str_empty_326	# strEnglish "NO"; strGerman "NO"; strFrench "NO"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WARNING_FILE_DEL_CatchEvent1, super=WARNING_FILE_DEL_KssUserBitmap1, next=WARNING_FILE_DEL_ExitScreen1, prev=WARNING_FILE_DEL_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssCatch_DeleteConfirm
 			IvExitScreen	WARNING_FILE_DEL_ExitScreen1, super=WARNING_FILE_DEL_KssUserBitmap1, prev=WARNING_FILE_DEL_CatchEvent1, flag=VF_Const|VF_InvisibleBox, X=32, Y=0, W=32, H=32, screen=HDD_MAIN_MENU_id
 
 Str_KssBg_16:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_16
 
 	KssBgScreen	ATTENTION_ALL, sub=ATTENTION_ALL_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=ATTENTION_ALL_window, title=Str_KssBg_16, icon=1	# title "KssBg"
 		KssUserBitmap	ATTENTION_ALL_KssUserBitmap1, super=ATTENTION_ALL, sub=ATTENTION_ALL_WideESBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 
 Str_empty_327:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_327
 
 			VwWideESBox	ATTENTION_ALL_WideESBox1, super=ATTENTION_ALL_KssUserBitmap1, sub=ATTENTION_ALL_KssPsMultiLangTextBox1, next=ATTENTION_ALL_KssPsWarnBox1, flag=VF_Const, X=4, Y=216, W=632, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom16, str=Str_empty_327	# str ""
 
@@ -3916,7 +3918,7 @@ Str_CANCEL_6:	.asciz "CANCEL"
 Str_empty_328:	.asciz ""
 Str_empty_329:	.asciz ""
 Str_empty_330:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_330
 
 				KssPsMultiLangTextBox	ATTENTION_ALL_KssPsMultiLangTextBox1, super=ATTENTION_ALL_WideESBox1, flag=VF_Const, X=0, Y=220, W=640, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_CANCEL_3, strGerman=Str_CANCEL_4, strFrench=Str_CANCEL_5, strSpanish=Str_CANCEL_6, strItalian=Str_empty_328, strIndones=Str_empty_329, strJapan=Str_empty_330	# strEnglish "CANCEL"; strGerman "CANCEL"; strFrench "CANCEL"; strSpanish "CANCEL"; strItalian ""; strIndones ""; strJapan ""
 			KssPsWarnBox	ATTENTION_ALL_KssPsWarnBox1, super=ATTENTION_ALL_KssUserBitmap1, next=ATTENTION_ALL_ExitScreen1, prev=ATTENTION_ALL_WideESBox1, flag=VF_Const, X=110, Y=40, W=420, H=155, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, retScreen=HDD_MAIN_MENU_id, fontTitle=2, fontcolorTitle=CL_Black, backfontcolorTitle=CL_White, rectTitle_X=120, rectTitle_Y=60, rectTitle_W=400, rectTitle_H=20, linesTitle=1, Dim3dTitle=1, fontWarn1=4, fontcolorWarn1=CL_FireRed, backfontcolorWarn1=CL_DarkGray, rectWarn1_X=120, rectWarn1_Y=92, rectWarn1_W=400, rectWarn1_H=48, linesWarn1=2, Dim3dWarn1=1, fontWarn2=5, fontcolorWarn2=CL_DarkGray, backfontcolorWarn2=CL_White, rectWarn2_X=120, rectWarn2_Y=150, rectWarn2_W=400, rectWarn2_H=40, linesWarn2=2, Dim3dWarn2=1
@@ -3924,7 +3926,7 @@ Str_empty_330:	.asciz ""
 			IvCatchEvent	ATTENTION_ALL_CatchEvent1, super=ATTENTION_ALL_KssUserBitmap1, prev=ATTENTION_ALL_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssCatch_WarnBox
 
 Str_KssBg_17:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_17
 
 	KssBgScreen	TheTimerScreen, sub=TheTimerScreen_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TheTimerScreen_window, title=Str_KssBg_17, icon=1	# title "KssBg"
 		KssUserBitmap	TheTimerScreen_KssUserBitmap1, super=TheTimerScreen, sub=TheTimerScreen_KssTimerShow1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3933,7 +3935,7 @@ Str_KssBg_17:	.asciz "KssBg"
 	Window	WaitingWindow, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, parent=WaitingWindow_parent, child=WaitingWindow_child
 
 Str_KssBg_18:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_18
 
 	KssBgScreen	TheInitialWaitScreen, sub=TheInitialWaitScreen_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=TheInitialWaitScreen_window, title=Str_KssBg_18, icon=1	# title "KssBg"
 		KssUserBitmap	TheInitialWaitScreen_KssUserBitmap1, super=TheInitialWaitScreen, sub=TheInitialWaitScreen_KssInitialWait1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -3943,14 +3945,14 @@ Str_KssBg_18:	.asciz "KssBg"
 		KssLoadSaveDel_DISP	LoadSaveWnd_KssLoadSaveDel_DISP1, super=LoadSaveWnd, flag=VF_Const, X=25, Y=50, W=590, H=140, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontStatus=2, fontcolorStatus=CL_Black, fontbackcolorStatus=CL_Transparent, fontInfo=3, fontcolorInfo=CL_Red, fontbackcolorInfo=CL_Transparent
 
 Str_KssBg_19:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_19
 
 	KssBgScreen	ASK_ALL, sub=ASK_ALL_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=ASK_ALL_window, title=Str_KssBg_19, icon=1	# title "KssBg"
 		KssUserBitmap	ASK_ALL_KssUserBitmap1, super=ASK_ALL, next=ASK_ALL_KssPsAskBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
 		KssPsAskBox	ASK_ALL_KssPsAskBox1, super=ASK_ALL, next=ASK_ALL_WideESBox1, prev=ASK_ALL_KssUserBitmap1, flag=VF_Const, X=110, Y=40, W=420, H=155, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, retScreen=HDD_MAIN_MENU_id, fontTitle=2, fontcolorTitle=CL_Black, backfontcolorTitle=CL_White, rectTitle_X=120, rectTitle_Y=60, rectTitle_W=400, rectTitle_H=20, linesTitle=1, Dim3dTitle=1, fontAsk1=4, fontcolorAsk1=CL_FireRed, backfontcolorAsk1=CL_DarkGray, rectAsk1_X=120, rectAsk1_Y=92, rectAsk1_W=400, rectAsk1_H=48, linesAsk1=2, Dim3dAsk1=1, fontAsk2=5, fontcolorAsk2=CL_DarkGray, backfontcolorAsk2=CL_White, rectAsk2_X=120, rectAsk2_Y=145, rectAsk2_W=400, rectAsk2_H=40, linesAsk2=2, Dim3dAsk2=1
 
 Str_empty_331:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_331
 
 		VwWideESBox	ASK_ALL_WideESBox1, super=ASK_ALL, sub=ASK_ALL_KssPsMultiLangTextBox1, next=ASK_ALL_WideESBox2, prev=ASK_ALL_KssPsAskBox1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_331	# str ""
 
@@ -3961,12 +3963,12 @@ Str_YES_14:	.asciz "YES"
 Str_empty_332:	.asciz ""
 Str_empty_333:	.asciz ""
 Str_empty_334:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_334
 
 			KssPsMultiLangTextBox	ASK_ALL_KssPsMultiLangTextBox1, super=ASK_ALL_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_YES_13, strGerman=Str_JA, strFrench=Str_OUI, strSpanish=Str_YES_14, strItalian=Str_empty_332, strIndones=Str_empty_333, strJapan=Str_empty_334	# strEnglish "YES"; strGerman "JA"; strFrench "OUI"; strSpanish "YES"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_335:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_335
 
 		VwWideESBox	ASK_ALL_WideESBox2, super=ASK_ALL, sub=ASK_ALL_KssPsMultiLangTextBox2, next=ASK_ALL_CatchEvent1, prev=ASK_ALL_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_335	# str ""
 
@@ -3977,7 +3979,7 @@ Str_NO_18:	.asciz "NO"
 Str_empty_336:	.asciz ""
 Str_empty_337:	.asciz ""
 Str_empty_338:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_338
 
 			KssPsMultiLangTextBox	ASK_ALL_KssPsMultiLangTextBox2, super=ASK_ALL_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO_17, strGerman=Str_NEIN, strFrench=Str_NON, strSpanish=Str_NO_18, strItalian=Str_empty_336, strIndones=Str_empty_337, strJapan=Str_empty_338	# strEnglish "NO"; strGerman "NEIN"; strFrench "NON"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 		IvCatchEvent	ASK_ALL_CatchEvent1, super=ASK_ALL, prev=ASK_ALL_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssCatch_AskBox
@@ -3986,7 +3988,7 @@ Str_empty_338:	.asciz ""
 		KssCopyFdToHD_DISP	CPFD2HD_Display_KssCopyFdToHD_DISP1, super=CPFD2HD_Display, flag=VF_Const, X=8, Y=30, W=624, H=205, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontStatus=2, fontcolorStatus=CL_Black, fontbackcolorStatus=CL_Transparent, fontInfo=3, fontcolorInfo=CL_Red, fontbackcolorInfo=CL_Transparent
 
 Str_COPY_FD_TO_HARD_DISK_DRIVE_2:	.asciz "COPY FD TO HARD DISK DRIVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_FD_TO_HARD_DISK_DRIVE_2
 
 	KssBgScreen	CP_SMF_HDD, sub=CP_SMF_HDD_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CP_SMF_HDD_window, title=Str_COPY_FD_TO_HARD_DISK_DRIVE_2, icon=115	# title "COPY FD TO HARD DISK DRIVE"
 		IvExitScreen	CP_SMF_HDD_ExitScreen1, super=CP_SMF_HDD, next=CP_SMF_HDD_KssUserBitmap1, flag=VF_Const|VF_InvisibleBox, X=340, Y=0, W=32, H=32, screen=SETUP_TOOLS_id
@@ -3994,13 +3996,13 @@ Str_COPY_FD_TO_HARD_DISK_DRIVE_2:	.asciz "COPY FD TO HARD DISK DRIVE"
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw1, super=CP_SMF_HDD_KssUserBitmap1, sub=CP_SMF_HDD_Label_SELECT_ALL, next=CP_SMF_HDD_IndexEditSw2, flag=VF_Const, X=544, Y=165, W=88, H=22, color=CL_Transparent, border=BD_3D_UP1, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4
 
 Str_SELECT_ALL_2:	.asciz "SELECT ALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_ALL_2
 
 				VwLabel	CP_SMF_HDD_Label_SELECT_ALL, super=CP_SMF_HDD_IndexEditSw1, flag=VF_Const, X=546, Y=168, W=84, H=19, str=Str_SELECT_ALL_2, font=7, fontcolor=CL_Selected	# str "SELECT ALL"
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw2, super=CP_SMF_HDD_KssUserBitmap1, sub=CP_SMF_HDD_Label_SELECT, next=CP_SMF_HDD_IndexEditSw3, prev=CP_SMF_HDD_IndexEditSw1, flag=VF_Const, X=544, Y=210, W=88, H=19, color=CL_Transparent, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Right5
 
 Str_SELECT_2:	.asciz "SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SELECT_2
 
 				VwLabel	CP_SMF_HDD_Label_SELECT, super=CP_SMF_HDD_IndexEditSw2, flag=VF_Const, X=566, Y=212, W=52, H=19, str=Str_SELECT_2, font=7, fontcolor=CL_Selected	# str "SELECT"
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw3, super=CP_SMF_HDD_KssUserBitmap1, next=CP_SMF_HDD_IndexWideES1, prev=CP_SMF_HDD_IndexEditSw2, flag=VF_Const, X=206, Y=213, W=32, H=24, color=CL_SilverB, border=BD_3D_DOWN1, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
@@ -4009,7 +4011,7 @@ Str_SELECT_2:	.asciz "SELECT"
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw5, super=CP_SMF_HDD_KssUserBitmap1, sub=CP_SMF_HDD_Label_COPY_TO, next=CP_SMF_FD_VOLLABEL, prev=CP_SMF_HDD_IndexEditSw4, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_Transparent, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_COPY_TO_2:	.asciz "COPY * TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_TO_2
 
 				VwLabel	CP_SMF_HDD_Label_COPY_TO, super=CP_SMF_HDD_IndexEditSw5, flag=VF_Const, X=520, Y=39, W=103, H=19, str=Str_COPY_TO_2, font=4, fontcolor=CL_Black	# str "COPY * TO"
 
@@ -4020,7 +4022,7 @@ Str_DISK_NAME_2:	.asciz "DISK NAME:"
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw6, super=CP_SMF_HDD_KssUserBitmap1, sub=CP_SMF_HDD_Label_TECH, next=CP_SMF_HDD_KssPsMultiLangTextBox1, prev=CP_SMF_FD_VOLLABEL, flag=VF_Const, X=8, Y=36, W=45, H=22, color=CL_Transparent, border=BD_3D_UP1, index=9, font=4, fontcolor=CL_Black, editsw=ES_Left1
 
 Str_TECH:	.asciz "TECH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TECH
 
 				VwLabel	CP_SMF_HDD_Label_TECH, super=CP_SMF_HDD_IndexEditSw6, flag=VF_Const, X=12, Y=39, W=35, H=19, str=Str_TECH, font=5, fontcolor=CL_Black	# str "TECH"
 
@@ -4031,7 +4033,7 @@ Str_COPY_FD_TO_HDD_SMF_4:	.asciz "COPY FD TO HDD SMF"
 Str_empty_340:	.asciz ""
 Str_empty_341:	.asciz ""
 Str_empty_342:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_342
 
 			KssPsMultiLangTextBox	CP_SMF_HDD_KssPsMultiLangTextBox1, super=CP_SMF_HDD_KssUserBitmap1, next=CP_SMF_SelectList, prev=CP_SMF_HDD_IndexEditSw6, flag=VF_Const, X=4, Y=2, W=320, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_Silver, backfontcolor=CL_Black, alignment=1, lines=1, Dim3d=1, strEnglish=Str_COPY_FD_TO_HDD_SMF, strGerman=Str_COPY_FD_TO_HDD_SMF_2, strFrench=Str_COPY_FD_TO_HDD_SMF_3, strSpanish=Str_COPY_FD_TO_HDD_SMF_4, strItalian=Str_empty_340, strIndones=Str_empty_341, strJapan=Str_empty_342	# strEnglish "COPY FD TO HDD SMF"; strGerman "COPY FD TO HDD SMF"; strFrench "COPY FD TO HDD SMF"; strSpanish "COPY FD TO HDD SMF"; strItalian ""; strIndones ""; strJapan ""
 			SelectFDCPSMFList	CP_SMF_SelectList, super=CP_SMF_HDD_KssUserBitmap1, sub=CP_SMF_FD_LINE2, next=CP_SMF_HDD_IndexEditSw7, prev=CP_SMF_HDD_KssPsMultiLangTextBox1, flag=VF_Const, X=117, Y=59, W=406, H=148, color=CL_SilverB, border=BD_3D_UP1, fontcolor=CL_Black, main_func=FN_KssCopySMFToHDScreen, str_adr=CP_SMF_SelectList_str_adr, column=3, row=10, sel_num=CP_SMF_SelectList_sel_num, dial=1, auto_inc=1, en_paradraw=CP_SMF_SelectList_en_paradraw
@@ -4041,7 +4043,7 @@ Str_empty_342:	.asciz ""
 			AcIndexEditSw	CP_SMF_HDD_IndexEditSw7, super=CP_SMF_HDD_KssUserBitmap1, sub=SIF_Label, prev=CP_SMF_SelectList, flag=VF_Const, X=8, Y=208, W=100, H=22, color=CL_Transparent, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Left5
 
 Str_empty_343:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_343
 
 		VwLine	CP_SMF_FD_LINE4, super=CP_SMF_HDD, next=CP_SMF_FD_LINE5, prev=CP_SMF_HDD_KssUserBitmap1, flag=VF_Const, X=245, Y=61, W=1, H=145, color=CL_White, linemode=1
 		VwLine	CP_SMF_FD_LINE5, super=CP_SMF_HDD, next=CP_SMF_FD_LINE6, prev=CP_SMF_FD_LINE4, flag=VF_Const, X=380, Y=61, W=1, H=145, color=CL_White, linemode=1
@@ -4053,13 +4055,13 @@ Str_empty_343:	.asciz ""
 	Window	SETUP_TOOL3, sub=SETUP_TOOL3_Label_SAVE_OPTIONS, flag=VF_Const, X=164, Y=28, W=476, H=25, color=CL_Transparent, index=0xFFFF, parent=SETUP_TOOL3_parent, child=SETUP_TOOL3_child
 
 Str_SAVE_OPTIONS_2:	.asciz "SAVE OPTIONS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_OPTIONS_2
 
 		VwLabel	SETUP_TOOL3_Label_SAVE_OPTIONS, super=SETUP_TOOL3, sub=WP_OBJ_SAVESET, next=SETUP_TOOL3_Label_FORMAT_HDD, flag=VF_Const, X=467, Y=213, W=136, H=19, str=Str_SAVE_OPTIONS_2, font=4, fontcolor=CL_Gray	# str "SAVE OPTIONS"
 
 Str_SAVE_OPTIONS_3:	.asciz "SAVE OPTIONS"
 Str_FORMAT_HDD:	.asciz "!! FORMAT HDD !!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FORMAT_HDD
 
 		VwLabel	SETUP_TOOL3_Label_FORMAT_HDD, super=SETUP_TOOL3, sub=WP_OBJ_FRMTHD, next=HDD_SETTOOLSPAR_9, prev=SETUP_TOOL3_Label_SAVE_OPTIONS, flag=VF_Const, X=481, Y=169, W=121, H=19, str=Str_FORMAT_HDD, font=5, fontcolor=CL_Gray	# str "!! FORMAT HDD !!"
 
@@ -4069,7 +4071,7 @@ Str_SEPARATE_OUTPUT_LOAD:	.asciz "SEPARATE OUTPUT LOAD"
 Str_SEPARATE_OUTPUT_LOAD_2:	.asciz "SEPARATE OUTPUT LOAD"
 Str_SEPARATE_OUTPUT_LOAD_3:	.asciz "SEPARATE OUTPUT LOAD"
 Str_SEPARATE_OUTPUT_LOAD_4:	.asciz "SEPARATE OUTPUT LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEPARATE_OUTPUT_LOAD_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_9, super=SETUP_TOOL3, next=SETUP_TOOL3_KssPsMultiLangTextBox1, prev=SETUP_TOOL3_Label_FORMAT_HDD, flag=VF_Const, X=10, Y=75, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_344, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left2, dial=1, selected=HDD_SETTOOLSPAR_9_selected, num=HDD_SETTOOLSPAR_9_num, max=2, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=9, posx=190, indexPara=9, strEnglish=Str_SEPARATE_OUTPUT_LOAD, strGerman=Str_SEPARATE_OUTPUT_LOAD_2, strFrench=Str_SEPARATE_OUTPUT_LOAD_3, strSpanish=Str_SEPARATE_OUTPUT_LOAD_4	# caption ""; strEnglish "SEPARATE OUTPUT LOAD"; strGerman "SEPARATE OUTPUT LOAD"; strFrench "SEPARATE OUTPUT LOAD"; strSpanish "SEPARATE OUTPUT LOAD"
 
@@ -4080,12 +4082,12 @@ Str_To_get_access_to_these_functions_you_hav_3:	.asciz "To get access to these f
 Str_empty_345:	.asciz ""
 Str_empty_346:	.asciz ""
 Str_empty_347:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_347
 
 		KssPsMultiLangTextBox	SETUP_TOOL3_KssPsMultiLangTextBox1, super=SETUP_TOOL3, sub=SETUP_TOOL3_StrBox1, next=HDD_SETTOOLSPAR_10, prev=HDD_SETTOOLSPAR_9, flag=VF_Const, X=452, Y=74, W=180, H=100, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Navy, backfontcolor=CL_White, alignment=1, lines=6, Dim3d=1, strEnglish=Str_To_get_access_to_these_functions_you_hav, strGerman=Str_Diese_Funktionen_sind_erst_verf_gbar_wen, strFrench=Str_To_get_access_to_these_functions_you_hav_2, strSpanish=Str_To_get_access_to_these_functions_you_hav_3, strItalian=Str_empty_345, strIndones=Str_empty_346, strJapan=Str_empty_347	# strEnglish "To get access to these functions you hav"; strGerman "Diese Funktionen sind erst verf\xFCgbar,"; strFrench "To get access to these functions you hav"; strSpanish "To get access to these functions you hav"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_348:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_348
 
 			VwStrBox	SETUP_TOOL3_StrBox1, super=SETUP_TOOL3_KssPsMultiLangTextBox1, flag=VF_Const, X=450, Y=70, W=190, H=170, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, str=Str_empty_348	# str ""
 
@@ -4094,7 +4096,7 @@ Str_KN6000_AfterLoadPage:	.asciz "KN6000 AfterLoadPage"
 Str_KN6000_AfterLoadPage_2:	.asciz "KN6000 AfterLoadPage"
 Str_KN6000_AfterLoadPage_3:	.asciz "KN6000 AfterLoadPage"
 Str_KN6000_AfterLoadPage_4:	.asciz "KN6000 AfterLoadPage"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KN6000_AfterLoadPage_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_10, super=SETUP_TOOL3, next=HDD_SETTOOLSPAR_11, prev=SETUP_TOOL3_KssPsMultiLangTextBox1, flag=VF_Const, X=10, Y=161, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_349, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left4, dial=1, selected=HDD_SETTOOLSPAR_10_selected, num=HDD_SETTOOLSPAR_10_num, max=1, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=9, posx=195, indexPara=10, strEnglish=Str_KN6000_AfterLoadPage, strGerman=Str_KN6000_AfterLoadPage_2, strFrench=Str_KN6000_AfterLoadPage_3, strSpanish=Str_KN6000_AfterLoadPage_4	# caption ""; strEnglish "KN6000 AfterLoadPage"; strGerman "KN6000 AfterLoadPage"; strFrench "KN6000 AfterLoadPage"; strSpanish "KN6000 AfterLoadPage"
 
@@ -4103,7 +4105,7 @@ Str_SAVE_OPTION_MODE:	.asciz "SAVE OPTION MODE"
 Str_SAVE_OPTION_MODE_2:	.asciz "SAVE OPTION MODE"
 Str_SAVE_OPTION_MODE_3:	.asciz "SAVE OPTION MODE"
 Str_SAVE_OPTION_MODE_4:	.asciz "SAVE OPTION MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_OPTION_MODE_4
 
 		KssParaEditEntry	HDD_SETTOOLSPAR_11, super=SETUP_TOOL3, next=SETUP_TOOL3_KssParaEditEntry1, prev=HDD_SETTOOLSPAR_10, flag=VF_Const, X=10, Y=204, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_350, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left5, dial=1, selected=HDD_SETTOOLSPAR_11_selected, num=HDD_SETTOOLSPAR_11_num, max=2, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=9, posx=195, indexPara=11, strEnglish=Str_SAVE_OPTION_MODE, strGerman=Str_SAVE_OPTION_MODE_2, strFrench=Str_SAVE_OPTION_MODE_3, strSpanish=Str_SAVE_OPTION_MODE_4	# caption ""; strEnglish "SAVE OPTION MODE"; strGerman "SAVE OPTION MODE"; strFrench "SAVE OPTION MODE"; strSpanish "SAVE OPTION MODE"
 
@@ -4112,7 +4114,7 @@ Str_JUKE_BOX_SET_MODE:	.asciz "JUKE BOX SET MODE"
 Str_JUKE_BOX_SET_MODE_2:	.asciz "JUKE BOX SET MODE"
 Str_JUKE_BOX_SET_MODE_3:	.asciz "JUKE BOX SET MODE"
 Str_JUKE_BOX_SET_MODE_4:	.asciz "JUKE BOX SET MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_SET_MODE_4
 
 		KssParaEditEntry	SETUP_TOOL3_KssParaEditEntry1, super=SETUP_TOOL3, next=SETUP_TOOL3_KssParaEditEntry2, prev=HDD_SETTOOLSPAR_11, flag=VF_Const, X=10, Y=32, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_351, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Left1, dial=1, selected=SETUP_TOOL3_KssParaEditEntry1_selected, num=SETUP_TOOL3_KssParaEditEntry1_num, max=2, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=11, posx=184, indexPara=14, strEnglish=Str_JUKE_BOX_SET_MODE, strGerman=Str_JUKE_BOX_SET_MODE_2, strFrench=Str_JUKE_BOX_SET_MODE_3, strSpanish=Str_JUKE_BOX_SET_MODE_4	# caption ""; strEnglish "JUKE BOX SET MODE"; strGerman "JUKE BOX SET MODE"; strFrench "JUKE BOX SET MODE"; strSpanish "JUKE BOX SET MODE"
 
@@ -4121,7 +4123,7 @@ Str_LYRICS_FONT_SIZE:	.asciz "LYRICS FONT SIZE"
 Str_LYRICS_FONT_SIZE_2:	.asciz "LYRICS FONT SIZE"
 Str_LYRICS_FONT_SIZE_3:	.asciz "LYRICS FONT SIZE"
 Str_LYRICS_FONT_SIZE_4:	.asciz "LYRICS FONT SIZE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LYRICS_FONT_SIZE_4
 
 		KssParaEditEntry	SETUP_TOOL3_KssParaEditEntry2, super=SETUP_TOOL3, prev=SETUP_TOOL3_KssParaEditEntry1, flag=VF_Const, X=350, Y=32, W=280, H=30, color=CL_SilverB, border=BD_3D_UP1, caption=Str_empty_352, font=4, fontcolor=CL_Silver, align=1, length=4, editsw=ES_Right1, dial=1, selected=SETUP_TOOL3_KssParaEditEntry2_selected, num=SETUP_TOOL3_KssParaEditEntry2_num, max=2, largestep=1, smallstep=1, fontTitle=1, fontcolorTitle=CL_Black, backfontcolorTitle=CL_Transparent, alignmentTitle=1, lenTitle=21, fontPara=1, fontcolorPara=CL_Black, backfontcolorPara=CL_SilverB, alignmentPara=1, lenPara=11, posx=184, indexPara=15, strEnglish=Str_LYRICS_FONT_SIZE, strGerman=Str_LYRICS_FONT_SIZE_2, strFrench=Str_LYRICS_FONT_SIZE_3, strSpanish=Str_LYRICS_FONT_SIZE_4	# caption ""; strEnglish "LYRICS FONT SIZE"; strGerman "LYRICS FONT SIZE"; strFrench "LYRICS FONT SIZE"; strSpanish "LYRICS FONT SIZE"
 
@@ -4134,14 +4136,14 @@ Str_Spa:	.asciz "Spa"
 Str_empty_353:	.asciz ""
 Str_empty_354:	.asciz ""
 Str_empty_355:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_355
 
 		KssPsMultiLangTextBox	JUKE_BOX_WIN_KssPsMultiLangTextBox1, super=JUKE_BOX_WIN, flag=VF_Const, X=170, Y=98, W=300, H=80, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Blue, backfontcolor=CL_White, alignment=1, lines=3, Dim3d=1, strEnglish=Str_Please_select_a_box_and_choose_a_song_wi, strGerman=Str_W_hlen_Sie_eine_Box_um_anschliessend_ber, strFrench=Str_Fre, strSpanish=Str_Spa, strItalian=Str_empty_353, strIndones=Str_empty_354, strJapan=Str_empty_355	# strEnglish "Please select a box and choose a song wi"; strGerman "W\xE4hlen Sie eine Box um anschliessend "; strFrench "Fre"; strSpanish "Spa"; strItalian ""; strIndones ""; strJapan ""
 
 	Window	BigFileFont_Win1, sub=WP_OBJ_DelFileBF, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Transparent, index=0xFFFF, parent=BigFileFont_Win1_parent, child=BigFileFont_Win1_child
 
 Str_DEL_TITLE_2:	.asciz "DEL. TITLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DEL_TITLE_2
 
 			VwLabel	WP_OBJ_DelFileBF_Label_DEL_TITLE, super=WP_OBJ_DelFileBF, flag=VF_Const, X=14, Y=215, W=78, H=19, str=Str_DEL_TITLE_2, font=5, fontcolor=CL_Red	# str "DEL. TITLE"
 
@@ -4152,7 +4154,7 @@ Str_FILE_SELECT_8:	.asciz "FILE SELECT"
 Str_empty_356:	.asciz ""
 Str_empty_357:	.asciz ""
 Str_empty_358:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_358
 
 		KssPsMultiLangTextBox	BigFileFont_Win1_KssPsMultiLangTextBox1, super=BigFileFont_Win1, next=FileSfxBoxBF, prev=WP_OBJ_DelFileBF, flag=VF_Const, X=4, Y=2, W=200, H=34, color=CL_Transparent, index=0xFFFF, font=10, fontcolor=CL_DarkGray, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_FILE_SELECT_5, strGerman=Str_FILE_SELECT_6, strFrench=Str_FILE_SELECT_7, strSpanish=Str_FILE_SELECT_8, strItalian=Str_empty_356, strIndones=Str_empty_357, strJapan=Str_empty_358	# strEnglish "FILE SELECT"; strGerman "FILE SELECT"; strFrench "FILE SELECT"; strSpanish "FILE SELECT"; strItalian ""; strIndones ""; strJapan ""
 		KssFileSfx_DISP	FileSfxBoxBF, super=BigFileFont_Win1, next=BigFileFont_Win1_IndexEditSw1, prev=BigFileFont_Win1_KssPsMultiLangTextBox1, flag=VF_Const, X=530, Y=58, W=100, H=148, color=CL_SilverB, border=BD_3D_UP1, index=0xFFFF, fontStatus=3, fontcolorStatus=CL_White, fontbackcolorStatus=CL_Transparent, fontInfo=3, fontcolorInfo=CL_Black, fontbackcolorInfo=CL_Transparent
@@ -4167,7 +4169,7 @@ Str_DIR_NAME_2:	.asciz "DIR.      NAME:"
 			VwLabel	BigFileFont_Win1_Label_DIR_NAME, super=BigFileFont_Win1_KssPsParaBox1, sub=BigFont_DirNr, next=BigFont_DirBox2, flag=VF_Const, X=144, Y=35, W=119, H=19, str=Str_DIR_NAME_2, font=5, fontcolor=CL_DarkGray	# str "DIR.      NAME:"
 
 Str_0123_2:	.asciz "0123"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0123_2
 
 				VwLabel	BigFont_DirNr, super=BigFileFont_Win1_Label_DIR_NAME, flag=VF_Const, X=178, Y=34, W=35, H=19, str=Str_0123_2, font=5, fontcolor=CL_Silver	# str "0123"
 
@@ -4178,25 +4180,25 @@ Str_empty_362:	.asciz ""
 Str_empty_363:	.asciz ""
 Str_empty_364:	.asciz ""
 Str_empty_365:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_365
 
 			KssPsMultiLangTextBox	BigFont_DirBox2, super=BigFileFont_Win1_KssPsParaBox1, sub=BigFont_DirBox2_IndexEditSw1, prev=BigFileFont_Win1_Label_DIR_NAME, flag=VF_Const, X=266, Y=34, W=140, H=19, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_DarkGray, backfontcolor=CL_White, alignment=1, lines=1, Dim3d=1, strEnglish=Str_empty_359, strGerman=Str_empty_360, strFrench=Str_empty_361, strSpanish=Str_empty_362, strItalian=Str_empty_363, strIndones=Str_empty_364, strJapan=Str_empty_365	# strEnglish ""; strGerman ""; strFrench ""; strSpanish ""; strItalian ""; strIndones ""; strJapan ""
 				AcIndexEditSw	BigFont_DirBox2_IndexEditSw1, super=BigFont_DirBox2, flag=VF_Invisible|VF_Const, X=384, Y=36, W=100, H=22, color=CL_Transparent, border=BD_3D_UP1, index=8, font=4, fontcolor=CL_Black, editsw=ES_Left1
 
 Str_LOAD_8:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_8
 
 		VwLabel	BigFileFont_Win1_Label_LOAD, super=BigFileFont_Win1, sub=BigFileFont_Win1_IndexEditSw3, next=WP_OBJ_SaveFileBF, prev=BigFileFont_Win1_KssPsParaBox1, flag=VF_Const, X=580, Y=39, W=48, H=19, str=Str_LOAD_8, font=4, fontcolor=CL_Black	# str "LOAD"
 			AcIndexEditSw	BigFileFont_Win1_IndexEditSw3, super=BigFileFont_Win1_Label_LOAD, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_Transparent, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_TITLE_2:	.asciz "SAVE TITLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_TITLE_2
 
 		AcIndexEditSw	BigFileFont_Win1_IndexEditSw4, super=BigFileFont_Win1, next=BigFileFont_Win1_Line1, prev=WP_OBJ_SaveFileBF, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Transparent, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2
 		VwLine	BigFileFont_Win1_Line1, super=BigFileFont_Win1, next=SET_To_JB, prev=BigFileFont_Win1_IndexEditSw4, flag=VF_Const, X=633, Y=52, W=1, H=36, color=CL_FireRed, linemode=1
 
 Str_SET_TO_JUKE_BOX_2:	.asciz "  SET TO JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SET_TO_JUKE_BOX_2
 
 		AcScreenMenu	SET_To_JB, super=BigFileFont_Win1, sub=SET_To_JB_Line1, next=BigFileFont_Win1_IndexEditSw5, prev=BigFileFont_Win1_Line1, flag=VF_Const, X=464, Y=213, W=70, H=22, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Gray, editsw=ES_Bottom13, selected=SET_To_JB_selected, str=Str_SET_TO_JUKE_BOX_2, screen=0xFFFFFFFF	# str "  SET TO JUKE BOX"
 			VwLine	SET_To_JB_Line1, super=SET_To_JB, next=SET_To_JB_Line2, flag=VF_Const, X=521, Y=213, W=1, H=21, color=CL_Gray, linemode=1
@@ -4207,7 +4209,7 @@ Str_SET_TO_JUKE_BOX_2:	.asciz "  SET TO JUKE BOX"
 		AcIndexEditSw	BigFileFont_Win1_IndexEditSw6, super=BigFileFont_Win1, next=WP_OBJ_DelDirBF, prev=BigFileFont_Win1_IndexEditSw5, flag=VF_Const, X=364, Y=212, W=32, H=24, color=CL_SilverB, border=BD_3D_UP1, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, style=8
 
 Str_DEL_DIR_2:	.asciz "DEL. DIR."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DEL_DIR_2
 
 			VwLabel	WP_OBJ_DelDirBF_Label_DEL_DIR, super=WP_OBJ_DelDirBF, flag=VF_Const, X=14, Y=35, W=69, H=19, str=Str_DEL_DIR_2, font=5, fontcolor=CL_Red	# str "DEL. DIR."
 
@@ -4215,7 +4217,7 @@ Str_DEL_DIR_2:	.asciz "DEL. DIR."
 		FKssVwBox	HPW_Basics, super=HP_Basics, flag=VF_Const, X=100, Y=42, W=532, H=142, color=CL_HalfTone, border=BD_3D_UP2
 
 Str_KssTt:	.asciz "KssTt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssTt
 
 	KssTtlScreen	FDLyricsLoad, sub=FDLyricsLoad_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=FDLyricsLoad_window, title=Str_KssTt, icon=1	# title "KssTt"
 		KssUserBitmap	FDLyricsLoad_KssUserBitmap1, super=FDLyricsLoad, sub=FDLyricsLoad_KssFileSfx_DISP1, next=FDLyricsLoad_ExitScreen1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -4225,12 +4227,12 @@ Str_KssTt:	.asciz "KssTt"
 		AcIndexEditSw	FDLyricsLoad_IndexEditSw1, super=FDLyricsLoad, sub=FDLyricsLoad_Label_SAVE_CLS, prev=FDLyricsLoad_IndexWideES1, flag=VF_Const, X=540, Y=213, W=90, H=24, color=CL_Transparent, border=BD_3D_UP1, index=4, font=4, fontcolor=CL_Black, editsw=ES_Right5
 
 Str_SAVE_CLS_2:	.asciz "SAVE CLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_CLS_2
 
 			VwLabel	FDLyricsLoad_Label_SAVE_CLS, super=FDLyricsLoad_IndexEditSw1, flag=VF_Const, X=558, Y=217, W=68, H=19, str=Str_SAVE_CLS_2, font=5, fontcolor=CL_Red	# str "SAVE CLS"
 
 Str_KssBg_20:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_20
 
 	KssBgScreen	WarningClsRunning, sub=WarningClsRunning_KssUserBitmap1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=WarningClsRunning_window, title=Str_KssBg_20, icon=1	# title "KssBg"
 		KssUserBitmap	WarningClsRunning_KssUserBitmap1, super=WarningClsRunning, sub=WarningClsRunning_KssVwBox1, flag=VF_Const, X=0, Y=0, W=640, H=240, func=FN_BitmapBg002, index=1
@@ -4243,7 +4245,7 @@ Str_Are_you_sure_3:	.asciz "Are you sure?"
 Str_empty_366:	.asciz ""
 Str_empty_367:	.asciz ""
 Str_empty_368:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_368
 
 				KssPsMultiLangTextBox	WarningClsRunning_KssPsMultiLangTextBox1, super=WarningClsRunning_KssVwBox1, next=WarningClsRunning_KssPsMultiLangTextBox2, flag=VF_Const, X=120, Y=175, W=400, H=40, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Black, backfontcolor=CL_White, lines=2, Dim3d=1, strEnglish=Str_Are_you_sure, strGerman=Str_Sind_Sie_sicher, strFrench=Str_Are_you_sure_2, strSpanish=Str_Are_you_sure_3, strItalian=Str_empty_366, strIndones=Str_empty_367, strJapan=Str_empty_368	# strEnglish "Are you sure?"; strGerman "Sind Sie sicher?"; strFrench "Are you sure?"; strSpanish "Are you sure?"; strItalian ""; strIndones ""; strJapan ""
 
@@ -4254,7 +4256,7 @@ Str_ATTENTION_31:	.asciz "!! ATTENTION !!"
 Str_empty_369:	.asciz ""
 Str_empty_370:	.asciz ""
 Str_empty_371:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_371
 
 				KssPsMultiLangTextBox	WarningClsRunning_KssPsMultiLangTextBox2, super=WarningClsRunning_KssVwBox1, next=WarningClsRunning_KssPsMultiLangTextBox3, prev=WarningClsRunning_KssPsMultiLangTextBox1, flag=VF_Const, X=110, Y=60, W=420, H=20, color=CL_Transparent, index=0xFFFF, font=2, fontcolor=CL_Black, backfontcolor=CL_White, lines=1, Dim3d=1, strEnglish=Str_ATTENTION_29, strGerman=Str_ACHTUNG_9, strFrench=Str_ATTENTION_30, strSpanish=Str_ATTENTION_31, strItalian=Str_empty_369, strIndones=Str_empty_370, strJapan=Str_empty_371	# strEnglish "!! ATTENTION !!"; strGerman "!! ACHTUNG !!"; strFrench "!! ATTENTION !!"; strSpanish "!! ATTENTION !!"; strItalian ""; strIndones ""; strJapan ""
 
@@ -4269,7 +4271,7 @@ Str_empty_374:	.asciz ""
 				KssPsMultiLangTextBox	WarningClsRunning_KssPsMultiLangTextBox3, super=WarningClsRunning_KssVwBox1, prev=WarningClsRunning_KssPsMultiLangTextBox2, flag=VF_Const, X=120, Y=85, W=420, H=86, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_FireRed, backfontcolor=CL_Black, lines=4, Dim3d=1, strEnglish=Str_You_are_going_to_leafe_the_actual_C_L_S, strGerman=Str_Sie_versuchen_die_C_L_S_zu_unterbrechen, strFrench=Str_You_are_going_to_overwrite_an_already_ex_3, strSpanish=Str_You_are_going_to_overwrite_an_already_ex_4, strItalian=Str_empty_372, strIndones=Str_empty_373, strJapan=Str_empty_374	# strEnglish "You are going to leafe the actual C.L.S."; strGerman "Sie versuchen die C.L.S. zu unterbrechen"; strFrench "You are going to overwrite an already ex"; strSpanish "You are going to overwrite an already ex"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_375:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_375
 
 			VwWideESBox	WarningClsRunning_WideESBox1, super=WarningClsRunning_KssUserBitmap1, sub=WarningClsRunning_KssPsMultiLangTextBox4, next=WarningClsRunning_WideESBox2, prev=WarningClsRunning_KssVwBox1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, str=Str_empty_375	# str ""
 
@@ -4280,12 +4282,12 @@ Str_YES_18:	.asciz "YES"
 Str_empty_376:	.asciz ""
 Str_empty_377:	.asciz ""
 Str_empty_378:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_378
 
 				KssPsMultiLangTextBox	WarningClsRunning_KssPsMultiLangTextBox4, super=WarningClsRunning_WideESBox1, flag=VF_Const, X=136, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_YES_15, strGerman=Str_YES_16, strFrench=Str_YES_17, strSpanish=Str_YES_18, strItalian=Str_empty_376, strIndones=Str_empty_377, strJapan=Str_empty_378	# strEnglish "YES"; strGerman "YES"; strFrench "YES"; strSpanish "YES"; strItalian ""; strIndones ""; strJapan ""
 
 Str_empty_379:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_379
 
 			VwWideESBox	WarningClsRunning_WideESBox2, super=WarningClsRunning_KssUserBitmap1, sub=WarningClsRunning_KssPsMultiLangTextBox5, next=WarningClsRunning_CatchEvent1, prev=WarningClsRunning_WideESBox1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, str=Str_empty_379	# str ""
 
@@ -4296,7 +4298,7 @@ Str_NO_22:	.asciz "NO"
 Str_empty_380:	.asciz ""
 Str_empty_381:	.asciz ""
 Str_empty_382:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_382
 
 				KssPsMultiLangTextBox	WarningClsRunning_KssPsMultiLangTextBox5, super=WarningClsRunning_WideESBox2, flag=VF_Const, X=452, Y=220, W=50, H=20, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_DarkGray, backfontcolor=CL_Silver, lines=1, Dim3d=1, strEnglish=Str_NO_19, strGerman=Str_NO_20, strFrench=Str_NO_21, strSpanish=Str_NO_22, strItalian=Str_empty_380, strIndones=Str_empty_381, strJapan=Str_empty_382	# strEnglish "NO"; strGerman "NO"; strFrench "NO"; strSpanish "NO"; strItalian ""; strIndones ""; strJapan ""
 			IvCatchEvent	WarningClsRunning_CatchEvent1, super=WarningClsRunning_KssUserBitmap1, next=WarningClsRunning_ExitScreen1, prev=WarningClsRunning_WideESBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DefaultFunction
@@ -4304,7 +4306,7 @@ Str_empty_382:	.asciz ""
 			IvCatchEvent	WarningClsRunning_CatchEvent2, super=WarningClsRunning_KssUserBitmap1, prev=WarningClsRunning_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=100, Y=0, W=32, H=32, func=FN_KssxCatch_FlsRunning
 
 Str_KssBg_21:	.asciz "KssBg"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KssBg_21
 
 	KssBgScreen	NewClsScreen, sub=NewClsScreen_IndexEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=NewClsScreen_window, title=Str_KssBg_21, icon=1	# title "KssBg"
 		AcIndexEditSw	NewClsScreen_IndexEditSw1, super=NewClsScreen, next=NewClsScreen_IndexEditSw2, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=7
@@ -4315,7 +4317,7 @@ Str_KssBg_21:	.asciz "KssBg"
 		AcIndexWideES	NewClsScreen_IndexWideES1, super=NewClsScreen, next=NewClsSfx, prev=NewClsScreen_IndexEditSw5, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
 
 Str_empty_383:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_383
 
 		AcListBox	NewClsSfx, super=NewClsScreen, next=NewClsScreen_CatchEvent1, prev=NewClsScreen_IndexWideES1, flag=VF_Const, X=527, Y=62, W=105, H=149, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=3, fontcolor=CL_White, row=14, selected=NewClsSfx_selected, list=Str_empty_383, dial=1	# list ""
 		IvCatchEvent	NewClsScreen_CatchEvent1, super=NewClsScreen, next=NewClsList, prev=NewClsSfx, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_KssCatch_NewClsScreen
@@ -5334,144 +5336,201 @@ RN_PleaseWait_Win:	.asciz "PleaseWait_Win"
 RN_empty_777:	.asciz ""
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0514AE, 0x0514B0
 Str_TT_HDDEXT:	.asciz "TT_HDDEXT"
-	.align	4, 0xFF
-data_978514BC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0514BC, 0x0518BC
-data_978518BC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0518BC, 0x05208C
-data_9785208C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x05208C, 0x0522EB
-	.space	289, 0x00
-.incbin_range "baserom/hdsx3_extapr.rom", 0x05240C, 0x05248C
-data_9785248C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x05248C, 0x05E340
+	.align	4, 0xFF	# pad after Str_TT_HDDEXT
 
-doubles_9785E340:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x3B3A3738, 0x3E3D3C3A	# 1.57180144e+11
-	.long	0x5452513E, 0x42424C55	# 1.56205092e+11
-	.long	0x47474742, 0x42422F46	# 2262148.45
-	.long	0x39413041, 0x41414242	# 9.99375025e-48
-.incbin_range "baserom/hdsx3_extapr.rom", 0x05E360, 0x05F960
-doubles_9785F960:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x43414343, 0x41434143	# 0.000526816241
-	.long	0x43414143, 0x3F414341	# 0.00052657875
-	.long	0x41434341, 0x3F414143	# 2784898.45
-	.long	0x393B413B, 0x41453F41	# 1653049.22
-	.long	0x39393939, 0x41393939	# 1.56537746e+11
-	.long	0x39394342, 0x42423930	# 1.81828312e+185
-.incbin_range "baserom/hdsx3_extapr.rom", 0x05F990, 0x0605E0
-doubles_978605E0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x3F43484B, 0x3F414341	# 2261634.46
-	.long	0x3B453B45, 0x41414141	# 2785922.51
-	.long	0x41414141, 0x41454141	# 1.5677499e+11
-	.long	0x40414139, 0x42424042	# 5.22474639e+54
-.incbin_range "baserom/hdsx3_extapr.rom", 0x060600, 0x061A30
-doubles_97861A30:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x462F462F, 0x422F4246	# 6.98982242e+10
-	.long	0x42424246, 0x42304642	# 1.5697632e+11
-	.long	0x463E4640, 0x42424642	# 1.08485822e+11
-	.long	0x46424242, 0x42394242	# -4.64119642e-277
-.incbin_range "baserom/hdsx3_extapr.rom", 0x061A50, 0x077C8C
-data_97877C8C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x077C8C, 0x07808C
-data_9787808C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x07808C, 0x07CFA8
-doubles_9787CFA8:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x24972097, 0x40352825	# 2523806.57
-	.long	0x49415154, 0x4143414F	# 42.5025711
-	.long	0x4041403E, 0x40454054	# 2131072.5
-	.long	0x4043534E, 0x41404240	# 3.69451083e+54
-.incbin_range "baserom/hdsx3_extapr.rom", 0x07CFC8, 0x09D88C
+BitmapDirsel_Palette:	# 256 colours, 0x00BBGGRR (BitmapDirsel: MT_GetBitmapPalette)
+	.long	0x00A17794, 0x004E627E, 0x003D7E31, 0x00803340, 0x003B4A8D, 0x00628339, 0x00751D25, 0x00242D72
+	.long	0x001D7116, 0x0078242D, 0x0033408B, 0x005D9761, 0x00864050, 0x00688197, 0x007A8F53, 0x00966078
+	.long	0x00668095, 0x00759157, 0x00A781A1, 0x0083A4B2, 0x00BEB8A5, 0x00B298BE, 0x0094B9AB, 0x00ACAE90
+	.long	0x00BCABD6, 0x00AAD4A7, 0x00A19E70, 0x00A57D9C, 0x0087A99C, 0x00869B6A, 0x00AD8EB1, 0x00ABD6B4
+	.long	0x00C49761, 0x008E5065, 0x005D7588, 0x00557D2E, 0x00833B4A, 0x00405077, 0x002B7C2D, 0x008F5368
+	.long	0x007F9EB1, 0x00BCAD8E, 0x00B197BC, 0x0087A9BD, 0x00D9BDAE, 0x00BBAAD4, 0x00A5CE9D, 0x00898D4E
+	.long	0x00853D4D, 0x0037458D, 0x00628D4E, 0x008C4D60, 0x005B7296, 0x00789864, 0x00955D75, 0x008AACA0
+	.long	0x0091A074, 0x009B6A84, 0x00728E93, 0x00708C4D, 0x0098647D, 0x00708C97, 0x007A9966, 0x0091576D
+	.long	0x00354285, 0x004D8844, 0x007B2A35, 0x00334085, 0x004D8A48, 0x00996680, 0x007B999F, 0x008E9E70
+	.long	0x00A17794, 0x008EB1B6, 0x00C96B0A, 0x007C2D38, 0x00374573, 0x00206E0F, 0x006B0A0D, 0x001C2385
+	.long	0x004D7D2E, 0x007A2832, 0x00222B70, 0x00187116, 0x00762028, 0x00374593, 0x0070935B, 0x00762028
+	.long	0x003D4D9C, 0x00869660, 0x009A6881, 0x00647D98, 0x007D9157, 0x00966078, 0x007F9EB1, 0x00BCB8A3
+	.long	0x00AD8EB1, 0x0090B4AE, 0x00B4AB8A, 0x00B39BC1, 0x00ABD6A7, 0x00A19966, 0x00A883A4, 0x0081A19F
+	.long	0x008EA177, 0x00AD8EB1, 0x00A1C9B4, 0x00C4A57F, 0x00A27896, 0x00789698, 0x007D8741, 0x00884455
+	.long	0x00394881, 0x00457E31, 0x008A485A, 0x006680A8, 0x00A4AC8B, 0x00B094B9, 0x007B99B5, 0x00C6B8A5
+	.long	0x00B8A5CE, 0x0098BEA3, 0x00999157, 0x00833948, 0x00283280, 0x00428741, 0x00813745, 0x00445590
+	.long	0x006A8C4D, 0x0098647D, 0x0077949D, 0x00899C6C, 0x009A6881, 0x00647D87, 0x00527E31, 0x00874152
+	.long	0x005D7596, 0x00789D6E, 0x009E708C, 0x00506589, 0x00588035, 0x006E1115, 0x00202886, 0x00508741
+	.long	0x008E5065, 0x007794A5, 0x009EA177, 0x00A37B99, 0x007896A2, 0x0096A57F, 0x0090546A, 0x00465879
+	.long	0x00306E11, 0x00660000, 0x001D2588, 0x00558946, 0x008A485A, 0x00485A81, 0x00457D2E, 0x00803542
+	.long	0x0037458E, 0x00658E50, 0x00751D25, 0x002D3893, 0x00709C6C, 0x009B6A84, 0x006A84A2, 0x0096A37B
+	.long	0x009A6881, 0x006A84A9, 0x00A6AA87, 0x00A985A6, 0x0098BEB0, 0x00B9AE90, 0x00B6A1C9, 0x0085A690
+	.long	0x006A9A68, 0x00AD8EB1, 0x0085A6A5, 0x009E9B6A, 0x009D6E89, 0x0085A6A7, 0x00A1A074, 0x00A985A6
+	.long	0x0081A19D, 0x00899660, 0x008F5368, 0x00506593, 0x00728D4E, 0x008C4D60, 0x005D75A1, 0x0094A57D
+	.long	0x00A985A6, 0x006881A5, 0x009EAE90, 0x00AD8EB1, 0x0074919D, 0x00899966, 0x008D4E62, 0x00445583
+	.long	0x00488C4D, 0x00864050, 0x00506593, 0x00728E50, 0x00935970, 0x005B7295, 0x00759761, 0x009D6E89
+	.long	0x00647D8E, 0x00658A48, 0x00833B4A, 0x004D6090, 0x006AA074, 0x00A07491, 0x00668086, 0x00508B4A
+	.long	0x0078242D, 0x002D3883, 0x004A8640, 0x008C4D60, 0x00617A9D, 0x0089A074, 0x00A17794, 0x0087A9A2
+	.long	0x0096AB8A, 0x00AB8AAC, 0x007B9990, 0x006A853D, 0x00751D25, 0x00313D87, 0x00528B4A, 0x00955D75
+	.long	0x00597088, 0x0055833B, 0x007E313D, 0x002E3A8E, 0x00659864, 0x00874152, 0x00283285, 0x004D9B6A
+	.long	0x009C6C86, 0x006680AB, 0x00ACAC8B, 0x00A985A6, 0x00668096, 0x00789864, 0x00AA87A9, 0x00A5CEB5
+	.long	0x00C6B8A3, 0x00A985A6, 0x007B999D, 0x0089AF92, 0x00B49DC4, 0x0081A1A7, 0x00A19A68, 0x0098647D
+
+BitmapDirsel_Pixels:	# 100 x 20, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapDirsel answers MT_GetBitmapData with (src/program/data/media/BitmapDirsel_Pixels.png)
+	.incbin	"build/bitmaps/BitmapDirsel_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 100 20) from src/program/data/media/BitmapDirsel_Pixels.png
+
+BitmapBg001_Palette:	# 256 colours, 0x00BBGGRR (BitmapBg001: MT_GetBitmapPalette)
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x00000000, 0x00282738, 0x0000004D, 0x00181867, 0x00524F50, 0x00797777, 0x006E6B6A, 0x00645C5C
+	.long	0x002D2B32, 0x000505A0, 0x000000FF, 0x000808F4, 0x001A1AE9, 0x00757488, 0x006160FD, 0x0078CCE6
+	.long	0x007D8F99, 0x00FF0000, 0x00F65352, 0x00F67171, 0x009A8B7A, 0x00D5AC72, 0x00888687, 0x00999698
+	.long	0x00918C91, 0x009497B1, 0x00A69998, 0x00A59DA8, 0x00A9A6A7, 0x00B5AAAA, 0x00B9B6B8, 0x00AFAAB5
+	.long	0x00A2A3AB, 0x00989BC9, 0x0094B0CF, 0x00ABADCD, 0x00B2B2FD, 0x009A99DC, 0x0091C4DC, 0x008ACBE4
+	.long	0x0095CBE5, 0x0090D2EC, 0x00AFD2E9, 0x00B4C6D9, 0x00C5B9BA, 0x00CCB6AD, 0x00F58D8D, 0x00F4AFAE
+	.long	0x00CCAB93, 0x00C5BCC3, 0x00D3C4B9, 0x00E3CEA6, 0x00CAC5C8, 0x00D3CBCD, 0x00D8CAC8, 0x00D4CDD3
+	.long	0x00DDD1CE, 0x00D6D4D5, 0x00DCD4D4, 0x00DAD5DB, 0x00DBDBDB, 0x00D9D9D9, 0x00DDDADA, 0x00DCDCDC
+	.long	0x00DDDDDD, 0x00DEDEDE, 0x00DEDDDD, 0x00DDDADD, 0x00D8D5D9, 0x00C9CAD7, 0x00DADBE4, 0x00C8D6E8
+	.long	0x00DBE2EC, 0x00E2D6D3, 0x00E5D9D6, 0x00E1DEDE, 0x00E6DEDD, 0x00E4DBDA, 0x00E9DFDD, 0x00E9DDDA
+	.long	0x00E7DAD7, 0x00E5D2CD, 0x00E2DEE2, 0x00E5E0DF, 0x00ECE1DE, 0x00E1E0E1, 0x00E3E3E3, 0x00E2E2E2
+	.long	0x00E2E1E1, 0x00E5E2E2, 0x00E4E4E4, 0x00E5E5E5, 0x00E5E4E4, 0x00E6E6E6, 0x00E5E2E5, 0x00EAE2E1
+	.long	0x00EAE5E5, 0x00EDE5E3, 0x00EDE6E5, 0x00EBE3E2, 0x00EAE6E9, 0x00EEE8E7, 0x00EAE8E7, 0x00EAE9E9
+	.long	0x00EEEAE9, 0x00EEEDED, 0x00EDEBEC, 0x00E5E3EA, 0x00EAEBF2, 0x00F0EAEA, 0x00F1EEED, 0x00F2EDEC
+	.long	0x00F0E8E6, 0x00F2EEF0, 0x00F3F0EF, 0x00F2F1F1, 0x00F5F2F2, 0x00F5F4F5, 0x00E9E0DE, 0x00847C7C
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+
+BitmapBg001_Pixels:	# 640 x 240, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapBg001 answers MT_GetBitmapData with (src/program/data/media/BitmapBg001_Pixels.png)
+	.incbin	"build/bitmaps/BitmapBg001_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 640 240) from src/program/data/media/BitmapBg001_Pixels.png
+
+BitmapBg002_Palette:	# 256 colours, 0x00BBGGRR (BitmapBg002: MT_GetBitmapPalette)
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007B7979, 0x006B6A69, 0x00858484, 0x00989797, 0x00908E8E, 0x00A9A8A8, 0x00B5B4B4, 0x00BCBBBB
+	.long	0x00B9B7B7, 0x00B2AFAD, 0x00A29E9D, 0x00BEC9D5, 0x00BDD3DD, 0x00BEC2CB, 0x00BCD8E2, 0x00B4D4DE
+	.long	0x00C2BDBD, 0x00C2BFC2, 0x00CFC7BA, 0x00E1D9B4, 0x00C4C2C3, 0x00CCCACC, 0x00C8C5C9, 0x00C4C5D3
+	.long	0x00CCCBD4, 0x00C7CAD8, 0x00C3D3DD, 0x00CBD4DC, 0x00D2CDCD, 0x00D4CBC5, 0x00D2CED1, 0x00DAD2CB
+	.long	0x00D7D7D7, 0x00D6D5D5, 0x00D4D2D3, 0x00D9D6D6, 0x00DBD5D4, 0x00D9D6D9, 0x00DDD8D7, 0x00D9D9D9
+	.long	0x00DBDBDB, 0x00DADADA, 0x00DAD9DA, 0x00DCDBDB, 0x00DFDBDA, 0x00DED9D9, 0x00DDDBDD, 0x00DEDCDB
+	.long	0x00DCDCDC, 0x00DDDDDD, 0x00DDDCDC, 0x00DEDDDD, 0x00DEDEDE, 0x00DFDFDF, 0x00DFDEDE, 0x00DEDDDE
+	.long	0x00DADADD, 0x00D4D9DE, 0x00D5D5DA, 0x00C3D7E1, 0x00C4DAE4, 0x00CADBE5, 0x00DEDEE1, 0x00DADDE2
+	.long	0x00D4DBE3, 0x00CACDE1, 0x00DBE1E6, 0x00C4E0E9, 0x00E0DBDA, 0x00E1DCDB, 0x00E0DDDC, 0x00E1DFDE
+	.long	0x00E2DFDE, 0x00E2DEDD, 0x00E4DFDE, 0x00E3DBC9, 0x00E1DFE1, 0x00E3E0DF, 0x00E1E0DF, 0x00E5E0DF
+	.long	0x00E2DCD5, 0x00E0E0E0, 0x00E1E1E1, 0x00E1E0E0, 0x00E3E1E0, 0x00E2E2E2, 0x00E3E3E3, 0x00E3E2E2
+	.long	0x00E2E1E2, 0x00E4E1E0, 0x00E5E2E1, 0x00E4E3E3, 0x00E5E2E2, 0x00E6E3E2, 0x00E6E2E1, 0x00E5E3E4
+	.long	0x00E7E4E3, 0x00E5E4E3, 0x00E4E4E4, 0x00E5E5E5, 0x00E5E4E4, 0x00E6E5E4, 0x00E7E6E6, 0x00E6E5E6
+	.long	0x00E5E6E9, 0x00E8E5E5, 0x00E8E7E7, 0x00E9E6E6, 0x00E8E4E3, 0x00E8E7E8, 0x00E9E8E7, 0x00E9E8E8
+	.long	0x00EAE9E9, 0x00EBEAEA, 0x00ECECEC, 0x00F3F3F2, 0x00EAE9EA, 0x00E2E2E5, 0x00BDBEC3, 0x00807F7F
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979, 0x007B7979
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+	.long	0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F, 0x007F7F7F
+
+BitmapBg002_Pixels:	# 640 x 240, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapBg002 answers MT_GetBitmapData with (src/program/data/media/BitmapBg002_Pixels.png)
+	.incbin	"build/bitmaps/BitmapBg002_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 640 240) from src/program/data/media/BitmapBg002_Pixels.png
 data_9789D88C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09D88C, 0x09D88E
 
 Str_WSL:	.asciz "WSL."
-Str_TMP:	.asciz "TMP."
-Str_TQS:	.asciz "TQS."
-Str_PMC:	.asciz "PMC."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8A2, 0x09D8A7
-Str_PSM:	.asciz "PSM."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D893, 0x09D8AC
 Str_CFE:	.asciz "CFE."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8B1, 0x09D8B6
-Str_VAF:	.asciz "VAF."
-Str_PMH:	.asciz "PMH."
-Str_TSA:	.asciz "TSA."
-Str_DIM:	.asciz "DIM."
-Str_XLT_3:	.asciz "XLT."
-Str_FIK:	.asciz "FIK."
-Str_XTT:	.asciz "XTT."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8D9, 0x09D8F2
-Str_QES:	.asciz "QES."
-Str_FQS:	.asciz "FQS."
-Str_XXX_2:	.asciz "XXX."
-Str_XXX_3:	.asciz "XXX."
-Str_XXX_4:	.asciz "XXX."
-Str_XXX_5:	.asciz "XXX."
-Str_XXX_6:	.asciz "XXX."
-Str_XXX_7:	.asciz "XXX."
-Str_XXX_8:	.asciz "XXX."
-Str_XXX_9:	.asciz "XXX."
-Str_XXX_10:	.asciz "XXX."
-Str_XXX_11:	.asciz "XXX."
+Str_DM:	.asciz "DM."
+	.space	1, 0x00
+
+Text_VAF:	# 24 strings of 4 characters, NUL-terminated
+	.asciz	"VAF."
+	.asciz	"PMH."
+	.asciz	"TSA."
+	.asciz	"DIM."
+	.asciz	"XLT."
+	.asciz	"FIK."
+	.asciz	"XTT."
+	.asciz	"1SU."
+	.asciz	"2SU."
+	.asciz	"3SU."
+	.asciz	"4SU."
+	.asciz	"5SU."
+	.asciz	"QES."
+	.asciz	"FQS."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+	.asciz	"XXX."
+
 Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1:	.asciz "01:                   \x0902:                   \x0903:                   \x0904:                   \x0905:                   \x0906:                   \x0907:                   \x0908:                   \x0909:                   \x0910:                   \x0911:                   \x0912:                   \x0913:                   \x0914:                   \x0915:                   \x0916:                   \x0917:                   \x0918:                   \x0919:                   \x0920:                   \x09"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1
 Str_empty_487:	.asciz "."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_487
 Str_XXX:	.asciz "XXX"
 Str_LSW_2:	.asciz ".LSW"
-Str_PMT:	.asciz ".PMT"
-Str_SQT_5:	.asciz ".SQT"
-Str_CMP:	.asciz ".CMP"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB18, 0x09DB1D
-Str_MSP:	.asciz ".MSP"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB09, 0x09DB22
 Str_EFC:	.asciz ".EFC"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09DB27, 0x09DB2C
 Str_FAV_5:	.asciz ".FAV"
-Str_HMP:	.asciz ".HMP"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB31, 0x09DB36
 Str_AST:	.asciz ".AST"
 Str_MID_7:	.asciz ".MID"
-Str_TLX_5:	.asciz ".TLX"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB40, 0x09DB45
 Str_KIF_3:	.asciz ".KIF"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09DB4A, 0x09DB68
 Str_USR:	.asciz ".USR"
-Str_SXD:	.asciz ".SXD"
-Str_SXF:	.asciz ".SXF"
-Str_SXC:	.asciz ".SXC"
-Str_SXY:	.asciz ".SXY"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB6D, 0x09DB81
 Str_SXU:	.asciz ".SXU"
 Str_SEQ_5:	.asciz ".SEQ"
-Str_SQF:	.asciz ".SQF"
-Str_RCM:	.asciz ".RCM"
-Str_TTX_6:	.asciz ".TTX"
-Str_XXX_12:	.asciz ".XXX"
-Str_XXX_13:	.asciz ".XXX"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB8B, 0x09DBA4
 Str_empty_486:	.asciz "            \x09"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_486
 Str_PCLK:	.asciz "PCLK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PCLK
 Str_Test_Ast:	.asciz "Test Ast"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Test_Ast
 Str_return_li:	.asciz "return: %li"
 Str_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN_2:	.asciz "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN_2
 Str_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN:	.asciz "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN
 Str_Header_id_X:	.asciz "Header id   : %X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Header_id_X
 Str_Header_size_i:	.asciz "Header size : %i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Header_size_i
 Str_Tracks_i:	.asciz "Tracks      : %i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Tracks_i
 Str_Res_i:	.asciz "Res         : %i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Res_i
 Str_Track_id_X:	.asciz "Track id    : %X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Track_id_X
 Str_Track_size_X:	.asciz "Track size  : %X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Track_size_X
 Str_empty_485:	.asciz "                                                          "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_485
 Str_TSKB:	.asciz "TSKB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TSKB
 Str_03i_s_9:	.asciz "%03i:%s"
 Str_03i_s_8:	.asciz "%03i:%s"
 Str_03i_s_7:	.asciz "%03i:%s"
@@ -5479,11 +5538,11 @@ Str_03i_s_6:	.asciz "%03i:%s"
 Str_03i_s_5:	.asciz "%03i:%s"
 Str_02i_s_7:	.asciz "%02i:%s"
 Str_End_of_Directory:	.asciz "End of Directory"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_End_of_Directory
 Str_02i_s_6:	.asciz "%02i:%s"
 Str_02i_s_5:	.asciz "%02i:%s"
 Str_Do_not_remove_this_u:	.asciz "   Do not remove this!!! : %u"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Do_not_remove_this_u
 Str_KssLang:	.asciz "KssLang"
 Str_1_13:	.asciz "1"
 Str_2_13:	.asciz "2"
@@ -5492,7 +5551,7 @@ Str_4_4:	.asciz "4"
 Str_5_4:	.asciz "5"
 Str_6_4:	.asciz "6"
 Str_7_5:	.asciz "7"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7_5
 
 ptrs_9789DD8C:
 	.long	Str_1_13
@@ -5526,7 +5585,7 @@ ptrs_9789DE14:
 
 Str_ATTENTIONE_4:	.asciz "!! ATTENTIONE !!"
 Str_ATTENTIONE_3:	.asciz "!! ATTENTIONE !!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ATTENTIONE_3
 
 ptrs_9789DE40:
 	.long	Str_ATTENTIONE_4
@@ -5541,7 +5600,7 @@ Str_Error_No_Floppy_Disk:	.asciz "Error: No Floppy Disk!"
 Str_Not_enough_free_places_in_serie:	.asciz "Not enough free places in serie"
 Str_This_function_is_not_yet_available_in_th:	.asciz "This function is not yet available in this software version"
 Str_Warn1_is_long_Message_Message_2_is_long_3:	.asciz "Warn1 is long Message  Message 2 is long MessageMessage 2 is long (E)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn1_is_long_Message_Message_2_is_long_3
 
 ptrs_9789DF94:
 	.long	Str_No_Files_Titles_are_marked
@@ -5563,7 +5622,7 @@ Str_Fehler_Keine_Diskette:	.asciz "Fehler: Keine Diskette!"
 Str_Nicht_genuegend_freie_Plaetze_in_Serie:	.asciz "Nicht genuegend freie Plaetze in Serie"
 Str_Diese_Funktion_ist_in_dieser_Version_noc:	.asciz "Diese Funktion ist in dieser Version noch nicht implementiert"
 Str_Warn1_ist_eine_lange_Nachricht_Message_2:	.asciz "Warn1 ist eine lange Nachricht Message 2 ist eine lange Nachricht (D)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn1_ist_eine_lange_Nachricht_Message_2
 
 ptrs_9789E148:
 	.long	Str_Es_sind_keine_Songs_zum_kopieren_markier
@@ -5585,7 +5644,7 @@ Str_No_Floppy_Disk_Error_F:	.asciz "No Floppy Disk Error(F)"
 Str_Not_enough_free_places_in_serie_F:	.asciz "Not enough free places in serie(F)"
 Str_This_function_is_not_available_in_this_s_2:	.asciz "This function is not available in this software version"
 Str_Warn1_is_long_Message_Message_2_is_long_2:	.asciz "Warn1 is long Message  Message 2 is long MessageMessage 2 is long (F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn1_is_long_Message_Message_2_is_long_2
 
 ptrs_9789E2C4:
 	.long	Str_No_Files_Titles_are_marked_F
@@ -5607,7 +5666,7 @@ Str_No_Floppy_Disk_Error_S:	.asciz "No Floppy Disk Error(S)"
 Str_Not_enough_free_places_in_serie_S:	.asciz "Not enough free places in serie(S)"
 Str_This_function_is_not_available_in_this_s:	.asciz "This function is not available in this software version"
 Str_Warn1_is_long_Message_Message_2_is_long:	.asciz "Warn1 is long Message  Message 2 is long MessageMessage 2 is long (S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn1_is_long_Message_Message_2_is_long
 
 ptrs_9789E440:
 	.long	Str_No_Files_Titles_are_marked_S
@@ -5650,7 +5709,7 @@ Str_Legen_Sie_bitte_eine_Diskette_ein_und_ve:	.asciz "Legen Sie bitte eine Diske
 Str_Bitte_waehlen_Sie_ein_Verzeichnis_mit_ge:	.asciz "Bitte waehlen Sie ein Verzeichnis mit genuegend freien Plaetzen"
 Str_Weitere_Informationen_auf_dem_Web_www_ke:	.asciz "Weitere Informationen auf dem Web www.keysoftservice.ch/sx6"
 Str_Warn2_ist_eine_lange_Nachricht_und_geht:	.asciz "Warn2 ist eine lange Nachricht und geht \xFCber 2 Linien Message 2 ist eine lange Nachricht (D)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn2_ist_eine_lange_Nachricht_und_geht
 
 ptrs_9789E880:
 	.long	Str_Selektieren_Sie_Songs_auf_der_vorherigen
@@ -5672,7 +5731,7 @@ Str_Please_insert_Floppy_Disk_and_try_again_2:	.asciz "Please insert Floppy Disk
 Str_Please_select_a_Directory_with_enough_fr_2:	.asciz "Please select a Directory with enough free places(F)"
 Str_More_information_on_the_web_www_keysofts_2:	.asciz "More information on the web www.keysoftservice.ch/sx6(F)"
 Str_Warn2_is_long_Message_Message_2_is_long_2:	.asciz "Warn2 is long Message  Message 2 is long MessageMessage 2 is long (F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn2_is_long_Message_Message_2_is_long_2
 
 ptrs_9789EA80:
 	.long	Str_Please_select_one_or_more_Songs_on_the_p_2
@@ -5694,7 +5753,7 @@ Str_Please_insert_Floppy_Disk_and_try_again:	.asciz "Please insert Floppy Disk a
 Str_Please_select_a_Directory_with_enough_fr:	.asciz "Please select a Directory with enough free places(S)"
 Str_More_information_on_the_web_www_keysofts:	.asciz "More information on the web www.keysoftservice.ch/sx6(S)"
 Str_Warn2_is_long_Message_Message_2_is_long:	.asciz "Warn2 is long Message  Message 2 is long MessageMessage 2 is long (S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Warn2_is_long_Message_Message_2_is_long
 
 ptrs_9789EC80:
 	.long	Str_Please_select_one_or_more_Songs_on_the_p
@@ -5723,7 +5782,7 @@ ptrs_9789ECC4:
 	.long	ptrs_9789EC80
 
 Str_WARN:	.asciz "WARN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WARN
 Str_ATTENTION_35:	.asciz "!! ATTENTION !!"
 Str_ATTENTION_34:	.asciz "!! ATTENTION !!"
 
@@ -5747,7 +5806,7 @@ ptrs_9789ED48:
 
 Str_ATTENTIONE_2:	.asciz "!! ATTENTIONE !!"
 Str_ATTENTIONE:	.asciz "!! ATTENTIONE !!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ATTENTIONE
 
 ptrs_9789ED74:
 	.long	Str_ATTENTIONE_2
@@ -5758,7 +5817,7 @@ Str_You_are_going_to_delete_an_already_exist_3:	.asciz "You are going to delete 
 Str_Ask_Msg_3:	.asciz "Ask Msg 3"
 Str_Ask_Msg_4:	.asciz "Ask Msg 4"
 Str_Ask_Msg_5:	.asciz "Ask Msg 5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_Msg_5
 
 ptrs_9789EE0C:
 	.long	Str_You_are_going_to_overwrite_an_already_ex_7
@@ -5772,7 +5831,7 @@ Str_Sie_loeschen_einen_bestehenden_Titel:	.asciz "Sie loeschen einen bestehenden
 Str_Ask_Msg_3_G:	.asciz "Ask Msg 3(G)"
 Str_Ask_Msg_4_G:	.asciz "Ask Msg 4(G)"
 Str_Ask_Msg_5_G:	.asciz "Ask Msg 5(G)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_Msg_5_G
 
 ptrs_9789EE98:
 	.long	Str_Sie_ueberschreiben_einen_bestehenden_Tit
@@ -5786,7 +5845,7 @@ Str_You_are_going_to_delete_an_already_exist_2:	.asciz "You are going to delete 
 Str_Ask_Msg_3_F:	.asciz "Ask Msg 3(F)"
 Str_Ask_Msg_4_F:	.asciz "Ask Msg 4(F)"
 Str_Ask_Msg_5_F:	.asciz "Ask Msg 5(F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_Msg_5_F
 
 ptrs_9789EF4C:
 	.long	Str_You_are_going_to_overwrite_an_already_ex_6
@@ -5800,7 +5859,7 @@ Str_You_are_going_to_delete_an_already_exist:	.asciz "You are going to delete an
 Str_Ask_Msg_3_S:	.asciz "Ask Msg 3(S)"
 Str_Ask_Msg_4_S:	.asciz "Ask Msg 4(S)"
 Str_Ask_Msg_5_S:	.asciz "Ask Msg 5(S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_Msg_5_S
 
 ptrs_9789F000:
 	.long	Str_You_are_going_to_overwrite_an_already_ex_5
@@ -5814,7 +5873,7 @@ Str_Ask_sec_2:	.asciz "Ask sec 2"
 Str_Ask_sec_3:	.asciz "Ask sec 3"
 Str_Ask_sec_4:	.asciz "Ask sec 4"
 Str_Ask_sec_5:	.asciz "Ask sec 5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_sec_5
 
 ptrs_9789F04C:
 	.long	Str_Are_you_sure_4
@@ -5828,7 +5887,7 @@ Str_Ask_sec_2_G:	.asciz "Ask sec 2(G)"
 Str_Ask_sec_3_G:	.asciz "Ask sec 3(G)"
 Str_Ask_sec_4_G:	.asciz "Ask sec 4(G)"
 Str_Ask_sec_5_G:	.asciz "Ask sec 5(G)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_sec_5_G
 
 ptrs_9789F0A8:
 	.long	Str_Sind_Sie_sicher_2
@@ -5842,7 +5901,7 @@ Str_Ask_sec_2_F:	.asciz "Ask sec 2(F)"
 Str_Ask_sec_3_F:	.asciz "Ask sec 3(F)"
 Str_Ask_sec_4_F:	.asciz "Ask sec 4(F)"
 Str_Ask_sec_5_F:	.asciz "Ask sec 5(F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_sec_5_F
 
 ptrs_9789F104:
 	.long	Str_Are_you_sure_F
@@ -5856,7 +5915,7 @@ Str_Ask_sec_2_S:	.asciz "Ask sec 2(S)"
 Str_Ask_sec_3_S:	.asciz "Ask sec 3(S)"
 Str_Ask_sec_4_S:	.asciz "Ask sec 4(S)"
 Str_Ask_sec_5_S:	.asciz "Ask sec 5(S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ask_sec_5_S
 
 ptrs_9789F160:
 	.long	Str_Are_you_sure_S
@@ -5881,10 +5940,10 @@ ptrs_9789F194:
 	.long	ptrs_9789F160
 
 Str_ASK:	.asciz "ASK "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ASK
 Str_Hard_Disk_is_formating_Please_wait:	.asciz "Hard Disk is formating... Please wait"
 Str_Txt2_8:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_8
 
 ptrs_9789F1D8:
 	.long	Str_Hard_Disk_is_formating_Please_wait
@@ -5892,7 +5951,7 @@ ptrs_9789F1D8:
 
 Str_HardDisk_wird_formatiert_Bitte_warten:	.asciz "HardDisk wird formatiert... Bitte warten"
 Str_Txt2_7:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_7
 
 ptrs_9789F210:
 	.long	Str_HardDisk_wird_formatiert_Bitte_warten
@@ -5900,7 +5959,7 @@ ptrs_9789F210:
 
 Str_Hard_Disk_is_formating_Please_wait_F:	.asciz "Hard Disk is formating... Please wait(F)"
 Str_Txt2_6:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_6
 
 ptrs_9789F248:
 	.long	Str_Hard_Disk_is_formating_Please_wait_F
@@ -5908,7 +5967,7 @@ ptrs_9789F248:
 
 Str_Hard_Disk_is_formating_Please_wait_S:	.asciz "Hard Disk is formating... Please wait(S)"
 Str_Txt2_5:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_5
 
 ptrs_9789F280:
 	.long	Str_Hard_Disk_is_formating_Please_wait_S
@@ -5971,7 +6030,7 @@ Str_Partition_3_Cluster_und_teste_Dies_brauc:	.asciz "-> Partition 3 Cluster und
 Str_Sichere_Partition_3_Datei_System_Block:	.asciz "-> Sichere Partition 3 Datei System Block"
 Str_Erfolg_HD_formatiert_Bitte_starten_Sie_d:	.asciz "   - - - Erfolg HD formatiert - - - Bitte starten Sie das Keyboard neu"
 Str_Fehler_HD_formatiert_Bitte_starten_Sie_d:	.asciz "   - - - Fehler HD formatiert - - - Bitte starten Sie das Keyboard neu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fehler_HD_formatiert_Bitte_starten_Sie_d
 
 ptrs_9789F968:
 	.long	Str_Formatiere_Boot_Sektor_User_Parameter
@@ -6011,7 +6070,7 @@ Str_Partition_3_Cluster_and_check_this_may_t_2:	.asciz "-> Partition 3 Cluster a
 Str_Save_Partition_3_File_System_Block_F:	.asciz "-> Save Partition 3 File System Block(F)"
 Str_Success_HD_Formatted_Please_restart_Keyb_2:	.asciz "   - - - Success HD Formatted - - - Please restart Keyboard(F)"
 Str_Failed_HD_Formatted_Please_restart_Keybo_2:	.asciz "   - - - Failed HD Formatted - - - Please restart Keyboard(F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Failed_HD_Formatted_Please_restart_Keybo_2
 
 ptrs_9789FD20:
 	.long	Str_Format_Boot_Sector_User_Param_F
@@ -6051,7 +6110,7 @@ Str_Partition_3_Cluster_and_check_this_may_t:	.asciz "-> Partition 3 Cluster and
 Str_Save_Partition_3_File_System_Block_S:	.asciz "-> Save Partition 3 File System Block(S)"
 Str_Success_HD_Formatted_Please_restart_Keyb:	.asciz "   - - - Success HD Formatted - - - Please restart Keyboard(S)"
 Str_Failed_HD_Formatted_Please_restart_Keybo:	.asciz "   - - - Failed HD Formatted - - - Please restart Keyboard(S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Failed_HD_Formatted_Please_restart_Keybo
 
 ptrs_978A00D8:
 	.long	Str_Format_Boot_Sector_User_Param_S
@@ -6075,7 +6134,7 @@ ptrs_978A00D8:
 
 Str_ok:	.asciz "ok"
 Str_failed:	.asciz "failed"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_failed
 
 ptrs_978A012C:
 	.long	Str_ok
@@ -6122,7 +6181,7 @@ Str_Partition_1:	.asciz "Partition 1"
 Str_Partition_2:	.asciz "Partition 2"
 Str_Partition_3:	.asciz "Partition 3"
 Str_Pluggins:	.asciz "Pluggins"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Pluggins
 Str_Time_Out_Code_lu_7:	.asciz "Time Out Code : %lu"
 Str_Fault_li_7:	.asciz "Fault : %li"
 Str_Time_Out_Code_lu_6:	.asciz "Time Out Code : %lu"
@@ -6139,7 +6198,7 @@ Str_Time_Out_Code_lu:	.asciz "Time Out Code : %lu"
 Str_Fault_li:	.asciz "Fault : %li"
 Str_HardDisk_parameter_reading_Please_wait_3:	.asciz "HardDisk parameter reading ... Please wait!"
 Str_Txt2_4:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_4
 
 ptrs_978A02F8:
 	.long	Str_HardDisk_parameter_reading_Please_wait_3
@@ -6147,7 +6206,7 @@ ptrs_978A02F8:
 
 Str_HardDisk_Parameter_werden_gelesen_Bitte:	.asciz "HardDisk Parameter werden gelesen ... Bitte warten!"
 Str_Txt2_3:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_3
 
 ptrs_978A033C:
 	.long	Str_HardDisk_Parameter_werden_gelesen_Bitte
@@ -6155,7 +6214,7 @@ ptrs_978A033C:
 
 Str_HardDisk_parameter_reading_Please_wait_2:	.asciz "HardDisk parameter reading ... Please wait!"
 Str_Txt2_2:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2_2
 
 ptrs_978A0378:
 	.long	Str_HardDisk_parameter_reading_Please_wait_2
@@ -6163,7 +6222,7 @@ ptrs_978A0378:
 
 Str_HardDisk_parameter_reading_Please_wait:	.asciz "HardDisk parameter reading ... Please wait!"
 Str_Txt2:	.asciz "Txt2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Txt2
 
 ptrs_978A03B4:
 	.long	Str_HardDisk_parameter_reading_Please_wait
@@ -6245,105 +6304,107 @@ data_978A04DC:
 data_978A04E4:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A04E4, 0x0A04EC
 Str_1_12:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_12
 Str_2_12:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_12
 Str_3_11:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_11
 Str_ALL_10:	.asciz "ALL"
 Str_PARTITION_SELECT_2:	.asciz "PARTITION SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PARTITION_SELECT_2
 Str_QUICK_3:	.asciz "QUICK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_QUICK_3
 Str_FULL_4:	.asciz "FULL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FULL_4
 Str_1_11:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_11
 Str_3_10:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_10
 Str_5_3:	.asciz "5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_5_3
 Str_7_4:	.asciz "7"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7_4
 Str_9_3:	.asciz "9"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_9_3
 Str_0_4:	.asciz "0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0_4
 Str_2_11:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_11
 Str_4_3:	.asciz "4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_4_3
 Str_6_3:	.asciz "6"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_6_3
 Str_8_5:	.asciz "8"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8_5
 Str_RESET_2:	.asciz "RESET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RESET_2
 Str_1_10:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_10
 Str_2_10:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_10
 Str_3_9:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_9
 Str_ALL_9:	.asciz "ALL"
 Str_PARTITION_SELECT:	.asciz "PARTITION SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PARTITION_SELECT
 Str_FULL_3:	.asciz "FULL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FULL_3
 Str_1_8:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_8
 Str_2_9:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_9
 Str_3_8:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_8
 Str_ALL_8:	.asciz "ALL"
 Str_1_7:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_7
 Str_2_8:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_8
 Str_3_7:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_7
 Str_ALL_7:	.asciz "ALL"
 Str_1_6:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_6
 Str_2_7:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_7
 Str_3_6:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_6
 Str_ALL_6:	.asciz "ALL"
 Str_1_5:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_5
 Str_2_6:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_6
 Str_3_5:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_5
 Str_ALL_5:	.asciz "ALL"
 Str_QUICK_2:	.asciz "QUICK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_QUICK_2
 Str_FULL_2:	.asciz "FULL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FULL_2
 Str_QUICK:	.asciz "QUICK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_QUICK
 Str_FULL:	.asciz "FULL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FULL
 Str_i_2:	.asciz "%i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_i_2
 Str_empty_484:	.asciz "********"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_484
 Str_73298125:	.asciz "73298125"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_73298125
 Str_empty_483:	.asciz "********"
-	.align	4, 0xFF
-data_978A0604:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0604, 0x0A060C
+	.align	4, 0xFF	# pad after Str_empty_483
+
+KssCatch_LBNEntryBox_Table:	# 8 x u8, 0..234; read by KssCatch_LBNEntryBox : `movbu	(a1), d0`
+	tab_u8	220, 0, 118, 0, 234, 1, 130, 0
+
 Str_LBND:	.asciz "LBND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LBND
 Str_Invalide_Entry:	.asciz "Invalide Entry"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Invalide_Entry
 Str_empty_482:	.asciz "--------------"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_482
 Str_0_ii:	.asciz "%%0%ii"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0_ii
 data_978A063C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A063C, 0x0A0644
 data_978A0644:
@@ -6357,120 +6418,120 @@ data_978A065C:
 data_978A0664:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A0664, 0x0A066C
 Str_1_4:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_4
 Str_2_5:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_5
 Str_3_4:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_4
 Str_empty_481:	.asciz ":"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_481
 Str_1_3:	.asciz "1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_3
 Str_2_4:	.asciz "2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_4
 Str_3_3:	.asciz "3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_3
 Str_empty_480:	.asciz ":"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_480
 Str_ON_3:	.asciz "ON"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_3
 Str_OFF_5:	.asciz "OFF"
 Str_Fault_15:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_15
 Str_ON_2:	.asciz "ON"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_2
 Str_OFF_4:	.asciz "OFF"
 Str_Fault_14:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_14
 Str_lu:	.asciz "- %lu -"
 Str_Fault_13:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_13
 Str_STANDARD_6:	.asciz "STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD_6
 Str_AUTO_LOAD:	.asciz "AUTO LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AUTO_LOAD
 Str_Fault_12:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_12
 Str_STANDARD_5:	.asciz " STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD_5
 Str_LBN_BOX_2:	.asciz " LBN BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LBN_BOX_2
 Str_C_L_S_11:	.asciz "  C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_11
 Str_JUKE_BOX_11:	.asciz " JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_11
 Str_ALPHA_LIST_3:	.asciz "ALPHA LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHA_LIST_3
 Str_Fault_11:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_11
 Str_STANDARD_4:	.asciz "STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD_4
 Str_HD_SX6:	.asciz " HD-SX6"
 Str_Fault_10:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_10
 Str_ON:	.asciz "ON"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON
 Str_OFF_3:	.asciz "OFF"
 Str_Fault_9:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_9
 Str_Fault_8:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_8
 Str_3f_GB:	.asciz "%-.3f GB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3f_GB
 Str_i_MB:	.asciz "%-i MB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_i_MB
 Str_BIG_2:	.asciz "  BIG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BIG_2
 Str_SMALL_2:	.asciz " SMALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMALL_2
 Str_Fault_7:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_7
 Str_GLOBAL:	.asciz "  GLOBAL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GLOBAL
 Str_FILE:	.asciz "  FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE
 Str_Fault_6:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_6
 Str_HOMEPAGE:	.asciz "HOMEPAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HOMEPAGE
 Str_SEQ_PAGE:	.asciz "SEQ PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEQ_PAGE
 Str_Fault_5:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_5
 Str_STANDARD_3:	.asciz "STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD_3
 Str_HDD_LOAD:	.asciz "HDD LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_LOAD
 Str_Fault_4:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_4
 Str_STANDARD_2:	.asciz " STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD_2
 Str_ALPHA_LIST_2:	.asciz "ALPHA LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHA_LIST_2
 Str_Fault_3:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_3
 Str_STANDARD:	.asciz "STANDARD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STANDARD
 Str_SMALL:	.asciz " SMALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMALL
 Str_BIG:	.asciz "  BIG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BIG
 Str_Fault_2:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_2
 Str_DIR_LIST:	.asciz "DIR LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DIR_LIST
 Str_LBN_BOX:	.asciz " LBN BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LBN_BOX
 Str_C_L_S_10:	.asciz "  C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_10
 Str_JUKE_BOX_10:	.asciz " JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_10
 Str_ALPHA_LIST:	.asciz "ALPHA LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHA_LIST
 Str_OFF_2:	.asciz "   OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_2
 Str_Fault:	.asciz "Fault"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault
 Str_PLEASE_WAIT_4:	.asciz "PLEASE WAIT!"
 Str_BITTE_WARTEN_2:	.asciz "BITTE WARTEN!"
 Str_VEUILLEZ_PATIENTER_2:	.asciz "VEUILLEZ PATIENTER!"
@@ -6667,7 +6728,7 @@ ptrs_978A0A60:
 	.long	Str_AF_2
 	.long	Str_2E_2
 	.long	Str_22_2
-	.space	4, 0x00
+	.long	0
 
 Str_5F_2:	.asciz "~5F"
 Str_30_2:	.asciz "~30"
@@ -6745,7 +6806,7 @@ ptrs_978A0C58:
 	.long	Str_58_2
 	.long	Str_59_2
 	.long	Str_5A_2
-	.space	4, 0x00
+	.long	0
 ptrs_978A0CF0:
 	.long	ptrs_978A0A60
 	.long	ptrs_978A0C58
@@ -6759,11 +6820,11 @@ ptrs_978A0CFC:
 
 Str_7f:	.asciz "~7f"
 Str_empty_477:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_477
 Str_empty_476:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_476
 Str_empty_475:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_475
 Str_80:	.asciz "~80"
 Str_CURRENT_PANEL_8:	.asciz "CURRENT PANEL"
 Str_PANEL_MEMORY_8:	.asciz "PANEL MEMORY"
@@ -6926,7 +6987,7 @@ Str_OLD_SEQ_2:	.asciz "OLD SEQ"
 Str_OLD_SQF_2:	.asciz "OLD SQF"
 Str_OLD_RCM_2:	.asciz "OLD RCM"
 Str_No_Entry_F:	.asciz "-No Entry(F)-"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Entry_F
 
 ptrs_978A123C:
 	.long	Str_CURRENT_PANEL_6
@@ -6992,7 +7053,7 @@ Str_OLD_SEQ:	.asciz "OLD SEQ"
 Str_OLD_SQF:	.asciz "OLD SQF"
 Str_OLD_RCM:	.asciz "OLD RCM"
 Str_No_Entry_S:	.asciz "-No Entry(S)-"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Entry_S
 
 ptrs_978A141C:
 	.long	Str_CURRENT_PANEL_5
@@ -7041,7 +7102,7 @@ Str_Directory_3:	.asciz "Directory"
 Str_Song_8:	.asciz "Song"
 Str_Saving_User_Parameter:	.asciz "Saving User Parameter"
 Str_Saving_Custom_Load_Script:	.asciz "Saving Custom Load Script"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Saving_Custom_Load_Script
 
 ptrs_978A1528:
 	.long	Str_Saving_Directory
@@ -7063,7 +7124,7 @@ Str_Verzeichnis:	.asciz "Verzeichnis"
 Str_Song_7:	.asciz "Song"
 Str_Sichere_Benutzerdaten:	.asciz "Sichere Benutzerdaten"
 Str_Sichere_Custom_Load_Script:	.asciz "Sichere Custom Load Script"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sichere_Custom_Load_Script
 
 ptrs_978A15D8:
 	.long	Str_Sichere_Verzeichnis
@@ -7085,7 +7146,7 @@ Str_Directory_2:	.asciz "Directory"
 Str_Song_6:	.asciz "Song"
 Str_Save_User_Param_2:	.asciz "Save User Param"
 Str_Save_C_L_S_2:	.asciz "Save C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Save_C_L_S_2
 
 ptrs_978A1670:
 	.long	Str_Save_Directory_F
@@ -7107,7 +7168,7 @@ Str_Directory:	.asciz "Directory"
 Str_Song_5:	.asciz "Song"
 Str_Save_User_Param:	.asciz "Save User Param"
 Str_Save_C_L_S:	.asciz "Save C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Save_C_L_S
 
 ptrs_978A1708:
 	.long	Str_Save_Directory_S
@@ -7128,7 +7189,7 @@ Str_Smf_4:	.asciz "Smf"
 Str_3Bk_4:	.asciz "3Bk"
 Str_All_4:	.asciz "All"
 Str_Please_wait_about_30_seconds_Custom_Styl_3:	.asciz "Please wait about 30 seconds (Custom Style)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_about_30_seconds_Custom_Styl_3
 
 ptrs_978A177C:
 	.long	Str_Please_wait
@@ -7148,7 +7209,7 @@ Str_Smf_3:	.asciz "Smf"
 Str_3Bk_3:	.asciz "3Bk"
 Str_All_3:	.asciz "All"
 Str_Bitte_ca_30_Sekunden_warten_Custom_Style:	.asciz "Bitte ca. 30 Sekunden warten (Custom Style)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bitte_ca_30_Sekunden_warten_Custom_Style
 
 ptrs_978A17F0:
 	.long	Str_Bitte_warten
@@ -7168,7 +7229,7 @@ Str_Smf_2:	.asciz "Smf"
 Str_3Bk_2:	.asciz "3Bk"
 Str_All_2:	.asciz "All"
 Str_Please_wait_about_30_seconds_Custom_Styl_2:	.asciz "Please wait about 30 seconds (Custom Style)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_about_30_seconds_Custom_Styl_2
 
 ptrs_978A1864:
 	.long	Str_Please_wait_F
@@ -7188,7 +7249,7 @@ Str_Smf:	.asciz "Smf"
 Str_3Bk:	.asciz "3Bk"
 Str_All:	.asciz "All"
 Str_Please_wait_about_30_seconds_Custom_Styl:	.asciz "Please wait about 30 seconds (Custom Style)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_about_30_seconds_Custom_Styl
 
 ptrs_978A18D8:
 	.long	Str_Please_wait_S
@@ -7263,7 +7324,7 @@ Str_Fehler_Falsche_Kommando_3:	.asciz "Fehler : Falsche Kommando"
 Str_Fehler_Song_sichern_schlecht_3:	.asciz "Fehler : Song sichern schlecht"
 Str_Fehler_Song_laden_schlecht_3:	.asciz "Fehler : Song laden schlecht"
 Str_Fehler_Benutzerdaten_sichern_schlecht:	.asciz "Fehler : Benutzerdaten sichern schlecht"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fehler_Benutzerdaten_sichern_schlecht
 
 ptrs_978A1B28:
 	.long	Str_FSB_sichern_iO
@@ -7370,7 +7431,7 @@ ptrs_978A1E28:
 
 Str_s_s_7:	.asciz "%s : %s"
 Str_s_lu_s_lu_2:	.asciz "%s : %lu  %s : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_lu_s_lu_2
 Str_empty_474:	.asciz " : "
 Str_empty_473:	.asciz " - "
 Str_empty_472:	.asciz " : "
@@ -7396,7 +7457,7 @@ Str_empty_453:	.asciz " - "
 Str_empty_452:	.asciz " : "
 Str_s_s_6:	.asciz "%s : %s"
 Str_s_lu_s_lu:	.asciz "%s : %lu  %s : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_lu_s_lu
 Str_61:	.asciz "~61"
 Str_62:	.asciz "~62"
 Str_63:	.asciz "~63"
@@ -7629,21 +7690,21 @@ ptrs_978A2224:
 	.long	ptrs_978A21B0
 
 Str_DNSC_2:	.asciz "DNSC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DNSC_2
 Str_DNSC:	.asciz "DNSC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DNSC
 Str_FNSC:	.asciz "FNSC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FNSC
 Str_CcSt:	.asciz "CcSt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcSt
 Str_MID_6:	.asciz "MID"
 Str_CcS2:	.asciz "CcS2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcS2
 Str_CcCA:	.asciz "CcCA"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcCA
 Str_empty_451:	.asciz "*.*"
 Str_2_2d:	.asciz "%2.2d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_2d
 Str_GM_GM2_8dGM2:	.asciz "GM/GM2~8dGM2 "
 Str_NX_8d_NX:	.asciz "  NX ~8d NX  "
 Str_GM_GM2_8d_NX:	.asciz "GM/GM2 ~8d NX"
@@ -7656,17 +7717,17 @@ ptrs_978A22AC:
 	.long	Str_PREV_TEC_8dNX
 
 Str_03i_02i:	.asciz "%03i-%02i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_03i_02i
 Str_CpWp:	.asciz "CpWp"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CpWp
 Str_CpHD:	.asciz "CpHD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CpHD
 Str_CpNn:	.asciz "CpNn"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CpNn
 Str_CpS2:	.asciz "CpS2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CpS2
 Str_WrCn:	.asciz "WrCn"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WrCn
 data_978A22F0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A22F0, 0x0A22F4
 Str_empty_450:	.asciz "                           "
@@ -7674,20 +7735,20 @@ Str_empty_449:	.asciz "                           "
 Str_mid_2:	.asciz "mid"
 Str_empty_448:	.asciz "   "
 Str_empty_447:	.asciz "                                                 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_447
 Str_s_s_5:	.asciz "%s %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_s_5
 Str_s_s_4:	.asciz "%s %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_s_4
 Str_MID_5:	.asciz ".MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID_5
 Str_empty_446:	.asciz " ->"
 Str_MID_4:	.asciz "MID"
 Str_empty_445:	.asciz "*.*"
 Str_TTX_5:	.asciz ".TTX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TTX_5
 Str_XLT_2:	.asciz "XLT."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_XLT_2
 Str_Connection_Type_3:	.asciz "Connection Type :"
 Str_Connection_is_3:	.asciz "Connection is :"
 Str_Communication_Message:	.asciz "Communication Message :"
@@ -7695,7 +7756,7 @@ Str_Connection_Time_02lu_02lu_02lu_02lu_02lu_3:	.asciz "Connection Time : %02lu.
 Str_Song_4:	.asciz "Song : "
 Str_File_Type_3:	.asciz " -> File Type : "
 Str_Receive_Song_finished_3:	.asciz "Receive Song finished"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Receive_Song_finished_3
 
 ptrs_978A243C:
 	.long	Str_Connection_Type_3
@@ -7713,7 +7774,7 @@ Str_Verbindungs_Zeit_02lu_02lu_02lu_02lu_02l:	.asciz "Verbindungs Zeit : %02lu.%
 Str_Song_3:	.asciz "Song : "
 Str_Datei_Typ:	.asciz " -> Datei Typ : "
 Str_Song_empfangen_erledigt:	.asciz "Song empfangen erledigt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Song_empfangen_erledigt
 
 ptrs_978A2500:
 	.long	Str_Verbindungsart
@@ -7731,7 +7792,7 @@ Str_Connection_Time_02lu_02lu_02lu_02lu_02lu_2:	.asciz "Connection Time : %02lu.
 Str_Song_2:	.asciz "Song : "
 Str_File_Type_2:	.asciz " -> File Type : "
 Str_Receive_Song_finished_2:	.asciz "Receive Song finished"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Receive_Song_finished_2
 
 ptrs_978A25C0:
 	.long	Str_Connection_Type_2
@@ -7749,7 +7810,7 @@ Str_Connection_Time_02lu_02lu_02lu_02lu_02lu:	.asciz "Connection Time : %02lu.%0
 Str_Song:	.asciz "Song : "
 Str_File_Type:	.asciz " -> File Type : "
 Str_Receive_Song_finished:	.asciz "Receive Song finished"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Receive_Song_finished
 
 ptrs_978A2680:
 	.long	Str_Connection_Type
@@ -7781,7 +7842,7 @@ Str_ECP_Verbindung:	.asciz "ECP Verbindung"
 Str_PS2_Verbindung:	.asciz "PS2 Verbindung"
 Str_Nicht_Aktiv:	.asciz "Nicht Aktiv"
 Str_Aktiv:	.asciz "   Aktiv   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Aktiv
 
 ptrs_978A275C:
 	.long	Str_Keine_Verbindung
@@ -7797,7 +7858,7 @@ Str_ECP_Connection_F:	.asciz "ECP Connection(F)"
 Str_PS2_Connection_F:	.asciz "PS2 Connection(F)"
 Str_Not_Activ_F:	.asciz "Not Activ(F)"
 Str_Activ_F:	.asciz "  Activ(F)  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Activ_F
 
 ptrs_978A27D8:
 	.long	Str_No_Connection_F
@@ -7813,7 +7874,7 @@ Str_ECP_Connection_S:	.asciz "ECP Connection(S)"
 Str_PS2_Connection_S:	.asciz "PS2 Connection(S)"
 Str_Not_Activ_S:	.asciz "Not Activ(S)"
 Str_Activ_S:	.asciz "  Activ(S)  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Activ_S
 
 ptrs_978A2854:
 	.long	Str_No_Connection_S
@@ -7850,7 +7911,7 @@ Str_Int_received_3:	.asciz "Int received"
 Str_First_Receive_bad_3:	.asciz "First Receive bad"
 Str_Second_Receive_bad_3:	.asciz "Second Receive bad"
 Str_Reset_Kommunication_iO:	.asciz "Reset Kommunication iO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Reset_Kommunication_iO
 
 ptrs_978A29F4:
 	.long	Str_Testen_Sie_zuerst_den_Kommunikationsweg
@@ -7870,7 +7931,7 @@ Str_Int_received_2:	.asciz "Int received"
 Str_First_Receive_bad_2:	.asciz "First Receive bad"
 Str_Second_Receive_bad_2:	.asciz "Second Receive bad"
 Str_Reset_Communication_ok_F:	.asciz "Reset Communication ok(F)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Reset_Communication_ok_F
 
 ptrs_978A2AD0:
 	.long	Str_Test_first_Communication_Way_F
@@ -7890,7 +7951,7 @@ Str_Int_received:	.asciz "Int received"
 Str_First_Receive_bad:	.asciz "First Receive bad"
 Str_Second_Receive_bad:	.asciz "Second Receive bad"
 Str_Reset_Communication_ok_S:	.asciz "Reset Communication ok(S)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Reset_Communication_ok_S
 
 ptrs_978A2BAC:
 	.long	Str_Test_first_Communication_Way_S
@@ -7954,21 +8015,21 @@ data_978A2C64:
 data_978A2C68:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C68, 0x0A2C70
 Str_USPP:	.asciz "USPP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USPP
 Str_s_fAbortDataTransfer_TRUE:	.asciz "s_fAbortDataTransfer : TRUE"
 Str_s_fAbortDataTransfer_FALSE:	.asciz "s_fAbortDataTransfer : FALSE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_fAbortDataTransfer_FALSE
 Str_s_ulWantedSfx_lu:	.asciz "s_ulWantedSfx : %lu"
 Str_g_ReadToMuch_lu:	.asciz "g_ReadToMuch : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_g_ReadToMuch_lu
 Str_Direction_Recv_Data:	.asciz "Direction Recv Data"
 Str_Direction_Send_Data:	.asciz "Direction Send Data"
 Str_s_iPPStage_PPS_ENDTRANS:	.asciz "s_iPPStage : PPS_ENDTRANS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_iPPStage_PPS_ENDTRANS
 Str_s_iPPStage_PPS_INITIAL:	.asciz "s_iPPStage : PPS_INITIAL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_iPPStage_PPS_INITIAL
 Str_s_iPPStage_PPS_DEBUGINFO:	.asciz "s_iPPStage : PPS_DEBUGINFO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_iPPStage_PPS_DEBUGINFO
 Str_s_iPPStage_PPS_DATAACCESS:	.asciz "s_iPPStage : PPS_DATAACCESS"
 Str_s_iConnectionActiv_i:	.asciz "s_iConnectionActiv : %i"
 data_978A2D8C:
@@ -7976,7 +8037,7 @@ data_978A2D8C:
 data_978A2D8E:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2D8E, 0x0A2D90
 Str_CDIR:	.asciz "CDIR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CDIR
 Str_CURRENT_PANEL_4:	.asciz "CURRENT PANEL"
 Str_PANEL_MEMORY_4:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_SMF_4:	.asciz "SEQUENCER/SMF"
@@ -7990,7 +8051,7 @@ Str_HOME_PAGE_4:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES_4:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS_4:	.asciz "CUST0M LYRICS"
 Str_INFO_FILE_4:	.asciz "INFO FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INFO_FILE_4
 
 ptrs_978A2E34:
 	.long	Str_CURRENT_PANEL_4
@@ -8020,7 +8081,7 @@ Str_HOME_PAGE_3:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES_3:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS_3:	.asciz "CUST0M LYRICS"
 Str_INFO_FILE_3:	.asciz "INFO FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INFO_FILE_3
 
 ptrs_978A2F04:
 	.long	Str_CURRENT_PANEL_3
@@ -8050,7 +8111,7 @@ Str_HOME_PAGE_2:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES_2:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS_2:	.asciz "CUST0M LYRICS"
 Str_INFO_FILE_2:	.asciz "INFO FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INFO_FILE_2
 
 ptrs_978A2FD4:
 	.long	Str_CURRENT_PANEL_2
@@ -8080,7 +8141,7 @@ Str_HOME_PAGE:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS:	.asciz "CUST0M LYRICS"
 Str_INFO_FILE:	.asciz "INFO FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INFO_FILE
 
 ptrs_978A30A4:
 	.long	Str_CURRENT_PANEL
@@ -8105,7 +8166,7 @@ Str_SMF_5:	.asciz "SMF"
 Str_DEL_7:	.asciz "DEL"
 Str_3BK_4:	.asciz "3BK"
 Str_ALL_4:	.asciz "ALL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_4
 
 ptrs_978A30F8:
 	.long	Str_empty_442
@@ -8204,30 +8265,30 @@ data_978A3208:
 data_978A320A:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A320A, 0x0A320C
 Str_SSFX_2:	.asciz "SSFX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SSFX_2
 Str_DLCF_2:	.asciz "DLCF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DLCF_2
 Str_SLSF:	.asciz "SLSF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SLSF
 Str_SSFX:	.asciz "SSFX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SSFX
 Str_DSFX:	.asciz "DSFX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DSFX
 Str_DLCF:	.asciz "DLCF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DLCF
 Str_MWKS:	.asciz "MWKS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MWKS
 Str_02i_2:	.asciz "%02i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_02i_2
 Str_ClO:	.asciz "ClO"
 Str_02i:	.asciz "%02i: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_02i
 Str_empty_438:	.asciz "*"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_438
 Str_empty_437:	.asciz "*"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_437
 Str_empty_436:	.asciz "*"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_436
 Str_COPY_FD_TO_HDD_TECH_FORMAT:	.asciz "COPY FD TO HDD: TECH-FORMAT"
 Str_d2_Kopiere_FD_auf_HDD_Technics_Format:	.asciz "d2\x8A\x97Kopiere FD auf HDD: Technics-Format"
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT_2:	.asciz "\x842\x8A\x97COPY FD TO HDD: TECH-FORMAT"
@@ -8256,7 +8317,7 @@ Str_Failed_Bad_command_6:	.asciz "Failed : Bad command"
 Str_Failed_Song_save_aborted_6:	.asciz "Failed : Song save aborted"
 Str_Failed_Song_load_aborted_6:	.asciz "Failed : Song load aborted"
 Str_Failed_No_more_Directory_6:	.asciz "Failed : No more Directory"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Failed_No_more_Directory_6
 
 ptrs_978A33F0:
 	.long	Str_SAVE_FSB_OK_3
@@ -8298,7 +8359,7 @@ Str_Fehler_Falsche_Kommando_2:	.asciz "Fehler : Falsche Kommando"
 Str_Fehler_Song_sichern_schlecht_2:	.asciz "Fehler : Song sichern schlecht"
 Str_Fehler_Song_laden_schlecht_2:	.asciz "Fehler : Song laden schlecht"
 Str_Fehler_Kein_weiteres_Verzeichnis_2:	.asciz "Fehler : Kein weiteres Verzeichnis"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fehler_Kein_weiteres_Verzeichnis_2
 
 ptrs_978A3568:
 	.long	Str_FSB_sichern_OK_2
@@ -8340,7 +8401,7 @@ Str_Failed_Bad_command_5:	.asciz "Failed : Bad command"
 Str_Failed_Song_save_aborted_5:	.asciz "Failed : Song save aborted"
 Str_Failed_Song_load_aborted_5:	.asciz "Failed : Song load aborted"
 Str_Failed_No_more_Directory_5:	.asciz "Failed : No more Directory"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Failed_No_more_Directory_5
 
 ptrs_978A36A8:
 	.long	Str_SAVE_FSB_OK_2
@@ -8382,7 +8443,7 @@ Str_Failed_Bad_command_4:	.asciz "Failed : Bad command"
 Str_Failed_Song_save_aborted_4:	.asciz "Failed : Song save aborted"
 Str_Failed_Song_load_aborted_4:	.asciz "Failed : Song load aborted"
 Str_Failed_No_more_Directory_4:	.asciz "Failed : No more Directory"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Failed_No_more_Directory_4
 
 ptrs_978A37E8:
 	.long	Str_SAVE_FSB_OK
@@ -8414,23 +8475,23 @@ ptrs_978A3838:
 
 Str_s_5:	.asciz "%s"
 Str_OK_6:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_6
 Str_TTX_4:	.asciz ".TTX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TTX_4
 Str_rb_15:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_15
 Str_LSW:	.asciz ".LSW"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LSW
 Str_rb_14:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_14
 Str_COPY_FD_TO_HDD_SMF_5:	.asciz "COPY FD TO HDD SMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY_FD_TO_HDD_SMF_5
 Str_h8_COPY_FD_TO_HDD_SMF:	.asciz "h8\x8A\x97COPY FD TO HDD SMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_h8_COPY_FD_TO_HDD_SMF
 Str_8_COPY_FD_TO_HDD_SMF_2:	.asciz "\x808\x8A\x97COPY FD TO HDD SMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF_2
 Str_8_COPY_FD_TO_HDD_SMF:	.asciz "\x988\x8A\x97COPY FD TO HDD SMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF
 data_978A38C4:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A38C4, 0x0A38C8
 Str_Save_FSB_OK_3:	.asciz "Save FSB = OK"
@@ -8438,7 +8499,7 @@ Str_Save_Song_to_HD_OK_3:	.asciz "Save Song to HD = OK"
 Str_Load_Song_from_FD_OK_3:	.asciz "Load Song from FD = OK"
 Str_Copy_FD_to_HD_complet_successful_3:	.asciz "Copy FD to HD = complet & successful"
 data_978A3927:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_Copy_FD_to_HD_complet_successful_3
 data_978A3928:
 	.space	1, 0x00
 data_978A3929:
@@ -8520,7 +8581,7 @@ Str_Save_Song_to_HD_OK_2:	.asciz "Save Song to HD = OK"
 Str_Load_Song_from_FD_OK_2:	.asciz "Load Song from FD = OK"
 Str_Copy_FD_to_HD_complet_successful_2:	.asciz "Copy FD to HD = complet & successful"
 data_978A3BDB:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_Copy_FD_to_HD_complet_successful_2
 data_978A3BDC:
 	.space	1, 0x00
 data_978A3BDD:
@@ -8561,7 +8622,7 @@ Str_Save_Song_to_HD_OK:	.asciz "Save Song to HD = OK"
 Str_Load_Song_from_FD_OK:	.asciz "Load Song from FD = OK"
 Str_Copy_FD_to_HD_complet_successful:	.asciz "Copy FD to HD = complet & successful"
 data_978A3D1F:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_Copy_FD_to_HD_complet_successful
 data_978A3D20:
 	.space	1, 0x00
 data_978A3D21:
@@ -8609,25 +8670,27 @@ ptrs_978A3E14:
 
 Str_s_4:	.asciz "%s"
 Str_OK_5:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_5
 Str_empty_435:	.asciz "."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_435
 Str_TLX_4:	.asciz ".TLX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TLX_4
 Str_rb_13:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_13
 Str_TTX_3:	.asciz ".TTX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TTX_3
 Str_rb_12:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_12
 Str_TTX_2:	.asciz ".TTX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TTX_2
 Str_rb_11:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_11
 Str_SOPW:	.asciz "SOPW"
-	.align	4, 0xFF
-data_978A3E5C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3E5C, 0x0A3E68
+	.align	4, 0xFF	# pad after Str_SOPW
+
+KssAudioOutputProc_Table:	# 12 x u8, 2..255; read by KssAudioOutputProc : `movbu	(d0, a0), d1`; KssAudioOutputProc : `movbu	(d1, a0), d1` ...
+	tab_u8	5, 2, 2, 2, 2, 17, 17, 17, 17, 255, 255, 255
+
 Str_SEP_OUTPUT_PRESET_FOR_APC:	.asciz "SEP. OUTPUT PRESET FOR APC:"
 Str_STEREO_OUTPUT_1:	.asciz "--- STEREO OUTPUT 1 ---"
 Str_STEREO_OUTPUT_2:	.asciz "--- STEREO OUTPUT 2 ---"
@@ -8635,7 +8698,7 @@ Str_AUX_RETURN:	.asciz "AUX RETURN"
 Str_EXPRESSION_PEDAL_CONTROL:	.asciz "EXPRESSION PEDAL CONTROL"
 Str_PART_SELECT:	.asciz "PART SELECT"
 Str_FOR_SEQ:	.asciz "FOR SEQ."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3EED, 0x0A3EF1
+Str_ON_4:	.asciz "ON "
 Str_OFF:	.asciz "OFF"
 Str_01:	.asciz "01"
 Str_02:	.asciz "02"
@@ -8661,8 +8724,9 @@ Str_written:	.asciz "written"
 Str_not_written:	.asciz "not written"
 Str_1_2_DRUMS_BASS_STEREO_3_4_ALL_ACC_STEREO:	.asciz "1&2:DRUMS/BASS STEREO - 3&4:ALL ACC STEREO"
 Str_MONO_TEST:	.asciz "MONO TEST"
-data_978A3FCC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FCC, 0x0A3FD0
+
+KssAudioOutputProc_Table_2:	# 1 x u32, 2542419560..2542419560; read by KssAudioOutputProc : `mov	(d0, a0), a0`
+	tab_u32	2542419560
 data_978A3FD0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FD0, 0x0A3FD4
 data_978A3FD4:
@@ -8802,11 +8866,13 @@ ptrs_978A4188:
 	.long	data_978A4170
 	.long	data_978A4178
 	.long	data_978A4180
-data_978A41AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A41AC, 0x0A41C8
+
+func_97826A43_Table:	# 28 x u8, 0..255; read by func_97826A43 : `movbu	(a1), d0`
+	tab_u8	24, 176, 24, 158, 0, 176, 25, 158, 0, 176, 26, 158, 0, 176, 24, 135	# [0]
+	tab_u8	1, 176, 25, 135, 2, 176, 26, 135, 2, 255, 255, 255	# [16]
 
 Str_Sep1_08x_Sep2_08x_Left_08x_Right_08x:	.asciz "Sep1 : %08x Sep2 : %08x Left : %08x Right : % 08x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sep1_08x_Sep2_08x_Left_08x_Right_08x
 Str_a:	.asciz "a"
 Str_b:	.asciz "b"
 Str_c:	.asciz "c"
@@ -8883,16 +8949,16 @@ ptrs_978A4244:
 	.long	Str_9_2
 
 Str_empty_434:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_434
 Str_empty_433:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_433
 Str_i_i_3:	.asciz "%i-%i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_i_i_3
 Str_empty_432:	.asciz " - "
 Str_empty_431:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_431
 Str_empty_430:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_430
 Str_01i_s_2:	.asciz "%01i:%s"
 Str_02i_s_4:	.asciz "%02i:%s"
 Str_03i_s_4:	.asciz "%03i:%s"
@@ -8905,38 +8971,38 @@ data_978A43A0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A43A0, 0x0A43A4
 Str_03i_s_2:	.asciz "%03i:%s"
 Str_02i_s_s:	.asciz "%02i:%s%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_02i_s_s
 Str_01_99_Luftballons_Nena_x02_MMMMMMMMMMMMM:	.asciz "01:99 Luftballons Nena______x02:MMMMMMMMMMMMMMMMMMMMMMMMMM AS ALx03x04x05x06:Weine nicht kleine Eva MMMx07x08x09x10x11x12x13x14x15x16x17x18x19x20x21x22:KKKKKKKKKKKKKKKKKKKKKKKKKK AS ALx23x24x25x26x27x28x29x30x31x32"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_01_99_Luftballons_Nena_x02_MMMMMMMMMMMMM
 data_978A4490:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4490, 0x0A4494
 Str_PANIC_6:	.asciz "PANIC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANIC_6
 Str_PANIC_5:	.asciz "PANIC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANIC_5
 Str_02i_s_2:	.asciz "%02i:%s"
 Str_AL_2:	.asciz "AL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AL_2
 data_978A44B0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A44B0, 0x0A44B4
 Str_AS_2:	.asciz "AS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AS_2
 data_978A44B8:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A44B8, 0x0A44BC
 Str_AL:	.asciz "AL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AL
 Str_AS:	.asciz "AS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AS
 Str_s_s_3:	.asciz "%s:%s"
 Str_empty_429:	.asciz "---"
 Str_empty_428:	.asciz "--"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_428
 Str_003li_02li:	.asciz "%003li:%02li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_003li_02li
 Str_FLSR:	.asciz "FLSR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FLSR
 Str_NOTS:	.asciz "NOTS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NOTS
 Str_JUKE_BOX_12:	.asciz "JUKE BOX"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A44FD, 0x0A4504
 data_978A4504:
@@ -9142,77 +9208,83 @@ data_978A47E0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A47E0, 0x0A47E8
 data_978A47E8:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A47E8, 0x0A47F0
-data_978A47F0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47F0, 0x0A4868
+
+HamaAlphabeticFileListProc_Table:	# 60 x s16, -256..29545; read by HamaAlphabeticFileListProc : `movhu	(0x32, a0), d2`
+	tab_s16	260, 33, 259, 204, 12592, 16698, 28780, 24936, 25954, 26996, 21347, 29295	# [0]
+	tab_s16	25972, 19556, 29545, 2420, 12848, 12297, 2355, 13360, 12297, 2357, 13872, 12297	# [12]
+	tab_s16	2359, 14384, 12297, 2361, 12337, 12553, 2353, 12849, 12553, 2355, 13361, 12553	# [24]
+	tab_s16	2357, 13873, 12553, 2359, 14385, 12553, 2361, 12338, 12809, 2353, 12850, 12809	# [36]
+	tab_s16	2355, 13362, 12809, 2357, 13874, 12809, 2359, 14386, 12809, 2361, 12339, -256	# [48]
 data_978A4868:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4868, 0x0A486C
+
 Str_0_2:	.asciz "0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0_2
 Str_A_2:	.asciz "A"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_2
 Str_B:	.asciz "B"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_B
 Str_C_3:	.asciz "C"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_3
 Str_D:	.asciz "D"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_D
 Str_E_2:	.asciz "E"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_E_2
 Str_F:	.asciz "F"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_F
 Str_G:	.asciz "G"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_G
 Str_H:	.asciz "H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H
 Str_I:	.asciz "I"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_I
 Str_K:	.asciz "K"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_K
 Str_L:	.asciz "L"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_L
 Str_M:	.asciz "M"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_M
 Str_N:	.asciz "N"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_N
 Str_O:	.asciz "O"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_O
 Str_P:	.asciz "P"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P
 Str_R_2:	.asciz "R"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_R_2
 Str_S_2:	.asciz "S"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_2
 Str_T_2:	.asciz "T"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_T_2
 Str_U:	.asciz "U"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_U
 Str_V:	.asciz "V"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_V
 Str_W:	.asciz "W"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_W
 Str_X_2:	.asciz "X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_X_2
 Str_Z:	.asciz "Z"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Z
 Str_empty_424:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_424
 Str_empty_423:	.asciz "                          "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_423
 Str_Dir_003li_Nr_02li_s:	.asciz " Dir.%003li  Nr.%02li     %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dir_003li_Nr_02li_s
 Str_li_Songs:	.asciz " %li Songs.--------------------------------------"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_li_Songs
 Str_s:	.asciz "%s "
 Str_empty_422:	.asciz "                                      "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_422
 Str_empty_421:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_421
 Str_empty_420:	.asciz "          "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_420
 Str_003i_02i:	.asciz "%003i%02i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_003i_02i
 Str_01_SelectList_max16_02_03_04_05_06_07_08:	.asciz " 01:SelectList max16\x09 02:\x09 03\x09 04\x09 05\x09 06\x09 07\x09 08\x09 09\x09 10\x09 11:Evergreens fast1\x09 12\x09 13\x09 14\x09 15\x09 16\x09 17\x0918\x0919\x0920\x0921\x0922\x0923\x0924\x0925\x0926\x0927\x0928\x0929\x0930"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_01_SelectList_max16_02_03_04_05_06_07_08
 data_978A4A18:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4A18, 0x0A4A1C
 Str_03i_s:	.asciz "%03i:%s"
@@ -9220,60 +9292,60 @@ Str_01_Song_Namen_with_max_26_ch_02_03_04_05:	.asciz " 01:Song Namen with max. 2
 data_978A4ABC:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4ABC, 0x0A4AC0
 Str_03i_2:	.asciz "%03i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_03i_2
 Str_02i_s:	.asciz "%02i:%s"
 Str_empty_419:	.asciz "                  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_419
 Str_03i:	.asciz "%03i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_03i
 Str_empty_418:	.asciz "       "
 Str_empty_417:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_417
 Str_iCYL_iHEAD_iSEC_T:	.asciz "%iCYL %iHEAD %iSEC/T"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_iCYL_iHEAD_iSEC_T
 Str_No_Custom_Lyrics_loaded:	.asciz "No Custom Lyrics loaded"
 Str_empty_416:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_416
 Str_empty_415:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_415
 Str_empty_414:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_414
 Str_empty_413:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_413
 Str_empty_412:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_412
 Str_empty_411:	.asciz "                                        "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_411
 Str_empty_410:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_410
 Str_03i_i_2:	.asciz "%03i - %i "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_03i_i_2
 Str_MID_3:	.asciz "MID"
 Str_Error_in_Lyricsfile_Error_No_i_i:	.asciz "Error in Lyricsfile! Error No %i.%i"
 Str_empty_409:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_409
 Str_empty_408:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_408
 Str_empty_407:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_407
 Str_empty_406:	.asciz " - "
 Str_empty_405:	.asciz " / "
 Str_i_i_2:	.asciz " %i/%i "
 Str_info_3:	.asciz "info:"
 Str_info_2:	.asciz "info:"
 Str_info:	.asciz "info:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_info
 Str_No_Copyright_Info:	.asciz "No Copyright Info"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Copyright_Info
 Str_No_Song_Title:	.asciz "No Song Title"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Song_Title
 Str_i_i:	.asciz " %i/%i "
 Str_03i_i:	.asciz "%03i - %i "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_03i_i
 Str_empty_404:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_404
 Str_empty_403:	.asciz " "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_403
 data_978A4C10:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4C10, 0x0A4C14
 data_978A4C14:
@@ -9285,20 +9357,20 @@ Str_empty_401:	.asciz "                           "
 Str_mid:	.asciz "mid"
 Str_empty_400:	.asciz "   "
 Str_empty_399:	.asciz "                                                 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_399
 Str_s_s_2:	.asciz "%s %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_s_2
 Str_s_s:	.asciz "%s %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_s
 Str_TLX_3:	.asciz ".TLX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TLX_3
 Str_empty_398:	.asciz " ->"
 Str_TTX:	.asciz ".TTX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TTX
 Str_MID_2:	.asciz ".MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID_2
 Str_XLT:	.asciz "XLT."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_XLT
 Str_PLEASE_WAIT_2:	.asciz "PLEASE WAIT!............"
 Str_BITTE_WARTEN:	.asciz "BITTE WARTEN!............."
 Str_VEUILLEZ_PATIENTER:	.asciz "VEUILLEZ PATIENTER!..................."
@@ -9313,8 +9385,9 @@ ptrs_978A4D80:
 	.long	Str_POR_FAVOR_ESPERE
 	.long	Str_PLEASE_WAIT
 	.long	Str_SILAHKAN_TUNGGU
-data_978A4D98:
-	.space	16, 0xFF
+
+func_978339B0_Table:	# 16 x u8, 255..255; read by func_978339B0_entry : `movbu	(a1), d0`
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 
 Str_CURRENT_PANEL_9:	.asciz "CURRENT PANEL"
 Str_PANEL_MEMORY_9:	.asciz "PANEL MEMORY"
@@ -9330,14 +9403,19 @@ Str_CUSTOM_STYLES_5:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_5:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_7:	.asciz "CUSTOM LYRICS"
 Str_INFO_FILE_9:	.asciz "INFO FILE"
-data_978A4E47:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4E47, 0x0A4E80
+
+func_97833A24_Table:	# 57 x u8, 3..255; read by func_97833A24 : `movbu	(a1), d0`
+	tab_u8	168, 77, 138, 151, 182, 77, 138, 151, 195, 77, 138, 151, 205, 77, 138, 151	# [0]
+	tab_u8	214, 77, 138, 151, 227, 77, 138, 151, 242, 77, 138, 151, 249, 77, 138, 151	# [16]
+	tab_u8	3, 78, 138, 151, 13, 78, 138, 151, 23, 78, 138, 151, 37, 78, 138, 151	# [32]
+	tab_u8	47, 78, 138, 151, 61, 78, 138, 151, 255	# [48]
+
 Str_empty_397:	.asciz "                |"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_397
 Str_No_Entry:	.asciz "||||||| - No Entry - |||||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Entry
 Str_empty_396:	.asciz "|"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_396
 Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S:	.asciz "<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>NEWS:</FONT><BR>From now on you will find the MIDI2TLX converter tool and some samples with CUSTOM LYRICS on the update disk.<BR>Copy the shorten samples with COPY FD TO HDD to the hard disk drive. Afterwards if you load such a Song, automatically the CUSTOM LYRICS page will appear.<BR>"
 Str_You_can_use_the_same_disk_now_also_to_in:	.asciz "You can use the same disk now also to install the MIDI2TLX convert on your (Windows) computer.<BR>With inserted disk press START/Execute and type A:setup and follow the installation procedure.<BR>Further information's you will find on our Web-Page or later on the Help-Workshop.<H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>"
 Str_Since_the_actual_lyrics_function_is_very:	.asciz "Since the actual lyrics function is very limited, SX6 is capable of offering a separate file (*.TLX) for better handling and visibility. If your TLX file is Lyrics plus chord sysmbols, we have included a large white field for these harmonic details. Below the Lyrics box there is also an APC CHORDS box. This box shows you the chord symbols if your music was recorded with APC.<BR>"
@@ -9467,23 +9545,32 @@ Str_FONT_color_red_Would_you_like_to_store_y_3:	.asciz "<FONT color=red>Would yo
 Str_With_the_new_parameter_SAVE_OPTION_MODE_3:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you dit not checked the file option box!<BR>"
 Str_BR_There_is_an_other_new_parameter_FONT_2:	.asciz "<BR>There is an other new parameter: <FONT color=red>- KN6000 AfterLoadPage -.</FONT><BR>When you normaly load a Song/Title including a sequencer, the sequencer main page will appear. Many musicians complaind allredy with our previous products about that. We than changed and set allways to the home page.<BR>"
 Str_With_the_version_1_0_on_HD_SX6_you_can_n_3:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_With_the_version_1_0_on_HD_SX6_you_can_n_3
 Str_0123456789_2:	.asciz "0123456789"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0123456789_2
 Str_ABCDEF:	.asciz "ABCDEF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ABCDEF
 Str_abcdef:	.asciz "abcdef"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_abcdef
 Str_0123456789:	.asciz "0123456789"
-	.align	4, 0xFF
-data_978AECAC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AECAC, 0x0AED2C
+	.align	4, 0xFF	# pad after Str_0123456789
+
+func_97833E69_Table:	# 128 x u8, 0..255; read by func_97833E69_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 192, 192, 192, 0	# [0]
+	tab_u8	248, 0, 0, 0, 128, 128, 128, 0, 255, 0, 0, 0, 255, 255, 255, 0	# [16]
+	tab_u8	1, 0, 0, 0, 0, 0, 128, 0, 249, 0, 0, 0, 0, 0, 255, 0	# [32]
+	tab_u8	5, 0, 0, 0, 128, 0, 128, 0, 253, 0, 0, 0, 255, 0, 255, 0	# [48]
+	tab_u8	2, 0, 0, 0, 0, 128, 0, 0, 250, 0, 0, 0, 0, 255, 0, 0	# [64]
+	tab_u8	3, 0, 0, 0, 0, 128, 128, 0, 251, 0, 0, 0, 0, 255, 255, 0	# [80]
+	tab_u8	4, 0, 0, 0, 128, 0, 0, 0, 252, 0, 0, 0, 255, 0, 0, 0	# [96]
+	tab_u8	6, 0, 0, 0, 128, 128, 0, 0, 254, 0, 0, 0, 255, 255, 0, 0	# [112]
+
 Str_black:	.asciz "black"
 Str_silver:	.asciz "silver"
 Str_gray:	.asciz "gray"
 Str_white:	.asciz "white"
 Str_maroon:	.asciz "maroon"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AED4B, 0x0AED4F
+Str_red:	.asciz "red"
 Str_purple:	.asciz "purple"
 Str_fuchsia:	.asciz "fuchsia"
 Str_green:	.asciz "green"
@@ -9494,8 +9581,18 @@ Str_navy:	.asciz "navy"
 Str_blue:	.asciz "blue"
 Str_teal:	.asciz "teal"
 Str_aqua:	.asciz "aqua"
-data_978AED8A:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AED8A, 0x0AEE0C
+
+func_97833F31_Table:	# 130 x u8, 0..255; read by func_97833F31_entry : `movbu	(a1), d0`
+	tab_u8	44, 237, 138, 151, 0, 0, 0, 0, 50, 237, 138, 151, 7, 0, 0, 0	# [0]
+	tab_u8	57, 237, 138, 151, 248, 0, 0, 0, 62, 237, 138, 151, 255, 0, 0, 0	# [16]
+	tab_u8	68, 237, 138, 151, 1, 0, 0, 0, 75, 237, 138, 151, 249, 0, 0, 0	# [32]
+	tab_u8	79, 237, 138, 151, 5, 0, 0, 0, 86, 237, 138, 151, 253, 0, 0, 0	# [48]
+	tab_u8	94, 237, 138, 151, 2, 0, 0, 0, 100, 237, 138, 151, 250, 0, 0, 0	# [64]
+	tab_u8	105, 237, 138, 151, 3, 0, 0, 0, 111, 237, 138, 151, 251, 0, 0, 0	# [80]
+	tab_u8	118, 237, 138, 151, 4, 0, 0, 0, 123, 237, 138, 151, 252, 0, 0, 0	# [96]
+	tab_u8	128, 237, 138, 151, 6, 0, 0, 0, 133, 237, 138, 151, 254, 0, 0, 0	# [112]
+	tab_u8	255, 255	# [128]
+
 Str_sp:	.asciz "sp"
 Str_excl:	.asciz "excl"
 Str_quot:	.asciz "quot"
@@ -9625,24 +9722,28 @@ Str_uuml:	.asciz "uuml"
 Str_yacute:	.asciz "yacute"
 Str_thorn:	.asciz "thorn"
 Str_yuml:	.asciz "yuml"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF101, 0x0AF104
+Str_text:	.asciz ";"
+	.align	4, 0xFF	# pad after Str_text
 Str_color:	.asciz "color"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_color
 Str_color_i:	.asciz "color %i"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_color_i
 Str_size:	.asciz "size"
-	.align	4, 0xFF
-data_978AF120:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF120, 0x0AF134
+	.align	4, 0xFF	# pad after Str_size
+
+func_978343AC_Table:	# 20 x u8, 0..10; read by func_978343AC : `movbu	(a1), d0`
+	tab_u8	3, 0, 0, 0, 5, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0	# [0]
+	tab_u8	10, 0, 0, 0	# [16]
+
 Str_Value_for_attribute_size_is_invalid:	.asciz "Value for attribute size is invalid"
 Str_FONT:	.asciz "FONT"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF15D, 0x0AF178
 Str_Didnt_found_tagname_s_in_hashtable:	.asciz "Didnt found tagname \"%s\" in hashtable"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Didnt_found_tagname_s_in_hashtable
 Str_Empty_elements_are_not_allowed_to_have_e:	.asciz "Empty elements are not allowed to have endtag"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Empty_elements_are_not_allowed_to_have_e
 Str_Belonging_tag_not_found_stack_empty:	.asciz "Belonging tag not found (stack empty)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Belonging_tag_not_found_stack_empty
 Str_Belonging_tag_not_found:	.asciz "Belonging tag not found"
 data_978AF210:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF210, 0x0AF218
@@ -9654,7 +9755,7 @@ data_978AF221:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF221, 0x0AF22C
 Str_x:	.asciz "#x"
 Str_X:	.asciz "#X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_X
 data_978AF234:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF234, 0x0AF240
 Str_Invalid_dec_character_reference:	.asciz "Invalid dec character reference"
@@ -9666,9 +9767,9 @@ data_978AF28C:
 data_978AF28D:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF28D, 0x0AF298
 Str_Invalid_entity_character_reference:	.asciz "Invalid entity character reference"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Invalid_entity_character_reference
 Str_supposed:	.asciz " '<' supposed "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_supposed
 data_978AF2CC:
 	.space	1, 0x00
 data_978AF2CD:
@@ -9685,8 +9786,9 @@ Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_2:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWX
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
 data_978AF3E0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3E0, 0x0AF3E8
-data_978AF3E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3E8, 0x0AF3EC
+
+func_97834BA2_Table:	# 4 x u8, 0..255; read by func_97834BA2_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 255, 255
 data_978AF3EC:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3EC, 0x0AF3F4
 data_978AF3F4:
@@ -9701,17 +9803,20 @@ data_978AF40C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF40C, 0x0AF410
 data_978AF410:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF410, 0x0AF418
+
 Str_Hallo_FONT_face_Arial_size_3_color_80706:	.asciz "Hallo <FONT face=\"Arial\" size=3 color=\"#807060\"> Senorflo </FONT> Bye Bye "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Hallo_FONT_face_Arial_size_3_color_80706
 data_978AF464:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF464, 0x0AF468
 Str_Parsed_Tag_s_i:	.asciz "Parsed Tag:\"%s\" ,%i"
 Str_Attribute_i_is_s_with_value_s_i_i:	.asciz "Attribute %i is \"%s\" with value \"%s\",%i,%i"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF4A7, 0x0AF4AA
 Str_TOO_MANY_LINES:	.asciz "!!!TOO MANY LINES!!!"
-	.align	4, 0xFF
-data_978AF4C0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF4C0, 0x0AF4D0
+	.align	4, 0xFF	# pad after Str_TOO_MANY_LINES
+
+func_978355D3_Table:	# 16 x u8, 0..3; read by func_978355D3 : `movbu	(a1), d0`
+	tab_u8	3, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0
+
 Str_BASICS_11:	.asciz "BASICS"
 Str_JUKE_BOX_13:	.asciz "JUKE BOX"
 Str_LOAD_BY_10:	.asciz "LOAD BY"
@@ -9721,7 +9826,7 @@ Str_ALPHAB_10:	.asciz "ALPHAB."
 Str_LIST_10:	.asciz "LIST"
 Str_S_OUTPUT_10:	.asciz "S-OUTPUT"
 Str_MIXER_10:	.asciz "MIXER"
-Str_C_L_S_12:	.asciz "C.L.S."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF510, 0x0AF517
 Str_SETUP_10:	.asciz "SETUP &"
 Str_TOOLS_10:	.asciz "TOOLS"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF525, 0x0AF558
@@ -9750,344 +9855,344 @@ data_978AF5A8:
 data_978AF5B0:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF5B0, 0x0AF5B8
 Str_BASICS_10:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_10
 Str_JUKE_BOX_9:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_9
 Str_LOAD_BY_9:	.asciz "LOAD BY"
 Str_NUMBER_9:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_9
 Str_NEWS_9:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_9
 Str_ALPHAB_9:	.asciz "ALPHAB."
 Str_LIST_9:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_9
 Str_S_OUTPUT_9:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_9
 Str_MIXER_9:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_9
 Str_C_L_S_9:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_9
 Str_SETUP_9:	.asciz "SETUP &"
 Str_TOOLS_9:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_9
 Str_BASICS_9:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_9
 Str_JUKE_BOX_8:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_8
 Str_LOAD_BY_8:	.asciz "LOAD BY"
 Str_NUMBER_8:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_8
 Str_NEWS_8:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_8
 Str_ALPHAB_8:	.asciz "ALPHAB."
 Str_LIST_8:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_8
 Str_S_OUTPUT_8:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_8
 Str_MIXER_8:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_8
 Str_C_L_S_8:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_8
 Str_SETUP_8:	.asciz "SETUP &"
 Str_TOOLS_8:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_8
 Str_BASICS_8:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_8
 Str_BASICS_7:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_7
 Str_JUKE_BOX_7:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_7
 Str_LOAD_BY_7:	.asciz "LOAD BY"
 Str_NUMBER_7:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_7
 Str_NEWS_7:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_7
 Str_ALPHAB_7:	.asciz "ALPHAB."
 Str_LIST_7:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_7
 Str_S_OUTPUT_7:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_7
 Str_MIXER_7:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_7
 Str_C_L_S_7:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_7
 Str_SETUP_7:	.asciz "SETUP &"
 Str_TOOLS_7:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_7
 Str_BASICS_6:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_6
 Str_JUKE_BOX_6:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_6
 Str_LOAD_BY_6:	.asciz "LOAD BY"
 Str_NUMBER_6:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_6
 Str_NEWS_6:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_6
 Str_ALPHAB_6:	.asciz "ALPHAB."
 Str_LIST_6:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_6
 Str_S_OUTPUT_6:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_6
 Str_MIXER_6:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_6
 Str_C_L_S_6:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_6
 Str_SETUP_6:	.asciz "SETUP &"
 Str_TOOLS_6:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_6
 Str_BASICS_5:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_5
 Str_JUKE_BOX_5:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_5
 Str_LOAD_BY_5:	.asciz "LOAD BY"
 Str_NUMBER_5:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_5
 Str_NEWS_5:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_5
 Str_ALPHAB_5:	.asciz "ALPHAB."
 Str_LIST_5:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_5
 Str_S_OUTPUT_5:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_5
 Str_MIXER_5:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_5
 Str_C_L_S_5:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_5
 Str_SETUP_5:	.asciz "SETUP &"
 Str_TOOLS_5:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_5
 Str_BASICS_4:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_4
 Str_JUKE_BOX_4:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_4
 Str_LOAD_BY_4:	.asciz "LOAD BY"
 Str_NUMBER_4:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_4
 Str_NEWS_4:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_4
 Str_ALPHAB_4:	.asciz "ALPHAB."
 Str_LIST_4:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_4
 Str_S_OUTPUT_4:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_4
 Str_MIXER_4:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_4
 Str_C_L_S_4:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_4
 Str_SETUP_4:	.asciz "SETUP &"
 Str_TOOLS_4:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_4
 Str_BASICS_3:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_3
 Str_JUKE_BOX_3:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_3
 Str_LOAD_BY_3:	.asciz "LOAD BY"
 Str_NUMBER_3:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_3
 Str_NEWS_3:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_3
 Str_ALPHAB_3:	.asciz "ALPHAB."
 Str_LIST_3:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_3
 Str_S_OUTPUT_3:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_3
 Str_MIXER_3:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_3
 Str_C_L_S_3:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_3
 Str_SETUP_3:	.asciz "SETUP &"
 Str_TOOLS_3:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_3
 Str_BASICS_2:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS_2
 Str_JUKE_BOX_2:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX_2
 Str_LOAD_BY_2:	.asciz "LOAD BY"
 Str_NUMBER_2:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER_2
 Str_NEWS_2:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS_2
 Str_ALPHAB_2:	.asciz "ALPHAB."
 Str_LIST_2:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST_2
 Str_S_OUTPUT_2:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT_2
 Str_MIXER_2:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_2
 Str_C_L_S_2:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S_2
 Str_SETUP_2:	.asciz "SETUP &"
 Str_TOOLS_2:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS_2
 Str_BASICS:	.asciz "BASICS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BASICS
 Str_JUKE_BOX:	.asciz "JUKE BOX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_JUKE_BOX
 Str_LOAD_BY:	.asciz "LOAD BY"
 Str_NUMBER:	.asciz "NUMBER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NUMBER
 Str_NEWS:	.asciz "NEWS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEWS
 Str_ALPHAB:	.asciz "ALPHAB."
 Str_LIST:	.asciz "LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LIST
 Str_S_OUTPUT:	.asciz "S-OUTPUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_S_OUTPUT
 Str_MIXER:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER
 Str_C_L_S:	.asciz "C.L.S."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_L_S
 Str_SETUP:	.asciz "SETUP &"
 Str_TOOLS:	.asciz "TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOOLS
 Str_oops1_lu_lu:	.asciz "oops1 : %lu - %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_oops1_lu_lu
 Str_Ooooops_li:	.asciz "Ooooops!!!!! : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Ooooops_li
 Str_Name_is_s:	.asciz "Name is %s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Name_is_s
 Str_SendPPort:	.asciz "SendPPort"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SendPPort
 Str_Fault_2_lTimeOut_li_lu:	.asciz "Fault 2 lTimeOut : %li - %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fault_2_lTimeOut_li_lu
 Str_ECR_2_2X_DCR_2_2X_STS_2_2X:	.asciz "ECR : %2.2X - DCR : %2.2X - STS : %2.2X"
 Str_12345678_SXU_2:	.asciz "12345678.SXU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXU_2
 Str_12345678_SXD_2:	.asciz "12345678.SXD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXD_2
 Str_12345678_SXF_2:	.asciz "12345678.SXF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXF_2
 Str_12345678_SXC_2:	.asciz "12345678.SXC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXC_2
 Str_12345678_SXY_2:	.asciz "12345678.SXY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXY_2
 Str_12345678_SXZ_2:	.asciz "12345678.SXZ"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXZ_2
 Str_12345678_SXL_2:	.asciz "12345678.SXL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXL_2
 Str_12345678_X:	.asciz "12345678.X__"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_X
 Str_12345678_SXB:	.asciz "12345678.SXB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXB
 Str_12345678_SXI:	.asciz "12345678.SXI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXI
 Str_12345678_5:	.asciz "12345678"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_5
 Str_002_li:	.asciz "002 : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_002_li
 Str_12345678_SXU:	.asciz "12345678.SXU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXU
 Str_12345678_SXD:	.asciz "12345678.SXD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXD
 Str_12345678_SXF:	.asciz "12345678.SXF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXF
 Str_12345678_SXC:	.asciz "12345678.SXC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXC
 Str_12345678_SXY:	.asciz "12345678.SXY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXY
 Str_12345678_SXZ:	.asciz "12345678.SXZ"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXZ
 Str_12345678_SXL:	.asciz "12345678.SXL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_SXL
 Str_12345678_4:	.asciz "12345678"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_4
 Str_001_li:	.asciz "001 : %li"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_001_li
 Str_Not_all_Files_Should_not_happen:	.asciz "Not all Files Should not happen"
 Str_Bad_save_Buffer:	.asciz "Bad save Buffer"
 Str_Bad_receive_Buffer:	.asciz "Bad receive Buffer"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_receive_Buffer
 Str_Bad_receive_header:	.asciz "Bad receive header"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_receive_header
 Str_Bad_send_header:	.asciz "Bad send header"
 Str_12345678_3:	.asciz "12345678"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_3
 Str_12345678_2:	.asciz "12345678"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678_2
 Str_12345678:	.asciz "12345678"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_12345678
 Str_Save_Att_File_Nr_lu_Action_lu_Size_lu_Of:	.asciz "Save Att: File Nr: %lu Action: %lu Size: %lu Offset: %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Save_Att_File_Nr_lu_Action_lu_Size_lu_Of
 Str_TMPNAME_DAT_2:	.asciz "TMPNAME.DAT"
 Str_TMPNAME_DAT:	.asciz "TMPNAME.DAT"
 Str_SMFDATA1_MID:	.asciz "SMFDATA1.MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMFDATA1_MID
 Str_TLX_2:	.asciz ".TLX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TLX_2
 Str_rb_10:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_10
 Str_Bad_Id_08X_08X_2:	.asciz "Bad Id : %08X - %08X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_08X_08X_2
 Str_Bad_Size_lu:	.asciz "Bad Size : %lu"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Size_lu
 Str_TLX:	.asciz ".TLX"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TLX
 Str_Bad_Id_08X_08X:	.asciz "Bad Id : %08X - %08X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_08X_08X
 Str_wb_12:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_12
 Str_KIF_2:	.asciz ".KIF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KIF_2
 Str_wb_11:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_11
 Str_wb_10:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_10
 Str_wb_9:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_9
 Str_wb_8:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_8
 Str_wb_7:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_7
 Str_wb_6:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_6
 Str_wb_5:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_5
 Str_wb_4:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_4
 Str_wb_3:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_3
 Str_wb_2:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_2
 Str_wb:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb
 Str_KIF:	.asciz ".KIF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KIF
 Str_rb_9:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_9
 Str_Bad_Id_8:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_8
 Str_rb_8:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_8
 Str_Bad_Id_7:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_7
 Str_rb_7:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_7
 Str_Bad_Id_6:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_6
 Str_rb_6:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_6
 Str_Bad_Id_5:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_5
 Str_rb_5:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_5
 Str_Bad_Id_4:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_4
 Str_rb_4:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_4
 Str_Bad_Id_3:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_3
 Str_rb_3:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_3
 Str_Bad_Id_2:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id_2
 Str_rb_2:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_2
 Str_Bad_Id:	.asciz "Bad Id"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bad_Id
 Str_MID:	.asciz ".MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID
 Str_rb:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb
 
 ptrs_978AFD20:
 	.long	Str_C_2
@@ -10104,7 +10209,8 @@ ptrs_978AFD48:
 	.long	Str_empty_395
 	.long	data_9783E56C
 	.long	data_9783E56D
-	.space	12, 0x00
+	.long	0
+	.space	8, 0x00
 data_978AFD64:
 	.space	4, 0x00
 data_978AFD68:
@@ -10194,7 +10300,7 @@ Module08_Classes:
 	.space	4824, 0x00
 
 Str_7_2:	.asciz "7"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7_2
 
 # 999 objects of block V_HDD_MAIN_MENU; object <name> is index <name>_ix, id <name>_id = (0x77 << 16) | <name>_ix
 V_HDD_MAIN_MENU_Viewables:
@@ -13007,7 +13113,7 @@ data_97910C2C:
 	.space	4, 0x00
 
 Str_empty_394:	.asciz "                              "
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_empty_394
 data_97910C50:
 	.space	2, 0x00
 data_97910C52:
@@ -13095,7 +13201,7 @@ data_97910CDC:
 data_97910CDD:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B61, 0x0B4B64
 Str_empty_393:	.asciz "                "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_393
 data_97910CF4:
 	.space	8, 0x00
 Str_empty_392:	.asciz "                           "
@@ -13151,7 +13257,8 @@ ptrs_97910E1C:
 	.long	Str_Unfortunately_the_description_of_the_DEL
 	.long	Str_Because_this_is_also_a_direct_HDD_access
 	.long	Str_BR_FONT_color_red_Attention_FONT_CAUTION
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4CBC, 0x0B5194
+	.long	0
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4CC0, 0x0B5194
 	.space	172, 0x00
 
 names_979113BC:
@@ -13287,8 +13394,13 @@ names_979113BC:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B5648, 0x0B5650
 data_979117CC:
 	.space	4, 0x00
-data_979117D0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5654, 0x0B56DC
+
+func_97834719_Table:	# 34 x u32, 0..2542465398; read by func_97834719_entry : `mov	(d0, a0), a0`; func_97834719_entry : `mov	(d0, a0), a1`
+	tab_u32	2542465368, 3, 2541962156, 2542465373, 1, 2541962142, 2542465375, 2	# [0]
+	tab_u32	2541962114, 2542465378, 0, 2541961865, 2542465381, 0, 2541961865, 2542465384	# [8]
+	tab_u32	0, 2541961865, 2542465387, 0, 2541961865, 2542465390, 0, 2541961865	# [16]
+	tab_u32	2542465393, 0, 2541961865, 2542465396, 3, 2541961861, 2542465398, 0	# [24]
+	tab_u32	0, 0	# [32]
 data_97911858:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B56DC, 0x0B56E0
 data_9791185C:
@@ -14027,7 +14139,7 @@ Module08_ResEvents:
 	.space	4, 0x00
 
 Str_empty_384:	.asciz "/"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_384
 
 # 100 ResMethod names; an resmethod id is (0x1a8 << 16) | its index
 Module08_ResMethods:
@@ -14134,7 +14246,7 @@ Module08_ResMethods:
 	.space	4, 0x00
 
 Str_d:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d
 
 # 52 Function procedures; a function id is (0x108 << 16) | its index (the names are the parallel table at slot 0x308)
 Module08_Functions:
@@ -14299,18 +14411,25 @@ data_979125AC:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B6430, 0x0B6434
 data_979125B0:
 	.space	4, 0xFF
-data_979125B4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6438, 0x0B644A
-data_979125C6:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B644A, 0x0B646A
-data_979125E6:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B646A, 0x0B646E
-data_979125EA:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B646E, 0x0B6491
-data_9791260D:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6491, 0x0B64B0
-data_9791262C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B64B0, 0x0B64D0
+
+func_97837D7C_Table:	# 18 x s8, 0..83; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	18, 1, 16, 0, 0, 0, 0, 8, 83, 75, 0, 16, 0, 1, 1, 2	# [0]
+	tab_s8	3, 1	# [16]
+func_97837D7C_Table_2:	# 32 x s8, -127..64; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	9, 2, 32, 0, 1, 2, 0, 64, 37, 9, 4, 0, 0, 2, 0, 0	# [0]
+	tab_s8	0, 0, 7, 5, -127, 2, 64, 0, 0, 7, 5, 1, 2, 64, 0, 0	# [16]
+func_97837D7C_Table_3:	# 4 x s8, 3..9; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	4, 3, 9, 4
+func_97837D7C_Table_4:	# 35 x s8, 0..89; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	35, 3, 75, 0, 69, 0, 89, 0, 32, 0, 83, 0, 79, 0, 70, 0	# [0]
+	tab_s8	84, 0, 32, 0, 83, 0, 69, 0, 82, 0, 86, 0, 73, 0, 67, 0	# [16]
+	tab_s8	69, 0, 0	# [32]
+func_97837D7C_Table_5:	# 31 x s8, 0..118; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	31, 3, 83, 0, 88, 0, 54, 0, 32, 0, 85, 0, 83, 0, 66, 0	# [0]
+	tab_s8	32, 0, 68, 0, 101, 0, 118, 0, 105, 0, 99, 0, 101, 0, 0	# [16]
+func_97837D7C_Table_6:	# 32 x s8, -1..88; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
+	tab_s8	31, 3, 83, 0, 88, 0, 54, 0, 45, 0, 49, 0, 50, 0, 51, 0	# [0]
+	tab_s8	52, 0, 45, 0, 53, 0, 54, 0, 55, 0, 56, 0, 57, 0, 0, -1	# [16]
 data_9791264C:
 	.space	4, 0x00
 data_97912650:
@@ -14323,17 +14442,19 @@ data_9791265C:
 	.space	4, 0x00
 data_97912660:
 	.space	4, 0x00
-data_97912664:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B64E8, 0x0B6508
-data_97912684:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6508, 0x0B6528
-data_979126A4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6528, 0x0B6530
-data_979126AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6530, 0x0B6538
+func_97839FA8_Table:	# 16 x u16, 1..32768; read by func_97839FA8 : `movhu	(d0, a0), d0`; func_97839FF6 : `movhu	(d0, a0), d2`
+	tab_u16	1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048	# [0]
+	tab_u16	4096, 8192, 16384, 32768	# [12]
+func_97839FA8_Table_2:	# 16 x u16, 32767..65534; read by func_97839FA8 : `movhu	(d0, a1), d2`
+	tab_u16	65534, 65533, 65531, 65527, 65519, 65503, 65471, 65407, 65279, 65023, 64511, 63487	# [0]
+	tab_u16	61439, 57343, 49151, 32767	# [12]
+func_9783A02E_Table:	# 8 x u8, 1..128; read by func_9783A02E : `movbu	(d0, a0), d0`; func_9783A073_entry : `movbu	(d0, a0), d2`
+	tab_u8	1, 2, 4, 8, 16, 32, 64, 128
+func_9783A02E_Table_2:	# 8 x u8, 127..254; read by func_9783A02E : `movbu	(d0, a0), d0`
+	tab_u8	254, 253, 251, 247, 239, 223, 191, 127
 data_979126B4:
 	.space	4, 0x00
 
 Str_This_is_Test_data_for_initial:	.asciz "This is Test data for initial"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_This_is_Test_data_for_initial
 .mnbase 0x97800000
