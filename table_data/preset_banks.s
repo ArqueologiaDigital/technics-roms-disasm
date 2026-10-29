@@ -105,97 +105,97 @@ SectionDirectory_Table:
 ; entry 0, 120x95: accordion picture, grey bellows on green ("accger16")
 ; == program ROM Bitmap_Accger16 (v10 0xE892FE)
 ; SectionInfo_Sec00 returns (base, 120, 95)
-SectionBank00_AccordionGer16:	.incbin "../v10/maincpu/images/BitmapAccger16.bin"
+SectionBank00_AccordionGer16:	.incbin "../v10/maincpu/images/BitmapAccger16.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 1, 120x95: the same accordion recoloured orange ("accita16"): 3,280
 ; of entry 0's 3,981 index-0xF8 pixels read 0x0A here, and nothing else
 ; differs
 ; == program ROM Bitmap_Accita16 (v10 0xE86676)
 ; SectionInfo_Sec01 returns (base, 120, 95)
-SectionBank01_AccordionIta16:	.incbin "../v10/maincpu/images/BitmapAccita16.bin"
+SectionBank01_AccordionIta16:	.incbin "../v10/maincpu/images/BitmapAccita16.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 2, 294x6: strip of small orange/green triangles
 ; == program ROM Bitmap_SomeArrows (v10 0xE8BF86)
 ; SectionInfo_Sec02 returns (base, 294, 6)
-SectionBank02_ArrowStrip:	.incbin "../v10/maincpu/images/BitmapSomeArrows.bin"
+SectionBank02_ArrowStrip:	.incbin "../v10/maincpu/images/BitmapSomeArrows.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 3, 22x222: drawbar scale 8..1 with a red knob
 ; == program ROM BitmapBound_DrawbarSlider1_Start (v10 0xE8C66A)
 ; SectionInfo_Sec03 returns (base, 22, 222)
-SectionBank03_DrawbarSlider1:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_1.bin"
+SectionBank03_DrawbarSlider1:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_1.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 4, 22x222: drawbar scale 8..1 with a white knob
 ; == program ROM BitmapBound_DrawbarSlider2_Start (v10 0xE8D97E)
 ; SectionInfo_Sec04 returns (base, 22, 222)
-SectionBank04_DrawbarSlider2:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_2.bin"
+SectionBank04_DrawbarSlider2:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_2.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 5, 22x222: drawbar scale 8..1 with a black knob
 ; == program ROM BitmapBound_DrawbarSlider3_Start (v10 0xE8EC92)
 ; SectionInfo_Sec05 returns (base, 22, 222)
-SectionBank05_DrawbarSlider3:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_3.bin"
+SectionBank05_DrawbarSlider3:	.incbin "../v10/maincpu/images/BitmapDrawbarNumberedSlider_3.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 8, 112x25: widening grey wedge (fade-in symbol)
 ; == program ROM Bitmap_FadeInPicture (v10 0xEB8072)
 ; SectionInfo_Sec08 returns (base, 112, 25)
-SectionBank08_FadeInPicture:	.incbin "../v10/maincpu/images/BitmapFadeInPicture.bin"
+SectionBank08_FadeInPicture:	.incbin "../v10/maincpu/images/BitmapFadeInPicture.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 9, 80x18: "FADE IN" lettering
 ; == program ROM Bitmap_FadeInText (v10 0xEB8B62)
 ; SectionInfo_Sec09 returns (base, 80, 18)
-SectionBank09_FadeInText:	.incbin "../v10/maincpu/images/BitmapFadeInText.bin"
+SectionBank09_FadeInText:	.incbin "../v10/maincpu/images/BitmapFadeInText.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 10, 113x25: narrowing grey wedge (fade-out symbol); odd width, so
 ; each row carries one pad byte (0x00 at +113 of all 25 rows) -- 2,850 B
 ; == program ROM Bitmap_FadeOutPicture (v10 0xEB9102)
 ; SectionInfo_Sec10 returns (base, 113, 25)
-SectionBank10_FadeOutPicture:	.incbin "../v10/maincpu/images/BitmapFadeOutPicture.bin"
+SectionBank10_FadeOutPicture:	.incbin "../v10/maincpu/images/BitmapFadeOutPicture.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 11, 108x20: "FADE OUT" lettering
 ; == program ROM Bitmap_FadeOutText (v10 0xEB9C24)
 ; SectionInfo_Sec11 returns (base, 108, 20)
-SectionBank11_FadeOutText:	.incbin "../v10/maincpu/images/BitmapFadeOutText.bin"
+SectionBank11_FadeOutText:	.incbin "../v10/maincpu/images/BitmapFadeOutText.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 12, 58x52: one-octave keyboard picture, no split marked
 ; == program ROM Bitmap_SplitPoint_no_split (v10 0xE5AE4A)
-SectionBank12_SplitPoint_None:	.incbin "../v10/maincpu/images/BitmapSplitPoint_no_split.bin"
+SectionBank12_SplitPoint_None:	.incbin "../v10/maincpu/images/BitmapSplitPoint_no_split.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 13, 58x52: one-octave keyboard picture with the split at C marked
 ; == program ROM Bitmap_SplitPoint_C (v10 0xE5BA12)
-SectionBank13_SplitPoint_C:	.incbin "../v10/maincpu/images/BitmapSplitPoint_C.bin"
+SectionBank13_SplitPoint_C:	.incbin "../v10/maincpu/images/BitmapSplitPoint_C.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 14, 58x52: one-octave keyboard picture with the split at Db marked
 ; == program ROM Bitmap_SplitPoint_Db (v10 0xE5C5DA)
-SectionBank14_SplitPoint_Db:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Db.bin"
+SectionBank14_SplitPoint_Db:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Db.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 15, 58x52: one-octave keyboard picture with the split at D marked
 ; == program ROM Bitmap_SplitPoint_D (v10 0xE5D1A2)
-SectionBank15_SplitPoint_D:	.incbin "../v10/maincpu/images/BitmapSplitPoint_D.bin"
+SectionBank15_SplitPoint_D:	.incbin "../v10/maincpu/images/BitmapSplitPoint_D.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 16, 58x52: one-octave keyboard picture with the split at Eb marked
 ; == program ROM Bitmap_SplitPoint_Eb (v10 0xE5DD6A)
-SectionBank16_SplitPoint_Eb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Eb.bin"
+SectionBank16_SplitPoint_Eb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Eb.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 17, 58x52: one-octave keyboard picture with the split at E marked
 ; == program ROM Bitmap_SplitPoint_E (v10 0xE5E932)
-SectionBank17_SplitPoint_E:	.incbin "../v10/maincpu/images/BitmapSplitPoint_E.bin"
+SectionBank17_SplitPoint_E:	.incbin "../v10/maincpu/images/BitmapSplitPoint_E.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 18, 58x52: one-octave keyboard picture with the split at F marked
 ; == program ROM Bitmap_SplitPoint_F (v10 0xE5F4FA)
-SectionBank18_SplitPoint_F:	.incbin "../v10/maincpu/images/BitmapSplitPoint_F.bin"
+SectionBank18_SplitPoint_F:	.incbin "../v10/maincpu/images/BitmapSplitPoint_F.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 19, 58x52: one-octave keyboard picture with the split at Gb marked
 ; == program ROM Bitmap_SplitPoint_Gb (v10 0xE600C2)
-SectionBank19_SplitPoint_Gb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Gb.bin"
+SectionBank19_SplitPoint_Gb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Gb.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 20, 58x52: one-octave keyboard picture with the split at G marked
 ; == program ROM Bitmap_SplitPoint_G (v10 0xE60C8A)
-SectionBank20_SplitPoint_G:	.incbin "../v10/maincpu/images/BitmapSplitPoint_G.bin"
+SectionBank20_SplitPoint_G:	.incbin "../v10/maincpu/images/BitmapSplitPoint_G.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 21, 58x52: one-octave keyboard picture with the split at Ab marked
 ; == program ROM Bitmap_SplitPoint_Ab (v10 0xE61852)
-SectionBank21_SplitPoint_Ab:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Ab.bin"
+SectionBank21_SplitPoint_Ab:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Ab.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 22, 58x52: one-octave keyboard picture with the split at A marked
 ; == program ROM Bitmap_SplitPoint_A (v10 0xE6241A)
-SectionBank22_SplitPoint_A:	.incbin "../v10/maincpu/images/BitmapSplitPoint_A.bin"
+SectionBank22_SplitPoint_A:	.incbin "../v10/maincpu/images/BitmapSplitPoint_A.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 23, 58x52: one-octave keyboard picture with the split at Bb marked
 ; == program ROM Bitmap_SplitPoint_Bb (v10 0xE62FE2)
-SectionBank23_SplitPoint_Bb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Bb.bin"
+SectionBank23_SplitPoint_Bb:	.incbin "../v10/maincpu/images/BitmapSplitPoint_Bb.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 24, 58x52: one-octave keyboard picture with the split at B marked
 ; == program ROM Bitmap_SplitPoint_B (v10 0xE63BAA)
-SectionBank24_SplitPoint_B:	.incbin "../v10/maincpu/images/BitmapSplitPoint_B.bin"
+SectionBank24_SplitPoint_B:	.incbin "../v10/maincpu/images/BitmapSplitPoint_B.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 25, 296x108: MIDI connection diagram 1 -- PC, MASTER KEYBOARD and
 ; EXTERNAL MODULE wired to the KN5000 COMPUTER, MIDI IN and MIDI OUT sockets
 ; == program ROM Bitmap_MIDIConnections_1 (v10 0xE64772)
-SectionBank25_MIDIConnections1:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_1.bin"
+SectionBank25_MIDIConnections1:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_1.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 26, 296x108: MIDI connection diagram 2 -- PC, MASTER KEYBOARD and
 ; EXTERNAL MODULE wired to the KN5000 COMPUTER, MIDI IN and MIDI OUT sockets
 ; == program ROM Bitmap_MIDIConnections_2 (v10 0xE6C452)
-SectionBank26_MIDIConnections2:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_2.bin"
+SectionBank26_MIDIConnections2:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_2.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; entry 27, 296x108: MIDI connection diagram 3 -- PC, MASTER KEYBOARD and
 ; EXTERNAL MODULE wired to the KN5000 COMPUTER, MIDI IN and MIDI OUT sockets
 ; == program ROM Bitmap_MIDIConnections_3 (v10 0xE74132)
-SectionBank27_MIDIConnections3:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_3.bin"
+SectionBank27_MIDIConnections3:	.incbin "../v10/maincpu/images/BitmapMIDIConnections_3.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 
 ; -----------------------------------------------------------------------------
 ; Section 7 (0x82CDA2): the "KN-5000" wordmark, a 199 x 36 8bpp bitmap
@@ -219,7 +219,7 @@ SectionBank27_MIDIConnections3:	.incbin "../v10/maincpu/images/BitmapMIDIConnect
 ; directory target (0x91D000), and the accessor pins the real extent.
 ; Check: python3 scripts/analysis/tdata_evidence_probes.py  (section 7)
 ; -----------------------------------------------------------------------------
-SectionBank07_KN5000Logo:	.incbin "../v10/maincpu/images/BitmapKN5000Logo.bin"
+SectionBank07_KN5000Logo:	.incbin "../v10/maincpu/images/BitmapKN5000Logo.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 	.fill	1598, 1, 0xff		; erased flash up to the accessor routines
 
 ; =============================================================================
