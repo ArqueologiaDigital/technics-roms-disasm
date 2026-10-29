@@ -94,3 +94,5 @@ original_ROMs/kn5000_v6_program.rom
 original_ROMs/kn5000_v5_program.rom
 # HD-AE5000 v2.01i: same convention (HDAE5000_V201_REF in Makefile).
 original_ROMs/hd-ae5000_v2_01i.ic4
+# KN5000 waveform ROM IC307: same convention (KN5000_IC307_REF in Makefile).
+original_ROMs/kn5000_waveform_rom.ic307
