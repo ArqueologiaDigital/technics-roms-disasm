@@ -178,7 +178,7 @@ const naka_sequencer_exit_t naka_sequencer_exit_data
     /* w11: TYPE_0x47 — IvAutoPunchExit */
     /* w12: TYPE_0x21 — AcPanicEditSw */
     /* w13: TYPE_0x47 — IvRealRecExit */
-    .classdef_168_12_parent = 0x01600031,
+    .classdef_168_12_parent = NAKA_CLASS(Box),
 
     .classdef_168_12_allsize = 0x0020,
 
@@ -190,31 +190,31 @@ const naka_sequencer_exit_t naka_sequencer_exit_data
 
     .classdef_168_12_propname = NAKA_ADDR(NakaDesc_FuncTtlNo_B),
 
-    .classdef_168_13 = { .proc = NAKA_ADDR(EqOnOffFuncToggleProc), .parent = 0x01600044, .allsize = 44, .selfsize = 0, .name = SELF(EqOnOffFuncToggle_name), .propdata = SELF(EqOnOffFuncToggle_code), .propname = NAKA_ADDR(NakaDesc_Empty_C) },
+    .classdef_168_13 = { .proc = NAKA_ADDR(EqOnOffFuncToggleProc), .parent = NAKA_CLASS(AcFuncToggle), .allsize = 44, .selfsize = 0, .name = SELF(EqOnOffFuncToggle_name), .propdata = SELF(EqOnOffFuncToggle_code), .propname = NAKA_ADDR(NakaDesc_Empty_C) },
 
-    .classdef_168_14 = { .proc = NAKA_ADDR(MsgToTtlProc), .parent = 0x01600010, .allsize = 22, .selfsize = 0, .name = SELF(MsgToTtl_name), .propdata = SELF(MsgToTtl_code), .propname = NAKA_ADDR(NakaDesc_Empty_D) },
+    .classdef_168_14 = { .proc = NAKA_ADDR(MsgToTtlProc), .parent = NAKA_CLASS(Viewable), .allsize = 22, .selfsize = 0, .name = SELF(MsgToTtl_name), .propdata = SELF(MsgToTtl_code), .propname = NAKA_ADDR(NakaDesc_Empty_D) },
 
-    .classdef_168_15 = { .proc = NAKA_ADDR(AcIndexWideToggleProc), .parent = 0x01600045, .allsize = 50, .selfsize = 8, .name = SELF(AcIndexWideToggle_name), .propdata = SELF(AcIndexWideToggle_code), .propname = NAKA_ADDR(NakaDesc_FuncIndex) },
+    .classdef_168_15 = { .proc = NAKA_ADDR(AcIndexWideToggleProc), .parent = NAKA_CLASS(PsWideToggle), .allsize = 50, .selfsize = 8, .name = SELF(AcIndexWideToggle_name), .propdata = SELF(AcIndexWideToggle_code), .propname = NAKA_ADDR(NakaDesc_FuncIndex) },
 
-    .classdef_168_16 = { .proc = NAKA_ADDR(IvPlayExitProc), .parent = 0x01600047, .allsize = 26, .selfsize = 4, .name = SELF(IvPlayExit_name), .propdata = SELF(IvPlayExit_code), .propname = NAKA_ADDR(NakaDesc_Mode) },
+    .classdef_168_16 = { .proc = NAKA_ADDR(IvPlayExitProc), .parent = NAKA_CLASS(IvExit), .allsize = 26, .selfsize = 4, .name = SELF(IvPlayExit_name), .propdata = SELF(IvPlayExit_code), .propname = NAKA_ADDR(NakaDesc_Mode) },
 
-    .classdef_168_17 = { .proc = NAKA_ADDR(HelpTtlProc), .parent = 0x01600010, .allsize = 36, .selfsize = 14, .name = SELF(HelpTtl_name), .propdata = SELF(HelpTtl_code), .propname = NAKA_ADDR(NakaDesc_ColorFontPageFunc) },
+    .classdef_168_17 = { .proc = NAKA_ADDR(HelpTtlProc), .parent = NAKA_CLASS(Viewable), .allsize = 36, .selfsize = 14, .name = SELF(HelpTtl_name), .propdata = SELF(HelpTtl_code), .propname = NAKA_ADDR(NakaDesc_ColorFontPageFunc) },
 
-    .classdef_168_18 = { .proc = NAKA_ADDR(IvPnlWrExitProc), .parent = 0x01600047, .allsize = 22, .selfsize = 0, .name = SELF(IvPnlWrExit_name), .propdata = SELF(IvPnlWrExit_code), .propname = NAKA_ADDR(ClassProps_IvPnlWrExit) },
+    .classdef_168_18 = { .proc = NAKA_ADDR(IvPnlWrExitProc), .parent = NAKA_CLASS(IvExit), .allsize = 22, .selfsize = 0, .name = SELF(IvPnlWrExit_name), .propdata = SELF(IvPnlWrExit_code), .propname = NAKA_ADDR(ClassProps_IvPnlWrExit) },
 
-    .classdef_168_19 = { .proc = NAKA_ADDR(IvSdrevProc), .parent = 0x01600027, .allsize = 22, .selfsize = 0, .name = SELF(IvSdrev_name), .propdata = SELF(IvSdrev_code), .propname = NAKA_ADDR(NakaDesc_Empty_E) },
+    .classdef_168_19 = { .proc = NAKA_ADDR(IvSdrevProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = SELF(IvSdrev_name), .propdata = SELF(IvSdrev_code), .propname = NAKA_ADDR(NakaDesc_Empty_E) },
 
-    .classdef_168_20 = { .proc = NAKA_ADDR(IvSddspProc), .parent = 0x01600027, .allsize = 22, .selfsize = 0, .name = SELF(IvSddsp_name), .propdata = SELF(IvSddsp_code), .propname = NAKA_ADDR(NakaDesc_Empty_F) },
+    .classdef_168_20 = { .proc = NAKA_ADDR(IvSddspProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = SELF(IvSddsp_name), .propdata = SELF(IvSddsp_code), .propname = NAKA_ADDR(NakaDesc_Empty_F) },
 
-    .classdef_168_21 = { .proc = NAKA_ADDR(IvSdaccProc), .parent = 0x01600027, .allsize = 22, .selfsize = 0, .name = SELF(IvSdacc_name), .propdata = SELF(IvSdacc_code), .propname = NAKA_ADDR(NakaDesc_Empty_G) },
+    .classdef_168_21 = { .proc = NAKA_ADDR(IvSdaccProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = SELF(IvSdacc_name), .propdata = SELF(IvSdacc_code), .propname = NAKA_ADDR(NakaDesc_Empty_G) },
 
-    .classdef_168_22 = { .proc = NAKA_ADDR(IvPunchExitProc), .parent = 0x01600047, .allsize = 22, .selfsize = 0, .name = SELF(IvPunchExit_name), .propdata = SELF(IvPunchExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_H) },
+    .classdef_168_22 = { .proc = NAKA_ADDR(IvPunchExitProc), .parent = NAKA_CLASS(IvExit), .allsize = 22, .selfsize = 0, .name = SELF(IvPunchExit_name), .propdata = SELF(IvPunchExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_H) },
 
-    .classdef_168_23 = { .proc = NAKA_ADDR(IvAutoPunchExitProc), .parent = 0x01600047, .allsize = 22, .selfsize = 0, .name = SELF(IvAutoPunchExit_name), .propdata = SELF(IvAutoPunchExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_I) },
+    .classdef_168_23 = { .proc = NAKA_ADDR(IvAutoPunchExitProc), .parent = NAKA_CLASS(IvExit), .allsize = 22, .selfsize = 0, .name = SELF(IvAutoPunchExit_name), .propdata = SELF(IvAutoPunchExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_I) },
 
-    .classdef_168_24 = { .proc = NAKA_ADDR(AcPanicEditSwProc), .parent = 0x01600021, .allsize = 46, .selfsize = 6, .name = SELF(AcPanicEditSw_name), .propdata = SELF(AcPanicEditSw_code), .propname = NAKA_ADDR(NakaDesc_StyleFunc) },
+    .classdef_168_24 = { .proc = NAKA_ADDR(AcPanicEditSwProc), .parent = NAKA_CLASS(PsWideESBox), .allsize = 46, .selfsize = 6, .name = SELF(AcPanicEditSw_name), .propdata = SELF(AcPanicEditSw_code), .propname = NAKA_ADDR(NakaDesc_StyleFunc) },
 
-    .classdef_168_25 = { .proc = NAKA_ADDR(IvRealRecExitProc), .parent = 0x01600047, .allsize = 22, .selfsize = 0, .name = SELF(IvRealRecExit_name), .propdata = SELF(IvRealRecExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_J) },
+    .classdef_168_25 = { .proc = NAKA_ADDR(IvRealRecExitProc), .parent = NAKA_CLASS(IvExit), .allsize = 22, .selfsize = 0, .name = SELF(IvRealRecExit_name), .propdata = SELF(IvRealRecExit_code), .propname = NAKA_ADDR(NakaDesc_Empty_J) },
 
     .classrun_168_x014C = 0x00000000,
 

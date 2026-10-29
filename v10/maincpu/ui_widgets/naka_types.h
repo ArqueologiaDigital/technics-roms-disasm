@@ -22,6 +22,13 @@
 
 #include <stdint.h>
 
+/* Every class (NAKA_CLASS_*, naka_cls_<Class>_t), the property value names (CL_*, BD_*, VF_*,
+ * ...) and the event_codes.s ids (TITLE_*, NAKA_*FUNC_*, EVT_*): generated headers,
+ * scripts/generators/gen_naka_gui_headers.py. */
+#include "naka_classes.h"
+#include "naka_ids.h"
+#include "naka_ram_cells.h"
+
 /* ── Type codes ─────────────────────────────────────────────── */
 
 #define NAKA_TYPE_DIAGLIST   0x16
@@ -39,6 +46,25 @@
 /* ── Constants ──────────────────────────────────────────────── */
 
 #define NAKA_NONE  0xFFFF   /* unused index slot */
+
+/* ── Widget geometry and object ids ──────────────────────────── */
+
+/**
+ * A record's `rect` is x1, y1, x2, y2, inclusive.  The firmware itself edits x2 / y2 as
+ * "width" / "height" (RectX2Proc / RectY2Proc, ui/ui_widget_defs.s: GET answers x2 - x1 + 1,
+ * SET stores x1 + width - 1), so the sources write the rectangle the same way:
+ *   .rect = NAKA_XYWH(0, 0, 320, 240)     -- the whole 320 x 240 screen
+ * NAKA_XYXY spells the corners directly, for the few rectangles with no positive size.
+ */
+#define NAKA_XYWH(x, y, w, h)       { (x), (y), (x) + (w) - 1, (y) + (h) - 1 }
+#define NAKA_XYXY(x1, y1, x2, y2)   { (x1), (y1), (x2), (y2) }
+
+/**
+ * A view object id is 0x0SSS_KKKK: element KKKK of the Viewable table registered at registry
+ * slot SSS (ViewIDProc / WindowIDProc / ScreenIDProc).  Each C file names its tables'
+ * elements in an enum (OBJ_*), and the table's slot as <Table>_SLOT.
+ */
+#define NAKA_VIEW_ID(table, obj)    ((((uint32_t)(table##_SLOT)) << 16) | (uint32_t)(obj))
 
 /* ── Header ─────────────────────────────────────────────────── */
 

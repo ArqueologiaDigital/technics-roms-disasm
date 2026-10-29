@@ -15,115 +15,6 @@ extern const char PlySngSel2Func;
 
 #define BASE  0x00E1A73Eu
 
-/* NAKA class AcWindowPage -- class id 0x01600025 (Class table slot 0x160, entry 37),
- * parent PsPageBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t page;              /* +28 n */
-    uint16_t pagemin;           /* +32 A */
-    uint16_t pagemax;           /* +34 A */
-} naka_cls_AcWindowPage_t;
-
-/* NAKA class IvPageControl -- class id 0x01600028 (Class table slot 0x160, entry 40),
- * parent PsInvisibleBox; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t page;              /* +22 A */
-    uint32_t window;            /* +24 t */
-} naka_cls_IvPageControl_t;
-
-/* NAKA class IvShowHide -- class id 0x01600064 (Class table slot 0x160, entry 100),
- * parent PsInvisibleBox; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t func;              /* +22 j */
-} naka_cls_IvShowHide_t;
-
-/* NAKA class IvIntVari -- class id 0x01600062 (Class table slot 0x160, entry 98),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntVari_t;
-
-/* NAKA class Window -- class id 0x01600035 (Class table slot 0x160, entry 53),
- * parent GroupBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t modal;             /* +26 G */
-    uint32_t parent;            /* +28 r */
-    uint32_t child;             /* +32 r */
-} naka_cls_Window_t;
-
-/* NAKA class VwVariBox -- class id 0x01640024 (Class table slot 0x164, entry 36),
- * parent VwBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint32_t selected;          /* +38 m */
-    uint8_t mspbnk;            /* +42 C */
-    uint8_t _pad_43[1];
-} naka_cls_VwVariBox_t;
-
 typedef struct __attribute__((packed)) {
     /* element 1 of Viewable slot 0xC8 "MspBkslWin": AcWindowPage (class id 0x01600025) */
     naka_cls_AcWindowPage_t MspBkslWin;
@@ -185,19 +76,57 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_accomp7_widgets_t) == 1050,
     "naka_accomp7_widgets must be exactly 1050 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Naka_Accomp7_Screens, registry slot 0xC8, 27 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 27, Naka_Accomp7_Screens, 0xC8`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp7_Screens, OBJ_x). */
+#define Naka_Accomp7_Screens_SLOT 0x0C8u
+enum Naka_Accomp7_Screens_objects {
+    OBJ_MspBkslScreen,   /*  0 TtlScreen, record in naka_composer_style.c */
+      OBJ_MspBkslWin,    /*  1 AcWindowPage "MspBkslWin" */
+      OBJ_MspBnkP1Ctl,   /*  2 IvPageControl "MspBnkP1Ctl" */
+      OBJ_MspBnkP2Ctl,   /*  3 IvPageControl "MspBnkP2Ctl" */
+      OBJ_vC8_e4,        /*  4 IvShowHide */
+      OBJ_vC8_e5,        /*  5 IvIntVari */
+    OBJ_MspBkslP1Win,    /*  6 Window "MspBkslP1Win" */
+      OBJ_Eff1Bnk,       /*  7 VwVariBox "Eff1Bnk" */
+      OBJ_Eff2Bnk,       /*  8 VwVariBox "Eff2Bnk" */
+      OBJ_ComicBnk,      /*  9 VwVariBox "ComicBnk" */
+      OBJ_MovieBnk,      /* 10 VwVariBox "MovieBnk" */
+      OBJ_EnterBnk,      /* 11 VwVariBox "EnterBnk" */
+      OBJ_ArpgioBnk,     /* 12 VwVariBox "ArpgioBnk" */
+      OBJ_Rock1Bnk,      /* 13 VwVariBox "Rock1Bnk" */
+      OBJ_Rock2Bnk,      /* 14 VwVariBox "Rock2Bnk" */
+      OBJ_DanceBnk,      /* 15 VwVariBox "DanceBnk" */
+      OBJ_FunkBnk,       /* 16 VwVariBox "FunkBnk" */
+    OBJ_MspBkslP2Win,    /* 17 Window "MspBkslP2Win" */
+      OBJ_JazzBnk,       /* 18 VwVariBox "JazzBnk" */
+      OBJ_LatinBnk,      /* 19 VwVariBox "LatinBnk" */
+      OBJ_HitBnk,        /* 20 VwVariBox "HitBnk" */
+      OBJ_User1Bnk,      /* 21 VwVariBox "User1Bnk" */
+      OBJ_User2Bnk,      /* 22 VwVariBox "User2Bnk" */
+      OBJ_Cmpile1Bnk,    /* 23 VwVariBox "Cmpile1Bnk" */
+      OBJ_Cmpile2Bnk,    /* 24 VwVariBox "Cmpile2Bnk" */
+      OBJ_Ctrl1Bnk,      /* 25 VwVariBox "Ctrl1Bnk" */
+      OBJ_Ctrl2Bnk,      /* 26 VwVariBox "Ctrl2Bnk" */
+};
+
 const naka_accomp7_widgets_t naka_accomp7_widgets_data
     __attribute__((section(".text"), used)) = {
 
     .MspBkslWin = {
-        .class_ = 0x01600025,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcWindowPage),
+        .super = OBJ_MspBkslScreen,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_MspBnkP1Ctl,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 245, 6, 315, 23 },
-        .color = 0x00F3,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(245, 6, 71, 18),
+        .color = CL_PageBack,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
         .page = 0x0003D72A,
         .pagemin = 0x0001,
@@ -205,456 +134,460 @@ const naka_accomp7_widgets_t naka_accomp7_widgets_data
     },
 
     .MspBnkP1Ctl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_MspBkslScreen,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_MspBnkP2Ctl,
+        .prev = OBJ_MspBkslWin,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00C80006,
+        .window = NAKA_VIEW_ID(Naka_Accomp7_Screens, OBJ_MspBkslP1Win),
     },
 
     .MspBnkP2Ctl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_MspBkslScreen,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_vC8_e4,
+        .prev = OBJ_MspBnkP1Ctl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00C80011,
+        .window = NAKA_VIEW_ID(Naka_Accomp7_Screens, OBJ_MspBkslP2Win),
     },
 
     .vC8_e4 = {
-        .class_ = 0x01600064,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvShowHide),
+        .super = OBJ_MspBkslScreen,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .func = 0x01240016,
+        .next = OBJ_vC8_e5,
+        .prev = OBJ_MspBnkP2Ctl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_APFUNC_MspBnkShow,
     },
 
     .vC8_e5 = {
-        .class_ = 0x01600062,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvIntVari),
+        .super = OBJ_MspBkslScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .time = 0x0001,
+        .prev = OBJ_vC8_e4,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_MspBkslP1Win: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MspBkslP1Win = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 7,
+        .sub = OBJ_Eff1Bnk,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 30, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 30, 320, 210),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
         .parent = 0x0003D72C,
         .child = 0x0003D730,
     },
 
     .Eff1Bnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 8,
+        .next = OBJ_Eff2Bnk,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 30, 156, 55 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 30, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0088,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left1,
         .selected = 0x0003D734,
         .mspbnk = 0x00,
         ._pad_43 = { 0x00 },
     },
 
     .Eff2Bnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 8, 72, 156, 97 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_ComicBnk,
+        .prev = OBJ_Eff1Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0089,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left2,
         .selected = 0x0003D736,
         .mspbnk = 0x01,
         ._pad_43 = { 0x00 },
     },
 
     .ComicBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_MovieBnk,
+        .prev = OBJ_Eff2Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008A,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left3,
         .selected = 0x0003D738,
         .mspbnk = 0x02,
         ._pad_43 = { 0x00 },
     },
 
     .MovieBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 11,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_EnterBnk,
+        .prev = OBJ_ComicBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008B,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left4,
         .selected = 0x0003D73A,
         .mspbnk = 0x03,
         ._pad_43 = { 0x00 },
     },
 
     .EnterBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 8, 198, 156, 223 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_ArpgioBnk,
+        .prev = OBJ_MovieBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 198, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008C,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left5,
         .selected = 0x0003D73C,
         .mspbnk = 0x04,
         ._pad_43 = { 0x00 },
     },
 
     .ArpgioBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 163, 30, 311, 55 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Rock1Bnk,
+        .prev = OBJ_EnterBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 30, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0008,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right1,
         .selected = 0x0003D73E,
         .mspbnk = 0x05,
         ._pad_43 = { 0x00 },
     },
 
     .Rock1Bnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 163, 72, 311, 97 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Rock2Bnk,
+        .prev = OBJ_ArpgioBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 72, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0009,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right2,
         .selected = 0x0003D740,
         .mspbnk = 0x06,
         ._pad_43 = { 0x00 },
     },
 
     .Rock2Bnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 163, 114, 311, 139 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_DanceBnk,
+        .prev = OBJ_Rock1Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 114, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x000A,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right3,
         .selected = 0x0003D742,
         .mspbnk = 0x07,
         ._pad_43 = { 0x00 },
     },
 
     .DanceBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 163, 156, 311, 181 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_FunkBnk,
+        .prev = OBJ_Rock2Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 156, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x000B,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right4,
         .selected = 0x0003D744,
         .mspbnk = 0x08,
         ._pad_43 = { 0x00 },
     },
 
     .FunkBnk = {
-        .class_ = 0x01640024,
-        .super = 6,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP1Win,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 163, 198, 311, 223 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .prev = OBJ_DanceBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 198, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x000C,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right5,
         .selected = 0x0003D746,
         .mspbnk = 0x09,
         ._pad_43 = { 0x00 },
     },
 
+    /* ==== VIEW OBJ_MspBkslP2Win: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MspBkslP2Win = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 18,
+        .sub = OBJ_JazzBnk,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 30, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 30, 320, 210),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
         .parent = 0x0003D748,
         .child = 0x0003D74C,
     },
 
     .JazzBnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 19,
+        .next = OBJ_LatinBnk,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 30, 156, 55 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 30, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0088,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left1,
         .selected = 0x0003D750,
         .mspbnk = 0x0A,
         ._pad_43 = { 0x00 },
     },
 
     .LatinBnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 8, 72, 156, 97 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_HitBnk,
+        .prev = OBJ_JazzBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0089,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left2,
         .selected = 0x0003D752,
         .mspbnk = 0x0B,
         ._pad_43 = { 0x00 },
     },
 
     .HitBnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_User1Bnk,
+        .prev = OBJ_LatinBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008A,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left3,
         .selected = 0x0003D754,
         .mspbnk = 0x0C,
         ._pad_43 = { 0x00 },
     },
 
     .User1Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_User2Bnk,
+        .prev = OBJ_HitBnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008B,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left4,
         .selected = 0x0003D756,
         .mspbnk = 0x0D,
         ._pad_43 = { 0x00 },
     },
 
     .User2Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 23,
-        .prev = 21,
-        .flag = 0x0008,
-        .rect = { 8, 198, 156, 223 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Cmpile1Bnk,
+        .prev = OBJ_User1Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 198, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x008C,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Left5,
         .selected = 0x0003D758,
         .mspbnk = 0x0E,
         ._pad_43 = { 0x00 },
     },
 
     .Cmpile1Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 24,
-        .prev = 22,
-        .flag = 0x0008,
-        .rect = { 163, 30, 311, 55 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Cmpile2Bnk,
+        .prev = OBJ_User2Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 30, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0008,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right1,
         .selected = 0x0003D75A,
         .mspbnk = 0x0F,
         ._pad_43 = { 0x00 },
     },
 
     .Cmpile2Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 25,
-        .prev = 23,
-        .flag = 0x0008,
-        .rect = { 163, 72, 311, 97 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Ctrl1Bnk,
+        .prev = OBJ_Cmpile1Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 72, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x0009,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right2,
         .selected = 0x0003D75C,
         .mspbnk = 0x10,
         ._pad_43 = { 0x00 },
     },
 
     .Ctrl1Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 163, 114, 311, 139 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Ctrl2Bnk,
+        .prev = OBJ_Cmpile2Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 114, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x000A,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right3,
         .selected = 0x0003D75E,
         .mspbnk = 0x11,
         ._pad_43 = { 0x00 },
     },
 
     .Ctrl2Bnk = {
-        .class_ = 0x01640024,
-        .super = 17,
+        .class_ = NAKA_CLASS(VwVariBox),
+        .super = OBJ_MspBkslP2Win,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 163, 156, 311, 181 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .prev = OBJ_Ctrl1Bnk,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 156, 149, 26),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0001,
-        .editsw = 0x000B,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_LeftJustify,
+        .editsw = ES_Right4,
         .selected = 0x0003D760,
         .mspbnk = 0x12,
         ._pad_43 = { 0x00 },
