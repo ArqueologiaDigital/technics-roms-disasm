@@ -258,6 +258,127 @@ def describe_sqf(ctx):
     return L
 
 
+def tlv_blocks(d, o):
+    """Consecutive {tag, len} record lists, each ended by FF FF: [(start, records)], offset after the last."""
+    out = []
+    while o + 2 <= len(d):
+        q, recs = o, []
+        while q + 2 <= len(d) and not (d[q] == 0xFF and d[q + 1] == 0xFF):
+            t, n = d[q], d[q + 1]
+            if q + 2 + n > len(d):
+                return out, o
+            recs.append((q, t, n))
+            q += 2 + n
+        if q + 2 > len(d) or not recs:
+            return out, o
+        out.append((o, recs))
+        o = q + 2
+    return out, o
+
+
+CMB_TAGS = None
+
+
+def cmb_line(t, n, pay):
+    v = ', '.join(str(x) for x in pay)
+    if t == 0x78 and n == 16:
+        return ['\tcmb_name', '\t.ascii\t%s' % s_esc(pay)]
+    if t == 0x60 and n == 12:
+        return ['\tcmb_effect_common\t' + v]
+    if t in (0x61, 0x62, 0x63) and n == 30:
+        return ['\tcmb_effect\t0x%02x, %s' % (t, v)]
+    if t <= 0x07 and n == 30:
+        return ['\tcmb_part_a\t%d, %s' % (t, v)]
+    if 0x20 <= t <= 0x27 and n == 30:
+        return ['\tcmb_part_b\t0x%02x, %s' % (t, v)]
+    if t == 0x92 and n == 14:
+        return ['\tcmb_key_scaling\t' + v]
+    if t == 0x79 and n == 44:
+        return ['\tcmb_common\t' + v]
+    return None
+
+
+def describe_panel(ctx):
+    """PANEL: .LSW (a 0x20-byte header "ZZ" 01 00 "WA0", then record blocks) and .SLS (0x600 bytes of RAM 0x7000,
+    DiskLoad_PanelSlsFile; record blocks from +0).  The first block is a combination record (cmb_*), the
+    others are {tag, length} lists typed by record; the bytes after the last block are spelled with offsets."""
+    d = ctx.data
+    ext = ctx.path.rsplit('.', 1)[-1].upper()
+    if not d:
+        return None
+    st = 0x20 if ext == 'LSW' else 0
+    if ext == 'LSW' and d[:4] != b'ZZ\x01\x00':
+        return None
+    blocks, end = tlv_blocks(d, st)
+    if not blocks:
+        return None
+    L = ['; %s: the panel, as record blocks (wsa1/include/wsa1_files.inc).  The first block is the current' % ext,
+         '; combination (the 23 records of a .CMB combination); the other blocks\' tags are not traced.', '',
+         '\t.include\t"wsa1_files.inc"', ctx.label + ':']
+    if st:
+        L += ['\t.ascii\t"ZZ"', '\t.byte\t1, 0', '\t.ascii\t"WA0"'] + rows(d[7:0x20])
+    for k, (o, recs) in enumerate(blocks):
+        L.append('; block %d: %d records' % (k + 1, len(recs)))
+        for q, t, n in recs:
+            pay = d[q + 2:q + 2 + n]
+            c = cmb_line(t, n, pay) if k == 0 else None
+            if c:
+                L += c
+            else:
+                L.append('\twsa_tlv\t0x%02x, %d' % (t, n))
+                L += rows(pay)
+        L.append('\twsa_tlv_end')
+    if end < len(d):
+        L += ['; +0x%X..+0x%X: after the last record block, not traced' % (end, len(d) - 1)] + rows(d[end:])
+    return L
+
+
+def describe_remap(ctx):
+    """RE-MAP files: a header and three maps of 0x210 (.SRM .CRM: name, 16 group names, 128 {number, source})
+    or 0x90 (.DRM: name, 128 one-byte entries); the map size is the header's own offset step.  One .DRM on
+    mcompos holds a COMBI RE-MAP image cut at 1024 bytes: its second map is typed as far as it goes."""
+    d = ctx.data
+    ext = ctx.path.rsplit('.', 1)[-1].upper()
+    if d[:5] != b'WSA1 ' or any(d[5:0x0F]):
+        return None
+    m = [int.from_bytes(d[0x10 + 4 * k:0x14 + 4 * k], 'little') for k in range(4)]
+    size = m[1] - m[0]
+    if m[3] or m[0] != 0x20 or m[2] - m[1] != size or size not in (0x90, 0x210):
+        return None
+    L = ['; %s: three re-maps (wsa1/notes/sysex-probes/sysex_remap_files.py)%s.' % (
+         ext, '' if (size == 0x90) == (ext == 'DRM') else '; this file holds the other kind\'s layout'), '',
+         '\t.include\t"wsa1_files.inc"', ctx.label + ':', '\tremap_head\t0x%02x, 0x%x, 0x%x, 0x%x' % ((d[0x0F],) + tuple(m[:3]))]
+    pos = 0x20
+    for k in range(3):
+        o = 0x20 + size * k
+        if o + 16 > len(d):
+            break
+        L += ['%s_Map%d:' % (ctx.label, k + 1), '\t.ascii\t%s\t; map name' % s_esc(d[o:o + 16])]
+        pos = o + 16
+        if size == 0x90:
+            n = min(128, len(d) - pos)
+            L += ['; %d entries of one byte' % n] + rows(d[pos:pos + n])
+            pos += n
+        else:
+            for g in range(16):
+                if pos + 16 > len(d):
+                    break
+                L.append('\t.ascii\t%s\t; group %d' % (s_esc(d[pos:pos + 16]), g + 1))
+                pos += 16
+            n = min(128, (len(d) - pos) // 2) if pos == o + 0x110 else 0
+            for j in range(0, n, 8):
+                L.append('\t.byte\t' + ', '.join('%d, %d' % (d[pos + 2 * x], d[pos + 2 * x + 1]) for x in range(j, min(j + 8, n)))
+                         + '\t; entries %d-%d {number, source}' % (j, min(j + 8, n) - 1))
+            pos += 2 * n
+    rest = d[pos:]
+    if rest:
+        if len(set(rest)) == 1:
+            L.append('\t.fill\t%d, 1, 0x%02x\t; to the end of the file' % (len(rest), rest[0]))
+        else:
+            L += ['; +0x%X..: after the maps, not traced' % pos] + rows(rest)
+    return L
+
+
 def describe(ctx):
     ext = ctx.path.rsplit('.', 1)[-1].upper()
     if ext == 'MID':
@@ -270,4 +391,8 @@ def describe(ctx):
         return describe_cmb(ctx)
     if ext == 'SQF':
         return describe_sqf(ctx)
+    if ext in ('LSW', 'SLS'):
+        return describe_panel(ctx)
+    if ext in ('SRM', 'CRM', 'DRM'):
+        return describe_remap(ctx)
     return None

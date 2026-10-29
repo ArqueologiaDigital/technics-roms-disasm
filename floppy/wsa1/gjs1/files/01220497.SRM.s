@@ -2,5 +2,138 @@
 
 ; 01220497.SRM -- 2048 bytes, clusters 596..599.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01220497_SRM:	.incbin	"gjs1.img", 0x4f200, 2048
+; SRM: three re-maps (wsa1/notes/sysex-probes/sysex_remap_files.py).
+
+	.include	"wsa1_files.inc"
+F_01220497_SRM:
+	remap_head	0x31, 0x20, 0x230, 0x440
+F_01220497_SRM_Map1:
+	.ascii	"SOUND RE-MAP 1  "	; map name
+	.ascii	"RE-MAP 1 GROUP 1"	; group 1
+	.ascii	"RE-MAP 1 GROUP 2"	; group 2
+	.ascii	"RE-MAP 1 GROUP 3"	; group 3
+	.ascii	"RE-MAP 1 GROUP 4"	; group 4
+	.ascii	"RE-MAP 1 GROUP 5"	; group 5
+	.ascii	"RE-MAP 1 GROUP 6"	; group 6
+	.ascii	"RE-MAP 1 GROUP 7"	; group 7
+	.ascii	"RE-MAP 1 GROUP 8"	; group 8
+	.ascii	"RE-MAP 1 GROUP 9"	; group 9
+	.ascii	"RE-MAP 1 GROUP10"	; group 10
+	.ascii	"RE-MAP 1 GROUP11"	; group 11
+	.ascii	"RE-MAP 1 GROUP12"	; group 12
+	.ascii	"RE-MAP 1 GROUP13"	; group 13
+	.ascii	"RE-MAP 1 GROUP14"	; group 14
+	.ascii	"RE-MAP 1 GROUP15"	; group 15
+	.ascii	"RE-MAP 1 GROUP16"	; group 16
+	.byte	0, 8, 1, 8, 2, 8, 3, 8, 4, 8, 5, 8, 6, 8, 7, 8	; entries 0-7 {number, source}
+	.byte	8, 8, 9, 8, 10, 8, 11, 8, 12, 8, 13, 8, 14, 8, 15, 8	; entries 8-15 {number, source}
+	.byte	16, 8, 17, 8, 18, 8, 19, 8, 20, 8, 21, 8, 22, 8, 23, 8	; entries 16-23 {number, source}
+	.byte	24, 8, 25, 8, 26, 8, 27, 8, 28, 8, 29, 8, 30, 8, 31, 8	; entries 24-31 {number, source}
+	.byte	32, 8, 33, 8, 34, 8, 35, 8, 36, 8, 37, 8, 38, 8, 39, 8	; entries 32-39 {number, source}
+	.byte	40, 8, 41, 8, 42, 8, 43, 8, 44, 8, 45, 8, 46, 8, 47, 8	; entries 40-47 {number, source}
+	.byte	48, 8, 49, 8, 50, 8, 51, 8, 52, 8, 53, 8, 54, 8, 55, 8	; entries 48-55 {number, source}
+	.byte	56, 8, 57, 8, 58, 8, 59, 8, 60, 8, 61, 8, 62, 8, 63, 8	; entries 56-63 {number, source}
+	.byte	64, 8, 65, 8, 66, 8, 67, 8, 68, 8, 69, 8, 70, 8, 71, 8	; entries 64-71 {number, source}
+	.byte	72, 8, 73, 8, 74, 8, 75, 8, 76, 8, 77, 8, 78, 8, 79, 8	; entries 72-79 {number, source}
+	.byte	80, 8, 81, 8, 82, 8, 83, 8, 84, 8, 85, 8, 86, 8, 87, 8	; entries 80-87 {number, source}
+	.byte	88, 8, 89, 8, 90, 8, 91, 8, 92, 8, 93, 8, 94, 8, 95, 8	; entries 88-95 {number, source}
+	.byte	96, 8, 97, 8, 98, 8, 99, 8, 100, 8, 101, 8, 102, 8, 103, 8	; entries 96-103 {number, source}
+	.byte	104, 8, 105, 8, 106, 8, 107, 8, 108, 8, 109, 8, 110, 8, 111, 8	; entries 104-111 {number, source}
+	.byte	112, 8, 113, 8, 114, 8, 115, 8, 116, 8, 117, 8, 118, 8, 119, 8	; entries 112-119 {number, source}
+	.byte	120, 8, 121, 8, 122, 8, 123, 8, 124, 8, 125, 8, 126, 8, 127, 8	; entries 120-127 {number, source}
+F_01220497_SRM_Map2:
+	.ascii	"SOUND RE-MAP 2  "	; map name
+	.ascii	"RE-MAP 2 GROUP 1"	; group 1
+	.ascii	"RE-MAP 2 GROUP 2"	; group 2
+	.ascii	"RE-MAP 2 GROUP 3"	; group 3
+	.ascii	"RE-MAP 2 GROUP 4"	; group 4
+	.ascii	"RE-MAP 2 GROUP 5"	; group 5
+	.ascii	"RE-MAP 2 GROUP 6"	; group 6
+	.ascii	"RE-MAP 2 GROUP 7"	; group 7
+	.ascii	"RE-MAP 2 GROUP 8"	; group 8
+	.ascii	"RE-MAP 2 GROUP 9"	; group 9
+	.ascii	"RE-MAP 2 GROUP10"	; group 10
+	.ascii	"RE-MAP 2 GROUP11"	; group 11
+	.ascii	"RE-MAP 2 GROUP12"	; group 12
+	.ascii	"RE-MAP 2 GROUP13"	; group 13
+	.ascii	"RE-MAP 2 GROUP14"	; group 14
+	.ascii	"RE-MAP 2 GROUP15"	; group 15
+	.ascii	"RE-MAP 2 GROUP16"	; group 16
+	.byte	0, 9, 1, 9, 2, 9, 3, 9, 4, 9, 5, 9, 6, 9, 7, 9	; entries 0-7 {number, source}
+	.byte	8, 9, 9, 9, 10, 9, 11, 9, 12, 9, 13, 9, 14, 9, 15, 9	; entries 8-15 {number, source}
+	.byte	16, 9, 17, 9, 18, 9, 19, 9, 20, 9, 21, 9, 22, 9, 23, 9	; entries 16-23 {number, source}
+	.byte	24, 9, 25, 9, 26, 9, 27, 9, 28, 9, 29, 9, 30, 9, 31, 9	; entries 24-31 {number, source}
+	.byte	32, 9, 33, 9, 34, 9, 35, 9, 36, 9, 37, 9, 38, 9, 39, 9	; entries 32-39 {number, source}
+	.byte	40, 9, 41, 9, 42, 9, 43, 9, 44, 9, 45, 9, 46, 9, 47, 9	; entries 40-47 {number, source}
+	.byte	48, 9, 49, 9, 50, 9, 51, 9, 52, 9, 53, 9, 54, 9, 55, 9	; entries 48-55 {number, source}
+	.byte	56, 9, 57, 9, 58, 9, 59, 9, 60, 9, 61, 9, 62, 9, 63, 9	; entries 56-63 {number, source}
+	.byte	64, 9, 65, 9, 66, 9, 67, 9, 68, 9, 69, 9, 70, 9, 71, 9	; entries 64-71 {number, source}
+	.byte	72, 9, 73, 9, 74, 9, 75, 9, 76, 9, 77, 9, 78, 9, 79, 9	; entries 72-79 {number, source}
+	.byte	80, 9, 81, 9, 82, 9, 83, 9, 84, 9, 85, 9, 86, 9, 87, 9	; entries 80-87 {number, source}
+	.byte	88, 9, 89, 9, 90, 9, 91, 9, 92, 9, 93, 9, 94, 9, 95, 9	; entries 88-95 {number, source}
+	.byte	96, 9, 97, 9, 98, 9, 99, 9, 100, 9, 101, 9, 102, 9, 103, 9	; entries 96-103 {number, source}
+	.byte	104, 9, 105, 9, 106, 9, 107, 9, 108, 9, 109, 9, 110, 9, 111, 9	; entries 104-111 {number, source}
+	.byte	112, 9, 113, 9, 114, 9, 115, 9, 116, 9, 117, 9, 118, 9, 119, 9	; entries 112-119 {number, source}
+	.byte	120, 9, 121, 9, 122, 9, 123, 9, 124, 9, 125, 9, 126, 9, 127, 9	; entries 120-127 {number, source}
+F_01220497_SRM_Map3:
+	.ascii	"GM RE-MAP       "	; map name
+	.ascii	"PIANO           "	; group 1
+	.ascii	"CHROMATIC PERC. "	; group 2
+	.ascii	"ORGAN           "	; group 3
+	.ascii	"GUITAR          "	; group 4
+	.ascii	"BASS            "	; group 5
+	.ascii	"STRINGS         "	; group 6
+	.ascii	"ENSEMBLE        "	; group 7
+	.ascii	"BRASS           "	; group 8
+	.ascii	"REED            "	; group 9
+	.ascii	"PIPE            "	; group 10
+	.ascii	"SYNTH LEAD      "	; group 11
+	.ascii	"SYNTH PAD       "	; group 12
+	.ascii	"SYNTH EFFECTS   "	; group 13
+	.ascii	"ETHNIC          "	; group 14
+	.ascii	"PERCUSSIVE      "	; group 15
+	.ascii	"SOUND EFFECTS   "	; group 16
+	.byte	0, 0, 3, 2, 3, 0, 1, 1, 5, 0, 6, 0, 16, 0, 17, 0	; entries 0-7 {number, source}
+	.byte	12, 0, 9, 0, 7, 0, 8, 0, 10, 0, 11, 0, 14, 0, 38, 1	; entries 8-15 {number, source}
+	.byte	89, 0, 88, 0, 92, 2, 84, 0, 86, 2, 80, 0, 83, 1, 80, 1	; entries 16-23 {number, source}
+	.byte	21, 0, 22, 0, 25, 0, 26, 0, 29, 0, 27, 2, 30, 0, 27, 1	; entries 24-31 {number, source}
+	.byte	43, 0, 40, 1, 42, 0, 40, 2, 41, 0, 41, 1, 46, 0, 45, 0	; entries 32-39 {number, source}
+	.byte	96, 0, 97, 2, 97, 0, 98, 0, 100, 2, 99, 0, 32, 0, 126, 0	; entries 40-47 {number, source}
+	.byte	100, 0, 101, 0, 103, 0, 103, 1, 104, 3, 109, 0, 107, 0, 127, 1	; entries 48-55 {number, source}
+	.byte	48, 0, 52, 0, 55, 0, 50, 0, 54, 1, 56, 0, 60, 0, 62, 4	; entries 56-63 {number, source}
+	.byte	76, 0, 77, 0, 78, 3, 79, 1, 66, 0, 67, 0, 70, 0, 68, 0	; entries 64-71 {number, source}
+	.byte	64, 0, 65, 0, 74, 0, 72, 0, 72, 2, 75, 0, 111, 0, 74, 1	; entries 72-79 {number, source}
+	.byte	117, 0, 118, 1, 72, 3, 117, 2, 27, 3, 106, 1, 119, 0, 46, 2	; entries 80-87 {number, source}
+	.byte	116, 3, 107, 1, 102, 2, 107, 2, 120, 0, 106, 2, 107, 3, 62, 2	; entries 88-95 {number, source}
+	.byte	121, 3, 119, 1, 9, 2, 21, 3, 108, 3, 106, 0, 106, 3, 120, 1	; entries 96-103 {number, source}
+	.byte	38, 0, 33, 0, 36, 0, 37, 0, 39, 0, 73, 0, 96, 2, 73, 1	; entries 104-111 {number, source}
+	.byte	14, 2, 122, 0, 15, 0, 122, 1, 123, 3, 122, 2, 124, 0, 122, 3	; entries 112-119 {number, source}
+	.byte	124, 1, 124, 2, 124, 3, 125, 2, 123, 0, 123, 1, 125, 3, 123, 2	; entries 120-127 {number, source}
+; +0x650..: after the maps, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+	.byte	99, 30, 20, 27, 45, 14, 99, 50, 11, 24, 17, 18, 0, 0, 0, 0
+	.byte	0, 0, 0, 222, 2, 88, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 30, 0, 0, 0, 127, 0, 127, 0, 64, 64, 64, 128, 2, 0, 0
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	32, 30, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0
+	.byte	1, 30, 0, 0, 0, 121, 0, 0, 127, 0, 0, 64, 128, 2, 0, 33
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	33, 30, 0, 0, 0, 1, 0, 24, 1, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0
+	.byte	2, 30, 0, 0, 0, 121, 0, 0, 127, 0, 127, 64, 128, 2, 0, 34
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	34, 30, 0, 0, 0, 1, 0, 24, 1, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0
+	.byte	3, 30, 0, 0, 0, 115, 0, 127, 0, 0, 44, 64, 128, 2, 0, 35
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	35, 30, 0, 0, 0, 1, 0, 24, 1, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0
+	.byte	4, 30, 0, 0, 0, 113, 0, 73, 127, 0, 64, 64, 128, 2, 0, 36
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	36, 30, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0
+	.byte	5, 30, 0, 0, 0, 108, 0, 72, 0, 0, 74, 64, 128, 2, 0, 37
+	.byte	128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	37, 30, 0, 0, 0, 1, 0, 24, 1, 0, 127, 0, 127, 96, 11, 0
+	.byte	63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 2, 1, 0, 0, 0

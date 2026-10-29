@@ -110,3 +110,27 @@
 	.short	\first_block
 	.endm
 	.endif
+
+; ---- generic {tag, length} record header (the panel blocks of .LSW / .SLS that are not a combination)
+	.ifndef	WSA1_TLV_INC
+	.set	WSA1_TLV_INC, 1
+	.macro	wsa_tlv tag, len
+	.byte	\tag, \len
+	.endm
+	.macro	wsa_tlv_end
+	.byte	0xff, 0xff
+	.endm
+; ---- RE-MAP files (.SRM, .CRM, .DRM): wsa1/notes/sysex-probes/sysex_remap_files.py; the ROM holds the three
+; default files as literal images (prom_b 0xF30810 / 0xF30E60 / 0xF314B0).  A 32-byte header: "WSA1 ", the byte
+; +0x0F (0x31 once saved, 0 in the ROM images), three u32 map offsets and a zero word; then three maps.
+	.macro	remap_head b0f, m0, m1, m2
+	.ascii	"WSA1 "
+	.fill	10, 1, 0
+	.byte	\b0f
+	.long	\m0, \m1, \m2, 0
+	.endm
+; A re-map entry: the number and its source ({number, source}: sixteen groups of eight).
+	.macro	remap_entry number, source
+	.byte	\number, \source
+	.endm
+	.endif
