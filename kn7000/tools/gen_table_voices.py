@@ -29,8 +29,18 @@ head + n x 0x7A elements; VoiceModRecFetch 0x4844982A), the multisample headers 
 zone lists, the first data block and the other T tables stay labelled passthroughs:
 their fields are not traced yet (notes/table-semantics-2026-10-29.md).
 """
+import glob
+import os
 import re
 import struct
+
+# The wave-ROM sources' directory entries (src/wave/main.s, sub.s): Main_Ppp_Eeee / Sub_...
+WAVE = set()
+for _f in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "wave", "*.s")):
+    for _ln in open(_f, "rb"):
+        _m = re.match(rb"((?:Main|Sub)_P[0-9A-F]{2}_E[0-9A-F]{3}):", _ln)
+        if _m:
+            WAVE.add(_m.group(1).decode())
 
 HASHES = [  # (D offset of buckets, D offset of descriptor, label, key bytes, payload bytes, reader)
     (0x08, 0x20, "ParamBank", 4, 4, "VoiceParamBankLookupInternal 0x48570DF8: key (MSB<<16 | LSB<<8 | program), "
@@ -196,15 +206,60 @@ def internal_voice_archive(d, s, e, label, ref):
     for o in tone:
         size = 16
         put(o, size, [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 16])}"])
-    pl = []
+    # ---- parameter records, multisample headers, zone lists ----
+    # TgVoiceRoutePtrCalc 0x4C02BE45: key map = base + *(base + param+0) (func_48449DF8),
+    # group = keymap[note], zone = (base + param+4) + (param+0 + 4)[group] * (8 if param+8
+    # bit 7 else 6).  TgPitchNoteResolve adds the zone's s16 +6 only when param+8 bit 7 is set.
+    recs = []
     for i in range(np_):
         r = pr + 16 * i
-        pl.append(f"    .long\t0x{u32(c, r):06x}, 0x{u32(c, r + 4):06x}\t# record {i}: multisample header, zone list")
-        pl.append(f"    .byte\t{hexrow(c[r + 8:r + 16])}")
+        a, b, fl = u32(c, r), u32(c, r + 4), c[r + 8]
+        km = u32(c, a)
+        ng = max(c[km:km + 128]) + 1
+        nz = max(c[a + 4:a + 4 + ng]) + 1
+        recs.append((i, r, a, b, fl, km, ng, nz, 8 if fl & 0x80 else 6))
+        labels[a], labels[b] = f"JkMsHeader{i:03d}", f"JkZones{i:03d}"
+    pl = []
+    for i, r, a, b, fl, km, ng, nz, zs in recs:
+        pl += [f"    jk_param\t{labels[a]} - {label}, {labels[b]} - {label}, 0x{fl:02x}, {c[r + 9]}, {c[r + 10]}, "
+               f"{c[r + 11]}, 0x{u16(c, r + 12):04x}, {c[r + 14]}, {c[r + 15]}\t# record {i}"]
     put(pr, 16 * np_, pl)
     for k, o in enumerate(keymaps):
-        put(o, 128, [f"{labels[o]}:\t\t# key 0..127 -> key group (multisample headers' first word)"] +
-            [f"    .byte\t{hexrow(c[o + i:o + i + 16])}\t# keys {i}-{i + 15}" for i in range(0, 128, 16)])
+        put(o, 128, [f"{labels[o]}:\t\t# key 0..127 -> key group (a multisample header's first word)"] +
+            [f"    .byte\t{', '.join(str(x) for x in c[o + i:o + i + 16])}\t# keys {i}-{i + 15}" for i in range(0, 128, 16)])
+    for i, r, a, b, fl, km, ng, nz, zs in recs:
+        put(a, 4 + ng, [f"    .long\t{labels[km]} - {label}",
+                        f"    .byte\t{', '.join(str(x) for x in c[a + 4:a + 4 + ng])}\t# key group -> zone"])
+        zl = []
+        for k in range(nz):
+            z = b + zs * k
+            page, fb, ent, b4, b5 = c[z], c[z + 1], u16(c, z + 2), c[z + 4], c[z + 5]
+            names = [f"{tg}_P{page:02X}_E{ent:03X}" for tg in ("Main", "Sub") if f"{tg}_P{page:02X}_E{ent:03X}" in WAVE]
+            rec = " / ".join(names) if names else f"page 0x{page:02x} entry 0x{ent:03x}: no such wave entry"
+            if zs == 8:
+                zl.append(f"    jk_zone8\t0x{page:02x}, 0x{fb:02x}, 0x{ent:03x}, {b4}, {b5}, "
+                          f"{struct.unpack_from('<h', c, z + 6)[0]}\t# zone {k}: {rec}")
+            else:
+                zl.append(f"    jk_zone6\t0x{page:02x}, 0x{fb:02x}, 0x{ent:03x}, {b4}, {b5}\t# zone {k}: {rec}")
+        put(b, zs * nz, zl)
+    # the alignment between them, and a key map nothing points at
+    zone_items = sorted(o for o in items if keymaps[0] <= o)
+    end_zone = max(o + items[o][0] for o in zone_items)
+    pos_ = keymaps[0]
+    for o in zone_items + [end_zone]:
+        if o > pos_ and pos_ < end_zone:
+            gap = c[pos_:o]
+            if gap == bytes(len(gap)) and len(gap) < 4:
+                put(pos_, len(gap), [f"    .space\t{len(gap)}, 0x00\t# alignment"])
+            elif gap == b"\xff" * len(gap) and len(gap) < 4:
+                put(pos_, len(gap), [f"    .space\t{len(gap)}, 0xff\t# alignment"])
+            elif len(gap) == 128 and list(gap) == sorted(gap):
+                labels[pos_] = "JkKeyMapUnreferenced"
+                put(pos_, 128, ["JkKeyMapUnreferenced:\t\t# a key map no multisample header points at"] +
+                    [f"    .byte\t{', '.join(str(x) for x in gap[i:i + 16])}\t# keys {i}-{i + 15}"
+                     for i in range(0, 128, 16)])
+        if o in items:
+            pos_ = max(pos_, o + items[o][0])
 
     # ---- assemble, passthroughs for the gaps ----
     out = []

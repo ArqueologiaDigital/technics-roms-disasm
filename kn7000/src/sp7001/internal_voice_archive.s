@@ -29429,53 +29429,8010 @@ Voice_Cowbell6_6:
     .ascii	"Cowbell 6    "
     .byte	0x01, 0x00, 0x00	# +0x0D: VoiceSubRecFetch's selector byte
     .byte	0x38, 0x78, 0x1c, 0x00, 0x0a, 0x00, 0x4d, 0x14, 0x30, 0x00, 0x29, 0x00, 0x29, 0x00, 0x29, 0x0e, 0x61, 0x10, 0x00, 0x67, 0x10, 0x47, 0x6d, 0x00, 0x00, 0x00, 0x00, 0x00	# sub-record 0
-JkKeyMap0:		# key 0..127 -> key group (multisample headers' first word)
-    .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01	# keys 0-15
-    .byte	0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02	# keys 16-31
-    .byte	0x02, 0x02, 0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03	# keys 32-47
-    .byte	0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x05, 0x05, 0x05, 0x05	# keys 48-63
-    .byte	0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06	# keys 64-79
-    .byte	0x06, 0x06, 0x06, 0x06, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07	# keys 80-95
-    .byte	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x09, 0x09, 0x09, 0x09	# keys 96-111
-    .byte	0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a	# keys 112-127
-JkKeyMap1:		# key 0..127 -> key group (multisample headers' first word)
-    .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02	# keys 0-15
-    .byte	0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x05, 0x05	# keys 16-31
-    .byte	0x05, 0x05, 0x05, 0x05, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07	# keys 32-47
-    .byte	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x0a, 0x0a, 0x0a, 0x0a	# keys 48-63
-    .byte	0x0a, 0x0a, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0c, 0x0c, 0x0c, 0x0c, 0x0c, 0x0c, 0x0d, 0x0d	# keys 64-79
-    .byte	0x0d, 0x0d, 0x0d, 0x0d, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f	# keys 80-95
-    .byte	0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x12, 0x12, 0x12, 0x12	# keys 96-111
-    .byte	0x12, 0x12, 0x13, 0x13, 0x13, 0x13, 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x14, 0x14, 0x14, 0x14	# keys 112-127
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x10d094, 0x10d114	# not decoded yet
-JkKeyMap2:		# key 0..127 -> key group (multisample headers' first word)
-    .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02	# keys 0-15
-    .byte	0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x04, 0x04, 0x04, 0x04, 0x05, 0x05, 0x06, 0x06	# keys 16-31
-    .byte	0x07, 0x07, 0x07, 0x07, 0x08, 0x08, 0x08, 0x08, 0x09, 0x09, 0x0a, 0x0a, 0x0b, 0x0b, 0x0b, 0x0b	# keys 32-47
-    .byte	0x0c, 0x0c, 0x0c, 0x0c, 0x0d, 0x0d, 0x0e, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x10, 0x10, 0x10, 0x10	# keys 48-63
-    .byte	0x11, 0x11, 0x12, 0x12, 0x13, 0x13, 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x15, 0x15, 0x16, 0x16	# keys 64-79
-    .byte	0x17, 0x17, 0x17, 0x17, 0x18, 0x18, 0x18, 0x18, 0x19, 0x19, 0x1a, 0x1a, 0x1b, 0x1b, 0x1b, 0x1b	# keys 80-95
-    .byte	0x1c, 0x1c, 0x1c, 0x1c, 0x1d, 0x1d, 0x1e, 0x1e, 0x1f, 0x1f, 0x1f, 0x1f, 0x20, 0x20, 0x20, 0x20	# keys 96-111
-    .byte	0x20, 0x20, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22	# keys 112-127
-JkKeyMap3:		# key 0..127 -> key group (multisample headers' first word)
-    .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02	# keys 0-15
-    .byte	0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x04, 0x04, 0x04, 0x05, 0x05, 0x05, 0x06, 0x06	# keys 16-31
-    .byte	0x06, 0x07, 0x07, 0x07, 0x08, 0x08, 0x08, 0x09, 0x09, 0x09, 0x0a, 0x0a, 0x0a, 0x0b, 0x0b, 0x0b	# keys 32-47
-    .byte	0x0c, 0x0c, 0x0c, 0x0d, 0x0d, 0x0d, 0x0e, 0x0e, 0x0e, 0x0f, 0x0f, 0x0f, 0x10, 0x10, 0x10, 0x11	# keys 48-63
-    .byte	0x11, 0x11, 0x12, 0x12, 0x12, 0x13, 0x13, 0x13, 0x14, 0x14, 0x14, 0x15, 0x15, 0x15, 0x16, 0x16	# keys 64-79
-    .byte	0x16, 0x17, 0x17, 0x17, 0x18, 0x18, 0x18, 0x19, 0x19, 0x19, 0x1a, 0x1a, 0x1a, 0x1b, 0x1b, 0x1b	# keys 80-95
-    .byte	0x1c, 0x1c, 0x1c, 0x1d, 0x1d, 0x1d, 0x1e, 0x1e, 0x1e, 0x1f, 0x1f, 0x1f, 0x20, 0x20, 0x20, 0x20	# keys 96-111
-    .byte	0x20, 0x20, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22	# keys 112-127
-JkKeyMap4:		# key 0..127 -> key group (multisample headers' first word)
-    .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02	# keys 0-15
-    .byte	0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b	# keys 16-31
-    .byte	0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b	# keys 32-47
-    .byte	0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a, 0x2b	# keys 48-63
-    .byte	0x2c, 0x2d, 0x2e, 0x2f, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b	# keys 64-79
-    .byte	0x3c, 0x3d, 0x3e, 0x3f, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b	# keys 80-95
-    .byte	0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x5b	# keys 96-111
-    .byte	0x5c, 0x5d, 0x5e, 0x5f, 0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6a, 0x6b	# keys 112-127
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x10d294, 0x120bb8	# not decoded yet
+JkKeyMap0:		# key 0..127 -> key group (a multisample header's first word)
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1	# keys 0-15
+    .byte	1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2	# keys 16-31
+    .byte	2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# keys 32-47
+    .byte	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5	# keys 48-63
+    .byte	5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6	# keys 64-79
+    .byte	6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# keys 80-95
+    .byte	8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9	# keys 96-111
+    .byte	9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10	# keys 112-127
+JkKeyMap1:		# key 0..127 -> key group (a multisample header's first word)
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2	# keys 0-15
+    .byte	2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5	# keys 16-31
+    .byte	5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7	# keys 32-47
+    .byte	8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10	# keys 48-63
+    .byte	10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 13	# keys 64-79
+    .byte	13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15	# keys 80-95
+    .byte	16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18	# keys 96-111
+    .byte	18, 18, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20	# keys 112-127
+JkKeyMapUnreferenced:		# a key map no multisample header points at
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2	# keys 0-15
+    .byte	2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5	# keys 16-31
+    .byte	6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9	# keys 32-47
+    .byte	10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13	# keys 48-63
+    .byte	14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17	# keys 64-79
+    .byte	18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21	# keys 80-95
+    .byte	22, 22, 22, 22, 23, 23, 23, 23, 24, 24, 24, 24, 25, 25, 25, 25	# keys 96-111
+    .byte	25, 25, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27	# keys 112-127
+JkKeyMap2:		# key 0..127 -> key group (a multisample header's first word)
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2	# keys 0-15
+    .byte	2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6	# keys 16-31
+    .byte	7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 10, 10, 11, 11, 11, 11	# keys 32-47
+    .byte	12, 12, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16	# keys 48-63
+    .byte	17, 17, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 22, 22	# keys 64-79
+    .byte	23, 23, 23, 23, 24, 24, 24, 24, 25, 25, 26, 26, 27, 27, 27, 27	# keys 80-95
+    .byte	28, 28, 28, 28, 29, 29, 30, 30, 31, 31, 31, 31, 32, 32, 32, 32	# keys 96-111
+    .byte	32, 32, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 34	# keys 112-127
+JkKeyMap3:		# key 0..127 -> key group (a multisample header's first word)
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2	# keys 0-15
+    .byte	2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6	# keys 16-31
+    .byte	6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11	# keys 32-47
+    .byte	12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 17	# keys 48-63
+    .byte	17, 17, 18, 18, 18, 19, 19, 19, 20, 20, 20, 21, 21, 21, 22, 22	# keys 64-79
+    .byte	22, 23, 23, 23, 24, 24, 24, 25, 25, 25, 26, 26, 26, 27, 27, 27	# keys 80-95
+    .byte	28, 28, 28, 29, 29, 29, 30, 30, 30, 31, 31, 31, 32, 32, 32, 32	# keys 96-111
+    .byte	32, 32, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 34	# keys 112-127
+JkKeyMap4:		# key 0..127 -> key group (a multisample header's first word)
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2	# keys 0-15
+    .byte	2, 2, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11	# keys 16-31
+    .byte	12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27	# keys 32-47
+    .byte	28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43	# keys 48-63
+    .byte	44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59	# keys 64-79
+    .byte	60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75	# keys 80-95
+    .byte	76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91	# keys 96-111
+    .byte	92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107	# keys 112-127
+JkMsHeader013:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones013:
+    jk_zone6	0x01, 0x14, 0x019, 237, 0	# zone 0: Main_P01_E019 / Sub_P01_E019
+    jk_zone6	0x01, 0x04, 0x019, 237, 0	# zone 1: Main_P01_E019 / Sub_P01_E019
+    jk_zone6	0x01, 0x04, 0x018, 237, 0	# zone 2: Main_P01_E018 / Sub_P01_E018
+    jk_zone6	0x01, 0x04, 0x01a, 242, 0	# zone 3: Main_P01_E01A / Sub_P01_E01A
+    jk_zone6	0x01, 0x04, 0x01b, 236, 0	# zone 4: Main_P01_E01B / Sub_P01_E01B
+    jk_zone6	0x01, 0x04, 0x01c, 230, 0	# zone 5: Main_P01_E01C / Sub_P01_E01C
+    jk_zone6	0x01, 0x04, 0x01d, 246, 0	# zone 6: Main_P01_E01D / Sub_P01_E01D
+    jk_zone6	0x01, 0x04, 0x01e, 246, 0	# zone 7: Main_P01_E01E / Sub_P01_E01E
+    jk_zone6	0x01, 0x04, 0x01f, 246, 0	# zone 8: Main_P01_E01F / Sub_P01_E01F
+    jk_zone6	0x01, 0x04, 0x007, 242, 0	# zone 9: Main_P01_E007 / Sub_P01_E007
+JkMsHeader032:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones032:
+    jk_zone6	0x03, 0x14, 0x01d, 251, 0	# zone 0: Main_P03_E01D / Sub_P03_E01D
+    jk_zone6	0x03, 0x04, 0x01c, 251, 0	# zone 1: Main_P03_E01C / Sub_P03_E01C
+    jk_zone6	0x03, 0x04, 0x01e, 253, 0	# zone 2: Main_P03_E01E / Sub_P03_E01E
+    jk_zone6	0x03, 0x04, 0x01f, 250, 0	# zone 3: Main_P03_E01F / Sub_P03_E01F
+    jk_zone6	0x03, 0x04, 0x021, 253, 0	# zone 4: Main_P03_E021 / Sub_P03_E021
+    jk_zone6	0x03, 0x04, 0x020, 253, 0	# zone 5: Main_P03_E020 / Sub_P03_E020
+    jk_zone6	0x03, 0x04, 0x022, 246, 0	# zone 6: Main_P03_E022 / Sub_P03_E022
+    jk_zone6	0x03, 0x04, 0x023, 247, 0	# zone 7: Main_P03_E023 / Sub_P03_E023
+    jk_zone6	0x03, 0x04, 0x024, 249, 0	# zone 8: Main_P03_E024 / Sub_P03_E024
+    jk_zone6	0x03, 0x04, 0x025, 249, 0	# zone 9: Main_P03_E025 / Sub_P03_E025
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 10: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 11: Main_P03_E010 / Sub_P03_E010
+JkMsHeader034:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones034:
+    jk_zone6	0x03, 0x14, 0x059, 241, 0	# zone 0: Main_P03_E059 / Sub_P03_E059
+    jk_zone6	0x03, 0x14, 0x059, 241, 0	# zone 1: Main_P03_E059 / Sub_P03_E059
+    jk_zone6	0x03, 0x04, 0x059, 241, 0	# zone 2: Main_P03_E059 / Sub_P03_E059
+    jk_zone6	0x03, 0x04, 0x05b, 247, 0	# zone 3: Main_P03_E05B / Sub_P03_E05B
+    jk_zone6	0x03, 0x04, 0x05d, 254, 0	# zone 4: Main_P03_E05D / Sub_P03_E05D
+    jk_zone6	0x03, 0x04, 0x05c, 254, 0	# zone 5: Main_P03_E05C / Sub_P03_E05C
+    jk_zone6	0x03, 0x04, 0x05e, 252, 0	# zone 6: Main_P03_E05E / Sub_P03_E05E
+    jk_zone6	0x03, 0x04, 0x05f, 252, 0	# zone 7: Main_P03_E05F / Sub_P03_E05F
+    jk_zone6	0x03, 0x04, 0x060, 250, 0	# zone 8: Main_P03_E060 / Sub_P03_E060
+    jk_zone6	0x03, 0x04, 0x061, 247, 0	# zone 9: Main_P03_E061 / Sub_P03_E061
+    jk_zone6	0x03, 0x04, 0x062, 247, 0	# zone 10: Main_P03_E062 / Sub_P03_E062
+    jk_zone6	0x03, 0x04, 0x063, 243, 0	# zone 11: Main_P03_E063 / Sub_P03_E063
+    jk_zone6	0x03, 0x04, 0x064, 243, 0	# zone 12: Main_P03_E064 / Sub_P03_E064
+    .space	2, 0xff	# alignment
+JkMsHeader035:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 7, 7, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones035:
+    jk_zone6	0x03, 0x14, 0x031, 230, 0	# zone 0: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x14, 0x031, 234, 0	# zone 1: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x14, 0x031, 238, 0	# zone 2: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x04, 0x031, 242, 0	# zone 3: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x04, 0x031, 246, 0	# zone 4: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x04, 0x031, 250, 0	# zone 5: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x04, 0x032, 246, 0	# zone 6: Main_P03_E032 / Sub_P03_E032
+    jk_zone6	0x03, 0x04, 0x033, 246, 0	# zone 7: Main_P03_E033 / Sub_P03_E033
+    jk_zone6	0x03, 0x04, 0x034, 250, 0	# zone 8: Main_P03_E034 / Sub_P03_E034
+    jk_zone6	0x03, 0x04, 0x035, 250, 0	# zone 9: Main_P03_E035 / Sub_P03_E035
+    jk_zone6	0x03, 0x04, 0x036, 250, 0	# zone 10: Main_P03_E036 / Sub_P03_E036
+    jk_zone6	0x03, 0x04, 0x037, 250, 0	# zone 11: Main_P03_E037 / Sub_P03_E037
+JkMsHeader037:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones037:
+    jk_zone8	0x03, 0xb4, 0x02b, 3, 0, -1726	# zone 0: Main_P03_E02B / Sub_P03_E02B
+    jk_zone8	0x03, 0x14, 0x02c, 7, 0, -216	# zone 1: Main_P03_E02C / Sub_P03_E02C
+    jk_zone8	0x03, 0x54, 0x02d, 7, 0, -1227	# zone 2: Main_P03_E02D / Sub_P03_E02D
+    jk_zone8	0x03, 0x94, 0x02e, 7, 0, -1999	# zone 3: Main_P03_E02E / Sub_P03_E02E
+    jk_zone8	0x03, 0xf4, 0x02f, 6, 0, -3027	# zone 4: Main_P03_E02F / Sub_P03_E02F
+    jk_zone8	0x03, 0x54, 0x030, 8, 0, 0	# zone 5: Main_P03_E030 / Sub_P03_E030
+    jk_zone8	0x03, 0x04, 0x064, 239, 0, 0	# zone 6: Main_P03_E064 / Sub_P03_E064
+JkMsHeader038:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones038:
+    jk_zone8	0x03, 0x54, 0x03e, 1, 0, -2264	# zone 0: Main_P03_E03E / Sub_P03_E03E
+    jk_zone8	0x03, 0xd4, 0x03f, 2, 0, -1600	# zone 1: Main_P03_E03F / Sub_P03_E03F
+    jk_zone8	0x03, 0xf4, 0x040, 0, 0, -2107	# zone 2: Main_P03_E040 / Sub_P03_E040
+    jk_zone8	0x03, 0x34, 0x041, 249, 0, -2845	# zone 3: Main_P03_E041 / Sub_P03_E041
+    jk_zone8	0x03, 0x94, 0x042, 1, 0, -1060	# zone 4: Main_P03_E042 / Sub_P03_E042
+    jk_zone8	0x03, 0xd4, 0x043, 253, 0, -1593	# zone 5: Main_P03_E043 / Sub_P03_E043
+    jk_zone8	0x03, 0x34, 0x044, 253, 0, -2852	# zone 6: Main_P03_E044 / Sub_P03_E044
+    jk_zone8	0x03, 0x54, 0x045, 0, 0, -277	# zone 7: Main_P03_E045 / Sub_P03_E045
+    jk_zone8	0x03, 0x94, 0x046, 2, 0, -1003	# zone 8: Main_P03_E046 / Sub_P03_E046
+    jk_zone8	0x03, 0xd4, 0x047, 12, 0, -1773	# zone 9: Main_P03_E047 / Sub_P03_E047
+    jk_zone8	0x03, 0x14, 0x048, 9, 0, -2550	# zone 10: Main_P03_E048 / Sub_P03_E048
+    jk_zone8	0x03, 0x54, 0x049, 7, 0, -275	# zone 11: Main_P03_E049 / Sub_P03_E049
+    jk_zone8	0x03, 0x94, 0x04a, 3, 0, -1038	# zone 12: Main_P03_E04A / Sub_P03_E04A
+JkMsHeader041:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones041:
+    jk_zone8	0x03, 0xd4, 0x04b, 2, 0, 0	# zone 0: Main_P03_E04B / Sub_P03_E04B
+    jk_zone8	0x03, 0x54, 0x04c, 255, 0, -1230	# zone 1: Main_P03_E04C / Sub_P03_E04C
+    jk_zone8	0x03, 0xb4, 0x04d, 3, 0, -2246	# zone 2: Main_P03_E04D / Sub_P03_E04D
+    jk_zone8	0x03, 0xf4, 0x04e, 255, 0, -3027	# zone 3: Main_P03_E04E / Sub_P03_E04E
+    jk_zone8	0x03, 0x34, 0x04f, 4, 0, -725	# zone 4: Main_P03_E04F / Sub_P03_E04F
+    jk_zone8	0x03, 0x94, 0x050, 8, 0, -1451	# zone 5: Main_P03_E050 / Sub_P03_E050
+    jk_zone8	0x03, 0xb4, 0x051, 10, 0, -2286	# zone 6: Main_P03_E051 / Sub_P03_E051
+    jk_zone8	0x03, 0xd4, 0x052, 12, 0, -2778	# zone 7: Main_P03_E052 / Sub_P03_E052
+    jk_zone8	0x03, 0x14, 0x053, 9, 0, 0	# zone 8: Main_P03_E053 / Sub_P03_E053
+    jk_zone8	0x03, 0x54, 0x054, 13, 0, 0	# zone 9: Main_P03_E054 / Sub_P03_E054
+JkMsHeader042:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones042:
+    jk_zone8	0x03, 0x54, 0x065, 251, 0, 0	# zone 0: Main_P03_E065 / Sub_P03_E065
+    jk_zone8	0x03, 0xd4, 0x066, 251, 0, -1367	# zone 1: Main_P03_E066 / Sub_P03_E066
+    jk_zone8	0x03, 0x54, 0x067, 250, 0, 8	# zone 2: Main_P03_E067 / Sub_P03_E067
+    jk_zone8	0x03, 0x14, 0x072, 253, 0, -4011	# zone 3: Main_P03_E072
+    jk_zone8	0x03, 0xf4, 0x02f, 246, 0, -2003	# zone 4: Main_P03_E02F / Sub_P03_E02F
+    jk_zone8	0x03, 0x54, 0x030, 248, 0, 1024	# zone 5: Main_P03_E030 / Sub_P03_E030
+    jk_zone8	0x03, 0x04, 0x064, 223, 0, 1024	# zone 6: Main_P03_E064 / Sub_P03_E064
+JkMsHeader045:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones045:
+    jk_zone6	0x03, 0x14, 0x055, 249, 0	# zone 0: Main_P03_E055 / Sub_P03_E055
+    jk_zone6	0x03, 0x04, 0x055, 249, 0	# zone 1: Main_P03_E055 / Sub_P03_E055
+    jk_zone6	0x03, 0x04, 0x056, 255, 0	# zone 2: Main_P03_E056 / Sub_P03_E056
+    jk_zone6	0x03, 0x14, 0x057, 255, 0	# zone 3: Main_P03_E057 / Sub_P03_E057
+    jk_zone6	0x03, 0x04, 0x057, 255, 0	# zone 4: Main_P03_E057 / Sub_P03_E057
+    jk_zone6	0x03, 0x04, 0x058, 255, 0	# zone 5: Main_P03_E058 / Sub_P03_E058
+JkMsHeader046:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones046:
+    jk_zone6	0x02, 0x14, 0x003, 251, 0	# zone 0: Main_P02_E003 / Sub_P02_E003
+    jk_zone6	0x02, 0x04, 0x003, 251, 0	# zone 1: Main_P02_E003 / Sub_P02_E003
+    jk_zone6	0x02, 0x04, 0x005, 247, 0	# zone 2: Main_P02_E005 / Sub_P02_E005
+    jk_zone6	0x02, 0x04, 0x004, 247, 0	# zone 3: Main_P02_E004 / Sub_P02_E004
+    jk_zone6	0x02, 0x04, 0x006, 248, 0	# zone 4: Main_P02_E006 / Sub_P02_E006
+    jk_zone6	0x02, 0x04, 0x008, 245, 0	# zone 5: Main_P02_E008 / Sub_P02_E008
+    jk_zone6	0x02, 0x04, 0x007, 245, 0	# zone 6: Main_P02_E007 / Sub_P02_E007
+    jk_zone6	0x02, 0x04, 0x009, 245, 0	# zone 7: Main_P02_E009 / Sub_P02_E009
+JkMsHeader050:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones050:
+    jk_zone6	0x01, 0xb4, 0x020, 255, 0	# zone 0: Main_P01_E020 / Sub_P01_E020
+    jk_zone6	0x01, 0x54, 0x021, 252, 0	# zone 1: Main_P01_E021 / Sub_P01_E021
+    jk_zone6	0x01, 0x14, 0x022, 253, 0	# zone 2: Main_P01_E022 / Sub_P01_E022
+    jk_zone6	0x01, 0x14, 0x023, 249, 0	# zone 3: Main_P01_E023 / Sub_P01_E023
+    jk_zone6	0x01, 0x04, 0x023, 249, 0	# zone 4: Main_P01_E023 / Sub_P01_E023
+    jk_zone6	0x01, 0x04, 0x06e, 246, 0	# zone 5: Main_P01_E06E / Sub_P01_E06E
+    jk_zone6	0x01, 0x04, 0x06f, 246, 0	# zone 6: Main_P01_E06F / Sub_P01_E06F
+    jk_zone6	0x01, 0xb4, 0x076, 237, 0	# zone 7: Main_P01_E076 / Sub_P01_E076
+JkMsHeader057:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones057:
+    jk_zone8	0x01, 0xd4, 0x056, 0, 0, -1491	# zone 0: Main_P01_E056 / Sub_P01_E056
+    jk_zone8	0x01, 0x54, 0x057, 254, 0, -908	# zone 1: Main_P01_E057 / Sub_P01_E057
+    jk_zone8	0x01, 0xb4, 0x058, 0, 0, -2219	# zone 2: Main_P01_E058 / Sub_P01_E058
+    jk_zone8	0x01, 0x54, 0x059, 242, 0, -1001	# zone 3: Main_P01_E059 / Sub_P01_E059
+    jk_zone8	0x01, 0x94, 0x05a, 244, 0, -1777	# zone 4: Main_P01_E05A / Sub_P01_E05A
+    jk_zone8	0x01, 0xd4, 0x05b, 252, 0, -1797	# zone 5: Main_P01_E05B / Sub_P01_E05B
+    jk_zone8	0x01, 0x14, 0x02c, 249, 0, -216	# zone 6: Main_P01_E02C / Sub_P01_E02C
+JkMsHeader060:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones060:
+    jk_zone6	0x01, 0x74, 0x070, 255, 0	# zone 0: Main_P01_E070 / Sub_P01_E070
+    jk_zone6	0x01, 0xd4, 0x071, 252, 0	# zone 1: Main_P01_E071 / Sub_P01_E071
+    jk_zone6	0x01, 0x54, 0x072, 0, 0	# zone 2: Main_P01_E072 / Sub_P01_E072
+    jk_zone6	0x01, 0xd4, 0x073, 255, 0	# zone 3: Main_P01_E073 / Sub_P01_E073
+    jk_zone6	0x01, 0x34, 0x074, 252, 0	# zone 4: Main_P01_E074 / Sub_P01_E074
+    jk_zone6	0x01, 0x54, 0x075, 252, 0	# zone 5: Main_P01_E075 / Sub_P01_E075
+    jk_zone6	0x01, 0xb4, 0x076, 245, 0	# zone 6: Main_P01_E076 / Sub_P01_E076
+    .space	2, 0xff	# alignment
+JkMsHeader064:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones064:
+    jk_zone6	0x01, 0x18, 0x000, 254, 0	# zone 0: Main_P01_E000 / Sub_P01_E000
+    jk_zone6	0x01, 0x08, 0x000, 254, 0	# zone 1: Main_P01_E000 / Sub_P01_E000
+    jk_zone6	0x01, 0x08, 0x001, 254, 0	# zone 2: Main_P01_E001 / Sub_P01_E001
+    jk_zone6	0x01, 0x08, 0x002, 0, 0	# zone 3: Main_P01_E002 / Sub_P01_E002
+    jk_zone6	0x01, 0x08, 0x003, 252, 0	# zone 4: Main_P01_E003 / Sub_P01_E003
+    jk_zone6	0x01, 0x08, 0x004, 252, 0	# zone 5: Main_P01_E004 / Sub_P01_E004
+    jk_zone6	0x01, 0x08, 0x005, 250, 0	# zone 6: Main_P01_E005 / Sub_P01_E005
+    jk_zone6	0x01, 0x08, 0x006, 254, 0	# zone 7: Main_P01_E006 / Sub_P01_E006
+    jk_zone6	0x01, 0x08, 0x007, 254, 0	# zone 8: Main_P01_E007 / Sub_P01_E007
+    jk_zone6	0x01, 0x08, 0x008, 246, 0	# zone 9: Main_P01_E008 / Sub_P01_E008
+    jk_zone6	0x01, 0x08, 0x009, 246, 0	# zone 10: Main_P01_E009 / Sub_P01_E009
+    jk_zone6	0x03, 0x04, 0x00a, 246, 0	# zone 11: Main_P03_E00A / Sub_P03_E00A
+    jk_zone6	0x03, 0x04, 0x00d, 233, 0	# zone 12: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x04, 0x00f, 222, 0	# zone 13: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 222, 0	# zone 14: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader069:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones069:
+    jk_zone6	0x01, 0x18, 0x033, 254, 0	# zone 0: Main_P01_E033 / Sub_P01_E033
+    jk_zone6	0x01, 0x08, 0x033, 254, 0	# zone 1: Main_P01_E033 / Sub_P01_E033
+    jk_zone6	0x01, 0x08, 0x034, 252, 0	# zone 2: Main_P01_E034 / Sub_P01_E034
+    jk_zone6	0x01, 0x08, 0x035, 249, 0	# zone 3: Main_P01_E035 / Sub_P01_E035
+    jk_zone6	0x01, 0x08, 0x036, 2, 0	# zone 4: Main_P01_E036 / Sub_P01_E036
+    jk_zone6	0x01, 0x08, 0x037, 248, 0	# zone 5: Main_P01_E037 / Sub_P01_E037
+    jk_zone6	0x01, 0x08, 0x038, 251, 0	# zone 6: Main_P01_E038 / Sub_P01_E038
+    jk_zone6	0x01, 0x08, 0x039, 244, 0	# zone 7: Main_P01_E039 / Sub_P01_E039
+    jk_zone6	0x01, 0x08, 0x03a, 244, 0	# zone 8: Main_P01_E03A / Sub_P01_E03A
+    jk_zone6	0x01, 0x08, 0x03b, 244, 0	# zone 9: Main_P01_E03B / Sub_P01_E03B
+    jk_zone6	0x03, 0x04, 0x00d, 229, 0	# zone 10: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x04, 0x00f, 218, 0	# zone 11: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 218, 0	# zone 12: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader071:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones071:
+    jk_zone6	0x01, 0x18, 0x048, 250, 0	# zone 0: Main_P01_E048 / Sub_P01_E048
+    jk_zone6	0x01, 0x08, 0x048, 250, 0	# zone 1: Main_P01_E048 / Sub_P01_E048
+    jk_zone6	0x01, 0x08, 0x04c, 248, 0	# zone 2: Main_P01_E04C / Sub_P01_E04C
+    jk_zone6	0x01, 0x08, 0x04f, 251, 0	# zone 3: Main_P01_E04F / Sub_P01_E04F
+    jk_zone6	0x01, 0x08, 0x052, 252, 0	# zone 4: Main_P01_E052 / Sub_P01_E052
+    jk_zone6	0x01, 0x08, 0x054, 252, 0	# zone 5: Main_P01_E054 / Sub_P01_E054
+    jk_zone6	0x01, 0x08, 0x057, 255, 0	# zone 6: Main_P01_E057 / Sub_P01_E057
+    jk_zone6	0x01, 0x08, 0x059, 247, 0	# zone 7: Main_P01_E059 / Sub_P01_E059
+    jk_zone6	0x01, 0x08, 0x05a, 247, 0	# zone 8: Main_P01_E05A / Sub_P01_E05A
+    jk_zone6	0x01, 0x08, 0x05b, 247, 0	# zone 9: Main_P01_E05B / Sub_P01_E05B
+    jk_zone6	0x08, 0x04, 0x01a, 248, 0	# zone 10: Main_P08_E01A / Sub_P08_E01A
+    .space	2, 0xff	# alignment
+JkMsHeader073:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones073:
+    jk_zone6	0x01, 0x18, 0x05f, 247, 0	# zone 0: Main_P01_E05F / Sub_P01_E05F
+    jk_zone6	0x01, 0x08, 0x05f, 247, 0	# zone 1: Main_P01_E05F / Sub_P01_E05F
+    jk_zone6	0x01, 0x08, 0x061, 247, 0	# zone 2: Main_P01_E061 / Sub_P01_E061
+    jk_zone6	0x01, 0x08, 0x060, 247, 0	# zone 3: Main_P01_E060 / Sub_P01_E060
+    jk_zone6	0x01, 0x08, 0x062, 251, 0	# zone 4: Main_P01_E062 / Sub_P01_E062
+    jk_zone6	0x01, 0x08, 0x063, 248, 0	# zone 5: Main_P01_E063 / Sub_P01_E063
+    jk_zone6	0x01, 0x08, 0x064, 248, 0	# zone 6: Main_P01_E064 / Sub_P01_E064
+    jk_zone6	0x01, 0x08, 0x065, 250, 0	# zone 7: Main_P01_E065 / Sub_P01_E065
+    jk_zone6	0x01, 0x08, 0x067, 252, 0	# zone 8: Main_P01_E067 / Sub_P01_E067
+    jk_zone6	0x01, 0x08, 0x066, 252, 0	# zone 9: Main_P01_E066 / Sub_P01_E066
+    jk_zone6	0x01, 0x08, 0x068, 252, 0	# zone 10: Main_P01_E068 / Sub_P01_E068
+    jk_zone6	0x03, 0x34, 0x02a, 243, 0	# zone 11: Main_P03_E02A / Sub_P03_E02A
+    jk_zone6	0x03, 0x04, 0x025, 1, 0	# zone 12: Main_P03_E025 / Sub_P03_E025
+    jk_zone6	0x03, 0x04, 0x00f, 238, 0	# zone 13: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 238, 0	# zone 14: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader075:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 5, 5, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones075:
+    jk_zone6	0x01, 0x18, 0x06d, 253, 0	# zone 0: Main_P01_E06D / Sub_P01_E06D
+    jk_zone6	0x01, 0x08, 0x06d, 253, 0	# zone 1: Main_P01_E06D / Sub_P01_E06D
+    jk_zone6	0x01, 0x08, 0x06e, 255, 0	# zone 2: Main_P01_E06E / Sub_P01_E06E
+    jk_zone6	0x01, 0x08, 0x06f, 250, 0	# zone 3: Main_P01_E06F / Sub_P01_E06F
+    jk_zone6	0x01, 0x08, 0x070, 251, 0	# zone 4: Main_P01_E070 / Sub_P01_E070
+    jk_zone6	0x01, 0x08, 0x071, 251, 0	# zone 5: Main_P01_E071 / Sub_P01_E071
+    jk_zone6	0x08, 0x04, 0x01a, 244, 0	# zone 6: Main_P08_E01A / Sub_P08_E01A
+    .space	2, 0xff	# alignment
+JkMsHeader079:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones079:
+    jk_zone6	0x03, 0x18, 0x001, 244, 0	# zone 0: Main_P03_E001 / Sub_P03_E001
+    jk_zone6	0x03, 0x08, 0x001, 244, 0	# zone 1: Main_P03_E001 / Sub_P03_E001
+    jk_zone6	0x03, 0x08, 0x000, 244, 0	# zone 2: Main_P03_E000 / Sub_P03_E000
+    jk_zone6	0x03, 0x08, 0x002, 244, 0	# zone 3: Main_P03_E002 / Sub_P03_E002
+    jk_zone6	0x03, 0x08, 0x003, 243, 0	# zone 4: Main_P03_E003 / Sub_P03_E003
+    jk_zone6	0x03, 0x08, 0x004, 248, 0	# zone 5: Main_P03_E004 / Sub_P03_E004
+    jk_zone6	0x03, 0x08, 0x005, 247, 0	# zone 6: Main_P03_E005 / Sub_P03_E005
+    jk_zone6	0x03, 0x08, 0x006, 244, 0	# zone 7: Main_P03_E006 / Sub_P03_E006
+    jk_zone6	0x03, 0x08, 0x007, 250, 0	# zone 8: Main_P03_E007 / Sub_P03_E007
+    jk_zone6	0x03, 0x08, 0x008, 246, 0	# zone 9: Main_P03_E008 / Sub_P03_E008
+    jk_zone6	0x03, 0x08, 0x009, 251, 0	# zone 10: Main_P03_E009 / Sub_P03_E009
+    jk_zone6	0x03, 0x08, 0x00a, 251, 0	# zone 11: Main_P03_E00A / Sub_P03_E00A
+JkMsHeader080:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones080:
+    jk_zone6	0x00, 0x18, 0x003, 255, 0	# zone 0: Main_P00_E003 / Sub_P00_E003
+    jk_zone6	0x00, 0x08, 0x003, 255, 0	# zone 1: Main_P00_E003 / Sub_P00_E003
+    jk_zone6	0x00, 0x08, 0x005, 252, 0	# zone 2: Main_P00_E005 / Sub_P00_E005
+    jk_zone6	0x00, 0x08, 0x004, 252, 0	# zone 3: Main_P00_E004 / Sub_P00_E004
+    jk_zone6	0x00, 0x08, 0x006, 251, 0	# zone 4: Main_P00_E006 / Sub_P00_E006
+    jk_zone6	0x00, 0x08, 0x007, 248, 0	# zone 5: Main_P00_E007 / Sub_P00_E007
+    jk_zone6	0x00, 0x08, 0x008, 248, 0	# zone 6: Main_P00_E008 / Sub_P00_E008
+    jk_zone6	0x00, 0x08, 0x017, 251, 0	# zone 7: Main_P00_E017 / Sub_P00_E017
+    jk_zone6	0x09, 0x08, 0x008, 240, 0	# zone 8: Main_P09_E008 / Sub_P09_E008
+    jk_zone6	0x03, 0x04, 0x00f, 224, 0	# zone 9: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 224, 0	# zone 10: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader081:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 6, 6, 7, 7, 7, 8, 9, 9, 10, 10, 11, 11, 11	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones081:
+    jk_zone6	0x00, 0x18, 0x00b, 250, 0	# zone 0: Main_P00_E00B / Sub_P00_E00B
+    jk_zone6	0x00, 0x08, 0x00b, 250, 0	# zone 1: Main_P00_E00B / Sub_P00_E00B
+    jk_zone6	0x00, 0x08, 0x00a, 250, 0	# zone 2: Main_P00_E00A / Sub_P00_E00A
+    jk_zone6	0x00, 0x08, 0x00c, 252, 0	# zone 3: Main_P00_E00C / Sub_P00_E00C
+    jk_zone6	0x00, 0x08, 0x00e, 254, 0	# zone 4: Main_P00_E00E / Sub_P00_E00E
+    jk_zone6	0x00, 0x08, 0x00d, 254, 0	# zone 5: Main_P00_E00D / Sub_P00_E00D
+    jk_zone6	0x00, 0x08, 0x00f, 243, 0	# zone 6: Main_P00_E00F / Sub_P00_E00F
+    jk_zone6	0x00, 0x08, 0x010, 243, 0	# zone 7: Main_P00_E010 / Sub_P00_E010
+    jk_zone6	0x05, 0x04, 0x007, 239, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    jk_zone6	0x05, 0x04, 0x008, 239, 0	# zone 9: Main_P05_E008 / Sub_P05_E008
+    jk_zone6	0x03, 0x04, 0x00f, 226, 0	# zone 10: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 226, 0	# zone 11: Main_P03_E010 / Sub_P03_E010
+JkMsHeader083:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones083:
+    jk_zone6	0x09, 0x18, 0x001, 243, 0	# zone 0: Main_P09_E001 / Sub_P09_E001
+    jk_zone6	0x09, 0x08, 0x001, 243, 0	# zone 1: Main_P09_E001 / Sub_P09_E001
+    jk_zone6	0x09, 0x08, 0x000, 243, 0	# zone 2: Main_P09_E000 / Sub_P09_E000
+    jk_zone6	0x09, 0x08, 0x002, 247, 0	# zone 3: Main_P09_E002 / Sub_P09_E002
+    jk_zone6	0x09, 0x08, 0x003, 250, 0	# zone 4: Main_P09_E003 / Sub_P09_E003
+    jk_zone6	0x09, 0x08, 0x004, 250, 0	# zone 5: Main_P09_E004 / Sub_P09_E004
+    jk_zone6	0x09, 0x08, 0x005, 253, 0	# zone 6: Main_P09_E005 / Sub_P09_E005
+    jk_zone6	0x09, 0x08, 0x006, 248, 0	# zone 7: Main_P09_E006 / Sub_P09_E006
+    jk_zone6	0x09, 0x08, 0x007, 248, 0	# zone 8: Main_P09_E007 / Sub_P09_E007
+    jk_zone6	0x09, 0x08, 0x008, 248, 0	# zone 9: Main_P09_E008 / Sub_P09_E008
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 10: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 11: Main_P03_E010 / Sub_P03_E010
+JkMsHeader086:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 8, 8	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones086:
+    jk_zone6	0x01, 0x18, 0x075, 255, 0	# zone 0: Main_P01_E075 / Sub_P01_E075
+    jk_zone6	0x01, 0x08, 0x075, 255, 0	# zone 1: Main_P01_E075 / Sub_P01_E075
+    jk_zone6	0x01, 0x08, 0x076, 234, 0	# zone 2: Main_P01_E076 / Sub_P01_E076
+    jk_zone6	0x01, 0x08, 0x077, 245, 0	# zone 3: Main_P01_E077 / Sub_P01_E077
+    jk_zone6	0x01, 0x08, 0x079, 243, 0	# zone 4: Main_P01_E079 / Sub_P01_E079
+    jk_zone6	0x03, 0x04, 0x00a, 242, 0	# zone 5: Main_P03_E00A / Sub_P03_E00A
+    jk_zone6	0x03, 0x04, 0x00d, 229, 0	# zone 6: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x04, 0x00f, 218, 0	# zone 7: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 218, 0	# zone 8: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader087:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones087:
+    jk_zone6	0x05, 0x14, 0x001, 248, 0	# zone 0: Main_P05_E001 / Sub_P05_E001
+    jk_zone6	0x05, 0x04, 0x001, 248, 0	# zone 1: Main_P05_E001 / Sub_P05_E001
+    jk_zone6	0x05, 0x04, 0x000, 248, 0	# zone 2: Main_P05_E000 / Sub_P05_E000
+    jk_zone6	0x05, 0x04, 0x002, 249, 0	# zone 3: Main_P05_E002 / Sub_P05_E002
+    jk_zone6	0x05, 0x04, 0x003, 254, 0	# zone 4: Main_P05_E003 / Sub_P05_E003
+    jk_zone6	0x05, 0x04, 0x004, 254, 0	# zone 5: Main_P05_E004 / Sub_P05_E004
+    jk_zone6	0x05, 0x04, 0x005, 251, 0	# zone 6: Main_P05_E005 / Sub_P05_E005
+    jk_zone6	0x05, 0x04, 0x006, 246, 0	# zone 7: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x04, 0x007, 243, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    jk_zone6	0x05, 0x04, 0x008, 243, 0	# zone 9: Main_P05_E008 / Sub_P05_E008
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 10: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 11: Main_P03_E010 / Sub_P03_E010
+JkMsHeader088:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones088:
+    jk_zone6	0x01, 0x18, 0x072, 248, 0	# zone 0: Main_P01_E072 / Sub_P01_E072
+    jk_zone6	0x01, 0x08, 0x072, 248, 0	# zone 1: Main_P01_E072 / Sub_P01_E072
+    jk_zone6	0x01, 0x08, 0x073, 248, 0	# zone 2: Main_P01_E073 / Sub_P01_E073
+    jk_zone6	0x01, 0x08, 0x074, 248, 0	# zone 3: Main_P01_E074 / Sub_P01_E074
+JkMsHeader089:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones089:
+    jk_zone6	0x02, 0x14, 0x000, 245, 0	# zone 0: Main_P02_E000 / Sub_P02_E000
+    jk_zone6	0x02, 0x04, 0x000, 245, 0	# zone 1: Main_P02_E000 / Sub_P02_E000
+    jk_zone6	0x02, 0x04, 0x001, 245, 0	# zone 2: Main_P02_E001 / Sub_P02_E001
+    jk_zone6	0x02, 0x04, 0x002, 245, 0	# zone 3: Main_P02_E002 / Sub_P02_E002
+    jk_zone6	0x03, 0x04, 0x063, 231, 0	# zone 4: Main_P03_E063 / Sub_P03_E063
+    jk_zone6	0x03, 0x04, 0x064, 231, 0	# zone 5: Main_P03_E064 / Sub_P03_E064
+JkMsHeader090:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones090:
+    jk_zone6	0x03, 0x18, 0x00b, 249, 0	# zone 0: Main_P03_E00B / Sub_P03_E00B
+    jk_zone6	0x03, 0x08, 0x00b, 249, 0	# zone 1: Main_P03_E00B / Sub_P03_E00B
+    jk_zone6	0x03, 0x08, 0x00c, 249, 0	# zone 2: Main_P03_E00C / Sub_P03_E00C
+    jk_zone6	0x03, 0x08, 0x00d, 254, 0	# zone 3: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x08, 0x00e, 254, 0	# zone 4: Main_P03_E00E / Sub_P03_E00E
+    jk_zone6	0x03, 0x08, 0x00f, 254, 0	# zone 5: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x08, 0x010, 254, 0	# zone 6: Main_P03_E010 / Sub_P03_E010
+    jk_zone6	0x03, 0x08, 0x011, 254, 0	# zone 7: Main_P03_E011 / Sub_P03_E011
+    jk_zone6	0x03, 0x08, 0x012, 254, 0	# zone 8: Main_P03_E012 / Sub_P03_E012
+    .space	2, 0xff	# alignment
+JkMsHeader093:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones093:
+    jk_zone6	0x03, 0x18, 0x01b, 254, 0	# zone 0: Main_P03_E01B / Sub_P03_E01B
+    jk_zone6	0x03, 0x08, 0x01b, 254, 0	# zone 1: Main_P03_E01B / Sub_P03_E01B
+    jk_zone6	0x03, 0x08, 0x01c, 254, 0	# zone 2: Main_P03_E01C / Sub_P03_E01C
+    jk_zone6	0x03, 0x08, 0x01d, 248, 0	# zone 3: Main_P03_E01D / Sub_P03_E01D
+    jk_zone6	0x03, 0x08, 0x01e, 247, 0	# zone 4: Main_P03_E01E / Sub_P03_E01E
+    jk_zone6	0x03, 0x08, 0x01f, 247, 0	# zone 5: Main_P03_E01F / Sub_P03_E01F
+    jk_zone6	0x03, 0x08, 0x020, 247, 0	# zone 6: Main_P03_E020 / Sub_P03_E020
+    jk_zone6	0x03, 0x08, 0x021, 247, 0	# zone 7: Main_P03_E021 / Sub_P03_E021
+    jk_zone6	0x03, 0x08, 0x022, 247, 0	# zone 8: Main_P03_E022 / Sub_P03_E022
+    jk_zone6	0x03, 0x08, 0x023, 247, 0	# zone 9: Main_P03_E023 / Sub_P03_E023
+JkMsHeader099:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones099:
+    jk_zone6	0x00, 0x14, 0x084, 247, 0	# zone 0: Main_P00_E084 / Sub_P00_E084
+    jk_zone6	0x00, 0x04, 0x084, 247, 0	# zone 1: Main_P00_E084 / Sub_P00_E084
+    jk_zone6	0x00, 0x04, 0x083, 247, 0	# zone 2: Main_P00_E083 / Sub_P00_E083
+    jk_zone6	0x00, 0x04, 0x085, 247, 0	# zone 3: Main_P00_E085 / Sub_P00_E085
+    jk_zone6	0x00, 0x04, 0x086, 247, 0	# zone 4: Main_P00_E086 / Sub_P00_E086
+    jk_zone6	0x00, 0x04, 0x087, 247, 0	# zone 5: Main_P00_E087 / Sub_P00_E087
+    jk_zone6	0x00, 0x04, 0x088, 247, 0	# zone 6: Main_P00_E088 / Sub_P00_E088
+    jk_zone6	0x03, 0x08, 0x039, 250, 0	# zone 7: Main_P03_E039 / Sub_P03_E039
+    jk_zone6	0x03, 0x08, 0x03a, 250, 0	# zone 8: Main_P03_E03A / Sub_P03_E03A
+    .space	2, 0xff	# alignment
+JkMsHeader103:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones103:
+    jk_zone6	0x03, 0x18, 0x040, 251, 0	# zone 0: Main_P03_E040 / Sub_P03_E040
+    jk_zone6	0x03, 0x08, 0x040, 251, 0	# zone 1: Main_P03_E040 / Sub_P03_E040
+    jk_zone6	0x03, 0x08, 0x03f, 251, 0	# zone 2: Main_P03_E03F / Sub_P03_E03F
+    jk_zone6	0x03, 0x08, 0x041, 244, 0	# zone 3: Main_P03_E041 / Sub_P03_E041
+    jk_zone6	0x03, 0x08, 0x042, 244, 0	# zone 4: Main_P03_E042 / Sub_P03_E042
+    jk_zone6	0x03, 0x08, 0x043, 244, 0	# zone 5: Main_P03_E043 / Sub_P03_E043
+    jk_zone6	0x03, 0x08, 0x044, 244, 0	# zone 6: Main_P03_E044 / Sub_P03_E044
+    jk_zone6	0x03, 0x08, 0x045, 244, 0	# zone 7: Main_P03_E045 / Sub_P03_E045
+    jk_zone6	0x03, 0x14, 0x07f, 247, 0	# zone 8: Main_P03_E07F
+    .space	2, 0xff	# alignment
+JkMsHeader104:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones104:
+    jk_zone6	0x03, 0x18, 0x03b, 252, 0	# zone 0: Main_P03_E03B / Sub_P03_E03B
+    jk_zone6	0x03, 0x08, 0x03b, 252, 0	# zone 1: Main_P03_E03B / Sub_P03_E03B
+    jk_zone6	0x03, 0x08, 0x03c, 252, 0	# zone 2: Main_P03_E03C / Sub_P03_E03C
+    jk_zone6	0x03, 0x08, 0x03d, 252, 0	# zone 3: Main_P03_E03D / Sub_P03_E03D
+    jk_zone6	0x03, 0x18, 0x03e, 252, 0	# zone 4: Main_P03_E03E / Sub_P03_E03E
+    .space	2, 0xff	# alignment
+JkMsHeader105:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones105:
+    jk_zone6	0x03, 0x18, 0x047, 250, 0	# zone 0: Main_P03_E047 / Sub_P03_E047
+    jk_zone6	0x03, 0x08, 0x047, 250, 0	# zone 1: Main_P03_E047 / Sub_P03_E047
+    jk_zone6	0x03, 0x08, 0x046, 250, 0	# zone 2: Main_P03_E046 / Sub_P03_E046
+    jk_zone6	0x03, 0x08, 0x048, 250, 0	# zone 3: Main_P03_E048 / Sub_P03_E048
+    jk_zone6	0x03, 0x08, 0x049, 250, 0	# zone 4: Main_P03_E049 / Sub_P03_E049
+    jk_zone6	0x03, 0x08, 0x04a, 250, 0	# zone 5: Main_P03_E04A / Sub_P03_E04A
+    jk_zone6	0x03, 0x08, 0x04b, 250, 0	# zone 6: Main_P03_E04B / Sub_P03_E04B
+    jk_zone6	0x03, 0x08, 0x04c, 250, 0	# zone 7: Main_P03_E04C / Sub_P03_E04C
+JkMsHeader106:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones106:
+    jk_zone6	0x03, 0x14, 0x07f, 251, 0	# zone 0: Main_P03_E07F
+    .space	2, 0xff	# alignment
+JkMsHeader110:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones110:
+    jk_zone6	0x06, 0x14, 0x03b, 252, 0	# zone 0: Main_P06_E03B / Sub_P06_E03B
+    jk_zone6	0x03, 0x14, 0x07f, 255, 0	# zone 1: Main_P03_E07F
+JkMsHeader115:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones115:
+    jk_zone6	0x01, 0x18, 0x089, 239, 0	# zone 0: Sub_P01_E089
+    jk_zone6	0x01, 0x98, 0x08a, 234, 0	# zone 1: Sub_P01_E08A
+    jk_zone6	0x01, 0x18, 0x08b, 233, 0	# zone 2: Sub_P01_E08B
+    jk_zone6	0x01, 0x98, 0x08c, 233, 0	# zone 3: Sub_P01_E08C
+    jk_zone6	0x01, 0x18, 0x08d, 231, 0	# zone 4: Sub_P01_E08D
+    jk_zone6	0x01, 0x18, 0x08d, 227, 0	# zone 5: Sub_P01_E08D
+JkMsHeader118:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones118:
+    jk_zone6	0x01, 0x58, 0x09d, 233, 0	# zone 0: Sub_P01_E09D
+    jk_zone6	0x01, 0xd8, 0x09e, 229, 0	# zone 1: Sub_P01_E09E
+    jk_zone6	0x01, 0x58, 0x09f, 234, 0	# zone 2: Sub_P01_E09F
+    jk_zone6	0x01, 0x18, 0x0a0, 232, 0	# zone 3: Sub_P01_E0A0
+    jk_zone6	0x01, 0x18, 0x08d, 227, 0	# zone 4: Sub_P01_E08D
+    jk_zone6	0x01, 0x18, 0x08d, 223, 0	# zone 5: Sub_P01_E08D
+JkMsHeader119:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones119:
+    jk_zone6	0x01, 0x38, 0x0a1, 247, 0	# zone 0: Sub_P01_E0A1
+    jk_zone6	0x01, 0xd8, 0x0a2, 244, 0	# zone 1: Sub_P01_E0A2
+    jk_zone6	0x01, 0x38, 0x0a3, 247, 0	# zone 2: Sub_P01_E0A3
+    jk_zone6	0x01, 0xd8, 0x0a4, 239, 0	# zone 3: Sub_P01_E0A4
+    jk_zone6	0x01, 0x38, 0x0a5, 242, 0	# zone 4: Sub_P01_E0A5
+    jk_zone6	0x01, 0xd8, 0x0a6, 242, 0	# zone 5: Sub_P01_E0A6
+    jk_zone6	0x01, 0x98, 0x08c, 233, 0	# zone 6: Sub_P01_E08C
+    jk_zone6	0x01, 0x18, 0x08d, 231, 0	# zone 7: Sub_P01_E08D
+    jk_zone6	0x01, 0x18, 0x08d, 227, 0	# zone 8: Sub_P01_E08D
+    .space	2, 0xff	# alignment
+JkMsHeader121:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones121:
+    jk_zone6	0x01, 0xd8, 0x0a7, 236, 0	# zone 0: Sub_P01_E0A7
+    jk_zone6	0x01, 0x38, 0x0a8, 237, 0	# zone 1: Sub_P01_E0A8
+    jk_zone6	0x01, 0x98, 0x0a9, 242, 0	# zone 2: Sub_P01_E0A9
+    jk_zone6	0x01, 0xd8, 0x0a6, 242, 0	# zone 3: Sub_P01_E0A6
+    jk_zone6	0x01, 0x98, 0x08c, 233, 0	# zone 4: Sub_P01_E08C
+    jk_zone6	0x01, 0x18, 0x08d, 231, 0	# zone 5: Sub_P01_E08D
+    jk_zone6	0x01, 0x18, 0x08d, 227, 0	# zone 6: Sub_P01_E08D
+    .space	2, 0xff	# alignment
+JkMsHeader122:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones122:
+    jk_zone6	0x01, 0x18, 0x07c, 252, 0	# zone 0: Main_P01_E07C / Sub_P01_E07C
+    jk_zone6	0x01, 0x08, 0x07c, 252, 0	# zone 1: Main_P01_E07C / Sub_P01_E07C
+    jk_zone6	0x01, 0x08, 0x07b, 252, 0	# zone 2: Main_P01_E07B / Sub_P01_E07B
+    jk_zone6	0x01, 0x08, 0x07d, 250, 0	# zone 3: Main_P01_E07D / Sub_P01_E07D
+    jk_zone6	0x01, 0x08, 0x07e, 245, 0	# zone 4: Main_P01_E07E / Sub_P01_E07E
+    jk_zone6	0x01, 0x08, 0x07f, 255, 0	# zone 5: Main_P01_E07F / Sub_P01_E07F
+    jk_zone6	0x01, 0x08, 0x081, 248, 0	# zone 6: Main_P01_E081 / Sub_P01_E081
+    jk_zone6	0x01, 0x08, 0x080, 248, 0	# zone 7: Main_P01_E080 / Sub_P01_E080
+    jk_zone6	0x01, 0x08, 0x082, 253, 0	# zone 8: Sub_P01_E082
+    jk_zone6	0x01, 0x08, 0x084, 255, 0	# zone 9: Sub_P01_E084
+    jk_zone6	0x01, 0x08, 0x083, 255, 0	# zone 10: Sub_P01_E083
+    jk_zone6	0x01, 0x08, 0x085, 249, 0	# zone 11: Sub_P01_E085
+    jk_zone6	0x01, 0x08, 0x087, 244, 0	# zone 12: Sub_P01_E087
+    jk_zone6	0x01, 0x08, 0x086, 244, 0	# zone 13: Sub_P01_E086
+    jk_zone6	0x01, 0x08, 0x088, 244, 0	# zone 14: Sub_P01_E088
+    .space	2, 0xff	# alignment
+JkMsHeader123:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones123:
+    jk_zone8	0x00, 0x08, 0x06f, 248, 0, -2042	# zone 0: Main_P00_E06F / Sub_P00_E06F
+    jk_zone8	0x00, 0x08, 0x071, 254, 0, -1261	# zone 1: Main_P00_E071 / Sub_P00_E071
+    jk_zone8	0x00, 0x08, 0x073, 253, 0, -2778	# zone 2: Main_P00_E073 / Sub_P00_E073
+    jk_zone8	0x00, 0x08, 0x075, 245, 0, -1282	# zone 3: Main_P00_E075 / Sub_P00_E075
+    jk_zone8	0x00, 0x08, 0x077, 247, 0, -2784	# zone 4: Main_P00_E077 / Sub_P00_E077
+    jk_zone8	0x00, 0x08, 0x079, 252, 0, -1297	# zone 5: Main_P00_E079 / Sub_P00_E079
+    jk_zone8	0x00, 0x08, 0x07b, 235, 0, -2810	# zone 6: Main_P00_E07B / Sub_P00_E07B
+    jk_zone8	0x00, 0x08, 0x07d, 245, 0, -1003	# zone 7: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 8: Main_P00_E07A / Sub_P00_E07A
+JkMsHeader129:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones129:
+    jk_zone8	0x00, 0x04, 0x06c, 236, 0, -2144	# zone 0: Main_P00_E06C / Sub_P00_E06C
+    jk_zone8	0x00, 0x04, 0x06e, 252, 0, -1011	# zone 1: Main_P00_E06E / Sub_P00_E06E
+    jk_zone8	0x00, 0x04, 0x070, 246, 0, -2221	# zone 2: Main_P00_E070 / Sub_P00_E070
+    jk_zone8	0x00, 0x04, 0x072, 250, 0, -989	# zone 3: Main_P00_E072 / Sub_P00_E072
+    jk_zone8	0x00, 0x04, 0x074, 249, 0, -2498	# zone 4: Main_P00_E074 / Sub_P00_E074
+    jk_zone8	0x00, 0x04, 0x076, 248, 0, -999	# zone 5: Main_P00_E076 / Sub_P00_E076
+    jk_zone8	0x00, 0x04, 0x078, 245, 0, -2552	# zone 6: Main_P00_E078 / Sub_P00_E078
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 7: Main_P00_E07A / Sub_P00_E07A
+    jk_zone8	0x00, 0x08, 0x07d, 245, 0, -1003	# zone 8: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 9: Main_P00_E07A / Sub_P00_E07A
+JkMsHeader133:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones133:
+    jk_zone8	0x00, 0x08, 0x07e, 245, 0, -1003	# zone 0: Main_P00_E07E / Sub_P00_E07E
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 1: Main_P00_E07B / Sub_P00_E07B
+JkMsHeader135:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones135:
+    jk_zone6	0x02, 0x04, 0x031, 244, 0	# zone 0: Main_P02_E031
+    jk_zone6	0x02, 0x04, 0x032, 253, 0	# zone 1: Main_P02_E032
+    jk_zone6	0x02, 0x04, 0x033, 255, 0	# zone 2: Main_P02_E033
+    .space	2, 0xff	# alignment
+JkMsHeader137:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones137:
+    jk_zone8	0x02, 0x54, 0x055, 240, 0, -1275	# zone 0: Main_P02_E055
+    jk_zone8	0x02, 0xb4, 0x056, 237, 0, -2125	# zone 1: Main_P02_E056
+    jk_zone8	0x02, 0x14, 0x057, 247, 0, -174	# zone 2: Main_P02_E057
+    jk_zone8	0x02, 0x54, 0x058, 241, 0, -953	# zone 3: Main_P02_E058
+    jk_zone8	0x02, 0x94, 0x059, 240, 0, -1612	# zone 4: Main_P02_E059
+    jk_zone8	0x02, 0xd4, 0x05a, 243, 0, -2505	# zone 5: Main_P02_E05A
+    jk_zone8	0x02, 0x14, 0x05b, 237, 0, -174	# zone 6: Main_P02_E05B
+    jk_zone8	0x02, 0x54, 0x05c, 237, 0, -953	# zone 7: Main_P02_E05C
+    jk_zone8	0x02, 0x04, 0x033, 251, 0, 0	# zone 8: Main_P02_E033
+JkMsHeader140:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones140:
+    jk_zone8	0x02, 0x04, 0x01a, 243, 0, 0	# zone 0: Main_P02_E01A / Sub_P02_E01A
+    jk_zone8	0x02, 0x04, 0x01b, 234, 0, -1237	# zone 1: Main_P02_E01B / Sub_P02_E01B
+    jk_zone8	0x02, 0x04, 0x01c, 245, 0, -2761	# zone 2: Main_P02_E01C / Sub_P02_E01C
+    jk_zone8	0x02, 0x04, 0x01d, 245, 0, -1275	# zone 3: Main_P02_E01D / Sub_P02_E01D
+    jk_zone8	0x02, 0x04, 0x01e, 247, 0, -2819	# zone 4: Main_P02_E01E / Sub_P02_E01E
+    jk_zone8	0x02, 0x04, 0x01f, 243, 0, -1285	# zone 5: Main_P02_E01F / Sub_P02_E01F
+    jk_zone8	0x02, 0x04, 0x020, 252, 0, 0	# zone 6: Main_P02_E020 / Sub_P02_E020
+JkMsHeader143:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones143:
+    jk_zone8	0x02, 0x54, 0x028, 236, 0, 0	# zone 0: Main_P02_E028
+    jk_zone8	0x02, 0x74, 0x029, 239, 0, -1749	# zone 1: Main_P02_E029
+    jk_zone8	0x02, 0xd4, 0x02a, 241, 0, -2510	# zone 2: Main_P02_E02A
+    jk_zone8	0x02, 0x14, 0x02b, 247, 0, -208	# zone 3: Main_P02_E02B
+    jk_zone8	0x02, 0x54, 0x02c, 255, 0, -953	# zone 4: Main_P02_E02C
+    jk_zone8	0x02, 0x94, 0x02d, 255, 0, -1761	# zone 5: Main_P02_E02D
+    jk_zone8	0x02, 0xd4, 0x02e, 254, 0, -2485	# zone 6: Main_P02_E02E
+    jk_zone8	0x02, 0x14, 0x02f, 255, 0, -208	# zone 7: Main_P02_E02F
+    jk_zone8	0x02, 0x54, 0x030, 3, 0, -24	# zone 8: Main_P02_E030
+JkMsHeader144:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones144:
+    jk_zone8	0x02, 0x94, 0x039, 240, 0, -966	# zone 0: Main_P02_E039
+    jk_zone8	0x02, 0xd4, 0x03b, 247, 0, -2389	# zone 1: Main_P02_E03B
+    jk_zone8	0x02, 0x14, 0x03d, 233, 0, -208	# zone 2: Main_P02_E03D
+    jk_zone8	0x02, 0x54, 0x03f, 240, 0, -953	# zone 3: Main_P02_E03F
+    jk_zone8	0x02, 0x94, 0x041, 245, 0, -1738	# zone 4: Main_P02_E041
+    jk_zone8	0x02, 0xb4, 0x043, 248, 0, -2236	# zone 5: Main_P02_E043
+    jk_zone8	0x02, 0x14, 0x045, 251, 0, -174	# zone 6: Main_P02_E045
+    jk_zone8	0x02, 0x54, 0x047, 250, 0, -896	# zone 7: Main_P02_E047
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 8: Main_P02_E020 / Sub_P02_E020
+JkMsHeader155:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones155:
+    jk_zone6	0x02, 0x14, 0x06d, 248, 0	# zone 0: Main_P02_E06D
+    .space	2, 0xff	# alignment
+JkMsHeader156:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones156:
+    jk_zone8	0x03, 0x08, 0x068, 244, 0, -1596	# zone 0: Main_P03_E068 / Sub_P03_E068
+JkMsHeader157:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones157:
+    jk_zone8	0x03, 0x08, 0x069, 253, 0, 0	# zone 0: Main_P03_E069 / Sub_P03_E069
+    jk_zone8	0x03, 0x08, 0x06a, 251, 0, 0	# zone 1: Main_P03_E06A / Sub_P03_E06A
+    jk_zone8	0x03, 0x08, 0x05c, 250, 0, -2159	# zone 2: Main_P03_E05C / Sub_P03_E05C
+    jk_zone8	0x03, 0x08, 0x05e, 249, 0, -1718	# zone 3: Main_P03_E05E / Sub_P03_E05E
+JkMsHeader158:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones158:
+    jk_zone6	0x05, 0xf8, 0x002, 248, 0	# zone 0: Main_P05_E002 / Sub_P05_E002
+    jk_zone6	0x05, 0x38, 0x003, 252, 0	# zone 1: Main_P05_E003 / Sub_P05_E003
+    jk_zone6	0x05, 0x98, 0x004, 252, 0	# zone 2: Main_P05_E004 / Sub_P05_E004
+    jk_zone6	0x05, 0x18, 0x005, 248, 0	# zone 3: Main_P05_E005 / Sub_P05_E005
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 4: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader169:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones169:
+    jk_zone6	0x04, 0xd4, 0x030, 253, 0	# zone 0: Main_P04_E030 / Sub_P04_E030
+    jk_zone6	0x04, 0x14, 0x031, 251, 0	# zone 1: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x74, 0x032, 252, 0	# zone 2: Main_P04_E032 / Sub_P04_E032
+    jk_zone6	0x04, 0xf4, 0x033, 250, 0	# zone 3: Main_P04_E033 / Sub_P04_E033
+    jk_zone6	0x04, 0x74, 0x034, 251, 0	# zone 4: Main_P04_E034 / Sub_P04_E034
+    jk_zone6	0x04, 0xd4, 0x035, 251, 0	# zone 5: Main_P04_E035 / Sub_P04_E035
+    jk_zone6	0x04, 0x04, 0x036, 251, 0	# zone 6: Main_P04_E036 / Sub_P04_E036
+    jk_zone6	0x04, 0x04, 0x037, 251, 0	# zone 7: Main_P04_E037 / Sub_P04_E037
+    jk_zone6	0x05, 0xd8, 0x01f, 249, 0	# zone 8: Main_P05_E01F / Sub_P05_E01F
+    jk_zone6	0x05, 0x98, 0x007, 242, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader173:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones173:
+    jk_zone6	0x05, 0x78, 0x036, 240, 0	# zone 0: Main_P05_E036 / Sub_P05_E036
+    jk_zone6	0x05, 0xb8, 0x037, 246, 0	# zone 1: Main_P05_E037 / Sub_P05_E037
+    jk_zone6	0x05, 0x58, 0x038, 250, 0	# zone 2: Main_P05_E038 / Sub_P05_E038
+    jk_zone6	0x05, 0x98, 0x039, 248, 0	# zone 3: Main_P05_E039 / Sub_P05_E039
+    jk_zone6	0x05, 0x98, 0x03c, 249, 0	# zone 4: Main_P05_E03C / Sub_P05_E03C
+    jk_zone6	0x05, 0x98, 0x007, 242, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader176:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones176:
+    jk_zone6	0x04, 0x58, 0x069, 253, 0	# zone 0: Sub_P04_E069
+    jk_zone6	0x04, 0xd8, 0x06a, 249, 0	# zone 1: Sub_P04_E06A
+    jk_zone6	0x04, 0x58, 0x06b, 253, 0	# zone 2: Sub_P04_E06B
+    jk_zone6	0x04, 0xd8, 0x06c, 255, 0	# zone 3: Sub_P04_E06C
+    jk_zone6	0x04, 0x18, 0x06d, 250, 0	# zone 4: Sub_P04_E06D
+    jk_zone6	0x04, 0x14, 0x025, 251, 0	# zone 5: Main_P04_E025 / Sub_P04_E025
+JkMsHeader179:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones179:
+    jk_zone6	0x04, 0xd8, 0x073, 250, 0	# zone 0: Sub_P04_E073
+    jk_zone6	0x04, 0x58, 0x074, 251, 0	# zone 1: Sub_P04_E074
+    jk_zone6	0x04, 0x98, 0x075, 254, 0	# zone 2: Sub_P04_E075
+    jk_zone6	0x04, 0xd8, 0x076, 251, 0	# zone 3: Sub_P04_E076
+    jk_zone6	0x04, 0x18, 0x077, 252, 0	# zone 4: Sub_P04_E077
+    jk_zone6	0x05, 0x18, 0x005, 248, 0	# zone 5: Main_P05_E005 / Sub_P05_E005
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 6: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 7: Main_P05_E007 / Sub_P05_E007
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader180:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones180:
+    jk_zone8	0x00, 0xd4, 0x07c, 248, 0, -2776	# zone 0: Main_P00_E07C / Sub_P00_E07C
+    jk_zone8	0x00, 0x54, 0x07d, 254, 0, -1513	# zone 1: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0xb4, 0x07e, 254, 0, -2512	# zone 2: Main_P00_E07E / Sub_P00_E07E
+    jk_zone8	0x00, 0x34, 0x07f, 253, 0, -1012	# zone 3: Main_P00_E07F / Sub_P00_E07F
+    jk_zone8	0x00, 0xb4, 0x080, 1, 0, -2799	# zone 4: Main_P00_E080 / Sub_P00_E080
+    jk_zone8	0x00, 0x34, 0x081, 255, 0, -1012	# zone 5: Main_P00_E081 / Sub_P00_E081
+    jk_zone8	0x00, 0xb4, 0x082, 250, 0, 0	# zone 6: Main_P00_E082 / Sub_P00_E082
+JkMsHeader182:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones182:
+    jk_zone8	0x04, 0xd8, 0x086, 5, 0, 4804	# zone 0: Sub_P04_E086
+    jk_zone8	0x04, 0x78, 0x087, 6, 0, 3012	# zone 1: Sub_P04_E087
+    jk_zone8	0x04, 0xd8, 0x088, 5, 0, 1696	# zone 2: Sub_P04_E088
+JkMsHeader188:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones188:
+    jk_zone8	0x04, 0x08, 0x078, 242, 0, 0	# zone 0: Sub_P04_E078
+    jk_zone8	0x04, 0x08, 0x079, 253, 0, 0	# zone 1: Sub_P04_E079
+    jk_zone8	0x04, 0x08, 0x07a, 252, 0, 0	# zone 2: Sub_P04_E07A
+    jk_zone8	0x03, 0x08, 0x05b, 250, 0, -2159	# zone 3: Main_P03_E05B / Sub_P03_E05B
+    jk_zone8	0x03, 0x08, 0x05d, 249, 0, -1718	# zone 4: Main_P03_E05D / Sub_P03_E05D
+JkMsHeader191:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones191:
+    jk_zone6	0x05, 0x14, 0x014, 252, 0	# zone 0: Main_P05_E014 / Sub_P05_E014
+    jk_zone6	0x05, 0x04, 0x014, 252, 0	# zone 1: Main_P05_E014 / Sub_P05_E014
+    jk_zone6	0x05, 0x04, 0x015, 252, 0	# zone 2: Main_P05_E015 / Sub_P05_E015
+    jk_zone6	0x05, 0x04, 0x013, 252, 0	# zone 3: Main_P05_E013 / Sub_P05_E013
+    jk_zone6	0x05, 0x94, 0x016, 254, 0	# zone 4: Main_P05_E016 / Sub_P05_E016
+    jk_zone6	0x05, 0xd4, 0x017, 251, 0	# zone 5: Main_P05_E017 / Sub_P05_E017
+    jk_zone6	0x05, 0x54, 0x018, 0, 0	# zone 6: Main_P05_E018 / Sub_P05_E018
+    jk_zone6	0x05, 0xb4, 0x019, 255, 0	# zone 7: Main_P05_E019 / Sub_P05_E019
+    jk_zone6	0x05, 0xb4, 0x01a, 251, 0	# zone 8: Main_P05_E01A / Sub_P05_E01A
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader194:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones194:
+    jk_zone6	0x05, 0x14, 0x020, 248, 0	# zone 0: Main_P05_E020 / Sub_P05_E020
+    jk_zone6	0x05, 0x54, 0x021, 247, 0	# zone 1: Main_P05_E021 / Sub_P05_E021
+    jk_zone6	0x05, 0x94, 0x022, 251, 0	# zone 2: Main_P05_E022 / Sub_P05_E022
+    jk_zone6	0x05, 0xd4, 0x023, 248, 0	# zone 3: Main_P05_E023 / Sub_P05_E023
+    jk_zone6	0x05, 0x14, 0x024, 242, 0	# zone 4: Main_P05_E024 / Sub_P05_E024
+    jk_zone6	0x05, 0x54, 0x025, 246, 0	# zone 5: Main_P05_E025 / Sub_P05_E025
+    jk_zone6	0x05, 0x74, 0x026, 247, 0	# zone 6: Main_P05_E026 / Sub_P05_E026
+    jk_zone6	0x05, 0x94, 0x027, 248, 0	# zone 7: Main_P05_E027 / Sub_P05_E027
+    jk_zone6	0x05, 0xd4, 0x028, 244, 0	# zone 8: Main_P05_E028 / Sub_P05_E028
+    jk_zone6	0x05, 0x14, 0x029, 247, 0	# zone 9: Main_P05_E029 / Sub_P05_E029
+    jk_zone6	0x05, 0x54, 0x02a, 250, 0	# zone 10: Main_P05_E02A / Sub_P05_E02A
+    jk_zone6	0x05, 0x94, 0x02b, 240, 0	# zone 11: Main_P05_E02B / Sub_P05_E02B
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 12: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader200:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones200:
+    jk_zone6	0x06, 0x38, 0x000, 252, 0	# zone 0: Main_P06_E000 / Sub_P06_E000
+    jk_zone6	0x06, 0x58, 0x001, 251, 0	# zone 1: Main_P06_E001 / Sub_P06_E001
+    jk_zone6	0x06, 0xd8, 0x002, 242, 0	# zone 2: Main_P06_E002 / Sub_P06_E002
+    jk_zone6	0x06, 0x18, 0x003, 250, 0	# zone 3: Main_P06_E003 / Sub_P06_E003
+    jk_zone6	0x06, 0x98, 0x004, 248, 0	# zone 4: Main_P06_E004 / Sub_P06_E004
+    jk_zone6	0x05, 0xb4, 0x019, 239, 0	# zone 5: Main_P05_E019 / Sub_P05_E019
+    jk_zone6	0x05, 0xb4, 0x01a, 235, 0	# zone 6: Main_P05_E01A / Sub_P05_E01A
+    jk_zone6	0x05, 0x98, 0x007, 230, 0	# zone 7: Main_P05_E007 / Sub_P05_E007
+JkMsHeader205:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones205:
+    jk_zone6	0x06, 0x58, 0x01e, 245, 0	# zone 0: Main_P06_E01E / Sub_P06_E01E
+    jk_zone6	0x06, 0xd8, 0x01f, 244, 0	# zone 1: Main_P06_E01F / Sub_P06_E01F
+    jk_zone6	0x06, 0x38, 0x020, 248, 0	# zone 2: Main_P06_E020 / Sub_P06_E020
+    jk_zone6	0x06, 0xb8, 0x021, 248, 0	# zone 3: Main_P06_E021 / Sub_P06_E021
+    jk_zone6	0x06, 0x58, 0x022, 244, 0	# zone 4: Main_P06_E022 / Sub_P06_E022
+    jk_zone6	0x06, 0x98, 0x004, 248, 0	# zone 5: Main_P06_E004 / Sub_P06_E004
+    jk_zone6	0x05, 0xb4, 0x019, 239, 0	# zone 6: Main_P05_E019 / Sub_P05_E019
+    jk_zone6	0x05, 0xb4, 0x01a, 235, 0	# zone 7: Main_P05_E01A / Sub_P05_E01A
+    jk_zone6	0x05, 0x98, 0x007, 230, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader207:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones207:
+    jk_zone6	0x05, 0x98, 0x03d, 248, 0	# zone 0: Main_P05_E03D / Sub_P05_E03D
+    jk_zone6	0x05, 0xd8, 0x03e, 247, 0	# zone 1: Main_P05_E03E / Sub_P05_E03E
+    jk_zone6	0x05, 0x58, 0x03f, 246, 0	# zone 2: Main_P05_E03F / Sub_P05_E03F
+    jk_zone6	0x05, 0x98, 0x040, 250, 0	# zone 3: Main_P05_E040 / Sub_P05_E040
+    jk_zone6	0x05, 0x18, 0x041, 253, 0	# zone 4: Main_P05_E041 / Sub_P05_E041
+    jk_zone6	0x05, 0xb8, 0x04e, 253, 0	# zone 5: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0x98, 0x06a, 241, 0	# zone 6: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader214:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones214:
+    jk_zone6	0x05, 0x38, 0x054, 253, 0	# zone 0: Main_P05_E054 / Sub_P05_E054
+    jk_zone6	0x05, 0x98, 0x055, 249, 0	# zone 1: Main_P05_E055 / Sub_P05_E055
+    jk_zone6	0x05, 0xd8, 0x056, 255, 0	# zone 2: Main_P05_E056 / Sub_P05_E056
+    jk_zone6	0x05, 0x38, 0x057, 252, 0	# zone 3: Main_P05_E057 / Sub_P05_E057
+    jk_zone6	0x05, 0x78, 0x058, 247, 0	# zone 4: Main_P05_E058 / Sub_P05_E058
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 5: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 6: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader218:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones218:
+    jk_zone6	0x05, 0x38, 0x05d, 254, 0	# zone 0: Main_P05_E05D / Sub_P05_E05D
+    jk_zone6	0x05, 0xd8, 0x05e, 253, 0	# zone 1: Main_P05_E05E / Sub_P05_E05E
+    jk_zone6	0x05, 0x38, 0x05f, 250, 0	# zone 2: Main_P05_E05F / Sub_P05_E05F
+    jk_zone6	0x05, 0xb8, 0x060, 245, 0	# zone 3: Main_P05_E060 / Sub_P05_E060
+    jk_zone6	0x05, 0x58, 0x061, 246, 0	# zone 4: Main_P05_E061 / Sub_P05_E061
+    jk_zone6	0x05, 0xd8, 0x062, 253, 0	# zone 5: Main_P05_E062 / Sub_P05_E062
+    jk_zone6	0x05, 0x18, 0x05c, 254, 0	# zone 6: Main_P05_E05C / Sub_P05_E05C
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 7: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader220:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones220:
+    jk_zone6	0x05, 0x98, 0x063, 247, 0	# zone 0: Main_P05_E063 / Sub_P05_E063
+    jk_zone6	0x05, 0x18, 0x064, 251, 0	# zone 1: Main_P05_E064 / Sub_P05_E064
+    jk_zone6	0x05, 0x18, 0x065, 245, 0	# zone 2: Main_P05_E065 / Sub_P05_E065
+    jk_zone6	0x05, 0x18, 0x066, 243, 0	# zone 3: Main_P05_E066 / Sub_P05_E066
+    jk_zone6	0x05, 0x98, 0x06a, 245, 0	# zone 4: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader223:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# key group -> zone
+JkZones223:
+    jk_zone8	0x06, 0x14, 0x000, 248, 0, -2264	# zone 0: Main_P06_E000 / Sub_P06_E000
+    jk_zone8	0x06, 0xb4, 0x001, 250, 0, -2264	# zone 1: Main_P06_E001 / Sub_P06_E001
+    jk_zone8	0x06, 0x34, 0x002, 245, 0, -1587	# zone 2: Main_P06_E002 / Sub_P06_E002
+JkMsHeader224:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones224:
+    jk_zone8	0x06, 0x04, 0x003, 242, 0, -2027	# zone 0: Main_P06_E003 / Sub_P06_E003
+    jk_zone8	0x06, 0x04, 0x004, 246, 0, -1881	# zone 1: Main_P06_E004 / Sub_P06_E004
+    jk_zone8	0x06, 0x04, 0x005, 248, 0, 0	# zone 2: Main_P06_E005 / Sub_P06_E005
+    jk_zone8	0x06, 0x04, 0x006, 248, 0, -1669	# zone 3: Main_P06_E006 / Sub_P06_E006
+JkMsHeader230:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# key group -> zone
+JkZones230:
+    jk_zone8	0x06, 0x04, 0x02a, 255, 0, 0	# zone 0: Main_P06_E02A / Sub_P06_E02A
+    jk_zone8	0x06, 0x04, 0x006, 0, 0, -1669	# zone 1: Main_P06_E006 / Sub_P06_E006
+JkMsHeader232:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones232:
+    jk_zone8	0x05, 0x14, 0x048, 240, 0, 0	# zone 0: Main_P05_E048 / Sub_P05_E048
+    jk_zone8	0x05, 0xb4, 0x049, 241, 0, -2246	# zone 1: Main_P05_E049 / Sub_P05_E049
+    jk_zone8	0x05, 0x14, 0x04a, 248, 0, -443	# zone 2: Main_P05_E04A / Sub_P05_E04A
+    jk_zone8	0x05, 0x54, 0x04b, 252, 0, -1581	# zone 3: Main_P05_E04B / Sub_P05_E04B
+    jk_zone8	0x05, 0xb4, 0x04c, 239, 0, -2246	# zone 4: Main_P05_E04C / Sub_P05_E04C
+    jk_zone8	0x05, 0x94, 0x04d, 241, 0, 35	# zone 5: Main_P05_E04D / Sub_P05_E04D
+JkMsHeader236:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones236:
+    jk_zone8	0x05, 0x94, 0x04d, 237, 0, 35	# zone 0: Main_P05_E04D / Sub_P05_E04D
+    jk_zone8	0x05, 0x94, 0x04d, 245, 0, 35	# zone 1: Main_P05_E04D / Sub_P05_E04D
+    jk_zone8	0x05, 0x94, 0x04d, 253, 0, 35	# zone 2: Main_P05_E04D / Sub_P05_E04D
+JkMsHeader237:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones237:
+    jk_zone6	0x05, 0xd4, 0x04e, 239, 0	# zone 0: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0xd4, 0x04e, 247, 0	# zone 1: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0xd4, 0x04e, 255, 0	# zone 2: Main_P05_E04E / Sub_P05_E04E
+    .space	2, 0xff	# alignment
+JkMsHeader238:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones238:
+    jk_zone8	0x05, 0x34, 0x04f, 242, 0, -1008	# zone 0: Main_P05_E04F / Sub_P05_E04F
+    jk_zone8	0x05, 0x94, 0x050, 244, 0, -2594	# zone 1: Main_P05_E050 / Sub_P05_E050
+    jk_zone8	0x05, 0x14, 0x051, 242, 0, -833	# zone 2: Main_P05_E051 / Sub_P05_E051
+    jk_zone8	0x05, 0xd4, 0x052, 243, 0, 0	# zone 3: Main_P05_E052 / Sub_P05_E052
+    jk_zone8	0x05, 0x54, 0x053, 0, 0, 0	# zone 4: Main_P05_E053 / Sub_P05_E053
+    jk_zone8	0x06, 0x04, 0x006, 248, 0, -1669	# zone 5: Main_P06_E006 / Sub_P06_E006
+JkMsHeader239:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones239:
+    jk_zone6	0x05, 0xd8, 0x06c, 249, 0	# zone 0: Main_P05_E06C / Sub_P05_E06C
+    jk_zone6	0x05, 0x58, 0x06d, 247, 0	# zone 1: Main_P05_E06D / Sub_P05_E06D
+    jk_zone6	0x05, 0x98, 0x06e, 239, 0	# zone 2: Main_P05_E06E / Sub_P05_E06E
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 3: Main_P05_E007 / Sub_P05_E007
+JkMsHeader241:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones241:
+    jk_zone6	0x04, 0xd4, 0x000, 248, 0	# zone 0: Main_P04_E000 / Sub_P04_E000
+    jk_zone6	0x04, 0x54, 0x001, 244, 0	# zone 1: Main_P04_E001 / Sub_P04_E001
+    jk_zone6	0x04, 0xd4, 0x002, 243, 0	# zone 2: Main_P04_E002 / Sub_P04_E002
+    jk_zone6	0x04, 0x14, 0x008, 251, 0	# zone 3: Main_P04_E008 / Sub_P04_E008
+    jk_zone6	0x04, 0x14, 0x009, 247, 0	# zone 4: Main_P04_E009 / Sub_P04_E009
+    jk_zone6	0x04, 0x58, 0x031, 247, 0	# zone 5: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 6: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 237, 0	# zone 7: Main_P04_E032 / Sub_P04_E032
+JkMsHeader255:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones255:
+    jk_zone8	0x04, 0x74, 0x00a, 234, 0, -1456	# zone 0: Main_P04_E00A / Sub_P04_E00A
+    jk_zone8	0x04, 0xd4, 0x00b, 243, 0, -3133	# zone 1: Main_P04_E00B / Sub_P04_E00B
+    jk_zone8	0x04, 0x34, 0x00c, 251, 0, -1330	# zone 2: Main_P04_E00C / Sub_P04_E00C
+    jk_zone8	0x04, 0xd4, 0x00d, 241, 0, -3387	# zone 3: Main_P04_E00D / Sub_P04_E00D
+    jk_zone8	0x04, 0x54, 0x00e, 244, 0, -1581	# zone 4: Main_P04_E00E / Sub_P04_E00E
+    jk_zone8	0x04, 0xd4, 0x00f, 242, 0, 0	# zone 5: Main_P04_E00F / Sub_P04_E00F
+JkMsHeader258:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones258:
+    jk_zone6	0x04, 0xd8, 0x000, 252, 0	# zone 0: Main_P04_E000 / Sub_P04_E000
+    jk_zone6	0x04, 0x58, 0x001, 248, 0	# zone 1: Main_P04_E001 / Sub_P04_E001
+    jk_zone6	0x04, 0xd8, 0x002, 245, 0	# zone 2: Main_P04_E002 / Sub_P04_E002
+    jk_zone6	0x04, 0xd8, 0x012, 235, 0	# zone 3: Main_P04_E012 / Sub_P04_E012
+    jk_zone6	0x00, 0x04, 0x000, 228, 0	# zone 4: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader259:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones259:
+    jk_zone6	0x04, 0xd8, 0x003, 253, 0	# zone 0: Main_P04_E003 / Sub_P04_E003
+    jk_zone6	0x04, 0x58, 0x004, 0, 0	# zone 1: Main_P04_E004 / Sub_P04_E004
+    jk_zone6	0x04, 0xd8, 0x005, 248, 0	# zone 2: Main_P04_E005 / Sub_P04_E005
+    jk_zone6	0x04, 0x58, 0x006, 245, 0	# zone 3: Main_P04_E006 / Sub_P04_E006
+    jk_zone6	0x04, 0xd8, 0x007, 239, 0	# zone 4: Main_P04_E007 / Sub_P04_E007
+    jk_zone6	0x04, 0x58, 0x008, 242, 0	# zone 5: Main_P04_E008 / Sub_P04_E008
+    jk_zone6	0x04, 0xd8, 0x009, 241, 0	# zone 6: Main_P04_E009 / Sub_P04_E009
+    jk_zone6	0x04, 0xd8, 0x012, 235, 0	# zone 7: Main_P04_E012 / Sub_P04_E012
+    jk_zone6	0x00, 0x04, 0x000, 228, 0	# zone 8: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader296:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones296:
+    jk_zone8	0x04, 0x98, 0x013, 244, 0, -1012	# zone 0: Main_P04_E013 / Sub_P04_E013
+    jk_zone8	0x04, 0x98, 0x014, 249, 0, -1460	# zone 1: Main_P04_E014 / Sub_P04_E014
+    jk_zone8	0x04, 0x18, 0x015, 246, 0, -2761	# zone 2: Main_P04_E015 / Sub_P04_E015
+    jk_zone8	0x04, 0x98, 0x016, 249, 0, -1475	# zone 3: Main_P04_E016 / Sub_P04_E016
+    jk_zone8	0x04, 0x18, 0x017, 249, 0, -3008	# zone 4: Main_P04_E017 / Sub_P04_E017
+    jk_zone8	0x04, 0x78, 0x018, 251, 0, 0	# zone 5: Main_P04_E018 / Sub_P04_E018
+JkMsHeader297:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones297:
+    jk_zone6	0x00, 0x04, 0x08e, 227, 0	# zone 0: Main_P00_E08E / Sub_P00_E08E
+    jk_zone6	0x00, 0x04, 0x08f, 226, 0	# zone 1: Main_P00_E08F / Sub_P00_E08F
+    jk_zone6	0x00, 0x04, 0x090, 226, 0	# zone 2: Main_P00_E090 / Sub_P00_E090
+    jk_zone6	0x00, 0x04, 0x091, 214, 0	# zone 3: Main_P00_E091 / Sub_P00_E091
+    jk_zone6	0x00, 0x04, 0x092, 216, 0	# zone 4: Main_P00_E092 / Sub_P00_E092
+    jk_zone6	0x00, 0x04, 0x093, 208, 0	# zone 5: Main_P00_E093 / Sub_P00_E093
+    jk_zone6	0x00, 0x04, 0x094, 208, 0	# zone 6: Main_P00_E094 / Sub_P00_E094
+    jk_zone6	0x00, 0x04, 0x094, 204, 0	# zone 7: Main_P00_E094 / Sub_P00_E094
+    jk_zone6	0x00, 0x04, 0x094, 200, 0	# zone 8: Main_P00_E094 / Sub_P00_E094
+    jk_zone6	0x00, 0x04, 0x094, 196, 0	# zone 9: Main_P00_E094 / Sub_P00_E094
+    jk_zone6	0x00, 0x04, 0x094, 192, 0	# zone 10: Main_P00_E094 / Sub_P00_E094
+    .space	2, 0xff	# alignment
+JkMsHeader322:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones322:
+    jk_zone6	0x00, 0xb4, 0x095, 246, 0	# zone 0: Main_P00_E095 / Sub_P00_E095
+    jk_zone6	0x00, 0x14, 0x096, 250, 0	# zone 1: Main_P00_E096 / Sub_P00_E096
+    jk_zone6	0x00, 0x94, 0x097, 247, 0	# zone 2: Main_P00_E097 / Sub_P00_E097
+    jk_zone6	0x00, 0x34, 0x098, 253, 0	# zone 3: Main_P00_E098 / Sub_P00_E098
+    jk_zone6	0x00, 0xb4, 0x099, 245, 0	# zone 4: Main_P00_E099 / Sub_P00_E099
+    jk_zone6	0x00, 0x54, 0x09a, 252, 0	# zone 5: Main_P00_E09A / Sub_P00_E09A
+    jk_zone6	0x00, 0x54, 0x09b, 245, 0	# zone 6: Main_P00_E09B / Sub_P00_E09B
+    jk_zone6	0x00, 0x54, 0x09c, 241, 0	# zone 7: Main_P00_E09C / Sub_P00_E09C
+JkMsHeader323:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones323:
+    jk_zone8	0x00, 0x04, 0x09d, 252, 0, -3072	# zone 0: Main_P00_E09D / Sub_P00_E09D
+    jk_zone8	0x00, 0x04, 0x09e, 252, 0, -4347	# zone 1: Main_P00_E09E / Sub_P00_E09E
+    jk_zone8	0x00, 0x04, 0x09f, 246, 0, -3072	# zone 2: Main_P00_E09F / Sub_P00_E09F
+    jk_zone8	0x00, 0x04, 0x0a0, 243, 0, -3072	# zone 3: Main_P00_E0A0 / Sub_P00_E0A0
+    jk_zone8	0x00, 0x04, 0x0a1, 238, 0, -3072	# zone 4: Main_P00_E0A1 / Sub_P00_E0A1
+    jk_zone8	0x00, 0x04, 0x0a2, 237, 0, -3072	# zone 5: Main_P00_E0A2 / Sub_P00_E0A2
+    jk_zone8	0x00, 0x04, 0x0a3, 228, 0, -3072	# zone 6: Main_P00_E0A3 / Sub_P00_E0A3
+    jk_zone8	0x00, 0x04, 0x0a3, 220, 0, -3072	# zone 7: Main_P00_E0A3 / Sub_P00_E0A3
+JkMsHeader325:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones325:
+    jk_zone6	0x00, 0x04, 0x000, 248, 0	# zone 0: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader328:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones328:
+    jk_zone6	0x00, 0x04, 0x01d, 251, 0	# zone 0: Main_P00_E01D / Sub_P00_E01D
+    jk_zone6	0x00, 0x04, 0x01e, 250, 0	# zone 1: Main_P00_E01E / Sub_P00_E01E
+    jk_zone6	0x00, 0x04, 0x01f, 250, 0	# zone 2: Main_P00_E01F / Sub_P00_E01F
+    jk_zone6	0x00, 0x04, 0x020, 248, 0	# zone 3: Main_P00_E020 / Sub_P00_E020
+    jk_zone6	0x00, 0x04, 0x021, 247, 0	# zone 4: Main_P00_E021 / Sub_P00_E021
+    jk_zone6	0x00, 0x04, 0x022, 245, 0	# zone 5: Main_P00_E022 / Sub_P00_E022
+    jk_zone6	0x00, 0x04, 0x023, 243, 0	# zone 6: Main_P00_E023 / Sub_P00_E023
+    jk_zone6	0x00, 0x04, 0x024, 243, 0	# zone 7: Main_P00_E024 / Sub_P00_E024
+    jk_zone6	0x00, 0x04, 0x025, 240, 0	# zone 8: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 9: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 10: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader342:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones342:
+    jk_zone6	0x00, 0x04, 0x036, 247, 0	# zone 0: Main_P00_E036 / Sub_P00_E036
+    jk_zone6	0x00, 0x04, 0x037, 245, 0	# zone 1: Main_P00_E037 / Sub_P00_E037
+    jk_zone6	0x00, 0x04, 0x038, 244, 0	# zone 2: Main_P00_E038 / Sub_P00_E038
+    jk_zone6	0x00, 0x04, 0x039, 243, 0	# zone 3: Main_P00_E039 / Sub_P00_E039
+    jk_zone6	0x00, 0x04, 0x03a, 241, 0	# zone 4: Main_P00_E03A / Sub_P00_E03A
+    jk_zone6	0x00, 0x04, 0x03b, 239, 0	# zone 5: Main_P00_E03B / Sub_P00_E03B
+    jk_zone6	0x00, 0x04, 0x03c, 240, 0	# zone 6: Main_P00_E03C / Sub_P00_E03C
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 7: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 8: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader357:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones357:
+    jk_zone6	0x09, 0x08, 0x056, 240, 0	# zone 0: Sub_P09_E056
+    jk_zone6	0x09, 0x08, 0x057, 240, 0	# zone 1: Sub_P09_E057
+    jk_zone6	0x09, 0x08, 0x058, 240, 0	# zone 2: Sub_P09_E058
+    jk_zone6	0x09, 0x08, 0x059, 240, 0	# zone 3: Sub_P09_E059
+    jk_zone6	0x09, 0x08, 0x05a, 240, 0	# zone 4: Sub_P09_E05A
+    jk_zone6	0x09, 0x08, 0x05b, 240, 0	# zone 5: Sub_P09_E05B
+    jk_zone6	0x09, 0x08, 0x05c, 240, 0	# zone 6: Sub_P09_E05C
+    jk_zone6	0x00, 0x04, 0x025, 240, 0	# zone 7: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 8: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 9: Main_P00_E000 / Sub_P00_E000
+JkMsHeader362:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones362:
+    jk_zone6	0x09, 0x18, 0x048, 238, 0	# zone 0: Sub_P09_E048
+    jk_zone6	0x09, 0xd8, 0x049, 237, 0	# zone 1: Sub_P09_E049
+    jk_zone6	0x09, 0x98, 0x04a, 237, 0	# zone 2: Sub_P09_E04A
+    jk_zone6	0x09, 0x58, 0x04b, 236, 0	# zone 3: Sub_P09_E04B
+    jk_zone6	0x09, 0x18, 0x04c, 236, 0	# zone 4: Sub_P09_E04C
+    jk_zone6	0x09, 0x58, 0x04d, 237, 0	# zone 5: Sub_P09_E04D
+    jk_zone6	0x09, 0x18, 0x04e, 235, 0	# zone 6: Sub_P09_E04E
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 7: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 8: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 9: Main_P00_E000 / Sub_P00_E000
+JkMsHeader364:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones364:
+    jk_zone6	0x03, 0x08, 0x04d, 240, 0	# zone 0: Main_P03_E04D / Sub_P03_E04D
+    jk_zone6	0x00, 0x04, 0x000, 232, 0	# zone 1: Main_P00_E000 / Sub_P00_E000
+JkMsHeader367:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones367:
+    jk_zone6	0x09, 0x18, 0x04f, 250, 0	# zone 0: Sub_P09_E04F
+    jk_zone6	0x09, 0x98, 0x050, 249, 0	# zone 1: Sub_P09_E050
+    jk_zone6	0x09, 0x58, 0x051, 249, 0	# zone 2: Sub_P09_E051
+    jk_zone6	0x09, 0x18, 0x052, 249, 0	# zone 3: Sub_P09_E052
+    jk_zone6	0x09, 0xd8, 0x053, 249, 0	# zone 4: Sub_P09_E053
+    jk_zone6	0x09, 0x98, 0x054, 249, 0	# zone 5: Sub_P09_E054
+    jk_zone6	0x09, 0x18, 0x055, 250, 0	# zone 6: Sub_P09_E055
+    jk_zone6	0x01, 0x08, 0x031, 253, 0	# zone 7: Main_P01_E031 / Sub_P01_E031
+    jk_zone6	0x01, 0x08, 0x032, 253, 0	# zone 8: Main_P01_E032 / Sub_P01_E032
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 9: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 10: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader369:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones369:
+    jk_zone8	0x03, 0x08, 0x055, 251, 0, -1312	# zone 0: Main_P03_E055 / Sub_P03_E055
+    jk_zone8	0x03, 0x08, 0x057, 250, 0, -2979	# zone 1: Main_P03_E057 / Sub_P03_E057
+    jk_zone8	0x03, 0x08, 0x059, 253, 0, -1241	# zone 2: Main_P03_E059 / Sub_P03_E059
+    jk_zone8	0x03, 0x08, 0x05b, 250, 0, -2159	# zone 3: Main_P03_E05B / Sub_P03_E05B
+    jk_zone8	0x03, 0x08, 0x05d, 249, 0, -1718	# zone 4: Main_P03_E05D / Sub_P03_E05D
+JkMsHeader373:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones373:
+    jk_zone8	0x05, 0x04, 0x05e, 240, 0, 541	# zone 0: Main_P05_E05E / Sub_P05_E05E
+JkMsHeader379:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones379:
+    jk_zone6	0x05, 0x04, 0x065, 213, 0	# zone 0: Main_P05_E065 / Sub_P05_E065
+    .space	2, 0xff	# alignment
+JkMsHeader380:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones380:
+    jk_zone8	0x05, 0x04, 0x06b, 251, 0, 3072	# zone 0: Main_P05_E06B / Sub_P05_E06B
+JkMsHeader395:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones395:
+    jk_zone8	0x05, 0x14, 0x06c, 236, 0, 2756	# zone 0: Main_P05_E06C / Sub_P05_E06C
+JkMsHeader397:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones397:
+    jk_zone6	0x05, 0x14, 0x068, 243, 0	# zone 0: Main_P05_E068 / Sub_P05_E068
+    .space	2, 0xff	# alignment
+JkMsHeader403:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones403:
+    jk_zone8	0x05, 0x14, 0x067, 241, 0, -96	# zone 0: Main_P05_E067 / Sub_P05_E067
+JkMsHeader405:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones405:
+    jk_zone8	0x06, 0x08, 0x023, 253, 0, 2756	# zone 0: Main_P06_E023 / Sub_P06_E023
+JkMsHeader408:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones408:
+    jk_zone6	0x05, 0x08, 0x000, 255, 0	# zone 0: Main_P05_E000 / Sub_P05_E000
+    .space	2, 0xff	# alignment
+JkMsHeader410:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones410:
+    jk_zone8	0x08, 0x04, 0x028, 250, 0, 2756	# zone 0: Main_P08_E028 / Sub_P08_E028
+JkMsHeader444:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones444:
+    jk_zone8	0x08, 0x04, 0x02d, 254, 0, 2756	# zone 0: Main_P08_E02D
+JkMsHeader459:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones459:
+    jk_zone8	0x08, 0x04, 0x037, 244, 0, 2756	# zone 0: Main_P08_E037
+JkMsHeader539:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones539:
+    jk_zone8	0x09, 0x08, 0x093, 249, 0, 2756	# zone 0: Sub_P09_E093
+JkMsHeader569:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones569:
+    jk_zone8	0x09, 0x08, 0x091, 8, 0, 5120	# zone 0: Sub_P09_E091
+JkMsHeader614:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones614:
+    jk_zone8	0x00, 0x04, 0x0a4, 238, 0, 2756	# zone 0: Main_P00_E0A4 / Sub_P00_E0A4
+JkMsHeader635:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones635:
+    jk_zone6	0x00, 0x08, 0x052, 245, 0	# zone 0: Main_P00_E052 / Sub_P00_E052
+    .space	2, 0xff	# alignment
+JkMsHeader659:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones659:
+    jk_zone6	0x00, 0x08, 0x053, 251, 0	# zone 0: Main_P00_E053 / Sub_P00_E053
+    .space	2, 0xff	# alignment
+JkMsHeader671:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones671:
+    jk_zone8	0x06, 0x08, 0x042, 248, 0, 3012	# zone 0: Main_P06_E042 / Sub_P06_E042
+JkMsHeader722:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones722:
+    jk_zone8	0x00, 0x08, 0x06b, 250, 0, 2756	# zone 0: Main_P00_E06B / Sub_P00_E06B
+JkMsHeader747:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones747:
+    jk_zone8	0x06, 0x04, 0x052, 251, 0, 4924	# zone 0: Main_P06_E052 / Sub_P06_E052
+JkMsHeader750:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones750:
+    jk_zone8	0x04, 0x08, 0x089, 250, 0, -992	# zone 0: Sub_P04_E089
+JkMsHeader752:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones752:
+    jk_zone6	0x06, 0x04, 0x058, 254, 0	# zone 0: Main_P06_E058 / Sub_P06_E058
+    .space	2, 0xff	# alignment
+JkMsHeader757:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones757:
+    jk_zone8	0x06, 0x04, 0x04d, 254, 0, 2756	# zone 0: Main_P06_E04D / Sub_P06_E04D
+JkMsHeader761:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones761:
+    jk_zone8	0x06, 0x04, 0x05d, 250, 0, 1084	# zone 0: Main_P06_E05D / Sub_P06_E05D
+JkMsHeader771:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones771:
+    jk_zone6	0x06, 0x04, 0x05c, 247, 0	# zone 0: Main_P06_E05C / Sub_P06_E05C
+    .space	2, 0xff	# alignment
+JkMsHeader775:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones775:
+    jk_zone8	0x02, 0x04, 0x06f, 255, 0, -576	# zone 0: Main_P02_E06F
+    jk_zone8	0x03, 0x34, 0x06f, 240, 0, 0	# zone 1: Main_P03_E06F
+    jk_zone8	0x03, 0x34, 0x070, 236, 0, 0	# zone 2: Main_P03_E070
+    jk_zone8	0x03, 0x34, 0x071, 236, 0, 0	# zone 3: Main_P03_E071
+JkMsHeader781:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones781:
+    jk_zone8	0x06, 0x04, 0x04c, 3, 0, 2756	# zone 0: Main_P06_E04C / Sub_P06_E04C
+JkMsHeader782:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones782:
+    jk_zone8	0x02, 0x04, 0x072, 243, 0, -316	# zone 0: Main_P02_E072
+JkMsHeader787:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones787:
+    jk_zone8	0x06, 0x04, 0x050, 245, 0, -1536	# zone 0: Main_P06_E050 / Sub_P06_E050
+JkMsHeader790:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones790:
+    jk_zone8	0x00, 0x08, 0x02e, 235, 0, 1335	# zone 0: Main_P00_E02E / Sub_P00_E02E
+JkMsHeader812:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones812:
+    jk_zone8	0x06, 0x08, 0x028, 244, 0, 2756	# zone 0: Main_P06_E028 / Sub_P06_E028
+JkMsHeader834:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones834:
+    jk_zone8	0x09, 0x08, 0x074, 239, 0, 2756	# zone 0: Sub_P09_E074
+JkMsHeader850:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones850:
+    jk_zone8	0x09, 0x08, 0x07c, 236, 0, 2756	# zone 0: Sub_P09_E07C
+JkMsHeader000:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones000:
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 0: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x002, 238, 0, -1714	# zone 1: Main_P08_E002 / Sub_P08_E002
+    jk_zone8	0x08, 0x04, 0x003, 247, 0, -2883	# zone 2: Main_P08_E003 / Sub_P08_E003
+    jk_zone8	0x08, 0x04, 0x004, 242, 0, -3984	# zone 3: Main_P08_E004 / Sub_P08_E004
+    jk_zone8	0x08, 0x04, 0x005, 238, 0, -1944	# zone 4: Main_P08_E005 / Sub_P08_E005
+    jk_zone8	0x08, 0x04, 0x006, 244, 0, -2723	# zone 5: Main_P08_E006 / Sub_P08_E006
+    jk_zone8	0x08, 0x04, 0x007, 233, 0, -3804	# zone 6: Main_P08_E007 / Sub_P08_E007
+    jk_zone8	0x08, 0x04, 0x008, 240, 0, -1983	# zone 7: Main_P08_E008 / Sub_P08_E008
+    jk_zone8	0x09, 0x08, 0x0a2, 235, 0, -2708	# zone 8: Sub_P09_E0A2
+    jk_zone8	0x09, 0x08, 0x0a3, 243, 0, -3932	# zone 9: Sub_P09_E0A3
+    jk_zone8	0x09, 0x08, 0x0a4, 244, 0, -1747	# zone 10: Sub_P09_E0A4
+    jk_zone8	0x09, 0x08, 0x0a5, 248, 0, -2522	# zone 11: Sub_P09_E0A5
+    jk_zone8	0x09, 0x08, 0x0a6, 241, 0, -3533	# zone 12: Sub_P09_E0A6
+    jk_zone8	0x0a, 0x08, 0x023, 249, 0, -2016	# zone 13: Main_P0A_E023 / Sub_P0A_E023
+    jk_zone8	0x0a, 0x08, 0x024, 239, 0, -3035	# zone 14: Main_P0A_E024 / Sub_P0A_E024
+    jk_zone8	0x0a, 0x08, 0x025, 247, 0, -4343	# zone 15: Main_P0A_E025 / Sub_P0A_E025
+JkMsHeader004:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones004:
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 0: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x002, 238, 0, -1714	# zone 1: Main_P08_E002 / Sub_P08_E002
+    jk_zone8	0x08, 0x04, 0x003, 247, 0, -2883	# zone 2: Main_P08_E003 / Sub_P08_E003
+    jk_zone8	0x08, 0x04, 0x004, 242, 0, -3984	# zone 3: Main_P08_E004 / Sub_P08_E004
+    jk_zone8	0x08, 0x04, 0x005, 238, 0, -1944	# zone 4: Main_P08_E005 / Sub_P08_E005
+    jk_zone8	0x08, 0x04, 0x006, 244, 0, -2723	# zone 5: Main_P08_E006 / Sub_P08_E006
+    jk_zone8	0x08, 0x04, 0x007, 233, 0, -3804	# zone 6: Main_P08_E007 / Sub_P08_E007
+    jk_zone8	0x08, 0x04, 0x008, 240, 0, -1983	# zone 7: Main_P08_E008 / Sub_P08_E008
+    jk_zone8	0x08, 0x04, 0x009, 234, 0, -2708	# zone 8: Main_P08_E009 / Sub_P08_E009
+    jk_zone8	0x08, 0x04, 0x00a, 239, 0, -3932	# zone 9: Main_P08_E00A / Sub_P08_E00A
+    jk_zone8	0x08, 0x04, 0x00b, 241, 0, -1747	# zone 10: Main_P08_E00B / Sub_P08_E00B
+    jk_zone8	0x08, 0x04, 0x00c, 243, 0, -2522	# zone 11: Main_P08_E00C / Sub_P08_E00C
+    jk_zone8	0x08, 0x04, 0x00d, 240, 0, -3533	# zone 12: Main_P08_E00D / Sub_P08_E00D
+    jk_zone8	0x0b, 0x04, 0x008, 241, 0, -2016	# zone 13: Main_P0B_E008 / Sub_P0B_E008
+    jk_zone8	0x0b, 0x04, 0x009, 237, 0, -3035	# zone 14: Main_P0B_E009 / Sub_P0B_E009
+    jk_zone8	0x0b, 0x04, 0x00a, 243, 0, -4343	# zone 15: Main_P0B_E00A / Sub_P0B_E00A
+JkMsHeader012:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones012:
+    jk_zone8	0x02, 0x08, 0x000, 243, 0, -407	# zone 0: Main_P02_E000 / Sub_P02_E000
+    jk_zone8	0x02, 0x08, 0x001, 242, 0, -362	# zone 1: Main_P02_E001 / Sub_P02_E001
+    jk_zone8	0x02, 0x08, 0x002, 246, 0, -1570	# zone 2: Main_P02_E002 / Sub_P02_E002
+    jk_zone8	0x02, 0x08, 0x003, 244, 0, -186	# zone 3: Main_P02_E003 / Sub_P02_E003
+    jk_zone8	0x02, 0x08, 0x004, 249, 0, -1929	# zone 4: Main_P02_E004 / Sub_P02_E004
+    jk_zone8	0x02, 0x08, 0x005, 250, 0, -487	# zone 5: Main_P02_E005 / Sub_P02_E005
+    jk_zone8	0x02, 0x08, 0x006, 250, 0, -2806	# zone 6: Main_P02_E006 / Sub_P02_E006
+    jk_zone8	0x02, 0x08, 0x007, 246, 0, 72	# zone 7: Main_P02_E007 / Sub_P02_E007
+JkMsHeader014:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones014:
+    jk_zone6	0x01, 0x14, 0x011, 235, 0	# zone 0: Main_P01_E011 / Sub_P01_E011
+    jk_zone6	0x01, 0x04, 0x011, 235, 0	# zone 1: Main_P01_E011 / Sub_P01_E011
+    jk_zone6	0x01, 0x04, 0x010, 235, 0	# zone 2: Main_P01_E010 / Sub_P01_E010
+    jk_zone6	0x01, 0x04, 0x012, 239, 0	# zone 3: Main_P01_E012 / Sub_P01_E012
+    jk_zone6	0x01, 0x04, 0x013, 242, 0	# zone 4: Main_P01_E013 / Sub_P01_E013
+    jk_zone6	0x01, 0x04, 0x014, 231, 0	# zone 5: Main_P01_E014 / Sub_P01_E014
+    jk_zone6	0x01, 0x04, 0x015, 247, 0	# zone 6: Main_P01_E015 / Sub_P01_E015
+    jk_zone6	0x01, 0x04, 0x016, 247, 0	# zone 7: Main_P01_E016 / Sub_P01_E016
+    jk_zone6	0x01, 0x04, 0x017, 247, 0	# zone 8: Main_P01_E017 / Sub_P01_E017
+    jk_zone6	0x01, 0x04, 0x007, 242, 0	# zone 9: Main_P01_E007 / Sub_P01_E007
+JkMsHeader019:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones019:
+    jk_zone6	0x00, 0x14, 0x055, 243, 0	# zone 0: Main_P00_E055 / Sub_P00_E055
+    jk_zone6	0x00, 0x04, 0x055, 243, 0	# zone 1: Main_P00_E055 / Sub_P00_E055
+    jk_zone6	0x00, 0x04, 0x054, 243, 0	# zone 2: Main_P00_E054 / Sub_P00_E054
+    jk_zone6	0x00, 0x04, 0x057, 253, 0	# zone 3: Main_P00_E057 / Sub_P00_E057
+    jk_zone6	0x00, 0x04, 0x056, 253, 0	# zone 4: Main_P00_E056 / Sub_P00_E056
+    jk_zone6	0x00, 0x04, 0x058, 248, 0	# zone 5: Main_P00_E058 / Sub_P00_E058
+    jk_zone6	0x00, 0x04, 0x05a, 251, 0	# zone 6: Main_P00_E05A / Sub_P00_E05A
+    jk_zone6	0x00, 0x04, 0x059, 251, 0	# zone 7: Main_P00_E059 / Sub_P00_E059
+    jk_zone6	0x00, 0x04, 0x05b, 246, 0	# zone 8: Main_P00_E05B / Sub_P00_E05B
+    jk_zone6	0x00, 0x04, 0x05c, 246, 0	# zone 9: Main_P00_E05C / Sub_P00_E05C
+    jk_zone6	0x00, 0x04, 0x05d, 246, 0	# zone 10: Main_P00_E05D / Sub_P00_E05D
+    jk_zone6	0x00, 0x04, 0x05e, 254, 0	# zone 11: Main_P00_E05E / Sub_P00_E05E
+    jk_zone6	0x00, 0x04, 0x05f, 254, 0	# zone 12: Main_P00_E05F / Sub_P00_E05F
+    jk_zone6	0x00, 0x04, 0x060, 254, 0	# zone 13: Main_P00_E060 / Sub_P00_E060
+JkMsHeader021:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones021:
+    jk_zone6	0x00, 0x38, 0x0b2, 245, 0	# zone 0: Main_P00_E0B2 / Sub_P00_E0B2
+    jk_zone6	0x00, 0x08, 0x0b3, 245, 0	# zone 1: Main_P00_E0B3 / Sub_P00_E0B3
+    jk_zone6	0x00, 0x08, 0x0b4, 243, 0	# zone 2: Main_P00_E0B4 / Sub_P00_E0B4
+    jk_zone6	0x00, 0x08, 0x0b5, 243, 0	# zone 3: Sub_P00_E0B5
+    jk_zone6	0x00, 0x08, 0x0b0, 240, 0	# zone 4: Main_P00_E0B0 / Sub_P00_E0B0
+    jk_zone6	0x00, 0x08, 0x0b1, 240, 0	# zone 5: Main_P00_E0B1 / Sub_P00_E0B1
+    jk_zone6	0x00, 0x08, 0x0a7, 242, 0	# zone 6: Main_P00_E0A7 / Sub_P00_E0A7
+    .space	2, 0xff	# alignment
+JkMsHeader028:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones028:
+    jk_zone6	0x03, 0x14, 0x001, 239, 0	# zone 0: Main_P03_E001 / Sub_P03_E001
+    jk_zone6	0x03, 0x04, 0x001, 239, 0	# zone 1: Main_P03_E001 / Sub_P03_E001
+    jk_zone6	0x03, 0x04, 0x000, 239, 0	# zone 2: Main_P03_E000 / Sub_P03_E000
+    jk_zone6	0x03, 0x04, 0x003, 242, 0	# zone 3: Main_P03_E003 / Sub_P03_E003
+    jk_zone6	0x03, 0x04, 0x002, 242, 0	# zone 4: Main_P03_E002 / Sub_P03_E002
+    jk_zone6	0x03, 0x04, 0x004, 243, 0	# zone 5: Main_P03_E004 / Sub_P03_E004
+    jk_zone6	0x03, 0x04, 0x005, 246, 0	# zone 6: Main_P03_E005 / Sub_P03_E005
+    jk_zone6	0x03, 0x04, 0x006, 248, 0	# zone 7: Main_P03_E006 / Sub_P03_E006
+    jk_zone6	0x03, 0x04, 0x008, 248, 0	# zone 8: Main_P03_E008 / Sub_P03_E008
+    jk_zone6	0x03, 0x04, 0x007, 248, 0	# zone 9: Main_P03_E007 / Sub_P03_E007
+    jk_zone6	0x03, 0x04, 0x009, 250, 0	# zone 10: Main_P03_E009 / Sub_P03_E009
+    jk_zone6	0x03, 0x04, 0x00a, 250, 0	# zone 11: Main_P03_E00A / Sub_P03_E00A
+    jk_zone6	0x03, 0x04, 0x00d, 237, 0	# zone 12: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x04, 0x00f, 226, 0	# zone 13: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 226, 0	# zone 14: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader072:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones072:
+    jk_zone6	0x01, 0x18, 0x04b, 250, 0	# zone 0: Main_P01_E04B / Sub_P01_E04B
+    jk_zone6	0x01, 0x08, 0x04b, 250, 0	# zone 1: Main_P01_E04B / Sub_P01_E04B
+    jk_zone6	0x01, 0x08, 0x04e, 248, 0	# zone 2: Main_P01_E04E / Sub_P01_E04E
+    jk_zone6	0x01, 0x08, 0x051, 251, 0	# zone 3: Main_P01_E051 / Sub_P01_E051
+    jk_zone6	0x01, 0x08, 0x053, 252, 0	# zone 4: Main_P01_E053 / Sub_P01_E053
+    jk_zone6	0x01, 0x08, 0x056, 252, 0	# zone 5: Main_P01_E056 / Sub_P01_E056
+    jk_zone6	0x01, 0x08, 0x058, 255, 0	# zone 6: Main_P01_E058 / Sub_P01_E058
+    jk_zone6	0x01, 0x08, 0x05c, 247, 0	# zone 7: Main_P01_E05C / Sub_P01_E05C
+    jk_zone6	0x01, 0x08, 0x05d, 247, 0	# zone 8: Main_P01_E05D / Sub_P01_E05D
+    jk_zone6	0x01, 0x08, 0x05e, 247, 0	# zone 9: Main_P01_E05E / Sub_P01_E05E
+    jk_zone6	0x08, 0x04, 0x01a, 248, 0	# zone 10: Main_P08_E01A / Sub_P08_E01A
+    .space	2, 0xff	# alignment
+JkMsHeader124:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones124:
+    jk_zone8	0x00, 0x08, 0x070, 248, 0, -2042	# zone 0: Main_P00_E070 / Sub_P00_E070
+    jk_zone8	0x00, 0x08, 0x072, 254, 0, -1261	# zone 1: Main_P00_E072 / Sub_P00_E072
+    jk_zone8	0x00, 0x08, 0x074, 253, 0, -2778	# zone 2: Main_P00_E074 / Sub_P00_E074
+    jk_zone8	0x00, 0x08, 0x076, 245, 0, -1282	# zone 3: Main_P00_E076 / Sub_P00_E076
+    jk_zone8	0x00, 0x08, 0x078, 247, 0, -2784	# zone 4: Main_P00_E078 / Sub_P00_E078
+    jk_zone8	0x00, 0x08, 0x07a, 252, 0, -1297	# zone 5: Main_P00_E07A / Sub_P00_E07A
+    jk_zone8	0x00, 0x08, 0x07c, 235, 0, -2810	# zone 6: Main_P00_E07C / Sub_P00_E07C
+    jk_zone8	0x00, 0x08, 0x07e, 245, 0, -1003	# zone 7: Main_P00_E07E / Sub_P00_E07E
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 8: Main_P00_E07B / Sub_P00_E07B
+JkMsHeader130:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones130:
+    jk_zone8	0x00, 0x04, 0x06d, 236, 0, -2144	# zone 0: Main_P00_E06D / Sub_P00_E06D
+    jk_zone8	0x00, 0x04, 0x06f, 252, 0, -1011	# zone 1: Main_P00_E06F / Sub_P00_E06F
+    jk_zone8	0x00, 0x04, 0x071, 246, 0, -2221	# zone 2: Main_P00_E071 / Sub_P00_E071
+    jk_zone8	0x00, 0x04, 0x073, 250, 0, -989	# zone 3: Main_P00_E073 / Sub_P00_E073
+    jk_zone8	0x00, 0x04, 0x075, 249, 0, -2498	# zone 4: Main_P00_E075 / Sub_P00_E075
+    jk_zone8	0x00, 0x04, 0x077, 248, 0, -999	# zone 5: Main_P00_E077 / Sub_P00_E077
+    jk_zone8	0x00, 0x04, 0x079, 245, 0, -2552	# zone 6: Main_P00_E079 / Sub_P00_E079
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 7: Main_P00_E07B / Sub_P00_E07B
+    jk_zone8	0x00, 0x08, 0x07e, 245, 0, -1003	# zone 8: Main_P00_E07E / Sub_P00_E07E
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 9: Main_P00_E07B / Sub_P00_E07B
+JkMsHeader141:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones141:
+    jk_zone8	0x02, 0x04, 0x01a, 243, 0, 0	# zone 0: Main_P02_E01A / Sub_P02_E01A
+    jk_zone8	0x02, 0x04, 0x01b, 234, 0, -1237	# zone 1: Main_P02_E01B / Sub_P02_E01B
+    jk_zone8	0x02, 0x04, 0x01c, 245, 0, -2761	# zone 2: Main_P02_E01C / Sub_P02_E01C
+    jk_zone8	0x02, 0x04, 0x01d, 245, 0, -1275	# zone 3: Main_P02_E01D / Sub_P02_E01D
+    jk_zone8	0x02, 0x04, 0x01e, 247, 0, -2819	# zone 4: Main_P02_E01E / Sub_P02_E01E
+    jk_zone8	0x02, 0x04, 0x01f, 243, 0, -1285	# zone 5: Main_P02_E01F / Sub_P02_E01F
+    jk_zone8	0x02, 0x04, 0x020, 252, 0, 0	# zone 6: Main_P02_E020 / Sub_P02_E020
+JkMsHeader370:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones370:
+    jk_zone8	0x03, 0x08, 0x056, 251, 0, -1312	# zone 0: Main_P03_E056 / Sub_P03_E056
+    jk_zone8	0x03, 0x08, 0x058, 250, 0, -2979	# zone 1: Main_P03_E058 / Sub_P03_E058
+    jk_zone8	0x03, 0x08, 0x05a, 253, 0, -1241	# zone 2: Main_P03_E05A / Sub_P03_E05A
+    jk_zone8	0x03, 0x08, 0x05c, 250, 0, -2159	# zone 3: Main_P03_E05C / Sub_P03_E05C
+    jk_zone8	0x03, 0x08, 0x05e, 249, 0, -1718	# zone 4: Main_P03_E05E / Sub_P03_E05E
+JkMsHeader404:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones404:
+    jk_zone8	0x05, 0x14, 0x066, 241, 0, -96	# zone 0: Main_P05_E066 / Sub_P05_E066
+JkMsHeader406:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones406:
+    jk_zone8	0x06, 0x08, 0x024, 249, 0, 2756	# zone 0: Main_P06_E024 / Sub_P06_E024
+JkMsHeader615:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones615:
+    jk_zone8	0x00, 0x08, 0x04a, 250, 0, 2756	# zone 0: Main_P00_E04A / Sub_P00_E04A
+JkMsHeader783:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones783:
+    jk_zone8	0x02, 0x04, 0x073, 243, 0, -316	# zone 0: Main_P02_E073
+JkMsHeader813:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones813:
+    jk_zone8	0x06, 0x08, 0x029, 244, 0, 2756	# zone 0: Main_P06_E029 / Sub_P06_E029
+JkMsHeader835:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones835:
+    jk_zone8	0x09, 0x08, 0x075, 239, 0, 2756	# zone 0: Sub_P09_E075
+JkMsHeader029:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones029:
+    jk_zone6	0x03, 0x14, 0x012, 236, 0	# zone 0: Main_P03_E012 / Sub_P03_E012
+    jk_zone6	0x03, 0x04, 0x012, 236, 0	# zone 1: Main_P03_E012 / Sub_P03_E012
+    jk_zone6	0x03, 0x04, 0x011, 236, 0	# zone 2: Main_P03_E011 / Sub_P03_E011
+    jk_zone6	0x03, 0x04, 0x014, 236, 0	# zone 3: Main_P03_E014 / Sub_P03_E014
+    jk_zone6	0x03, 0x04, 0x013, 236, 0	# zone 4: Main_P03_E013 / Sub_P03_E013
+    jk_zone6	0x03, 0x04, 0x015, 235, 0	# zone 5: Main_P03_E015 / Sub_P03_E015
+    jk_zone6	0x03, 0x04, 0x016, 242, 0	# zone 6: Main_P03_E016 / Sub_P03_E016
+    jk_zone6	0x03, 0x04, 0x017, 240, 0	# zone 7: Main_P03_E017 / Sub_P03_E017
+    jk_zone6	0x03, 0x04, 0x019, 250, 0	# zone 8: Main_P03_E019 / Sub_P03_E019
+    jk_zone6	0x03, 0x04, 0x018, 250, 0	# zone 9: Main_P03_E018 / Sub_P03_E018
+    jk_zone6	0x03, 0x04, 0x01a, 248, 0	# zone 10: Main_P03_E01A / Sub_P03_E01A
+    jk_zone6	0x03, 0x04, 0x01b, 248, 0	# zone 11: Main_P03_E01B / Sub_P03_E01B
+    jk_zone6	0x03, 0x04, 0x00a, 250, 0	# zone 12: Main_P03_E00A / Sub_P03_E00A
+    jk_zone6	0x03, 0x04, 0x00d, 237, 0	# zone 13: Main_P03_E00D / Sub_P03_E00D
+    jk_zone6	0x03, 0x04, 0x00f, 226, 0	# zone 14: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 226, 0	# zone 15: Main_P03_E010 / Sub_P03_E010
+JkMsHeader298:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones298:
+    jk_zone6	0x00, 0x08, 0x020, 232, 0	# zone 0: Main_P00_E020 / Sub_P00_E020
+    jk_zone6	0x00, 0x08, 0x021, 236, 0	# zone 1: Main_P00_E021 / Sub_P00_E021
+    jk_zone6	0x00, 0x08, 0x022, 236, 0	# zone 2: Main_P00_E022 / Sub_P00_E022
+    jk_zone6	0x00, 0x08, 0x023, 228, 0	# zone 3: Main_P00_E023 / Sub_P00_E023
+    jk_zone6	0x00, 0x08, 0x024, 231, 0	# zone 4: Main_P00_E024 / Sub_P00_E024
+    jk_zone6	0x00, 0x08, 0x025, 230, 0	# zone 5: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x08, 0x026, 229, 0	# zone 6: Main_P00_E026 / Sub_P00_E026
+    jk_zone6	0x00, 0x08, 0x026, 225, 0	# zone 7: Main_P00_E026 / Sub_P00_E026
+    jk_zone6	0x00, 0x08, 0x026, 221, 0	# zone 8: Main_P00_E026 / Sub_P00_E026
+    jk_zone6	0x00, 0x08, 0x026, 217, 0	# zone 9: Main_P00_E026 / Sub_P00_E026
+    jk_zone6	0x00, 0x08, 0x026, 213, 0	# zone 10: Main_P00_E026 / Sub_P00_E026
+    .space	2, 0xff	# alignment
+JkMsHeader324:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones324:
+    jk_zone8	0x00, 0x08, 0x027, 0, 0, -3072	# zone 0: Main_P00_E027 / Sub_P00_E027
+    jk_zone8	0x00, 0x08, 0x028, 1, 0, -4347	# zone 1: Main_P00_E028 / Sub_P00_E028
+    jk_zone8	0x00, 0x08, 0x029, 254, 0, -3072	# zone 2: Main_P00_E029 / Sub_P00_E029
+    jk_zone8	0x00, 0x08, 0x02a, 251, 0, -3072	# zone 3: Main_P00_E02A / Sub_P00_E02A
+    jk_zone8	0x00, 0x08, 0x02b, 246, 0, -3072	# zone 4: Main_P00_E02B / Sub_P00_E02B
+    jk_zone8	0x00, 0x08, 0x02c, 239, 0, -3072	# zone 5: Main_P00_E02C / Sub_P00_E02C
+    jk_zone8	0x00, 0x08, 0x02d, 231, 0, -3072	# zone 6: Main_P00_E02D / Sub_P00_E02D
+    jk_zone8	0x00, 0x08, 0x02d, 223, 0, -3072	# zone 7: Main_P00_E02D / Sub_P00_E02D
+JkMsHeader411:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones411:
+    jk_zone8	0x08, 0x04, 0x029, 249, 0, 2756	# zone 0: Main_P08_E029 / Sub_P08_E029
+JkMsHeader460:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones460:
+    jk_zone8	0x0c, 0x04, 0x018, 244, 0, 2756	# zone 0: Main_P0C_E018 / Sub_P0C_E018
+JkMsHeader540:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones540:
+    jk_zone8	0x0c, 0x04, 0x01b, 248, 0, 2756	# zone 0: Main_P0C_E01B / Sub_P0C_E01B
+JkMsHeader784:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones784:
+    jk_zone8	0x02, 0x04, 0x075, 243, 0, -316	# zone 0: Main_P02_E075
+JkMsHeader814:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones814:
+    jk_zone8	0x06, 0x08, 0x02a, 244, 0, 2756	# zone 0: Main_P06_E02A / Sub_P06_E02A
+JkMsHeader836:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones836:
+    jk_zone8	0x09, 0x08, 0x076, 239, 0, 2756	# zone 0: Sub_P09_E076
+JkMsHeader015:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones015:
+    jk_zone6	0x01, 0x14, 0x009, 237, 0	# zone 0: Main_P01_E009 / Sub_P01_E009
+    jk_zone6	0x01, 0x04, 0x009, 237, 0	# zone 1: Main_P01_E009 / Sub_P01_E009
+    jk_zone6	0x01, 0x04, 0x008, 237, 0	# zone 2: Main_P01_E008 / Sub_P01_E008
+    jk_zone6	0x01, 0x04, 0x00a, 236, 0	# zone 3: Main_P01_E00A / Sub_P01_E00A
+    jk_zone6	0x01, 0x04, 0x00b, 238, 0	# zone 4: Main_P01_E00B / Sub_P01_E00B
+    jk_zone6	0x01, 0x04, 0x00c, 237, 0	# zone 5: Main_P01_E00C / Sub_P01_E00C
+    jk_zone6	0x01, 0x04, 0x00d, 249, 0	# zone 6: Main_P01_E00D / Sub_P01_E00D
+    jk_zone6	0x01, 0x04, 0x00e, 249, 0	# zone 7: Main_P01_E00E / Sub_P01_E00E
+    jk_zone6	0x01, 0x04, 0x00f, 249, 0	# zone 8: Main_P01_E00F / Sub_P01_E00F
+    jk_zone6	0x01, 0x04, 0x007, 242, 0	# zone 9: Main_P01_E007 / Sub_P01_E007
+JkMsHeader022:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones022:
+    jk_zone6	0x00, 0x38, 0x0ac, 248, 0	# zone 0: Main_P00_E0AC / Sub_P00_E0AC
+    jk_zone6	0x00, 0x08, 0x0ad, 247, 0	# zone 1: Main_P00_E0AD / Sub_P00_E0AD
+    jk_zone6	0x00, 0x08, 0x0ae, 246, 0	# zone 2: Main_P00_E0AE / Sub_P00_E0AE
+    jk_zone6	0x00, 0x08, 0x0af, 246, 0	# zone 3: Main_P00_E0AF / Sub_P00_E0AF
+    jk_zone6	0x00, 0x08, 0x0b0, 240, 0	# zone 4: Main_P00_E0B0 / Sub_P00_E0B0
+    jk_zone6	0x00, 0x08, 0x0b1, 240, 0	# zone 5: Main_P00_E0B1 / Sub_P00_E0B1
+    jk_zone6	0x00, 0x08, 0x0a7, 242, 0	# zone 6: Main_P00_E0A7 / Sub_P00_E0A7
+    .space	2, 0xff	# alignment
+JkMsHeader461:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones461:
+    jk_zone8	0x0c, 0x08, 0x018, 249, 0, 2756	# zone 0: Main_P0C_E018 / Sub_P0C_E018
+JkMsHeader541:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones541:
+    jk_zone8	0x0c, 0x08, 0x01b, 250, 0, 2756	# zone 0: Main_P0C_E01B / Sub_P0C_E01B
+JkMsHeader815:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones815:
+    jk_zone8	0x06, 0x08, 0x02b, 234, 0, 2756	# zone 0: Main_P06_E02B / Sub_P06_E02B
+JkMsHeader837:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones837:
+    jk_zone8	0x09, 0x08, 0x077, 239, 0, 2756	# zone 0: Sub_P09_E077
+JkMsHeader001:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones001:
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 0: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x009, 233, 0, 0	# zone 1: Main_P0A_E009 / Sub_P0A_E009
+    jk_zone8	0x0a, 0x04, 0x00a, 242, 0, -1272	# zone 2: Main_P0A_E00A / Sub_P0A_E00A
+    jk_zone8	0x0a, 0x04, 0x00b, 239, 0, -2320	# zone 3: Main_P0A_E00B / Sub_P0A_E00B
+    jk_zone8	0x0a, 0x04, 0x00c, 239, 0, -306	# zone 4: Main_P0A_E00C / Sub_P0A_E00C
+    jk_zone8	0x0a, 0x04, 0x00d, 237, 0, -1067	# zone 5: Main_P0A_E00D / Sub_P0A_E00D
+    jk_zone8	0x0a, 0x04, 0x00e, 233, 0, -2103	# zone 6: Main_P0A_E00E / Sub_P0A_E00E
+    jk_zone8	0x0a, 0x04, 0x00f, 232, 0, -324	# zone 7: Main_P0A_E00F / Sub_P0A_E00F
+    jk_zone8	0x08, 0x08, 0x024, 235, 0, -1091	# zone 8: Main_P08_E024 / Sub_P08_E024
+    jk_zone8	0x08, 0x08, 0x025, 238, 0, -2352	# zone 9: Main_P08_E025 / Sub_P08_E025
+    jk_zone8	0x08, 0x08, 0x026, 241, 0, -50	# zone 10: Main_P08_E026 / Sub_P08_E026
+    jk_zone8	0x08, 0x08, 0x027, 244, 0, -825	# zone 11: Main_P08_E027 / Sub_P08_E027
+    jk_zone8	0x08, 0x08, 0x028, 237, 0, -1864	# zone 12: Main_P08_E028 / Sub_P08_E028
+    jk_zone8	0x08, 0x08, 0x029, 245, 0, -343	# zone 13: Main_P08_E029 / Sub_P08_E029
+    jk_zone8	0x08, 0x08, 0x02a, 241, 0, -1368	# zone 14: Main_P08_E02A / Sub_P08_E02A
+    jk_zone8	0x08, 0x08, 0x02b, 227, 0, -1650	# zone 15: Main_P08_E02B / Sub_P08_E02B
+JkMsHeader005:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones005:
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 0: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x009, 233, 0, 0	# zone 1: Main_P0A_E009 / Sub_P0A_E009
+    jk_zone8	0x0a, 0x04, 0x00a, 242, 0, -1272	# zone 2: Main_P0A_E00A / Sub_P0A_E00A
+    jk_zone8	0x0a, 0x04, 0x00b, 239, 0, -2320	# zone 3: Main_P0A_E00B / Sub_P0A_E00B
+    jk_zone8	0x0a, 0x04, 0x00c, 239, 0, -306	# zone 4: Main_P0A_E00C / Sub_P0A_E00C
+    jk_zone8	0x0a, 0x04, 0x00d, 237, 0, -1067	# zone 5: Main_P0A_E00D / Sub_P0A_E00D
+    jk_zone8	0x0a, 0x04, 0x00e, 233, 0, -2103	# zone 6: Main_P0A_E00E / Sub_P0A_E00E
+    jk_zone8	0x0a, 0x04, 0x00f, 232, 0, -324	# zone 7: Main_P0A_E00F / Sub_P0A_E00F
+    jk_zone8	0x0a, 0x04, 0x010, 238, 0, -1091	# zone 8: Main_P0A_E010 / Sub_P0A_E010
+    jk_zone8	0x0a, 0x04, 0x011, 231, 0, -2352	# zone 9: Main_P0A_E011 / Sub_P0A_E011
+    jk_zone8	0x0a, 0x04, 0x012, 227, 0, -50	# zone 10: Main_P0A_E012 / Sub_P0A_E012
+    jk_zone8	0x0a, 0x04, 0x013, 231, 0, -825	# zone 11: Main_P0A_E013 / Sub_P0A_E013
+    jk_zone8	0x0a, 0x04, 0x014, 234, 0, -1864	# zone 12: Main_P0A_E014 / Sub_P0A_E014
+    jk_zone8	0x0a, 0x04, 0x015, 240, 0, -343	# zone 13: Main_P0A_E015 / Sub_P0A_E015
+    jk_zone8	0x0a, 0x04, 0x016, 233, 0, -1368	# zone 14: Main_P0A_E016 / Sub_P0A_E016
+    jk_zone8	0x0a, 0x04, 0x017, 237, 0, -1650	# zone 15: Main_P0A_E017 / Sub_P0A_E017
+JkMsHeader020:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones020:
+    jk_zone6	0x00, 0x14, 0x048, 244, 0	# zone 0: Main_P00_E048 / Sub_P00_E048
+    jk_zone6	0x00, 0x04, 0x048, 244, 0	# zone 1: Main_P00_E048 / Sub_P00_E048
+    jk_zone6	0x00, 0x04, 0x047, 244, 0	# zone 2: Main_P00_E047 / Sub_P00_E047
+    jk_zone6	0x00, 0x04, 0x04a, 238, 0	# zone 3: Main_P00_E04A / Sub_P00_E04A
+    jk_zone6	0x00, 0x04, 0x049, 238, 0	# zone 4: Main_P00_E049 / Sub_P00_E049
+    jk_zone6	0x00, 0x04, 0x04b, 251, 0	# zone 5: Main_P00_E04B / Sub_P00_E04B
+    jk_zone6	0x00, 0x04, 0x04d, 249, 0	# zone 6: Main_P00_E04D / Sub_P00_E04D
+    jk_zone6	0x00, 0x04, 0x04c, 249, 0	# zone 7: Main_P00_E04C / Sub_P00_E04C
+    jk_zone6	0x00, 0x04, 0x04e, 250, 0	# zone 8: Main_P00_E04E / Sub_P00_E04E
+    jk_zone6	0x00, 0x04, 0x04f, 250, 0	# zone 9: Main_P00_E04F / Sub_P00_E04F
+    jk_zone6	0x00, 0x04, 0x050, 254, 0	# zone 10: Main_P00_E050 / Sub_P00_E050
+    jk_zone6	0x00, 0x04, 0x051, 252, 0	# zone 11: Main_P00_E051 / Sub_P00_E051
+    jk_zone6	0x00, 0x04, 0x052, 252, 0	# zone 12: Main_P00_E052 / Sub_P00_E052
+    jk_zone6	0x00, 0x04, 0x053, 252, 0	# zone 13: Main_P00_E053 / Sub_P00_E053
+JkMsHeader051:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones051:
+    jk_zone6	0x01, 0x14, 0x02e, 0, 0	# zone 0: Main_P01_E02E / Sub_P01_E02E
+    jk_zone6	0x01, 0x04, 0x02e, 0, 0	# zone 1: Main_P01_E02E / Sub_P01_E02E
+    jk_zone6	0x01, 0x04, 0x02d, 0, 0	# zone 2: Main_P01_E02D / Sub_P01_E02D
+    jk_zone6	0x01, 0x04, 0x02f, 251, 0	# zone 3: Main_P01_E02F / Sub_P01_E02F
+    jk_zone6	0x01, 0x04, 0x030, 252, 0	# zone 4: Main_P01_E030 / Sub_P01_E030
+    jk_zone6	0x01, 0x04, 0x031, 250, 0	# zone 5: Main_P01_E031 / Sub_P01_E031
+    jk_zone6	0x01, 0x04, 0x032, 251, 0	# zone 6: Main_P01_E032 / Sub_P01_E032
+    jk_zone6	0x01, 0x04, 0x033, 251, 0	# zone 7: Main_P01_E033 / Sub_P01_E033
+    jk_zone6	0x01, 0x04, 0x034, 249, 0	# zone 8: Main_P01_E034 / Sub_P01_E034
+    jk_zone6	0x01, 0x04, 0x035, 249, 0	# zone 9: Main_P01_E035 / Sub_P01_E035
+    jk_zone6	0x01, 0x04, 0x036, 249, 0	# zone 10: Main_P01_E036 / Sub_P01_E036
+    .space	2, 0xff	# alignment
+JkMsHeader076:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones076:
+    jk_zone6	0x08, 0x14, 0x011, 242, 0	# zone 0: Main_P08_E011 / Sub_P08_E011
+    jk_zone6	0x08, 0x04, 0x011, 242, 0	# zone 1: Main_P08_E011 / Sub_P08_E011
+    jk_zone6	0x08, 0x04, 0x012, 242, 0	# zone 2: Main_P08_E012 / Sub_P08_E012
+    jk_zone6	0x08, 0x04, 0x013, 245, 0	# zone 3: Main_P08_E013 / Sub_P08_E013
+    jk_zone6	0x08, 0x04, 0x014, 254, 0	# zone 4: Main_P08_E014 / Sub_P08_E014
+    jk_zone6	0x08, 0x04, 0x015, 254, 0	# zone 5: Main_P08_E015 / Sub_P08_E015
+    jk_zone6	0x08, 0x04, 0x016, 246, 0	# zone 6: Main_P08_E016 / Sub_P08_E016
+    jk_zone6	0x08, 0x04, 0x017, 249, 0	# zone 7: Main_P08_E017 / Sub_P08_E017
+    jk_zone6	0x08, 0x04, 0x018, 249, 0	# zone 8: Main_P08_E018 / Sub_P08_E018
+    jk_zone6	0x08, 0x04, 0x019, 244, 0	# zone 9: Main_P08_E019 / Sub_P08_E019
+    jk_zone6	0x08, 0x04, 0x01a, 244, 0	# zone 10: Main_P08_E01A / Sub_P08_E01A
+    .space	2, 0xff	# alignment
+JkMsHeader100:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones100:
+    jk_zone6	0x00, 0x14, 0x08a, 248, 0	# zone 0: Main_P00_E08A / Sub_P00_E08A
+    jk_zone6	0x00, 0x04, 0x08a, 248, 0	# zone 1: Main_P00_E08A / Sub_P00_E08A
+    jk_zone6	0x00, 0x04, 0x089, 248, 0	# zone 2: Main_P00_E089 / Sub_P00_E089
+    jk_zone6	0x00, 0x04, 0x08b, 248, 0	# zone 3: Main_P00_E08B / Sub_P00_E08B
+    jk_zone6	0x00, 0x04, 0x08c, 248, 0	# zone 4: Main_P00_E08C / Sub_P00_E08C
+    jk_zone6	0x00, 0x04, 0x08d, 248, 0	# zone 5: Main_P00_E08D / Sub_P00_E08D
+    jk_zone6	0x00, 0x04, 0x088, 247, 0	# zone 6: Main_P00_E088 / Sub_P00_E088
+    jk_zone6	0x03, 0x08, 0x039, 250, 0	# zone 7: Main_P03_E039 / Sub_P03_E039
+    jk_zone6	0x03, 0x08, 0x03a, 250, 0	# zone 8: Main_P03_E03A / Sub_P03_E03A
+    .space	2, 0xff	# alignment
+JkMsHeader145:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones145:
+    jk_zone8	0x0e, 0x18, 0x010, 236, 0, -1012	# zone 0: Main_P0E_E010 / Sub_P0E_E010
+    jk_zone8	0x0e, 0x18, 0x011, 240, 0, -2460	# zone 1: Main_P0E_E011 / Sub_P0E_E011
+    jk_zone8	0x0e, 0x18, 0x012, 248, 0, -141	# zone 2: Main_P0E_E012 / Sub_P0E_E012
+    jk_zone8	0x0e, 0x18, 0x013, 247, 0, -653	# zone 3: Main_P0E_E013 / Sub_P0E_E013
+    jk_zone8	0x0e, 0x18, 0x014, 247, 0, -889	# zone 4: Main_P0E_E014 / Sub_P0E_E014
+    jk_zone8	0x0e, 0x18, 0x015, 250, 0, -1701	# zone 5: Main_P0E_E015 / Sub_P0E_E015
+    jk_zone8	0x0e, 0x18, 0x016, 246, 0, -2206	# zone 6: Main_P0E_E016 / Sub_P0E_E016
+    jk_zone8	0x0e, 0x18, 0x017, 246, 0, -2965	# zone 7: Main_P0E_E017 / Sub_P0E_E017
+    jk_zone8	0x0e, 0x18, 0x018, 244, 0, -140	# zone 8: Main_P0E_E018 / Sub_P0E_E018
+    jk_zone8	0x0e, 0x18, 0x019, 243, 0, -1176	# zone 9: Main_P0E_E019 / Sub_P0E_E019
+    jk_zone8	0x0e, 0x18, 0x01a, 242, 0, -2257	# zone 10: Main_P0E_E01A / Sub_P0E_E01A
+    jk_zone8	0x0e, 0x18, 0x01b, 242, 0, -1192	# zone 11: Main_P0E_E01B / Sub_P0E_E01B
+    jk_zone8	0x02, 0x54, 0x047, 238, 0, -896	# zone 12: Main_P02_E047
+    jk_zone8	0x02, 0x04, 0x020, 216, 0, 0	# zone 13: Main_P02_E020 / Sub_P02_E020
+JkMsHeader240:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones240:
+    jk_zone6	0x05, 0xd8, 0x06b, 251, 0	# zone 0: Main_P05_E06B / Sub_P05_E06B
+    jk_zone6	0x05, 0xd8, 0x06c, 249, 0	# zone 1: Main_P05_E06C / Sub_P05_E06C
+    jk_zone6	0x05, 0x58, 0x06d, 247, 0	# zone 2: Main_P05_E06D / Sub_P05_E06D
+    jk_zone6	0x05, 0x98, 0x06e, 239, 0	# zone 3: Main_P05_E06E / Sub_P05_E06E
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 4: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader326:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones326:
+    jk_zone6	0x09, 0x08, 0x099, 255, 0	# zone 0: Sub_P09_E099
+    .space	2, 0xff	# alignment
+JkMsHeader329:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones329:
+    jk_zone6	0x00, 0x04, 0x026, 247, 0	# zone 0: Main_P00_E026 / Sub_P00_E026
+    jk_zone6	0x00, 0x04, 0x027, 244, 0	# zone 1: Main_P00_E027 / Sub_P00_E027
+    jk_zone6	0x00, 0x04, 0x028, 243, 0	# zone 2: Main_P00_E028 / Sub_P00_E028
+    jk_zone6	0x00, 0x04, 0x029, 241, 0	# zone 3: Main_P00_E029 / Sub_P00_E029
+    jk_zone6	0x00, 0x04, 0x02a, 239, 0	# zone 4: Main_P00_E02A / Sub_P00_E02A
+    jk_zone6	0x00, 0x04, 0x02b, 237, 0	# zone 5: Main_P00_E02B / Sub_P00_E02B
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 6: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 7: Main_P00_E000 / Sub_P00_E000
+JkMsHeader343:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones343:
+    jk_zone6	0x00, 0x14, 0x03d, 232, 0	# zone 0: Main_P00_E03D / Sub_P00_E03D
+    jk_zone6	0x00, 0x94, 0x03e, 234, 0	# zone 1: Main_P00_E03E / Sub_P00_E03E
+    jk_zone6	0x00, 0x14, 0x03f, 234, 0	# zone 2: Main_P00_E03F / Sub_P00_E03F
+    jk_zone6	0x00, 0x94, 0x040, 234, 0	# zone 3: Main_P00_E040 / Sub_P00_E040
+    jk_zone6	0x00, 0x14, 0x041, 232, 0	# zone 4: Main_P00_E041 / Sub_P00_E041
+    jk_zone6	0x00, 0x94, 0x042, 232, 0	# zone 5: Main_P00_E042 / Sub_P00_E042
+    jk_zone6	0x00, 0x14, 0x043, 232, 0	# zone 6: Main_P00_E043 / Sub_P00_E043
+    jk_zone6	0x00, 0x94, 0x044, 233, 0	# zone 7: Main_P00_E044 / Sub_P00_E044
+    jk_zone6	0x00, 0x14, 0x045, 233, 0	# zone 8: Main_P00_E045 / Sub_P00_E045
+    jk_zone6	0x00, 0x94, 0x046, 232, 0	# zone 9: Main_P00_E046 / Sub_P00_E046
+    jk_zone6	0x00, 0x04, 0x03c, 240, 0	# zone 10: Main_P00_E03C / Sub_P00_E03C
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 11: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 12: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader412:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones412:
+    jk_zone8	0x08, 0x04, 0x02f, 255, 0, 2756	# zone 0: Main_P08_E02F
+JkMsHeader445:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones445:
+    jk_zone8	0x0c, 0x04, 0x000, 237, 0, 2756	# zone 0: Main_P0C_E000 / Sub_P0C_E000
+JkMsHeader462:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones462:
+    jk_zone8	0x08, 0x04, 0x038, 245, 0, 2756	# zone 0: Main_P08_E038
+JkMsHeader542:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones542:
+    jk_zone8	0x0c, 0x04, 0x006, 249, 0, 2756	# zone 0: Main_P0C_E006 / Sub_P0C_E006
+JkMsHeader616:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones616:
+    jk_zone8	0x00, 0x04, 0x0a5, 242, 0, 2756	# zone 0: Main_P00_E0A5 / Sub_P00_E0A5
+JkMsHeader672:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones672:
+    jk_zone8	0x06, 0x08, 0x043, 248, 0, 3012	# zone 0: Main_P06_E043 / Sub_P06_E043
+JkMsHeader816:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones816:
+    jk_zone8	0x06, 0x08, 0x027, 241, 0, 2756	# zone 0: Main_P06_E027 / Sub_P06_E027
+JkMsHeader838:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones838:
+    jk_zone8	0x09, 0x08, 0x078, 239, 0, 2756	# zone 0: Sub_P09_E078
+JkMsHeader016:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones016:
+    jk_zone6	0x01, 0x14, 0x001, 235, 0	# zone 0: Main_P01_E001 / Sub_P01_E001
+    jk_zone6	0x01, 0x04, 0x001, 235, 0	# zone 1: Main_P01_E001 / Sub_P01_E001
+    jk_zone6	0x01, 0x04, 0x000, 235, 0	# zone 2: Main_P01_E000 / Sub_P01_E000
+    jk_zone6	0x01, 0x04, 0x002, 229, 0	# zone 3: Main_P01_E002 / Sub_P01_E002
+    jk_zone6	0x01, 0x04, 0x003, 238, 0	# zone 4: Main_P01_E003 / Sub_P01_E003
+    jk_zone6	0x01, 0x04, 0x004, 234, 0	# zone 5: Main_P01_E004 / Sub_P01_E004
+    jk_zone6	0x01, 0x04, 0x005, 242, 0	# zone 6: Main_P01_E005 / Sub_P01_E005
+    jk_zone6	0x01, 0x04, 0x006, 242, 0	# zone 7: Main_P01_E006 / Sub_P01_E006
+    jk_zone6	0x01, 0x04, 0x007, 242, 0	# zone 8: Main_P01_E007 / Sub_P01_E007
+    .space	2, 0xff	# alignment
+JkMsHeader023:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones023:
+    jk_zone6	0x00, 0x38, 0x0a8, 244, 0	# zone 0: Main_P00_E0A8 / Sub_P00_E0A8
+    jk_zone6	0x00, 0x08, 0x0a9, 243, 0	# zone 1: Main_P00_E0A9 / Sub_P00_E0A9
+    jk_zone6	0x00, 0x08, 0x0aa, 243, 0	# zone 2: Main_P00_E0AA / Sub_P00_E0AA
+    jk_zone6	0x00, 0x08, 0x0ab, 243, 0	# zone 3: Main_P00_E0AB / Sub_P00_E0AB
+    jk_zone6	0x00, 0x08, 0x0a5, 242, 0	# zone 4: Main_P00_E0A5 / Sub_P00_E0A5
+    jk_zone6	0x00, 0x08, 0x0a6, 242, 0	# zone 5: Main_P00_E0A6 / Sub_P00_E0A6
+    jk_zone6	0x00, 0x08, 0x0a7, 242, 0	# zone 6: Main_P00_E0A7 / Sub_P00_E0A7
+    .space	2, 0xff	# alignment
+JkMsHeader446:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones446:
+    jk_zone8	0x0c, 0x08, 0x000, 237, 0, 2756	# zone 0: Main_P0C_E000 / Sub_P0C_E000
+JkMsHeader543:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones543:
+    jk_zone8	0x0c, 0x08, 0x006, 245, 0, 2756	# zone 0: Main_P0C_E006 / Sub_P0C_E006
+JkMsHeader617:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones617:
+    jk_zone8	0x00, 0x08, 0x04b, 248, 0, 2756	# zone 0: Main_P00_E04B / Sub_P00_E04B
+JkMsHeader024:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones024:
+    jk_zone6	0x00, 0x38, 0x0a1, 243, 0	# zone 0: Main_P00_E0A1 / Sub_P00_E0A1
+    jk_zone6	0x00, 0x08, 0x0a2, 243, 0	# zone 1: Main_P00_E0A2 / Sub_P00_E0A2
+    jk_zone6	0x00, 0x08, 0x0a3, 242, 0	# zone 2: Main_P00_E0A3 / Sub_P00_E0A3
+    jk_zone6	0x00, 0x08, 0x0a4, 242, 0	# zone 3: Main_P00_E0A4 / Sub_P00_E0A4
+    jk_zone6	0x00, 0x08, 0x0a5, 242, 0	# zone 4: Main_P00_E0A5 / Sub_P00_E0A5
+    jk_zone6	0x00, 0x08, 0x0a6, 242, 0	# zone 5: Main_P00_E0A6 / Sub_P00_E0A6
+    jk_zone6	0x00, 0x08, 0x0a7, 242, 0	# zone 6: Main_P00_E0A7 / Sub_P00_E0A7
+    .space	2, 0xff	# alignment
+JkMsHeader120:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones120:
+    jk_zone8	0x09, 0x34, 0x009, 240, 0, 0	# zone 0: Main_P09_E009 / Sub_P09_E009
+    jk_zone8	0x09, 0x94, 0x00a, 242, 0, -2605	# zone 1: Main_P09_E00A / Sub_P09_E00A
+    jk_zone8	0x09, 0xd4, 0x00b, 237, 0, -2650	# zone 2: Main_P09_E00B / Sub_P09_E00B
+    jk_zone8	0x09, 0x34, 0x00c, 241, 0, -740	# zone 3: Main_P09_E00C / Sub_P09_E00C
+    jk_zone8	0x09, 0x94, 0x00d, 246, 0, -1797	# zone 4: Main_P09_E00D / Sub_P09_E00D
+    jk_zone8	0x09, 0xd4, 0x00e, 248, 0, -2628	# zone 5: Main_P09_E00E / Sub_P09_E00E
+    jk_zone8	0x09, 0x34, 0x00f, 244, 0, -668	# zone 6: Main_P09_E00F / Sub_P09_E00F
+    jk_zone8	0x09, 0x94, 0x010, 238, 0, -1693	# zone 7: Main_P09_E010 / Sub_P09_E010
+    jk_zone8	0x09, 0xd4, 0x011, 241, 0, -2793	# zone 8: Main_P09_E011 / Sub_P09_E011
+    jk_zone8	0x09, 0x34, 0x012, 241, 0, 0	# zone 9: Main_P09_E012 / Sub_P09_E012
+    jk_zone8	0x01, 0x98, 0x094, 247, 0, -257	# zone 10: Sub_P01_E094
+    jk_zone8	0x01, 0xf8, 0x095, 237, 0, -897	# zone 11: Sub_P01_E095
+    jk_zone8	0x01, 0x58, 0x096, 237, 0, -2354	# zone 12: Sub_P01_E096
+    jk_zone8	0x01, 0x98, 0x097, 239, 0, 0	# zone 13: Sub_P01_E097
+JkMsHeader192:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones192:
+    jk_zone8	0x07, 0xf4, 0x000, 249, 0, -2037	# zone 0: Main_P07_E000 / Sub_P07_E000
+    jk_zone8	0x07, 0x34, 0x001, 245, 0, -674	# zone 1: Main_P07_E001 / Sub_P07_E001
+    jk_zone8	0x07, 0x54, 0x002, 248, 0, -933	# zone 2: Main_P07_E002 / Sub_P07_E002
+    jk_zone8	0x07, 0x74, 0x003, 247, 0, -1472	# zone 3: Main_P07_E003 / Sub_P07_E003
+    jk_zone8	0x07, 0x94, 0x004, 247, 0, -1909	# zone 4: Main_P07_E004 / Sub_P07_E004
+    jk_zone8	0x07, 0xf4, 0x005, 249, 0, -2890	# zone 5: Main_P07_E005 / Sub_P07_E005
+    jk_zone8	0x07, 0x14, 0x006, 254, 0, -312	# zone 6: Main_P07_E006 / Sub_P07_E006
+    jk_zone8	0x07, 0x74, 0x007, 253, 0, -1575	# zone 7: Main_P07_E007 / Sub_P07_E007
+    jk_zone8	0x04, 0x14, 0x025, 251, 0, 0	# zone 8: Main_P04_E025 / Sub_P04_E025
+JkMsHeader195:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones195:
+    jk_zone8	0x05, 0x14, 0x02c, 247, 0, 0	# zone 0: Main_P05_E02C / Sub_P05_E02C
+    jk_zone8	0x05, 0x54, 0x02d, 255, 0, -1239	# zone 1: Main_P05_E02D / Sub_P05_E02D
+    jk_zone8	0x05, 0x94, 0x02e, 253, 0, -1797	# zone 2: Main_P05_E02E / Sub_P05_E02E
+    jk_zone8	0x05, 0xd4, 0x02f, 254, 0, -2549	# zone 3: Main_P05_E02F / Sub_P05_E02F
+    jk_zone8	0x05, 0x14, 0x030, 245, 0, -266	# zone 4: Main_P05_E030 / Sub_P05_E030
+    jk_zone8	0x05, 0x34, 0x031, 243, 0, -746	# zone 5: Main_P05_E031 / Sub_P05_E031
+    jk_zone8	0x05, 0x74, 0x032, 254, 0, -1485	# zone 6: Main_P05_E032 / Sub_P05_E032
+    jk_zone8	0x05, 0xd4, 0x033, 253, 0, -2542	# zone 7: Main_P05_E033 / Sub_P05_E033
+    jk_zone8	0x05, 0x14, 0x034, 250, 0, 0	# zone 8: Main_P05_E034 / Sub_P05_E034
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader206:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones206:
+    jk_zone8	0x0f, 0x18, 0x006, 249, 0, -1143	# zone 0: Main_P0F_E006 / Sub_P0F_E006
+    jk_zone8	0x0f, 0xb8, 0x007, 249, 0, -2319	# zone 1: Main_P0F_E007 / Sub_P0F_E007
+    jk_zone8	0x0f, 0xd8, 0x008, 247, 0, -2786	# zone 2: Main_P0F_E008 / Sub_P0F_E008
+    jk_zone8	0x0f, 0x18, 0x009, 244, 0, -269	# zone 3: Main_P0F_E009 / Sub_P0F_E009
+    jk_zone8	0x0f, 0x58, 0x00a, 248, 0, -1189	# zone 4: Main_P0F_E00A / Sub_P0F_E00A
+    jk_zone8	0x0f, 0x78, 0x00b, 247, 0, -1682	# zone 5: Main_P0F_E00B / Sub_P0F_E00B
+    jk_zone8	0x0f, 0x98, 0x00c, 242, 0, -2230	# zone 6: Main_P0F_E00C / Sub_P0F_E00C
+    jk_zone8	0x0f, 0xd8, 0x00d, 235, 0, -2332	# zone 7: Main_P0F_E00D / Sub_P0F_E00D
+    jk_zone8	0x0f, 0xf8, 0x00e, 233, 0, -167	# zone 8: Main_P0F_E00E / Sub_P0F_E00E
+    jk_zone8	0x0f, 0x38, 0x00f, 239, 0, -683	# zone 9: Main_P0F_E00F / Sub_P0F_E00F
+    jk_zone8	0x0f, 0x58, 0x010, 234, 0, -1433	# zone 10: Main_P0F_E010 / Sub_P0F_E010
+    jk_zone8	0x0f, 0x98, 0x011, 238, 0, -484	# zone 11: Main_P0F_E011 / Sub_P0F_E011
+    jk_zone8	0x06, 0xd8, 0x00b, 230, 0, -1875	# zone 12: Main_P06_E00B / Sub_P06_E00B
+    jk_zone8	0x06, 0x08, 0x010, 230, 0, -1384	# zone 13: Main_P06_E010 / Sub_P06_E010
+JkMsHeader208:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones208:
+    jk_zone8	0x0a, 0x58, 0x00a, 242, 0, -233	# zone 0: Main_P0A_E00A / Sub_P0A_E00A
+    jk_zone8	0x0a, 0x98, 0x00b, 245, 0, -2103	# zone 1: Main_P0A_E00B / Sub_P0A_E00B
+    jk_zone8	0x0a, 0xf8, 0x00c, 248, 0, -2989	# zone 2: Main_P0A_E00C / Sub_P0A_E00C
+    jk_zone8	0x0a, 0x58, 0x00d, 249, 0, -1022	# zone 3: Main_P0A_E00D / Sub_P0A_E00D
+    jk_zone8	0x0a, 0x98, 0x00e, 245, 0, -2003	# zone 4: Main_P0A_E00E / Sub_P0A_E00E
+    jk_zone8	0x0a, 0xd8, 0x00f, 248, 0, -2776	# zone 5: Main_P0A_E00F / Sub_P0A_E00F
+    jk_zone8	0x0a, 0x18, 0x010, 251, 0, -211	# zone 6: Main_P0A_E010 / Sub_P0A_E010
+    jk_zone8	0x0a, 0x38, 0x011, 254, 0, -733	# zone 7: Main_P0A_E011 / Sub_P0A_E011
+    jk_zone8	0x0a, 0x78, 0x012, 250, 0, -1505	# zone 8: Main_P0A_E012 / Sub_P0A_E012
+    jk_zone8	0x05, 0xb4, 0x01a, 235, 0, 0	# zone 9: Main_P05_E01A / Sub_P05_E01A
+    jk_zone8	0x05, 0x98, 0x007, 230, 0, 0	# zone 10: Main_P05_E007 / Sub_P05_E007
+JkMsHeader215:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones215:
+    jk_zone8	0x09, 0xf4, 0x000, 247, 0, -1967	# zone 0: Main_P09_E000 / Sub_P09_E000
+    jk_zone8	0x09, 0x54, 0x001, 245, 0, 0	# zone 1: Main_P09_E001 / Sub_P09_E001
+    jk_zone8	0x09, 0x74, 0x002, 252, 0, -546	# zone 2: Main_P09_E002 / Sub_P09_E002
+    jk_zone8	0x09, 0x94, 0x003, 252, 0, -1063	# zone 3: Main_P09_E003 / Sub_P09_E003
+    jk_zone8	0x09, 0xf4, 0x004, 253, 0, -2083	# zone 4: Main_P09_E004 / Sub_P09_E004
+    jk_zone8	0x09, 0x14, 0x005, 254, 0, -2605	# zone 5: Main_P09_E005 / Sub_P09_E005
+    jk_zone8	0x09, 0x34, 0x006, 254, 0, -2827	# zone 6: Main_P09_E006 / Sub_P09_E006
+    jk_zone8	0x09, 0x74, 0x007, 252, 0, -557	# zone 7: Main_P09_E007 / Sub_P09_E007
+    jk_zone8	0x09, 0xb4, 0x008, 255, 0, 0	# zone 8: Main_P09_E008 / Sub_P09_E008
+    jk_zone8	0x04, 0x14, 0x025, 251, 0, 0	# zone 9: Main_P04_E025 / Sub_P04_E025
+JkMsHeader219:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 8, 8, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 14, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17	# key group -> zone
+JkZones219:
+    jk_zone8	0x0a, 0x14, 0x01f, 252, 0, -2480	# zone 0: Main_P0A_E01F / Sub_P0A_E01F
+    jk_zone8	0x0a, 0x54, 0x020, 0, 0, -2037	# zone 1: Main_P0A_E020 / Sub_P0A_E020
+    jk_zone8	0x0a, 0x94, 0x021, 254, 0, -2883	# zone 2: Main_P0A_E021 / Sub_P0A_E021
+    jk_zone8	0x0a, 0xd4, 0x022, 246, 0, -3427	# zone 3: Main_P0A_E022 / Sub_P0A_E022
+    jk_zone8	0x0a, 0x14, 0x023, 254, 0, -1027	# zone 4: Main_P0A_E023 / Sub_P0A_E023
+    jk_zone8	0x0a, 0x34, 0x024, 253, 0, -1661	# zone 5: Main_P0A_E024 / Sub_P0A_E024
+    jk_zone8	0x0a, 0x74, 0x025, 250, 0, -2264	# zone 6: Main_P0A_E025 / Sub_P0A_E025
+    jk_zone8	0x0a, 0x94, 0x026, 249, 0, -2965	# zone 7: Main_P0A_E026 / Sub_P0A_E026
+    jk_zone8	0x0a, 0xd4, 0x027, 252, 0, -3341	# zone 8: Main_P0A_E027 / Sub_P0A_E027
+    jk_zone8	0x0a, 0xf4, 0x028, 253, 0, -3911	# zone 9: Main_P0A_E028 / Sub_P0A_E028
+    jk_zone8	0x0a, 0x34, 0x029, 4, 0, -2734	# zone 10: Main_P0A_E029 / Sub_P0A_E029
+    jk_zone8	0x07, 0x98, 0x006, 246, 0, -1958	# zone 11: Main_P07_E006 / Sub_P07_E006
+    jk_zone8	0x07, 0xd8, 0x007, 246, 0, -2717	# zone 12: Main_P07_E007 / Sub_P07_E007
+    jk_zone8	0x07, 0x38, 0x008, 241, 0, -701	# zone 13: Main_P07_E008 / Sub_P07_E008
+    jk_zone8	0x07, 0x58, 0x009, 239, 0, 0	# zone 14: Main_P07_E009 / Sub_P07_E009
+    jk_zone8	0x09, 0x74, 0x007, 248, 0, -557	# zone 15: Main_P09_E007 / Sub_P09_E007
+    jk_zone8	0x09, 0xb4, 0x008, 251, 0, 0	# zone 16: Main_P09_E008 / Sub_P09_E008
+    jk_zone8	0x04, 0x14, 0x025, 247, 0, 0	# zone 17: Main_P04_E025 / Sub_P04_E025
+JkMsHeader221:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones221:
+    jk_zone8	0x0f, 0x18, 0x012, 243, 0, 0	# zone 0: Main_P0F_E012 / Sub_P0F_E012
+    jk_zone8	0x0f, 0x58, 0x013, 247, 0, 0	# zone 1: Main_P0F_E013 / Sub_P0F_E013
+    jk_zone8	0x0f, 0x98, 0x014, 246, 0, -1573	# zone 2: Main_P0F_E014 / Sub_P0F_E014
+    jk_zone8	0x0f, 0x18, 0x015, 246, 0, 0	# zone 3: Main_P0F_E015 / Sub_P0F_E015
+    jk_zone8	0x0f, 0x58, 0x016, 242, 0, 0	# zone 4: Sub_P0F_E016
+    jk_zone8	0x0f, 0x98, 0x017, 244, 0, -726	# zone 5: Sub_P0F_E017
+    jk_zone8	0x0f, 0xf8, 0x018, 237, 0, 0	# zone 6: Sub_P0F_E018
+    jk_zone8	0x05, 0x98, 0x06a, 225, 0, 0	# zone 7: Main_P05_E06A / Sub_P05_E06A
+JkMsHeader225:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones225:
+    jk_zone8	0x06, 0x14, 0x007, 242, 0, -2828	# zone 0: Main_P06_E007 / Sub_P06_E007
+    jk_zone8	0x06, 0x34, 0x008, 239, 0, -158	# zone 1: Main_P06_E008 / Sub_P06_E008
+    jk_zone8	0x06, 0x74, 0x009, 245, 0, -972	# zone 2: Main_P06_E009 / Sub_P06_E009
+    jk_zone8	0x06, 0xb4, 0x00a, 241, 0, -1719	# zone 3: Main_P06_E00A / Sub_P06_E00A
+    jk_zone8	0x06, 0x14, 0x00b, 246, 0, -2823	# zone 4: Main_P06_E00B / Sub_P06_E00B
+    jk_zone8	0x06, 0x54, 0x00c, 249, 0, -517	# zone 5: Main_P06_E00C / Sub_P06_E00C
+    jk_zone8	0x06, 0x54, 0x00d, 242, 0, -766	# zone 6: Main_P06_E00D / Sub_P06_E00D
+    jk_zone8	0x06, 0xb4, 0x00e, 247, 0, -1767	# zone 7: Main_P06_E00E / Sub_P06_E00E
+    jk_zone8	0x06, 0xd4, 0x00f, 248, 0, -2297	# zone 8: Main_P06_E00F / Sub_P06_E00F
+    jk_zone8	0x06, 0x14, 0x010, 249, 0, -2789	# zone 9: Main_P06_E010 / Sub_P06_E010
+    jk_zone8	0x06, 0x54, 0x011, 243, 0, -561	# zone 10: Main_P06_E011 / Sub_P06_E011
+    jk_zone8	0x06, 0x94, 0x012, 230, 0, -1564	# zone 11: Main_P06_E012 / Sub_P06_E012
+    jk_zone8	0x06, 0xd4, 0x013, 237, 0, -2287	# zone 12: Main_P06_E013 / Sub_P06_E013
+JkMsHeader231:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones231:
+    jk_zone8	0x06, 0x94, 0x02b, 236, 0, -1048	# zone 0: Main_P06_E02B / Sub_P06_E02B
+    jk_zone8	0x06, 0xd4, 0x02c, 243, 0, -2431	# zone 1: Main_P06_E02C / Sub_P06_E02C
+    jk_zone8	0x06, 0x54, 0x02d, 253, 0, -568	# zone 2: Main_P06_E02D / Sub_P06_E02D
+    jk_zone8	0x06, 0x94, 0x02e, 253, 0, -1497	# zone 3: Main_P06_E02E / Sub_P06_E02E
+    jk_zone8	0x06, 0xd4, 0x02f, 254, 0, -1955	# zone 4: Main_P06_E02F / Sub_P06_E02F
+    jk_zone8	0x06, 0x34, 0x030, 251, 0, -155	# zone 5: Main_P06_E030 / Sub_P06_E030
+    jk_zone8	0x06, 0x94, 0x031, 246, 0, -1415	# zone 6: Main_P06_E031 / Sub_P06_E031
+    jk_zone8	0x05, 0x94, 0x04d, 245, 0, 35	# zone 7: Main_P05_E04D / Sub_P05_E04D
+JkMsHeader233:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones233:
+    jk_zone8	0x07, 0x54, 0x014, 236, 0, 0	# zone 0: Main_P07_E014 / Sub_P07_E014
+    jk_zone8	0x07, 0x94, 0x015, 238, 0, -1655	# zone 1: Main_P07_E015 / Sub_P07_E015
+    jk_zone8	0x07, 0xb4, 0x016, 241, 0, -2223	# zone 2: Main_P07_E016 / Sub_P07_E016
+    jk_zone8	0x07, 0x14, 0x017, 244, 0, -170	# zone 3: Main_P07_E017 / Sub_P07_E017
+    jk_zone8	0x07, 0x54, 0x018, 247, 0, -947	# zone 4: Main_P07_E018 / Sub_P07_E018
+    jk_zone8	0x07, 0x94, 0x019, 241, 0, -2344	# zone 5: Main_P07_E019 / Sub_P07_E019
+    jk_zone8	0x07, 0xd4, 0x01a, 242, 0, -1736	# zone 6: Main_P07_E01A / Sub_P07_E01A
+    jk_zone8	0x05, 0x94, 0x04d, 237, 0, 35	# zone 7: Main_P05_E04D / Sub_P05_E04D
+JkMsHeader447:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones447:
+    jk_zone8	0x0c, 0x04, 0x001, 249, 0, 2756	# zone 0: Main_P0C_E001 / Sub_P0C_E001
+JkMsHeader463:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones463:
+    jk_zone8	0x0c, 0x04, 0x017, 245, 0, 2756	# zone 0: Main_P0C_E017 / Sub_P0C_E017
+JkMsHeader159:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones159:
+    jk_zone8	0x0f, 0xd8, 0x000, 1, 0, 5060	# zone 0: Main_P0F_E000 / Sub_P0F_E000
+    jk_zone8	0x0f, 0x38, 0x001, 2, 0, 3780	# zone 1: Main_P0F_E001 / Sub_P0F_E001
+    jk_zone8	0x0f, 0x98, 0x002, 0, 0, 2500	# zone 2: Main_P0F_E002 / Sub_P0F_E002
+    jk_zone8	0x0f, 0x18, 0x003, 2, 0, 1220	# zone 3: Main_P0F_E003 / Sub_P0F_E003
+    jk_zone8	0x0f, 0x78, 0x004, 254, 0, -60	# zone 4: Main_P0F_E004 / Sub_P0F_E004
+    jk_zone8	0x0f, 0xd8, 0x005, 253, 0, 1732	# zone 5: Main_P0F_E005 / Sub_P0F_E005
+JkMsHeader448:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones448:
+    jk_zone8	0x0c, 0x08, 0x001, 248, 0, 2756	# zone 0: Main_P0C_E001 / Sub_P0C_E001
+JkMsHeader464:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones464:
+    jk_zone8	0x0c, 0x08, 0x017, 249, 0, 2756	# zone 0: Main_P0C_E017 / Sub_P0C_E017
+JkMsHeader047:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones047:
+    jk_zone6	0x03, 0x14, 0x087, 243, 0	# zone 0: Main_P03_E087
+    jk_zone6	0x03, 0x04, 0x087, 243, 0	# zone 1: Main_P03_E087
+    jk_zone6	0x03, 0x04, 0x086, 243, 0	# zone 2: Main_P03_E086
+    jk_zone6	0x03, 0x04, 0x088, 243, 0	# zone 3: Main_P03_E088
+    jk_zone6	0x03, 0x04, 0x089, 243, 0	# zone 4: Main_P03_E089
+    jk_zone6	0x02, 0x04, 0x009, 245, 0	# zone 5: Main_P02_E009 / Sub_P02_E009
+JkMsHeader058:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones058:
+    jk_zone8	0x0f, 0xd4, 0x000, 248, 0, -1491	# zone 0: Main_P0F_E000 / Sub_P0F_E000
+    jk_zone8	0x0f, 0xd4, 0x001, 249, 0, -2480	# zone 1: Main_P0F_E001 / Sub_P0F_E001
+    jk_zone8	0x0f, 0x14, 0x002, 251, 0, -189	# zone 2: Main_P0F_E002 / Sub_P0F_E002
+    jk_zone8	0x0f, 0x54, 0x003, 246, 0, -908	# zone 3: Main_P0F_E003 / Sub_P0F_E003
+    jk_zone8	0x0f, 0x94, 0x004, 245, 0, -2013	# zone 4: Main_P0F_E004 / Sub_P0F_E004
+    jk_zone8	0x0f, 0xd4, 0x005, 247, 0, -2726	# zone 5: Main_P0F_E005 / Sub_P0F_E005
+    jk_zone8	0x0f, 0x34, 0x006, 240, 0, -708	# zone 6: Main_P0F_E006 / Sub_P0F_E006
+    jk_zone8	0x0f, 0x74, 0x007, 241, 0, -1491	# zone 7: Main_P0F_E007 / Sub_P0F_E007
+    jk_zone8	0x0f, 0xb4, 0x008, 246, 0, -2228	# zone 8: Main_P0F_E008 / Sub_P0F_E008
+    jk_zone8	0x0f, 0x14, 0x009, 249, 0, 0	# zone 9: Main_P0F_E009 / Sub_P0F_E009
+    jk_zone8	0x01, 0x14, 0x02c, 241, 0, -216	# zone 10: Main_P01_E02C / Sub_P01_E02C
+JkMsHeader094:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones094:
+    jk_zone8	0x07, 0xd4, 0x01f, 250, 0, -328	# zone 0: Main_P07_E01F
+    jk_zone8	0x07, 0x54, 0x020, 249, 0, -1682	# zone 1: Main_P07_E020
+    jk_zone8	0x07, 0xd4, 0x021, 246, 0, -328	# zone 2: Main_P07_E021
+    jk_zone8	0x07, 0x54, 0x022, 247, 0, -1797	# zone 3: Main_P07_E022
+    jk_zone8	0x07, 0xd4, 0x023, 245, 0, -335	# zone 4: Main_P07_E023
+JkMsHeader107:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones107:
+    jk_zone6	0x06, 0x14, 0x032, 252, 0	# zone 0: Main_P06_E032 / Sub_P06_E032
+    jk_zone6	0x06, 0x04, 0x032, 252, 0	# zone 1: Main_P06_E032 / Sub_P06_E032
+    jk_zone6	0x06, 0x04, 0x033, 252, 0	# zone 2: Main_P06_E033 / Sub_P06_E033
+    jk_zone6	0x06, 0x04, 0x034, 252, 0	# zone 3: Main_P06_E034 / Sub_P06_E034
+    jk_zone6	0x06, 0x04, 0x035, 252, 0	# zone 4: Main_P06_E035 / Sub_P06_E035
+    jk_zone6	0x06, 0x04, 0x036, 252, 0	# zone 5: Main_P06_E036 / Sub_P06_E036
+    jk_zone6	0x06, 0x04, 0x037, 252, 0	# zone 6: Main_P06_E037 / Sub_P06_E037
+    jk_zone6	0x06, 0x04, 0x038, 252, 0	# zone 7: Main_P06_E038 / Sub_P06_E038
+JkMsHeader138:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones138:
+    jk_zone8	0x02, 0x74, 0x05d, 242, 0, -314	# zone 0: Main_P02_E05D
+    jk_zone8	0x02, 0xb4, 0x05e, 248, 0, -40	# zone 1: Main_P02_E05E
+    jk_zone8	0x02, 0xf4, 0x05f, 249, 0, -24	# zone 2: Main_P02_E05F
+    jk_zone8	0x02, 0x54, 0x060, 249, 0, -16	# zone 3: Main_P02_E060
+    jk_zone8	0x02, 0x94, 0x061, 249, 0, -16	# zone 4: Main_P02_E061
+    jk_zone8	0x02, 0xd4, 0x062, 248, 0, 0	# zone 5: Main_P02_E062
+    jk_zone8	0x02, 0xf4, 0x063, 249, 0, -12	# zone 6: Main_P02_E063
+    jk_zone8	0x02, 0x34, 0x064, 250, 0, -8	# zone 7: Main_P02_E064
+JkMsHeader146:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones146:
+    jk_zone8	0x02, 0x94, 0x03a, 240, 0, -966	# zone 0: Main_P02_E03A
+    jk_zone8	0x02, 0xd4, 0x03c, 247, 0, -2389	# zone 1: Main_P02_E03C
+    jk_zone8	0x02, 0x14, 0x03e, 233, 0, -208	# zone 2: Main_P02_E03E
+    jk_zone8	0x02, 0x54, 0x040, 240, 0, -953	# zone 3: Main_P02_E040
+    jk_zone8	0x02, 0x94, 0x042, 245, 0, -1738	# zone 4: Main_P02_E042
+    jk_zone8	0x02, 0xb4, 0x044, 248, 0, -2236	# zone 5: Main_P02_E044
+    jk_zone8	0x02, 0x14, 0x046, 251, 0, -174	# zone 6: Main_P02_E046
+    jk_zone8	0x02, 0x54, 0x048, 250, 0, -896	# zone 7: Main_P02_E048
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 8: Main_P02_E020 / Sub_P02_E020
+JkMsHeader160:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones160:
+    jk_zone6	0x05, 0x18, 0x01b, 247, 0	# zone 0: Main_P05_E01B / Sub_P05_E01B
+    jk_zone6	0x05, 0x58, 0x01c, 246, 0	# zone 1: Main_P05_E01C / Sub_P05_E01C
+    jk_zone6	0x05, 0xd8, 0x01d, 255, 0	# zone 2: Main_P05_E01D / Sub_P05_E01D
+    jk_zone6	0x05, 0x58, 0x01e, 250, 0	# zone 3: Main_P05_E01E / Sub_P05_E01E
+    jk_zone6	0x05, 0xd8, 0x01f, 253, 0	# zone 4: Main_P05_E01F / Sub_P05_E01F
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader174:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones174:
+    jk_zone6	0x05, 0x38, 0x03a, 252, 0	# zone 0: Main_P05_E03A / Sub_P05_E03A
+    jk_zone6	0x05, 0xf8, 0x03b, 251, 0	# zone 1: Main_P05_E03B / Sub_P05_E03B
+    jk_zone6	0x05, 0x98, 0x03c, 249, 0	# zone 2: Main_P05_E03C / Sub_P05_E03C
+    jk_zone6	0x05, 0x98, 0x007, 242, 0	# zone 3: Main_P05_E007 / Sub_P05_E007
+JkMsHeader177:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones177:
+    jk_zone6	0x04, 0x58, 0x064, 254, 0	# zone 0: Sub_P04_E064
+    jk_zone6	0x04, 0x98, 0x065, 253, 0	# zone 1: Sub_P04_E065
+    jk_zone6	0x04, 0xd8, 0x066, 249, 0	# zone 2: Sub_P04_E066
+    jk_zone6	0x04, 0x58, 0x067, 248, 0	# zone 3: Sub_P04_E067
+    jk_zone6	0x04, 0xb8, 0x068, 252, 0	# zone 4: Sub_P04_E068
+    .space	2, 0xff	# alignment
+JkMsHeader193:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones193:
+    jk_zone6	0x05, 0x14, 0x014, 252, 0	# zone 0: Main_P05_E014 / Sub_P05_E014
+    jk_zone6	0x05, 0x04, 0x014, 252, 0	# zone 1: Main_P05_E014 / Sub_P05_E014
+    jk_zone6	0x05, 0x04, 0x015, 252, 0	# zone 2: Main_P05_E015 / Sub_P05_E015
+    jk_zone6	0x05, 0x94, 0x016, 254, 0	# zone 3: Main_P05_E016 / Sub_P05_E016
+    jk_zone6	0x05, 0xd4, 0x017, 251, 0	# zone 4: Main_P05_E017 / Sub_P05_E017
+    jk_zone6	0x05, 0x54, 0x018, 0, 0	# zone 5: Main_P05_E018 / Sub_P05_E018
+    jk_zone6	0x05, 0xb4, 0x019, 255, 0	# zone 6: Main_P05_E019 / Sub_P05_E019
+    jk_zone6	0x05, 0xb4, 0x01a, 251, 0	# zone 7: Main_P05_E01A / Sub_P05_E01A
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+    .space	2, 0xff	# alignment
+JkMsHeader209:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones209:
+    jk_zone6	0x05, 0x98, 0x03d, 248, 0	# zone 0: Main_P05_E03D / Sub_P05_E03D
+    jk_zone6	0x05, 0xd8, 0x03e, 247, 0	# zone 1: Main_P05_E03E / Sub_P05_E03E
+    jk_zone6	0x05, 0x58, 0x03f, 246, 0	# zone 2: Main_P05_E03F / Sub_P05_E03F
+    jk_zone6	0x05, 0x98, 0x040, 250, 0	# zone 3: Main_P05_E040 / Sub_P05_E040
+    jk_zone6	0x05, 0x18, 0x041, 253, 0	# zone 4: Main_P05_E041 / Sub_P05_E041
+    jk_zone6	0x05, 0x18, 0x041, 253, 0	# zone 5: Main_P05_E041 / Sub_P05_E041
+    jk_zone6	0x05, 0xb8, 0x04e, 253, 0	# zone 6: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0x98, 0x06a, 241, 0	# zone 7: Main_P05_E06A / Sub_P05_E06A
+JkMsHeader242:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones242:
+    jk_zone6	0x04, 0x94, 0x003, 253, 0	# zone 0: Main_P04_E003 / Sub_P04_E003
+    jk_zone6	0x04, 0xd4, 0x004, 250, 0	# zone 1: Main_P04_E004 / Sub_P04_E004
+    jk_zone6	0x04, 0x14, 0x005, 247, 0	# zone 2: Main_P04_E005 / Sub_P04_E005
+    jk_zone6	0x04, 0x94, 0x006, 245, 0	# zone 3: Main_P04_E006 / Sub_P04_E006
+    jk_zone6	0x04, 0xb4, 0x007, 247, 0	# zone 4: Main_P04_E007 / Sub_P04_E007
+    jk_zone6	0x04, 0x14, 0x008, 251, 0	# zone 5: Main_P04_E008 / Sub_P04_E008
+    jk_zone6	0x04, 0x14, 0x009, 247, 0	# zone 6: Main_P04_E009 / Sub_P04_E009
+    jk_zone6	0x04, 0x58, 0x031, 247, 0	# zone 7: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 8: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 237, 0	# zone 9: Main_P04_E032 / Sub_P04_E032
+JkMsHeader330:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones330:
+    jk_zone6	0x00, 0x58, 0x0b6, 253, 0	# zone 0: Sub_P00_E0B6
+    jk_zone6	0x00, 0xd8, 0x0b7, 248, 0	# zone 1: Sub_P00_E0B7
+    jk_zone6	0x00, 0x58, 0x0b8, 245, 0	# zone 2: Sub_P00_E0B8
+    jk_zone6	0x00, 0xd8, 0x0b9, 240, 0	# zone 3: Sub_P00_E0B9
+    jk_zone6	0x00, 0x58, 0x0ba, 239, 0	# zone 4: Sub_P00_E0BA
+    jk_zone6	0x00, 0xd8, 0x0bb, 240, 0	# zone 5: Sub_P00_E0BB
+    jk_zone6	0x00, 0x58, 0x0bc, 239, 0	# zone 6: Sub_P00_E0BC
+    jk_zone6	0x00, 0xd8, 0x0bd, 239, 0	# zone 7: Sub_P00_E0BD
+    jk_zone6	0x00, 0x58, 0x0be, 240, 0	# zone 8: Sub_P00_E0BE
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 9: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader358:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones358:
+    jk_zone6	0x09, 0x98, 0x05d, 247, 0	# zone 0: Sub_P09_E05D
+    jk_zone6	0x09, 0x18, 0x05e, 248, 0	# zone 1: Sub_P09_E05E
+    jk_zone6	0x09, 0x98, 0x05f, 248, 0	# zone 2: Sub_P09_E05F
+    jk_zone6	0x09, 0x18, 0x060, 248, 0	# zone 3: Sub_P09_E060
+    jk_zone6	0x09, 0x18, 0x061, 248, 0	# zone 4: Sub_P09_E061
+    jk_zone6	0x09, 0x98, 0x062, 248, 0	# zone 5: Sub_P09_E062
+    jk_zone6	0x09, 0x18, 0x063, 247, 0	# zone 6: Sub_P09_E063
+    jk_zone6	0x09, 0x08, 0x06b, 240, 0	# zone 7: Sub_P09_E06B
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 8: Sub_P09_E06C
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 9: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader381:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones381:
+    jk_zone8	0x01, 0x18, 0x00c, 252, 0, 3072	# zone 0: Main_P01_E00C / Sub_P01_E00C
+JkMsHeader398:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones398:
+    jk_zone6	0x05, 0x14, 0x069, 248, 0	# zone 0: Main_P05_E069 / Sub_P05_E069
+    .space	2, 0xff	# alignment
+JkMsHeader413:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones413:
+    jk_zone8	0x0c, 0x04, 0x016, 239, 0, 2756	# zone 0: Main_P0C_E016 / Sub_P0C_E016
+JkMsHeader449:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones449:
+    jk_zone8	0x09, 0x04, 0x013, 242, 0, 1335	# zone 0: Main_P09_E013 / Sub_P09_E013
+JkMsHeader465:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones465:
+    jk_zone8	0x0c, 0x04, 0x01a, 248, 0, 2756	# zone 0: Main_P0C_E01A / Sub_P0C_E01A
+JkMsHeader544:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones544:
+    jk_zone8	0x08, 0x04, 0x059, 247, 0, 2756	# zone 0: Main_P08_E059
+JkMsHeader570:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones570:
+    jk_zone8	0x08, 0x04, 0x050, 253, 0, 2688	# zone 0: Main_P08_E050
+JkMsHeader618:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones618:
+    jk_zone8	0x00, 0x04, 0x0a8, 245, 0, 2756	# zone 0: Main_P00_E0A8 / Sub_P00_E0A8
+JkMsHeader636:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones636:
+    jk_zone6	0x00, 0x04, 0x0ae, 235, 0	# zone 0: Main_P00_E0AE / Sub_P00_E0AE
+    .space	2, 0xff	# alignment
+JkMsHeader660:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones660:
+    jk_zone6	0x00, 0x04, 0x0b1, 252, 0	# zone 0: Main_P00_E0B1 / Sub_P00_E0B1
+    .space	2, 0xff	# alignment
+JkMsHeader673:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones673:
+    jk_zone8	0x06, 0x08, 0x044, 251, 0, 3012	# zone 0: Main_P06_E044 / Sub_P06_E044
+JkMsHeader723:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones723:
+    jk_zone8	0x00, 0x08, 0x06c, 249, 0, 4036	# zone 0: Main_P00_E06C / Sub_P00_E06C
+JkMsHeader751:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones751:
+    jk_zone8	0x04, 0x08, 0x08a, 255, 0, 4096	# zone 0: Sub_P04_E08A
+JkMsHeader753:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones753:
+    jk_zone6	0x06, 0x04, 0x059, 240, 0	# zone 0: Main_P06_E059 / Sub_P06_E059
+    .space	2, 0xff	# alignment
+JkMsHeader791:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones791:
+    jk_zone8	0x00, 0x08, 0x030, 246, 0, 1335	# zone 0: Main_P00_E030 / Sub_P00_E030
+JkMsHeader817:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones817:
+    jk_zone8	0x06, 0x08, 0x02c, 248, 0, 2756	# zone 0: Main_P06_E02C / Sub_P06_E02C
+JkMsHeader002:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones002:
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 0: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 1: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x002, 238, 0, -1714	# zone 2: Main_P08_E002 / Sub_P08_E002
+    jk_zone8	0x08, 0x04, 0x003, 247, 0, -2883	# zone 3: Main_P08_E003 / Sub_P08_E003
+    jk_zone8	0x08, 0x04, 0x004, 242, 0, -3984	# zone 4: Main_P08_E004 / Sub_P08_E004
+    jk_zone8	0x08, 0x04, 0x005, 238, 0, -1944	# zone 5: Main_P08_E005 / Sub_P08_E005
+    jk_zone8	0x08, 0x04, 0x006, 244, 0, -2723	# zone 6: Main_P08_E006 / Sub_P08_E006
+    jk_zone8	0x08, 0x04, 0x007, 233, 0, -3804	# zone 7: Main_P08_E007 / Sub_P08_E007
+    jk_zone8	0x08, 0x04, 0x008, 240, 0, -1983	# zone 8: Main_P08_E008 / Sub_P08_E008
+    jk_zone8	0x09, 0x08, 0x0a2, 235, 0, -2708	# zone 9: Sub_P09_E0A2
+    jk_zone8	0x09, 0x08, 0x0a3, 243, 0, -3932	# zone 10: Sub_P09_E0A3
+    jk_zone8	0x09, 0x08, 0x0a4, 244, 0, -1747	# zone 11: Sub_P09_E0A4
+    jk_zone8	0x09, 0x08, 0x0a5, 248, 0, -2522	# zone 12: Sub_P09_E0A5
+    jk_zone8	0x09, 0x08, 0x0a6, 241, 0, -3533	# zone 13: Sub_P09_E0A6
+    jk_zone8	0x0a, 0x08, 0x023, 249, 0, -2016	# zone 14: Main_P0A_E023 / Sub_P0A_E023
+    jk_zone8	0x0a, 0x08, 0x024, 239, 0, -3035	# zone 15: Main_P0A_E024 / Sub_P0A_E024
+    jk_zone8	0x0a, 0x08, 0x025, 247, 0, -4343	# zone 16: Main_P0A_E025 / Sub_P0A_E025
+JkMsHeader006:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones006:
+    jk_zone8	0x09, 0x08, 0x09a, 239, 0, -3378	# zone 0: Sub_P09_E09A
+    jk_zone8	0x09, 0x08, 0x09b, 236, 0, -1714	# zone 1: Sub_P09_E09B
+    jk_zone8	0x09, 0x08, 0x09c, 243, 0, -2883	# zone 2: Sub_P09_E09C
+    jk_zone8	0x09, 0x08, 0x09d, 238, 0, -3984	# zone 3: Sub_P09_E09D
+    jk_zone8	0x09, 0x08, 0x09e, 235, 0, -1944	# zone 4: Sub_P09_E09E
+    jk_zone8	0x09, 0x08, 0x09f, 233, 0, -2723	# zone 5: Sub_P09_E09F
+    jk_zone8	0x09, 0x08, 0x0a0, 238, 0, -3804	# zone 6: Sub_P09_E0A0
+    jk_zone8	0x09, 0x08, 0x0a1, 241, 0, -1983	# zone 7: Sub_P09_E0A1
+    jk_zone8	0x09, 0x08, 0x0a2, 235, 0, -2708	# zone 8: Sub_P09_E0A2
+    jk_zone8	0x09, 0x08, 0x0a3, 243, 0, -3932	# zone 9: Sub_P09_E0A3
+    jk_zone8	0x09, 0x08, 0x0a4, 244, 0, -1747	# zone 10: Sub_P09_E0A4
+    jk_zone8	0x09, 0x08, 0x0a5, 248, 0, -2522	# zone 11: Sub_P09_E0A5
+    jk_zone8	0x09, 0x08, 0x0a6, 241, 0, -3533	# zone 12: Sub_P09_E0A6
+    jk_zone8	0x0a, 0x08, 0x023, 249, 0, -2016	# zone 13: Main_P0A_E023 / Sub_P0A_E023
+    jk_zone8	0x0a, 0x08, 0x024, 239, 0, -3035	# zone 14: Main_P0A_E024 / Sub_P0A_E024
+    jk_zone8	0x0a, 0x08, 0x025, 247, 0, -4343	# zone 15: Main_P0A_E025 / Sub_P0A_E025
+JkMsHeader017:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones017:
+    jk_zone6	0x00, 0x18, 0x093, 240, 0	# zone 0: Main_P00_E093 / Sub_P00_E093
+    jk_zone6	0x00, 0x08, 0x093, 240, 0	# zone 1: Main_P00_E093 / Sub_P00_E093
+    jk_zone6	0x00, 0x08, 0x092, 240, 0	# zone 2: Main_P00_E092 / Sub_P00_E092
+    jk_zone6	0x00, 0x08, 0x094, 239, 0	# zone 3: Main_P00_E094 / Sub_P00_E094
+    jk_zone6	0x00, 0x08, 0x096, 242, 0	# zone 4: Main_P00_E096 / Sub_P00_E096
+    jk_zone6	0x00, 0x08, 0x095, 242, 0	# zone 5: Main_P00_E095 / Sub_P00_E095
+    jk_zone6	0x00, 0x08, 0x097, 250, 0	# zone 6: Main_P00_E097 / Sub_P00_E097
+    jk_zone6	0x00, 0x08, 0x099, 245, 0	# zone 7: Main_P00_E099 / Sub_P00_E099
+    jk_zone6	0x00, 0x08, 0x098, 245, 0	# zone 8: Main_P00_E098 / Sub_P00_E098
+    jk_zone6	0x00, 0x08, 0x09a, 252, 0	# zone 9: Main_P00_E09A / Sub_P00_E09A
+    jk_zone6	0x00, 0x08, 0x09c, 246, 0	# zone 10: Main_P00_E09C / Sub_P00_E09C
+    jk_zone6	0x00, 0x08, 0x09b, 246, 0	# zone 11: Main_P00_E09B / Sub_P00_E09B
+    jk_zone6	0x00, 0x08, 0x09d, 252, 0	# zone 12: Main_P00_E09D / Sub_P00_E09D
+    jk_zone6	0x00, 0x08, 0x09f, 254, 0	# zone 13: Main_P00_E09F / Sub_P00_E09F
+    jk_zone6	0x00, 0x08, 0x09e, 254, 0	# zone 14: Main_P00_E09E / Sub_P00_E09E
+    jk_zone6	0x00, 0x08, 0x0a0, 254, 0	# zone 15: Main_P00_E0A0 / Sub_P00_E0A0
+JkMsHeader025:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones025:
+    jk_zone6	0x00, 0x14, 0x061, 241, 0	# zone 0: Main_P00_E061 / Sub_P00_E061
+    jk_zone6	0x00, 0x04, 0x061, 241, 0	# zone 1: Main_P00_E061 / Sub_P00_E061
+    jk_zone6	0x00, 0x04, 0x062, 239, 0	# zone 2: Main_P00_E062 / Sub_P00_E062
+    jk_zone6	0x00, 0x94, 0x062, 239, 0	# zone 3: Main_P00_E062 / Sub_P00_E062
+    jk_zone6	0x00, 0x94, 0x063, 240, 0	# zone 4: Main_P00_E063 / Sub_P00_E063
+    jk_zone6	0x00, 0x08, 0x0b0, 240, 0	# zone 5: Main_P00_E0B0 / Sub_P00_E0B0
+    jk_zone6	0x00, 0x08, 0x0b1, 240, 0	# zone 6: Main_P00_E0B1 / Sub_P00_E0B1
+    jk_zone6	0x00, 0x08, 0x0a7, 242, 0	# zone 7: Main_P00_E0A7 / Sub_P00_E0A7
+JkMsHeader382:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones382:
+    jk_zone8	0x01, 0x18, 0x00d, 249, 0, 3072	# zone 0: Main_P01_E00D / Sub_P01_E00D
+JkMsHeader414:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones414:
+    jk_zone8	0x0c, 0x08, 0x016, 243, 0, 2756	# zone 0: Main_P0C_E016 / Sub_P0C_E016
+JkMsHeader450:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones450:
+    jk_zone8	0x08, 0x08, 0x014, 243, 0, 1335	# zone 0: Main_P08_E014 / Sub_P08_E014
+JkMsHeader466:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones466:
+    jk_zone8	0x0c, 0x08, 0x01a, 250, 0, 2756	# zone 0: Main_P0C_E01A / Sub_P0C_E01A
+JkMsHeader792:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones792:
+    jk_zone8	0x00, 0x08, 0x031, 255, 0, 1335	# zone 0: Main_P00_E031 / Sub_P00_E031
+JkMsHeader818:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones818:
+    jk_zone8	0x06, 0x08, 0x02d, 246, 0, 2756	# zone 0: Main_P06_E02D / Sub_P06_E02D
+JkMsHeader415:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones415:
+    jk_zone8	0x0c, 0x04, 0x015, 246, 0, 2756	# zone 0: Main_P0C_E015 / Sub_P0C_E015
+JkMsHeader451:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones451:
+    jk_zone8	0x09, 0x04, 0x014, 242, 0, 1335	# zone 0: Main_P09_E014 / Sub_P09_E014
+JkMsHeader467:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones467:
+    jk_zone8	0x0c, 0x04, 0x019, 249, 0, 2756	# zone 0: Main_P0C_E019 / Sub_P0C_E019
+JkMsHeader793:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones793:
+    jk_zone8	0x00, 0x08, 0x032, 247, 0, 1335	# zone 0: Main_P00_E032 / Sub_P00_E032
+JkMsHeader819:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones819:
+    jk_zone8	0x06, 0x08, 0x02e, 248, 0, 2756	# zone 0: Main_P06_E02E / Sub_P06_E02E
+JkMsHeader416:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones416:
+    jk_zone8	0x0c, 0x08, 0x015, 250, 0, 2756	# zone 0: Main_P0C_E015 / Sub_P0C_E015
+JkMsHeader452:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones452:
+    jk_zone8	0x08, 0x08, 0x015, 242, 0, 1335	# zone 0: Main_P08_E015 / Sub_P08_E015
+JkMsHeader468:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones468:
+    jk_zone8	0x0c, 0x08, 0x019, 251, 0, 2756	# zone 0: Main_P0C_E019 / Sub_P0C_E019
+JkMsHeader820:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones820:
+    jk_zone8	0x06, 0x08, 0x02f, 250, 0, 2756	# zone 0: Main_P06_E02F / Sub_P06_E02F
+JkMsHeader003:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones003:
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 0: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 1: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x009, 233, 0, 0	# zone 2: Main_P0A_E009 / Sub_P0A_E009
+    jk_zone8	0x0a, 0x04, 0x00a, 242, 0, -1272	# zone 3: Main_P0A_E00A / Sub_P0A_E00A
+    jk_zone8	0x0a, 0x04, 0x00b, 239, 0, -2320	# zone 4: Main_P0A_E00B / Sub_P0A_E00B
+    jk_zone8	0x0a, 0x04, 0x00c, 239, 0, -306	# zone 5: Main_P0A_E00C / Sub_P0A_E00C
+    jk_zone8	0x0a, 0x04, 0x00d, 237, 0, -1067	# zone 6: Main_P0A_E00D / Sub_P0A_E00D
+    jk_zone8	0x0a, 0x04, 0x00e, 233, 0, -2103	# zone 7: Main_P0A_E00E / Sub_P0A_E00E
+    jk_zone8	0x0a, 0x04, 0x00f, 232, 0, -324	# zone 8: Main_P0A_E00F / Sub_P0A_E00F
+    jk_zone8	0x08, 0x08, 0x024, 235, 0, -1091	# zone 9: Main_P08_E024 / Sub_P08_E024
+    jk_zone8	0x08, 0x08, 0x025, 238, 0, -2352	# zone 10: Main_P08_E025 / Sub_P08_E025
+    jk_zone8	0x08, 0x08, 0x026, 241, 0, -50	# zone 11: Main_P08_E026 / Sub_P08_E026
+    jk_zone8	0x08, 0x08, 0x027, 244, 0, -825	# zone 12: Main_P08_E027 / Sub_P08_E027
+    jk_zone8	0x08, 0x08, 0x028, 237, 0, -1864	# zone 13: Main_P08_E028 / Sub_P08_E028
+    jk_zone8	0x08, 0x08, 0x029, 245, 0, -343	# zone 14: Main_P08_E029 / Sub_P08_E029
+    jk_zone8	0x08, 0x08, 0x02a, 241, 0, -1368	# zone 15: Main_P08_E02A / Sub_P08_E02A
+    jk_zone8	0x08, 0x08, 0x02b, 227, 0, -1650	# zone 16: Main_P08_E02B / Sub_P08_E02B
+JkMsHeader007:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones007:
+    jk_zone8	0x08, 0x08, 0x01c, 230, 0, -2264	# zone 0: Main_P08_E01C / Sub_P08_E01C
+    jk_zone8	0x08, 0x08, 0x01d, 239, 0, 0	# zone 1: Main_P08_E01D / Sub_P08_E01D
+    jk_zone8	0x08, 0x08, 0x01e, 242, 0, -1272	# zone 2: Main_P08_E01E / Sub_P08_E01E
+    jk_zone8	0x08, 0x08, 0x01f, 235, 0, -2320	# zone 3: Main_P08_E01F / Sub_P08_E01F
+    jk_zone8	0x08, 0x08, 0x020, 234, 0, -306	# zone 4: Main_P08_E020 / Sub_P08_E020
+    jk_zone8	0x08, 0x08, 0x021, 223, 0, -1067	# zone 5: Main_P08_E021 / Sub_P08_E021
+    jk_zone8	0x08, 0x08, 0x022, 239, 0, -2103	# zone 6: Main_P08_E022 / Sub_P08_E022
+    jk_zone8	0x08, 0x08, 0x023, 237, 0, -324	# zone 7: Main_P08_E023 / Sub_P08_E023
+    jk_zone8	0x08, 0x08, 0x024, 235, 0, -1091	# zone 8: Main_P08_E024 / Sub_P08_E024
+    jk_zone8	0x08, 0x08, 0x025, 238, 0, -2352	# zone 9: Main_P08_E025 / Sub_P08_E025
+    jk_zone8	0x08, 0x08, 0x026, 241, 0, -50	# zone 10: Main_P08_E026 / Sub_P08_E026
+    jk_zone8	0x08, 0x08, 0x027, 244, 0, -825	# zone 11: Main_P08_E027 / Sub_P08_E027
+    jk_zone8	0x08, 0x08, 0x028, 237, 0, -1864	# zone 12: Main_P08_E028 / Sub_P08_E028
+    jk_zone8	0x08, 0x08, 0x029, 245, 0, -343	# zone 13: Main_P08_E029 / Sub_P08_E029
+    jk_zone8	0x08, 0x08, 0x02a, 241, 0, -1368	# zone 14: Main_P08_E02A / Sub_P08_E02A
+    jk_zone8	0x08, 0x08, 0x02b, 227, 0, -1650	# zone 15: Main_P08_E02B / Sub_P08_E02B
+JkMsHeader018:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones018:
+    jk_zone6	0x00, 0x18, 0x084, 247, 0	# zone 0: Main_P00_E084 / Sub_P00_E084
+    jk_zone6	0x00, 0x08, 0x084, 247, 0	# zone 1: Main_P00_E084 / Sub_P00_E084
+    jk_zone6	0x00, 0x08, 0x083, 247, 0	# zone 2: Main_P00_E083 / Sub_P00_E083
+    jk_zone6	0x00, 0x08, 0x085, 242, 0	# zone 3: Main_P00_E085 / Sub_P00_E085
+    jk_zone6	0x00, 0x08, 0x087, 247, 0	# zone 4: Main_P00_E087 / Sub_P00_E087
+    jk_zone6	0x00, 0x08, 0x086, 247, 0	# zone 5: Main_P00_E086 / Sub_P00_E086
+    jk_zone6	0x00, 0x08, 0x088, 242, 0	# zone 6: Main_P00_E088 / Sub_P00_E088
+    jk_zone6	0x00, 0x08, 0x089, 246, 0	# zone 7: Main_P00_E089 / Sub_P00_E089
+    jk_zone6	0x00, 0x08, 0x08a, 246, 0	# zone 8: Main_P00_E08A / Sub_P00_E08A
+    jk_zone6	0x00, 0x08, 0x08b, 251, 0	# zone 9: Main_P00_E08B / Sub_P00_E08B
+    jk_zone6	0x00, 0x08, 0x08d, 252, 0	# zone 10: Main_P00_E08D / Sub_P00_E08D
+    jk_zone6	0x00, 0x08, 0x08c, 252, 0	# zone 11: Main_P00_E08C / Sub_P00_E08C
+    jk_zone6	0x00, 0x08, 0x08e, 0, 0	# zone 12: Main_P00_E08E / Sub_P00_E08E
+    jk_zone6	0x00, 0x08, 0x090, 250, 0	# zone 13: Main_P00_E090 / Sub_P00_E090
+    jk_zone6	0x00, 0x08, 0x08f, 250, 0	# zone 14: Main_P00_E08F / Sub_P00_E08F
+    jk_zone6	0x00, 0x08, 0x091, 250, 0	# zone 15: Main_P00_E091 / Sub_P00_E091
+JkMsHeader147:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones147:
+    jk_zone8	0x0e, 0x18, 0x01c, 235, 0, -1275	# zone 0: Main_P0E_E01C / Sub_P0E_E01C
+    jk_zone8	0x0e, 0x18, 0x01d, 244, 0, -2636	# zone 1: Main_P0E_E01D / Sub_P0E_E01D
+    jk_zone8	0x0e, 0x18, 0x01e, 247, 0, -403	# zone 2: Main_P0E_E01E / Sub_P0E_E01E
+    jk_zone8	0x0e, 0x18, 0x01f, 248, 0, -1168	# zone 3: Main_P0E_E01F / Sub_P0E_E01F
+    jk_zone8	0x0e, 0x18, 0x020, 244, 0, -1984	# zone 4: Main_P0E_E020 / Sub_P0E_E020
+    jk_zone8	0x0e, 0x18, 0x021, 249, 0, -2965	# zone 5: Main_P0E_E021 / Sub_P0E_E021
+    jk_zone8	0x0e, 0x18, 0x022, 252, 0, -1466	# zone 6: Main_P0E_E022 / Sub_P0E_E022
+    jk_zone8	0x0e, 0x18, 0x023, 251, 0, -1179	# zone 7: Main_P0E_E023 / Sub_P0E_E023
+    jk_zone8	0x02, 0x54, 0x048, 242, 0, -896	# zone 8: Main_P02_E048
+    jk_zone8	0x02, 0x04, 0x020, 220, 0, 0	# zone 9: Main_P02_E020 / Sub_P02_E020
+JkMsHeader417:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones417:
+    jk_zone8	0x0b, 0x04, 0x02b, 244, 0, 1335	# zone 0: Main_P0B_E02B
+JkMsHeader453:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones453:
+    jk_zone8	0x09, 0x04, 0x015, 251, 0, 1335	# zone 0: Main_P09_E015 / Sub_P09_E015
+JkMsHeader469:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones469:
+    jk_zone8	0x0a, 0x04, 0x01c, 245, 0, 2756	# zone 0: Main_P0A_E01C / Sub_P0A_E01C
+JkMsHeader674:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones674:
+    jk_zone8	0x06, 0x08, 0x045, 247, 0, 3012	# zone 0: Main_P06_E045 / Sub_P06_E045
+JkMsHeader148:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones148:
+    jk_zone8	0x0d, 0x14, 0x0ab, 239, 0, 0	# zone 0: Main_P0D_E0AB / Sub_P0D_E0AB
+    jk_zone8	0x0d, 0x14, 0x0ac, 247, 0, -1971	# zone 1: Main_P0D_E0AC / Sub_P0D_E0AC
+    jk_zone8	0x0d, 0x14, 0x0ad, 244, 0, -1174	# zone 2: Main_P0D_E0AD / Sub_P0D_E0AD
+    jk_zone8	0x02, 0x54, 0x048, 238, 0, -896	# zone 3: Main_P02_E048
+    jk_zone8	0x02, 0x04, 0x020, 216, 0, 0	# zone 4: Main_P02_E020 / Sub_P02_E020
+JkMsHeader418:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones418:
+    jk_zone8	0x0b, 0x08, 0x011, 246, 0, 1335	# zone 0: Main_P0B_E011 / Sub_P0B_E011
+JkMsHeader454:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones454:
+    jk_zone8	0x08, 0x08, 0x016, 250, 0, 1335	# zone 0: Main_P08_E016 / Sub_P08_E016
+JkMsHeader470:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones470:
+    jk_zone8	0x0a, 0x08, 0x029, 243, 0, 2756	# zone 0: Main_P0A_E029 / Sub_P0A_E029
+JkMsHeader226:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones226:
+    jk_zone8	0x06, 0x14, 0x014, 255, 0, -2744	# zone 0: Main_P06_E014 / Sub_P06_E014
+    jk_zone8	0x06, 0x34, 0x015, 1, 0, -244	# zone 1: Main_P06_E015 / Sub_P06_E015
+    jk_zone8	0x06, 0x74, 0x016, 5, 0, -1005	# zone 2: Main_P06_E016 / Sub_P06_E016
+    jk_zone8	0x06, 0xb4, 0x017, 254, 0, -1738	# zone 3: Main_P06_E017 / Sub_P06_E017
+    jk_zone8	0x06, 0x14, 0x018, 7, 0, -2849	# zone 4: Main_P06_E018 / Sub_P06_E018
+    jk_zone8	0x06, 0x54, 0x019, 12, 0, -493	# zone 5: Main_P06_E019 / Sub_P06_E019
+    jk_zone8	0x06, 0x54, 0x01a, 10, 0, -744	# zone 6: Main_P06_E01A / Sub_P06_E01A
+    jk_zone8	0x06, 0xb4, 0x01b, 2, 0, -1769	# zone 7: Main_P06_E01B / Sub_P06_E01B
+    jk_zone8	0x06, 0xd4, 0x01c, 10, 0, -2291	# zone 8: Main_P06_E01C / Sub_P06_E01C
+    jk_zone8	0x06, 0x14, 0x01d, 255, 0, -2813	# zone 9: Main_P06_E01D / Sub_P06_E01D
+    jk_zone8	0x06, 0x54, 0x01e, 2, 0, -548	# zone 10: Main_P06_E01E / Sub_P06_E01E
+    jk_zone8	0x06, 0x94, 0x01f, 0, 0, -1576	# zone 11: Main_P06_E01F / Sub_P06_E01F
+JkMsHeader383:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones383:
+    jk_zone6	0x01, 0x18, 0x03c, 246, 0	# zone 0: Main_P01_E03C / Sub_P01_E03C
+    .space	2, 0xff	# alignment
+JkMsHeader419:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones419:
+    jk_zone8	0x0b, 0x04, 0x02c, 250, 0, 1335	# zone 0: Main_P0B_E02C
+JkMsHeader455:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones455:
+    jk_zone8	0x09, 0x04, 0x016, 249, 0, 1335	# zone 0: Main_P09_E016 / Sub_P09_E016
+JkMsHeader471:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones471:
+    jk_zone8	0x0a, 0x04, 0x01d, 248, 0, 2756	# zone 0: Main_P0A_E01D / Sub_P0A_E01D
+JkMsHeader227:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones227:
+    jk_zone8	0x0a, 0x18, 0x013, 0, 0, -2183	# zone 0: Main_P0A_E013 / Sub_P0A_E013
+    jk_zone8	0x0a, 0x18, 0x014, 0, 0, 0	# zone 1: Main_P0A_E014 / Sub_P0A_E014
+    jk_zone8	0x0a, 0x58, 0x015, 0, 0, -403	# zone 2: Main_P0A_E015 / Sub_P0A_E015
+    jk_zone8	0x0a, 0x78, 0x016, 1, 0, -947	# zone 3: Main_P0A_E016 / Sub_P0A_E016
+    jk_zone8	0x0a, 0x98, 0x017, 0, 0, -1491	# zone 4: Main_P0A_E017 / Sub_P0A_E017
+    jk_zone8	0x0a, 0xd8, 0x018, 2, 0, -2264	# zone 5: Main_P0A_E018 / Sub_P0A_E018
+    jk_zone8	0x0a, 0x18, 0x019, 1, 0, -97	# zone 6: Main_P0A_E019 / Sub_P0A_E019
+    jk_zone8	0x0a, 0x38, 0x01a, 2, 0, -292	# zone 7: Main_P0A_E01A / Sub_P0A_E01A
+    jk_zone8	0x0a, 0x58, 0x01b, 0, 0, -773	# zone 8: Main_P0A_E01B / Sub_P0A_E01B
+    jk_zone8	0x0a, 0x98, 0x01c, 1, 0, -1249	# zone 9: Main_P0A_E01C / Sub_P0A_E01C
+    jk_zone8	0x0a, 0xb8, 0x01d, 7, 0, -1764	# zone 10: Main_P0A_E01D / Sub_P0A_E01D
+    jk_zone8	0x0a, 0xd8, 0x01e, 5, 0, -2364	# zone 11: Main_P0A_E01E / Sub_P0A_E01E
+    jk_zone8	0x0a, 0x18, 0x01f, 4, 0, -56	# zone 12: Main_P0A_E01F / Sub_P0A_E01F
+    jk_zone8	0x0a, 0x58, 0x020, 1, 0, -817	# zone 13: Main_P0A_E020 / Sub_P0A_E020
+    jk_zone8	0x0a, 0x78, 0x021, 4, 0, -1077	# zone 14: Main_P0A_E021 / Sub_P0A_E021
+    jk_zone8	0x0a, 0x98, 0x022, 1, 0, -341	# zone 15: Main_P0A_E022 / Sub_P0A_E022
+JkMsHeader420:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones420:
+    jk_zone8	0x0b, 0x08, 0x012, 255, 0, 1335	# zone 0: Main_P0B_E012 / Sub_P0B_E012
+JkMsHeader456:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones456:
+    jk_zone8	0x08, 0x08, 0x017, 249, 0, 1335	# zone 0: Main_P08_E017 / Sub_P08_E017
+JkMsHeader472:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones472:
+    jk_zone8	0x0a, 0x08, 0x02a, 247, 0, 2756	# zone 0: Sub_P0A_E02A
+JkMsHeader675:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones675:
+    jk_zone8	0x06, 0x08, 0x06a, 201, 0, 2756	# zone 0: Main_P06_E06A / Sub_P06_E06A
+JkMsHeader036:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones036:
+    jk_zone8	0x03, 0x74, 0x038, 254, 0, 0	# zone 0: Main_P03_E038 / Sub_P03_E038
+    jk_zone8	0x03, 0xf4, 0x039, 255, 0, -3072	# zone 1: Main_P03_E039 / Sub_P03_E039
+    jk_zone8	0x03, 0x54, 0x03a, 252, 0, -1211	# zone 2: Main_P03_E03A / Sub_P03_E03A
+    jk_zone8	0x03, 0xb4, 0x03b, 248, 0, -2550	# zone 3: Main_P03_E03B / Sub_P03_E03B
+    jk_zone8	0x03, 0x14, 0x03c, 252, 0, -360	# zone 4: Main_P03_E03C / Sub_P03_E03C
+    jk_zone8	0x03, 0x74, 0x03d, 254, 0, 0	# zone 5: Main_P03_E03D / Sub_P03_E03D
+    jk_zone8	0x03, 0x04, 0x037, 242, 0, 0	# zone 6: Main_P03_E037 / Sub_P03_E037
+JkMsHeader052:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones052:
+    jk_zone6	0x01, 0x14, 0x038, 252, 0	# zone 0: Main_P01_E038 / Sub_P01_E038
+    jk_zone6	0x01, 0x04, 0x038, 252, 0	# zone 1: Main_P01_E038 / Sub_P01_E038
+    jk_zone6	0x01, 0x04, 0x037, 252, 0	# zone 2: Main_P01_E037 / Sub_P01_E037
+    jk_zone6	0x01, 0x04, 0x039, 254, 0	# zone 3: Main_P01_E039 / Sub_P01_E039
+    jk_zone6	0x01, 0x04, 0x03b, 255, 0	# zone 4: Main_P01_E03B / Sub_P01_E03B
+    jk_zone6	0x01, 0x04, 0x03a, 255, 0	# zone 5: Main_P01_E03A / Sub_P01_E03A
+    jk_zone6	0x01, 0x04, 0x03c, 253, 0	# zone 6: Main_P01_E03C / Sub_P01_E03C
+    jk_zone6	0x01, 0x04, 0x03e, 255, 0	# zone 7: Main_P01_E03E / Sub_P01_E03E
+    jk_zone6	0x01, 0x04, 0x03d, 255, 0	# zone 8: Main_P01_E03D / Sub_P01_E03D
+    jk_zone6	0x01, 0x04, 0x03f, 255, 0	# zone 9: Main_P01_E03F / Sub_P01_E03F
+    jk_zone6	0x01, 0x04, 0x06e, 250, 0	# zone 10: Main_P01_E06E / Sub_P01_E06E
+    jk_zone6	0x01, 0x04, 0x06f, 250, 0	# zone 11: Main_P01_E06F / Sub_P01_E06F
+    jk_zone6	0x01, 0xb4, 0x076, 241, 0	# zone 12: Main_P01_E076 / Sub_P01_E076
+    .space	2, 0xff	# alignment
+JkMsHeader061:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones061:
+    jk_zone6	0x01, 0x04, 0x077, 1, 0	# zone 0: Main_P01_E077 / Sub_P01_E077
+    jk_zone6	0x01, 0x04, 0x078, 1, 0	# zone 1: Main_P01_E078 / Sub_P01_E078
+    jk_zone6	0x01, 0x04, 0x079, 0, 0	# zone 2: Main_P01_E079 / Sub_P01_E079
+    jk_zone6	0x01, 0x04, 0x07a, 255, 0	# zone 3: Main_P01_E07A / Sub_P01_E07A
+    jk_zone6	0x01, 0x04, 0x07b, 255, 0	# zone 4: Main_P01_E07B / Sub_P01_E07B
+    jk_zone6	0x01, 0x04, 0x07c, 1, 0	# zone 5: Main_P01_E07C / Sub_P01_E07C
+    jk_zone6	0x01, 0x04, 0x07d, 0, 0	# zone 6: Main_P01_E07D / Sub_P01_E07D
+    jk_zone6	0x01, 0x04, 0x07e, 0, 0	# zone 7: Main_P01_E07E / Sub_P01_E07E
+    jk_zone6	0x01, 0x04, 0x07f, 3, 0	# zone 8: Main_P01_E07F / Sub_P01_E07F
+    jk_zone6	0x01, 0x04, 0x080, 3, 0	# zone 9: Main_P01_E080 / Sub_P01_E080
+    jk_zone6	0x01, 0x04, 0x081, 3, 0	# zone 10: Main_P01_E081 / Sub_P01_E081
+    .space	2, 0xff	# alignment
+JkMsHeader065:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones065:
+    jk_zone6	0x01, 0x18, 0x016, 251, 0	# zone 0: Main_P01_E016 / Sub_P01_E016
+    jk_zone6	0x01, 0x08, 0x016, 251, 0	# zone 1: Main_P01_E016 / Sub_P01_E016
+    jk_zone6	0x01, 0x08, 0x017, 253, 0	# zone 2: Main_P01_E017 / Sub_P01_E017
+    jk_zone6	0x01, 0x08, 0x018, 0, 0	# zone 3: Main_P01_E018 / Sub_P01_E018
+    jk_zone6	0x01, 0xf8, 0x019, 255, 0	# zone 4: Main_P01_E019 / Sub_P01_E019
+    jk_zone6	0x01, 0xf8, 0x019, 255, 0	# zone 5: Main_P01_E019 / Sub_P01_E019
+    jk_zone6	0x01, 0x08, 0x01b, 250, 0	# zone 6: Main_P01_E01B / Sub_P01_E01B
+    jk_zone6	0x01, 0x08, 0x01c, 250, 0	# zone 7: Main_P01_E01C / Sub_P01_E01C
+    jk_zone6	0x01, 0x08, 0x01d, 242, 0	# zone 8: Main_P01_E01D / Sub_P01_E01D
+    jk_zone6	0x03, 0x04, 0x025, 249, 0	# zone 9: Main_P03_E025 / Sub_P03_E025
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 10: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 11: Main_P03_E010 / Sub_P03_E010
+JkMsHeader077:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones077:
+    jk_zone6	0x08, 0xd4, 0x01b, 243, 0	# zone 0: Main_P08_E01B / Sub_P08_E01B
+    jk_zone6	0x08, 0xd4, 0x01b, 247, 0	# zone 1: Main_P08_E01B / Sub_P08_E01B
+    jk_zone6	0x08, 0xd4, 0x01b, 251, 0	# zone 2: Main_P08_E01B / Sub_P08_E01B
+    jk_zone6	0x08, 0x14, 0x01c, 247, 0	# zone 3: Main_P08_E01C / Sub_P08_E01C
+    jk_zone6	0x08, 0x04, 0x01a, 236, 0	# zone 4: Main_P08_E01A / Sub_P08_E01A
+    .space	2, 0xff	# alignment
+JkMsHeader091:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones091:
+    jk_zone8	0x03, 0xf8, 0x013, 254, 0, -3880	# zone 0: Main_P03_E013 / Sub_P03_E013
+    jk_zone8	0x03, 0x58, 0x014, 253, 0, -2170	# zone 1: Main_P03_E014 / Sub_P03_E014
+    jk_zone8	0x03, 0x98, 0x015, 254, 0, -3193	# zone 2: Main_P03_E015 / Sub_P03_E015
+    jk_zone8	0x03, 0xf8, 0x016, 251, 0, -4254	# zone 3: Main_P03_E016 / Sub_P03_E016
+    jk_zone8	0x03, 0x58, 0x017, 247, 0, -2212	# zone 4: Main_P03_E017 / Sub_P03_E017
+JkMsHeader095:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones095:
+    jk_zone8	0x03, 0x98, 0x028, 253, 0, -2389	# zone 0: Main_P03_E028 / Sub_P03_E028
+    jk_zone8	0x03, 0x18, 0x029, 252, 0, -860	# zone 1: Main_P03_E029 / Sub_P03_E029
+    jk_zone8	0x03, 0x98, 0x02a, 252, 0, -2200	# zone 2: Main_P03_E02A / Sub_P03_E02A
+    jk_zone8	0x03, 0xf8, 0x02b, 252, 0, -3523	# zone 3: Main_P03_E02B / Sub_P03_E02B
+    jk_zone8	0x03, 0x58, 0x02c, 247, 0, -1630	# zone 4: Main_P03_E02C / Sub_P03_E02C
+    jk_zone8	0x03, 0x38, 0x027, 241, 0, -1224	# zone 5: Main_P03_E027 / Sub_P03_E027
+JkMsHeader101:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones101:
+    jk_zone6	0x03, 0x14, 0x073, 253, 0	# zone 0: Main_P03_E073
+    jk_zone6	0x03, 0x04, 0x073, 253, 0	# zone 1: Main_P03_E073
+    jk_zone6	0x03, 0x04, 0x075, 254, 0	# zone 2: Main_P03_E075
+    jk_zone6	0x03, 0x04, 0x074, 254, 0	# zone 3: Main_P03_E074
+    jk_zone6	0x03, 0x04, 0x076, 254, 0	# zone 4: Main_P03_E076
+    jk_zone6	0x03, 0x04, 0x077, 254, 0	# zone 5: Main_P03_E077
+    jk_zone6	0x03, 0x04, 0x078, 254, 0	# zone 6: Main_P03_E078
+    jk_zone6	0x03, 0x04, 0x079, 254, 0	# zone 7: Main_P03_E079
+    jk_zone6	0x03, 0x04, 0x07a, 254, 0	# zone 8: Main_P03_E07A
+    .space	2, 0xff	# alignment
+JkMsHeader111:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# key group -> zone
+JkZones111:
+    jk_zone6	0x06, 0x14, 0x03c, 248, 0	# zone 0: Main_P06_E03C / Sub_P06_E03C
+    jk_zone6	0x03, 0x14, 0x07f, 251, 0	# zone 1: Main_P03_E07F
+JkMsHeader116:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones116:
+    jk_zone6	0x01, 0xf8, 0x098, 255, 0	# zone 0: Sub_P01_E098
+    jk_zone6	0x01, 0x58, 0x099, 244, 0	# zone 1: Sub_P01_E099
+    jk_zone6	0x01, 0xd8, 0x09a, 248, 0	# zone 2: Sub_P01_E09A
+    jk_zone6	0x01, 0x18, 0x09b, 249, 0	# zone 3: Sub_P01_E09B
+    jk_zone6	0x01, 0xf8, 0x09c, 249, 0	# zone 4: Sub_P01_E09C
+    jk_zone6	0x01, 0x18, 0x08d, 227, 0	# zone 5: Sub_P01_E08D
+    jk_zone6	0x01, 0x18, 0x08d, 223, 0	# zone 6: Sub_P01_E08D
+    .space	2, 0xff	# alignment
+JkMsHeader136:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones136:
+    jk_zone8	0x02, 0x04, 0x034, 243, 0, -1114	# zone 0: Main_P02_E034
+    jk_zone8	0x02, 0x04, 0x035, 250, 0, -3755	# zone 1: Main_P02_E035
+    jk_zone8	0x02, 0x04, 0x036, 241, 0, -2389	# zone 2: Main_P02_E036
+    jk_zone8	0x02, 0x04, 0x037, 253, 0, -708	# zone 3: Main_P02_E037
+    jk_zone8	0x02, 0x04, 0x038, 249, 0, 0	# zone 4: Main_P02_E038
+JkMsHeader139:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones139:
+    jk_zone8	0x02, 0x74, 0x065, 248, 0, 28	# zone 0: Main_P02_E065
+    jk_zone8	0x02, 0x94, 0x066, 249, 0, -16	# zone 1: Main_P02_E066
+    jk_zone8	0x02, 0xf4, 0x067, 250, 0, -48	# zone 2: Main_P02_E067
+    jk_zone8	0x02, 0x34, 0x068, 249, 0, -48	# zone 3: Main_P02_E068
+    jk_zone8	0x02, 0x74, 0x069, 0, 0, -16	# zone 4: Main_P02_E069
+    jk_zone8	0x02, 0x94, 0x06a, 0, 0, 0	# zone 5: Main_P02_E06A
+    jk_zone8	0x02, 0xf4, 0x06b, 0, 0, 0	# zone 6: Main_P02_E06B
+    jk_zone8	0x02, 0x14, 0x06c, 250, 0, 0	# zone 7: Main_P02_E06C
+JkMsHeader142:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones142:
+    jk_zone8	0x02, 0x04, 0x021, 250, 0, -163	# zone 0: Main_P02_E021 / Sub_P02_E021
+    jk_zone8	0x02, 0x04, 0x022, 250, 0, -2060	# zone 1: Main_P02_E022 / Sub_P02_E022
+    jk_zone8	0x02, 0x04, 0x023, 245, 0, -2782	# zone 2: Main_P02_E023 / Sub_P02_E023
+    jk_zone8	0x02, 0x04, 0x024, 251, 0, -1251	# zone 3: Main_P02_E024 / Sub_P02_E024
+    jk_zone8	0x02, 0x04, 0x025, 251, 0, -2030	# zone 4: Main_P02_E025
+    jk_zone8	0x02, 0x04, 0x026, 251, 0, -2803	# zone 5: Main_P02_E026
+    jk_zone8	0x02, 0x04, 0x027, 246, 0, 0	# zone 6: Main_P02_E027
+    jk_zone8	0x02, 0x04, 0x027, 242, 0, 0	# zone 7: Main_P02_E027
+    jk_zone8	0x02, 0x04, 0x027, 238, 0, 0	# zone 8: Main_P02_E027
+    jk_zone8	0x02, 0x04, 0x027, 234, 0, 0	# zone 9: Main_P02_E027
+    jk_zone8	0x02, 0x04, 0x027, 230, 0, 0	# zone 10: Main_P02_E027
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 11: Main_P02_E020 / Sub_P02_E020
+JkMsHeader149:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones149:
+    jk_zone8	0x02, 0xb4, 0x049, 235, 0, -1189	# zone 0: Main_P02_E049
+    jk_zone8	0x02, 0x14, 0x04b, 241, 0, -140	# zone 1: Main_P02_E04B
+    jk_zone8	0x02, 0x54, 0x04d, 0, 0, -925	# zone 2: Main_P02_E04D
+    jk_zone8	0x02, 0xb4, 0x04f, 0, 0, -2149	# zone 3: Main_P02_E04F
+    jk_zone8	0x02, 0x14, 0x051, 247, 0, -122	# zone 4: Main_P02_E051
+    jk_zone8	0x02, 0x54, 0x053, 247, 0, -896	# zone 5: Main_P02_E053
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 6: Main_P02_E020 / Sub_P02_E020
+JkMsHeader161:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones161:
+    jk_zone6	0x05, 0x18, 0x008, 250, 0	# zone 0: Main_P05_E008 / Sub_P05_E008
+    jk_zone6	0x05, 0x78, 0x009, 0, 0	# zone 1: Main_P05_E009 / Sub_P05_E009
+    jk_zone6	0x05, 0x18, 0x00a, 252, 0	# zone 2: Main_P05_E00A / Sub_P05_E00A
+    jk_zone6	0x05, 0x78, 0x00b, 252, 0	# zone 3: Main_P05_E00B / Sub_P05_E00B
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 4: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader170:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones170:
+    jk_zone8	0x04, 0x94, 0x038, 247, 0, -1353	# zone 0: Main_P04_E038 / Sub_P04_E038
+    jk_zone8	0x04, 0xd4, 0x039, 251, 0, -2200	# zone 1: Main_P04_E039 / Sub_P04_E039
+    jk_zone8	0x04, 0x34, 0x03a, 255, 0, -156	# zone 2: Main_P04_E03A / Sub_P04_E03A
+    jk_zone8	0x04, 0x74, 0x03b, 254, 0, -989	# zone 3: Main_P04_E03B / Sub_P04_E03B
+    jk_zone8	0x04, 0xd4, 0x03c, 249, 0, -2003	# zone 4: Main_P04_E03C / Sub_P04_E03C
+    jk_zone8	0x04, 0x34, 0x03d, 254, 0, -231	# zone 5: Main_P04_E03D / Sub_P04_E03D
+    jk_zone8	0x04, 0x94, 0x03e, 250, 0, -1447	# zone 6: Main_P04_E03E / Sub_P04_E03E
+    jk_zone8	0x04, 0xf4, 0x03f, 253, 0, -2048	# zone 7: Main_P04_E03F / Sub_P04_E03F
+    jk_zone8	0x05, 0x98, 0x007, 242, 0, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+JkMsHeader196:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones196:
+    jk_zone8	0x05, 0xd4, 0x01b, 253, 0, -2083	# zone 0: Main_P05_E01B / Sub_P05_E01B
+    jk_zone8	0x05, 0x34, 0x01c, 253, 0, 0	# zone 1: Main_P05_E01C / Sub_P05_E01C
+    jk_zone8	0x05, 0xb4, 0x01d, 253, 0, -1275	# zone 2: Main_P05_E01D / Sub_P05_E01D
+    jk_zone8	0x05, 0xf4, 0x01e, 254, 0, -1275	# zone 3: Main_P05_E01E / Sub_P05_E01E
+    jk_zone8	0x05, 0x34, 0x01f, 253, 0, -592	# zone 4: Main_P05_E01F / Sub_P05_E01F
+    jk_zone8	0x05, 0x98, 0x006, 246, 0, 0	# zone 5: Main_P05_E006 / Sub_P05_E006
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 6: Main_P05_E007 / Sub_P05_E007
+JkMsHeader210:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones210:
+    jk_zone6	0x05, 0x98, 0x042, 255, 0	# zone 0: Main_P05_E042 / Sub_P05_E042
+    jk_zone6	0x05, 0x18, 0x043, 248, 0	# zone 1: Main_P05_E043 / Sub_P05_E043
+    jk_zone6	0x05, 0x98, 0x044, 252, 0	# zone 2: Main_P05_E044 / Sub_P05_E044
+    jk_zone6	0x05, 0x98, 0x045, 253, 0	# zone 3: Main_P05_E045 / Sub_P05_E045
+    jk_zone6	0x05, 0x58, 0x046, 252, 0	# zone 4: Main_P05_E046 / Sub_P05_E046
+    jk_zone6	0x05, 0xb8, 0x04e, 249, 0	# zone 5: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0x98, 0x06a, 237, 0	# zone 6: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader327:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones327:
+    jk_zone6	0x00, 0x14, 0x003, 249, 0	# zone 0: Main_P00_E003 / Sub_P00_E003
+    jk_zone6	0x00, 0xd4, 0x004, 250, 0	# zone 1: Main_P00_E004 / Sub_P00_E004
+    jk_zone6	0x00, 0x94, 0x005, 249, 0	# zone 2: Main_P00_E005 / Sub_P00_E005
+    jk_zone6	0x00, 0x14, 0x006, 249, 0	# zone 3: Main_P00_E006 / Sub_P00_E006
+    jk_zone6	0x00, 0xd4, 0x007, 248, 0	# zone 4: Main_P00_E007 / Sub_P00_E007
+    jk_zone6	0x00, 0x14, 0x008, 249, 0	# zone 5: Main_P00_E008 / Sub_P00_E008
+    jk_zone6	0x00, 0x94, 0x009, 249, 0	# zone 6: Main_P00_E009 / Sub_P00_E009
+    jk_zone6	0x00, 0x14, 0x00a, 249, 0	# zone 7: Main_P00_E00A / Sub_P00_E00A
+    jk_zone6	0x00, 0x94, 0x00b, 249, 0	# zone 8: Main_P00_E00B / Sub_P00_E00B
+    jk_zone6	0x00, 0x04, 0x000, 248, 0	# zone 9: Main_P00_E000 / Sub_P00_E000
+JkMsHeader359:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones359:
+    jk_zone6	0x09, 0x08, 0x064, 249, 0	# zone 0: Sub_P09_E064
+    jk_zone6	0x09, 0x08, 0x065, 249, 0	# zone 1: Sub_P09_E065
+    jk_zone6	0x09, 0x08, 0x066, 249, 0	# zone 2: Sub_P09_E066
+    jk_zone6	0x09, 0x08, 0x067, 249, 0	# zone 3: Sub_P09_E067
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 4: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 5: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 6: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader365:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones365:
+    jk_zone6	0x03, 0x08, 0x04e, 243, 0	# zone 0: Main_P03_E04E / Sub_P03_E04E
+    jk_zone6	0x03, 0x08, 0x04f, 243, 0	# zone 1: Main_P03_E04F / Sub_P03_E04F
+    jk_zone6	0x03, 0x08, 0x050, 243, 0	# zone 2: Main_P03_E050 / Sub_P03_E050
+    jk_zone6	0x03, 0x08, 0x051, 243, 0	# zone 3: Main_P03_E051 / Sub_P03_E051
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 4: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader371:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones371:
+    jk_zone8	0x03, 0x08, 0x05f, 252, 0, 0	# zone 0: Main_P03_E05F / Sub_P03_E05F
+    jk_zone8	0x03, 0x08, 0x060, 254, 0, 0	# zone 1: Main_P03_E060 / Sub_P03_E060
+    jk_zone8	0x03, 0x08, 0x05c, 250, 0, -2159	# zone 2: Main_P03_E05C / Sub_P03_E05C
+    jk_zone8	0x03, 0x08, 0x05e, 249, 0, -1718	# zone 3: Main_P03_E05E / Sub_P03_E05E
+JkMsHeader374:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones374:
+    jk_zone8	0x05, 0x04, 0x05f, 252, 0, -5091	# zone 0: Main_P05_E05F / Sub_P05_E05F
+JkMsHeader421:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones421:
+    jk_zone8	0x08, 0x04, 0x02b, 249, 0, 2756	# zone 0: Main_P08_E02B / Sub_P08_E02B
+JkMsHeader457:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones457:
+    jk_zone8	0x06, 0x04, 0x048, 241, 0, 3132	# zone 0: Main_P06_E048 / Sub_P06_E048
+JkMsHeader473:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones473:
+    jk_zone8	0x08, 0x04, 0x039, 242, 0, 2756	# zone 0: Main_P08_E039
+JkMsHeader545:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones545:
+    jk_zone8	0x08, 0x04, 0x05a, 232, 0, 2756	# zone 0: Main_P08_E05A
+JkMsHeader619:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones619:
+    jk_zone8	0x0b, 0x04, 0x020, 223, 0, 2756	# zone 0: Main_P0B_E020 / Sub_P0B_E020
+JkMsHeader637:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones637:
+    jk_zone6	0x00, 0x04, 0x0ab, 249, 0	# zone 0: Main_P00_E0AB / Sub_P00_E0AB
+    .space	2, 0xff	# alignment
+JkMsHeader661:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones661:
+    jk_zone6	0x00, 0x04, 0x0b2, 248, 0	# zone 0: Main_P00_E0B2 / Sub_P00_E0B2
+    .space	2, 0xff	# alignment
+JkMsHeader676:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones676:
+    jk_zone8	0x06, 0x08, 0x04e, 244, 0, 1732	# zone 0: Main_P06_E04E / Sub_P06_E04E
+JkMsHeader724:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones724:
+    jk_zone8	0x00, 0x08, 0x06d, 252, 0, 2756	# zone 0: Main_P00_E06D / Sub_P00_E06D
+JkMsHeader748:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones748:
+    jk_zone8	0x06, 0x04, 0x053, 232, 0, 4608	# zone 0: Main_P06_E053 / Sub_P06_E053
+JkMsHeader754:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones754:
+    jk_zone8	0x06, 0x04, 0x04b, 255, 0, 2756	# zone 0: Main_P06_E04B / Sub_P06_E04B
+JkMsHeader758:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones758:
+    jk_zone8	0x06, 0x04, 0x04e, 250, 0, 2756	# zone 0: Main_P06_E04E / Sub_P06_E04E
+JkMsHeader762:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones762:
+    jk_zone8	0x06, 0x04, 0x05f, 250, 0, 452	# zone 0: Main_P06_E05F / Sub_P06_E05F
+JkMsHeader772:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones772:
+    jk_zone8	0x06, 0x04, 0x043, 248, 0, 3132	# zone 0: Main_P06_E043 / Sub_P06_E043
+JkMsHeader776:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones776:
+    jk_zone8	0x02, 0x04, 0x071, 252, 0, 1732	# zone 0: Main_P02_E071
+JkMsHeader785:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones785:
+    jk_zone8	0x02, 0x04, 0x06e, 249, 0, -316	# zone 0: Main_P02_E06E
+JkMsHeader794:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones794:
+    jk_zone8	0x00, 0x08, 0x033, 236, 0, 1335	# zone 0: Main_P00_E033 / Sub_P00_E033
+JkMsHeader839:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones839:
+    jk_zone8	0x09, 0x08, 0x086, 241, 0, 2756	# zone 0: Sub_P09_E086
+JkMsHeader851:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones851:
+    jk_zone8	0x09, 0x08, 0x079, 240, 0, 2756	# zone 0: Sub_P09_E079
+JkMsHeader008:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones008:
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 0: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x001, 247, 0, -3378	# zone 1: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x04, 0x002, 238, 0, -1714	# zone 2: Main_P08_E002 / Sub_P08_E002
+    jk_zone8	0x08, 0x04, 0x003, 247, 0, -2883	# zone 3: Main_P08_E003 / Sub_P08_E003
+    jk_zone8	0x08, 0x04, 0x004, 242, 0, -3984	# zone 4: Main_P08_E004 / Sub_P08_E004
+    jk_zone8	0x08, 0x04, 0x005, 238, 0, -1944	# zone 5: Main_P08_E005 / Sub_P08_E005
+    jk_zone8	0x08, 0x04, 0x006, 244, 0, -2723	# zone 6: Main_P08_E006 / Sub_P08_E006
+    jk_zone8	0x08, 0x04, 0x007, 233, 0, -3804	# zone 7: Main_P08_E007 / Sub_P08_E007
+    jk_zone8	0x08, 0x04, 0x008, 240, 0, -1983	# zone 8: Main_P08_E008 / Sub_P08_E008
+    jk_zone8	0x08, 0x04, 0x009, 234, 0, -2708	# zone 9: Main_P08_E009 / Sub_P08_E009
+    jk_zone8	0x08, 0x04, 0x00a, 239, 0, -3932	# zone 10: Main_P08_E00A / Sub_P08_E00A
+    jk_zone8	0x08, 0x04, 0x00b, 241, 0, -1747	# zone 11: Main_P08_E00B / Sub_P08_E00B
+    jk_zone8	0x08, 0x04, 0x00c, 243, 0, -2522	# zone 12: Main_P08_E00C / Sub_P08_E00C
+    jk_zone8	0x08, 0x04, 0x00d, 240, 0, -3533	# zone 13: Main_P08_E00D / Sub_P08_E00D
+    jk_zone8	0x0b, 0x04, 0x008, 241, 0, -2016	# zone 14: Main_P0B_E008 / Sub_P0B_E008
+    jk_zone8	0x0b, 0x04, 0x009, 237, 0, -3035	# zone 15: Main_P0B_E009 / Sub_P0B_E009
+    jk_zone8	0x0b, 0x04, 0x00a, 243, 0, -4343	# zone 16: Main_P0B_E00A / Sub_P0B_E00A
+JkMsHeader092:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones092:
+    jk_zone8	0x03, 0xf8, 0x013, 254, 0, -3880	# zone 0: Main_P03_E013 / Sub_P03_E013
+    jk_zone8	0x03, 0x58, 0x014, 253, 0, -2170	# zone 1: Main_P03_E014 / Sub_P03_E014
+    jk_zone8	0x03, 0x98, 0x015, 254, 0, -3193	# zone 2: Main_P03_E015 / Sub_P03_E015
+    jk_zone8	0x03, 0xf8, 0x018, 255, 0, -4254	# zone 3: Main_P03_E018 / Sub_P03_E018
+    jk_zone8	0x03, 0x38, 0x019, 246, 0, -1967	# zone 4: Main_P03_E019 / Sub_P03_E019
+    jk_zone8	0x03, 0x58, 0x01a, 250, 0, -2212	# zone 5: Main_P03_E01A / Sub_P03_E01A
+JkMsHeader546:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones546:
+    jk_zone8	0x09, 0x08, 0x094, 228, 0, 2756	# zone 0: Sub_P09_E094
+JkMsHeader620:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones620:
+    jk_zone8	0x0b, 0x08, 0x003, 219, 0, 2756	# zone 0: Main_P0B_E003 / Sub_P0B_E003
+JkMsHeader638:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones638:
+    jk_zone6	0x00, 0x08, 0x050, 245, 0	# zone 0: Main_P00_E050 / Sub_P00_E050
+    .space	2, 0xff	# alignment
+JkMsHeader662:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones662:
+    jk_zone6	0x00, 0x08, 0x054, 241, 0	# zone 0: Main_P00_E054 / Sub_P00_E054
+    .space	2, 0xff	# alignment
+JkMsHeader422:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones422:
+    jk_zone8	0x08, 0x04, 0x02c, 245, 0, 2756	# zone 0: Main_P08_E02C
+JkMsHeader474:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones474:
+    jk_zone8	0x0b, 0x04, 0x017, 238, 0, 2756	# zone 0: Main_P0B_E017 / Sub_P0B_E017
+JkMsHeader547:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones547:
+    jk_zone8	0x09, 0x04, 0x017, 240, 0, 2756	# zone 0: Main_P09_E017 / Sub_P09_E017
+JkMsHeader475:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones475:
+    jk_zone8	0x08, 0x08, 0x018, 242, 0, 2756	# zone 0: Main_P08_E018 / Sub_P08_E018
+JkMsHeader548:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones548:
+    jk_zone8	0x0b, 0x08, 0x002, 242, 0, 2756	# zone 0: Main_P0B_E002 / Sub_P0B_E002
+JkMsHeader009:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones009:
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 0: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x008, 242, 0, -2264	# zone 1: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x04, 0x009, 233, 0, 0	# zone 2: Main_P0A_E009 / Sub_P0A_E009
+    jk_zone8	0x0a, 0x04, 0x00a, 242, 0, -1272	# zone 3: Main_P0A_E00A / Sub_P0A_E00A
+    jk_zone8	0x0a, 0x04, 0x00b, 239, 0, -2320	# zone 4: Main_P0A_E00B / Sub_P0A_E00B
+    jk_zone8	0x0a, 0x04, 0x00c, 239, 0, -306	# zone 5: Main_P0A_E00C / Sub_P0A_E00C
+    jk_zone8	0x0a, 0x04, 0x00d, 237, 0, -1067	# zone 6: Main_P0A_E00D / Sub_P0A_E00D
+    jk_zone8	0x0a, 0x04, 0x00e, 233, 0, -2103	# zone 7: Main_P0A_E00E / Sub_P0A_E00E
+    jk_zone8	0x0a, 0x04, 0x00f, 232, 0, -324	# zone 8: Main_P0A_E00F / Sub_P0A_E00F
+    jk_zone8	0x0a, 0x04, 0x010, 238, 0, -1091	# zone 9: Main_P0A_E010 / Sub_P0A_E010
+    jk_zone8	0x0a, 0x04, 0x011, 231, 0, -2352	# zone 10: Main_P0A_E011 / Sub_P0A_E011
+    jk_zone8	0x0a, 0x04, 0x012, 227, 0, -50	# zone 11: Main_P0A_E012 / Sub_P0A_E012
+    jk_zone8	0x0a, 0x04, 0x013, 231, 0, -825	# zone 12: Main_P0A_E013 / Sub_P0A_E013
+    jk_zone8	0x0a, 0x04, 0x014, 234, 0, -1864	# zone 13: Main_P0A_E014 / Sub_P0A_E014
+    jk_zone8	0x0a, 0x04, 0x015, 240, 0, -343	# zone 14: Main_P0A_E015 / Sub_P0A_E015
+    jk_zone8	0x0a, 0x04, 0x016, 233, 0, -1368	# zone 15: Main_P0A_E016 / Sub_P0A_E016
+    jk_zone8	0x0a, 0x04, 0x017, 237, 0, -1650	# zone 16: Main_P0A_E017 / Sub_P0A_E017
+JkMsHeader066:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones066:
+    jk_zone8	0x01, 0xb8, 0x01e, 251, 0, -1715	# zone 0: Main_P01_E01E / Sub_P01_E01E
+    jk_zone8	0x01, 0x18, 0x01f, 251, 0, -2570	# zone 1: Main_P01_E01F / Sub_P01_E01F
+    jk_zone8	0x01, 0x58, 0x020, 248, 0, -249	# zone 2: Main_P01_E020 / Sub_P01_E020
+    jk_zone8	0x01, 0xb8, 0x021, 251, 0, -1240	# zone 3: Main_P01_E021 / Sub_P01_E021
+    jk_zone8	0x01, 0xf8, 0x022, 255, 0, -2012	# zone 4: Main_P01_E022 / Sub_P01_E022
+    jk_zone8	0x01, 0x58, 0x023, 253, 0, -248	# zone 5: Main_P01_E023 / Sub_P01_E023
+    jk_zone8	0x01, 0x98, 0x024, 251, 0, -979	# zone 6: Main_P01_E024 / Sub_P01_E024
+    jk_zone8	0x01, 0xf8, 0x025, 249, 0, -2028	# zone 7: Main_P01_E025 / Sub_P01_E025
+    jk_zone8	0x01, 0x18, 0x026, 248, 0, -2529	# zone 8: Main_P01_E026 / Sub_P01_E026
+    jk_zone8	0x01, 0x78, 0x027, 249, 0, -502	# zone 9: Main_P01_E027 / Sub_P01_E027
+    jk_zone8	0x03, 0x04, 0x025, 249, 0, 0	# zone 10: Main_P03_E025 / Sub_P03_E025
+    jk_zone8	0x03, 0x04, 0x00f, 230, 0, 0	# zone 11: Main_P03_E00F / Sub_P03_E00F
+    jk_zone8	0x03, 0x04, 0x010, 230, 0, 0	# zone 12: Main_P03_E010 / Sub_P03_E010
+JkMsHeader078:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones078:
+    jk_zone6	0x08, 0x14, 0x01d, 246, 0	# zone 0: Main_P08_E01D / Sub_P08_E01D
+    jk_zone6	0x08, 0x04, 0x01d, 246, 0	# zone 1: Main_P08_E01D / Sub_P08_E01D
+    jk_zone6	0x08, 0x04, 0x01e, 246, 0	# zone 2: Main_P08_E01E / Sub_P08_E01E
+    jk_zone6	0x08, 0x04, 0x01f, 248, 0	# zone 3: Main_P08_E01F / Sub_P08_E01F
+    jk_zone6	0x08, 0x04, 0x020, 247, 0	# zone 4: Main_P08_E020 / Sub_P08_E020
+    jk_zone6	0x08, 0x04, 0x021, 247, 0	# zone 5: Main_P08_E021 / Sub_P08_E021
+    jk_zone6	0x08, 0x04, 0x022, 248, 0	# zone 6: Main_P08_E022 / Sub_P08_E022
+    jk_zone6	0x08, 0x04, 0x023, 248, 0	# zone 7: Main_P08_E023 / Sub_P08_E023
+    jk_zone6	0x08, 0x04, 0x024, 248, 0	# zone 8: Main_P08_E024 / Sub_P08_E024
+    jk_zone6	0x08, 0x04, 0x025, 247, 0	# zone 9: Main_P08_E025 / Sub_P08_E025
+    jk_zone6	0x08, 0x04, 0x026, 247, 0	# zone 10: Main_P08_E026 / Sub_P08_E026
+    jk_zone6	0x08, 0x04, 0x027, 247, 0	# zone 11: Main_P08_E027 / Sub_P08_E027
+JkMsHeader102:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 6, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones102:
+    jk_zone6	0x03, 0x14, 0x07c, 252, 0	# zone 0: Main_P03_E07C
+    jk_zone6	0x03, 0x04, 0x07c, 252, 0	# zone 1: Main_P03_E07C
+    jk_zone6	0x03, 0x04, 0x07b, 252, 0	# zone 2: Main_P03_E07B
+    jk_zone6	0x03, 0x04, 0x07d, 252, 0	# zone 3: Main_P03_E07D
+    jk_zone6	0x03, 0x04, 0x07e, 252, 0	# zone 4: Main_P03_E07E
+    jk_zone6	0x03, 0x04, 0x078, 254, 0	# zone 5: Main_P03_E078
+    jk_zone6	0x03, 0x04, 0x079, 254, 0	# zone 6: Main_P03_E079
+    jk_zone6	0x03, 0x04, 0x07a, 254, 0	# zone 7: Main_P03_E07A
+JkMsHeader150:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones150:
+    jk_zone8	0x0e, 0x14, 0x02d, 240, 0, -1012	# zone 0: Main_P0E_E02D
+    jk_zone8	0x0e, 0x14, 0x02e, 244, 0, -2400	# zone 1: Main_P0E_E02E
+    jk_zone8	0x0e, 0x14, 0x02f, 247, 0, -2859	# zone 2: Main_P0E_E02F
+    jk_zone8	0x0e, 0x14, 0x030, 247, 0, -653	# zone 3: Main_P0E_E030
+    jk_zone8	0x0e, 0x14, 0x031, 250, 0, -1185	# zone 4: Main_P0E_E031
+    jk_zone8	0x0e, 0x14, 0x032, 248, 0, -2135	# zone 5: Main_P0E_E032
+    jk_zone8	0x0e, 0x14, 0x033, 249, 0, -2667	# zone 6: Main_P0E_E033
+    jk_zone8	0x0e, 0x14, 0x034, 247, 0, -374	# zone 7: Main_P0E_E034
+    jk_zone8	0x0e, 0x14, 0x035, 252, 0, -896	# zone 8: Main_P0E_E035
+    jk_zone8	0x0e, 0x14, 0x036, 249, 0, -1948	# zone 9: Main_P0E_E036
+    jk_zone8	0x0e, 0x14, 0x037, 248, 0, -2465	# zone 10: Main_P0E_E037
+    jk_zone8	0x0e, 0x14, 0x038, 240, 0, 0	# zone 11: Main_P0E_E038
+    jk_zone8	0x02, 0x54, 0x054, 239, 0, -896	# zone 12: Main_P02_E054
+    jk_zone8	0x02, 0x04, 0x020, 220, 0, 0	# zone 13: Main_P02_E020 / Sub_P02_E020
+JkMsHeader162:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones162:
+    jk_zone6	0x05, 0x18, 0x00c, 253, 0	# zone 0: Main_P05_E00C / Sub_P05_E00C
+    jk_zone6	0x05, 0x58, 0x00d, 0, 0	# zone 1: Main_P05_E00D / Sub_P05_E00D
+    jk_zone6	0x05, 0x98, 0x00e, 0, 0	# zone 2: Main_P05_E00E / Sub_P05_E00E
+    jk_zone6	0x05, 0xd8, 0x00f, 0, 0	# zone 3: Main_P05_E00F / Sub_P05_E00F
+    jk_zone6	0x05, 0x18, 0x010, 254, 0	# zone 4: Main_P05_E010 / Sub_P05_E010
+    jk_zone6	0x05, 0xb8, 0x011, 0, 0	# zone 5: Main_P05_E011 / Sub_P05_E011
+    jk_zone6	0x05, 0xf8, 0x012, 251, 0	# zone 6: Main_P05_E012 / Sub_P05_E012
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 7: Main_P05_E007 / Sub_P05_E007
+JkMsHeader423:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones423:
+    jk_zone8	0x08, 0x04, 0x035, 251, 0, 2756	# zone 0: Main_P08_E035
+JkMsHeader476:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones476:
+    jk_zone8	0x08, 0x04, 0x03a, 249, 0, 2756	# zone 0: Main_P08_E03A
+JkMsHeader549:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones549:
+    jk_zone8	0x0a, 0x04, 0x018, 240, 0, 2756	# zone 0: Main_P0A_E018 / Sub_P0A_E018
+JkMsHeader663:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones663:
+    jk_zone6	0x0a, 0x04, 0x01e, 250, 0	# zone 0: Main_P0A_E01E / Sub_P0A_E01E
+    .space	2, 0xff	# alignment
+JkMsHeader677:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones677:
+    jk_zone8	0x06, 0x08, 0x04f, 243, 0, 1732	# zone 0: Main_P06_E04F / Sub_P06_E04F
+JkMsHeader852:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones852:
+    jk_zone8	0x09, 0x08, 0x088, 218, 0, 2756	# zone 0: Sub_P09_E088
+JkMsHeader550:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones550:
+    jk_zone8	0x0a, 0x08, 0x02b, 239, 0, 2756	# zone 0: Sub_P0A_E02B
+JkMsHeader664:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones664:
+    jk_zone6	0x0b, 0x08, 0x023, 250, 0	# zone 0: Main_P0B_E023 / Sub_P0B_E023
+    .space	2, 0xff	# alignment
+JkMsHeader171:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones171:
+    jk_zone8	0x07, 0x18, 0x00a, 248, 0, -3664	# zone 0: Main_P07_E00A / Sub_P07_E00A
+    jk_zone8	0x07, 0x98, 0x00b, 249, 0, -2125	# zone 1: Main_P07_E00B / Sub_P07_E00B
+    jk_zone8	0x07, 0xf8, 0x00c, 249, 0, -3400	# zone 2: Main_P07_E00C / Sub_P07_E00C
+    jk_zone8	0x07, 0x58, 0x00d, 250, 0, -1738	# zone 3: Main_P07_E00D / Sub_P07_E00D
+    jk_zone8	0x07, 0xd8, 0x00e, 251, 0, -2982	# zone 4: Main_P07_E00E / Sub_P07_E00E
+    jk_zone8	0x07, 0x38, 0x00f, 250, 0, -4261	# zone 5: Main_P07_E00F / Sub_P07_E00F
+    jk_zone8	0x07, 0x98, 0x010, 252, 0, -2566	# zone 6: Main_P07_E010 / Sub_P07_E010
+    jk_zone8	0x07, 0x18, 0x011, 248, 0, -3829	# zone 7: Main_P07_E011 / Sub_P07_E011
+JkMsHeader211:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones211:
+    jk_zone8	0x0a, 0x58, 0x000, 241, 0, -246	# zone 0: Main_P0A_E000 / Sub_P0A_E000
+    jk_zone8	0x0a, 0x98, 0x001, 248, 0, -2107	# zone 1: Main_P0A_E001 / Sub_P0A_E001
+    jk_zone8	0x0a, 0xf8, 0x002, 250, 0, -2979	# zone 2: Main_P0A_E002 / Sub_P0A_E002
+    jk_zone8	0x0a, 0x18, 0x003, 251, 0, -167	# zone 3: Main_P0A_E003 / Sub_P0A_E003
+    jk_zone8	0x0a, 0x58, 0x004, 245, 0, -1156	# zone 4: Main_P0A_E004 / Sub_P0A_E004
+    jk_zone8	0x0a, 0x98, 0x005, 244, 0, -1929	# zone 5: Main_P0A_E005 / Sub_P0A_E005
+    jk_zone8	0x0a, 0xf8, 0x006, 250, 0, -3027	# zone 6: Main_P0A_E006 / Sub_P0A_E006
+    jk_zone8	0x0a, 0x18, 0x007, 250, 0, -463	# zone 7: Main_P0A_E007 / Sub_P0A_E007
+    jk_zone8	0x0a, 0x58, 0x008, 245, 0, -1203	# zone 8: Main_P0A_E008 / Sub_P0A_E008
+    jk_zone8	0x0a, 0x98, 0x009, 246, 0, -2015	# zone 9: Main_P0A_E009 / Sub_P0A_E009
+    jk_zone8	0x05, 0xb4, 0x01a, 235, 0, 0	# zone 10: Main_P05_E01A / Sub_P05_E01A
+    jk_zone8	0x05, 0x98, 0x007, 230, 0, 0	# zone 11: Main_P05_E007 / Sub_P05_E007
+JkMsHeader477:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones477:
+    jk_zone8	0x0b, 0x04, 0x018, 235, 0, 2756	# zone 0: Main_P0B_E018 / Sub_P0B_E018
+JkMsHeader551:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones551:
+    jk_zone8	0x0b, 0x04, 0x01b, 239, 0, 2756	# zone 0: Main_P0B_E01B / Sub_P0B_E01B
+JkMsHeader172:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones172:
+    jk_zone8	0x07, 0xd4, 0x01b, 248, 0, 5060	# zone 0: Main_P07_E01B / Sub_P07_E01B
+    jk_zone8	0x07, 0x34, 0x01c, 253, 0, 2359	# zone 1: Main_P07_E01C / Sub_P07_E01C
+    jk_zone8	0x07, 0x94, 0x01d, 254, 0, 1079	# zone 2: Main_P07_E01D
+    jk_zone8	0x07, 0x14, 0x01e, 254, 0, 1220	# zone 3: Main_P07_E01E
+JkMsHeader478:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones478:
+    jk_zone8	0x08, 0x08, 0x019, 238, 0, 2756	# zone 0: Main_P08_E019 / Sub_P08_E019
+JkMsHeader552:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones552:
+    jk_zone8	0x0a, 0x08, 0x02c, 243, 0, 2756	# zone 0: Sub_P0A_E02C
+JkMsHeader053:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones053:
+    jk_zone8	0x07, 0x98, 0x012, 255, 0, -1400	# zone 0: Main_P07_E012 / Sub_P07_E012
+    jk_zone8	0x07, 0xd8, 0x013, 0, 0, -2480	# zone 1: Main_P07_E013 / Sub_P07_E013
+    jk_zone8	0x07, 0x18, 0x014, 253, 0, -193	# zone 2: Main_P07_E014 / Sub_P07_E014
+    jk_zone8	0x07, 0x58, 0x015, 251, 0, -1227	# zone 3: Main_P07_E015 / Sub_P07_E015
+    jk_zone8	0x07, 0x98, 0x016, 0, 0, -1958	# zone 4: Main_P07_E016 / Sub_P07_E016
+    jk_zone8	0x07, 0xf8, 0x017, 0, 0, -2954	# zone 5: Main_P07_E017 / Sub_P07_E017
+    jk_zone8	0x07, 0x18, 0x018, 0, 0, -181	# zone 6: Main_P07_E018 / Sub_P07_E018
+    jk_zone8	0x07, 0x58, 0x019, 254, 0, -1230	# zone 7: Main_P07_E019 / Sub_P07_E019
+    jk_zone8	0x07, 0x98, 0x01a, 249, 0, -1755	# zone 8: Main_P07_E01A / Sub_P07_E01A
+    jk_zone8	0x07, 0x18, 0x01b, 249, 0, -216	# zone 9: Main_P07_E01B / Sub_P07_E01B
+    jk_zone8	0x07, 0x38, 0x01c, 248, 0, -728	# zone 10: Main_P07_E01C / Sub_P07_E01C
+JkMsHeader151:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones151:
+    jk_zone8	0x02, 0xb4, 0x04a, 235, 0, -1189	# zone 0: Main_P02_E04A
+    jk_zone8	0x02, 0x14, 0x04c, 241, 0, -140	# zone 1: Main_P02_E04C
+    jk_zone8	0x02, 0x54, 0x04e, 253, 0, -925	# zone 2: Main_P02_E04E
+    jk_zone8	0x02, 0xb4, 0x050, 0, 0, -2149	# zone 3: Main_P02_E050
+    jk_zone8	0x02, 0x14, 0x052, 247, 0, -122	# zone 4: Main_P02_E052
+    jk_zone8	0x02, 0x54, 0x054, 247, 0, -896	# zone 5: Main_P02_E054
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 6: Main_P02_E020 / Sub_P02_E020
+JkMsHeader424:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones424:
+    jk_zone8	0x08, 0x04, 0x02e, 254, 0, 2756	# zone 0: Main_P08_E02E
+JkMsHeader479:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones479:
+    jk_zone8	0x08, 0x04, 0x03d, 246, 0, 2756	# zone 0: Main_P08_E03D
+JkMsHeader553:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones553:
+    jk_zone8	0x08, 0x04, 0x05b, 247, 0, 4301	# zone 0: Main_P08_E05B
+JkMsHeader621:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones621:
+    jk_zone8	0x0b, 0x04, 0x021, 244, 0, 2756	# zone 0: Main_P0B_E021 / Sub_P0B_E021
+JkMsHeader639:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones639:
+    jk_zone6	0x00, 0x08, 0x04e, 253, 0	# zone 0: Main_P00_E04E / Sub_P00_E04E
+    .space	2, 0xff	# alignment
+JkMsHeader678:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones678:
+    jk_zone8	0x06, 0x08, 0x050, 247, 0, 1732	# zone 0: Main_P06_E050 / Sub_P06_E050
+JkMsHeader725:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones725:
+    jk_zone8	0x00, 0x08, 0x06e, 254, 0, 4036	# zone 0: Main_P00_E06E / Sub_P00_E06E
+JkMsHeader773:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones773:
+    jk_zone8	0x06, 0x04, 0x044, 248, 0, 3132	# zone 0: Main_P06_E044 / Sub_P06_E044
+JkMsHeader777:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones777:
+    jk_zone8	0x06, 0x04, 0x055, 0, 0, 1348	# zone 0: Main_P06_E055 / Sub_P06_E055
+JkMsHeader795:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones795:
+    jk_zone8	0x00, 0x08, 0x02f, 218, 0, 1335	# zone 0: Main_P00_E02F / Sub_P00_E02F
+JkMsHeader840:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones840:
+    jk_zone8	0x09, 0x08, 0x089, 0, 0, 2756	# zone 0: Sub_P09_E089
+JkMsHeader853:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones853:
+    jk_zone8	0x09, 0x08, 0x082, 251, 0, 2756	# zone 0: Sub_P09_E082
+JkMsHeader010:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones010:
+    jk_zone8	0x09, 0x08, 0x09a, 239, 0, -3378	# zone 0: Sub_P09_E09A
+    jk_zone8	0x09, 0x08, 0x09a, 239, 0, -3378	# zone 1: Sub_P09_E09A
+    jk_zone8	0x09, 0x08, 0x09b, 236, 0, -1714	# zone 2: Sub_P09_E09B
+    jk_zone8	0x09, 0x08, 0x09c, 243, 0, -2883	# zone 3: Sub_P09_E09C
+    jk_zone8	0x09, 0x08, 0x09d, 238, 0, -3984	# zone 4: Sub_P09_E09D
+    jk_zone8	0x09, 0x08, 0x09e, 235, 0, -1944	# zone 5: Sub_P09_E09E
+    jk_zone8	0x09, 0x08, 0x09f, 233, 0, -2723	# zone 6: Sub_P09_E09F
+    jk_zone8	0x09, 0x08, 0x0a0, 238, 0, -3804	# zone 7: Sub_P09_E0A0
+    jk_zone8	0x09, 0x08, 0x0a1, 241, 0, -1983	# zone 8: Sub_P09_E0A1
+    jk_zone8	0x09, 0x08, 0x0a2, 235, 0, -2708	# zone 9: Sub_P09_E0A2
+    jk_zone8	0x09, 0x08, 0x0a3, 243, 0, -3932	# zone 10: Sub_P09_E0A3
+    jk_zone8	0x09, 0x08, 0x0a4, 244, 0, -1747	# zone 11: Sub_P09_E0A4
+    jk_zone8	0x09, 0x08, 0x0a5, 248, 0, -2522	# zone 12: Sub_P09_E0A5
+    jk_zone8	0x09, 0x08, 0x0a6, 241, 0, -3533	# zone 13: Sub_P09_E0A6
+    jk_zone8	0x0a, 0x08, 0x023, 249, 0, -2016	# zone 14: Main_P0A_E023 / Sub_P0A_E023
+    jk_zone8	0x0a, 0x08, 0x024, 239, 0, -3035	# zone 15: Main_P0A_E024 / Sub_P0A_E024
+    jk_zone8	0x0a, 0x08, 0x025, 247, 0, -4343	# zone 16: Main_P0A_E025 / Sub_P0A_E025
+JkMsHeader480:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones480:
+    jk_zone8	0x09, 0x08, 0x08b, 246, 0, 2756	# zone 0: Sub_P09_E08B
+JkMsHeader622:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones622:
+    jk_zone8	0x0b, 0x08, 0x004, 242, 0, 2756	# zone 0: Main_P0B_E004 / Sub_P0B_E004
+JkMsHeader481:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones481:
+    jk_zone8	0x0c, 0x04, 0x002, 238, 0, 2756	# zone 0: Main_P0C_E002 / Sub_P0C_E002
+JkMsHeader482:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones482:
+    jk_zone8	0x0c, 0x08, 0x002, 248, 0, 2756	# zone 0: Main_P0C_E002 / Sub_P0C_E002
+JkMsHeader011:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones011:
+    jk_zone8	0x08, 0x08, 0x01c, 230, 0, -2264	# zone 0: Main_P08_E01C / Sub_P08_E01C
+    jk_zone8	0x08, 0x08, 0x01c, 230, 0, -2264	# zone 1: Main_P08_E01C / Sub_P08_E01C
+    jk_zone8	0x08, 0x08, 0x01d, 239, 0, 0	# zone 2: Main_P08_E01D / Sub_P08_E01D
+    jk_zone8	0x08, 0x08, 0x01e, 242, 0, -1272	# zone 3: Main_P08_E01E / Sub_P08_E01E
+    jk_zone8	0x08, 0x08, 0x01f, 235, 0, -2320	# zone 4: Main_P08_E01F / Sub_P08_E01F
+    jk_zone8	0x08, 0x08, 0x020, 234, 0, -306	# zone 5: Main_P08_E020 / Sub_P08_E020
+    jk_zone8	0x08, 0x08, 0x021, 223, 0, -1067	# zone 6: Main_P08_E021 / Sub_P08_E021
+    jk_zone8	0x08, 0x08, 0x022, 239, 0, -2103	# zone 7: Main_P08_E022 / Sub_P08_E022
+    jk_zone8	0x08, 0x08, 0x023, 237, 0, -324	# zone 8: Main_P08_E023 / Sub_P08_E023
+    jk_zone8	0x08, 0x08, 0x024, 235, 0, -1091	# zone 9: Main_P08_E024 / Sub_P08_E024
+    jk_zone8	0x08, 0x08, 0x025, 238, 0, -2352	# zone 10: Main_P08_E025 / Sub_P08_E025
+    jk_zone8	0x08, 0x08, 0x026, 241, 0, -50	# zone 11: Main_P08_E026 / Sub_P08_E026
+    jk_zone8	0x08, 0x08, 0x027, 244, 0, -825	# zone 12: Main_P08_E027 / Sub_P08_E027
+    jk_zone8	0x08, 0x08, 0x028, 237, 0, -1864	# zone 13: Main_P08_E028 / Sub_P08_E028
+    jk_zone8	0x08, 0x08, 0x029, 245, 0, -343	# zone 14: Main_P08_E029 / Sub_P08_E029
+    jk_zone8	0x08, 0x08, 0x02a, 241, 0, -1368	# zone 15: Main_P08_E02A / Sub_P08_E02A
+    jk_zone8	0x08, 0x08, 0x02b, 227, 0, -1650	# zone 16: Main_P08_E02B / Sub_P08_E02B
+JkMsHeader483:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones483:
+    jk_zone8	0x08, 0x04, 0x03e, 246, 0, 2756	# zone 0: Main_P08_E03E
+JkMsHeader679:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones679:
+    jk_zone8	0x06, 0x08, 0x051, 248, 0, 1732	# zone 0: Main_P06_E051 / Sub_P06_E051
+JkMsHeader763:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones763:
+    jk_zone8	0x01, 0x18, 0x0ad, 253, 0, 452	# zone 0: Sub_P01_E0AD
+JkMsHeader778:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones778:
+    jk_zone8	0x01, 0x18, 0x0ac, 249, 0, 2304	# zone 0: Sub_P01_E0AC
+JkMsHeader854:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones854:
+    jk_zone8	0x09, 0x08, 0x083, 250, 0, 2756	# zone 0: Sub_P09_E083
+JkMsHeader484:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones484:
+    jk_zone8	0x09, 0x08, 0x08c, 246, 0, 2756	# zone 0: Sub_P09_E08C
+JkMsHeader485:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones485:
+    jk_zone8	0x0c, 0x04, 0x003, 251, 0, 2756	# zone 0: Main_P0C_E003 / Sub_P0C_E003
+JkMsHeader486:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones486:
+    jk_zone8	0x0c, 0x08, 0x003, 249, 0, 2756	# zone 0: Main_P0C_E003 / Sub_P0C_E003
+JkMsHeader680:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones680:
+    jk_zone8	0x06, 0x08, 0x06b, 175, 0, 2756	# zone 0: Main_P06_E06B / Sub_P06_E06B
+JkMsHeader043:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones043:
+    jk_zone8	0x03, 0x14, 0x072, 253, 0, -5035	# zone 0: Main_P03_E072
+    jk_zone8	0x03, 0xf4, 0x02f, 246, 0, -3027	# zone 1: Main_P03_E02F / Sub_P03_E02F
+    jk_zone8	0x03, 0x54, 0x030, 248, 0, 0	# zone 2: Main_P03_E030 / Sub_P03_E030
+    jk_zone8	0x03, 0x04, 0x064, 223, 0, 0	# zone 3: Main_P03_E064 / Sub_P03_E064
+JkMsHeader048:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones048:
+    jk_zone6	0x02, 0x14, 0x015, 240, 0	# zone 0: Main_P02_E015 / Sub_P02_E015
+    jk_zone6	0x02, 0x04, 0x015, 240, 0	# zone 1: Main_P02_E015 / Sub_P02_E015
+    jk_zone6	0x02, 0x04, 0x014, 240, 0	# zone 2: Main_P02_E014 / Sub_P02_E014
+    jk_zone6	0x02, 0x04, 0x016, 240, 0	# zone 3: Main_P02_E016 / Sub_P02_E016
+    jk_zone6	0x02, 0x04, 0x017, 240, 0	# zone 4: Main_P02_E017 / Sub_P02_E017
+    jk_zone6	0x02, 0x04, 0x018, 240, 0	# zone 5: Main_P02_E018 / Sub_P02_E018
+    jk_zone6	0x02, 0x04, 0x019, 240, 0	# zone 6: Main_P02_E019 / Sub_P02_E019
+    jk_zone6	0x03, 0x04, 0x063, 243, 0	# zone 7: Main_P03_E063 / Sub_P03_E063
+    jk_zone6	0x03, 0x04, 0x064, 243, 0	# zone 8: Main_P03_E064 / Sub_P03_E064
+    .space	2, 0xff	# alignment
+JkMsHeader054:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones054:
+    jk_zone8	0x01, 0xd4, 0x025, 254, 0, -1958	# zone 0: Main_P01_E025 / Sub_P01_E025
+    jk_zone8	0x01, 0x54, 0x026, 252, 0, -908	# zone 1: Main_P01_E026 / Sub_P01_E026
+    jk_zone8	0x01, 0x94, 0x027, 0, 0, -1747	# zone 2: Main_P01_E027 / Sub_P01_E027
+    jk_zone8	0x01, 0xf4, 0x028, 0, 0, -2954	# zone 3: Main_P01_E028 / Sub_P01_E028
+    jk_zone8	0x01, 0x34, 0x029, 253, 0, -700	# zone 4: Main_P01_E029 / Sub_P01_E029
+    jk_zone8	0x01, 0x94, 0x02a, 247, 0, -1755	# zone 5: Main_P01_E02A / Sub_P01_E02A
+    jk_zone8	0x01, 0xd4, 0x02b, 249, 0, -2778	# zone 6: Main_P01_E02B / Sub_P01_E02B
+    jk_zone8	0x01, 0x14, 0x02c, 249, 0, -216	# zone 7: Main_P01_E02C / Sub_P01_E02C
+JkMsHeader067:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones067:
+    jk_zone6	0x01, 0x18, 0x028, 248, 0	# zone 0: Main_P01_E028 / Sub_P01_E028
+    jk_zone6	0x01, 0x08, 0x028, 248, 0	# zone 1: Main_P01_E028 / Sub_P01_E028
+    jk_zone6	0x01, 0x08, 0x029, 248, 0	# zone 2: Main_P01_E029 / Sub_P01_E029
+    jk_zone6	0x01, 0x08, 0x02a, 247, 0	# zone 3: Main_P01_E02A / Sub_P01_E02A
+    jk_zone6	0x01, 0x08, 0x02b, 248, 0	# zone 4: Main_P01_E02B / Sub_P01_E02B
+    jk_zone6	0x01, 0x08, 0x02c, 248, 0	# zone 5: Main_P01_E02C / Sub_P01_E02C
+    jk_zone6	0x01, 0x08, 0x02d, 255, 0	# zone 6: Main_P01_E02D / Sub_P01_E02D
+    jk_zone6	0x01, 0x08, 0x02e, 254, 0	# zone 7: Main_P01_E02E / Sub_P01_E02E
+    jk_zone6	0x01, 0x08, 0x02f, 254, 0	# zone 8: Main_P01_E02F / Sub_P01_E02F
+    jk_zone6	0x01, 0x08, 0x030, 253, 0	# zone 9: Main_P01_E030 / Sub_P01_E030
+    jk_zone6	0x01, 0x08, 0x031, 253, 0	# zone 10: Main_P01_E031 / Sub_P01_E031
+    jk_zone6	0x01, 0x08, 0x032, 253, 0	# zone 11: Main_P01_E032 / Sub_P01_E032
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 12: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 13: Main_P03_E010 / Sub_P03_E010
+JkMsHeader070:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones070:
+    jk_zone6	0x01, 0x18, 0x03d, 251, 0	# zone 0: Main_P01_E03D / Sub_P01_E03D
+    jk_zone6	0x01, 0x08, 0x03d, 251, 0	# zone 1: Main_P01_E03D / Sub_P01_E03D
+    jk_zone6	0x01, 0x08, 0x03e, 251, 0	# zone 2: Main_P01_E03E / Sub_P01_E03E
+    jk_zone6	0x01, 0x08, 0x03f, 253, 0	# zone 3: Main_P01_E03F / Sub_P01_E03F
+    jk_zone6	0x01, 0x08, 0x040, 253, 0	# zone 4: Main_P01_E040 / Sub_P01_E040
+    jk_zone6	0x01, 0x08, 0x041, 253, 0	# zone 5: Main_P01_E041 / Sub_P01_E041
+    jk_zone6	0x01, 0x08, 0x042, 248, 0	# zone 6: Main_P01_E042 / Sub_P01_E042
+    jk_zone6	0x01, 0x08, 0x043, 252, 0	# zone 7: Main_P01_E043 / Sub_P01_E043
+    jk_zone6	0x01, 0x08, 0x044, 248, 0	# zone 8: Main_P01_E044 / Sub_P01_E044
+    jk_zone6	0x01, 0x08, 0x045, 248, 0	# zone 9: Main_P01_E045 / Sub_P01_E045
+    jk_zone6	0x01, 0x08, 0x046, 248, 0	# zone 10: Main_P01_E046 / Sub_P01_E046
+    jk_zone6	0x01, 0x08, 0x047, 248, 0	# zone 11: Main_P01_E047 / Sub_P01_E047
+    jk_zone6	0x03, 0x04, 0x00f, 222, 0	# zone 12: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 222, 0	# zone 13: Main_P03_E010 / Sub_P03_E010
+JkMsHeader082:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones082:
+    jk_zone6	0x05, 0x14, 0x00a, 254, 0	# zone 0: Main_P05_E00A / Sub_P05_E00A
+    jk_zone6	0x05, 0x04, 0x00a, 254, 0	# zone 1: Main_P05_E00A / Sub_P05_E00A
+    jk_zone6	0x05, 0x04, 0x009, 254, 0	# zone 2: Main_P05_E009 / Sub_P05_E009
+    jk_zone6	0x05, 0x04, 0x00b, 254, 0	# zone 3: Main_P05_E00B / Sub_P05_E00B
+    jk_zone6	0x05, 0x04, 0x00c, 253, 0	# zone 4: Main_P05_E00C / Sub_P05_E00C
+    jk_zone6	0x05, 0x04, 0x00d, 250, 0	# zone 5: Main_P05_E00D / Sub_P05_E00D
+    jk_zone6	0x05, 0x04, 0x00f, 248, 0	# zone 6: Main_P05_E00F / Sub_P05_E00F
+    jk_zone6	0x05, 0x04, 0x00e, 248, 0	# zone 7: Main_P05_E00E / Sub_P05_E00E
+    jk_zone6	0x05, 0x04, 0x010, 248, 0	# zone 8: Main_P05_E010 / Sub_P05_E010
+    jk_zone6	0x05, 0x04, 0x011, 248, 0	# zone 9: Main_P05_E011 / Sub_P05_E011
+    jk_zone6	0x05, 0x04, 0x012, 248, 0	# zone 10: Main_P05_E012 / Sub_P05_E012
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 11: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 12: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader096:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones096:
+    jk_zone8	0x03, 0xb8, 0x024, 0, 0, 0	# zone 0: Main_P03_E024 / Sub_P03_E024
+    jk_zone8	0x03, 0x38, 0x025, 251, 0, -1375	# zone 1: Main_P03_E025 / Sub_P03_E025
+    jk_zone8	0x03, 0xb8, 0x026, 250, 0, -2866	# zone 2: Main_P03_E026 / Sub_P03_E026
+    jk_zone8	0x03, 0x38, 0x027, 241, 0, -1224	# zone 3: Main_P03_E027 / Sub_P03_E027
+JkMsHeader108:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones108:
+    jk_zone6	0x02, 0x18, 0x01d, 253, 0	# zone 0: Main_P02_E01D / Sub_P02_E01D
+    jk_zone6	0x02, 0x08, 0x01d, 253, 0	# zone 1: Main_P02_E01D / Sub_P02_E01D
+    jk_zone6	0x02, 0x08, 0x01e, 253, 0	# zone 2: Main_P02_E01E / Sub_P02_E01E
+    jk_zone6	0x02, 0x08, 0x01f, 247, 0	# zone 3: Main_P02_E01F / Sub_P02_E01F
+    jk_zone6	0x02, 0x08, 0x020, 247, 0	# zone 4: Main_P02_E020 / Sub_P02_E020
+    jk_zone6	0x02, 0x08, 0x021, 247, 0	# zone 5: Main_P02_E021 / Sub_P02_E021
+    jk_zone6	0x02, 0x08, 0x022, 247, 0	# zone 6: Main_P02_E022 / Sub_P02_E022
+    jk_zone6	0x02, 0x08, 0x023, 247, 0	# zone 7: Main_P02_E023 / Sub_P02_E023
+    jk_zone6	0x02, 0x08, 0x024, 247, 0	# zone 8: Main_P02_E024 / Sub_P02_E024
+    .space	2, 0xff	# alignment
+JkMsHeader112:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones112:
+    jk_zone6	0x06, 0x14, 0x03e, 243, 0	# zone 0: Main_P06_E03E / Sub_P06_E03E
+    jk_zone6	0x06, 0x04, 0x03e, 243, 0	# zone 1: Main_P06_E03E / Sub_P06_E03E
+    jk_zone6	0x06, 0x04, 0x03d, 243, 0	# zone 2: Main_P06_E03D / Sub_P06_E03D
+    jk_zone6	0x06, 0x04, 0x03f, 243, 0	# zone 3: Main_P06_E03F / Sub_P06_E03F
+    jk_zone6	0x06, 0x04, 0x040, 243, 0	# zone 4: Main_P06_E040 / Sub_P06_E040
+    jk_zone6	0x06, 0x04, 0x041, 243, 0	# zone 5: Main_P06_E041 / Sub_P06_E041
+    jk_zone6	0x06, 0x04, 0x042, 243, 0	# zone 6: Main_P06_E042 / Sub_P06_E042
+    jk_zone6	0x03, 0x94, 0x084, 251, 0	# zone 7: Main_P03_E084
+    jk_zone6	0x03, 0x94, 0x085, 246, 0	# zone 8: Main_P03_E085
+    .space	2, 0xff	# alignment
+JkMsHeader117:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones117:
+    jk_zone8	0x01, 0xb8, 0x08f, 236, 0, -1198	# zone 0: Sub_P01_E08F
+    jk_zone8	0x01, 0xd8, 0x090, 236, 0, -2062	# zone 1: Sub_P01_E090
+    jk_zone8	0x01, 0x58, 0x091, 229, 0, -672	# zone 2: Sub_P01_E091
+    jk_zone8	0x01, 0xd8, 0x092, 244, 0, -2230	# zone 3: Sub_P01_E092
+    jk_zone8	0x01, 0x58, 0x093, 240, 0, -476	# zone 4: Sub_P01_E093
+    jk_zone8	0x01, 0x98, 0x094, 247, 0, -257	# zone 5: Sub_P01_E094
+    jk_zone8	0x01, 0xf8, 0x095, 237, 0, -897	# zone 6: Sub_P01_E095
+    jk_zone8	0x01, 0x58, 0x096, 237, 0, -2354	# zone 7: Sub_P01_E096
+    jk_zone8	0x01, 0x98, 0x097, 239, 0, 0	# zone 8: Sub_P01_E097
+JkMsHeader134:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones134:
+    jk_zone8	0x03, 0x08, 0x066, 245, 0, 0	# zone 0: Main_P03_E066 / Sub_P03_E066
+    jk_zone8	0x03, 0x08, 0x067, 245, 0, 0	# zone 1: Main_P03_E067 / Sub_P03_E067
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 2: Main_P00_E07B / Sub_P00_E07B
+    jk_zone8	0x00, 0x08, 0x07e, 245, 0, -1003	# zone 3: Main_P00_E07E / Sub_P00_E07E
+    jk_zone8	0x00, 0x04, 0x07b, 246, 0, -922	# zone 4: Main_P00_E07B / Sub_P00_E07B
+JkMsHeader152:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones152:
+    jk_zone8	0x0b, 0xb4, 0x00b, 240, 0, 32	# zone 0: Main_P0B_E00B / Sub_P0B_E00B
+    jk_zone8	0x0b, 0xf4, 0x00c, 244, 0, -24	# zone 1: Main_P0B_E00C / Sub_P0B_E00C
+    jk_zone8	0x0b, 0x54, 0x00d, 249, 0, -16	# zone 2: Main_P0B_E00D / Sub_P0B_E00D
+    jk_zone8	0x0b, 0x94, 0x00e, 251, 0, 0	# zone 3: Main_P0B_E00E / Sub_P0B_E00E
+    jk_zone8	0x0b, 0xb4, 0x00f, 248, 0, 0	# zone 4: Main_P0B_E00F / Sub_P0B_E00F
+    jk_zone8	0x0b, 0xd4, 0x010, 250, 0, 0	# zone 5: Main_P0B_E010 / Sub_P0B_E010
+    jk_zone8	0x0b, 0x14, 0x011, 248, 0, 0	# zone 6: Main_P0B_E011 / Sub_P0B_E011
+    jk_zone8	0x0b, 0x34, 0x012, 251, 0, 0	# zone 7: Main_P0B_E012 / Sub_P0B_E012
+JkMsHeader163:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones163:
+    jk_zone6	0x05, 0xf8, 0x013, 6, 0	# zone 0: Main_P05_E013 / Sub_P05_E013
+    jk_zone6	0x05, 0x38, 0x014, 4, 0	# zone 1: Main_P05_E014 / Sub_P05_E014
+    jk_zone6	0x05, 0x98, 0x015, 8, 0	# zone 2: Main_P05_E015 / Sub_P05_E015
+    jk_zone6	0x05, 0xd8, 0x016, 4, 0	# zone 3: Main_P05_E016 / Sub_P05_E016
+    jk_zone6	0x05, 0x38, 0x017, 2, 0	# zone 4: Main_P05_E017 / Sub_P05_E017
+    jk_zone6	0x05, 0x78, 0x018, 4, 0	# zone 5: Main_P05_E018 / Sub_P05_E018
+    jk_zone6	0x05, 0xb8, 0x019, 3, 0	# zone 6: Main_P05_E019 / Sub_P05_E019
+    jk_zone6	0x05, 0xf8, 0x01a, 255, 0	# zone 7: Main_P05_E01A / Sub_P05_E01A
+    jk_zone6	0x05, 0xf8, 0x012, 251, 0	# zone 8: Main_P05_E012 / Sub_P05_E012
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader175:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones175:
+    jk_zone8	0x04, 0xd4, 0x040, 244, 0, 0	# zone 0: Main_P04_E040 / Sub_P04_E040
+    jk_zone8	0x04, 0x34, 0x041, 248, 0, -1275	# zone 1: Main_P04_E041 / Sub_P04_E041
+    jk_zone8	0x04, 0x94, 0x042, 251, 0, -1797	# zone 2: Main_P04_E042 / Sub_P04_E042
+    jk_zone8	0x04, 0x14, 0x043, 243, 0, -592	# zone 3: Main_P04_E043 / Sub_P04_E043
+    jk_zone8	0x04, 0x54, 0x044, 241, 0, -1275	# zone 4: Main_P04_E044 / Sub_P04_E044
+    jk_zone8	0x04, 0xd4, 0x045, 239, 0, 0	# zone 5: Main_P04_E045 / Sub_P04_E045
+    jk_zone8	0x05, 0xd8, 0x01f, 245, 0, 0	# zone 6: Main_P05_E01F / Sub_P05_E01F
+    jk_zone8	0x05, 0x98, 0x007, 238, 0, 0	# zone 7: Main_P05_E007 / Sub_P05_E007
+JkMsHeader178:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones178:
+    jk_zone8	0x04, 0x98, 0x06e, 2, 0, -2009	# zone 0: Sub_P04_E06E
+    jk_zone8	0x04, 0x18, 0x06f, 238, 0, -202	# zone 1: Sub_P04_E06F
+    jk_zone8	0x04, 0x58, 0x070, 3, 0, -1230	# zone 2: Sub_P04_E070
+    jk_zone8	0x04, 0x98, 0x071, 0, 0, -2009	# zone 3: Sub_P04_E071
+    jk_zone8	0x04, 0xd8, 0x072, 253, 0, -1765	# zone 4: Sub_P04_E072
+    jk_zone8	0x00, 0xb4, 0x082, 250, 0, 0	# zone 5: Main_P00_E082 / Sub_P00_E082
+JkMsHeader181:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones181:
+    jk_zone8	0x00, 0xd8, 0x07f, 10, 0, -932	# zone 0: Main_P00_E07F / Sub_P00_E07F
+    jk_zone8	0x00, 0x58, 0x080, 11, 0, 0	# zone 1: Main_P00_E080 / Sub_P00_E080
+    jk_zone8	0x00, 0xd8, 0x081, 11, 0, 0	# zone 2: Main_P00_E081 / Sub_P00_E081
+    jk_zone8	0x00, 0xd8, 0x082, 6, 0, -2877	# zone 3: Main_P00_E082 / Sub_P00_E082
+    jk_zone8	0x00, 0xb4, 0x082, 250, 0, 0	# zone 4: Main_P00_E082 / Sub_P00_E082
+JkMsHeader183:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones183:
+    jk_zone8	0x05, 0xf8, 0x02f, 4, 0, 1076	# zone 0: Main_P05_E02F / Sub_P05_E02F
+    jk_zone8	0x05, 0x18, 0x030, 6, 0, 804	# zone 1: Main_P05_E030 / Sub_P05_E030
+    jk_zone8	0x05, 0x38, 0x031, 5, 0, 324	# zone 2: Main_P05_E031 / Sub_P05_E031
+    jk_zone8	0x05, 0x78, 0x032, 6, 0, -492	# zone 3: Main_P05_E032 / Sub_P05_E032
+    jk_zone8	0x05, 0xb8, 0x033, 5, 0, -1276	# zone 4: Main_P05_E033 / Sub_P05_E033
+    jk_zone8	0x05, 0xd8, 0x034, 0, 0, -1356	# zone 5: Main_P05_E034 / Sub_P05_E034
+    jk_zone8	0x05, 0x18, 0x035, 255, 0, 780	# zone 6: Main_P05_E035 / Sub_P05_E035
+JkMsHeader201:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones201:
+    jk_zone8	0x06, 0x08, 0x00c, 248, 0, 0	# zone 0: Main_P06_E00C / Sub_P06_E00C
+    jk_zone8	0x06, 0x08, 0x00d, 252, 0, -2058	# zone 1: Main_P06_E00D / Sub_P06_E00D
+    jk_zone8	0x06, 0x08, 0x00e, 251, 0, 0	# zone 2: Main_P06_E00E / Sub_P06_E00E
+    jk_zone8	0x06, 0x08, 0x00f, 251, 0, -1520	# zone 3: Main_P06_E00F / Sub_P06_E00F
+    jk_zone8	0x06, 0x08, 0x010, 249, 0, -1384	# zone 4: Main_P06_E010 / Sub_P06_E010
+    jk_zone8	0x06, 0x08, 0x010, 246, 0, -1384	# zone 5: Main_P06_E010 / Sub_P06_E010
+JkMsHeader222:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones222:
+    jk_zone6	0x05, 0x58, 0x067, 243, 0	# zone 0: Main_P05_E067 / Sub_P05_E067
+    jk_zone6	0x05, 0x18, 0x068, 254, 0	# zone 1: Main_P05_E068 / Sub_P05_E068
+    jk_zone6	0x05, 0x98, 0x069, 250, 0	# zone 2: Main_P05_E069 / Sub_P05_E069
+    jk_zone6	0x05, 0x98, 0x06a, 245, 0	# zone 3: Main_P05_E06A / Sub_P05_E06A
+JkMsHeader228:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones228:
+    jk_zone8	0x06, 0x04, 0x020, 236, 0, -2223	# zone 0: Main_P06_E020 / Sub_P06_E020
+    jk_zone8	0x06, 0x04, 0x020, 244, 0, -2223	# zone 1: Main_P06_E020 / Sub_P06_E020
+    jk_zone8	0x06, 0x04, 0x020, 252, 0, -2223	# zone 2: Main_P06_E020 / Sub_P06_E020
+    jk_zone8	0x06, 0x04, 0x021, 246, 0, -1978	# zone 3: Main_P06_E021 / Sub_P06_E021
+    jk_zone8	0x06, 0x04, 0x022, 247, 0, 0	# zone 4: Main_P06_E022 / Sub_P06_E022
+    jk_zone8	0x06, 0x04, 0x023, 250, 0, -343	# zone 5: Main_P06_E023 / Sub_P06_E023
+    jk_zone8	0x06, 0x04, 0x024, 255, 0, 0	# zone 6: Main_P06_E024 / Sub_P06_E024
+JkMsHeader260:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones260:
+    jk_zone6	0x04, 0xd8, 0x00a, 248, 0	# zone 0: Main_P04_E00A / Sub_P04_E00A
+    jk_zone6	0x04, 0x58, 0x00b, 244, 0	# zone 1: Main_P04_E00B / Sub_P04_E00B
+    jk_zone6	0x04, 0xd8, 0x00c, 245, 0	# zone 2: Main_P04_E00C / Sub_P04_E00C
+    jk_zone6	0x04, 0x58, 0x00d, 247, 0	# zone 3: Main_P04_E00D / Sub_P04_E00D
+    jk_zone6	0x04, 0xd8, 0x00e, 245, 0	# zone 4: Main_P04_E00E / Sub_P04_E00E
+    jk_zone6	0x04, 0x58, 0x00f, 238, 0	# zone 5: Main_P04_E00F / Sub_P04_E00F
+    jk_zone6	0x00, 0x04, 0x000, 228, 0	# zone 6: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader331:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones331:
+    jk_zone6	0x00, 0x18, 0x0bf, 243, 0	# zone 0: Sub_P00_E0BF
+    jk_zone6	0x00, 0x98, 0x0c0, 243, 0	# zone 1: Sub_P00_E0C0
+    jk_zone6	0x00, 0x18, 0x0c1, 244, 0	# zone 2: Sub_P00_E0C1
+    jk_zone6	0x00, 0x98, 0x0c2, 243, 0	# zone 3: Sub_P00_E0C2
+    jk_zone6	0x00, 0x18, 0x0c3, 243, 0	# zone 4: Sub_P00_E0C3
+    jk_zone6	0x00, 0x98, 0x0c4, 245, 0	# zone 5: Sub_P00_E0C4
+    jk_zone6	0x00, 0x18, 0x0c5, 241, 0	# zone 6: Sub_P00_E0C5
+    jk_zone6	0x00, 0xd8, 0x0c6, 245, 0	# zone 7: Sub_P00_E0C6
+    jk_zone6	0x00, 0x58, 0x0c7, 243, 0	# zone 8: Sub_P00_E0C7
+    jk_zone6	0x00, 0x04, 0x025, 244, 0	# zone 9: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 252, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 244, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader360:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones360:
+    jk_zone6	0x09, 0x08, 0x06f, 248, 0	# zone 0: Sub_P09_E06F
+    jk_zone6	0x09, 0x08, 0x070, 248, 0	# zone 1: Sub_P09_E070
+    jk_zone6	0x09, 0x08, 0x071, 248, 0	# zone 2: Sub_P09_E071
+    jk_zone6	0x09, 0x08, 0x072, 248, 0	# zone 3: Sub_P09_E072
+    jk_zone6	0x09, 0x08, 0x073, 248, 0	# zone 4: Sub_P09_E073
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 5: Main_P00_E000 / Sub_P00_E000
+JkMsHeader363:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones363:
+    jk_zone6	0x09, 0x08, 0x06d, 248, 0	# zone 0: Sub_P09_E06D
+    jk_zone6	0x09, 0x08, 0x06e, 248, 0	# zone 1: Sub_P09_E06E
+JkMsHeader366:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones366:
+    jk_zone6	0x03, 0x08, 0x052, 248, 0	# zone 0: Main_P03_E052 / Sub_P03_E052
+    jk_zone6	0x03, 0x08, 0x053, 248, 0	# zone 1: Main_P03_E053 / Sub_P03_E053
+    jk_zone6	0x03, 0x08, 0x054, 248, 0	# zone 2: Main_P03_E054 / Sub_P03_E054
+    jk_zone6	0x03, 0x08, 0x04d, 240, 0	# zone 3: Main_P03_E04D / Sub_P03_E04D
+    jk_zone6	0x00, 0x04, 0x000, 232, 0	# zone 4: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader368:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones368:
+    jk_zone8	0x03, 0x18, 0x061, 249, 0, -2792	# zone 0: Main_P03_E061 / Sub_P03_E061
+    jk_zone8	0x03, 0xd8, 0x062, 252, 0, -1958	# zone 1: Main_P03_E062 / Sub_P03_E062
+    jk_zone8	0x03, 0x58, 0x063, 253, 0, -449	# zone 2: Main_P03_E063 / Sub_P03_E063
+    jk_zone8	0x03, 0x58, 0x064, 250, 0, -439	# zone 3: Main_P03_E064 / Sub_P03_E064
+    jk_zone8	0x03, 0xd8, 0x065, 251, 0, -1094	# zone 4: Main_P03_E065 / Sub_P03_E065
+    jk_zone8	0x03, 0x08, 0x05d, 249, 0, -1718	# zone 5: Main_P03_E05D / Sub_P03_E05D
+JkMsHeader384:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones384:
+    jk_zone8	0x05, 0x14, 0x06d, 219, 0, 2756	# zone 0: Main_P05_E06D / Sub_P05_E06D
+JkMsHeader396:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones396:
+    jk_zone6	0x05, 0x14, 0x06a, 243, 0	# zone 0: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader407:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones407:
+    jk_zone8	0x06, 0x04, 0x061, 251, 0, 1857	# zone 0: Main_P06_E061 / Sub_P06_E061
+JkMsHeader425:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones425:
+    jk_zone8	0x01, 0x08, 0x0bf, 252, 0, 2756	# zone 0: Sub_P01_E0BF
+JkMsHeader487:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones487:
+    jk_zone8	0x08, 0x04, 0x03f, 250, 0, 2756	# zone 0: Main_P08_E03F
+JkMsHeader571:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones571:
+    jk_zone8	0x08, 0x04, 0x056, 250, 0, 4096	# zone 0: Main_P08_E056
+JkMsHeader640:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones640:
+    jk_zone6	0x00, 0x04, 0x0aa, 250, 0	# zone 0: Main_P00_E0AA / Sub_P00_E0AA
+    .space	2, 0xff	# alignment
+JkMsHeader681:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones681:
+    jk_zone8	0x06, 0x08, 0x05a, 251, 0, 3268	# zone 0: Main_P06_E05A / Sub_P06_E05A
+JkMsHeader749:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones749:
+    jk_zone8	0x06, 0x04, 0x054, 246, 0, 2756	# zone 0: Main_P06_E054 / Sub_P06_E054
+JkMsHeader755:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones755:
+    jk_zone8	0x06, 0x04, 0x056, 253, 0, 2048	# zone 0: Main_P06_E056 / Sub_P06_E056
+JkMsHeader759:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones759:
+    jk_zone8	0x06, 0x04, 0x04f, 249, 0, 2756	# zone 0: Main_P06_E04F / Sub_P06_E04F
+JkMsHeader764:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones764:
+    jk_zone8	0x06, 0x04, 0x05e, 0, 0, -768	# zone 0: Main_P06_E05E / Sub_P06_E05E
+JkMsHeader774:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones774:
+    jk_zone8	0x06, 0x04, 0x060, 247, 0, -3780	# zone 0: Main_P06_E060 / Sub_P06_E060
+JkMsHeader779:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones779:
+    jk_zone8	0x06, 0x04, 0x05a, 233, 0, -6144	# zone 0: Main_P06_E05A / Sub_P06_E05A
+JkMsHeader786:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones786:
+    jk_zone8	0x02, 0x04, 0x070, 245, 0, 2756	# zone 0: Main_P02_E070
+JkMsHeader796:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones796:
+    jk_zone8	0x00, 0x08, 0x034, 239, 0, 2756	# zone 0: Main_P00_E034 / Sub_P00_E034
+JkMsHeader841:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones841:
+    jk_zone8	0x09, 0x08, 0x087, 242, 0, 2756	# zone 0: Sub_P09_E087
+JkMsHeader855:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones855:
+    jk_zone8	0x09, 0x08, 0x07a, 229, 0, 2756	# zone 0: Sub_P09_E07A
+JkMsHeader030:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones030:
+    jk_zone8	0x07, 0x04, 0x008, 243, 0, -409	# zone 0: Main_P07_E008 / Sub_P07_E008
+    jk_zone8	0x07, 0x04, 0x009, 246, 0, -2465	# zone 1: Main_P07_E009 / Sub_P07_E009
+    jk_zone8	0x07, 0x04, 0x00a, 241, 0, -204	# zone 2: Main_P07_E00A / Sub_P07_E00A
+    jk_zone8	0x07, 0x04, 0x00b, 242, 0, -1459	# zone 3: Main_P07_E00B / Sub_P07_E00B
+    jk_zone8	0x07, 0x04, 0x00c, 244, 0, -3001	# zone 4: Main_P07_E00C / Sub_P07_E00C
+    jk_zone8	0x07, 0x04, 0x00d, 234, 0, -1226	# zone 5: Main_P07_E00D / Sub_P07_E00D
+    jk_zone8	0x07, 0x04, 0x00e, 239, 0, -1987	# zone 6: Main_P07_E00E / Sub_P07_E00E
+    jk_zone8	0x07, 0x04, 0x00f, 241, 0, -449	# zone 7: Main_P07_E00F / Sub_P07_E00F
+    jk_zone8	0x07, 0x04, 0x010, 241, 0, -1995	# zone 8: Main_P07_E010 / Sub_P07_E010
+    jk_zone8	0x07, 0x04, 0x011, 246, 0, -2759	# zone 9: Main_P07_E011 / Sub_P07_E011
+    jk_zone8	0x07, 0x04, 0x012, 242, 0, -1829	# zone 10: Main_P07_E012 / Sub_P07_E012
+    jk_zone8	0x07, 0x04, 0x012, 238, 0, -1831	# zone 11: Main_P07_E012 / Sub_P07_E012
+    jk_zone8	0x07, 0x04, 0x013, 234, 0, -3	# zone 12: Main_P07_E013 / Sub_P07_E013
+    jk_zone8	0x07, 0x04, 0x013, 231, 0, -2	# zone 13: Main_P07_E013 / Sub_P07_E013
+    jk_zone8	0x07, 0x04, 0x013, 228, 0, -3	# zone 14: Main_P07_E013 / Sub_P07_E013
+JkMsHeader385:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones385:
+    jk_zone8	0x05, 0x14, 0x06e, 222, 0, 2756	# zone 0: Main_P05_E06E / Sub_P05_E06E
+JkMsHeader572:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones572:
+    jk_zone8	0x09, 0x08, 0x090, 249, 0, 4096	# zone 0: Sub_P09_E090
+JkMsHeader797:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones797:
+    jk_zone8	0x00, 0x08, 0x035, 222, 0, 2756	# zone 0: Main_P00_E035 / Sub_P00_E035
+JkMsHeader031:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones031:
+    jk_zone8	0x0b, 0x08, 0x013, 241, 0, -409	# zone 0: Main_P0B_E013 / Sub_P0B_E013
+    jk_zone8	0x0b, 0x08, 0x014, 243, 0, -2465	# zone 1: Main_P0B_E014 / Sub_P0B_E014
+    jk_zone8	0x0b, 0x08, 0x015, 243, 0, -204	# zone 2: Main_P0B_E015 / Sub_P0B_E015
+    jk_zone8	0x0b, 0x08, 0x016, 245, 0, -1459	# zone 3: Main_P0B_E016 / Sub_P0B_E016
+    jk_zone8	0x0b, 0x08, 0x017, 243, 0, -3001	# zone 4: Main_P0B_E017 / Sub_P0B_E017
+    jk_zone8	0x0b, 0x08, 0x018, 241, 0, -1226	# zone 5: Main_P0B_E018 / Sub_P0B_E018
+    jk_zone8	0x0b, 0x08, 0x019, 241, 0, -1987	# zone 6: Main_P0B_E019 / Sub_P0B_E019
+    jk_zone8	0x0b, 0x08, 0x01a, 241, 0, -449	# zone 7: Main_P0B_E01A / Sub_P0B_E01A
+    jk_zone8	0x0b, 0x08, 0x01b, 244, 0, -1995	# zone 8: Main_P0B_E01B / Sub_P0B_E01B
+    jk_zone8	0x0b, 0x08, 0x01c, 247, 0, -2759	# zone 9: Main_P0B_E01C / Sub_P0B_E01C
+    jk_zone8	0x0b, 0x08, 0x01d, 229, 0, -1829	# zone 10: Main_P0B_E01D / Sub_P0B_E01D
+    jk_zone8	0x0b, 0x08, 0x01d, 225, 0, -1831	# zone 11: Main_P0B_E01D / Sub_P0B_E01D
+    jk_zone8	0x0b, 0x08, 0x01e, 215, 0, -3	# zone 12: Main_P0B_E01E / Sub_P0B_E01E
+    jk_zone8	0x0b, 0x08, 0x01e, 212, 0, -2	# zone 13: Main_P0B_E01E / Sub_P0B_E01E
+    jk_zone8	0x0b, 0x08, 0x01e, 209, 0, -3	# zone 14: Main_P0B_E01E / Sub_P0B_E01E
+JkMsHeader573:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones573:
+    jk_zone8	0x0b, 0x04, 0x016, 249, 0, 1335	# zone 0: Main_P0B_E016 / Sub_P0B_E016
+JkMsHeader641:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones641:
+    jk_zone6	0x0c, 0x04, 0x014, 251, 0	# zone 0: Main_P0C_E014 / Sub_P0C_E014
+    .space	2, 0xff	# alignment
+JkMsHeader798:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones798:
+    jk_zone8	0x00, 0x08, 0x036, 242, 0, 2756	# zone 0: Main_P00_E036 / Sub_P00_E036
+JkMsHeader574:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones574:
+    jk_zone8	0x0b, 0x08, 0x022, 250, 0, 1335	# zone 0: Main_P0B_E022 / Sub_P0B_E022
+JkMsHeader642:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones642:
+    jk_zone6	0x0c, 0x08, 0x014, 251, 0	# zone 0: Main_P0C_E014 / Sub_P0C_E014
+    .space	2, 0xff	# alignment
+JkMsHeader055:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones055:
+    jk_zone6	0x01, 0x14, 0x040, 253, 0	# zone 0: Main_P01_E040 / Sub_P01_E040
+    jk_zone6	0x01, 0x04, 0x040, 253, 0	# zone 1: Main_P01_E040 / Sub_P01_E040
+    jk_zone6	0x01, 0x04, 0x041, 253, 0	# zone 2: Main_P01_E041 / Sub_P01_E041
+    jk_zone6	0x01, 0x04, 0x042, 253, 0	# zone 3: Main_P01_E042 / Sub_P01_E042
+    jk_zone6	0x01, 0x04, 0x043, 253, 0	# zone 4: Main_P01_E043 / Sub_P01_E043
+    jk_zone6	0x01, 0x04, 0x044, 245, 0	# zone 5: Main_P01_E044 / Sub_P01_E044
+    jk_zone6	0x01, 0x04, 0x045, 250, 0	# zone 6: Main_P01_E045 / Sub_P01_E045
+    jk_zone6	0x01, 0x04, 0x046, 250, 0	# zone 7: Main_P01_E046 / Sub_P01_E046
+    jk_zone6	0x01, 0x04, 0x047, 250, 0	# zone 8: Main_P01_E047 / Sub_P01_E047
+    jk_zone6	0x01, 0x04, 0x048, 250, 0	# zone 9: Main_P01_E048 / Sub_P01_E048
+JkMsHeader153:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones153:
+    jk_zone6	0x0d, 0x18, 0x0b3, 233, 0	# zone 0: Sub_P0D_E0B3
+    jk_zone6	0x0d, 0x18, 0x0b4, 238, 0	# zone 1: Sub_P0D_E0B4
+    jk_zone6	0x0d, 0x18, 0x0b5, 249, 0	# zone 2: Sub_P0D_E0B5
+    jk_zone6	0x0d, 0x18, 0x0b6, 240, 0	# zone 3: Sub_P0D_E0B6
+    jk_zone6	0x0d, 0x18, 0x0b7, 246, 0	# zone 4: Sub_P0D_E0B7
+    jk_zone6	0x0d, 0x18, 0x0b8, 246, 0	# zone 5: Sub_P0D_E0B8
+    jk_zone6	0x0d, 0x18, 0x0b9, 246, 0	# zone 6: Sub_P0D_E0B9
+    jk_zone6	0x0d, 0x18, 0x0ba, 246, 0	# zone 7: Sub_P0D_E0BA
+    jk_zone6	0x0d, 0x18, 0x0bb, 242, 0	# zone 8: Sub_P0D_E0BB
+    jk_zone6	0x0d, 0x18, 0x0bc, 249, 0	# zone 9: Sub_P0D_E0BC
+    jk_zone6	0x0d, 0x18, 0x0bd, 247, 0	# zone 10: Sub_P0D_E0BD
+    jk_zone6	0x0d, 0x18, 0x0be, 244, 0	# zone 11: Sub_P0D_E0BE
+    jk_zone6	0x0d, 0x18, 0x0bf, 248, 0	# zone 12: Sub_P0D_E0BF
+    jk_zone6	0x0b, 0x34, 0x012, 251, 0	# zone 13: Main_P0B_E012 / Sub_P0B_E012
+JkMsHeader184:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones184:
+    jk_zone8	0x05, 0xf8, 0x028, 4, 0, 1108	# zone 0: Main_P05_E028 / Sub_P05_E028
+    jk_zone8	0x05, 0x18, 0x029, 5, 0, 576	# zone 1: Main_P05_E029 / Sub_P05_E029
+    jk_zone8	0x05, 0x58, 0x02a, 5, 0, 36	# zone 2: Main_P05_E02A / Sub_P05_E02A
+    jk_zone8	0x05, 0x78, 0x02b, 5, 0, -444	# zone 3: Main_P05_E02B / Sub_P05_E02B
+    jk_zone8	0x05, 0x98, 0x02c, 6, 0, -1076	# zone 4: Main_P05_E02C / Sub_P05_E02C
+    jk_zone8	0x05, 0xd8, 0x02d, 2, 0, -1564	# zone 5: Main_P05_E02D / Sub_P05_E02D
+    jk_zone8	0x05, 0xf8, 0x02e, 255, 0, 1044	# zone 6: Main_P05_E02E / Sub_P05_E02E
+JkMsHeader426:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones426:
+    jk_zone8	0x01, 0x08, 0x0bc, 255, 0, 2756	# zone 0: Sub_P01_E0BC
+JkMsHeader488:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones488:
+    jk_zone8	0x0b, 0x04, 0x019, 240, 0, 2756	# zone 0: Main_P0B_E019 / Sub_P0B_E019
+JkMsHeader643:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones643:
+    jk_zone6	0x0c, 0x04, 0x009, 248, 0	# zone 0: Main_P0C_E009 / Sub_P0C_E009
+    .space	2, 0xff	# alignment
+JkMsHeader682:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones682:
+    jk_zone8	0x06, 0x08, 0x05b, 251, 0, 3268	# zone 0: Main_P06_E05B / Sub_P06_E05B
+JkMsHeader856:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones856:
+    jk_zone8	0x09, 0x08, 0x07f, 249, 0, 2756	# zone 0: Sub_P09_E07F
+JkMsHeader489:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones489:
+    jk_zone8	0x08, 0x08, 0x01a, 239, 0, 2756	# zone 0: Main_P08_E01A / Sub_P08_E01A
+JkMsHeader644:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones644:
+    jk_zone6	0x0c, 0x08, 0x009, 251, 0	# zone 0: Main_P0C_E009 / Sub_P0C_E009
+    .space	2, 0xff	# alignment
+JkMsHeader202:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones202:
+    jk_zone8	0x06, 0xd8, 0x005, 249, 0, -2734	# zone 0: Main_P06_E005 / Sub_P06_E005
+    jk_zone8	0x06, 0x38, 0x006, 255, 0, -730	# zone 1: Main_P06_E006 / Sub_P06_E006
+    jk_zone8	0x06, 0x98, 0x007, 251, 0, -1504	# zone 2: Main_P06_E007 / Sub_P06_E007
+    jk_zone8	0x06, 0xd8, 0x008, 0, 0, -1899	# zone 3: Main_P06_E008 / Sub_P06_E008
+    jk_zone8	0x06, 0x38, 0x009, 251, 0, -207	# zone 4: Main_P06_E009 / Sub_P06_E009
+    jk_zone8	0x06, 0x78, 0x00a, 253, 0, -910	# zone 5: Main_P06_E00A / Sub_P06_E00A
+    jk_zone8	0x06, 0xd8, 0x00b, 246, 0, -1875	# zone 6: Main_P06_E00B / Sub_P06_E00B
+    jk_zone8	0x06, 0x08, 0x010, 246, 0, -1384	# zone 7: Main_P06_E010 / Sub_P06_E010
+JkMsHeader490:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones490:
+    jk_zone8	0x0b, 0x04, 0x01a, 233, 0, 2756	# zone 0: Main_P0B_E01A / Sub_P0B_E01A
+JkMsHeader645:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones645:
+    jk_zone6	0x0c, 0x04, 0x00a, 250, 0	# zone 0: Main_P0C_E00A / Sub_P0C_E00A
+    .space	2, 0xff	# alignment
+JkMsHeader491:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones491:
+    jk_zone8	0x08, 0x08, 0x01b, 235, 0, 2756	# zone 0: Main_P08_E01B / Sub_P08_E01B
+JkMsHeader646:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones646:
+    jk_zone6	0x0c, 0x08, 0x00a, 241, 0	# zone 0: Main_P0C_E00A / Sub_P0C_E00A
+    .space	2, 0xff	# alignment
+JkMsHeader332:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones332:
+    jk_zone6	0x00, 0x14, 0x02c, 249, 0	# zone 0: Main_P00_E02C / Sub_P00_E02C
+    jk_zone6	0x00, 0x94, 0x02d, 247, 0	# zone 1: Main_P00_E02D / Sub_P00_E02D
+    jk_zone6	0x00, 0x14, 0x02e, 245, 0	# zone 2: Main_P00_E02E / Sub_P00_E02E
+    jk_zone6	0x00, 0x94, 0x02f, 249, 0	# zone 3: Main_P00_E02F / Sub_P00_E02F
+    jk_zone6	0x00, 0x14, 0x030, 247, 0	# zone 4: Main_P00_E030 / Sub_P00_E030
+    jk_zone6	0x00, 0x94, 0x031, 247, 0	# zone 5: Main_P00_E031 / Sub_P00_E031
+    jk_zone6	0x00, 0x14, 0x032, 247, 0	# zone 6: Main_P00_E032 / Sub_P00_E032
+    jk_zone6	0x00, 0x94, 0x033, 249, 0	# zone 7: Main_P00_E033 / Sub_P00_E033
+    jk_zone6	0x00, 0x14, 0x034, 249, 0	# zone 8: Main_P00_E034 / Sub_P00_E034
+    jk_zone6	0x09, 0x08, 0x06b, 244, 0	# zone 9: Sub_P09_E06B
+    jk_zone6	0x09, 0x08, 0x06c, 244, 0	# zone 10: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 236, 0	# zone 11: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 228, 0	# zone 12: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader386:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones386:
+    jk_zone8	0x01, 0x18, 0x00b, 232, 0, 3072	# zone 0: Main_P01_E00B / Sub_P01_E00B
+JkMsHeader492:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones492:
+    jk_zone8	0x08, 0x04, 0x045, 250, 0, 2756	# zone 0: Main_P08_E045
+JkMsHeader554:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones554:
+    jk_zone8	0x09, 0x08, 0x095, 253, 0, 2756	# zone 0: Sub_P09_E095
+JkMsHeader575:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones575:
+    jk_zone8	0x08, 0x04, 0x04d, 251, 0, 3072	# zone 0: Main_P08_E04D
+JkMsHeader647:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones647:
+    jk_zone6	0x0b, 0x04, 0x024, 237, 0	# zone 0: Main_P0B_E024
+    .space	2, 0xff	# alignment
+JkMsHeader683:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones683:
+    jk_zone8	0x06, 0x08, 0x05c, 248, 0, 3268	# zone 0: Main_P06_E05C / Sub_P06_E05C
+JkMsHeader756:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones756:
+    jk_zone8	0x06, 0x04, 0x057, 237, 0, 1792	# zone 0: Main_P06_E057 / Sub_P06_E057
+JkMsHeader780:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones780:
+    jk_zone6	0x06, 0x04, 0x05b, 234, 0	# zone 0: Main_P06_E05B / Sub_P06_E05B
+    .space	2, 0xff	# alignment
+JkMsHeader857:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones857:
+    jk_zone8	0x09, 0x08, 0x07d, 249, 0, 2756	# zone 0: Sub_P09_E07D
+JkMsHeader493:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones493:
+    jk_zone8	0x0c, 0x04, 0x00d, 185, 0, 2756	# zone 0: Main_P0C_E00D / Sub_P0C_E00D
+JkMsHeader555:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones555:
+    jk_zone8	0x01, 0x18, 0x0b3, 0, 0, 2756	# zone 0: Sub_P01_E0B3
+JkMsHeader576:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones576:
+    jk_zone8	0x09, 0x08, 0x08d, 245, 0, 3072	# zone 0: Sub_P09_E08D
+JkMsHeader648:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones648:
+    jk_zone6	0x0b, 0x08, 0x007, 237, 0	# zone 0: Main_P0B_E007 / Sub_P0B_E007
+    .space	2, 0xff	# alignment
+JkMsHeader494:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones494:
+    jk_zone8	0x0c, 0x04, 0x00c, 216, 0, 2756	# zone 0: Main_P0C_E00C / Sub_P0C_E00C
+JkMsHeader577:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones577:
+    jk_zone8	0x0b, 0x04, 0x015, 246, 0, 1335	# zone 0: Main_P0B_E015 / Sub_P0B_E015
+JkMsHeader649:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones649:
+    jk_zone6	0x0b, 0x04, 0x025, 239, 0	# zone 0: Main_P0B_E025
+    .space	2, 0xff	# alignment
+JkMsHeader495:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones495:
+    jk_zone8	0x0c, 0x04, 0x00b, 232, 0, 2756	# zone 0: Main_P0C_E00B / Sub_P0C_E00B
+JkMsHeader578:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones578:
+    jk_zone8	0x0b, 0x08, 0x021, 250, 0, 1335	# zone 0: Main_P0B_E021 / Sub_P0B_E021
+JkMsHeader650:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones650:
+    jk_zone6	0x0b, 0x08, 0x008, 242, 0	# zone 0: Main_P0B_E008 / Sub_P0B_E008
+    .space	2, 0xff	# alignment
+JkMsHeader154:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones154:
+    jk_zone8	0x0e, 0x14, 0x020, 234, 0, -1275	# zone 0: Main_P0E_E020 / Sub_P0E_E020
+    jk_zone8	0x0e, 0x14, 0x021, 242, 0, -2859	# zone 1: Main_P0E_E021 / Sub_P0E_E021
+    jk_zone8	0x0e, 0x14, 0x022, 247, 0, -663	# zone 2: Main_P0E_E022 / Sub_P0E_E022
+    jk_zone8	0x0e, 0x14, 0x023, 247, 0, -1185	# zone 3: Main_P0E_E023 / Sub_P0E_E023
+    jk_zone8	0x0e, 0x14, 0x024, 246, 0, -1450	# zone 4: Main_P0E_E024
+    jk_zone8	0x0e, 0x14, 0x025, 246, 0, -2389	# zone 5: Main_P0E_E025
+    jk_zone8	0x0e, 0x14, 0x026, 250, 0, -2667	# zone 6: Main_P0E_E026
+    jk_zone8	0x0e, 0x14, 0x027, 249, 0, -406	# zone 7: Main_P0E_E027
+    jk_zone8	0x0e, 0x14, 0x028, 250, 0, -1149	# zone 8: Main_P0E_E028
+    jk_zone8	0x0e, 0x14, 0x029, 247, 0, -1689	# zone 9: Main_P0E_E029
+    jk_zone8	0x0e, 0x14, 0x02a, 247, 0, -2236	# zone 10: Main_P0E_E02A
+    jk_zone8	0x0e, 0x14, 0x02b, 247, 0, -2485	# zone 11: Main_P0E_E02B
+    jk_zone8	0x0e, 0x14, 0x02c, 249, 0, 0	# zone 12: Main_P0E_E02C
+    jk_zone8	0x02, 0x54, 0x048, 250, 0, -896	# zone 13: Main_P02_E048
+    jk_zone8	0x02, 0x04, 0x020, 228, 0, 0	# zone 14: Main_P02_E020 / Sub_P02_E020
+JkMsHeader496:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones496:
+    jk_zone8	0x08, 0x04, 0x046, 234, 0, 2756	# zone 0: Main_P08_E046
+JkMsHeader556:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones556:
+    jk_zone8	0x09, 0x08, 0x096, 254, 0, 2756	# zone 0: Sub_P09_E096
+JkMsHeader684:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones684:
+    jk_zone8	0x06, 0x08, 0x05d, 250, 0, 3268	# zone 0: Main_P06_E05D / Sub_P06_E05D
+JkMsHeader760:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones760:
+    jk_zone8	0x01, 0x18, 0x0ae, 248, 0, 2756	# zone 0: Sub_P01_E0AE
+JkMsHeader858:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones858:
+    jk_zone8	0x09, 0x08, 0x080, 249, 0, 2756	# zone 0: Sub_P09_E080
+JkMsHeader497:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones497:
+    jk_zone8	0x0c, 0x08, 0x00d, 204, 0, 2756	# zone 0: Main_P0C_E00D / Sub_P0C_E00D
+JkMsHeader498:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones498:
+    jk_zone8	0x0c, 0x08, 0x00c, 233, 0, 2756	# zone 0: Main_P0C_E00C / Sub_P0C_E00C
+JkMsHeader579:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones579:
+    jk_zone8	0x09, 0x04, 0x01a, 240, 0, 1335	# zone 0: Main_P09_E01A / Sub_P09_E01A
+JkMsHeader651:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones651:
+    jk_zone6	0x0b, 0x04, 0x026, 227, 0	# zone 0: Main_P0B_E026
+    .space	2, 0xff	# alignment
+JkMsHeader499:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones499:
+    jk_zone8	0x0c, 0x08, 0x00b, 249, 0, 2756	# zone 0: Main_P0C_E00B / Sub_P0C_E00B
+JkMsHeader580:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones580:
+    jk_zone8	0x0b, 0x08, 0x00c, 249, 0, 1335	# zone 0: Main_P0B_E00C / Sub_P0B_E00C
+JkMsHeader652:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones652:
+    jk_zone6	0x0b, 0x08, 0x009, 224, 0	# zone 0: Main_P0B_E009 / Sub_P0B_E009
+    .space	2, 0xff	# alignment
+JkMsHeader685:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones685:
+    jk_zone8	0x06, 0x08, 0x06c, 201, 0, 2756	# zone 0: Main_P06_E06C / Sub_P06_E06C
+JkMsHeader039:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones039:
+    jk_zone6	0x03, 0x14, 0x069, 253, 0	# zone 0: Main_P03_E069 / Sub_P03_E069
+    jk_zone6	0x03, 0x04, 0x069, 253, 0	# zone 1: Main_P03_E069 / Sub_P03_E069
+    jk_zone6	0x03, 0x04, 0x068, 253, 0	# zone 2: Main_P03_E068 / Sub_P03_E068
+    jk_zone6	0x03, 0x04, 0x06a, 253, 0	# zone 3: Main_P03_E06A / Sub_P03_E06A
+    jk_zone6	0x03, 0x04, 0x06b, 253, 0	# zone 4: Main_P03_E06B / Sub_P03_E06B
+    jk_zone6	0x03, 0x04, 0x06c, 253, 0	# zone 5: Main_P03_E06C / Sub_P03_E06C
+    jk_zone6	0x03, 0x04, 0x06d, 253, 0	# zone 6: Main_P03_E06D / Sub_P03_E06D
+    .space	2, 0xff	# alignment
+JkMsHeader049:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones049:
+    jk_zone6	0x02, 0x14, 0x00c, 251, 0	# zone 0: Main_P02_E00C / Sub_P02_E00C
+    jk_zone6	0x02, 0x04, 0x00c, 251, 0	# zone 1: Main_P02_E00C / Sub_P02_E00C
+    jk_zone6	0x02, 0x04, 0x00d, 251, 0	# zone 2: Main_P02_E00D / Sub_P02_E00D
+    jk_zone6	0x02, 0x04, 0x00a, 251, 0	# zone 3: Main_P02_E00A / Sub_P02_E00A
+    jk_zone6	0x02, 0x04, 0x00b, 251, 0	# zone 4: Main_P02_E00B / Sub_P02_E00B
+    jk_zone6	0x02, 0x04, 0x00e, 252, 0	# zone 5: Main_P02_E00E / Sub_P02_E00E
+    jk_zone6	0x02, 0x04, 0x00f, 252, 0	# zone 6: Main_P02_E00F / Sub_P02_E00F
+    jk_zone6	0x02, 0x04, 0x010, 247, 0	# zone 7: Main_P02_E010 / Sub_P02_E010
+    jk_zone6	0x02, 0x04, 0x012, 251, 0	# zone 8: Main_P02_E012 / Sub_P02_E012
+    jk_zone6	0x02, 0x04, 0x011, 251, 0	# zone 9: Main_P02_E011 / Sub_P02_E011
+    jk_zone6	0x02, 0x04, 0x013, 251, 0	# zone 10: Main_P02_E013 / Sub_P02_E013
+    .space	2, 0xff	# alignment
+JkMsHeader097:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones097:
+    jk_zone6	0x03, 0x18, 0x02d, 255, 0	# zone 0: Main_P03_E02D / Sub_P03_E02D
+    jk_zone6	0x03, 0x08, 0x02d, 255, 0	# zone 1: Main_P03_E02D / Sub_P03_E02D
+    jk_zone6	0x03, 0x08, 0x02e, 255, 0	# zone 2: Main_P03_E02E / Sub_P03_E02E
+    jk_zone6	0x03, 0x08, 0x02f, 250, 0	# zone 3: Main_P03_E02F / Sub_P03_E02F
+    jk_zone6	0x03, 0x08, 0x030, 250, 0	# zone 4: Main_P03_E030 / Sub_P03_E030
+    jk_zone6	0x03, 0x08, 0x031, 250, 0	# zone 5: Main_P03_E031 / Sub_P03_E031
+    jk_zone6	0x03, 0x08, 0x032, 250, 0	# zone 6: Main_P03_E032 / Sub_P03_E032
+    jk_zone6	0x03, 0x08, 0x033, 250, 0	# zone 7: Main_P03_E033 / Sub_P03_E033
+    jk_zone6	0x03, 0x08, 0x03a, 250, 0	# zone 8: Main_P03_E03A / Sub_P03_E03A
+    .space	2, 0xff	# alignment
+JkMsHeader113:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones113:
+    jk_zone6	0x06, 0xf4, 0x039, 255, 0	# zone 0: Main_P06_E039 / Sub_P06_E039
+    jk_zone6	0x06, 0x94, 0x03a, 255, 0	# zone 1: Main_P06_E03A / Sub_P06_E03A
+    jk_zone6	0x06, 0x14, 0x03b, 252, 0	# zone 2: Main_P06_E03B / Sub_P06_E03B
+    jk_zone6	0x03, 0x14, 0x07f, 255, 0	# zone 3: Main_P03_E07F
+JkMsHeader125:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones125:
+    jk_zone8	0x02, 0x08, 0x014, 255, 0, -2244	# zone 0: Main_P02_E014 / Sub_P02_E014
+    jk_zone8	0x02, 0x08, 0x015, 249, 0, -989	# zone 1: Main_P02_E015 / Sub_P02_E015
+    jk_zone8	0x02, 0x08, 0x008, 253, 0, -1525	# zone 2: Main_P02_E008 / Sub_P02_E008
+    jk_zone8	0x02, 0x08, 0x009, 250, 0, -1242	# zone 3: Main_P02_E009 / Sub_P02_E009
+    jk_zone8	0x02, 0x08, 0x00a, 247, 0, -3029	# zone 4: Main_P02_E00A / Sub_P02_E00A
+    jk_zone8	0x02, 0x08, 0x00b, 249, 0, -1725	# zone 5: Main_P02_E00B / Sub_P02_E00B
+    jk_zone8	0x02, 0x08, 0x00c, 250, 0, -3015	# zone 6: Main_P02_E00C / Sub_P02_E00C
+    jk_zone8	0x02, 0x08, 0x00d, 243, 0, -2153	# zone 7: Main_P02_E00D / Sub_P02_E00D
+    jk_zone8	0x00, 0x08, 0x07d, 245, 0, -1003	# zone 8: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 9: Main_P00_E07A / Sub_P00_E07A
+JkMsHeader164:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones164:
+    jk_zone8	0x05, 0xd8, 0x020, 0, 0, -1669	# zone 0: Main_P05_E020 / Sub_P05_E020
+    jk_zone8	0x05, 0x58, 0x021, 2, 0, -397	# zone 1: Main_P05_E021 / Sub_P05_E021
+    jk_zone8	0x05, 0x78, 0x022, 251, 0, -920	# zone 2: Main_P05_E022 / Sub_P05_E022
+    jk_zone8	0x05, 0xb8, 0x023, 2, 0, -1652	# zone 3: Main_P05_E023 / Sub_P05_E023
+    jk_zone8	0x05, 0x18, 0x024, 1, 0, -2699	# zone 4: Main_P05_E024 / Sub_P05_E024
+    jk_zone8	0x05, 0x58, 0x025, 255, 0, 0	# zone 5: Main_P05_E025 / Sub_P05_E025
+    jk_zone8	0x05, 0x98, 0x026, 253, 0, -752	# zone 6: Main_P05_E026 / Sub_P05_E026
+    jk_zone8	0x05, 0xd8, 0x027, 0, 0, 0	# zone 7: Main_P05_E027 / Sub_P05_E027
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 8: Main_P05_E007 / Sub_P05_E007
+JkMsHeader185:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones185:
+    jk_zone8	0x08, 0x18, 0x009, 253, 0, 10180	# zone 0: Main_P08_E009 / Sub_P08_E009
+    jk_zone8	0x08, 0x98, 0x00a, 252, 0, 8900	# zone 1: Main_P08_E00A / Sub_P08_E00A
+    jk_zone8	0x08, 0xf8, 0x00b, 253, 0, 7620	# zone 2: Main_P08_E00B / Sub_P08_E00B
+    jk_zone8	0x08, 0x58, 0x00c, 253, 0, 6340	# zone 3: Main_P08_E00C / Sub_P08_E00C
+    jk_zone8	0x08, 0xd8, 0x00d, 253, 0, 5060	# zone 4: Main_P08_E00D / Sub_P08_E00D
+    jk_zone8	0x08, 0x38, 0x00e, 255, 0, 3780	# zone 5: Main_P08_E00E / Sub_P08_E00E
+    jk_zone8	0x08, 0x98, 0x00f, 253, 0, 2500	# zone 6: Main_P08_E00F / Sub_P08_E00F
+    jk_zone8	0x08, 0x18, 0x010, 253, 0, 1220	# zone 7: Main_P08_E010 / Sub_P08_E010
+    jk_zone8	0x08, 0x78, 0x011, 248, 0, -60	# zone 8: Main_P08_E011 / Sub_P08_E011
+    jk_zone8	0x0a, 0x14, 0x007, 251, 0, 1220	# zone 9: Main_P0A_E007 / Sub_P0A_E007
+JkMsHeader197:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones197:
+    jk_zone6	0x05, 0x54, 0x035, 244, 0	# zone 0: Main_P05_E035 / Sub_P05_E035
+    jk_zone6	0x05, 0x94, 0x036, 245, 0	# zone 1: Main_P05_E036 / Sub_P05_E036
+    jk_zone6	0x05, 0xd4, 0x037, 238, 0	# zone 2: Main_P05_E037 / Sub_P05_E037
+    jk_zone6	0x05, 0xf4, 0x038, 242, 0	# zone 3: Main_P05_E038 / Sub_P05_E038
+    jk_zone6	0x05, 0x54, 0x039, 244, 0	# zone 4: Main_P05_E039 / Sub_P05_E039
+    jk_zone6	0x05, 0x94, 0x03a, 246, 0	# zone 5: Main_P05_E03A / Sub_P05_E03A
+    jk_zone6	0x05, 0xd4, 0x03b, 244, 0	# zone 6: Main_P05_E03B / Sub_P05_E03B
+    jk_zone6	0x05, 0xf4, 0x03c, 245, 0	# zone 7: Main_P05_E03C / Sub_P05_E03C
+    jk_zone6	0x05, 0x54, 0x03d, 243, 0	# zone 8: Main_P05_E03D / Sub_P05_E03D
+    jk_zone6	0x05, 0x94, 0x03e, 236, 0	# zone 9: Main_P05_E03E / Sub_P05_E03E
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 10: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 11: Main_P05_E007 / Sub_P05_E007
+JkMsHeader203:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones203:
+    jk_zone8	0x06, 0xf8, 0x011, 245, 0, 0	# zone 0: Main_P06_E011 / Sub_P06_E011
+    jk_zone8	0x06, 0x98, 0x012, 248, 0, 0	# zone 1: Main_P06_E012 / Sub_P06_E012
+    jk_zone8	0x06, 0xd8, 0x013, 252, 0, 0	# zone 2: Main_P06_E013 / Sub_P06_E013
+    jk_zone8	0x06, 0xf8, 0x014, 251, 0, 0	# zone 3: Main_P06_E014 / Sub_P06_E014
+    jk_zone8	0x06, 0x58, 0x015, 250, 0, 0	# zone 4: Main_P06_E015 / Sub_P06_E015
+    jk_zone8	0x06, 0xb8, 0x016, 252, 0, 0	# zone 5: Main_P06_E016 / Sub_P06_E016
+    jk_zone8	0x06, 0xf8, 0x017, 244, 0, 0	# zone 6: Main_P06_E017 / Sub_P06_E017
+    jk_zone8	0x05, 0x34, 0x01f, 253, 0, -592	# zone 7: Main_P05_E01F / Sub_P05_E01F
+    jk_zone8	0x05, 0x98, 0x006, 246, 0, 0	# zone 8: Main_P05_E006 / Sub_P05_E006
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader212:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones212:
+    jk_zone6	0x05, 0x78, 0x047, 249, 0	# zone 0: Main_P05_E047 / Sub_P05_E047
+    jk_zone6	0x05, 0xd8, 0x048, 245, 0	# zone 1: Main_P05_E048 / Sub_P05_E048
+    jk_zone6	0x05, 0x18, 0x049, 249, 0	# zone 2: Main_P05_E049 / Sub_P05_E049
+    jk_zone6	0x05, 0x58, 0x04a, 242, 0	# zone 3: Main_P05_E04A / Sub_P05_E04A
+    jk_zone6	0x05, 0xd8, 0x04b, 240, 0	# zone 4: Main_P05_E04B / Sub_P05_E04B
+    jk_zone6	0x05, 0x58, 0x04c, 239, 0	# zone 5: Main_P05_E04C / Sub_P05_E04C
+    jk_zone6	0x05, 0x78, 0x04d, 246, 0	# zone 6: Main_P05_E04D / Sub_P05_E04D
+    jk_zone6	0x05, 0xb8, 0x04e, 249, 0	# zone 7: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0x98, 0x06a, 237, 0	# zone 8: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader261:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 14, 14, 15, 15, 15, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17	# key group -> zone
+JkZones261:
+    jk_zone8	0x0c, 0x18, 0x01c, 241, 0, -2264	# zone 0: Main_P0C_E01C / Sub_P0C_E01C
+    jk_zone8	0x0c, 0x78, 0x01d, 241, 0, -947	# zone 1: Main_P0C_E01D / Sub_P0C_E01D
+    jk_zone8	0x0c, 0xd8, 0x01e, 240, 0, -1661	# zone 2: Main_P0C_E01E / Sub_P0C_E01E
+    jk_zone8	0x0c, 0x18, 0x01f, 242, 0, -2605	# zone 3: Main_P0C_E01F / Sub_P0C_E01F
+    jk_zone8	0x0c, 0x38, 0x020, 245, 0, -216	# zone 4: Main_P0C_E020 / Sub_P0C_E020
+    jk_zone8	0x0c, 0x98, 0x021, 250, 0, -1491	# zone 5: Main_P0C_E021 / Sub_P0C_E021
+    jk_zone8	0x0c, 0xf8, 0x022, 251, 0, -2480	# zone 6: Main_P0C_E022 / Sub_P0C_E022
+    jk_zone8	0x0c, 0x38, 0x023, 248, 0, -109	# zone 7: Main_P0C_E023 / Sub_P0C_E023
+    jk_zone8	0x0c, 0x78, 0x024, 251, 0, -899	# zone 8: Main_P0C_E024 / Sub_P0C_E024
+    jk_zone8	0x0c, 0xd8, 0x025, 246, 0, -1942	# zone 9: Main_P0C_E025 / Sub_P0C_E025
+    jk_zone8	0x0c, 0x38, 0x026, 250, 0, -163	# zone 10: Main_P0C_E026 / Sub_P0C_E026
+    jk_zone8	0x0c, 0x78, 0x027, 243, 0, -1012	# zone 11: Main_P0C_E027 / Sub_P0C_E027
+    jk_zone8	0x0c, 0xd8, 0x028, 237, 0, -1962	# zone 12: Main_P0C_E028 / Sub_P0C_E028
+    jk_zone8	0x0c, 0x18, 0x029, 243, 0, -2722	# zone 13: Main_P0C_E029 / Sub_P0C_E029
+    jk_zone8	0x0c, 0x38, 0x02a, 244, 0, -167	# zone 14: Main_P0C_E02A / Sub_P0C_E02A
+    jk_zone8	0x0c, 0x78, 0x02b, 251, 0, -961	# zone 15: Main_P0C_E02B / Sub_P0C_E02B
+    jk_zone8	0x0c, 0x98, 0x02c, 252, 0, -1479	# zone 16: Sub_P0C_E02C
+    jk_zone8	0x0c, 0xf8, 0x02d, 248, 0, 0	# zone 17: Sub_P0C_E02D
+JkMsHeader361:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones361:
+    jk_zone6	0x09, 0x08, 0x068, 247, 0	# zone 0: Sub_P09_E068
+    jk_zone6	0x09, 0x08, 0x069, 242, 0	# zone 1: Sub_P09_E069
+    jk_zone6	0x09, 0x08, 0x069, 246, 0	# zone 2: Sub_P09_E069
+    jk_zone6	0x09, 0x08, 0x06a, 240, 0	# zone 3: Sub_P09_E06A
+    jk_zone6	0x09, 0x08, 0x06b, 240, 0	# zone 4: Sub_P09_E06B
+    jk_zone6	0x09, 0x08, 0x06c, 240, 0	# zone 5: Sub_P09_E06C
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 6: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 7: Main_P00_E000 / Sub_P00_E000
+JkMsHeader387:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones387:
+    jk_zone8	0x05, 0x14, 0x06f, 237, 0, 2756	# zone 0: Main_P05_E06F
+JkMsHeader427:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones427:
+    jk_zone8	0x08, 0x04, 0x030, 233, 0, 2756	# zone 0: Main_P08_E030
+JkMsHeader500:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones500:
+    jk_zone8	0x08, 0x04, 0x049, 242, 0, 2756	# zone 0: Main_P08_E049
+JkMsHeader557:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones557:
+    jk_zone8	0x09, 0x08, 0x097, 207, 0, 2756	# zone 0: Sub_P09_E097
+JkMsHeader581:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones581:
+    jk_zone8	0x08, 0x04, 0x04e, 250, 0, 1792	# zone 0: Main_P08_E04E
+JkMsHeader665:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones665:
+    jk_zone6	0x00, 0x04, 0x0b3, 246, 0	# zone 0: Main_P00_E0B3 / Sub_P00_E0B3
+    .space	2, 0xff	# alignment
+JkMsHeader686:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones686:
+    jk_zone8	0x06, 0x08, 0x066, 244, 0, 4036	# zone 0: Main_P06_E066 / Sub_P06_E066
+JkMsHeader765:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones765:
+    jk_zone8	0x06, 0x04, 0x051, 0, 0, 2756	# zone 0: Main_P06_E051 / Sub_P06_E051
+JkMsHeader799:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones799:
+    jk_zone8	0x00, 0x08, 0x048, 240, 0, 1335	# zone 0: Main_P00_E048 / Sub_P00_E048
+JkMsHeader821:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones821:
+    jk_zone8	0x00, 0x08, 0x040, 245, 0, 1335	# zone 0: Main_P00_E040 / Sub_P00_E040
+JkMsHeader859:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones859:
+    jk_zone8	0x09, 0x08, 0x07e, 243, 0, 2756	# zone 0: Sub_P09_E07E
+JkMsHeader126:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones126:
+    jk_zone8	0x02, 0x08, 0x019, 5, 0, -3378	# zone 0: Main_P02_E019 / Sub_P02_E019
+    jk_zone8	0x02, 0x08, 0x01a, 1, 0, -1797	# zone 1: Main_P02_E01A / Sub_P02_E01A
+    jk_zone8	0x02, 0x08, 0x01b, 253, 0, -3385	# zone 2: Main_P02_E01B / Sub_P02_E01B
+    jk_zone8	0x02, 0x08, 0x01c, 247, 0, -1797	# zone 3: Main_P02_E01C / Sub_P02_E01C
+    jk_zone8	0x02, 0x08, 0x016, 253, 0, -2797	# zone 4: Main_P02_E016 / Sub_P02_E016
+    jk_zone8	0x02, 0x08, 0x017, 255, 0, -1495	# zone 5: Main_P02_E017 / Sub_P02_E017
+    jk_zone8	0x02, 0x08, 0x018, 255, 0, -3573	# zone 6: Main_P02_E018 / Sub_P02_E018
+    jk_zone8	0x02, 0x08, 0x012, 244, 0, -1075	# zone 7: Main_P02_E012 / Sub_P02_E012
+    jk_zone8	0x02, 0x08, 0x013, 248, 0, -2505	# zone 8: Main_P02_E013 / Sub_P02_E013
+JkMsHeader262:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones262:
+    jk_zone8	0x0e, 0x58, 0x000, 244, 0, -386	# zone 0: Main_P0E_E000 / Sub_P0E_E000
+    jk_zone8	0x0e, 0x98, 0x001, 241, 0, -1491	# zone 1: Main_P0E_E001 / Sub_P0E_E001
+    jk_zone8	0x0e, 0xf8, 0x002, 238, 0, -2183	# zone 2: Main_P0E_E002 / Sub_P0E_E002
+    jk_zone8	0x0e, 0x38, 0x003, 243, 0, -206	# zone 3: Main_P0E_E003 / Sub_P0E_E003
+    jk_zone8	0x0e, 0x78, 0x004, 242, 0, -989	# zone 4: Main_P0E_E004 / Sub_P0E_E004
+    jk_zone8	0x0e, 0xd8, 0x005, 243, 0, -1942	# zone 5: Main_P0E_E005 / Sub_P0E_E005
+    jk_zone8	0x0e, 0x18, 0x006, 247, 0, -2845	# zone 6: Main_P0E_E006 / Sub_P0E_E006
+    jk_zone8	0x0e, 0x58, 0x007, 247, 0, -715	# zone 7: Main_P0E_E007 / Sub_P0E_E007
+    jk_zone8	0x0e, 0x98, 0x008, 250, 0, -1524	# zone 8: Main_P0E_E008 / Sub_P0E_E008
+    jk_zone8	0x0e, 0xf8, 0x009, 251, 0, -2543	# zone 9: Main_P0E_E009 / Sub_P0E_E009
+    jk_zone8	0x0e, 0x38, 0x00a, 249, 0, -216	# zone 10: Main_P0E_E00A / Sub_P0E_E00A
+    jk_zone8	0x0e, 0x78, 0x00b, 249, 0, -1000	# zone 11: Main_P0E_E00B / Sub_P0E_E00B
+    jk_zone8	0x0e, 0xd8, 0x00c, 247, 0, -2003	# zone 12: Main_P0E_E00C / Sub_P0E_E00C
+    jk_zone8	0x0e, 0x38, 0x00d, 247, 0, -162	# zone 13: Main_P0E_E00D / Sub_P0E_E00D
+    jk_zone8	0x0e, 0x78, 0x00e, 247, 0, -973	# zone 14: Main_P0E_E00E / Sub_P0E_E00E
+    jk_zone8	0x0e, 0xd8, 0x00f, 248, 0, 0	# zone 15: Main_P0E_E00F / Sub_P0E_E00F
+JkMsHeader388:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones388:
+    jk_zone8	0x05, 0x14, 0x070, 245, 0, 2756	# zone 0: Main_P05_E070
+JkMsHeader582:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones582:
+    jk_zone8	0x09, 0x08, 0x08e, 237, 0, 1792	# zone 0: Sub_P09_E08E
+JkMsHeader666:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones666:
+    jk_zone6	0x00, 0x08, 0x055, 249, 0	# zone 0: Main_P00_E055 / Sub_P00_E055
+    .space	2, 0xff	# alignment
+JkMsHeader800:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones800:
+    jk_zone8	0x00, 0x08, 0x049, 234, 0, 1335	# zone 0: Main_P00_E049 / Sub_P00_E049
+JkMsHeader822:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones822:
+    jk_zone8	0x00, 0x08, 0x041, 231, 0, 1335	# zone 0: Main_P00_E041 / Sub_P00_E041
+JkMsHeader186:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones186:
+    jk_zone8	0x08, 0x18, 0x001, 251, 0, 8759	# zone 0: Main_P08_E001 / Sub_P08_E001
+    jk_zone8	0x08, 0x98, 0x002, 252, 0, 7479	# zone 1: Main_P08_E002 / Sub_P08_E002
+    jk_zone8	0x08, 0xf8, 0x003, 253, 0, 6199	# zone 2: Main_P08_E003 / Sub_P08_E003
+    jk_zone8	0x08, 0x58, 0x004, 0, 0, 4919	# zone 3: Main_P08_E004 / Sub_P08_E004
+    jk_zone8	0x08, 0xd8, 0x005, 253, 0, 3639	# zone 4: Main_P08_E005 / Sub_P08_E005
+    jk_zone8	0x08, 0x38, 0x006, 252, 0, 2359	# zone 5: Main_P08_E006 / Sub_P08_E006
+    jk_zone8	0x08, 0x98, 0x007, 253, 0, 1079	# zone 6: Main_P08_E007 / Sub_P08_E007
+    jk_zone8	0x08, 0x18, 0x008, 247, 0, 1220	# zone 7: Main_P08_E008 / Sub_P08_E008
+    jk_zone8	0x08, 0x78, 0x011, 248, 0, -60	# zone 8: Main_P08_E011 / Sub_P08_E011
+    jk_zone8	0x0a, 0x14, 0x007, 251, 0, 1220	# zone 9: Main_P0A_E007 / Sub_P0A_E007
+JkMsHeader263:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones263:
+    jk_zone8	0x0c, 0x54, 0x01c, 242, 0, -386	# zone 0: Main_P0C_E01C / Sub_P0C_E01C
+    jk_zone8	0x0c, 0x94, 0x01d, 247, 0, -1491	# zone 1: Main_P0C_E01D / Sub_P0C_E01D
+    jk_zone8	0x0c, 0xf4, 0x01e, 246, 0, -2605	# zone 2: Main_P0C_E01E / Sub_P0C_E01E
+    jk_zone8	0x0c, 0x14, 0x01f, 246, 0, -2605	# zone 3: Main_P0C_E01F / Sub_P0C_E01F
+    jk_zone8	0x0c, 0x54, 0x020, 249, 0, -740	# zone 4: Main_P0C_E020 / Sub_P0C_E020
+    jk_zone8	0x0c, 0x94, 0x021, 246, 0, -1491	# zone 5: Main_P0C_E021 / Sub_P0C_E021
+    jk_zone8	0x0c, 0xf4, 0x022, 255, 0, -2352	# zone 6: Main_P0C_E022 / Sub_P0C_E022
+    jk_zone8	0x0c, 0x34, 0x023, 254, 0, -216	# zone 7: Main_P0C_E023 / Sub_P0C_E023
+    jk_zone8	0x0c, 0x94, 0x024, 248, 0, -1491	# zone 8: Main_P0C_E024 / Sub_P0C_E024
+    jk_zone8	0x0c, 0xf4, 0x025, 255, 0, -2510	# zone 9: Main_P0C_E025 / Sub_P0C_E025
+    jk_zone8	0x0c, 0x54, 0x026, 248, 0, -732	# zone 10: Main_P0C_E026 / Sub_P0C_E026
+    jk_zone8	0x0c, 0xd4, 0x027, 249, 0, -2013	# zone 11: Main_P0C_E027 / Sub_P0C_E027
+    jk_zone8	0x0c, 0x14, 0x028, 253, 0, -2786	# zone 12: Main_P0C_E028 / Sub_P0C_E028
+    jk_zone8	0x0c, 0x34, 0x029, 4, 0, -222	# zone 13: Main_P0C_E029 / Sub_P0C_E029
+    jk_zone8	0x0c, 0x74, 0x02a, 253, 0, -1000	# zone 14: Main_P0C_E02A / Sub_P0C_E02A
+    jk_zone8	0x0c, 0xd4, 0x02b, 254, 0, 0	# zone 15: Main_P0C_E02B / Sub_P0C_E02B
+JkMsHeader389:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones389:
+    jk_zone8	0x05, 0x14, 0x071, 225, 0, 2756	# zone 0: Main_P05_E071
+JkMsHeader501:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones501:
+    jk_zone8	0x0b, 0x04, 0x027, 245, 0, 2756	# zone 0: Main_P0B_E027
+JkMsHeader558:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones558:
+    jk_zone8	0x0c, 0x04, 0x00e, 211, 0, 2756	# zone 0: Main_P0C_E00E / Sub_P0C_E00E
+JkMsHeader583:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones583:
+    jk_zone8	0x0b, 0x04, 0x014, 248, 0, 1335	# zone 0: Main_P0B_E014 / Sub_P0B_E014
+JkMsHeader823:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones823:
+    jk_zone8	0x00, 0x08, 0x042, 244, 0, 1335	# zone 0: Main_P00_E042 / Sub_P00_E042
+JkMsHeader502:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones502:
+    jk_zone8	0x0b, 0x08, 0x00d, 245, 0, 2756	# zone 0: Main_P0B_E00D / Sub_P0B_E00D
+JkMsHeader559:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones559:
+    jk_zone8	0x0c, 0x08, 0x00e, 210, 0, 2756	# zone 0: Main_P0C_E00E / Sub_P0C_E00E
+JkMsHeader584:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones584:
+    jk_zone8	0x0b, 0x08, 0x020, 249, 0, 1335	# zone 0: Main_P0B_E020 / Sub_P0B_E020
+JkMsHeader824:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones824:
+    jk_zone8	0x00, 0x08, 0x043, 247, 0, 1335	# zone 0: Main_P00_E043 / Sub_P00_E043
+JkMsHeader503:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones503:
+    jk_zone8	0x08, 0x04, 0x03c, 251, 0, 2756	# zone 0: Main_P08_E03C
+JkMsHeader687:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones687:
+    jk_zone8	0x06, 0x08, 0x067, 251, 0, 4036	# zone 0: Main_P06_E067 / Sub_P06_E067
+JkMsHeader825:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones825:
+    jk_zone8	0x00, 0x08, 0x044, 240, 0, 1335	# zone 0: Main_P00_E044 / Sub_P00_E044
+JkMsHeader860:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones860:
+    jk_zone8	0x09, 0x08, 0x085, 249, 0, 2756	# zone 0: Sub_P09_E085
+JkMsHeader826:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones826:
+    jk_zone8	0x00, 0x08, 0x045, 241, 0, 1335	# zone 0: Main_P00_E045 / Sub_P00_E045
+JkMsHeader187:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones187:
+    jk_zone8	0x0a, 0x14, 0x000, 255, 0, 8759	# zone 0: Main_P0A_E000 / Sub_P0A_E000
+    jk_zone8	0x0a, 0x94, 0x001, 250, 0, 7479	# zone 1: Main_P0A_E001 / Sub_P0A_E001
+    jk_zone8	0x0a, 0xf4, 0x002, 248, 0, 6199	# zone 2: Main_P0A_E002 / Sub_P0A_E002
+    jk_zone8	0x0a, 0x54, 0x003, 248, 0, 4919	# zone 3: Main_P0A_E003 / Sub_P0A_E003
+    jk_zone8	0x0a, 0xd4, 0x004, 248, 0, 3639	# zone 4: Main_P0A_E004 / Sub_P0A_E004
+    jk_zone8	0x0a, 0x34, 0x005, 249, 0, 2359	# zone 5: Main_P0A_E005 / Sub_P0A_E005
+    jk_zone8	0x0a, 0x94, 0x006, 250, 0, 1079	# zone 6: Main_P0A_E006 / Sub_P0A_E006
+    jk_zone8	0x0a, 0x14, 0x007, 255, 0, 1220	# zone 7: Main_P0A_E007 / Sub_P0A_E007
+JkMsHeader504:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones504:
+    jk_zone8	0x0b, 0x04, 0x028, 248, 0, 2756	# zone 0: Main_P0B_E028
+JkMsHeader585:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones585:
+    jk_zone8	0x09, 0x04, 0x019, 250, 0, 1335	# zone 0: Main_P09_E019 / Sub_P09_E019
+JkMsHeader827:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones827:
+    jk_zone8	0x00, 0x08, 0x046, 248, 0, 1335	# zone 0: Main_P00_E046 / Sub_P00_E046
+JkMsHeader505:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones505:
+    jk_zone8	0x0b, 0x08, 0x00e, 249, 0, 2756	# zone 0: Main_P0B_E00E / Sub_P0B_E00E
+JkMsHeader586:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones586:
+    jk_zone8	0x0b, 0x08, 0x00b, 243, 0, 1335	# zone 0: Main_P0B_E00B / Sub_P0B_E00B
+JkMsHeader828:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones828:
+    jk_zone8	0x00, 0x08, 0x047, 241, 0, 1335	# zone 0: Main_P00_E047 / Sub_P00_E047
+JkMsHeader264:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones264:
+    jk_zone8	0x0f, 0x54, 0x00a, 243, 0, -2050	# zone 0: Main_P0F_E00A / Sub_P0F_E00A
+    jk_zone8	0x0f, 0x94, 0x00b, 248, 0, -718	# zone 1: Main_P0F_E00B / Sub_P0F_E00B
+    jk_zone8	0x0f, 0xf4, 0x00c, 249, 0, -2003	# zone 2: Main_P0F_E00C / Sub_P0F_E00C
+    jk_zone8	0x0f, 0x14, 0x00d, 247, 0, -190	# zone 3: Main_P0F_E00D / Sub_P0F_E00D
+    jk_zone8	0x0f, 0x54, 0x00e, 248, 0, -714	# zone 4: Main_P0F_E00E / Sub_P0F_E00E
+    jk_zone8	0x0f, 0x94, 0x00f, 248, 0, -1979	# zone 5: Main_P0F_E00F / Sub_P0F_E00F
+    jk_zone8	0x0f, 0xf4, 0x010, 249, 0, -2758	# zone 6: Main_P0F_E010 / Sub_P0F_E010
+    jk_zone8	0x0f, 0x34, 0x011, 245, 0, -704	# zone 7: Main_P0F_E011 / Sub_P0F_E011
+    jk_zone8	0x0f, 0x94, 0x012, 246, 0, -1999	# zone 8: Main_P0F_E012 / Sub_P0F_E012
+    jk_zone8	0x0f, 0xf4, 0x013, 246, 0, -2765	# zone 9: Main_P0F_E013 / Sub_P0F_E013
+    jk_zone8	0x0f, 0x54, 0x014, 246, 0, -731	# zone 10: Main_P0F_E014 / Sub_P0F_E014
+    jk_zone8	0x0f, 0xd4, 0x015, 247, 0, 0	# zone 11: Main_P0F_E015 / Sub_P0F_E015
+JkMsHeader390:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones390:
+    jk_zone8	0x05, 0x14, 0x072, 247, 0, 2756	# zone 0: Main_P05_E072
+JkMsHeader428:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones428:
+    jk_zone8	0x08, 0x04, 0x02a, 249, 0, 2756	# zone 0: Main_P08_E02A / Sub_P08_E02A
+JkMsHeader506:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones506:
+    jk_zone8	0x0b, 0x04, 0x029, 0, 0, 2756	# zone 0: Main_P0B_E029
+JkMsHeader560:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones560:
+    jk_zone8	0x09, 0x08, 0x098, 242, 0, 2756	# zone 0: Sub_P09_E098
+JkMsHeader587:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones587:
+    jk_zone8	0x08, 0x04, 0x04f, 248, 0, 768	# zone 0: Main_P08_E04F
+JkMsHeader688:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones688:
+    jk_zone8	0x06, 0x08, 0x068, 249, 0, 4036	# zone 0: Main_P06_E068 / Sub_P06_E068
+JkMsHeader801:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones801:
+    jk_zone8	0x00, 0x08, 0x03f, 237, 0, 1335	# zone 0: Main_P00_E03F / Sub_P00_E03F
+JkMsHeader861:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones861:
+    jk_zone8	0x09, 0x08, 0x084, 245, 0, 2756	# zone 0: Sub_P09_E084
+JkMsHeader391:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones391:
+    jk_zone8	0x05, 0x14, 0x073, 249, 0, 2756	# zone 0: Main_P05_E073
+JkMsHeader429:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones429:
+    jk_zone8	0x09, 0x08, 0x08a, 246, 0, 2756	# zone 0: Sub_P09_E08A
+JkMsHeader507:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones507:
+    jk_zone8	0x0b, 0x08, 0x00f, 255, 0, 2756	# zone 0: Main_P0B_E00F / Sub_P0B_E00F
+JkMsHeader588:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones588:
+    jk_zone8	0x09, 0x08, 0x08f, 251, 0, 768	# zone 0: Sub_P09_E08F
+JkMsHeader392:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones392:
+    jk_zone8	0x05, 0x14, 0x074, 217, 0, 2756	# zone 0: Main_P05_E074
+JkMsHeader508:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones508:
+    jk_zone8	0x0b, 0x04, 0x02a, 248, 0, 2756	# zone 0: Main_P0B_E02A
+JkMsHeader561:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones561:
+    jk_zone8	0x0c, 0x04, 0x00f, 199, 0, 2756	# zone 0: Main_P0C_E00F / Sub_P0C_E00F
+JkMsHeader589:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones589:
+    jk_zone8	0x0b, 0x04, 0x013, 249, 0, 1335	# zone 0: Main_P0B_E013 / Sub_P0B_E013
+JkMsHeader509:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones509:
+    jk_zone8	0x0b, 0x08, 0x010, 249, 0, 2756	# zone 0: Main_P0B_E010 / Sub_P0B_E010
+JkMsHeader562:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones562:
+    jk_zone8	0x0c, 0x08, 0x00f, 202, 0, 2756	# zone 0: Main_P0C_E00F / Sub_P0C_E00F
+JkMsHeader590:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones590:
+    jk_zone8	0x0b, 0x08, 0x01f, 249, 0, 1335	# zone 0: Main_P0B_E01F / Sub_P0B_E01F
+JkMsHeader430:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones430:
+    jk_zone8	0x0b, 0x04, 0x01c, 240, 0, 1335	# zone 0: Main_P0B_E01C / Sub_P0B_E01C
+JkMsHeader510:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones510:
+    jk_zone8	0x08, 0x04, 0x040, 242, 0, 2756	# zone 0: Main_P08_E040
+JkMsHeader563:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones563:
+    jk_zone8	0x0c, 0x04, 0x010, 191, 0, 2756	# zone 0: Main_P0C_E010 / Sub_P0C_E010
+JkMsHeader689:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones689:
+    jk_zone8	0x06, 0x08, 0x069, 251, 0, 4036	# zone 0: Main_P06_E069 / Sub_P06_E069
+JkMsHeader862:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones862:
+    jk_zone8	0x09, 0x08, 0x07b, 243, 0, 2756	# zone 0: Sub_P09_E07B
+JkMsHeader431:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones431:
+    jk_zone8	0x08, 0x08, 0x012, 244, 0, 1335	# zone 0: Main_P08_E012 / Sub_P08_E012
+JkMsHeader564:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones564:
+    jk_zone8	0x0c, 0x08, 0x010, 191, 0, 2756	# zone 0: Main_P0C_E010 / Sub_P0C_E010
+JkMsHeader432:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones432:
+    jk_zone8	0x0b, 0x04, 0x01d, 247, 0, 1335	# zone 0: Main_P0B_E01D / Sub_P0B_E01D
+JkMsHeader511:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones511:
+    jk_zone8	0x0c, 0x04, 0x004, 225, 0, 2756	# zone 0: Main_P0C_E004 / Sub_P0C_E004
+JkMsHeader565:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones565:
+    jk_zone8	0x0c, 0x04, 0x011, 194, 0, 2756	# zone 0: Main_P0C_E011 / Sub_P0C_E011
+JkMsHeader591:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones591:
+    jk_zone8	0x09, 0x04, 0x018, 250, 0, 1335	# zone 0: Main_P09_E018 / Sub_P09_E018
+JkMsHeader433:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones433:
+    jk_zone8	0x08, 0x08, 0x013, 250, 0, 1335	# zone 0: Main_P08_E013 / Sub_P08_E013
+JkMsHeader512:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones512:
+    jk_zone8	0x0c, 0x08, 0x004, 229, 0, 2756	# zone 0: Main_P0C_E004 / Sub_P0C_E004
+JkMsHeader566:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones566:
+    jk_zone8	0x0c, 0x08, 0x011, 195, 0, 2756	# zone 0: Main_P0C_E011 / Sub_P0C_E011
+JkMsHeader592:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones592:
+    jk_zone8	0x0b, 0x08, 0x00a, 221, 0, 1335	# zone 0: Main_P0B_E00A / Sub_P0B_E00A
+JkMsHeader026:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones026:
+    jk_zone8	0x00, 0x04, 0x064, 249, 0, -186	# zone 0: Main_P00_E064 / Sub_P00_E064
+    jk_zone8	0x00, 0x04, 0x066, 248, 0, -841	# zone 1: Main_P00_E066 / Sub_P00_E066
+    jk_zone8	0x00, 0x04, 0x068, 245, 0, -1577	# zone 2: Main_P00_E068 / Sub_P00_E068
+    jk_zone8	0x00, 0x04, 0x06a, 241, 0, 0	# zone 3: Main_P00_E06A / Sub_P00_E06A
+JkMsHeader033:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones033:
+    jk_zone6	0x03, 0x34, 0x026, 239, 0	# zone 0: Main_P03_E026 / Sub_P03_E026
+    jk_zone6	0x03, 0x34, 0x027, 240, 0	# zone 1: Main_P03_E027 / Sub_P03_E027
+    jk_zone6	0x03, 0x34, 0x028, 241, 0	# zone 2: Main_P03_E028 / Sub_P03_E028
+    jk_zone6	0x03, 0x34, 0x029, 238, 0	# zone 3: Main_P03_E029 / Sub_P03_E029
+    jk_zone6	0x03, 0x34, 0x02a, 235, 0	# zone 4: Main_P03_E02A / Sub_P03_E02A
+    jk_zone6	0x03, 0x04, 0x025, 249, 0	# zone 5: Main_P03_E025 / Sub_P03_E025
+    jk_zone6	0x03, 0x04, 0x00f, 230, 0	# zone 6: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 230, 0	# zone 7: Main_P03_E010 / Sub_P03_E010
+JkMsHeader044:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones044:
+    jk_zone8	0x02, 0x04, 0x076, 234, 0, 7184	# zone 0: Main_P02_E076
+JkMsHeader059:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones059:
+    jk_zone8	0x01, 0xd4, 0x05c, 255, 0, -1491	# zone 0: Main_P01_E05C / Sub_P01_E05C
+    jk_zone8	0x01, 0x34, 0x05d, 245, 0, -725	# zone 1: Main_P01_E05D / Sub_P01_E05D
+    jk_zone8	0x01, 0x94, 0x05e, 255, 0, -2003	# zone 2: Main_P01_E05E / Sub_P01_E05E
+    jk_zone8	0x01, 0xf4, 0x05f, 248, 0, -2968	# zone 3: Main_P01_E05F / Sub_P01_E05F
+    jk_zone8	0x01, 0xf4, 0x060, 246, 0, -2015	# zone 4: Main_P01_E060 / Sub_P01_E060
+    jk_zone8	0x01, 0x14, 0x02c, 249, 0, -216	# zone 5: Main_P01_E02C / Sub_P01_E02C
+JkMsHeader062:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones062:
+    jk_zone6	0x01, 0x14, 0x066, 248, 0	# zone 0: Main_P01_E066 / Sub_P01_E066
+    jk_zone6	0x01, 0x04, 0x066, 248, 0	# zone 1: Main_P01_E066 / Sub_P01_E066
+    jk_zone6	0x01, 0x04, 0x067, 252, 0	# zone 2: Main_P01_E067 / Sub_P01_E067
+    jk_zone6	0x01, 0x04, 0x068, 252, 0	# zone 3: Main_P01_E068 / Sub_P01_E068
+    jk_zone6	0x01, 0x04, 0x069, 252, 0	# zone 4: Main_P01_E069 / Sub_P01_E069
+    jk_zone6	0x01, 0x04, 0x06a, 252, 0	# zone 5: Main_P01_E06A / Sub_P01_E06A
+    jk_zone6	0x01, 0x04, 0x06b, 0, 0	# zone 6: Main_P01_E06B / Sub_P01_E06B
+    jk_zone6	0x01, 0x04, 0x06c, 0, 0	# zone 7: Main_P01_E06C / Sub_P01_E06C
+    jk_zone6	0x01, 0x04, 0x06d, 254, 0	# zone 8: Main_P01_E06D / Sub_P01_E06D
+    jk_zone6	0x01, 0x04, 0x06e, 254, 0	# zone 9: Main_P01_E06E / Sub_P01_E06E
+    jk_zone6	0x01, 0x04, 0x06f, 254, 0	# zone 10: Main_P01_E06F / Sub_P01_E06F
+    jk_zone6	0x01, 0xb4, 0x076, 245, 0	# zone 11: Main_P01_E076 / Sub_P01_E076
+JkMsHeader068:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 9, 9, 9, 9	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones068:
+    jk_zone6	0x01, 0x18, 0x00e, 252, 0	# zone 0: Main_P01_E00E / Sub_P01_E00E
+    jk_zone6	0x01, 0x08, 0x00e, 252, 0	# zone 1: Main_P01_E00E / Sub_P01_E00E
+    jk_zone6	0x01, 0x08, 0x00f, 254, 0	# zone 2: Main_P01_E00F / Sub_P01_E00F
+    jk_zone6	0x01, 0x08, 0x010, 247, 0	# zone 3: Main_P01_E010 / Sub_P01_E010
+    jk_zone6	0x01, 0x08, 0x011, 247, 0	# zone 4: Main_P01_E011 / Sub_P01_E011
+    jk_zone6	0x01, 0x08, 0x012, 246, 0	# zone 5: Main_P01_E012 / Sub_P01_E012
+    jk_zone6	0x01, 0x08, 0x013, 244, 0	# zone 6: Main_P01_E013 / Sub_P01_E013
+    jk_zone6	0x01, 0x08, 0x014, 244, 0	# zone 7: Main_P01_E014 / Sub_P01_E014
+    jk_zone6	0x01, 0x08, 0x015, 244, 0	# zone 8: Main_P01_E015 / Sub_P01_E015
+    jk_zone6	0x01, 0xb4, 0x076, 221, 0	# zone 9: Main_P01_E076 / Sub_P01_E076
+JkMsHeader084:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones084:
+    jk_zone6	0x00, 0x18, 0x011, 251, 0	# zone 0: Main_P00_E011 / Sub_P00_E011
+    jk_zone6	0x00, 0x08, 0x011, 251, 0	# zone 1: Main_P00_E011 / Sub_P00_E011
+    jk_zone6	0x00, 0x08, 0x012, 252, 0	# zone 2: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x08, 0x013, 252, 0	# zone 3: Main_P00_E013 / Sub_P00_E013
+    jk_zone6	0x00, 0x08, 0x014, 249, 0	# zone 4: Main_P00_E014 / Sub_P00_E014
+    jk_zone6	0x00, 0x08, 0x015, 251, 0	# zone 5: Main_P00_E015 / Sub_P00_E015
+    jk_zone6	0x00, 0x08, 0x016, 251, 0	# zone 6: Main_P00_E016 / Sub_P00_E016
+    jk_zone6	0x00, 0x08, 0x017, 251, 0	# zone 7: Main_P00_E017 / Sub_P00_E017
+    jk_zone6	0x09, 0x08, 0x008, 240, 0	# zone 8: Main_P09_E008 / Sub_P09_E008
+    jk_zone6	0x03, 0x04, 0x00f, 224, 0	# zone 9: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 224, 0	# zone 10: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader098:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones098:
+    jk_zone6	0x03, 0x18, 0x035, 250, 0	# zone 0: Main_P03_E035 / Sub_P03_E035
+    jk_zone6	0x03, 0x08, 0x035, 250, 0	# zone 1: Main_P03_E035 / Sub_P03_E035
+    jk_zone6	0x03, 0x08, 0x034, 250, 0	# zone 2: Main_P03_E034 / Sub_P03_E034
+    jk_zone6	0x03, 0x08, 0x036, 250, 0	# zone 3: Main_P03_E036 / Sub_P03_E036
+    jk_zone6	0x03, 0x08, 0x037, 250, 0	# zone 4: Main_P03_E037 / Sub_P03_E037
+    jk_zone6	0x03, 0x08, 0x038, 250, 0	# zone 5: Main_P03_E038 / Sub_P03_E038
+    jk_zone6	0x03, 0x08, 0x039, 250, 0	# zone 6: Main_P03_E039 / Sub_P03_E039
+    jk_zone6	0x03, 0x08, 0x03a, 250, 0	# zone 7: Main_P03_E03A / Sub_P03_E03A
+JkMsHeader114:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones114:
+    jk_zone6	0x03, 0x14, 0x081, 253, 0	# zone 0: Main_P03_E081
+    jk_zone6	0x03, 0x94, 0x082, 253, 0	# zone 1: Main_P03_E082
+    jk_zone6	0x03, 0x94, 0x083, 248, 0	# zone 2: Main_P03_E083
+    jk_zone6	0x03, 0x94, 0x084, 247, 0	# zone 3: Main_P03_E084
+    jk_zone6	0x03, 0x94, 0x085, 242, 0	# zone 4: Main_P03_E085
+    .space	2, 0xff	# alignment
+JkMsHeader127:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones127:
+    jk_zone8	0x02, 0x08, 0x008, 253, 0, -1525	# zone 0: Main_P02_E008 / Sub_P02_E008
+    jk_zone8	0x02, 0x08, 0x009, 250, 0, -1242	# zone 1: Main_P02_E009 / Sub_P02_E009
+    jk_zone8	0x02, 0x08, 0x00a, 247, 0, -3029	# zone 2: Main_P02_E00A / Sub_P02_E00A
+    jk_zone8	0x02, 0x08, 0x00b, 249, 0, -1725	# zone 3: Main_P02_E00B / Sub_P02_E00B
+    jk_zone8	0x02, 0x08, 0x00c, 250, 0, -3015	# zone 4: Main_P02_E00C / Sub_P02_E00C
+    jk_zone8	0x02, 0x08, 0x00d, 243, 0, -2153	# zone 5: Main_P02_E00D / Sub_P02_E00D
+    jk_zone8	0x00, 0x08, 0x07d, 245, 0, -1003	# zone 6: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 7: Main_P00_E07A / Sub_P00_E07A
+JkMsHeader131:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones131:
+    jk_zone8	0x02, 0x08, 0x014, 255, 0, -2244	# zone 0: Main_P02_E014 / Sub_P02_E014
+    jk_zone8	0x02, 0x08, 0x015, 249, 0, -989	# zone 1: Main_P02_E015 / Sub_P02_E015
+    jk_zone8	0x02, 0x08, 0x016, 253, 0, -2797	# zone 2: Main_P02_E016 / Sub_P02_E016
+    jk_zone8	0x02, 0x08, 0x017, 255, 0, -1495	# zone 3: Main_P02_E017 / Sub_P02_E017
+    jk_zone8	0x02, 0x08, 0x018, 255, 0, -3573	# zone 4: Main_P02_E018 / Sub_P02_E018
+    jk_zone8	0x02, 0x08, 0x00b, 249, 0, -1725	# zone 5: Main_P02_E00B / Sub_P02_E00B
+    jk_zone8	0x02, 0x08, 0x00c, 250, 0, -3015	# zone 6: Main_P02_E00C / Sub_P02_E00C
+    jk_zone8	0x02, 0x08, 0x00d, 243, 0, -2153	# zone 7: Main_P02_E00D / Sub_P02_E00D
+    jk_zone8	0x00, 0x08, 0x07d, 245, 0, -1003	# zone 8: Main_P00_E07D / Sub_P00_E07D
+    jk_zone8	0x00, 0x04, 0x07a, 246, 0, -922	# zone 9: Main_P00_E07A / Sub_P00_E07A
+JkMsHeader165:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones165:
+    jk_zone6	0x04, 0xf4, 0x020, 252, 0	# zone 0: Main_P04_E020 / Sub_P04_E020
+    jk_zone6	0x04, 0x34, 0x021, 251, 0	# zone 1: Main_P04_E021 / Sub_P04_E021
+    jk_zone6	0x04, 0x94, 0x022, 241, 0	# zone 2: Main_P04_E022 / Sub_P04_E022
+    jk_zone6	0x04, 0xf4, 0x023, 253, 0	# zone 3: Main_P04_E023 / Sub_P04_E023
+    jk_zone6	0x04, 0xb4, 0x024, 249, 0	# zone 4: Main_P04_E024 / Sub_P04_E024
+    jk_zone6	0x04, 0x14, 0x025, 255, 0	# zone 5: Main_P04_E025 / Sub_P04_E025
+JkMsHeader189:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones189:
+    jk_zone6	0x04, 0x08, 0x07b, 245, 0	# zone 0: Sub_P04_E07B
+    jk_zone6	0x04, 0x08, 0x07c, 244, 0	# zone 1: Sub_P04_E07C
+    jk_zone6	0x04, 0x08, 0x07d, 248, 0	# zone 2: Sub_P04_E07D
+    jk_zone6	0x04, 0x08, 0x07e, 247, 0	# zone 3: Sub_P04_E07E
+    jk_zone6	0x04, 0x08, 0x07f, 245, 0	# zone 4: Sub_P04_E07F
+    jk_zone6	0x04, 0x08, 0x080, 241, 0	# zone 5: Sub_P04_E080
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 6: Main_P05_E007 / Sub_P05_E007
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 7: Main_P05_E007 / Sub_P05_E007
+JkMsHeader198:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones198:
+    jk_zone8	0x05, 0x54, 0x03f, 250, 0, 0	# zone 0: Main_P05_E03F / Sub_P05_E03F
+    jk_zone8	0x05, 0x94, 0x040, 246, 0, -1375	# zone 1: Main_P05_E040 / Sub_P05_E040
+    jk_zone8	0x05, 0xd4, 0x041, 246, 0, -2058	# zone 2: Main_P05_E041 / Sub_P05_E041
+    jk_zone8	0x05, 0xf4, 0x042, 0, 0, 0	# zone 3: Main_P05_E042 / Sub_P05_E042
+    jk_zone8	0x05, 0x54, 0x043, 249, 0, -683	# zone 4: Main_P05_E043 / Sub_P05_E043
+    jk_zone8	0x05, 0x94, 0x044, 252, 0, -1581	# zone 5: Main_P05_E044 / Sub_P05_E044
+    jk_zone8	0x05, 0xd4, 0x045, 252, 0, -2327	# zone 6: Main_P05_E045 / Sub_P05_E045
+    jk_zone8	0x05, 0x54, 0x046, 249, 0, -455	# zone 7: Main_P05_E046 / Sub_P05_E046
+    jk_zone8	0x05, 0x98, 0x006, 246, 0, 0	# zone 8: Main_P05_E006 / Sub_P05_E006
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader204:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones204:
+    jk_zone8	0x06, 0xf8, 0x011, 245, 0, 0	# zone 0: Main_P06_E011 / Sub_P06_E011
+    jk_zone8	0x06, 0x98, 0x018, 249, 0, -808	# zone 1: Main_P06_E018 / Sub_P06_E018
+    jk_zone8	0x06, 0xd8, 0x019, 5, 0, -1797	# zone 2: Main_P06_E019 / Sub_P06_E019
+    jk_zone8	0x06, 0xf8, 0x01a, 251, 0, -2304	# zone 3: Main_P06_E01A / Sub_P06_E01A
+    jk_zone8	0x06, 0x58, 0x01b, 246, 0, -403	# zone 4: Main_P06_E01B / Sub_P06_E01B
+    jk_zone8	0x06, 0xb8, 0x01c, 0, 0, -1630	# zone 5: Main_P06_E01C / Sub_P06_E01C
+    jk_zone8	0x06, 0xf8, 0x01d, 11, 0, -2200	# zone 6: Main_P06_E01D / Sub_P06_E01D
+    jk_zone8	0x05, 0x34, 0x01f, 253, 0, -592	# zone 7: Main_P05_E01F / Sub_P05_E01F
+    jk_zone8	0x05, 0x98, 0x006, 246, 0, 0	# zone 8: Main_P05_E006 / Sub_P05_E006
+    jk_zone8	0x05, 0x98, 0x007, 246, 0, 0	# zone 9: Main_P05_E007 / Sub_P05_E007
+JkMsHeader213:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones213:
+    jk_zone6	0x05, 0xf8, 0x04f, 244, 0	# zone 0: Main_P05_E04F / Sub_P05_E04F
+    jk_zone6	0x05, 0x38, 0x050, 249, 0	# zone 1: Main_P05_E050 / Sub_P05_E050
+    jk_zone6	0x05, 0xb8, 0x051, 249, 0	# zone 2: Main_P05_E051 / Sub_P05_E051
+    jk_zone6	0x05, 0x18, 0x052, 0, 0	# zone 3: Main_P05_E052 / Sub_P05_E052
+    jk_zone6	0x05, 0x58, 0x053, 248, 0	# zone 4: Main_P05_E053 / Sub_P05_E053
+    jk_zone6	0x05, 0x58, 0x04a, 242, 0	# zone 5: Main_P05_E04A / Sub_P05_E04A
+    jk_zone6	0x05, 0xd8, 0x04b, 240, 0	# zone 6: Main_P05_E04B / Sub_P05_E04B
+    jk_zone6	0x05, 0x58, 0x04c, 239, 0	# zone 7: Main_P05_E04C / Sub_P05_E04C
+    jk_zone6	0x05, 0x78, 0x04d, 246, 0	# zone 8: Main_P05_E04D / Sub_P05_E04D
+    jk_zone6	0x05, 0xb8, 0x04e, 249, 0	# zone 9: Main_P05_E04E / Sub_P05_E04E
+    jk_zone6	0x05, 0x98, 0x06a, 237, 0	# zone 10: Main_P05_E06A / Sub_P05_E06A
+    .space	2, 0xff	# alignment
+JkMsHeader216:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones216:
+    jk_zone6	0x05, 0xd8, 0x059, 238, 0	# zone 0: Main_P05_E059 / Sub_P05_E059
+    jk_zone6	0x05, 0x38, 0x05a, 252, 0	# zone 1: Main_P05_E05A / Sub_P05_E05A
+    jk_zone6	0x05, 0xd8, 0x05b, 252, 0	# zone 2: Main_P05_E05B / Sub_P05_E05B
+    jk_zone6	0x05, 0x18, 0x05c, 254, 0	# zone 3: Main_P05_E05C / Sub_P05_E05C
+    jk_zone6	0x05, 0x98, 0x006, 246, 0	# zone 4: Main_P05_E006 / Sub_P05_E006
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader229:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones229:
+    jk_zone8	0x06, 0x14, 0x025, 243, 0, -448	# zone 0: Main_P06_E025 / Sub_P06_E025
+    jk_zone8	0x06, 0x74, 0x026, 243, 0, -2058	# zone 1: Main_P06_E026 / Sub_P06_E026
+    jk_zone8	0x06, 0xd4, 0x027, 247, 0, 0	# zone 2: Main_P06_E027 / Sub_P06_E027
+    jk_zone8	0x06, 0x14, 0x028, 255, 0, -1069	# zone 3: Main_P06_E028 / Sub_P06_E028
+    jk_zone8	0x06, 0x74, 0x029, 246, 0, -2026	# zone 4: Main_P06_E029 / Sub_P06_E029
+    jk_zone8	0x06, 0x04, 0x006, 248, 0, -1669	# zone 5: Main_P06_E006 / Sub_P06_E006
+JkMsHeader234:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones234:
+    jk_zone8	0x05, 0x14, 0x054, 235, 0, 0	# zone 0: Main_P05_E054 / Sub_P05_E054
+    jk_zone8	0x05, 0x94, 0x055, 244, 0, -1999	# zone 1: Main_P05_E055 / Sub_P05_E055
+    jk_zone8	0x05, 0x14, 0x056, 247, 0, -216	# zone 2: Main_P05_E056 / Sub_P05_E056
+    jk_zone8	0x05, 0x94, 0x057, 245, 0, -2585	# zone 3: Main_P05_E057 / Sub_P05_E057
+    jk_zone8	0x05, 0x94, 0x04d, 243, 0, 35	# zone 4: Main_P05_E04D / Sub_P05_E04D
+JkMsHeader243:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15	# key group -> zone
+JkZones243:
+    jk_zone6	0x04, 0xd8, 0x019, 253, 0	# zone 0: Main_P04_E019 / Sub_P04_E019
+    jk_zone6	0x04, 0x18, 0x01a, 252, 0	# zone 1: Main_P04_E01A / Sub_P04_E01A
+    jk_zone6	0x04, 0x38, 0x01b, 248, 0	# zone 2: Main_P04_E01B / Sub_P04_E01B
+    jk_zone6	0x04, 0x58, 0x01c, 247, 0	# zone 3: Main_P04_E01C / Sub_P04_E01C
+    jk_zone6	0x04, 0xd8, 0x01d, 245, 0	# zone 4: Main_P04_E01D / Sub_P04_E01D
+    jk_zone6	0x04, 0xf8, 0x01e, 244, 0	# zone 5: Main_P04_E01E / Sub_P04_E01E
+    jk_zone6	0x04, 0x38, 0x01f, 244, 0	# zone 6: Main_P04_E01F / Sub_P04_E01F
+    jk_zone6	0x04, 0x98, 0x020, 249, 0	# zone 7: Main_P04_E020 / Sub_P04_E020
+    jk_zone6	0x04, 0xd8, 0x021, 247, 0	# zone 8: Main_P04_E021 / Sub_P04_E021
+    jk_zone6	0x04, 0x18, 0x022, 252, 0	# zone 9: Main_P04_E022 / Sub_P04_E022
+    jk_zone6	0x04, 0x58, 0x02a, 249, 0	# zone 10: Main_P04_E02A / Sub_P04_E02A
+    jk_zone6	0x04, 0x78, 0x02b, 246, 0	# zone 11: Main_P04_E02B / Sub_P04_E02B
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 12: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 13: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 235, 0	# zone 14: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 15: Main_P04_E032 / Sub_P04_E032
+JkMsHeader256:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones256:
+    jk_zone8	0x04, 0x94, 0x010, 248, 0, -2003	# zone 0: Main_P04_E010 / Sub_P04_E010
+    jk_zone8	0x04, 0x14, 0x011, 243, 0, -216	# zone 1: Main_P04_E011 / Sub_P04_E011
+    jk_zone8	0x04, 0x94, 0x012, 242, 0, -1738	# zone 2: Main_P04_E012 / Sub_P04_E012
+    jk_zone8	0x04, 0x14, 0x013, 240, 0, -202	# zone 3: Main_P04_E013 / Sub_P04_E013
+    jk_zone8	0x04, 0x94, 0x014, 246, 0, 0	# zone 4: Main_P04_E014 / Sub_P04_E014
+    jk_zone8	0x04, 0xd4, 0x00f, 242, 0, 0	# zone 5: Main_P04_E00F / Sub_P04_E00F
+JkMsHeader265:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones265:
+    jk_zone6	0x04, 0x78, 0x010, 249, 0	# zone 0: Main_P04_E010 / Sub_P04_E010
+    jk_zone6	0x04, 0xd8, 0x011, 245, 0	# zone 1: Main_P04_E011 / Sub_P04_E011
+    jk_zone6	0x04, 0xd8, 0x012, 235, 0	# zone 2: Main_P04_E012 / Sub_P04_E012
+    jk_zone6	0x00, 0x04, 0x000, 228, 0	# zone 3: Main_P00_E000 / Sub_P00_E000
+JkMsHeader333:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones333:
+    jk_zone6	0x00, 0x04, 0x00c, 248, 0	# zone 0: Main_P00_E00C / Sub_P00_E00C
+    jk_zone6	0x00, 0x04, 0x00d, 248, 0	# zone 1: Main_P00_E00D / Sub_P00_E00D
+    jk_zone6	0x00, 0x04, 0x00e, 248, 0	# zone 2: Main_P00_E00E / Sub_P00_E00E
+    jk_zone6	0x00, 0x04, 0x00f, 248, 0	# zone 3: Main_P00_E00F / Sub_P00_E00F
+    jk_zone6	0x00, 0x04, 0x010, 248, 0	# zone 4: Main_P00_E010 / Sub_P00_E010
+    jk_zone6	0x00, 0x04, 0x011, 248, 0	# zone 5: Main_P00_E011 / Sub_P00_E011
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 6: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 7: Main_P00_E000 / Sub_P00_E000
+JkMsHeader344:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones344:
+    jk_zone6	0x09, 0x08, 0x009, 247, 0	# zone 0: Main_P09_E009 / Sub_P09_E009
+    jk_zone6	0x09, 0x08, 0x00a, 247, 0	# zone 1: Main_P09_E00A / Sub_P09_E00A
+    jk_zone6	0x09, 0x08, 0x00b, 246, 0	# zone 2: Main_P09_E00B / Sub_P09_E00B
+    jk_zone6	0x09, 0x08, 0x00c, 246, 0	# zone 3: Main_P09_E00C / Sub_P09_E00C
+    jk_zone6	0x09, 0x08, 0x00d, 246, 0	# zone 4: Main_P09_E00D / Sub_P09_E00D
+    jk_zone6	0x09, 0x08, 0x00e, 245, 0	# zone 5: Main_P09_E00E / Sub_P09_E00E
+    jk_zone6	0x09, 0x08, 0x00f, 244, 0	# zone 6: Main_P09_E00F / Sub_P09_E00F
+    jk_zone6	0x09, 0x08, 0x010, 244, 0	# zone 7: Main_P09_E010 / Sub_P09_E010
+    jk_zone6	0x00, 0x04, 0x025, 240, 0	# zone 8: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 9: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 10: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader375:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones375:
+    jk_zone6	0x05, 0x04, 0x062, 242, 0	# zone 0: Main_P05_E062 / Sub_P05_E062
+    .space	2, 0xff	# alignment
+JkMsHeader399:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 10, 10, 11, 11, 12, 13, 13	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones399:
+    jk_zone8	0x06, 0x74, 0x064, 223, 0, 10496	# zone 0: Main_P06_E064 / Sub_P06_E064
+    jk_zone8	0x06, 0x74, 0x064, 223, 0, 7424	# zone 1: Main_P06_E064 / Sub_P06_E064
+    jk_zone8	0x06, 0x74, 0x06c, 244, 0, 5120	# zone 2: Main_P06_E06C / Sub_P06_E06C
+    jk_zone8	0x06, 0x74, 0x074, 231, 0, 4352	# zone 3: Main_P06_E074
+    jk_zone8	0x06, 0x74, 0x074, 231, 0, 4352	# zone 4: Main_P06_E074
+    jk_zone8	0x06, 0x74, 0x07c, 246, 0, 1792	# zone 5: Main_P06_E07C
+    jk_zone8	0x06, 0x74, 0x084, 241, 0, 0	# zone 6: Main_P06_E084
+    jk_zone8	0x06, 0x74, 0x08c, 249, 0, -2048	# zone 7: Main_P06_E08C
+    jk_zone8	0x06, 0x74, 0x094, 238, 0, -3072	# zone 8: Main_P06_E094
+    jk_zone8	0x06, 0x74, 0x09c, 245, 0, -5632	# zone 9: Main_P06_E09C
+    jk_zone8	0x06, 0x74, 0x0a4, 217, 0, -8448	# zone 10: Main_P06_E0A4
+    jk_zone8	0x06, 0x74, 0x0a4, 217, 0, -8448	# zone 11: Main_P06_E0A4
+    jk_zone8	0x06, 0x74, 0x0a4, 217, 0, -8448	# zone 12: Main_P06_E0A4
+    jk_zone8	0x06, 0x74, 0x0a4, 217, 0, -8448	# zone 13: Main_P06_E0A4
+JkMsHeader409:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones409:
+    jk_zone8	0x01, 0x08, 0x07a, 245, 0, 2244	# zone 0: Main_P01_E07A / Sub_P01_E07A
+JkMsHeader434:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones434:
+    jk_zone8	0x08, 0x04, 0x034, 254, 0, 2756	# zone 0: Main_P08_E034
+JkMsHeader458:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones458:
+    jk_zone8	0x05, 0xd8, 0x001, 255, 0, -444	# zone 0: Main_P05_E001 / Sub_P05_E001
+JkMsHeader513:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones513:
+    jk_zone8	0x08, 0x04, 0x042, 250, 0, 2756	# zone 0: Main_P08_E042
+JkMsHeader567:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones567:
+    jk_zone8	0x08, 0x04, 0x03b, 236, 0, 2756	# zone 0: Main_P08_E03B
+JkMsHeader593:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones593:
+    jk_zone8	0x09, 0x08, 0x092, 255, 0, 4736	# zone 0: Sub_P09_E092
+JkMsHeader623:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones623:
+    jk_zone8	0x00, 0x04, 0x0a7, 249, 0, 2756	# zone 0: Main_P00_E0A7 / Sub_P00_E0A7
+JkMsHeader653:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones653:
+    jk_zone6	0x00, 0x04, 0x0b0, 235, 0	# zone 0: Main_P00_E0B0 / Sub_P00_E0B0
+    .space	2, 0xff	# alignment
+JkMsHeader726:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones726:
+    jk_zone8	0x00, 0x08, 0x057, 241, 0, 2756	# zone 0: Main_P00_E057 / Sub_P00_E057
+JkMsHeader766:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones766:
+    jk_zone8	0x06, 0x04, 0x045, 254, 0, 2756	# zone 0: Main_P06_E045 / Sub_P06_E045
+JkMsHeader788:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones788:
+    jk_zone6	0x06, 0x04, 0x062, 235, 0	# zone 0: Main_P06_E062 / Sub_P06_E062
+    .space	2, 0xff	# alignment
+JkMsHeader802:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones802:
+    jk_zone8	0x00, 0x08, 0x038, 247, 0, 1335	# zone 0: Main_P00_E038 / Sub_P00_E038
+JkMsHeader829:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones829:
+    jk_zone8	0x00, 0x08, 0x037, 172, 0, 1335	# zone 0: Main_P00_E037 / Sub_P00_E037
+JkMsHeader842:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones842:
+    jk_zone8	0x06, 0x08, 0x033, 246, 0, 2756	# zone 0: Main_P06_E033 / Sub_P06_E033
+JkMsHeader027:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones027:
+    jk_zone8	0x00, 0x04, 0x065, 247, 0, -186	# zone 0: Main_P00_E065 / Sub_P00_E065
+    jk_zone8	0x00, 0x04, 0x065, 243, 0, -186	# zone 1: Main_P00_E065 / Sub_P00_E065
+    jk_zone8	0x00, 0x04, 0x067, 252, 0, -841	# zone 2: Main_P00_E067 / Sub_P00_E067
+    jk_zone8	0x00, 0x04, 0x069, 251, 0, -1577	# zone 3: Main_P00_E069 / Sub_P00_E069
+    jk_zone8	0x00, 0x04, 0x06b, 247, 0, 0	# zone 4: Main_P00_E06B / Sub_P00_E06B
+JkMsHeader199:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones199:
+    jk_zone8	0x05, 0x54, 0x03f, 250, 0, 0	# zone 0: Main_P05_E03F / Sub_P05_E03F
+    jk_zone8	0x05, 0x94, 0x040, 246, 0, -1375	# zone 1: Main_P05_E040 / Sub_P05_E040
+    jk_zone8	0x05, 0xd4, 0x041, 246, 0, -2058	# zone 2: Main_P05_E041 / Sub_P05_E041
+    jk_zone8	0x05, 0xf4, 0x042, 0, 0, 0	# zone 3: Main_P05_E042 / Sub_P05_E042
+    jk_zone8	0x05, 0x54, 0x043, 249, 0, -683	# zone 4: Main_P05_E043 / Sub_P05_E043
+    jk_zone8	0x05, 0x94, 0x044, 252, 0, -1581	# zone 5: Main_P05_E044 / Sub_P05_E044
+    jk_zone8	0x05, 0xd4, 0x045, 252, 0, -2327	# zone 6: Main_P05_E045 / Sub_P05_E045
+    jk_zone8	0x05, 0x54, 0x046, 249, 0, -455	# zone 7: Main_P05_E046 / Sub_P05_E046
+    jk_zone8	0x05, 0xd4, 0x047, 253, 0, 0	# zone 8: Main_P05_E047 / Sub_P05_E047
+JkMsHeader244:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones244:
+    jk_zone6	0x04, 0x98, 0x023, 254, 0	# zone 0: Main_P04_E023 / Sub_P04_E023
+    jk_zone6	0x04, 0xd8, 0x024, 255, 0	# zone 1: Main_P04_E024 / Sub_P04_E024
+    jk_zone6	0x04, 0x18, 0x025, 245, 0	# zone 2: Main_P04_E025 / Sub_P04_E025
+    jk_zone6	0x04, 0x58, 0x026, 244, 0	# zone 3: Main_P04_E026 / Sub_P04_E026
+    jk_zone6	0x04, 0x98, 0x027, 244, 0	# zone 4: Main_P04_E027 / Sub_P04_E027
+    jk_zone6	0x04, 0xd8, 0x028, 246, 0	# zone 5: Main_P04_E028 / Sub_P04_E028
+    jk_zone6	0x04, 0x18, 0x029, 239, 0	# zone 6: Main_P04_E029 / Sub_P04_E029
+    jk_zone6	0x04, 0x58, 0x02a, 249, 0	# zone 7: Main_P04_E02A / Sub_P04_E02A
+    jk_zone6	0x04, 0x78, 0x02b, 246, 0	# zone 8: Main_P04_E02B / Sub_P04_E02B
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 9: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 10: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 235, 0	# zone 11: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 12: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader376:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones376:
+    jk_zone6	0x05, 0x04, 0x063, 242, 0	# zone 0: Main_P05_E063 / Sub_P05_E063
+    .space	2, 0xff	# alignment
+JkMsHeader624:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones624:
+    jk_zone8	0x00, 0x08, 0x04d, 246, 0, 2756	# zone 0: Main_P00_E04D / Sub_P00_E04D
+JkMsHeader727:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones727:
+    jk_zone8	0x00, 0x08, 0x058, 182, 0, 2756	# zone 0: Main_P00_E058 / Sub_P00_E058
+JkMsHeader803:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones803:
+    jk_zone8	0x00, 0x08, 0x039, 249, 0, 1335	# zone 0: Main_P00_E039 / Sub_P00_E039
+JkMsHeader843:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones843:
+    jk_zone8	0x06, 0x08, 0x034, 250, 0, 2756	# zone 0: Main_P06_E034 / Sub_P06_E034
+JkMsHeader245:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones245:
+    jk_zone6	0x04, 0x98, 0x02c, 247, 0	# zone 0: Main_P04_E02C / Sub_P04_E02C
+    jk_zone6	0x04, 0xf8, 0x02d, 253, 0	# zone 1: Main_P04_E02D / Sub_P04_E02D
+    jk_zone6	0x04, 0x38, 0x02e, 246, 0	# zone 2: Main_P04_E02E / Sub_P04_E02E
+    jk_zone6	0x04, 0xd8, 0x02f, 240, 0	# zone 3: Main_P04_E02F / Sub_P04_E02F
+    jk_zone6	0x04, 0x18, 0x030, 243, 0	# zone 4: Main_P04_E030 / Sub_P04_E030
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 5: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 6: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 235, 0	# zone 7: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 8: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader514:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones514:
+    jk_zone8	0x0a, 0x04, 0x019, 237, 0, 2756	# zone 0: Main_P0A_E019 / Sub_P0A_E019
+JkMsHeader728:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones728:
+    jk_zone8	0x00, 0x08, 0x059, 242, 0, 2756	# zone 0: Main_P00_E059 / Sub_P00_E059
+JkMsHeader804:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones804:
+    jk_zone8	0x00, 0x08, 0x03a, 250, 0, 1335	# zone 0: Main_P00_E03A / Sub_P00_E03A
+JkMsHeader246:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones246:
+    jk_zone6	0x04, 0xd8, 0x033, 255, 0	# zone 0: Main_P04_E033 / Sub_P04_E033
+    jk_zone6	0x04, 0xf8, 0x034, 253, 0	# zone 1: Main_P04_E034 / Sub_P04_E034
+    jk_zone6	0x04, 0x38, 0x035, 253, 0	# zone 2: Main_P04_E035 / Sub_P04_E035
+    jk_zone6	0x04, 0x78, 0x036, 0, 0	# zone 3: Main_P04_E036 / Sub_P04_E036
+    jk_zone6	0x04, 0xf8, 0x037, 254, 0	# zone 4: Main_P04_E037 / Sub_P04_E037
+    jk_zone6	0x04, 0x38, 0x038, 0, 0	# zone 5: Main_P04_E038 / Sub_P04_E038
+    jk_zone6	0x04, 0x98, 0x039, 252, 0	# zone 6: Main_P04_E039 / Sub_P04_E039
+    jk_zone6	0x04, 0xf8, 0x03a, 240, 0	# zone 7: Main_P04_E03A / Sub_P04_E03A
+    jk_zone6	0x04, 0x38, 0x03b, 248, 0	# zone 8: Main_P04_E03B / Sub_P04_E03B
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 9: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 10: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 235, 0	# zone 11: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 12: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader515:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones515:
+    jk_zone8	0x0a, 0x08, 0x026, 238, 0, 2756	# zone 0: Main_P0A_E026 / Sub_P0A_E026
+JkMsHeader729:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones729:
+    jk_zone8	0x00, 0x08, 0x05a, 217, 0, 2756	# zone 0: Main_P00_E05A / Sub_P00_E05A
+JkMsHeader805:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones805:
+    jk_zone8	0x00, 0x08, 0x03b, 252, 0, 1335	# zone 0: Main_P00_E03B / Sub_P00_E03B
+JkMsHeader190:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones190:
+    jk_zone6	0x04, 0x18, 0x081, 244, 0	# zone 0: Sub_P04_E081
+    jk_zone6	0x04, 0x18, 0x082, 246, 0	# zone 1: Sub_P04_E082
+    jk_zone6	0x04, 0x18, 0x083, 249, 0	# zone 2: Sub_P04_E083
+    jk_zone6	0x04, 0x18, 0x084, 248, 0	# zone 3: Sub_P04_E084
+    jk_zone6	0x04, 0x18, 0x085, 246, 0	# zone 4: Sub_P04_E085
+    jk_zone6	0x05, 0x98, 0x007, 246, 0	# zone 5: Main_P05_E007 / Sub_P05_E007
+JkMsHeader247:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones247:
+    jk_zone6	0x04, 0xd8, 0x03c, 253, 0	# zone 0: Main_P04_E03C / Sub_P04_E03C
+    jk_zone6	0x04, 0x18, 0x03d, 251, 0	# zone 1: Main_P04_E03D / Sub_P04_E03D
+    jk_zone6	0x04, 0x58, 0x03e, 246, 0	# zone 2: Main_P04_E03E / Sub_P04_E03E
+    jk_zone6	0x04, 0x98, 0x03f, 248, 0	# zone 3: Main_P04_E03F / Sub_P04_E03F
+    jk_zone6	0x04, 0xf8, 0x040, 251, 0	# zone 4: Main_P04_E040 / Sub_P04_E040
+    jk_zone6	0x04, 0x18, 0x041, 248, 0	# zone 5: Main_P04_E041 / Sub_P04_E041
+    jk_zone6	0x04, 0x78, 0x042, 244, 0	# zone 6: Main_P04_E042 / Sub_P04_E042
+    jk_zone6	0x04, 0xd8, 0x043, 244, 0	# zone 7: Main_P04_E043 / Sub_P04_E043
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 8: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 9: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 235, 0	# zone 10: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 11: Main_P04_E032 / Sub_P04_E032
+JkMsHeader266:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones266:
+    jk_zone6	0x06, 0x74, 0x0d2, 247, 0	# zone 0: Main_P06_E0D2
+    jk_zone6	0x00, 0x04, 0x000, 248, 0	# zone 1: Main_P00_E000 / Sub_P00_E000
+JkMsHeader334:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones334:
+    jk_zone6	0x00, 0x14, 0x013, 253, 0	# zone 0: Main_P00_E013 / Sub_P00_E013
+    jk_zone6	0x00, 0x94, 0x014, 252, 0	# zone 1: Main_P00_E014 / Sub_P00_E014
+    jk_zone6	0x00, 0x14, 0x015, 252, 0	# zone 2: Main_P00_E015 / Sub_P00_E015
+    jk_zone6	0x00, 0x94, 0x016, 253, 0	# zone 3: Main_P00_E016 / Sub_P00_E016
+    jk_zone6	0x00, 0x14, 0x017, 252, 0	# zone 4: Main_P00_E017 / Sub_P00_E017
+    jk_zone6	0x00, 0x94, 0x018, 251, 0	# zone 5: Main_P00_E018 / Sub_P00_E018
+    jk_zone6	0x00, 0x14, 0x019, 252, 0	# zone 6: Main_P00_E019 / Sub_P00_E019
+    jk_zone6	0x00, 0x94, 0x01a, 253, 0	# zone 7: Main_P00_E01A / Sub_P00_E01A
+    jk_zone6	0x00, 0x14, 0x01b, 253, 0	# zone 8: Main_P00_E01B / Sub_P00_E01B
+    jk_zone6	0x00, 0x94, 0x01c, 253, 0	# zone 9: Main_P00_E01C / Sub_P00_E01C
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader345:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones345:
+    jk_zone6	0x09, 0x18, 0x029, 240, 0	# zone 0: Sub_P09_E029
+    jk_zone6	0x09, 0x98, 0x02a, 238, 0	# zone 1: Sub_P09_E02A
+    jk_zone6	0x09, 0x18, 0x02b, 239, 0	# zone 2: Sub_P09_E02B
+    jk_zone6	0x09, 0x98, 0x02c, 240, 0	# zone 3: Sub_P09_E02C
+    jk_zone6	0x09, 0x18, 0x02d, 240, 0	# zone 4: Sub_P09_E02D
+    jk_zone6	0x09, 0x98, 0x02e, 240, 0	# zone 5: Sub_P09_E02E
+    jk_zone6	0x09, 0x18, 0x02f, 239, 0	# zone 6: Sub_P09_E02F
+    jk_zone6	0x09, 0x98, 0x030, 240, 0	# zone 7: Sub_P09_E030
+    jk_zone6	0x09, 0x18, 0x031, 240, 0	# zone 8: Sub_P09_E031
+    jk_zone6	0x09, 0x98, 0x032, 241, 0	# zone 9: Sub_P09_E032
+    jk_zone6	0x00, 0x04, 0x025, 240, 0	# zone 10: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 11: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 12: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader516:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones516:
+    jk_zone8	0x08, 0x04, 0x043, 249, 0, 2756	# zone 0: Main_P08_E043
+JkMsHeader730:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones730:
+    jk_zone8	0x00, 0x08, 0x05b, 188, 0, 2756	# zone 0: Main_P00_E05B / Sub_P00_E05B
+JkMsHeader806:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones806:
+    jk_zone8	0x00, 0x08, 0x03c, 237, 0, 1335	# zone 0: Main_P00_E03C / Sub_P00_E03C
+JkMsHeader517:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones517:
+    jk_zone8	0x0c, 0x04, 0x005, 242, 0, 2756	# zone 0: Main_P0C_E005 / Sub_P0C_E005
+JkMsHeader731:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones731:
+    jk_zone8	0x00, 0x08, 0x05c, 230, 0, 2756	# zone 0: Main_P00_E05C / Sub_P00_E05C
+JkMsHeader807:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones807:
+    jk_zone8	0x00, 0x08, 0x03d, 249, 0, 1335	# zone 0: Main_P00_E03D / Sub_P00_E03D
+JkMsHeader166:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones166:
+    jk_zone8	0x04, 0xb4, 0x026, 253, 0, -1188	# zone 0: Main_P04_E026 / Sub_P04_E026
+    jk_zone8	0x04, 0xf4, 0x027, 250, 0, -2091	# zone 1: Main_P04_E027 / Sub_P04_E027
+    jk_zone8	0x04, 0x34, 0x028, 254, 0, -2744	# zone 2: Main_P04_E028 / Sub_P04_E028
+    jk_zone8	0x04, 0x94, 0x029, 255, 0, -724	# zone 3: Main_P04_E029 / Sub_P04_E029
+    jk_zone8	0x04, 0xb4, 0x02a, 255, 0, -1313	# zone 4: Main_P04_E02A / Sub_P04_E02A
+    jk_zone8	0x04, 0xd4, 0x02b, 252, 0, -1816	# zone 5: Main_P04_E02B / Sub_P04_E02B
+    jk_zone8	0x04, 0x14, 0x02c, 253, 0, -2586	# zone 6: Main_P04_E02C / Sub_P04_E02C
+    jk_zone8	0x04, 0x74, 0x02d, 252, 0, -563	# zone 7: Main_P04_E02D / Sub_P04_E02D
+    jk_zone8	0x04, 0x94, 0x02e, 246, 0, -1139	# zone 8: Main_P04_E02E / Sub_P04_E02E
+    jk_zone8	0x04, 0xd4, 0x02f, 246, 0, -1782	# zone 9: Main_P04_E02F / Sub_P04_E02F
+JkMsHeader217:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 8, 8, 9, 9, 9, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones217:
+    jk_zone8	0x07, 0x78, 0x000, 246, 0, -375	# zone 0: Main_P07_E000 / Sub_P07_E000
+    jk_zone8	0x07, 0xb8, 0x001, 241, 0, -2299	# zone 1: Main_P07_E001 / Sub_P07_E001
+    jk_zone8	0x07, 0xd8, 0x002, 249, 0, -2702	# zone 2: Main_P07_E002 / Sub_P07_E002
+    jk_zone8	0x07, 0x38, 0x003, 252, 0, -695	# zone 3: Main_P07_E003 / Sub_P07_E003
+    jk_zone8	0x07, 0x58, 0x004, 254, 0, -1230	# zone 4: Main_P07_E004 / Sub_P07_E004
+    jk_zone8	0x07, 0x78, 0x005, 247, 0, -1387	# zone 5: Main_P07_E005 / Sub_P07_E005
+    jk_zone8	0x07, 0x98, 0x006, 250, 0, -1958	# zone 6: Main_P07_E006 / Sub_P07_E006
+    jk_zone8	0x07, 0xd8, 0x007, 250, 0, -2717	# zone 7: Main_P07_E007 / Sub_P07_E007
+    jk_zone8	0x07, 0x38, 0x008, 245, 0, -701	# zone 8: Main_P07_E008 / Sub_P07_E008
+    jk_zone8	0x07, 0x58, 0x009, 243, 0, 0	# zone 9: Main_P07_E009 / Sub_P07_E009
+    jk_zone8	0x09, 0x74, 0x007, 252, 0, -557	# zone 10: Main_P09_E007 / Sub_P09_E007
+    jk_zone8	0x09, 0xb4, 0x008, 255, 0, 0	# zone 11: Main_P09_E008 / Sub_P09_E008
+    jk_zone8	0x04, 0x14, 0x025, 251, 0, 0	# zone 12: Main_P04_E025 / Sub_P04_E025
+JkMsHeader518:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones518:
+    jk_zone8	0x0c, 0x08, 0x005, 249, 0, 2756	# zone 0: Main_P0C_E005 / Sub_P0C_E005
+JkMsHeader732:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones732:
+    jk_zone8	0x00, 0x08, 0x05d, 242, 0, 2756	# zone 0: Main_P00_E05D / Sub_P00_E05D
+JkMsHeader808:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones808:
+    jk_zone8	0x00, 0x08, 0x03e, 249, 0, 1335	# zone 0: Main_P00_E03E / Sub_P00_E03E
+JkMsHeader733:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones733:
+    jk_zone8	0x00, 0x08, 0x05e, 245, 0, 2756	# zone 0: Main_P00_E05E / Sub_P00_E05E
+JkMsHeader235:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones235:
+    jk_zone8	0x05, 0x54, 0x058, 253, 0, -273	# zone 0: Main_P05_E058 / Sub_P05_E058
+    jk_zone8	0x05, 0x94, 0x059, 250, 0, -2027	# zone 1: Main_P05_E059 / Sub_P05_E059
+    jk_zone8	0x05, 0xd4, 0x05a, 253, 0, -2556	# zone 2: Main_P05_E05A / Sub_P05_E05A
+    jk_zone8	0x05, 0x14, 0x05b, 248, 0, -422	# zone 3: Main_P05_E05B / Sub_P05_E05B
+    jk_zone8	0x05, 0x94, 0x05c, 1, 0, -1797	# zone 4: Main_P05_E05C / Sub_P05_E05C
+    jk_zone8	0x05, 0xd4, 0x05d, 252, 0, -2580	# zone 5: Main_P05_E05D / Sub_P05_E05D
+JkMsHeader248:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+JkZones248:
+    jk_zone6	0x04, 0x98, 0x044, 245, 0	# zone 0: Main_P04_E044 / Sub_P04_E044
+    jk_zone6	0x04, 0xf8, 0x045, 244, 0	# zone 1: Main_P04_E045 / Sub_P04_E045
+    jk_zone6	0x04, 0x38, 0x046, 245, 0	# zone 2: Sub_P04_E046
+    jk_zone6	0x04, 0x98, 0x047, 245, 0	# zone 3: Sub_P04_E047
+    jk_zone6	0x04, 0xf8, 0x048, 245, 0	# zone 4: Sub_P04_E048
+    jk_zone6	0x04, 0x78, 0x049, 243, 0	# zone 5: Sub_P04_E049
+    jk_zone6	0x04, 0x98, 0x04a, 239, 0	# zone 6: Sub_P04_E04A
+    jk_zone6	0x04, 0xd8, 0x04b, 241, 0	# zone 7: Sub_P04_E04B
+    jk_zone6	0x04, 0x18, 0x04c, 238, 0	# zone 8: Sub_P04_E04C
+    jk_zone6	0x04, 0x98, 0x053, 244, 0	# zone 9: Sub_P04_E053
+    jk_zone6	0x04, 0xd8, 0x054, 241, 0	# zone 10: Sub_P04_E054
+    jk_zone6	0x04, 0x38, 0x05a, 237, 0	# zone 11: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 233, 0	# zone 12: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 229, 0	# zone 13: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 225, 0	# zone 14: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 221, 0	# zone 15: Sub_P04_E05A
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 16: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader257:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones257:
+    jk_zone6	0x04, 0x34, 0x015, 253, 0	# zone 0: Main_P04_E015 / Sub_P04_E015
+    jk_zone6	0x04, 0x74, 0x016, 241, 0	# zone 1: Main_P04_E016 / Sub_P04_E016
+    jk_zone6	0x04, 0xd4, 0x017, 247, 0	# zone 2: Main_P04_E017 / Sub_P04_E017
+    jk_zone6	0x04, 0x94, 0x006, 241, 0	# zone 3: Main_P04_E006 / Sub_P04_E006
+    jk_zone6	0x04, 0xb4, 0x007, 243, 0	# zone 4: Main_P04_E007 / Sub_P04_E007
+    jk_zone6	0x04, 0x14, 0x008, 247, 0	# zone 5: Main_P04_E008 / Sub_P04_E008
+    jk_zone6	0x04, 0x14, 0x009, 243, 0	# zone 6: Main_P04_E009 / Sub_P04_E009
+    jk_zone6	0x04, 0x58, 0x031, 243, 0	# zone 7: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 239, 0	# zone 8: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 233, 0	# zone 9: Main_P04_E032 / Sub_P04_E032
+JkMsHeader346:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones346:
+    jk_zone6	0x09, 0x08, 0x011, 249, 0	# zone 0: Main_P09_E011 / Sub_P09_E011
+    jk_zone6	0x09, 0x08, 0x012, 247, 0	# zone 1: Main_P09_E012 / Sub_P09_E012
+    jk_zone6	0x09, 0x08, 0x013, 246, 0	# zone 2: Main_P09_E013 / Sub_P09_E013
+    jk_zone6	0x09, 0x08, 0x014, 247, 0	# zone 3: Main_P09_E014 / Sub_P09_E014
+    jk_zone6	0x09, 0x08, 0x015, 246, 0	# zone 4: Main_P09_E015 / Sub_P09_E015
+    jk_zone6	0x09, 0x08, 0x016, 245, 0	# zone 5: Main_P09_E016 / Sub_P09_E016
+    jk_zone6	0x09, 0x08, 0x017, 245, 0	# zone 6: Main_P09_E017 / Sub_P09_E017
+    jk_zone6	0x09, 0x08, 0x018, 245, 0	# zone 7: Main_P09_E018 / Sub_P09_E018
+    jk_zone6	0x00, 0x04, 0x025, 240, 0	# zone 8: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 9: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 10: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader519:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones519:
+    jk_zone8	0x08, 0x04, 0x044, 255, 0, 2756	# zone 0: Main_P08_E044
+JkMsHeader594:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones594:
+    jk_zone8	0x08, 0x04, 0x055, 252, 0, 2384	# zone 0: Main_P08_E055
+JkMsHeader625:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones625:
+    jk_zone8	0x00, 0x04, 0x0a9, 244, 0, 2756	# zone 0: Main_P00_E0A9 / Sub_P00_E0A9
+JkMsHeader654:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones654:
+    jk_zone6	0x00, 0x08, 0x04f, 247, 0	# zone 0: Main_P00_E04F / Sub_P00_E04F
+    .space	2, 0xff	# alignment
+JkMsHeader734:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones734:
+    jk_zone8	0x00, 0x08, 0x05f, 209, 0, 2756	# zone 0: Main_P00_E05F / Sub_P00_E05F
+JkMsHeader767:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones767:
+    jk_zone8	0x06, 0x04, 0x046, 2, 0, 2756	# zone 0: Main_P06_E046 / Sub_P06_E046
+JkMsHeader789:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones789:
+    jk_zone6	0x06, 0x04, 0x063, 230, 0	# zone 0: Main_P06_E063 / Sub_P06_E063
+    .space	2, 0xff	# alignment
+JkMsHeader844:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones844:
+    jk_zone8	0x06, 0x08, 0x035, 233, 0, 2756	# zone 0: Main_P06_E035 / Sub_P06_E035
+JkMsHeader249:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+JkZones249:
+    jk_zone6	0x04, 0x98, 0x044, 245, 0	# zone 0: Main_P04_E044 / Sub_P04_E044
+    jk_zone6	0x04, 0xf8, 0x045, 244, 0	# zone 1: Main_P04_E045 / Sub_P04_E045
+    jk_zone6	0x04, 0x38, 0x046, 245, 0	# zone 2: Sub_P04_E046
+    jk_zone6	0x04, 0x98, 0x04d, 246, 0	# zone 3: Sub_P04_E04D
+    jk_zone6	0x04, 0xf8, 0x04e, 247, 0	# zone 4: Sub_P04_E04E
+    jk_zone6	0x04, 0x58, 0x04f, 246, 0	# zone 5: Sub_P04_E04F
+    jk_zone6	0x04, 0xf8, 0x050, 242, 0	# zone 6: Sub_P04_E050
+    jk_zone6	0x04, 0x38, 0x051, 238, 0	# zone 7: Sub_P04_E051
+    jk_zone6	0x04, 0x58, 0x052, 240, 0	# zone 8: Sub_P04_E052
+    jk_zone6	0x04, 0x98, 0x053, 244, 0	# zone 9: Sub_P04_E053
+    jk_zone6	0x04, 0xd8, 0x054, 241, 0	# zone 10: Sub_P04_E054
+    jk_zone6	0x04, 0x38, 0x05a, 237, 0	# zone 11: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 233, 0	# zone 12: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 229, 0	# zone 13: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 225, 0	# zone 14: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 221, 0	# zone 15: Sub_P04_E05A
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 16: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader735:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones735:
+    jk_zone8	0x00, 0x08, 0x060, 199, 0, 2756	# zone 0: Main_P00_E060 / Sub_P00_E060
+JkMsHeader845:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones845:
+    jk_zone8	0x06, 0x08, 0x036, 236, 0, 2756	# zone 0: Main_P06_E036 / Sub_P06_E036
+JkMsHeader250:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16	# key group -> zone
+JkZones250:
+    jk_zone6	0x04, 0x98, 0x044, 245, 0	# zone 0: Main_P04_E044 / Sub_P04_E044
+    jk_zone6	0x04, 0xf8, 0x045, 244, 0	# zone 1: Main_P04_E045 / Sub_P04_E045
+    jk_zone6	0x04, 0x38, 0x046, 245, 0	# zone 2: Sub_P04_E046
+    jk_zone6	0x04, 0x98, 0x04d, 246, 0	# zone 3: Sub_P04_E04D
+    jk_zone6	0x04, 0xf8, 0x04e, 247, 0	# zone 4: Sub_P04_E04E
+    jk_zone6	0x04, 0x58, 0x04f, 246, 0	# zone 5: Sub_P04_E04F
+    jk_zone6	0x04, 0x98, 0x055, 241, 0	# zone 6: Sub_P04_E055
+    jk_zone6	0x04, 0xf8, 0x056, 243, 0	# zone 7: Sub_P04_E056
+    jk_zone6	0x04, 0x58, 0x057, 249, 0	# zone 8: Sub_P04_E057
+    jk_zone6	0x04, 0x98, 0x058, 242, 0	# zone 9: Sub_P04_E058
+    jk_zone6	0x04, 0xd8, 0x059, 237, 0	# zone 10: Sub_P04_E059
+    jk_zone6	0x04, 0x38, 0x05a, 237, 0	# zone 11: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 233, 0	# zone 12: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 229, 0	# zone 13: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 225, 0	# zone 14: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 221, 0	# zone 15: Sub_P04_E05A
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 16: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader520:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones520:
+    jk_zone8	0x0a, 0x04, 0x01a, 241, 0, 2756	# zone 0: Main_P0A_E01A / Sub_P0A_E01A
+JkMsHeader736:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones736:
+    jk_zone8	0x00, 0x08, 0x061, 181, 0, 2756	# zone 0: Main_P00_E061 / Sub_P00_E061
+JkMsHeader846:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones846:
+    jk_zone8	0x06, 0x08, 0x037, 235, 0, 2756	# zone 0: Main_P06_E037 / Sub_P06_E037
+JkMsHeader251:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13	# key group -> zone
+JkZones251:
+    jk_zone6	0x04, 0x98, 0x05b, 240, 0	# zone 0: Sub_P04_E05B
+    jk_zone6	0x04, 0xf8, 0x05c, 244, 0	# zone 1: Sub_P04_E05C
+    jk_zone6	0x04, 0x58, 0x05d, 251, 0	# zone 2: Sub_P04_E05D
+    jk_zone6	0x04, 0x98, 0x05e, 240, 0	# zone 3: Sub_P04_E05E
+    jk_zone6	0x04, 0xf8, 0x05f, 251, 0	# zone 4: Sub_P04_E05F
+    jk_zone6	0x04, 0x38, 0x060, 242, 0	# zone 5: Sub_P04_E060
+    jk_zone6	0x04, 0x58, 0x061, 235, 0	# zone 6: Sub_P04_E061
+    jk_zone6	0x04, 0xd8, 0x062, 238, 0	# zone 7: Sub_P04_E062
+    jk_zone6	0x04, 0x38, 0x05a, 237, 0	# zone 8: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 233, 0	# zone 9: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 229, 0	# zone 10: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 225, 0	# zone 11: Sub_P04_E05A
+    jk_zone6	0x04, 0x38, 0x05a, 221, 0	# zone 12: Sub_P04_E05A
+    jk_zone6	0x04, 0x58, 0x032, 229, 0	# zone 13: Main_P04_E032 / Sub_P04_E032
+JkMsHeader521:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones521:
+    jk_zone8	0x0a, 0x08, 0x027, 243, 0, 2756	# zone 0: Main_P0A_E027 / Sub_P0A_E027
+JkMsHeader737:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones737:
+    jk_zone8	0x00, 0x08, 0x062, 231, 0, 2756	# zone 0: Main_P00_E062 / Sub_P00_E062
+JkMsHeader847:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones847:
+    jk_zone8	0x06, 0x08, 0x038, 234, 0, 2756	# zone 0: Main_P06_E038 / Sub_P06_E038
+JkMsHeader347:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12	# key group -> zone
+JkZones347:
+    jk_zone6	0x09, 0x18, 0x033, 246, 0	# zone 0: Sub_P09_E033
+    jk_zone6	0x09, 0x58, 0x034, 244, 0	# zone 1: Sub_P09_E034
+    jk_zone6	0x09, 0x58, 0x035, 245, 0	# zone 2: Sub_P09_E035
+    jk_zone6	0x09, 0x98, 0x036, 244, 0	# zone 3: Sub_P09_E036
+    jk_zone6	0x09, 0x18, 0x037, 245, 0	# zone 4: Sub_P09_E037
+    jk_zone6	0x09, 0x98, 0x038, 244, 0	# zone 5: Sub_P09_E038
+    jk_zone6	0x09, 0x18, 0x039, 246, 0	# zone 6: Sub_P09_E039
+    jk_zone6	0x09, 0x98, 0x03a, 245, 0	# zone 7: Sub_P09_E03A
+    jk_zone6	0x09, 0x18, 0x03b, 245, 0	# zone 8: Sub_P09_E03B
+    jk_zone6	0x09, 0x08, 0x018, 241, 0	# zone 9: Main_P09_E018 / Sub_P09_E018
+    jk_zone6	0x00, 0x04, 0x025, 236, 0	# zone 10: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 244, 0	# zone 11: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 236, 0	# zone 12: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader522:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones522:
+    jk_zone8	0x06, 0x04, 0x049, 244, 0, 3132	# zone 0: Main_P06_E049 / Sub_P06_E049
+JkMsHeader738:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones738:
+    jk_zone8	0x00, 0x08, 0x063, 246, 0, 2756	# zone 0: Main_P00_E063 / Sub_P00_E063
+JkMsHeader768:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones768:
+    jk_zone8	0x01, 0x18, 0x0b7, 252, 0, 2756	# zone 0: Sub_P01_E0B7
+JkMsHeader848:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones848:
+    jk_zone8	0x06, 0x08, 0x039, 227, 0, 2756	# zone 0: Main_P06_E039 / Sub_P06_E039
+JkMsHeader739:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones739:
+    jk_zone8	0x00, 0x08, 0x064, 195, 0, 2756	# zone 0: Main_P00_E064 / Sub_P00_E064
+JkMsHeader348:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14	# key group -> zone
+JkZones348:
+    jk_zone6	0x09, 0x18, 0x03d, 249, 0	# zone 0: Sub_P09_E03D
+    jk_zone6	0x09, 0x58, 0x03e, 249, 0	# zone 1: Sub_P09_E03E
+    jk_zone6	0x09, 0xd8, 0x03f, 249, 0	# zone 2: Sub_P09_E03F
+    jk_zone6	0x09, 0x58, 0x040, 249, 0	# zone 3: Sub_P09_E040
+    jk_zone6	0x09, 0xd8, 0x041, 249, 0	# zone 4: Sub_P09_E041
+    jk_zone6	0x09, 0x58, 0x042, 249, 0	# zone 5: Sub_P09_E042
+    jk_zone6	0x09, 0xd8, 0x043, 249, 0	# zone 6: Sub_P09_E043
+    jk_zone6	0x09, 0x18, 0x044, 249, 0	# zone 7: Sub_P09_E044
+    jk_zone6	0x09, 0x98, 0x045, 249, 0	# zone 8: Sub_P09_E045
+    jk_zone6	0x09, 0x18, 0x046, 249, 0	# zone 9: Sub_P09_E046
+    jk_zone6	0x09, 0x98, 0x047, 248, 0	# zone 10: Sub_P09_E047
+    jk_zone6	0x00, 0x58, 0x0c7, 243, 0	# zone 11: Sub_P00_E0C7
+    jk_zone6	0x00, 0x04, 0x025, 244, 0	# zone 12: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 252, 0	# zone 13: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 244, 0	# zone 14: Main_P00_E000 / Sub_P00_E000
+    .space	2, 0xff	# alignment
+JkMsHeader523:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones523:
+    jk_zone8	0x0a, 0x04, 0x01b, 249, 0, 2756	# zone 0: Main_P0A_E01B / Sub_P0A_E01B
+JkMsHeader740:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones740:
+    jk_zone8	0x00, 0x08, 0x065, 228, 0, 2756	# zone 0: Main_P00_E065 / Sub_P00_E065
+JkMsHeader524:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones524:
+    jk_zone8	0x0a, 0x08, 0x028, 251, 0, 2756	# zone 0: Main_P0A_E028 / Sub_P0A_E028
+JkMsHeader741:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones741:
+    jk_zone8	0x00, 0x08, 0x066, 245, 0, 2756	# zone 0: Main_P00_E066 / Sub_P00_E066
+JkMsHeader063:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones063:
+    jk_zone8	0x01, 0x54, 0x061, 252, 0, -674	# zone 0: Main_P01_E061 / Sub_P01_E061
+    jk_zone8	0x01, 0xd4, 0x062, 1, 0, -2021	# zone 1: Main_P01_E062 / Sub_P01_E062
+    jk_zone8	0x01, 0x14, 0x063, 1, 0, 0	# zone 2: Main_P01_E063 / Sub_P01_E063
+    jk_zone8	0x01, 0x94, 0x064, 0, 0, -1235	# zone 3: Main_P01_E064 / Sub_P01_E064
+    jk_zone8	0x01, 0xf4, 0x065, 253, 0, -2042	# zone 4: Main_P01_E065 / Sub_P01_E065
+    jk_zone8	0x01, 0x04, 0x06f, 254, 0, 0	# zone 5: Main_P01_E06F / Sub_P01_E06F
+    jk_zone8	0x01, 0xb4, 0x076, 245, 0, 0	# zone 6: Main_P01_E076 / Sub_P01_E076
+JkMsHeader167:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones167:
+    jk_zone8	0x04, 0x94, 0x018, 243, 0, -1469	# zone 0: Main_P04_E018 / Sub_P04_E018
+    jk_zone8	0x04, 0xf4, 0x019, 250, 0, -2480	# zone 1: Main_P04_E019 / Sub_P04_E019
+    jk_zone8	0x04, 0x54, 0x01a, 251, 0, -451	# zone 2: Main_P04_E01A / Sub_P04_E01A
+    jk_zone8	0x04, 0x74, 0x01b, 247, 0, -989	# zone 3: Main_P04_E01B / Sub_P04_E01B
+    jk_zone8	0x04, 0xb4, 0x01c, 253, 0, -1744	# zone 4: Main_P04_E01C / Sub_P04_E01C
+    jk_zone8	0x04, 0xd4, 0x01d, 252, 0, -2217	# zone 5: Main_P04_E01D / Sub_P04_E01D
+    jk_zone8	0x04, 0x54, 0x01e, 246, 0, -483	# zone 6: Main_P04_E01E / Sub_P04_E01E
+    jk_zone8	0x04, 0xb4, 0x01f, 254, 0, -1310	# zone 7: Main_P04_E01F / Sub_P04_E01F
+JkMsHeader252:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17	# key group -> zone
+JkZones252:
+    jk_zone6	0x0e, 0x14, 0x000, 245, 0	# zone 0: Main_P0E_E000 / Sub_P0E_E000
+    jk_zone6	0x0e, 0x14, 0x001, 249, 0	# zone 1: Main_P0E_E001 / Sub_P0E_E001
+    jk_zone6	0x0e, 0x14, 0x002, 248, 0	# zone 2: Main_P0E_E002 / Sub_P0E_E002
+    jk_zone6	0x0e, 0x14, 0x003, 247, 0	# zone 3: Main_P0E_E003 / Sub_P0E_E003
+    jk_zone6	0x0e, 0x14, 0x004, 240, 0	# zone 4: Main_P0E_E004 / Sub_P0E_E004
+    jk_zone6	0x0e, 0x14, 0x005, 237, 0	# zone 5: Main_P0E_E005 / Sub_P0E_E005
+    jk_zone6	0x0e, 0x14, 0x006, 237, 0	# zone 6: Main_P0E_E006 / Sub_P0E_E006
+    jk_zone6	0x0e, 0x14, 0x007, 237, 0	# zone 7: Main_P0E_E007 / Sub_P0E_E007
+    jk_zone6	0x0e, 0x14, 0x008, 239, 0	# zone 8: Main_P0E_E008 / Sub_P0E_E008
+    jk_zone6	0x0e, 0x14, 0x009, 241, 0	# zone 9: Main_P0E_E009 / Sub_P0E_E009
+    jk_zone6	0x0e, 0x14, 0x00a, 238, 0	# zone 10: Main_P0E_E00A / Sub_P0E_E00A
+    jk_zone6	0x0e, 0x14, 0x00b, 237, 0	# zone 11: Main_P0E_E00B / Sub_P0E_E00B
+    jk_zone6	0x0e, 0x14, 0x00c, 233, 0	# zone 12: Main_P0E_E00C / Sub_P0E_E00C
+    jk_zone6	0x0e, 0x14, 0x00d, 229, 0	# zone 13: Main_P0E_E00D / Sub_P0E_E00D
+    jk_zone6	0x0e, 0x14, 0x00e, 231, 0	# zone 14: Main_P0E_E00E / Sub_P0E_E00E
+    jk_zone6	0x0e, 0x14, 0x00f, 230, 0	# zone 15: Main_P0E_E00F / Sub_P0E_E00F
+    jk_zone6	0x04, 0x58, 0x031, 223, 0	# zone 16: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 217, 0	# zone 17: Main_P04_E032 / Sub_P04_E032
+JkMsHeader267:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones267:
+    jk_zone6	0x06, 0x74, 0x0ac, 240, 0	# zone 0: Main_P06_E0AC
+    jk_zone6	0x00, 0x04, 0x000, 248, 0	# zone 1: Main_P00_E000 / Sub_P00_E000
+JkMsHeader335:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones335:
+    jk_zone6	0x00, 0x18, 0x0c8, 245, 0	# zone 0: Sub_P00_E0C8
+    jk_zone6	0x00, 0xd8, 0x0c9, 248, 0	# zone 1: Sub_P00_E0C9
+    jk_zone6	0x00, 0x98, 0x0ca, 250, 0	# zone 2: Sub_P00_E0CA
+    jk_zone6	0x00, 0x18, 0x0cb, 247, 0	# zone 3: Sub_P00_E0CB
+    jk_zone6	0x00, 0x98, 0x0cc, 246, 0	# zone 4: Sub_P00_E0CC
+    jk_zone6	0x00, 0x18, 0x0cd, 245, 0	# zone 5: Sub_P00_E0CD
+    jk_zone6	0x00, 0xd8, 0x0ce, 249, 0	# zone 6: Sub_P00_E0CE
+    jk_zone6	0x00, 0x58, 0x0cf, 248, 0	# zone 7: Sub_P00_E0CF
+    jk_zone6	0x00, 0x04, 0x012, 248, 0	# zone 8: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 240, 0	# zone 9: Main_P00_E000 / Sub_P00_E000
+JkMsHeader349:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones349:
+    jk_zone6	0x09, 0x08, 0x019, 247, 0	# zone 0: Main_P09_E019 / Sub_P09_E019
+    jk_zone6	0x09, 0x08, 0x01a, 247, 0	# zone 1: Main_P09_E01A / Sub_P09_E01A
+    jk_zone6	0x09, 0x08, 0x01b, 246, 0	# zone 2: Sub_P09_E01B
+    jk_zone6	0x09, 0x08, 0x01c, 246, 0	# zone 3: Sub_P09_E01C
+    jk_zone6	0x09, 0x08, 0x01d, 246, 0	# zone 4: Sub_P09_E01D
+    jk_zone6	0x09, 0x08, 0x01e, 247, 0	# zone 5: Sub_P09_E01E
+    jk_zone6	0x09, 0x08, 0x01f, 246, 0	# zone 6: Sub_P09_E01F
+    jk_zone6	0x09, 0x08, 0x020, 245, 0	# zone 7: Sub_P09_E020
+    jk_zone6	0x09, 0x08, 0x018, 241, 0	# zone 8: Main_P09_E018 / Sub_P09_E018
+    jk_zone6	0x00, 0x04, 0x025, 236, 0	# zone 9: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 244, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 236, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader377:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones377:
+    jk_zone6	0x05, 0x04, 0x060, 248, 0	# zone 0: Main_P05_E060 / Sub_P05_E060
+    .space	2, 0xff	# alignment
+JkMsHeader435:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones435:
+    jk_zone8	0x08, 0x04, 0x032, 253, 0, 2756	# zone 0: Main_P08_E032
+JkMsHeader525:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones525:
+    jk_zone8	0x08, 0x04, 0x047, 1, 0, 2756	# zone 0: Main_P08_E047
+JkMsHeader568:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones568:
+    jk_zone8	0x08, 0x04, 0x041, 237, 0, 2756	# zone 0: Main_P08_E041
+JkMsHeader595:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones595:
+    jk_zone8	0x0b, 0x04, 0x01e, 249, 0, 1335	# zone 0: Main_P0B_E01E / Sub_P0B_E01E
+JkMsHeader626:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones626:
+    jk_zone8	0x0b, 0x04, 0x022, 226, 0, 2756	# zone 0: Main_P0B_E022 / Sub_P0B_E022
+JkMsHeader655:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones655:
+    jk_zone6	0x00, 0x04, 0x0ac, 232, 0	# zone 0: Main_P00_E0AC / Sub_P00_E0AC
+    .space	2, 0xff	# alignment
+JkMsHeader667:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones667:
+    jk_zone6	0x00, 0x04, 0x0b4, 248, 0	# zone 0: Main_P00_E0B4 / Sub_P00_E0B4
+    .space	2, 0xff	# alignment
+JkMsHeader742:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones742:
+    jk_zone8	0x00, 0x08, 0x067, 227, 0, 2756	# zone 0: Main_P00_E067 / Sub_P00_E067
+JkMsHeader769:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones769:
+    jk_zone8	0x06, 0x04, 0x047, 254, 0, 2756	# zone 0: Main_P06_E047 / Sub_P06_E047
+JkMsHeader809:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones809:
+    jk_zone8	0x06, 0x08, 0x032, 251, 0, 2756	# zone 0: Main_P06_E032 / Sub_P06_E032
+JkMsHeader253:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 12, 12, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18	# key group -> zone
+JkZones253:
+    jk_zone6	0x0e, 0x14, 0x010, 242, 0	# zone 0: Main_P0E_E010 / Sub_P0E_E010
+    jk_zone6	0x0e, 0x14, 0x011, 248, 0	# zone 1: Main_P0E_E011 / Sub_P0E_E011
+    jk_zone6	0x0e, 0x14, 0x012, 241, 0	# zone 2: Main_P0E_E012 / Sub_P0E_E012
+    jk_zone6	0x0e, 0x14, 0x013, 244, 0	# zone 3: Main_P0E_E013 / Sub_P0E_E013
+    jk_zone6	0x0e, 0x14, 0x014, 246, 0	# zone 4: Main_P0E_E014 / Sub_P0E_E014
+    jk_zone6	0x0e, 0x14, 0x015, 241, 0	# zone 5: Main_P0E_E015 / Sub_P0E_E015
+    jk_zone6	0x0e, 0x14, 0x016, 234, 0	# zone 6: Main_P0E_E016 / Sub_P0E_E016
+    jk_zone6	0x0e, 0x14, 0x017, 246, 0	# zone 7: Main_P0E_E017 / Sub_P0E_E017
+    jk_zone6	0x0e, 0x14, 0x018, 237, 0	# zone 8: Main_P0E_E018 / Sub_P0E_E018
+    jk_zone6	0x0e, 0x14, 0x019, 241, 0	# zone 9: Main_P0E_E019 / Sub_P0E_E019
+    jk_zone6	0x0e, 0x14, 0x01a, 245, 0	# zone 10: Main_P0E_E01A / Sub_P0E_E01A
+    jk_zone6	0x0e, 0x14, 0x01b, 236, 0	# zone 11: Main_P0E_E01B / Sub_P0E_E01B
+    jk_zone6	0x0e, 0x14, 0x01c, 236, 0	# zone 12: Main_P0E_E01C / Sub_P0E_E01C
+    jk_zone6	0x0e, 0x14, 0x01d, 229, 0	# zone 13: Main_P0E_E01D / Sub_P0E_E01D
+    jk_zone6	0x0e, 0x14, 0x01e, 226, 0	# zone 14: Main_P0E_E01E / Sub_P0E_E01E
+    jk_zone6	0x0e, 0x14, 0x01f, 238, 0	# zone 15: Main_P0E_E01F / Sub_P0E_E01F
+    jk_zone6	0x04, 0x58, 0x031, 231, 0	# zone 16: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x031, 227, 0	# zone 17: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 221, 0	# zone 18: Main_P04_E032 / Sub_P04_E032
+    .space	2, 0xff	# alignment
+JkMsHeader378:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones378:
+    jk_zone6	0x05, 0x04, 0x061, 248, 0	# zone 0: Main_P05_E061 / Sub_P05_E061
+    .space	2, 0xff	# alignment
+JkMsHeader596:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones596:
+    jk_zone8	0x0b, 0x08, 0x000, 247, 0, 1335	# zone 0: Main_P0B_E000 / Sub_P0B_E000
+JkMsHeader627:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones627:
+    jk_zone8	0x0b, 0x08, 0x005, 222, 0, 2756	# zone 0: Main_P0B_E005 / Sub_P0B_E005
+JkMsHeader656:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones656:
+    jk_zone6	0x00, 0x08, 0x051, 225, 0	# zone 0: Main_P00_E051 / Sub_P00_E051
+    .space	2, 0xff	# alignment
+JkMsHeader668:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones668:
+    jk_zone6	0x00, 0x08, 0x056, 248, 0	# zone 0: Main_P00_E056 / Sub_P00_E056
+    .space	2, 0xff	# alignment
+JkMsHeader743:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones743:
+    jk_zone8	0x00, 0x08, 0x068, 169, 0, 2756	# zone 0: Main_P00_E068 / Sub_P00_E068
+JkMsHeader254:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones254:
+    jk_zone6	0x0d, 0x18, 0x0c0, 235, 0	# zone 0: Sub_P0D_E0C0
+    jk_zone6	0x0d, 0x18, 0x0c1, 242, 0	# zone 1: Sub_P0D_E0C1
+    jk_zone6	0x0d, 0x18, 0x0c2, 240, 0	# zone 2: Sub_P0D_E0C2
+    jk_zone6	0x0d, 0x18, 0x0c3, 245, 0	# zone 3: Sub_P0D_E0C3
+    jk_zone6	0x0d, 0x18, 0x0c4, 239, 0	# zone 4: Sub_P0D_E0C4
+    jk_zone6	0x0d, 0x18, 0x0c5, 241, 0	# zone 5: Sub_P0D_E0C5
+    jk_zone6	0x0d, 0x18, 0x0c6, 235, 0	# zone 6: Sub_P0D_E0C6
+    jk_zone6	0x0d, 0x18, 0x0c7, 234, 0	# zone 7: Sub_P0D_E0C7
+    jk_zone6	0x0d, 0x18, 0x0c8, 231, 0	# zone 8: Sub_P0D_E0C8
+    jk_zone6	0x0d, 0x18, 0x0c9, 227, 0	# zone 9: Sub_P0D_E0C9
+    jk_zone6	0x04, 0x58, 0x031, 231, 0	# zone 10: Main_P04_E031 / Sub_P04_E031
+    jk_zone6	0x04, 0x58, 0x032, 225, 0	# zone 11: Main_P04_E032 / Sub_P04_E032
+JkMsHeader436:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones436:
+    jk_zone8	0x01, 0x08, 0x0bb, 253, 0, 2756	# zone 0: Sub_P01_E0BB
+JkMsHeader597:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones597:
+    jk_zone8	0x0c, 0x04, 0x008, 243, 0, 2756	# zone 0: Main_P0C_E008 / Sub_P0C_E008
+JkMsHeader744:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones744:
+    jk_zone8	0x00, 0x08, 0x069, 248, 0, 2756	# zone 0: Main_P00_E069 / Sub_P00_E069
+JkMsHeader598:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones598:
+    jk_zone8	0x0c, 0x08, 0x008, 249, 0, 2756	# zone 0: Main_P0C_E008 / Sub_P0C_E008
+JkMsHeader745:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones745:
+    jk_zone8	0x00, 0x08, 0x06a, 225, 0, 2756	# zone 0: Main_P00_E06A / Sub_P00_E06A
+JkMsHeader526:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones526:
+    jk_zone8	0x01, 0x08, 0x0c2, 252, 0, 2756	# zone 0: Sub_P01_E0C2
+JkMsHeader599:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones599:
+    jk_zone8	0x0c, 0x04, 0x013, 227, 0, 2756	# zone 0: Main_P0C_E013 / Sub_P0C_E013
+JkMsHeader600:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones600:
+    jk_zone8	0x0c, 0x08, 0x013, 228, 0, 2756	# zone 0: Main_P0C_E013 / Sub_P0C_E013
+JkMsHeader168:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones168:
+    jk_zone8	0x0b, 0xd4, 0x000, 249, 0, -1867	# zone 0: Main_P0B_E000 / Sub_P0B_E000
+    jk_zone8	0x0b, 0xf4, 0x001, 249, 0, -3519	# zone 1: Main_P0B_E001 / Sub_P0B_E001
+    jk_zone8	0x0b, 0x54, 0x002, 251, 0, -1608	# zone 2: Main_P0B_E002 / Sub_P0B_E002
+    jk_zone8	0x0b, 0x94, 0x003, 252, 0, -2348	# zone 3: Main_P0B_E003 / Sub_P0B_E003
+    jk_zone8	0x0b, 0x94, 0x004, 253, 0, -2605	# zone 4: Main_P0B_E004 / Sub_P0B_E004
+    jk_zone8	0x0b, 0xd4, 0x005, 255, 0, -3360	# zone 5: Main_P0B_E005 / Sub_P0B_E005
+    jk_zone8	0x0b, 0x34, 0x006, 248, 0, -1327	# zone 6: Main_P0B_E006 / Sub_P0B_E006
+    jk_zone8	0x0b, 0x74, 0x007, 246, 0, 0	# zone 7: Main_P0B_E007 / Sub_P0B_E007
+JkMsHeader350:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11	# key group -> zone
+JkZones350:
+    jk_zone6	0x09, 0x08, 0x021, 248, 0	# zone 0: Sub_P09_E021
+    jk_zone6	0x09, 0x08, 0x022, 247, 0	# zone 1: Sub_P09_E022
+    jk_zone6	0x09, 0x08, 0x023, 246, 0	# zone 2: Sub_P09_E023
+    jk_zone6	0x09, 0x08, 0x024, 246, 0	# zone 3: Sub_P09_E024
+    jk_zone6	0x09, 0x08, 0x025, 246, 0	# zone 4: Sub_P09_E025
+    jk_zone6	0x09, 0x08, 0x026, 246, 0	# zone 5: Sub_P09_E026
+    jk_zone6	0x09, 0x08, 0x027, 244, 0	# zone 6: Sub_P09_E027
+    jk_zone6	0x09, 0x08, 0x028, 239, 0	# zone 7: Sub_P09_E028
+    jk_zone6	0x09, 0x08, 0x018, 229, 0	# zone 8: Main_P09_E018 / Sub_P09_E018
+    jk_zone6	0x00, 0x04, 0x025, 224, 0	# zone 9: Main_P00_E025 / Sub_P00_E025
+    jk_zone6	0x00, 0x04, 0x012, 232, 0	# zone 10: Main_P00_E012 / Sub_P00_E012
+    jk_zone6	0x00, 0x04, 0x000, 224, 0	# zone 11: Main_P00_E000 / Sub_P00_E000
+JkMsHeader437:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones437:
+    jk_zone8	0x08, 0x04, 0x031, 255, 0, 2756	# zone 0: Main_P08_E031
+JkMsHeader527:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones527:
+    jk_zone8	0x08, 0x04, 0x048, 252, 0, 2756	# zone 0: Main_P08_E048
+JkMsHeader601:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones601:
+    jk_zone8	0x0b, 0x04, 0x01f, 248, 0, 1335	# zone 0: Main_P0B_E01F / Sub_P0B_E01F
+JkMsHeader770:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones770:
+    jk_zone8	0x0f, 0x08, 0x019, 250, 0, 1229	# zone 0: Sub_P0F_E019
+JkMsHeader602:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones602:
+    jk_zone8	0x0b, 0x08, 0x001, 250, 0, 1335	# zone 0: Main_P0B_E001 / Sub_P0B_E001
+JkMsHeader603:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones603:
+    jk_zone8	0x0c, 0x04, 0x007, 244, 0, 2756	# zone 0: Main_P0C_E007 / Sub_P0C_E007
+JkMsHeader604:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones604:
+    jk_zone8	0x0c, 0x08, 0x007, 250, 0, 2756	# zone 0: Main_P0C_E007 / Sub_P0C_E007
+JkMsHeader605:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones605:
+    jk_zone8	0x0c, 0x04, 0x012, 205, 0, 2756	# zone 0: Main_P0C_E012 / Sub_P0C_E012
+JkMsHeader606:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones606:
+    jk_zone8	0x0c, 0x08, 0x012, 215, 0, 2756	# zone 0: Main_P0C_E012 / Sub_P0C_E012
+JkMsHeader040:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones040:
+    jk_zone6	0x03, 0x34, 0x06e, 252, 0	# zone 0: Main_P03_E06E
+    jk_zone6	0x03, 0x34, 0x06f, 248, 0	# zone 1: Main_P03_E06F
+    jk_zone6	0x03, 0x34, 0x070, 244, 0	# zone 2: Main_P03_E070
+    jk_zone6	0x03, 0x34, 0x071, 244, 0	# zone 3: Main_P03_E071
+JkMsHeader056:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones056:
+    jk_zone6	0x01, 0x14, 0x049, 254, 0	# zone 0: Main_P01_E049 / Sub_P01_E049
+    jk_zone6	0x01, 0x04, 0x049, 254, 0	# zone 1: Main_P01_E049 / Sub_P01_E049
+    jk_zone6	0x01, 0x04, 0x04a, 253, 0	# zone 2: Main_P01_E04A / Sub_P01_E04A
+    jk_zone6	0x01, 0x04, 0x04b, 249, 0	# zone 3: Main_P01_E04B / Sub_P01_E04B
+    jk_zone6	0x01, 0x04, 0x04c, 251, 0	# zone 4: Main_P01_E04C / Sub_P01_E04C
+    jk_zone6	0x01, 0x04, 0x04d, 251, 0	# zone 5: Main_P01_E04D / Sub_P01_E04D
+    jk_zone6	0x01, 0x04, 0x04e, 248, 0	# zone 6: Main_P01_E04E / Sub_P01_E04E
+    jk_zone6	0x01, 0x04, 0x04f, 248, 0	# zone 7: Main_P01_E04F / Sub_P01_E04F
+    jk_zone6	0x01, 0x04, 0x050, 248, 0	# zone 8: Main_P01_E050 / Sub_P01_E050
+    jk_zone6	0x01, 0x04, 0x051, 248, 0	# zone 9: Main_P01_E051 / Sub_P01_E051
+JkMsHeader074:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones074:
+    jk_zone6	0x01, 0xd8, 0x069, 245, 0	# zone 0: Main_P01_E069 / Sub_P01_E069
+    jk_zone6	0x01, 0x38, 0x06a, 253, 0	# zone 1: Main_P01_E06A / Sub_P01_E06A
+    jk_zone6	0x01, 0xf8, 0x06b, 241, 0	# zone 2: Main_P01_E06B / Sub_P01_E06B
+    jk_zone6	0x01, 0xf8, 0x06c, 238, 0	# zone 3: Main_P01_E06C / Sub_P01_E06C
+JkMsHeader085:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones085:
+    jk_zone6	0x00, 0x08, 0x018, 252, 0	# zone 0: Main_P00_E018 / Sub_P00_E018
+    jk_zone6	0x00, 0x08, 0x019, 252, 0	# zone 1: Main_P00_E019 / Sub_P00_E019
+    jk_zone6	0x00, 0x08, 0x01a, 251, 0	# zone 2: Main_P00_E01A / Sub_P00_E01A
+    jk_zone6	0x00, 0x08, 0x01b, 243, 0	# zone 3: Main_P00_E01B / Sub_P00_E01B
+    jk_zone6	0x00, 0x08, 0x01c, 0, 0	# zone 4: Main_P00_E01C / Sub_P00_E01C
+    jk_zone6	0x00, 0x08, 0x01d, 245, 0	# zone 5: Main_P00_E01D / Sub_P00_E01D
+    jk_zone6	0x00, 0x08, 0x01e, 245, 0	# zone 6: Main_P00_E01E / Sub_P00_E01E
+    jk_zone6	0x00, 0x08, 0x017, 251, 0	# zone 7: Main_P00_E017 / Sub_P00_E017
+    jk_zone6	0x09, 0x08, 0x008, 240, 0	# zone 8: Main_P09_E008 / Sub_P09_E008
+    jk_zone6	0x03, 0x04, 0x00f, 224, 0	# zone 9: Main_P03_E00F / Sub_P03_E00F
+    jk_zone6	0x03, 0x04, 0x010, 224, 0	# zone 10: Main_P03_E010 / Sub_P03_E010
+    .space	2, 0xff	# alignment
+JkMsHeader109:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# key group -> zone
+JkZones109:
+    jk_zone6	0x03, 0xd4, 0x080, 251, 0	# zone 0: Main_P03_E080
+    jk_zone6	0x03, 0x18, 0x03e, 244, 0	# zone 1: Main_P03_E03E / Sub_P03_E03E
+JkMsHeader128:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones128:
+    jk_zone8	0x02, 0x08, 0x00e, 2, 0, -697	# zone 0: Main_P02_E00E / Sub_P02_E00E
+    jk_zone8	0x02, 0x08, 0x00f, 1, 0, -2537	# zone 1: Main_P02_E00F / Sub_P02_E00F
+    jk_zone8	0x02, 0x08, 0x010, 252, 0, -1215	# zone 2: Main_P02_E010 / Sub_P02_E010
+    jk_zone8	0x02, 0x08, 0x011, 242, 0, -3001	# zone 3: Main_P02_E011 / Sub_P02_E011
+    jk_zone8	0x02, 0x08, 0x012, 244, 0, -1075	# zone 4: Main_P02_E012 / Sub_P02_E012
+    jk_zone8	0x02, 0x08, 0x013, 248, 0, -2505	# zone 5: Main_P02_E013 / Sub_P02_E013
+JkMsHeader132:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones132:
+    jk_zone8	0x02, 0x08, 0x019, 5, 0, -3378	# zone 0: Main_P02_E019 / Sub_P02_E019
+    jk_zone8	0x02, 0x08, 0x01a, 1, 0, -1797	# zone 1: Main_P02_E01A / Sub_P02_E01A
+    jk_zone8	0x02, 0x08, 0x01b, 253, 0, -3385	# zone 2: Main_P02_E01B / Sub_P02_E01B
+    jk_zone8	0x02, 0x08, 0x01c, 247, 0, -1797	# zone 3: Main_P02_E01C / Sub_P02_E01C
+JkMsHeader268:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones268:
+    jk_zone8	0x0d, 0x04, 0x000, 246, 0, -3072	# zone 0: Main_P0D_E000 / Sub_P0D_E000
+    jk_zone8	0x0d, 0x04, 0x001, 243, 0, -3072	# zone 1: Main_P0D_E001 / Sub_P0D_E001
+    jk_zone8	0x0d, 0x04, 0x002, 245, 0, -3072	# zone 2: Main_P0D_E002 / Sub_P0D_E002
+    jk_zone8	0x0d, 0x04, 0x003, 240, 0, -3072	# zone 3: Main_P0D_E003 / Sub_P0D_E003
+    jk_zone8	0x0d, 0x04, 0x004, 234, 0, -3072	# zone 4: Main_P0D_E004 / Sub_P0D_E004
+    jk_zone8	0x0d, 0x04, 0x005, 228, 0, -3072	# zone 5: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x04, 0x006, 222, 0, -3072	# zone 6: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader299:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones299:
+    jk_zone8	0x0d, 0x08, 0x06e, 243, 0, -3072	# zone 0: Main_P0D_E06E / Sub_P0D_E06E
+    jk_zone8	0x0d, 0x08, 0x06f, 239, 0, -3072	# zone 1: Main_P0D_E06F / Sub_P0D_E06F
+    jk_zone8	0x0d, 0x08, 0x070, 242, 0, -3072	# zone 2: Main_P0D_E070 / Sub_P0D_E070
+    jk_zone8	0x0d, 0x08, 0x071, 249, 0, -3072	# zone 3: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, -3072	# zone 4: Main_P0D_E072 / Sub_P0D_E072
+JkMsHeader336:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones336:
+    jk_zone6	0x0d, 0x08, 0x01b, 225, 0	# zone 0: Main_P0D_E01B / Sub_P0D_E01B
+    jk_zone6	0x0d, 0x08, 0x01c, 224, 0	# zone 1: Main_P0D_E01C / Sub_P0D_E01C
+    jk_zone6	0x0d, 0x08, 0x01d, 222, 0	# zone 2: Main_P0D_E01D / Sub_P0D_E01D
+    jk_zone6	0x0d, 0x08, 0x01e, 219, 0	# zone 3: Main_P0D_E01E / Sub_P0D_E01E
+    jk_zone6	0x0d, 0x08, 0x01f, 219, 0	# zone 4: Main_P0D_E01F / Sub_P0D_E01F
+    jk_zone6	0x0d, 0x08, 0x020, 218, 0	# zone 5: Main_P0D_E020 / Sub_P0D_E020
+    jk_zone6	0x0d, 0x08, 0x021, 221, 0	# zone 6: Main_P0D_E021 / Sub_P0D_E021
+    jk_zone6	0x0d, 0x08, 0x022, 218, 0	# zone 7: Main_P0D_E022 / Sub_P0D_E022
+JkMsHeader351:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones351:
+    jk_zone8	0x0d, 0x04, 0x02a, 221, 0, -3072	# zone 0: Main_P0D_E02A / Sub_P0D_E02A
+    jk_zone8	0x0d, 0x04, 0x02b, 229, 0, -3072	# zone 1: Main_P0D_E02B / Sub_P0D_E02B
+    jk_zone8	0x0d, 0x04, 0x02c, 231, 0, -3072	# zone 2: Main_P0D_E02C / Sub_P0D_E02C
+    jk_zone8	0x0d, 0x04, 0x02d, 229, 0, -3072	# zone 3: Main_P0D_E02D / Sub_P0D_E02D
+    jk_zone8	0x0d, 0x04, 0x02e, 225, 0, -3072	# zone 4: Main_P0D_E02E / Sub_P0D_E02E
+    jk_zone8	0x0d, 0x04, 0x02f, 219, 0, -3072	# zone 5: Main_P0D_E02F / Sub_P0D_E02F
+JkMsHeader393:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones393:
+    jk_zone6	0x01, 0x14, 0x052, 0, 0	# zone 0: Main_P01_E052 / Sub_P01_E052
+    .space	2, 0xff	# alignment
+JkMsHeader438:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones438:
+    jk_zone8	0x08, 0x04, 0x033, 252, 0, 2756	# zone 0: Main_P08_E033
+JkMsHeader528:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones528:
+    jk_zone8	0x01, 0x18, 0x0b0, 245, 0, 2756	# zone 0: Sub_P01_E0B0
+JkMsHeader607:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones607:
+    jk_zone8	0x08, 0x04, 0x057, 239, 0, 3840	# zone 0: Main_P08_E057
+JkMsHeader628:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones628:
+    jk_zone8	0x00, 0x04, 0x0a6, 226, 0, 2756	# zone 0: Main_P00_E0A6 / Sub_P00_E0A6
+JkMsHeader690:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones690:
+    jk_zone8	0x06, 0x08, 0x03a, 208, 0, 2756	# zone 0: Main_P06_E03A / Sub_P06_E03A
+JkMsHeader810:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones810:
+    jk_zone8	0x06, 0x08, 0x030, 251, 0, 2756	# zone 0: Main_P06_E030 / Sub_P06_E030
+JkMsHeader830:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones830:
+    jk_zone8	0x06, 0x08, 0x025, 249, 0, 2756	# zone 0: Main_P06_E025 / Sub_P06_E025
+JkMsHeader849:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones849:
+    jk_zone8	0x09, 0x08, 0x081, 244, 0, 2756	# zone 0: Sub_P09_E081
+JkMsHeader269:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones269:
+    jk_zone6	0x0d, 0x04, 0x007, 237, 0	# zone 0: Main_P0D_E007 / Sub_P0D_E007
+    jk_zone6	0x0d, 0x04, 0x008, 230, 0	# zone 1: Main_P0D_E008 / Sub_P0D_E008
+    jk_zone6	0x0d, 0x04, 0x009, 235, 0	# zone 2: Main_P0D_E009 / Sub_P0D_E009
+    jk_zone6	0x0d, 0x04, 0x00a, 229, 0	# zone 3: Main_P0D_E00A / Sub_P0D_E00A
+    jk_zone6	0x0d, 0x04, 0x00b, 219, 0	# zone 4: Main_P0D_E00B / Sub_P0D_E00B
+    jk_zone6	0x0d, 0x04, 0x00c, 214, 0	# zone 5: Main_P0D_E00C / Sub_P0D_E00C
+    jk_zone6	0x0d, 0x04, 0x00d, 206, 0	# zone 6: Main_P0D_E00D / Sub_P0D_E00D
+    .space	2, 0xff	# alignment
+JkMsHeader300:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones300:
+    jk_zone8	0x0d, 0x08, 0x071, 247, 0, 4869	# zone 0: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, 4869	# zone 1: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone8	0x0d, 0x08, 0x073, 225, 0, 4869	# zone 2: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 4869	# zone 3: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 193, 0, 4869	# zone 4: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader337:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones337:
+    jk_zone6	0x0d, 0x08, 0x023, 210, 0	# zone 0: Main_P0D_E023 / Sub_P0D_E023
+    jk_zone6	0x0d, 0x08, 0x024, 216, 0	# zone 1: Main_P0D_E024 / Sub_P0D_E024
+    jk_zone6	0x0d, 0x08, 0x025, 219, 0	# zone 2: Main_P0D_E025 / Sub_P0D_E025
+    jk_zone6	0x0d, 0x08, 0x026, 221, 0	# zone 3: Main_P0D_E026 / Sub_P0D_E026
+    jk_zone6	0x0d, 0x08, 0x027, 219, 0	# zone 4: Main_P0D_E027 / Sub_P0D_E027
+    jk_zone6	0x0d, 0x08, 0x028, 225, 0	# zone 5: Main_P0D_E028 / Sub_P0D_E028
+    jk_zone6	0x0d, 0x08, 0x029, 225, 0	# zone 6: Main_P0D_E029 / Sub_P0D_E029
+    .space	2, 0xff	# alignment
+JkMsHeader352:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones352:
+    jk_zone6	0x0d, 0x04, 0x030, 218, 0	# zone 0: Main_P0D_E030 / Sub_P0D_E030
+    jk_zone6	0x0d, 0x04, 0x031, 219, 0	# zone 1: Main_P0D_E031 / Sub_P0D_E031
+    jk_zone6	0x0d, 0x04, 0x032, 219, 0	# zone 2: Main_P0D_E032 / Sub_P0D_E032
+    jk_zone6	0x0d, 0x04, 0x033, 218, 0	# zone 3: Main_P0D_E033 / Sub_P0D_E033
+    jk_zone6	0x0d, 0x04, 0x034, 214, 0	# zone 4: Main_P0D_E034 / Sub_P0D_E034
+    jk_zone6	0x0d, 0x04, 0x035, 210, 0	# zone 5: Main_P0D_E035 / Sub_P0D_E035
+    jk_zone6	0x0d, 0x04, 0x036, 207, 0	# zone 6: Main_P0D_E036 / Sub_P0D_E036
+    jk_zone6	0x0d, 0x04, 0x037, 199, 0	# zone 7: Main_P0D_E037 / Sub_P0D_E037
+JkMsHeader394:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones394:
+    jk_zone6	0x01, 0x14, 0x053, 0, 0	# zone 0: Main_P01_E053 / Sub_P01_E053
+    .space	2, 0xff	# alignment
+JkMsHeader529:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones529:
+    jk_zone8	0x01, 0x18, 0x0b1, 254, 0, 2756	# zone 0: Sub_P01_E0B1
+JkMsHeader629:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones629:
+    jk_zone8	0x00, 0x08, 0x04c, 230, 0, 2756	# zone 0: Main_P00_E04C / Sub_P00_E04C
+JkMsHeader691:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones691:
+    jk_zone8	0x06, 0x08, 0x03b, 161, 0, 2756	# zone 0: Main_P06_E03B / Sub_P06_E03B
+JkMsHeader270:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones270:
+    jk_zone8	0x0d, 0x04, 0x00e, 2, 0, -3072	# zone 0: Main_P0D_E00E / Sub_P0D_E00E
+    jk_zone8	0x0d, 0x04, 0x00f, 253, 0, -3072	# zone 1: Main_P0D_E00F / Sub_P0D_E00F
+    jk_zone8	0x0d, 0x04, 0x010, 0, 0, -3072	# zone 2: Main_P0D_E010 / Sub_P0D_E010
+    jk_zone8	0x0d, 0x04, 0x011, 249, 0, -3072	# zone 3: Main_P0D_E011 / Sub_P0D_E011
+    jk_zone8	0x0d, 0x04, 0x012, 245, 0, -3072	# zone 4: Main_P0D_E012 / Sub_P0D_E012
+    jk_zone8	0x0d, 0x04, 0x013, 238, 0, -3072	# zone 5: Main_P0D_E013 / Sub_P0D_E013
+    jk_zone8	0x0d, 0x04, 0x014, 231, 0, -3072	# zone 6: Main_P0D_E014 / Sub_P0D_E014
+    jk_zone8	0x0d, 0x04, 0x006, 222, 0, -3072	# zone 7: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader301:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9	# key group -> zone
+JkZones301:
+    jk_zone8	0x0d, 0x04, 0x086, 4, 0, -3072	# zone 0: Main_P0D_E086 / Sub_P0D_E086
+    jk_zone8	0x0d, 0x04, 0x087, 3, 0, -3072	# zone 1: Main_P0D_E087 / Sub_P0D_E087
+    jk_zone8	0x0d, 0x04, 0x088, 253, 0, -3072	# zone 2: Main_P0D_E088 / Sub_P0D_E088
+    jk_zone8	0x0d, 0x04, 0x089, 254, 0, -3072	# zone 3: Main_P0D_E089 / Sub_P0D_E089
+    jk_zone8	0x0d, 0x04, 0x08a, 251, 0, -3072	# zone 4: Main_P0D_E08A / Sub_P0D_E08A
+    jk_zone8	0x0d, 0x04, 0x08b, 254, 0, -3072	# zone 5: Main_P0D_E08B / Sub_P0D_E08B
+    jk_zone8	0x0d, 0x04, 0x08c, 253, 0, -3072	# zone 6: Main_P0D_E08C / Sub_P0D_E08C
+    jk_zone8	0x0d, 0x04, 0x08d, 243, 0, -3072	# zone 7: Main_P0D_E08D / Sub_P0D_E08D
+    jk_zone8	0x0d, 0x04, 0x08e, 238, 0, -3072	# zone 8: Main_P0D_E08E / Sub_P0D_E08E
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, -3072	# zone 9: Main_P0D_E072 / Sub_P0D_E072
+JkMsHeader338:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones338:
+    jk_zone6	0x0d, 0x08, 0x02a, 226, 0	# zone 0: Main_P0D_E02A / Sub_P0D_E02A
+    jk_zone6	0x0d, 0x08, 0x02b, 227, 0	# zone 1: Main_P0D_E02B / Sub_P0D_E02B
+    jk_zone6	0x0d, 0x08, 0x02c, 225, 0	# zone 2: Main_P0D_E02C / Sub_P0D_E02C
+    jk_zone6	0x0d, 0x08, 0x02d, 229, 0	# zone 3: Main_P0D_E02D / Sub_P0D_E02D
+    jk_zone6	0x0d, 0x08, 0x02e, 222, 0	# zone 4: Main_P0D_E02E / Sub_P0D_E02E
+    jk_zone6	0x0d, 0x08, 0x02f, 223, 0	# zone 5: Main_P0D_E02F / Sub_P0D_E02F
+    jk_zone6	0x0d, 0x08, 0x030, 223, 0	# zone 6: Main_P0D_E030 / Sub_P0D_E030
+    jk_zone6	0x0d, 0x08, 0x031, 236, 0	# zone 7: Main_P0D_E031 / Sub_P0D_E031
+    jk_zone6	0x0d, 0x08, 0x022, 218, 0	# zone 8: Main_P0D_E022 / Sub_P0D_E022
+    .space	2, 0xff	# alignment
+JkMsHeader353:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones353:
+    jk_zone8	0x0d, 0x04, 0x038, 219, 0, -3072	# zone 0: Main_P0D_E038 / Sub_P0D_E038
+    jk_zone8	0x0d, 0x04, 0x039, 222, 0, -3072	# zone 1: Main_P0D_E039 / Sub_P0D_E039
+    jk_zone8	0x0d, 0x04, 0x03a, 226, 0, -3072	# zone 2: Main_P0D_E03A / Sub_P0D_E03A
+    jk_zone8	0x0d, 0x04, 0x03b, 237, 0, -3072	# zone 3: Main_P0D_E03B / Sub_P0D_E03B
+    jk_zone8	0x0d, 0x04, 0x03c, 230, 0, -3072	# zone 4: Main_P0D_E03C / Sub_P0D_E03C
+    jk_zone8	0x0d, 0x04, 0x03d, 229, 0, -3072	# zone 5: Main_P0D_E03D / Sub_P0D_E03D
+    jk_zone8	0x0d, 0x04, 0x03e, 217, 0, -3072	# zone 6: Main_P0D_E03E / Sub_P0D_E03E
+    jk_zone8	0x0d, 0x04, 0x03f, 218, 0, -3072	# zone 7: Main_P0D_E03F / Sub_P0D_E03F
+    jk_zone8	0x0d, 0x04, 0x02f, 219, 0, -3072	# zone 8: Main_P0D_E02F / Sub_P0D_E02F
+JkMsHeader439:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones439:
+    jk_zone8	0x01, 0x08, 0x0b8, 252, 0, 2756	# zone 0: Sub_P01_E0B8
+JkMsHeader692:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones692:
+    jk_zone8	0x06, 0x08, 0x03c, 241, 0, 2756	# zone 0: Main_P06_E03C / Sub_P06_E03C
+JkMsHeader271:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones271:
+    jk_zone8	0x0d, 0x08, 0x002, 224, 0, 4869	# zone 0: Main_P0D_E002 / Sub_P0D_E002
+    jk_zone8	0x0d, 0x08, 0x003, 221, 0, 4869	# zone 1: Main_P0D_E003 / Sub_P0D_E003
+    jk_zone8	0x0d, 0x08, 0x004, 219, 0, 4869	# zone 2: Main_P0D_E004 / Sub_P0D_E004
+    jk_zone8	0x0d, 0x08, 0x005, 210, 0, 4869	# zone 3: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x08, 0x006, 202, 0, 4869	# zone 4: Main_P0D_E006 / Sub_P0D_E006
+    jk_zone8	0x0d, 0x08, 0x007, 203, 0, 4869	# zone 5: Main_P0D_E007 / Sub_P0D_E007
+JkMsHeader302:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+JkZones302:
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, 7133	# zone 0: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone8	0x0d, 0x08, 0x073, 225, 0, 7133	# zone 1: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 7133	# zone 2: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 193, 0, 7133	# zone 3: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader693:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones693:
+    jk_zone8	0x06, 0x08, 0x03d, 156, 0, 2756	# zone 0: Main_P06_E03D / Sub_P06_E03D
+JkMsHeader272:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones272:
+    jk_zone8	0x0d, 0x04, 0x015, 253, 0, -3072	# zone 0: Main_P0D_E015 / Sub_P0D_E015
+    jk_zone8	0x0d, 0x04, 0x016, 251, 0, -3072	# zone 1: Main_P0D_E016 / Sub_P0D_E016
+    jk_zone8	0x0d, 0x04, 0x017, 252, 0, -3072	# zone 2: Main_P0D_E017 / Sub_P0D_E017
+    jk_zone8	0x0d, 0x04, 0x018, 248, 0, -3072	# zone 3: Main_P0D_E018 / Sub_P0D_E018
+    jk_zone8	0x0d, 0x04, 0x019, 242, 0, -3072	# zone 4: Main_P0D_E019 / Sub_P0D_E019
+    jk_zone8	0x0d, 0x04, 0x01a, 234, 0, -3072	# zone 5: Main_P0D_E01A / Sub_P0D_E01A
+    jk_zone8	0x0d, 0x04, 0x01b, 229, 0, -3072	# zone 6: Main_P0D_E01B / Sub_P0D_E01B
+    jk_zone8	0x0d, 0x04, 0x006, 222, 0, -3072	# zone 7: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader303:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones303:
+    jk_zone8	0x0d, 0x04, 0x08f, 0, 0, -3072	# zone 0: Main_P0D_E08F / Sub_P0D_E08F
+    jk_zone8	0x0d, 0x04, 0x090, 254, 0, -3072	# zone 1: Main_P0D_E090 / Sub_P0D_E090
+    jk_zone8	0x0d, 0x04, 0x091, 248, 0, -3072	# zone 2: Main_P0D_E091 / Sub_P0D_E091
+    jk_zone8	0x0d, 0x04, 0x092, 252, 0, -3072	# zone 3: Main_P0D_E092 / Sub_P0D_E092
+    jk_zone8	0x0d, 0x04, 0x093, 249, 0, -3072	# zone 4: Main_P0D_E093 / Sub_P0D_E093
+    jk_zone8	0x0d, 0x04, 0x094, 251, 0, -3072	# zone 5: Main_P0D_E094 / Sub_P0D_E094
+    jk_zone8	0x0d, 0x04, 0x095, 250, 0, -3072	# zone 6: Main_P0D_E095 / Sub_P0D_E095
+    jk_zone8	0x0d, 0x04, 0x096, 239, 0, -3072	# zone 7: Main_P0D_E096 / Sub_P0D_E096
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, -3072	# zone 8: Main_P0D_E072 / Sub_P0D_E072
+JkMsHeader440:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones440:
+    jk_zone8	0x08, 0x04, 0x036, 254, 0, 2756	# zone 0: Main_P08_E036
+JkMsHeader530:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones530:
+    jk_zone8	0x08, 0x04, 0x04c, 246, 0, 2756	# zone 0: Main_P08_E04C
+JkMsHeader694:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones694:
+    jk_zone8	0x06, 0x08, 0x03e, 176, 0, 2756	# zone 0: Main_P06_E03E / Sub_P06_E03E
+JkMsHeader811:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones811:
+    jk_zone8	0x06, 0x08, 0x031, 251, 0, 2756	# zone 0: Main_P06_E031 / Sub_P06_E031
+JkMsHeader273:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones273:
+    jk_zone6	0x0d, 0x04, 0x01c, 241, 0	# zone 0: Main_P0D_E01C / Sub_P0D_E01C
+    jk_zone6	0x0d, 0x04, 0x01d, 245, 0	# zone 1: Main_P0D_E01D / Sub_P0D_E01D
+    jk_zone6	0x0d, 0x04, 0x01e, 246, 0	# zone 2: Main_P0D_E01E / Sub_P0D_E01E
+    jk_zone6	0x0d, 0x04, 0x01f, 237, 0	# zone 3: Main_P0D_E01F / Sub_P0D_E01F
+    jk_zone6	0x0d, 0x04, 0x020, 228, 0	# zone 4: Main_P0D_E020 / Sub_P0D_E020
+    jk_zone6	0x0d, 0x04, 0x021, 226, 0	# zone 5: Main_P0D_E021 / Sub_P0D_E021
+    jk_zone6	0x0d, 0x04, 0x022, 216, 0	# zone 6: Main_P0D_E022 / Sub_P0D_E022
+    jk_zone6	0x0d, 0x04, 0x00d, 206, 0	# zone 7: Main_P0D_E00D / Sub_P0D_E00D
+JkMsHeader304:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones304:
+    jk_zone8	0x0d, 0x04, 0x097, 2, 0, -3072	# zone 0: Main_P0D_E097 / Sub_P0D_E097
+    jk_zone8	0x0d, 0x04, 0x098, 247, 0, -3072	# zone 1: Main_P0D_E098 / Sub_P0D_E098
+    jk_zone8	0x0d, 0x04, 0x099, 232, 0, -3072	# zone 2: Main_P0D_E099 / Sub_P0D_E099
+    jk_zone8	0x0d, 0x04, 0x09a, 217, 0, -3072	# zone 3: Main_P0D_E09A / Sub_P0D_E09A
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 4869	# zone 4: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 193, 0, 4869	# zone 5: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader531:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones531:
+    jk_zone8	0x01, 0x08, 0x0c0, 251, 0, 2756	# zone 0: Sub_P01_E0C0
+JkMsHeader695:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones695:
+    jk_zone8	0x06, 0x08, 0x03f, 163, 0, 2756	# zone 0: Main_P06_E03F / Sub_P06_E03F
+JkMsHeader274:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones274:
+    jk_zone8	0x0d, 0x04, 0x023, 1, 0, -3072	# zone 0: Main_P0D_E023 / Sub_P0D_E023
+    jk_zone8	0x0d, 0x04, 0x024, 0, 0, -3072	# zone 1: Main_P0D_E024 / Sub_P0D_E024
+    jk_zone8	0x0d, 0x04, 0x025, 4, 0, -3072	# zone 2: Main_P0D_E025 / Sub_P0D_E025
+    jk_zone8	0x0d, 0x04, 0x026, 254, 0, -3072	# zone 3: Main_P0D_E026 / Sub_P0D_E026
+    jk_zone8	0x0d, 0x04, 0x027, 246, 0, -3072	# zone 4: Main_P0D_E027 / Sub_P0D_E027
+    jk_zone8	0x0d, 0x04, 0x028, 242, 0, -3072	# zone 5: Main_P0D_E028 / Sub_P0D_E028
+    jk_zone8	0x0d, 0x04, 0x029, 233, 0, -3072	# zone 6: Main_P0D_E029 / Sub_P0D_E029
+    jk_zone8	0x0d, 0x04, 0x014, 231, 0, -3072	# zone 7: Main_P0D_E014 / Sub_P0D_E014
+    jk_zone8	0x0d, 0x04, 0x006, 222, 0, -3072	# zone 8: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader305:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10	# key group -> zone
+JkZones305:
+    jk_zone8	0x0d, 0x04, 0x09b, 9, 0, -3072	# zone 0: Main_P0D_E09B / Sub_P0D_E09B
+    jk_zone8	0x0d, 0x04, 0x09c, 8, 0, -3072	# zone 1: Main_P0D_E09C / Sub_P0D_E09C
+    jk_zone8	0x0d, 0x04, 0x09d, 0, 0, -3072	# zone 2: Main_P0D_E09D / Sub_P0D_E09D
+    jk_zone8	0x0d, 0x04, 0x09e, 3, 0, -3072	# zone 3: Main_P0D_E09E / Sub_P0D_E09E
+    jk_zone8	0x0d, 0x04, 0x09f, 253, 0, -3072	# zone 4: Main_P0D_E09F / Sub_P0D_E09F
+    jk_zone8	0x0d, 0x04, 0x0a0, 255, 0, -3072	# zone 5: Main_P0D_E0A0 / Sub_P0D_E0A0
+    jk_zone8	0x0d, 0x04, 0x0a1, 252, 0, -3072	# zone 6: Main_P0D_E0A1 / Sub_P0D_E0A1
+    jk_zone8	0x0d, 0x04, 0x0a2, 240, 0, -3072	# zone 7: Main_P0D_E0A2 / Sub_P0D_E0A2
+    jk_zone8	0x0d, 0x04, 0x08d, 243, 0, -3072	# zone 8: Main_P0D_E08D / Sub_P0D_E08D
+    jk_zone8	0x0d, 0x04, 0x08e, 238, 0, -3072	# zone 9: Main_P0D_E08E / Sub_P0D_E08E
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, -3072	# zone 10: Main_P0D_E072 / Sub_P0D_E072
+JkMsHeader696:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones696:
+    jk_zone8	0x06, 0x08, 0x040, 249, 0, 2756	# zone 0: Main_P06_E040 / Sub_P06_E040
+JkMsHeader697:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones697:
+    jk_zone8	0x06, 0x08, 0x041, 246, 0, 2756	# zone 0: Main_P06_E041 / Sub_P06_E041
+JkMsHeader275:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones275:
+    jk_zone8	0x0d, 0x04, 0x040, 252, 0, -3072	# zone 0: Main_P0D_E040 / Sub_P0D_E040
+    jk_zone8	0x0d, 0x04, 0x041, 246, 0, -3072	# zone 1: Main_P0D_E041 / Sub_P0D_E041
+    jk_zone8	0x0d, 0x04, 0x042, 238, 0, -3072	# zone 2: Main_P0D_E042 / Sub_P0D_E042
+    jk_zone8	0x0d, 0x04, 0x043, 235, 0, -3072	# zone 3: Main_P0D_E043 / Sub_P0D_E043
+    jk_zone8	0x0d, 0x04, 0x044, 235, 0, -3072	# zone 4: Main_P0D_E044 / Sub_P0D_E044
+    jk_zone8	0x0d, 0x04, 0x045, 232, 0, -3072	# zone 5: Main_P0D_E045 / Sub_P0D_E045
+    jk_zone8	0x0d, 0x04, 0x046, 234, 0, -3072	# zone 6: Main_P0D_E046 / Sub_P0D_E046
+JkMsHeader306:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones306:
+    jk_zone6	0x0d, 0x08, 0x06f, 241, 0	# zone 0: Main_P0D_E06F / Sub_P0D_E06F
+    jk_zone6	0x0d, 0x08, 0x070, 244, 0	# zone 1: Main_P0D_E070 / Sub_P0D_E070
+    jk_zone6	0x0d, 0x08, 0x071, 249, 0	# zone 2: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone6	0x0d, 0x08, 0x072, 238, 0	# zone 3: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone6	0x0d, 0x08, 0x073, 225, 0	# zone 4: Main_P0D_E073 / Sub_P0D_E073
+    .space	2, 0xff	# alignment
+JkMsHeader441:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones441:
+    jk_zone8	0x01, 0x08, 0x0bd, 255, 0, 2756	# zone 0: Sub_P01_E0BD
+JkMsHeader532:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones532:
+    jk_zone8	0x01, 0x08, 0x0c1, 0, 0, 2756	# zone 0: Sub_P01_E0C1
+JkMsHeader608:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones608:
+    jk_zone8	0x08, 0x04, 0x051, 238, 0, 2944	# zone 0: Main_P08_E051
+JkMsHeader630:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones630:
+    jk_zone8	0x0b, 0x04, 0x023, 229, 0, 2756	# zone 0: Main_P0B_E023 / Sub_P0B_E023
+JkMsHeader698:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones698:
+    jk_zone8	0x06, 0x08, 0x046, 215, 0, 2756	# zone 0: Main_P06_E046 / Sub_P06_E046
+JkMsHeader276:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones276:
+    jk_zone6	0x0d, 0x04, 0x047, 226, 0	# zone 0: Main_P0D_E047 / Sub_P0D_E047
+    jk_zone6	0x0d, 0x04, 0x048, 224, 0	# zone 1: Main_P0D_E048 / Sub_P0D_E048
+    jk_zone6	0x0d, 0x04, 0x049, 223, 0	# zone 2: Main_P0D_E049 / Sub_P0D_E049
+    jk_zone6	0x0d, 0x04, 0x04a, 223, 0	# zone 3: Main_P0D_E04A / Sub_P0D_E04A
+    jk_zone6	0x0d, 0x04, 0x04b, 226, 0	# zone 4: Main_P0D_E04B / Sub_P0D_E04B
+    jk_zone6	0x0d, 0x04, 0x04c, 228, 0	# zone 5: Main_P0D_E04C / Sub_P0D_E04C
+    jk_zone6	0x0d, 0x04, 0x04d, 228, 0	# zone 6: Main_P0D_E04D / Sub_P0D_E04D
+    .space	2, 0xff	# alignment
+JkMsHeader307:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones307:
+    jk_zone8	0x0d, 0x08, 0x070, 244, 0, 3072	# zone 0: Main_P0D_E070 / Sub_P0D_E070
+    jk_zone8	0x0d, 0x08, 0x071, 249, 0, 3072	# zone 1: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, 3072	# zone 2: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone8	0x0d, 0x08, 0x073, 225, 0, 3072	# zone 3: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 3072	# zone 4: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader631:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones631:
+    jk_zone8	0x0b, 0x08, 0x006, 218, 0, 2756	# zone 0: Main_P0B_E006 / Sub_P0B_E006
+JkMsHeader699:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones699:
+    jk_zone8	0x06, 0x08, 0x047, 185, 0, 2756	# zone 0: Main_P06_E047 / Sub_P06_E047
+JkMsHeader277:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones277:
+    jk_zone8	0x0d, 0x04, 0x054, 1, 0, -3072	# zone 0: Main_P0D_E054 / Sub_P0D_E054
+    jk_zone8	0x0d, 0x04, 0x055, 251, 0, -3072	# zone 1: Main_P0D_E055 / Sub_P0D_E055
+    jk_zone8	0x0d, 0x04, 0x056, 247, 0, -3072	# zone 2: Main_P0D_E056 / Sub_P0D_E056
+    jk_zone8	0x0d, 0x04, 0x057, 243, 0, -3072	# zone 3: Main_P0D_E057 / Sub_P0D_E057
+    jk_zone8	0x0d, 0x04, 0x058, 246, 0, -3072	# zone 4: Main_P0D_E058 / Sub_P0D_E058
+    jk_zone8	0x0d, 0x04, 0x059, 245, 0, -3072	# zone 5: Main_P0D_E059 / Sub_P0D_E059
+    jk_zone8	0x0d, 0x04, 0x05a, 247, 0, -3072	# zone 6: Main_P0D_E05A / Sub_P0D_E05A
+    jk_zone8	0x0d, 0x04, 0x046, 234, 0, -3072	# zone 7: Main_P0D_E046 / Sub_P0D_E046
+JkMsHeader308:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones308:
+    jk_zone6	0x0d, 0x08, 0x074, 255, 0	# zone 0: Main_P0D_E074 / Sub_P0D_E074
+    jk_zone6	0x0d, 0x08, 0x075, 6, 0	# zone 1: Main_P0D_E075 / Sub_P0D_E075
+    jk_zone6	0x0d, 0x08, 0x076, 2, 0	# zone 2: Main_P0D_E076 / Sub_P0D_E076
+    jk_zone6	0x0d, 0x08, 0x077, 243, 0	# zone 3: Main_P0D_E077 / Sub_P0D_E077
+    jk_zone6	0x0d, 0x08, 0x078, 229, 0	# zone 4: Main_P0D_E078 / Sub_P0D_E078
+    jk_zone6	0x0d, 0x08, 0x073, 225, 0	# zone 5: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader700:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones700:
+    jk_zone8	0x06, 0x08, 0x048, 243, 0, 2756	# zone 0: Main_P06_E048 / Sub_P06_E048
+JkMsHeader278:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones278:
+    jk_zone8	0x0d, 0x04, 0x04e, 226, 0, 4869	# zone 0: Main_P0D_E04E / Sub_P0D_E04E
+    jk_zone8	0x0d, 0x04, 0x04f, 221, 0, 4869	# zone 1: Main_P0D_E04F / Sub_P0D_E04F
+    jk_zone8	0x0d, 0x04, 0x050, 223, 0, 4869	# zone 2: Main_P0D_E050 / Sub_P0D_E050
+    jk_zone8	0x0d, 0x04, 0x051, 220, 0, 4869	# zone 3: Main_P0D_E051 / Sub_P0D_E051
+    jk_zone8	0x0d, 0x04, 0x052, 219, 0, 4869	# zone 4: Main_P0D_E052 / Sub_P0D_E052
+    jk_zone8	0x0d, 0x04, 0x053, 223, 0, 4869	# zone 5: Main_P0D_E053 / Sub_P0D_E053
+JkMsHeader309:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones309:
+    jk_zone8	0x0d, 0x08, 0x071, 249, 0, 6144	# zone 0: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone8	0x0d, 0x08, 0x072, 238, 0, 6144	# zone 1: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone8	0x0d, 0x08, 0x073, 225, 0, 6144	# zone 2: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 6144	# zone 3: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x08, 0x073, 193, 0, 6144	# zone 4: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader701:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones701:
+    jk_zone8	0x06, 0x08, 0x049, 174, 0, 2756	# zone 0: Main_P06_E049 / Sub_P06_E049
+JkMsHeader279:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones279:
+    jk_zone8	0x0d, 0x04, 0x05b, 2, 0, -3072	# zone 0: Main_P0D_E05B / Sub_P0D_E05B
+    jk_zone8	0x0d, 0x04, 0x05c, 252, 0, -3072	# zone 1: Main_P0D_E05C / Sub_P0D_E05C
+    jk_zone8	0x0d, 0x04, 0x05d, 247, 0, -3072	# zone 2: Main_P0D_E05D / Sub_P0D_E05D
+    jk_zone8	0x0d, 0x04, 0x05e, 243, 0, -3072	# zone 3: Main_P0D_E05E / Sub_P0D_E05E
+    jk_zone8	0x0d, 0x04, 0x05f, 243, 0, -3072	# zone 4: Main_P0D_E05F / Sub_P0D_E05F
+    jk_zone8	0x0d, 0x04, 0x060, 242, 0, -3072	# zone 5: Main_P0D_E060 / Sub_P0D_E060
+    jk_zone8	0x0d, 0x04, 0x061, 244, 0, -3072	# zone 6: Main_P0D_E061 / Sub_P0D_E061
+    jk_zone8	0x0d, 0x04, 0x046, 234, 0, -3072	# zone 7: Main_P0D_E046 / Sub_P0D_E046
+JkMsHeader310:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones310:
+    jk_zone6	0x0d, 0x08, 0x079, 4, 0	# zone 0: Main_P0D_E079 / Sub_P0D_E079
+    jk_zone6	0x0d, 0x08, 0x07a, 0, 0	# zone 1: Main_P0D_E07A / Sub_P0D_E07A
+    jk_zone6	0x0d, 0x08, 0x07b, 254, 0	# zone 2: Main_P0D_E07B / Sub_P0D_E07B
+    jk_zone6	0x0d, 0x08, 0x07c, 243, 0	# zone 3: Main_P0D_E07C / Sub_P0D_E07C
+    jk_zone6	0x0d, 0x08, 0x07d, 223, 0	# zone 4: Main_P0D_E07D / Sub_P0D_E07D
+    jk_zone6	0x0d, 0x08, 0x073, 225, 0	# zone 5: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader702:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones702:
+    jk_zone8	0x06, 0x08, 0x04a, 148, 0, 2756	# zone 0: Main_P06_E04A / Sub_P06_E04A
+JkMsHeader280:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones280:
+    jk_zone6	0x0d, 0x04, 0x062, 238, 0	# zone 0: Main_P0D_E062 / Sub_P0D_E062
+    jk_zone6	0x0d, 0x04, 0x063, 233, 0	# zone 1: Main_P0D_E063 / Sub_P0D_E063
+    jk_zone6	0x0d, 0x04, 0x064, 238, 0	# zone 2: Main_P0D_E064 / Sub_P0D_E064
+    jk_zone6	0x0d, 0x04, 0x065, 234, 0	# zone 3: Main_P0D_E065 / Sub_P0D_E065
+    jk_zone6	0x0d, 0x04, 0x066, 238, 0	# zone 4: Main_P0D_E066 / Sub_P0D_E066
+    jk_zone6	0x0d, 0x04, 0x067, 240, 0	# zone 5: Main_P0D_E067 / Sub_P0D_E067
+    jk_zone6	0x0d, 0x04, 0x068, 237, 0	# zone 6: Main_P0D_E068 / Sub_P0D_E068
+    jk_zone6	0x0d, 0x04, 0x04d, 228, 0	# zone 7: Main_P0D_E04D / Sub_P0D_E04D
+JkMsHeader311:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones311:
+    jk_zone8	0x0d, 0x08, 0x075, 6, 0, 3072	# zone 0: Main_P0D_E075 / Sub_P0D_E075
+    jk_zone8	0x0d, 0x08, 0x076, 2, 0, 3072	# zone 1: Main_P0D_E076 / Sub_P0D_E076
+    jk_zone8	0x0d, 0x08, 0x077, 243, 0, 3072	# zone 2: Main_P0D_E077 / Sub_P0D_E077
+    jk_zone8	0x0d, 0x08, 0x078, 229, 0, 3072	# zone 3: Main_P0D_E078 / Sub_P0D_E078
+    jk_zone8	0x0d, 0x08, 0x078, 213, 0, 3072	# zone 4: Main_P0D_E078 / Sub_P0D_E078
+    jk_zone8	0x0d, 0x08, 0x073, 209, 0, 3072	# zone 5: Main_P0D_E073 / Sub_P0D_E073
+JkMsHeader703:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones703:
+    jk_zone8	0x06, 0x08, 0x04b, 177, 0, 2756	# zone 0: Main_P06_E04B / Sub_P06_E04B
+JkMsHeader281:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones281:
+    jk_zone8	0x0d, 0x04, 0x069, 4, 0, -3072	# zone 0: Main_P0D_E069 / Sub_P0D_E069
+    jk_zone8	0x0d, 0x04, 0x06a, 0, 0, -3072	# zone 1: Main_P0D_E06A / Sub_P0D_E06A
+    jk_zone8	0x0d, 0x04, 0x06b, 254, 0, -3072	# zone 2: Main_P0D_E06B / Sub_P0D_E06B
+    jk_zone8	0x0d, 0x04, 0x06c, 250, 0, -3072	# zone 3: Main_P0D_E06C / Sub_P0D_E06C
+    jk_zone8	0x0d, 0x04, 0x06d, 252, 0, -3072	# zone 4: Main_P0D_E06D / Sub_P0D_E06D
+    jk_zone8	0x0d, 0x04, 0x06e, 252, 0, -3072	# zone 5: Main_P0D_E06E / Sub_P0D_E06E
+    jk_zone8	0x0d, 0x04, 0x06f, 251, 0, -3072	# zone 6: Main_P0D_E06F / Sub_P0D_E06F
+    jk_zone8	0x0d, 0x04, 0x05a, 247, 0, -3072	# zone 7: Main_P0D_E05A / Sub_P0D_E05A
+    jk_zone8	0x0d, 0x04, 0x046, 234, 0, -3072	# zone 8: Main_P0D_E046 / Sub_P0D_E046
+JkMsHeader312:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones312:
+    jk_zone6	0x0d, 0x08, 0x07e, 11, 0	# zone 0: Main_P0D_E07E / Sub_P0D_E07E
+    jk_zone6	0x0d, 0x08, 0x07f, 4, 0	# zone 1: Main_P0D_E07F / Sub_P0D_E07F
+    jk_zone6	0x0d, 0x08, 0x080, 3, 0	# zone 2: Main_P0D_E080 / Sub_P0D_E080
+    jk_zone6	0x0d, 0x08, 0x081, 245, 0	# zone 3: Main_P0D_E081 / Sub_P0D_E081
+    jk_zone6	0x0d, 0x08, 0x082, 233, 0	# zone 4: Main_P0D_E082 / Sub_P0D_E082
+    jk_zone6	0x0d, 0x08, 0x078, 229, 0	# zone 5: Main_P0D_E078 / Sub_P0D_E078
+    jk_zone6	0x0d, 0x08, 0x073, 225, 0	# zone 6: Main_P0D_E073 / Sub_P0D_E073
+    .space	2, 0xff	# alignment
+JkMsHeader704:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones704:
+    jk_zone8	0x06, 0x08, 0x04c, 243, 0, 2756	# zone 0: Main_P06_E04C / Sub_P06_E04C
+JkMsHeader705:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones705:
+    jk_zone8	0x06, 0x08, 0x04d, 243, 0, 2756	# zone 0: Main_P06_E04D / Sub_P06_E04D
+JkMsHeader282:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones282:
+    jk_zone8	0x0d, 0x08, 0x000, 234, 0, 3072	# zone 0: Main_P0D_E000 / Sub_P0D_E000
+    jk_zone8	0x0d, 0x08, 0x001, 231, 0, 3072	# zone 1: Main_P0D_E001 / Sub_P0D_E001
+    jk_zone8	0x0d, 0x08, 0x002, 226, 0, 3072	# zone 2: Main_P0D_E002 / Sub_P0D_E002
+    jk_zone8	0x0d, 0x08, 0x003, 223, 0, 3072	# zone 3: Main_P0D_E003 / Sub_P0D_E003
+    jk_zone8	0x0d, 0x08, 0x004, 221, 0, 3072	# zone 4: Main_P0D_E004 / Sub_P0D_E004
+    jk_zone8	0x0d, 0x08, 0x005, 212, 0, 3072	# zone 5: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 3072	# zone 6: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader313:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones313:
+    jk_zone6	0x0d, 0x08, 0x08a, 250, 0	# zone 0: Main_P0D_E08A / Sub_P0D_E08A
+    jk_zone6	0x0d, 0x08, 0x08b, 243, 0	# zone 1: Main_P0D_E08B / Sub_P0D_E08B
+    jk_zone6	0x0d, 0x08, 0x08c, 244, 0	# zone 2: Main_P0D_E08C / Sub_P0D_E08C
+    jk_zone6	0x0d, 0x08, 0x08d, 242, 0	# zone 3: Main_P0D_E08D / Sub_P0D_E08D
+    jk_zone6	0x0d, 0x08, 0x08e, 243, 0	# zone 4: Main_P0D_E08E / Sub_P0D_E08E
+    jk_zone6	0x0d, 0x08, 0x08f, 238, 0	# zone 5: Main_P0D_E08F / Sub_P0D_E08F
+    jk_zone6	0x0d, 0x08, 0x090, 226, 0	# zone 6: Main_P0D_E090 / Sub_P0D_E090
+    .space	2, 0xff	# alignment
+JkMsHeader339:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones339:
+    jk_zone6	0x0d, 0x08, 0x059, 235, 0	# zone 0: Main_P0D_E059 / Sub_P0D_E059
+    jk_zone6	0x0d, 0x08, 0x05a, 228, 0	# zone 1: Main_P0D_E05A / Sub_P0D_E05A
+    jk_zone6	0x0d, 0x08, 0x05b, 232, 0	# zone 2: Main_P0D_E05B / Sub_P0D_E05B
+    jk_zone6	0x0d, 0x08, 0x05c, 237, 0	# zone 3: Main_P0D_E05C / Sub_P0D_E05C
+    jk_zone6	0x0d, 0x08, 0x05d, 240, 0	# zone 4: Main_P0D_E05D / Sub_P0D_E05D
+    jk_zone6	0x0d, 0x08, 0x05e, 244, 0	# zone 5: Main_P0D_E05E / Sub_P0D_E05E
+    jk_zone6	0x0d, 0x08, 0x05f, 237, 0	# zone 6: Main_P0D_E05F / Sub_P0D_E05F
+    .space	2, 0xff	# alignment
+JkMsHeader354:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones354:
+    jk_zone8	0x0d, 0x04, 0x070, 228, 0, -3072	# zone 0: Main_P0D_E070 / Sub_P0D_E070
+    jk_zone8	0x0d, 0x04, 0x071, 233, 0, -3072	# zone 1: Main_P0D_E071 / Sub_P0D_E071
+    jk_zone8	0x0d, 0x04, 0x072, 240, 0, -3072	# zone 2: Main_P0D_E072 / Sub_P0D_E072
+    jk_zone8	0x0d, 0x04, 0x073, 240, 0, -3072	# zone 3: Main_P0D_E073 / Sub_P0D_E073
+    jk_zone8	0x0d, 0x04, 0x074, 243, 0, -3072	# zone 4: Main_P0D_E074 / Sub_P0D_E074
+    jk_zone8	0x0d, 0x04, 0x075, 236, 0, -3072	# zone 5: Main_P0D_E075 / Sub_P0D_E075
+JkMsHeader372:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones372:
+    jk_zone8	0x03, 0x18, 0x06b, 248, 0, 4292	# zone 0: Main_P03_E06B / Sub_P03_E06B
+    jk_zone8	0x03, 0x18, 0x06c, 251, 0, 1220	# zone 1: Main_P03_E06C / Sub_P03_E06C
+    jk_zone8	0x03, 0x18, 0x06c, 247, 0, 1220	# zone 2: Main_P03_E06C / Sub_P03_E06C
+    jk_zone8	0x03, 0x18, 0x06d, 244, 0, 1220	# zone 3: Main_P03_E06D / Sub_P03_E06D
+JkMsHeader400:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones400:
+    jk_zone8	0x06, 0x74, 0x29f, 229, 0, 3072	# zone 0: Main_P06_E29F
+JkMsHeader442:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones442:
+    jk_zone8	0x01, 0x08, 0x0ba, 4, 0, 2756	# zone 0: Sub_P01_E0BA
+JkMsHeader533:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones533:
+    jk_zone8	0x01, 0x08, 0x0c4, 249, 0, 2756	# zone 0: Sub_P01_E0C4
+JkMsHeader609:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones609:
+    jk_zone8	0x08, 0x04, 0x058, 255, 0, 4036	# zone 0: Main_P08_E058
+JkMsHeader657:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones657:
+    jk_zone8	0x01, 0x18, 0x0b4, 0, 0, 2756	# zone 0: Sub_P01_E0B4
+JkMsHeader669:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones669:
+    jk_zone8	0x06, 0x04, 0x04a, 250, 0, 2756	# zone 0: Main_P06_E04A / Sub_P06_E04A
+JkMsHeader706:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones706:
+    jk_zone8	0x06, 0x08, 0x052, 211, 0, 2756	# zone 0: Main_P06_E052 / Sub_P06_E052
+JkMsHeader746:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones746:
+    jk_zone8	0x01, 0x18, 0x0b6, 239, 0, 3780	# zone 0: Sub_P01_E0B6
+JkMsHeader831:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones831:
+    jk_zone8	0x06, 0x08, 0x026, 251, 0, 2756	# zone 0: Main_P06_E026 / Sub_P06_E026
+JkMsHeader283:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones283:
+    jk_zone8	0x0d, 0x08, 0x002, 226, 0, 6144	# zone 0: Main_P0D_E002 / Sub_P0D_E002
+    jk_zone8	0x0d, 0x08, 0x003, 223, 0, 6144	# zone 1: Main_P0D_E003 / Sub_P0D_E003
+    jk_zone8	0x0d, 0x08, 0x004, 221, 0, 6144	# zone 2: Main_P0D_E004 / Sub_P0D_E004
+    jk_zone8	0x0d, 0x08, 0x005, 212, 0, 6144	# zone 3: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 6144	# zone 4: Main_P0D_E006 / Sub_P0D_E006
+    jk_zone8	0x0d, 0x08, 0x007, 205, 0, 6144	# zone 5: Main_P0D_E007 / Sub_P0D_E007
+JkMsHeader314:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones314:
+    jk_zone6	0x0d, 0x08, 0x091, 238, 0	# zone 0: Main_P0D_E091 / Sub_P0D_E091
+    jk_zone6	0x0d, 0x08, 0x092, 238, 0	# zone 1: Main_P0D_E092 / Sub_P0D_E092
+    jk_zone6	0x0d, 0x08, 0x093, 234, 0	# zone 2: Main_P0D_E093 / Sub_P0D_E093
+    jk_zone6	0x0d, 0x08, 0x094, 243, 0	# zone 3: Main_P0D_E094 / Sub_P0D_E094
+    jk_zone6	0x0d, 0x08, 0x095, 237, 0	# zone 4: Main_P0D_E095 / Sub_P0D_E095
+    jk_zone6	0x0d, 0x08, 0x096, 237, 0	# zone 5: Main_P0D_E096 / Sub_P0D_E096
+JkMsHeader340:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones340:
+    jk_zone6	0x0d, 0x08, 0x060, 232, 0	# zone 0: Main_P0D_E060 / Sub_P0D_E060
+    jk_zone6	0x0d, 0x08, 0x061, 236, 0	# zone 1: Main_P0D_E061 / Sub_P0D_E061
+    jk_zone6	0x0d, 0x08, 0x062, 236, 0	# zone 2: Main_P0D_E062 / Sub_P0D_E062
+    jk_zone6	0x0d, 0x08, 0x063, 237, 0	# zone 3: Main_P0D_E063 / Sub_P0D_E063
+    jk_zone6	0x0d, 0x08, 0x064, 236, 0	# zone 4: Main_P0D_E064 / Sub_P0D_E064
+    jk_zone6	0x0d, 0x08, 0x065, 231, 0	# zone 5: Main_P0D_E065 / Sub_P0D_E065
+JkMsHeader355:
+    .long	JkKeyMap1 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7	# key group -> zone
+    .space	3, 0x00	# alignment
+JkZones355:
+    jk_zone6	0x0d, 0x04, 0x076, 234, 0	# zone 0: Main_P0D_E076 / Sub_P0D_E076
+    jk_zone6	0x0d, 0x04, 0x077, 240, 0	# zone 1: Main_P0D_E077 / Sub_P0D_E077
+    jk_zone6	0x0d, 0x04, 0x078, 242, 0	# zone 2: Main_P0D_E078 / Sub_P0D_E078
+    jk_zone6	0x0d, 0x04, 0x079, 242, 0	# zone 3: Main_P0D_E079 / Sub_P0D_E079
+    jk_zone6	0x0d, 0x04, 0x07a, 251, 0	# zone 4: Main_P0D_E07A / Sub_P0D_E07A
+    jk_zone6	0x0d, 0x04, 0x07b, 249, 0	# zone 5: Main_P0D_E07B / Sub_P0D_E07B
+    jk_zone6	0x0d, 0x04, 0x07c, 250, 0	# zone 6: Main_P0D_E07C / Sub_P0D_E07C
+    jk_zone6	0x0d, 0x04, 0x07d, 255, 0	# zone 7: Main_P0D_E07D / Sub_P0D_E07D
+JkMsHeader401:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones401:
+    jk_zone8	0x06, 0x74, 0x29f, 229, 0, 4869	# zone 0: Main_P06_E29F
+JkMsHeader534:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones534:
+    jk_zone8	0x01, 0x08, 0x0b9, 0, 0, 2756	# zone 0: Sub_P01_E0B9
+JkMsHeader707:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones707:
+    jk_zone8	0x06, 0x08, 0x053, 180, 0, 2756	# zone 0: Main_P06_E053 / Sub_P06_E053
+JkMsHeader284:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones284:
+    jk_zone8	0x0d, 0x08, 0x008, 244, 0, 3072	# zone 0: Main_P0D_E008 / Sub_P0D_E008
+    jk_zone8	0x0d, 0x08, 0x009, 243, 0, 3072	# zone 1: Main_P0D_E009 / Sub_P0D_E009
+    jk_zone8	0x0d, 0x08, 0x00a, 238, 0, 3072	# zone 2: Main_P0D_E00A / Sub_P0D_E00A
+    jk_zone8	0x0d, 0x08, 0x00b, 232, 0, 3072	# zone 3: Main_P0D_E00B / Sub_P0D_E00B
+    jk_zone8	0x0d, 0x08, 0x00c, 229, 0, 3072	# zone 4: Main_P0D_E00C / Sub_P0D_E00C
+    jk_zone8	0x0d, 0x08, 0x00d, 223, 0, 3072	# zone 5: Main_P0D_E00D / Sub_P0D_E00D
+    jk_zone8	0x0d, 0x08, 0x00e, 217, 0, 3072	# zone 6: Main_P0D_E00E / Sub_P0D_E00E
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 3072	# zone 7: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader315:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones315:
+    jk_zone6	0x0d, 0x08, 0x097, 253, 0	# zone 0: Main_P0D_E097 / Sub_P0D_E097
+    jk_zone6	0x0d, 0x08, 0x098, 248, 0	# zone 1: Main_P0D_E098 / Sub_P0D_E098
+    jk_zone6	0x0d, 0x08, 0x099, 249, 0	# zone 2: Main_P0D_E099 / Sub_P0D_E099
+    jk_zone6	0x0d, 0x08, 0x09a, 251, 0	# zone 3: Main_P0D_E09A / Sub_P0D_E09A
+    jk_zone6	0x0d, 0x08, 0x09b, 247, 0	# zone 4: Main_P0D_E09B / Sub_P0D_E09B
+    jk_zone6	0x0d, 0x08, 0x09c, 243, 0	# zone 5: Main_P0D_E09C / Sub_P0D_E09C
+    jk_zone6	0x0d, 0x08, 0x09d, 244, 0	# zone 6: Main_P0D_E09D / Sub_P0D_E09D
+    jk_zone6	0x0d, 0x08, 0x090, 226, 0	# zone 7: Main_P0D_E090 / Sub_P0D_E090
+JkMsHeader341:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones341:
+    jk_zone6	0x0d, 0x08, 0x066, 235, 0	# zone 0: Main_P0D_E066 / Sub_P0D_E066
+    jk_zone6	0x0d, 0x08, 0x067, 236, 0	# zone 1: Main_P0D_E067 / Sub_P0D_E067
+    jk_zone6	0x0d, 0x08, 0x068, 232, 0	# zone 2: Main_P0D_E068 / Sub_P0D_E068
+    jk_zone6	0x0d, 0x08, 0x069, 237, 0	# zone 3: Main_P0D_E069 / Sub_P0D_E069
+    jk_zone6	0x0d, 0x08, 0x06a, 241, 0	# zone 4: Main_P0D_E06A / Sub_P0D_E06A
+    jk_zone6	0x0d, 0x08, 0x06b, 245, 0	# zone 5: Main_P0D_E06B / Sub_P0D_E06B
+    jk_zone6	0x0d, 0x08, 0x06c, 239, 0	# zone 6: Main_P0D_E06C / Sub_P0D_E06C
+    jk_zone6	0x0d, 0x08, 0x06d, 243, 0	# zone 7: Main_P0D_E06D / Sub_P0D_E06D
+    jk_zone6	0x0d, 0x08, 0x05f, 237, 0	# zone 8: Main_P0D_E05F / Sub_P0D_E05F
+    .space	2, 0xff	# alignment
+JkMsHeader356:
+    .long	JkKeyMap2 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones356:
+    jk_zone8	0x0d, 0x04, 0x07e, 233, 0, -3072	# zone 0: Main_P0D_E07E / Sub_P0D_E07E
+    jk_zone8	0x0d, 0x04, 0x07f, 238, 0, -3072	# zone 1: Main_P0D_E07F / Sub_P0D_E07F
+    jk_zone8	0x0d, 0x04, 0x080, 239, 0, -3072	# zone 2: Main_P0D_E080 / Sub_P0D_E080
+    jk_zone8	0x0d, 0x04, 0x081, 246, 0, -3072	# zone 3: Main_P0D_E081 / Sub_P0D_E081
+    jk_zone8	0x0d, 0x04, 0x082, 252, 0, -3072	# zone 4: Main_P0D_E082 / Sub_P0D_E082
+    jk_zone8	0x0d, 0x04, 0x083, 254, 0, -3072	# zone 5: Main_P0D_E083 / Sub_P0D_E083
+    jk_zone8	0x0d, 0x04, 0x084, 253, 0, -3072	# zone 6: Main_P0D_E084 / Sub_P0D_E084
+    jk_zone8	0x0d, 0x04, 0x085, 251, 0, -3072	# zone 7: Main_P0D_E085 / Sub_P0D_E085
+    jk_zone8	0x0d, 0x04, 0x075, 236, 0, -3072	# zone 8: Main_P0D_E075 / Sub_P0D_E075
+JkMsHeader402:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones402:
+    jk_zone6	0x06, 0x74, 0x46b, 243, 0	# zone 0: Main_P06_E46B
+    .space	2, 0xff	# alignment
+JkMsHeader443:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones443:
+    jk_zone8	0x01, 0x08, 0x0be, 255, 0, 2756	# zone 0: Sub_P01_E0BE
+JkMsHeader610:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones610:
+    jk_zone6	0x08, 0x04, 0x052, 245, 0	# zone 0: Main_P08_E052
+    .space	2, 0xff	# alignment
+JkMsHeader708:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones708:
+    jk_zone8	0x06, 0x08, 0x054, 236, 0, 2756	# zone 0: Main_P06_E054 / Sub_P06_E054
+JkMsHeader285:
+    .long	JkKeyMap3 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones285:
+    jk_zone8	0x0d, 0x08, 0x004, 221, 0, 9216	# zone 0: Main_P0D_E004 / Sub_P0D_E004
+    jk_zone8	0x0d, 0x08, 0x005, 212, 0, 9216	# zone 1: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 9216	# zone 2: Main_P0D_E006 / Sub_P0D_E006
+    jk_zone8	0x0d, 0x08, 0x007, 205, 0, 9216	# zone 3: Main_P0D_E007 / Sub_P0D_E007
+JkMsHeader316:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones316:
+    jk_zone6	0x0d, 0x08, 0x083, 220, 0	# zone 0: Main_P0D_E083 / Sub_P0D_E083
+    jk_zone6	0x0d, 0x08, 0x084, 215, 0	# zone 1: Main_P0D_E084 / Sub_P0D_E084
+    jk_zone6	0x0d, 0x08, 0x085, 212, 0	# zone 2: Main_P0D_E085 / Sub_P0D_E085
+    jk_zone6	0x0d, 0x08, 0x086, 216, 0	# zone 3: Main_P0D_E086 / Sub_P0D_E086
+    jk_zone6	0x0d, 0x08, 0x087, 218, 0	# zone 4: Main_P0D_E087 / Sub_P0D_E087
+    jk_zone6	0x0d, 0x08, 0x088, 216, 0	# zone 5: Main_P0D_E088 / Sub_P0D_E088
+    jk_zone6	0x0d, 0x08, 0x089, 212, 0	# zone 6: Main_P0D_E089 / Sub_P0D_E089
+    .space	2, 0xff	# alignment
+JkMsHeader709:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones709:
+    jk_zone8	0x06, 0x08, 0x055, 177, 0, 2756	# zone 0: Main_P06_E055 / Sub_P06_E055
+JkMsHeader286:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones286:
+    jk_zone8	0x0d, 0x08, 0x00f, 243, 0, 3072	# zone 0: Main_P0D_E00F / Sub_P0D_E00F
+    jk_zone8	0x0d, 0x08, 0x010, 238, 0, 3072	# zone 1: Main_P0D_E010 / Sub_P0D_E010
+    jk_zone8	0x0d, 0x08, 0x011, 233, 0, 3072	# zone 2: Main_P0D_E011 / Sub_P0D_E011
+    jk_zone8	0x0d, 0x08, 0x012, 231, 0, 3072	# zone 3: Main_P0D_E012 / Sub_P0D_E012
+    jk_zone8	0x0d, 0x08, 0x013, 230, 0, 3072	# zone 4: Main_P0D_E013 / Sub_P0D_E013
+    jk_zone8	0x0d, 0x08, 0x014, 224, 0, 3072	# zone 5: Main_P0D_E014 / Sub_P0D_E014
+    jk_zone8	0x0d, 0x08, 0x005, 212, 0, 3072	# zone 6: Main_P0D_E005 / Sub_P0D_E005
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 3072	# zone 7: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader317:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones317:
+    jk_zone6	0x0d, 0x08, 0x09e, 248, 0	# zone 0: Main_P0D_E09E / Sub_P0D_E09E
+    jk_zone6	0x0d, 0x08, 0x09f, 243, 0	# zone 1: Main_P0D_E09F / Sub_P0D_E09F
+    jk_zone6	0x0d, 0x08, 0x0a0, 243, 0	# zone 2: Main_P0D_E0A0 / Sub_P0D_E0A0
+    jk_zone6	0x0d, 0x08, 0x0a1, 242, 0	# zone 3: Main_P0D_E0A1 / Sub_P0D_E0A1
+    jk_zone6	0x0d, 0x08, 0x0a2, 240, 0	# zone 4: Main_P0D_E0A2 / Sub_P0D_E0A2
+    jk_zone6	0x0d, 0x08, 0x0a3, 240, 0	# zone 5: Main_P0D_E0A3 / Sub_P0D_E0A3
+    jk_zone6	0x0d, 0x08, 0x0a4, 222, 0	# zone 6: Main_P0D_E0A4 / Sub_P0D_E0A4
+    .space	2, 0xff	# alignment
+JkMsHeader535:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones535:
+    jk_zone8	0x08, 0x04, 0x04a, 250, 0, 2756	# zone 0: Main_P08_E04A
+JkMsHeader710:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones710:
+    jk_zone8	0x06, 0x08, 0x056, 201, 0, 2756	# zone 0: Main_P06_E056 / Sub_P06_E056
+JkMsHeader287:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones287:
+    jk_zone8	0x0d, 0x08, 0x00a, 238, 0, 6144	# zone 0: Main_P0D_E00A / Sub_P0D_E00A
+    jk_zone8	0x0d, 0x08, 0x00b, 232, 0, 6144	# zone 1: Main_P0D_E00B / Sub_P0D_E00B
+    jk_zone8	0x0d, 0x08, 0x00c, 229, 0, 6144	# zone 2: Main_P0D_E00C / Sub_P0D_E00C
+    jk_zone8	0x0d, 0x08, 0x00d, 223, 0, 6144	# zone 3: Main_P0D_E00D / Sub_P0D_E00D
+    jk_zone8	0x0d, 0x08, 0x00e, 217, 0, 6144	# zone 4: Main_P0D_E00E / Sub_P0D_E00E
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 6144	# zone 5: Main_P0D_E006 / Sub_P0D_E006
+    jk_zone8	0x0d, 0x08, 0x007, 205, 0, 6144	# zone 6: Main_P0D_E007 / Sub_P0D_E007
+JkMsHeader318:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones318:
+    jk_zone6	0x0d, 0x08, 0x0a5, 244, 0	# zone 0: Main_P0D_E0A5 / Sub_P0D_E0A5
+    jk_zone6	0x0d, 0x08, 0x0a6, 238, 0	# zone 1: Main_P0D_E0A6 / Sub_P0D_E0A6
+    jk_zone6	0x0d, 0x08, 0x0a7, 230, 0	# zone 2: Main_P0D_E0A7 / Sub_P0D_E0A7
+    jk_zone6	0x0d, 0x08, 0x0a8, 247, 0	# zone 3: Main_P0D_E0A8 / Sub_P0D_E0A8
+    jk_zone6	0x0d, 0x08, 0x0a9, 233, 0	# zone 4: Main_P0D_E0A9 / Sub_P0D_E0A9
+    jk_zone6	0x0d, 0x08, 0x0aa, 233, 0	# zone 5: Main_P0D_E0AA / Sub_P0D_E0AA
+    jk_zone6	0x0d, 0x08, 0x0ab, 237, 0	# zone 6: Main_P0D_E0AB / Sub_P0D_E0AB
+    jk_zone6	0x0d, 0x08, 0x089, 212, 0	# zone 7: Main_P0D_E089 / Sub_P0D_E089
+JkMsHeader711:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones711:
+    jk_zone8	0x06, 0x08, 0x057, 186, 0, 2756	# zone 0: Main_P06_E057 / Sub_P06_E057
+JkMsHeader288:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones288:
+    jk_zone8	0x0d, 0x08, 0x015, 248, 0, 3072	# zone 0: Main_P0D_E015 / Sub_P0D_E015
+    jk_zone8	0x0d, 0x08, 0x016, 247, 0, 3072	# zone 1: Main_P0D_E016 / Sub_P0D_E016
+    jk_zone8	0x0d, 0x08, 0x017, 240, 0, 3072	# zone 2: Main_P0D_E017 / Sub_P0D_E017
+    jk_zone8	0x0d, 0x08, 0x018, 235, 0, 3072	# zone 3: Main_P0D_E018 / Sub_P0D_E018
+    jk_zone8	0x0d, 0x08, 0x019, 235, 0, 3072	# zone 4: Main_P0D_E019 / Sub_P0D_E019
+    jk_zone8	0x0d, 0x08, 0x01a, 229, 0, 3072	# zone 5: Main_P0D_E01A / Sub_P0D_E01A
+    jk_zone8	0x0d, 0x08, 0x00d, 223, 0, 3072	# zone 6: Main_P0D_E00D / Sub_P0D_E00D
+    jk_zone8	0x0d, 0x08, 0x00e, 217, 0, 3072	# zone 7: Main_P0D_E00E / Sub_P0D_E00E
+    jk_zone8	0x0d, 0x08, 0x006, 204, 0, 3072	# zone 8: Main_P0D_E006 / Sub_P0D_E006
+JkMsHeader319:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones319:
+    jk_zone6	0x0d, 0x08, 0x0ac, 252, 0	# zone 0: Main_P0D_E0AC / Sub_P0D_E0AC
+    jk_zone6	0x0d, 0x08, 0x0ad, 0, 0	# zone 1: Main_P0D_E0AD / Sub_P0D_E0AD
+    jk_zone6	0x0d, 0x08, 0x0ae, 249, 0	# zone 2: Sub_P0D_E0AE
+    jk_zone6	0x0d, 0x08, 0x0af, 251, 0	# zone 3: Sub_P0D_E0AF
+    jk_zone6	0x0d, 0x08, 0x0b0, 247, 0	# zone 4: Sub_P0D_E0B0
+    jk_zone6	0x0d, 0x08, 0x0b1, 245, 0	# zone 5: Sub_P0D_E0B1
+    jk_zone6	0x0d, 0x08, 0x0b2, 241, 0	# zone 6: Sub_P0D_E0B2
+    jk_zone6	0x0d, 0x08, 0x0a4, 222, 0	# zone 7: Main_P0D_E0A4 / Sub_P0D_E0A4
+JkMsHeader712:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones712:
+    jk_zone8	0x06, 0x08, 0x058, 252, 0, 2756	# zone 0: Main_P06_E058 / Sub_P06_E058
+JkMsHeader713:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones713:
+    jk_zone8	0x06, 0x08, 0x059, 249, 0, 2756	# zone 0: Main_P06_E059 / Sub_P06_E059
+JkMsHeader289:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones289:
+    jk_zone8	0x0d, 0x08, 0x032, 229, 0, 3072	# zone 0: Main_P0D_E032 / Sub_P0D_E032
+    jk_zone8	0x0d, 0x08, 0x033, 218, 0, 3072	# zone 1: Main_P0D_E033 / Sub_P0D_E033
+    jk_zone8	0x0d, 0x08, 0x034, 221, 0, 3072	# zone 2: Main_P0D_E034 / Sub_P0D_E034
+    jk_zone8	0x0d, 0x08, 0x035, 219, 0, 3072	# zone 3: Main_P0D_E035 / Sub_P0D_E035
+    jk_zone8	0x0d, 0x08, 0x036, 220, 0, 3072	# zone 4: Main_P0D_E036 / Sub_P0D_E036
+    jk_zone8	0x0d, 0x08, 0x037, 215, 0, 3072	# zone 5: Main_P0D_E037 / Sub_P0D_E037
+    jk_zone8	0x0d, 0x08, 0x038, 217, 0, 3072	# zone 6: Main_P0D_E038 / Sub_P0D_E038
+JkMsHeader320:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones320:
+    jk_zone6	0x0d, 0x04, 0x0a3, 228, 0	# zone 0: Main_P0D_E0A3 / Sub_P0D_E0A3
+    jk_zone6	0x0d, 0x04, 0x0a4, 214, 0	# zone 1: Main_P0D_E0A4 / Sub_P0D_E0A4
+    jk_zone6	0x0d, 0x04, 0x0a5, 209, 0	# zone 2: Main_P0D_E0A5 / Sub_P0D_E0A5
+    jk_zone6	0x0d, 0x04, 0x0a6, 204, 0	# zone 3: Main_P0D_E0A6 / Sub_P0D_E0A6
+    jk_zone6	0x0d, 0x04, 0x0a7, 215, 0	# zone 4: Main_P0D_E0A7 / Sub_P0D_E0A7
+    jk_zone6	0x0d, 0x04, 0x0a8, 211, 0	# zone 5: Main_P0D_E0A8 / Sub_P0D_E0A8
+JkMsHeader536:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones536:
+    jk_zone8	0x01, 0x08, 0x0c3, 251, 0, 2756	# zone 0: Sub_P01_E0C3
+JkMsHeader632:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones632:
+    jk_zone8	0x01, 0x18, 0x0aa, 252, 0, 452	# zone 0: Sub_P01_E0AA
+JkMsHeader658:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones658:
+    jk_zone6	0x00, 0x04, 0x0af, 235, 0	# zone 0: Main_P00_E0AF / Sub_P00_E0AF
+    .space	2, 0xff	# alignment
+JkMsHeader670:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones670:
+    jk_zone8	0x01, 0x18, 0x0b5, 242, 0, 2756	# zone 0: Sub_P01_E0B5
+JkMsHeader714:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones714:
+    jk_zone8	0x06, 0x08, 0x05e, 214, 0, 2756	# zone 0: Main_P06_E05E / Sub_P06_E05E
+JkMsHeader832:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones832:
+    jk_zone8	0x0f, 0x08, 0x01a, 234, 0, 1229	# zone 0: Sub_P0F_E01A
+JkMsHeader290:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4	# key group -> zone
+JkZones290:
+    jk_zone8	0x0d, 0x08, 0x039, 234, 0, 6144	# zone 0: Main_P0D_E039 / Sub_P0D_E039
+    jk_zone8	0x0d, 0x08, 0x03a, 232, 0, 6144	# zone 1: Main_P0D_E03A / Sub_P0D_E03A
+    jk_zone8	0x0d, 0x08, 0x03b, 227, 0, 6144	# zone 2: Main_P0D_E03B / Sub_P0D_E03B
+    jk_zone8	0x0d, 0x08, 0x03c, 225, 0, 6144	# zone 3: Main_P0D_E03C / Sub_P0D_E03C
+    jk_zone8	0x0d, 0x08, 0x03d, 222, 0, 6144	# zone 4: Main_P0D_E03D / Sub_P0D_E03D
+JkMsHeader321:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6	# key group -> zone
+JkZones321:
+    jk_zone6	0x0d, 0x08, 0x083, 228, 0	# zone 0: Main_P0D_E083 / Sub_P0D_E083
+    jk_zone6	0x0d, 0x08, 0x084, 223, 0	# zone 1: Main_P0D_E084 / Sub_P0D_E084
+    jk_zone6	0x0d, 0x08, 0x085, 220, 0	# zone 2: Main_P0D_E085 / Sub_P0D_E085
+    jk_zone6	0x0d, 0x08, 0x086, 224, 0	# zone 3: Main_P0D_E086 / Sub_P0D_E086
+    jk_zone6	0x0d, 0x08, 0x087, 226, 0	# zone 4: Main_P0D_E087 / Sub_P0D_E087
+    jk_zone6	0x0d, 0x08, 0x088, 224, 0	# zone 5: Main_P0D_E088 / Sub_P0D_E088
+    jk_zone6	0x0d, 0x08, 0x089, 220, 0	# zone 6: Main_P0D_E089 / Sub_P0D_E089
+    .space	2, 0xff	# alignment
+JkMsHeader537:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones537:
+    jk_zone8	0x01, 0x08, 0x0c5, 250, 0, 2756	# zone 0: Sub_P01_E0C5
+JkMsHeader611:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones611:
+    jk_zone8	0x08, 0x04, 0x053, 253, 0, 2816	# zone 0: Main_P08_E053
+JkMsHeader715:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones715:
+    jk_zone8	0x06, 0x08, 0x05f, 189, 0, 2756	# zone 0: Main_P06_E05F / Sub_P06_E05F
+JkMsHeader833:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones833:
+    jk_zone8	0x0f, 0x08, 0x01b, 230, 0, 1229	# zone 0: Sub_P0F_E01B
+JkMsHeader291:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones291:
+    jk_zone8	0x0d, 0x08, 0x041, 246, 0, 3072	# zone 0: Main_P0D_E041 / Sub_P0D_E041
+    jk_zone8	0x0d, 0x08, 0x042, 241, 0, 3072	# zone 1: Main_P0D_E042 / Sub_P0D_E042
+    jk_zone8	0x0d, 0x08, 0x043, 239, 0, 3072	# zone 2: Main_P0D_E043 / Sub_P0D_E043
+    jk_zone8	0x0d, 0x08, 0x044, 237, 0, 3072	# zone 3: Main_P0D_E044 / Sub_P0D_E044
+    jk_zone8	0x0d, 0x08, 0x045, 236, 0, 3072	# zone 4: Main_P0D_E045 / Sub_P0D_E045
+    jk_zone8	0x0d, 0x08, 0x046, 234, 0, 3072	# zone 5: Main_P0D_E046 / Sub_P0D_E046
+    jk_zone8	0x0d, 0x08, 0x047, 235, 0, 3072	# zone 6: Main_P0D_E047 / Sub_P0D_E047
+    jk_zone8	0x0d, 0x08, 0x038, 217, 0, 3072	# zone 7: Main_P0D_E038 / Sub_P0D_E038
+JkMsHeader612:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones612:
+    jk_zone8	0x01, 0x18, 0x0af, 243, 0, 964	# zone 0: Sub_P01_E0AF
+JkMsHeader716:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones716:
+    jk_zone8	0x06, 0x08, 0x060, 236, 0, 2756	# zone 0: Main_P06_E060 / Sub_P06_E060
+JkMsHeader292:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# key group -> zone
+JkZones292:
+    jk_zone8	0x0d, 0x08, 0x03e, 230, 0, 9216	# zone 0: Main_P0D_E03E / Sub_P0D_E03E
+    jk_zone8	0x0d, 0x08, 0x03f, 223, 0, 9216	# zone 1: Main_P0D_E03F / Sub_P0D_E03F
+    jk_zone8	0x0d, 0x08, 0x040, 218, 0, 9216	# zone 2: Main_P0D_E040 / Sub_P0D_E040
+JkMsHeader717:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones717:
+    jk_zone8	0x06, 0x08, 0x061, 180, 0, 2756	# zone 0: Main_P06_E061 / Sub_P06_E061
+JkMsHeader293:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7	# key group -> zone
+JkZones293:
+    jk_zone8	0x0d, 0x08, 0x048, 245, 0, 3072	# zone 0: Main_P0D_E048 / Sub_P0D_E048
+    jk_zone8	0x0d, 0x08, 0x049, 236, 0, 3072	# zone 1: Main_P0D_E049 / Sub_P0D_E049
+    jk_zone8	0x0d, 0x08, 0x04a, 235, 0, 3072	# zone 2: Main_P0D_E04A / Sub_P0D_E04A
+    jk_zone8	0x0d, 0x08, 0x04b, 236, 0, 3072	# zone 3: Main_P0D_E04B / Sub_P0D_E04B
+    jk_zone8	0x0d, 0x08, 0x04c, 237, 0, 3072	# zone 4: Main_P0D_E04C / Sub_P0D_E04C
+    jk_zone8	0x0d, 0x08, 0x04d, 235, 0, 3072	# zone 5: Main_P0D_E04D / Sub_P0D_E04D
+    jk_zone8	0x0d, 0x08, 0x037, 215, 0, 3072	# zone 6: Main_P0D_E037 / Sub_P0D_E037
+    jk_zone8	0x0d, 0x08, 0x038, 217, 0, 3072	# zone 7: Main_P0D_E038 / Sub_P0D_E038
+JkMsHeader538:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones538:
+    jk_zone8	0x08, 0x04, 0x04b, 245, 0, 2756	# zone 0: Main_P08_E04B
+JkMsHeader613:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones613:
+    jk_zone8	0x08, 0x04, 0x054, 0, 0, 2560	# zone 0: Main_P08_E054
+JkMsHeader633:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones633:
+    jk_zone8	0x01, 0x18, 0x0ab, 0, 0, 2756	# zone 0: Sub_P01_E0AB
+JkMsHeader718:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones718:
+    jk_zone8	0x06, 0x08, 0x062, 181, 0, 2756	# zone 0: Main_P06_E062 / Sub_P06_E062
+JkMsHeader294:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5	# key group -> zone
+JkZones294:
+    jk_zone8	0x0d, 0x08, 0x04e, 247, 0, 6144	# zone 0: Main_P0D_E04E / Sub_P0D_E04E
+    jk_zone8	0x0d, 0x08, 0x04f, 243, 0, 6144	# zone 1: Main_P0D_E04F / Sub_P0D_E04F
+    jk_zone8	0x0d, 0x08, 0x050, 237, 0, 6144	# zone 2: Main_P0D_E050 / Sub_P0D_E050
+    jk_zone8	0x0d, 0x08, 0x051, 237, 0, 6144	# zone 3: Main_P0D_E051 / Sub_P0D_E051
+    jk_zone8	0x0d, 0x08, 0x052, 237, 0, 6144	# zone 4: Main_P0D_E052 / Sub_P0D_E052
+    jk_zone8	0x0d, 0x08, 0x03d, 222, 0, 6144	# zone 5: Main_P0D_E03D / Sub_P0D_E03D
+JkMsHeader719:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones719:
+    jk_zone8	0x06, 0x08, 0x063, 179, 0, 2756	# zone 0: Main_P06_E063 / Sub_P06_E063
+JkMsHeader295:
+    .long	JkKeyMap4 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8	# key group -> zone
+JkZones295:
+    jk_zone8	0x0d, 0x08, 0x053, 251, 0, 3072	# zone 0: Main_P0D_E053 / Sub_P0D_E053
+    jk_zone8	0x0d, 0x08, 0x054, 244, 0, 3072	# zone 1: Main_P0D_E054 / Sub_P0D_E054
+    jk_zone8	0x0d, 0x08, 0x055, 240, 0, 3072	# zone 2: Main_P0D_E055 / Sub_P0D_E055
+    jk_zone8	0x0d, 0x08, 0x056, 246, 0, 3072	# zone 3: Main_P0D_E056 / Sub_P0D_E056
+    jk_zone8	0x0d, 0x08, 0x057, 242, 0, 3072	# zone 4: Main_P0D_E057 / Sub_P0D_E057
+    jk_zone8	0x0d, 0x08, 0x058, 240, 0, 3072	# zone 5: Main_P0D_E058 / Sub_P0D_E058
+    jk_zone8	0x0d, 0x08, 0x046, 234, 0, 3072	# zone 6: Main_P0D_E046 / Sub_P0D_E046
+    jk_zone8	0x0d, 0x08, 0x047, 235, 0, 3072	# zone 7: Main_P0D_E047 / Sub_P0D_E047
+    jk_zone8	0x0d, 0x08, 0x038, 217, 0, 3072	# zone 8: Main_P0D_E038 / Sub_P0D_E038
+JkMsHeader634:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones634:
+    jk_zone8	0x01, 0x18, 0x0b2, 0, 0, 2756	# zone 0: Sub_P01_E0B2
+JkMsHeader720:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones720:
+    jk_zone8	0x06, 0x08, 0x064, 248, 0, 2756	# zone 0: Main_P06_E064 / Sub_P06_E064
+JkMsHeader721:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones721:
+    jk_zone8	0x06, 0x08, 0x065, 249, 0, 2756	# zone 0: Main_P06_E065 / Sub_P06_E065
+JkMsHeader863:
+    .long	JkKeyMap0 - InternalVoiceArchive
+    .byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# key group -> zone
+    .space	1, 0x00	# alignment
+JkZones863:
+    jk_zone6	0x00, 0x04, 0x002, 248, 0	# zone 0: Main_P00_E002 / Sub_P00_E002
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x11de06, 0x120bb8	# not decoded yet
 # VoiceAttrLookupInternal 0x48571178: key (MSB<<16 | LSB<<8 | program), payload u8 at entry+8
 JkAttrEnt0000:
     .long	0	# next in the bucket chain
@@ -36123,1734 +44080,870 @@ JkVoiceDirectory:
     .long	Voice_Cowbell6_6 - InternalVoiceArchive
     .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x12a3c8, 0x131df0	# not decoded yet
 JkParamRecords:
-    .long	0x0a1a5c, 0x0a1a84	# record 0: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a2610, 0x0a2638	# record 1: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0e, 0x00
-    .long	0x0a41b0, 0x0a41d8	# record 2: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a45e0, 0x0a4608	# record 3: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0f, 0x00
-    .long	0x0a1b04, 0x0a1b2c	# record 4: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a26b8, 0x0a26e0	# record 5: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0e, 0x00
-    .long	0x0a4260, 0x0a4288	# record 6: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a4690, 0x0a46b8	# record 7: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0e, 0x00
-    .long	0x0a5be0, 0x0a5c08	# record 8: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a5e08, 0x0a5e30	# record 9: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0f, 0x00
-    .long	0x0a67d4, 0x0a67fc	# record 10: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x0a68e4, 0x0a690c	# record 11: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x0f, 0x00
-    .long	0x0a1bac, 0x0a1c1c	# record 12: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x00
-    .long	0x09e7fc, 0x09e86c	# record 13: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x0a1c5c, 0x0a1ccc	# record 14: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x0a24b0, 0x0a2520	# record 15: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x0a2d94, 0x0a2da4	# record 16: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x0a4308, 0x0a4378	# record 17: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a4738, 0x0a47a8	# record 18: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1d08, 0x0a1d78	# record 19: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2760, 0x0a27d0	# record 20: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1dcc, 0x0a1df4	# record 21: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x03, 0x01
-    .long	0x0a255c, 0x0a2584	# record 22: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x03, 0x01
-    .long	0x0a2ddc, 0x0a2e04	# record 23: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x03, 0x01
-    .long	0x0a2e78, 0x0a2ea0	# record 24: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x03, 0x01
-    .long	0x0a43d8, 0x0a4448	# record 25: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x05, 0x01
-    .long	0x0a98fc, 0x0a9924	# record 26: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa848, 0x0aa870	# record 27: multisample header, zone list
-    .byte	0x81, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1e20, 0x0a1e90	# record 28: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a2294, 0x0a2304	# record 29: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a7b04, 0x0a7b74	# record 30: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a7c34, 0x0a7ca4	# record 31: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x09e8a8, 0x09e918	# record 32: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9944, 0x0a99b4	# record 33: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x09e960, 0x09e9d0	# record 34: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x09ea20, 0x09ea48	# record 35: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a4c88, 0x0a4cf8	# record 36: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x09ea90, 0x09eb00	# record 37: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x09eb38, 0x09eba8	# record 38: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a860c, 0x0a861c	# record 39: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac4b8, 0x0ac4e0	# record 40: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x48, 0x05, 0x01
-    .long	0x09ec10, 0x09ec80	# record 41: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x09ecd0, 0x09ed40	# record 42: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6a6c, 0x0a6adc	# record 43: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x48, 0x07, 0x01
-    .long	0x0a99e4, 0x0a99f4	# record 44: multisample header, zone list
-    .byte	0x80, 0x13, 0x60, 0x42, 0x44, 0x31, 0x00, 0x01
-    .long	0x09ed78, 0x09ed94	# record 45: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x05, 0x01
-    .long	0x09edb8, 0x09ee28	# record 46: multisample header, zone list
-    .byte	0x00, 0x0c, 0x76, 0x42, 0x80, 0x4f, 0x00, 0x01
-    .long	0x0a3874, 0x0a3890	# record 47: multisample header, zone list
-    .byte	0x00, 0x0c, 0x76, 0x42, 0x80, 0x49, 0x00, 0x01
-    .long	0x0a6afc, 0x0a6b24	# record 48: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3b, 0x00, 0x01
-    .long	0x0a8648, 0x0a86b8	# record 49: multisample header, zone list
-    .byte	0x00, 0x0c, 0x76, 0x42, 0x80, 0x5a, 0x00, 0x01
-    .long	0x09ee58, 0x09eec8	# record 50: multisample header, zone list
-    .byte	0x02, 0x0c, 0x71, 0x08, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a2824, 0x0a2894	# record 51: multisample header, zone list
-    .byte	0x02, 0x0c, 0x66, 0x08, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a4d30, 0x0a4da0	# record 52: multisample header, zone list
-    .byte	0x02, 0x0c, 0x71, 0x08, 0x38, 0x00, 0x02, 0x01
-    .long	0x0a6544, 0x0a65b4	# record 53: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6b5c, 0x0a6bcc	# record 54: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7d94, 0x0a7e04	# record 55: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac4f8, 0x0ac568	# record 56: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x09eef8, 0x09ef68	# record 57: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a38b4, 0x0a3924	# record 58: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a99fc, 0x0a9a6c	# record 59: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09efa0, 0x09efbc	# record 60: multisample header, zone list
-    .byte	0x02, 0x0c, 0x71, 0x10, 0x38, 0x00, 0x03, 0x01
-    .long	0x0a4df0, 0x0a4e60	# record 61: multisample header, zone list
-    .byte	0x02, 0x0c, 0x6f, 0x10, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a9a9c, 0x0a9b0c	# record 62: multisample header, zone list
-    .byte	0x02, 0x0c, 0x71, 0x10, 0x38, 0x00, 0x02, 0x01
-    .long	0x0abad0, 0x0abb40	# record 63: multisample header, zone list
-    .byte	0x80, 0x0c, 0x71, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09efe8, 0x09f058	# record 64: multisample header, zone list
-    .byte	0x02, 0x0c, 0x72, 0x00, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a4ea4, 0x0a4f14	# record 65: multisample header, zone list
-    .byte	0x02, 0x0c, 0x72, 0x00, 0x38, 0x00, 0x02, 0x01
-    .long	0x0a5eb8, 0x0a5f28	# record 66: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6c0c, 0x0a6c7c	# record 67: multisample header, zone list
-    .byte	0x02, 0x0c, 0x72, 0x00, 0x38, 0x00, 0x02, 0x01
-    .long	0x0a9b54, 0x0a9b70	# record 68: multisample header, zone list
-    .byte	0x02, 0x0c, 0x71, 0x00, 0x38, 0x00, 0x00, 0x01
-    .long	0x09f0b4, 0x09f124	# record 69: multisample header, zone list
-    .byte	0x02, 0x0c, 0x72, 0x10, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a6cd0, 0x0a6d40	# record 70: multisample header, zone list
-    .byte	0x02, 0x0c, 0x72, 0x10, 0x38, 0x00, 0x00, 0x01
-    .long	0x09f174, 0x09f1e4	# record 71: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x01, 0x01
-    .long	0x0a1eec, 0x0a1f5c	# record 72: multisample header, zone list
-    .byte	0x01, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x01, 0x01
-    .long	0x09f228, 0x09f298	# record 73: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x0ac5a4, 0x0ac614	# record 74: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x48, 0x02, 0x01
-    .long	0x09f2f4, 0x09f310	# record 75: multisample header, zone list
-    .byte	0x02, 0x0c, 0x6f, 0x00, 0x38, 0x00, 0x00, 0x01
-    .long	0x0a28d8, 0x0a2900	# record 76: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a4f5c, 0x0a4f78	# record 77: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5f90, 0x0a6000	# record 78: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09f33c, 0x09f3ac	# record 79: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6d, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x09f3f4, 0x09f464	# record 80: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09f4a8, 0x09f4d0	# record 81: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6d94, 0x0a6e04	# record 82: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09f518, 0x09f588	# record 83: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9bac, 0x0a9c1c	# record 84: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac62c, 0x0ac69c	# record 85: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09f5d0, 0x09f5ec	# record 86: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x02, 0x01
-    .long	0x09f624, 0x09f694	# record 87: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09f6dc, 0x09f6ec	# record 88: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x04, 0x01
-    .long	0x09f704, 0x09f72c	# record 89: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x54, 0x07, 0x01
-    .long	0x09f750, 0x09f778	# record 90: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a4f98, 0x0a5008	# record 91: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a5c90, 0x0a5d00	# record 92: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09f7b0, 0x09f820	# record 93: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a397c, 0x0a3998	# record 94: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5030, 0x0a50a0	# record 95: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a6e54, 0x0a6e70	# record 96: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a86fc, 0x0a876c	# record 97: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a9c60, 0x0a9c70	# record 98: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09f85c, 0x09f884	# record 99: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a2944, 0x0a29b4	# record 100: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a50d0, 0x0a5140	# record 101: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a6048, 0x0a6064	# record 102: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x09f8bc, 0x09f92c	# record 103: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09f964, 0x09f9d4	# record 104: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09f9f4, 0x09fa04	# record 105: multisample header, zone list
-    .byte	0x00, 0x0c, 0x70, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09fa34, 0x09fa44	# record 106: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a39c0, 0x0a39d0	# record 107: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a6e90, 0x0a6f00	# record 108: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0ac6e0, 0x0ac750	# record 109: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09fa4c, 0x09fa74	# record 110: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a5178, 0x0a51e8	# record 111: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a6f38, 0x0a6fa8	# record 112: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a87a4, 0x0a87cc	# record 113: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a9ca0, 0x0a9cc8	# record 114: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09fa80, 0x09faf0	# record 115: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a51f4, 0x0a5264	# record 116: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a6fe0, 0x0a7050	# record 117: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x09fb14, 0x09fb84	# record 118: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x09fba8, 0x09fc18	# record 119: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a2ecc, 0x0a2f3c	# record 120: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09fc50, 0x09fcc0	# record 121: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09fcec, 0x09fd5c	# record 122: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09fdb8, 0x09fe28	# record 123: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1fa0, 0x0a2010	# record 124: multisample header, zone list
-    .byte	0x81, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a87e4, 0x0a8854	# record 125: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a8e9c, 0x0a8f0c	# record 126: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9ce8, 0x0a9d58	# record 127: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0ac75c, 0x0ac7cc	# record 128: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x09fe70, 0x09fee0	# record 129: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2058, 0x0a20c8	# record 130: multisample header, zone list
-    .byte	0x81, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9d98, 0x0a9e08	# record 131: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0ac7fc, 0x0ac86c	# record 132: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x09ff30, 0x09ff58	# record 133: multisample header, zone list
-    .byte	0x81, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7098, 0x0a7108	# record 134: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09ff68, 0x09ff90	# record 135: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5290, 0x0a5300	# record 136: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x09ffa4, 0x0a0014	# record 137: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a3a00, 0x0a3a70	# record 138: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a5328, 0x0a5398	# record 139: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a005c, 0x0a0078	# record 140: multisample header, zone list
-    .byte	0x81, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2118, 0x0a2134	# record 141: multisample header, zone list
-    .byte	0x81, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a53d8, 0x0a5448	# record 142: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a00b0, 0x0a0120	# record 143: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0168, 0x0a01d8	# record 144: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a29ec, 0x0a2a5c	# record 145: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3ab0, 0x0a3b20	# record 146: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a4808, 0x0a4878	# record 147: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a4928, 0x0a4998	# record 148: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a54a8, 0x0a5518	# record 149: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6094, 0x0a6104	# record 150: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a660c, 0x0a667c	# record 151: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7130, 0x0a71a0	# record 152: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7e40, 0x0a7eb0	# record 153: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a83ec, 0x0a845c	# record 154: multisample header, zone list
-    .byte	0x80, 0x0c, 0x65, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0220, 0x0a0230	# record 155: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0238, 0x0a0248	# record 156: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0250, 0x0a02c0	# record 157: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a02e0, 0x0a0350	# record 158: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a37a4, 0x0a3814	# record 159: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3b68, 0x0a3bd8	# record 160: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a5550, 0x0a5578	# record 161: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a6174, 0x0a61e4	# record 162: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a71e0, 0x0a7250	# record 163: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a88a4, 0x0a8914	# record 164: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a9e58, 0x0a9ec8	# record 165: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0aaff0, 0x0ab060	# record 166: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0abb78, 0x0abbe8	# record 167: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0ac278, 0x0ac2e8	# record 168: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0374, 0x0a03e4	# record 169: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a559c, 0x0a560c	# record 170: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a62d4, 0x0a6344	# record 171: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6484, 0x0a64f4	# record 172: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0420, 0x0a0490	# record 173: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a3bfc, 0x0a3c24	# record 174: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a728c, 0x0a72fc	# record 175: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a04b4, 0x0a0524	# record 176: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3c3c, 0x0a3cac	# record 177: multisample header, zone list
-    .byte	0x00, 0x0c, 0x71, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a733c, 0x0a73ac	# record 178: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0548, 0x0a05b8	# record 179: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x24, 0x00, 0x01
-    .long	0x0a05f0, 0x0a060c	# record 180: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a73dc, 0x0a744c	# record 181: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0644, 0x0a066c	# record 182: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7474, 0x0a74e4	# record 183: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a7f04, 0x0a7f74	# record 184: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a895c, 0x0a89cc	# record 185: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a90bc, 0x0a912c	# record 186: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a93bc, 0x0a942c	# record 187: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0684, 0x0a06f4	# record 188: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9eec, 0x0a9f5c	# record 189: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aac80, 0x0aacf0	# record 190: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a071c, 0x0a078c	# record 191: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a2fac, 0x0a301c	# record 192: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3ccc, 0x0a3d3c	# record 193: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a07c8, 0x0a0838	# record 194: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3064, 0x0a30d4	# record 195: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5654, 0x0a56c4	# record 196: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a8a1c, 0x0a8a8c	# record 197: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a9f8c, 0x0a9ffc	# record 198: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa898, 0x0aa908	# record 199: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0888, 0x0a08f8	# record 200: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a751c, 0x0a7544	# record 201: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a8054, 0x0a80c4	# record 202: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a8ad4, 0x0a8b44	# record 203: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0aa04c, 0x0aa0bc	# record 204: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a0928, 0x0a0998	# record 205: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a3124, 0x0a3194	# record 206: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a09d0, 0x0a0a40	# record 207: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3204, 0x0a3274	# record 208: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3d74, 0x0a3de4	# record 209: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a56fc, 0x0a576c	# record 210: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a6384, 0x0a63f4	# record 211: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a8b94, 0x0a8bbc	# record 212: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa10c, 0x0aa17c	# record 213: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0a6c, 0x0a0a94	# record 214: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a32cc, 0x0a333c	# record 215: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa1c0, 0x0aa1e8	# record 216: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab0b0, 0x0ab120	# record 217: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0ac0, 0x0a0ae8	# record 218: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a338c, 0x0a33fc	# record 219: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0b20, 0x0a0b90	# record 220: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a348c, 0x0a34fc	# record 221: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7574, 0x0a759c	# record 222: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a0bb0, 0x0a0c20	# record 223: multisample header, zone list
-    .byte	0x80, 0x0e, 0x6f, 0x42, 0x80, 0x60, 0x00, 0x01
-    .long	0x0a0c38, 0x0a0ca8	# record 224: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a353c, 0x0a35ac	# record 225: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a4a08, 0x0a4a78	# record 226: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a4b38, 0x0a4ba8	# record 227: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a75b4, 0x0a7624	# record 228: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0aa20c, 0x0aa27c	# record 229: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a0cc8, 0x0a0d38	# record 230: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a3614, 0x0a3684	# record 231: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a0d48, 0x0a0db8	# record 232: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x0a36c4, 0x0a3734	# record 233: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa2ac, 0x0aa2d4	# record 234: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x0ab1e8, 0x0ab210	# record 235: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a0de8, 0x0a0df8	# record 236: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x0a0e10, 0x0a0e20	# record 237: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x0a0e34, 0x0a0ea4	# record 238: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a0ed4, 0x0a0efc	# record 239: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2acc, 0x0a2b3c	# record 240: multisample header, zone list
-    .byte	0x00, 0x0c, 0x66, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0f14, 0x0a0f84	# record 241: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3e14, 0x0a3e84	# record 242: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa2fc, 0x0aa36c	# record 243: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa950, 0x0aa9c0	# record 244: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aaa88, 0x0aaaf8	# record 245: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aab78, 0x0aabe8	# record 246: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aad14, 0x0aad84	# record 247: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab240, 0x0ab2b0	# record 248: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab538, 0x0ab5a8	# record 249: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab640, 0x0ab6b0	# record 250: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab760, 0x0ab7d0	# record 251: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0abc28, 0x0abc98	# record 252: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0abf8c, 0x0abffc	# record 253: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac100, 0x0ac170	# record 254: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a0fb4, 0x0a0fdc	# record 255: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa3cc, 0x0aa43c	# record 256: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab318, 0x0ab388	# record 257: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x30, 0x00, 0x01
-    .long	0x0a100c, 0x0a107c	# record 258: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a109c, 0x0a110c	# record 259: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a765c, 0x0a76cc	# record 260: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a8bf4, 0x0a8c64	# record 261: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a8f54, 0x0a8fc4	# record 262: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a917c, 0x0a91ec	# record 263: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a94fc, 0x0a956c	# record 264: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aa46c, 0x0aa4dc	# record 265: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aadcc, 0x0aaddc	# record 266: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0abd04, 0x0abd14	# record 267: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ac88c, 0x0ac8b4	# record 268: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0acaf4, 0x0acb1c	# record 269: multisample header, zone list
-    .byte	0x00, 0x0c, 0x71, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0accd4, 0x0accfc	# record 270: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0acf44, 0x0acf6c	# record 271: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad044, 0x0ad0b4	# record 272: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad20c, 0x0ad27c	# record 273: multisample header, zone list
-    .byte	0x00, 0x0c, 0x71, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad37c, 0x0ad3ec	# record 274: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad52c, 0x0ad59c	# record 275: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad6dc, 0x0ad74c	# record 276: multisample header, zone list
-    .byte	0x00, 0x0c, 0x70, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad840, 0x0ad8b0	# record 277: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad99c, 0x0ada0c	# record 278: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adaec, 0x0adb5c	# record 279: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adc48, 0x0adcb8	# record 280: multisample header, zone list
-    .byte	0x00, 0x0c, 0x70, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adda0, 0x0ade10	# record 281: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adf24, 0x0adf4c	# record 282: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae1c8, 0x0ae1f0	# record 283: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae388, 0x0ae3f8	# record 284: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae650, 0x0ae678	# record 285: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae74c, 0x0ae7bc	# record 286: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae8c8, 0x0ae938	# record 287: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aea28, 0x0aea98	# record 288: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aebb0, 0x0aec20	# record 289: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aed7c, 0x0aedec	# record 290: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aef10, 0x0aef80	# record 291: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aeff0, 0x0af060	# record 292: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0af090, 0x0af100	# record 293: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0af1a0, 0x0af210	# record 294: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0af258, 0x0af2c8	# record 295: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a1144, 0x0a11b4	# record 296: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a11e4, 0x0a1200	# record 297: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a2364, 0x0a2380	# record 298: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ac8ec, 0x0ac95c	# record 299: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0acb48, 0x0acbb8	# record 300: multisample header, zone list
-    .byte	0x80, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0acd3c, 0x0acdac	# record 301: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0acf9c, 0x0ad00c	# record 302: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5b, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad0f4, 0x0ad164	# record 303: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad2ac, 0x0ad31c	# record 304: multisample header, zone list
-    .byte	0x80, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad434, 0x0ad4a4	# record 305: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad5d4, 0x0ad644	# record 306: multisample header, zone list
-    .byte	0x00, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad778, 0x0ad7e8	# record 307: multisample header, zone list
-    .byte	0x80, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ad8f0, 0x0ad960	# record 308: multisample header, zone list
-    .byte	0x00, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ada3c, 0x0adaac	# record 309: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adb9c, 0x0adc0c	# record 310: multisample header, zone list
-    .byte	0x00, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adce8, 0x0add58	# record 311: multisample header, zone list
-    .byte	0x80, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ade58, 0x0adec8	# record 312: multisample header, zone list
-    .byte	0x00, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0adf84, 0x0adff4	# record 313: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae220, 0x0ae290	# record 314: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae438, 0x0ae4a8	# record 315: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae698, 0x0ae708	# record 316: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae7fc, 0x0ae86c	# record 317: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0ae970, 0x0ae9e0	# record 318: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aeae0, 0x0aeb50	# record 319: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aec58, 0x0aecc8	# record 320: multisample header, zone list
-    .byte	0x00, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0aee14, 0x0aee84	# record 321: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a1244, 0x0a1260	# record 322: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6f, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a1290, 0x0a12ac	# record 323: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a23c4, 0x0a23e0	# record 324: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0xff
-    .long	0x0a12ec, 0x0a12fc	# record 325: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2b5c, 0x0a2b6c	# record 326: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x87, 0x1f, 0x00, 0x01
-    .long	0x0a5798, 0x0a5808	# record 327: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1304, 0x0a1374	# record 328: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a2b74, 0x0a2be4	# record 329: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3ec0, 0x0a3f30	# record 330: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a76f8, 0x0a7768	# record 331: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a8164, 0x0a81d4	# record 332: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa4f4, 0x0aa564	# record 333: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aade8, 0x0aae58	# record 334: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0abd20, 0x0abd90	# record 335: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac984, 0x0ac9a0	# record 336: multisample header, zone list
-    .byte	0x00, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0acbe0, 0x0acbfc	# record 337: multisample header, zone list
-    .byte	0x00, 0x0c, 0x62, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0acdfc, 0x0ace24	# record 338: multisample header, zone list
-    .byte	0x00, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae020, 0x0ae03c	# record 339: multisample header, zone list
-    .byte	0x00, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae2b4, 0x0ae2d0	# record 340: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae4d8, 0x0ae548	# record 341: multisample header, zone list
-    .byte	0x00, 0x0c, 0x64, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a13b8, 0x0a1428	# record 342: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0a2c14, 0x0a2c84	# record 343: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x48, 0x00, 0x01
-    .long	0x0aa594, 0x0aa604	# record 344: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aaea0, 0x0aaf10	# record 345: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab3c4, 0x0ab434	# record 346: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab86c, 0x0ab8dc	# record 347: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ab9a4, 0x0aba14	# record 348: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0abdcc, 0x0abe3c	# record 349: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac328, 0x0ac398	# record 350: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ac9d0, 0x0ac9ec	# record 351: multisample header, zone list
-    .byte	0x80, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0acc28, 0x0acc44	# record 352: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ace5c, 0x0acecc	# record 353: multisample header, zone list
-    .byte	0x80, 0x0c, 0x73, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae068, 0x0ae084	# record 354: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae2f4, 0x0ae310	# record 355: multisample header, zone list
-    .byte	0x00, 0x0c, 0x67, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae580, 0x0ae5a8	# record 356: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1460, 0x0a14d0	# record 357: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a3f78, 0x0a3fe8	# record 358: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5844, 0x0a58b4	# record 359: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a77b0, 0x0a7820	# record 360: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a8cf4, 0x0a8d64	# record 361: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a150c, 0x0a157c	# record 362: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a7844, 0x0a7860	# record 363: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a15b8, 0x0a15d4	# record 364: multisample header, zone list
-    .byte	0x01, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a58e0, 0x0a5950	# record 365: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a786c, 0x0a7894	# record 366: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a15e0, 0x0a1650	# record 367: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a78b4, 0x0a7924	# record 368: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a1694, 0x0a1704	# record 369: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a216c, 0x0a21dc	# record 370: multisample header, zone list
-    .byte	0x81, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5970, 0x0a59e0	# record 371: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae0b4, 0x0ae0d0	# record 372: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a172c, 0x0a173c	# record 373: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a5a00, 0x0a5a10	# record 374: multisample header, zone list
-    .byte	0x80, 0x18, 0x56, 0x42, 0x80, 0x54, 0x00, 0x01
-    .long	0x0aa648, 0x0aa658	# record 375: multisample header, zone list
-    .byte	0x00, 0x0e, 0x5c, 0x42, 0xa7, 0x45, 0x00, 0x01
-    .long	0x0aaa10, 0x0aaa20	# record 376: multisample header, zone list
-    .byte	0x01, 0x0e, 0x5c, 0x42, 0xa7, 0x45, 0x00, 0x01
-    .long	0x0abe84, 0x0abe94	# record 377: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4e, 0x42, 0x80, 0x2e, 0x00, 0x01
-    .long	0x0ac070, 0x0ac080	# record 378: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4e, 0x42, 0x80, 0x2e, 0x00, 0x01
-    .long	0x0a1744, 0x0a1754	# record 379: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a175c, 0x0a176c	# record 380: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0xbc, 0x42, 0x00, 0x01
-    .long	0x0a4030, 0x0a4040	# record 381: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0xbc, 0x42, 0x00, 0x01
-    .long	0x0a4478, 0x0a4488	# record 382: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0xbc, 0x42, 0x00, 0x01
-    .long	0x0a4ad8, 0x0a4ae8	# record 383: multisample header, zone list
-    .byte	0x00, 0x11, 0x78, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a7954, 0x0a7964	# record 384: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7bec, 0x0a7bfc	# record 385: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8224, 0x0a8234	# record 386: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x67, 0x45, 0x00, 0x01
-    .long	0x0a8d94, 0x0a8da4	# record 387: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9044, 0x0a9054	# record 388: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a926c, 0x0a927c	# record 389: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a95cc, 0x0a95dc	# record 390: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a968c, 0x0a969c	# record 391: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a96ec, 0x0a96fc	# record 392: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aca1c, 0x0aca2c	# record 393: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x43, 0x00, 0x01
-    .long	0x0acc74, 0x0acc84	# record 394: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x43, 0x00, 0x01
-    .long	0x0a1774, 0x0a1784	# record 395: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a796c, 0x0a797c	# record 396: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x28, 0x00, 0x01
-    .long	0x0a178c, 0x0a179c	# record 397: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x40, 0x00, 0x01
-    .long	0x0a4048, 0x0a4058	# record 398: multisample header, zone list
-    .byte	0x00, 0x10, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0aa660, 0x0aa688	# record 399: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae0f0, 0x0ae100	# record 400: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae340, 0x0ae350	# record 401: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0ae5f0, 0x0ae600	# record 402: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
-    .long	0x0a17a4, 0x0a17b4	# record 403: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0xa4, 0x4d, 0x00, 0x01
-    .long	0x0a2204, 0x0a2214	# record 404: multisample header, zone list
-    .byte	0x80, 0x0c, 0x64, 0x42, 0xa4, 0x4d, 0x00, 0x01
-    .long	0x0a17bc, 0x0a17cc	# record 405: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a221c, 0x0a222c	# record 406: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7984, 0x0a7994	# record 407: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a17d4, 0x0a17e4	# record 408: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x80, 0x41, 0x02, 0x01
-    .long	0x0aa6f8, 0x0aa708	# record 409: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x44, 0x00, 0x01
-    .long	0x0a17ec, 0x0a17fc	# record 410: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2420, 0x0a2430	# record 411: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2cd4, 0x0a2ce4	# record 412: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4060, 0x0a4070	# record 413: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4490, 0x0a44a0	# record 414: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4508, 0x0a4518	# record 415: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4580, 0x0a4590	# record 416: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a48c8, 0x0a48d8	# record 417: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a49c0, 0x0a49d0	# record 418: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4af0, 0x0a4b00	# record 419: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4c28, 0x0a4c38	# record 420: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5a18, 0x0a5a28	# record 421: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5d90, 0x0a5da0	# record 422: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6214, 0x0a6224	# record 423: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a66b4, 0x0a66c4	# record 424: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a799c, 0x0a79ac	# record 425: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7fac, 0x0a7fbc	# record 426: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8dac, 0x0a8dbc	# record 427: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a95e4, 0x0a95f4	# record 428: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a96a4, 0x0a96b4	# record 429: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9794, 0x0a97a4	# record 430: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a980c, 0x0a981c	# record 431: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a983c, 0x0a984c	# record 432: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a989c, 0x0a98ac	# record 433: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa710, 0x0aa720	# record 434: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abe9c, 0x0abeac	# record 435: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac1b8, 0x0ac1c8	# record 436: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac3e0, 0x0ac3f0	# record 437: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aca34, 0x0aca44	# record 438: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acf14, 0x0acf24	# record 439: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad1ac, 0x0ad1bc	# record 440: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad664, 0x0ad674	# record 441: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae108, 0x0ae118	# record 442: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae608, 0x0ae618	# record 443: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1804, 0x0a1814	# record 444: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2cec, 0x0a2cfc	# record 445: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2e30, 0x0a2e40	# record 446: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a3774, 0x0a3784	# record 447: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a3844, 0x0a3854	# record 448: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4078, 0x0a4088	# record 449: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a44a8, 0x0a44b8	# record 450: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4520, 0x0a4530	# record 451: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4598, 0x0a45a8	# record 452: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a48e0, 0x0a48f0	# record 453: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a49d8, 0x0a49e8	# record 454: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4b08, 0x0a4b18	# record 455: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4c40, 0x0a4c50	# record 456: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5a30, 0x0a5a40	# record 457: multisample header, zone list
-    .byte	0x80, 0x11, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa728, 0x0aa738	# record 458: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x21, 0x01, 0x01
-    .long	0x0a181c, 0x0a182c	# record 459: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2438, 0x0a2448	# record 460: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a25b0, 0x0a25c0	# record 461: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2d04, 0x0a2d14	# record 462: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a378c, 0x0a379c	# record 463: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a385c, 0x0a386c	# record 464: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4090, 0x0a40a0	# record 465: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a44c0, 0x0a44d0	# record 466: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4538, 0x0a4548	# record 467: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a45b0, 0x0a45c0	# record 468: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a48f8, 0x0a4908	# record 469: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a49f0, 0x0a4a00	# record 470: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4b20, 0x0a4b30	# record 471: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4c58, 0x0a4c68	# record 472: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5a48, 0x0a5a58	# record 473: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5da8, 0x0a5db8	# record 474: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5dd8, 0x0a5de8	# record 475: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a622c, 0x0a623c	# record 476: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6454, 0x0a6464	# record 477: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6514, 0x0a6524	# record 478: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a66cc, 0x0a66dc	# record 479: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6884, 0x0a6894	# record 480: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a68b4, 0x0a68c4	# record 481: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a68cc, 0x0a68dc	# record 482: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6994, 0x0a69a4	# record 483: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6a0c, 0x0a6a1c	# record 484: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6a24, 0x0a6a34	# record 485: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6a3c, 0x0a6a4c	# record 486: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a79b4, 0x0a79c4	# record 487: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7fc4, 0x0a7fd4	# record 488: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8024, 0x0a8034	# record 489: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8104, 0x0a8114	# record 490: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8134, 0x0a8144	# record 491: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a823c, 0x0a824c	# record 492: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a82fc, 0x0a830c	# record 493: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a835c, 0x0a836c	# record 494: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a83a4, 0x0a83b4	# record 495: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a84d4, 0x0a84e4	# record 496: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a854c, 0x0a855c	# record 497: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8564, 0x0a8574	# record 498: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a85ac, 0x0a85bc	# record 499: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8dc4, 0x0a8dd4	# record 500: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9284, 0x0a9294	# record 501: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a92e4, 0x0a92f4	# record 502: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9344, 0x0a9354	# record 503: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a946c, 0x0a947c	# record 504: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a94b4, 0x0a94c4	# record 505: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a95fc, 0x0a960c	# record 506: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a96bc, 0x0a96cc	# record 507: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9704, 0x0a9714	# record 508: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a974c, 0x0a975c	# record 509: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a97ac, 0x0a97bc	# record 510: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9854, 0x0a9864	# record 511: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a98b4, 0x0a98c4	# record 512: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa740, 0x0aa750	# record 513: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aab30, 0x0aab40	# record 514: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aac38, 0x0aac48	# record 515: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaf60, 0x0aaf70	# record 516: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aafa8, 0x0aafb8	# record 517: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab188, 0x0ab198	# record 518: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab478, 0x0ab488	# record 519: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab718, 0x0ab728	# record 520: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab824, 0x0ab834	# record 521: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab92c, 0x0ab93c	# record 522: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aba70, 0x0aba80	# record 523: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abaa0, 0x0abab0	# record 524: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abeb4, 0x0abec4	# record 525: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac230, 0x0ac240	# record 526: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac3f8, 0x0ac408	# record 527: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aca4c, 0x0aca5c	# record 528: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acc8c, 0x0acc9c	# record 529: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad1c4, 0x0ad1d4	# record 530: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad34c, 0x0ad35c	# record 531: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad67c, 0x0ad68c	# record 532: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae120, 0x0ae130	# record 533: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae358, 0x0ae368	# record 534: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae898, 0x0ae8a8	# record 535: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aecec, 0x0aecfc	# record 536: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aeeb0, 0x0aeec0	# record 537: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af140, 0x0af150	# record 538: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1834, 0x0a1844	# record 539: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2450, 0x0a2460	# record 540: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a25c8, 0x0a25d8	# record 541: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2d1c, 0x0a2d2c	# record 542: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2e48, 0x0a2e58	# record 543: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a40a8, 0x0a40b8	# record 544: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5a60, 0x0a5a70	# record 545: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5d30, 0x0a5d40	# record 546: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5dc0, 0x0a5dd0	# record 547: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5df0, 0x0a5e00	# record 548: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6244, 0x0a6254	# record 549: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a62a4, 0x0a62b4	# record 550: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a646c, 0x0a647c	# record 551: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a652c, 0x0a653c	# record 552: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a66e4, 0x0a66f4	# record 553: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8254, 0x0a8264	# record 554: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8314, 0x0a8324	# record 555: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a84ec, 0x0a84fc	# record 556: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8ddc, 0x0a8dec	# record 557: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a929c, 0x0a92ac	# record 558: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a92fc, 0x0a930c	# record 559: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9614, 0x0a9624	# record 560: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a971c, 0x0a972c	# record 561: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9764, 0x0a9774	# record 562: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a97c4, 0x0a97d4	# record 563: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9824, 0x0a9834	# record 564: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a986c, 0x0a987c	# record 565: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a98cc, 0x0a98dc	# record 566: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa758, 0x0aa768	# record 567: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abecc, 0x0abedc	# record 568: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a184c, 0x0a185c	# record 569: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x66, 0x3d, 0x00, 0x01
-    .long	0x0a40c0, 0x0a40d0	# record 570: multisample header, zone list
-    .byte	0x80, 0x0c, 0x68, 0x42, 0xc4, 0x48, 0x00, 0x01
-    .long	0x0a79cc, 0x0a79dc	# record 571: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x44, 0x3d, 0x00, 0x01
-    .long	0x0a7c04, 0x0a7c14	# record 572: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x44, 0x3d, 0x00, 0x01
-    .long	0x0a7d1c, 0x0a7d2c	# record 573: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7d64, 0x0a7d74	# record 574: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a826c, 0x0a827c	# record 575: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x44, 0x41, 0x00, 0x01
-    .long	0x0a832c, 0x0a833c	# record 576: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x44, 0x41, 0x00, 0x01
-    .long	0x0a8374, 0x0a8384	# record 577: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a83bc, 0x0a83cc	# record 578: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a857c, 0x0a858c	# record 579: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a85c4, 0x0a85d4	# record 580: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8df4, 0x0a8e04	# record 581: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x44, 0x46, 0x00, 0x01
-    .long	0x0a905c, 0x0a906c	# record 582: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x44, 0x46, 0x00, 0x01
-    .long	0x0a92b4, 0x0a92c4	# record 583: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9314, 0x0a9324	# record 584: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9484, 0x0a9494	# record 585: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a94cc, 0x0a94dc	# record 586: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a962c, 0x0a963c	# record 587: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x44, 0x4a, 0x00, 0x01
-    .long	0x0a96d4, 0x0a96e4	# record 588: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x44, 0x4a, 0x00, 0x01
-    .long	0x0a9734, 0x0a9744	# record 589: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a977c, 0x0a978c	# record 590: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9884, 0x0a9894	# record 591: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a98e4, 0x0a98f4	# record 592: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa770, 0x0aa780	# record 593: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0xe6, 0x3e, 0x00, 0x01
-    .long	0x0ab490, 0x0ab4a0	# record 594: multisample header, zone list
-    .byte	0x80, 0x0c, 0x68, 0x42, 0xce, 0x46, 0x00, 0x01
-    .long	0x0abee4, 0x0abef4	# record 595: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac088, 0x0ac098	# record 596: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac1d0, 0x0ac1e0	# record 597: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac200, 0x0ac210	# record 598: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac248, 0x0ac258	# record 599: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac260, 0x0ac270	# record 600: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac410, 0x0ac420	# record 601: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac440, 0x0ac450	# record 602: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac458, 0x0ac468	# record 603: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac470, 0x0ac480	# record 604: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac488, 0x0ac498	# record 605: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac4a0, 0x0ac4b0	# record 606: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aca64, 0x0aca74	# record 607: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x66, 0x42, 0x00, 0x01
-    .long	0x0ad694, 0x0ad6a4	# record 608: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0xc4, 0x47, 0x00, 0x01
-    .long	0x0ae138, 0x0ae148	# record 609: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0ae620, 0x0ae630	# record 610: multisample header, zone list
-    .byte	0x00, 0x0c, 0x72, 0x42, 0x4d, 0x53, 0x00, 0x01
-    .long	0x0aeec8, 0x0aeed8	# record 611: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x44, 0x42, 0x00, 0x01
-    .long	0x0aefc0, 0x0aefd0	# record 612: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x49, 0x00, 0x01
-    .long	0x0af158, 0x0af168	# record 613: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x44, 0x43, 0x00, 0x01
-    .long	0x0a1864, 0x0a1874	# record 614: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2234, 0x0a2244	# record 615: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2d34, 0x0a2d44	# record 616: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2e60, 0x0a2e70	# record 617: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a40d8, 0x0a40e8	# record 618: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5a78, 0x0a5a88	# record 619: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5d48, 0x0a5d58	# record 620: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a66fc, 0x0a670c	# record 621: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a689c, 0x0a68ac	# record 622: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa788, 0x0aa798	# record 623: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4d, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaa28, 0x0aaa38	# record 624: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4d, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab4a8, 0x0ab4b8	# record 625: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4d, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abefc, 0x0abf0c	# record 626: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac0a0, 0x0ac0b0	# record 627: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aca7c, 0x0aca8c	# record 628: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acca4, 0x0accb4	# record 629: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad6ac, 0x0ad6bc	# record 630: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad810, 0x0ad820	# record 631: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aed04, 0x0aed14	# record 632: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4e, 0x42, 0x80, 0x4b, 0x00, 0x01
-    .long	0x0af170, 0x0af180	# record 633: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af310, 0x0af320	# record 634: multisample header, zone list
-    .byte	0x80, 0x0c, 0x78, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a187c, 0x0a188c	# record 635: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0xc1, 0x49, 0x00, 0x01
-    .long	0x0a40f0, 0x0a4100	# record 636: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a5a90, 0x0a5aa0	# record 637: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a5d60, 0x0a5d70	# record 638: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a6714, 0x0a6724	# record 639: multisample header, zone list
-    .byte	0x00, 0x0c, 0x54, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a79e4, 0x0a79f4	# record 640: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a7d34, 0x0a7d44	# record 641: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a7d7c, 0x0a7d8c	# record 642: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a7fdc, 0x0a7fec	# record 643: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a803c, 0x0a804c	# record 644: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a811c, 0x0a812c	# record 645: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a814c, 0x0a815c	# record 646: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a8284, 0x0a8294	# record 647: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a8344, 0x0a8354	# record 648: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a838c, 0x0a839c	# record 649: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a83d4, 0x0a83e4	# record 650: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a8594, 0x0a85a4	# record 651: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a85dc, 0x0a85ec	# record 652: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0aa7a0, 0x0aa7b0	# record 653: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ab4c0, 0x0ab4d0	# record 654: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0abf14, 0x0abf24	# record 655: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ac0b8, 0x0ac0c8	# record 656: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ae150, 0x0ae160	# record 657: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aed1c, 0x0aed2c	# record 658: multisample header, zone list
-    .byte	0x00, 0x0c, 0x60, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a1894, 0x0a18a4	# record 659: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a4108, 0x0a4118	# record 660: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a5aa8, 0x0a5ab8	# record 661: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a5d78, 0x0a5d88	# record 662: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a625c, 0x0a626c	# record 663: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a62bc, 0x0a62cc	# record 664: multisample header, zone list
-    .byte	0x00, 0x0c, 0x5a, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a8e0c, 0x0a8e1c	# record 665: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a9074, 0x0a9084	# record 666: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0abf2c, 0x0abf3c	# record 667: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ac0d0, 0x0ac0e0	# record 668: multisample header, zone list
-    .byte	0x00, 0x0c, 0x59, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ae168, 0x0ae178	# record 669: multisample header, zone list
-    .byte	0x80, 0x0c, 0x63, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aed34, 0x0aed44	# record 670: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a18ac, 0x0a18bc	# record 671: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x41, 0x00, 0x01
-    .long	0x0a2d4c, 0x0a2d5c	# record 672: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x41, 0x00, 0x01
-    .long	0x0a4120, 0x0a4130	# record 673: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x41, 0x00, 0x01
-    .long	0x0a4910, 0x0a4920	# record 674: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x41, 0x00, 0x01
-    .long	0x0a4c70, 0x0a4c80	# record 675: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5ac0, 0x0a5ad0	# record 676: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x46, 0x00, 0x01
-    .long	0x0a6274, 0x0a6284	# record 677: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x46, 0x00, 0x01
-    .long	0x0a672c, 0x0a673c	# record 678: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x46, 0x00, 0x01
-    .long	0x0a69ac, 0x0a69bc	# record 679: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x46, 0x00, 0x01
-    .long	0x0a6a54, 0x0a6a64	# record 680: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a79fc, 0x0a7a0c	# record 681: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x40, 0x00, 0x01
-    .long	0x0a7ff4, 0x0a8004	# record 682: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x40, 0x00, 0x01
-    .long	0x0a829c, 0x0a82ac	# record 683: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x40, 0x00, 0x01
-    .long	0x0a8504, 0x0a8514	# record 684: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x40, 0x00, 0x01
-    .long	0x0a85f4, 0x0a8604	# record 685: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8e24, 0x0a8e34	# record 686: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0a935c, 0x0a936c	# record 687: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0a9644, 0x0a9654	# record 688: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0a97dc, 0x0a97ec	# record 689: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0aca94, 0x0acaa4	# record 690: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0accbc, 0x0acccc	# record 691: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acf2c, 0x0acf3c	# record 692: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad02c, 0x0ad03c	# record 693: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad1dc, 0x0ad1ec	# record 694: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad364, 0x0ad374	# record 695: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad4fc, 0x0ad50c	# record 696: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad514, 0x0ad524	# record 697: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad6c4, 0x0ad6d4	# record 698: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad828, 0x0ad838	# record 699: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad984, 0x0ad994	# record 700: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0adad4, 0x0adae4	# record 701: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0adc30, 0x0adc40	# record 702: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0add88, 0x0add98	# record 703: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0adef4, 0x0adf04	# record 704: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0adf0c, 0x0adf1c	# record 705: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae180, 0x0ae190	# record 706: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae370, 0x0ae380	# record 707: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae638, 0x0ae648	# record 708: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae734, 0x0ae744	# record 709: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae8b0, 0x0ae8c0	# record 710: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aea10, 0x0aea20	# record 711: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aeb80, 0x0aeb90	# record 712: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aeb98, 0x0aeba8	# record 713: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aed4c, 0x0aed5c	# record 714: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aeee0, 0x0aeef0	# record 715: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aefd8, 0x0aefe8	# record 716: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af078, 0x0af088	# record 717: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af188, 0x0af198	# record 718: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af240, 0x0af250	# record 719: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af328, 0x0af338	# record 720: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af340, 0x0af350	# record 721: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a18c4, 0x0a18d4	# record 722: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4138, 0x0a4148	# record 723: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0a5ad8, 0x0a5ae8	# record 724: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a6744, 0x0a6754	# record 725: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3d, 0x00, 0x01
-    .long	0x0aa7b8, 0x0aa7c8	# record 726: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaa40, 0x0aaa50	# record 727: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aab48, 0x0aab58	# record 728: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aac50, 0x0aac60	# record 729: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaf78, 0x0aaf88	# record 730: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aafc0, 0x0aafd0	# record 731: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab1a0, 0x0ab1b0	# record 732: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab1d0, 0x0ab1e0	# record 733: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab4d8, 0x0ab4e8	# record 734: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab610, 0x0ab620	# record 735: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab730, 0x0ab740	# record 736: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab83c, 0x0ab84c	# record 737: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab944, 0x0ab954	# record 738: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab98c, 0x0ab99c	# record 739: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aba88, 0x0aba98	# record 740: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abab8, 0x0abac8	# record 741: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abf44, 0x0abf54	# record 742: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac0e8, 0x0ac0f8	# record 743: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac1e8, 0x0ac1f8	# record 744: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac218, 0x0ac228	# record 745: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae198, 0x0ae1a8	# record 746: multisample header, zone list
-    .byte	0x80, 0x0c, 0x71, 0x42, 0x80, 0x3e, 0x00, 0x01
-    .long	0x0a18dc, 0x0a18ec	# record 747: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x3b, 0x00, 0x01
-    .long	0x0a5af0, 0x0a5b00	# record 748: multisample header, zone list
-    .byte	0x80, 0x0c, 0x68, 0x42, 0xbc, 0x3c, 0x00, 0x01
-    .long	0x0a7a14, 0x0a7a24	# record 749: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a18f4, 0x0a1904	# record 750: multisample header, zone list
-    .byte	0x80, 0x15, 0x6c, 0x42, 0x9c, 0x52, 0x00, 0x01
-    .long	0x0a4150, 0x0a4160	# record 751: multisample header, zone list
-    .byte	0x80, 0x0c, 0x67, 0x42, 0xbc, 0x3e, 0x00, 0x01
-    .long	0x0a190c, 0x0a191c	# record 752: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4f, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a4168, 0x0a4178	# record 753: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4f, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a5b08, 0x0a5b18	# record 754: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5f, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7a2c, 0x0a7a3c	# record 755: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0xbc, 0x46, 0x00, 0x01
-    .long	0x0a82b4, 0x0a82c4	# record 756: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0xbc, 0x47, 0x00, 0x01
-    .long	0x0a1924, 0x0a1934	# record 757: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5b20, 0x0a5b30	# record 758: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7a44, 0x0a7a54	# record 759: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a851c, 0x0a852c	# record 760: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a193c, 0x0a194c	# record 761: multisample header, zone list
-    .byte	0x80, 0x00, 0x6c, 0x42, 0x80, 0x4a, 0x00, 0x01
-    .long	0x0a5b38, 0x0a5b48	# record 762: multisample header, zone list
-    .byte	0x80, 0x15, 0x6c, 0x42, 0x80, 0x4b, 0x00, 0x01
-    .long	0x0a69c4, 0x0a69d4	# record 763: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x4b, 0x00, 0x01
-    .long	0x0a7a5c, 0x0a7a6c	# record 764: multisample header, zone list
-    .byte	0x80, 0x11, 0x60, 0x42, 0xbc, 0x51, 0x00, 0x01
-    .long	0x0a8e3c, 0x0a8e4c	# record 765: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa7d0, 0x0aa7e0	# record 766: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab4f0, 0x0ab500	# record 767: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab95c, 0x0ab96c	# record 768: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abf5c, 0x0abf6c	# record 769: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5b, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ac428, 0x0ac438	# record 770: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1954, 0x0a1964	# record 771: multisample header, zone list
-    .byte	0x00, 0x10, 0x5a, 0x42, 0xbc, 0x4e, 0x00, 0x01
-    .long	0x0a5b50, 0x0a5b60	# record 772: multisample header, zone list
-    .byte	0x80, 0x0c, 0x59, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a675c, 0x0a676c	# record 773: multisample header, zone list
-    .byte	0x80, 0x0c, 0x59, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7a74, 0x0a7a84	# record 774: multisample header, zone list
-    .byte	0x80, 0x13, 0x6c, 0x42, 0x80, 0x5d, 0x00, 0x01
-    .long	0x0a196c, 0x0a1994	# record 775: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6f, 0x42, 0x84, 0x4f, 0x00, 0x01
-    .long	0x0a5b68, 0x0a5b78	# record 776: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x46, 0x00, 0x01
-    .long	0x0a6774, 0x0a6784	# record 777: multisample header, zone list
-    .byte	0x80, 0x0c, 0x68, 0x42, 0x00, 0x48, 0x00, 0x01
-    .long	0x0a69dc, 0x0a69ec	# record 778: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x44, 0x44, 0x00, 0x01
-    .long	0x0a7a8c, 0x0a7a9c	# record 779: multisample header, zone list
-    .byte	0x80, 0x1c, 0x67, 0x42, 0x44, 0x65, 0x00, 0x01
-    .long	0x0a82cc, 0x0a82dc	# record 780: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4f, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a19b4, 0x0a19c4	# record 781: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a19cc, 0x0a19dc	# record 782: multisample header, zone list
-    .byte	0x80, 0x13, 0x5b, 0x42, 0x80, 0x4e, 0x00, 0x01
-    .long	0x0a224c, 0x0a225c	# record 783: multisample header, zone list
-    .byte	0x80, 0x13, 0x5b, 0x42, 0x80, 0x4e, 0x00, 0x01
-    .long	0x0a2468, 0x0a2478	# record 784: multisample header, zone list
-    .byte	0x80, 0x13, 0x5b, 0x42, 0x80, 0x4e, 0x00, 0x01
-    .long	0x0a5b80, 0x0a5b90	# record 785: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4f, 0x42, 0x80, 0x4e, 0x00, 0x01
-    .long	0x0a7aa4, 0x0a7ab4	# record 786: multisample header, zone list
-    .byte	0x80, 0x0c, 0x45, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a19e4, 0x0a19f4	# record 787: multisample header, zone list
-    .byte	0x80, 0x18, 0x5b, 0x42, 0xbc, 0x54, 0x00, 0x01
-    .long	0x0aa7e8, 0x0aa7f8	# record 788: multisample header, zone list
-    .byte	0x00, 0x0c, 0x4f, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0ab508, 0x0ab518	# record 789: multisample header, zone list
-    .byte	0x00, 0x0c, 0x6c, 0x42, 0x44, 0x4d, 0x00, 0x01
-    .long	0x0a19fc, 0x0a1a0c	# record 790: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4180, 0x0a4190	# record 791: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a44d8, 0x0a44e8	# record 792: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4550, 0x0a4560	# record 793: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5b98, 0x0a5ba8	# record 794: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a678c, 0x0a679c	# record 795: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7abc, 0x0a7acc	# record 796: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7c1c, 0x0a7c2c	# record 797: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7d4c, 0x0a7d5c	# record 798: multisample header, zone list
-    .byte	0x80, 0x0c, 0x4e, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8e54, 0x0a8e64	# record 799: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a908c, 0x0a909c	# record 800: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a965c, 0x0a966c	# record 801: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa800, 0x0aa810	# record 802: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaa58, 0x0aaa68	# record 803: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aab60, 0x0aab70	# record 804: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aac68, 0x0aac78	# record 805: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaf90, 0x0aafa0	# record 806: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aafd8, 0x0aafe8	# record 807: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab1b8, 0x0ab1c8	# record 808: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0abf74, 0x0abf84	# record 809: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acaac, 0x0acabc	# record 810: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ad1f4, 0x0ad204	# record 811: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1a14, 0x0a1a24	# record 812: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2264, 0x0a2274	# record 813: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2480, 0x0a2490	# record 814: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a25e0, 0x0a25f0	# record 815: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2d64, 0x0a2d74	# record 816: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4198, 0x0a41a8	# record 817: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a44f0, 0x0a4500	# record 818: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a4568, 0x0a4578	# record 819: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a45c8, 0x0a45d8	# record 820: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8e6c, 0x0a8e7c	# record 821: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a90a4, 0x0a90b4	# record 822: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a92cc, 0x0a92dc	# record 823: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a932c, 0x0a933c	# record 824: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9374, 0x0a9384	# record 825: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a93a4, 0x0a93b4	# record 826: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a949c, 0x0a94ac	# record 827: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a94e4, 0x0a94f4	# record 828: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa818, 0x0aa828	# record 829: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acac4, 0x0acad4	# record 830: multisample header, zone list
-    .byte	0x80, 0x0c, 0x48, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ae1b0, 0x0ae1c0	# record 831: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aed64, 0x0aed74	# record 832: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aeef8, 0x0aef08	# record 833: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1a2c, 0x0a1a3c	# record 834: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a227c, 0x0a228c	# record 835: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2498, 0x0a24a8	# record 836: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a25f8, 0x0a2608	# record 837: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a2d7c, 0x0a2d8c	# record 838: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5bb0, 0x0a5bc0	# record 839: multisample header, zone list
-    .byte	0x80, 0x0c, 0x54, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a67a4, 0x0a67b4	# record 840: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7ad4, 0x0a7ae4	# record 841: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aa830, 0x0aa840	# record 842: multisample header, zone list
-    .byte	0x80, 0x0c, 0x43, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0aaa70, 0x0aaa80	# record 843: multisample header, zone list
-    .byte	0x80, 0x0c, 0x49, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab520, 0x0ab530	# record 844: multisample header, zone list
-    .byte	0x80, 0x0c, 0x49, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab628, 0x0ab638	# record 845: multisample header, zone list
-    .byte	0x80, 0x0c, 0x43, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab748, 0x0ab758	# record 846: multisample header, zone list
-    .byte	0x80, 0x0c, 0x49, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab854, 0x0ab864	# record 847: multisample header, zone list
-    .byte	0x80, 0x0c, 0x49, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0ab974, 0x0ab984	# record 848: multisample header, zone list
-    .byte	0x80, 0x0c, 0x49, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0acadc, 0x0acaec	# record 849: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a1a44, 0x0a1a54	# record 850: multisample header, zone list
-    .byte	0x80, 0x0c, 0x66, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a5bc8, 0x0a5bd8	# record 851: multisample header, zone list
-    .byte	0x80, 0x0c, 0x51, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a628c, 0x0a629c	# record 852: multisample header, zone list
-    .byte	0x80, 0x0c, 0x5a, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a67bc, 0x0a67cc	# record 853: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a69f4, 0x0a6a04	# record 854: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a7aec, 0x0a7afc	# record 855: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a800c, 0x0a801c	# record 856: multisample header, zone list
-    .byte	0x80, 0x0c, 0x60, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a82e4, 0x0a82f4	# record 857: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8534, 0x0a8544	# record 858: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a8e84, 0x0a8e94	# record 859: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a938c, 0x0a939c	# record 860: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a9674, 0x0a9684	# record 861: multisample header, zone list
-    .byte	0x80, 0x0c, 0x72, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0a97f4, 0x0a9804	# record 862: multisample header, zone list
-    .byte	0x80, 0x0c, 0x6c, 0x42, 0x80, 0x42, 0x00, 0x01
-    .long	0x0af358, 0x0af368	# record 863: multisample header, zone list
-    .byte	0x00, 0x0c, 0x78, 0x42, 0x80, 0x3c, 0x00, 0x01
+    jk_param	JkMsHeader000 - InternalVoiceArchive, JkZones000 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 0
+    jk_param	JkMsHeader001 - InternalVoiceArchive, JkZones001 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 14, 0	# record 1
+    jk_param	JkMsHeader002 - InternalVoiceArchive, JkZones002 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 2
+    jk_param	JkMsHeader003 - InternalVoiceArchive, JkZones003 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 15, 0	# record 3
+    jk_param	JkMsHeader004 - InternalVoiceArchive, JkZones004 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 4
+    jk_param	JkMsHeader005 - InternalVoiceArchive, JkZones005 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 14, 0	# record 5
+    jk_param	JkMsHeader006 - InternalVoiceArchive, JkZones006 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 6
+    jk_param	JkMsHeader007 - InternalVoiceArchive, JkZones007 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 14, 0	# record 7
+    jk_param	JkMsHeader008 - InternalVoiceArchive, JkZones008 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 8
+    jk_param	JkMsHeader009 - InternalVoiceArchive, JkZones009 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 15, 0	# record 9
+    jk_param	JkMsHeader010 - InternalVoiceArchive, JkZones010 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 0	# record 10
+    jk_param	JkMsHeader011 - InternalVoiceArchive, JkZones011 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 15, 0	# record 11
+    jk_param	JkMsHeader012 - InternalVoiceArchive, JkZones012 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 0	# record 12
+    jk_param	JkMsHeader013 - InternalVoiceArchive, JkZones013 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 13
+    jk_param	JkMsHeader014 - InternalVoiceArchive, JkZones014 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 14
+    jk_param	JkMsHeader015 - InternalVoiceArchive, JkZones015 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 15
+    jk_param	JkMsHeader016 - InternalVoiceArchive, JkZones016 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 16
+    jk_param	JkMsHeader017 - InternalVoiceArchive, JkZones017 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 0, 1	# record 17
+    jk_param	JkMsHeader018 - InternalVoiceArchive, JkZones018 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 0, 1	# record 18
+    jk_param	JkMsHeader019 - InternalVoiceArchive, JkZones019 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 19
+    jk_param	JkMsHeader020 - InternalVoiceArchive, JkZones020 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 20
+    jk_param	JkMsHeader021 - InternalVoiceArchive, JkZones021 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 3, 1	# record 21
+    jk_param	JkMsHeader022 - InternalVoiceArchive, JkZones022 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 3, 1	# record 22
+    jk_param	JkMsHeader023 - InternalVoiceArchive, JkZones023 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 3, 1	# record 23
+    jk_param	JkMsHeader024 - InternalVoiceArchive, JkZones024 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 3, 1	# record 24
+    jk_param	JkMsHeader025 - InternalVoiceArchive, JkZones025 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 5, 1	# record 25
+    jk_param	JkMsHeader026 - InternalVoiceArchive, JkZones026 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 26
+    jk_param	JkMsHeader027 - InternalVoiceArchive, JkZones027 - InternalVoiceArchive, 0x81, 12, 108, 66, 0x3c80, 0, 1	# record 27
+    jk_param	JkMsHeader028 - InternalVoiceArchive, JkZones028 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 255	# record 28
+    jk_param	JkMsHeader029 - InternalVoiceArchive, JkZones029 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 255	# record 29
+    jk_param	JkMsHeader030 - InternalVoiceArchive, JkZones030 - InternalVoiceArchive, 0x80, 12, 111, 66, 0x3c80, 0, 255	# record 30
+    jk_param	JkMsHeader031 - InternalVoiceArchive, JkZones031 - InternalVoiceArchive, 0x80, 12, 111, 66, 0x3c80, 0, 255	# record 31
+    jk_param	JkMsHeader032 - InternalVoiceArchive, JkZones032 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 32
+    jk_param	JkMsHeader033 - InternalVoiceArchive, JkZones033 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 33
+    jk_param	JkMsHeader034 - InternalVoiceArchive, JkZones034 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x5480, 0, 1	# record 34
+    jk_param	JkMsHeader035 - InternalVoiceArchive, JkZones035 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x4880, 0, 1	# record 35
+    jk_param	JkMsHeader036 - InternalVoiceArchive, JkZones036 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 36
+    jk_param	JkMsHeader037 - InternalVoiceArchive, JkZones037 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x5480, 0, 1	# record 37
+    jk_param	JkMsHeader038 - InternalVoiceArchive, JkZones038 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 38
+    jk_param	JkMsHeader039 - InternalVoiceArchive, JkZones039 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 39
+    jk_param	JkMsHeader040 - InternalVoiceArchive, JkZones040 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x4880, 5, 1	# record 40
+    jk_param	JkMsHeader041 - InternalVoiceArchive, JkZones041 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x5480, 0, 1	# record 41
+    jk_param	JkMsHeader042 - InternalVoiceArchive, JkZones042 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 42
+    jk_param	JkMsHeader043 - InternalVoiceArchive, JkZones043 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4880, 7, 1	# record 43
+    jk_param	JkMsHeader044 - InternalVoiceArchive, JkZones044 - InternalVoiceArchive, 0x80, 19, 96, 66, 0x3144, 0, 1	# record 44
+    jk_param	JkMsHeader045 - InternalVoiceArchive, JkZones045 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 5, 1	# record 45
+    jk_param	JkMsHeader046 - InternalVoiceArchive, JkZones046 - InternalVoiceArchive, 0x00, 12, 118, 66, 0x4f80, 0, 1	# record 46
+    jk_param	JkMsHeader047 - InternalVoiceArchive, JkZones047 - InternalVoiceArchive, 0x00, 12, 118, 66, 0x4980, 0, 1	# record 47
+    jk_param	JkMsHeader048 - InternalVoiceArchive, JkZones048 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3b80, 0, 1	# record 48
+    jk_param	JkMsHeader049 - InternalVoiceArchive, JkZones049 - InternalVoiceArchive, 0x00, 12, 118, 66, 0x5a80, 0, 1	# record 49
+    jk_param	JkMsHeader050 - InternalVoiceArchive, JkZones050 - InternalVoiceArchive, 0x02, 12, 113, 8, 0x0038, 0, 1	# record 50
+    jk_param	JkMsHeader051 - InternalVoiceArchive, JkZones051 - InternalVoiceArchive, 0x02, 12, 102, 8, 0x0038, 0, 1	# record 51
+    jk_param	JkMsHeader052 - InternalVoiceArchive, JkZones052 - InternalVoiceArchive, 0x02, 12, 113, 8, 0x0038, 2, 1	# record 52
+    jk_param	JkMsHeader053 - InternalVoiceArchive, JkZones053 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 53
+    jk_param	JkMsHeader054 - InternalVoiceArchive, JkZones054 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 54
+    jk_param	JkMsHeader055 - InternalVoiceArchive, JkZones055 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 55
+    jk_param	JkMsHeader056 - InternalVoiceArchive, JkZones056 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 2, 1	# record 56
+    jk_param	JkMsHeader057 - InternalVoiceArchive, JkZones057 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 57
+    jk_param	JkMsHeader058 - InternalVoiceArchive, JkZones058 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 58
+    jk_param	JkMsHeader059 - InternalVoiceArchive, JkZones059 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 59
+    jk_param	JkMsHeader060 - InternalVoiceArchive, JkZones060 - InternalVoiceArchive, 0x02, 12, 113, 16, 0x0038, 3, 1	# record 60
+    jk_param	JkMsHeader061 - InternalVoiceArchive, JkZones061 - InternalVoiceArchive, 0x02, 12, 111, 16, 0x0038, 0, 1	# record 61
+    jk_param	JkMsHeader062 - InternalVoiceArchive, JkZones062 - InternalVoiceArchive, 0x02, 12, 113, 16, 0x0038, 2, 1	# record 62
+    jk_param	JkMsHeader063 - InternalVoiceArchive, JkZones063 - InternalVoiceArchive, 0x80, 12, 113, 66, 0x3c80, 0, 1	# record 63
+    jk_param	JkMsHeader064 - InternalVoiceArchive, JkZones064 - InternalVoiceArchive, 0x02, 12, 114, 0, 0x0038, 0, 1	# record 64
+    jk_param	JkMsHeader065 - InternalVoiceArchive, JkZones065 - InternalVoiceArchive, 0x02, 12, 114, 0, 0x0038, 2, 1	# record 65
+    jk_param	JkMsHeader066 - InternalVoiceArchive, JkZones066 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x3c80, 0, 1	# record 66
+    jk_param	JkMsHeader067 - InternalVoiceArchive, JkZones067 - InternalVoiceArchive, 0x02, 12, 114, 0, 0x0038, 2, 1	# record 67
+    jk_param	JkMsHeader068 - InternalVoiceArchive, JkZones068 - InternalVoiceArchive, 0x02, 12, 113, 0, 0x0038, 0, 1	# record 68
+    jk_param	JkMsHeader069 - InternalVoiceArchive, JkZones069 - InternalVoiceArchive, 0x02, 12, 114, 16, 0x0038, 0, 1	# record 69
+    jk_param	JkMsHeader070 - InternalVoiceArchive, JkZones070 - InternalVoiceArchive, 0x02, 12, 114, 16, 0x0038, 0, 1	# record 70
+    jk_param	JkMsHeader071 - InternalVoiceArchive, JkZones071 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 1, 1	# record 71
+    jk_param	JkMsHeader072 - InternalVoiceArchive, JkZones072 - InternalVoiceArchive, 0x01, 12, 111, 66, 0x3c80, 1, 1	# record 72
+    jk_param	JkMsHeader073 - InternalVoiceArchive, JkZones073 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 73
+    jk_param	JkMsHeader074 - InternalVoiceArchive, JkZones074 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x4880, 2, 1	# record 74
+    jk_param	JkMsHeader075 - InternalVoiceArchive, JkZones075 - InternalVoiceArchive, 0x02, 12, 111, 0, 0x0038, 0, 1	# record 75
+    jk_param	JkMsHeader076 - InternalVoiceArchive, JkZones076 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 0, 1	# record 76
+    jk_param	JkMsHeader077 - InternalVoiceArchive, JkZones077 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 0, 1	# record 77
+    jk_param	JkMsHeader078 - InternalVoiceArchive, JkZones078 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 78
+    jk_param	JkMsHeader079 - InternalVoiceArchive, JkZones079 - InternalVoiceArchive, 0x00, 12, 109, 66, 0x3c80, 2, 1	# record 79
+    jk_param	JkMsHeader080 - InternalVoiceArchive, JkZones080 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 80
+    jk_param	JkMsHeader081 - InternalVoiceArchive, JkZones081 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 81
+    jk_param	JkMsHeader082 - InternalVoiceArchive, JkZones082 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 82
+    jk_param	JkMsHeader083 - InternalVoiceArchive, JkZones083 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 83
+    jk_param	JkMsHeader084 - InternalVoiceArchive, JkZones084 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 84
+    jk_param	JkMsHeader085 - InternalVoiceArchive, JkZones085 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 85
+    jk_param	JkMsHeader086 - InternalVoiceArchive, JkZones086 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 2, 1	# record 86
+    jk_param	JkMsHeader087 - InternalVoiceArchive, JkZones087 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 87
+    jk_param	JkMsHeader088 - InternalVoiceArchive, JkZones088 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 4, 1	# record 88
+    jk_param	JkMsHeader089 - InternalVoiceArchive, JkZones089 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x5480, 7, 1	# record 89
+    jk_param	JkMsHeader090 - InternalVoiceArchive, JkZones090 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 90
+    jk_param	JkMsHeader091 - InternalVoiceArchive, JkZones091 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x2480, 0, 1	# record 91
+    jk_param	JkMsHeader092 - InternalVoiceArchive, JkZones092 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x2480, 0, 1	# record 92
+    jk_param	JkMsHeader093 - InternalVoiceArchive, JkZones093 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x2480, 0, 1	# record 93
+    jk_param	JkMsHeader094 - InternalVoiceArchive, JkZones094 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 94
+    jk_param	JkMsHeader095 - InternalVoiceArchive, JkZones095 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x2480, 0, 1	# record 95
+    jk_param	JkMsHeader096 - InternalVoiceArchive, JkZones096 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x2480, 0, 1	# record 96
+    jk_param	JkMsHeader097 - InternalVoiceArchive, JkZones097 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 97
+    jk_param	JkMsHeader098 - InternalVoiceArchive, JkZones098 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 98
+    jk_param	JkMsHeader099 - InternalVoiceArchive, JkZones099 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 99
+    jk_param	JkMsHeader100 - InternalVoiceArchive, JkZones100 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3080, 0, 1	# record 100
+    jk_param	JkMsHeader101 - InternalVoiceArchive, JkZones101 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 101
+    jk_param	JkMsHeader102 - InternalVoiceArchive, JkZones102 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3080, 0, 1	# record 102
+    jk_param	JkMsHeader103 - InternalVoiceArchive, JkZones103 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 103
+    jk_param	JkMsHeader104 - InternalVoiceArchive, JkZones104 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 104
+    jk_param	JkMsHeader105 - InternalVoiceArchive, JkZones105 - InternalVoiceArchive, 0x00, 12, 112, 66, 0x2480, 0, 1	# record 105
+    jk_param	JkMsHeader106 - InternalVoiceArchive, JkZones106 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 106
+    jk_param	JkMsHeader107 - InternalVoiceArchive, JkZones107 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x2480, 0, 1	# record 107
+    jk_param	JkMsHeader108 - InternalVoiceArchive, JkZones108 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x2480, 0, 1	# record 108
+    jk_param	JkMsHeader109 - InternalVoiceArchive, JkZones109 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 109
+    jk_param	JkMsHeader110 - InternalVoiceArchive, JkZones110 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 110
+    jk_param	JkMsHeader111 - InternalVoiceArchive, JkZones111 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 111
+    jk_param	JkMsHeader112 - InternalVoiceArchive, JkZones112 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 112
+    jk_param	JkMsHeader113 - InternalVoiceArchive, JkZones113 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 113
+    jk_param	JkMsHeader114 - InternalVoiceArchive, JkZones114 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 114
+    jk_param	JkMsHeader115 - InternalVoiceArchive, JkZones115 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4880, 0, 1	# record 115
+    jk_param	JkMsHeader116 - InternalVoiceArchive, JkZones116 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4880, 0, 1	# record 116
+    jk_param	JkMsHeader117 - InternalVoiceArchive, JkZones117 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4880, 0, 1	# record 117
+    jk_param	JkMsHeader118 - InternalVoiceArchive, JkZones118 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4880, 0, 1	# record 118
+    jk_param	JkMsHeader119 - InternalVoiceArchive, JkZones119 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x3080, 0, 1	# record 119
+    jk_param	JkMsHeader120 - InternalVoiceArchive, JkZones120 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 120
+    jk_param	JkMsHeader121 - InternalVoiceArchive, JkZones121 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x2480, 0, 1	# record 121
+    jk_param	JkMsHeader122 - InternalVoiceArchive, JkZones122 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 122
+    jk_param	JkMsHeader123 - InternalVoiceArchive, JkZones123 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 123
+    jk_param	JkMsHeader124 - InternalVoiceArchive, JkZones124 - InternalVoiceArchive, 0x81, 12, 108, 66, 0x3c80, 0, 1	# record 124
+    jk_param	JkMsHeader125 - InternalVoiceArchive, JkZones125 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 125
+    jk_param	JkMsHeader126 - InternalVoiceArchive, JkZones126 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 126
+    jk_param	JkMsHeader127 - InternalVoiceArchive, JkZones127 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 127
+    jk_param	JkMsHeader128 - InternalVoiceArchive, JkZones128 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 128
+    jk_param	JkMsHeader129 - InternalVoiceArchive, JkZones129 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 129
+    jk_param	JkMsHeader130 - InternalVoiceArchive, JkZones130 - InternalVoiceArchive, 0x81, 12, 108, 66, 0x3c80, 0, 1	# record 130
+    jk_param	JkMsHeader131 - InternalVoiceArchive, JkZones131 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3080, 0, 1	# record 131
+    jk_param	JkMsHeader132 - InternalVoiceArchive, JkZones132 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x2480, 0, 1	# record 132
+    jk_param	JkMsHeader133 - InternalVoiceArchive, JkZones133 - InternalVoiceArchive, 0x81, 12, 108, 66, 0x3c80, 0, 1	# record 133
+    jk_param	JkMsHeader134 - InternalVoiceArchive, JkZones134 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 134
+    jk_param	JkMsHeader135 - InternalVoiceArchive, JkZones135 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 135
+    jk_param	JkMsHeader136 - InternalVoiceArchive, JkZones136 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 136
+    jk_param	JkMsHeader137 - InternalVoiceArchive, JkZones137 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3080, 0, 1	# record 137
+    jk_param	JkMsHeader138 - InternalVoiceArchive, JkZones138 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3080, 0, 1	# record 138
+    jk_param	JkMsHeader139 - InternalVoiceArchive, JkZones139 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3080, 0, 1	# record 139
+    jk_param	JkMsHeader140 - InternalVoiceArchive, JkZones140 - InternalVoiceArchive, 0x81, 12, 101, 66, 0x3c80, 0, 1	# record 140
+    jk_param	JkMsHeader141 - InternalVoiceArchive, JkZones141 - InternalVoiceArchive, 0x81, 12, 101, 66, 0x3c80, 0, 1	# record 141
+    jk_param	JkMsHeader142 - InternalVoiceArchive, JkZones142 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 142
+    jk_param	JkMsHeader143 - InternalVoiceArchive, JkZones143 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 143
+    jk_param	JkMsHeader144 - InternalVoiceArchive, JkZones144 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 144
+    jk_param	JkMsHeader145 - InternalVoiceArchive, JkZones145 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 145
+    jk_param	JkMsHeader146 - InternalVoiceArchive, JkZones146 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 146
+    jk_param	JkMsHeader147 - InternalVoiceArchive, JkZones147 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 147
+    jk_param	JkMsHeader148 - InternalVoiceArchive, JkZones148 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 148
+    jk_param	JkMsHeader149 - InternalVoiceArchive, JkZones149 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 149
+    jk_param	JkMsHeader150 - InternalVoiceArchive, JkZones150 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 150
+    jk_param	JkMsHeader151 - InternalVoiceArchive, JkZones151 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 151
+    jk_param	JkMsHeader152 - InternalVoiceArchive, JkZones152 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 152
+    jk_param	JkMsHeader153 - InternalVoiceArchive, JkZones153 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 153
+    jk_param	JkMsHeader154 - InternalVoiceArchive, JkZones154 - InternalVoiceArchive, 0x80, 12, 101, 66, 0x3c80, 0, 1	# record 154
+    jk_param	JkMsHeader155 - InternalVoiceArchive, JkZones155 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 155
+    jk_param	JkMsHeader156 - InternalVoiceArchive, JkZones156 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 156
+    jk_param	JkMsHeader157 - InternalVoiceArchive, JkZones157 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 157
+    jk_param	JkMsHeader158 - InternalVoiceArchive, JkZones158 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 158
+    jk_param	JkMsHeader159 - InternalVoiceArchive, JkZones159 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 159
+    jk_param	JkMsHeader160 - InternalVoiceArchive, JkZones160 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 160
+    jk_param	JkMsHeader161 - InternalVoiceArchive, JkZones161 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 161
+    jk_param	JkMsHeader162 - InternalVoiceArchive, JkZones162 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 162
+    jk_param	JkMsHeader163 - InternalVoiceArchive, JkZones163 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 163
+    jk_param	JkMsHeader164 - InternalVoiceArchive, JkZones164 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4880, 0, 1	# record 164
+    jk_param	JkMsHeader165 - InternalVoiceArchive, JkZones165 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 165
+    jk_param	JkMsHeader166 - InternalVoiceArchive, JkZones166 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4880, 0, 1	# record 166
+    jk_param	JkMsHeader167 - InternalVoiceArchive, JkZones167 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 167
+    jk_param	JkMsHeader168 - InternalVoiceArchive, JkZones168 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 168
+    jk_param	JkMsHeader169 - InternalVoiceArchive, JkZones169 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 169
+    jk_param	JkMsHeader170 - InternalVoiceArchive, JkZones170 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 170
+    jk_param	JkMsHeader171 - InternalVoiceArchive, JkZones171 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 171
+    jk_param	JkMsHeader172 - InternalVoiceArchive, JkZones172 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 172
+    jk_param	JkMsHeader173 - InternalVoiceArchive, JkZones173 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 173
+    jk_param	JkMsHeader174 - InternalVoiceArchive, JkZones174 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 174
+    jk_param	JkMsHeader175 - InternalVoiceArchive, JkZones175 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 175
+    jk_param	JkMsHeader176 - InternalVoiceArchive, JkZones176 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 176
+    jk_param	JkMsHeader177 - InternalVoiceArchive, JkZones177 - InternalVoiceArchive, 0x00, 12, 113, 66, 0x3c80, 0, 1	# record 177
+    jk_param	JkMsHeader178 - InternalVoiceArchive, JkZones178 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 178
+    jk_param	JkMsHeader179 - InternalVoiceArchive, JkZones179 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x2480, 0, 1	# record 179
+    jk_param	JkMsHeader180 - InternalVoiceArchive, JkZones180 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 180
+    jk_param	JkMsHeader181 - InternalVoiceArchive, JkZones181 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 181
+    jk_param	JkMsHeader182 - InternalVoiceArchive, JkZones182 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x3c80, 0, 1	# record 182
+    jk_param	JkMsHeader183 - InternalVoiceArchive, JkZones183 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4880, 0, 1	# record 183
+    jk_param	JkMsHeader184 - InternalVoiceArchive, JkZones184 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4880, 0, 1	# record 184
+    jk_param	JkMsHeader185 - InternalVoiceArchive, JkZones185 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 185
+    jk_param	JkMsHeader186 - InternalVoiceArchive, JkZones186 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 186
+    jk_param	JkMsHeader187 - InternalVoiceArchive, JkZones187 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 187
+    jk_param	JkMsHeader188 - InternalVoiceArchive, JkZones188 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 188
+    jk_param	JkMsHeader189 - InternalVoiceArchive, JkZones189 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 189
+    jk_param	JkMsHeader190 - InternalVoiceArchive, JkZones190 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 190
+    jk_param	JkMsHeader191 - InternalVoiceArchive, JkZones191 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 191
+    jk_param	JkMsHeader192 - InternalVoiceArchive, JkZones192 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 192
+    jk_param	JkMsHeader193 - InternalVoiceArchive, JkZones193 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 193
+    jk_param	JkMsHeader194 - InternalVoiceArchive, JkZones194 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 194
+    jk_param	JkMsHeader195 - InternalVoiceArchive, JkZones195 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 195
+    jk_param	JkMsHeader196 - InternalVoiceArchive, JkZones196 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 196
+    jk_param	JkMsHeader197 - InternalVoiceArchive, JkZones197 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 197
+    jk_param	JkMsHeader198 - InternalVoiceArchive, JkZones198 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 198
+    jk_param	JkMsHeader199 - InternalVoiceArchive, JkZones199 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 199
+    jk_param	JkMsHeader200 - InternalVoiceArchive, JkZones200 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3080, 0, 1	# record 200
+    jk_param	JkMsHeader201 - InternalVoiceArchive, JkZones201 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3080, 0, 1	# record 201
+    jk_param	JkMsHeader202 - InternalVoiceArchive, JkZones202 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3080, 0, 1	# record 202
+    jk_param	JkMsHeader203 - InternalVoiceArchive, JkZones203 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3080, 0, 1	# record 203
+    jk_param	JkMsHeader204 - InternalVoiceArchive, JkZones204 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3080, 0, 1	# record 204
+    jk_param	JkMsHeader205 - InternalVoiceArchive, JkZones205 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3080, 0, 1	# record 205
+    jk_param	JkMsHeader206 - InternalVoiceArchive, JkZones206 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 206
+    jk_param	JkMsHeader207 - InternalVoiceArchive, JkZones207 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 207
+    jk_param	JkMsHeader208 - InternalVoiceArchive, JkZones208 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 208
+    jk_param	JkMsHeader209 - InternalVoiceArchive, JkZones209 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 209
+    jk_param	JkMsHeader210 - InternalVoiceArchive, JkZones210 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 210
+    jk_param	JkMsHeader211 - InternalVoiceArchive, JkZones211 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 211
+    jk_param	JkMsHeader212 - InternalVoiceArchive, JkZones212 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 212
+    jk_param	JkMsHeader213 - InternalVoiceArchive, JkZones213 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 213
+    jk_param	JkMsHeader214 - InternalVoiceArchive, JkZones214 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 214
+    jk_param	JkMsHeader215 - InternalVoiceArchive, JkZones215 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 215
+    jk_param	JkMsHeader216 - InternalVoiceArchive, JkZones216 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 216
+    jk_param	JkMsHeader217 - InternalVoiceArchive, JkZones217 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 217
+    jk_param	JkMsHeader218 - InternalVoiceArchive, JkZones218 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3080, 0, 1	# record 218
+    jk_param	JkMsHeader219 - InternalVoiceArchive, JkZones219 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 219
+    jk_param	JkMsHeader220 - InternalVoiceArchive, JkZones220 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 220
+    jk_param	JkMsHeader221 - InternalVoiceArchive, JkZones221 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x3c80, 0, 1	# record 221
+    jk_param	JkMsHeader222 - InternalVoiceArchive, JkZones222 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x4880, 0, 1	# record 222
+    jk_param	JkMsHeader223 - InternalVoiceArchive, JkZones223 - InternalVoiceArchive, 0x80, 14, 111, 66, 0x6080, 0, 1	# record 223
+    jk_param	JkMsHeader224 - InternalVoiceArchive, JkZones224 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 224
+    jk_param	JkMsHeader225 - InternalVoiceArchive, JkZones225 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 225
+    jk_param	JkMsHeader226 - InternalVoiceArchive, JkZones226 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 226
+    jk_param	JkMsHeader227 - InternalVoiceArchive, JkZones227 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 227
+    jk_param	JkMsHeader228 - InternalVoiceArchive, JkZones228 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 228
+    jk_param	JkMsHeader229 - InternalVoiceArchive, JkZones229 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 229
+    jk_param	JkMsHeader230 - InternalVoiceArchive, JkZones230 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 230
+    jk_param	JkMsHeader231 - InternalVoiceArchive, JkZones231 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 231
+    jk_param	JkMsHeader232 - InternalVoiceArchive, JkZones232 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x5480, 0, 1	# record 232
+    jk_param	JkMsHeader233 - InternalVoiceArchive, JkZones233 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 1	# record 233
+    jk_param	JkMsHeader234 - InternalVoiceArchive, JkZones234 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x5480, 0, 1	# record 234
+    jk_param	JkMsHeader235 - InternalVoiceArchive, JkZones235 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 235
+    jk_param	JkMsHeader236 - InternalVoiceArchive, JkZones236 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x5480, 0, 1	# record 236
+    jk_param	JkMsHeader237 - InternalVoiceArchive, JkZones237 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x5480, 0, 1	# record 237
+    jk_param	JkMsHeader238 - InternalVoiceArchive, JkZones238 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4880, 0, 1	# record 238
+    jk_param	JkMsHeader239 - InternalVoiceArchive, JkZones239 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 239
+    jk_param	JkMsHeader240 - InternalVoiceArchive, JkZones240 - InternalVoiceArchive, 0x00, 12, 102, 66, 0x3c80, 0, 1	# record 240
+    jk_param	JkMsHeader241 - InternalVoiceArchive, JkZones241 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 241
+    jk_param	JkMsHeader242 - InternalVoiceArchive, JkZones242 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 242
+    jk_param	JkMsHeader243 - InternalVoiceArchive, JkZones243 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 243
+    jk_param	JkMsHeader244 - InternalVoiceArchive, JkZones244 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 244
+    jk_param	JkMsHeader245 - InternalVoiceArchive, JkZones245 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 245
+    jk_param	JkMsHeader246 - InternalVoiceArchive, JkZones246 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 246
+    jk_param	JkMsHeader247 - InternalVoiceArchive, JkZones247 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 247
+    jk_param	JkMsHeader248 - InternalVoiceArchive, JkZones248 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 248
+    jk_param	JkMsHeader249 - InternalVoiceArchive, JkZones249 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 249
+    jk_param	JkMsHeader250 - InternalVoiceArchive, JkZones250 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 250
+    jk_param	JkMsHeader251 - InternalVoiceArchive, JkZones251 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 251
+    jk_param	JkMsHeader252 - InternalVoiceArchive, JkZones252 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 252
+    jk_param	JkMsHeader253 - InternalVoiceArchive, JkZones253 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 253
+    jk_param	JkMsHeader254 - InternalVoiceArchive, JkZones254 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 254
+    jk_param	JkMsHeader255 - InternalVoiceArchive, JkZones255 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 255
+    jk_param	JkMsHeader256 - InternalVoiceArchive, JkZones256 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 256
+    jk_param	JkMsHeader257 - InternalVoiceArchive, JkZones257 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3080, 0, 1	# record 257
+    jk_param	JkMsHeader258 - InternalVoiceArchive, JkZones258 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 258
+    jk_param	JkMsHeader259 - InternalVoiceArchive, JkZones259 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 259
+    jk_param	JkMsHeader260 - InternalVoiceArchive, JkZones260 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 260
+    jk_param	JkMsHeader261 - InternalVoiceArchive, JkZones261 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 255	# record 261
+    jk_param	JkMsHeader262 - InternalVoiceArchive, JkZones262 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 255	# record 262
+    jk_param	JkMsHeader263 - InternalVoiceArchive, JkZones263 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 263
+    jk_param	JkMsHeader264 - InternalVoiceArchive, JkZones264 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 255	# record 264
+    jk_param	JkMsHeader265 - InternalVoiceArchive, JkZones265 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 265
+    jk_param	JkMsHeader266 - InternalVoiceArchive, JkZones266 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 266
+    jk_param	JkMsHeader267 - InternalVoiceArchive, JkZones267 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 255	# record 267
+    jk_param	JkMsHeader268 - InternalVoiceArchive, JkZones268 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 268
+    jk_param	JkMsHeader269 - InternalVoiceArchive, JkZones269 - InternalVoiceArchive, 0x00, 12, 113, 66, 0x3c80, 0, 255	# record 269
+    jk_param	JkMsHeader270 - InternalVoiceArchive, JkZones270 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 270
+    jk_param	JkMsHeader271 - InternalVoiceArchive, JkZones271 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 271
+    jk_param	JkMsHeader272 - InternalVoiceArchive, JkZones272 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 272
+    jk_param	JkMsHeader273 - InternalVoiceArchive, JkZones273 - InternalVoiceArchive, 0x00, 12, 113, 66, 0x3c80, 0, 255	# record 273
+    jk_param	JkMsHeader274 - InternalVoiceArchive, JkZones274 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 274
+    jk_param	JkMsHeader275 - InternalVoiceArchive, JkZones275 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 275
+    jk_param	JkMsHeader276 - InternalVoiceArchive, JkZones276 - InternalVoiceArchive, 0x00, 12, 112, 66, 0x3c80, 0, 255	# record 276
+    jk_param	JkMsHeader277 - InternalVoiceArchive, JkZones277 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 277
+    jk_param	JkMsHeader278 - InternalVoiceArchive, JkZones278 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 278
+    jk_param	JkMsHeader279 - InternalVoiceArchive, JkZones279 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 279
+    jk_param	JkMsHeader280 - InternalVoiceArchive, JkZones280 - InternalVoiceArchive, 0x00, 12, 112, 66, 0x3c80, 0, 255	# record 280
+    jk_param	JkMsHeader281 - InternalVoiceArchive, JkZones281 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 281
+    jk_param	JkMsHeader282 - InternalVoiceArchive, JkZones282 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 282
+    jk_param	JkMsHeader283 - InternalVoiceArchive, JkZones283 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 283
+    jk_param	JkMsHeader284 - InternalVoiceArchive, JkZones284 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 284
+    jk_param	JkMsHeader285 - InternalVoiceArchive, JkZones285 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x3c80, 0, 255	# record 285
+    jk_param	JkMsHeader286 - InternalVoiceArchive, JkZones286 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 286
+    jk_param	JkMsHeader287 - InternalVoiceArchive, JkZones287 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 287
+    jk_param	JkMsHeader288 - InternalVoiceArchive, JkZones288 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 288
+    jk_param	JkMsHeader289 - InternalVoiceArchive, JkZones289 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 289
+    jk_param	JkMsHeader290 - InternalVoiceArchive, JkZones290 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 290
+    jk_param	JkMsHeader291 - InternalVoiceArchive, JkZones291 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 291
+    jk_param	JkMsHeader292 - InternalVoiceArchive, JkZones292 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x3c80, 0, 255	# record 292
+    jk_param	JkMsHeader293 - InternalVoiceArchive, JkZones293 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 293
+    jk_param	JkMsHeader294 - InternalVoiceArchive, JkZones294 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 294
+    jk_param	JkMsHeader295 - InternalVoiceArchive, JkZones295 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x3c80, 0, 255	# record 295
+    jk_param	JkMsHeader296 - InternalVoiceArchive, JkZones296 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3c80, 0, 255	# record 296
+    jk_param	JkMsHeader297 - InternalVoiceArchive, JkZones297 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 297
+    jk_param	JkMsHeader298 - InternalVoiceArchive, JkZones298 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 298
+    jk_param	JkMsHeader299 - InternalVoiceArchive, JkZones299 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 299
+    jk_param	JkMsHeader300 - InternalVoiceArchive, JkZones300 - InternalVoiceArchive, 0x80, 12, 103, 66, 0x3c80, 0, 255	# record 300
+    jk_param	JkMsHeader301 - InternalVoiceArchive, JkZones301 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 301
+    jk_param	JkMsHeader302 - InternalVoiceArchive, JkZones302 - InternalVoiceArchive, 0x80, 12, 91, 66, 0x3c80, 0, 255	# record 302
+    jk_param	JkMsHeader303 - InternalVoiceArchive, JkZones303 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 303
+    jk_param	JkMsHeader304 - InternalVoiceArchive, JkZones304 - InternalVoiceArchive, 0x80, 12, 103, 66, 0x3c80, 0, 255	# record 304
+    jk_param	JkMsHeader305 - InternalVoiceArchive, JkZones305 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 255	# record 305
+    jk_param	JkMsHeader306 - InternalVoiceArchive, JkZones306 - InternalVoiceArchive, 0x00, 12, 115, 66, 0x3c80, 0, 255	# record 306
+    jk_param	JkMsHeader307 - InternalVoiceArchive, JkZones307 - InternalVoiceArchive, 0x80, 12, 103, 66, 0x3c80, 0, 255	# record 307
+    jk_param	JkMsHeader308 - InternalVoiceArchive, JkZones308 - InternalVoiceArchive, 0x00, 12, 115, 66, 0x3c80, 0, 255	# record 308
+    jk_param	JkMsHeader309 - InternalVoiceArchive, JkZones309 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 309
+    jk_param	JkMsHeader310 - InternalVoiceArchive, JkZones310 - InternalVoiceArchive, 0x00, 12, 115, 66, 0x3c80, 0, 255	# record 310
+    jk_param	JkMsHeader311 - InternalVoiceArchive, JkZones311 - InternalVoiceArchive, 0x80, 12, 103, 66, 0x3c80, 0, 255	# record 311
+    jk_param	JkMsHeader312 - InternalVoiceArchive, JkZones312 - InternalVoiceArchive, 0x00, 12, 115, 66, 0x3c80, 0, 255	# record 312
+    jk_param	JkMsHeader313 - InternalVoiceArchive, JkZones313 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 313
+    jk_param	JkMsHeader314 - InternalVoiceArchive, JkZones314 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x3c80, 0, 255	# record 314
+    jk_param	JkMsHeader315 - InternalVoiceArchive, JkZones315 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 315
+    jk_param	JkMsHeader316 - InternalVoiceArchive, JkZones316 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 316
+    jk_param	JkMsHeader317 - InternalVoiceArchive, JkZones317 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 317
+    jk_param	JkMsHeader318 - InternalVoiceArchive, JkZones318 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 318
+    jk_param	JkMsHeader319 - InternalVoiceArchive, JkZones319 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 319
+    jk_param	JkMsHeader320 - InternalVoiceArchive, JkZones320 - InternalVoiceArchive, 0x00, 12, 103, 66, 0x3c80, 0, 255	# record 320
+    jk_param	JkMsHeader321 - InternalVoiceArchive, JkZones321 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 255	# record 321
+    jk_param	JkMsHeader322 - InternalVoiceArchive, JkZones322 - InternalVoiceArchive, 0x00, 12, 111, 66, 0x3c80, 0, 255	# record 322
+    jk_param	JkMsHeader323 - InternalVoiceArchive, JkZones323 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 323
+    jk_param	JkMsHeader324 - InternalVoiceArchive, JkZones324 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 255	# record 324
+    jk_param	JkMsHeader325 - InternalVoiceArchive, JkZones325 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 325
+    jk_param	JkMsHeader326 - InternalVoiceArchive, JkZones326 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x1f87, 0, 1	# record 326
+    jk_param	JkMsHeader327 - InternalVoiceArchive, JkZones327 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 327
+    jk_param	JkMsHeader328 - InternalVoiceArchive, JkZones328 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 328
+    jk_param	JkMsHeader329 - InternalVoiceArchive, JkZones329 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 329
+    jk_param	JkMsHeader330 - InternalVoiceArchive, JkZones330 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 330
+    jk_param	JkMsHeader331 - InternalVoiceArchive, JkZones331 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 331
+    jk_param	JkMsHeader332 - InternalVoiceArchive, JkZones332 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 332
+    jk_param	JkMsHeader333 - InternalVoiceArchive, JkZones333 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 333
+    jk_param	JkMsHeader334 - InternalVoiceArchive, JkZones334 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 334
+    jk_param	JkMsHeader335 - InternalVoiceArchive, JkZones335 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 335
+    jk_param	JkMsHeader336 - InternalVoiceArchive, JkZones336 - InternalVoiceArchive, 0x00, 12, 103, 66, 0x3c80, 0, 1	# record 336
+    jk_param	JkMsHeader337 - InternalVoiceArchive, JkZones337 - InternalVoiceArchive, 0x00, 12, 98, 66, 0x3c80, 0, 1	# record 337
+    jk_param	JkMsHeader338 - InternalVoiceArchive, JkZones338 - InternalVoiceArchive, 0x00, 12, 103, 66, 0x3c80, 0, 1	# record 338
+    jk_param	JkMsHeader339 - InternalVoiceArchive, JkZones339 - InternalVoiceArchive, 0x00, 12, 100, 66, 0x3c80, 0, 1	# record 339
+    jk_param	JkMsHeader340 - InternalVoiceArchive, JkZones340 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x3c80, 0, 1	# record 340
+    jk_param	JkMsHeader341 - InternalVoiceArchive, JkZones341 - InternalVoiceArchive, 0x00, 12, 100, 66, 0x3c80, 0, 1	# record 341
+    jk_param	JkMsHeader342 - InternalVoiceArchive, JkZones342 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4880, 0, 1	# record 342
+    jk_param	JkMsHeader343 - InternalVoiceArchive, JkZones343 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4880, 0, 1	# record 343
+    jk_param	JkMsHeader344 - InternalVoiceArchive, JkZones344 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 344
+    jk_param	JkMsHeader345 - InternalVoiceArchive, JkZones345 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 345
+    jk_param	JkMsHeader346 - InternalVoiceArchive, JkZones346 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 346
+    jk_param	JkMsHeader347 - InternalVoiceArchive, JkZones347 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 347
+    jk_param	JkMsHeader348 - InternalVoiceArchive, JkZones348 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 348
+    jk_param	JkMsHeader349 - InternalVoiceArchive, JkZones349 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 349
+    jk_param	JkMsHeader350 - InternalVoiceArchive, JkZones350 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 350
+    jk_param	JkMsHeader351 - InternalVoiceArchive, JkZones351 - InternalVoiceArchive, 0x80, 12, 115, 66, 0x3c80, 0, 1	# record 351
+    jk_param	JkMsHeader352 - InternalVoiceArchive, JkZones352 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x3c80, 0, 1	# record 352
+    jk_param	JkMsHeader353 - InternalVoiceArchive, JkZones353 - InternalVoiceArchive, 0x80, 12, 115, 66, 0x3c80, 0, 1	# record 353
+    jk_param	JkMsHeader354 - InternalVoiceArchive, JkZones354 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 354
+    jk_param	JkMsHeader355 - InternalVoiceArchive, JkZones355 - InternalVoiceArchive, 0x00, 12, 103, 66, 0x3c80, 0, 1	# record 355
+    jk_param	JkMsHeader356 - InternalVoiceArchive, JkZones356 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 356
+    jk_param	JkMsHeader357 - InternalVoiceArchive, JkZones357 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 357
+    jk_param	JkMsHeader358 - InternalVoiceArchive, JkZones358 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 358
+    jk_param	JkMsHeader359 - InternalVoiceArchive, JkZones359 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 359
+    jk_param	JkMsHeader360 - InternalVoiceArchive, JkZones360 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 360
+    jk_param	JkMsHeader361 - InternalVoiceArchive, JkZones361 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 361
+    jk_param	JkMsHeader362 - InternalVoiceArchive, JkZones362 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 362
+    jk_param	JkMsHeader363 - InternalVoiceArchive, JkZones363 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 363
+    jk_param	JkMsHeader364 - InternalVoiceArchive, JkZones364 - InternalVoiceArchive, 0x01, 12, 120, 66, 0x3c80, 0, 1	# record 364
+    jk_param	JkMsHeader365 - InternalVoiceArchive, JkZones365 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 365
+    jk_param	JkMsHeader366 - InternalVoiceArchive, JkZones366 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 366
+    jk_param	JkMsHeader367 - InternalVoiceArchive, JkZones367 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x3c80, 0, 1	# record 367
+    jk_param	JkMsHeader368 - InternalVoiceArchive, JkZones368 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 368
+    jk_param	JkMsHeader369 - InternalVoiceArchive, JkZones369 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 369
+    jk_param	JkMsHeader370 - InternalVoiceArchive, JkZones370 - InternalVoiceArchive, 0x81, 12, 96, 66, 0x3c80, 0, 1	# record 370
+    jk_param	JkMsHeader371 - InternalVoiceArchive, JkZones371 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 371
+    jk_param	JkMsHeader372 - InternalVoiceArchive, JkZones372 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 372
+    jk_param	JkMsHeader373 - InternalVoiceArchive, JkZones373 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x3c80, 0, 1	# record 373
+    jk_param	JkMsHeader374 - InternalVoiceArchive, JkZones374 - InternalVoiceArchive, 0x80, 24, 86, 66, 0x5480, 0, 1	# record 374
+    jk_param	JkMsHeader375 - InternalVoiceArchive, JkZones375 - InternalVoiceArchive, 0x00, 14, 92, 66, 0x45a7, 0, 1	# record 375
+    jk_param	JkMsHeader376 - InternalVoiceArchive, JkZones376 - InternalVoiceArchive, 0x01, 14, 92, 66, 0x45a7, 0, 1	# record 376
+    jk_param	JkMsHeader377 - InternalVoiceArchive, JkZones377 - InternalVoiceArchive, 0x00, 12, 78, 66, 0x2e80, 0, 1	# record 377
+    jk_param	JkMsHeader378 - InternalVoiceArchive, JkZones378 - InternalVoiceArchive, 0x00, 12, 78, 66, 0x2e80, 0, 1	# record 378
+    jk_param	JkMsHeader379 - InternalVoiceArchive, JkZones379 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4d44, 0, 1	# record 379
+    jk_param	JkMsHeader380 - InternalVoiceArchive, JkZones380 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x42bc, 0, 1	# record 380
+    jk_param	JkMsHeader381 - InternalVoiceArchive, JkZones381 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x42bc, 0, 1	# record 381
+    jk_param	JkMsHeader382 - InternalVoiceArchive, JkZones382 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x42bc, 0, 1	# record 382
+    jk_param	JkMsHeader383 - InternalVoiceArchive, JkZones383 - InternalVoiceArchive, 0x00, 17, 120, 66, 0x4d44, 0, 1	# record 383
+    jk_param	JkMsHeader384 - InternalVoiceArchive, JkZones384 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 384
+    jk_param	JkMsHeader385 - InternalVoiceArchive, JkZones385 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 385
+    jk_param	JkMsHeader386 - InternalVoiceArchive, JkZones386 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4567, 0, 1	# record 386
+    jk_param	JkMsHeader387 - InternalVoiceArchive, JkZones387 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 387
+    jk_param	JkMsHeader388 - InternalVoiceArchive, JkZones388 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 388
+    jk_param	JkMsHeader389 - InternalVoiceArchive, JkZones389 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 389
+    jk_param	JkMsHeader390 - InternalVoiceArchive, JkZones390 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 390
+    jk_param	JkMsHeader391 - InternalVoiceArchive, JkZones391 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 391
+    jk_param	JkMsHeader392 - InternalVoiceArchive, JkZones392 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 392
+    jk_param	JkMsHeader393 - InternalVoiceArchive, JkZones393 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4380, 0, 1	# record 393
+    jk_param	JkMsHeader394 - InternalVoiceArchive, JkZones394 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4380, 0, 1	# record 394
+    jk_param	JkMsHeader395 - InternalVoiceArchive, JkZones395 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 395
+    jk_param	JkMsHeader396 - InternalVoiceArchive, JkZones396 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x2880, 0, 1	# record 396
+    jk_param	JkMsHeader397 - InternalVoiceArchive, JkZones397 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x4080, 0, 1	# record 397
+    jk_param	JkMsHeader398 - InternalVoiceArchive, JkZones398 - InternalVoiceArchive, 0x00, 16, 120, 66, 0x3c80, 0, 1	# record 398
+    jk_param	JkMsHeader399 - InternalVoiceArchive, JkZones399 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 399
+    jk_param	JkMsHeader400 - InternalVoiceArchive, JkZones400 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 400
+    jk_param	JkMsHeader401 - InternalVoiceArchive, JkZones401 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x3c80, 0, 1	# record 401
+    jk_param	JkMsHeader402 - InternalVoiceArchive, JkZones402 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 402
+    jk_param	JkMsHeader403 - InternalVoiceArchive, JkZones403 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x4da4, 0, 1	# record 403
+    jk_param	JkMsHeader404 - InternalVoiceArchive, JkZones404 - InternalVoiceArchive, 0x80, 12, 100, 66, 0x4da4, 0, 1	# record 404
+    jk_param	JkMsHeader405 - InternalVoiceArchive, JkZones405 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 405
+    jk_param	JkMsHeader406 - InternalVoiceArchive, JkZones406 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 406
+    jk_param	JkMsHeader407 - InternalVoiceArchive, JkZones407 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 407
+    jk_param	JkMsHeader408 - InternalVoiceArchive, JkZones408 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x4180, 2, 1	# record 408
+    jk_param	JkMsHeader409 - InternalVoiceArchive, JkZones409 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4480, 0, 1	# record 409
+    jk_param	JkMsHeader410 - InternalVoiceArchive, JkZones410 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 410
+    jk_param	JkMsHeader411 - InternalVoiceArchive, JkZones411 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 411
+    jk_param	JkMsHeader412 - InternalVoiceArchive, JkZones412 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 412
+    jk_param	JkMsHeader413 - InternalVoiceArchive, JkZones413 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 413
+    jk_param	JkMsHeader414 - InternalVoiceArchive, JkZones414 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 414
+    jk_param	JkMsHeader415 - InternalVoiceArchive, JkZones415 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 415
+    jk_param	JkMsHeader416 - InternalVoiceArchive, JkZones416 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 416
+    jk_param	JkMsHeader417 - InternalVoiceArchive, JkZones417 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 417
+    jk_param	JkMsHeader418 - InternalVoiceArchive, JkZones418 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 418
+    jk_param	JkMsHeader419 - InternalVoiceArchive, JkZones419 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 419
+    jk_param	JkMsHeader420 - InternalVoiceArchive, JkZones420 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 420
+    jk_param	JkMsHeader421 - InternalVoiceArchive, JkZones421 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 421
+    jk_param	JkMsHeader422 - InternalVoiceArchive, JkZones422 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 422
+    jk_param	JkMsHeader423 - InternalVoiceArchive, JkZones423 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 423
+    jk_param	JkMsHeader424 - InternalVoiceArchive, JkZones424 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 424
+    jk_param	JkMsHeader425 - InternalVoiceArchive, JkZones425 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 425
+    jk_param	JkMsHeader426 - InternalVoiceArchive, JkZones426 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 426
+    jk_param	JkMsHeader427 - InternalVoiceArchive, JkZones427 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 427
+    jk_param	JkMsHeader428 - InternalVoiceArchive, JkZones428 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 428
+    jk_param	JkMsHeader429 - InternalVoiceArchive, JkZones429 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 429
+    jk_param	JkMsHeader430 - InternalVoiceArchive, JkZones430 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 430
+    jk_param	JkMsHeader431 - InternalVoiceArchive, JkZones431 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 431
+    jk_param	JkMsHeader432 - InternalVoiceArchive, JkZones432 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 432
+    jk_param	JkMsHeader433 - InternalVoiceArchive, JkZones433 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 433
+    jk_param	JkMsHeader434 - InternalVoiceArchive, JkZones434 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 434
+    jk_param	JkMsHeader435 - InternalVoiceArchive, JkZones435 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 435
+    jk_param	JkMsHeader436 - InternalVoiceArchive, JkZones436 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 436
+    jk_param	JkMsHeader437 - InternalVoiceArchive, JkZones437 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 437
+    jk_param	JkMsHeader438 - InternalVoiceArchive, JkZones438 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 438
+    jk_param	JkMsHeader439 - InternalVoiceArchive, JkZones439 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 439
+    jk_param	JkMsHeader440 - InternalVoiceArchive, JkZones440 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 440
+    jk_param	JkMsHeader441 - InternalVoiceArchive, JkZones441 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 441
+    jk_param	JkMsHeader442 - InternalVoiceArchive, JkZones442 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 442
+    jk_param	JkMsHeader443 - InternalVoiceArchive, JkZones443 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 443
+    jk_param	JkMsHeader444 - InternalVoiceArchive, JkZones444 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 444
+    jk_param	JkMsHeader445 - InternalVoiceArchive, JkZones445 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 445
+    jk_param	JkMsHeader446 - InternalVoiceArchive, JkZones446 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 446
+    jk_param	JkMsHeader447 - InternalVoiceArchive, JkZones447 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 447
+    jk_param	JkMsHeader448 - InternalVoiceArchive, JkZones448 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 448
+    jk_param	JkMsHeader449 - InternalVoiceArchive, JkZones449 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 449
+    jk_param	JkMsHeader450 - InternalVoiceArchive, JkZones450 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 450
+    jk_param	JkMsHeader451 - InternalVoiceArchive, JkZones451 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 451
+    jk_param	JkMsHeader452 - InternalVoiceArchive, JkZones452 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 452
+    jk_param	JkMsHeader453 - InternalVoiceArchive, JkZones453 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 453
+    jk_param	JkMsHeader454 - InternalVoiceArchive, JkZones454 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 454
+    jk_param	JkMsHeader455 - InternalVoiceArchive, JkZones455 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 455
+    jk_param	JkMsHeader456 - InternalVoiceArchive, JkZones456 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 456
+    jk_param	JkMsHeader457 - InternalVoiceArchive, JkZones457 - InternalVoiceArchive, 0x80, 17, 114, 66, 0x4280, 0, 1	# record 457
+    jk_param	JkMsHeader458 - InternalVoiceArchive, JkZones458 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x2180, 1, 1	# record 458
+    jk_param	JkMsHeader459 - InternalVoiceArchive, JkZones459 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 459
+    jk_param	JkMsHeader460 - InternalVoiceArchive, JkZones460 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 460
+    jk_param	JkMsHeader461 - InternalVoiceArchive, JkZones461 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 461
+    jk_param	JkMsHeader462 - InternalVoiceArchive, JkZones462 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 462
+    jk_param	JkMsHeader463 - InternalVoiceArchive, JkZones463 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 463
+    jk_param	JkMsHeader464 - InternalVoiceArchive, JkZones464 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 464
+    jk_param	JkMsHeader465 - InternalVoiceArchive, JkZones465 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 465
+    jk_param	JkMsHeader466 - InternalVoiceArchive, JkZones466 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 466
+    jk_param	JkMsHeader467 - InternalVoiceArchive, JkZones467 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 467
+    jk_param	JkMsHeader468 - InternalVoiceArchive, JkZones468 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 468
+    jk_param	JkMsHeader469 - InternalVoiceArchive, JkZones469 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 469
+    jk_param	JkMsHeader470 - InternalVoiceArchive, JkZones470 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 470
+    jk_param	JkMsHeader471 - InternalVoiceArchive, JkZones471 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 471
+    jk_param	JkMsHeader472 - InternalVoiceArchive, JkZones472 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 472
+    jk_param	JkMsHeader473 - InternalVoiceArchive, JkZones473 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 473
+    jk_param	JkMsHeader474 - InternalVoiceArchive, JkZones474 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 474
+    jk_param	JkMsHeader475 - InternalVoiceArchive, JkZones475 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 475
+    jk_param	JkMsHeader476 - InternalVoiceArchive, JkZones476 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 476
+    jk_param	JkMsHeader477 - InternalVoiceArchive, JkZones477 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 477
+    jk_param	JkMsHeader478 - InternalVoiceArchive, JkZones478 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 478
+    jk_param	JkMsHeader479 - InternalVoiceArchive, JkZones479 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 479
+    jk_param	JkMsHeader480 - InternalVoiceArchive, JkZones480 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 480
+    jk_param	JkMsHeader481 - InternalVoiceArchive, JkZones481 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 481
+    jk_param	JkMsHeader482 - InternalVoiceArchive, JkZones482 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 482
+    jk_param	JkMsHeader483 - InternalVoiceArchive, JkZones483 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 483
+    jk_param	JkMsHeader484 - InternalVoiceArchive, JkZones484 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 484
+    jk_param	JkMsHeader485 - InternalVoiceArchive, JkZones485 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 485
+    jk_param	JkMsHeader486 - InternalVoiceArchive, JkZones486 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 486
+    jk_param	JkMsHeader487 - InternalVoiceArchive, JkZones487 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 487
+    jk_param	JkMsHeader488 - InternalVoiceArchive, JkZones488 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 488
+    jk_param	JkMsHeader489 - InternalVoiceArchive, JkZones489 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 489
+    jk_param	JkMsHeader490 - InternalVoiceArchive, JkZones490 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 490
+    jk_param	JkMsHeader491 - InternalVoiceArchive, JkZones491 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 491
+    jk_param	JkMsHeader492 - InternalVoiceArchive, JkZones492 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 492
+    jk_param	JkMsHeader493 - InternalVoiceArchive, JkZones493 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 493
+    jk_param	JkMsHeader494 - InternalVoiceArchive, JkZones494 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 494
+    jk_param	JkMsHeader495 - InternalVoiceArchive, JkZones495 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 495
+    jk_param	JkMsHeader496 - InternalVoiceArchive, JkZones496 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 496
+    jk_param	JkMsHeader497 - InternalVoiceArchive, JkZones497 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 497
+    jk_param	JkMsHeader498 - InternalVoiceArchive, JkZones498 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 498
+    jk_param	JkMsHeader499 - InternalVoiceArchive, JkZones499 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 499
+    jk_param	JkMsHeader500 - InternalVoiceArchive, JkZones500 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 500
+    jk_param	JkMsHeader501 - InternalVoiceArchive, JkZones501 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 501
+    jk_param	JkMsHeader502 - InternalVoiceArchive, JkZones502 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 502
+    jk_param	JkMsHeader503 - InternalVoiceArchive, JkZones503 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 503
+    jk_param	JkMsHeader504 - InternalVoiceArchive, JkZones504 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 504
+    jk_param	JkMsHeader505 - InternalVoiceArchive, JkZones505 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 505
+    jk_param	JkMsHeader506 - InternalVoiceArchive, JkZones506 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 506
+    jk_param	JkMsHeader507 - InternalVoiceArchive, JkZones507 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 507
+    jk_param	JkMsHeader508 - InternalVoiceArchive, JkZones508 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 508
+    jk_param	JkMsHeader509 - InternalVoiceArchive, JkZones509 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 509
+    jk_param	JkMsHeader510 - InternalVoiceArchive, JkZones510 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 510
+    jk_param	JkMsHeader511 - InternalVoiceArchive, JkZones511 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 511
+    jk_param	JkMsHeader512 - InternalVoiceArchive, JkZones512 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 512
+    jk_param	JkMsHeader513 - InternalVoiceArchive, JkZones513 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 513
+    jk_param	JkMsHeader514 - InternalVoiceArchive, JkZones514 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 514
+    jk_param	JkMsHeader515 - InternalVoiceArchive, JkZones515 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 515
+    jk_param	JkMsHeader516 - InternalVoiceArchive, JkZones516 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 516
+    jk_param	JkMsHeader517 - InternalVoiceArchive, JkZones517 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 517
+    jk_param	JkMsHeader518 - InternalVoiceArchive, JkZones518 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 518
+    jk_param	JkMsHeader519 - InternalVoiceArchive, JkZones519 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 519
+    jk_param	JkMsHeader520 - InternalVoiceArchive, JkZones520 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 520
+    jk_param	JkMsHeader521 - InternalVoiceArchive, JkZones521 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 521
+    jk_param	JkMsHeader522 - InternalVoiceArchive, JkZones522 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 522
+    jk_param	JkMsHeader523 - InternalVoiceArchive, JkZones523 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 523
+    jk_param	JkMsHeader524 - InternalVoiceArchive, JkZones524 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 524
+    jk_param	JkMsHeader525 - InternalVoiceArchive, JkZones525 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 525
+    jk_param	JkMsHeader526 - InternalVoiceArchive, JkZones526 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 526
+    jk_param	JkMsHeader527 - InternalVoiceArchive, JkZones527 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 527
+    jk_param	JkMsHeader528 - InternalVoiceArchive, JkZones528 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 528
+    jk_param	JkMsHeader529 - InternalVoiceArchive, JkZones529 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 529
+    jk_param	JkMsHeader530 - InternalVoiceArchive, JkZones530 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 530
+    jk_param	JkMsHeader531 - InternalVoiceArchive, JkZones531 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 531
+    jk_param	JkMsHeader532 - InternalVoiceArchive, JkZones532 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 532
+    jk_param	JkMsHeader533 - InternalVoiceArchive, JkZones533 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 533
+    jk_param	JkMsHeader534 - InternalVoiceArchive, JkZones534 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 534
+    jk_param	JkMsHeader535 - InternalVoiceArchive, JkZones535 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 535
+    jk_param	JkMsHeader536 - InternalVoiceArchive, JkZones536 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 536
+    jk_param	JkMsHeader537 - InternalVoiceArchive, JkZones537 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 537
+    jk_param	JkMsHeader538 - InternalVoiceArchive, JkZones538 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 538
+    jk_param	JkMsHeader539 - InternalVoiceArchive, JkZones539 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 539
+    jk_param	JkMsHeader540 - InternalVoiceArchive, JkZones540 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 540
+    jk_param	JkMsHeader541 - InternalVoiceArchive, JkZones541 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 541
+    jk_param	JkMsHeader542 - InternalVoiceArchive, JkZones542 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 542
+    jk_param	JkMsHeader543 - InternalVoiceArchive, JkZones543 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 543
+    jk_param	JkMsHeader544 - InternalVoiceArchive, JkZones544 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 544
+    jk_param	JkMsHeader545 - InternalVoiceArchive, JkZones545 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 545
+    jk_param	JkMsHeader546 - InternalVoiceArchive, JkZones546 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 546
+    jk_param	JkMsHeader547 - InternalVoiceArchive, JkZones547 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 547
+    jk_param	JkMsHeader548 - InternalVoiceArchive, JkZones548 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 548
+    jk_param	JkMsHeader549 - InternalVoiceArchive, JkZones549 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 549
+    jk_param	JkMsHeader550 - InternalVoiceArchive, JkZones550 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 550
+    jk_param	JkMsHeader551 - InternalVoiceArchive, JkZones551 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 551
+    jk_param	JkMsHeader552 - InternalVoiceArchive, JkZones552 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 552
+    jk_param	JkMsHeader553 - InternalVoiceArchive, JkZones553 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 553
+    jk_param	JkMsHeader554 - InternalVoiceArchive, JkZones554 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 554
+    jk_param	JkMsHeader555 - InternalVoiceArchive, JkZones555 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 555
+    jk_param	JkMsHeader556 - InternalVoiceArchive, JkZones556 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 556
+    jk_param	JkMsHeader557 - InternalVoiceArchive, JkZones557 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 557
+    jk_param	JkMsHeader558 - InternalVoiceArchive, JkZones558 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 558
+    jk_param	JkMsHeader559 - InternalVoiceArchive, JkZones559 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 559
+    jk_param	JkMsHeader560 - InternalVoiceArchive, JkZones560 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 560
+    jk_param	JkMsHeader561 - InternalVoiceArchive, JkZones561 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 561
+    jk_param	JkMsHeader562 - InternalVoiceArchive, JkZones562 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 562
+    jk_param	JkMsHeader563 - InternalVoiceArchive, JkZones563 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 563
+    jk_param	JkMsHeader564 - InternalVoiceArchive, JkZones564 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 564
+    jk_param	JkMsHeader565 - InternalVoiceArchive, JkZones565 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 565
+    jk_param	JkMsHeader566 - InternalVoiceArchive, JkZones566 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 566
+    jk_param	JkMsHeader567 - InternalVoiceArchive, JkZones567 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 567
+    jk_param	JkMsHeader568 - InternalVoiceArchive, JkZones568 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 568
+    jk_param	JkMsHeader569 - InternalVoiceArchive, JkZones569 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d66, 0, 1	# record 569
+    jk_param	JkMsHeader570 - InternalVoiceArchive, JkZones570 - InternalVoiceArchive, 0x80, 12, 104, 66, 0x48c4, 0, 1	# record 570
+    jk_param	JkMsHeader571 - InternalVoiceArchive, JkZones571 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d44, 0, 1	# record 571
+    jk_param	JkMsHeader572 - InternalVoiceArchive, JkZones572 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d44, 0, 1	# record 572
+    jk_param	JkMsHeader573 - InternalVoiceArchive, JkZones573 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 573
+    jk_param	JkMsHeader574 - InternalVoiceArchive, JkZones574 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 574
+    jk_param	JkMsHeader575 - InternalVoiceArchive, JkZones575 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4144, 0, 1	# record 575
+    jk_param	JkMsHeader576 - InternalVoiceArchive, JkZones576 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4144, 0, 1	# record 576
+    jk_param	JkMsHeader577 - InternalVoiceArchive, JkZones577 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 577
+    jk_param	JkMsHeader578 - InternalVoiceArchive, JkZones578 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 578
+    jk_param	JkMsHeader579 - InternalVoiceArchive, JkZones579 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 579
+    jk_param	JkMsHeader580 - InternalVoiceArchive, JkZones580 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 580
+    jk_param	JkMsHeader581 - InternalVoiceArchive, JkZones581 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4644, 0, 1	# record 581
+    jk_param	JkMsHeader582 - InternalVoiceArchive, JkZones582 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4644, 0, 1	# record 582
+    jk_param	JkMsHeader583 - InternalVoiceArchive, JkZones583 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 583
+    jk_param	JkMsHeader584 - InternalVoiceArchive, JkZones584 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 584
+    jk_param	JkMsHeader585 - InternalVoiceArchive, JkZones585 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 585
+    jk_param	JkMsHeader586 - InternalVoiceArchive, JkZones586 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 586
+    jk_param	JkMsHeader587 - InternalVoiceArchive, JkZones587 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4a44, 0, 1	# record 587
+    jk_param	JkMsHeader588 - InternalVoiceArchive, JkZones588 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4a44, 0, 1	# record 588
+    jk_param	JkMsHeader589 - InternalVoiceArchive, JkZones589 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 589
+    jk_param	JkMsHeader590 - InternalVoiceArchive, JkZones590 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 590
+    jk_param	JkMsHeader591 - InternalVoiceArchive, JkZones591 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 591
+    jk_param	JkMsHeader592 - InternalVoiceArchive, JkZones592 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 592
+    jk_param	JkMsHeader593 - InternalVoiceArchive, JkZones593 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3ee6, 0, 1	# record 593
+    jk_param	JkMsHeader594 - InternalVoiceArchive, JkZones594 - InternalVoiceArchive, 0x80, 12, 104, 66, 0x46ce, 0, 1	# record 594
+    jk_param	JkMsHeader595 - InternalVoiceArchive, JkZones595 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 595
+    jk_param	JkMsHeader596 - InternalVoiceArchive, JkZones596 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 596
+    jk_param	JkMsHeader597 - InternalVoiceArchive, JkZones597 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 597
+    jk_param	JkMsHeader598 - InternalVoiceArchive, JkZones598 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 598
+    jk_param	JkMsHeader599 - InternalVoiceArchive, JkZones599 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 599
+    jk_param	JkMsHeader600 - InternalVoiceArchive, JkZones600 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 600
+    jk_param	JkMsHeader601 - InternalVoiceArchive, JkZones601 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 601
+    jk_param	JkMsHeader602 - InternalVoiceArchive, JkZones602 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 602
+    jk_param	JkMsHeader603 - InternalVoiceArchive, JkZones603 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 603
+    jk_param	JkMsHeader604 - InternalVoiceArchive, JkZones604 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 604
+    jk_param	JkMsHeader605 - InternalVoiceArchive, JkZones605 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 605
+    jk_param	JkMsHeader606 - InternalVoiceArchive, JkZones606 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 606
+    jk_param	JkMsHeader607 - InternalVoiceArchive, JkZones607 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4266, 0, 1	# record 607
+    jk_param	JkMsHeader608 - InternalVoiceArchive, JkZones608 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x47c4, 0, 1	# record 608
+    jk_param	JkMsHeader609 - InternalVoiceArchive, JkZones609 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 609
+    jk_param	JkMsHeader610 - InternalVoiceArchive, JkZones610 - InternalVoiceArchive, 0x00, 12, 114, 66, 0x534d, 0, 1	# record 610
+    jk_param	JkMsHeader611 - InternalVoiceArchive, JkZones611 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4244, 0, 1	# record 611
+    jk_param	JkMsHeader612 - InternalVoiceArchive, JkZones612 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4980, 0, 1	# record 612
+    jk_param	JkMsHeader613 - InternalVoiceArchive, JkZones613 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4344, 0, 1	# record 613
+    jk_param	JkMsHeader614 - InternalVoiceArchive, JkZones614 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 614
+    jk_param	JkMsHeader615 - InternalVoiceArchive, JkZones615 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 615
+    jk_param	JkMsHeader616 - InternalVoiceArchive, JkZones616 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 616
+    jk_param	JkMsHeader617 - InternalVoiceArchive, JkZones617 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 617
+    jk_param	JkMsHeader618 - InternalVoiceArchive, JkZones618 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 618
+    jk_param	JkMsHeader619 - InternalVoiceArchive, JkZones619 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 619
+    jk_param	JkMsHeader620 - InternalVoiceArchive, JkZones620 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 620
+    jk_param	JkMsHeader621 - InternalVoiceArchive, JkZones621 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 621
+    jk_param	JkMsHeader622 - InternalVoiceArchive, JkZones622 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 622
+    jk_param	JkMsHeader623 - InternalVoiceArchive, JkZones623 - InternalVoiceArchive, 0x80, 12, 77, 66, 0x4280, 0, 1	# record 623
+    jk_param	JkMsHeader624 - InternalVoiceArchive, JkZones624 - InternalVoiceArchive, 0x80, 12, 77, 66, 0x4280, 0, 1	# record 624
+    jk_param	JkMsHeader625 - InternalVoiceArchive, JkZones625 - InternalVoiceArchive, 0x80, 12, 77, 66, 0x4280, 0, 1	# record 625
+    jk_param	JkMsHeader626 - InternalVoiceArchive, JkZones626 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 626
+    jk_param	JkMsHeader627 - InternalVoiceArchive, JkZones627 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 627
+    jk_param	JkMsHeader628 - InternalVoiceArchive, JkZones628 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 628
+    jk_param	JkMsHeader629 - InternalVoiceArchive, JkZones629 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 629
+    jk_param	JkMsHeader630 - InternalVoiceArchive, JkZones630 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 630
+    jk_param	JkMsHeader631 - InternalVoiceArchive, JkZones631 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 631
+    jk_param	JkMsHeader632 - InternalVoiceArchive, JkZones632 - InternalVoiceArchive, 0x80, 12, 78, 66, 0x4b80, 0, 1	# record 632
+    jk_param	JkMsHeader633 - InternalVoiceArchive, JkZones633 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 633
+    jk_param	JkMsHeader634 - InternalVoiceArchive, JkZones634 - InternalVoiceArchive, 0x80, 12, 120, 66, 0x4280, 0, 1	# record 634
+    jk_param	JkMsHeader635 - InternalVoiceArchive, JkZones635 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x49c1, 0, 1	# record 635
+    jk_param	JkMsHeader636 - InternalVoiceArchive, JkZones636 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 636
+    jk_param	JkMsHeader637 - InternalVoiceArchive, JkZones637 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 637
+    jk_param	JkMsHeader638 - InternalVoiceArchive, JkZones638 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 638
+    jk_param	JkMsHeader639 - InternalVoiceArchive, JkZones639 - InternalVoiceArchive, 0x00, 12, 84, 66, 0x4d44, 0, 1	# record 639
+    jk_param	JkMsHeader640 - InternalVoiceArchive, JkZones640 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 640
+    jk_param	JkMsHeader641 - InternalVoiceArchive, JkZones641 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 641
+    jk_param	JkMsHeader642 - InternalVoiceArchive, JkZones642 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 642
+    jk_param	JkMsHeader643 - InternalVoiceArchive, JkZones643 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 643
+    jk_param	JkMsHeader644 - InternalVoiceArchive, JkZones644 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 644
+    jk_param	JkMsHeader645 - InternalVoiceArchive, JkZones645 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 645
+    jk_param	JkMsHeader646 - InternalVoiceArchive, JkZones646 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 646
+    jk_param	JkMsHeader647 - InternalVoiceArchive, JkZones647 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 647
+    jk_param	JkMsHeader648 - InternalVoiceArchive, JkZones648 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 648
+    jk_param	JkMsHeader649 - InternalVoiceArchive, JkZones649 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 649
+    jk_param	JkMsHeader650 - InternalVoiceArchive, JkZones650 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 650
+    jk_param	JkMsHeader651 - InternalVoiceArchive, JkZones651 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 651
+    jk_param	JkMsHeader652 - InternalVoiceArchive, JkZones652 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 652
+    jk_param	JkMsHeader653 - InternalVoiceArchive, JkZones653 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 653
+    jk_param	JkMsHeader654 - InternalVoiceArchive, JkZones654 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 654
+    jk_param	JkMsHeader655 - InternalVoiceArchive, JkZones655 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 655
+    jk_param	JkMsHeader656 - InternalVoiceArchive, JkZones656 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 656
+    jk_param	JkMsHeader657 - InternalVoiceArchive, JkZones657 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 657
+    jk_param	JkMsHeader658 - InternalVoiceArchive, JkZones658 - InternalVoiceArchive, 0x00, 12, 96, 66, 0x4d44, 0, 1	# record 658
+    jk_param	JkMsHeader659 - InternalVoiceArchive, JkZones659 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 659
+    jk_param	JkMsHeader660 - InternalVoiceArchive, JkZones660 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 660
+    jk_param	JkMsHeader661 - InternalVoiceArchive, JkZones661 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 661
+    jk_param	JkMsHeader662 - InternalVoiceArchive, JkZones662 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 662
+    jk_param	JkMsHeader663 - InternalVoiceArchive, JkZones663 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 663
+    jk_param	JkMsHeader664 - InternalVoiceArchive, JkZones664 - InternalVoiceArchive, 0x00, 12, 90, 66, 0x4d44, 0, 1	# record 664
+    jk_param	JkMsHeader665 - InternalVoiceArchive, JkZones665 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 665
+    jk_param	JkMsHeader666 - InternalVoiceArchive, JkZones666 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 666
+    jk_param	JkMsHeader667 - InternalVoiceArchive, JkZones667 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 667
+    jk_param	JkMsHeader668 - InternalVoiceArchive, JkZones668 - InternalVoiceArchive, 0x00, 12, 89, 66, 0x4d44, 0, 1	# record 668
+    jk_param	JkMsHeader669 - InternalVoiceArchive, JkZones669 - InternalVoiceArchive, 0x80, 12, 99, 66, 0x4280, 0, 1	# record 669
+    jk_param	JkMsHeader670 - InternalVoiceArchive, JkZones670 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 670
+    jk_param	JkMsHeader671 - InternalVoiceArchive, JkZones671 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4180, 0, 1	# record 671
+    jk_param	JkMsHeader672 - InternalVoiceArchive, JkZones672 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4180, 0, 1	# record 672
+    jk_param	JkMsHeader673 - InternalVoiceArchive, JkZones673 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4180, 0, 1	# record 673
+    jk_param	JkMsHeader674 - InternalVoiceArchive, JkZones674 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4180, 0, 1	# record 674
+    jk_param	JkMsHeader675 - InternalVoiceArchive, JkZones675 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 675
+    jk_param	JkMsHeader676 - InternalVoiceArchive, JkZones676 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4680, 0, 1	# record 676
+    jk_param	JkMsHeader677 - InternalVoiceArchive, JkZones677 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4680, 0, 1	# record 677
+    jk_param	JkMsHeader678 - InternalVoiceArchive, JkZones678 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4680, 0, 1	# record 678
+    jk_param	JkMsHeader679 - InternalVoiceArchive, JkZones679 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4680, 0, 1	# record 679
+    jk_param	JkMsHeader680 - InternalVoiceArchive, JkZones680 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 680
+    jk_param	JkMsHeader681 - InternalVoiceArchive, JkZones681 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4080, 0, 1	# record 681
+    jk_param	JkMsHeader682 - InternalVoiceArchive, JkZones682 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4080, 0, 1	# record 682
+    jk_param	JkMsHeader683 - InternalVoiceArchive, JkZones683 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4080, 0, 1	# record 683
+    jk_param	JkMsHeader684 - InternalVoiceArchive, JkZones684 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4080, 0, 1	# record 684
+    jk_param	JkMsHeader685 - InternalVoiceArchive, JkZones685 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 685
+    jk_param	JkMsHeader686 - InternalVoiceArchive, JkZones686 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 686
+    jk_param	JkMsHeader687 - InternalVoiceArchive, JkZones687 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 687
+    jk_param	JkMsHeader688 - InternalVoiceArchive, JkZones688 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 688
+    jk_param	JkMsHeader689 - InternalVoiceArchive, JkZones689 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 689
+    jk_param	JkMsHeader690 - InternalVoiceArchive, JkZones690 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 690
+    jk_param	JkMsHeader691 - InternalVoiceArchive, JkZones691 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 691
+    jk_param	JkMsHeader692 - InternalVoiceArchive, JkZones692 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 692
+    jk_param	JkMsHeader693 - InternalVoiceArchive, JkZones693 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 693
+    jk_param	JkMsHeader694 - InternalVoiceArchive, JkZones694 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 694
+    jk_param	JkMsHeader695 - InternalVoiceArchive, JkZones695 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 695
+    jk_param	JkMsHeader696 - InternalVoiceArchive, JkZones696 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 696
+    jk_param	JkMsHeader697 - InternalVoiceArchive, JkZones697 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 697
+    jk_param	JkMsHeader698 - InternalVoiceArchive, JkZones698 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 698
+    jk_param	JkMsHeader699 - InternalVoiceArchive, JkZones699 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 699
+    jk_param	JkMsHeader700 - InternalVoiceArchive, JkZones700 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 700
+    jk_param	JkMsHeader701 - InternalVoiceArchive, JkZones701 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 701
+    jk_param	JkMsHeader702 - InternalVoiceArchive, JkZones702 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 702
+    jk_param	JkMsHeader703 - InternalVoiceArchive, JkZones703 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 703
+    jk_param	JkMsHeader704 - InternalVoiceArchive, JkZones704 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 704
+    jk_param	JkMsHeader705 - InternalVoiceArchive, JkZones705 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 705
+    jk_param	JkMsHeader706 - InternalVoiceArchive, JkZones706 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 706
+    jk_param	JkMsHeader707 - InternalVoiceArchive, JkZones707 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 707
+    jk_param	JkMsHeader708 - InternalVoiceArchive, JkZones708 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 708
+    jk_param	JkMsHeader709 - InternalVoiceArchive, JkZones709 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 709
+    jk_param	JkMsHeader710 - InternalVoiceArchive, JkZones710 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 710
+    jk_param	JkMsHeader711 - InternalVoiceArchive, JkZones711 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 711
+    jk_param	JkMsHeader712 - InternalVoiceArchive, JkZones712 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 712
+    jk_param	JkMsHeader713 - InternalVoiceArchive, JkZones713 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 713
+    jk_param	JkMsHeader714 - InternalVoiceArchive, JkZones714 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 714
+    jk_param	JkMsHeader715 - InternalVoiceArchive, JkZones715 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 715
+    jk_param	JkMsHeader716 - InternalVoiceArchive, JkZones716 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 716
+    jk_param	JkMsHeader717 - InternalVoiceArchive, JkZones717 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 717
+    jk_param	JkMsHeader718 - InternalVoiceArchive, JkZones718 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 718
+    jk_param	JkMsHeader719 - InternalVoiceArchive, JkZones719 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 719
+    jk_param	JkMsHeader720 - InternalVoiceArchive, JkZones720 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 720
+    jk_param	JkMsHeader721 - InternalVoiceArchive, JkZones721 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 721
+    jk_param	JkMsHeader722 - InternalVoiceArchive, JkZones722 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 722
+    jk_param	JkMsHeader723 - InternalVoiceArchive, JkZones723 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 723
+    jk_param	JkMsHeader724 - InternalVoiceArchive, JkZones724 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 724
+    jk_param	JkMsHeader725 - InternalVoiceArchive, JkZones725 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3d80, 0, 1	# record 725
+    jk_param	JkMsHeader726 - InternalVoiceArchive, JkZones726 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 726
+    jk_param	JkMsHeader727 - InternalVoiceArchive, JkZones727 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 727
+    jk_param	JkMsHeader728 - InternalVoiceArchive, JkZones728 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 728
+    jk_param	JkMsHeader729 - InternalVoiceArchive, JkZones729 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 729
+    jk_param	JkMsHeader730 - InternalVoiceArchive, JkZones730 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 730
+    jk_param	JkMsHeader731 - InternalVoiceArchive, JkZones731 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 731
+    jk_param	JkMsHeader732 - InternalVoiceArchive, JkZones732 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 732
+    jk_param	JkMsHeader733 - InternalVoiceArchive, JkZones733 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 733
+    jk_param	JkMsHeader734 - InternalVoiceArchive, JkZones734 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 734
+    jk_param	JkMsHeader735 - InternalVoiceArchive, JkZones735 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 735
+    jk_param	JkMsHeader736 - InternalVoiceArchive, JkZones736 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 736
+    jk_param	JkMsHeader737 - InternalVoiceArchive, JkZones737 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 737
+    jk_param	JkMsHeader738 - InternalVoiceArchive, JkZones738 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 738
+    jk_param	JkMsHeader739 - InternalVoiceArchive, JkZones739 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 739
+    jk_param	JkMsHeader740 - InternalVoiceArchive, JkZones740 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 740
+    jk_param	JkMsHeader741 - InternalVoiceArchive, JkZones741 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 741
+    jk_param	JkMsHeader742 - InternalVoiceArchive, JkZones742 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 742
+    jk_param	JkMsHeader743 - InternalVoiceArchive, JkZones743 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 743
+    jk_param	JkMsHeader744 - InternalVoiceArchive, JkZones744 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 744
+    jk_param	JkMsHeader745 - InternalVoiceArchive, JkZones745 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 745
+    jk_param	JkMsHeader746 - InternalVoiceArchive, JkZones746 - InternalVoiceArchive, 0x80, 12, 113, 66, 0x3e80, 0, 1	# record 746
+    jk_param	JkMsHeader747 - InternalVoiceArchive, JkZones747 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x3b80, 0, 1	# record 747
+    jk_param	JkMsHeader748 - InternalVoiceArchive, JkZones748 - InternalVoiceArchive, 0x80, 12, 104, 66, 0x3cbc, 0, 1	# record 748
+    jk_param	JkMsHeader749 - InternalVoiceArchive, JkZones749 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 749
+    jk_param	JkMsHeader750 - InternalVoiceArchive, JkZones750 - InternalVoiceArchive, 0x80, 21, 108, 66, 0x529c, 0, 1	# record 750
+    jk_param	JkMsHeader751 - InternalVoiceArchive, JkZones751 - InternalVoiceArchive, 0x80, 12, 103, 66, 0x3ebc, 0, 1	# record 751
+    jk_param	JkMsHeader752 - InternalVoiceArchive, JkZones752 - InternalVoiceArchive, 0x00, 12, 79, 66, 0x4d44, 0, 1	# record 752
+    jk_param	JkMsHeader753 - InternalVoiceArchive, JkZones753 - InternalVoiceArchive, 0x00, 12, 79, 66, 0x4d44, 0, 1	# record 753
+    jk_param	JkMsHeader754 - InternalVoiceArchive, JkZones754 - InternalVoiceArchive, 0x80, 12, 95, 66, 0x4280, 0, 1	# record 754
+    jk_param	JkMsHeader755 - InternalVoiceArchive, JkZones755 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x46bc, 0, 1	# record 755
+    jk_param	JkMsHeader756 - InternalVoiceArchive, JkZones756 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x47bc, 0, 1	# record 756
+    jk_param	JkMsHeader757 - InternalVoiceArchive, JkZones757 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 757
+    jk_param	JkMsHeader758 - InternalVoiceArchive, JkZones758 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 758
+    jk_param	JkMsHeader759 - InternalVoiceArchive, JkZones759 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 759
+    jk_param	JkMsHeader760 - InternalVoiceArchive, JkZones760 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 760
+    jk_param	JkMsHeader761 - InternalVoiceArchive, JkZones761 - InternalVoiceArchive, 0x80, 0, 108, 66, 0x4a80, 0, 1	# record 761
+    jk_param	JkMsHeader762 - InternalVoiceArchive, JkZones762 - InternalVoiceArchive, 0x80, 21, 108, 66, 0x4b80, 0, 1	# record 762
+    jk_param	JkMsHeader763 - InternalVoiceArchive, JkZones763 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4b80, 0, 1	# record 763
+    jk_param	JkMsHeader764 - InternalVoiceArchive, JkZones764 - InternalVoiceArchive, 0x80, 17, 96, 66, 0x51bc, 0, 1	# record 764
+    jk_param	JkMsHeader765 - InternalVoiceArchive, JkZones765 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 765
+    jk_param	JkMsHeader766 - InternalVoiceArchive, JkZones766 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 766
+    jk_param	JkMsHeader767 - InternalVoiceArchive, JkZones767 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 767
+    jk_param	JkMsHeader768 - InternalVoiceArchive, JkZones768 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 768
+    jk_param	JkMsHeader769 - InternalVoiceArchive, JkZones769 - InternalVoiceArchive, 0x80, 12, 91, 66, 0x4280, 0, 1	# record 769
+    jk_param	JkMsHeader770 - InternalVoiceArchive, JkZones770 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 770
+    jk_param	JkMsHeader771 - InternalVoiceArchive, JkZones771 - InternalVoiceArchive, 0x00, 16, 90, 66, 0x4ebc, 0, 1	# record 771
+    jk_param	JkMsHeader772 - InternalVoiceArchive, JkZones772 - InternalVoiceArchive, 0x80, 12, 89, 66, 0x4280, 0, 1	# record 772
+    jk_param	JkMsHeader773 - InternalVoiceArchive, JkZones773 - InternalVoiceArchive, 0x80, 12, 89, 66, 0x4280, 0, 1	# record 773
+    jk_param	JkMsHeader774 - InternalVoiceArchive, JkZones774 - InternalVoiceArchive, 0x80, 19, 108, 66, 0x5d80, 0, 1	# record 774
+    jk_param	JkMsHeader775 - InternalVoiceArchive, JkZones775 - InternalVoiceArchive, 0x80, 12, 111, 66, 0x4f84, 0, 1	# record 775
+    jk_param	JkMsHeader776 - InternalVoiceArchive, JkZones776 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4680, 0, 1	# record 776
+    jk_param	JkMsHeader777 - InternalVoiceArchive, JkZones777 - InternalVoiceArchive, 0x80, 12, 104, 66, 0x4800, 0, 1	# record 777
+    jk_param	JkMsHeader778 - InternalVoiceArchive, JkZones778 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4444, 0, 1	# record 778
+    jk_param	JkMsHeader779 - InternalVoiceArchive, JkZones779 - InternalVoiceArchive, 0x80, 28, 103, 66, 0x6544, 0, 1	# record 779
+    jk_param	JkMsHeader780 - InternalVoiceArchive, JkZones780 - InternalVoiceArchive, 0x00, 12, 79, 66, 0x4d44, 0, 1	# record 780
+    jk_param	JkMsHeader781 - InternalVoiceArchive, JkZones781 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 781
+    jk_param	JkMsHeader782 - InternalVoiceArchive, JkZones782 - InternalVoiceArchive, 0x80, 19, 91, 66, 0x4e80, 0, 1	# record 782
+    jk_param	JkMsHeader783 - InternalVoiceArchive, JkZones783 - InternalVoiceArchive, 0x80, 19, 91, 66, 0x4e80, 0, 1	# record 783
+    jk_param	JkMsHeader784 - InternalVoiceArchive, JkZones784 - InternalVoiceArchive, 0x80, 19, 91, 66, 0x4e80, 0, 1	# record 784
+    jk_param	JkMsHeader785 - InternalVoiceArchive, JkZones785 - InternalVoiceArchive, 0x80, 12, 79, 66, 0x4e80, 0, 1	# record 785
+    jk_param	JkMsHeader786 - InternalVoiceArchive, JkZones786 - InternalVoiceArchive, 0x80, 12, 69, 66, 0x4280, 0, 1	# record 786
+    jk_param	JkMsHeader787 - InternalVoiceArchive, JkZones787 - InternalVoiceArchive, 0x80, 24, 91, 66, 0x54bc, 0, 1	# record 787
+    jk_param	JkMsHeader788 - InternalVoiceArchive, JkZones788 - InternalVoiceArchive, 0x00, 12, 79, 66, 0x4d44, 0, 1	# record 788
+    jk_param	JkMsHeader789 - InternalVoiceArchive, JkZones789 - InternalVoiceArchive, 0x00, 12, 108, 66, 0x4d44, 0, 1	# record 789
+    jk_param	JkMsHeader790 - InternalVoiceArchive, JkZones790 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 790
+    jk_param	JkMsHeader791 - InternalVoiceArchive, JkZones791 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 791
+    jk_param	JkMsHeader792 - InternalVoiceArchive, JkZones792 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 792
+    jk_param	JkMsHeader793 - InternalVoiceArchive, JkZones793 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 793
+    jk_param	JkMsHeader794 - InternalVoiceArchive, JkZones794 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 794
+    jk_param	JkMsHeader795 - InternalVoiceArchive, JkZones795 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 795
+    jk_param	JkMsHeader796 - InternalVoiceArchive, JkZones796 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 796
+    jk_param	JkMsHeader797 - InternalVoiceArchive, JkZones797 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 797
+    jk_param	JkMsHeader798 - InternalVoiceArchive, JkZones798 - InternalVoiceArchive, 0x80, 12, 78, 66, 0x4280, 0, 1	# record 798
+    jk_param	JkMsHeader799 - InternalVoiceArchive, JkZones799 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 799
+    jk_param	JkMsHeader800 - InternalVoiceArchive, JkZones800 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 800
+    jk_param	JkMsHeader801 - InternalVoiceArchive, JkZones801 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 801
+    jk_param	JkMsHeader802 - InternalVoiceArchive, JkZones802 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 802
+    jk_param	JkMsHeader803 - InternalVoiceArchive, JkZones803 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 803
+    jk_param	JkMsHeader804 - InternalVoiceArchive, JkZones804 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 804
+    jk_param	JkMsHeader805 - InternalVoiceArchive, JkZones805 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 805
+    jk_param	JkMsHeader806 - InternalVoiceArchive, JkZones806 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 806
+    jk_param	JkMsHeader807 - InternalVoiceArchive, JkZones807 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 807
+    jk_param	JkMsHeader808 - InternalVoiceArchive, JkZones808 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 808
+    jk_param	JkMsHeader809 - InternalVoiceArchive, JkZones809 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 809
+    jk_param	JkMsHeader810 - InternalVoiceArchive, JkZones810 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 810
+    jk_param	JkMsHeader811 - InternalVoiceArchive, JkZones811 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 811
+    jk_param	JkMsHeader812 - InternalVoiceArchive, JkZones812 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 812
+    jk_param	JkMsHeader813 - InternalVoiceArchive, JkZones813 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 813
+    jk_param	JkMsHeader814 - InternalVoiceArchive, JkZones814 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 814
+    jk_param	JkMsHeader815 - InternalVoiceArchive, JkZones815 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 815
+    jk_param	JkMsHeader816 - InternalVoiceArchive, JkZones816 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 816
+    jk_param	JkMsHeader817 - InternalVoiceArchive, JkZones817 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 817
+    jk_param	JkMsHeader818 - InternalVoiceArchive, JkZones818 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 818
+    jk_param	JkMsHeader819 - InternalVoiceArchive, JkZones819 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 819
+    jk_param	JkMsHeader820 - InternalVoiceArchive, JkZones820 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 820
+    jk_param	JkMsHeader821 - InternalVoiceArchive, JkZones821 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 821
+    jk_param	JkMsHeader822 - InternalVoiceArchive, JkZones822 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 822
+    jk_param	JkMsHeader823 - InternalVoiceArchive, JkZones823 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 823
+    jk_param	JkMsHeader824 - InternalVoiceArchive, JkZones824 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 824
+    jk_param	JkMsHeader825 - InternalVoiceArchive, JkZones825 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 825
+    jk_param	JkMsHeader826 - InternalVoiceArchive, JkZones826 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 826
+    jk_param	JkMsHeader827 - InternalVoiceArchive, JkZones827 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 827
+    jk_param	JkMsHeader828 - InternalVoiceArchive, JkZones828 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 828
+    jk_param	JkMsHeader829 - InternalVoiceArchive, JkZones829 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 829
+    jk_param	JkMsHeader830 - InternalVoiceArchive, JkZones830 - InternalVoiceArchive, 0x80, 12, 72, 66, 0x4280, 0, 1	# record 830
+    jk_param	JkMsHeader831 - InternalVoiceArchive, JkZones831 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 831
+    jk_param	JkMsHeader832 - InternalVoiceArchive, JkZones832 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 832
+    jk_param	JkMsHeader833 - InternalVoiceArchive, JkZones833 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 833
+    jk_param	JkMsHeader834 - InternalVoiceArchive, JkZones834 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 834
+    jk_param	JkMsHeader835 - InternalVoiceArchive, JkZones835 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 835
+    jk_param	JkMsHeader836 - InternalVoiceArchive, JkZones836 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 836
+    jk_param	JkMsHeader837 - InternalVoiceArchive, JkZones837 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 837
+    jk_param	JkMsHeader838 - InternalVoiceArchive, JkZones838 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 838
+    jk_param	JkMsHeader839 - InternalVoiceArchive, JkZones839 - InternalVoiceArchive, 0x80, 12, 84, 66, 0x4280, 0, 1	# record 839
+    jk_param	JkMsHeader840 - InternalVoiceArchive, JkZones840 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 840
+    jk_param	JkMsHeader841 - InternalVoiceArchive, JkZones841 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 841
+    jk_param	JkMsHeader842 - InternalVoiceArchive, JkZones842 - InternalVoiceArchive, 0x80, 12, 67, 66, 0x4280, 0, 1	# record 842
+    jk_param	JkMsHeader843 - InternalVoiceArchive, JkZones843 - InternalVoiceArchive, 0x80, 12, 73, 66, 0x4280, 0, 1	# record 843
+    jk_param	JkMsHeader844 - InternalVoiceArchive, JkZones844 - InternalVoiceArchive, 0x80, 12, 73, 66, 0x4280, 0, 1	# record 844
+    jk_param	JkMsHeader845 - InternalVoiceArchive, JkZones845 - InternalVoiceArchive, 0x80, 12, 67, 66, 0x4280, 0, 1	# record 845
+    jk_param	JkMsHeader846 - InternalVoiceArchive, JkZones846 - InternalVoiceArchive, 0x80, 12, 73, 66, 0x4280, 0, 1	# record 846
+    jk_param	JkMsHeader847 - InternalVoiceArchive, JkZones847 - InternalVoiceArchive, 0x80, 12, 73, 66, 0x4280, 0, 1	# record 847
+    jk_param	JkMsHeader848 - InternalVoiceArchive, JkZones848 - InternalVoiceArchive, 0x80, 12, 73, 66, 0x4280, 0, 1	# record 848
+    jk_param	JkMsHeader849 - InternalVoiceArchive, JkZones849 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 849
+    jk_param	JkMsHeader850 - InternalVoiceArchive, JkZones850 - InternalVoiceArchive, 0x80, 12, 102, 66, 0x4280, 0, 1	# record 850
+    jk_param	JkMsHeader851 - InternalVoiceArchive, JkZones851 - InternalVoiceArchive, 0x80, 12, 81, 66, 0x4280, 0, 1	# record 851
+    jk_param	JkMsHeader852 - InternalVoiceArchive, JkZones852 - InternalVoiceArchive, 0x80, 12, 90, 66, 0x4280, 0, 1	# record 852
+    jk_param	JkMsHeader853 - InternalVoiceArchive, JkZones853 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 853
+    jk_param	JkMsHeader854 - InternalVoiceArchive, JkZones854 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 854
+    jk_param	JkMsHeader855 - InternalVoiceArchive, JkZones855 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 855
+    jk_param	JkMsHeader856 - InternalVoiceArchive, JkZones856 - InternalVoiceArchive, 0x80, 12, 96, 66, 0x4280, 0, 1	# record 856
+    jk_param	JkMsHeader857 - InternalVoiceArchive, JkZones857 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 857
+    jk_param	JkMsHeader858 - InternalVoiceArchive, JkZones858 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 858
+    jk_param	JkMsHeader859 - InternalVoiceArchive, JkZones859 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 859
+    jk_param	JkMsHeader860 - InternalVoiceArchive, JkZones860 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 860
+    jk_param	JkMsHeader861 - InternalVoiceArchive, JkZones861 - InternalVoiceArchive, 0x80, 12, 114, 66, 0x4280, 0, 1	# record 861
+    jk_param	JkMsHeader862 - InternalVoiceArchive, JkZones862 - InternalVoiceArchive, 0x80, 12, 108, 66, 0x4280, 0, 1	# record 862
+    jk_param	JkMsHeader863 - InternalVoiceArchive, JkZones863 - InternalVoiceArchive, 0x00, 12, 120, 66, 0x3c80, 0, 1	# record 863
     .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x1353f0, 0x139e98	# not decoded yet
 JkAttrDesc:
     .word	1, 19	# mult, nbuckets

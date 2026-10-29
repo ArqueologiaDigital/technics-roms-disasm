@@ -124,3 +124,35 @@
 .macro tpad_ref a, b, flags
 	.byte	\a, \b, \flags
 .endm
+# ---- the 'JK' internal voice archive (src/table/voices/; tools/gen_table_voices.py) ----
+# A parameter record (0x10 bytes; VoiceParamRecFetchBanked 0x48449925 indexes them):
+#   ms, zones   offsets of its multisample header and zone list (TgVoiceRoutePtrCalc 0x4C02BE45)
+#   flags       bit 7: the zones are 8 bytes and carry a fine tune (TgVoiceRoutePtrCalc steps 8
+#               or 6; TgPitchNoteResolve 0x4C02FB79 adds zone +6); the low bits: no reader traced
+#   key_lo, key_hi  the sample's mapped key window, notes (TgPitchZoneFold 0x4C02FB25 folds the
+#               pitch by octaves into [key_lo << 8, (key_hi << 8) + 0xFF])
+#   b11         no reader traced (66 in nearly all records)
+#   center      the zone centre pitch, 16-bit (TgPitchZoneFold -> librec +0x0C)
+#   b14, b15    no reader traced
+.macro jk_param ms, zones, flags, key_lo, key_hi, b11, center, b14, b15
+	.long	\ms, \zones
+	.byte	\flags, \key_lo, \key_hi, \b11
+	.word	\center
+	.byte	\b14, \b15
+.endm
+# A zone: the halfword +0 is the wave page (low byte; TgVoiceRouteFieldSet 0x4C037C16 puts
+# it in bits 19:12 of the voice's select) with the TG side in bits 10/11 (0x400 / 0x800;
+# TgVoiceSideSelect 0x4C02BECB) and bits 12-15 not traced; +2 the wave directory entry
+# (TgElemNoteOnStd 0x4C030A98: & 0xFFF into bits 11:0); +4, +5 not traced (+5 is 0 in
+# every zone); the 8-byte kind adds a signed fine tune (+6; TgPitchNoteResolve).
+.macro jk_zone6 page, flags, entry, b4, b5
+	.byte	\page, \flags
+	.word	\entry
+	.byte	\b4, \b5
+.endm
+.macro jk_zone8 page, flags, entry, b4, b5, tune
+	.byte	\page, \flags
+	.word	\entry
+	.byte	\b4, \b5
+	.word	\tune
+.endm
