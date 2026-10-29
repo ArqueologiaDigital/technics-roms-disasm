@@ -8,17 +8,18 @@ the custom1/custom2/idd7000 floppies, inflated), or the KN6000/KN6500's (idd6000
 01CTMINI.AST).  Its format is in kn7000/notes/custom-data-ic21.md; the record macros are in
 kn7000/src/customdata/customdata.inc.
 
-What the source spells out, as records:
+What the source spells out, as records (macros of src/customdata/customdata.inc and the shared
+src/include/panel_memory.inc / voice_record.inc), one include file per record:
   * the directory (block 0): signature, the 20 slot descriptors, the 60-entry block map;
-  * every slot record and every complete stale record (a record in a free block that no
-    slot points at): its 0x100-byte header with symbolic offsets and sizes, the "TCMP"
-    container header, style record and 20 variation records, the "TPAD" container header,
-    bank record and six pad records, every stream header;
+  * every slot record and every complete stale record (a record in a free block that no slot
+    points at): its header with symbolic offsets and sizes, the four one-touch-setting panel
+    memories, the custom-sound block (header bytes, 128 voice references, 128 voice records),
+    the "TCMP" container (header, style record, 20 variation records with their part set-ups,
+    the event streams one event per line) and the "TPAD" container (header, bank, six pads,
+    their streams);
   * erased flash as `.space N, 0xff`.
-What stays an `.incbin_range` of the (git-ignored) reference, one labelled item each:
-  the one-touch-setting panel records, the variation and pad part blocks, the event
-  streams, the custom-sound block, and -- declared opaque -- the residue past a record's
-  end and the partial stale data in free blocks.
+Only the residue past a record's end and the partial stale data in free blocks stay
+`.incbin_range` of the (git-ignored) reference, declared opaque.
 
 Every item is checked here: the generator models each macro's bytes and compares them with
 the image, so a source it writes either rebuilds the image or the generator stops.
@@ -238,6 +239,51 @@ def parse_record(d, base, model):
     return size, deps, secs
 
 
+PM_PART_MASKS = [None, None, None, 0xFF, 0xDF, 0x03, 0xFF, 0xFF, 0xFF, 0x7F, 0xFF, 0x7F, 0x7F, 0x7F,
+                 0x7F, 0x7F, 0x7F, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x3F]
+MASK_MISS = []
+TAIL_OLD = []
+
+
+def masked(vals, masks, what):
+    for v, m in zip(vals, masks):
+        if m is not None and v & ~m:
+            MASK_MISS.append(what)
+    return ", ".join(f"{v:#04x}" for v in vals)
+
+
+def gen_ots(o, r, lab, i, model):
+    """One one-touch-setting panel memory (macros of src/include/panel_memory.inc)."""
+    o.emit(lab, "PM_PART " + masked(r[0:0x1A], PM_PART_MASKS, lab), r[0:0x1A], f"setting {i + 1}: part 0")
+    for k in (1, 2):
+        o.emit(None, "PM_PART " + masked(r[0x1A * k:0x1A * (k + 1)], PM_PART_MASKS, lab), r[0x1A * k:0x1A * (k + 1)],
+               f"part {k}")
+    o.emit(None, "PM_ENTRIES " + ", ".join(f"{x:#04x}" for x in r[0x4E:0x56]), r[0x4E:0x56])
+    o.emit(None, "PM_PART " + masked(r[0x56:0x70], PM_PART_MASKS, lab), r[0x56:0x70], "part 3")
+    st = r[0x70:0x77]
+    if st[1:3] != b"\x00\x20" or st[4] & 0xCF:
+        raise SystemExit(f"{lab}: +0x70 {st.hex()} does not fit PM_STYLE")
+    o.emit(None, f"PM_STYLE {st[0]}, {st[3]:#04x}, {st[4] >> 4}, {st[5]:#04x}, {st[6]:#04x}", st,
+           "the CUSTOM slot, the setting's number")
+    o.emit(None, "PM_SET77 " + masked(r[0x77:0x7A], [0x07, 0x01, 0xFF], lab), r[0x77:0x7A])
+    o.emit(None, "PM_FX " + masked(r[0x7A:0x88], [0x88] + [None] * 13, lab), r[0x7A:0x88])
+    o.emit(None, "PM_SET88 " + masked(r[0x88:0x8C], [0x04, 0xFF, 0x0F, 0xFF], lab), r[0x88:0x8C])
+    o.emit(None, "PM_SET8C " + ", ".join(f"{x:#04x}" for x in r[0x8C:0x8E]), r[0x8C:0x8E])
+    if model == "kn7000":
+        tails = [r[0x8F + 3 * k:0x92 + 3 * k] for k in range(4)]
+        if all(t[0] & ~0x07 == 0 for t in tails):
+            o.emit(None, f".byte {r[0x8E]:#04x}", r[0x8E:0x8F], "+0x8E: not written by func_4C02A0C4")
+            for k, t in enumerate(tails):
+                o.emit(None, "PM_PART_TAIL " + ", ".join(f"{x:#04x}" for x in t), t, f"part {k}")
+        else:
+            TAIL_OLD.append(lab)
+            o.bytes_run(r[0x8E:0x9B], "+0x8E..+0x9A: not what program 941 writes here (PM_PART_TAIL x4: its "
+                                      "p23 masks 0x07 do not hold), so an older writer's bytes")
+        o.emit(None, ".space 5, 0xff", r[0x9B:0xA0])
+    else:
+        o.emit(None, ".space 2, 0xff", r[0x8E:0x90])
+
+
 def gen_record(o, d, base, lab, model, place, slot_of, title):
     """Emit one slot record (or stale record) at image offset base, labelled lab."""
     size, deps, secs = parse_record(d, base, model)
@@ -273,7 +319,15 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
                 t = vb[0x27 + 3 * i:0x2A + 3 * i]
                 o.emit(None, f"VOICE_REF {t[0]:#04x}, {t[1]:#04x}, {t[2]:#04x}", t, f"voice {i}" if i % 16 == 0 else None)
             for i in range(128):
-                o.incbin(f"{lab}_Voice{i:03d}", 0x8E, "voice record (layout not decoded)")
+                v = vb[0x1A7 + 0x8E * i:0x1A7 + 0x8E * (i + 1)]
+                o.emit(f"{lab}_Voice{i:03d}", f"VOICE_HEAD {qstr(v[0:13])}, {v[13]:#04x}, {v[14]:#04x}, {v[15]:#04x}",
+                       v[0:16], f"voice {i}")
+                for k in range(2):
+                    b = v[0x10 + 0x1C * k:0x2C + 0x1C * k]
+                    o.emit(None, "VOICE_SUB " + ", ".join(f"{x:#04x}" for x in b), b, f"sub-record {k}")
+                for k in range(2):
+                    b = v[0x48 + 0x23 * k:0x6B + 0x23 * k]
+                    o.emit(None, "VOICE_ELEM " + ", ".join(f"{x:#04x}" for x in b), b, f"element {k}")
             continue
         o.incbin(f"{lab}_{DEP_NAME[k]}", cnt * DEP_STRIDE[k], f"{cnt} x {DEP_STRIDE[k]:#x}-byte records")
     # one touch settings
@@ -281,14 +335,7 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     o.w(f"{lab}_Ots:")
     for i in range(4):
         r = rec[secs[0][0] + i * ots:secs[0][0] + (i + 1) * ots]
-        if model == "kn7000":
-            o.incbin(f"{lab}_Ots{i + 1}", 0x70, f"one touch setting {i + 1}: panel memory (library format, "
-                     "written by func_4C02A0C4, sized by func_4C02AD02; fields not traced)")
-            o.emit(None, f".byte {r[0x70]}", r[0x70:0x71],
-                   "+0x70 its style's CUSTOM slot")
-            o.incbin(None, ots - 0x71, "panel memory +0x71..")
-        else:
-            o.incbin(f"{lab}_Ots{i + 1}", ots, f"one touch setting {i + 1}: panel memory (fields not traced)")
+        gen_ots(o, r, f"{lab}_Ots{i + 1}", i, model)
     o.w(f"{lab}_Ots_End:")
     # TCMP
     t0, tsz = secs[1]
@@ -377,6 +424,8 @@ def main():
     ap.add_argument("--model", choices=sorted(OTS_SIZE), required=True)
     ap.add_argument("--include", required=True)
     ap.add_argument("--title", action="append", default=[])
+    ap.add_argument("--shared", default="src/include",
+                    help="directory of panel_memory.inc / voice_record.inc as the source names it")
     ap.add_argument("--inc-dir", help="directory of the per-record include files, as the source names it"
                                       " and relative to the current directory (default: --out without .s)")
     a = ap.parse_args()
@@ -412,6 +461,8 @@ def main():
     o.w("# SHA-1 checked) from the softlist floppy's .AST file.")
     o.w()
     o.w(f'.include "{a.include}"')
+    o.w(f'.include "{a.shared}/panel_memory.inc"')
+    o.w(f'.include "{a.shared}/voice_record.inc"')
     o.w()
     # which block starts which slot
     slots = {}
@@ -474,7 +525,8 @@ def main():
     for f in sorted(os.listdir(inc_dir)):
         if f.endswith(".inc") and f not in written:
             os.remove(os.path.join(inc_dir, f))
-    print(f"wrote {a.out}: {len(o.lines)} lines")
+    print(f"wrote {a.out}: {len(o.lines)} lines; {len(MASK_MISS)} stored bytes outside their field mask, "
+          f"{len(TAIL_OLD)} settings without the 941 part tails")
 
 
 if __name__ == "__main__":

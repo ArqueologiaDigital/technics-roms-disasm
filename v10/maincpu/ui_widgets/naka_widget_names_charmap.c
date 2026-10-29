@@ -6361,7 +6361,7 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
 
     .field_5672 = 0x0003,
 
-    .NakaDbg_PanelSimBitmap = { 0x0160002C, 0x0000, 0xFFFF, 0x0002, 0xFFFF, 0x0008, { 6, 34, 312, 78 }, 0x00000001 },
+    .NakaDbg_PanelSimBitmap = { NAKA_CLASS(Bitmap), 0x0000, 0xFFFF, 0x0002, 0xFFFF, 0x0008, { 6, 34, 312, 78 }, 0x00000001 },
 
 };
 

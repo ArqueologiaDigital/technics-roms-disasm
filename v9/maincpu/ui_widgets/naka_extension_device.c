@@ -375,10 +375,6 @@ extern const char Toshi_NORMAL_Elem62;
 
 #define BASE  0x00ED67CCu
 
-/* NAKA class TtlScreen -- class id 0x01600034 (Class table slot 0x160, entry 52),
- * parent Screen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
 /* PanelInput_PedalRecordDefaults's element (scripts/converters/nakarest_reviewed_slices.py). */
 typedef struct __attribute__((packed)) {
     uint8_t event_index;
@@ -386,153 +382,6 @@ typedef struct __attribute__((packed)) {
     uint8_t prev_raw;
     uint8_t state;
 } PanelInput_PedalRecordDefaults_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_TtlScreen_t;
-
-/* NAKA class TextBox -- class id 0x01600036 (Class table slot 0x160, entry 54),
- * parent Box; allsize 40.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t text;              /* +26 X */
-    uint32_t font;              /* +30 c */
-    uint16_t fontcolor;         /* +34 ^ */
-    uint16_t alignment;         /* +36 d */
-    uint16_t lines;             /* +38 B */
-} naka_cls_TextBox_t;
-
-/* NAKA class Label -- class id 0x0160002B (Class table slot 0x160, entry 43),
- * parent Viewable; allsize 32.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t str;               /* +22 X */
-    uint32_t font;              /* +26 c */
-    uint16_t fontcolor;         /* +30 ^ */
-} naka_cls_Label_t;
-
-/* NAKA class IvPageControl -- class id 0x01600028 (Class table slot 0x160, entry 40),
- * parent PsInvisibleBox; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t page;              /* +22 A */
-    uint32_t window;            /* +24 t */
-} naka_cls_IvPageControl_t;
-
-/* NAKA class Window -- class id 0x01600035 (Class table slot 0x160, entry 53),
- * parent GroupBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t modal;             /* +26 G */
-    uint32_t parent;            /* +28 r */
-    uint32_t child;             /* +32 r */
-} naka_cls_Window_t;
-
-/* NAKA class SineWaveScreen -- class id 0x0162001A (Class table slot 0x162, entry 26),
- * parent Screen; allsize 52.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t func;              /* +34 k */
-    uint32_t font;              /* +38 c */
-    uint16_t fontcolor;         /* +42 ^ */
-    uint32_t nowswno;           /* +44 n */
-    uint32_t oldswno;           /* +48 n */
-} naka_cls_SineWaveScreen_t;
-
-/* NAKA class Frame -- class id 0x0160002F (Class table slot 0x160, entry 47),
- * parent Viewable; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t frame;             /* +22 h */
-    uint16_t width;             /* +24 A */
-    uint16_t color;             /* +26 ^ */
-} naka_cls_Frame_t;
-
-/* NAKA class IvScreen -- class id 0x0160006A (Class table slot 0x160, entry 106),
- * parent Screen; allsize 34.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-} naka_cls_IvScreen_t;
 
 /* Sound-parameter bank entries (6 bytes; a bank is 23 base + 16 masked entries = 234 bytes, address 0 =
  * unused).  The same types are defined in sound_config_lookup.c (the 25 ROM presets) and
@@ -1662,1565 +1511,1792 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_extension_device_t) == 14740,
     "naka_extension_device must be exactly 14740 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Toshi_Viewable_TEST1, registry slot 0xF4, 14 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 14, Toshi_Viewable_TEST1, 0xF4`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST1, OBJ_x). */
+#define Toshi_Viewable_TEST1_SLOT 0x0F4u
+enum Toshi_Viewable_TEST1_objects {
+    OBJ_vF4_e0,                             /*  0 TtlScreen, record in naka_ctrl_menu_body.c */
+    OBJ_TEST1RAM,                           /*  1 Window, record in naka_ctrl_menu_body.c */
+      OBJ_Caution_Label,                    /*  2 Label, record in naka_ctrl_menu_body.c */
+      OBJ_ErrorInBackUp_Label,              /*  3 Label, record in naka_ctrl_menu_body.c */
+      OBJ_PleaseTryTurningOff_Label,        /*  4 Label, record in naka_ctrl_menu_body.c */
+      OBJ_IfThisMessageAppears_Label,       /*  5 Label, record in naka_ctrl_menu_body.c */
+      OBJ_ThisUnitNeedsRepairing_Label,     /*  6 Label, record in naka_ctrl_menu_body.c */
+    OBJ_TEST1CP,                            /*  7 Window, record in naka_ctrl_menu_body.c */
+      OBJ_ErrorDialog_CautionHeader,        /*  8 Label, record outside the C sources (ErrorDialog_CautionHeader) */
+      OBJ_ErrorDialog_CPUTransmissionError, /*  9 Label, record outside the C sources (ErrorDialog_CPUTransmissionError) */
+      OBJ_ErrorDialog_RecoveryLine1,        /* 10 Label, record outside the C sources (ErrorDialog_RecoveryLine1) */
+      OBJ_ErrorDialog_RecoveryLine2,        /* 11 Label, record outside the C sources (ErrorDialog_RecoveryLine2) */
+      OBJ_ErrorDialog_RecoveryLine3,        /* 12 Label, record outside the C sources (ErrorDialog_RecoveryLine3) */
+    OBJ_vF4_e13,                            /* 13 TtlScreen */
+};
+
+/* Viewable table Toshi_Viewable_TEST2, registry slot 0xF5, 23 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 23, Toshi_Viewable_TEST2, 0xF5`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_x). */
+#define Toshi_Viewable_TEST2_SLOT 0x0F5u
+enum Toshi_Viewable_TEST2_objects {
+    OBJ_TEST2,                    /*  0 TtlScreen "TEST2" */
+      OBJ_TEST2_TextBox,          /*  1 TextBox */
+      OBJ_PanelCpuChecking_Label, /*  2 Label */
+      OBJ_ResultCpuOfCpr_Label,   /*  3 Label */
+      OBJ_CpuOfCpl_Label,         /*  4 Label */
+      OBJ_IfBothCpuAre_Label,     /*  5 Label */
+      OBJ_ItIsBetterTo_Label,     /*  6 Label */
+      OBJ_TEST2_IvPageControl,    /*  7 IvPageControl */
+      OBJ_TEST2_IvPageControl_2,  /*  8 IvPageControl */
+      OBJ_TEST2_IvPageControl_3,  /*  9 IvPageControl */
+      OBJ_TEST2_IvPageControl_4,  /* 10 IvPageControl */
+    OBJ_TEST2OKOK,                /* 11 Window "TEST2OKOK" */
+      OBJ_Ok_Label,               /* 12 Label */
+      OBJ_Ok_Label_2,             /* 13 Label */
+    OBJ_TEST2NGNG,                /* 14 Window "TEST2NGNG" */
+      OBJ_No_Label,               /* 15 Label */
+      OBJ_No_Label_2,             /* 16 Label */
+    OBJ_TEST2NGOK,                /* 17 Window "TEST2NGOK" */
+      OBJ_No_Label_3,             /* 18 Label */
+      OBJ_Ok_Label_3,             /* 19 Label */
+    OBJ_TEST2OKNG,                /* 20 Window "TEST2OKNG" */
+      OBJ_Ok_Label_4,             /* 21 Label */
+      OBJ_No_Label_4,             /* 22 Label */
+};
+
+/* Viewable table Toshi_Viewable_TEST3, registry slot 0xF6, 1 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 1, Toshi_Viewable_TEST3, 0xF6`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST3, OBJ_x). */
+#define Toshi_Viewable_TEST3_SLOT 0x0F6u
+enum Toshi_Viewable_TEST3_objects {
+    OBJ_TEST3, /*  0 SineWaveScreen "TEST3" */
+};
+
+/* Viewable table Toshi_Viewable_TEST4, registry slot 0xF7, 3 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 3, Toshi_Viewable_TEST4, 0xF7`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST4, OBJ_x). */
+#define Toshi_Viewable_TEST4_SLOT 0x0F7u
+enum Toshi_Viewable_TEST4_objects {
+    OBJ_TEST4,                   /*  0 TtlScreen "TEST4" */
+      OBJ_TEST4_TextBox,         /*  1 TextBox */
+      OBJ_PanelSwLedCheck_Label, /*  2 Label */
+};
+
+/* Viewable table Toshi_Viewable_TEST5, registry slot 0xF8, 67 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 67, Toshi_Viewable_TEST5, 0xF8`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_x). */
+#define Toshi_Viewable_TEST5_SLOT 0x0F8u
+enum Toshi_Viewable_TEST5_objects {
+    OBJ_TEST5,                           /*  0 TtlScreen "TEST5" */
+      OBJ_TEST5_IvPageControl,           /*  1 IvPageControl */
+      OBJ_TEST5_IvPageControl_2,         /*  2 IvPageControl */
+      OBJ_TEST5_IvPageControl_3,         /*  3 IvPageControl */
+      OBJ_TEST5_IvPageControl_4,         /*  4 IvPageControl */
+      OBJ_TEST5_IvPageControl_5,         /*  5 IvPageControl */
+    OBJ_TEST51,                          /*  6 Window "TEST51" */
+      OBJ_LcdPanelTest_Label,            /*  7 Label */
+    OBJ_TEST52,                          /*  8 Window "TEST52" */
+      OBJ_LcdPanelTest_Label_2,          /*  9 Label */
+    OBJ_TEST53,                          /* 10 Window "TEST53" */
+      OBJ_LcdPanelTest_Label_3,          /* 11 Label */
+    OBJ_TEST54,                          /* 12 Window "TEST54" */
+      OBJ_LcdPanelTest_Label_4,          /* 13 Label */
+    OBJ_TEST55,                          /* 14 Window "TEST55" */
+      OBJ_LcdPanelTest_Label_5,          /* 15 Label */
+    OBJ_TEST56,                          /* 16 Window "TEST56" */
+      OBJ_TEST56_Frame,                  /* 17 Frame */
+        OBJ_H_Label,                     /* 18 Label */
+        OBJ_H_Label_2,                   /* 19 Label */
+          OBJ_Hhhhhhh_Label,             /* 20 Label */
+            OBJ_H_Label_3,               /* 21 Label */
+              OBJ_H_Label_4,             /* 22 Label */
+          OBJ_H_Label_5,                 /* 23 Label */
+        OBJ_H_Label_6,                   /* 24 Label */
+        OBJ_H_Label_7,                   /* 25 Label */
+        OBJ_H_Label_8,                   /* 26 Label */
+      OBJ_TEST56_Frame_2,                /* 27 Frame */
+        OBJ_H_Label_9,                   /* 28 Label */
+        OBJ_H_Label_10,                  /* 29 Label */
+          OBJ_Hhhhhhh_Label_2,           /* 30 Label */
+            OBJ_H_Label_11,              /* 31 Label */
+              OBJ_H_Label_12,            /* 32 Label */
+          OBJ_H_Label_13,                /* 33 Label */
+        OBJ_H_Label_14,                  /* 34 Label */
+        OBJ_H_Label_15,                  /* 35 Label */
+        OBJ_H_Label_16,                  /* 36 Label */
+      OBJ_TEST56_Frame_3,                /* 37 Frame */
+        OBJ_H_Label_17,                  /* 38 Label */
+        OBJ_H_Label_18,                  /* 39 Label */
+          OBJ_Hhhhhhh_Label_3,           /* 40 Label */
+            OBJ_H_Label_19,              /* 41 Label */
+              OBJ_H_Label_20,            /* 42 Label */
+          OBJ_H_Label_21,                /* 43 Label */
+        OBJ_H_Label_22,                  /* 44 Label */
+        OBJ_H_Label_23,                  /* 45 Label */
+        OBJ_H_Label_24,                  /* 46 Label */
+      OBJ_TEST56_Frame_4,                /* 47 Frame */
+        OBJ_H_Label_25,                  /* 48 Label */
+        OBJ_H_Label_26,                  /* 49 Label */
+          OBJ_Hhhhhhh_Label_4,           /* 50 Label */
+            OBJ_H_Label_27,              /* 51 Label */
+              OBJ_H_Label_28,            /* 52 Label */
+          OBJ_H_Label_29,                /* 53 Label */
+        OBJ_H_Label_30,                  /* 54 Label */
+        OBJ_H_Label_31,                  /* 55 Label */
+        OBJ_H_Label_32,                  /* 56 Label */
+      OBJ_TEST56_Frame_5,                /* 57 Frame */
+        OBJ_H_Label_33,                  /* 58 Label */
+        OBJ_H_Label_34,                  /* 59 Label */
+          OBJ_Hhhhhhh_Label_5,           /* 60 Label */
+            OBJ_H_Label_35,              /* 61 Label */
+              OBJ_H_Label_36,            /* 62 Label */
+          OBJ_H_Label_37,                /* 63 Label */
+        OBJ_H_Label_38,                  /* 64 Label */
+        OBJ_H_Label_39,                  /* 65 Label */
+        OBJ_H_Label_40,                  /* 66 Label */
+};
+
+/* Viewable table Toshi_Viewable_TEST6, registry slot 0xF9, 9 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 9, Toshi_Viewable_TEST6, 0xF9`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_TEST6, OBJ_x). */
+#define Toshi_Viewable_TEST6_SLOT 0x0F9u
+enum Toshi_Viewable_TEST6_objects {
+    OBJ_TEST6,                           /*  0 TtlScreen "TEST6" */
+      OBJ_PeripheralDeviceCheck_Label,   /*  1 Label */
+      OBJ_FloppyDiskControllerFdc_Label, /*  2 Label */
+      OBJ_TEST6_IvPageControl,           /*  3 IvPageControl */
+      OBJ_TEST6_IvPageControl_2,         /*  4 IvPageControl */
+    OBJ_TEST6OK,                         /*  5 Window "TEST6OK" */
+      OBJ_MayBeOk_Label,                 /*  6 Label */
+    OBJ_TEST6NG,                         /*  7 Window "TEST6NG" */
+      OBJ_No_Label_5,                    /*  8 Label */
+};
+
+/* Viewable table Toshi_Viewable_EXT, registry slot 0xFB, 1 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 1, Toshi_Viewable_EXT, 0xFB`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_EXT, OBJ_x). */
+#define Toshi_Viewable_EXT_SLOT 0x0FBu
+enum Toshi_Viewable_EXT_objects {
+    OBJ_EXT, /*  0 IvScreen "EXT" */
+};
+
 const naka_extension_device_t naka_extension_device_data
     __attribute__((section(".text"), used)) = {
 
     .vF4_e13 = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F642,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_vF4_e13_Window,
         .title = SELF(w0_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w0_text = ALIGNED_STRING(""),
 
+    /* ==== SCREEN TITLE_TEST2 -- "TT_TEST2", title id 0xF5, function NAKA_MAINFUNC_TEST2FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST2 = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_TEST2_TextBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F646,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_TEST2_Window,
         .title = SELF(w1_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w1_text = ALIGNED_STRING(""),
 
     .TEST2_TextBox = {
-        .class_ = 0x01600036,
-        .super = 0,
+        .class_ = NAKA_CLASS(TextBox),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_PanelCpuChecking_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 64, 319, 119 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 64, 320, 56),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .text = SELF(vF5_e1_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FB,
-        .alignment = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_Yellow,
+        .alignment = AL_Center,
         .lines = 0x0003,
     },
 
     .vF5_e1_text = ALIGNED_STRING("Please check by the LED of test port. (PANEL CPU:                            OK=Lit SHORT, NO=Lit LONG) "),
 
     .PanelCpuChecking_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 58, 26, 259, 44 },
+        .next = OBJ_ResultCpuOfCpr_Label,
+        .prev = OBJ_TEST2_TextBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(58, 26, 202, 19),
         .str = SELF(PanelCpuChecking_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .PanelCpuChecking_text = ALIGNED_STRING("PANEL CPU CHECKING"),
 
     .ResultCpuOfCpr_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 42, 138, 205, 156 },
+        .next = OBJ_CpuOfCpl_Label,
+        .prev = OBJ_PanelCpuChecking_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 138, 164, 19),
         .str = SELF(ResultCpuOfCpr_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .ResultCpuOfCpr_text = ALIGNED_STRING("RESULT: CPU of CPR ="),
 
     .CpuOfCpl_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 106, 158, 205, 176 },
+        .next = OBJ_IfBothCpuAre_Label,
+        .prev = OBJ_ResultCpuOfCpr_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(106, 158, 100, 19),
         .str = SELF(CpuOfCpl_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .CpuOfCpl_text = ALIGNED_STRING("CPU of CPL ="),
 
     .IfBothCpuAre_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 14, 190, 169, 208 },
+        .next = OBJ_ItIsBetterTo_Label,
+        .prev = OBJ_CpuOfCpl_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(14, 190, 156, 19),
         .str = SELF(IfBothCpuAre_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .IfBothCpuAre_text = "If both CPU are NO,",
 
     .ItIsBetterTo_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 7,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 14, 206, 307, 224 },
+        .next = OBJ_TEST2_IvPageControl,
+        .prev = OBJ_IfBothCpuAre_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(14, 206, 294, 19),
         .str = SELF(ItIsBetterTo_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .ItIsBetterTo_text = "it is better to check the MAIN PCB.",
 
     .TEST2_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST2_IvPageControl_2,
+        .prev = OBJ_ItIsBetterTo_Label,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F5000B,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2OKOK),
     },
 
     .TEST2_IvPageControl_2 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 7,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST2_IvPageControl_3,
+        .prev = OBJ_TEST2_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F5000E,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2NGNG),
     },
 
     .TEST2_IvPageControl_3 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST2_IvPageControl_4,
+        .prev = OBJ_TEST2_IvPageControl_2,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00F50011,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2NGOK),
     },
 
     .TEST2_IvPageControl_4 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 9,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_TEST2_IvPageControl_3,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00F50014,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2OKNG),
     },
 
+    /* ==== VIEW OBJ_TEST2OKOK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2OKOK = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 12,
+        .sub = OBJ_Ok_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 212, 132, 259, 183 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(212, 132, 48, 52),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F64A,
-        .child = 0x0003F64E,
+        .parent = RAM_TEST2OKOK_Parent,
+        .child = RAM_TEST2OKOK_Child,
     },
 
     .Ok_Label = {
-        .class_ = 0x0160002B,
-        .super = 11,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2OKOK,
         .sub = NAKA_NONE,
-        .next = 13,
+        .next = OBJ_Ok_Label_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 214, 138, 233, 156 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 138, 20, 19),
         .str = SELF(Ok_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FA,
+        .font = idCHARA1,
+        .fontcolor = CL_Lime,
     },
 
     .Ok_text = ALIGNED_STRING("OK"),
 
     .Ok_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 11,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2OKOK,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 214, 158, 233, 176 },
+        .prev = OBJ_Ok_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 158, 20, 19),
         .str = SELF(Ok_text_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00FA,
+        .font = idCHARA1,
+        .fontcolor = CL_Lime,
     },
 
     .Ok_text_2 = ALIGNED_STRING("OK"),
 
+    /* ==== VIEW OBJ_TEST2NGNG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2NGNG = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 15,
+        .sub = OBJ_No_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 212, 132, 259, 183 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(212, 132, 48, 52),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F652,
-        .child = 0x0003F656,
+        .parent = RAM_TEST2NGNG_Parent,
+        .child = RAM_TEST2NGNG_Child,
     },
 
     .No_Label = {
-        .class_ = 0x0160002B,
-        .super = 14,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2NGNG,
         .sub = NAKA_NONE,
-        .next = 16,
+        .next = OBJ_No_Label_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 214, 138, 233, 156 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 138, 20, 19),
         .str = SELF(No_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00F9,
+        .font = idCHARA1,
+        .fontcolor = CL_Red,
     },
 
     .No_text = ALIGNED_STRING("NO"),
 
     .No_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 14,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2NGNG,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 214, 158, 233, 176 },
+        .prev = OBJ_No_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 158, 20, 19),
         .str = SELF(No_text_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00F9,
+        .font = idCHARA1,
+        .fontcolor = CL_Red,
     },
 
     .No_text_2 = ALIGNED_STRING("NO"),
 
+    /* ==== VIEW OBJ_TEST2NGOK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2NGOK = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 18,
+        .sub = OBJ_No_Label_3,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 212, 132, 259, 183 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(212, 132, 48, 52),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F65A,
-        .child = 0x0003F65E,
+        .parent = RAM_TEST2NGOK_Parent,
+        .child = RAM_TEST2NGOK_Child,
     },
 
     .No_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2NGOK,
         .sub = NAKA_NONE,
-        .next = 19,
+        .next = OBJ_Ok_Label_3,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 214, 138, 233, 156 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 138, 20, 19),
         .str = SELF(No_text_3),
-        .font = 0x00000000,
-        .fontcolor = 0x00F9,
+        .font = idCHARA1,
+        .fontcolor = CL_Red,
     },
 
     .No_text_3 = ALIGNED_STRING("NO"),
 
     .Ok_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2NGOK,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 214, 158, 233, 176 },
+        .prev = OBJ_No_Label_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 158, 20, 19),
         .str = SELF(Ok_text_3),
-        .font = 0x00000000,
-        .fontcolor = 0x00FA,
+        .font = idCHARA1,
+        .fontcolor = CL_Lime,
     },
 
     .Ok_text_3 = ALIGNED_STRING("OK"),
 
+    /* ==== VIEW OBJ_TEST2OKNG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2OKNG = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 21,
+        .sub = OBJ_Ok_Label_4,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 212, 132, 259, 183 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(212, 132, 48, 52),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F662,
-        .child = 0x0003F666,
+        .parent = RAM_TEST2OKNG_Parent,
+        .child = RAM_TEST2OKNG_Child,
     },
 
     .Ok_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 20,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2OKNG,
         .sub = NAKA_NONE,
-        .next = 22,
+        .next = OBJ_No_Label_4,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 214, 138, 233, 156 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 138, 20, 19),
         .str = SELF(Ok_text_4),
-        .font = 0x00000000,
-        .fontcolor = 0x00FA,
+        .font = idCHARA1,
+        .fontcolor = CL_Lime,
     },
 
     .Ok_text_4 = ALIGNED_STRING("OK"),
 
     .No_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 20,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST2OKNG,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 21,
-        .flag = 0x0008,
-        .rect = { 214, 158, 233, 176 },
+        .prev = OBJ_Ok_Label_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(214, 158, 20, 19),
         .str = SELF(No_text_4),
-        .font = 0x00000000,
-        .fontcolor = 0x00F9,
+        .font = idCHARA1,
+        .fontcolor = CL_Red,
     },
 
     .No_text_4 = ALIGNED_STRING("NO"),
 
+    /* ==== SCREEN TITLE_TEST3 -- "TT_TEST3", title id 0xF6, function NAKA_MAINFUNC_TEST3FUNC ====
+     * What: a self-test screen. While it is up, some panel handlers stand down and one is active
+     *       only there.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST3 = {
-        .class_ = 0x0162001A,
+        .class_ = NAKA_CLASS(SineWaveScreen),
         .super = NAKA_NONE,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F66A,
-        .func = 0x01200000,
-        .font = 0x00000000,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_TEST3_Window,
+        .func = NAKA_APFUNC_DefaultFunction,
+        .font = idCHARA1,
         .fontcolor = 0x0043,
-        .nowswno = 0x0003F66E,
-        .oldswno = 0x0003F670,
+        .nowswno = RAM_TEST3_Nowswno,
+        .oldswno = RAM_TEST3_Oldswno,
     },
 
+    /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST4 = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_TEST4_TextBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F672,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_TEST4_Window,
         .title = SELF(w15_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w15_text = ALIGNED_STRING(""),
 
     .TEST4_TextBox = {
-        .class_ = 0x01600036,
-        .super = 0,
+        .class_ = NAKA_CLASS(TextBox),
+        .super = OBJ_TEST4,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_PanelSwLedCheck_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 84, 311, 199 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 84, 268, 116),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .text = SELF(vF7_e1_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FB,
-        .alignment = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_Yellow,
+        .alignment = AL_LeftJustify,
         .lines = 0x0004,
     },
 
     .vF7_e1_text = ALIGNED_STRING("After all LEDs ON and OFF,  Please push any button.         If LED near the button turn ON/OFF,it is working OK."),
 
     .PanelSwLedCheck_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST4,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 54, 42, 255, 60 },
+        .prev = OBJ_TEST4_TextBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(54, 42, 202, 19),
         .str = SELF(PanelSwLedCheck_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .PanelSwLedCheck_text = ALIGNED_STRING("PANEL SW&LED CHECK"),
 
+    /* ==== SCREEN TITLE_TEST5 -- "TT_TEST5", title id 0xF8, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST5 = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_TEST5_IvPageControl,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F676,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_TEST5_Window,
         .title = SELF(w17_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w17_text = ALIGNED_STRING(""),
 
     .TEST5_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST5,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_TEST5_IvPageControl_2,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F80006,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST51),
     },
 
     .TEST5_IvPageControl_2 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST5,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST5_IvPageControl_3,
+        .prev = OBJ_TEST5_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F80008,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST52),
     },
 
     .TEST5_IvPageControl_3 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST5,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST5_IvPageControl_4,
+        .prev = OBJ_TEST5_IvPageControl_2,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00F8000A,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST53),
     },
 
     .TEST5_IvPageControl_4 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST5,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST5_IvPageControl_5,
+        .prev = OBJ_TEST5_IvPageControl_3,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00F8000C,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST54),
     },
 
     .TEST5_IvPageControl_5 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST5,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_TEST5_IvPageControl_4,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0005,
-        .window = 0x00F8000E,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST55),
     },
 
+    /* ==== VIEW OBJ_TEST51: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST51 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 7,
+        .sub = OBJ_LcdPanelTest_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F67A,
-        .child = 0x0003F67E,
+        .parent = RAM_TEST51_Parent,
+        .child = RAM_TEST51_Child,
     },
 
     .LcdPanelTest_Label = {
-        .class_ = 0x0160002B,
-        .super = 6,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST51,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 42, 110, 269, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 110, 228, 19),
         .str = SELF(LcdPanelTest_text),
-        .font = 0x00000002,
-        .fontcolor = 0x00FF,
+        .font = idCHARA3,
+        .fontcolor = CL_White,
     },
 
     .LcdPanelTest_text = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST52: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST52 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 9,
+        .sub = OBJ_LcdPanelTest_Label_2,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F682,
-        .child = 0x0003F686,
+        .parent = RAM_TEST52_Parent,
+        .child = RAM_TEST52_Child,
     },
 
     .LcdPanelTest_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 8,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST52,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 42, 110, 269, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 110, 228, 19),
         .str = SELF(LcdPanelTest_text_2),
-        .font = 0x00000002,
-        .fontcolor = 0x00FF,
+        .font = idCHARA3,
+        .fontcolor = CL_White,
     },
 
     .LcdPanelTest_text_2 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST53: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST53 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 11,
+        .sub = OBJ_LcdPanelTest_Label_3,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x0002,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Green,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F68A,
-        .child = 0x0003F68E,
+        .parent = RAM_TEST53_Parent,
+        .child = RAM_TEST53_Child,
     },
 
     .LcdPanelTest_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 10,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST53,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 42, 110, 269, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 110, 228, 19),
         .str = SELF(LcdPanelTest_text_3),
-        .font = 0x00000002,
-        .fontcolor = 0x00FF,
+        .font = idCHARA3,
+        .fontcolor = CL_White,
     },
 
     .LcdPanelTest_text_3 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST54: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST54 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 13,
+        .sub = OBJ_LcdPanelTest_Label_4,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F692,
-        .child = 0x0003F696,
+        .parent = RAM_TEST54_Parent,
+        .child = RAM_TEST54_Child,
     },
 
     .LcdPanelTest_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 12,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST54,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 42, 110, 269, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 110, 228, 19),
         .str = SELF(LcdPanelTest_text_4),
-        .font = 0x00000002,
-        .fontcolor = 0x0000,
+        .font = idCHARA3,
+        .fontcolor = CL_Black,
     },
 
     .LcdPanelTest_text_4 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST55: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST55 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 15,
+        .sub = OBJ_LcdPanelTest_Label_5,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x0000,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Black,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F69A,
-        .child = 0x0003F69E,
+        .parent = RAM_TEST55_Parent,
+        .child = RAM_TEST55_Child,
     },
 
     .LcdPanelTest_Label_5 = {
-        .class_ = 0x0160002B,
-        .super = 14,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST55,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 42, 110, 269, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(42, 110, 228, 19),
         .str = SELF(LcdPanelTest_text_5),
-        .font = 0x00000002,
-        .fontcolor = 0x00FF,
+        .font = idCHARA3,
+        .fontcolor = CL_White,
     },
 
     .LcdPanelTest_text_5 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST56: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST56 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 17,
+        .sub = OBJ_TEST56_Frame,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x0000,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Black,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6A2,
-        .child = 0x0003F6A6,
+        .parent = RAM_TEST56_Parent,
+        .child = RAM_TEST56_Child,
     },
 
     .TEST56_Frame = {
-        .class_ = 0x0160002F,
-        .super = 16,
-        .sub = 18,
-        .next = 27,
+        .class_ = NAKA_CLASS(Frame),
+        .super = OBJ_TEST56,
+        .sub = OBJ_H_Label,
+        .next = OBJ_TEST56_Frame_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 3, 3, 82, 82 },
-        .frame = 0x0001,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(3, 3, 80, 80),
+        .frame = FR_Single,
         .width = 0x0003,
-        .color = 0x00FF,
+        .color = CL_White,
     },
 
     .H_Label = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame,
         .sub = NAKA_NONE,
-        .next = 19,
+        .next = OBJ_H_Label_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 13, 11, 24, 29 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 11, 12, 19),
         .str = SELF(H_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text = "H",
 
     .H_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 17,
-        .sub = 20,
-        .next = 24,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 13, 47, 24, 65 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame,
+        .sub = OBJ_Hhhhhhh_Label,
+        .next = OBJ_H_Label_6,
+        .prev = OBJ_H_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 47, 12, 19),
         .str = SELF(H_text_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_2 = "H",
 
     .Hhhhhhh_Label = {
-        .class_ = 0x0160002B,
-        .super = 19,
-        .sub = 21,
-        .next = 23,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_2,
+        .sub = OBJ_H_Label_3,
+        .next = OBJ_H_Label_5,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 13, 35, 72, 53 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 35, 60, 19),
         .str = SELF(Hhhhhhh_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hhhhhhh_text = "HHHHHHH",
 
     .H_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 20,
-        .sub = 22,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Hhhhhhh_Label,
+        .sub = OBJ_H_Label_4,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 61, 47, 72, 65 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 47, 12, 19),
         .str = SELF(H_text_3),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_3 = "H",
 
     .H_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 21,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_3,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 61, 59, 72, 77 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 59, 12, 19),
         .str = SELF(H_text_4),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_4 = "H",
 
     .H_Label_5 = {
-        .class_ = 0x0160002B,
-        .super = 19,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 13, 59, 24, 77 },
+        .prev = OBJ_Hhhhhhh_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 59, 12, 19),
         .str = SELF(H_text_5),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_5 = "H",
 
     .H_Label_6 = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame,
         .sub = NAKA_NONE,
-        .next = 25,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 61, 11, 72, 29 },
+        .next = OBJ_H_Label_7,
+        .prev = OBJ_H_Label_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 11, 12, 19),
         .str = SELF(H_text_6),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_6 = "H",
 
     .H_Label_7 = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 13, 23, 24, 41 },
+        .next = OBJ_H_Label_8,
+        .prev = OBJ_H_Label_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 23, 12, 19),
         .str = SELF(H_text_7),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_7 = "H",
 
     .H_Label_8 = {
-        .class_ = 0x0160002B,
-        .super = 17,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 61, 23, 72, 41 },
+        .prev = OBJ_H_Label_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 23, 12, 19),
         .str = SELF(H_text_8),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_8 = "H",
 
     .TEST56_Frame_2 = {
-        .class_ = 0x0160002F,
-        .super = 16,
-        .sub = 28,
-        .next = 37,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 3, 157, 82, 236 },
-        .frame = 0x0001,
+        .class_ = NAKA_CLASS(Frame),
+        .super = OBJ_TEST56,
+        .sub = OBJ_H_Label_9,
+        .next = OBJ_TEST56_Frame_3,
+        .prev = OBJ_TEST56_Frame,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(3, 157, 80, 80),
+        .frame = FR_Single,
         .width = 0x0003,
-        .color = 0x00FF,
+        .color = CL_White,
     },
 
     .H_Label_9 = {
-        .class_ = 0x0160002B,
-        .super = 27,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_2,
         .sub = NAKA_NONE,
-        .next = 29,
+        .next = OBJ_H_Label_10,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 13, 167, 24, 185 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 167, 12, 19),
         .str = SELF(H_text_9),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_9 = "H",
 
     .H_Label_10 = {
-        .class_ = 0x0160002B,
-        .super = 27,
-        .sub = 30,
-        .next = 34,
-        .prev = 28,
-        .flag = 0x0008,
-        .rect = { 13, 203, 24, 221 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_2,
+        .sub = OBJ_Hhhhhhh_Label_2,
+        .next = OBJ_H_Label_14,
+        .prev = OBJ_H_Label_9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 203, 12, 19),
         .str = SELF(H_text_10),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_10 = "H",
 
     .Hhhhhhh_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 29,
-        .sub = 31,
-        .next = 33,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_10,
+        .sub = OBJ_H_Label_11,
+        .next = OBJ_H_Label_13,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 13, 191, 72, 209 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 191, 60, 19),
         .str = SELF(Hhhhhhh_text_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hhhhhhh_text_2 = "HHHHHHH",
 
     .H_Label_11 = {
-        .class_ = 0x0160002B,
-        .super = 30,
-        .sub = 32,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Hhhhhhh_Label_2,
+        .sub = OBJ_H_Label_12,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 61, 203, 72, 221 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 203, 12, 19),
         .str = SELF(H_text_11),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_11 = "H",
 
     .H_Label_12 = {
-        .class_ = 0x0160002B,
-        .super = 31,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_11,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 61, 215, 72, 233 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 215, 12, 19),
         .str = SELF(H_text_12),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_12 = "H",
 
     .H_Label_13 = {
-        .class_ = 0x0160002B,
-        .super = 29,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_10,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 30,
-        .flag = 0x0008,
-        .rect = { 13, 215, 24, 233 },
+        .prev = OBJ_Hhhhhhh_Label_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 215, 12, 19),
         .str = SELF(H_text_13),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_13 = "H",
 
     .H_Label_14 = {
-        .class_ = 0x0160002B,
-        .super = 27,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_2,
         .sub = NAKA_NONE,
-        .next = 35,
-        .prev = 29,
-        .flag = 0x0008,
-        .rect = { 61, 167, 72, 185 },
+        .next = OBJ_H_Label_15,
+        .prev = OBJ_H_Label_10,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 167, 12, 19),
         .str = SELF(H_text_14),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_14 = "H",
 
     .H_Label_15 = {
-        .class_ = 0x0160002B,
-        .super = 27,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_2,
         .sub = NAKA_NONE,
-        .next = 36,
-        .prev = 34,
-        .flag = 0x0008,
-        .rect = { 13, 179, 24, 197 },
+        .next = OBJ_H_Label_16,
+        .prev = OBJ_H_Label_14,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(13, 179, 12, 19),
         .str = SELF(H_text_15),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_15 = "H",
 
     .H_Label_16 = {
-        .class_ = 0x0160002B,
-        .super = 27,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 35,
-        .flag = 0x0008,
-        .rect = { 61, 179, 72, 197 },
+        .prev = OBJ_H_Label_15,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(61, 179, 12, 19),
         .str = SELF(H_text_16),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_16 = "H",
 
     .TEST56_Frame_3 = {
-        .class_ = 0x0160002F,
-        .super = 16,
-        .sub = 38,
-        .next = 47,
-        .prev = 27,
-        .flag = 0x0008,
-        .rect = { 237, 3, 316, 82 },
-        .frame = 0x0001,
+        .class_ = NAKA_CLASS(Frame),
+        .super = OBJ_TEST56,
+        .sub = OBJ_H_Label_17,
+        .next = OBJ_TEST56_Frame_4,
+        .prev = OBJ_TEST56_Frame_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(237, 3, 80, 80),
+        .frame = FR_Single,
         .width = 0x0003,
-        .color = 0x00FF,
+        .color = CL_White,
     },
 
     .H_Label_17 = {
-        .class_ = 0x0160002B,
-        .super = 37,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_3,
         .sub = NAKA_NONE,
-        .next = 39,
+        .next = OBJ_H_Label_18,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 247, 11, 258, 29 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 11, 12, 19),
         .str = SELF(H_text_17),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_17 = "H",
 
     .H_Label_18 = {
-        .class_ = 0x0160002B,
-        .super = 37,
-        .sub = 40,
-        .next = 44,
-        .prev = 38,
-        .flag = 0x0008,
-        .rect = { 247, 47, 258, 65 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_3,
+        .sub = OBJ_Hhhhhhh_Label_3,
+        .next = OBJ_H_Label_22,
+        .prev = OBJ_H_Label_17,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 47, 12, 19),
         .str = SELF(H_text_18),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_18 = "H",
 
     .Hhhhhhh_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 39,
-        .sub = 41,
-        .next = 43,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_18,
+        .sub = OBJ_H_Label_19,
+        .next = OBJ_H_Label_21,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 247, 35, 306, 53 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 35, 60, 19),
         .str = SELF(Hhhhhhh_text_3),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hhhhhhh_text_3 = "HHHHHHH",
 
     .H_Label_19 = {
-        .class_ = 0x0160002B,
-        .super = 40,
-        .sub = 42,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Hhhhhhh_Label_3,
+        .sub = OBJ_H_Label_20,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 295, 47, 306, 65 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 47, 12, 19),
         .str = SELF(H_text_19),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_19 = "H",
 
     .H_Label_20 = {
-        .class_ = 0x0160002B,
-        .super = 41,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_19,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 295, 59, 306, 77 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 59, 12, 19),
         .str = SELF(H_text_20),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_20 = "H",
 
     .H_Label_21 = {
-        .class_ = 0x0160002B,
-        .super = 39,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_18,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 40,
-        .flag = 0x0008,
-        .rect = { 247, 59, 258, 77 },
+        .prev = OBJ_Hhhhhhh_Label_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 59, 12, 19),
         .str = SELF(H_text_21),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_21 = "H",
 
     .H_Label_22 = {
-        .class_ = 0x0160002B,
-        .super = 37,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_3,
         .sub = NAKA_NONE,
-        .next = 45,
-        .prev = 39,
-        .flag = 0x0008,
-        .rect = { 295, 11, 306, 29 },
+        .next = OBJ_H_Label_23,
+        .prev = OBJ_H_Label_18,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 11, 12, 19),
         .str = SELF(H_text_22),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_22 = "H",
 
     .H_Label_23 = {
-        .class_ = 0x0160002B,
-        .super = 37,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_3,
         .sub = NAKA_NONE,
-        .next = 46,
-        .prev = 44,
-        .flag = 0x0008,
-        .rect = { 247, 23, 258, 41 },
+        .next = OBJ_H_Label_24,
+        .prev = OBJ_H_Label_22,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 23, 12, 19),
         .str = SELF(H_text_23),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_23 = "H",
 
     .H_Label_24 = {
-        .class_ = 0x0160002B,
-        .super = 37,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_3,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 45,
-        .flag = 0x0008,
-        .rect = { 295, 23, 306, 41 },
+        .prev = OBJ_H_Label_23,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 23, 12, 19),
         .str = SELF(H_text_24),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_24 = "H",
 
     .TEST56_Frame_4 = {
-        .class_ = 0x0160002F,
-        .super = 16,
-        .sub = 48,
-        .next = 57,
-        .prev = 37,
-        .flag = 0x0008,
-        .rect = { 237, 157, 316, 236 },
-        .frame = 0x0001,
+        .class_ = NAKA_CLASS(Frame),
+        .super = OBJ_TEST56,
+        .sub = OBJ_H_Label_25,
+        .next = OBJ_TEST56_Frame_5,
+        .prev = OBJ_TEST56_Frame_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(237, 157, 80, 80),
+        .frame = FR_Single,
         .width = 0x0003,
-        .color = 0x00FF,
+        .color = CL_White,
     },
 
     .H_Label_25 = {
-        .class_ = 0x0160002B,
-        .super = 47,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_4,
         .sub = NAKA_NONE,
-        .next = 49,
+        .next = OBJ_H_Label_26,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 247, 167, 258, 185 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 167, 12, 19),
         .str = SELF(H_text_25),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_25 = "H",
 
     .H_Label_26 = {
-        .class_ = 0x0160002B,
-        .super = 47,
-        .sub = 50,
-        .next = 54,
-        .prev = 48,
-        .flag = 0x0008,
-        .rect = { 247, 203, 258, 221 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_4,
+        .sub = OBJ_Hhhhhhh_Label_4,
+        .next = OBJ_H_Label_30,
+        .prev = OBJ_H_Label_25,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 203, 12, 19),
         .str = SELF(H_text_26),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_26 = "H",
 
     .Hhhhhhh_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 49,
-        .sub = 51,
-        .next = 53,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_26,
+        .sub = OBJ_H_Label_27,
+        .next = OBJ_H_Label_29,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 247, 191, 306, 209 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 191, 60, 19),
         .str = SELF(Hhhhhhh_text_4),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hhhhhhh_text_4 = "HHHHHHH",
 
     .H_Label_27 = {
-        .class_ = 0x0160002B,
-        .super = 50,
-        .sub = 52,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Hhhhhhh_Label_4,
+        .sub = OBJ_H_Label_28,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 295, 203, 306, 221 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 203, 12, 19),
         .str = SELF(H_text_27),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_27 = "H",
 
     .H_Label_28 = {
-        .class_ = 0x0160002B,
-        .super = 51,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_27,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 295, 215, 306, 233 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 215, 12, 19),
         .str = SELF(H_text_28),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_28 = "H",
 
     .H_Label_29 = {
-        .class_ = 0x0160002B,
-        .super = 49,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_26,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 50,
-        .flag = 0x0008,
-        .rect = { 247, 215, 258, 233 },
+        .prev = OBJ_Hhhhhhh_Label_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 215, 12, 19),
         .str = SELF(H_text_29),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_29 = "H",
 
     .H_Label_30 = {
-        .class_ = 0x0160002B,
-        .super = 47,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_4,
         .sub = NAKA_NONE,
-        .next = 55,
-        .prev = 49,
-        .flag = 0x0008,
-        .rect = { 295, 167, 306, 185 },
+        .next = OBJ_H_Label_31,
+        .prev = OBJ_H_Label_26,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 167, 12, 19),
         .str = SELF(H_text_30),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_30 = "H",
 
     .H_Label_31 = {
-        .class_ = 0x0160002B,
-        .super = 47,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_4,
         .sub = NAKA_NONE,
-        .next = 56,
-        .prev = 54,
-        .flag = 0x0008,
-        .rect = { 247, 179, 258, 197 },
+        .next = OBJ_H_Label_32,
+        .prev = OBJ_H_Label_30,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(247, 179, 12, 19),
         .str = SELF(H_text_31),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_31 = "H",
 
     .H_Label_32 = {
-        .class_ = 0x0160002B,
-        .super = 47,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_4,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 55,
-        .flag = 0x0008,
-        .rect = { 295, 179, 306, 197 },
+        .prev = OBJ_H_Label_31,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 179, 12, 19),
         .str = SELF(H_text_32),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_32 = "H",
 
     .TEST56_Frame_5 = {
-        .class_ = 0x0160002F,
-        .super = 16,
-        .sub = 58,
+        .class_ = NAKA_CLASS(Frame),
+        .super = OBJ_TEST56,
+        .sub = OBJ_H_Label_33,
         .next = NAKA_NONE,
-        .prev = 47,
-        .flag = 0x0008,
-        .rect = { 120, 80, 199, 159 },
-        .frame = 0x0001,
+        .prev = OBJ_TEST56_Frame_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(120, 80, 80, 80),
+        .frame = FR_Single,
         .width = 0x0003,
-        .color = 0x00FF,
+        .color = CL_White,
     },
 
     .H_Label_33 = {
-        .class_ = 0x0160002B,
-        .super = 57,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_5,
         .sub = NAKA_NONE,
-        .next = 59,
+        .next = OBJ_H_Label_34,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 130, 90, 141, 108 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 90, 12, 19),
         .str = SELF(H_text_33),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_33 = "H",
 
     .H_Label_34 = {
-        .class_ = 0x0160002B,
-        .super = 57,
-        .sub = 60,
-        .next = 64,
-        .prev = 58,
-        .flag = 0x0008,
-        .rect = { 130, 126, 141, 144 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_5,
+        .sub = OBJ_Hhhhhhh_Label_5,
+        .next = OBJ_H_Label_38,
+        .prev = OBJ_H_Label_33,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 126, 12, 19),
         .str = SELF(H_text_34),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_34 = "H",
 
     .Hhhhhhh_Label_5 = {
-        .class_ = 0x0160002B,
-        .super = 59,
-        .sub = 61,
-        .next = 63,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_34,
+        .sub = OBJ_H_Label_35,
+        .next = OBJ_H_Label_37,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 130, 114, 189, 132 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 114, 60, 19),
         .str = SELF(Hhhhhhh_text_5),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hhhhhhh_text_5 = "HHHHHHH",
 
     .H_Label_35 = {
-        .class_ = 0x0160002B,
-        .super = 60,
-        .sub = 62,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Hhhhhhh_Label_5,
+        .sub = OBJ_H_Label_36,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 178, 126, 189, 144 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(178, 126, 12, 19),
         .str = SELF(H_text_35),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_35 = "H",
 
     .H_Label_36 = {
-        .class_ = 0x0160002B,
-        .super = 61,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_35,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 178, 138, 189, 156 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(178, 138, 12, 19),
         .str = SELF(H_text_36),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_36 = "H",
 
     .H_Label_37 = {
-        .class_ = 0x0160002B,
-        .super = 59,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_H_Label_34,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 60,
-        .flag = 0x0008,
-        .rect = { 130, 138, 141, 156 },
+        .prev = OBJ_Hhhhhhh_Label_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 138, 12, 19),
         .str = SELF(H_text_37),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_37 = "H",
 
     .H_Label_38 = {
-        .class_ = 0x0160002B,
-        .super = 57,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_5,
         .sub = NAKA_NONE,
-        .next = 65,
-        .prev = 59,
-        .flag = 0x0008,
-        .rect = { 178, 90, 189, 108 },
+        .next = OBJ_H_Label_39,
+        .prev = OBJ_H_Label_34,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(178, 90, 12, 19),
         .str = SELF(H_text_38),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_38 = "H",
 
     .H_Label_39 = {
-        .class_ = 0x0160002B,
-        .super = 57,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_5,
         .sub = NAKA_NONE,
-        .next = 66,
-        .prev = 64,
-        .flag = 0x0008,
-        .rect = { 130, 102, 141, 120 },
+        .next = OBJ_H_Label_40,
+        .prev = OBJ_H_Label_38,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 102, 12, 19),
         .str = SELF(H_text_39),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_39 = "H",
 
     .H_Label_40 = {
-        .class_ = 0x0160002B,
-        .super = 57,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST56_Frame_5,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 65,
-        .flag = 0x0008,
-        .rect = { 178, 102, 189, 120 },
+        .prev = OBJ_H_Label_39,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(178, 102, 12, 19),
         .str = SELF(H_text_40),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .H_text_40 = "H",
 
+    /* ==== SCREEN TITLE_TEST6 -- "TT_TEST6", title id 0xF9, function NAKA_MAINFUNC_TEST6FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST6 = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_PeripheralDeviceCheck_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F6AA,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_TEST6_Window,
         .title = SELF(w68_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w68_text = ALIGNED_STRING(""),
 
     .PeripheralDeviceCheck_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST6,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_FloppyDiskControllerFdc_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 22, 66, 278, 84 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(22, 66, 257, 19),
         .str = SELF(PeripheralDeviceCheck_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .PeripheralDeviceCheck_text = "PERIPHERAL DEVICE CHECK",
 
     .FloppyDiskControllerFdc_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST6,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 14, 110, 241, 128 },
+        .next = OBJ_TEST6_IvPageControl,
+        .prev = OBJ_PeripheralDeviceCheck_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(14, 110, 228, 19),
         .str = SELF(FloppyDiskControllerFdc_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .FloppyDiskControllerFdc_text = ALIGNED_STRING("FLOPPY DISK CONTROLLER(FDC) "),
 
     .TEST6_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST6,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_TEST6_IvPageControl_2,
+        .prev = OBJ_FloppyDiskControllerFdc_Label,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F90005,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST6, OBJ_TEST6OK),
     },
 
     .TEST6_IvPageControl_2 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_TEST6,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_TEST6_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F90007,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST6, OBJ_TEST6NG),
     },
 
+    /* ==== VIEW OBJ_TEST6OK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST6OK = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 6,
+        .sub = OBJ_MayBeOk_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 176, 132, 311, 155 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(176, 132, 136, 24),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6AE,
-        .child = 0x0003F6B2,
+        .parent = RAM_TEST6OK_Parent,
+        .child = RAM_TEST6OK_Child,
     },
 
     .MayBeOk_Label = {
-        .class_ = 0x0160002B,
-        .super = 5,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST6OK,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 178, 134, 302, 152 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(178, 134, 125, 19),
         .str = SELF(MayBeOk_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .MayBeOk_text = "= may be OK",
 
+    /* ==== VIEW OBJ_TEST6NG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST6NG = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 8,
+        .sub = OBJ_No_Label_5,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 240, 108, 303, 131 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(240, 108, 64, 24),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6B6,
-        .child = 0x0003F6BA,
+        .parent = RAM_TEST6NG_Parent,
+        .child = RAM_TEST6NG_Child,
     },
 
     .No_Label_5 = {
-        .class_ = 0x0160002B,
-        .super = 7,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_TEST6NG,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 246, 110, 293, 128 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(246, 110, 48, 19),
         .str = SELF(No_text_5),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .No_text_5 = ALIGNED_STRING("= NO"),
 
+    /* ==== SCREEN TITLE_EXT -- "TT_EXT", title id 0xFB, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .EXT = {
-        .class_ = 0x0160006A,
+        .class_ = NAKA_CLASS(IvScreen),
         .super = NAKA_NONE,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F6BE,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_EXT_Window,
     },
 
     .ptrs_0 = {

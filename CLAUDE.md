@@ -206,8 +206,8 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,063   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
 | `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
-| `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 5,298   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
-| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 5,209   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %

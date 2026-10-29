@@ -7150,7 +7150,7 @@ HDAE5000_Get_Init_Flag:
 .equ HDAE5000_RAM_DATA_A, 0x2397EA	; RAM data area A
 .equ HDAE5000_RAM_DATA_B_SIZE, 0x239870	; Size word for RAM data area B (variable)
 .equ HDAE5000_RAM_DATA_B, 0x239824	; RAM data area B
-.equ HDAE5000_DATA_COPY_DEST, 0x23952A	; Init data copy destination
+.equ HDAE5000_DATA_COPY_DEST, 0x2394ce	; Init data copy destination (v2.01i: 0x2394ce, see hdae5000_init_data.s)
 .equ HDAE5000_INIT_DATA_2, 0x239642	; Init data area (secondary)
 .equ HDAE5000_SERIAL_DATA_1, 0x239872	; Serial port data (primary)
 .equ HDAE5000_SERIAL_DATA_2, 0x2398AA	; Serial port data (secondary)

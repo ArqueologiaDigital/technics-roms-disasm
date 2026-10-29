@@ -1,0 +1,22 @@
+# records whose emitter comment said interpreter A and which gui_display_list_macros.py reads as interpreter B
+# measured at 9dbc03088 (the tree before the respelling); columns: file, enclosing label, how decided (count)
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0D081                                                  geometry 1, length 1
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0DA93                                                  length 1
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0DB91                                                  length 4
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0DCC1                                                  length 4
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0DE62                                                  length 4
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0DF7D                                                  length 5
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       DL_F0E0E2                                                  length 5
+prom_b/modules/f0c800_f0e7ff_midi_screen_display_lists.s       MidiOutProgramChange_PaintBankLsb_DL                       geometry 1
+prom_b/modules/f27c00_f2c7ff_mode_screen_display_lists.s       ModeScreen_PaintDirtyFields2_DL1                           audit 4
+prom_b/modules/f32800_f33fff_sound_edit_display_lists.s        DL_F3391E                                                  geometry 6, length 6
+prom_b/modules/f34000_f367ff_sequencer_display_lists.s         DL_F34000                                                  adjacent 25, length 1
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     DL_F3B65B                                                  audit 8
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     DL_F3C351                                                  length 2
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     S0ngC0py_DrawFromSong_DL1                                  geometry 2
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     SequencerMedley_DrawPlayState_DL2                          length 1
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     SequencerMedley_DrawPlayState_DL4                          adjacent 1, length 1
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     TrackAssign_DrawLocalControlColumn_DL                      length 8
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     TrackAssign_DrawOutChannelColumn_DL                        length 8
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     TrackAssign_DrawSelectedPart_DL                            length 19
+# total: 118 {'geometry': 10, 'length': 70, 'audit': 12, 'adjacent': 26}

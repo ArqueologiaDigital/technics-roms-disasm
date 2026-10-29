@@ -38,12 +38,16 @@ QUESTION ANSWERED / JOB IT DOES
                 in the target get a HDAE5000_Str_* / _Fmt_* label and a "; only
                 in <version>" note, labels of strings it lacks are kept and
                 marked PORT-ORPHAN;
-      uitables  regenerates the whole UI object section of
-                hdae5000_data_tables.s (descriptor pool, object and name
-                tables, HDAE5000_OBJ_* ids, name pool) from the target ROM,
-                with the record model of scripts/generators/gen_hdae5000_ui_pool.py
-                (checked: run on a copy of hdae5000/ it reproduces v2.06i byte
-                for byte).
+      uitables  regenerates the whole GUI of the target tree from the target ROM:
+                since 2026-10-29 it runs scripts/converters/hdae5000_ui_tree.py
+                <ver> --write, which writes <tree>/hdae5000_ui_tree.s (the object
+                tree in the class macros of hdae5000/shared/naka_ui_macros.s, the
+                object / name tables and the name pool) and the UI state block and
+                RAM-object records of hdae5000_init_data.s.  Build the tree first:
+                the converter reads its ELF's labels.  (Until then this pass wrote
+                typed records with its own copy of the retired
+                gen_hdae5000_ui_pool.py model; ui_generate below is that copy,
+                kept for `tables`.)
     The rest (a few switch tables, deleted settings, the RAM-image layout) is
     edited by hand; `status` and `show N` list what is left.  The aligner gets
     the BYTES right; label placement it cannot verify where nothing references
@@ -794,6 +798,8 @@ def obj_ids_frozen(tree):
     each HDAE5000_OBJ_<NAME> is 0x007F0000 + the index of <NAME> in the target's own name
     table, and `fix` must not move it to make one use's bytes match (on 2026-10-24 that
     left two v2.01i constants naming the wrong objects)."""
+    if os.path.exists(os.path.join(tree, "hdae5000_ui_tree.s")):
+        return True             # the ids are computed by the tree's macros
     p = os.path.join(tree, "hdae5000_data_tables.s")
     return any(l.startswith(UITABLES_MARK) and b"uitables" in l
                for l in open(p, "rb").read().split(b"\n"))
@@ -1498,6 +1504,13 @@ def find_classtab(R):
 
 
 def cmd_uitables(ver, tag="v2.01i"):
+    """The GUI of the target tree, from its ROM: scripts/converters/hdae5000_ui_tree.py."""
+    conv = os.path.join(ROOT, "scripts", "converters", "hdae5000_ui_tree.py")
+    sys.exit(subprocess.call([sys.executable, conv, ver, "--write"], cwd=ROOT))
+
+
+def cmd_uitables_typed_records(ver, tag="v2.01i"):
+    """RETIRED 2026-10-29 (superseded by hdae5000_ui_tree.py): the typed-record writer."""
     bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
     ctx = Ctx(bld, ref, full)
     inv = {n: b for b, n in ctx.bmap.items()}
