@@ -3,3 +3,4 @@
 # it compresses) and encoded by its part's coder.  Rules: floppy/tools/kd/kd.mk.
 
 $(eval $(call KD_IMAGE,kn7000,idd7000,01CTMINI.ast,KN7000_CUSTOMDATA_01ctmini))
+$(eval $(call KD_CUT,kn7000,idd7000,04HPGINI.hmp,bmp,0x18c,17078))

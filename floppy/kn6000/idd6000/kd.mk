@@ -2,4 +2,5 @@
 # The stored streams of kn6000/idd6000: each one assembled from payload/ (or taken from the image
 # it compresses) and encoded by its part's coder.  Rules: floppy/tools/kd/kd.mk.
 
+$(eval $(call KD_CUT,kn6000,idd6000,04HPGINI.hmp,bmp,0x18c,17078))
 $(eval $(call KD_IMAGE,kn6000,idd6000,01CTMINI.ast,KN6000_CUSTOMDATA_01ctmini))

@@ -2,5 +2,12 @@
 
 ; STACKS__.MID -- 36864 bytes, clusters 1618..1689.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_STACKS___MID:	.incbin	"dance.img", 0xcee00, 36864
+; A Standard MIDI File (format 0, 1 tracks, division 96), cut out as a .mid of its own.
+
+F_STACKS___MID:	.incbin	"STACKS__.mid.smf.mid"
+; The rest of the last 1024-byte output window.  The SMF writer flushes whole windows
+; (SmfOut_WindowsFlushed 0x126C counts them; the track length at 0xF7789A is computed from
+; it), so the file is a multiple of 1024 bytes and these bytes are what the window buffer
+; still held from earlier output.
+; census: opaque -- unknown-dump: stale SMF output-window bytes past the end of the file's last track
+	.incbin	"dance.img", 0xd7add, 803

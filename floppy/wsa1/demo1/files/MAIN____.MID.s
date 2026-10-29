@@ -2,5 +2,6 @@
 
 ; MAIN____.MID -- 49816 bytes, clusters 2508..2605.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_MAIN_____MID:	.incbin	"demo1.img", 0x13e200, 49816
+; A Standard MIDI File (format 0, 1 tracks, division 384), cut out as a .mid of its own.
+
+F_MAIN_____MID:	.incbin	"MAIN____.mid.smf.mid"

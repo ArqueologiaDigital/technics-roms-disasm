@@ -97,6 +97,28 @@ def wrk_unit(ctx):
     return L
 
 
+def hmp_unit(ctx, model):
+    """A home-page file: HmpFileLoad (KN7000 program 941 0x4852CC3A) checks the 'JK ' signature, reads
+    0x4442 bytes, and HmpInstall (0x484970C1) copies the first 0x18C (the record) to 0x5006B5F8 and
+    programs the rest, a BMP of 0x42B6 bytes, to custom flash 0x9681118C."""
+    d = ctx.data
+    bmp = '%s.bmp' % ctx.extracted
+    kd_describe._reg(model, ctx.disk)[1].append(
+        '$(eval $(call KD_CUT,%s,%s,%s,bmp,0x18c,%d))' % (model, ctx.disk, ctx.extracted, len(d) - 0x18c))
+    L = ['; A home-page file (.HMP): HmpFileLoad (KN7000 program 941 0x4852CC3A) checks the signature and',
+         '; reads 0x4442 bytes; HmpInstall (0x484970C1) copies the first 0x18C bytes, the home-page record,',
+         '; to 0x5006B5F8 (HpRecordProgram writes it to custom flash 0x96811000) and programs the BMP after',
+         '; it to custom flash 0x9681118C.  The record\'s fields past the signature are not decoded: they are',
+         '; spelled as the little-endian halfwords they look like.', '',
+         ctx.label + ':',
+         '\t.ascii\t%s\t\t; signature, checked by func_4852B746 (file type 9)' % s_escape(d[:4])]
+    for k in range(4, 0x18c, 16):
+        L.append('\t.short\t' + ', '.join('0x%04x' % int.from_bytes(d[j:j + 2], 'little') for j in range(k, min(k + 16, 0x18c), 2)))
+    L += ['%s_Bmp:\t.incbin\t"%s"\t; the home-page picture, %dx%d' % (ctx.label, bmp,
+          int.from_bytes(d[0x18c + 18:0x18c + 22], 'little'), int.from_bytes(d[0x18c + 22:0x18c + 26], 'little'))]
+    return L
+
+
 def describe(ctx, model):
     ext = ctx.path.rsplit('.', 1)[-1].upper()
     base = ctx.path.rsplit('/', 1)[-1].rsplit('.', 1)[0]
@@ -124,6 +146,8 @@ def describe(ctx, model):
                 'ACT': 'The presentation script (<ACTION> section): which picture each ACT NO shows.',
                 'PRE': 'The presentation file (<PRESENTATION>): the song to play and its title.'}[ext]
         return text_unit(ctx, what)
+    if ext == 'HMP' and ctx.data[1:4] == b'K \0' and ctx.data[0x18c:0x18e] == b'BM':
+        return hmp_unit(ctx, model)
     if ext == 'VER' and ctx.data.startswith(b'CAKEWALK'):
         return wrk_unit(ctx)
     return kd_describe.describe_kd(ctx, model, kn_payloads.TYPERS, kn_payloads.note(ctx, ext))

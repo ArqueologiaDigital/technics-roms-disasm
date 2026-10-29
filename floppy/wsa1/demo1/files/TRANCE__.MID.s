@@ -2,5 +2,6 @@
 
 ; TRANCE__.MID -- 35401 bytes, clusters 2606..2675.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_TRANCE___MID:	.incbin	"demo1.img", 0x14a600, 35401
+; A Standard MIDI File (format 0, 1 tracks, division 384), cut out as a .mid of its own.
+
+F_TRANCE___MID:	.incbin	"TRANCE__.mid.smf.mid"
