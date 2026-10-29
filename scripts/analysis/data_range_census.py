@@ -265,8 +265,12 @@ def strip_comment(line):
 
 # ------------------------------------------------------------------ the mirror
 def collect_macros(srcroot):
-    """name -> 'code'|'data'|'none', judged from the macro BODY."""
+    """name -> 'code'|'data'|'none', judged from the macro BODY -- or declared: a `.macro` line
+    whose comment says `census: data` is data whatever its body invokes (2026-10-29: the
+    HD-AE5000 GUI's class macros, hdae5000/shared/naka_ui_macros.s, emit their records through
+    helper macros, which this body test would take for instructions)."""
     macros = {}
+    declared = set()
     for dp, _, fn in os.walk(srcroot):
         for f in sorted(fn):
             if not f.endswith((".s", ".inc")):
@@ -281,6 +285,8 @@ def collect_macros(srcroot):
                 m = re.match(r'^\.macro\s+([\w.$]+)', c)
                 if m:
                     cur, body = m.group(1), []
+                    if "census: data" in ln:
+                        declared.add(cur)
                     continue
                 if cur is not None:
                     if re.match(r'^\.endm\b', c):
@@ -297,7 +303,7 @@ def collect_macros(srcroot):
                                     kinds.add("data")
                             else:
                                 kinds.add("code")
-                        macros[cur] = "code" if "code" in kinds else (
+                        macros[cur] = "data" if cur in declared else "code" if "code" in kinds else (
                             "data" if "data" in kinds else "none")
                         cur = None
                     else:

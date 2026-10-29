@@ -164,6 +164,7 @@ gate: all
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
 	python3 scripts/analysis/hdae5000_obj_constants_check.py
+	python3 scripts/analysis/hdae5000_menu_map.py --check
 	python3 scripts/analysis/l2_symbol_reference.py --check
 	$(MAKE) --no-print-directory gui-check
 
@@ -190,6 +191,12 @@ gui-census:
 # decompresses to exactly its tracked plain payload ROM (under 1 s).
 # --selftest (about 4 s) shows the check catches one flipped byte, and that the
 # other two LZSS scripts agree with the build's decoder.
+# The HD-AE5000 GUI menu maps (notes/data-gui-hdae5000-2026-10-29/menu-map-*.md), generated from
+# <tree>/hdae5000_ui_tree.s; `make gate` checks they are up to date.
+.PHONY: hdae5000-menu-map
+hdae5000-menu-map:
+	python3 scripts/analysis/hdae5000_menu_map.py
+
 verify-subprogram-update-images:
 	python3 scripts/build/verify_subprogram_update_images.py
 	python3 scripts/build/verify_subprogram_update_images.py --selftest
