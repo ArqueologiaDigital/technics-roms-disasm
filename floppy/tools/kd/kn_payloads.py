@@ -21,8 +21,15 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kn_tcmp  # noqa: E402
 import kn_sqt  # noqa: E402
+import kn_panel  # noqa: E402
 
-TYPERS = {'CMP': kn_tcmp.typer, 'SQT': kn_sqt.typer}
+
+
+def _lsw(ctx, part, p, ref, lab):
+    return kn_panel.lsw1(ctx, part, p, ref, lab) if part == 1 else None
+
+
+TYPERS = {'CMP': kn_tcmp.typer, 'SQT': kn_sqt.typer, 'PMT': kn_panel.pmt, 'LSW': _lsw}
 
 
 def note(ctx, ext):
