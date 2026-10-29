@@ -351,11 +351,19 @@ def describe_tm(ctx):
 # Style banks: CMP (COMPOSER) and the sections of RCM (RHYTHM CUSTOM)
 
 DIR0, NREC, REC = 0x60, 30, 0x60
+# STYLE_SECTION 0..29 (AccDemo_LoadVariation_EntryLoop_Data's order; scripts/build/style_events.py).
+SECTION_ROLE = ['a-variation1', 'a-variation2', 'a-variation3', 'a-variation4',
+                'b-variation1', 'b-variation2', 'b-variation3', 'b-variation4',
+                'c-variation1', 'c-variation2', 'c-variation3', 'c-variation4',
+                'a-intro 1', 'a-intro 2', 'a-fill in 1', 'a-fill in 2', 'a-ending 1', 'a-ending 2',
+                'b-intro 1', 'b-intro 2', 'b-fill in 1', 'b-fill in 2', 'b-ending 1', 'b-ending 2',
+                'c-intro 1', 'c-intro 2', 'c-fill in 1', 'c-fill in 2', 'c-ending 1', 'c-ending 2']
 
 
 # Cell pointers count blocks from block 20 of the bank (bank + 0x1400), in every bank on these
-# disks: no other base makes a single link mutual (probe kn5000_floppy_formats.py, BASE).  Three
-# CMPs hold cell-shaped blocks 12..19 below that base; they are typed as unlinked blocks.
+# disks: no other base makes 1/10 as many links mutual (probe kn5000_floppy_formats.py, BASE), and
+# AccPatch_InitSlotChain allocates the cells from base + 0x1400.  Three CMPs hold cell-shaped
+# bytes in data_ba0 below that base; they are spelled as bytes there.
 CELL_BASE_BLOCK = 20
 
 
@@ -367,29 +375,34 @@ def emit_style_bank(o, d, base, end, title):
     """One IC19-format style bank at d[base:end]: header, directory, then 256-byte blocks."""
     if d[base:base + 4] != b'H\0K\0':
         return False
-    o.comment('%s: "H\\0K\\0" header, 30-record style directory at +0x60, 256-byte cells.' % title)
+    o.comment('%s: one Composer style image (the bank layout of scripts/build/style_events.py, shared' % title)
+    o.comment('with the IC19 custom-data banks): header, 30 STYLE_SECTION records, the fill-in cell at')
+    o.comment('+0x13c0, then 256-byte cells from +0x1400 (AccPatch_InitSlotChain: base + 0x1400).')
     o.ascii(d[base:base + 4], 'bank magic')
-    o.inc(DIR0 - 4, 'bank header +4..+0x5f (fields not established)')
+    o.fill_or_bytes(d[base + 4:base + 0x1E], 'hdr_04: 26 bytes, the same in every bank (TODO: not established)')
+    w = struct.unpack_from('<9H', d, base + 0x1E)
+    o.put('\tstyle_bank_sizes\t0x%04x, 0x%02x, 0x%02x, %d, 0x%03x, %d, 0x%02x, 0x%04x, 0x%04x' % w, 18)
+    o.fill_or_bytes(d[base + 0x30:base + 0x60], 'hdr_30 (TODO: not established)')
     for k in range(NREC):
         r = base + DIR0 + k * REC
-        nm = d[r + 0x40:r + 0x50]
         v = struct.unpack_from('<6H', d, r)
-        o.comment('style %d' % k)
-        o.raw('.short', ['0x%04x' % x for x in v], 12,
-              'chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md')
-        o.inc(0x34, 'record +0x0c..+0x3f (fields not established)')
-        if printable(nm):
-            o.ascii(nm, 'style name')
-        else:
-            o.inc(16, 'name field, not text')
-        o.inc(0x10, 'record +0x50..+0x5f (fields not established)')
-    p = base + DIR0 + NREC * REC
-    # the first cell-aligned block at or after the directory's end
-    first = base + ((p - base + 255) // 256) * 256
-    blk = first
-    while blk + 256 <= end and not is_cell(d[blk:blk + 256]):
-        blk += 256
-    o.inc(blk - p, 'between the directory and the first cell (not established)')
+        g = struct.unpack_from('<20H', d, r + 0x18)
+        vals = ['0x%04x' % x for x in v] + ['0x%02x' % x if x else '0' for x in d[r + 0x0C:r + 0x18]] + \
+            ['0x%04x' % x if x else '0' for x in g] + [s_escape(d[r + 0x40:r + 0x50])] + \
+            ['0x%02x' % x if x else '0' for x in d[r + 0x50:r + 0x60]]
+        o.put('\tstyle_section\t%s\t; %d %s' % (', '.join(vals), k, SECTION_ROLE[k]), REC)
+    o.fill_or_bytes(d[base + 0xBA0:base + 0x13C0], 'data_ba0 (AccDemo_LoadVariation_DataBlock and the table '
+                    'after it; zero in the factory banks; TODO: fields not established)')
+    f = base + 0x13C0
+    if d[f + 5] == 0x87:
+        o.raw('style_cell', ['0x%02x' % d[f]] + ['0x%04x' % x for x in struct.unpack_from('<HH', d, f + 1)], 6,
+              'the 64-byte fill-in cell (AccDemo_LoadFillIn copies 0x40 bytes here)')
+        stream = d[f + 6:f + 0x40]
+        for line, n in events.cut(stream, events.tokenize_style(stream), [(0, len(stream))])[0]:
+            o.put(line, n)
+    else:
+        o.fill_or_bytes(d[f:f + 0x40], 'the fill-in cell area, not cell-shaped here')
+    blk = base + 0x1400
     cells = []
     c = blk
     while c + 256 <= end and is_cell(d[c:c + 256]):
