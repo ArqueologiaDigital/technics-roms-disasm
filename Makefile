@@ -119,7 +119,7 @@ gate-kn6000:
 gate-kn6500:
 	$(MAKE) -C kn6500 verify
 gate-hdsx3:
-	$(MAKE) -C hdsx3 verify
+	$(MAKE) -C hdsx3 verify verify-gui-map
 
 mn10300-siblings-clean:
 	$(MAKE) -C kn2400 clean

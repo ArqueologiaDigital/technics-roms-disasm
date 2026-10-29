@@ -99,6 +99,19 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A")
+# The KN6000 / KN6500 expansion board's XAPR plug-in (sx6-113, the HD-SX6's; folder
+# hdsx3): code first, then its data, then erased flash.  It runs on the SX-KN6000:
+# its records use the KN6000's classes (`host`) and its own (registry slot 0x168), it
+# calls the KN6000's routines through the host's Function table (milk_model
+# HOST_CALLS), and its initialised RAM is copied from 0x978B3E84 to 0x97910000
+# (0x26D8 bytes, func_97800082, the XAPR header's first code vector's loop).
+PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="src/program",
+                         code="src/program.s", prog="src/program.s",
+                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym"],
+                         labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
+                         base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
+                         functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
+                         raminit=(0x978B3E84, 0x97910000, 0x26D8))
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
@@ -110,13 +123,14 @@ def configure(name):
     PROFILE, P = name, PROFILES[name]
     KN7 = os.path.normpath(os.path.join(KN7_DIR, P.get("root", ".")))
     BASE = P.get("base", 0x48400000)
-    MM.configure(base=BASE, sig_size=P.get("sig"), scheme=P.get("scheme", "kn7000"), sigmap=P.get("sigmap", {}))
+    MM.configure(base=BASE, sig_size=P.get("sig"), scheme=P.get("scheme", "kn7000"), sigmap=P.get("sigmap", {}),
+                 host_calls={})
     ROMQ = f'"{P["rom"]}"'
     R1_END = P["r1"]             # end of code region 1 (file offset)
     PALETTE = P["pal"]           # display palette, 512 x u32
     DATA_END = P["end"]          # the library image starts here (gen_program_s LIB_FILE_BASE)
     OUTDIR = P["src"] + "/data"
-    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = MM.find_raminit(code_glob())
+    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = P.get("raminit") or MM.find_raminit(code_glob())
     MM.RAMINIT_ROM, MM.RAMINIT_RAM, MM.RAMINIT_LEN = RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN
     RAMINIT_OFF = RAMINIT_ROM - BASE
     RAMINIT_END = RAMINIT_OFF + RAMINIT_LEN
@@ -173,11 +187,42 @@ class Item:
         self.comment = None
 
 
+def host_model(name):
+    """(the Model of host profile `name`, {offset: routine name} of its Function
+    table at registry slot 0x100, which a plug-in calls through); the module is
+    bound to the current profile again afterwards."""
+    cur = PROFILE
+    configure(name)
+    hm = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
+                  sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
+                  label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")])
+    r = hm.by_slot[0x100]
+    calls = {}
+    for i in range(r["count"]):
+        a = hm.u32(r["table"] + 4 * i)
+        calls[4 * i] = hm.sym_by_addr.get(a) or f"func_{a:08X}"
+    # the host's title, mode and function ids, by name (read while it is configured)
+    ids = {i: sanitize(nm or f"ID_{i:X}", 60) for d in (hm.titles, hm.modes) for i, (nm, _a, _c) in d.items()}
+    for slot, r in hm.by_slot.items():
+        nr = hm.by_slot.get(MM.names_slot(slot))
+        if r.get("kind") not in ("Function", "ApFunction", "MainFunction") or not nr:
+            continue
+        for i in range(min(r["count"], nr["count"])):
+            nm = hm.cstr(hm.u32(nr["table"] + 4 * i))
+            if nm:
+                ids.setdefault((slot << 16) | i, "FN_" + sanitize(nm, 60))
+    hm.id_names = ids
+    configure(cur)
+    return hm, calls
+
+
 class Gen:
     def __init__(self):
+        self.host, self.host_calls = (host_model(P["host"]) if P.get("host") else (None, {}))
+        MM.HOST_CALLS = dict(self.host_calls)
         self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
                           sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
-                          label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")])
+                          label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")], host=self.host)
         m = self.m
         self.rom = m.rom
         self.items = {}               # file offset -> Item
@@ -189,6 +234,15 @@ class Gen:
         self._load_names()
         self.refs = set()             # CPU addresses referred to (need a label)
         self.code_targets = set()     # code addresses the typed data names loc_<ADDR>
+        self.host_ids, self.host_used = self.host_id_names(), set()
+
+    def host_id_names(self):
+        """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
+        ApFunction / MainFunction entries (its records name host titles in `exit`
+        and host functions in `func` / `main_func`); gui_ids.inc equates those used."""
+        if self.host is None:
+            return {}
+        return {i: (n if n not in self.names else n + "_HOST") for i, n in self.host.id_names.items()}
 
     # -- names ---------------------------------------------------------------
     def _load_names(self):
@@ -342,6 +396,10 @@ class Gen:
         if v in self.label_at:
             return self.label_at[v]
         if v in self.extern:
+            if "root" in P and self.extern[v] == f"loc_{v:08X}":
+                # (a sibling) a loc_ label exists only because this data names it:
+                # keep it in code_refs.txt, or gen_image_s.py drops it next round
+                self.code_targets.add(v)
             return self.extern[v]
         if self.in_code(v):
             # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
@@ -662,7 +720,7 @@ class Gen:
         for slot, b in sorted(m.blocks.items()):
             for i, o in enumerate(b["objects"]):
                 for f in m.layout[o.klass.id]:
-                    v = o.values[f.name]
+                    v = o.fvalues[f.off]
                     if f.sig == "X" and v and m.inrom(v):
                         s = m.cstr(v)
                         self.str_item(v, "Str_" + (sanitize(s, 40) or "empty"), "widget text", slot)
@@ -680,8 +738,8 @@ class Gen:
         comments = []
         objs = m.blocks[slot]["objects"]
         for f in self.macro_fields(k.id):
-            v = o.values[f.name]
-            p = self.param[k.id][f.name]
+            v = o.fvalues[f.off]
+            p = self.param[k.id][f.off]
             if f.name in ("super", "sub", "next", "prev") and f.sig == "[":
                 if v != NONE16:
                     args.append(f"{p}={self.obj_label[(slot, v)]}")
@@ -691,7 +749,8 @@ class Gen:
             if f.sig == "P":
                 b = m.bytes_at(o.addr + f.off, 8)
                 x1, y1, x2, y2 = (int.from_bytes(b[j:j + 2], "little", signed=True) for j in (0, 2, 4, 6))
-                args.append(f"X={x1}, Y={y1}, W={x2 - x1 + 1}, H={y2 - y1 + 1}")
+                q = self.rect_prefix[k.id][f.off]
+                args.append(f"{q}X={x1}, {q}Y={y1}, {q}W={x2 - x1 + 1}, {q}H={y2 - y1 + 1}")
                 continue
             if v == 0 and f.sig not in ("]", "e"):
                 continue
@@ -729,6 +788,9 @@ class Gen:
                 return self.obj_by_id[v] + "_id"
             if v in self.fn_name:
                 return self.fn_name[v]
+            if v in self.host_ids:
+                self.host_used.add(v)
+                return self.host_ids[v]
             return f"0x{v:X}"
         if f.size == 4 and v >= 0x80000000:
             return f"0x{v:X}"
@@ -758,7 +820,7 @@ class Gen:
         """One macro per class used by a record: its parameters are the class
         chain's field names, its body the record's bytes in field order."""
         m = self.m
-        self.macro, self.param = {}, {}
+        self.macro, self.param, self.rect_prefix = {}, {}, {}
         used = set()
         for b in m.blocks.values():
             for o in b["objects"]:
@@ -771,20 +833,24 @@ class Gen:
                 mname = "W_" + mname
             self.macro[cid] = mname
             fields = m.layout[cid]
-            pnames, params, seen = {}, [], set()
+            # parameters per field (by offset: a subclass may declare a field name
+            # again); the first rect is X / Y / W / H, a further one <field>_X ...
+            pnames, params, seen, rp = {}, [], set(), {}
             for f in fields:
                 pn = sanitize(f.name) or "f"
                 if pn in self.RESERVED or pn in seen:
                     pn = f"{pn}_{f.cls.name}" if f"{pn}_{f.cls.name}" not in seen else f"{pn}_{f.off}"
                     pn = sanitize(pn)
                 seen.add(pn)
-                pnames[f.name] = pn
-            self.param[cid] = pnames
+                pnames[f.off] = pn
+                if f.sig == "P":
+                    rp[f.off] = "" if not rp else f"{pn}_"
+            self.param[cid], self.rect_prefix[cid] = pnames, rp
             plist = ["this"]
             body = ["\\this\\():"]
             off = 0
             for f in fields:
-                pn = pnames[f.name]
+                pn = pnames[f.off]
                 if f.off > off:
                     body.append(f"\t.space\t{f.off - off}")
                 off = f.off + f.size
@@ -794,8 +860,9 @@ class Gen:
                     plist.append(f"{pn}=NONE")
                     body.append(f"\t.word\t\\{pn}\\()_ix")
                 elif f.sig == "P":
-                    plist += ["X=0", "Y=0", "W=0", "H=0"]
-                    body.append("\t.word\t\\X, \\Y, \\X + \\W - 1, \\Y + \\H - 1")
+                    q = rp[f.off]
+                    plist += [f"{q}X=0", f"{q}Y=0", f"{q}W=0", f"{q}H=0"]
+                    body.append(f"\t.word\t\\{q}X, \\{q}Y, \\{q}X + \\{q}W - 1, \\{q}Y + \\{q}H - 1")
                 else:
                     plist.append(f"{pn}=0")
                     d = {1: ".byte", 2: ".word", 4: ".long"}[f.size]
@@ -1338,7 +1405,7 @@ class Gen:
             "# after code region 1; the library image follows.  See tools/gen_data_s.py and",
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
-            '.include "src/constants.inc"',
+            f'.include "{P.get("constants", "src/constants.inc")}"',
             *(f'.include "{KN7000_INC}/{f}"' for f in ("kn_song.inc", "panel_memory.inc", "kn_panel_extra.inc")),
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
@@ -1480,7 +1547,25 @@ class Gen:
             "\t.equ\t\\id, (\\slot << 16) | ((\\id\\()_at - \\table) / 4)",
             "\t.long\t\\value",
             ".endm",
-            ""] + self.macro_lines
+            ""] + self.host_class_ids() + self.macro_lines
+
+    def host_class_ids(self):
+        """(a plug-in) `.equ` lines for the host firmware's classes this image's
+        classes derive from and its records are instances of: their ids are the
+        host's registry (`P["host"]`), not tables of this image."""
+        m = self.m
+        if m.host is None:
+            return []
+        own = set()
+        for slot, r in m.by_slot.items():
+            if r["kind"] == "Class":
+                own |= {(slot << 16) | k for k in range(r["count"])}
+        used = set()
+        for cid in list(own) + [o.klass.id for b in m.blocks.values() for o in b["objects"] if o.klass]:
+            used |= {k.id for k in m.chain(cid)}
+        rows = [f".equ {self.cls_id[c]}, 0x{c:08X}\t# {m.classes[c].name}" for c in sorted(used - own)]
+        return [f"# The {P['host'].upper()}'s classes this image's classes derive from and its records use:",
+                f"# their ids are the host's (its class tables, ../{P['host']}/src/program/data/)."] + rows + [""]
 
     def ids_inc(self):
         m = self.m
@@ -1499,6 +1584,9 @@ class Gen:
                     extra = f"\t# screen {self.obj_by_id.get(scr, hex(scr) if isinstance(scr, int) else '?')}"
                 out.append(f".equ {self.id_name[i]}, 0x{i:08X}{extra}")
             out.append("")
+        if self.host_used:
+            out += [f"# the {P['host'].upper()}'s titles and functions this image's records name (the host's ids)"]
+            out += [f".equ {self.host_ids[i]}, 0x{i:08X}" for i in sorted(self.host_used)] + [""]
         return out
 
     @staticmethod

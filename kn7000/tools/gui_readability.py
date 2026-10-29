@@ -49,9 +49,10 @@ SIBLINGS = {
     "kn6000": ("../kn6000", "src/program.s", "kn6000"),
     "kn6500": ("../kn6500", "src/program.s", "kn6500"),
     "kn2400": ("../kn2400", "src/program.s", "kn2400"),
+    "hdsx3": ("../hdsx3", "src/program.s", "hdsx3"),
 }
 ID_RE = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\b")      # a record field given as hex ...
-ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50)[0-9A-Fa-f]{6}\b")
+ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50|97)[0-9A-Fa-f]{6}\b")   # 0x97: the XAPR plug-in
 LINK_RE = re.compile(r"\b(super|sub|next|prev)=(0x[0-9A-Fa-f]+|\d+)\b")
 
 
@@ -156,10 +157,14 @@ def main():
             G.configure(prof)
             lo, hi = G.BASE + G.R1_END, G.BASE + G.DATA_END
             ram = (G.RAMINIT_RAM, G.RAMINIT_RAM + G.RAMINIT_LEN)
-            tot = sum(len(b["objects"]) for b in milk_model.Model(
-                rom_path=os.path.join(tree, G.P["rom"]), src_glob=G.code_glob(),
-                sym_paths=[os.path.join(tree, f) for f in G.P["syms"]],
-                label_paths=[os.path.join(tree, G.OUTDIR, "labels.sym")]).blocks.values())
+            if G.P.get("host"):
+                # a plug-in: its model needs its host's (classes, Function table)
+                tot = sum(len(b["objects"]) for b in G.Gen().m.blocks.values())
+            else:
+                tot = sum(len(b["objects"]) for b in milk_model.Model(
+                    rom_path=os.path.join(tree, G.P["rom"]), src_glob=G.code_glob(),
+                    sym_paths=[os.path.join(tree, f) for f in G.P["syms"]],
+                    label_paths=[os.path.join(tree, G.OUTDIR, "labels.sym")]).blocks.values())
         except (Exception, SystemExit) as e:   # noqa: BLE001 -- the reference image may be absent
             print(f"(no object total for {t}: {e})", file=sys.stderr)
         r = census(tree, top, tot, lo, hi, ram)
