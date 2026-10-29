@@ -81,6 +81,92 @@ def firmware_routines(rom, r1_end, lib_file, syms, unidasm):
     return {b: sorted(n)[0] for b, n in out.items() if len(n) == 1}
 
 
+def _asm_str(bs):
+    return "".join("\\" + chr(c) if chr(c) in '"\\' else chr(c) if 0x20 <= c < 0x7F else f"\\x{c:02x}"
+                   for c in bs)
+
+
+def typed_gap(d, lo, hi, base, ptr_ok, nm_or_hex):
+    """The bytes d[lo:hi] between recognised strings and pointer tables, as typed rows:
+    0x00/0xFF fill as .space, NUL-terminated text as .asciz, UTF-16LE character tables
+    (the C runtime's and the naming dialogs' character sets) as .word rows, 4-aligned
+    pointers into the image as .long, 8-aligned IEEE doubles (the printf/strtod power
+    tables) as .long lo, hi with the value, anything else as a commented .byte row."""
+    out, o = [], lo
+
+    def printable(c):
+        return 0x20 <= c < 0x7F
+
+    def is_double(p):
+        if p % 4 or p + 8 > hi:
+            return False
+        v = struct.unpack_from("<d", d, p)[0]
+        return v == v and 1e-300 < abs(v) < 1e300 and float(f"{v:.15g}") == v
+
+    while o < hi:
+        b = d[o]
+        if b in (0x00, 0xFF):
+            e = o
+            while e < hi and d[e] == b:
+                if b == 0 and is_double(e):
+                    break                    # a double's zero low bytes are not fill
+                e += 1
+            if e == o:                       # a double starts right here
+                e = o + 8
+                lo32, hi32 = struct.unpack_from("<II", d, o)
+                out.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {struct.unpack_from('<d', d, o)[0]:.15g}")
+                o = e
+                continue
+            out.append(f"    .space {e - o}, 0x{b:02X}")
+            o = e
+            continue
+        e = o
+        while e < hi and printable(d[e]):
+            e += 1
+        if e - o >= 2 and e < hi and d[e] == 0:
+            out.append(f'    .asciz "{_asm_str(d[o:e])}"')
+            o = e + 1
+            continue
+        if True:
+            e = o
+            while e + 2 <= hi and printable(d[e]) and d[e + 1] == 0:
+                e += 2
+            if e - o >= 2:
+                chars = d[o:e:2]
+                for i in range(0, len(chars), 16):
+                    seg = chars[i:i + 16]
+                    out.append(f"    .word {', '.join(f'0x{c:04X}' for c in seg)}   "
+                               f"# UTF-16 \"{_asm_str(seg).replace('#', '?')}\"")
+                o = e
+                continue
+        if o % 4 == 0 and o + 8 <= hi:
+            if is_double(o):
+                rows = []
+                while is_double(o) or (o % 4 == 0 and o + 8 <= hi and   # inside a table: any finite value
+                                       1e-300 < abs(struct.unpack_from("<d", d, o)[0]) < 1e300):
+                    v = struct.unpack_from("<d", d, o)[0]
+                    lo32, hi32 = struct.unpack_from("<II", d, o)
+                    rows.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {v!r}")
+                    o += 8
+                out += rows
+                continue
+        if o % 4 == 0 and o + 4 <= hi and ptr_ok(struct.unpack_from("<I", d, o)[0]):
+            out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
+            o += 4
+            continue
+        if o % 4 == 0 and o + 4 <= hi and 0 < struct.unpack_from("<I", d, o)[0] < 0x10000:
+            out.append(f"    .long 0x{struct.unpack_from('<I', d, o)[0]:08X}")
+            o += 4
+            continue
+        e = o + 1
+        while e < hi and d[e] not in (0x00, 0xFF) and not (e % 4 == 0 and e + 4 <= hi and
+                                                            ptr_ok(struct.unpack_from("<I", d, e)[0])):
+            e += 1
+        out.append(f"    .byte {T.hexbytes(d[o:e])}   # data (CPU 0x{base + o:08X})")
+        o = e
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -94,6 +180,10 @@ def main():
     ap.add_argument("--fw-lib-file", type=lambda v: int(v, 0), help="its library image (file)")
     ap.add_argument("--fw-sym", nargs="*", default=[], help="its symbol files")
     ap.add_argument("--title", default="SP7001 .XAP plug-in - byte-exact.")
+    ap.add_argument("--typed-gaps", action="store_true",
+                    help="spell the data bytes between strings and pointer tables as typed "
+                         "directives (fill, strings, UTF-16 character tables, pointers, doubles) "
+                         "instead of .incbin_range")
     ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../mame-sony-video/unidasm"))
     a = ap.parse_args()
 
@@ -167,12 +257,21 @@ def main():
             return e + 1 - o
         return 0
 
+    def dbl(p):
+        if p + 8 > dend:
+            return False
+        v = struct.unpack_from("<d", d, p)[0]
+        return v == v and 1e-300 < abs(v) < 1e300 and float(f"{v:.15g}") == v
+
     D = ["", "# ---- data: strings, pointer tables, C-runtime tables ----"]
     o, raw0, nstr, nptr = chi, chi, 0, 0
 
     def flush(upto):
         if upto > raw0:
-            D.append(f".incbin_range {ROMQ}, 0x{raw0:06X}, 0x{upto:06X}")
+            if a.typed_gaps:
+                D.extend(typed_gap(d, raw0, upto, base, ptr_ok, nm_or_hex))
+            else:
+                D.append(f".incbin_range {ROMQ}, 0x{raw0:06X}, 0x{upto:06X}")
     while o < dend:
         if o % 4 == 0 and o + 8 <= dend and ptr_ok(struct.unpack_from("<I", d, o)[0]) \
                 and ptr_ok(struct.unpack_from("<I", d, o + 4)[0]):
@@ -186,6 +285,9 @@ def main():
                 D.append(f"    .long {', '.join(rows[i:i + 4])}")
             nptr += 1
             raw0 = o
+            continue
+        if a.typed_gaps and o % 4 == 0 and dbl(o) and dbl(o + 8):
+            o += 16                          # IEEE doubles: left to typed_gap, never read as text
             continue
         n = is_str(o) if (o == chi or d[o - 1] in (0, 0xFF)) else 0
         if n:

@@ -378,7 +378,7 @@ xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
 		kn7000_sp7001_exports.sym kn7000_sp7001_new.sym \
 		baserom/sp7001_baseext.xap baserom/kn7000_program_sp7001.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_xap_s.py --xap baserom/sp7001_baseext.xap \
-	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E \
+	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E --typed-gaps \
 	    --title 'SP7001 BASEEXT.XAP (Key Soft Service base extension) - byte-exact.' \
 	    --sym kn7000_sp7001_baseext.sym \
 	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
