@@ -706,6 +706,16 @@ verify-customdata: $(CD_TARGETS) $(CD_REFS)
 	[ $$ok -eq 1 ] || { echo; echo "Custom-data byte-match FAILED"; exit 1; }
 	@echo; echo "All 9 factory custom-style banks reproduced byte-for-byte."
 
+# Rebuild each .AST file from its image with tools/zlib10_deflate.py, the port of the
+# programs' zlib 1.0.4 (header tag and the 8 stack bytes taken from the floppy's file),
+# and compare with the floppy's file. About 6 s an image; not part of the gate.
+verify-customdata-ast: $(CD_REFS) tools/ast_file.py tools/zlib10_deflate.py
+	@mkdir -p build/customdata
+	@for n in $(CUSTOMDATA); do \
+	  $(PYTHON) tools/ast_file.py deflate baserom/customdata/$$n.ic21 build/customdata/$$n.ast \
+	    --like baserom/customdata/$$n.ast || exit 1; \
+	done
+
 # Regenerate src/customdata/*.s from the references. The committed files are the result.
 customdata-src: tools/gen_customdata_s.py $(CD_REFS)
 	$(foreach n,$(CUSTOMDATA),$(PYTHON) tools/gen_customdata_s.py --rom baserom/customdata/$(n).ic21 \
