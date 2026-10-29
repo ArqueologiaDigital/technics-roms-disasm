@@ -59,16 +59,55 @@ baserom/kn7000_program.rom baserom/kn7000_table.rom &:
 # --labels: the previous build's label addresses seed kn7asm's first pass (only
 # an estimate -- the passes still run until one is exact -- so a fully
 # converted program assembles in about one pass instead of five).
+# The program data regions' bitmaps are indexed PNGs in <data dir>/media/ (gen_data_s.py
+# bitmaps() / drawn_bitmaps()); tools/table_png.py turns them back into the bytes the data
+# .incbins from build/bitmaps/<build>/ (one stamp per program build).
+# $(1) = the build's name in gen_data_s.py, $(2) = its data directory
+define PROGRAM_BITMAPS
+build/bitmaps/$(1)/.stamp: $$(wildcard $(2)/media/*.png) tools/table_png.py
+	@mkdir -p build/bitmaps/$(1)
+	$$(PYTHON) tools/table_png.py build --out-dir build/bitmaps/$(1) --src-root $(2)/media $$(wildcard $(2)/media/*.png)
+	@touch $$@
+endef
+$(eval $(call PROGRAM_BITMAPS,941,src/program/data))
+$(eval $(call PROGRAM_BITMAPS,sp7001,src/sp7001/program/data))
+$(eval $(call PROGRAM_BITMAPS,b935,src/b935/program/data))
+$(eval $(call PROGRAM_BITMAPS,b893,src/b893/program/data))
+
 build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) $(wildcard src/program/data/*) src/symbols.inc \
-		src/constants.inc tools/kn7asm.py baserom/kn7000_program.rom
+		src/constants.inc tools/kn7asm.py baserom/kn7000_program.rom build/bitmaps/941/.stamp
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@ --labels build/kn7000_program.labels
 
 # ---- recover symbols from the firmware's MILK-toolkit reflection tables -----
 # Names 444 functions (shared with the KN5000). Regenerates kn7000.sym and the
 # src/symbols.inc that src/program.s includes.
-symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.rom
-	$(PYTHON) tools/gen_symbols.py baserom/kn7000_program.rom
+#
+# The symbol files are committed SOURCES: no rule has them as its target, so a
+# build never regenerates them implicitly (a changed generator used to rewrite them
+# in the middle of a gate).  `make symbols` (941), `symbols-sp7001`, `exports-941`,
+# `symbols-935` and `symbols-893` regenerate them on purpose; `make symbols-check`
+# runs the same recipes into build/symcheck/ (SYMOUT) and fails when any output
+# differs from the committed file.  Each recipe reads the committed inputs, so the
+# check compares every step on its own.
+SYMOUT ?= .
+SYMCHECK := build/symcheck
+SYMBOL_FILES := kn7000.sym src/symbols.inc \
+    kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym kn7000_sp7001_exports.sym \
+    kn7000_sp7001_table.sym src/sp7001/table_symbols.inc kn7000_exports_from_942.sym \
+    kn7000_b935.sym src/b935/symbols.inc kn7000_b935_manual.sym kn7000_b935_exports.sym \
+    kn7000_b893.sym src/b893/symbols.inc kn7000_b893_manual.sym kn7000_b893_exports.sym
+.PHONY: symbols symbols-check
+symbols:
+	@mkdir -p $(SYMOUT)/src
+	$(PYTHON) tools/gen_symbols.py baserom/kn7000_program.rom --sym $(SYMOUT)/kn7000.sym --inc $(SYMOUT)/src/symbols.inc
+symbols-check:
+	rm -rf -- $(SYMCHECK)
+	$(MAKE) --no-print-directory symbols symbols-sp7001 exports-941 symbols-935 symbols-893 SYMOUT=$(SYMCHECK)
+	@ok=1; for f in $(SYMBOL_FILES); do \
+	    if cmp -s "$(SYMCHECK)/$$f" "$$f"; then echo "OK    $$f is what its generator writes"; \
+	    else echo "FAIL  $$f differs from its generator's output ($(SYMCHECK)/$$f)"; ok=0; fi; done; \
+	 [ $$ok -eq 1 ]
 
 # Regenerate src/program.s and its parts in src/program/ (code region 1 and the
 # library image as MN10300 assembly; tools/gen_program_s.py, needs unidasm,
@@ -274,7 +313,7 @@ baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
 
 build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/program/*.s) \
 		$(wildcard src/sp7001/program/data/*) src/constants.inc src/sp7001/symbols.inc tools/kn7asm.py \
-		baserom/kn7000_program_sp7001.rom
+		baserom/kn7000_program_sp7001.rom build/bitmaps/sp7001/.stamp
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
@@ -368,36 +407,32 @@ SP7001_LIB_FILE := 0x3BA785
 # misalign, so tools/itron_stubs.py then re-places each exported kernel name on the 941 stub
 # that enters the same service routine (needs unidasm, $UNIDASM).
 .PHONY: exports-941
-exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.py tools/itron_stubs.py \
-		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
+exports-941: $(REFS) $(SP7001_REFS)
+	@mkdir -p $(SYMOUT)
 	$(PYTHON) tools/port_symbols.py baserom/kn7000_program_sp7001.rom baserom/kn7000_program.rom \
 	    baserom/kn7000_table_sp7001.rom baserom/kn7000_table.rom \
-	    kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --old-lib-base $(SP7001_LIB_FILE) \
+	    kn7000_sp7001_exports.sym $(SYMOUT)/kn7000_exports_from_942.sym --old-lib-base $(SP7001_LIB_FILE) \
 	    --title "KN7000 build 941: names from the SP7001 (build 942) plug-in export table, ported back"
 	$(PYTHON) tools/itron_stubs.py baserom/kn7000_program_sp7001.rom $(SP7001_LIB_FILE) \
-	    baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --fix
+	    baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym $(SYMOUT)/kn7000_exports_from_942.sym --fix
 
 .PHONY: symbols-sp7001 program-src-sp7001
-# (symbols-sp7001 is a phony that depends on the files: inside the grouped target it
-# made the recipe run on every verify-sp7001, rewriting tracked files)
-symbols-sp7001: kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
-	kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc
-kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
-kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc &: \
-		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py tools/sp7001_exports.py \
-		kn7000.sym kn7000_manual.sym kn7000_sp7001_new.sym $(REFS) $(SP7001_REFS)
-	$(SP7001_PORT) kn7000.sym kn7000_sp7001.sym --inc src/sp7001/symbols.inc \
+# (explicit only: see `symbols` above; it reads the committed kn7000.sym,
+# kn7000_manual.sym and kn7000_sp7001_new.sym and writes under $(SYMOUT))
+symbols-sp7001: $(REFS) $(SP7001_REFS)
+	@mkdir -p $(SYMOUT)/src/sp7001
+	$(SP7001_PORT) kn7000.sym $(SYMOUT)/kn7000_sp7001.sym --inc $(SYMOUT)/src/sp7001/symbols.inc \
 	    --title "KN7000 SP7001 (program 942 / table 83) symbols" \
 	    --check-recovered 0x80:0x1864F4 0x3B97B4:0x3F8BDB
-	$(SP7001_PORT) kn7000_manual.sym kn7000_sp7001_manual.sym \
+	$(SP7001_PORT) kn7000_manual.sym $(SYMOUT)/kn7000_sp7001_manual.sym \
 	    --title "KN7000 SP7001 manual symbol supplement"
 	LIB_FILE_BASE=$(SP7001_LIB_FILE) UNIDASM=$(UNIDASM) $(PYTHON) tools/sp7001_exports.py \
-	    baserom/kn7000_program_sp7001.rom kn7000_sp7001_exports.sym \
+	    baserom/kn7000_program_sp7001.rom $(SYMOUT)/kn7000_sp7001_exports.sym \
 	    kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym
 	$(PYTHON) tools/gen_symbols.py baserom/kn7000_table_sp7001.rom --program-base 0x48000000 \
 	    --code-range $(SP7001_PLUGIN) --no-manual \
 	    --title "KN7000 SP7001 table-flash XAPR plug-in: names from its own MILK reflection tables" \
-	    --sym kn7000_sp7001_table.sym --inc src/sp7001/table_symbols.inc
+	    --sym $(SYMOUT)/kn7000_sp7001_table.sym --inc $(SYMOUT)/src/sp7001/table_symbols.inc
 
 # Regenerate src/sp7001/program.s from build 942 by porting build 941's split,
 # conversions and notes (needs unidasm). The committed file is the result.
@@ -665,7 +700,7 @@ baserom/kn7000_program_b$(1).rom: tools/rom_from_eproms.py
 
 build/kn7000_program_b$(1).rom: src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) \
 		$$(wildcard src/b$(1)/program/data/*) src/constants.inc src/b$(1)/symbols.inc \
-		tools/kn7asm.py tools/mn10300_asm.py baserom/kn7000_program_b$(1).rom
+		tools/kn7asm.py tools/mn10300_asm.py baserom/kn7000_program_b$(1).rom build/bitmaps/b$(1)/.stamp
 	@mkdir -p build
 	$$(ASM) src/b$(1)/program.s -I . -o $$@ --labels build/kn7000_program_b$(1).labels
 
@@ -677,20 +712,16 @@ verify-$(1): build/kn7000_program_b$(1).rom baserom/kn7000_program_b$(1).rom
 
 B$(1)_PORT = $$(PYTHON) tools/port_symbols.py baserom/kn7000_program.rom baserom/kn7000_program_b$(1).rom \
     baserom/kn7000_table.rom $$(B$(1)_TABLE) --min-run $$(PORT_MIN_RUN) --cache-dir build/offset-maps
-# (src/b<N>/symbols.inc is written with kn7000_b<N>.sym but is not declared a
-# target here, so verify-<N> never re-ports symbols: it needs only the reference)
-symbols-$(1): kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym
-kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym &: \
-		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py \
-		kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym $$(REFS) $$(B$(1)_TABLE) \
-		baserom/kn7000_program_b$(1).rom
-	@mkdir -p src/b$(1)
-	$$(B$(1)_PORT) kn7000.sym kn7000_b$(1).sym --inc src/b$(1)/symbols.inc \
+# (explicit only, as `symbols`: no rule has the committed files as its target, so
+# verify-<N> never re-ports symbols)
+symbols-$(1): $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
+	@mkdir -p $$(SYMOUT)/src/b$(1)
+	$$(B$(1)_PORT) kn7000.sym $$(SYMOUT)/kn7000_b$(1).sym --inc $$(SYMOUT)/src/b$(1)/symbols.inc \
 	    --title "KN7000 program $(1) symbols" \
 	    --check-recovered $$(B$(1)_RECOVER)
-	$$(B$(1)_PORT) kn7000_manual.sym kn7000_b$(1)_manual.sym \
+	$$(B$(1)_PORT) kn7000_manual.sym $$(SYMOUT)/kn7000_b$(1)_manual.sym \
 	    --title "KN7000 program $(1) manual symbol supplement"
-	$$(B$(1)_PORT) kn7000_exports_from_942.sym kn7000_b$(1)_exports.sym \
+	$$(B$(1)_PORT) kn7000_exports_from_942.sym $$(SYMOUT)/kn7000_b$(1)_exports.sym \
 	    --title "KN7000 program $(1): the SP7001 plug-in export names (ported 942 -> 941 -> $(1))"
 
 program-src-$(1): tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py tools/offset_map.py \

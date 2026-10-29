@@ -102,10 +102,24 @@ verify: build/$(ROM)
 
 # ---- symbols from the firmware's own MILK reflection tables --------------------
 # Only tables whose procedures land in the code ranges count (README.md, "Symbols").
-symbols $(MODEL).sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
+# The symbol files are committed sources: no rule has them as its target, so a build
+# never regenerates them (a changed gen_symbols.py used to rewrite them in the middle
+# of a gate).  `make symbols` regenerates them on purpose; `make symbols-check` writes
+# the generator's output to build/symcheck/ and fails when it differs from them.
+SYMOUT ?= .
+.PHONY: symbols-check
+symbols: baserom/$(ROM)
+	@mkdir -p $(SYMOUT)/src
 	$(PYTHON) $(TOOLS)/gen_symbols.py baserom/$(ROM) --program-base $(BASE) $(SYMRANGE) --no-manual \
 	    --title "KN6500 program-image symbols recovered from the MILK toolkit" \
-	    --inc-title "KN6500 symbols" --sym $(MODEL).sym --inc src/symbols.inc
+	    --inc-title "KN6500 symbols" --sym $(SYMOUT)/$(MODEL).sym --inc $(SYMOUT)/src/symbols.inc
+symbols-check:
+	rm -rf -- build/symcheck
+	$(MAKE) --no-print-directory symbols SYMOUT=build/symcheck
+	@ok=1; for f in $(MODEL).sym src/symbols.inc; do \
+	    if cmp -s "build/symcheck/$$f" "$$f"; then echo "OK    $$f is what gen_symbols.py writes"; \
+	    else echo "FAIL  $$f differs from gen_symbols.py's output (build/symcheck/$$f)"; ok=0; fi; done; \
+	 [ $$ok -eq 1 ]
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
