@@ -711,6 +711,10 @@ def typed_gap(d, lo, hi, base, ptr_ok, nm_or_hex):
             out.append(f"    .space {e - o}, 0x{b:02X}")
             o = e
             continue
+        if o % 4 == 0 and o + 4 <= hi and ptr_ok(struct.unpack_from("<I", d, o)[0]):
+            out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
+            o += 4
+            continue
         e = o
         while e < hi and printable(d[e]):
             e += 1
@@ -745,6 +749,16 @@ def typed_gap(d, lo, hi, base, ptr_ok, nm_or_hex):
             out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
             o += 4
             continue
+        if o % 4 == 0 and o + 16 <= hi:   # a run of u32 words that differ only in their low byte
+            w0 = struct.unpack_from("<I", d, o)[0]
+            e = o
+            while e + 4 <= hi and struct.unpack_from("<I", d, e)[0] >> 8 == w0 >> 8 and w0 >> 8:
+                e += 4
+            if e - o >= 16:
+                for p in range(o, e, 4):
+                    out.append(f"    .long 0x{struct.unpack_from('<I', d, p)[0]:08X}   # u32 table (CPU 0x{base + p:08X})")
+                o = e
+                continue
         if o % 4 == 0 and o + 4 <= hi and 0 < struct.unpack_from("<I", d, o)[0] < 0x10000:
             out.append(f"    .long 0x{struct.unpack_from('<I', d, o)[0]:08X}")
             o += 4

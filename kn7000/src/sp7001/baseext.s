@@ -29845,9 +29845,18 @@
     .space 2, 0x00
 # pointer table (CPU 0x502B17DC, 2 entries)
     .long 0x502AFA40, 0x502AFAD4
-.incbin_range "baserom/sp7001_baseext.xap", 0x0167E4, 0x01680E
-    .byte 0x2B, 0x50, 0x00   # "+P"
-    .space 3, 0x00
+    .space 4, 0xFF
+    .long 0x502AFF88
+    .long 0x02F00103   # u32 table (CPU 0x502B17EC)
+    .long 0x02F00104   # u32 table (CPU 0x502B17F0)
+    .long 0x02F00105   # u32 table (CPU 0x502B17F4)
+    .long 0x02F0010A   # u32 table (CPU 0x502B17F8)
+    .long 0x02F00109   # u32 table (CPU 0x502B17FC)
+    .long 0x02F00108   # u32 table (CPU 0x502B1800)
+    .long 0x02F00107   # u32 table (CPU 0x502B1804)
+    .long 0x02F00106   # u32 table (CPU 0x502B1808)
+    .long 0x502B006C
+    .space 4, 0x00
 # pointer table (CPU 0x502B1814, 2 entries)
     .long 0x502B0180, 0x502B01A8
     .space 4, 0xFF
