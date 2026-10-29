@@ -328,7 +328,9 @@
  * registry slot 0x260, 0x37 entries, one per letter 'A'..'w'): {property-type proc, number
  * of named values, value size, -> {name, value} pairs}.  The names are those pairs (CL_White,
  * BD_None, ...); fonts, bitmaps and icons are indices into a name table, spelled as the
- * type's EVT_MAKE_DUMP writes them (the DumpPrefix string + the table's name). */
+ * type's EVT_MAKE_DUMP writes them (the DumpPrefix string + the table's name).
+ * The assembler twin of this list is hdae5000/shared/naka_values.s (same generator). */
+#define NAKA_NO_OBJECT           0xFFFFFFFFu  /* an object-id field that names no object */
 /* letter Z, ConstFlagProc (SupportClass_PropTypeRecords['Z']) */
 #define CF_AllRam                0x0000u
 #define CF_AllRom                0x0001u
