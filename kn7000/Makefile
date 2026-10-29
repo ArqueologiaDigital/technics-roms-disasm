@@ -510,6 +510,39 @@ ic18-src: tools/gen_ic18_s.py tools/gen_xap_s.py kn7000_ic18.sym baserom/kn7000_
 	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
 	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
 
+# ---- All of IC18: the boot ROM and the rhythm data -----------------------------
+# src/ic18/ic18.s is boot.s (above) followed by rhythm.s, the "Technics Rhythms"
+# style resource from 0x10000 to the end of the chip, typed record by record
+# (tools/gen_ic18_rhythm_s.py). The styles' event streams, the ROM's music, are
+# .incbin_range'd from the whole chip image, which is copied here with its SHA-1
+# checked and never committed. See notes/ic18-rhythm-rom.md.
+.PHONY: verify-ic18-full ic18-rhythm-src
+baserom/kn7000_ic18.rom:
+	@mkdir -p baserom
+	echo "$(IC18_SHA1)  $(IC18_ROM)" | sha1sum --quiet -c
+	cp "$(IC18_ROM)" $@.tmp
+	echo "$(IC18_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/kn7000_ic18.bin: src/ic18/ic18.s src/ic18/boot.s src/ic18/rhythm.s baserom/kn7000_ic18.rom \
+		tools/kn7asm.py tools/mn10300_asm.py
+	@mkdir -p build
+	$(ASM) src/ic18/ic18.s -I . -o $@ --labels build/kn7000_ic18.labels
+
+verify-ic18-full: build/kn7000_ic18.bin baserom/kn7000_ic18.rom
+	@if [ "$$(sha1sum < $< | cut -d' ' -f1)" = "$(IC18_SHA1)" ] && cmp -s $< baserom/kn7000_ic18.rom; then \
+	    echo "OK    kn7000_ic18.bin is 100% byte-identical to all of IC18 (SHA-1 $(IC18_SHA1))"; \
+	 else echo "FAIL  kn7000_ic18.bin differs from IC18:"; \
+	    cmp $< baserom/kn7000_ic18.rom || true; exit 1; fi
+
+# Regenerate src/ic18/rhythm.s (needs program 941 and table 84 for the rhythm
+# groups and the table-ROM style names). The committed file is the result.
+ic18-rhythm-src: tools/gen_ic18_rhythm_s.py baserom/kn7000_ic18.rom baserom/kn7000_program.rom \
+		baserom/kn7000_table.rom
+	$(PYTHON) tools/gen_ic18_rhythm_s.py --rom baserom/kn7000_ic18.rom \
+	    --program baserom/kn7000_program.rom --table baserom/kn7000_table.rom \
+	    --out src/ic18/rhythm.s
+
 # ---- Table build 80 (pairs with program 893, v1.3) -------------------------
 # The reference is the read of Felipe's own instrument: the two EPROM halves in
 # the private romset, de-interleaved like SP7001's. src/b80/table.s builds it
