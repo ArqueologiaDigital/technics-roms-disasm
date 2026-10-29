@@ -16734,7 +16734,7 @@ PfDoubleToDecimal_entry:
 	mov	sp, a2
 	add	0x68, a2
 	mov	a2, (4, sp)
-	mov	data_9783E698, a1
+	mov	PfDoubleToDecimal_Table, a1
 	mov	sp, a0
 	add	0x44, a0
 	mov	-5, d1
@@ -17313,7 +17313,7 @@ LibI32ToF64_L55:
 
 LibF64Zero:
 	add	-8, sp
-	mov	data_9783E6AC, a0
+	mov	LibF64Zero_Table, a0
 	mov	sp, a1
 	mov	(a0), d1
 	mov	(4, a0), d0
@@ -19756,12 +19756,12 @@ func_9780A414_entry:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x278, a0), a1
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	8, d0
 	mov	d0, (0x14, sp)
 	mov	0x77, d0
-	mov	FN_KssTitleFunc, d1
+	mov	0x01480000, d1
 	mov	Str_TT_HDDEXT, a0
 	calls	(a1)
 	ret	0, 0x2c
@@ -28241,7 +28241,7 @@ KssLanguageCheck_Lf:
 	bra	KssLanguageCheck_L31
 KssLanguageCheck_L1b:
 	mov	(0xc, sp), d0
-	cmp	EV_NONE, d0
+	cmp	0x1800000, d0
 	bne	KssLanguageCheck_L27
 	bra	KssLanguageCheck_L35
 KssLanguageCheck_L27:
@@ -32631,7 +32631,7 @@ KssInitialWaitProc_L164:
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
 	mov	d0, (0x18, sp)
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 	mov	-2, d0
@@ -32702,14 +32702,14 @@ KssInitialWaitProc_L193:
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	EV_SHOW, d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0x14, d0
-	mov	HDD_MAIN_MENU_id, d1
+	mov	0x00770000, d1
 	calls	(a0)
 	bra	KssInitialWaitProc_L2a7
 KssInitialWaitProc_L29a:
@@ -32790,7 +32790,7 @@ func_978129A4_entry_L81:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
 func_978129A4_entry_La0:
@@ -33839,7 +33839,7 @@ KssCatch_LBNEntryBox:
 	add	-0x48, sp
 	mov	d0, (0x54, sp)
 	mov	d1, (0x58, sp)
-	mov	data_978A0604, a1
+	mov	KssCatch_LBNEntryBox_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	mov	-8, d1
@@ -34406,7 +34406,7 @@ KssCatch_LBNEntryBox_L642:
 	mov	(0x30, sp), d1
 	mov	0x97913b14, a0
 	call	func_9780271A_entry, [d2], 0x4c
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	SELECT_NUMBER_id, d1
@@ -40160,14 +40160,14 @@ KssNamingWindowProc_Le87:
 	beq	KssNamingWindowProc_Led1
 	bra	KssNamingWindowProc_Lee8
 KssNamingWindowProc_Led1:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x64, d0
 	mov	BigFont_DirSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssNamingWindowProc_Lefd
 KssNamingWindowProc_Lee8:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x64, d0
 	mov	HDD_DIR_SELECT_id, d1
@@ -40189,7 +40189,7 @@ KssNamingWindowProc_Lf0a:
 	movhu	(0x3c, sp), d0
 	mov	0x97913ef9, a0
 	call	func_9780232C_entry, 0, 0x48
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x68, d0
 	mov	HDD_FLS_SELECT_id, d1
@@ -53543,14 +53543,14 @@ KssCatch_SetSfx_L33c:
 	beq	KssCatch_SetSfx_L350
 	bra	KssCatch_SetSfx_L369
 KssCatch_SetSfx_L350:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	BigFont_FileSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L369:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	HDD_FILE_SELECT_id, d1
@@ -54553,14 +54553,14 @@ KssCatch_SetSfxSave_L411:
 	beq	KssCatch_SetSfxSave_L444
 	bra	KssCatch_SetSfxSave_L45d
 KssCatch_SetSfxSave_L444:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x65, d0
 	mov	BigFont_FileSelect_id, d1
 	call	func_97817C21_entry, 0, 0x14
 	bra	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L45d:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x65, d0
 	mov	HDD_FILE_SELECT_id, d1
@@ -55241,7 +55241,7 @@ KssTitleFunc_Led:
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
-	mov	EV_APCReset, d1
+	mov	0x01880000, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -55249,7 +55249,7 @@ KssTitleFunc_Led:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
-	mov	EV_APCReset, d1
+	mov	0x01880000, d1
 	calls	(a0)
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L152:
@@ -55403,7 +55403,7 @@ Main_Wind_KSS_L109:
 	mov	d0, (0x14, sp)
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 Main_Wind_KSS_L121:
@@ -56016,7 +56016,7 @@ SelectFDCPListProc_La5:
 	jmp	SelectFDCPListProc_L7f8
 SelectFDCPListProc_Lb2:
 	mov	(0xb4, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	SelectFDCPListProc_Lbf
 	jmp	SelectFDCPListProc_La02
 SelectFDCPListProc_Lbf:
@@ -56675,7 +56675,7 @@ SelectFDCPListProc_L6cc:
 	movhu	(0x3c, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	MT_OverFlow, d1
+	mov	0x01a80000, d1
 	calls	(a0)
 	bra	SelectFDCPListProc_L70d
 SelectFDCPListProc_L6ef:
@@ -57320,7 +57320,7 @@ SelectFDCPSMFListProc_La5:
 	jmp	SelectFDCPSMFListProc_L8bc
 SelectFDCPSMFListProc_Lb2:
 	mov	(0xb0, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	SelectFDCPSMFListProc_Lbf
 	jmp	SelectFDCPSMFListProc_Laf3
 SelectFDCPSMFListProc_Lbf:
@@ -58038,7 +58038,7 @@ SelectFDCPSMFListProc_L790:
 	movhu	(0x38, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	MT_OverFlow, d1
+	mov	0x01a80000, d1
 	calls	(a0)
 	bra	SelectFDCPSMFListProc_L7d1
 SelectFDCPSMFListProc_L7b3:
@@ -60930,7 +60930,7 @@ KssCatch_SaveOptionsAndPassWords_Ld2:
 	mov	PROTECT_OPTIONS_id, d0
 	mov	d0, (0x10, sp)
 	mov	0x67, d0
-	mov	HDD_MAIN_MENU_id, d1
+	mov	0x00770000, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SaveOptionsAndPassWords_Le9:
 	mov	(data_979126B4), a0
@@ -61197,7 +61197,7 @@ KssAudioOutputProc_L165:
 	mov	data_978A4138, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A3FCC), a0
+	mov	(KssAudioOutputProc_Table_2), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -61865,7 +61865,7 @@ KssAudioOutputProc_L8a4:
 	movbu	(0x97916f53), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -61915,7 +61915,7 @@ KssAudioOutputProc_L92a:
 	movbu	(0x97916f54), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -61965,7 +61965,7 @@ KssAudioOutputProc_L9b0:
 	movbu	(0x97916f55), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -62015,7 +62015,7 @@ KssAudioOutputProc_La36:
 	movbu	(0x97916f56), d0
 	add	8, d0
 	asl2	d0
-	mov	data_978A3FCC, a0
+	mov	KssAudioOutputProc_Table_2, a0
 	mov	(d0, a0), a0
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -62599,7 +62599,7 @@ KssAudioOutputProc_L104f:
 	mov	(0x24, a0), a0
 	movhu	(a0), d1
 	exth	d1
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d1, a0), d1
 	inc	d0
 	cmp	d1, d0
@@ -62713,7 +62713,7 @@ KssAudioOutputProc_L117c:
 	mov	(0x24, a0), a0
 	movhu	(a0), d1
 	exth	d1
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d1, a0), d1
 	extbu	d0
 	add	-1, d1
@@ -62806,7 +62806,7 @@ KssAudioOutputProc_L1268:
 	mov	(0x24, a0), a0
 	movhu	(a0), d0
 	exth	d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0x44, sp), d0
 	extbu	d0
@@ -62879,7 +62879,7 @@ KssAudioOutputProc_L1325:
 
 func_97826A43:
 	add	-0x28, sp
-	mov	data_978A41AC, a1
+	mov	func_97826A43_Table, a1
 	mov	sp, a0
 	add	0xc, a0
 	mov	-0x19, d1
@@ -63057,7 +63057,7 @@ func_97826B0B_L92:
 	jmp	func_97826B0B_L1ad
 func_97826B0B_L98:
 	movbu	(8, sp), d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0xc, sp), d0
 	inc	d0
@@ -63127,7 +63127,7 @@ func_97826B0B_L118:
 	jmp	func_97826B0B_L1ad
 func_97826B0B_L120:
 	movbu	(8, sp), d0
-	mov	data_978A3E5C, a0
+	mov	KssAudioOutputProc_Table, a0
 	movbu	(d0, a0), d1
 	movbu	(0xc, sp), d0
 	add	2, d0
@@ -64297,7 +64297,7 @@ func_9782766C_entry_L6a:
 	mov	d0, (0x18, sp)
 	bra	func_9782766C_entry_Lab
 func_9782766C_entry_L84:
-	mov	FN_InitializeUser00, d0
+	mov	0x01000000, d0
 	mov	d0, (0x10, sp)
 	mov	0x00100000, d0
 	mov	d0, (0x14, sp)
@@ -66834,7 +66834,7 @@ KSSCLSListProc_La5:
 	jmp	KSSCLSListProc_L933
 KSSCLSListProc_Lb2:
 	mov	(0xe4, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	KSSCLSListProc_Lbf
 	jmp	KSSCLSListProc_Lb7c
 KSSCLSListProc_Lbf:
@@ -68274,7 +68274,7 @@ KSSCLSFileListProc_Lbf:
 	jmp	KSSCLSFileListProc_Le0d
 KSSCLSFileListProc_Lce:
 	mov	(0x22c, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	KSSCLSFileListProc_Ldd
 	jmp	KSSCLSFileListProc_L159f
 KSSCLSFileListProc_Ldd:
@@ -69318,7 +69318,7 @@ KSSCLSFileListProc_Lb7d:
 	movhu	(0xb6, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	MT_OverFlow, d1
+	mov	0x01a80000, d1
 	calls	(a0)
 	bra	KSSCLSFileListProc_Lbc0
 KSSCLSFileListProc_Lba0:
@@ -71334,7 +71334,7 @@ KssxJukeBoxProc_L8a2:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71395,7 +71395,7 @@ KssxJukeBoxProc_L95f:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71456,7 +71456,7 @@ KssxJukeBoxProc_La1c:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71517,7 +71517,7 @@ KssxJukeBoxProc_Lad9:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71589,7 +71589,7 @@ KssxJukeBoxProc_Lbba:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71650,7 +71650,7 @@ KssxJukeBoxProc_Lc77:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71711,7 +71711,7 @@ KssxJukeBoxProc_Ld34:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -71772,7 +71772,7 @@ KssxJukeBoxProc_Ldf1:
 	movhu	(d0, a0), d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	JUKE_BOX_id, d1
@@ -72581,7 +72581,7 @@ HamaAlphabeticFileListProc_Lce:
 	jmp	HamaAlphabeticFileListProc_L1121
 HamaAlphabeticFileListProc_Ldd:
 	mov	(0x10c, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	HamaAlphabeticFileListProc_Lec
 	jmp	HamaAlphabeticFileListProc_L13a7
 HamaAlphabeticFileListProc_Lec:
@@ -72837,7 +72837,7 @@ HamaAlphabeticFileListProc_L3a1:
 	bhi	HamaAlphabeticFileListProc_L3ae
 	bra	HamaAlphabeticFileListProc_L3ed
 HamaAlphabeticFileListProc_L3ae:
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
 	mov	ALPHA_SORTED_LIST_id, d1
@@ -73742,7 +73742,7 @@ HamaAlphabeticFileListProc_Lccf:
 	bge	HamaAlphabeticFileListProc_Lce6
 	jmp	HamaAlphabeticFileListProc_L81a
 HamaAlphabeticFileListProc_Lce6:
-	mov	data_978A47F0, a0
+	mov	HamaAlphabeticFileListProc_Table, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	(0x20, sp), a0
@@ -73942,7 +73942,7 @@ HamaAlphabeticFileListProc_Lee4:
 	movhu	(0x5c, sp), d1
 	exth	d1
 	mov	d1, (0x10, sp)
-	mov	MT_OverFlow, d1
+	mov	0x01a80000, d1
 	mov	d2, d0
 	calls	(a0)
 	bra	HamaAlphabeticFileListProc_Lf28
@@ -74849,7 +74849,7 @@ HamaSelectListProc_La5:
 	jmp	HamaSelectListProc_L938
 HamaSelectListProc_Lb2:
 	mov	(0xe4, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	HamaSelectListProc_Lbf
 	jmp	HamaSelectListProc_Laaa
 HamaSelectListProc_Lbf:
@@ -75988,7 +75988,7 @@ HamaSelectFileListProc_Ldb:
 	jmp	HamaSelectFileListProc_L1217
 HamaSelectFileListProc_Le6:
 	mov	(0x10c, sp), d0
-	cmp	EV_APCReset, d0
+	cmp	0x1880000, d0
 	bne	HamaSelectFileListProc_Lf5
 	jmp	HamaSelectFileListProc_L1240
 HamaSelectFileListProc_Lf5:
@@ -79552,7 +79552,7 @@ KssXLyricsBoxProc_La64:
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	HDD_MAIN_MENU_id, d0
+	mov	0x00770000, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
 	clr	d0
@@ -82997,7 +82997,7 @@ func_978339B0:
 	add	-0x24, sp
 
 func_978339B0_entry:
-	mov	data_978A4D98, a1
+	mov	func_978339B0_Table, a1
 	mov	sp, a0
 	add	0x14, a0
 	mov	-0x10, d1
@@ -83039,7 +83039,7 @@ func_97833A24:
 	add	-0x16c, sp
 	mov	d0, (0x174, sp)
 	mov	d1, (0x178, sp)
-	mov	data_978A4E47, a1
+	mov	func_97833A24_Table, a1
 	mov	sp, a0
 	add	0x1c, a0
 	mov	-0x38, d1
@@ -83616,7 +83616,7 @@ func_97833E69:
 
 func_97833E69_entry:
 	mov	d0, (0xa4, sp)
-	mov	data_978AECAC, a1
+	mov	func_97833E69_Table, a1
 	mov	sp, a0
 	add	0x1c, a0
 	mov	-0x80, d1
@@ -83713,7 +83713,7 @@ func_97833F31:
 func_97833F31_entry:
 	mov	a1, (0xa0, sp)
 	mov	a0, (0x9c, sp)
-	mov	data_978AED8A, a1
+	mov	func_97833F31_Table, a1
 	mov	sp, a0
 	add	0x14, a0
 	mov	-0x80, d1
@@ -84518,7 +84518,7 @@ func_978343AC_L1a0:
 	beq	func_978343AC_L1c4
 	jmp	func_978343AC_L324
 func_978343AC_L1c4:
-	mov	data_978AF120, a1
+	mov	func_978343AC_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	mov	-0x14, d1
@@ -84777,7 +84777,7 @@ func_97834719_entry_L2a:
 	nop
 	nop
 	mulu	d1, d0
-	mov	data_979117D0, a0
+	mov	func_97834719_Table, a0
 	mov	(d0, a0), a1
 	mov	0x97917d34, a0
 	mov	(0x14, sp), d0
@@ -84785,7 +84785,7 @@ func_97834719_entry_L2a:
 	nop
 	nop
 	mulu	d1, d0
-	add	data_979117D0, d0
+	add	func_97834719_Table, d0
 	call	func_9783403D_entry, [d3], 0x18
 	mov	(0x14, sp), d0
 	inc	d0
@@ -84796,7 +84796,7 @@ func_97834719_entry_L58:
 	nop
 	nop
 	mulu	d1, d0
-	mov	data_979117D0, a0
+	mov	func_97834719_Table, a0
 	mov	(d0, a0), a0
 	movbu	(a0), d0
 	extb	d0
@@ -85468,7 +85468,7 @@ func_97834BA2_entry_L178:
 	beq	func_97834BA2_entry_L191
 	jmp	func_97834BA2_entry_L359
 func_97834BA2_entry_L191:
-	mov	data_978AF3E8, a1
+	mov	func_97834BA2_Table, a1
 	mov	sp, a0
 	add	0x40, a0
 	movbu	(a1), d0
@@ -86541,7 +86541,7 @@ func_978355D3_L110:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L17a:
-	mov	data_978AF4C0, a1
+	mov	func_978355D3_Table, a1
 	mov	sp, a0
 	add	0x68, a0
 	mov	-0x10, d1
@@ -89974,7 +89974,7 @@ func_97837D7C_entry_L374:
 	bra	func_97837D7C_entry_L393
 func_97837D7C_entry_L37a:
 	movbu	(4, sp), d0
-	mov	data_979125B4, a0
+	mov	func_97837D7C_Table, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90025,7 +90025,7 @@ func_97837D7C_entry_L3fb:
 	bra	func_97837D7C_entry_L41a
 func_97837D7C_entry_L401:
 	movbu	(4, sp), d0
-	mov	data_979125C6, a0
+	mov	func_97837D7C_Table_2, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90082,7 +90082,7 @@ func_97837D7C_entry_L491:
 	bra	func_97837D7C_entry_L4b0
 func_97837D7C_entry_L497:
 	movbu	(4, sp), d0
-	mov	data_979125E6, a0
+	mov	func_97837D7C_Table_3, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90132,7 +90132,7 @@ func_97837D7C_entry_L516:
 	bra	func_97837D7C_entry_L535
 func_97837D7C_entry_L51c:
 	movbu	(4, sp), d0
-	mov	data_979125EA, a0
+	mov	func_97837D7C_Table_4, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90183,7 +90183,7 @@ func_97837D7C_entry_L59d:
 	bra	func_97837D7C_entry_L5bc
 func_97837D7C_entry_L5a3:
 	movbu	(4, sp), d0
-	mov	data_9791260D, a0
+	mov	func_97837D7C_Table_5, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90234,7 +90234,7 @@ func_97837D7C_entry_L624:
 	bra	func_97837D7C_entry_L643
 func_97837D7C_entry_L62a:
 	movbu	(4, sp), d0
-	mov	data_9791262C, a0
+	mov	func_97837D7C_Table_6, a0
 	movbu	(d0, a0), d0
 	extb	d0
 	movhu	d0, (0x98068000)
@@ -90924,7 +90924,7 @@ func_97838A05_entry_Ldf:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_Lff
 func_97838A05_entry_Le9:
-	mov	data_979125B4, a0
+	mov	func_97837D7C_Table, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90949,7 +90949,7 @@ func_97838A05_entry_L115:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L135
 func_97838A05_entry_L11f:
-	mov	data_979125C6, a0
+	mov	func_97837D7C_Table_2, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90974,7 +90974,7 @@ func_97838A05_entry_L14b:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L16b
 func_97838A05_entry_L155:
-	mov	data_979125E6, a0
+	mov	func_97837D7C_Table_3, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -90999,7 +90999,7 @@ func_97838A05_entry_L181:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L1a1
 func_97838A05_entry_L18b:
-	mov	data_979125EA, a0
+	mov	func_97837D7C_Table_4, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -91024,7 +91024,7 @@ func_97838A05_entry_L1b7:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L1d7
 func_97838A05_entry_L1c1:
-	mov	data_9791260D, a0
+	mov	func_97837D7C_Table_5, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -91049,7 +91049,7 @@ func_97838A05_entry_L1ed:
 	mov	d0, (4, sp)
 	bra	func_97838A05_entry_L20d
 func_97838A05_entry_L1f7:
-	mov	data_9791262C, a0
+	mov	func_97837D7C_Table_6, a0
 	mov	(4, sp), d0
 	movbu	(d0, a0), d1
 	extb	d1
@@ -93317,7 +93317,7 @@ func_97839FA8_L13:
 func_97839FA8_L1c:
 	movbu	(0x10, sp), d0
 	add	d0, d0
-	mov	data_97912664, a0
+	mov	func_97839FA8_Table, a0
 	movhu	(d0, a0), d0
 	mov	(0xc, sp), a0
 	movhu	(a0), d1
@@ -93328,7 +93328,7 @@ func_97839FA8_L32:
 	movbu	(0x10, sp), d0
 	mov	d0, a0
 	add	a0, a0
-	mov	data_97912684, a1
+	mov	func_97839FA8_Table_2, a1
 	mov	a0, d0
 	movhu	(d0, a1), d2
 	mov	(0xc, sp), a0
@@ -93352,7 +93352,7 @@ func_97839FF6_L11:
 func_97839FF6_L14:
 	movbu	(0x10, sp), d0
 	add	d0, d0
-	mov	data_97912664, a0
+	mov	func_97839FA8_Table, a0
 	movhu	(d0, a0), d2
 	movbu	(0x10, sp), d0
 	add	d0, d0
@@ -93385,7 +93385,7 @@ func_9783A02E_L11:
 	bra	func_9783A02E_L2f
 func_9783A02E_L1a:
 	movbu	(0xc, sp), d0
-	mov	data_979126A4, a0
+	mov	func_9783A02E_Table, a0
 	movbu	(d0, a0), d0
 	mov	(8, sp), a0
 	movbu	(a0), d1
@@ -93394,7 +93394,7 @@ func_9783A02E_L1a:
 	bra	func_9783A02E_L42
 func_9783A02E_L2f:
 	movbu	(0xc, sp), d0
-	mov	data_979126AC, a0
+	mov	func_9783A02E_Table_2, a0
 	movbu	(d0, a0), d0
 	mov	(8, sp), a0
 	movbu	(a0), d1
@@ -93418,7 +93418,7 @@ func_9783A073_entry_Lf:
 	bra	func_9783A073_entry_L31
 func_9783A073_entry_L12:
 	movbu	(0x10, sp), d0
-	mov	data_979126A4, a0
+	mov	func_9783A02E_Table, a0
 	movbu	(d0, a0), d2
 	movbu	(0x10, sp), d0
 	movbu	(d0, a0), d1
@@ -99864,7 +99864,7 @@ func_9783DC78_L131:
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
-	mov	EV_APCReset, d1
+	mov	0x01880000, d1
 	calls	(a0)
 	mov	(data_979126B4), a0
 	mov	(0x100c, a0), a0
@@ -99872,7 +99872,7 @@ func_9783DC78_L131:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
-	mov	EV_APCReset, d1
+	mov	0x01880000, d1
 	calls	(a0)
 func_9783DC78_L18c:
 	ret	[d2,a2], 0x28

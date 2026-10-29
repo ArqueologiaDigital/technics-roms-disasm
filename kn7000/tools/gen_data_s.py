@@ -971,7 +971,7 @@ class Gen:
         func, cpu = None, None
         for i, ln in enumerate(lines):
             m = re.match(r"^([A-Za-z_]\w*):", ln)
-            if m and not m.group(1).startswith("loc_"):
+            if m and not m.group(1).startswith("loc_") and not re.search(r"_L[0-9a-f]+_*$", m.group(1)):
                 func = m.group(1)
             m = re.match(r"# \S+\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if m:
