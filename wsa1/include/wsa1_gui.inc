@@ -1,0 +1,357 @@
+; ==============================================================================
+; include/wsa1_gui.inc -- the SX-WSA1R's GUI records, one macro per record kind
+; ==============================================================================
+;
+; The WSA1 has no widget classes and no string table.  Everything its 320 x 240
+; LCD shows -- every caption, box, rule, bitmap and live value -- is one RECORD of
+; a DISPLAY LIST, and a screen is the code that runs a few lists (its Enter / Paint
+; method) plus a table that maps each panel key to a handler (its Button method).
+; This file names the records; the screens, their key maps and their transitions
+; are indexed in wsa1/docs/gui-menu-map.md (generated from the sources by
+; scripts/analysis/gui_menu_map.py).
+;
+;   record     +0 opcode   +1 length of the WHOLE record   +2.. operands
+;
+; Two interpreters run the lists, both in prom_b (FINDINGS-ui-display-list.md,
+; FINDINGS-ui-display-list-interpreter-b.md):
+;
+;   DisplayList_Run  (0xF31A09, `dl_*` below) draws what the RECORD says.  Its
+;       opcode IS the SWI7 graphics service number: DLHandler_IX_Text does
+;       `ld A,(XIY)` / `swi 7`, and SWI7_ServiceTable (prom_a 0xF8E9C6) names the
+;       service.  Each macro is named after its service.
+;   DisplayListB_Run (0xF31AF0, `dlb_*` below) draws what a VARIABLE says: every
+;       handler first reads ((var) & mask) >> shift (DisplayListB_ExtractField)
+;       and then draws that value as digits, as entry [value] of a string table,
+;       or as the rectangle in entry [value] of a table.
+;
+; GEOMETRY IS IN PANEL PIXELS, x right and y down, origin top left:
+;   * x0, y0, x1, y1 are the four words DLHandler_4Words copies to LCD_X0, LCD_Y0,
+;     LCD_X1, LCD_Y1 -- the corners LCD_Svc_00_DrawLine / LCD_Svc_05_FillRect /
+;     LCD_Svc_09_DrawBox walk ("(0x2536)-(0x2532)+1" rows, inclusive);
+;   * a text or bitmap position is a display-RAM BYTE OFFSET within the layer
+;     (LCD_Svc_06_DrawText8x14, LCD_Svc_03_BlitColumns: `ld WA,IX` /
+;     `add WA,(LCD_CurrentLayerBase)`), and LCD_Init_SED1330 programmes AP = 40
+;     bytes per line with 8 pixels per byte.  So offset = y * 40 + x / 8, and x
+;     must be a multiple of 8 -- _dl_at checks it.  The packed-text services 0x17
+;     and 0x1C instead take a pixel x and y in LCD_X0 / LCD_Y0 (DLHandler_2Words_Text).
+;   * w is in pixels (BC counts byte columns, so w / 8 is emitted); h is in rows.
+;
+; Which layer a list draws into is not in the list: the caller sets
+; LCD_CurrentLayer (0x2540) before `call T_DisplayList_Run`.
+;
+; Every macro computes its own length byte from its operands, so a mis-read text
+; or field cannot rebuild the ROM: the byte gate checks every record.
+; Converted by scripts/tools/gui_display_list_macros.py (its docstring says how a
+; record's interpreter is decided); counted by scripts/analysis/gui_readability_census.py.
+; ==============================================================================
+
+.ifndef WSA1_GUI_INC
+.equ WSA1_GUI_INC, 1
+
+; ---- SWI7 graphics services (SWI7_ServiceTable, prom_a 0xF8E9C6): the `svc`
+;      field of an interpreter-B record, and the opcode of an interpreter-A one.
+	.equ LCDSVC_DrawLine,			0x00
+	.equ LCDSVC_DrawHLine,			0x01
+	.equ LCDSVC_DrawVLine,			0x02
+	.equ LCDSVC_BlitColumns,		0x03
+	.equ LCDSVC_ReadColumns,		0x04
+	.equ LCDSVC_FillRect,			0x05
+	.equ LCDSVC_DrawText8x14,		0x06
+	.equ LCDSVC_DrawText8x16,		0x07
+	.equ LCDSVC_DrawText16x16,		0x08
+	.equ LCDSVC_DrawBox,			0x09
+	.equ LCDSVC_DrawBoxShadow2,		0x0a
+	.equ LCDSVC_PlotPoint,			0x0b
+	.equ LCDSVC_SetLayersOn,		0x0c
+	.equ LCDSVC_SetLayersFlashing,		0x0d
+	.equ LCDSVC_ClearColumns,		0x0e
+	.equ LCDSVC_SetPanel2Layer,		0x0f
+	.equ LCDSVC_SetPanel3Layer,		0x10
+	.equ LCDSVC_DrawHLineDither,		0x11
+	.equ LCDSVC_DrawVLineDashed,		0x12
+	.equ LCDSVC_DrawBoxPatterned,		0x13
+	.equ LCDSVC_FillRectPattern,		0x14
+	.equ LCDSVC_DrawLineDashed,		0x15
+	.equ LCDSVC_DrawKatakanaHalfWidth,	0x16
+	.equ LCDSVC_DrawText8x8Packed,		0x17
+	.equ LCDSVC_DrawKatakana16x16,		0x19
+	.equ LCDSVC_DrawKanjiSetA16x16,		0x1a
+	.equ LCDSVC_EraseRect,			0x1b
+	.equ LCDSVC_DrawText16x16Packed,	0x1c
+	.equ LCDSVC_DrawHiragana16x16,		0x1d
+	.equ LCDSVC_ScrollCurrentLayer,		0x1e
+	.equ LCDSVC_DrawKanjiSetB16x16,		0x1f
+	.equ LCDSVC_DrawText8x10,		0x20
+	.equ LCDSVC_DrawText16x24,		0x21
+	.equ LCDSVC_DrawBoxShadow1,		0x22
+
+; ---- helpers ------------------------------------------------------------------
+
+; a display-RAM byte offset from a pixel position (see GEOMETRY above)
+.macro _dl_at x, y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+.endm
+
+; the record header: the opcode and the length byte, measured to the macro's end label
+.macro _dl_head op, start, end
+\start:
+	.byte \op, \end - \start
+.endm
+
+; ==============================================================================
+; INTERPRETER A -- DisplayList_Run (prom_b 0xF31A09), DisplayList_HandlerTable
+; ==============================================================================
+
+; ---- four corners -> DLHandler_4Words -> SWI7 service <op>.  10 bytes.
+.macro _dl_rect op, x0, y0, x1, y1
+	.byte \op, 10
+	.short \x0, \y0, \x1, \y1
+.endm
+.macro dl_line x0, y0, x1, y1
+	_dl_rect 0x00, \x0, \y0, \x1, \y1
+.endm
+.macro dl_hline x0, y0, x1, y1
+	_dl_rect 0x01, \x0, \y0, \x1, \y1
+.endm
+.macro dl_vline x0, y0, x1, y1
+	_dl_rect 0x02, \x0, \y0, \x1, \y1
+.endm
+.macro dl_fill_rect x0, y0, x1, y1
+	_dl_rect 0x05, \x0, \y0, \x1, \y1
+.endm
+.macro dl_box x0, y0, x1, y1
+	_dl_rect 0x09, \x0, \y0, \x1, \y1
+.endm
+.macro dl_box_shadow2 x0, y0, x1, y1
+	_dl_rect 0x0a, \x0, \y0, \x1, \y1
+.endm
+.macro dl_hline_dither x0, y0, x1, y1
+	_dl_rect 0x11, \x0, \y0, \x1, \y1
+.endm
+.macro dl_vline_dashed x0, y0, x1, y1
+	_dl_rect 0x12, \x0, \y0, \x1, \y1
+.endm
+.macro dl_box_patterned x0, y0, x1, y1
+	_dl_rect 0x13, \x0, \y0, \x1, \y1
+.endm
+.macro dl_line_dashed x0, y0, x1, y1
+	_dl_rect 0x15, \x0, \y0, \x1, \y1
+.endm
+.macro dl_erase_rect x0, y0, x1, y1
+	_dl_rect 0x1b, \x0, \y0, \x1, \y1
+.endm
+.macro dl_box_shadow1 x0, y0, x1, y1
+	_dl_rect 0x22, \x0, \y0, \x1, \y1
+.endm
+
+; ---- text at a display-RAM position -> DLHandler_IX_Text: IX = position,
+;      BC = length - 4 characters from +4, service <op>.  Characters below 0x20
+;      and above 0x7E are the font's own glyphs (FINDINGS-fonts.md) and are
+;      written as octal escapes.
+.macro _dl_text op, x, y, text
+	_dl_head \op, .Ldl_s\@, .Ldl_e\@
+	_dl_at \x, \y
+	.ascii "\text"
+.Ldl_e\@:
+.endm
+.macro dl_text8x14 x, y, text
+	_dl_text 0x06, \x, \y, "\text"
+.endm
+.macro dl_text8x16 x, y, text
+	_dl_text 0x07, \x, \y, "\text"
+.endm
+.macro dl_text16x16 x, y, text
+	_dl_text 0x08, \x, \y, "\text"
+.endm
+.macro dl_kana_halfwidth x, y, text
+	_dl_text 0x16, \x, \y, "\text"
+.endm
+.macro dl_svc18_unimplemented x, y, text
+	_dl_text 0x18, \x, \y, "\text"
+.endm
+.macro dl_katakana16 x, y, text
+	_dl_text 0x19, \x, \y, "\text"
+.endm
+.macro dl_kanji_a16 x, y, text
+	_dl_text 0x1a, \x, \y, "\text"
+.endm
+.macro dl_hiragana16 x, y, text
+	_dl_text 0x1d, \x, \y, "\text"
+.endm
+.macro dl_scroll_layer x, y, text
+	_dl_text 0x1e, \x, \y, "\text"
+.endm
+.macro dl_kanji_b16 x, y, text
+	_dl_text 0x1f, \x, \y, "\text"
+.endm
+.macro dl_text8x10 x, y, text
+	_dl_text 0x20, \x, \y, "\text"
+.endm
+.macro dl_text16x24 x, y, text
+	_dl_text 0x21, \x, \y, "\text"
+.endm
+
+; ---- text at any pixel -> DLHandler_2Words_Text: LCD_X0 = x, LCD_Y0 = y,
+;      BC = length - 6 characters from +6.  Services 0x17 (8x8 face) and 0x1C
+;      (16x16 face, 11 pixels apart): LCD_Svc_17_DrawText8x8Packed, LCD_Svc_1C_...
+.macro _dl_ptext op, x, y, text
+	_dl_head \op, .Ldl_s\@, .Ldl_e\@
+	.short \x, \y
+	.ascii "\text"
+.Ldl_e\@:
+.endm
+.macro dl_text8x8_packed x, y, text
+	_dl_ptext 0x17, \x, \y, "\text"
+.endm
+.macro dl_text16x16_packed x, y, text
+	_dl_ptext 0x1c, \x, \y, "\text"
+.endm
+
+; ---- one pixel -> DLHandler_2Words -> LCD_Svc_0B_PlotPoint.  6 bytes.
+.macro dl_plot x, y
+	.byte 0x0b, 6
+	.short \x, \y
+.endm
+
+; ---- zero a w x h area -> DLHandler_IY_BC_HL -> LCD_Svc_0E_ClearColumns
+;      (IY = position, BC = byte columns, HL = rows).  8 bytes.
+.macro dl_clear_area x, y, w, h
+	.byte 0x0e, 8
+	_dl_at \x, \y
+	.short (\w) / 8, \h
+.endm
+
+; ---- a bitmap that lives outside the list -> DLHandler_FarPtr: XIY = bitmap,
+;      IX = position, BC = byte columns, HL = rows -> LCD_Svc_03_BlitColumns
+;      (dl_bitmap) or LCD_Svc_04_ReadColumns (dl_read_area, the display copied
+;      INTO the buffer).  12 bytes.  The bitmap is column-major, w/8 columns of h
+;      bytes (FINDINGS-image-files.md).
+.macro dl_bitmap bitmap, x, y, w, h
+	.byte 0x03, 12
+	.long \bitmap
+	_dl_at \x, \y
+	.short (\w) / 8, \h
+.endm
+.macro dl_read_area buffer, x, y, w, h
+	.byte 0x04, 12
+	.long \buffer
+	_dl_at \x, \y
+	.short (\w) / 8, \h
+.endm
+
+; ---- one 24 x 24 value glyph -> DLHandler_Glyph24x24: glyph <n> of the 72-byte
+;      array DLGlyph_000_F78028 (prom_b), blitted 3 bytes x 24 rows at x, y.  5 bytes.
+.macro dl_value_glyph glyph, x, y
+	.byte 0x23, 5, \glyph
+	_dl_at \x, \y
+.endm
+
+; ==============================================================================
+; INTERPRETER B -- DisplayListB_Run (prom_b 0xF31AF0), DisplayListB_HandlerTable
+;
+; Common to every record: var = the 16-bit address the value is read from,
+; mask / shift = the bit-field ((var) & mask) >> (shift & 7), and svc = the SWI7
+; service that draws it (LCDSVC_* above).  Each opcode has ONE length in the
+; whole image, the one its handler implies (FINDINGS-ui-display-list-interpreter-b.md).
+; ==============================================================================
+
+.macro _dlb_field op, len, var, mask, shift
+	.byte \op, \len
+	.short \var
+	.byte \mask, \shift
+.endm
+
+; ---- the value as decimal digits at a display-RAM position -> DLB_Handler_Decimal
+;      (T_Value_ToAsciiDigits3_RightJustified; digits 3 / 2 / else 1 picks the
+;      first of the three digits drawn).  10 bytes.  dlb_number16 reads the
+;      variable as a 16-bit word instead of through the bit-field (`cp A,6`).
+.macro dlb_number var, mask, shift, svc, x, y, digits
+	_dlb_field 0x00, 10, \var, \mask, \shift
+	.byte \svc
+	_dl_at \x, \y
+	.byte \digits
+.endm
+.macro dlb_number16 var, mask, shift, svc, x, y, digits
+	_dlb_field 0x06, 10, \var, \mask, \shift
+	.byte \svc
+	_dl_at \x, \y
+	.byte \digits
+.endm
+; ---- signed: one more character, the sign, unless bit 7 of signflag is set
+;      (DisplayListB_ExtractFieldSigned).  11 bytes.
+.macro dlb_number_signed var, mask, shift, svc, x, y, digits, signflag
+	_dlb_field 0x05, 11, \var, \mask, \shift
+	.byte \svc
+	_dl_at \x, \y
+	.byte \digits, \signflag
+.endm
+; ---- the same at a pixel position (LCD_X0 / LCD_Y0) -> DLB_Handler_Decimal2Words,
+;      DLB_Handler_DecimalSigned2Words.  12 / 12 / 13 bytes.
+.macro dlb_number_xy var, mask, shift, svc, x, y, digits
+	_dlb_field 0x09, 12, \var, \mask, \shift
+	.byte \svc
+	.short \x, \y
+	.byte \digits
+.endm
+.macro dlb_number16_xy var, mask, shift, svc, x, y, digits
+	_dlb_field 0x0a, 12, \var, \mask, \shift
+	.byte \svc
+	.short \x, \y
+	.byte \digits
+.endm
+.macro dlb_number_signed_xy var, mask, shift, svc, x, y, digits, signflag
+	_dlb_field 0x0b, 13, \var, \mask, \shift
+	.byte \svc
+	.short \x, \y
+	.byte \digits, \signflag
+.endm
+
+; ---- entry [value] of a string table of <width>-character entries, at a
+;      display-RAM position -> DLB_Handler_StringTable.  15 bytes.
+.macro dlb_string var, mask, shift, svc, table, width, x, y
+	_dlb_field 0x02, 15, \var, \mask, \shift
+	.byte \svc
+	.long \table
+	.short \width
+	_dl_at \x, \y
+.endm
+; ---- the same at a pixel position -> DLB_Handler_StringTable2.  17 bytes.
+.macro dlb_string_xy var, mask, shift, svc, table, width, x, y
+	_dlb_field 0x07, 17, \var, \mask, \shift
+	.byte \svc
+	.long \table
+	.short \width, \x, \y
+.endm
+
+; ---- entry [value] of a table of 8-byte (x0, y0, x1, y1) rectangles, drawn by
+;      service svc -> DLB_Handler_Array8.  11 bytes.  Opcodes 0x03 and 0x08 share
+;      the handler; TODO: what tells them apart -- nothing in DLB_Handler_Array8
+;      reads the opcode.
+.macro dlb_rect_entry var, mask, shift, svc, table
+	_dlb_field 0x03, 11, \var, \mask, \shift
+	.byte \svc
+	.long \table
+.endm
+.macro dlb_rect_entry_op08 var, mask, shift, svc, table
+	_dlb_field 0x08, 11, \var, \mask, \shift
+	.byte \svc
+	.long \table
+.endm
+; ---- entry [value] of a table of 6-byte (position, columns, rows) areas -> IY / BC
+;      / HL -> DLB_Handler_Array6.  11 bytes.
+.macro dlb_area_entry var, mask, shift, svc, table
+	_dlb_field 0x04, 11, \var, \mask, \shift
+	.byte \svc
+	.long \table
+.endm
+; ---- a box whose top edge rises by value / 2 above y1 -> DLB_Handler_CentredSpan
+;      (service 0x0A hard-coded).  12 bytes.
+.macro dlb_centred_span var, mask, shift, x0, x1, y1
+	_dlb_field 0x01, 12, \var, \mask, \shift
+	.short \x0, \x1, \y1
+.endm
+
+.endif
