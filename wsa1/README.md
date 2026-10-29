@@ -44,6 +44,15 @@ rule has exceptions and proves the cut changes no byte
 is generated.  ⚠ A tool that opens `prom_X/wsa1_prom_X.s` by path reads the root, not the image:
 read through `notes/asm_source.py` (`image_lines`, `image_text`, `own_lines`) instead.
 
+## The GUI, at a glance
+
+Every screen element is a display-list record, spelled as one macro of `include/wsa1_gui.inc`
+(`dl_text8x14 x=176, y=82, text="TONE LAYER"`, `dl_box x0=12, y0=31, x1=60, y1=50`, `dlb_string var=..., table=...`),
+and every panel key map is `on_key KEY_Exit, ExitKey_SongClear` lines.  `docs/gui-menu-map.md` is the generated
+index of every screen: what it draws, the handler on each key, and which key leads to it (`make gui-menu-map`;
+`make gui-menu-map-check` runs in the root `gate-wsa1`).  How it was done and what is left:
+`notes/gui-data-2026-10-29/README.md`.
+
 ## The sources that are not images
 
 | source | included by | contents |
