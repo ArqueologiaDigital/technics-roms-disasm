@@ -12,6 +12,7 @@
 .include "src/include/kn_panel_extra.inc"
 .include "src/include/data_tables.inc"
 .include "src/program/data/data_structs.inc"
+.include "src/include/dsp_records.inc"
 .include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"
 .include "src/program/data/gui_classes.inc"

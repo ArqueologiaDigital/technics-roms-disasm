@@ -75,17 +75,38 @@ NONE16 = 0xFFFF
 RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = 0x487B0B78, 0x50000010, 0x7F34   # build 941
 
 
+def _label_addr(src_glob, name):
+    """The address of data label `name`, from the labels.sym beside the converted code."""
+    d = os.path.dirname(src_glob)
+    for p in (os.path.join(d, "data", "labels.sym"), os.path.join(d, "program", "data", "labels.sym"),
+              os.path.join(os.path.splitext(d)[0], "data", "labels.sym")):
+        if os.path.exists(p):
+            for line in open(p):
+                f = line.split()
+                if len(f) >= 2 and f[1] == name and not line.startswith(";"):
+                    return int(f[0], 16)
+    return None
+
+
 def find_raminit(src_glob):
     """(ROM source, RAM destination, byte count) of that copy loop, read from a
     build's converted code: `mov N, d1 / cmp 0, d1 / ble ... / mov SRC, a0 /
     mov 0x50000010, a1`."""
     rx = re.compile(r"mov\s+(0x[0-9a-fA-F]+), d1\n\s+cmp\s+0, d1\n\s+ble\s+\S+\n"
-                    r"\s+mov\s+(0x4[89cC][0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
-    # (the destination is a number, or, once the data region is typed, its label <kind>_<ADDR>)
+                    r"\s+mov\s+(0x4[89cC][0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])|\w+), a1\n")
+    # (the destination is a number, or, once the data region is typed, its label: <kind>_<ADDR>, or
+    # a name the data generation gave it, looked up in the data region's labels.sym)
     for f in sorted(glob.glob(src_glob)):
         m = rx.search(open(f, encoding="latin-1").read())
         if m:
-            dst = int(m.group(4), 16) if m.group(4) else int(m.group(3), 16)
+            if m.group(4):
+                dst = int(m.group(4), 16)
+            elif m.group(3).startswith("0x"):
+                dst = int(m.group(3), 16)
+            else:
+                dst = _label_addr(src_glob, m.group(3))
+                if dst is None:
+                    continue
             return int(m.group(2), 16), dst, int(m.group(1), 16)
     sys.exit(f"milk_model: no initialised-RAM copy loop in {src_glob}")
 

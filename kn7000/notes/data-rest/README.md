@@ -61,6 +61,47 @@ its last read field.  Pointers in those records are followed the same way.  Exam
 (1,085 records of 24 bytes) points with its field +0 at 1,037 records of 160 bytes, each a built-in
 style's panel settings.
 
+## The other passes this lane added (gen_data_s, profiles with `structs=True`)
+
+| pass             | what it types                                                                                      | evidence                                                             |
+|------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| `dsp_pool`       | the 80 effects-DSP download records, block by block, PM words with their SHARC instruction         | tools/gen_dsp_records.py's format; names from dsp/records.tsv        |
+| `bitmaps`        | the bitmap resources (procs answering MT_GetBitmapData / Width / Height / Palette / GetBitCount)   | the shared pass of lane sib-kn6000, now also for unlabelled procs    |
+| `drawn_bitmaps`  | pixels handed to DrawBitmapSP / SPFast / SPFast16 / SPFast4 / SP2 with a constant size             | the call's a1 / d0 / d1 (annotations/gfx_draw.ann gives each format) |
+| `string_arrays`  | fixed-width NUL-terminated value names ("  0.1   ", "   10 ms")                                    | the shared pass; at least 4 characters for the KN7000                |
+| `message_tables` | `{u32 key, code address}` runs: dispatch tables                                                    | [INFERENCE] from their shape; a MILK id key is spelled by its name   |
+| `variables`      | what an instruction reads or writes at a fixed address: a variable, or a table up to the next name | the access, cited                                                    |
+
+Bitmaps are indexed PNGs in `<data dir>/media/`, built by `tools/table_png.py` into
+`build/bitmaps/<build>/` (`pk D W H`, rows padded to an even byte count; `p2 W H`).  A bitmap
+resource with no MT_GetBitCount answer is taken as 4 bits a pixel only when its pixels end
+exactly at the next label [INFERENCE: VwUserBitmapProc draws any depth but 1 and 8 with
+DrawBitmapSPFast16].
+
+## What is declared opaque, and why
+
+Bytes no pass could type are an `.incbin_range` of the reference.  When no load, store, base
+(`mov Addr, rN` / `add Addr, rN`) or call argument of the converted code lands in them, the
+line above says so: `census: opaque -- unknown-dump: <n> bytes of <what> in <where>; no
+instruction reads them ...`, and whether a typed pointer or a code immediate still holds their
+address.  That is the reader search the brief asks for (tools/data_readers.py over all the
+converted code), and its limits are the walk's: a pointer computed in a way the walk does not
+follow is not seen.  Bytes that some instruction does read but no pass could type stay generic,
+and are listed under "What remains".
+
+## The symbol files (coordinator items, same session)
+
+- `symbols-sp7001` was a phony inside a grouped target, so every `verify-sp7001` re-ran it.
+- More generally no rule has a committed symbol file as its target any more (kn7000 and the four
+  siblings): `make symbols` and its per-build variants regenerate them on purpose, and `make
+  symbols-check` compares the generator's output with them (in the siblings' gates).
+- `gen_symbols.py` pairs a reflection table's names with its code array start-aligned by default
+  and stops its walk at name lists; with that it reproduces every committed symbol file.  The
+  committed SP7001 plug-in pairing (ApTestProc = 0x483E850F) is the right one: the name array at
+  0x483F9130 holds 25 names and the code run before its NUL 25 entries (0x483F90C8..0x483F9128).
+- 935 and 893 still called 941's get_tid routine ter_tsk (941's names were corrected by 612f5881c
+  and never re-ported); `make symbols-935 symbols-893` re-ported them with those programs.
+
 ## Website page draft
 
 (For `kn7000-data-region.md` in technics-docs, to be added by the website sync.)

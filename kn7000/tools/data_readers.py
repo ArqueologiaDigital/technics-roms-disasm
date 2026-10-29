@@ -82,8 +82,9 @@ def I(b, s, o, inner=None, bound=None):
     return ("I", b, s, o, inner, bound)
 
 
-def P(key, o):
-    return ("P", key, o)
+def P(key, o, dyn=False):
+    """A pointer loaded from field `key`, plus o; dyn: plus an index the walk does not know."""
+    return ("P", key, o, dyn)
 
 
 def D(key, o):
@@ -208,6 +209,9 @@ class Reader:
         """x + y on symbolic values."""
         x = None if x is not None and x[0] == "D" else x
         y = None if y is not None and y[0] == "D" else y
+        for p, q in ((x, y), (y, x)):
+            if p is not None and p[0] == "P" and (q is None or q[0] == "S"):
+                return P(p[1], p[2], True)
         if x is None or y is None:
             # an address plus an unknown register: an index with no known stride
             for p, q in ((x, y), (y, x)):
@@ -225,7 +229,7 @@ class Reader:
                 if p[0] == "I":
                     return I(p[1], p[2], p[3] + q[1], p[4], p[5])
                 if p[0] == "P":
-                    return P(p[1], p[2] + q[1])
+                    return P(p[1], p[2] + q[1], p[3])
                 if p[0] == "S":
                     return None
             if q[0] == "S":
@@ -263,6 +267,7 @@ class Reader:
 
     def walk(self, lines):
         st = {}
+        pending = {}             # forward-branch target -> the state the branches carried there
         func, cpu = None, None
         dead = False             # the previous instruction never falls through
         last_load = {}           # register -> index into self.accesses of the load that set it
@@ -284,8 +289,16 @@ class Reader:
                     st = {r: (P if r[0] == "a" else D)(("param", n, r), 0) for r in ("a0", "a1", "d0", "d1")}
                     a = self.labels.get(n)
                     cpu = a if a is not None else cpu
-                elif dead:
-                    st, last_load = {}, {}
+                    pending = {}
+                else:
+                    # what the forward branches to this label carried: a label reached only by
+                    # jumps takes their common state, one also reached by falling in keeps only
+                    # what agrees with it
+                    came = pending.pop(n, None)
+                    if dead:
+                        st, last_load = (dict(came) if came is not None else {}), {}
+                    elif came is not None:
+                        st = {k: v for k, v in st.items() if came.get(k) == v}
                 dead = False
                 code = code[ml.end():].strip()
                 if not code:
@@ -294,6 +307,14 @@ class Reader:
             op = parts[0]
             args = [x.strip() for x in self.split_args(parts[1])] if len(parts) > 1 else []
             dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti")
+            if (op.startswith("b") or op == "jmp") and args and args[0].startswith("loc_") and op not in (
+                    "btst", "bset", "bclr"):
+                t = args[0]
+                snap = {k: v for k, v in st.items() if not k.startswith("#cmp")}
+                if op in self.LESS and "#cmp" in st:
+                    pass                  # (the bound is applied by step below, on both paths)
+                prev = pending.get(t)
+                pending[t] = snap if prev is None else {k: v for k, v in prev.items() if snap.get(k) == v}
             self.step(op, args, st, last_load, func, cpu, code.strip())
 
     @staticmethod
@@ -334,7 +355,9 @@ class Reader:
             return ("abs", v[1] + off), 0, None, None
         if v[0] == "I":
             return ("rec", v[1], v[2]), v[3] + off, v[4], v[5]
-        if v[0] in "PD":
+        if v[0] == "P":
+            return ("ptr", v[1]), v[2] + off, (-1 if v[3] else None), None
+        if v[0] == "D":
             return ("ptr", v[1]), v[2] + off, None, None
         return None
 
@@ -382,6 +405,8 @@ class Reader:
                 return
             if R(dst) and op == "mov":
                 st[dst] = st.get(src) if R(src) else (self.imm(src) if src not in ("sp", "mdr", "psw") else None)
+                if not R(src) and st[dst] is not None and st[dst][0] == "A":
+                    self.record(("base", st[dst][1]), 0, 0, "base", func, cpu, insn)
                 if R(src) and ("#b" + src) in st:
                     st["#b" + dst] = st["#b" + src]
                 else:
@@ -406,6 +431,15 @@ class Reader:
             return
         if op in ("add", "sub") and len(args) == 2 and R(args[1]):
             src, dst = args
+            c = _num(src)
+            v0 = st.get(dst)
+            if not R(src) and op == "add":
+                vb = self.imm(src)
+                if vb is not None and vb[0] == "A":
+                    self.record(("base", vb[1]), 0, 0, "base", func, cpu, insn)
+            if op == "add" and dst[0] == "a" and c is not None and 2 <= c <= 4096 and v0 and v0[0] == "A":
+                # a pointer stepped through an array from its base: the record size
+                self.record(("step", v0[1]), c, 0, "step", func, cpu, insn)
             if R(src):
                 if src == dst and op == "add":
                     st[dst] = self.scale(st.get(dst), 2, st.get("#b" + dst))
@@ -425,6 +459,8 @@ class Reader:
                     st[dst] = self.add(st.get(dst), v) if v is not None else None
             last_load.pop(dst, None)
             return
+        if op == "inc4" and args and args[0][0] == "a" and st.get(args[0]) and st[args[0]][0] == "A":
+            self.record(("step", st[args[0]][1]), 4, 0, "step", func, cpu, insn)
         if op in ("inc", "inc4") and args:
             st[args[0]] = self.add(st.get(args[0]), C(1 if op == "inc" else 4))
             return
@@ -432,6 +468,13 @@ class Reader:
             a, b = st.get(args[0]), st.get(args[1])
             a = None if a is not None and a[0] in "DP" else a
             b = None if b is not None and b[0] in "DP" else b
+            if a and b and a[0] == "C" and b[0] == "C":
+                # the compiler folds constant products, so a run-time multiply has a variable
+                # operand: one that the walk knows is a loop counter's start (clr / mov 0 or 1);
+                # otherwise the larger constant is taken as the record size [INFERENCE]
+                k = b[1] if a[1] in (0, 1) else a[1] if b[1] in (0, 1) else max(a[1], b[1])
+                st[args[1]] = S(k) if k >= 2 else None
+                return
             if a and a[0] == "C" and (b is None or b[0] in "SC"):
                 st[args[1]] = self.scale(b, a[1], st.get("#b" + args[1]))
             elif b and b[0] == "C" and (a is None or a[0] == "S"):

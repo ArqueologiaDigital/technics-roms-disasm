@@ -1158,6 +1158,9 @@ class Gen:
         self.dr = DS.readers(self, os.path.join(KN7, P["labels"]), code_glob())
         gs = DS.groups(self.dr)
         hard = set(self.fixed) - self.fixed_by_code | {g.base for g in gs}
+        # an address the code loads as a base (`mov Addr, rN`) on a record boundary of an array is
+        # another table that follows it (NoteConvRules+1024), not one of its records [INFERENCE]
+        bases = {x.key[1] for x in self.dr.accesses if x.key[0] == "base"}
         self.struct_groups = []
         for g in sorted(gs, key=lambda g: g.base):
             a, s = g.base, g.stride
@@ -1169,7 +1172,7 @@ class Gen:
             n = 0
             while n < 65536:
                 ra, ro = a + n * s, o + n * s
-                if not self.free(ra, s) or (n and any(x in hard for x in range(ra, ra + s))):
+                if not self.free(ra, s) or (n and (any(x in hard for x in range(ra, ra + s)) or ra in bases)):
                     break
                 if any(not (v == 0 or self.is_addr(v)) for v in
                        (int.from_bytes(self.rom[ro + f.off:ro + f.off + 4], "little") for f in ptrf)):
@@ -1178,6 +1181,9 @@ class Gen:
                 if n and len(set(rest)) == 1 and rest[0] == 0xFF:
                     break
                 n += 1
+            bounds = [x.bound for _o, x in g.accs if getattr(x, "bound", None)]
+            if bounds and n > max(bounds):
+                n = max(bounds)        # [INFERENCE] the index is checked (or is a byte) below this
             if n < 1:
                 continue
             g.count = n
@@ -1209,7 +1215,9 @@ class Gen:
                     self.add(a, n * s, g.label, "reader table",
                              lambda gen, it, vals=vals, kind=kind, rd=rd, s=s: gen.render_table(it, vals, kind, rd, s))
                 continue
-            kind, names = DN.lookup(g.label, s)
+            kind, names, new_label = DN.lookup3(g.label, s)
+            if new_label and g.label != new_label:
+                g.label = self.rename_at(a, new_label)
             g.macro = self.uniq(kind or ("REC_" + g.label))
             DS.name_fields(g, names)
             self.struct_groups.append(g)
@@ -1262,24 +1270,44 @@ class Gen:
             ts = [t for t in ts if self.free(t, 1)]
             if not ts or not any(a.width for a in accs):
                 continue
-            need = max(a.off + (a.width or 1) for a in accs)
+            dyn = [a for a in accs if a.inner == -1 and a.width]
+            fixed_accs = [a for a in accs if a.inner != -1]
+            opt = DN.options(self.kind_name(root))
+            need = max([a.off + (a.width or 1) for a in fixed_accs] + [a.off for a in dyn] + [1])
+            if opt.get("tail"):
+                need = opt["tail"][2]
+            # what the kind's 32-bit fields point at (a record's own name string) ends a record too
+            stops = {self.m.u32(t + a.off) for t in ts for a in fixed_accs if a.width == 4 and self.in_data(t + a.off + 3)}
+            if opt.get("tail"):
+                stops |= {self.m.u32(t + k) for t in ts for k in range(0, need, 4)}
+            hard_k = sorted(set(hard) | {v for v in stops if self.in_data(v)})
             room = {}
             for t in ts:
                 o = self.off(t)
                 e = o
-                k = bisect.bisect_right(hard, t)
-                lim = self.off(hard[k]) if k < len(hard) else DATA_END
-                while e < DATA_END and e < lim and not self.claimed[e] and e - o < 4096:
+                k = bisect.bisect_right(hard_k, t)
+                lim = self.off(hard_k[k]) if k < len(hard_k) else DATA_END
+                while e < DATA_END and e < lim and not self.claimed[e] and e - o < 0x2000:
                     e += 1
                 room[t] = e - o
             gaps_ = [b - a for a, b in zip(ts, ts[1:]) if b - a == room[a]]
             stride = collections.Counter(gaps_).most_common(1)[0][0] if gaps_ else 0
-            if stride < need:
+            tail = None
+            if opt.get("tail") and all(room[t] > need for t in ts):
+                stride, tail = need, opt["tail"]
+            elif dyn and not gaps_ and len({room[t] for t in ts}) > 1 and all(room[t] > need for t in ts):
+                # records of varying size: the fields, then the rest of each record's room as rows of
+                # the width its computed-offset reads use (the code indexes into it)
+                stride = need
+                w = collections.Counter(a.width for a in dyn).most_common(1)[0][0]
+                tail = (w, any(a.signed for a in dyn if a.width == w), min(a.off for a in dyn))
+            elif stride < need:
                 stride = need + (-need % 4 if all(room[t] >= need + (-need % 4) for t in ts) else 0)
             ts = [t for t in ts if room[t] >= stride]
-            if not ts or stride > 4096:
+            if not ts or stride > 0x2000:
                 continue
             g = DS.Group(ts[0], stride)
+            g.tail = tail
             g.accs = [(a.off, a) for a in accs if a.off < stride]
             g.count = len(ts)
             g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
@@ -1302,7 +1330,10 @@ class Gen:
                         v = self.m.u32(t + f.off)
                         if v and self.in_data(v):
                             self.refs.add(v)
-                self.add(t, stride, lab, "pointed record", lambda gen, it, g=g: gen.render_pointed(it, g))
+                size = stride
+                if tail:
+                    size = room[t] - (room[t] - stride) % tail[0]
+                self.add(t, size, lab, "pointed record", lambda gen, it, g=g: gen.render_pointed(it, g))
 
     def _item_of(self, a):
         import bisect
@@ -1370,7 +1401,21 @@ class Gen:
 
     def render_pointed(self, it, g):
         import data_structs as DS
-        return [f"{it.label}:\t# {g.macro} ({g.stride} bytes)", DS.record_line(self, g, self.rom, self.off(it.start))]
+        if not g.tail or it.size == g.stride:
+            return [f"{it.label}:\t# {g.macro} ({g.stride} bytes)", DS.record_line(self, g, self.rom, self.off(it.start))]
+        w, signed, at = g.tail
+        o = self.off(it.start) + g.stride
+        vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed)
+                for i in range((it.size - g.stride) // w)]
+        kind = ("s" if signed else "u") + str(8 * w)
+        per = 12 if len(vals) % 12 == 0 else 16
+        rd = DS.cite([a for _o, a in g.accs if a.inner == -1] or [a for _o, a in g.accs], 2)
+        out = [f"{it.label}:\t# {g.macro} ({g.stride} bytes), then {len(vals)} x {kind} the code indexes"
+               f" from +{at}" + (f" (read by {rd})" if rd else " (tools/data_struct_names.py OPTIONS)"),
+               DS.record_line(self, g, self.rom, self.off(it.start))]
+        for i in range(0, len(vals), per):
+            out.append(f"\ttab_{kind}\t" + ", ".join(str(v) for v in vals[i:i + per]) + f"\t# [{i}]")
+        return out
 
     def message_tables(self):
         """(`structs` profiles) {u32 key, code address} pairs, >= 3 in a row and
@@ -1478,6 +1523,157 @@ class Gen:
                          f" {blit}{more} ({OUTDIR}/media/{fn})",
                          f'\t.incbin\t"build/bitmaps/{PROFILE}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
                          f"tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
+
+    def variables(self):
+        """(`structs` profiles) What is left that an instruction reads or writes at a
+        fixed address (data_readers: a load / store of `(Label)` or `(off, aN)` with aN a
+        known address, or an unscaled index from one): a variable of that width, or a
+        table of them up to the next address anything names, the instructions cited.
+        In the initialised-RAM image these are the variables' initial values."""
+        import bisect
+        import data_structs as DS
+        acc = collections.defaultdict(list)
+        for x in self.dr.accesses:
+            k = x.key
+            if not x.width:
+                continue
+            if k[0] == "abs":
+                acc[k[1]].append(x)
+            elif k[0] == "rec" and k[2] is None:
+                acc[k[1] + x.off].append(x)
+        self.build_index()
+        named = sorted({self.off(a) for a in acc if self.in_data(a)} | {self.off(a) for a in self.refs if self.in_data(a)}
+                       | {self.off(a) for a in self.label_at})
+        for a in sorted(acc):
+            if not self.in_data(a) or not self.free(a, 1):
+                continue
+            xs = acc[a]
+            w = collections.Counter(x.width for x in xs).most_common(1)[0][0]
+            o = self.off(a)
+            if o % w:
+                w = 1
+            k = bisect.bisect_right(named, o)
+            end = named[k] if k < len(named) else DATA_END
+            e = o
+            while e < end and not self.claimed[e]:
+                e += 1
+            n = (e - o) // w
+            if n < 1:
+                continue
+            signed = any(x.signed for x in xs if x.width == w)
+            vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed) for i in range(n)]
+            kind = ("s" if signed else "u") + str(8 * w)
+            rd = sorted({(x.func, x.cpu, " ".join(x.insn.split())) for x in xs}, key=lambda r: (r[1] or 0, r[0] or "", r[2]))
+            ram = RAMINIT_OFF <= o < RAMINIT_END
+            nm = self.label_at.get(a) or self.fixed.get(a)
+            if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)):
+                fn = next((r[0] for r in rd if r[0]), None)
+                base = (re.sub(r"_entry$", "", fn) + ("_Var" if n == 1 else "_Table")) if fn else f"var_{a:08X}"
+                lab = self.rename_at(a, base)
+            else:
+                lab = self.name_at(a, nm)
+            self.add(a, w * n, lab, "variable" if n == 1 else "reader table",
+                     lambda g, it, vals=vals, kind=kind, rd=rd, w=w, ram=ram: g.render_variable(it, vals, kind, rd, w, ram))
+
+    def render_variable(self, it, vals, kind, rd, w, ram):
+        if len(vals) > 1:
+            return self.render_table(it, vals, kind, rd, w)
+        what = "initial value of a RAM variable" if ram else "a constant"
+        cite = "; ".join(f"{f or '?'} {('0x%08X' % c) if c else ''}: `{ins}`".replace("  ", " ") for f, c, ins in rd[:2]) \
+            + (" ..." if len(rd) > 2 else "")
+        return [f"{it.label}:\t# {kind}, {what}; read / written by {cite}",
+                f"\t{ {1: '.byte', 2: '.word', 4: '.long'}[w]}\t{vals[0] if w < 4 or vals[0] < 0x10000 else hex(vals[0])}"]
+
+    def dsp_pool(self):
+        """(`structs` profiles) The effects-DSP download records (src/include/dsp_records.inc,
+        tools/gen_dsp_records.py): a chain of >= 10 records of 0x2004 blocks.  Each record is
+        typed block by block, its PM words with the SHARC instruction the committed listing
+        disassembly/dsp/recNN_*.asm gives the same word, its name and role from dsp/records.tsv
+        (build 941's records; another build's record takes the name of a 941 record with the
+        same bytes)."""
+        import glob as _glob
+        import hashlib
+
+        def hdr(rom, o):
+            return o + 12 <= len(rom) and rom[o] == 0x20 and rom[o + 1] == 0x04 and rom[o + 2] in (0, 0x80) \
+                and rom[o + 3] in (0, 0xFF) and rom[o + 4:o + 6] == b"\0\0" and rom[o + 8:o + 10] == b"\0\0"
+
+        def chain(rom, o, end):
+            recs = []
+            while o < end and hdr(rom, o):
+                st, blocks = o, []
+                while hdr(rom, o):
+                    ln = rom[o + 10] << 8 | rom[o + 11]
+                    blocks.append((o, rom[o + 2], rom[o + 3], rom[o + 6] << 8 | rom[o + 7], ln))
+                    o += 12 + ln
+                z = o
+                while o < end and o - z <= 16 and rom[o] == 0 and not hdr(rom, o):
+                    o += 1
+                recs.append((st, z, o, blocks))
+            return recs
+
+        def find(rom, lo, hi):
+            for mo in re.finditer(rb"\x20\x04[\x00\x80][\x00\xff]\x00\x00", rom[lo:hi]):
+                r = chain(rom, lo + mo.start(), hi)
+                if len(r) >= 10:
+                    return r
+            return []
+        recs = find(self.rom, R1_END, DATA_END)
+        if not recs:
+            return
+        # build 941's names and the listings' instruction text
+        ref = open(os.path.join(KN7, PROFILES["941"]["rom"]), "rb").read()
+        names = {}
+        tsv = os.path.join(KN7, "dsp", "records.tsv")
+        meta = {}
+        if os.path.exists(tsv):
+            for line in open(tsv, encoding="utf-8"):
+                f = line.rstrip("\n").split("\t")
+                if len(f) >= 7 and not line.startswith("#"):
+                    meta[int(f[1], 16)] = (int(f[0]), f[5], f[6])
+        for st, z, _e, _b in find(ref, PROFILES["941"]["r1"], PROFILES["941"]["end"]):
+            if st in meta:
+                names[hashlib.sha1(ref[st:z]).hexdigest()] = meta[st]
+        insn = {}
+        for f in _glob.glob(os.path.join(KN7, "disasm", "dsp", "rec*.asm")):
+            for line in open(f, encoding="utf-8"):
+                mo = re.match(r"^[0-9a-f]{4}: ([0-9a-f]{16}) (.*)$", line)
+                if mo:
+                    insn.setdefault(int(mo.group(1), 16), mo.group(2).strip())
+        rom = self.rom
+        for st, z, e, blocks in recs:
+            a = self.addr_of(st)
+            if not self.free(a, e - st):
+                continue
+            idx, role, name = names.get(hashlib.sha1(rom[st:z]).hexdigest(), (None, None, None))
+            base = f"DspRecord{idx:02d}_{sanitize(name or role, 32)}" if idx is not None else f"DspRecord_{a:08X}"
+            nm = self.label_at.get(a) or self.fixed.get(a)
+            lab = self.rename_at(a, base) if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)) \
+                else self.name_at(a, nm)
+
+            def render(g, it, st=st, z=z, e=e, blocks=blocks, idx=idx, role=role, name=name):
+                out = [f"{it.label}:\t# effects-DSP download record" + (f" {idx:02d} [{role}]: {name}"
+                                                                         f" (dsp/records.tsv, disasm/dsp/rec{idx:02d}_*.asm)"
+                                                                         if idx is not None else "")]
+                for o, mode, flag, tgt, ln in blocks:
+                    pm = bool(mode & 0x80)
+                    out.append(f"\tDSP_BLOCK\t{'DSP_PM' if pm else 'DSP_DM'}, 0x{flag:02X}, 0x{tgt:04X}, {ln}"
+                               f"\t# {ln // (6 if pm else 5)} {'instruction' if pm else 'data'} words"
+                               f" at {'PM' if pm else 'DM'} 0x{tgt:04X}")
+                    p, w = o + 12, (6 if pm else 5)
+                    for k in range(ln // w):
+                        v = int.from_bytes(rom[p + w * k:p + w * k + w], "big")
+                        if pm:
+                            t = insn.get(v)
+                            out.append(f"\tpm48\t0x{v:012X}" + (f"\t# {t}" if t else ""))
+                        else:
+                            out.append(f"\tdm40\t0x{v:010X}")
+                    if ln % w:
+                        out.append("\t.byte\t" + ", ".join(str(b) for b in rom[p + ln - ln % w:p + ln]))
+                if e > z:
+                    out.append(f"\t.space\t{e - z}\t# the record's zero terminator")
+                return out
+            self.add(a, e - st, lab, "dsp record", render)
 
     def render_structs(self, it, g):
         import data_structs as DS
@@ -1919,6 +2115,23 @@ class Gen:
                             found.append((func, r))
                     func, body = mo.group(1), []
                 body.append(line)
+                if P.get("structs") and re.match(r"\s+(retf|ret|rets)\b", line):
+                    mo = None
+                    if func and len(body) < 400:
+                        txt = "\n".join(body)
+                        r = {}
+                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt)
+                        for c, lab in pairs:
+                            k = meth.get(val(c))
+                            m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
+                            if k and m2:
+                                r[k] = val(m2.group(1)) if m2.group(1) else 0
+                        if r.get("data") and r.get("w") and r.get("h") and "bits" not in r and P.get("bitmap_bits"):
+                            r["bits"], r["bits_default"] = P["bitmap_bits"], True
+                        if r.get("data") and r.get("w") and r.get("h") and r.get("bits") in (1, 2, 4, 8) \
+                                and all(r.get("data") != f2[1].get("data") for f2 in found):
+                            found.append((func, r))
+                    body = []
         pal_of = {}
         for func, r in found:
             a, w, h, depth = r["data"], r["w"], r["h"], r["bits"]
@@ -2101,6 +2314,10 @@ class Gen:
         rx = re.compile(rb"[\x20-\x7e\x09\x0a\x0d\x80-\xfe]{4,}\x00")
         for mo in rx.finditer(rom, R1_END, DATA_END):
             o, e = mo.start(), mo.end()
+            if P.get("structs"):
+                # (a typed item's printable last bytes -- a pointer's "GH" -- may run into the string)
+                while o < e - 1 and self.claimed[o]:
+                    o += 1
             bs = rom[o:e - 1]
             if not is_text(bs) or sum(1 for c in bs if 0x41 <= c <= 0x7A) < 3:
                 continue
@@ -2237,7 +2454,7 @@ class Gen:
               if self.tone_macros else []),
             f'.include "{SHARED}src/include/kn_panel_extra.inc"',
             f'.include "{SHARED}src/include/data_tables.inc"',
-            *([f'.include "{outdir}/data_structs.inc"'] if P.get("structs") else []),
+            *([f'.include "{outdir}/data_structs.inc"', '.include "src/include/dsp_records.inc"'] if P.get("structs") else []),
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
@@ -2364,10 +2581,58 @@ class Gen:
     STRING_KINDS = {"string", "text", "class name", "class sig", "field name", "event name", "method name",
                     "function name", "resource name", "widget text"}
 
+    def gap_note(self, a, b):
+        """(`structs` profiles) For the bytes a..b no pass could type: the census
+        declaration when nothing reads them -- no load, store or call argument of the
+        converted code lands in them (tools/data_readers.py) and no address the code or
+        a typed item holds points into them -- else None (they stay generic: a reader
+        exists that the passes could not turn into a type)."""
+        import bisect
+        if not hasattr(self, "_gap_reads"):
+            rd = set()
+            for x in self.dr.accesses:
+                k = x.key
+                if k[0] in ("abs", "base", "step") and self.in_data(k[1]):
+                    rd.add(self.off(k[1]))
+                elif k[0] == "rec" and self.in_data(k[1]):
+                    rd.add(self.off(k[1] + x.off))
+            self._gap_reads = sorted(rd)
+            self._gap_refs = sorted(self.off(r) for r in self.refs if self.in_data(r))
+        i = bisect.bisect_left(self._gap_reads, a)
+        if i < len(self._gap_reads) and self._gap_reads[i] < b:
+            return None
+        j = bisect.bisect_left(self._gap_refs, a)
+        held = j < len(self._gap_refs) and self._gap_refs[j] < b
+        bs = self.rom[a:b]
+        words = [int.from_bytes(bs[k:k + 4], "little") for k in range(-a % 4, len(bs) - 3, 4)]
+        what = ("printable bytes, not NUL-terminated text" if sum(1 for c in bs if 0x20 <= c < 0x7F) >= 0.6 * len(bs)
+                else "words that look like addresses" if words and 2 * sum(1 for w in words if self.is_addr(w)) >= len(words)
+                else "7-bit values" if all(c < 0x80 for c in bs) else "binary")
+        where = "the initialised-RAM image (initial values no instruction names)" if RAMINIT_OFF <= a < RAMINIT_END \
+            else "the program flash"
+        return (f"# census: opaque -- unknown-dump: {b - a} bytes of {what} in {where}; no instruction reads them"
+                f" (tools/data_readers.py: no load, store, base or call argument in them)"
+                + ("; a typed pointer or a code immediate holds their address, but nothing is read through it"
+                   if held else "; no address the code or a typed item holds points into them"))
+
     def gap_lines(self, a, b):
         """The bytes a..b (file offsets) no typed item holds: a uniform run is
         .space (or .align, when it is the padding up to a 4-byte boundary after
         a string or record); the rest stays .incbin_range of the reference."""
+        out = self._gap_lines(a, b)
+        if P.get("structs"):
+            res = []
+            for ln in out:
+                mo = re.match(r'\.incbin_range "[^"]+", 0x([0-9A-F]+), 0x([0-9A-F]+)', ln)
+                if mo:
+                    note = self.gap_note(int(mo.group(1), 16), int(mo.group(2), 16))
+                    if note:
+                        res.append(note)
+                res.append(ln)
+            return res
+        return out
+
+    def _gap_lines(self, a, b):
         d = self.rom[a:b]
         if len(set(d)) == 1:
             fill = d[0]
@@ -2501,6 +2766,7 @@ class Gen:
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
             self.name_value_tables()
             self.panel_memories()
+            self.dsp_pool()
             if P.get("string_arrays"):
                 self.string_arrays()
             self.struct_arrays()
@@ -2519,6 +2785,8 @@ class Gen:
                 self.string_arrays()
             self.text_runs()
         self.reader_tables()
+        if P.get("structs"):
+            self.variables()
         self.short_strings()
         self.zlib_kinds()
         self.build_index()

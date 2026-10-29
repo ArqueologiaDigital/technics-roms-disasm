@@ -56,7 +56,7 @@ MainSEQ_SongClrNameParaDraw:
     call    func_48455FAB_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x2c, sp)
-    mov     FE_SeqPlaylistSetting_Records+260, d0
+    mov     Str_SONG_2d_16s_3d, d0
     mov     d0, (0xc, sp)
     mov     d2, (0x10, sp)
     mov     a2, (0x14, sp)
@@ -68,7 +68,7 @@ MainSEQ_SongClrNameParaDraw:
     call    sprintf_entry, [a2], 0x20
     bra     loc_485400D5
 loc_485400C8:
-    mov     FE_SeqPlaylistSetting_Records+284, a1
+    mov     Str_ALL_SONGS_100, a1
     call    strcpy_entry, [a2], 4
 loc_485400D5:
     mov     a3, (0x10, sp)
@@ -86,7 +86,7 @@ loc_485400D5:
     blt     loc_48540126
     cmp     0xa, d2
     bgt     loc_48540126
-    mov     FE_SeqPlaylistSetting_Records+320, d0
+    mov     Str_4d_KB, d0
     mov     d0, (0xc, sp)
     mov     d2, d0
     call    SongCapacity_KB_entry, 0, 0xc
@@ -96,7 +96,7 @@ loc_485400D5:
     call    sprintf_entry, [a2], 0x20
     bra     loc_48540133
 loc_48540126:
-    mov     FE_SeqPlaylistSetting_Records+328, a1
+    mov     Str_empty_769, a1
     call    strcpy_entry, [a2], 4
 loc_48540133:
     mov     a2, (0x10, sp)
@@ -170,7 +170,7 @@ func_485401CC_entry:
     ret     0, 0x14
 loc_485401F0:
     call    func_484566D5_entry, 0, 0x10
-    movhu   d0, (Str_d_2)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+34)
     mov     -1, d0
     mov     0x00e50000, d1
     call    ApDeleteEvent_entry, [d2], 0x18
@@ -189,10 +189,10 @@ loc_485401F0:
     beq     loc_4854023D
     ret     0, 0x14
 loc_4854023D:
-    movhu   (Str_d_2), d0
+    movhu   (AcSeqTrackNumBoxProc_Table+34), d0
     cmp     0, d0
     bne     loc_48540271
-    movbu   (data_5000517C), d0
+    movbu   (func_4853F2A1_Table), d0
     cmp     1, d0
     beq     loc_485402AA
     clr     d0
@@ -201,10 +201,10 @@ loc_4854023D:
     mov     EV_SHOW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
-    movbu   d0, (data_5000517C)
+    movbu   d0, (func_4853F2A1_Table)
     bra     loc_485402AA
 loc_48540271:
-    movbu   (data_5000517C), d0
+    movbu   (func_4853F2A1_Table), d0
     cmp     0, d0
     beq     loc_485402AA
     clr     d0
@@ -218,7 +218,7 @@ loc_48540271:
     mov     EV_ALLPAINT, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
-    movbu   d0, (data_5000517C)
+    movbu   d0, (func_4853F2A1_Table)
 loc_485402AA:
     ret     0, 0x14
 # MainSEQ_SongSelBoxSetString  (CPU 0x485402ad)
@@ -244,7 +244,7 @@ loc_485402CB:
     call    func_48455FAB_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x30, sp)
-    mov     FE_SeqPlaylistSetting_Records+336, d0
+    mov     Str_2d_16s_3d_2, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     mov     a3, (0x14, sp)
@@ -547,24 +547,24 @@ MainSEQ_SeqAutoPunch_Reload:
     add     0x20, d0
     call    func_48455275_entry, [d2,a2,a3], 0x14
     movhu   (0x1c, sp), d1
-    mov     (data_500051A0), d0
+    mov     (MainSEQ_SeqCycPly_Reload_Records+32), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     movhu   (0x1e, sp), d1
-    mov     (data_500051A4), d0
+    mov     (MainSEQ_SeqCycPly_Reload_Records+36), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     movhu   (0x20, sp), d1
-    mov     (data_500051A8), d0
+    mov     (MainSEQ_SeqCycPly_Reload_Records+40), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     mov     0x80, d0
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, (8, sp)
-    mov     FE_SeqPlaylistSetting_Records+352, d0
+    mov     Str_FIRST_MEAS_3d_LAST_MEAS_3d_COUNT_IN_M_3d, d0
     mov     d0, (0xc, sp)
     movhu   (0x1c, sp), d0
     mov     a0, a2
@@ -1028,11 +1028,11 @@ MainSEQ_GridDrawLocalCtrlSeq:
     exthu   d0
     cmp     0, d0
     beq     loc_48540ADD
-    mov     FE_SeqPlaylistSetting_Records+400, d0
+    mov     Str_ON_34, d0
     mov     d0, (4, a2)
     bra     loc_48540AE6
 loc_48540ADD:
-    mov     FE_SeqPlaylistSetting_Records+404, d0
+    mov     Str_OFF_37, d0
     mov     d0, (4, a2)
 loc_48540AE6:
     mov     a2, (0x10, sp)
@@ -1071,11 +1071,11 @@ MainSEQ_GridDrawMidiOutSeq:
     exthu   d0
     cmp     0, d0
     beq     loc_48540B4E
-    mov     FE_SeqPlaylistSetting_Records+408, d0
+    mov     Str_ON_33, d0
     mov     d0, (4, a2)
     bra     loc_48540B57
 loc_48540B4E:
-    mov     FE_SeqPlaylistSetting_Records+412, d0
+    mov     Str_OFF_36, d0
     mov     d0, (4, a2)
 loc_48540B57:
     mov     a2, (0x10, sp)
@@ -1401,14 +1401,14 @@ MainSEQ_TrackCopySongParaDraw:
     clr     d0
     movbu   d0, (0x28, sp)
     mov     a2, (8, sp)
-    mov     FE_SeqPlaylistSetting_Records+416, d0
+    mov     Str_2d_16s, d0
     mov     d0, (0xc, sp)
     mov     d2, (0x10, sp)
     mov     a3, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     bra     loc_48540ED6
 loc_48540EC9:
-    mov     FE_SeqPlaylistSetting_Records+428, a1
+    mov     Str_ALL_SONGS, a1
     call    strcpy_entry, [a2], 4
 loc_48540ED6:
     mov     d3, d0
@@ -1890,7 +1890,7 @@ func_48541357:
 func_48541357_entry:
     mov     d0, d2
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     cmp     0x95, d0
@@ -1988,7 +1988,7 @@ func_48541485:
     add     -0x14, sp
 func_48541485_entry:
     call    func_484671B3, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     mov     SeqSRUpdate_id, d0
     mov     0x0176000a, d1
     call    ApDeleteEvent_entry, [d2], 0x18
@@ -2091,7 +2091,7 @@ loc_485415B4:
     mov     -1, d0
     add     d1, d0
     asl2    d0
-    mov     func_48541281_Table+36, a0
+    mov     func_4854159B_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485415C2:
@@ -3586,7 +3586,7 @@ func_48542540:
     add     -0x14, sp
 func_48542540_entry:
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     cmp     0x95, d0
@@ -3595,14 +3595,14 @@ func_48542540_entry:
     beq     loc_48542585
     bra     loc_485425A0
 loc_48542568:
-    movhu   (data_50007E7C), d0
+    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
     mov     0x00e6000a, d1
     mov     d0, (0x10, sp)
     mov     SeqNoteEditData_id, d0
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_485425A0
 loc_48542585:
-    movhu   (data_50007E7C), d0
+    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
     mov     0x00e6000a, d1
     mov     d0, (0x10, sp)
     mov     SeqDrumEditData_id, d0
@@ -3981,7 +3981,7 @@ loc_4854292D:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
@@ -3996,7 +3996,7 @@ loc_4854296F:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
@@ -4207,7 +4207,7 @@ loc_48542B82:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
@@ -4222,7 +4222,7 @@ loc_48542BC4:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
@@ -5352,7 +5352,7 @@ loc_48543525:
     or      d1, d0
     or      d2, d0
     mov     d0, (a2)
-    mov     FE_SeqPlaylistSetting_Records+448, d0
+    mov     data_4867B6C0, d0
     mov     d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     (0xa8, sp), d0
@@ -5420,7 +5420,7 @@ loc_485435D0:
     or      d1, d0
     or      d2, d0
     mov     d0, (a2)
-    mov     FE_SeqPlaylistSetting_Records+452, d0
+    mov     data_4867B6C4, d0
     mov     d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     (0xa8, sp), d0
@@ -5561,7 +5561,7 @@ loc_48543729:
     mov     d1, d0
     or      d2, d0
     mov     d0, (a2)
-    mov     FE_SeqPlaylistSetting_Records+456, d0
+    mov     data_4867B6C8, d0
     mov     d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     (0xa8, sp), d0
@@ -5638,7 +5638,7 @@ loc_485437E3:
     or      d0, d1
     or      d2, d1
     mov     d1, (a2)
-    mov     FE_SeqPlaylistSetting_Records+460, d0
+    mov     data_4867B6CC, d0
     mov     d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     (0xa8, sp), d0
@@ -5763,11 +5763,11 @@ loc_48543931:
     mov     (0x30, sp), d0
     cmp     1, d0
     bne     loc_4854395E
-    mov     FE_SeqPlaylistSetting_Records+464, d0
+    mov     Str_END_2, d0
     mov     d0, (4, a2)
     bra     loc_48543967
 loc_4854395E:
-    mov     FE_SeqPlaylistSetting_Records+476, d0
+    mov     Str_REPEAT_3, d0
     mov     d0, (4, a2)
 loc_48543967:
     mov     a0, (0x10, sp)
@@ -5890,20 +5890,20 @@ loc_48543A25:
     beq     loc_48543AAD
     bra     loc_48543AB5
 loc_48543A8A:
-    mov     FE_SeqPlaylistSetting_Records+488, d0
+    mov     data_4867B6E8, d0
     mov     d0, (0x1c, sp)
     bra     loc_48543AB5
 loc_48543A94:
     movbu   (0x6c, sp), d0
     cmp     0x30, d0
-    mov     FE_SeqPlaylistSetting_Records+492, d0
+    mov     data_4867B6EC, d0
     mov     d0, (0x1c, sp)
     blt     loc_48543AB5
-    mov     FE_SeqPlaylistSetting_Records+496, d0
+    mov     data_4867B6F0, d0
     mov     d0, (0x1c, sp)
     bra     loc_48543AB5
 loc_48543AAD:
-    mov     FE_SeqPlaylistSetting_Records+500, d0
+    mov     data_4867B6F4, d0
     mov     d0, (0x1c, sp)
 loc_48543AB5:
     cmp     0, d2
@@ -6047,7 +6047,7 @@ loc_48543B98:
     mov     d1, d0
     or      d2, d0
     mov     d0, (a2)
-    mov     FE_SeqPlaylistSetting_Records+504, d0
+    mov     data_4867B6F8, d0
     mov     d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     (0xa8, sp), d0
@@ -6422,12 +6422,12 @@ loc_48543F1B:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_484671B3, 0, 0
-    movhu   d0, (data_50007E7C)
-    movhu   (data_50007E7C), d0
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
     cmp     1, d0
     bge     loc_48543F62
     mov     1, d0
-    movhu   d0, (data_50007E7C)
+    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
 loc_48543F62:
     call    func_4854159B_entry, [d2,d3,a2,a3], 0x30
     clr     d0
@@ -6563,12 +6563,12 @@ loc_4854408D:
     extbu   d3
     cmp     0, d3
     bne     loc_485440A1
-    mov     FE_SeqPlaylistSetting_Records+508, a1
+    mov     Str_OFF_35, a1
     call    strcpy_entry, [a2], 4
     bra     loc_485440B4
 loc_485440A1:
     mov     a0, (8, sp)
-    mov     FE_SeqPlaylistSetting_Records+512, d0
+    mov     Str_2d_3, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -6655,7 +6655,7 @@ loc_48544151:
     blt     loc_48544160
     mov     0x20, d0
 loc_48544160:
-    mov     FE_SeqPlaylistSetting_Records+520, d1
+    mov     Str_1c_3d, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -7479,7 +7479,7 @@ loc_485449BD:
     jmp     loc_48544F00
 loc_485449E1:
     add     8, a0
-    cmp     SeqLyricsBoxProc_Records+128, a0
+    cmp     Str_MThd_2, a0
     bcs     loc_485449EC
     mov     a1, a0
 loc_485449EC:
@@ -7489,24 +7489,27 @@ loc_485449EC:
 loc_485449EF:
     mov     (4, a0), a0
     jmp     (a0)
+loc_485449F4:
     mov     (0x88, sp), a0
     mov     d2, d1
     mov     a0, (0x10, sp)
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_500051AC)
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+44)
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544A0D:
     mov     (0x88, sp), a0
     mov     d2, d1
     mov     a0, (0x10, sp)
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
-    movbu   d0, (data_500051AC)
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+44)
     ret     [d2,d3,a2,a3], 0x78
-    movbu   (data_500051AC), d0
+loc_48544A24:
+    movbu   (MainSEQ_SeqCycPly_Reload_Records+44), d0
     cmp     0, d0
     bne     loc_48544A32
     clr     d0
@@ -7535,6 +7538,7 @@ loc_48544A58:
 loc_48544A70:
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544A74:
     mov     (0x88, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -7542,7 +7546,8 @@ loc_48544A70:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
-    movbu   (data_500051AC), d0
+loc_48544A8A:
+    movbu   (MainSEQ_SeqCycPly_Reload_Records+44), d0
     cmp     0, d0
     beq     loc_48544AA6
     mov     (0x88, sp), a0
@@ -7567,6 +7572,7 @@ loc_48544AAC:
     bcs     loc_48544AAC
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544AC6:
     mov     (0x88, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -7575,7 +7581,7 @@ loc_48544AAC:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, (0x2c, sp)
-    movbu   (data_500051AC), d0
+    movbu   (MainSEQ_SeqCycPly_Reload_Records+44), d0
     cmp     0, d0
     bne     loc_48544AEA
     jmp     loc_48544DA9
@@ -7876,6 +7882,7 @@ loc_48544D9C:
 loc_48544DA9:
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544DAD:
     mov     (0x88, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -7893,6 +7900,7 @@ loc_48544DA9:
     call    PostEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544DE9:
     mov     (0x88, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -7910,12 +7918,13 @@ loc_48544DA9:
     call    PostEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_48544E25:
     mov     (0x88, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
     mov     d2, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    movbu   (data_500051AC), d0
+    movbu   (MainSEQ_SeqCycPly_Reload_Records+44), d0
     cmp     0, d0
     bne     loc_48544E3F
     jmp     loc_48544EFD
@@ -10551,7 +10560,7 @@ func_4854699F_entry:
     clr     d3
     clr     d0
     movbu   d0, (0xc, sp)
-    mov     SeqLyricsBoxProc_Records+128, a1
+    mov     Str_MThd_2, a1
     mov     sp, a0
     add     0x10, a0
     mov     -5, d1
@@ -11054,7 +11063,7 @@ func_48546ED0:
     movm    [d2,d3], (sp)
     add     -0x10, sp
 func_48546ED0_entry:
-    mov     SeqLyricsBoxProc_Records+136, a1
+    mov     Str_MTrk_2, a1
     mov     sp, a0
     add     8, a0
     mov     -5, d1
@@ -12536,7 +12545,7 @@ func_48547C04:
     add     -0x1c, sp
 func_48547C04_entry:
     mov     a0, a2
-    mov     SeqLyricsBoxProc_Records+144, a1
+    mov     func_48547C04_Table, a1
     mov     sp, a0
     add     0x14, a0
     mov     -6, d1
@@ -13621,7 +13630,7 @@ loc_4854864A:
 func_4854864E:
     add     -0x10, sp
 func_4854864E_entry:
-    mov     SeqLyricsBoxProc_Records+152, a0
+    mov     Str_MThd, a0
     mov     0xe, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
     ret     0, 0x10
@@ -13630,7 +13639,7 @@ func_48548661:
     movm    [d2], (sp)
     add     -0x10, sp
 func_48548661_entry:
-    mov     SeqLyricsBoxProc_Records+168, a0
+    mov     Str_MTrk, a0
     mov     4, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
     clr     d2
@@ -13647,7 +13656,7 @@ func_48548683:
     movm    [a2], (sp)
     add     -0x24, sp
 func_48548683_entry:
-    mov     SeqLyricsBoxProc_Records+172, a0
+    mov     Str_MTrk+4, a0
     mov     4, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
     mov     sp, a2
@@ -13850,17 +13859,17 @@ func_4854886A_entry:
     beq     loc_485488A3
     bra     loc_485488B0
 loc_48548885:
-    mov     SeqLyricsBoxProc_Records+176, a0
+    mov     func_48549271_Table, a0
     mov     0xc, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
     bra     loc_485488B0
 loc_48548894:
-    mov     SeqLyricsBoxProc_Records+188, a0
+    mov     func_48549271_Table_2, a0
     mov     7, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
     bra     loc_485488B0
 loc_485488A3:
-    mov     SeqLyricsBoxProc_Records+195, a0
+    mov     func_48549271_Table_3, a0
     mov     7, d0
     call    func_48549271_entry, [d2,d3,a2], 0x18
 loc_485488B0:
@@ -13872,7 +13881,7 @@ func_485488B3:
 func_485488B3_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     SeqLyricsBoxProc_Records+204, a1
+    mov     func_485488B3_Table, a1
     mov     sp, a0
     add     0x10, a0
     mov     -0xc, d1
@@ -16600,7 +16609,7 @@ func_4854A283_entry:
     mov     d2, d1
     call    func_48455C95_entry, 0, 0x10
     extbu   d0
-    mov     SeqLyricsBoxProc_Records+216, a0
+    mov     func_4854A283_Table, a0
     movbu   (d0, a0), d1
     mov     d2, a3
     movbu   d1, (0x26, sp)
@@ -16642,7 +16651,7 @@ loc_4854A2FD:
     mov     2, d1
     call    PutM3Sqf_entry, [d2,d3], 0x20
 loc_4854A32B:
-    mov     SeqLyricsBoxProc_Records+244, d3
+    mov     func_4854A283_Records, d3
     mov     sp, a2
     add     0x28, a2
     extbu   d2
@@ -16688,40 +16697,50 @@ loc_4854A37F:
 loc_4854A382:
     mov     (4, a0), a0
     jmp     (a0)
+loc_4854A387:
     mov     0x82, d0
     call    func_48458F4D_entry, 0, 0x14
     mov     1, d0
     movbu   d0, (0x27, sp)
     jmp     loc_4854A4EB
+loc_4854A399:
     mov     0x84, d0
     call    func_48458F4D_entry, 0, 0x14
     mov     1, d0
     movbu   d0, (0x27, sp)
     jmp     loc_4854A4EB
+loc_4854A3AB:
     mov     0x81, d0
     call    func_48458F4D_entry, 0, 0x14
     call    func_48458D72_entry, [d2,d3], 0x14
     jmp     loc_4854A4EB
+loc_4854A3BF:
     mov     a2, a0
     call    func_4854A526_entry, [a2], 0x10
     jmp     loc_4854A4EB
+loc_4854A3C8:
     mov     a2, a0
     mov     a3, d0
     call    func_4854A66A_entry, [d2,d3,a2,a3], 0x34
     jmp     loc_4854A4EB
+loc_4854A3D3:
     mov     a2, a0
     call    func_4854A562_entry, [a2], 0x10
     jmp     loc_4854A4EB
+loc_4854A3DC:
     mov     a2, a0
     mov     a3, d0
     call    func_4854A6E6_entry, [d2,d3,a2,a3], 0x34
     jmp     loc_4854A4EB
+loc_4854A3E7:
     mov     a2, a0
     call    func_4854A5BE_entry, [a2], 0x10
     jmp     loc_4854A4EB
+loc_4854A3F0:
     mov     a2, a0
     call    func_4854A61A_entry, 0, 0xc
     jmp     loc_4854A4EB
+loc_4854A3F9:
     mov     a2, a0
     call    func_4854A642_entry, 0, 0xc
     jmp     loc_4854A4EB
@@ -16744,7 +16763,7 @@ loc_4854A423:
     clr     d0
     call    func_48455C95_entry, 0, 0x10
     extbu   d0
-    mov     SeqLyricsBoxProc_Records+216, a0
+    mov     func_4854A283_Table, a0
     movbu   (d0, a0), d0
     extbu   d0
     cmp     0x21, d0
@@ -16795,7 +16814,7 @@ loc_4854A4B2:
     clr     d2
 loc_4854A4B4:
     exthu   d0
-    mov     SeqLyricsBoxProc_Records+236, a0
+    mov     func_4854A283_Table_2, a0
     movbu   (d0, a0), d1
     inc     d2
     movbu   (d1, a2), d0
@@ -16835,7 +16854,7 @@ loc_4854A4FF:
     clr     d0
     call    func_48455C95_entry, 0, 0x10
     extbu   d0
-    mov     SeqLyricsBoxProc_Records+216, a0
+    mov     func_4854A283_Table, a0
     movbu   (d0, a0), d0
     mov     d2, d1
     extbu   d0
@@ -16945,7 +16964,7 @@ func_4854A66A_entry:
     call    func_48455C95_entry, 0, 0x10
     extbu   d0
     movbu   (2, a3), d1
-    mov     SeqLyricsBoxProc_Records+216, a0
+    mov     func_4854A283_Table, a0
     movbu   (d0, a0), d2
     mov     sp, a2
     asl     24, d2
@@ -16998,7 +17017,7 @@ func_4854A6E6_entry:
     mov     a0, a3
     call    func_48455C95_entry, 0, 0x10
     extbu   d0
-    mov     SeqLyricsBoxProc_Records+216, a0
+    mov     func_4854A283_Table, a0
     movbu   (d0, a0), d1
     mov     d1, d0
     extbu   d0
@@ -17642,12 +17661,12 @@ DiskInit_entry:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
     mov     8, d0
-    mov     func_4854AC9E_Table+92, a0
+    mov     func_4C03D154_Table_11, a0
     call    cre_tsk, 0, 0
     mov     8, d0
     clr     d1
     call    sta_tsk, 0, 0
-    mov     data_4867B9B8, a2
+    mov     func_4C03BFC8_Table_3, a2
     mov     9, d0
     mov     a2, a0
     call    func_4C03BF3C, 0, 0
@@ -17755,7 +17774,7 @@ loc_4854ADF4:
 DiskCmdReplyCopy:
     movm    [d2], (sp)
     mov     d0, d2
-    movhu   (data_500051B0), d0
+    movhu   (MainSEQ_SeqCycPly_Reload_Records+48), d0
     mov     -1, d1
     exth    d0
     cmp     1, d0
@@ -17773,9 +17792,9 @@ DiskCmdReplyCopy:
     inc4    a1
     inc     d1
     lne
-    movhu   d2, (data_500051B2)
+    movhu   d2, (MainSEQ_SeqCycPly_Reload_Records+50)
     clr     d0
-    movhu   d0, (data_500051B0)
+    movhu   d0, (MainSEQ_SeqCycPly_Reload_Records+48)
     bra     loc_4854AE60
 loc_4854AE44:
     mov     0x501606b0, a1
@@ -17787,9 +17806,9 @@ loc_4854AE44:
     inc4    a1
     inc     d1
     lne
-    movhu   d2, (data_500051B2)
+    movhu   d2, (MainSEQ_SeqCycPly_Reload_Records+50)
     clr     d0
-    movhu   d0, (data_500051B0)
+    movhu   d0, (MainSEQ_SeqCycPly_Reload_Records+48)
 loc_4854AE60:
     clr     d1
 loc_4854AE61:
@@ -17828,16 +17847,16 @@ loc_4854AE8D:
     cmp     0, d0
     bne     loc_4854AE9A
     clr     d0
-    movbu   d0, (data_500051B4)
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+52)
 loc_4854AE9A:
-    movbu   (data_500051B4), d0
+    movbu   (MainSEQ_SeqCycPly_Reload_Records+52), d0
     cmp     0, d0
     beq     loc_4854AEAA
     mov     0xfb, d0
     ret     [d2,a2], 0x18
 loc_4854AEAA:
     mov     1, d0
-    movbu   d0, (data_500051B4)
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+52)
     mov     0x50082918, a0
     mov     0xa, d0
     call    func_4C03CA58, 0, 0
@@ -17857,7 +17876,7 @@ loc_4854AECA:
     inc     d1
     lne
     mov     1, d0
-    movhu   d0, (data_500051B0)
+    movhu   d0, (MainSEQ_SeqCycPly_Reload_Records+48)
     mov     (0x50082918), a0
     mov     3, d0
     movhu   d0, (4, a0)
@@ -17881,7 +17900,7 @@ loc_4854AECA:
     call    LibMsgSend, 0, 0
     mov     3, d0
     call    rot_rdq, 0, 0
-    movhu   (data_500051B0), d0
+    movhu   (MainSEQ_SeqCycPly_Reload_Records+48), d0
     mov     (0x50151bfc), d2
     exth    d0
     cmp     0, d0
@@ -17892,13 +17911,13 @@ loc_4854AF39:
     cmp     0x1f40, d0
     bls     loc_4854AF52
     clr     d0
-    movbu   d0, (data_500051B4)
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+52)
     mov     1, d0
     bra     loc_4854AF82
 loc_4854AF52:
     mov     2, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    movhu   (data_500051B0), d0
+    movhu   (MainSEQ_SeqCycPly_Reload_Records+48), d0
     exth    d0
     cmp     0, d0
     bne     loc_4854AF39
@@ -17913,8 +17932,8 @@ loc_4854AF66:
     inc     d1
     lne
     clr     d0
-    movbu   d0, (data_500051B4)
-    movhu   (data_500051B2), d0
+    movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+52)
+    movhu   (MainSEQ_SeqCycPly_Reload_Records+50), d0
 loc_4854AF82:
     ret     [d2,a2], 0x18
 # DiskCmdPostAsync  (CPU 0x4854af85)
@@ -18056,7 +18075,7 @@ loc_4854B07B:
 loc_4854B07E:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
-    mov     data_50007E8A, a0
+    mov     SdCommandSend_Var, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     mov     0x64, d0
     call    dly_tsk_entry, [d2,a2], 0x18
@@ -18159,7 +18178,7 @@ loc_4854B177:
     exth    d2
     cmp     0, d2
     lgt
-    mov     data_50007EE4, a0
+    mov     SdReadBlockCmd_Var, a0
     mov     0x200, d0
     mov     (0x14, sp), a1
     call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c
@@ -18249,7 +18268,7 @@ loc_4854B22E:
     exth    d2
     cmp     0, d2
     lgt
-    mov     data_50007EEE, a0
+    mov     SdWriteBlockCmd_Var, a0
     mov     0x200, d0
     mov     (0x14, sp), a1
     call    SdWriteBlockCmd_entry, [d2,d3,a2,a3], 0x2c
@@ -18414,7 +18433,7 @@ loc_4854B3C9:
 loc_4854B3D0:
     add     -0x40, d0
     asl2    d0
-    mov     ptrs_4867B9F0, a0
+    mov     DiskDriveCtrlHandler_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4854B3DD:
@@ -18430,7 +18449,7 @@ loc_4854B3DD:
 loc_4854B3F2:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
-    mov     data_50007E8A, a0
+    mov     SdCommandSend_Var, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     mov     0x64, d0
     call    dly_tsk_entry, [d2,a2], 0x18
@@ -18771,7 +18790,7 @@ SdCardInitFull_entry:
     clr     d3
     mov     0x100, a2
 loc_4854B6C0:
-    mov     data_50007EC6, a0
+    mov     SdCommandSend_Var_4, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     a2, d0
@@ -18826,7 +18845,7 @@ loc_4854B71D:
 loc_4854B728:
     clr     d2
 loc_4854B729:
-    mov     data_50007EDA, a0
+    mov     SdCommandSend_Var_10, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
@@ -18856,7 +18875,7 @@ loc_4854B759:
 loc_4854B768:
     clr     d2
 loc_4854B769:
-    mov     data_50007ED0, a0
+    mov     SdCommandSend_Var_7, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
@@ -19293,7 +19312,7 @@ DriveLetterClass:
     bgt     loc_4854BB30
     add     -0x41, d0
     asl2    d0
-    mov     ptrs_4867BA2C, a0
+    mov     DriveLetterClass_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4854BB2C:
@@ -19366,14 +19385,14 @@ loc_4854BBA9:
     jmp     loc_4854BC40
 loc_4854BBAC:
     extbu   d0
-    mov     d0, (data_500051FC)
+    mov     d0, (SdSpiClockSet_Var)
     mov     3, d1
     mov     0x19, d0
-    mov     d0, (data_50005200)
+    mov     d0, (SdSpiClockSet_Var_2)
     jmp     loc_4854BC44
 loc_4854BBC0:
     extbu   d0
-    mov     d0, (data_500051FC)
+    mov     d0, (SdSpiClockSet_Var)
     call    PanelSubTypeGet_entry, 0, 8
     extbu   d0
     cmp     5, d0
@@ -19385,36 +19404,36 @@ loc_4854BBC0:
 loc_4854BBDF:
     mov     3, d1
     mov     0x19, d0
-    mov     d0, (data_50005200)
+    mov     d0, (SdSpiClockSet_Var_2)
     bra     loc_4854BC44
 loc_4854BBEB:
-    movbu   (data_50005209), d0
-    movbu   (data_50005208), d1
-    mov     d0, (data_50005200)
+    movbu   (SdSpiClockSet_Table), d0
+    movbu   (SdSpiClockSet_Var_3), d1
+    mov     d0, (SdSpiClockSet_Var_2)
     bra     loc_4854BC44
 loc_4854BBFF:
     mov     1, d0
-    movbu   d0, (data_50005208)
+    movbu   d0, (SdSpiClockSet_Var_3)
     mov     4, d0
-    movbu   d0, (data_50005209)
+    movbu   d0, (SdSpiClockSet_Table)
     clr     d0
     bra     loc_4854BC77
 loc_4854BC12:
     mov     2, d0
-    movbu   d0, (data_50005208)
+    movbu   d0, (SdSpiClockSet_Var_3)
     mov     0xe, d0
-    movbu   d0, (data_50005209)
+    movbu   d0, (SdSpiClockSet_Table)
     clr     d0
     bra     loc_4854BC77
 loc_4854BC25:
     mov     3, d0
-    movbu   d0, (data_50005208)
+    movbu   d0, (SdSpiClockSet_Var_3)
     mov     0x1c, d0
-    movbu   d0, (data_50005209)
+    movbu   d0, (SdSpiClockSet_Table)
     clr     d0
     bra     loc_4854BC77
 loc_4854BC38:
-    movbu   (data_50005208), d0
+    movbu   (SdSpiClockSet_Var_3), d0
     bra     loc_4854BC77
 loc_4854BC40:
     mov     -1, d0
@@ -19493,11 +19512,11 @@ SdCardDetectRaw_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BD2F
-    movhu   (data_50005204), d0
+    movhu   (SdCardDetectRaw_Table), d0
     exth    d0
     cmp     0, d0
     blt     loc_4854BD00
-    movhu   (data_50005204), d0
+    movhu   (SdCardDetectRaw_Table), d0
     extbu   d0
     bra     loc_4854BD31
 loc_4854BD00:
@@ -19533,7 +19552,7 @@ SdCardDetectDebounce:
 SdCardDetectDebounce_entry:
     call    SdCardDetectRaw_entry, 0, 0xc
     mov     d0, d2
-    movbu   (data_5000520C), d0
+    movbu   (SdCardDetectDebounce_Table), d0
     cmp     0, d0
     bne     loc_4854BD5B
     mov     d2, d0
@@ -19541,16 +19560,16 @@ SdCardDetectDebounce_entry:
     cmp     0, d0
     beq     loc_4854BD5B
     mov     (0x50151bfc), d0
-    mov     d0, (data_50005210)
+    mov     d0, (SdCardDetectDebounce_Var)
 loc_4854BD5B:
     mov     d2, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4854BD68
     clr     d0
-    mov     d0, (data_50005210)
+    mov     d0, (SdCardDetectDebounce_Var)
 loc_4854BD68:
-    mov     (data_50005210), d1
+    mov     (SdCardDetectDebounce_Var), d1
     mov     d2, d0
     cmp     0, d1
     beq     loc_4854BD86
@@ -19559,10 +19578,10 @@ loc_4854BD68:
     clr     d0
     cmp     d1, d3
     bls     loc_4854BD86
-    mov     d0, (data_50005210)
+    mov     d0, (SdCardDetectDebounce_Var)
     mov     d2, d0
 loc_4854BD86:
-    movbu   d2, (data_5000520C)
+    movbu   d2, (SdCardDetectDebounce_Table)
     extbu   d0
     ret     [d2,d3], 0x10
 # SdPowerLineSet  (CPU 0x4854bd90)
@@ -19624,13 +19643,13 @@ SdSlotDrainWait_entry:
     bclr    0x02, (0x9cc00009)
 loc_4854BE01:
     mov     -1, d0
-    movhu   d0, (data_50005204)
+    movhu   d0, (SdCardDetectRaw_Table)
     mov     0x1e, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     mov     (0x50151bfc), d0
     mov     d0, (0xc, sp)
     clr     d0
-    movbu   d0, (data_50007EFC)
+    movbu   d0, (SdSlotDrainWait_Table)
 loc_4854BE21:
     mov     (0xc, sp), d1
     mov     (0x50151bfc), d0
@@ -19638,7 +19657,7 @@ loc_4854BE21:
     cmp     0x7d0, d0
     bls     loc_4854BE3C
     mov     0xfa, d0
-    movbu   d0, (data_50007EFC)
+    movbu   d0, (SdSlotDrainWait_Table)
     bra     loc_4854BE89
 loc_4854BE3C:
     call    SdSlotSenseGet_entry, 0, 8
@@ -19657,7 +19676,7 @@ loc_4854BE52:
     cmp     1, d0
     bne     loc_4854BE5F
     clr     d2
-    movbu   d2, (data_50007EFC)
+    movbu   d2, (SdSlotDrainWait_Table)
 loc_4854BE5F:
     mov     (0xc, sp), d1
     mov     (0x50151bfc), d0
@@ -19665,7 +19684,7 @@ loc_4854BE5F:
     cmp     0x64, d0
     bls     loc_4854BE74
     clr     d2
-    movbu   d2, (data_50007EFC)
+    movbu   d2, (SdSlotDrainWait_Table)
 loc_4854BE74:
     mov     d2, d0
     extbu   d0
@@ -19695,7 +19714,7 @@ SdSlotDischarge_entry:
     call    SdCsAssert, 0, 0
     call    SdCardDetectDebounce_entry, [d2,d3], 0x10
     extbu   d0
-    movhu   d0, (data_50005204)
+    movhu   d0, (SdCardDetectRaw_Table)
     call    PanelSubTypeGet_entry, 0, 8
     extbu   d0
     cmp     4, d0
@@ -19703,7 +19722,7 @@ SdSlotDischarge_entry:
     bset    0x02, (0x9cc00009)
 loc_4854BEC0:
     mov     0xa, d0
-    movbu   d0, (data_50007EFC)
+    movbu   d0, (SdSlotDrainWait_Table)
     mov     2, d0
     call    SdSpiClockSet_entry, [d2], 0x10
     clr     d2
@@ -19763,7 +19782,7 @@ SdSlotRelease_entry:
     bclr    0x02, (0x9cc00009)
 loc_4854BF3E:
     mov     -1, d0
-    movhu   d0, (data_50005204)
+    movhu   d0, (SdCardDetectRaw_Table)
     clr     d0
     ret     0, 8
 # SdSpiSendByte  (CPU 0x4854bf4a)
@@ -19784,7 +19803,7 @@ SdSpiSendByte_entry:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50005200), d1
+    mov     (SdSpiClockSet_Var_2), d1
     extbu   d0
     mov     d1, (0, sp)
     movhu   d0, (0x9805000c)
@@ -19837,7 +19856,7 @@ loc_4854BFB5:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50005200), d1
+    mov     (SdSpiClockSet_Var_2), d1
     mov     (0, sp), d0
     mov     d1, (4, sp)
     movbu   (d0, a0), d1
@@ -19885,7 +19904,7 @@ SdSpiRecvByte_entry:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50005200), d0
+    mov     (SdSpiClockSet_Var_2), d0
     mov     -1, d1
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -19940,7 +19959,7 @@ loc_4854C088:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50005200), d1
+    mov     (SdSpiClockSet_Var_2), d1
     mov     0xff, d0
     mov     d1, (4, sp)
     movhu   d0, (0x9805000c)
@@ -21457,7 +21476,7 @@ loc_4854CC8A:
 loc_4854CC92:
     movhu   (0x50082922), d0
     inc     d0
-    movbu   d0, (data_50007F3C)
+    movbu   d0, (SdPlaylistDbClear_Table)
     ret     [d2,d3,a2,a3], 0x2c
 
 func_4854CCA2:
@@ -21860,11 +21879,11 @@ SdPowerCtrlSet:
     and     0xf7ff, psw
     nop
     nop
-    movbu   (data_50005214), d1
+    movbu   (SdPowerCtrlSet_Table), d1
     extbu   d0
     or      d0, d1
-    movbu   d1, (data_50005214)
-    movbu   (data_50005214), d0
+    movbu   d1, (SdPowerCtrlSet_Table)
+    movbu   (SdPowerCtrlSet_Table), d0
     movbu   d0, (0x98060000)
     or      0x0800, psw
     nop
@@ -21884,12 +21903,12 @@ SdPowerCtrlClear:
     and     0xf7ff, psw
     nop
     nop
-    movbu   (data_50005214), d1
+    movbu   (SdPowerCtrlSet_Table), d1
     extbu   d0
     not     d0
     and     d0, d1
-    movbu   d1, (data_50005214)
-    movbu   (data_50005214), d0
+    movbu   d1, (SdPowerCtrlSet_Table)
+    movbu   (SdPowerCtrlSet_Table), d0
     movbu   d0, (0x98060000)
     or      0x0800, psw
     nop
@@ -21906,7 +21925,7 @@ SdPowerCtrlClear:
 # SdPowerCtrlWrite  (CPU 0x4854d0dc)
 #   direct byte -> shadow 0x50005214 + 0x98060000
 SdPowerCtrlWrite:
-    movbu   d0, (data_50005214)
+    movbu   d0, (SdPowerCtrlSet_Table)
     movbu   d0, (0x98060000)
     clr     d1
     setlb
@@ -21966,11 +21985,11 @@ SdPowerDacInit_entry:
     ret     0, 0xc
 # SdPowerCtrlSetRaw  (CPU 0x4854d168)
 SdPowerCtrlSetRaw:
-    movbu   (data_50005214), d1
+    movbu   (SdPowerCtrlSet_Table), d1
     extbu   d0
     or      d0, d1
-    movbu   d1, (data_50005214)
-    movbu   (data_50005214), d0
+    movbu   d1, (SdPowerCtrlSet_Table)
+    movbu   (SdPowerCtrlSet_Table), d0
     clr     d1
     movbu   d0, (0x98060000)
     setlb
@@ -21983,12 +22002,12 @@ SdPowerCtrlSetRaw:
     retf    0, 0
 # SdPowerCtrlClearRaw  (CPU 0x4854d18f)
 SdPowerCtrlClearRaw:
-    movbu   (data_50005214), d1
+    movbu   (SdPowerCtrlSet_Table), d1
     extbu   d0
     not     d0
     and     d0, d1
-    movbu   d1, (data_50005214)
-    movbu   (data_50005214), d0
+    movbu   d1, (SdPowerCtrlSet_Table)
+    movbu   (SdPowerCtrlSet_Table), d0
     clr     d1
     movbu   d0, (0x98060000)
     setlb
@@ -22392,21 +22411,21 @@ func_4854D704_entry:
     bra     loc_4854D75B
 loc_4854D734:
     clr     d0
-    movhu   d0, (data_50005218)
+    movhu   d0, (func_4854D704_Table)
     bra     loc_4854D767
 loc_4854D73D:
     call    TgStrapProbe, 0, 0
     mov     2, d1
-    movhu   d1, (data_50005218)
+    movhu   d1, (func_4854D704_Table)
     extbu   d0
     cmp     3, d0
     bne     loc_4854D767
     mov     1, d0
-    movhu   d0, (data_50005218)
+    movhu   d0, (func_4854D704_Table)
     bra     loc_4854D767
 loc_4854D75B:
     mov     0x0000ffff, d0
-    movhu   d0, (data_50005218)
+    movhu   d0, (func_4854D704_Table)
 loc_4854D767:
     movhu   d2, (0x3200002e)
     clr     d0
@@ -22414,13 +22433,13 @@ loc_4854D767:
     ret     [d2], 0x10
 
 func_4854D778:
-    movhu   (data_50005218), d0
+    movhu   (func_4854D704_Table), d0
     retf    0, 0
 
 func_4854D781:
     movm    [d2,d3], (sp)
     mov     d0, d2
-    movhu   (data_50005218), d0
+    movhu   (func_4854D704_Table), d0
     cmp     0, d0
     beq     loc_4854D796
     cmp     1, d0
@@ -22457,7 +22476,7 @@ loc_4854D79C:
 func_4854D7C3:
     movm    [d2,d3], (sp)
     mov     d0, d1
-    movhu   (data_50005218), d0
+    movhu   (func_4854D704_Table), d0
     cmp     0, d0
     beq     loc_4854D7D8
     cmp     1, d0
@@ -22497,7 +22516,7 @@ func_4854D809:
     add     -8, sp
 func_4854D809_entry:
     call    func_4854D704_entry, [d2], 0x10
-    movhu   (data_50005218), d0
+    movhu   (func_4854D704_Table), d0
     cmp     0, d0
     beq     loc_4854D823
     cmp     1, d0
@@ -22526,7 +22545,7 @@ func_4854D83D:
 func_4854D848:
     add     -0xc, sp
 func_4854D848_entry:
-    movhu   (data_50005218), d1
+    movhu   (func_4854D704_Table), d1
     cmp     0, d1
     beq     loc_4854D85D
     cmp     1, d1
@@ -22547,7 +22566,7 @@ func_4854D86E:
     movm    [d2], (sp)
     add     -0xc, sp
 func_4854D86E_entry:
-    movhu   (data_50005218), d1
+    movhu   (func_4854D704_Table), d1
     mov     d0, d2
     cmp     0, d1
     beq     loc_4854D886
@@ -25539,7 +25558,7 @@ loc_4854FC1C:
     mov     (0x28, sp), a0
     mov     (0x14, a0), a2
     mov     (0x10, a0), d0
-    mov     ptrs_4868D6E8, a0
+    mov     SdcLoadDispFunc_Table, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
@@ -25967,7 +25986,7 @@ loc_48550082:
     jmp     loc_485506A5
 loc_485500A7:
     add     8, a0
-    cmp     PsFolderFileListBoxProc_Records+256, a0
+    cmp     SdStateReset_Var, a0
     bcs     loc_485500B2
     mov     a1, a0
 loc_485500B2:
@@ -25977,6 +25996,7 @@ loc_485500B2:
 loc_485500B5:
     mov     (4, a0), a0
     jmp     (a0)
+loc_485500BA:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), a1
@@ -25997,6 +26017,7 @@ loc_485500B5:
     mov     (0xf0, sp), d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0xe4
+loc_485500FD:
     mov     (0xf4, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -26103,6 +26124,7 @@ loc_485501E1:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_485501F7:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     a0, (0x28, sp)
@@ -26298,6 +26320,7 @@ loc_48550377:
 loc_48550395:
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_48550399:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     a0, (0x28, sp)
@@ -26474,6 +26497,7 @@ loc_485504E0:
 loc_485504FF:
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_48550503:
     mov     (0xf4, sp), d0
     movhu   d0, (0x50082a64)
     mov     d0, (0x10, sp)
@@ -26481,6 +26505,7 @@ loc_485504FF:
     mov     d2, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0xe4
+loc_4855051A:
     mov     (0xf4, sp), d0
     movhu   d0, (0x50082a66)
     mov     d0, (0x10, sp)
@@ -26488,6 +26513,7 @@ loc_485504FF:
     mov     d2, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0xe4
+loc_48550531:
     mov     -1, d0
     movhu   d0, (0x50082a66)
     mov     (0xf4, sp), a0
@@ -26496,6 +26522,7 @@ loc_485504FF:
     mov     (0xf0, sp), d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0xe4
+loc_4855054A:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0xf4, sp), a2
@@ -26529,6 +26556,7 @@ loc_48550596:
 loc_485505A6:
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_485505AA:
     mov     (0xf4, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -26561,6 +26589,7 @@ loc_485505F1:
 loc_48550603:
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_48550607:
     mov     (0xf4, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -26574,6 +26603,7 @@ loc_48550603:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2,a3], 0xe4
+loc_48550636:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), a0
@@ -26585,6 +26615,7 @@ loc_48550603:
     mov     (0xf0, sp), d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     bra     loc_485506B3
+loc_48550653:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0xf4, sp), a1
@@ -26604,6 +26635,7 @@ loc_4855066E:
     mov     d2, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     bra     loc_485506B3
+loc_4855067C:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0xf4, sp), a1
@@ -27692,13 +27724,13 @@ func_4855113E_entry:
     extbu   d0
     bra     loc_485511A1
 loc_48551159:
-    movhu   (PsFolderFileListBoxProc_Records+280), d0
+    movhu   (func_4855113E_Records), d0
     clr     d2
     exth    d0
     cmp     d0, d1
-    mov     PsFolderFileListBoxProc_Records+280, a0
+    mov     func_4855113E_Records, a0
     beq     loc_48551187
-    movhu   (PsFolderFileListBoxProc_Records+280), d0
+    movhu   (func_4855113E_Records), d0
     exth    d0
     cmp     d2, d0
     bge     loc_48551187
@@ -28619,7 +28651,7 @@ SdStateReset_entry:
     movbu   d0, (0x50083bbf)
     movbu   d0, (0x50083bc4)
     movbu   d0, (0x50083bc5)
-    mov     PsFolderFileListBoxProc_Records+256, a0
+    mov     SdStateReset_Var, a0
     movbu   (a0), d0
     mov     0x50083bc6, a1
     movbu   d0, (a1)
@@ -28645,7 +28677,7 @@ SdUnmountCleanup_entry:
     clr     d0
     movbu   d0, (0x50083bbf)
     movbu   d0, (0x50083bc4)
-    mov     PsFolderFileListBoxProc_Records+256, a0
+    mov     SdStateReset_Var, a0
     movbu   (a0), d0
     mov     0x50083bc6, a1
     movbu   d0, (a1)
@@ -28719,7 +28751,7 @@ loc_48551939:
     cmp     2, d0
     bne     loc_48551968
     mov     1, d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
     bra     loc_48551975
 loc_48551968:
     call    SdUnmountCleanup_entry, 0, 8
@@ -28733,7 +28765,7 @@ loc_4855197E:
     cmp     1, d2
     bne     loc_485519AA
     call    func_48565F67, 0, 0
-    movbu   (data_500058A0), d0
+    movbu   (SdCardInsertMsgHandler_Table), d0
     cmp     0, d0
     bne     loc_4855199E
     mov     1, d0
@@ -28743,7 +28775,7 @@ loc_4855199E:
     cmp     1, d0
     bne     loc_485519AA
     mov     2, d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
 loc_485519AA:
     mov     d2, d1
     mov     d3, d0
@@ -29313,12 +29345,12 @@ loc_48552055:
     mov     3, d0
     call    SD_SetState, 0, 0
 loc_4855205E:
-    movbu   (data_500058A0), d0
+    movbu   (SdCardInsertMsgHandler_Table), d0
     cmp     1, d0
     bne     loc_4855207C
     call    SdUnmountCleanup_entry, 0, 8
     clr     d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
     movbu   d0, (0x50083bc2)
     bra     loc_4855209B
 loc_4855207C:
@@ -29326,7 +29358,7 @@ loc_4855207C:
     bne     loc_4855209B
     call    SdUnmountCleanup_entry, 0, 8
     clr     d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
     movbu   d0, (0x50083bc2)
     mov     1, d0
     call    SD_SetState, 0, 0
@@ -29391,12 +29423,12 @@ loc_4855211E:
     mov     3, d0
     call    SD_SetState, 0, 0
 loc_48552127:
-    movbu   (data_500058A0), d0
+    movbu   (SdCardInsertMsgHandler_Table), d0
     cmp     1, d0
     bne     loc_48552145
     call    SdUnmountCleanup_entry, 0, 8
     clr     d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
     movbu   d0, (0x50083bc2)
     bra     loc_48552164
 loc_48552145:
@@ -29404,7 +29436,7 @@ loc_48552145:
     bne     loc_48552164
     call    SdUnmountCleanup_entry, 0, 8
     clr     d0
-    movbu   d0, (data_500058A0)
+    movbu   d0, (SdCardInsertMsgHandler_Table)
     movbu   d0, (0x50083bc2)
     mov     1, d0
     call    SD_SetState, 0, 0
@@ -30912,7 +30944,7 @@ loc_48553006:
     cmp     0xb, d2
     blt     loc_48552FF0
     call    SetSdSavePM3Bank, 0, 0
-    mov     PsFolderFileListBoxProc_Records+256, a1
+    mov     SdStateReset_Var, a1
     movbu   (a1), d0
     mov     0x50083bc6, a0
     movbu   d0, (a0)
@@ -32935,12 +32967,12 @@ loc_4855462A:
 loc_4855462E:
     call    GetTitleNow_entry, 0, 0x10
     mov     0xa, d1
-    movbu   d1, (data_500058A8)
+    movbu   d1, (SdcFmmFolderNameFunc_Table)
     exthu   d0
     cmp     0x113, d0
     beq     loc_4855464C
     mov     8, d0
-    movbu   d0, (data_500058A8)
+    movbu   d0, (SdcFmmFolderNameFunc_Table)
 loc_4855464C:
     call    func_4855EECB_entry, 0, 0xc
     movhu   d0, (0x50082a88)
@@ -32951,7 +32983,7 @@ loc_4855464C:
     movhu   d0, (0x50082a88)
 loc_48554664:
     movhu   (0x50082a88), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -32969,7 +33001,7 @@ loc_48554664:
     movhu   d0, (0x50082a8a)
 loc_485546A0:
     movhu   (0x50082a8a), d1
-    movbu   (data_500058A8), d0
+    movbu   (SdcFmmFolderNameFunc_Table), d0
     exth    d1
     ext     d1
     div     d0, d1
@@ -32993,11 +33025,11 @@ loc_485546D8:
 loc_485546DC:
     movbu   d3, (0x50082a8d)
     movhu   (0x50082a88), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     call    func_4855125F_entry, [d2,d3,a2,a3], 0x30
     call    func_4855EECB_entry, 0, 0xc
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
     movhu   (0x50082a8a), d1
@@ -33091,7 +33123,7 @@ loc_485547F3:
     cmp     1, a2
     bne     loc_48554815
     movhu   (0x50082a88), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     cmp     d1, d0
     bge     loc_4855480A
@@ -33104,7 +33136,7 @@ loc_48554815:
     cmp     2, a2
     bne     loc_4855486B
     movhu   (0x50082a88), d0
-    movbu   (data_500058A8), d3
+    movbu   (SdcFmmFolderNameFunc_Table), d3
     exth    d0
     exth    d2
     mov     d3, d1
@@ -33171,7 +33203,7 @@ loc_485548B4:
     cmp     4, a2
     bne     loc_485548D6
     movhu   (0x50082a8a), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     cmp     d1, d0
     bge     loc_485548CB
@@ -33183,7 +33215,7 @@ loc_485548CB:
 loc_485548D6:
     cmp     5, a2
     bne     loc_48554902
-    movbu   (data_500058A8), d0
+    movbu   (SdcFmmFolderNameFunc_Table), d0
     movhu   (0x50082a8a), d2
     mov     d0, d1
     exth    d2
@@ -33687,7 +33719,7 @@ loc_48554F75:
     extbu   d0
     call    func_4855EEB1_entry, [d2], 0x10
     movhu   (0x50082a88), d1
-    movbu   (data_500058A8), d0
+    movbu   (SdcFmmFolderNameFunc_Table), d0
     exth    d1
     ext     d1
     div     d0, d1
@@ -33696,7 +33728,7 @@ loc_48554F75:
     mov     -1, d0
     mov     0x02150003, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    movbu   (data_500058A8), d2
+    movbu   (SdcFmmFolderNameFunc_Table), d2
     movhu   (0x50082a88), d0
     mov     d2, d1
     exth    d0
@@ -33728,7 +33760,7 @@ loc_48554FD6:
     mov     0x02150001, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     movhu   (0x50082a88), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -33747,7 +33779,7 @@ loc_48555027:
     movhu   d0, (0x50082a8a)
     call    func_4855EE77_entry, [d2], 0x10
     movhu   (0x50082a8a), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -33757,7 +33789,7 @@ loc_48555027:
     mov     0x02150004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     call    func_4855EECB_entry, 0, 0xc
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
     movhu   (0x50082a8a), d1
@@ -33779,7 +33811,7 @@ loc_48555092:
     extbu   d0
     call    func_4855EE77_entry, [d2], 0x10
     movhu   (0x50082a8a), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -33788,7 +33820,7 @@ loc_48555092:
     mov     -1, d0
     mov     0x02150004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    movbu   (data_500058A8), d3
+    movbu   (SdcFmmFolderNameFunc_Table), d3
     movhu   (0x50082a8a), d0
     mov     d3, d1
     exth    d0
@@ -33800,7 +33832,7 @@ loc_48555092:
     cmp     d0, d2
     beq     loc_48555105
     call    func_4855EECB_entry, 0, 0xc
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
     movhu   (0x50082a8a), d1
@@ -33823,7 +33855,7 @@ loc_48555105:
     mov     0x02150002, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     movhu   (0x50082a8a), d0
-    movbu   (data_500058A8), d1
+    movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -33923,10 +33955,10 @@ loc_48555210:
     bge     loc_4855524E
 loc_48555226:
     mov     0x50082a95, a0
-    mov     PsFolderFileListBoxProc_Records+340, a1
+    mov     Str_empty_768, a1
     call    func_4852F762, 0, 0
     mov     0x50082a92, a0
-    mov     PsFolderFileListBoxProc_Records+344, a1
+    mov     Str_empty_767, a1
     call    func_4852F762, 0, 0
     bra     loc_485552BD
 loc_4855524E:
@@ -33952,10 +33984,10 @@ loc_48555289:
     movbu   d0, (0x50082a90)
     movbu   d0, (0x50082a91)
     mov     0x50082a92, a0
-    mov     PsFolderFileListBoxProc_Records+348, a1
+    mov     Str_empty_766, a1
     call    func_4852F762, 0, 0
     mov     0x50082a95, a0
-    mov     PsFolderFileListBoxProc_Records+352, a1
+    mov     Str_empty_765, a1
     call    func_4852F762, 0, 0
 loc_485552BD:
     mov     -1, d0
@@ -34181,10 +34213,10 @@ loc_4855554E:
     mov     -1, d0
     movbu   d0, (0x50082a90)
     movbu   d0, (0x50082a91)
-    mov     PsFolderFileListBoxProc_Records+356, a1
+    mov     Str_empty_764, a1
     call    func_4852F762, 0, 0
     mov     d2, a0
-    mov     PsFolderFileListBoxProc_Records+360, a1
+    mov     Str_empty_763, a1
     call    func_4852F762, 0, 0
     mov     0x500831c4, a3
     mov     a3, a0
@@ -34297,7 +34329,7 @@ loc_485556FE:
     bra     loc_48555720
 loc_4855570D:
     mov     0x500831dd, a0
-    mov     PsFolderFileListBoxProc_Records+364, a1
+    mov     Str_NO_SONG, a1
     call    func_4852F762, 0, 0
 loc_48555720:
     mov     1, d0
@@ -34319,11 +34351,11 @@ loc_48555747:
     movbu   d0, (0x50082a91)
     mov     0x50082a95, d2
     mov     d2, a0
-    mov     PsFolderFileListBoxProc_Records+384, a1
+    mov     Str_empty_762, a1
     call    func_4852F762, 0, 0
     mov     0x50082a92, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+388, a1
+    mov     Str_empty_761, a1
     call    func_4852F762, 0, 0
     clr     d0
     movhu   d0, (0x50083bb4)
@@ -34564,7 +34596,7 @@ loc_48555A09:
     bne     loc_48555A39
     mov     0x5008317c, a3
     mov     a3, a0
-    mov     PsFolderFileListBoxProc_Records+392, a1
+    mov     Str_empty_760, a1
     call    func_4852F762, 0, 0
     bra     loc_48555A81
 loc_48555A39:
@@ -34574,7 +34606,7 @@ loc_48555A39:
     bne     loc_48555A56
     mov     0x5008317c, a3
     mov     a3, a0
-    mov     PsFolderFileListBoxProc_Records+412, a1
+    mov     Str_empty_759, a1
     call    func_4852F762, 0, 0
     bra     loc_48555A81
 loc_48555A56:
@@ -34587,7 +34619,7 @@ loc_48555A56:
 loc_48555A6D:
     mov     0x5008317c, a3
     mov     a3, a0
-    mov     PsFolderFileListBoxProc_Records+432, a1
+    mov     Str_empty_758, a1
     call    func_4852F762, 0, 0
 loc_48555A81:
     mov     0x50082a98, a0
@@ -35625,12 +35657,12 @@ func_4855653E_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_48556574
-    mov     PsFolderFileListBoxProc_Records+452, a1
+    mov     Str_YES_6, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     ret     [d2,a2], 0x18
 loc_48556574:
-    mov     PsFolderFileListBoxProc_Records+460, a1
+    mov     Str_NO_45, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_485565DF
@@ -35652,17 +35684,17 @@ loc_48556584:
     extbu   d0
     cmp     0, d0
     beq     loc_485565C1
-    mov     PsFolderFileListBoxProc_Records+468, a1
+    mov     Str_YES_5, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_485565DF
 loc_485565C1:
-    mov     PsFolderFileListBoxProc_Records+476, a1
+    mov     Str_NO_44, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_485565DF
 loc_485565D1:
-    mov     PsFolderFileListBoxProc_Records+484, a1
+    mov     Str_empty_757, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
 loc_485565DF:
@@ -35858,22 +35890,22 @@ func_485567A8_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_485567E0
-    mov     PsFolderFileListBoxProc_Records+492, a1
+    mov     Str_3BANK, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_4855680E
 loc_485567E0:
-    mov     PsFolderFileListBoxProc_Records+500, a1
+    mov     Str_ALL_8, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_4855680E
 loc_485567F0:
-    mov     PsFolderFileListBoxProc_Records+508, a1
+    mov     Str_YES_4, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
     bra     loc_4855680E
 loc_48556800:
-    mov     PsFolderFileListBoxProc_Records+516, a1
+    mov     Str_NO_43, a1
     mov     a2, a0
     call    func_4852F762, 0, 0
 loc_4855680E:
@@ -36360,7 +36392,7 @@ func_48556D5E_entry:
     clr     d0
     extb    d2
     setlb
-    mov     PsFolderFileListBoxProc_Records+524, a0
+    mov     Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a0
     movbu   (d0, a0), d0
     extb    d0
     cmp     d2, d0
@@ -36390,14 +36422,14 @@ func_48556D7B_entry:
     extb    d2
     cmp     0x20, d2
     bne     loc_48556DCB
-    mov     (PsFolderFileListBoxProc_Records+636), d0
+    mov     (func_48556D7B_Var), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_LDAL_ALSPC_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_48556DE6
 loc_48556DCB:
-    mov     (PsFolderFileListBoxProc_Records+640), d0
+    mov     (func_48556D7B_Var_2), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_LDAL_ALSPC_id, d0
@@ -36776,7 +36808,7 @@ loc_4855716A:
     ret     [d2,d3,a2,a3], 0x30
 loc_4855716E:
     movhu   (0x50082c44), d0
-    mov     PsFolderFileListBoxProc_Records+524, a2
+    mov     Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a2
     exth    d0
     movbu   (d0, a2), d0
     extb    d0
@@ -37004,7 +37036,7 @@ loc_485573C7:
 loc_485573D7:
     clr     d0
     movhu   d0, (0x50082c46)
-    mov     PsFolderFileListBoxProc_Records+524, a3
+    mov     Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a3
     movbu   (d1, a3), d0
     extb    d0
     call    func_48561B71_entry, [d2,d3,a2,a3], 0x24
@@ -37133,7 +37165,7 @@ loc_4855751E:
     beq     loc_48557583
     mov     d2, (0x10, sp)
     movhu   (0x50082c44), d0
-    mov     PsFolderFileListBoxProc_Records+524, a0
+    mov     Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a0
     exth    d0
     movbu   (d0, a0), d0
     extb    d0
@@ -37180,7 +37212,7 @@ loc_48557583:
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 loc_485575D8:
     movhu   (0x50082c44), d0
-    mov     PsFolderFileListBoxProc_Records+524, a0
+    mov     Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a0
     exth    d0
     movbu   (d0, a0), d0
     movhu   (0x50082c46), d1
@@ -37538,7 +37570,7 @@ loc_48557981:
 loc_485579A1:
     mov     0x50082c50, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+644, a1
+    mov     Str_USER_LIST_2, a1
     call    func_4852F762, 0, 0
     extbu   d2
     inc     d2
@@ -37553,7 +37585,7 @@ loc_485579A1:
 loc_485579CE:
     mov     0x50082c50, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+656, a1
+    mov     Str_FOLDER_17, a1
     call    func_4852F762, 0, 0
     call    func_4855EECB_entry, 0, 0xc
     exth    d0
@@ -37568,7 +37600,7 @@ loc_485579CE:
 loc_485579FE:
     mov     0x50082c50, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+668, a1
+    mov     Str_ALL_SONG_CURRENT_FOLDER, a1
     call    func_4852F762, 0, 0
     call    func_4855EECB_entry, 0, 0xc
     exth    d0
@@ -37580,7 +37612,7 @@ loc_485579FE:
     mov     a2, a0
     call    func_4852F7AE, 0, 0
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+696, a1
+    mov     Str_empty_756, a1
     call    func_4852F7AE, 0, 0
     bra     loc_48557A4A
 loc_48557A3C:
@@ -38229,7 +38261,7 @@ loc_48558032:
     clr     d0
     movbu   d2, (0x50083bbb)
     movbu   d0, (0x50082c70)
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     call    func_4855EECB_entry, 0, 0xc
     movbu   d0, (0x50082c71)
     extbu   d0
@@ -38301,7 +38333,7 @@ loc_485580CC:
     bne     loc_4855810E
     mov     0, a3
     clr     d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     mov     1, d3
 loc_4855810E:
     mov     d3, d0
@@ -38350,7 +38382,7 @@ loc_4855815E:
     bne     loc_485581A9
     mov     0, a3
     clr     d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     mov     1, d3
     bra     loc_485581A9
 loc_4855819C:
@@ -38431,7 +38463,7 @@ loc_4855824E:
     bne     loc_48558285
     mov     0, a3
     clr     d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     mov     1, d3
 loc_48558285:
     mov     d3, d0
@@ -38471,7 +38503,7 @@ loc_485582ED:
     call    func_4855EE91_entry, 0, 0xc
     exth    d0
     clr     d1
-    mov     PsFolderFileListBoxProc_Records+700, a0
+    mov     Str_empty_755, a0
     call    func_4853230D_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
@@ -38494,7 +38526,7 @@ loc_4855832A:
     clr     d0
     movbu   d0, (0x50082c71)
     movbu   d0, (0x50082c70)
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     mov     0x104, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -38521,7 +38553,7 @@ loc_48558370:
     cmp     d2, d0
     bne     loc_485583A7
     clr     d0
-    movbu   d2, (data_500058AC)
+    movbu   d2, (SdcFmmSongMedleyListViewFunc_Table)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     MT_SetNotDrawFlag, d1
@@ -38534,7 +38566,7 @@ loc_48558370:
     bra     loc_485583CA
 loc_485583A7:
     clr     d0
-    movbu   d2, (data_500058AC)
+    movbu   d2, (SdcFmmSongMedleyListViewFunc_Table)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     MT_SetNotDrawFlag, d1
@@ -38551,7 +38583,7 @@ loc_485583CE:
     cmp     0x123, d0
     beq     loc_485583F1
     clr     d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     call    func_48461E97_entry, 0, 0xc
     call    func_4853233C, 0, 0
 loc_485583F1:
@@ -38647,7 +38679,7 @@ loc_485584C8:
     call    func_4855EE91_entry, 0, 0xc
     exth    d0
     clr     d1
-    mov     PsFolderFileListBoxProc_Records+708, a0
+    mov     Str_empty_754, a0
     call    func_4853230D_entry, 0, 0x14
     mov     a3, (0x10, sp)
     mov     -1, d0
@@ -38657,7 +38689,7 @@ loc_485584C8:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
 loc_48558504:
@@ -38716,7 +38748,7 @@ loc_48558589:
     call    func_4855EE91_entry, 0, 0xc
     exth    d0
     clr     d1
-    mov     PsFolderFileListBoxProc_Records+716, a0
+    mov     Str_empty_753, a0
     call    func_4853230D_entry, 0, 0x14
     mov     a3, (0x10, sp)
     mov     -1, d0
@@ -38726,7 +38758,7 @@ loc_48558589:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
 loc_485585C5:
@@ -38788,7 +38820,7 @@ loc_48558657:
     call    func_4855EE91_entry, 0, 0xc
     exth    d0
     clr     d1
-    mov     PsFolderFileListBoxProc_Records+724, a0
+    mov     Str_empty_752, a0
     call    func_4853230D_entry, 0, 0x14
     mov     a3, (0x10, sp)
     mov     -1, d0
@@ -38798,7 +38830,7 @@ loc_48558657:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
 loc_48558693:
@@ -38836,7 +38868,7 @@ loc_485586E0:
     clr     d0
     movbu   d0, (0x50082c71)
     movbu   d0, (0x50082c70)
-    movbu   d0, (data_500058AC)
+    movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
     mov     0x104, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -38857,7 +38889,7 @@ loc_48558716:
     beq     loc_48558721
     jmp     loc_485587AA
 loc_48558721:
-    movbu   (data_500058AC), d0
+    movbu   (SdcFmmSongMedleyListViewFunc_Table), d0
     cmp     d2, d0
     beq     loc_4855872E
     clr     d0
@@ -38906,7 +38938,7 @@ loc_48558788:
 loc_485587AA:
     cmp     0x41, a0
     bne     loc_485587D8
-    movbu   (data_500058AC), d0
+    movbu   (SdcFmmSongMedleyListViewFunc_Table), d0
     cmp     d2, d0
     beq     loc_485587BB
     clr     d0
@@ -38924,7 +38956,7 @@ loc_485587CE:
 loc_485587D8:
     cmp     0x42, a0
     bne     loc_48558806
-    movbu   (data_500058AC), d0
+    movbu   (SdcFmmSongMedleyListViewFunc_Table), d0
     cmp     d2, d0
     beq     loc_485587E9
     clr     d0
@@ -38944,7 +38976,7 @@ loc_48558806:
     beq     loc_4855880D
     jmp     loc_48558888
 loc_4855880D:
-    movbu   (data_500058AC), d0
+    movbu   (SdcFmmSongMedleyListViewFunc_Table), d0
     cmp     d2, d0
     beq     loc_4855881A
     clr     d0
@@ -38989,7 +39021,7 @@ loc_48558888:
     beq     loc_4855888E
     bra     loc_48558903
 loc_4855888E:
-    movbu   (data_500058AC), d0
+    movbu   (SdcFmmSongMedleyListViewFunc_Table), d0
     cmp     d2, d0
     beq     loc_4855889A
     clr     d0
@@ -39215,7 +39247,7 @@ loc_48558AEE:
     mov     d0, a0
     movbu   d1, (a0)
     inc     a0
-    mov     PsFolderFileListBoxProc_Records+732, a1
+    mov     Str_CUSTOM_6, a1
     call    func_4852F762, 0, 0
     movbu   (0x50082c74), d0
     mov     0x15, d1
@@ -39311,7 +39343,7 @@ loc_48558BE2:
     jmp     loc_48558D57
 loc_48558C05:
     inc     a0
-    mov     PsFolderFileListBoxProc_Records+744, a1
+    mov     Str_FILE_4, a1
     call    func_4852F762, 0, 0
     movhu   (0x50083bac), d0
     mov     d3, d2
@@ -39326,7 +39358,7 @@ loc_48558C22:
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+752, a1
+    mov     Str_NEW_2, a1
     inc     d2
     mov     d2, d0
     exthu   d0
@@ -39358,7 +39390,7 @@ loc_48558C22:
     add     a0, d0
     mov     d0, a0
     inc     a0
-    mov     PsFolderFileListBoxProc_Records+764, a1
+    mov     func_4852F762_Var_13, a1
     call    func_4852F762, 0, 0
     movbu   (0x50082c79), d1
     mov     0x15, d0
@@ -39436,12 +39468,12 @@ loc_48558D57:
     cmp     0, d0
     bne     loc_48558D72
     inc     a0
-    mov     PsFolderFileListBoxProc_Records+768, a1
+    mov     Str_NO_FILE, a1
     call    func_4852F762, 0, 0
     bra     loc_48558DCD
 loc_48558D72:
     inc     a0
-    mov     PsFolderFileListBoxProc_Records+788, a1
+    mov     Str_FILE_3, a1
     call    func_4852F762, 0, 0
     mov     1, d0
     call    SetExtMode, 0, 0
@@ -39574,7 +39606,7 @@ loc_48558ED4:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48558ED8:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     mov     -1, d0
     movbu   d0, (0x50082c7d)
@@ -39585,15 +39617,15 @@ loc_48558ED8:
     mov     0x01450017, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movhu   (0x50083bac), d0
-    movhu   d0, (data_500058B2)
-    movhu   (data_500058B2), d1
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d1
     mov     -1, d0
     exth    d1
     add     d1, d0
     mov     d0, d2
     cmp     0, d1
     bgt     loc_48558F1D
-    movhu   (data_500058B2), d2
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d2
 loc_48558F1D:
     mov     d2, d0
     exthu   d0
@@ -39618,12 +39650,12 @@ loc_48558F4E:
     bra     loc_48558F6E
 loc_48558F57:
     call    func_4855F8D6_entry, 0, 0xc
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
     exth    d0
     cmp     0, d0
     bge     loc_48558F6E
     clr     d0
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
 loc_48558F6E:
     mov     -1, d0
     mov     d0, (0x10, sp)
@@ -39655,22 +39687,22 @@ loc_48558FAB:
     beq     loc_48558FB8
     jmp     loc_4855904D
 loc_48558FB8:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559021
-    movhu   (data_500058B2), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d1
     movhu   (0x50083bac), d0
     exth    d1
     exth    d0
     cmp     d0, d1
     blt     loc_48558FE2
-    mov     PsFolderFileListBoxProc_Records+796, a0
+    mov     Str_CST_7, a0
     call    func_4852FACA_entry, [a2], 0x18
     bra     loc_48558FF9
 loc_48558FE2:
     cmp     0, d1
     blt     loc_48558FF9
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F9B1_entry, [d2], 0x10
     call    func_4852FACA_entry, [a2], 0x18
@@ -39701,38 +39733,38 @@ loc_48559046:
     clr     d0
     movbu   d0, (0x50083bc0)
 loc_4855904D:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_4855908F
-    mov     (PsFolderFileListBoxProc_Records+276), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var_2), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_FROM_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (PsFolderFileListBoxProc_Records+272), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_TO_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_485590C5
 loc_4855908F:
-    mov     (PsFolderFileListBoxProc_Records+272), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_FROM_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (PsFolderFileListBoxProc_Records+276), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var_2), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_TO_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 loc_485590C5:
     movbu   (0x50083bbe), d0
-    movbu   (data_500058B0), d1
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d1
     exth    d0
     call    func_48558AC2_entry, [d2,d3,a2], 0x20
-    movhu   (data_500058B2), d0
-    movbu   (data_500058B0), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d1
     exth    d0
     call    func_48558BB6_entry, [d2,d3,a2,a3], 0x40
     clr     d0
@@ -39742,7 +39774,7 @@ loc_485590F3:
     mov     (0x30, sp), a2
     cmp     0, a2
     bne     loc_48559103
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     1, d0
     beq     loc_48559117
 loc_48559103:
@@ -39750,7 +39782,7 @@ loc_48559103:
     beq     loc_4855910A
     jmp     loc_485591F2
 loc_4855910A:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559117
     jmp     loc_485591F2
@@ -39800,7 +39832,7 @@ loc_4855918E:
     exthu   d2
     cmp     d0, d2
     beq     loc_485591A3
-    movbu   (data_500058B0), d1
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d1
     call    func_48558AC2_entry, [d2,d3,a2], 0x20
 loc_485591A3:
     movbu   (0x50082c7d), d0
@@ -39828,7 +39860,7 @@ loc_485591E7:
 loc_485591F2:
     cmp     1, a2
     bne     loc_48559200
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     1, d0
     beq     loc_48559214
 loc_48559200:
@@ -39836,7 +39868,7 @@ loc_48559200:
     beq     loc_48559207
     jmp     loc_4855931C
 loc_48559207:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559214
     jmp     loc_4855931C
@@ -39847,23 +39879,23 @@ loc_48559214:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48559222:
-    movhu   (data_500058B2), d3
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d3
     cmp     EV_INDEXSW_DOWN, d1
     bne     loc_48559245
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exth    d0
     cmp     0, d0
     ble     loc_4855928E
     add     -1, d0
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
     bra     loc_4855928E
 loc_48559245:
     cmp     EV_INDEXSW_UP, d1
     bne     loc_4855928E
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559274
-    movhu   (data_500058B2), d2
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d2
     movhu   (0x50083bac), d1
     exth    d2
     exth    d1
@@ -39873,10 +39905,10 @@ loc_48559245:
     cmp     d1, d0
     bge     loc_4855928E
     inc     d2
-    movhu   d2, (data_500058B2)
+    movhu   d2, (SdcCusLoadSaveSrcDstFunc_Var_3)
     bra     loc_4855928E
 loc_48559274:
-    movhu   (data_500058B2), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d1
     movhu   (0x50083bac), d2
     exth    d1
     exth    d2
@@ -39885,7 +39917,7 @@ loc_48559274:
     cmp     d2, d0
     bge     loc_4855928E
     inc     d1
-    movhu   d1, (data_500058B2)
+    movhu   d1, (SdcCusLoadSaveSrcDstFunc_Var_3)
 loc_4855928E:
     cmp     1, a2
     bne     loc_485592A7
@@ -39902,7 +39934,7 @@ loc_485592A7:
     mov     0x0145000c, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_485592BA:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d3
     exth    d0
     cmp     d0, d3
@@ -39937,39 +39969,39 @@ loc_4855931C:
     beq     loc_48559323
     jmp     loc_485594FA
 loc_48559323:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     bne     loc_48559330
     jmp     loc_48559424
 loc_48559330:
     clr     d0
-    movbu   d0, (data_500058B0)
+    movbu   d0, (SdcCusLoadSaveSrcDstFunc_Table)
     call    func_4855F8D6_entry, 0, 0xc
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
     exth    d0
     cmp     0, d0
     bge     loc_4855934E
     clr     d0
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
 loc_4855934E:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     movhu   (0x50083bac), d1
     exth    d0
     exth    d1
     cmp     d1, d0
     bne     loc_48559367
     add     -1, d0
-    movhu   d0, (data_500058B2)
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
 loc_48559367:
     mov     -1, d0
     movbu   d0, (0x50082c7d)
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F953_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485593AA
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F969_entry, [d2,d3], 0x18
     mov     5, d0
@@ -39980,16 +40012,16 @@ loc_48559367:
     call    SdMountSyncPost_entry, 0, 0xc
     bra     loc_485593B6
 loc_485593AA:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F8F7_entry, [d2,d3], 0x18
 loc_485593B6:
-    mov     (PsFolderFileListBoxProc_Records+272), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_FROM_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (PsFolderFileListBoxProc_Records+276), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var_2), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_TO_SIDE_id, d0
@@ -40012,15 +40044,15 @@ loc_485593B6:
 loc_48559424:
     movhu   (0x50083bac), d0
     mov     -1, d2
-    movhu   d0, (data_500058B2)
-    movhu   (data_500058B2), d0
+    movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exth    d0
     add     d0, d2
     cmp     0, d0
     mov     1, d0
-    movbu   d0, (data_500058B0)
+    movbu   d0, (SdcCusLoadSaveSrcDstFunc_Table)
     bgt     loc_4855944C
-    movhu   (data_500058B2), d2
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d2
 loc_4855944C:
     mov     d2, d0
     exthu   d0
@@ -40045,12 +40077,12 @@ loc_4855947D:
 loc_48559484:
     mov     -1, d0
     movbu   d0, (0x50082c7d)
-    mov     (PsFolderFileListBoxProc_Records+276), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var_2), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_FROM_SIDE_id, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (PsFolderFileListBoxProc_Records+272), d0
+    mov     (SdcCusLoadSaveSrcDstFunc_Var), d0
     mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     SD_CS_TO_SIDE_id, d0
@@ -40075,7 +40107,7 @@ loc_485594FA:
     beq     loc_48559501
     jmp     loc_485596B7
 loc_48559501:
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_4855950E
     jmp     loc_485595A7
@@ -40254,7 +40286,7 @@ loc_4855977E:
     bne     loc_48559785
     jmp     loc_4855988A
 loc_48559785:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F953_entry, 0, 0xc
     extbu   d0
@@ -40264,7 +40296,7 @@ loc_48559785:
 loc_48559799:
     mov     1, d0
     movbu   d0, (0x50083bc0)
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F969_entry, [d2,d3], 0x18
     mov     5, d0
@@ -40273,12 +40305,12 @@ loc_48559799:
     mov     EV_SHOW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    SdMountSyncPost_entry, 0, 0xc
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     bne     loc_485597D6
     jmp     loc_48559867
 loc_485597D6:
-    movhu   (data_500058B2), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d1
     movhu   (0x50083bac), d0
     exth    d1
     exth    d0
@@ -40286,7 +40318,7 @@ loc_485597D6:
     blt     loc_485597F8
     cmp     0, d1
     ble     loc_485597F8
-    mov     PsFolderFileListBoxProc_Records+812, a0
+    mov     Str_CST_6, a0
     call    func_4852FACA_entry, [a2], 0x18
 loc_485597F8:
     clr     d0
@@ -40296,13 +40328,13 @@ loc_485597F8:
     call    SdcSaveFileNameCstFunc_entry, [a2], 0x18
     bra     loc_48559867
 loc_4855980A:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F8F7_entry, [d2,d3], 0x18
-    movbu   (data_500058B0), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559867
-    movhu   (data_500058B2), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d1
     movhu   (0x50083bac), d0
     exth    d1
     exth    d0
@@ -40310,11 +40342,11 @@ loc_4855980A:
     blt     loc_48559844
     cmp     0, d1
     ble     loc_48559844
-    mov     PsFolderFileListBoxProc_Records+828, a0
+    mov     Str_CST_5, a0
     call    func_4852FACA_entry, [a2], 0x18
     bra     loc_48559857
 loc_48559844:
-    movhu   (data_500058B2), d0
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
     call    func_4855F9B1_entry, [d2], 0x10
     call    func_4852FACA_entry, [a2], 0x18
@@ -40328,8 +40360,8 @@ loc_48559867:
     movbu   (0x50083bc0), d0
     cmp     0, d0
     bne     loc_48559883
-    movhu   (data_500058B2), d0
-    movbu   (data_500058B0), d1
+    movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
+    movbu   (SdcCusLoadSaveSrcDstFunc_Table), d1
     exth    d0
     call    func_48558BB6_entry, [d2,d3,a2,a3], 0x40
 loc_48559883:
@@ -40445,7 +40477,7 @@ loc_485599A3:
     mov     8, d0
     call    func_485209E6, 0, 0
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+844, a1
+    mov     Str_CST_4, a1
     call    func_4852F7AE, 0, 0
     mov     a2, a0
     call    func_4852FACA_entry, [a2], 0x18
@@ -40915,7 +40947,7 @@ loc_48559EB8:
     extb    d0
     cmp     d1, d0
     beq     loc_48559F01
-    mov     (data_486D0670), a0
+    mov     (FileRenameFunc_Var), a0
     inc     a0
     setlb
     movbu   (d1, a2), d0
@@ -40951,7 +40983,7 @@ loc_48559F0F:
 loc_48559F18:
     mov     0x500831dc, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+852, a1
+    mov     Str_empty_651, a1
     call    func_4852F762, 0, 0
 loc_48559F2C:
     mov     0x50082c84, a0
@@ -40977,7 +41009,7 @@ loc_48559F48:
     ret     [d2,a2], 0x1c
 loc_48559F6F:
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+864, a1
+    mov     Str_CST_3, a1
     call    func_4852F7AE, 0, 0
     mov     5, d0
     mov     d0, (0x10, sp)
@@ -42265,7 +42297,7 @@ SdcSmfSeqToSongNumFunc_entry:
     bne     loc_4855AE7D
     mov     0x50082cac, a2
     mov     a2, a0
-    mov     PsFolderFileListBoxProc_Records+872, a1
+    mov     Str_TO_SONG, a1
     call    func_4852F762, 0, 0
     movbu   (0x50083bb8), d0
     mov     2, d1
@@ -42437,7 +42469,7 @@ SdcSmfSaveAsFunc_entry:
     cmp     EV_PAINT, d1
     bne     loc_4855B05B
     movbu   (0x50083bb7), d0
-    mov     ptrs_4868DD3C, a0
+    mov     SdcSmfSaveAsFunc_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     0x0145000f, d1
@@ -42495,7 +42527,7 @@ loc_4855B095:
     bge     loc_4855B0D3
     mov     0x500831dc, a2
     mov     a2, a0
-    mov     data_4868DD48, a1
+    mov     func_4852F762_Var_14, a1
     call    func_4852F762, 0, 0
     bra     loc_4855B12F
 loc_4855B0D3:
@@ -42523,7 +42555,7 @@ loc_4855B0D3:
 loc_4855B11B:
     mov     0x500831dc, a2
     mov     a2, a0
-    mov     data_4868DD54, a1
+    mov     func_4852F762_Var_15, a1
     call    func_4852F762, 0, 0
 loc_4855B12F:
     mov     a2, a0
@@ -42695,7 +42727,7 @@ loc_4855B2C2:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     data_4868DD5C, a1
+    mov     func_4852F762_Var_16, a1
     call    func_4852F762, 0, 0
 loc_4855B2D9:
     mov     0x18, d1
@@ -42795,7 +42827,7 @@ loc_4855B3A2:
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855B3A6:
     mov     0xa, d0
-    movhu   d0, (data_500058B4)
+    movhu   d0, (SdcFmmSmfPlaylistNameFunc_Table)
     call    func_48560BA3_entry, 0, 8
     exth    d0
     add     -1, d0
@@ -42822,7 +42854,7 @@ loc_4855B3E0:
     mov     1, d0
     call    func_48560BDD_entry, [d2], 0x10
     movhu   (0x50082d2c), d1
-    movhu   (data_500058B4), d0
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     exth    d1
     ext     d1
     div     d0, d1
@@ -42837,7 +42869,7 @@ loc_4855B41F:
     add     -1, d0
     movhu   d0, (0x50082d2c)
     movhu   (0x50082d2c), d1
-    movhu   (data_500058B4), d0
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     exth    d1
     ext     d1
     div     d0, d1
@@ -42863,7 +42895,7 @@ loc_4855B462:
     movhu   (0x50082d2c), d0
     exth    d0
     mov     d0, (0x10, sp)
-    movhu   (data_500058B4), d0
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     extbu   d0
     mov     d0, (0x14, sp)
     movhu   (0x50082d2e), d1
@@ -42907,7 +42939,7 @@ loc_4855B4DC:
     cmp     4, a1
     bne     loc_4855B4FA
     movhu   (0x50082d2c), d0
-    movhu   (data_500058B4), d1
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d1
     exth    d0
     cmp     d1, d0
     blt     loc_4855B54A
@@ -42918,7 +42950,7 @@ loc_4855B4FA:
     cmp     5, a1
     bne     loc_4855B54A
     movhu   (0x50082d2c), d0
-    movhu   (data_500058B4), d2
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d2
     movhu   (0x50082d2e), d3
     exth    d0
     exth    d3
@@ -42956,7 +42988,7 @@ loc_4855B54A:
     bne     loc_4855B55C
     jmp     loc_4855B621
 loc_4855B55C:
-    movhu   (data_500058B4), d0
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     ext     d1
     div     d0, d1
     mov     mdr, d1
@@ -42969,7 +43001,7 @@ loc_4855B55C:
     inc     d0
     exth    d0
     call    func_48560BDD_entry, [d2], 0x10
-    movhu   (data_500058B4), d3
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d3
     movhu   (0x50082d2c), d0
     mov     d3, d1
     exth    d0
@@ -42982,7 +43014,7 @@ loc_4855B55C:
     cmp     d0, d2
     beq     loc_4855B5D0
     mov     a2, (0x10, sp)
-    movhu   (data_500058B4), d0
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     movbu   d0, (0x18, sp)
     movbu   (0x18, sp), d0
     mov     d0, (0x14, sp)
@@ -43007,7 +43039,7 @@ loc_4855B5D0:
     mov     0x02150002, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     movhu   (0x50082d2c), d0
-    movhu   (data_500058B4), d1
+    movhu   (SdcFmmSmfPlaylistNameFunc_Table), d1
     exth    d0
     ext     d0
     div     d1, d0
@@ -43082,7 +43114,7 @@ loc_4855B674:
 loc_4855B6AF:
     mov     0x500831c4, a2
     mov     a2, a0
-    mov     data_4868DD90, a1
+    mov     func_4852F762_Var_17, a1
     call    func_4852F762, 0, 0
 loc_4855B6C3:
     mov     a2, a0
@@ -46584,7 +46616,7 @@ loc_4855DB26:
     extb    d0
     cmp     d1, d0
     beq     loc_4855DB63
-    mov     (data_486D0670), a0
+    mov     (FileRenameFunc_Var), a0
     inc     a0
     setlb
     movbu   (d1, a2), d0
@@ -46633,7 +46665,7 @@ loc_4855DB8D:
     extb    d0
     cmp     d1, d0
     beq     loc_4855DBCA
-    mov     (data_486D0670), a0
+    mov     (FileRenameFunc_Var), a0
     inc     a0
     setlb
     movbu   (d1, a3), d0
@@ -47862,7 +47894,7 @@ func_4855E8AC_entry:
     lne
     clr     d1
 loc_4855E8D4:
-    mov     data_4868DE93, a1
+    mov     func_4855E8AC_Table_3, a1
     mov     9, d2
     nop
     nop
@@ -47883,7 +47915,7 @@ loc_4855E8D4:
     blt     loc_4855E8D4
     clr     d2
 loc_4855E8FA:
-    mov     data_4868DE75, a1
+    mov     func_4855E8AC_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -47904,7 +47936,7 @@ loc_4855E8FA:
     blt     loc_4855E8FA
     clr     d2
 loc_4855E920:
-    mov     data_4868DE9C, a1
+    mov     func_4855E8AC_Table_4, a1
     mov     0xa, d1
     nop
     nop
@@ -47965,7 +47997,7 @@ func_4855E9DB:
     retf    0, 0
 
 func_4855E9EA:
-    mov     (data_4868DE2C), d0
+    mov     (func_4855E8AC_Table+4), d0
     mov     d0, (0x50083ce0)
     retf    0, 0
 
@@ -47973,7 +48005,7 @@ func_4855E9F9:
     add     -0x10, sp
 func_4855E9F9_entry:
     mov     0x50083ce4, a0
-    mov     data_4868DE30, a1
+    mov     func_4852F762_Var_18, a1
     call    func_4852F762, 0, 0
     ret     0, 0x10
 
@@ -47997,7 +48029,7 @@ func_4855EA49:
     movm    [a2], (sp)
     add     -0x10, sp
     mov     (0x50083ce0), a0
-    mov     (data_4868DE2C), a1
+    mov     (func_4855E8AC_Table+4), a1
     cmp     a1, a0
     bne     loc_4855EA77
     call    func_484720D0_entry, 0, 0x1c
@@ -48031,7 +48063,7 @@ func_4855EAB8:
     add     -0x10, sp
 func_4855EAB8_entry:
     mov     0x50083ce4, d2
-    mov     data_4868DE30, a3
+    mov     func_4852F762_Var_18, a3
     mov     d2, a0
     mov     a3, a1
     call    func_4852F7D7, 0, 0
@@ -50117,7 +50149,7 @@ func_4855FAB1_entry:
     add     -0x164, sp
     clr     d2
 loc_4855FAB8:
-    mov     data_4868DE75, a1
+    mov     func_4855E8AC_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -50463,7 +50495,7 @@ func_4855FD9B_entry:
 loc_4855FDB0:
     clr     d2
 loc_4855FDB1:
-    mov     data_4868DE93, a1
+    mov     func_4855E8AC_Table_3, a1
     mov     9, d1
     nop
     nop
@@ -50840,7 +50872,7 @@ func_485600B7_entry:
 loc_485600CD:
     clr     d2
 loc_485600CE:
-    mov     data_4868DE9C, a1
+    mov     func_4855E8AC_Table_4, a1
     mov     0xa, d1
     nop
     nop
@@ -51268,7 +51300,7 @@ func_4856041B_entry:
 loc_48560435:
     clr     d1
 loc_48560436:
-    mov     data_4868DE9C, a1
+    mov     func_4855E8AC_Table_4, a1
     mov     0xa, d2
     nop
     nop
@@ -53843,7 +53875,7 @@ func_48561785_entry:
     bne     loc_48561797
     ret     [d2,d3,a2,a3], 0x3c
 loc_48561797:
-    mov     (data_500058B8), a0
+    mov     (func_48561785_Var), a0
     clr     d0
     mov     a0, (0x14, sp)
     movhu   d0, (0x28, sp)
@@ -54104,12 +54136,12 @@ func_48561960:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
 func_48561960_entry:
-    mov     (data_500058B8), a0
+    mov     (func_48561785_Var), a0
     mov     0x7bc, d0
     mov     0x1a, d1
     mov     func_48561870, a1
     call    func_4C00315D_entry, [d2,d3,a2,a3], 0x34
-    mov     (data_500058B8), a3
+    mov     (func_48561785_Var), a3
     mov     0xff, d0
     movbu   d0, (0x30, sp)
     mov     0, a2

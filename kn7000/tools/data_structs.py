@@ -17,7 +17,8 @@ The evidence is tools/data_readers.py: an access through base + index * stride
     offset is the access offset modulo the stride (a reader of element i - 1
     or i + 1 adds or subtracts the stride; a 1-based index subtracts it once);
   * bases closer together than one stride (the code added a field offset to
-    the base) or a whole number of strides apart are one array;
+    the base) are one array; a base a whole number of strides further on is
+    another array (TechniChordHymn's 28 rows, then TechniChordBigBandBrass);
   * a field's width is the width most of its loads use, signed when an extb /
     exth of the loaded register follows; an access with a second, smaller
     index (base + i * stride + j * t) is an array of t-byte elements inside the
@@ -58,6 +59,8 @@ class Field:
 
 
 class Group:
+    tail = None              # (pointed records of varying size) element width of the rows after the fields
+
     def __init__(self, base, stride):
         self.base, self.stride = base, stride
         self.accs = []           # (offset in the record, Access)
@@ -81,16 +84,29 @@ def readers(g, labels_path, src_glob):
 def groups(dr):
     """The record arrays the accesses show, merged."""
     raw = collections.defaultdict(list)
+    absacc = collections.defaultdict(list)
     for acc in dr.accesses:
         k = acc.key
         if k[0] == "rec" and k[2] and k[2] >= 2:
             raw[(k[2], k[1])].append(acc)
+        elif k[0] == "abs" and acc.width:
+            absacc[k[1]].append(acc)
+    # a pointer stepped from a base (`mov Base, aN` ... `add STRIDE, aN` / `inc4 aN`): an array of
+    # STRIDE-byte records whose fields are the fixed accesses within its first record
+    for acc in dr.accesses:
+        if acc.key[0] == "step":
+            b, s = acc.key[1], acc.off
+            if (s, b) in raw:
+                continue
+            first = [a._replace(key=("rec", b, s), off=x - b) for x in range(b, b + s) for a in absacc.get(x, ())]
+            if first:
+                raw[(s, b)] = first
     out, by_s = [], collections.defaultdict(list)
     for (s, b), accs in sorted(raw.items()):
         g = None
         for h in by_s[s]:
             d = b - h.base
-            if 0 <= d < s or (d % s == 0 and d <= 64 * s):
+            if 0 <= d < s:
                 g = h
                 break
         if g is None:
@@ -116,8 +132,8 @@ def layout(g, gen, base_off, n, offs=None):
     args = collections.defaultdict(list)
     inner = collections.defaultdict(list)     # element size -> [(offset, access)]
     for o, a in g.accs:
-        if o < 0 or o >= s:
-            continue
+        if o < 0 or o >= s or a.inner == -1:
+            continue          # (inner -1: an offset computed from here, see gen_data_s.ptr_records)
         if a.inner and a.inner < s and a.width:
             inner[a.inner].append((o, a))
         elif a.width:

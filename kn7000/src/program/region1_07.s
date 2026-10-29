@@ -16,7 +16,7 @@ loc_484E0311:
     jmp     loc_484E087E
 loc_484E031C:
     add     0xfffb0001, d2
-    mov     data_4863B93C, a1
+    mov     ToneGridSe1_Records, a1
     mov     a1, a0
     mov     0xf, d0
     and     d2, d0
@@ -41,6 +41,7 @@ loc_484E0349:
 loc_484E034C:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484E0351:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -63,7 +64,7 @@ loc_484E037C:
 loc_484E0383:
     add     -1, d0
     asl2    d0
-    mov     ToneGridSe1_Table+72, a0
+    mov     ToneGridSe1_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E0390:
@@ -229,6 +230,7 @@ loc_484E04D9:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
+loc_484E04F3:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -251,7 +253,7 @@ loc_484E051E:
 loc_484E0525:
     add     -1, d0
     asl2    d0
-    mov     ToneGridSe1_Table+36, a0
+    mov     ToneGridSe1_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E0532:
@@ -413,18 +415,22 @@ loc_484E0673:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
+loc_484E068D:
     mov     (0x58, sp), a0
     mov     Str_empty_1153, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
+loc_484E06A0:
     mov     (0x58, sp), a0
     mov     Str_1st_2nd_3rd_4th_21, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
+loc_484E06B3:
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
+loc_484E06B7:
     mov     (0x58, sp), a1
     mov     sp, a3
     mov     a1, d0
@@ -620,6 +626,7 @@ loc_484E0862:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_484E087F
+loc_484E087B:
     mov     d3, d0
     bra     loc_484E087F
 loc_484E087E:
@@ -656,7 +663,7 @@ loc_484E089F:
     jmp     loc_484E0E4C
 loc_484E08C2:
     add     8, a0
-    cmp     LayerGridSe1_Records+128, a0
+    cmp     LayerGridSe2_Records, a0
     bcs     loc_484E08CD
     mov     a1, a0
 loc_484E08CD:
@@ -1263,7 +1270,7 @@ loc_484E0E62:
     ble     loc_484E0E6D
     jmp     loc_484E1406
 loc_484E0E6D:
-    mov     LayerGridSe1_Records+128, a1
+    mov     LayerGridSe2_Records, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -1279,7 +1286,7 @@ loc_484E0E6D:
     jmp     loc_484E1406
 loc_484E0E8F:
     add     8, a0
-    cmp     LayerGridSe1_Records+256, a0
+    cmp     PitchGridSe_Records, a0
     bcs     loc_484E0E9A
     mov     a1, a0
 loc_484E0E9A:
@@ -1879,7 +1886,7 @@ loc_484E141C:
     ble     loc_484E1427
     jmp     loc_484E1717
 loc_484E1427:
-    mov     LayerGridSe1_Records+256, a1
+    mov     PitchGridSe_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -2242,7 +2249,7 @@ loc_484E1738:
     jmp     loc_484E1DEB
 loc_484E175A:
     add     8, a0
-    cmp     PitchGridSe2_Records+128, a0
+    cmp     PitchGridSe3_Records, a0
     bcs     loc_484E1765
     mov     a1, a0
 loc_484E1765:
@@ -2275,7 +2282,7 @@ loc_484E1798:
 loc_484E179F:
     add     -1, d0
     asl2    d0
-    mov     PitchGridSe2_Table+88, a0
+    mov     PitchGridSe2_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E17AC:
@@ -2509,7 +2516,7 @@ loc_484E197D:
 loc_484E1984:
     add     -1, d0
     asl2    d0
-    mov     PitchGridSe2_Table+44, a0
+    mov     PitchGridSe2_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E1991:
@@ -3021,7 +3028,7 @@ loc_484E1E01:
     ble     loc_484E1E0C
     jmp     loc_484E22F2
 loc_484E1E0C:
-    mov     PitchGridSe2_Records+128, a1
+    mov     PitchGridSe3_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -3037,7 +3044,7 @@ loc_484E1E0C:
     jmp     loc_484E22F2
 loc_484E1E2F:
     add     8, a0
-    cmp     PitchGridSe2_Records+256, a0
+    cmp     AmpGridSe1_Records, a0
     bcs     loc_484E1E3A
     mov     a1, a0
 loc_484E1E3A:
@@ -3146,7 +3153,7 @@ loc_484E1EED:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E1F9B
 loc_484E1F1D:
     mov     0x32, d0
@@ -3167,7 +3174,7 @@ loc_484E1F1D:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E1F9B
 loc_484E1F4A:
     mov     0x32, d0
@@ -3189,7 +3196,7 @@ loc_484E1F4A:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E1F9B
 loc_484E1F7A:
     mov     0x7f, d0
@@ -3313,7 +3320,7 @@ loc_484E205B:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E210A
 loc_484E208B:
     mov     -0x32, d0
@@ -3334,7 +3341,7 @@ loc_484E208B:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E210A
 loc_484E20B8:
     mov     -0x32, d0
@@ -3356,7 +3363,7 @@ loc_484E20B8:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E210A
 loc_484E20E8:
     clr     d0
@@ -3595,7 +3602,7 @@ loc_484E2308:
     ble     loc_484E2313
     jmp     loc_484E2949
 loc_484E2313:
-    mov     PitchGridSe2_Records+256, a1
+    mov     AmpGridSe1_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -4346,7 +4353,7 @@ loc_484E296A:
     jmp     loc_484E2F12
 loc_484E298C:
     add     8, a0
-    cmp     AmpGridSe2_Records+128, a0
+    cmp     AmpGridSe3_Table_2, a0
     bcs     loc_484E2997
     mov     a1, a0
 loc_484E2997:
@@ -4379,7 +4386,7 @@ loc_484E29CA:
 loc_484E29D1:
     add     -1, d0
     asl2    d0
-    mov     AmpGridSe2_Table+72, a0
+    mov     AmpGridSe2_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E29DE:
@@ -4575,7 +4582,7 @@ loc_484E2B5C:
 loc_484E2B63:
     add     -1, d0
     asl2    d0
-    mov     AmpGridSe2_Table+36, a0
+    mov     AmpGridSe2_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E2B70:
@@ -5025,7 +5032,7 @@ loc_484E2F33:
     jmp     loc_484E3546
 loc_484E2F55:
     add     8, a0
-    cmp     AmpGridSe3_Records+128, a0
+    cmp     FilterGridSe1_Records, a0
     bcs     loc_484E2F60
     mov     a1, a0
 loc_484E2F60:
@@ -5058,7 +5065,7 @@ loc_484E2F93:
 loc_484E2F9A:
     add     -1, d0
     asl2    d0
-    mov     AmpGridSe3_Table+36, a0
+    mov     AmpGridSe3_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E2FA7:
@@ -5126,7 +5133,7 @@ loc_484E3007:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E3127
 loc_484E3034:
     mov     0x32, d0
@@ -5148,7 +5155,7 @@ loc_484E3034:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E3127
 loc_484E3065:
     mov     0x32, d0
@@ -5168,7 +5175,7 @@ loc_484E3065:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E3127
 loc_484E3092:
     extbu   d2
@@ -5342,7 +5349,7 @@ loc_484E31D9:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32FB
 loc_484E3206:
     mov     -0x32, d0
@@ -5365,7 +5372,7 @@ loc_484E3206:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32FB
 loc_484E3238:
     mov     -0x32, d0
@@ -5385,7 +5392,7 @@ loc_484E3238:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32FB
 loc_484E3265:
     clr     d0
@@ -5515,9 +5522,10 @@ loc_484E336B:
 loc_484E3372:
     add     -1, d0
     asl2    d0
-    mov     AmpGridSe2_Records+128, a0
+    mov     AmpGridSe3_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484E337F:
     extbu   d1
     mov     d1, d0
     mov     a2, a0
@@ -5541,6 +5549,7 @@ loc_484E338C:
     mov     a2, a0
     call    func_484F78FB_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E352A
+loc_484E33B4:
     mov     0xff, d0
     mov     d0, (0x18, sp)
     extbu   d1
@@ -5579,6 +5588,7 @@ loc_484E33D8:
     mov     0x01b50002, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E352A
+loc_484E3412:
     mov     0xff, d0
     mov     d0, (0x18, sp)
     extbu   d1
@@ -5624,6 +5634,7 @@ loc_484E344C:
     mov     0x01b50002, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E352A
+loc_484E3486:
     extbu   d1
     mov     0x7a, d0
     nop
@@ -5668,6 +5679,7 @@ loc_484E34BE:
     mov     0x01b50002, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E352A
+loc_484E34F5:
     extbu   d1
     mov     0x7a, d0
     nop
@@ -5716,7 +5728,7 @@ loc_484E355C:
     ble     loc_484E3567
     jmp     loc_484E4033
 loc_484E3567:
-    mov     AmpGridSe3_Records+128, a1
+    mov     FilterGridSe1_Records, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -5732,7 +5744,7 @@ loc_484E3567:
     jmp     loc_484E4033
 loc_484E3589:
     add     8, a0
-    cmp     AmpGridSe3_Records+256, a0
+    cmp     FilterGridSe2_Records, a0
     bcs     loc_484E3594
     mov     a1, a0
 loc_484E3594:
@@ -6945,7 +6957,7 @@ loc_484E4049:
     ble     loc_484E4054
     jmp     loc_484E45E5
 loc_484E4054:
-    mov     AmpGridSe3_Records+256, a1
+    mov     FilterGridSe2_Records, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -7637,7 +7649,7 @@ loc_484E4606:
     jmp     loc_484E4CB9
 loc_484E4628:
     add     8, a0
-    cmp     FilterGridSe3_Records+128, a0
+    cmp     FilterGridSe4_Records, a0
     bcs     loc_484E4633
     mov     a1, a0
 loc_484E4633:
@@ -7670,7 +7682,7 @@ loc_484E4666:
 loc_484E466D:
     add     -1, d0
     asl2    d0
-    mov     FilterGridSe3_Table+88, a0
+    mov     FilterGridSe3_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E467A:
@@ -7904,7 +7916,7 @@ loc_484E484B:
 loc_484E4852:
     add     -1, d0
     asl2    d0
-    mov     FilterGridSe3_Table+44, a0
+    mov     FilterGridSe3_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E485F:
@@ -8416,7 +8428,7 @@ loc_484E4CCF:
     ble     loc_484E4CDA
     jmp     loc_484E51C0
 loc_484E4CDA:
-    mov     FilterGridSe3_Records+128, a1
+    mov     FilterGridSe4_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -8541,7 +8553,7 @@ loc_484E4DBB:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E4E69
 loc_484E4DEB:
     mov     0x32, d0
@@ -8562,7 +8574,7 @@ loc_484E4DEB:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4E69
 loc_484E4E18:
     mov     0x32, d0
@@ -8584,7 +8596,7 @@ loc_484E4E18:
     mov     1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4E69
 loc_484E4E48:
     mov     0x7f, d0
@@ -8708,7 +8720,7 @@ loc_484E4F29:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E4FD8
 loc_484E4F59:
     mov     -0x32, d0
@@ -8729,7 +8741,7 @@ loc_484E4F59:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4FD8
 loc_484E4F86:
     mov     -0x32, d0
@@ -8751,7 +8763,7 @@ loc_484E4F86:
     mov     -1, d1
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+733)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4FD8
 loc_484E4FB6:
     clr     d0
@@ -9040,7 +9052,7 @@ loc_484E5246:
 loc_484E524D:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe1_Table+88, a0
+    mov     LfoGridSe1_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E525A:
@@ -9385,7 +9397,7 @@ loc_484E55AA:
 loc_484E55B1:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe1_Table+44, a0
+    mov     LfoGridSe1_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E55BE:
@@ -10173,7 +10185,7 @@ loc_484E5D31:
 loc_484E5D38:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe2_Table+88, a0
+    mov     LfoGridSe2_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E5D45:
@@ -10518,7 +10530,7 @@ loc_484E6099:
 loc_484E60A0:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe2_Table+44, a0
+    mov     LfoGridSe2_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E60AD:
@@ -11306,7 +11318,7 @@ loc_484E6828:
 loc_484E682F:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe3_Table+88, a0
+    mov     LfoGridSe3_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E683C:
@@ -11651,7 +11663,7 @@ loc_484E6B90:
 loc_484E6B97:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe3_Table+44, a0
+    mov     LfoGridSe3_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E6BA4:
@@ -12405,7 +12417,7 @@ loc_484E72BA:
     jmp     loc_484E7D90
 loc_484E72DD:
     add     8, a0
-    cmp     LfoGridSe4_Records+128, a0
+    cmp     AcGridBoxSe2Proc_Records, a0
     bcs     loc_484E72E8
     mov     a1, a0
 loc_484E72E8:
@@ -12439,7 +12451,7 @@ loc_484E731F:
 loc_484E7326:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe4_Table+88, a0
+    mov     LfoGridSe4_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E7333:
@@ -12784,7 +12796,7 @@ loc_484E7687:
 loc_484E768E:
     add     -1, d0
     asl2    d0
-    mov     LfoGridSe4_Table+44, a0
+    mov     LfoGridSe4_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484E769B:
@@ -13522,7 +13534,7 @@ loc_484E7DA6:
     ble     loc_484E7DB1
     jmp     loc_484E8131
 loc_484E7DB1:
-    mov     LfoGridSe4_Records+128, a1
+    mov     AcGridBoxSe2Proc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -13539,7 +13551,7 @@ loc_484E7DB1:
     jmp     loc_484E8131
 loc_484E7DD5:
     add     8, a0
-    cmp     LfoGridSe4_Records+256, a0
+    cmp     ToneGridSe2_Records, a0
     bcs     loc_484E7DE0
     mov     a1, a0
 loc_484E7DE0:
@@ -13849,7 +13861,7 @@ loc_484E8153:
     ble     loc_484E815E
     jmp     loc_484E89F8
 loc_484E815E:
-    mov     LfoGridSe4_Records+256, a1
+    mov     ToneGridSe2_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -13865,7 +13877,7 @@ loc_484E815E:
     jmp     loc_484E89F8
 loc_484E8181:
     add     8, a0
-    cmp     LfoGridSe4_Records+384, a0
+    cmp     AcCtrlGridBoxSeProc_Records, a0
     bcs     loc_484E818C
     mov     a1, a0
 loc_484E818C:
@@ -13884,7 +13896,7 @@ loc_484E8194:
     cmp     1, d0
     bne     loc_484E81B7
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     bra     loc_484E8228
 loc_484E81B7:
     clr     d0
@@ -13895,7 +13907,7 @@ loc_484E81B7:
     cmp     1, d0
     bne     loc_484E81DB
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     bra     loc_484E8228
 loc_484E81DB:
     clr     d0
@@ -13906,7 +13918,7 @@ loc_484E81DB:
     cmp     1, d0
     bne     loc_484E81FF
     mov     2, d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     bra     loc_484E8228
 loc_484E81FF:
     clr     d0
@@ -13915,17 +13927,17 @@ loc_484E81FF:
     mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     3, d1
-    movbu   d1, (inflate_blocks_Table_2+730)
+    movbu   d1, (func_484D80BD_Var_3)
     cmp     1, d0
     beq     loc_484E8228
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
 loc_484E8228:
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
 loc_484E822C:
     mov     (0x58, sp), d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -13977,7 +13989,7 @@ loc_484E82A0:
     mov     d0, (0x14, sp)
     mov     0xc0, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14006,7 +14018,7 @@ loc_484E82EA:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14034,7 +14046,7 @@ loc_484E8330:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14062,7 +14074,7 @@ loc_484E8376:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14092,7 +14104,7 @@ loc_484E83C1:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d2
     nop
     nop
@@ -14123,7 +14135,7 @@ loc_484E840A:
     mov     sp, a3
     add     0x21, a3
 loc_484E841B:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a3, a0
     mov     0x23, d1
     nop
@@ -14144,7 +14156,7 @@ loc_484E841B:
     movbu   d0, (0x21, sp)
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14227,7 +14239,7 @@ loc_484E84F2:
     mov     d0, (0x14, sp)
     mov     0xc0, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14255,7 +14267,7 @@ loc_484E853A:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14282,7 +14294,7 @@ loc_484E857E:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14311,7 +14323,7 @@ loc_484E85C5:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14340,7 +14352,7 @@ loc_484E8610:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14368,7 +14380,7 @@ loc_484E865B:
     mov     d2, a2
     cmp     1, a2
     blt     loc_484E8689
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14401,7 +14413,7 @@ loc_484E869A:
     mov     sp, a3
     add     0x21, a3
 loc_484E86A8:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a3, a0
     mov     0x23, d1
     nop
@@ -14422,7 +14434,7 @@ loc_484E86A8:
     movbu   d1, (0x21, sp)
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14509,7 +14521,7 @@ loc_484E8778:
 loc_484E877F:
     jmp     loc_484E89DC
 loc_484E8782:
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     extb    d2
     mov     sp, a0
     mov     0x23, d0
@@ -14558,7 +14570,7 @@ loc_484E87F9:
     extb    d2
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14581,7 +14593,7 @@ loc_484E8829:
     extb    d2
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -14604,7 +14616,7 @@ loc_484E885B:
     extb    d2
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14626,7 +14638,7 @@ loc_484E888C:
     extb    d2
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -14663,7 +14675,7 @@ loc_484E88C0:
 loc_484E88DC:
     jmp     loc_484E89DC
 loc_484E88DF:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x21, a0
     mov     0x23, d1
@@ -14683,7 +14695,7 @@ loc_484E88DF:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484E89DC
 loc_484E8916:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x20, a0
     mov     0x23c, d3
@@ -14708,7 +14720,7 @@ loc_484E8916:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484E89DC
 loc_484E8953:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x21, a0
     mov     0x23, d1
@@ -14732,7 +14744,7 @@ loc_484E8953:
     call    sprintf_entry, [a2], 0x20
     bra     loc_484E89DC
 loc_484E898D:
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     add     -1, d2
     mov     sp, a0
     add     0x20, a0
@@ -14789,7 +14801,7 @@ loc_484E8A0E:
     ble     loc_484E8A19
     jmp     loc_484E8E73
 loc_484E8A19:
-    mov     LfoGridSe4_Records+384, a1
+    mov     AcCtrlGridBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -14806,7 +14818,7 @@ loc_484E8A19:
     jmp     loc_484E8E73
 loc_484E8A3D:
     add     8, a0
-    cmp     LfoGridSe4_Records+512, a0
+    cmp     CtrlGridSe1_Records, a0
     bcs     loc_484E8A48
     mov     a1, a0
 loc_484E8A48:
@@ -15198,7 +15210,7 @@ loc_484E8E95:
     ble     loc_484E8EA0
     jmp     loc_484EA373
 loc_484E8EA0:
-    mov     LfoGridSe4_Records+512, a1
+    mov     CtrlGridSe1_Records, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -17085,7 +17097,7 @@ loc_484EA394:
     jmp     loc_484EA6E0
 loc_484EA3B8:
     add     8, a0
-    cmp     DrumAcCtrlGridBoxSeProc_Records+128, a0
+    cmp     DrumCtrlGridSe_Records, a0
     bcs     loc_484EA3C3
     mov     a1, a0
 loc_484EA3C3:
@@ -17389,7 +17401,7 @@ loc_484EA702:
     ble     loc_484EA70D
     jmp     loc_484EAC7C
 loc_484EA70D:
-    mov     DrumAcCtrlGridBoxSeProc_Records+128, a1
+    mov     DrumCtrlGridSe_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -17405,7 +17417,7 @@ loc_484EA70D:
     jmp     loc_484EAC7C
 loc_484EA730:
     add     8, a0
-    cmp     DrumAcCtrlGridBoxSeProc_Records+256, a0
+    cmp     AcTsetGridBoxSeProc_Records, a0
     bcs     loc_484EA73B
     mov     a1, a0
 loc_484EA73B:
@@ -17960,7 +17972,7 @@ loc_484EAC92:
     ble     loc_484EAC9D
     jmp     loc_484EB00D
 loc_484EAC9D:
-    mov     DrumAcCtrlGridBoxSeProc_Records+256, a1
+    mov     AcTsetGridBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -17977,7 +17989,7 @@ loc_484EAC9D:
     jmp     loc_484EB00D
 loc_484EACC1:
     add     8, a0
-    cmp     DrumAcCtrlGridBoxSeProc_Records+384, a0
+    cmp     AcGridBoxScrlSeProc_Records, a0
     bcs     loc_484EACCC
     mov     a1, a0
 loc_484EACCC:
@@ -18348,7 +18360,7 @@ loc_484EB0CB:
     mov     d2, d0
     asl2    d2
     add     d0, d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x24, sp), a0
     mov     0x23c, d3
     mov     0x23, d1
@@ -18365,7 +18377,7 @@ loc_484EB0CB:
     mov     a0, d0
     add     0x35, d0
     mov     d0, (0x20, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x20, sp), a0
     mov     0x23, d1
     nop
@@ -18377,7 +18389,7 @@ loc_484EB0CB:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a3
     add     0x36, a3
     mov     a3, a0
@@ -18428,7 +18440,7 @@ loc_484EB16E:
 loc_484EB186:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18441,7 +18453,7 @@ loc_484EB186:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18454,7 +18466,7 @@ loc_484EB186:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18499,7 +18511,7 @@ loc_484EB22E:
     mov     a0, d0
     add     0x34, d0
     mov     d0, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23c, d3
     mov     0x23, d1
     nop
@@ -18515,7 +18527,7 @@ loc_484EB22E:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18533,7 +18545,7 @@ loc_484EB22E:
     mov     a1, d0
     exthu   d0
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18579,7 +18591,7 @@ loc_484EB22E:
 loc_484EB2EF:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18593,7 +18605,7 @@ loc_484EB2EF:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18607,7 +18619,7 @@ loc_484EB2EF:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18652,7 +18664,7 @@ loc_484EB39E:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d0
     nop
     nop
@@ -18680,7 +18692,7 @@ loc_484EB3E7:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -18712,7 +18724,7 @@ loc_484EB432:
     mov     sp, a3
     add     0x39, a3
 loc_484EB443:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a3, a0
     mov     0x23, d1
     nop
@@ -18733,7 +18745,7 @@ loc_484EB443:
     movbu   d0, (0x39, sp)
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18819,7 +18831,7 @@ loc_484EB51E:
     mov     d2, d0
     asl2    d2
     add     d0, d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x24, sp), a0
     mov     0x23c, d3
     mov     0x23, d1
@@ -18836,7 +18848,7 @@ loc_484EB51E:
     mov     a0, d0
     add     0x35, d0
     mov     d0, (0x20, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x20, sp), a0
     mov     0x23, d1
     nop
@@ -18848,7 +18860,7 @@ loc_484EB51E:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a3
     add     0x36, a3
     mov     a3, a0
@@ -18897,7 +18909,7 @@ loc_484EB5BE:
 loc_484EB5D6:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18910,7 +18922,7 @@ loc_484EB5D6:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18925,7 +18937,7 @@ loc_484EB5D6:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -18968,7 +18980,7 @@ loc_484EB67F:
     mov     d2, d0
     asl2    d2
     add     d0, d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x24, sp), a0
     mov     0x23c, d3
     mov     0x23, d1
@@ -18985,7 +18997,7 @@ loc_484EB67F:
     mov     a0, d0
     add     0x35, d0
     mov     d0, (0x20, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x20, sp), a0
     mov     0x23, d1
     nop
@@ -18997,7 +19009,7 @@ loc_484EB67F:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a3
     add     0x36, a3
     mov     0x23, d1
@@ -19044,7 +19056,7 @@ loc_484EB67F:
 loc_484EB737:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19057,7 +19069,7 @@ loc_484EB737:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19070,7 +19082,7 @@ loc_484EB737:
     call    func_484F7A9D_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19114,7 +19126,7 @@ loc_484EB7E0:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d0
     nop
     nop
@@ -19144,7 +19156,7 @@ loc_484EB82C:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d0
     nop
     nop
@@ -19171,7 +19183,7 @@ loc_484EB875:
     mov     d2, a3
     cmp     1, a3
     blt     loc_484EB8A5
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19205,7 +19217,7 @@ loc_484EB8B6:
     mov     sp, a2
     add     0x39, a2
 loc_484EB8C4:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a2, a0
     mov     0x23, d1
     nop
@@ -19226,7 +19238,7 @@ loc_484EB8C4:
     movbu   d0, (0x39, sp)
     mov     0x7f, d0
     mov     d0, (0x10, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19313,7 +19325,7 @@ loc_484EB997:
     mov     d0, d2
     asl2    d2
     add     d0, d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x34, a0
     mov     0x23c, d3
@@ -19327,7 +19339,7 @@ loc_484EB997:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x35, a0
     mov     0x23, d1
@@ -19340,7 +19352,7 @@ loc_484EB997:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     mov     7, a0
     nop
@@ -19378,7 +19390,7 @@ loc_484EBA28:
     mov     d0, d2
     asl2    d2
     add     d0, d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x34, a0
     mov     0x23c, d3
@@ -19394,7 +19406,7 @@ loc_484EBA28:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -19409,7 +19421,7 @@ loc_484EBA28:
     add     0x35, a0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x36, a0
     mov     0x23, d1
@@ -19443,7 +19455,7 @@ loc_484EBABD:
     extb    d0
     mov     0xff, d1
     mov     d1, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d1
     nop
     nop
@@ -19465,7 +19477,7 @@ loc_484EBAEE:
     extb    d0
     mov     0xff, d1
     mov     d1, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d1
     nop
     nop
@@ -19502,7 +19514,7 @@ loc_484EBB1F:
 loc_484EBB3C:
     jmp     loc_484EBC46
 loc_484EBB3F:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x39, a0
     mov     0x23, d1
@@ -19522,7 +19534,7 @@ loc_484EBB3F:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484EBC46
 loc_484EBB76:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x38, a0
     mov     0x23c, d3
@@ -19547,7 +19559,7 @@ loc_484EBB76:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484EBC46
 loc_484EBBBA:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x39, a0
     mov     0x23, d1
@@ -19571,7 +19583,7 @@ loc_484EBBBA:
     call    sprintf_entry, [a2], 0x20
     bra     loc_484EBC46
 loc_484EBBF4:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     -1, d2
     mov     0x23, d1
     mov     0x23c, a0
@@ -19685,7 +19697,7 @@ loc_484EBD13:
     jmp     loc_484EC102
 loc_484EBD16:
     movbu   (0x34, sp), d2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     extb    d2
     mov     0x23, d1
     nop
@@ -19694,7 +19706,7 @@ loc_484EBD16:
     mov     d2, d0
     asl2    d0
     add     d2, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     add     0x48, d1
     add     5, d1
     add     d0, d1
@@ -19827,7 +19839,7 @@ loc_484EBDE9:
     jmp     loc_484EC102
 loc_484EBE5F:
     movbu   (0x34, sp), d2
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     extb    d2
     mov     0x23, d0
     nop
@@ -19838,7 +19850,7 @@ loc_484EBE5F:
     mov     d2, d0
     asl2    d0
     add     d2, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     add     d0, d1
     mov     d1, a2
     exthu   d1
@@ -19971,7 +19983,7 @@ loc_484EBFA6:
     mov     d1, (0x14, sp)
     mov     0xff, d1
     mov     d1, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     extb    d0
     mov     0x23, d2
     nop
@@ -19982,7 +19994,7 @@ loc_484EBFA6:
     mov     d0, d1
     asl2    d1
     add     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     d1, a0
     add     8, a0
     mov     a0, d1
@@ -20010,7 +20022,7 @@ loc_484EC007:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     extb    d2
     mov     0x23, d0
     nop
@@ -20021,7 +20033,7 @@ loc_484EC007:
     asl2    d0
     add     d2, d0
     add     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     9, a0
     add     d1, a0
     mov     a0, d1
@@ -20051,13 +20063,13 @@ loc_484EC067:
     mov     sp, a2
     add     0x45, a2
 loc_484EC077:
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     a2, a0
     mov     0x23, d0
     nop
     nop
     mulu    d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x48, d1
     add     d3, d1
     exthu   d1
@@ -20154,7 +20166,7 @@ loc_484EC152:
 loc_484EC159:
     jmp     loc_484EC58F
 loc_484EC15C:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     extb    d3
     mov     sp, a0
     mov     0x23, d2
@@ -20166,7 +20178,7 @@ loc_484EC15C:
     mov     d3, d0
     asl2    d0
     add     d3, d0
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     add     d0, d2
     mov     d2, d1
     exthu   d1
@@ -20297,7 +20309,7 @@ loc_484EC232:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484EC58F
 loc_484EC2A8:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     extb    d3
     mov     d3, d2
     mov     sp, a0
@@ -20309,7 +20321,7 @@ loc_484EC2A8:
     add     d0, d1
     add     5, d1
     mov     d3, d0
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     asl2    d0
     add     d0, d2
     add     d1, d2
@@ -20444,7 +20456,7 @@ loc_484EC3F0:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -20458,7 +20470,7 @@ loc_484EC3F0:
     add     8, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -20482,7 +20494,7 @@ loc_484EC44E:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x23, d0
     nop
     nop
@@ -20494,7 +20506,7 @@ loc_484EC44E:
     add     d0, d1
     add     9, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -20517,7 +20529,7 @@ loc_484EC4A6:
     mov     d3, a3
     cmp     1, a3
     blt     loc_484EC4E4
-    movbu   (inflate_blocks_Table_2+730), d2
+    movbu   (func_484D80BD_Var_3), d2
     mov     0x23, d0
     nop
     nop
@@ -20528,7 +20540,7 @@ loc_484EC4A6:
     add     d0, d2
     mov     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -20559,7 +20571,7 @@ loc_484EC4F5:
     mov     sp, a2
     add     0x45, a2
 loc_484EC501:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a2, a0
     mov     0x23, d1
     nop
@@ -20568,7 +20580,7 @@ loc_484EC501:
     add     0x48, d0
     add     d2, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     0x8e, d3
     nop
@@ -20670,8 +20682,8 @@ loc_484EC5D8:
 loc_484EC5DF:
     jmp     loc_484EC92E
 loc_484EC5E2:
-    movbu   (inflate_blocks_Table_2+734), d3
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (Str_empty_266), d3
+    movbu   (func_484D80BD_Var_3), d0
     extb    d2
     mov     d2, d1
     asl2    d1
@@ -20749,7 +20761,7 @@ loc_484EC5E2:
     movbu   d0, (0x59, sp)
     jmp     loc_484EC92E
 loc_484EC686:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     extb    d2
     mov     sp, a0
     mov     0x23, d1
@@ -20761,7 +20773,7 @@ loc_484EC686:
     mov     d2, d1
     asl2    d1
     add     d2, d1
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     add     d1, d0
     mov     d0, a2
     mov     d0, d1
@@ -20829,7 +20841,7 @@ loc_484EC724:
     extb    d1
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d2
     nop
     nop
@@ -20843,7 +20855,7 @@ loc_484EC724:
     add     8, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -20861,7 +20873,7 @@ loc_484EC76B:
     extb    d1
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d2
     nop
     nop
@@ -20875,7 +20887,7 @@ loc_484EC76B:
     add     9, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -20907,7 +20919,7 @@ loc_484EC7B2:
 loc_484EC7CE:
     jmp     loc_484EC92E
 loc_484EC7D1:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x45, a0
     mov     0x23, d1
@@ -20917,7 +20929,7 @@ loc_484EC7D1:
     add     0x48, d0
     add     d2, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     0x8e, d0
@@ -20938,7 +20950,7 @@ loc_484EC7D1:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484EC92E
 loc_484EC81B:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x48, d3
     mov     0xffffffff, a0
     add     d2, a0
@@ -20948,7 +20960,7 @@ loc_484EC81B:
     mulu    d1, d0
     add     d3, d0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a0, d1
     exthu   d1
     mov     d2, (0x4c, sp)
@@ -20974,7 +20986,7 @@ loc_484EC81B:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484EC92E
 loc_484EC876:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x23, d1
     nop
     nop
@@ -20984,7 +20996,7 @@ loc_484EC876:
     add     d2, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x45, a0
     mov     0x8e, d2
@@ -21008,7 +21020,7 @@ loc_484EC876:
     call    sprintf_entry, [a2], 0x20
     bra     loc_484EC92E
 loc_484EC8C7:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     0x44, a0
     mov     0x23, d1
     nop
@@ -21018,7 +21030,7 @@ loc_484EC8C7:
     mov     0xffffffff, a1
     add     d2, a1
     add     d0, a1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a1, d1
     exthu   d1
     mov     0x8e, d2
@@ -21073,7 +21085,7 @@ loc_484EC962:
     ble     loc_484EC96D
     jmp     loc_484ECD5A
 loc_484EC96D:
-    mov     DrumAcCtrlGridBoxSeProc_Records+384, a1
+    mov     AcGridBoxScrlSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -21111,7 +21123,7 @@ loc_484EC9A4:
     mov     1, d0
     movhu   d0, (a0)
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+738)
+    movbu   d0, (AcGridBoxScrlSeProc_Var)
     mov     (0x34, sp), a0
     mov     d2, d1
     mov     a0, (0x10, sp)
@@ -21192,11 +21204,11 @@ loc_484ECA7F:
     exth    d2
     cmp     2, d2
     bne     loc_484ECACC
-    movbu   (inflate_blocks_Table_2+738), d1
+    movbu   (AcGridBoxScrlSeProc_Var), d1
     cmp     0, d1
     ble     loc_484ECACC
     add     -1, d1
-    movbu   d1, (inflate_blocks_Table_2+738)
+    movbu   d1, (AcGridBoxScrlSeProc_Var)
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
@@ -21294,14 +21306,14 @@ loc_484ECBBE:
     cmp     d2, d3
     bne     loc_484ECC18
     movhu   (a0), d1
-    movbu   (inflate_blocks_Table_2+738), d0
+    movbu   (AcGridBoxScrlSeProc_Var), d0
     add     -2, d1
     mov     0xc, d2
     sub     d1, d2
     cmp     d2, d0
     bge     loc_484ECC18
     inc     d0
-    movbu   d0, (inflate_blocks_Table_2+738)
+    movbu   d0, (AcGridBoxScrlSeProc_Var)
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
@@ -21447,7 +21459,7 @@ loc_484ECD88:
     jmp     loc_484EDBD9
 loc_484ECDAA:
     add     8, a0
-    cmp     LfoViewSe_Records+128, a0
+    cmp     AcDrumGridBoxSeProc_Records, a0
     bcs     loc_484ECDB5
     mov     a1, a0
 loc_484ECDB5:
@@ -21482,7 +21494,7 @@ loc_484ECDBD:
     beq     loc_484ECE4E
     jmp     loc_484ECE88
 loc_484ECE03:
-    movbu   (inflate_blocks_Table_2+738), d2
+    movbu   (AcGridBoxScrlSeProc_Var), d2
     extbu   d3
     add     d3, d2
     mov     0x7f, d0
@@ -21499,7 +21511,7 @@ loc_484ECE03:
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECE88
 loc_484ECE26:
-    movbu   (inflate_blocks_Table_2+738), d1
+    movbu   (AcGridBoxScrlSeProc_Var), d1
     extbu   d3
     add     d3, d1
     mov     1, d0
@@ -21518,7 +21530,7 @@ loc_484ECE26:
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECE88
 loc_484ECE4E:
-    movbu   (inflate_blocks_Table_2+738), d1
+    movbu   (AcGridBoxScrlSeProc_Var), d1
     extbu   d3
     add     d3, d1
     mov     d1, d0
@@ -21577,7 +21589,7 @@ loc_484ECEA2:
     beq     loc_484ECF33
     jmp     loc_484ECF6B
 loc_484ECEE8:
-    movbu   (inflate_blocks_Table_2+738), d1
+    movbu   (AcGridBoxScrlSeProc_Var), d1
     extbu   d3
     add     d3, d1
     clr     d0
@@ -21594,7 +21606,7 @@ loc_484ECEE8:
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECF6B
 loc_484ECF0C:
-    movbu   (inflate_blocks_Table_2+738), d2
+    movbu   (AcGridBoxScrlSeProc_Var), d2
     extbu   d3
     add     d3, d2
     clr     d0
@@ -21613,7 +21625,7 @@ loc_484ECF0C:
     call    func_484F75C1_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECF6B
 loc_484ECF33:
-    movbu   (inflate_blocks_Table_2+738), d1
+    movbu   (AcGridBoxScrlSeProc_Var), d1
     extbu   d3
     add     d3, d1
     mov     d1, d0
@@ -21653,7 +21665,7 @@ loc_484ECF85:
     mov     Str_LFO_2d_LFO_2d_LFO_2d_LFO_2d_LFO_2d_LFO_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movbu   (inflate_blocks_Table_2+738), d0
+    movbu   (AcGridBoxScrlSeProc_Var), d0
     mov     d0, d1
     inc     d1
     mov     d1, (0x10, sp)
@@ -21695,7 +21707,7 @@ loc_484ECFD0:
     movhu   (0x3a, sp), d3
     call    GetFocusObject_entry, 0, 0x10
     call    GetViewInstance, 0, 0
-    movbu   (inflate_blocks_Table_2+738), d0
+    movbu   (AcGridBoxScrlSeProc_Var), d0
     movbu   d0, (0x31, sp)
     movhu   (0x3a, sp), d0
     exth    d0
@@ -23046,7 +23058,7 @@ loc_484EDC61:
     mov     (0x24, sp), a1
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d2
     add     0x4c, d2
@@ -23066,7 +23078,7 @@ loc_484EDC61:
     mov     d2, d0
     inc     d0
     mov     d0, (0x1c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -23082,7 +23094,7 @@ loc_484EDC61:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x14, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     3, d2
     mov     0x7a, d1
     nop
@@ -23097,7 +23109,7 @@ loc_484EDC61:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -23757,7 +23769,7 @@ loc_484EE269:
     mov     (0x2c, sp), a1
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+733), d0
+    movbu   (EnvKfGraphTitleSe_Var), d0
     cmp     0, d0
     beq     loc_484EE312
     cmp     1, d0
@@ -23766,7 +23778,7 @@ loc_484EE269:
     beq     loc_484EE356
     bra     loc_484EE378
 loc_484EE312:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -23780,7 +23792,7 @@ loc_484EE312:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EE378
 loc_484EE332:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -23796,7 +23808,7 @@ loc_484EE332:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EE378
 loc_484EE356:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -23817,7 +23829,7 @@ loc_484EE378:
     mov     d2, d0
     inc     d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x18, sp), a0
     mov     0x54, d3
     mov     0x7a, d1
@@ -23832,7 +23844,7 @@ loc_484EE378:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x1c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     3, d2
     mov     0x31, a0
     mov     0x7a, d1
@@ -23847,7 +23859,7 @@ loc_484EE378:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x14, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, a0
     mov     0x7a, d1
     nop
@@ -24506,7 +24518,7 @@ loc_484EE8C2:
     mov     (0x24, sp), a1
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d2
     add     0x4c, d2
@@ -24526,7 +24538,7 @@ loc_484EE8C2:
     mov     d2, d0
     inc     d0
     mov     d0, (0x1c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -24542,7 +24554,7 @@ loc_484EE8C2:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x14, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     3, d2
     mov     0x7a, d1
     nop
@@ -24557,7 +24569,7 @@ loc_484EE8C2:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25217,7 +25229,7 @@ loc_484EEECA:
     mov     (0x1c, sp), a1
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+733), d0
+    movbu   (EnvKfGraphTitleSe_Var), d0
     cmp     0, d0
     beq     loc_484EEF73
     cmp     1, d0
@@ -25226,7 +25238,7 @@ loc_484EEECA:
     beq     loc_484EEFB7
     bra     loc_484EEFD9
 loc_484EEF73:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25240,7 +25252,7 @@ loc_484EEF73:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EEFD9
 loc_484EEF93:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25256,7 +25268,7 @@ loc_484EEF93:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EEFD9
 loc_484EEFB7:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25278,7 +25290,7 @@ loc_484EEFD9:
     add     0x44, d0
     add     d3, d0
     mov     d0, (0x14, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x14, sp), a0
     mov     0x7a, d1
     nop
@@ -25918,7 +25930,7 @@ loc_484EF4DA:
     mov     (0x1c, sp), a1
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+733), d0
+    movbu   (EnvKfGraphTitleSe_Var), d0
     cmp     0, d0
     beq     loc_484EF583
     cmp     1, d0
@@ -25927,7 +25939,7 @@ loc_484EF4DA:
     beq     loc_484EF5C7
     bra     loc_484EF5E9
 loc_484EF583:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25941,7 +25953,7 @@ loc_484EF583:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EF5E9
 loc_484EF5A3:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25957,7 +25969,7 @@ loc_484EF5A3:
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     bra     loc_484EF5E9
 loc_484EF5C7:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -25979,7 +25991,7 @@ loc_484EF5E9:
     add     0x44, d0
     add     d3, d0
     mov     d0, (0x14, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x14, sp), a0
     mov     0x7a, d1
     nop
@@ -26605,7 +26617,7 @@ loc_484EFAEA:
     movhu   d0, (0x5a, sp)
     mov     0xff, d0
     call    DrawDottedLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d2
     add     0x5c, d2
@@ -26619,7 +26631,7 @@ loc_484EFAEA:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, a2
     inc     a2
     mov     a2, a0
@@ -26635,7 +26647,7 @@ loc_484EFAEA:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x28, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x28, sp), a0
     mov     0x7a, d1
     nop
@@ -26649,7 +26661,7 @@ loc_484EFAEA:
     mov     3, d0
     add     d2, d0
     mov     d0, (0x20, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x20, sp), a0
     mov     0x7a, d1
     nop
@@ -26665,7 +26677,7 @@ loc_484EFAEA:
     mov     4, d0
     add     d2, d0
     mov     d0, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -26681,7 +26693,7 @@ loc_484EFAEA:
     mov     5, d0
     add     d2, d0
     mov     d0, (0x2c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x2c, sp), a0
     add     6, d2
     mov     0x7a, d1
@@ -26694,7 +26706,7 @@ loc_484EFAEA:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x3c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, a0
     mov     0x7a, d1
     nop
@@ -27130,13 +27142,13 @@ loc_484EFF08:
     sub     d1, d0
     mov     0x1c, d1
     mov     d0, a2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     nop
     nop
     mulu    d1, d0
     add     0x10, d0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x4c, sp)
     mov     a0, d1
     mov     0x8e, d2
@@ -27157,12 +27169,12 @@ loc_484EFF08:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x28, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x1c, d0
     nop
     nop
     mulu    d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x4c, sp)
     mov     0x10, a0
     add     d1, a0
@@ -27181,7 +27193,7 @@ loc_484EFF08:
     mov     (0x28, sp), a0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     3, a3
     add     d2, a3
     mov     0x1c, d1
@@ -27191,7 +27203,7 @@ loc_484EFF08:
     mov     0xb, a0
     add     0x10, d0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x4c, sp)
     mov     a0, d1
     mov     0x8e, d2
@@ -27210,12 +27222,12 @@ loc_484EFF08:
     mov     4, d0
     add     d2, d0
     mov     d0, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     0x1c, d0
     nop
     nop
     mulu    d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x4c, sp)
     add     0x10, d1
     mov     0x8e, d2
@@ -27237,7 +27249,7 @@ loc_484EFF08:
     mov     5, d0
     add     d2, d0
     mov     d0, (0x20, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x1c, d1
     nop
     nop
@@ -27245,7 +27257,7 @@ loc_484EFF08:
     add     0x10, d0
     mov     0xd, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x4c, sp)
     mov     a0, d1
     mov     0x8e, d2
@@ -27263,14 +27275,14 @@ loc_484EFF08:
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
     mov     d2, (0x38, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x1c, d1
     nop
     nop
     mulu    d1, d0
     mov     0x10, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0xe, a0
     mov     a0, d2
     exthu   d2
@@ -27285,7 +27297,7 @@ loc_484EFF08:
     mov     d2, d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x48, a0
     mov     0x8e, d1
@@ -27967,7 +27979,7 @@ loc_484F054D:
     movhu   d3, (0x62, sp)
     mov     0xff, d0
     call    DrawDottedLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d2
     add     0x64, d2
@@ -27986,7 +27998,7 @@ loc_484F054D:
     mov     d2, d0
     inc     d0
     mov     d0, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x24, sp), a0
     mov     0x7a, d1
     nop
@@ -28000,7 +28012,7 @@ loc_484F054D:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x28, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x28, sp), a0
     add     3, d2
     mov     0x7a, d1
@@ -28013,7 +28025,7 @@ loc_484F054D:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x38, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, a0
     mov     0x7a, d1
     nop
@@ -28024,7 +28036,7 @@ loc_484F054D:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d3
     add     0x6c, d3
@@ -28052,7 +28064,7 @@ loc_484F054D:
     mov     0x64, d1
     call    LibDiv32, 0, 0
     movhu   d0, (0x4c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d3, a3
     inc     a3
     mov     a3, a0
@@ -28081,7 +28093,7 @@ loc_484F054D:
     mov     0x64, d1
     call    LibDiv32, 0, 0
     movhu   d0, (0x46, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d3, a0
     mov     0x7a, d1
     nop
@@ -28092,7 +28104,7 @@ loc_484F054D:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -28142,7 +28154,7 @@ loc_484F076D:
     call    LibDiv32, 0, 0
     movhu   d0, (0x3e, sp)
 loc_484F0779:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     2, a2
     add     d3, a2
     mov     a2, a0
@@ -28169,7 +28181,7 @@ loc_484F0779:
     mov     0x64, d1
     call    LibDiv32, 0, 0
     movhu   d0, (0x44, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     mov     0xc, a0
     nop
@@ -28182,7 +28194,7 @@ loc_484F0779:
     mov     a3, a0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a2, a0
     mov     0x7a, d1
     nop
@@ -28232,7 +28244,7 @@ loc_484F0834:
     mov     3, d0
     add     d3, d0
     mov     d0, (0x2c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -28260,7 +28272,7 @@ loc_484F0834:
     mov     0x64, d1
     call    LibDiv32, 0, 0
     movhu   d0, (0x40, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     a2, a0
     mov     0x7a, d1
     nop
@@ -28271,7 +28283,7 @@ loc_484F0834:
     exthu   d0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x2c, sp), a0
     mov     0x7a, d1
     nop
@@ -28319,7 +28331,7 @@ loc_484F08E9:
 loc_484F08F5:
     add     4, d3
     mov     d3, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d3, a0
     mov     0x7a, d1
     nop
@@ -28347,7 +28359,7 @@ loc_484F08F5:
     mov     0x64, d1
     call    LibDiv32, 0, 0
     movhu   d0, (0x42, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -28360,7 +28372,7 @@ loc_484F08F5:
     mov     (0x2c, sp), a0
     mov     0xff, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -28607,7 +28619,7 @@ loc_484F0B15:
     add     -0x32, d0
     sub     a2, d0
     movbu   d0, (a0)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x24, sp), a0
     nop
     nop
@@ -28728,7 +28740,7 @@ loc_484F0BFE:
     mov     -0x32, d0
     movbu   d0, (a2)
 loc_484F0C09:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x14, a0
     mov     0x7a, d1
@@ -28853,7 +28865,7 @@ loc_484F0C7B:
     movhu   d3, (0x6a, sp)
     mov     0xff, d0
     call    DrawDottedLine_entry, [d2,a2,a3], 0x20
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     mov     a0, d2
     add     0x6c, d2
@@ -28870,7 +28882,7 @@ loc_484F0C7B:
     mov     d2, d0
     inc     d0
     mov     d0, (0x24, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x7a, d1
     nop
     nop
@@ -28886,7 +28898,7 @@ loc_484F0C7B:
     mov     2, d0
     add     d2, d0
     mov     d0, (0x34, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x34, sp), a0
     add     3, d2
     mov     0x7a, d1
@@ -28899,7 +28911,7 @@ loc_484F0C7B:
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
     mov     d2, (0x3c, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, a0
     mov     0x7a, d1
     nop
@@ -28914,7 +28926,7 @@ loc_484F0C7B:
     mov     a0, d0
     add     0x74, d0
     mov     d0, (0x28, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x28, sp), a0
     mov     0x7a, d1
     nop
@@ -28940,7 +28952,7 @@ loc_484F0C7B:
     call    LibDiv32, 0, 0
     movhu   d0, (0x54, sp)
     mov     (0x28, sp), a3
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     inc     a3
     mov     a3, a0
     mov     0x7a, d1
@@ -29005,7 +29017,7 @@ loc_484F0E5D:
     movhu   d0, (0x4c, sp)
 loc_484F0E69:
     mov     (0x28, sp), a2
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     add     2, a2
     mov     a2, a0
     mov     0x7a, d1
@@ -29069,7 +29081,7 @@ loc_484F0EE3:
     mov     0x7a, d1
     add     3, d0
     mov     d0, (0x38, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x38, sp), a0
     nop
     nop
@@ -29131,7 +29143,7 @@ loc_484F0F65:
     mov     0x7a, d1
     add     4, d0
     mov     d0, (0x34, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     (0x34, sp), a0
     nop
     nop
@@ -29555,7 +29567,7 @@ func_484F1261:
 func_484F1261_entry:
     mov     0x54, a0
     mov     d0, a3
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d1, a2
     mov     0x7a, d1
     nop
@@ -29945,7 +29957,7 @@ loc_484F150A:
     call    LibDiv32, 0, 0
     add     d0, d2
     movhu   d2, (0x36, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     call    func_484F7BA4_entry, [d2,a2], 0x20
     extbu   d0
     mov     d0, a3
@@ -29970,7 +29982,7 @@ loc_484F159B:
     call    DrawLine_entry, [d2,a2,a3], 0x20
     jmp     loc_484F1B92
 loc_484F15C3:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x40, a0
     mov     0x54, d2
@@ -29983,7 +29995,7 @@ loc_484F15C3:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x41, a0
     mov     0x7a, d1
@@ -29995,7 +30007,7 @@ loc_484F15C3:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x42, a0
     mov     0x7a, d1
@@ -30007,7 +30019,7 @@ loc_484F15C3:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x43, a0
     mov     0x7a, d1
@@ -30288,7 +30300,7 @@ loc_484F1854:
     call    DrawDottedLine_entry, [d2,a2,a3], 0x20
     jmp     loc_484F1B92
 loc_484F18BD:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x40, a0
     mov     0x54, d2
@@ -30301,7 +30313,7 @@ loc_484F18BD:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x41, a0
     mov     0x7a, d1
@@ -30676,7 +30688,7 @@ loc_484F1BB6:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, a0
     call    GetBox_entry, 0, 0x14
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     call    func_484F7BA4_entry, [d2,a2], 0x20
     extbu   d0
     cmp     1, d0
@@ -30689,7 +30701,7 @@ loc_484F1BB6:
     beq     loc_484F1C4F
     jmp     loc_484F1E2A
 loc_484F1C4F:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x24, a0
     mov     0x54, d2
@@ -30702,7 +30714,7 @@ loc_484F1C4F:
     exthu   d0
     mov     0x7f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x25, a0
     mov     0x7a, d1
@@ -30716,7 +30728,7 @@ loc_484F1C4F:
     exthu   d0
     mov     0x1f, d1
     call    func_484F79E3_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x26, a0
     mov     0x7a, d1
@@ -30948,7 +30960,7 @@ loc_484F1E59:
     call    LibDiv32, 0, 0
     add     d0, d2
     movhu   d2, (0x38, sp)
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     call    func_484F7C4A_entry, [d2,d3,a2,a3], 0x28
     extbu   d0
     mov     d0, a3
@@ -30973,7 +30985,7 @@ loc_484F1EE8:
     call    DrawLine_entry, [d2,a2,a3], 0x20
     jmp     loc_484F254A
 loc_484F1F10:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x40, a0
     mov     0x1a7, d2
@@ -30984,7 +30996,7 @@ loc_484F1F10:
     add     0x10, d0
     mov     0x13, a1
     add     d0, a1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a1, d1
     exthu   d1
     mov     d0, d3
@@ -30998,7 +31010,7 @@ loc_484F1F10:
     exthu   d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x41, a0
     mov     0x1c, d1
@@ -31008,7 +31020,7 @@ loc_484F1F10:
     add     0x10, d0
     add     0x14, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     0x8e, d3
     nop
@@ -31020,7 +31032,7 @@ loc_484F1F10:
     exthu   d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     sp, a0
     mov     0x1c, d0
     nop
@@ -31029,7 +31041,7 @@ loc_484F1F10:
     add     0x10, d1
     add     0x15, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x42, a0
     nop
     nop
@@ -31040,7 +31052,7 @@ loc_484F1F10:
     exthu   d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x43, a0
     mov     0x1c, d1
@@ -31050,7 +31062,7 @@ loc_484F1F10:
     add     0x10, d0
     mov     0x16, a1
     add     d0, a1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a1, d1
     exthu   d1
     nop
@@ -31329,7 +31341,7 @@ loc_484F21EC:
     call    DrawDottedLine_entry, [d2,a2,a3], 0x20
     jmp     loc_484F254A
 loc_484F2255:
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x40, a0
     mov     0x1a7, d3
@@ -31340,7 +31352,7 @@ loc_484F2255:
     add     0x10, d0
     add     0x13, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     0x8e, d2
     nop
@@ -31352,7 +31364,7 @@ loc_484F2255:
     exthu   d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     sp, a0
     add     0x41, a0
     mov     0x1c, d1
@@ -31362,7 +31374,7 @@ loc_484F2255:
     add     0x10, d0
     add     0x14, d0
     mov     d0, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d2
     mov     0x8e, d1
     nop
@@ -31735,7 +31747,7 @@ loc_484F256E:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, a0
     call    GetBox_entry, 0, 0x14
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     call    func_484F7C4A_entry, [d2,d3,a2,a3], 0x28
     extbu   d0
     cmp     1, d0
@@ -31748,8 +31760,8 @@ loc_484F256E:
     beq     loc_484F2605
     jmp     loc_484F2814
 loc_484F2605:
-    movbu   (inflate_blocks_Table_2+730), d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (func_484D80BD_Var_3), d1
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     mov     d0, d2
     add     0x28, a0
@@ -31771,14 +31783,14 @@ loc_484F2605:
     mov     d1, d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     0x1c, d1
     mov     0x10, a0
     nop
     nop
     mulu    d1, d0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x16, a0
     mov     a0, d2
     exthu   d2
@@ -31794,7 +31806,7 @@ loc_484F2605:
     mov     d2, d0
     mov     0x1f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     mov     sp, a0
     mov     0x1c, d0
     nop
@@ -31803,7 +31815,7 @@ loc_484F2605:
     add     0x10, d1
     add     0x16, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x2a, a0
     mov     0x8e, d2
     nop
@@ -34671,7 +34683,7 @@ loc_484F42C9:
     ble     loc_484F42D4
     jmp     loc_484F46C2
 loc_484F42D4:
-    mov     LfoViewSe_Records+128, a1
+    mov     AcDrumGridBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -34703,7 +34715,7 @@ loc_484F430B:
     call    GetViewInstance, 0, 0
     mov     a0, a2
     mov     (0x30, a2), a1
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, d1
     add     2, d0
     movhu   d0, (a1)
@@ -34822,7 +34834,7 @@ loc_484F43F7:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01b50001, d1
@@ -34875,7 +34887,7 @@ loc_484F449E:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -35043,7 +35055,7 @@ loc_484F46E4:
     jmp     loc_484F5505
 loc_484F46EF:
     add     0xfffb0001, d2
-    mov     data_4863CB74, a1
+    mov     DrumMainGridSe_Records, a1
     mov     0xf, d0
     and     d2, d0
     asl     3, d0
@@ -35058,7 +35070,7 @@ loc_484F46EF:
     jmp     loc_484F5505
 loc_484F4712:
     add     8, a0
-    cmp     ptrs_4863CBF4, a0
+    cmp     DrumFilterGridSe_Table_2, a0
     bcs     loc_484F471D
     mov     a1, a0
 loc_484F471D:
@@ -35068,6 +35080,7 @@ loc_484F471D:
 loc_484F4720:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484F4725:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -35094,7 +35107,7 @@ loc_484F475D:
     jmp     loc_484F4B62
 loc_484F4766:
     mov     (0x2c, sp), d0
-    mov     DrumMainGridSe_Table+80, a0
+    mov     DrumMainGridSe_Table_3, a0
     add     -1, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -35105,7 +35118,7 @@ loc_484F4775:
     call    func_484F77E5_entry, [d2,d3], 0x20
     jmp     loc_484F4B62
 loc_484F4780:
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     d1, d2
     extbu   d2
     mov     sp, a3
@@ -35239,7 +35252,7 @@ loc_484F482B:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484F4B62
 loc_484F48B4:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d1, d2
     extbu   d2
     mov     d0, a2
@@ -35395,7 +35408,7 @@ loc_484F49EC:
     add     6, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -35424,7 +35437,7 @@ loc_484F4A24:
     add     7, a0
     mov     a0, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -35451,7 +35464,7 @@ loc_484F4A5F:
     add     0x10, d0
     add     8, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     0x8e, d2
     nop
@@ -35494,7 +35507,7 @@ loc_484F4AB9:
     mov     a0, d1
     exthu   d1
     mov     d1, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -35518,7 +35531,7 @@ loc_484F4AF3:
     nop
     nop
     mulu    d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x10, a0
     add     d1, a0
     add     5, a0
@@ -35545,7 +35558,7 @@ loc_484F4B2F:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d0, d2
     mov     0x1c, d0
     nop
@@ -35573,6 +35586,7 @@ loc_484F4B62:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
+loc_484F4B7E:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -35599,7 +35613,7 @@ loc_484F4BB6:
     jmp     loc_484F4FAE
 loc_484F4BBF:
     mov     (0x2c, sp), d0
-    mov     DrumMainGridSe_Table+40, a0
+    mov     DrumMainGridSe_Table_2, a0
     add     -1, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -35610,7 +35624,7 @@ loc_484F4BCE:
     call    func_484F77E5_entry, [d2,d3], 0x20
     jmp     loc_484F4FAE
 loc_484F4BD8:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d1, d2
     extbu   d2
     mov     d0, a2
@@ -35753,7 +35767,7 @@ loc_484F4C8F:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484F4FAE
 loc_484F4D18:
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     d1, d2
     extbu   d2
     mov     sp, a3
@@ -35889,7 +35903,7 @@ loc_484F4E42:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d1
     mov     d0, d2
     mov     0x1c, d0
@@ -35919,7 +35933,7 @@ loc_484F4E7A:
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d1
     mov     d0, d2
     mov     0x1c, d0
@@ -35953,7 +35967,7 @@ loc_484F4EB6:
     nop
     nop
     mulu    d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x10, a0
     add     d1, a0
     add     8, a0
@@ -35998,7 +36012,7 @@ loc_484F4F10:
     add     4, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -36027,7 +36041,7 @@ loc_484F4F47:
     add     5, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -36053,7 +36067,7 @@ loc_484F4F80:
     add     0x10, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -36072,18 +36086,22 @@ loc_484F4FAE:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
+loc_484F4FCA:
     mov     (0x94, sp), a0
     mov     Str_empty_1051, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
+loc_484F4FDD:
     mov     (0x94, sp), a0
     mov     Str_1st_2nd_3rd_4th_4, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
+loc_484F4FF0:
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
+loc_484F4FF4:
     mov     (0x94, sp), a1
     mov     sp, a0
     mov     a1, d0
@@ -36125,7 +36143,7 @@ loc_484F503C:
     call    func_484F7896_entry, [d2,d3,a2], 0x28
     jmp     loc_484F54E7
 loc_484F5048:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a3
     mov     d0, d1
@@ -36202,7 +36220,7 @@ loc_484F5048:
     movbu   d0, (0x61, sp)
     jmp     loc_484F54E7
 loc_484F50E1:
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     extbu   d2
     mov     0x1c, d0
     nop
@@ -36274,7 +36292,7 @@ loc_484F50E1:
     call    strcpy_entry, [a2], 4
     jmp     loc_484F54E7
 loc_484F5177:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, d1
     mov     sp, a0
@@ -36300,7 +36318,7 @@ loc_484F5177:
     exthu   d2
     mov     d2, d0
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     2, a0
     add     d3, a0
     mov     a0, d1
@@ -36317,7 +36335,7 @@ loc_484F5177:
     exthu   d0
     mov     0xff, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     3, d3
     mov     d3, d1
     exthu   d1
@@ -36341,7 +36359,7 @@ loc_484F5177:
     nop
     mulu    d0, d3
     add     0x48, d3
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     d3, a2
     mov     a2, d1
     exthu   d1
@@ -36354,7 +36372,7 @@ loc_484F5177:
     exthu   d0
     mov     0x7f, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a2, a1
     inc     a1
     mov     a1, d1
@@ -36377,7 +36395,7 @@ loc_484F5177:
     add     a2, d0
     mov     d0, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x42, a0
     mov     0x8e, d1
     nop
@@ -36389,7 +36407,7 @@ loc_484F5177:
     mov     d2, d0
     mov     0xff, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     3, a0
     add     a2, a0
     mov     a0, d1
@@ -36407,7 +36425,7 @@ loc_484F5177:
     exthu   d0
     mov     0xff, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a2, d2
     exthu   d2
     mov     d0, d1
@@ -36423,7 +36441,7 @@ loc_484F5177:
     mov     d2, d0
     mov     0xff, d1
     call    func_484F7A21_entry, [d2,d3,a2], 0x24
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d3, d1
     exthu   d1
     mov     sp, a0
@@ -36488,7 +36506,7 @@ loc_484F531C:
     mov     a0, d2
     exthu   d2
     mov     d2, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     mov     0x8e, d1
     nop
     nop
@@ -36509,7 +36527,7 @@ loc_484F5356:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     d2, (0x54, sp)
     mov     0x1a7, d3
     mov     8, a0
@@ -36549,7 +36567,7 @@ loc_484F53B0:
     add     7, d2
     mov     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -36574,7 +36592,7 @@ loc_484F53DC:
     add     0x10, d2
     add     8, d2
     mov     d2, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     exthu   d0
     mov     0x8e, d1
     nop
@@ -36618,7 +36636,7 @@ loc_484F5446:
     add     0x10, d2
     add     4, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -36646,7 +36664,7 @@ loc_484F547B:
     mov     a0, d2
     exthu   d2
     mov     d2, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     mov     0x8e, d1
     nop
     nop
@@ -36668,7 +36686,7 @@ loc_484F54B6:
     mulu    d0, d2
     add     0x10, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -36692,6 +36710,7 @@ loc_484F54E7:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_484F5506
+loc_484F5502:
     mov     d3, d0
     bra     loc_484F5506
 loc_484F5505:
@@ -36728,7 +36747,7 @@ loc_484F5526:
     jmp     loc_484F6474
 loc_484F5548:
     add     8, a0
-    cmp     DrumFilterGridSe_Records+128, a0
+    cmp     AcDrumGridBoxSe2Proc_Records, a0
     bcs     loc_484F5553
     mov     a1, a0
 loc_484F5553:
@@ -36767,7 +36786,7 @@ loc_484F5599:
     mov     -1, d0
     add     d3, d0
     asl2    d0
-    mov     DrumFilterGridSe_Table+40, a0
+    mov     DrumFilterGridSe_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F55A7:
@@ -36823,7 +36842,7 @@ loc_484F5610:
 loc_484F561F:
     cmp     7, d0
     bne     loc_484F5681
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     sp, a0
     add     0x20, a0
@@ -36858,7 +36877,7 @@ loc_484F561F:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     0x8e, d2
     nop
@@ -36883,7 +36902,7 @@ loc_484F5681:
     nop
     nop
     mulu    d0, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x10, a0
     add     d2, a0
     add     0x13, a0
@@ -36932,7 +36951,7 @@ loc_484F56D2:
     add     0x14, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -36951,7 +36970,7 @@ loc_484F5719:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     0x1c, d1
     nop
@@ -37004,7 +37023,7 @@ loc_484F577E:
     nop
     mulu    d2, d0
     mov     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x10, a0
     add     0x16, a0
     mov     a0, d1
@@ -37060,7 +37079,7 @@ loc_484F57EE:
     add     0x15, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37089,7 +37108,7 @@ loc_484F5825:
     add     0x15, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37140,7 +37159,7 @@ loc_484F5893:
     add     d2, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37169,7 +37188,7 @@ loc_484F58C9:
     add     0x16, a0
     mov     a0, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -37203,7 +37222,7 @@ loc_484F591A:
     mov     0x8e, d2
     mov     0x11, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a0, d1
     exthu   d1
     nop
@@ -37237,7 +37256,7 @@ loc_484F596B:
     add     d2, d0
     add     0x10, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     0x8e, d0
@@ -37271,7 +37290,7 @@ loc_484F59BA:
     mov     0x8e, d2
     mov     0x10, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x12, a0
     mov     a0, d1
     exthu   d1
@@ -37390,7 +37409,7 @@ loc_484F5ABF:
     add     0x13, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37414,7 +37433,7 @@ loc_484F5B04:
     nop
     mulu    d2, d0
     mov     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x10, a0
     add     0x13, a0
     mov     a0, d1
@@ -37461,7 +37480,7 @@ loc_484F5B54:
     add     0x14, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37489,7 +37508,7 @@ loc_484F5B99:
     add     d1, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37535,7 +37554,7 @@ loc_484F5BFF:
     add     0x16, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37585,7 +37604,7 @@ loc_484F5C69:
     add     0x15, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37607,7 +37626,7 @@ loc_484F5C9F:
     add     0x13, d2
     mov     d2, a0
     mov     d2, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     a0, (0x24, sp)
     mov     0x1a7, d3
@@ -37633,7 +37652,7 @@ loc_484F5C9F:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     d2, a0
     mov     a0, d2
     exthu   d2
@@ -37686,7 +37705,7 @@ loc_484F5D36:
     add     0x16, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -37713,7 +37732,7 @@ loc_484F5D6C:
     add     d2, d0
     mov     0x16, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a0, d1
     exthu   d1
     mov     d0, d2
@@ -37746,7 +37765,7 @@ loc_484F5DBD:
     nop
     mulu    d2, d0
     mov     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x10, a0
     add     0x11, a0
     mov     a0, d1
@@ -37779,7 +37798,7 @@ loc_484F5E0C:
     nop
     mulu    d2, d0
     mov     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x10, a0
     add     0x10, a0
     mov     a0, d1
@@ -37814,7 +37833,7 @@ loc_484F5E5B:
     mov     0x8e, d2
     mov     0x10, a0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x12, a0
     mov     a0, d1
     exthu   d1
@@ -37879,7 +37898,7 @@ loc_484F5F01:
 loc_484F5F08:
     add     -1, d0
     asl2    d0
-    mov     ptrs_4863CBF4, a0
+    mov     DrumFilterGridSe_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F5F15:
@@ -37993,7 +38012,7 @@ loc_484F6022:
     add     0x10, d0
     add     0x13, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     sp, a0
@@ -38024,7 +38043,7 @@ loc_484F6058:
     mov     a0, d1
     exthu   d1
     mov     d1, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -38076,7 +38095,7 @@ loc_484F60D4:
     mov     d0, a0
     add     0x10, a0
     add     0x14, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a0, d1
     exthu   d1
     mov     d0, d2
@@ -38104,7 +38123,7 @@ loc_484F610F:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x14, a0
     add     d2, a0
     mov     a0, d2
@@ -38138,7 +38157,7 @@ loc_484F614C:
     add     0x14, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -38176,7 +38195,7 @@ loc_484F6195:
     cmp     5, d0
     bne     loc_484F620A
 loc_484F61AD:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     sp, a0
     add     0x20, a0
@@ -38255,7 +38274,7 @@ loc_484F624E:
     add     0x15, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -38284,7 +38303,7 @@ loc_484F6286:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -38336,7 +38355,7 @@ loc_484F6304:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x20, a0
     mov     0x16, d1
@@ -38366,7 +38385,7 @@ loc_484F633A:
     mov     d0, a1
     add     0x10, a1
     add     0x16, a1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a1, d1
     exthu   d1
     mov     d0, d2
@@ -38402,7 +38421,7 @@ loc_484F6385:
 loc_484F639A:
     mov     0x3f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d1
+    movbu   (Str_empty_266), d1
     extbu   d2
     mov     0x1c, d0
     mov     0x11, a0
@@ -38433,7 +38452,7 @@ loc_484F63D3:
     nop
     nop
     mulu    d0, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x10, a0
     add     d2, a0
     add     0x10, a0
@@ -38476,7 +38495,7 @@ loc_484F6424:
     add     d2, d0
     add     0x12, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     a2, a0
@@ -38519,7 +38538,7 @@ loc_484F648A:
     ble     loc_484F6495
     jmp     loc_484F6883
 loc_484F6495:
-    mov     DrumFilterGridSe_Records+128, a1
+    mov     AcDrumGridBoxSe2Proc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -38536,7 +38555,7 @@ loc_484F6495:
     jmp     loc_484F6883
 loc_484F64B9:
     add     8, a0
-    cmp     DrumFilterGridSe_Records+256, a0
+    cmp     DrumAmpGridSe_Records, a0
     bcs     loc_484F64C4
     mov     a1, a0
 loc_484F64C4:
@@ -38551,7 +38570,7 @@ loc_484F64CC:
     call    GetViewInstance, 0, 0
     mov     a0, a2
     mov     (0x30, a2), a1
-    movbu   (inflate_blocks_Table_2+730), d0
+    movbu   (func_484D80BD_Var_3), d0
     mov     d2, d1
     add     2, d0
     movhu   d0, (a1)
@@ -38670,7 +38689,7 @@ loc_484F65B8:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01b50001, d1
@@ -38723,7 +38742,7 @@ loc_484F665F:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     mov     1, d0
-    movbu   d0, (inflate_blocks_Table_2+730)
+    movbu   d0, (func_484D80BD_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -38890,7 +38909,7 @@ loc_484F68A5:
     ble     loc_484F68B0
     jmp     loc_484F706C
 loc_484F68B0:
-    mov     DrumFilterGridSe_Records+256, a1
+    mov     DrumAmpGridSe_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -38906,7 +38925,7 @@ loc_484F68B0:
     jmp     loc_484F706C
 loc_484F68D3:
     add     8, a0
-    cmp     DrumFilterGridSe_Records+384, a0
+    cmp     DrumLfoGridSe_Records, a0
     bcs     loc_484F68DE
     mov     a1, a0
 loc_484F68DE:
@@ -38980,7 +38999,7 @@ loc_484F694B:
     add     d2, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39009,7 +39028,7 @@ loc_484F6984:
     add     d0, a0
     mov     a0, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -39038,7 +39057,7 @@ loc_484F69BD:
     add     d2, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39066,7 +39085,7 @@ loc_484F69F4:
     add     0xc, d2
     mov     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39079,7 +39098,7 @@ loc_484F69F4:
     call    func_484F76AF_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6B14
 loc_484F6A2A:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x1a7, d3
@@ -39113,7 +39132,7 @@ loc_484F6A52:
     add     d2, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39126,7 +39145,7 @@ loc_484F6A52:
     call    func_484F76AF_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6B14
 loc_484F6A88:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x1a7, d3
@@ -39157,7 +39176,7 @@ loc_484F6A88:
     add     0xe, d2
     mov     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39182,7 +39201,7 @@ loc_484F6ADF:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0xf, d2
     mov     d2, d1
     exthu   d1
@@ -39267,7 +39286,7 @@ loc_484F6B92:
     add     d2, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39293,7 +39312,7 @@ loc_484F6BC9:
     add     0x10, d2
     add     0xa, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -39321,7 +39340,7 @@ loc_484F6BFD:
     mov     0xb, d1
     add     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39348,7 +39367,7 @@ loc_484F6C31:
     add     0xc, d2
     mov     d2, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39361,7 +39380,7 @@ loc_484F6C31:
     call    func_484F76AF_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D4E
 loc_484F6C65:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     mov     d0, d1
     add     0x1c, a0
@@ -39395,7 +39414,7 @@ loc_484F6C8E:
     add     d2, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39408,7 +39427,7 @@ loc_484F6C8E:
     call    func_484F76AF_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D4E
 loc_484F6CC0:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x1a7, d3
@@ -39439,7 +39458,7 @@ loc_484F6CC0:
     add     d2, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39467,7 +39486,7 @@ loc_484F6D18:
     add     d2, d0
     add     0xf, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     0x8e, d0
@@ -39563,7 +39582,7 @@ loc_484F6DF2:
     add     0x10, d2
     add     9, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -39596,7 +39615,7 @@ loc_484F6E39:
     add     d2, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39628,7 +39647,7 @@ loc_484F6E81:
     add     0xb, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39660,7 +39679,7 @@ loc_484F6EC8:
     add     0xc, a0
     mov     a0, d0
     exthu   d0
-    movbu   (inflate_blocks_Table_2+734), d1
+    movbu   (Str_empty_266), d1
     mov     0x8e, d2
     nop
     nop
@@ -39680,7 +39699,7 @@ loc_484F6EC8:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484F7050
 loc_484F6F12:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x1a7, d3
@@ -39718,7 +39737,7 @@ loc_484F6F52:
     add     0xd, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39738,7 +39757,7 @@ loc_484F6F52:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484F7050
 loc_484F6F99:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x1a7, d3
@@ -39776,7 +39795,7 @@ loc_484F6FD8:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -39806,7 +39825,7 @@ loc_484F701E:
     add     0x10, d0
     add     0xf, d0
     exthu   d0
-    movbu   (inflate_blocks_Table_2+734), d1
+    movbu   (Str_empty_266), d1
     mov     0x8e, d2
     nop
     nop
@@ -39846,7 +39865,7 @@ loc_484F7082:
     ble     loc_484F708D
     jmp     loc_484F75BD
 loc_484F708D:
-    mov     DrumFilterGridSe_Records+384, a1
+    mov     DrumLfoGridSe_Records, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -39926,7 +39945,7 @@ loc_484F7116:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d3
     nop
     nop
@@ -39954,7 +39973,7 @@ loc_484F714F:
     add     d1, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d3
     nop
     nop
@@ -39974,7 +39993,7 @@ loc_484F7187:
     extbu   d1
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x10, a1
     mov     d0, d3
     mov     0x1c, d0
@@ -40012,7 +40031,7 @@ loc_484F71C0:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d3
     nop
     nop
@@ -40041,7 +40060,7 @@ loc_484F71F6:
     add     d1, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d3
     nop
     nop
@@ -40113,7 +40132,7 @@ loc_484F7297:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40142,7 +40161,7 @@ loc_484F72CD:
     add     0x18, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40169,7 +40188,7 @@ loc_484F7306:
     add     0x18, d1
     mov     d1, d2
     exthu   d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d1
     nop
     nop
@@ -40199,7 +40218,7 @@ loc_484F7339:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40217,7 +40236,7 @@ loc_484F7372:
     mov     d0, (0x14, sp)
     mov     0x7f, d0
     mov     d0, (0x18, sp)
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d1
     mov     d0, d2
     mov     0x1c, d0
@@ -40315,7 +40334,7 @@ loc_484F743C:
     add     d0, a0
     mov     a0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40340,7 +40359,7 @@ loc_484F7473:
     add     0x10, d0
     add     0x18, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     0x8e, d0
@@ -40383,7 +40402,7 @@ loc_484F74D6:
     add     0x18, d0
     mov     d0, d1
     exthu   d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40406,7 +40425,7 @@ loc_484F750B:
     mulu    d1, d0
     add     0x10, d0
     add     d0, a0
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     a0, d1
     exthu   d1
     mov     d1, d2
@@ -40452,7 +40471,7 @@ loc_484F756E:
     add     0x10, d0
     add     0x19, d0
     mov     d0, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     exthu   d1
     mov     d0, d2
     mov     0x8e, d0
@@ -40764,7 +40783,7 @@ func_484F77E5_entry:
     add     d2, d2
     mov     1, d1
     asl     d2, d1
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x8e, d2
     nop
     nop
@@ -40843,7 +40862,7 @@ func_484F7896:
 func_484F7896_entry:
     mov     a0, a2
     mov     d0, d3
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     mov     0x8e, d0
     nop
     nop
@@ -41330,7 +41349,7 @@ func_484F7C4A:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
 func_484F7C4A_entry:
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     extbu   d0
     mov     sp, a3
     add     0x14, a3
@@ -41371,7 +41390,7 @@ loc_484F7C98:
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
 loc_484F7C9C:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x16, a0
     add     d3, a0
     mov     a0, d2
@@ -41411,7 +41430,7 @@ loc_484F7CE2:
     mov     3, d0
     bra     loc_484F7D32
 loc_484F7CE6:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     mov     0x16, a0
     add     d3, a0
     mov     a0, d1
@@ -41925,7 +41944,7 @@ loc_484F80A9:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     3, d0
     mov     d0, (0x10, sp)
     mov     0x10, d0
@@ -41975,7 +41994,7 @@ loc_484F8105:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     add     0x10, d2
     mov     d2, d1
     exthu   d1
@@ -41998,7 +42017,7 @@ loc_484F8133:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     3, d0
     mov     d0, (0x10, sp)
     mov     0x10, a0
@@ -42041,7 +42060,7 @@ loc_484F8184:
     beq     loc_484F81E8
     ret     [d2,d3,a2], 0x34
 loc_484F8193:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a2
     mov     0x1c, d0
@@ -42087,7 +42106,7 @@ loc_484F8193:
     call    func_484F7AE0_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F81E8:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a2
     mov     0x1c, d0
@@ -42142,7 +42161,7 @@ loc_484F8242:
     beq     loc_484F82A5
     ret     [d2,d3,a2], 0x34
 loc_484F8251:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a2
     mov     0x1c, d0
@@ -42188,7 +42207,7 @@ loc_484F8251:
     call    func_484F7AE0_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F82A5:
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a2
     mov     0x1c, d0
@@ -42248,7 +42267,7 @@ loc_484F8309:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     3, d0
     mov     d0, (0x10, sp)
     mov     0x10, d0
@@ -42288,7 +42307,7 @@ loc_484F8356:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     3, d0
     mov     d0, (0x10, sp)
     mov     0x10, d0
@@ -42336,7 +42355,7 @@ loc_484F83B1:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     0x1a7, a2
     mov     3, d0
     mov     d0, (0x10, sp)
@@ -42377,7 +42396,7 @@ loc_484F83FE:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     0x1a7, a2
     mov     3, d0
     mov     d0, (0x10, sp)
@@ -42426,7 +42445,7 @@ loc_484F845A:
     nop
     mulu    d0, d2
     add     0x10, d2
-    movbu   (inflate_blocks_Table_2+734), d3
+    movbu   (Str_empty_266), d3
     mov     0x1a7, a2
     mov     3, d0
     mov     d0, (0x10, sp)
@@ -42467,7 +42486,7 @@ loc_484F84A6:
     nop
     mulu    d2, d0
     add     0x10, d0
-    movbu   (inflate_blocks_Table_2+734), d2
+    movbu   (Str_empty_266), d2
     mov     0x1a7, a2
     mov     0x13, d3
     add     d0, d3
@@ -42521,7 +42540,7 @@ loc_484F850E:
     extb    d0
     cmp     -1, d0
     bne     loc_484F856B
-    movbu   (inflate_blocks_Table_2+734), d0
+    movbu   (Str_empty_266), d0
     extbu   d2
     mov     d0, a2
     mov     0x1c, d0
@@ -42741,7 +42760,7 @@ loc_484F86F5:
     jmp     loc_484F8879
 loc_484F86FC:
     asl2    d0
-    mov     func_484F86E1_Table+184, a0
+    mov     func_484F86E1_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F8707:
@@ -43266,7 +43285,7 @@ func_484F8BAB:
     bgt     loc_484F8BC4
     add     -0x11, d0
     asl2    d0
-    mov     func_484F88AF_Table+188, a0
+    mov     func_484F8BAB_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F8BC1:
@@ -43879,7 +43898,7 @@ func_484F90AB_entry:
     cmp     0xc, d0
     bgt     loc_484F90F5
     asl2    d0
-    mov     func_484F904F_Table+56, a0
+    mov     func_484F90AB_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F90C2:
@@ -43940,7 +43959,7 @@ func_484F9105_entry:
     extbu   d2
     mov     d2, (0x10, sp)
     extbu   d0
-    movbu   (inflate_blocks_Table_2+730), d1
+    movbu   (func_484D80BD_Var_3), d1
     call    TgPartElemMaskUpdate_entry, [d2,d3], 8
     ret     [d2], 0x18
 
@@ -45455,7 +45474,7 @@ loc_484F9F68:
     jmp     loc_484FA4AB
 loc_484F9F8C:
     add     8, a0
-    cmp     LyricsBoxProc_Records+128, a0
+    cmp     func_484FBC7B_Records, a0
     bcs     loc_484F9F97
     mov     a1, a0
 loc_484F9F97:
@@ -45472,7 +45491,7 @@ loc_484F9F9F:
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50003A44)
+    movbu   d0, (LyricsBoxProc_Table)
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
 loc_484F9FB8:
@@ -45482,10 +45501,10 @@ loc_484F9FB8:
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
-    movbu   d0, (data_50003A44)
+    movbu   d0, (LyricsBoxProc_Table)
     ret     [d2,d3,a2,a3], 0x78
 loc_484F9FCF:
-    movbu   (data_50003A44), d0
+    movbu   (LyricsBoxProc_Table), d0
     cmp     0, d0
     bne     loc_484F9FDD
     clr     d0
@@ -45523,7 +45542,7 @@ loc_484FA01F:
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
 loc_484FA035:
-    movbu   (data_50003A44), d0
+    movbu   (LyricsBoxProc_Table), d0
     cmp     0, d0
     beq     loc_484FA051
     mov     (0x88, sp), a0
@@ -45557,7 +45576,7 @@ loc_484FA071:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, (0x2c, sp)
-    movbu   (data_50003A44), d0
+    movbu   (LyricsBoxProc_Table), d0
     cmp     0, d0
     bne     loc_484FA095
     jmp     loc_484FA354
@@ -45900,7 +45919,7 @@ loc_484FA3D0:
     mov     a0, (0x10, sp)
     mov     d2, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    movbu   (data_50003A44), d0
+    movbu   (LyricsBoxProc_Table), d0
     cmp     0, d0
     bne     loc_484FA3EA
     jmp     loc_484FA4A8
@@ -48022,7 +48041,7 @@ func_484FBC7B_entry:
     blt     loc_484FBCC3
     cmp     0xce, d0
     bgt     loc_484FBCC3
-    mov     LyricsBoxProc_Records+128, a1
+    mov     func_484FBC7B_Records, a1
     add     -0x6d, d0
     mov     a1, a0
     mov     0xf, d1
@@ -51233,7 +51252,7 @@ GetMspChdStepScreenID:
     retf    0, 0
 # SetMspPartSetG1ID  (CPU 0x484fde3e)
 SetMspPartSetG1ID:
-    mov     d0, (data_50007E14)
+    mov     d0, (SetMspPartSetG1ID_Var)
     clr     d0
     retf    0, 0
 # AcFuncMenuProc  (CPU 0x484fde48)
@@ -51343,7 +51362,7 @@ loc_484FDF35:
     jmp     loc_484FE13D
 loc_484FDF58:
     add     8, a0
-    cmp     AcFuncEditBoxProc_Records+256, a0
+    cmp     FE_Dummy_Records, a0
     bcs     loc_484FDF63
     mov     a1, a0
 loc_484FDF63:
@@ -51880,7 +51899,7 @@ loc_484FE4F3:
     ble     loc_484FE4FE
     jmp     loc_484FE5C4
 loc_484FE4FE:
-    mov     AcFuncEditBoxProc_Records+256, a1
+    mov     FE_Dummy_Records, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -51896,7 +51915,7 @@ loc_484FE4FE:
     jmp     loc_484FE5C4
 loc_484FE520:
     add     8, a0
-    cmp     AcFuncEditBoxProc_Records+384, a0
+    cmp     AcGridBoxDeluxProc_Records, a0
     bcs     loc_484FE52B
     mov     a1, a0
 loc_484FE52B:
@@ -52646,7 +52665,7 @@ loc_484FEB59:
     ble     loc_484FEB66
     jmp     loc_484FEDC3
 loc_484FEB66:
-    mov     AcFuncEditBoxProc_Records+384, a1
+    mov     AcGridBoxDeluxProc_Records, a1
     mov     (0x64, sp), d1
     add     0xfffb0000, d1
     mov     a1, a0
@@ -53970,7 +53989,7 @@ loc_484FF82B:
     mov     (0x64, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50003AD0)
+    movbu   d0, (AcStepBoxProc_Table)
     clr     d0
     ret     [d2,d3,a2,a3], 0x5c
 loc_484FF866:
@@ -54104,7 +54123,7 @@ loc_484FF8DF:
     mov     d2, d1
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
 loc_484FF98F:
-    movbu   (data_50003AD0), d0
+    movbu   (AcStepBoxProc_Table), d0
     cmp     1, d0
     beq     loc_484FF99C
     jmp     loc_484FFA57
@@ -54288,7 +54307,7 @@ loc_484FFADF:
     jmp     loc_484FFF4B
 loc_484FFB03:
     add     8, a0
-    cmp     StepCommandCatch_Records+128, a0
+    cmp     func_48500C71_Records, a0
     bcs     loc_484FFB0E
     mov     a1, a0
 loc_484FFB0E:
@@ -54298,6 +54317,7 @@ loc_484FFB0E:
 loc_484FFB11:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484FFB16:
     mov     (0x5006d110), d0
     mov     d0, d1
     mov     d1, (0x5006d10c)
@@ -54318,14 +54338,17 @@ loc_484FFB2A:
     mov     -1, d0
     mov     d0, (0x5006d110)
     jmp     loc_484FFF4B
+loc_484FFB5D:
     mov     -1, d0
     mov     d0, (0x5006d10c)
     jmp     loc_484FFF4B
+loc_484FFB68:
     mov     -1, d0
     mov     d0, (0x5006d10c)
     mov     d0, (0x5006d110)
     clr     d0
     ret     [d2,d3,a2,a3], 0x30
+loc_484FFB7A:
     mov     a3, (0x10, sp)
     mov     0x01760001, d0
     mov     d0, (0x14, sp)
@@ -54340,11 +54363,13 @@ loc_484FFB2A:
     mov     d0, (0x5006d10c)
     mov     d0, (0x5006d110)
     jmp     loc_484FFF4B
+loc_484FFBB3:
     mov     (0x5006d10c), d0
     mov     d0, (0x5006d110)
     mov     (0x5006d104), d0
     mov     d0, (0x5006d108)
     jmp     loc_484FFF4B
+loc_484FFBCE:
     mov     (0x5006d10c), d1
     mov     (0x5006d104), d0
     call    func_484FFF5C_entry, [d2], 4
@@ -54362,8 +54387,10 @@ loc_484FFB2A:
 loc_484FFC0B:
     clr     d0
     ret     [d2,d3,a2,a3], 0x30
+loc_484FFC0F:
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x30
+loc_484FFC14:
     mov     (0x40, sp), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -54376,7 +54403,9 @@ loc_484FFC0B:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x30
+loc_484FFC3D:
     mov     2, d2
+loc_484FFC3F:
     mov     1, d1
     exth    d2
     add     -1, d2
@@ -54558,7 +54587,7 @@ loc_484FFE4D:
     jmp     loc_484FFF48
 loc_484FFE50:
     clr     d1
-    mov     data_4864246C, a1
+    mov     StepCommandCatch_Table, a1
     movbu   (0x5015233c), d2
     mov     a1, a0
     setlb
