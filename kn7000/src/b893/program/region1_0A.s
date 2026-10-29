@@ -1147,20 +1147,24 @@ loc_48540BC4:
     bgt     loc_48540C4E
     add     -1, d0
     asl2    d0
-    mov     data_48679ED4, a0
+    mov     ptrs_48679ED4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48540C09:
     bra     loc_48540C4E
+loc_48540C0B:
     mov     a2, (0x10, sp)
     mov     0x00e004da, d0
     mov     0x01760002, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_48540C4E
+loc_48540C22:
     mov     a2, (0x10, sp)
     mov     0x00e004e4, d0
     mov     0x01760002, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_48540C4E
+loc_48540C39:
     mov     a2, (0x10, sp)
     mov     0x00e004ea, d0
     mov     0x01760002, d1
@@ -1396,9 +1400,10 @@ loc_48540EDF:
     mov     -1, d0
     add     d1, d0
     asl2    d0
-    mov     data_48679EF8, a0
+    mov     ptrs_48679EF8, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48540EED:
     mov     sp, a0
     add     0x18, a0
     mov     0x501605f0, a1
@@ -1810,6 +1815,7 @@ loc_485413E7:
     mov     0x0176000c, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     ret     [d2,d3,a2,a3], 0x30
+loc_485413FF:
     cmp     5, d1
     beq     loc_48541418
     cmp     6, d1
@@ -16971,7 +16977,9 @@ loc_4854A68E:
 # DiskHookNops  (CPU 0x4854a6ab)
 DiskHookNops:
     retf    0, 0
+loc_4854A6AE:
     retf    0, 0
+loc_4854A6B1:
     retf    0, 0
 # DiskWorkerStatusClear  (CPU 0x4854a6b4)
 #   clear the ctrl-block status halfword (4,a0)
@@ -17715,9 +17723,10 @@ loc_4854ACF4:
 loc_4854ACFB:
     add     -0x40, d0
     asl2    d0
-    mov     data_4867A1B4, a0
+    mov     ptrs_4867A1B4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4854AD08:
     call    SdMediaStateGet, 0, 0
     exthu   d0
     cmp     1, d0
@@ -17774,6 +17783,7 @@ loc_4854ADA0:
     mov     0x5016064c, a1
     call    memcpy_entry, [a2,a3], 8
     jmp     loc_4854AE32
+loc_4854ADB5:
     mov     a2, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d2
@@ -17784,6 +17794,7 @@ loc_4854ADA0:
 loc_4854ADC5:
     call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_4854AE32
+loc_4854ADCC:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a2, a0
@@ -17805,6 +17816,7 @@ loc_4854ADFA:
     beq     loc_4854AE32
     call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_4854AE32
+loc_4854AE07:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a2, a0
@@ -17815,6 +17827,7 @@ loc_4854ADFA:
     beq     loc_4854AE32
     call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_4854AE32
+loc_4854AE21:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a2, a0
@@ -18589,10 +18602,12 @@ DriveLetterClass:
     bgt     loc_4854B45B
     add     -0x41, d0
     asl2    d0
-    mov     data_4867A1F0, a0
+    mov     ptrs_4867A1F0, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4854B457:
     bra     loc_4854B45B
+loc_4854B459:
     mov     2, d1
 loc_4854B45B:
     mov     d1, d0
@@ -22849,6 +22864,7 @@ loc_4854DC62:
     call    ApPostEvent_entry, [d2], 0x1c
 loc_4854DC74:
     ret     [a2,a3], 0x1c
+loc_4854DC77:
     cmp     MT_GetJpegData, d1
     bne     loc_4854DC87
     mov     data_4867DF5C, d0
@@ -23169,6 +23185,7 @@ loc_4854E03E:
 loc_4854E064:
     clr     d0
     ret     [d2], 0x18
+loc_4854E068:
     cmp     MT_GetLanguagePtr, d1
     beq     loc_4854E082
     cmp     MT_IsEucCode, d1
@@ -27956,7 +27973,9 @@ SdStateResetCall_entry:
 # SdHookNops  (CPU 0x48551210)
 SdHookNops:
     retf    0, 0
+loc_48551213:
     retf    0, 0
+loc_48551216:
     retf    0, 0
 # SdUiBusyBegin  (CPU 0x48551219)
 SdUiBusyBegin:

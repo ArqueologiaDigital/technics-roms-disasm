@@ -1325,92 +1325,578 @@ data_4858DE5C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x18DE5C, 0x18DE9C
 Str_001124689_BCDEFGHIJLNPRTVXZ_c:	.asciz "###$$%&&''((()))***+++,,---..///001124689;=@BCDEFGHIJLNPRTVXZ\\_c"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x18DEDD, 0x18DF5C
-data_4858DF5C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18DF5C, 0x18DF84
-data_4858DF84:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18DF84, 0x18DFAC
-data_4858DFAC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18DFAC, 0x18DFD4
-data_4858DFD4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18DFD4, 0x18DFFC
-data_4858DFFC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18DFFC, 0x18E024
-data_4858E024:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E024, 0x18E04C
+
+ptrs_4858DF5C:
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104B3
+	.long	loc_484104E3
+	.long	loc_484104B3
+ptrs_4858DF84:
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410514
+	.long	loc_48410544
+	.long	loc_48410514
+ptrs_4858DFAC:
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_48410575
+	.long	loc_484105A5
+	.long	loc_48410575
+ptrs_4858DFD4:
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_484105E6
+	.long	loc_48410614
+	.long	loc_484105E6
+ptrs_4858DFFC:
+	.long	loc_4841088A
+	.long	loc_4841088E
+	.long	loc_48410892
+	.long	loc_484108AC
+	.long	loc_484108C6
+	.long	loc_484108E0
+	.long	loc_484108FA
+	.long	loc_48410917
+	.long	loc_4841091A
+	.long	loc_48410914
+ptrs_4858E024:
+	.long	loc_48410AD0
+	.long	loc_48410AD4
+	.long	loc_48410AD8
+	.long	loc_48410AF2
+	.long	loc_48410B0C
+	.long	loc_48410B26
+	.long	loc_48410B40
+	.long	loc_48410B5D
+	.long	loc_48410B60
+	.long	loc_48410B5A
 data_4858E04C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x18E04C, 0x18E14C
-data_4858E14C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E14C, 0x18E180
-data_4858E180:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E180, 0x18E1B0
-data_4858E1B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E1B0, 0x18E1E4
-data_4858E1E4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E1E4, 0x18E214
-data_4858E214:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E214, 0x18E248
-data_4858E248:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E248, 0x18E278
-data_4858E278:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E278, 0x18E2AC
-data_4858E2AC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E2AC, 0x18E2E0
-data_4858E2E0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E2E0, 0x18E314
-data_4858E314:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E314, 0x18E348
-data_4858E348:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E348, 0x18E37C
-data_4858E37C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E37C, 0x18E3B0
-data_4858E3B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E3B0, 0x18E3E4
-data_4858E3E4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E3E4, 0x18E414
-data_4858E414:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E414, 0x18E448
-data_4858E448:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E448, 0x18E47C
-data_4858E47C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E47C, 0x18E4B0
-data_4858E4B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E4B0, 0x18E4E4
-data_4858E4E4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E4E4, 0x18E518
-data_4858E518:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E518, 0x18E54C
-data_4858E54C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E54C, 0x18E580
-data_4858E580:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E580, 0x18E5B4
-data_4858E5B4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E5B4, 0x18E5E8
-data_4858E5E8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E5E8, 0x18E61C
-data_4858E61C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E61C, 0x18E64C
-data_4858E64C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E64C, 0x18E67C
-data_4858E67C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E67C, 0x18E6A4
-data_4858E6A4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E6A4, 0x18E6CC
-data_4858E6CC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E6CC, 0x18E6F4
-data_4858E6F4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E6F4, 0x18E738
-data_4858E738:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E738, 0x18E768
-data_4858E768:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E768, 0x18E790
-data_4858E790:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E790, 0x18E7C4
-data_4858E7C4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E7C4, 0x18E7F8
-data_4858E7F8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E7F8, 0x18E868
+ptrs_4858E14C:
+	.long	loc_48411BCA
+	.long	loc_48411BCE
+	.long	loc_48411BCE
+	.long	loc_48411C61
+	.long	loc_48411BCE
+	.long	loc_48411BCE
+	.long	loc_48411BCE
+	.long	loc_48411C61
+	.long	loc_48411C00
+	.long	loc_48411C61
+	.long	loc_48411C00
+	.long	loc_48411C00
+	.long	loc_48411C00
+ptrs_4858E180:
+	.long	loc_48411D1A
+	.long	loc_48411D1A
+	.long	loc_48411D56
+	.long	loc_48411D1A
+	.long	loc_48411D1A
+	.long	loc_48411D1A
+	.long	loc_48411D56
+	.long	loc_48411D56
+	.long	loc_48411D56
+	.long	loc_48411D56
+	.long	loc_48411D56
+	.long	loc_48411D56
+ptrs_4858E1B0:
+	.long	loc_48411D84
+	.long	loc_48411DA7
+	.long	loc_48411DA7
+	.long	loc_48411E2E
+	.long	loc_48411DA7
+	.long	loc_48411DA7
+	.long	loc_48411DA7
+	.long	loc_48411E2E
+	.long	loc_48411DBE
+	.long	loc_48411E2E
+	.long	loc_48411DBE
+	.long	loc_48411DBE
+	.long	loc_48411DBE
+ptrs_4858E1E4:
+	.long	loc_48411E56
+	.long	loc_48411E56
+	.long	loc_48411E6E
+	.long	loc_48411E56
+	.long	loc_48411E56
+	.long	loc_48411E56
+	.long	loc_48411E6E
+	.long	loc_48411E6E
+	.long	loc_48411E6E
+	.long	loc_48411E6E
+	.long	loc_48411E6E
+	.long	loc_48411E6E
+ptrs_4858E214:
+	.long	loc_48411EA6
+	.long	loc_48411ECC
+	.long	loc_48411ECC
+	.long	loc_48411F62
+	.long	loc_48411ECC
+	.long	loc_48411ECC
+	.long	loc_48411ECC
+	.long	loc_48411F62
+	.long	loc_48411EEB
+	.long	loc_48411F62
+	.long	loc_48411EEB
+	.long	loc_48411EEB
+	.long	loc_48411EEB
+ptrs_4858E248:
+	.long	loc_48411F8A
+	.long	loc_48411F8A
+	.long	loc_48411FA7
+	.long	loc_48411F8A
+	.long	loc_48411F8A
+	.long	loc_48411F8A
+	.long	loc_48411FA7
+	.long	loc_48411FA7
+	.long	loc_48411FA7
+	.long	loc_48411FA7
+	.long	loc_48411FA7
+	.long	loc_48411FA7
+ptrs_4858E278:
+	.long	loc_48412009
+	.long	loc_48412009
+	.long	loc_48412009
+	.long	loc_4841201E
+	.long	loc_48412009
+	.long	loc_48412009
+	.long	loc_48412009
+	.long	loc_4841201E
+	.long	loc_48412009
+	.long	loc_4841201E
+	.long	loc_48412009
+	.long	loc_48412009
+	.long	loc_48412009
+ptrs_4858E2AC:
+	.long	loc_48412042
+	.long	loc_48412042
+	.long	loc_48412042
+	.long	loc_48412058
+	.long	loc_48412042
+	.long	loc_48412042
+	.long	loc_48412042
+	.long	loc_48412058
+	.long	loc_48412042
+	.long	loc_48412058
+	.long	loc_48412042
+	.long	loc_48412042
+	.long	loc_48412042
+ptrs_4858E2E0:
+	.long	loc_4841207C
+	.long	loc_4841207C
+	.long	loc_4841207C
+	.long	loc_48412092
+	.long	loc_4841207C
+	.long	loc_4841207C
+	.long	loc_4841207C
+	.long	loc_48412092
+	.long	loc_4841207C
+	.long	loc_48412092
+	.long	loc_4841207C
+	.long	loc_4841207C
+	.long	loc_4841207C
+ptrs_4858E314:
+	.long	loc_484120B6
+	.long	loc_484120B6
+	.long	loc_484120B6
+	.long	loc_484120CC
+	.long	loc_484120B6
+	.long	loc_484120B6
+	.long	loc_484120B6
+	.long	loc_484120CC
+	.long	loc_484120B6
+	.long	loc_484120CC
+	.long	loc_484120B6
+	.long	loc_484120B6
+	.long	loc_484120B6
+ptrs_4858E348:
+	.long	loc_484120F0
+	.long	loc_484120F0
+	.long	loc_484120F0
+	.long	loc_48412106
+	.long	loc_484120F0
+	.long	loc_484120F0
+	.long	loc_484120F0
+	.long	loc_48412106
+	.long	loc_484120F0
+	.long	loc_48412106
+	.long	loc_484120F0
+	.long	loc_484120F0
+	.long	loc_484120F0
+ptrs_4858E37C:
+	.long	loc_4841212A
+	.long	loc_4841212A
+	.long	loc_4841212A
+	.long	loc_48412140
+	.long	loc_4841212A
+	.long	loc_4841212A
+	.long	loc_4841212A
+	.long	loc_48412140
+	.long	loc_4841212A
+	.long	loc_48412140
+	.long	loc_4841212A
+	.long	loc_4841212A
+	.long	loc_4841212A
+ptrs_4858E3B0:
+	.long	loc_4841216B
+	.long	loc_48412191
+	.long	loc_48412191
+	.long	loc_48412227
+	.long	loc_48412191
+	.long	loc_48412191
+	.long	loc_48412191
+	.long	loc_48412227
+	.long	loc_484121B0
+	.long	loc_48412227
+	.long	loc_484121B0
+	.long	loc_484121B0
+	.long	loc_484121B0
+ptrs_4858E3E4:
+	.long	loc_4841224F
+	.long	loc_4841224F
+	.long	loc_4841226C
+	.long	loc_4841224F
+	.long	loc_4841224F
+	.long	loc_4841224F
+	.long	loc_4841226C
+	.long	loc_4841226C
+	.long	loc_4841226C
+	.long	loc_4841226C
+	.long	loc_4841226C
+	.long	loc_4841226C
+ptrs_4858E414:
+	.long	loc_4841229D
+	.long	loc_484122CA
+	.long	loc_484122CA
+	.long	loc_48412378
+	.long	loc_484122CA
+	.long	loc_484122CA
+	.long	loc_484122CA
+	.long	loc_48412378
+	.long	loc_484122F3
+	.long	loc_48412378
+	.long	loc_484122F3
+	.long	loc_484122F3
+	.long	loc_484122F3
+ptrs_4858E448:
+	.long	loc_48412533
+	.long	loc_48412533
+	.long	loc_48412533
+	.long	loc_48412553
+	.long	loc_48412533
+	.long	loc_48412533
+	.long	loc_48412533
+	.long	loc_48412553
+	.long	loc_48412533
+	.long	loc_48412553
+	.long	loc_48412533
+	.long	loc_48412533
+	.long	loc_48412533
+ptrs_4858E47C:
+	.long	loc_48412578
+	.long	loc_48412578
+	.long	loc_48412578
+	.long	loc_48412599
+	.long	loc_48412578
+	.long	loc_48412578
+	.long	loc_48412578
+	.long	loc_48412599
+	.long	loc_48412578
+	.long	loc_48412599
+	.long	loc_48412578
+	.long	loc_48412578
+	.long	loc_48412578
+ptrs_4858E4B0:
+	.long	loc_484125BE
+	.long	loc_484125BE
+	.long	loc_484125BE
+	.long	loc_484125DF
+	.long	loc_484125BE
+	.long	loc_484125BE
+	.long	loc_484125BE
+	.long	loc_484125DF
+	.long	loc_484125BE
+	.long	loc_484125DF
+	.long	loc_484125BE
+	.long	loc_484125BE
+	.long	loc_484125BE
+ptrs_4858E4E4:
+	.long	loc_48412604
+	.long	loc_48412604
+	.long	loc_48412604
+	.long	loc_48412625
+	.long	loc_48412604
+	.long	loc_48412604
+	.long	loc_48412604
+	.long	loc_48412625
+	.long	loc_48412604
+	.long	loc_48412625
+	.long	loc_48412604
+	.long	loc_48412604
+	.long	loc_48412604
+ptrs_4858E518:
+	.long	loc_48412651
+	.long	loc_48412651
+	.long	loc_48412651
+	.long	loc_484126E0
+	.long	loc_48412651
+	.long	loc_48412651
+	.long	loc_48412651
+	.long	loc_484126E0
+	.long	loc_48412651
+	.long	loc_484126E0
+	.long	loc_48412651
+	.long	loc_48412651
+	.long	loc_48412651
+ptrs_4858E54C:
+	.long	loc_48412705
+	.long	loc_48412705
+	.long	loc_48412705
+	.long	loc_48412727
+	.long	loc_48412705
+	.long	loc_48412705
+	.long	loc_48412705
+	.long	loc_48412727
+	.long	loc_48412705
+	.long	loc_48412727
+	.long	loc_48412705
+	.long	loc_48412705
+	.long	loc_48412705
+ptrs_4858E580:
+	.long	loc_4841274C
+	.long	loc_4841274C
+	.long	loc_4841274C
+	.long	loc_4841276E
+	.long	loc_4841274C
+	.long	loc_4841274C
+	.long	loc_4841274C
+	.long	loc_4841276E
+	.long	loc_4841274C
+	.long	loc_4841276E
+	.long	loc_4841274C
+	.long	loc_4841274C
+	.long	loc_4841274C
+ptrs_4858E5B4:
+	.long	loc_48412793
+	.long	loc_48412793
+	.long	loc_48412793
+	.long	loc_484127B5
+	.long	loc_48412793
+	.long	loc_48412793
+	.long	loc_48412793
+	.long	loc_484127B5
+	.long	loc_48412793
+	.long	loc_484127B5
+	.long	loc_48412793
+	.long	loc_48412793
+	.long	loc_48412793
+ptrs_4858E5E8:
+	.long	loc_484127DA
+	.long	loc_484127DA
+	.long	loc_484127DA
+	.long	loc_484127FB
+	.long	loc_484127DA
+	.long	loc_484127DA
+	.long	loc_484127DA
+	.long	loc_484127FB
+	.long	loc_484127DA
+	.long	loc_484127FB
+	.long	loc_484127DA
+	.long	loc_484127DA
+	.long	loc_484127DA
+ptrs_4858E61C:
+	.long	loc_48412823
+	.long	loc_48412823
+	.long	loc_4841284B
+	.long	loc_48412823
+	.long	loc_48412823
+	.long	loc_48412823
+	.long	loc_4841284B
+	.long	loc_4841284B
+	.long	loc_4841284B
+	.long	loc_4841284B
+	.long	loc_4841284B
+	.long	loc_4841284B
+ptrs_4858E64C:
+	.long	loc_4841287D
+	.long	loc_4841287D
+	.long	loc_484128EA
+	.long	loc_4841287D
+	.long	loc_4841287D
+	.long	loc_4841287D
+	.long	loc_484128EA
+	.long	loc_4841287D
+	.long	loc_484128EA
+	.long	loc_4841287D
+	.long	loc_4841287D
+	.long	loc_4841287D
+ptrs_4858E67C:
+	.long	loc_48412989
+	.long	loc_48412991
+	.long	loc_48412999
+	.long	loc_484129A1
+	.long	loc_484129A9
+	.long	loc_484129B1
+	.long	loc_484129B9
+	.long	loc_484129C9
+	.long	loc_484129D1
+	.long	loc_484129C1
+ptrs_4858E6A4:
+	.long	loc_48412AAA
+	.long	loc_48412AC1
+	.long	loc_48412AD7
+	.long	loc_48412AD7
+	.long	loc_48412AD7
+	.long	loc_48412AD7
+	.long	loc_48412AD7
+	.long	loc_48412B04
+	.long	loc_48412B1A
+	.long	loc_48412AED
+ptrs_4858E6CC:
+	.long	loc_48412B41
+	.long	loc_48412B49
+	.long	loc_48412B69
+	.long	loc_48412B71
+	.long	loc_48412B79
+	.long	loc_48412B81
+	.long	loc_48412B89
+	.long	loc_48412B61
+	.long	loc_48412B59
+	.long	loc_48412B51
+ptrs_4858E6F4:
+	.long	loc_48412BBE
+	.long	loc_48412BDE
+	.long	loc_48412BC2
+	.long	loc_48412BC6
+	.long	loc_48412BCA
+	.long	loc_48412BDE
+	.long	loc_48412BDE
+	.long	loc_48412BDE
+	.long	loc_48412BCE
+	.long	loc_48412BDE
+	.long	loc_48412BD2
+	.long	loc_48412BD6
+	.long	loc_48412BDA
+	.long	loc_48412BDE
+	.long	loc_48412BDE
+	.long	loc_48412BDE
+	.long	loc_48412BBA
+ptrs_4858E738:
+	.long	loc_48412BF9
+	.long	loc_48412C0A
+	.long	loc_48412C1B
+	.long	loc_48412C2C
+	.long	loc_48412C3D
+	.long	loc_48412C4E
+	.long	loc_48412C5F
+	.long	loc_48412C5F
+	.long	loc_48412C5F
+	.long	loc_48412C5F
+	.long	loc_48412C5F
+	.long	loc_48412C5F
+ptrs_4858E768:
+	.long	loc_48412C77
+	.long	loc_48412C7F
+	.long	loc_48412C87
+	.long	loc_48412C8F
+	.long	loc_48412C97
+	.long	loc_48412C9F
+	.long	loc_48412CA7
+	.long	loc_48412CB7
+	.long	loc_48412CBF
+	.long	loc_48412CAF
+ptrs_4858E790:
+	.long	loc_48412DE4
+	.long	loc_48412E30
+	.long	loc_48412E30
+	.long	loc_48412F39
+	.long	loc_48412E30
+	.long	loc_48412E30
+	.long	loc_48412E30
+	.long	loc_48412F39
+	.long	loc_48412E74
+	.long	loc_48412F39
+	.long	loc_48412E74
+	.long	loc_48412E74
+	.long	loc_48412E74
+ptrs_4858E7C4:
+	.long	loc_48413675
+	.long	loc_48413682
+	.long	loc_48413684
+	.long	loc_48413698
+	.long	loc_484136A8
+	.long	loc_484136B8
+	.long	loc_484136B8
+	.long	loc_484136B8
+	.long	loc_48413675
+	.long	loc_48413682
+	.long	loc_48413684
+	.long	loc_48413698
+	.long	loc_484136A8
+ptrs_4858E7F8:
+	.long	loc_48413875
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_484139C5
+	.long	loc_4841374D
+	.long	loc_4841374D
+	.long	loc_4841377F
+	.long	loc_4841377F
+	.long	loc_4841377F
+	.long	loc_484137C0
+	.long	loc_484137C0
+	.long	loc_484137C0
+	.long	loc_48413801
+	.long	loc_48413801
+	.long	loc_48413801
+	.long	loc_48413842
+	.long	loc_48413842
 Str_AAH_AAH_AAH_AAH_AAH6AAH_AAHQAAHNAAHFAAH:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x18E868, 0x18E89C
+	.long	loc_4841410E
+	.long	loc_48414116
+	.long	loc_4841411E
+	.long	loc_48414126
+	.long	loc_4841412E
+	.long	loc_48414136
+	.long	loc_4841413E
+	.long	loc_48414151
+	.long	loc_4841414E
+	.long	loc_48414146
+.incbin_range "baserom/kn7000_program_b893.rom", 0x18E890, 0x18E89C
+
 Str_Room1:	.asciz "     Room1      "
 .incbin_range "baserom/kn7000_program_b893.rom", 0x18E8AD, 0x18E8C8
 Str_Room2:	.asciz "     Room2      "
@@ -4871,15 +5357,43 @@ ptrs_485A0150:
 data_485A01B8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A01B8, 0x1A03B8
 Str_bnAHbnAHbnAHbnAHbnAHbnAHbnAHbnAHbnAH_nAH:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1A03B8, 0x1A03DC
-data_485A03DC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1A03DC, 0x1A0400
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+	.long	loc_48416E62
+ptrs_485A03DC:
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
+	.long	loc_48416E84
 data_485A0400:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A0400, 0x1A0600
 data_485A0600:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A0600, 0x1A0680
-data_485A0680:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1A0680, 0x1A06B4
+ptrs_485A0680:
+	.long	loc_48417A93
+	.long	loc_48417AA6
+	.long	loc_48417AB9
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
+	.long	loc_48417ACC
 
 Str_empty_1355:	.asciz " "
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A06B6, 0x1A07B4
@@ -4901,10 +5415,43 @@ data_485A0C34:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A0C34, 0x1A0CB4
 data_485A0CB4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A0CB4, 0x1A0D34
-data_485A0D34:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1A0D34, 0x1A0D78
-data_485A0D78:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1A0D78, 0x1A0DBC
+
+ptrs_485A0D34:
+	.long	loc_4841D69C
+	.long	loc_4841D6B2
+	.long	loc_4841D6C7
+	.long	loc_4841D7B0
+	.long	loc_4841D706
+	.long	loc_4841D719
+	.long	loc_4841D72C
+	.long	loc_4841D73E
+	.long	loc_4841D752
+	.long	loc_4841D78E
+	.long	loc_4841D7A0
+	.long	loc_4841D7B0
+	.long	loc_4841D6DC
+	.long	loc_4841D6F1
+	.long	loc_4841D7B0
+	.long	loc_4841D766
+	.long	loc_4841D77A
+ptrs_485A0D78:
+	.long	loc_4841DA80
+	.long	loc_4841DAAF
+	.long	loc_4841DAC3
+	.long	loc_4841DA80
+	.long	loc_4841DAAF
+	.long	loc_4841DAC3
+	.long	loc_4841DA80
+	.long	loc_4841DAC3
+	.long	loc_4841DAAF
+	.long	loc_4841DAAF
+	.long	loc_4841DAC3
+	.long	loc_4841DA80
+	.long	loc_4841DAAF
+	.long	loc_4841DAC3
+	.long	loc_4841DA80
+	.long	loc_4841DAC3
+	.long	loc_4841DAAF
 data_485A0DBC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A0DBC, 0x1A0E3C
 data_485A0E3C:
@@ -4919,6 +5466,7 @@ Pixel4bppPairTable:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A11BC, 0x1A13BC
 data_485A13BC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1A13BC, 0x1A15BC
+
 BmpSignature:	.asciz "BM"
 	.align	4, 0xFF
 RoundCornerPixels:
@@ -5103,10 +5651,51 @@ Str_TITLE_s:	.asciz "TITLE : %s"
 	.align	4, 0xFF
 data_485ACC78:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1ACC78, 0x1ACC94
-data_485ACC94:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1ACC94, 0x1ACCE4
-data_485ACCE4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1ACCE4, 0x1ACD3C
+
+ptrs_485ACC94:
+	.long	loc_4842A219
+	.long	loc_4842A21D
+	.long	loc_4842A256
+	.long	loc_4842A230
+	.long	loc_4842A269
+	.long	loc_4842A494
+	.long	loc_4842A494
+	.long	loc_4842A2BC
+	.long	loc_4842A2CF
+	.long	loc_4842A27C
+	.long	loc_4842A33B
+	.long	loc_4842A36E
+	.long	loc_4842A3A6
+	.long	loc_4842A3DE
+	.long	loc_4842A416
+	.long	loc_4842A44C
+	.long	loc_4842A45E
+	.long	loc_4842A243
+	.long	loc_4842A470
+	.long	loc_4842A488
+ptrs_485ACCE4:
+	.long	loc_4842A806
+	.long	loc_4842A80A
+	.long	loc_4842A81B
+	.long	loc_4842A847
+	.long	loc_4842A858
+	.long	loc_4842A88C
+	.long	loc_4842A915
+	.long	loc_4842A932
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA3B
+	.long	loc_4842AA6B
+	.long	loc_4842A83A
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842AA9B
+	.long	loc_4842A829
 data_485ACD3C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1ACD3C, 0x1ACDBC
 data_485ACDBC:
@@ -5134,6 +5723,7 @@ data_485AD490:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1AD490, 0x1AD494
 data_485AD494:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1AD494, 0x1AD498
+
 Str_bool_s_d:	.asciz "bool\x09%s%d"
 	.align	4, 0xFF
 Str_s_d_9:	.asciz "&%s%d"
@@ -5273,8 +5863,42 @@ data_485AD718:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1AD718, 0x1AD71C
 data_485AD71C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1AD71C, 0x1AD720
-data_485AD720:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1AD720, 0x1AD7A4
+
+ptrs_485AD720:
+	.long	loc_48431463
+	.long	loc_4843147D
+	.long	loc_48431467
+	.long	loc_4843147D
+	.long	loc_484314E2
+	.long	loc_48431434
+	.long	loc_48431450
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431554
+	.long	loc_48431456
+	.long	loc_4843145A
+	.long	loc_48431554
+	.long	loc_4843145F
+
 Str_OTB_PS_2:	.asciz "_OTB_PS"
 Str_OTB_01:	.asciz "_OTB_01"
 Str_OTB_02:	.asciz "_OTB_02"
@@ -9562,8 +10186,19 @@ data_485B6790:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B6790, 0x1B67A4
 data_485B67A4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B67A4, 0x1B67B0
-data_485B67B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B67B0, 0x1B67D8
+
+ptrs_485B67B0:
+	.long	loc_4844826E
+	.long	loc_48448289
+	.long	loc_484482BD
+	.long	loc_484482CD
+	.long	loc_484482DC
+	.long	loc_48448296
+	.long	loc_484482EC
+	.long	loc_484482B0
+	.long	loc_48448260
+	.long	loc_4844827C
+
 Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er:	.asciz "WRONG SW NUMBER!Sound Name ErrorSName Error!!\xFF\xFF\xFF\xA0\xAC\xB8\xC4\xD0\xDC\xE8\xF4"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B6811, 0x1B6818
 data_485B6818:
@@ -9614,8 +10249,19 @@ Str_d_dPd:	.asciz "d<dPd(\n"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B749E, 0x1B74A0
 Str_empty_1340:	.asciz ">"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B74A2, 0x1B7520
-data_485B7520:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B7520, 0x1B754C
+
+ptrs_485B7520:
+	.long	loc_4844D6A9
+	.long	loc_4844D6AF
+	.long	loc_4844D6B5
+	.long	loc_4844D6BB
+	.long	loc_4844D6C1
+	.long	loc_4844D6C7
+	.long	loc_4844D6CD
+	.long	loc_4844D6D3
+	.long	loc_4844D6D9
+	.long	loc_4844D6E0
+	.long	loc_4844D6E7
 data_485B754C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B754C, 0x1B7554
 data_485B7554:
@@ -9630,6 +10276,7 @@ data_485B7578:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7578, 0x1B7580
 data_485B7580:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7580, 0x1B758C
+
 Str_empty_1339:	.asciz "$%&'()*+,!\"#"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7599, 0x1B75A0
 data_485B75A0:
@@ -9650,18 +10297,130 @@ data_485B7B10:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7B10, 0x1B7B34
 data_485B7B34:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7B34, 0x1B7BB4
-Str_empty_1338:	.asciz "&"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B7BB6, 0x1B7C40
-data_485B7C40:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B7C40, 0x1B7CCC
+
+Str_empty_1338:
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_48450026
+	.long	loc_4844FF16
+	.long	loc_4844FF16
+	.long	loc_4844FF4D
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_48450044
+	.long	loc_4844FF84
+	.long	loc_48450042
+	.long	loc_48450042
+	.long	loc_48450042
+ptrs_485B7C40:
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_48450244
+	.long	loc_484501A1
+	.long	loc_484501A1
+	.long	loc_484501DA
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_4845020F
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450262
+	.long	loc_48450260
+	.long	loc_48450260
+	.long	loc_48450260
+	.long	loc_48450260
 data_485B7CCC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7CCC, 0x1B7D4C
 data_485B7D4C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7D4C, 0x1B7D54
+
 Str_empty_1337:	.asciz "`"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7D56, 0x1B7E54
-data_485B7E54:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B7E54, 0x1B7EFC
+
+ptrs_485B7E54:
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB6
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB6
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB6
+	.long	loc_48454CB6
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
+	.long	loc_48454CB3
 data_485B7EFC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7EFC, 0x1B7F0C
 data_485B7F0C:
@@ -9670,6 +10429,7 @@ data_485B7F1C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7F1C, 0x1B7F2C
 data_485B7F2C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7F2C, 0x1B7FAC
+
 Str_p_53:	.asciz "  p"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B7FB0, 0x1B802C
 data_485B802C:
@@ -9687,8 +10447,15 @@ data_485B842C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B842C, 0x1B8450
 data_485B8450:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8450, 0x1B8464
-data_485B8464:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8464, 0x1B8480
+
+ptrs_485B8464:
+	.long	loc_4845DC5B
+	.long	loc_4845DC5B
+	.long	func_4845DEAC
+	.long	loc_4845DC5B
+	.long	func_4845DF50
+	.long	func_4845E014
+	.long	func_4845E014
 data_485B8480:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8480, 0x1B84E0
 data_485B84E0:
@@ -9722,44 +10489,179 @@ ptrs_485B8720:
 
 Str_empty_1336:	.asciz "`"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B873E, 0x1B883C
-data_485B883C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B883C, 0x1B88CC
-data_485B88CC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B88CC, 0x1B895C
-data_485B895C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B895C, 0x1B8A04
+
+ptrs_485B883C:
+	.long	loc_48462E18
+	.long	loc_48462E50
+	.long	loc_48462E1F
+	.long	loc_48462E50
+	.long	loc_48462E49
+	.long	loc_48462E42
+	.long	loc_48462E49
+	.long	loc_48462E49
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E49
+	.long	loc_48462E2D
+	.long	loc_48462E3B
+	.long	loc_48462E49
+	.long	loc_48462E34
+	.long	loc_48462E3B
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E50
+	.long	loc_48462E26
+ptrs_485B88CC:
+	.long	loc_48462E89
+	.long	loc_48462E91
+	.long	loc_48462E99
+	.long	loc_48462EA1
+	.long	loc_48462ED1
+	.long	loc_48462EC9
+	.long	loc_48462F2D
+	.long	loc_48462F5A
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462EFF
+	.long	loc_48462EB1
+	.long	loc_48462EC1
+	.long	loc_48462F84
+	.long	loc_48462EB9
+	.long	loc_48462EC1
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462FAE
+	.long	loc_48462EA9
+ptrs_485B895C:
+	.long	loc_48463405
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463405
+	.long	loc_48463409
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463405
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463409
+	.long	loc_48463405
+	.long	loc_48463409
+	.long	loc_48463405
+	.long	loc_48463405
+
 Str_empty_1335:	.asciz "                  "
 	.align	4, 0xFF
 data_485B8A18:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8A18, 0x1B8A28
 data_485B8A28:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8A28, 0x1B8A44
-data_485B8A44:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8A44, 0x1B8A70
 
+ptrs_485B8A44:
+	.long	loc_4846880C
+	.long	func_484677F6
+	.long	func_48467812
+	.long	func_4846782E
+	.long	func_4846784A
+	.long	func_4846782E
+	.long	func_4846782E
+	.long	func_48467855
+	.long	func_4846784A
+	.long	func_48467855
+	.long	func_48467871
 ptrs_485B8A70:
 	.long	func_4846789D
 	.long	func_484678BD
 	.long	func_484678BD
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8A7C, 0x1B8A88
+	.long	loc_4846880C
+	.long	loc_4846880C
+	.long	loc_4846880C
 ptrs_485B8A88:
 	.long	func_4846789D
 	.long	func_484678BD
 	.long	func_484678BD
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8A94, 0x1B8AA0
-data_485B8AA0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8AA0, 0x1B8AB8
+	.long	loc_4846880C
+	.long	loc_4846880C
+	.long	loc_4846880C
+ptrs_485B8AA0:
+	.long	loc_4846880C
+	.long	loc_4846880C
+	.long	loc_4846880C
+	.long	func_484678BD
+	.long	func_484678BD
+	.long	loc_4846880C
 ptrs_485B8AB8:
 	.long	func_4846788D
 	.long	func_4846789D
 	.long	func_4846789D
 	.long	func_484678BD
 	.long	func_4846789D
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8ACC, 0x1B8AD0
+	.long	loc_4846880C
 ptrs_485B8AD0:
 	.long	func_4846788D
 	.long	func_4846789D
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B8AD8, 0x1B8AE8
+	.long	loc_484678B2
+	.long	func_484678BD
+	.long	loc_484678B2
+	.long	loc_4846880C
 data_485B8AE8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8AE8, 0x1B8B04
 ptrs_485B8B04:
@@ -9780,8 +10682,20 @@ data_485B8E28:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8E28, 0x1B8F28
 data_485B8F28:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B8F28, 0x1B9028
-data_485B9028:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B9028, 0x1B905C
+ptrs_485B9028:
+	.long	loc_4846AC6E
+	.long	loc_4846AC50
+	.long	loc_4846AC76
+	.long	loc_4846AC64
+	.long	loc_4846AC32
+	.long	loc_4846AC28
+	.long	loc_4846AC5A
+	.long	loc_4846AC1E
+	.long	loc_4846AC46
+	.long	loc_4846AC14
+	.long	loc_4846AC3C
+	.long	loc_4846AC0A
+	.long	loc_4846ABFF
 
 Str_A_3:	.asciz "A"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1B905E, 0x1B9060
@@ -9872,10 +10786,32 @@ Str_wb_34:	.asciz "wb"
 	.align	4, 0xFF
 Str_rb_62:	.asciz "rb"
 	.align	4, 0xFF
-data_485B9200:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B9200, 0x1B922C
-data_485B922C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1B922C, 0x1B9258
+
+ptrs_485B9200:
+	.long	loc_484716A2
+	.long	loc_484716A2
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716A6
+	.long	loc_484716AA
+	.long	loc_484716AC
+ptrs_485B922C:
+	.long	loc_484716CF
+	.long	loc_484716CF
+	.long	loc_484716D3
+	.long	loc_484716D3
+	.long	loc_484716D3
+	.long	loc_484716D7
+	.long	loc_484716D7
+	.long	loc_484716DB
+	.long	loc_484716DB
+	.long	loc_484716DB
+	.long	loc_484716DE
+
 Str_rb_61:	.asciz "rb"
 	.align	4, 0xFF
 Str_A_TESTDATA_SMF:	.asciz "A:\\TESTDATA.SMF"
@@ -9908,10 +10844,26 @@ data_485BB0AD:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1BB0AD, 0x1BB0B0
 data_485BB0B0:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1BB0B0, 0x1BB0B8
-data_485BB0B8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1BB0B8, 0x1BB104
+
+ptrs_485BB0B8:
+	.long	loc_48472DD8
+	.long	loc_48472DE1
+	.long	loc_48472DEA
+	.long	loc_48472DF2
+	.long	loc_48472DFB
+	.long	loc_48472E04
+	.long	loc_48472E0D
+	.long	loc_48472E16
+	.long	loc_48472E1F
+	.long	loc_48472E28
+	.long	loc_48472E31
+	.long	loc_48472E39
+	.long	loc_48472E41
+	.long	loc_48472E49
+.incbin_range "baserom/kn7000_program_b893.rom", 0x1BB0F0, 0x1BB104
 	.space	492, 0x00
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1BB2F0, 0x1BB4F0
+
 Str_Melody_Basic:	.asciz "Melody Basic "
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1BB4FE, 0x1BB6F0
 Str_Melody_In_7th_G_Bb:	.asciz "Melody In 7th G>Bb "
@@ -9974,8 +10926,23 @@ Str_incorrect_header_check:	.asciz "incorrect header check"
 Str_need_dictionary:	.asciz "need dictionary"
 Str_incorrect_data_check:	.asciz "incorrect data check"
 	.align	4, 0xFF
-data_485CBED8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1CBED8, 0x1CBF10
+
+ptrs_485CBED8:
+	.long	loc_4847672D
+	.long	loc_4847679F
+	.long	loc_48476806
+	.long	loc_48476833
+	.long	loc_48476866
+	.long	loc_48476899
+	.long	loc_484768D5
+	.long	loc_484768EE
+	.long	loc_48476939
+	.long	loc_48476966
+	.long	loc_48476999
+	.long	loc_484769CC
+	.long	loc_48476A20
+	.long	loc_48476A24
+
 Str_invalid_block_type:	.asciz "invalid block type"
 	.align	4, 0xFF
 Str_invalid_stored_block_lengths:	.asciz "invalid stored block lengths"
@@ -9983,8 +10950,19 @@ Str_invalid_stored_block_lengths:	.asciz "invalid stored block lengths"
 Str_too_many_length_or_distance_symbols:	.asciz "too many length or distance symbols"
 Str_invalid_bit_length_repeat:	.asciz "invalid bit length repeat"
 	.align	4, 0xFF
-data_485CBF84:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1CBF84, 0x1CBFAC
+
+ptrs_485CBF84:
+	.long	loc_48476D1F
+	.long	loc_48476E8F
+	.long	loc_48476F64
+	.long	loc_484770C6
+	.long	loc_484771F9
+	.long	loc_48477332
+	.long	loc_48477649
+	.long	loc_4847770C
+	.long	loc_48477760
+	.long	loc_48477790
+
 Str_oversubscribed_dynamic_bit_lengths_tree:	.asciz "oversubscribed dynamic bit lengths tree"
 Str_incomplete_dynamic_bit_lengths_tree:	.asciz "incomplete dynamic bit lengths tree"
 Str_oversubscribed_literal_length_tree_2:	.asciz "oversubscribed literal/length tree"
@@ -9998,8 +10976,19 @@ Str_incomplete_literal_length_tree:	.asciz "incomplete literal/length tree"
 Str_invalid_literal_length_code_2:	.asciz "invalid literal/length code"
 Str_invalid_distance_code_2:	.asciz "invalid distance code"
 	.align	4, 0xFF
-data_485CC0B4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1CC0B4, 0x1CC0DC
+
+ptrs_485CC0B4:
+	.long	loc_48477F8A
+	.long	loc_4847803D
+	.long	loc_4847813F
+	.long	loc_484781BD
+	.long	loc_4847829D
+	.long	loc_4847830B
+	.long	loc_48478460
+	.long	loc_4847855B
+	.long	loc_484785AE
+	.long	loc_484785DC
+
 Str_invalid_distance_code:	.asciz "invalid distance code"
 	.align	4, 0xFF
 Str_invalid_literal_length_code:	.asciz "invalid literal/length code"
@@ -10706,14 +11695,31 @@ data_485CE794:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1CE794, 0x1CE7A0
 data_485CE7A0:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1CE7A0, 0x1CE7C0
-data_485CE7C0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1CE7C0, 0x1CE800
+
+ptrs_485CE7C0:
+	.long	loc_48480742
+	.long	loc_4848075E
+	.long	loc_48480776
+	.long	loc_4848077B
+	.long	loc_484807B6
+	.long	loc_48480862
+	.long	loc_484807EE
+	.long	loc_484807EE
+	.long	loc_48480862
+	.long	loc_484807F1
+	.long	loc_48480862
+	.long	loc_48480809
+	.long	loc_48480862
+	.long	loc_48480862
+	.long	loc_48480833
+	.long	loc_4848084A
 data_485CE800:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1CE800, 0x1CE814
 data_485CE814:
 	.space	8, 0x00
 data_485CE81C:
 	.space	8, 0x00
+
 Str_empty_1325:	.asciz "\xFF/"
 	.align	4, 0xFF
 Str_MThd_5:	.asciz "MThd"
@@ -17007,10 +18013,33 @@ data_485EEFC8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1EEFC8, 0x1EF048
 data_485EF048:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1EF048, 0x1EF0C8
-data_485EF0C8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1EF0C8, 0x1EF0F8
-data_485EF0F8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1EF0F8, 0x1EF128
+
+ptrs_485EF0C8:
+	.long	loc_4848C102
+	.long	loc_4848C102
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+	.long	loc_4848C149
+ptrs_485EF0F8:
+	.long	loc_4848BF76
+	.long	loc_4848BF76
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
+	.long	loc_4848BFC1
 data_485EF128:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1EF128, 0x1EF1A8
 data_485EF1A8:
@@ -17047,6 +18076,7 @@ data_485EF9A8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1EF9A8, 0x1EFA28
 data_485EFA28:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x1EFA28, 0x1EFAA8
+
 Field_IvPageControlOW_page:	.asciz "page"
 Field_IvPageControlOW_window:	.asciz "window"
 Field_IvPageControlOW_end:	.asciz ""
@@ -24448,8 +25478,38 @@ data_4860C540:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20C540, 0x20C54C
 data_4860C54C:
 	.space	144, 0x00
-data_4860C5DC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x20C5DC, 0x20C654
+
+ptrs_4860C5DC:
+	.long	loc_484A0DD8
+	.long	loc_484A0DD8
+	.long	loc_484A0DD8
+	.long	loc_484A0DD8
+	.long	loc_484A0DD8
+	.long	loc_484A0E34
+	.long	loc_484A0DD8
+	.long	loc_484A0DD8
+	.long	loc_484A0E34
+	.long	loc_484A0E34
+	.long	loc_484A0E34
+	.long	loc_484A0E34
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0E90
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0F44
+	.long	loc_484A0EEB
 data_4860C654:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20C654, 0x20C754
 data_4860C754:
@@ -24458,8 +25518,17 @@ data_4860C7D4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20C7D4, 0x20C854
 data_4860C854:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20C854, 0x20C8D4
-data_4860C8D4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x20C8D4, 0x20C8F8
+ptrs_4860C8D4:
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+	.long	loc_484A5C21
+
 Field_AcDispTimeSetGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcDispTimeSetGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcDispTimeSetGridBox_func:	.asciz "func"
@@ -25124,8 +26193,16 @@ data_4860EA7C:
 	.space	256, 0x00
 data_4860EB7C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20EB7C, 0x20EBFC
-data_4860EBFC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x20EBFC, 0x20EC20
+ptrs_4860EBFC:
+	.long	loc_484A6D81
+	.long	loc_484A6D98
+	.long	loc_484A6DAF
+	.long	loc_484A6DC6
+	.long	loc_484A6DDD
+	.long	loc_484A6DF3
+	.long	loc_484A6E09
+	.long	loc_484A6E1F
+	.long	loc_484A6E35
 data_4860EC20:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x20EC20, 0x20ECA0
 
@@ -25869,10 +26946,29 @@ Str_OFF_146:	.asciz " OFF "
 	.align	4, 0xFF
 data_48611910:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x211910, 0x211924
-data_48611924:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x211924, 0x21194C
-data_4861194C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x21194C, 0x211974
+
+ptrs_48611924:
+	.long	loc_484A8C56
+	.long	loc_484A8C95
+	.long	loc_484A8CB3
+	.long	loc_484A8CCA
+	.long	loc_484A8C83
+	.long	loc_484A8C68
+	.long	loc_484A8C71
+	.long	loc_484A8C7A
+	.long	loc_484A8CD3
+	.long	loc_484A8C8C
+ptrs_4861194C:
+	.long	loc_484A8DC8
+	.long	loc_484A8DDB
+	.long	loc_484A8DEE
+	.long	loc_484A8E01
+	.long	loc_484A8E13
+	.long	loc_484A8E25
+	.long	loc_484A8E37
+	.long	loc_484A8E49
+	.long	loc_484A8E5B
+	.long	loc_484A8E6D
 data_48611974:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x211974, 0x2119F4
 data_486119F4:
@@ -25897,7 +26993,6 @@ data_48611C6C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x211C6C, 0x211C7C
 data_48611C7C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x211C7C, 0x211C9C
-
 ptrs_48611C9C:
 	.long	PanelXferIdleState
 	.long	PanelTxState1
@@ -26247,14 +27342,57 @@ Str_0_p_2:	.asciz "0 p"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213820, 0x213824
 Str_0_p:	.asciz "0 p"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213828, 0x21382C
-data_4861382C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x21382C, 0x213860
+
+ptrs_4861382C:
+	.long	loc_484ADA3A
+	.long	loc_484ADA42
+	.long	loc_484ADA4A
+	.long	loc_484ADA52
+	.long	loc_484ADA5A
+	.long	loc_484ADA62
+	.long	loc_484ADA6A
+	.long	loc_484ADA8A
+	.long	loc_484ADA72
+	.long	loc_484ADA7A
+	.long	loc_484ADA8A
+	.long	loc_484ADA8A
+	.long	loc_484ADA82
 data_48613860:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213860, 0x213A60
-data_48613A60:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213A60, 0x213AA0
-data_48613AA0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213AA0, 0x213AE0
+ptrs_48613A60:
+	.long	loc_484AE277
+	.long	loc_484AE28D
+	.long	loc_484AE2A3
+	.long	loc_484AE2B9
+	.long	loc_484AE2E5
+	.long	loc_484AE30E
+	.long	loc_484AE337
+	.long	loc_484AE360
+	.long	loc_484AE399
+	.long	loc_484AE3AE
+	.long	loc_484AE3C3
+	.long	loc_484AE419
+	.long	loc_484AE2CF
+	.long	loc_484AE419
+	.long	loc_484AE419
+	.long	loc_484AE3D7
+ptrs_48613AA0:
+	.long	loc_484AE0BE
+	.long	loc_484AE0D6
+	.long	loc_484AE0EE
+	.long	loc_484AE106
+	.long	loc_484AE136
+	.long	loc_484AE15C
+	.long	loc_484AE182
+	.long	loc_484AE1A8
+	.long	loc_484AE1DC
+	.long	loc_484AE1F4
+	.long	loc_484AE20C
+	.long	loc_484AE259
+	.long	loc_484AE11E
+	.long	loc_484AE259
+	.long	loc_484AE259
+	.long	loc_484AE21C
 data_48613AE0:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213AE0, 0x213B50
 data_48613B50:
@@ -26275,16 +27413,86 @@ PanelLedRegMap:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213CC0, 0x213CD8
 data_48613CD8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213CD8, 0x213CEC
-data_48613CEC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213CEC, 0x213D34
-data_48613D34:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213D34, 0x213D74
+ptrs_48613CEC:
+	.long	loc_484AE660
+	.long	loc_484AE69B
+	.long	loc_484AE6D6
+	.long	loc_484AE711
+	.long	loc_484AE74C
+	.long	loc_484AE787
+	.long	loc_484AE7C2
+	.long	loc_484AE7FD
+	.long	loc_484AE838
+	.long	loc_484AE873
+	.long	loc_484AE8AE
+	.long	loc_484AE8E9
+	.long	loc_484AE924
+	.long	loc_484AE95F
+	.long	loc_484AE99A
+	.long	loc_484AE9D5
+	.long	loc_484AEA0F
+	.long	loc_484AEA49
+ptrs_48613D34:
+	.long	loc_484AF514
+	.long	loc_484AF55D
+	.long	loc_484AF5A6
+	.long	loc_484AF5EF
+	.long	loc_484AF638
+	.long	loc_484AF681
+	.long	loc_484AF6CA
+	.long	loc_484AF713
+	.long	loc_484AF75C
+	.long	loc_484AF7A5
+	.long	loc_484AF7EE
+	.long	loc_484AF837
+	.long	loc_484AF880
+	.long	loc_484AF8C9
+	.long	loc_484AF912
+	.long	loc_484AF95A
+
 Str_empty_1175:	.asciz "["
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213D76, 0x213DF4
-data_48613DF4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213DF4, 0x213E40
-data_48613E40:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x213E40, 0x213E8C
+
+ptrs_48613DF4:
+	.long	loc_484B19DA
+	.long	loc_484B19E4
+	.long	loc_484B19EE
+	.long	loc_484B19F8
+	.long	loc_484B1A02
+	.long	loc_484B1A0C
+	.long	loc_484B1A16
+	.long	loc_484B1A20
+	.long	loc_484B1A34
+	.long	loc_484B1A3D
+	.long	loc_484B1A46
+	.long	loc_484B1A4F
+	.long	loc_484B1A58
+	.long	loc_484B1A2A
+	.long	loc_484B1A61
+	.long	loc_484B1A74
+	.long	loc_484B1A8E
+	.long	loc_484B1A8E
+	.long	loc_484B1A87
+ptrs_48613E40:
+	.long	loc_484B1AB0
+	.long	loc_484B1AB9
+	.long	loc_484B1AC2
+	.long	loc_484B1ACB
+	.long	loc_484B1AD4
+	.long	loc_484B1ADD
+	.long	loc_484B1AE6
+	.long	loc_484B1AEF
+	.long	loc_484B1B01
+	.long	loc_484B1B09
+	.long	loc_484B1B11
+	.long	loc_484B1B19
+	.long	loc_484B1B21
+	.long	loc_484B1AF8
+	.long	loc_484B1B29
+	.long	loc_484B1B3C
+	.long	loc_484B1B55
+	.long	loc_484B1B55
+	.long	loc_484B1B4F
 data_48613E8C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213E8C, 0x213EAC
 data_48613EAC:
@@ -26297,6 +27505,7 @@ data_48613EDF:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213EDF, 0x213EE4
 data_48613EE4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x213EE4, 0x213EF4
+
 Str_empty_1174:	.asciz "\xB0{"
 	.align	4, 0xFF
 Str_x_6:	.asciz "\xB0x"
@@ -27035,32 +28244,129 @@ data_48617594:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217594, 0x21759C
 data_4861759C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x21759C, 0x2175B4
-data_486175B4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2175B4, 0x2175E4
+
+ptrs_486175B4:
+	.long	loc_484CC2C6
+	.long	loc_484CC60E
+	.long	loc_484CC60E
+	.long	loc_484CC340
+	.long	loc_484CC3A5
+	.long	loc_484CC46D
+	.long	loc_484CC4CA
+	.long	loc_484CC527
+	.long	loc_484CC555
+	.long	loc_484CC5E1
+	.long	loc_484CC5B0
+	.long	loc_484CC582
 data_486175E4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2175E4, 0x2177E4
 data_486177E4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2177E4, 0x2177EC
 data_486177EC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2177EC, 0x217804
-data_48617804:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x217804, 0x217834
+ptrs_48617804:
+	.long	loc_484CCEF6
+	.long	loc_484CD194
+	.long	loc_484CD194
+	.long	loc_484CCF71
+	.long	loc_484CCFD6
+	.long	loc_484CD05B
+	.long	loc_484CD194
+	.long	loc_484CD0AD
+	.long	loc_484CD0DA
+	.long	loc_484CD167
+	.long	loc_484CD139
+	.long	loc_484CD10C
 data_48617834:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217834, 0x217A34
 data_48617A34:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217A34, 0x217A3C
 data_48617A3C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217A3C, 0x217A54
-data_48617A54:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x217A54, 0x217A84
+ptrs_48617A54:
+	.long	loc_484CDA96
+	.long	loc_484CDD0A
+	.long	loc_484CDD0A
+	.long	loc_484CDAD9
+	.long	loc_484CDB42
+	.long	loc_484CDBC1
+	.long	loc_484CDD0A
+	.long	loc_484CDC1E
+	.long	loc_484CDC50
+	.long	loc_484CDCDD
+	.long	loc_484CDCAE
+	.long	loc_484CDC80
 data_48617A84:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217A84, 0x217C84
 data_48617C84:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217C84, 0x217C8C
 data_48617C8C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217C8C, 0x217CA4
-data_48617CA4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x217CA4, 0x217DA4
+ptrs_48617CA4:
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CEB6B
+	.long	loc_484CE526
+	.long	loc_484CEB6B
+	.long	loc_484CE526
+	.long	loc_484CE665
+	.long	loc_484CE526
+	.long	loc_484CE8FB
+	.long	loc_484CE526
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CE865
+	.long	loc_484CEB6B
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CE526
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CE9BF
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEA55
+	.long	loc_484CEB6B
+	.long	loc_484CEA82
+	.long	loc_484CEAAF
+	.long	loc_484CEADD
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB09
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB6B
+	.long	loc_484CEB4B
 data_48617DA4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x217DA4, 0x218DAC
 data_48618DAC:
@@ -27071,6 +28377,7 @@ data_4861ADBC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x21ADBC, 0x21BDC4
 data_4861BDC4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x21BDC4, 0x21CDCC
+
 Str_1_27:	.asciz "1)\x1A"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x21CDD0, 0x21CE0C
 data_4861CE0C:
@@ -28538,14 +29845,42 @@ Str_empty_1149:	.asciz " "
 .incbin_range "baserom/kn7000_program_b893.rom", 0x226E8E, 0x226F0C
 data_48626F0C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x226F0C, 0x226F8C
-data_48626F8C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x226F8C, 0x226FB4
+
+ptrs_48626F8C:
+	.long	loc_484D1B5F
+	.long	loc_484D1B95
+	.long	loc_484D1BCB
+	.long	loc_484D1CCF
+	.long	loc_484D1E9B
+	.long	loc_484D1D8F
+	.long	loc_484D1DC5
+	.long	loc_484D1DFB
+	.long	loc_484D1E31
+	.long	loc_484D1E66
 data_48626FB4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x226FB4, 0x227034
-data_48627034:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x227034, 0x22705C
-data_4862705C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x22705C, 0x227084
+ptrs_48627034:
+	.long	loc_484D167F
+	.long	loc_484D1692
+	.long	loc_484D16A5
+	.long	loc_484D16BB
+	.long	loc_484D1762
+	.long	loc_484D1703
+	.long	loc_484D1716
+	.long	loc_484D1729
+	.long	loc_484D173C
+	.long	loc_484D174F
+ptrs_4862705C:
+	.long	loc_484D154B
+	.long	loc_484D155E
+	.long	loc_484D1571
+	.long	loc_484D1587
+	.long	loc_484D162E
+	.long	loc_484D15CF
+	.long	loc_484D15E2
+	.long	loc_484D15F5
+	.long	loc_484D1608
+	.long	loc_484D161B
 data_48627084:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x227084, 0x227184
 data_48627184:
@@ -28556,6 +29891,7 @@ data_48627304:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x227304, 0x227384
 data_48627384:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x227384, 0x227404
+
 Field_AcPmemBankSel_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -29053,10 +30389,90 @@ data_48628A6C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x228A6C, 0x228A74
 data_48628A74:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x228A74, 0x228AF4
-data_48628AF4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x228AF4, 0x228B94
-data_48628B94:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x228B94, 0x228C34
+
+ptrs_48628AF4:
+	.long	loc_484D66E8
+	.long	loc_484D6749
+	.long	loc_484D6782
+	.long	loc_484D67BB
+	.long	loc_484D67FC
+	.long	loc_484D6871
+	.long	loc_484D68D3
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D694C
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D6A20
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+	.long	loc_484D69CA
+ptrs_48628B94:
+	.long	loc_484D63FA
+	.long	loc_484D645D
+	.long	loc_484D6492
+	.long	loc_484D64C7
+	.long	loc_484D6504
+	.long	loc_484D6575
+	.long	loc_484D65D7
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D65D7
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D6691
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+	.long	loc_484D664E
+
 Field_AcResetPageSe_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -35304,108 +36720,667 @@ data_48639A2C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x239A2C, 0x239A79
 Str_MHJ:	.asciz "\x89MHJ"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x239A7E, 0x239AAC
-data_48639AAC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239AAC, 0x239AE0
-data_48639AE0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239AE0, 0x239B14
+
+ptrs_48639AAC:
+	.long	loc_484D8FF7
+	.long	loc_484D900D
+	.long	loc_484D9023
+	.long	loc_484D9039
+	.long	loc_484D904F
+	.long	loc_484D9065
+	.long	loc_484D907B
+	.long	loc_484D9090
+	.long	loc_484D90A5
+	.long	loc_484D90BA
+	.long	loc_484D90CF
+	.long	loc_484D90E4
+	.long	loc_484D90F9
+ptrs_48639AE0:
+	.long	loc_484DB497
+	.long	loc_484DB4AD
+	.long	loc_484DB4C3
+	.long	loc_484DB4D9
+	.long	loc_484DB4EF
+	.long	loc_484DB505
+	.long	loc_484DB51B
+	.long	loc_484DB530
+	.long	loc_484DB545
+	.long	loc_484DB55A
+	.long	loc_484DB56F
+	.long	loc_484DB584
+	.long	loc_484DB599
 data_48639B14:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x239B14, 0x239B94
-data_48639B94:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239B94, 0x239BC8
-data_48639BC8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239BC8, 0x239BFC
-data_48639BFC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239BFC, 0x239C30
-data_48639C30:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239C30, 0x239C64
-data_48639C64:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239C64, 0x239C98
-data_48639C98:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239C98, 0x239CCC
-data_48639CCC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239CCC, 0x239D00
-data_48639D00:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239D00, 0x239D34
-data_48639D34:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239D34, 0x239D68
-data_48639D68:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239D68, 0x239D9C
-data_48639D9C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239D9C, 0x239DD0
-data_48639DD0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239DD0, 0x239E04
-data_48639E04:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239E04, 0x239E38
-data_48639E38:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239E38, 0x239E6C
-data_48639E6C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239E6C, 0x239EA0
-data_48639EA0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239EA0, 0x239ED4
-data_48639ED4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239ED4, 0x239F08
-data_48639F08:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239F08, 0x239F3C
-data_48639F3C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239F3C, 0x239F70
-data_48639F70:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239F70, 0x239FA4
-data_48639FA4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239FA4, 0x239FD8
-data_48639FD8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x239FD8, 0x23A00C
-data_4863A00C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A00C, 0x23A040
-data_4863A040:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A040, 0x23A074
-data_4863A074:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A074, 0x23A0A8
-data_4863A0A8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A0A8, 0x23A0DC
-data_4863A0DC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A0DC, 0x23A110
-data_4863A110:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A110, 0x23A144
-data_4863A144:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A144, 0x23A178
-data_4863A178:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A178, 0x23A1AC
-data_4863A1AC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A1AC, 0x23A1E0
-data_4863A1E0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A1E0, 0x23A214
-data_4863A214:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A214, 0x23A248
-data_4863A248:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A248, 0x23A27C
-data_4863A27C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A27C, 0x23A2B0
-data_4863A2B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A2B0, 0x23A2E4
-data_4863A2E4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A2E4, 0x23A318
-data_4863A318:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A318, 0x23A34C
-data_4863A34C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A34C, 0x23A380
-data_4863A380:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A380, 0x23A3B4
+ptrs_48639B94:
+	.long	loc_484DCB42
+	.long	loc_484DCB42
+	.long	loc_484DCB42
+	.long	loc_484DCB42
+	.long	loc_484DCB6F
+	.long	loc_484DCB6F
+	.long	loc_484DCB9C
+	.long	loc_484DCBC9
+	.long	loc_484DCBF6
+	.long	loc_484DCC23
+	.long	loc_484DCC7B
+	.long	loc_484DCC4F
+	.long	loc_484DCC4F
+ptrs_48639BC8:
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCA88
+	.long	loc_484DCB0C
+	.long	loc_484DCAB1
+	.long	loc_484DCAB1
+ptrs_48639BFC:
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+	.long	loc_484DCA65
+	.long	loc_484DCA50
+	.long	loc_484DCA50
+ptrs_48639C30:
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DC9EA
+	.long	loc_484DCA03
+	.long	loc_484DCA33
+	.long	loc_484DCA1C
+	.long	loc_484DCA1C
+ptrs_48639C64:
+	.long	loc_484DCEAE
+	.long	loc_484DCEAE
+	.long	loc_484DCEAE
+	.long	loc_484DCEAE
+	.long	loc_484DCEDB
+	.long	loc_484DCEDB
+	.long	loc_484DCF08
+	.long	loc_484DCF35
+	.long	loc_484DCF62
+	.long	loc_484DCF8F
+	.long	loc_484DCFE7
+	.long	loc_484DCFBB
+	.long	loc_484DCFBB
+ptrs_48639C98:
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCDFC
+	.long	loc_484DCE25
+	.long	loc_484DCE4F
+	.long	loc_484DCE78
+	.long	loc_484DCE4F
+	.long	loc_484DCE4F
+ptrs_48639CCC:
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCD93
+	.long	loc_484DCDAA
+	.long	loc_484DCDC4
+	.long	loc_484DCDD9
+	.long	loc_484DCDC4
+	.long	loc_484DCDC4
+ptrs_48639D00:
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD13
+	.long	loc_484DCD2C
+	.long	loc_484DCD46
+	.long	loc_484DCD76
+	.long	loc_484DCD5F
+	.long	loc_484DCD5F
+ptrs_48639D34:
+	.long	loc_484DD36E
+	.long	loc_484DD36E
+	.long	loc_484DD36E
+	.long	loc_484DD36E
+	.long	loc_484DD39B
+	.long	loc_484DD39B
+	.long	loc_484DD3C8
+	.long	loc_484DD3F5
+	.long	loc_484DD422
+	.long	loc_484DD44F
+	.long	loc_484DD4A7
+	.long	loc_484DD47B
+	.long	loc_484DD47B
+ptrs_48639D68:
+	.long	loc_484DD1D5
+	.long	loc_484DD1D5
+	.long	loc_484DD1D5
+	.long	loc_484DD1D5
+	.long	loc_484DD200
+	.long	loc_484DD200
+	.long	loc_484DD22A
+	.long	loc_484DD2BC
+	.long	loc_484DD2E5
+	.long	loc_484DD30F
+	.long	loc_484DD338
+	.long	loc_484DD30F
+	.long	loc_484DD30F
+ptrs_48639D9C:
+	.long	loc_484DD152
+	.long	loc_484DD152
+	.long	loc_484DD152
+	.long	loc_484DD152
+	.long	loc_484DD16C
+	.long	loc_484DD16C
+	.long	loc_484DD16C
+	.long	loc_484DD16C
+	.long	loc_484DD183
+	.long	loc_484DD19D
+	.long	loc_484DD1B2
+	.long	loc_484DD19D
+	.long	loc_484DD19D
+ptrs_48639DD0:
+	.long	loc_484DD085
+	.long	loc_484DD085
+	.long	loc_484DD085
+	.long	loc_484DD085
+	.long	loc_484DD0A0
+	.long	loc_484DD0A0
+	.long	loc_484DD0B9
+	.long	loc_484DD0D2
+	.long	loc_484DD0EB
+	.long	loc_484DD105
+	.long	loc_484DD135
+	.long	loc_484DD11E
+	.long	loc_484DD11E
+ptrs_48639E04:
+	.long	loc_484DD683
+	.long	loc_484DD683
+	.long	loc_484DD683
+	.long	loc_484DD683
+	.long	loc_484DD6B0
+	.long	loc_484DD6B0
+	.long	loc_484DD6DD
+	.long	loc_484DD70A
+	.long	loc_484DD737
+	.long	loc_484DD764
+	.long	loc_484DD7BB
+	.long	loc_484DD790
+	.long	loc_484DD790
+ptrs_48639E38:
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD60F
+	.long	loc_484DD64D
+	.long	loc_484DD638
+	.long	loc_484DD638
+ptrs_48639E6C:
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5DD
+	.long	loc_484DD5F2
+	.long	loc_484DD5F2
+	.long	loc_484DD5F2
+ptrs_48639EA0:
+	.long	loc_484DD545
+	.long	loc_484DD545
+	.long	loc_484DD545
+	.long	loc_484DD545
+	.long	loc_484DD545
+	.long	loc_484DD545
+	.long	loc_484DD55E
+	.long	loc_484DD577
+	.long	loc_484DD590
+	.long	loc_484DD5A9
+	.long	loc_484DD5C0
+	.long	loc_484DD5C0
+	.long	loc_484DD5C0
+ptrs_48639ED4:
+	.long	loc_484DD988
+	.long	loc_484DD988
+	.long	loc_484DD988
+	.long	loc_484DD988
+	.long	loc_484DD9B5
+	.long	loc_484DD9B5
+	.long	loc_484DD9E1
+	.long	loc_484DD9E1
+	.long	loc_484DD9E1
+	.long	loc_484DD9E1
+	.long	loc_484DDA0C
+	.long	loc_484DD9E1
+	.long	loc_484DD9E1
+ptrs_48639F08:
+	.long	loc_484DD8EA
+	.long	loc_484DD8EA
+	.long	loc_484DD8EA
+	.long	loc_484DD8EA
+	.long	loc_484DD913
+	.long	loc_484DD913
+	.long	loc_484DD93D
+	.long	loc_484DD93D
+	.long	loc_484DD93D
+	.long	loc_484DD93D
+	.long	loc_484DD952
+	.long	loc_484DD93D
+	.long	loc_484DD93D
+ptrs_48639F3C:
+	.long	loc_484DD89E
+	.long	loc_484DD89E
+	.long	loc_484DD89E
+	.long	loc_484DD89E
+	.long	loc_484DD8B5
+	.long	loc_484DD8B5
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+	.long	loc_484DD8CD
+ptrs_48639F70:
+	.long	loc_484DD850
+	.long	loc_484DD850
+	.long	loc_484DD850
+	.long	loc_484DD850
+	.long	loc_484DD869
+	.long	loc_484DD869
+	.long	loc_484DD881
+	.long	loc_484DD881
+	.long	loc_484DD881
+	.long	loc_484DD881
+	.long	loc_484DD881
+	.long	loc_484DD881
+	.long	loc_484DD881
+ptrs_48639FA4:
+	.long	loc_484DDB91
+	.long	loc_484DDB91
+	.long	loc_484DDB91
+	.long	loc_484DDB91
+	.long	loc_484DDBBD
+	.long	loc_484DDBBD
+	.long	loc_484DDBE9
+	.long	loc_484DDBE9
+	.long	loc_484DDBE9
+	.long	loc_484DDBE9
+	.long	loc_484DDC14
+	.long	loc_484DDBE9
+	.long	loc_484DDBE9
+ptrs_48639FD8:
+	.long	loc_484DDB08
+	.long	loc_484DDB08
+	.long	loc_484DDB08
+	.long	loc_484DDB08
+	.long	loc_484DDB1D
+	.long	loc_484DDB1D
+	.long	loc_484DDB46
+	.long	loc_484DDB46
+	.long	loc_484DDB46
+	.long	loc_484DDB46
+	.long	loc_484DDB5B
+	.long	loc_484DDB46
+	.long	loc_484DDB46
+ptrs_4863A00C:
+	.long	loc_484DDAD4
+	.long	loc_484DDAD4
+	.long	loc_484DDAD4
+	.long	loc_484DDAD4
+	.long	loc_484DDAD6
+	.long	loc_484DDAD6
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+	.long	loc_484DDAEB
+ptrs_4863A040:
+	.long	loc_484DDA9E
+	.long	loc_484DDA9E
+	.long	loc_484DDA9E
+	.long	loc_484DDA9E
+	.long	loc_484DDAA0
+	.long	loc_484DDAA0
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+	.long	loc_484DDAB7
+ptrs_4863A074:
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDDE9
+	.long	loc_484DDE16
+	.long	loc_484DDE41
+ptrs_4863A0A8:
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD4A
+	.long	loc_484DDD74
+	.long	loc_484DDD89
+ptrs_4863A0DC:
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDCF8
+	.long	loc_484DDD10
+	.long	loc_484DDD12
+ptrs_4863A110:
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCA9
+	.long	loc_484DDCC1
+	.long	loc_484DDCC3
+ptrs_4863A144:
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+	.long	loc_484DDFC3
+ptrs_4863A178:
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+	.long	loc_484DDF69
+ptrs_4863A1AC:
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+	.long	loc_484DDF34
+ptrs_4863A1E0:
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+	.long	loc_484DDEFF
+ptrs_4863A214:
+	.long	loc_484DE1DD
+	.long	loc_484DE1DD
+	.long	loc_484DE1DD
+	.long	loc_484DE1DD
+	.long	loc_484DE1F3
+	.long	loc_484DE1F3
+	.long	loc_484DE208
+	.long	loc_484DE21D
+	.long	loc_484DE232
+	.long	loc_484DE247
+	.long	loc_484DE271
+	.long	loc_484DE25C
+	.long	loc_484DE25C
+ptrs_4863A248:
+	.long	loc_484DE2C5
+	.long	loc_484DE2C5
+	.long	loc_484DE2C5
+	.long	loc_484DE2C5
+	.long	loc_484DE2DB
+	.long	loc_484DE2DB
+	.long	loc_484DE2F0
+	.long	loc_484DE305
+	.long	loc_484DE31A
+	.long	loc_484DE32F
+	.long	loc_484DE359
+	.long	loc_484DE344
+	.long	loc_484DE344
+ptrs_4863A27C:
+	.long	loc_484DE3AD
+	.long	loc_484DE3AD
+	.long	loc_484DE3AD
+	.long	loc_484DE3AD
+	.long	loc_484DE3C3
+	.long	loc_484DE3C3
+	.long	loc_484DE3D8
+	.long	loc_484DE3ED
+	.long	loc_484DE402
+	.long	loc_484DE417
+	.long	loc_484DE441
+	.long	loc_484DE42C
+	.long	loc_484DE42C
+ptrs_4863A2B0:
+	.long	loc_484DE495
+	.long	loc_484DE495
+	.long	loc_484DE495
+	.long	loc_484DE495
+	.long	loc_484DE4AB
+	.long	loc_484DE4AB
+	.long	loc_484DE4C0
+	.long	loc_484DE4D5
+	.long	loc_484DE4EA
+	.long	loc_484DE4FF
+	.long	loc_484DE529
+	.long	loc_484DE514
+	.long	loc_484DE514
+ptrs_4863A2E4:
+	.long	loc_484DE576
+	.long	loc_484DE576
+	.long	loc_484DE576
+	.long	loc_484DE576
+	.long	loc_484DE58B
+	.long	loc_484DE58B
+	.long	loc_484DE5A0
+	.long	loc_484DE5A0
+	.long	loc_484DE5A0
+	.long	loc_484DE5A0
+	.long	loc_484DE5B5
+	.long	loc_484DE5A0
+	.long	loc_484DE5A0
+ptrs_4863A318:
+	.long	loc_484DE602
+	.long	loc_484DE602
+	.long	loc_484DE602
+	.long	loc_484DE602
+	.long	loc_484DE617
+	.long	loc_484DE617
+	.long	loc_484DE62C
+	.long	loc_484DE62C
+	.long	loc_484DE62C
+	.long	loc_484DE62C
+	.long	loc_484DE641
+	.long	loc_484DE62C
+	.long	loc_484DE62C
+ptrs_4863A34C:
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE68E
+	.long	loc_484DE6A3
+	.long	loc_484DE6B8
+ptrs_4863A380:
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
+	.long	loc_484DE717
 data_4863A3B4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A3B4, 0x23A434
-data_4863A434:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A434, 0x23A460
-data_4863A460:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A460, 0x23A48C
-data_4863A48C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A48C, 0x23A4B8
+ptrs_4863A434:
+	.long	loc_484DFDAC
+	.long	loc_484DFDB9
+	.long	loc_484DFE27
+	.long	loc_484DFE8E
+	.long	loc_484DFFA2
+	.long	loc_484DFFC8
+	.long	loc_484DFFF0
+	.long	loc_484E0014
+	.long	loc_484E0040
+	.long	loc_484E0093
+	.long	loc_484E00C6
+ptrs_4863A460:
+	.long	loc_484DF9AF
+	.long	loc_484DF9BB
+	.long	loc_484DFADF
+	.long	loc_484DFD21
+	.long	loc_484DFBEF
+	.long	loc_484DFC11
+	.long	loc_484DFC36
+	.long	loc_484DFC5F
+	.long	loc_484DFCBE
+	.long	loc_484DFCDF
+	.long	loc_484DFD16
+ptrs_4863A48C:
+	.long	loc_484DF5CC
+	.long	loc_484DF5DA
+	.long	loc_484DF6F9
+	.long	loc_484DF943
+	.long	loc_484DF807
+	.long	loc_484DF82E
+	.long	loc_484DF853
+	.long	loc_484DF87D
+	.long	loc_484DF8DC
+	.long	loc_484DF902
+	.long	loc_484DF938
 data_4863A4B8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A4B8, 0x23A538
-data_4863A538:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A538, 0x23A55C
-data_4863A55C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A55C, 0x23A580
-data_4863A580:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A580, 0x23A5A4
+ptrs_4863A538:
+	.long	loc_484E04EA
+	.long	loc_484E04F7
+	.long	loc_484E0562
+	.long	loc_484E0584
+	.long	loc_484E05AA
+	.long	loc_484E05B7
+	.long	loc_484E05DF
+	.long	loc_484E0607
+	.long	loc_484E0630
+ptrs_4863A55C:
+	.long	loc_484E0325
+	.long	loc_484E0331
+	.long	loc_484E0357
+	.long	loc_484E0379
+	.long	loc_484E039A
+	.long	loc_484E03A8
+	.long	loc_484E03DF
+	.long	loc_484E041C
+	.long	loc_484E0440
+ptrs_4863A580:
+	.long	loc_484E0183
+	.long	loc_484E0190
+	.long	loc_484E01B8
+	.long	loc_484E01DE
+	.long	loc_484E0202
+	.long	loc_484E0210
+	.long	loc_484E0248
+	.long	loc_484E0284
+	.long	loc_484E02AA
 data_4863A5A4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A5A4, 0x23A624
 data_4863A624:
@@ -35414,78 +37389,306 @@ data_4863A6A4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A6A4, 0x23A724
 data_4863A724:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A724, 0x23A7A4
-data_4863A7A4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A7A4, 0x23A7D0
-data_4863A7D0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A7D0, 0x23A7FC
-data_4863A7FC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A7FC, 0x23A828
+ptrs_4863A7A4:
+	.long	loc_484E1988
+	.long	loc_484E1995
+	.long	loc_484E19CF
+	.long	loc_484E1A04
+	.long	loc_484E1A3E
+	.long	loc_484E1A77
+	.long	loc_484E1AB1
+	.long	loc_484E1AE7
+	.long	loc_484E1B21
+	.long	loc_484E1B55
+	.long	loc_484E1B8B
+ptrs_4863A7D0:
+	.long	loc_484E1784
+	.long	loc_484E1790
+	.long	loc_484E17B9
+	.long	loc_484E17DB
+	.long	loc_484E1804
+	.long	loc_484E1826
+	.long	loc_484E184C
+	.long	loc_484E186E
+	.long	loc_484E1896
+	.long	loc_484E18B7
+	.long	loc_484E18E0
+ptrs_4863A7FC:
+	.long	loc_484E159F
+	.long	loc_484E15AD
+	.long	loc_484E15D3
+	.long	loc_484E15F7
+	.long	loc_484E1621
+	.long	loc_484E1645
+	.long	loc_484E166F
+	.long	loc_484E1692
+	.long	loc_484E16BA
+	.long	loc_484E16DC
+	.long	loc_484E1704
 data_4863A828:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A828, 0x23A8A8
 data_4863A8A8:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A8A8, 0x23A928
 data_4863A928:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23A928, 0x23A9A8
-data_4863A9A8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A9A8, 0x23A9CC
-data_4863A9CC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A9CC, 0x23A9F0
-data_4863A9F0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23A9F0, 0x23AA14
+ptrs_4863A9A8:
+	.long	loc_484E2B07
+	.long	loc_484E2B14
+	.long	loc_484E2B4C
+	.long	loc_484E2B84
+	.long	loc_484E2BBC
+	.long	loc_484E2BF4
+	.long	loc_484E2C2C
+	.long	loc_484E2C64
+	.long	loc_484E2C9B
+ptrs_4863A9CC:
+	.long	loc_484E2963
+	.long	loc_484E296F
+	.long	loc_484E2992
+	.long	loc_484E29B3
+	.long	loc_484E29D5
+	.long	loc_484E29F6
+	.long	loc_484E2A1A
+	.long	loc_484E2A3B
+	.long	loc_484E2A5F
+ptrs_4863A9F0:
+	.long	loc_484E27D1
+	.long	loc_484E27DF
+	.long	loc_484E2803
+	.long	loc_484E282A
+	.long	loc_484E2852
+	.long	loc_484E2876
+	.long	loc_484E289C
+	.long	loc_484E28C2
+	.long	loc_484E28E4
 data_4863AA14:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AA14, 0x23AA94
-data_4863AA94:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AA94, 0x23AAB8
-data_4863AAB8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AAB8, 0x23AADC
-data_4863AADC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AADC, 0x23AB00
+ptrs_4863AA94:
+	.long	loc_484E3172
+	.long	loc_484E317F
+	.long	loc_484E31A7
+	.long	loc_484E31CB
+	.long	loc_484E3205
+	.long	loc_484E323F
+	.long	loc_484E3279
+	.long	loc_484E32B1
+	.long	loc_484E32E8
+ptrs_4863AAB8:
+	.long	loc_484E2F74
+	.long	loc_484E2F80
+	.long	loc_484E2FA6
+	.long	loc_484E2FCC
+	.long	loc_484E2FF9
+	.long	loc_484E302B
+	.long	loc_484E3058
+	.long	loc_484E307C
+	.long	loc_484E30B6
+ptrs_4863AADC:
+	.long	loc_484E2D9A
+	.long	loc_484E2DA8
+	.long	loc_484E2DD1
+	.long	loc_484E2DFA
+	.long	loc_484E2E27
+	.long	loc_484E2E58
+	.long	loc_484E2E85
+	.long	loc_484E2EBF
+	.long	loc_484E2EF9
 data_4863AB00:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AB00, 0x23AB80
 data_4863AB80:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AB80, 0x23AC00
 data_4863AC00:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AC00, 0x23AC80
-data_4863AC80:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AC80, 0x23ACAC
-data_4863ACAC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23ACAC, 0x23ACD8
-data_4863ACD8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23ACD8, 0x23AD04
+ptrs_4863AC80:
+	.long	loc_484E4856
+	.long	loc_484E4863
+	.long	loc_484E489D
+	.long	loc_484E48D2
+	.long	loc_484E490C
+	.long	loc_484E4945
+	.long	loc_484E497F
+	.long	loc_484E49B5
+	.long	loc_484E49EF
+	.long	loc_484E4A23
+	.long	loc_484E4A59
+ptrs_4863ACAC:
+	.long	loc_484E4652
+	.long	loc_484E465E
+	.long	loc_484E4687
+	.long	loc_484E46A9
+	.long	loc_484E46D2
+	.long	loc_484E46F4
+	.long	loc_484E471A
+	.long	loc_484E473C
+	.long	loc_484E4764
+	.long	loc_484E4785
+	.long	loc_484E47AE
+ptrs_4863ACD8:
+	.long	loc_484E446D
+	.long	loc_484E447B
+	.long	loc_484E44A1
+	.long	loc_484E44C5
+	.long	loc_484E44EF
+	.long	loc_484E4513
+	.long	loc_484E453D
+	.long	loc_484E4560
+	.long	loc_484E4588
+	.long	loc_484E45AA
+	.long	loc_484E45D2
 data_4863AD04:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AD04, 0x23AD84
 data_4863AD84:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AD84, 0x23AE04
-data_4863AE04:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AE04, 0x23AE30
-data_4863AE30:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AE30, 0x23AE5C
-data_4863AE5C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AE5C, 0x23AE88
+ptrs_4863AE04:
+	.long	loc_484E5741
+	.long	loc_484E574E
+	.long	loc_484E57C6
+	.long	loc_484E57EB
+	.long	loc_484E5862
+	.long	loc_484E58DB
+	.long	loc_484E592A
+	.long	loc_484E597C
+	.long	loc_484E5A16
+	.long	loc_484E5A3B
+	.long	loc_484E5A60
+ptrs_4863AE30:
+	.long	loc_484E53B1
+	.long	loc_484E53BE
+	.long	loc_484E53E0
+	.long	loc_484E5479
+	.long	loc_484E5519
+	.long	loc_484E55DF
+	.long	loc_484E5601
+	.long	loc_484E5624
+	.long	loc_484E5646
+	.long	loc_484E566A
+	.long	loc_484E568F
+ptrs_4863AE5C:
+	.long	loc_484E504D
+	.long	loc_484E505B
+	.long	loc_484E507F
+	.long	loc_484E511A
+	.long	loc_484E51B7
+	.long	loc_484E527E
+	.long	loc_484E52A3
+	.long	loc_484E52C5
+	.long	loc_484E52E8
+	.long	loc_484E530E
+	.long	loc_484E5331
 data_4863AE88:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AE88, 0x23AF08
-data_4863AF08:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AF08, 0x23AF34
-data_4863AF34:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AF34, 0x23AF60
-data_4863AF60:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23AF60, 0x23AF8C
+ptrs_4863AF08:
+	.long	loc_484E6234
+	.long	loc_484E6241
+	.long	loc_484E62B9
+	.long	loc_484E62DF
+	.long	loc_484E6357
+	.long	loc_484E63D2
+	.long	loc_484E6421
+	.long	loc_484E6473
+	.long	loc_484E650D
+	.long	loc_484E6532
+	.long	loc_484E6557
+ptrs_4863AF34:
+	.long	loc_484E5EA0
+	.long	loc_484E5EAD
+	.long	loc_484E5ECF
+	.long	loc_484E5F69
+	.long	loc_484E600A
+	.long	loc_484E60D2
+	.long	loc_484E60F4
+	.long	loc_484E6117
+	.long	loc_484E6139
+	.long	loc_484E615D
+	.long	loc_484E6182
+ptrs_4863AF60:
+	.long	loc_484E5B38
+	.long	loc_484E5B46
+	.long	loc_484E5B6A
+	.long	loc_484E5C06
+	.long	loc_484E5CA4
+	.long	loc_484E5D6D
+	.long	loc_484E5D92
+	.long	loc_484E5DB4
+	.long	loc_484E5DD7
+	.long	loc_484E5DFD
+	.long	loc_484E5E20
 data_4863AF8C:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23AF8C, 0x23B00C
-data_4863B00C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B00C, 0x23B038
-data_4863B038:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B038, 0x23B064
+ptrs_4863B00C:
+	.long	loc_484E6D2B
+	.long	loc_484E6D38
+	.long	loc_484E6DB0
+	.long	loc_484E6DD6
+	.long	loc_484E6E4E
+	.long	loc_484E6EC9
+	.long	loc_484E6F18
+	.long	loc_484E6F6A
+	.long	loc_484E7004
+	.long	loc_484E7029
+	.long	loc_484E704E
+ptrs_4863B038:
+	.long	loc_484E6997
+	.long	loc_484E69A4
+	.long	loc_484E69C6
+	.long	loc_484E6A60
+	.long	loc_484E6B01
+	.long	loc_484E6BC9
+	.long	loc_484E6BEB
+	.long	loc_484E6C0E
+	.long	loc_484E6C30
+	.long	loc_484E6C54
+	.long	loc_484E6C79
 Str_fNH_fNHafNH_fNH_gNHdhNH_hNH_hNH_hNH_hNH:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B064, 0x23B090
+	.long	loc_484E662F
+	.long	loc_484E663D
+	.long	loc_484E6661
+	.long	loc_484E66FD
+	.long	loc_484E679B
+	.long	loc_484E6864
+	.long	loc_484E6889
+	.long	loc_484E68AB
+	.long	loc_484E68CE
+	.long	loc_484E68F4
+	.long	loc_484E6917
 data_4863B090:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B090, 0x23B110
-data_4863B110:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B110, 0x23B13C
-data_4863B13C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B13C, 0x23B168
+ptrs_4863B110:
+	.long	loc_484E7822
+	.long	loc_484E782F
+	.long	loc_484E78A7
+	.long	loc_484E78CD
+	.long	loc_484E7945
+	.long	loc_484E79C0
+	.long	loc_484E7A0F
+	.long	loc_484E7A61
+	.long	loc_484E7AFB
+	.long	loc_484E7B20
+	.long	loc_484E7B45
+ptrs_4863B13C:
+	.long	loc_484E748E
+	.long	loc_484E749B
+	.long	loc_484E74BD
+	.long	loc_484E7557
+	.long	loc_484E75F8
+	.long	loc_484E76C0
+	.long	loc_484E76E2
+	.long	loc_484E7705
+	.long	loc_484E7727
+	.long	loc_484E774B
+	.long	loc_484E7770
 Str_qNH4qNHXqNH_qNH_rNH_sNH_sNH_sNH_sNH_sNH:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B168, 0x23B194
+	.long	loc_484E7126
+	.long	loc_484E7134
+	.long	loc_484E7158
+	.long	loc_484E71F4
+	.long	loc_484E7292
+	.long	loc_484E735B
+	.long	loc_484E7380
+	.long	loc_484E73A2
+	.long	loc_484E73C5
+	.long	loc_484E73EB
+	.long	loc_484E740E
 data_4863B194:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B194, 0x23B214
 data_4863B214:
@@ -35504,26 +37707,99 @@ data_4863B514:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B514, 0x23B594
 data_4863B594:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B594, 0x23B614
-data_4863B614:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B614, 0x23B664
+ptrs_4863B614:
+	.long	loc_484ECE25
+	.long	loc_484ECE4B
+	.long	loc_484ECEBA
+	.long	loc_484ECF21
+	.long	loc_484ED325
+	.long	loc_484ED38E
+	.long	loc_484ED3F7
+	.long	loc_484ED460
+	.long	loc_484ED4C9
+	.long	loc_484ED532
+	.long	loc_484ED59B
+	.long	loc_484ED604
+	.long	loc_484ED66D
+	.long	loc_484ED6D6
+	.long	loc_484ED73F
+	.long	loc_484ED7A8
+	.long	loc_484ED811
+	.long	loc_484ED87A
+	.long	loc_484ED8E3
+	.long	loc_484ED94A
 data_4863B664:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B664, 0x23B6E4
 data_4863B6E4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B6E4, 0x23B764
-data_4863B764:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B764, 0x23B78C
-data_4863B78C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B78C, 0x23B7B4
-data_4863B7B4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B7B4, 0x23B7DC
+ptrs_4863B764:
+	.long	loc_484F4E2F
+	.long	loc_484F4E3B
+	.long	loc_484F4ED4
+	.long	loc_484F4F6A
+	.long	loc_484F510F
+	.long	loc_484F5149
+	.long	loc_484F51CF
+	.long	loc_484F5239
+	.long	loc_484F526E
+	.long	loc_484F52A9
+ptrs_4863B78C:
+	.long	loc_484F49C1
+	.long	loc_484F49CB
+	.long	loc_484F4B0B
+	.long	loc_484F4DA1
+	.long	loc_484F4C35
+	.long	loc_484F4C6D
+	.long	loc_484F4CA9
+	.long	loc_484F4D03
+	.long	loc_484F4D3A
+	.long	loc_484F4D73
+ptrs_4863B7B4:
+	.long	loc_484F4568
+	.long	loc_484F4573
+	.long	loc_484F46A7
+	.long	loc_484F4955
+	.long	loc_484F47DF
+	.long	loc_484F4817
+	.long	loc_484F4852
+	.long	loc_484F48AC
+	.long	loc_484F48E6
+	.long	loc_484F4922
 data_4863B7DC:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B7DC, 0x23B85C
-data_4863B85C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B85C, 0x23B884
-data_4863B884:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B884, 0x23B8AC
-data_4863B8AC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23B8AC, 0x23B8D4
+ptrs_4863B85C:
+	.long	loc_484F5D08
+	.long	loc_484F5D13
+	.long	loc_484F5DF0
+	.long	loc_484F5E98
+	.long	loc_484F5F88
+	.long	loc_484F6023
+	.long	loc_484F60D9
+	.long	loc_484F618D
+	.long	loc_484F61C6
+	.long	loc_484F6217
+ptrs_4863B884:
+	.long	loc_484F584A
+	.long	loc_484F586D
+	.long	loc_484F58B2
+	.long	loc_484F5947
+	.long	loc_484F59DA
+	.long	loc_484F5A3D
+	.long	loc_484F5B0B
+	.long	loc_484F5BB0
+	.long	loc_484F5BFF
+	.long	loc_484F5C4E
+ptrs_4863B8AC:
+	.long	loc_484F539A
+	.long	loc_484F53BE
+	.long	loc_484F5403
+	.long	loc_484F54C5
+	.long	loc_484F5559
+	.long	loc_484F55C3
+	.long	loc_484F5668
+	.long	loc_484F570D
+	.long	loc_484F575E
+	.long	loc_484F57AD
 data_4863B8D4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B8D4, 0x23B954
 data_4863B954:
@@ -35532,18 +37808,203 @@ data_4863B9D4:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23B9D4, 0x23BA54
 data_4863BA54:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23BA54, 0x23BAD4
-data_4863BAD4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BAD4, 0x23BB8C
-data_4863BB8C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BB8C, 0x23BC48
-data_4863BC48:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BC48, 0x23BD04
-data_4863BD04:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BD04, 0x23BD60
-data_4863BD60:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BD60, 0x23BD98
-data_4863BD98:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23BD98, 0x23BDCC
+ptrs_4863BAD4:
+	.long	loc_484F85D0
+	.long	loc_484F85D4
+	.long	loc_484F85D9
+	.long	loc_484F85DE
+	.long	loc_484F85E3
+	.long	loc_484F85E8
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F8606
+	.long	loc_484F863C
+	.long	loc_484F860B
+	.long	loc_484F8640
+	.long	loc_484F8610
+	.long	loc_484F8644
+	.long	loc_484F8615
+	.long	loc_484F8648
+	.long	loc_484F861A
+	.long	loc_484F864C
+	.long	loc_484F861F
+	.long	loc_484F8650
+	.long	loc_484F8624
+	.long	loc_484F8654
+	.long	loc_484F8628
+	.long	loc_484F8658
+	.long	loc_484F862C
+	.long	loc_484F865C
+	.long	loc_484F8630
+	.long	loc_484F8660
+	.long	loc_484F8634
+	.long	loc_484F8664
+	.long	loc_484F8638
+	.long	loc_484F8668
+	.long	loc_484F85ED
+	.long	loc_484F85F2
+	.long	loc_484F85F7
+	.long	loc_484F85FC
+	.long	loc_484F866C
+	.long	loc_484F866C
+	.long	loc_484F8601
+ptrs_4863BB8C:
+	.long	loc_484F84FA
+	.long	loc_484F84FF
+	.long	loc_484F8504
+	.long	loc_484F8509
+	.long	loc_484F850E
+	.long	loc_484F8513
+	.long	loc_484F8518
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F8536
+	.long	loc_484F8572
+	.long	loc_484F853B
+	.long	loc_484F8577
+	.long	loc_484F8540
+	.long	loc_484F857C
+	.long	loc_484F8545
+	.long	loc_484F8581
+	.long	loc_484F854A
+	.long	loc_484F8586
+	.long	loc_484F854F
+	.long	loc_484F858B
+	.long	loc_484F8554
+	.long	loc_484F8590
+	.long	loc_484F8559
+	.long	loc_484F8595
+	.long	loc_484F855E
+	.long	loc_484F859A
+	.long	loc_484F8563
+	.long	loc_484F859F
+	.long	loc_484F8568
+	.long	loc_484F85A4
+	.long	loc_484F856D
+	.long	loc_484F85A9
+	.long	loc_484F851D
+	.long	loc_484F8522
+	.long	loc_484F8527
+	.long	loc_484F852C
+	.long	loc_484F85A9
+	.long	loc_484F85A9
+	.long	loc_484F8531
+ptrs_4863BC48:
+	.long	loc_484F86BF
+	.long	loc_484F86D3
+	.long	loc_484F86E7
+	.long	loc_484F86FB
+	.long	loc_484F870F
+	.long	loc_484F8723
+	.long	loc_484F8737
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F874B
+	.long	loc_484F875F
+	.long	loc_484F8773
+	.long	loc_484F8787
+	.long	loc_484F879B
+	.long	loc_484F87AF
+	.long	loc_484F87C3
+	.long	loc_484F87D7
+	.long	loc_484F87EB
+	.long	loc_484F87FF
+	.long	loc_484F8813
+	.long	loc_484F8827
+	.long	loc_484F883B
+	.long	loc_484F884F
+	.long	loc_484F8863
+	.long	loc_484F8877
+	.long	loc_484F888B
+	.long	loc_484F889F
+	.long	loc_484F88B3
+	.long	loc_484F88C7
+	.long	loc_484F88DB
+	.long	loc_484F88EF
+	.long	loc_484F8903
+	.long	loc_484F8917
+	.long	loc_484F892B
+	.long	loc_484F893E
+	.long	loc_484F8951
+	.long	loc_484F8964
+	.long	loc_484F898A
+	.long	loc_484F898A
+	.long	loc_484F8977
+ptrs_4863BD04:
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+	.long	loc_484F89B7
+	.long	loc_484F89B4
+ptrs_4863BD60:
+	.long	loc_484F8E67
+	.long	loc_484F8E6A
+	.long	loc_484F8E6E
+	.long	loc_484F8E72
+	.long	loc_484F8E76
+	.long	loc_484F8E7A
+	.long	loc_484F8E7E
+	.long	loc_484F8E82
+	.long	loc_484F8E86
+	.long	loc_484F8E8A
+	.long	loc_484F8E8E
+	.long	loc_484F8E92
+	.long	loc_484F8E9A
+	.long	loc_484F8E96
+ptrs_4863BD98:
+	.long	loc_484F8EB5
+	.long	loc_484F8EB8
+	.long	loc_484F8EBC
+	.long	loc_484F8EC0
+	.long	loc_484F8EC4
+	.long	loc_484F8EC8
+	.long	loc_484F8ECC
+	.long	loc_484F8ED0
+	.long	loc_484F8ED4
+	.long	loc_484F8ED8
+	.long	loc_484F8EE4
+	.long	loc_484F8EDC
+	.long	loc_484F8EE0
+
 Field_AcIntTitleMenuDP_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -36473,8 +38934,25 @@ data_4863E620:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23E620, 0x23E6A0
 data_4863E6A0:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x23E6A0, 0x23E720
-data_4863E720:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x23E720, 0x23E760
+
+ptrs_4863E720:
+	.long	loc_484FBCDE
+	.long	loc_484FBD7C
+	.long	loc_484FBDD4
+	.long	loc_484FBD2D
+	.long	loc_484FBE32
+	.long	loc_484FBE70
+	.long	loc_484FBECE
+	.long	loc_484FBF0C
+	.long	loc_484FC0DB
+	.long	loc_484FC0DB
+	.long	loc_484FC0DB
+	.long	loc_484FC0DB
+	.long	loc_484FBF68
+	.long	loc_484FC00F
+	.long	loc_484FC0B1
+	.long	loc_484FC0C6
+
 Field_AcFuncMenu_str:	.asciz "str"
 Field_AcFuncMenu_func:	.asciz "func"
 Field_AcFuncMenu_icon:	.asciz "icon"
@@ -37533,2472 +40011,3 @@ Str_ACCOMP3_7:	.asciz "ACCOMP3"
 Str_ACCOMP4_7:	.asciz "ACCOMP4"
 Str_ACCOMP5_7:	.asciz "ACCOMP5"
 Str_DRUM2_6:	.asciz "DRUM2  "
-
-ptrs_4864115C:
-	.long	Str_DRUM1_6
-	.long	Str_BASS_8
-	.long	Str_ACCOMP1_7
-	.long	Str_ACCOMP2_7
-	.long	Str_ACCOMP3_7
-	.long	Str_ACCOMP4_7
-	.long	Str_ACCOMP5_7
-	.long	Str_DRUM2_6
-
-Str_PART_s:	.asciz "PART: %s"
-	.align	4, 0xFF
-Str_PART_PART_d:	.asciz "PART: PART%d"
-	.align	4, 0xFF
-Str_empty_994:	.asciz "---"
-Str_3s_2d_2d_s_v_3d_5d_s:	.asciz "     %3s. %2d. %2d.   %s v%3d %5d    %s"
-Str_3s_2d_2d_5d_s:	.asciz "     %3s. %2d. %2d.            %5d    %s"
-	.align	4, 0xFF
-Str_3d_58:	.asciz "%3d"
-Str_empty_993:	.asciz "---"
-Str_43_2d_32:	.asciz "~43~2d~32"
-Str_44_a0_bc:	.asciz "~44~a0~bc"
-Str_44_2d_32:	.asciz "~44~2d~32"
-Str_45_a0_bc:	.asciz "~45~a0~bc"
-Str_45_2d_32:	.asciz "~45~2d~32"
-Str_46_2d_32:	.asciz "~46~2d~32"
-Str_46_9e_bc:	.asciz "~46~9e~bc"
-Str_47_2d_32:	.asciz "~47~2d~32"
-Str_41_a0_bc:	.asciz "~41~a0~bc"
-Str_41_2d_32:	.asciz "~41~2d~32"
-Str_42_a0_bc:	.asciz "~42~a0~bc"
-Str_42_2d_32:	.asciz "~42~2d~32"
-Str_43_2d_31:	.asciz "~43~2d~31"
-Str_44_a0_bb:	.asciz "~44~a0~bb"
-Str_44_2d_31:	.asciz "~44~2d~31"
-Str_45_a0_bb:	.asciz "~45~a0~bb"
-Str_45_2d_31:	.asciz "~45~2d~31"
-Str_46_2d_31:	.asciz "~46~2d~31"
-Str_46_9e_bb:	.asciz "~46~9e~bb"
-Str_47_2d_31:	.asciz "~47~2d~31"
-Str_41_a0_bb:	.asciz "~41~a0~bb"
-Str_41_2d_31:	.asciz "~41~2d~31"
-Str_42_a0_bb:	.asciz "~42~a0~bb"
-Str_42_2d_31:	.asciz "~42~2d~31"
-Str_43_30_20:	.asciz "~43~30~20"
-Str_44_a0_30:	.asciz "~44~a0~30"
-Str_44_30_20:	.asciz "~44~30~20"
-Str_45_a0_30:	.asciz "~45~a0~30"
-Str_45_30_20:	.asciz "~45~30~20"
-Str_46_30_20:	.asciz "~46~30~20"
-Str_46_9e_30:	.asciz "~46~9e~30"
-Str_47_30_20:	.asciz "~47~30~20"
-Str_41_a0_30:	.asciz "~41~a0~30"
-Str_41_30_20:	.asciz "~41~30~20"
-Str_42_a0_30:	.asciz "~42~a0~30"
-Str_42_30_20:	.asciz "~42~30~20"
-Str_43_31_20:	.asciz "~43~31~20"
-Str_44_a0_31:	.asciz "~44~a0~31"
-Str_44_31_20:	.asciz "~44~31~20"
-Str_45_a0_31:	.asciz "~45~a0~31"
-Str_45_31_20:	.asciz "~45~31~20"
-Str_46_31_20:	.asciz "~46~31~20"
-Str_46_9e_31:	.asciz "~46~9e~31"
-Str_47_31_20:	.asciz "~47~31~20"
-Str_41_a0_31:	.asciz "~41~a0~31"
-Str_41_31_20:	.asciz "~41~31~20"
-Str_42_a0_31:	.asciz "~42~a0~31"
-Str_42_31_20:	.asciz "~42~31~20"
-Str_43_32_20:	.asciz "~43~32~20"
-Str_44_a0_32:	.asciz "~44~a0~32"
-Str_44_32_20:	.asciz "~44~32~20"
-Str_45_a0_32:	.asciz "~45~a0~32"
-Str_45_32_20:	.asciz "~45~32~20"
-Str_46_32_20:	.asciz "~46~32~20"
-Str_46_9e_32:	.asciz "~46~9e~32"
-Str_47_32_20:	.asciz "~47~32~20"
-Str_41_a0_32:	.asciz "~41~a0~32"
-Str_41_32_20:	.asciz "~41~32~20"
-Str_42_a0_32:	.asciz "~42~a0~32"
-Str_42_32_20:	.asciz "~42~32~20"
-Str_43_33_20:	.asciz "~43~33~20"
-Str_44_a0_33:	.asciz "~44~a0~33"
-Str_44_33_20:	.asciz "~44~33~20"
-Str_45_a0_33:	.asciz "~45~a0~33"
-Str_45_33_20:	.asciz "~45~33~20"
-Str_46_33_20:	.asciz "~46~33~20"
-Str_46_9e_33:	.asciz "~46~9e~33"
-Str_47_33_20:	.asciz "~47~33~20"
-Str_41_a0_33:	.asciz "~41~a0~33"
-Str_41_33_20:	.asciz "~41~33~20"
-Str_42_a0_33:	.asciz "~42~a0~33"
-Str_42_33_20:	.asciz "~42~33~20"
-Str_43_34_20:	.asciz "~43~34~20"
-Str_44_a0_34:	.asciz "~44~a0~34"
-Str_44_34_20:	.asciz "~44~34~20"
-Str_45_a0_34:	.asciz "~45~a0~34"
-Str_45_34_20:	.asciz "~45~34~20"
-Str_46_34_20:	.asciz "~46~34~20"
-Str_46_9e_34:	.asciz "~46~9e~34"
-Str_47_34_20:	.asciz "~47~34~20"
-Str_41_a0_34:	.asciz "~41~a0~34"
-Str_41_34_20:	.asciz "~41~34~20"
-Str_42_a0_34:	.asciz "~42~a0~34"
-Str_42_34_20:	.asciz "~42~34~20"
-Str_43_35_20:	.asciz "~43~35~20"
-Str_44_a0_35:	.asciz "~44~a0~35"
-Str_44_35_20:	.asciz "~44~35~20"
-Str_45_a0_35:	.asciz "~45~a0~35"
-Str_45_35_20:	.asciz "~45~35~20"
-Str_46_35_20:	.asciz "~46~35~20"
-Str_46_9e_35:	.asciz "~46~9e~35"
-Str_47_35_20:	.asciz "~47~35~20"
-Str_41_a0_35:	.asciz "~41~a0~35"
-Str_41_35_20:	.asciz "~41~35~20"
-Str_42_a0_35:	.asciz "~42~a0~35"
-Str_42_35_20:	.asciz "~42~35~20"
-Str_43_36_20:	.asciz "~43~36~20"
-Str_44_a0_36:	.asciz "~44~a0~36"
-Str_44_36_20:	.asciz "~44~36~20"
-Str_45_a0_36:	.asciz "~45~a0~36"
-Str_45_36_20:	.asciz "~45~36~20"
-Str_46_36_20:	.asciz "~46~36~20"
-Str_46_9e_36:	.asciz "~46~9e~36"
-Str_47_36_20:	.asciz "~47~36~20"
-Str_41_a0_36:	.asciz "~41~a0~36"
-Str_41_36_20:	.asciz "~41~36~20"
-Str_42_a0_36:	.asciz "~42~a0~36"
-Str_42_36_20:	.asciz "~42~36~20"
-Str_43_37_20:	.asciz "~43~37~20"
-Str_44_a0_37:	.asciz "~44~a0~37"
-Str_44_37_20:	.asciz "~44~37~20"
-Str_45_a0_37:	.asciz "~45~a0~37"
-Str_45_37_20:	.asciz "~45~37~20"
-Str_46_37_20:	.asciz "~46~37~20"
-Str_46_9e_37:	.asciz "~46~9e~37"
-Str_47_37_20:	.asciz "~47~37~20"
-Str_41_a0_37:	.asciz "~41~a0~37"
-Str_41_37_20:	.asciz "~41~37~20"
-Str_42_a0_37:	.asciz "~42~a0~37"
-Str_42_37_20:	.asciz "~42~37~20"
-Str_43_38_20:	.asciz "~43~38~20"
-Str_44_a0_38:	.asciz "~44~a0~38"
-Str_44_38_20:	.asciz "~44~38~20"
-Str_45_a0_38:	.asciz "~45~a0~38"
-Str_45_38_20:	.asciz "~45~38~20"
-Str_46_38_20:	.asciz "~46~38~20"
-Str_46_9e_38:	.asciz "~46~9e~38"
-Str_47_38_20:	.asciz "~47~38~20"
-
-ptrs_486416F8:
-	.long	Str_43_2d_32
-	.long	Str_44_a0_bc
-	.long	Str_44_2d_32
-	.long	Str_45_a0_bc
-	.long	Str_45_2d_32
-	.long	Str_46_2d_32
-	.long	Str_46_9e_bc
-	.long	Str_47_2d_32
-	.long	Str_41_a0_bc
-	.long	Str_41_2d_32
-	.long	Str_42_a0_bc
-	.long	Str_42_2d_32
-	.long	Str_43_2d_31
-	.long	Str_44_a0_bb
-	.long	Str_44_2d_31
-	.long	Str_45_a0_bb
-	.long	Str_45_2d_31
-	.long	Str_46_2d_31
-	.long	Str_46_9e_bb
-	.long	Str_47_2d_31
-	.long	Str_41_a0_bb
-	.long	Str_41_2d_31
-	.long	Str_42_a0_bb
-	.long	Str_42_2d_31
-	.long	Str_43_30_20
-	.long	Str_44_a0_30
-	.long	Str_44_30_20
-	.long	Str_45_a0_30
-	.long	Str_45_30_20
-	.long	Str_46_30_20
-	.long	Str_46_9e_30
-	.long	Str_47_30_20
-	.long	Str_41_a0_30
-	.long	Str_41_30_20
-	.long	Str_42_a0_30
-	.long	Str_42_30_20
-	.long	Str_43_31_20
-	.long	Str_44_a0_31
-	.long	Str_44_31_20
-	.long	Str_45_a0_31
-	.long	Str_45_31_20
-	.long	Str_46_31_20
-	.long	Str_46_9e_31
-	.long	Str_47_31_20
-	.long	Str_41_a0_31
-	.long	Str_41_31_20
-	.long	Str_42_a0_31
-	.long	Str_42_31_20
-	.long	Str_43_32_20
-	.long	Str_44_a0_32
-	.long	Str_44_32_20
-	.long	Str_45_a0_32
-	.long	Str_45_32_20
-	.long	Str_46_32_20
-	.long	Str_46_9e_32
-	.long	Str_47_32_20
-	.long	Str_41_a0_32
-	.long	Str_41_32_20
-	.long	Str_42_a0_32
-	.long	Str_42_32_20
-	.long	Str_43_33_20
-	.long	Str_44_a0_33
-	.long	Str_44_33_20
-	.long	Str_45_a0_33
-	.long	Str_45_33_20
-	.long	Str_46_33_20
-	.long	Str_46_9e_33
-	.long	Str_47_33_20
-	.long	Str_41_a0_33
-	.long	Str_41_33_20
-	.long	Str_42_a0_33
-	.long	Str_42_33_20
-	.long	Str_43_34_20
-	.long	Str_44_a0_34
-	.long	Str_44_34_20
-	.long	Str_45_a0_34
-	.long	Str_45_34_20
-	.long	Str_46_34_20
-	.long	Str_46_9e_34
-	.long	Str_47_34_20
-	.long	Str_41_a0_34
-	.long	Str_41_34_20
-	.long	Str_42_a0_34
-	.long	Str_42_34_20
-	.long	Str_43_35_20
-	.long	Str_44_a0_35
-	.long	Str_44_35_20
-	.long	Str_45_a0_35
-	.long	Str_45_35_20
-	.long	Str_46_35_20
-	.long	Str_46_9e_35
-	.long	Str_47_35_20
-	.long	Str_41_a0_35
-	.long	Str_41_35_20
-	.long	Str_42_a0_35
-	.long	Str_42_35_20
-	.long	Str_43_36_20
-	.long	Str_44_a0_36
-	.long	Str_44_36_20
-	.long	Str_45_a0_36
-	.long	Str_45_36_20
-	.long	Str_46_36_20
-	.long	Str_46_9e_36
-	.long	Str_47_36_20
-	.long	Str_41_a0_36
-	.long	Str_41_36_20
-	.long	Str_42_a0_36
-	.long	Str_42_36_20
-	.long	Str_43_37_20
-	.long	Str_44_a0_37
-	.long	Str_44_37_20
-	.long	Str_45_a0_37
-	.long	Str_45_37_20
-	.long	Str_46_37_20
-	.long	Str_46_9e_37
-	.long	Str_47_37_20
-	.long	Str_41_a0_37
-	.long	Str_41_37_20
-	.long	Str_42_a0_37
-	.long	Str_42_37_20
-	.long	Str_43_38_20
-	.long	Str_44_a0_38
-	.long	Str_44_38_20
-	.long	Str_45_a0_38
-	.long	Str_45_38_20
-	.long	Str_46_38_20
-	.long	Str_46_9e_38
-	.long	Str_47_38_20
-data_486418F8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2418F8, 0x2418FC
-
-Str_empty_992:	.asciz "\xAD "
-	.align	4, 0xFF
-data_48641900:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x241900, 0x241904
-Str_empty_991:	.asciz "\xAC "
-	.align	4, 0xFF
-data_48641908:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x241908, 0x24190C
-Str_empty_990:	.asciz "\xAB "
-	.align	4, 0xFF
-Str_empty_989:	.asciz "\xAA "
-	.align	4, 0xFF
-Str_2d_36:	.asciz "%2d"
-Str_3s_2d_2d_3d_v_3d_s:	.asciz "     %3s. %2d. %2d.   %3d  v%3d    %s"
-	.align	4, 0xFF
-Str_3s_2d_2d_v_3d_s:	.asciz "     %3s. %2d. %2d.        v%3d    %s"
-	.align	4, 0xFF
-Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
-	.align	4, 0xFF
-Str_3s_12:	.asciz " %3s                          "
-	.align	4, 0xFF
-Str_empty_1262:	.asciz "   "
-data_486419A8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2419A8, 0x2419AC
-Str_empty_1261:	.asciz " \xAD "
-data_486419B0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2419B0, 0x2419B4
-Str_empty_1260:	.asciz " \xAC "
-data_486419B8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2419B8, 0x2419BC
-Str_empty_1259:	.asciz " \xAB "
-data_486419C0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2419C0, 0x2419C4
-Str_empty_1258:	.asciz " \xAA "
-Str_empty_1246:	.asciz " \xA6 "
-Str_empty_1240:	.asciz " \xA1 "
-Str_x2:	.asciz "\xA1x2"
-Str_x3:	.asciz "\xA1x3"
-Str_x4:	.asciz "\xA1x4"
-
-ptrs_486419DC:
-	.long	Str_empty_1262
-	.long	data_486419A8
-	.long	Str_empty_1261
-	.long	data_486419B0
-	.long	Str_empty_1260
-	.long	data_486419B8
-	.long	Str_empty_1259
-	.long	data_486419C0
-	.long	Str_empty_1258
-	.long	Str_empty_1246
-	.long	Str_empty_1240
-	.long	Str_x2
-	.long	Str_x3
-	.long	Str_x4
-
-Str_TENU:	.asciz "TENU"
-Str_NORM:	.asciz "NORM"
-Str_STAC:	.asciz "STAC"
-Str_CUTT:	.asciz "CUTT"
-
-ptrs_48641A28:
-	.long	Str_TENU
-	.long	Str_NORM
-	.long	Str_STAC
-	.long	Str_CUTT
-
-Str_3s_1c_3s_4s:	.asciz "%3s%1c%3s  %4s"
-	.align	4, 0xFF
-Str_3s_s_4:	.asciz " %3s %s"
-Str_3s_11:	.asciz " %3s                                        "
-	.align	4, 0xFF
-Str_3s_END_2:	.asciz " %3s END                                    "
-	.align	4, 0xFF
-Str_3s_REPEAT_2:	.asciz " %3s REPEAT                                 "
-	.align	4, 0xFF
-Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
-	.align	4, 0xFF
-Str_s_VOLUME_3d:	.asciz " %s    VOLUME          =         %3d  "
-	.align	4, 0xFF
-Str_s_VOLUME_MUTE_s:	.asciz " %s    VOLUME          =     MUTE %s "
-Str_ON_82:	.asciz "ON "
-Str_OFF_94:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_EXPRESSION_3d:	.asciz " %s    EXPRESSION      =         %3d  "
-	.align	4, 0xFF
-Str_s_MULTI_EFFECT_DPT_3d:	.asciz " %s    MULTI EFFECT DPT=         %3d  "
-	.align	4, 0xFF
-Str_s_MULTI_EFFECT_s:	.asciz " %s    MULTI EFFECT    =         %s  "
-Str_ON_81:	.asciz "ON "
-Str_OFF_93:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_REVERB_3d:	.asciz " %s    REVERB          =         %3d  "
-	.align	4, 0xFF
-Str_s_SOLO_s:	.asciz " %s    SOLO            =         %s  "
-Str_ON_80:	.asciz "ON "
-Str_OFF_92:	.asciz "OFF"
-	.align	4, 0xFF
-Str_DSP1:	.asciz "DSP1 "
-	.align	4, 0xFF
-Str_empty_981:	.asciz "-"
-	.align	4, 0xFF
-Str_empty_980:	.asciz "                                "
-	.align	4, 0xFF
-Str_DSP2:	.asciz "DSP2 "
-	.align	4, 0xFF
-Str_empty_979:	.asciz "-"
-	.align	4, 0xFF
-Str_empty_978:	.asciz "                                "
-	.align	4, 0xFF
-Str_DSP3:	.asciz "DSP3 "
-	.align	4, 0xFF
-Str_empty_977:	.asciz "-"
-	.align	4, 0xFF
-Str_empty_976:	.asciz "                                "
-	.align	4, 0xFF
-Str_DSP4:	.asciz "DSP4 "
-	.align	4, 0xFF
-Str_empty_975:	.asciz "-"
-	.align	4, 0xFF
-Str_empty_974:	.asciz "                                "
-	.align	4, 0xFF
-Str_DSP5:	.asciz "DSP5 "
-	.align	4, 0xFF
-Str_empty_973:	.asciz "-"
-	.align	4, 0xFF
-Str_empty_972:	.asciz "                                "
-	.align	4, 0xFF
-Str_s_SOUND_DSP_DEPTH_3d:	.asciz " %s    SOUND DSP DEPTH =         %3d  "
-	.align	4, 0xFF
-Str_s_SOUND_DSP_s:	.asciz " %s    SOUND DSP       =         %s  "
-Str_ON_79:	.asciz "ON "
-Str_OFF_91:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_CHORUS_DEPTH_3d:	.asciz " %s    CHORUS DEPTH    =         %3d  "
-	.align	4, 0xFF
-Str_s_CHORUS_s:	.asciz " %s    CHORUS          =         %s  "
-Str_ON_78:	.asciz "ON "
-Str_OFF_90:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_PORTAMENTO_TIME_3d:	.asciz " %s    PORTAMENTO TIME =         %3d  "
-	.align	4, 0xFF
-Str_s_PORTAMENTO_s:	.asciz " %s    PORTAMENTO      =         %s  "
-Str_ON_77:	.asciz "ON "
-Str_OFF_89:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_EQ_HIGH_FC_s_Hz:	.asciz " %s    EQ HIGH FC      =      %s Hz"
-Str_s_EQ_HIGH_GAIN_5_1f_dB:	.asciz " %s    EQ HIGH GAIN    =      %+5.1f dB"
-Str_s_EQ_LOW_FC_s_Hz:	.asciz " %s    EQ LOW FC       =      %s Hz"
-Str_s_EQ_LOW_GAIN_5_1f_dB:	.asciz " %s    EQ LOW GAIN     =      %+5.1f dB"
-Str_s_DRAWBAR_TYPE_s:	.asciz " %s    DRAWBAR TYPE    =        %s  "
-Str_ROCK:	.asciz "ROCK"
-Str_JAZZ:	.asciz "JAZZ"
-	.align	4, 0xFF
-Str_s_DRAWBAR_EFF_TYPE_4d:	.asciz " %s    DRAWBAR EFF.TYPE=        %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_PERC_DECAY_4d:	.asciz " %s    DRAWBAR PERC.DECAY=      %+4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_PERC_LEVEL_4d:	.asciz " %s    DRAWBAR PERC.LEVEL=      %+4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_RELEASE_4d:	.asciz " %s    DRAWBAR RELEASE  =      %+4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_ATTACK_4d:	.asciz " %s    DRAWBAR ATTACK   =      %+4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE16_4d:	.asciz " %s    DRAWBAR FLUTE16'    =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE8_4d:	.asciz " %s    DRAWBAR FLUTE8'     =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE5_1_3_4d:	.asciz " %s    DRAWBAR FLUTE5 1/3' =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE4_4d:	.asciz " %s    DRAWBAR FLUTE4'     =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE2_2_3_4d:	.asciz " %s    DRAWBAR FLUTE2 2/3' =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE2_4d:	.asciz " %s    DRAWBAR FLUTE2'     =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE1_3_5_4d:	.asciz " %s    DRAWBAR FLUTE1 3/5' =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE1_1_3_4d:	.asciz " %s    DRAWBAR FLUTE1 1/3' =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_FLUTE1_4d:	.asciz " %s    DRAWBAR FLUTE1'     =   %4d  "
-	.align	4, 0xFF
-Str_s_DRAWBAR_PERC_4_s:	.asciz " %s    DRAWBAR PERC. 4'    =         %s  "
-Str_ON_76:	.asciz "ON "
-Str_OFF_88:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_DRAWBAR_PERC_2_2_3_s:	.asciz " %s    DRAWBAR PERC. 2 2/3'=         %s  "
-Str_ON_75:	.asciz "ON "
-Str_OFF_87:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_RESET_ALL_CONT_3d:	.asciz " %s    RESET ALL CONT. =         %3d  "
-	.align	4, 0xFF
-Str_s_ALL_SOUND_OFF_3d:	.asciz " %s    ALL SOUND OFF   =         %3d  "
-	.align	4, 0xFF
-Str_s_DIGITAL_EFFECT_s:	.asciz " %s    DIGITAL EFFECT  =         %s  "
-Str_ON_74:	.asciz "ON "
-Str_OFF_86:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_SUSTAIN_s_2:	.asciz " %s    SUSTAIN         =         %s  "
-Str_ON_73:	.asciz "ON "
-Str_OFF_85:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_SUSTAIN_LENGTH_3d:	.asciz " %s    SUSTAIN LENGTH  =         %3d  "
-	.align	4, 0xFF
-Str_s_SUSTAIN_s:	.asciz " %s    SUSTAIN         =         %s  "
-Str_EN:	.asciz "EN "
-Str_DIS:	.asciz "DIS"
-	.align	4, 0xFF
-Str_s_PAN_CENTER:	.asciz " %s    PAN             =       CENTER "
-	.align	4, 0xFF
-Str_s_PAN_L_2d:	.asciz " %s    PAN             =        L %2d  "
-Str_s_PAN_R_2d:	.asciz " %s    PAN             =        R %2d  "
-Str_s_BEND_SENS_3d:	.asciz " %s    BEND SENS       =         %3d  "
-	.align	4, 0xFF
-Str_s_TUNING_4d:	.asciz " %s    TUNING          =        %4d  "
-	.align	4, 0xFF
-Str_s_KEY_SHIFT_4d:	.asciz " %s    KEY SHIFT       =        %4d  "
-	.align	4, 0xFF
-Str_s_MODULATION_SENS_3d:	.asciz " %s    MODULATION SENS =         %3d  "
-	.align	4, 0xFF
-Str_s_AFTER_TOUCH_3d:	.asciz " %s    AFTER TOUCH     =         %3d  "
-	.align	4, 0xFF
-Str_s_PITCH_BEND_6d:	.asciz " %s    PITCH BEND      =      %6d  "
-Str_s_MODULATION_3d:	.asciz " %s    MODULATION      =         %3d  "
-	.align	4, 0xFF
-Str_APC_TYPE_10s:	.asciz "   APC TYPE             =  %10s  "
-	.align	4, 0xFF
-Str_APC_MEMORY_s:	.asciz "   APC MEMORY           =         %s  "
-Str_ON_72:	.asciz "ON "
-Str_OFF_84:	.asciz "OFF"
-	.align	4, 0xFF
-Str_APC_ON_BASS_s:	.asciz "   APC ON BASS          =         %s  "
-Str_ON_71:	.asciz "ON "
-Str_OFF_83:	.asciz "OFF"
-	.align	4, 0xFF
-Str_APC_HOLD_s:	.asciz "   APC HOLD             =         %s  "
-Str_ON_70:	.asciz "ON "
-Str_OFF_82:	.asciz "OFF"
-	.align	4, 0xFF
-Str_APC_VOLUME_3d:	.asciz "   APC VOLUME           =         %3d  "
-Str_SEQ_VOLUME_3d:	.asciz "   SEQ VOLUME           =         %3d  "
-Str_RHYTHM_FILLIN_OFF:	.asciz "   RHYTHM FILLIN OFF                   "
-Str_RHYTHM_FILLIN1:	.asciz "   RHYTHM FILLIN1                      "
-Str_RHYTHM_FILLIN2:	.asciz "   RHYTHM FILLIN2                      "
-Str_RHYTHM_INTRO_OFF:	.asciz "   RHYTHM INTRO OFF                    "
-Str_RHYTHM_COUNT_INTRO:	.asciz "   RHYTHM COUNT INTRO                  "
-Str_RHYTHM_INTRO1:	.asciz "   RHYTHM INTRO1                       "
-Str_RHYTHM_INTRO2:	.asciz "   RHYTHM INTRO2                       "
-Str_RHYTHM_ENDING_OFF:	.asciz "   RHYTHM ENDING OFF                   "
-Str_RHYTHM_ENDING1:	.asciz "   RHYTHM ENDING1                      "
-Str_RHYTHM_ENDING2:	.asciz "   RHYTHM ENDING2                      "
-Str_RHYTHM_SYNCHRO_s:	.asciz "   RHYTHM SYNCHRO       =         %s  "
-Str_ON_69:	.asciz "ON "
-Str_OFF_81:	.asciz "OFF"
-	.align	4, 0xFF
-Str_RHYTHM_STOP:	.asciz "   RHYTHM STOP                         "
-Str_RHYTHM_START:	.asciz "   RHYTHM START                        "
-Str_RHYTHM_s:	.asciz "   RHYTHM  %s                "
-	.align	4, 0xFF
-Str_RHYTHM_VARI_1c:	.asciz "   RHYTHM  VARI%1c                       "
-	.align	4, 0xFF
-Str_PAD_STOP:	.asciz "   PAD STOP                            "
-Str_PAD_16s:	.asciz "   PAD %16s                "
-Str_TEMPO_3d_2:	.asciz "   TEMPO              \xA8 = %3d          "
-Str_TEMPO_3d:	.asciz "   TEMPO              \xAA = %3d          "
-Str_TECHNI_CHORD_s:	.asciz "   TECHNI-CHORD         =         %s  "
-Str_ON_68:	.asciz "ON "
-Str_OFF_80:	.asciz "OFF"
-	.align	4, 0xFF
-Str_CONDUCTOR_R1:	.asciz "   CONDUCTOR R1                        "
-Str_CONDUCTOR_R2:	.asciz "   CONDUCTOR R2                        "
-Str_CONDUCTOR_R12:	.asciz "   CONDUCTOR R12                       "
-Str_CONDUCTOR_R12L:	.asciz "   CONDUCTOR R12L                      "
-Str_CONDUCTOR_R1L:	.asciz "   CONDUCTOR R1L                       "
-Str_CONDUCTOR_R2L:	.asciz "   CONDUCTOR R2L                       "
-Str_TOTAL_REVERB_s:	.asciz "   TOTAL REVERB         =         %s  "
-Str_ON_67:	.asciz "ON "
-Str_OFF_79:	.asciz "OFF"
-	.align	4, 0xFF
-Str_SPLIT_POINT_FREE:	.asciz "   SPLIT POINT      =            FREE  "
-Str_SPLIT_POINT_G2:	.asciz "   SPLIT POINT      =              G2  "
-Str_SPLIT_POINT_C3:	.asciz "   SPLIT POINT      =              C3  "
-Str_SPLIT_POINT_G3:	.asciz "   SPLIT POINT      =              G3  "
-Str_13s_2:	.asciz "   %13s                       "
-	.align	4, 0xFF
-Str_FADE_OFF:	.asciz "   FADE OFF                            "
-Str_FADE_IN_4:	.asciz "   FADE IN                             "
-Str_FADE_OUT_2:	.asciz "   FADE OUT                            "
-Str_PANEL_MEMORY_OFF:	.asciz "   PANEL MEMORY OFF                    "
-Str_PANEL_MEMORY_1c_1d:	.asciz "   PANEL MEMORY  %1c-%1d                   "
-Str_PANEL_MEMORY_2d_1d:	.asciz "   PANEL MEMORY %2d-%1d                   "
-	.align	4, 0xFF
-Str_GLIDE_s:	.asciz "   GLIDE                =         %s  "
-Str_ON_66:	.asciz "ON "
-Str_OFF_78:	.asciz "OFF"
-	.align	4, 0xFF
-Str_MSA_s:	.asciz "   MSA                  =         %s  "
-Str_ON_65:	.asciz "ON "
-Str_OFF_69:	.asciz "OFF"
-	.align	4, 0xFF
-Str_TOTAL_EXPRESSION_3d:	.asciz "   TOTAL EXPRESSION     =         %3d  "
-Str_PAD_VOLUME_3d:	.asciz "   PAD VOLUME           =         %3d  "
-Str_PAD_VOLUME_MUTE_s:	.asciz "   PAD VOLUME           =     MUTE %s "
-Str_ON_64:	.asciz "ON "
-Str_OFF_48:	.asciz "OFF"
-	.align	4, 0xFF
-Str_MASTER_TUNE_5_1f_Hz:	.asciz "   MASTER TUNE          =      %5.1f Hz"
-Str_s_SOSTENUTO_3d:	.asciz " %s    SOSTENUTO       =         %3d  "
-	.align	4, 0xFF
-Str_s_SOFT_PEDAL_3d:	.asciz " %s    SOFT PEDAL      =         %3d  "
-	.align	4, 0xFF
-Str_s_FILTER_RESONANCE_3d:	.asciz " %s    FILTER RESONANCE=         %+3d  "
-Str_s_RELEASE_TIME_3d:	.asciz " %s    RELEASE TIME    =         %+3d  "
-Str_s_ATTACK_TIME_3d:	.asciz " %s    ATTACK TIME     =         %+3d  "
-Str_s_BRIGHTNESS_3d:	.asciz " %s    BRIGHTNESS      =         %+3d  "
-Str_s_DECAY_TIME_3d:	.asciz " %s    DECAY TIME      =         %3d  "
-	.align	4, 0xFF
-Str_s_VIBRATO_RATE_3d:	.asciz " %s    VIBRATO RATE    =         %3d  "
-	.align	4, 0xFF
-Str_s_VIBRATO_DEPTH_3d:	.asciz " %s    VIBRATO DEPTH   =         %3d  "
-	.align	4, 0xFF
-Str_s_VIBRATO_DELAY_3d:	.asciz " %s    VIBRATO DELAY   =         %3d  "
-	.align	4, 0xFF
-Str_s_9:	.asciz "     %s"
-Str_empty_971:	.asciz "                                       "
-Str_PIC_USER_NO_DATA_3d:	.asciz "           PIC(USER)   = <NO DATA>%3d  "
-Str_PIC_USER_3d:	.asciz "           PIC(USER)   =          %3d  "
-Str_PIC_PRESET_3d:	.asciz "           PIC(PRESET) =          %3d  "
-Str_s_TREMULANT_TIBIA_ON:	.asciz " %s  TREMULANT TIBIA=ON                   "
-	.align	4, 0xFF
-Str_s_TREMULANT_VOX_ON:	.asciz " %s  TREMULANT VOX=ON                     "
-	.align	4, 0xFF
-Str_s_TREMULANT_TIBIA_ON_VOX_ON:	.asciz " %s  TREMULANT TIBIA=ON VOX=ON            "
-	.align	4, 0xFF
-Str_s_TREMULANT_MAIN_ON:	.asciz " %s  TREMULANT MAIN=ON                    "
-	.align	4, 0xFF
-Str_s_TREMULANT_TIBIA_ON_MAIN_ON:	.asciz " %s  TREMULANT TIBIA=ON MAIN=ON           "
-	.align	4, 0xFF
-Str_s_TREMULANT_VOX_ON_MAIN_ON:	.asciz " %s  TREMULANT VOX=ON MAIN=ON             "
-	.align	4, 0xFF
-Str_s_TREMULANT_TIBIA_ON_VOX_ON_MAIN_ON:	.asciz " %s  TREMULANT TIBIA=ON VOX=ON MAIN=ON    "
-	.align	4, 0xFF
-Str_s_TREMULANT_OFF:	.asciz " %s  TREMULANT OFF                        "
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_16_s:	.asciz " %s    TAB FLUTE 16'       =         %s  "
-Str_ON_63:	.asciz "ON "
-Str_OFF_34:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_8_s:	.asciz " %s    TAB FLUTE 8'        =         %s  "
-Str_ON_62:	.asciz "ON "
-Str_OFF_77:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_4_s:	.asciz " %s    TAB FLUTE 4'        =         %s  "
-Str_ON_61:	.asciz "ON "
-Str_OFF_76:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_2_2_3_s:	.asciz " %s    TAB FLUTE 2 2/3'    =         %s  "
-Str_ON_60:	.asciz "ON "
-Str_OFF_75:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_2_s:	.asciz " %s    TAB FLUTE 2'        =         %s  "
-Str_ON_59:	.asciz "ON "
-Str_OFF_74:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_1_3_5_s:	.asciz " %s    TAB FLUTE 1 3/5'    =         %s  "
-Str_ON_58:	.asciz "ON "
-Str_OFF_73:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_FLUTE_1_s:	.asciz " %s    TAB FLUTE 1'        =         %s  "
-Str_ON_57:	.asciz "ON "
-Str_OFF_72:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_TROMBONE_16_s:	.asciz " %s    TAB TROMBONE 16'    =         %s  "
-Str_ON_56:	.asciz "ON "
-Str_OFF_71:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_TRUMPET_8_s:	.asciz " %s    TAB TRUMPET 8'      =         %s  "
-Str_ON_55:	.asciz "ON "
-Str_OFF_70:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_KINURA_8_s:	.asciz " %s    TAB KINURA 8'       =         %s  "
-Str_ON_101:	.asciz "ON "
-Str_OFF_115:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_CLARINET_8_s:	.asciz " %s    TAB CLARINET 8'     =         %s  "
-Str_ON_54:	.asciz "ON "
-Str_OFF_68:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_VOX_HUMANA_8_s:	.asciz " %s    TAB VOX HUMANA 8'   =         %s  "
-Str_ON_53:	.asciz "ON "
-Str_OFF_67:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_VIOLIN_8_s:	.asciz " %s    TAB VIOLIN 8'       =         %s  "
-Str_ON_52:	.asciz "ON "
-Str_OFF_66:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_PERC_4_s:	.asciz " %s    TAB PERC. 4'        =         %s  "
-Str_ON_51:	.asciz "ON "
-Str_OFF_65:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_PERC_2_2_3_s:	.asciz " %s    TAB PERC. 2 2/3'    =         %s  "
-Str_ON_50:	.asciz "ON "
-Str_OFF_64:	.asciz "OFF"
-	.align	4, 0xFF
-Str_s_TAB_VIBRATO_s:	.asciz " %s    TAB VIBRATO         =         %s  "
-Str_ON_49:	.asciz "ON "
-Str_OFF_63:	.asciz "OFF"
-	.align	4, 0xFF
-Str_empty_970:	.asciz "                                       "
-Str_08x_08x_2:	.asciz "   %08x, %08x                  "
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24333C, 0x2433F6
-data_486433F6:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2433F6, 0x243474
-Str_ERROR:	.asciz "ERROR"
-	.align	4, 0xFF
-Str_OFF_62:	.asciz "OFF       "
-	.align	4, 0xFF
-Str_ONE_FINGER:	.asciz "ONE FINGER"
-	.align	4, 0xFF
-Str_FINGERD:	.asciz "FINGERD   "
-	.align	4, 0xFF
-Str_PIANIST_3:	.asciz "PIANIST   "
-	.align	4, 0xFF
-Str_TRANSPOSE_7fC:	.asciz "TRANSPOSE:~7fC "
-Str_TRANSPOSE_7fD_a0:	.asciz "TRANSPOSE:~7fD~a0"
-Str_TRANSPOSE_7fD:	.asciz "TRANSPOSE:~7fD "
-Str_TRANSPOSE_7fE_a0:	.asciz "TRANSPOSE:~7fE~a0"
-Str_TRANSPOSE_7fE:	.asciz "TRANSPOSE:~7fE "
-Str_TRANSPOSE_7fF:	.asciz "TRANSPOSE:~7fF "
-Str_TRANSPOSE_7fF_9e:	.asciz "TRANSPOSE:~7fF~9e"
-Str_TRANSPOSE_7fG:	.asciz "TRANSPOSE:~7fG "
-Str_TRANSPOSE_7fA_a0:	.asciz "TRANSPOSE:~7fA~a0"
-Str_TRANSPOSE_7fA:	.asciz "TRANSPOSE:~7fA "
-Str_TRANSPOSE_7fB_a0:	.asciz "TRANSPOSE:~7fB~a0"
-Str_TRANSPOSE_7fB:	.asciz "TRANSPOSE:~7fB "
-Str_TRANSPOSE_C:	.asciz "TRANSPOSE:C  "
-Str_TRANSPOSE_D_a0_80:	.asciz "TRANSPOSE:D~a0~80"
-Str_TRANSPOSE_D_80:	.asciz "TRANSPOSE:D ~80"
-Str_TRANSPOSE_E_a0_80:	.asciz "TRANSPOSE:E~a0~80"
-Str_TRANSPOSE_E_80:	.asciz "TRANSPOSE:E ~80"
-Str_TRANSPOSE_F_80:	.asciz "TRANSPOSE:F ~80"
-Str_TRANSPOSE_F_9e_80:	.asciz "TRANSPOSE:F~9e~80"
-Str_TRANSPOSE_G_80:	.asciz "TRANSPOSE:G ~80"
-Str_TRANSPOSE_A_a0_80:	.asciz "TRANSPOSE:A~a0~80"
-Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
-Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
-Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
-Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_1239:	.asciz "             "
-
-ptrs_4864365C:
-	.long	Str_TRANSPOSE_7fC
-	.long	Str_TRANSPOSE_7fD_a0
-	.long	Str_TRANSPOSE_7fD
-	.long	Str_TRANSPOSE_7fE_a0
-	.long	Str_TRANSPOSE_7fE
-	.long	Str_TRANSPOSE_7fF
-	.long	Str_TRANSPOSE_7fF_9e
-	.long	Str_TRANSPOSE_7fG
-	.long	Str_TRANSPOSE_7fA_a0
-	.long	Str_TRANSPOSE_7fA
-	.long	Str_TRANSPOSE_7fB_a0
-	.long	Str_TRANSPOSE_7fB
-	.long	Str_TRANSPOSE_C
-	.long	Str_TRANSPOSE_D_a0_80
-	.long	Str_TRANSPOSE_D_80
-	.long	Str_TRANSPOSE_E_a0_80
-	.long	Str_TRANSPOSE_E_80
-	.long	Str_TRANSPOSE_F_80
-	.long	Str_TRANSPOSE_F_9e_80
-	.long	Str_TRANSPOSE_G_80
-	.long	Str_TRANSPOSE_A_a0_80
-	.long	Str_TRANSPOSE_A_80
-	.long	Str_TRANSPOSE_B_a0_80
-	.long	Str_TRANSPOSE_B_80
-	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_1239
-
-Str_3s_s_s:	.asciz " %3s %s %s            "
-	.align	4, 0xFF
-Str_3s_10:	.asciz " %3s                                        "
-	.align	4, 0xFF
-Str_3s_s_3:	.asciz " %3s %s"
-Str_3s_s_5:	.asciz " %3s %s"
-Str_3s_9:	.asciz " %3s                                        "
-	.align	4, 0xFF
-Str_3s_END:	.asciz " %3s END                                    "
-	.align	4, 0xFF
-Str_3s_REPEAT:	.asciz " %3s REPEAT                                 "
-	.align	4, 0xFF
-Str_empty_968:	.asciz "\xAB "
-	.align	4, 0xFF
-Str_empty_983:	.asciz "\xAA "
-	.align	4, 0xFF
-Str_empty_967:	.asciz "\xA8 "
-	.align	4, 0xFF
-Str_empty_966:	.asciz "\xA6 "
-	.align	4, 0xFF
-Str_empty_965:	.asciz "\xA6."
-	.align	4, 0xFF
-Str_empty_964:	.asciz "\xA1 "
-	.align	4, 0xFF
-Str_empty_963:	.asciz "  "
-	.align	4, 0xFF
-Str_x_d:	.asciz "\xB2 x %d"
-	.align	4, 0xFF
-Str_empty_962:	.asciz " + \xB3"
-	.align	4, 0xFF
-data_486437D8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2437D8, 0x2437DC
-Str_s_8:	.asciz "     %s"
-Str_empty_961:	.asciz "                                       "
-Str_3s_s_VOLUME_3d_2:	.asciz " %3s  %s    VOLUME          =         %3d "
-	.align	4, 0xFF
-Str_3s_s_VOLUME_3d:	.asciz " %3s  %s    VOLUME          =         %3d "
-	.align	4, 0xFF
-Str_3s_8:	.asciz " %3s                                       "
-Str_3s_s_2:	.asciz " %3s %s"
-Str_3s_7:	.asciz " %3s                                        "
-	.align	4, 0xFF
-Str_3s_s:	.asciz " %3s %s"
-Str_3s_6:	.asciz " %3s                                        "
-	.align	4, 0xFF
-data_48643900:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243900, 0x243A00
-data_48643A00:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243A00, 0x243A80
-data_48643A80:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243A80, 0x243B00
-data_48643B00:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243B00, 0x243B44
-data_48643B44:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243B44, 0x243BC4
-data_48643BC4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x243BC4, 0x243FC4
-Str_SONG_2d_16s:	.asciz "SONG%2d : %16s"
-	.align	4, 0xFF
-Str_ALL_SONGS_2:	.asciz "        ALL SONGS        "
-	.align	4, 0xFF
-Str_TT_CMSTEP_2:	.asciz "TT_CMSTEP"
-	.align	4, 0xFF
-Str_TT_MSPSTEP_2:	.asciz "TT_MSPSTEP"
-	.align	4, 0xFF
-Str_d_11:	.asciz "%d"
-	.align	4, 0xFF
-Str_2d_35:	.asciz "%2d"
-Str_6d_2:	.asciz "%6d"
-Str_3d_57:	.asciz "%3d"
-Str_3d_56:	.asciz "%3d"
-Str_6d:	.asciz "%6d"
-Str_5d:	.asciz "%5d"
-Str_x_5:	.asciz "%x"
-	.align	4, 0xFF
-Str_empty_960:	.asciz "+"
-	.align	4, 0xFF
-Str_empty_982:	.asciz " "
-	.align	4, 0xFF
-Str_NOTE_6:	.asciz "NOTE"
-	.align	4, 0xFF
-Str_SOUND_14:	.asciz "SOUND"
-	.align	4, 0xFF
-Str_empty_959:	.asciz "@"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244042, 0x2440C0
-data_486440C0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2440C0, 0x244140
-data_48644140:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244140, 0x24420C
-data_4864420C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24420C, 0x244294
-data_48644294:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244294, 0x244370
-
-ptrs_48644370:
-	.long	func_4843C15E
-	.long	func_4843C433
-	.long	func_48436E56
-	.long	func_48436FA7
-	.long	func_484370B0
-	.long	func_484371B3
-	.long	func_4843713D
-	.long	func_48437201
-	.long	func_48436B5F
-	.long	func_48436F3D
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244398, 0x2443D0
-data_486443D0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2443D0, 0x2443E0
-data_486443E0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2443E0, 0x2443E8
-data_486443E8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2443E8, 0x244400
-data_48644400:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244400, 0x244408
-data_48644408:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244408, 0x24444A
-
-Str_empty_1178:	.asciz "|               |               |               |               |"
-
-ptrs_4864448C:
-	.long	data_48644408
-	.long	Str_empty_1178
-data_48644494:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244494, 0x2444A4
-data_486444A4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2444A4, 0x2444B4
-data_486444B4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2444B4, 0x2444B8
-data_486444B8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2444B8, 0x2444BC
-data_486444BC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2444BC, 0x2444C0
-
-Str_empty_957:	.asciz "                                                                 "
-	.align	4, 0xFF
-data_48644504:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244504, 0x244514
-data_48644514:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244514, 0x244518
-data_48644518:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244518, 0x24451C
-Str_NOTE_5:	.asciz "NOTE"
-	.align	4, 0xFF
-Str_VELOCITY_6:	.asciz "VELOCITY"
-	.align	4, 0xFF
-Str_LENGTH_3:	.asciz "LENGTH"
-	.align	4, 0xFF
-Str_ARRANGE:	.asciz "ARRANGE"
-Str_MODULATION_2:	.asciz "MODULATION"
-	.align	4, 0xFF
-Str_PAN_7:	.asciz "PAN"
-Str_CENTER_8:	.asciz "CENTER"
-	.align	4, 0xFF
-Str_L_2d_2:	.asciz "  L %2d"
-Str_R_2d_3:	.asciz "  R %2d"
-Str_EXPRESSION_2:	.asciz "EXPRESSION"
-	.align	4, 0xFF
-Str_SUSTAIN_4:	.asciz "SUSTAIN"
-Str_ON_48:	.asciz "ON "
-Str_OFF_61:	.asciz "OFF"
-Str_D_EFFECT_2:	.asciz "D.EFFECT"
-	.align	4, 0xFF
-Str_ON_47:	.asciz "ON "
-Str_OFF_60:	.asciz "OFF"
-Str_EFF_DYNAMIC_CTRL_2:	.asciz "EFF.DYNAMIC CTRL"
-	.align	4, 0xFF
-Str_TRACKBALL_X_2:	.asciz "TRACKBALL X"
-Str_TRACKBALL_Y_2:	.asciz "TRACKBALL Y"
-Str_CTL_ERR_2:	.asciz "CTL ERR"
-data_486445CC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2445CC, 0x2445D0
-Str_SOUND_13:	.asciz "SOUND"
-	.align	4, 0xFF
-Str_AFTER_TOUCH_5:	.asciz "AFTER TOUCH"
-Str_PITCH_BEND_2:	.asciz "PITCH BEND"
-	.align	4, 0xFF
-Str_CTL_ERR:	.asciz "CTL ERR"
-data_486445F8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2445F8, 0x2445FC
-Str_EVENT_ERR:	.asciz "EVENT ERR"
-	.align	4, 0xFF
-data_48644608:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244608, 0x24460C
-Str_ON_46:	.asciz "ON "
-Str_OFF_59:	.asciz "OFF"
-Str_ON_45:	.asciz "ON "
-Str_OFF_58:	.asciz "OFF"
-Str_CENTER_7:	.asciz "CENTER"
-	.align	4, 0xFF
-Str_L_2d_4:	.asciz "  L %2d"
-Str_R_2d_2:	.asciz "  R %2d"
-data_48644634:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244634, 0x244638
-data_48644638:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244638, 0x24463C
-Str_empty_956:	.asciz "   "
-	.space	14, 0x00
-Str_ad_b8_3:	.asciz " ~ad~b8"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244656, 0x244672
-Str_ac_b8_4:	.asciz " ~ac~b8"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24467A, 0x244684
-Str_ac_4:	.asciz " ~ac "
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24468A, 0x244696
-Str_ab_b8_4:	.asciz " ~ab~b8"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24469E, 0x2446BA
-Str_aa_b8:	.asciz " ~aa~b8"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2446C2, 0x244738
-Str_MODULATION:	.asciz "MODULATION"
-	.align	4, 0xFF
-Str_PAN_6:	.asciz "PAN"
-Str_CENTER_9:	.asciz "CENTER"
-	.align	4, 0xFF
-Str_L_2d:	.asciz "  L %2d"
-Str_R_2d:	.asciz "  R %2d"
-Str_EXPRESSION:	.asciz "EXPRESSION"
-	.align	4, 0xFF
-Str_SUSTAIN_5:	.asciz "SUSTAIN"
-Str_ON_44:	.asciz "ON "
-Str_OFF_57:	.asciz "OFF"
-Str_D_EFFECT:	.asciz "D.EFFECT"
-	.align	4, 0xFF
-Str_ON_43:	.asciz "ON "
-Str_OFF_56:	.asciz "OFF"
-Str_EFF_DYNAMIC_CTRL:	.asciz "EFF.DYNAMIC CTRL"
-	.align	4, 0xFF
-Str_TRACKBALL_X:	.asciz "TRACKBALL X"
-Str_TRACKBALL_Y:	.asciz "TRACKBALL Y"
-data_486447BC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2447BC, 0x2447C0
-data_486447C0:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2447C0, 0x2447C4
-Str_SOUND_12:	.asciz "SOUND"
-	.align	4, 0xFF
-Str_AFTER_TOUCH_4:	.asciz "AFTER TOUCH"
-Str_PITCH_BEND:	.asciz "PITCH BEND"
-	.align	4, 0xFF
-data_486447E4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2447E4, 0x2447E8
-data_486447E8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2447E8, 0x2447EC
-data_486447EC:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2447EC, 0x24486C
-data_4864486C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24486C, 0x24496C
-data_4864496C:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24496C, 0x244970
-
-Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown:
-	.long	func_4843258C
-	.long	func_484326B7
-	.long	func_48432FB8
-	.long	func_48433082
-	.long	func_4843317E
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244984, 0x244994
-
-Str_Unknown:	.asciz "Unknown!"
-	.align	4, 0xFF
-Str_Error:	.asciz "Error!"
-	.align	4, 0xFF
-data_486449A8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2449A8, 0x244A28
-Field_AcSndArgGridBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcSndArgGridBox:
-	.long	Field_AcSndArgGridBox_end
-
-ClassSig_AcSndArgGridBox:	.asciz ""
-ClassName_AcSndArgGridBox:	.asciz "AcSndArgGridBox"
-	.align	4, 0xFF
-FnName_AcSndArgGridBoxProc:	.asciz "AcSndArgGridBoxProc"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244A58, 0x244A5C
-FnName_SndArgGridCheck:	.asciz "SndArgGridCheck"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244A6C, 0x244A70
-FnName_MainSNDARG_PtselPut:	.asciz "MainSNDARG_PtselPut"
-FnName_MainSNDARG_SetSndaParaCur:	.asciz "MainSNDARG_SetSndaParaCur"
-FnName_MdSndArg:	.asciz "MdSndArg"
-FnName_TtSndArg:	.asciz "TtSndArg"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244AB0, 0x244AB4
-Str_SOUND_ARRANGER:	.asciz "SOUND ARRANGER"
-	.align	4, 0xFF
-
-	TtlScreen	SndArgrScreen, sub=SndArgrScreen_StrBox_PATTERN, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SndArgrScreen_window, title=Str_SOUND_ARRANGER, icon=88	# title "SOUND ARRANGER"
-
-Str_PATTERN_6:	.asciz " PATTERN :"
-	.align	4, 0xFF
-
-		VwStrBox	SndArgrScreen_StrBox_PATTERN, super=SndArgrScreen, next=SndArgrScreen_RhythmName1, flag=VF_Const, X=244, Y=0, W=324, H=30, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=1, str=Str_PATTERN_6	# str " PATTERN :"
-		AcRhythmName	SndArgrScreen_RhythmName1, super=SndArgrScreen, next=SndArgrScreen_IndexWideES1, prev=SndArgrScreen_StrBox_PATTERN, flag=VF_Const, X=372, Y=2, W=180, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White
-		AcIndexWideES	SndArgrScreen_IndexWideES1, super=SndArgrScreen, next=SndArgrScreen_ExitMode1, prev=SndArgrScreen_RhythmName1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
-		IvExitMode	SndArgrScreen_ExitMode1, super=SndArgrScreen, next=SndArgrScreen_SndArgGridBox1, prev=SndArgrScreen_IndexWideES1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_NORMAL
-
-Str_PART_SOUND_DIGITAL_EFF:	.asciz "   PART   |       SOUND       |DIGITAL EFF"
-Str_DRUMS1_DRUMS2_BASS_ACCOMP1_ACCOMP2_ACCOM:	.asciz "|-|DRUMS1|DRUMS2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
-	.align	4, 0xFF
-
-		AcSndArgGridBox	SndArgrScreen_SndArgGridBox1, super=SndArgrScreen, prev=SndArgrScreen_ExitMode1, flag=VF_Const, X=102, Y=38, W=480, H=194, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=10, col=3, vertline=1, selrow=SndArgrScreen_SndArgGridBox1_selrow, selcol=SndArgrScreen_SndArgGridBox1_selcol, pcol=SndArgrScreen_SndArgGridBox1_pcol, prow=SndArgrScreen_SndArgGridBox1_prow, crow=SndArgrScreen_SndArgGridBox1_crow, fixedcol=Str_PART_SOUND_DIGITAL_EFF, fixedrow=Str_DRUMS1_DRUMS2_BASS_ACCOMP1_ACCOMP2_ACCOM, func=FN_SndArgGridCheck	# fixedcol "   PART   |       SOUND       |DIGITAL E"; fixedrow "|-|DRUMS1|DRUMS2|BASS|ACCOMP1|ACCOMP2|AC"
-
-RN_SndArgrScreen:	.asciz "SndArgrScreen"
-RN_empty_2036:	.asciz ""
-RN_empty_2037:	.asciz ""
-RN_empty_2038:	.asciz ""
-RN_empty_2039:	.asciz ""
-RN_empty_2040:	.asciz ""
-	.align	4, 0x00
-Str_OTB_SND_ARG:	.asciz "OTB_SND_ARG"
-Str_iapsdarg:	.asciz "iapsdarg"
-	.align	4, 0xFF
-Str_MD_SND_ARG:	.asciz "MD_SND_ARG"
-	.align	4, 0xFF
-Str_TT_SNDARG:	.asciz "TT_SNDARG"
-	.align	4, 0xFF
-data_48644CA4:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244CA4, 0x244CAC
-Str_OFF_55:	.asciz "OFF"
-Str_ON_42:	.asciz "ON "
-Str_empty_955:	.asciz "---"
-data_48644CB8:
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244CB8, 0x244D38
-Field_AcMultiIndexList_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcMultiIndexList:
-	.long	Field_AcMultiIndexList_end
-
-Field_AcCmpCapaBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcCmpCapaBox:
-	.long	Field_AcCmpCapaBox_end
-
-ClassSig_AcMultiIndexList:	.asciz ""
-ClassSig_AcCmpCapaBox:	.asciz ""
-ClassName_AcMultiIndexList:	.asciz "AcMultiIndexList"
-ClassName_AcCmpCapaBox:	.asciz "AcCmpCapaBox"
-Str_EV_EASYCOMPTITLE:	.asciz "EV_EASYCOMPTITLE"
-	.align	4, 0xFF
-Str_MT_SetSelectedValue:	.asciz "MT_SetSelectedValue"
-Str_MT_GetInternalData:	.asciz "MT_GetInternalData"
-	.align	4, 0xFF
-FnName_AcMultiIndexListProc:	.asciz "AcMultiIndexListProc"
-FnName_AcCmpCapaBoxProc:	.asciz "AcCmpCapaBoxProc"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x244DCA, 0x244DCC
-FnName_CmpRecMemSelFunc:	.asciz "CmpRecMemSelFunc"
-FnName_CmpMemClrYes:	.asciz "CmpMemClrYes"
-FnName_CmBkslShowHideFunc:	.asciz "CmBkslShowHideFunc"
-FnName_CmpPatSelOK:	.asciz "CmpPatSelOK"
-FnName_FE_CmpRecMeas:	.asciz "FE_CmpRecMeas"
-FnName_FE_CmpRecTS:	.asciz "FE_CmpRecTS"
-FnName_CmpMeasTSOK:	.asciz "CmpMeasTSOK"
-FnName_CmpMeasTSYes:	.asciz "CmpMeasTSYes"
-FnName_CmpPartSel:	.asciz "CmpPartSel"
-FnName_CmpPtnClrYes:	.asciz "CmpPtnClrYes"
-FnName_CmpBkslSShowHideFunc:	.asciz "CmpBkslSShowHideFunc"
-FnName_CmpMemNmChk:	.asciz "CmpMemNmChk"
-FnName_CmpMemNmOk:	.asciz "CmpMemNmOk"
-FnName_CmpVari1NmOk:	.asciz "CmpVari1NmOk"
-FnName_CmpVari1NmChk:	.asciz "CmpVari1NmChk"
-FnName_CmpVari2NmChk:	.asciz "CmpVari2NmChk"
-FnName_CmpVari3NmChk:	.asciz "CmpVari3NmChk"
-FnName_CmpVari4NmChk:	.asciz "CmpVari4NmChk"
-FnName_FE_CmpRecSetKey:	.asciz "FE_CmpRecSetKey"
-FnName_FE_CmpRecSetChord:	.asciz "FE_CmpRecSetChord"
-FnName_CmpRecSoloFunc:	.asciz "CmpRecSoloFunc"
-FnName_FE_CmpRecQtz:	.asciz "FE_CmpRecQtz"
-FnName_CmpPartClrOk:	.asciz "CmpPartClrOk"
-FnName_CmpInstClrOnOff:	.asciz "CmpInstClrOnOff"
-FnName_CmpAllEraseOnOff:	.asciz "CmpAllEraseOnOff"
-FnName_CmPnCpOK:	.asciz "CmPnCpOK"
-FnName_CmpPnCpEditFunc:	.asciz "CmpPnCpEditFunc"
-FnName_FuncEdit_rhyDstName:	.asciz "FuncEdit_rhyDstName"
-FnName_FuncEdit_rhyDstPattern:	.asciz "FuncEdit_rhyDstPattern"
-FnName_FuncEdit_rhyYN:	.asciz "FuncEdit_rhyYN"
-FnName_FuncEdit_rhyName:	.asciz "FuncEdit_rhyName"
-FnName_FuncEdit_rhyPattern:	.asciz "FuncEdit_rhyPattern"
-FnName_FuncEdit_rhyGroup:	.asciz "FuncEdit_rhyGroup"
-FnName_CmpPartCopyGrid:	.asciz "CmpPartCopyGrid"
-FnName_CmpPrtCpyStsGrid:	.asciz "CmpPrtCpyStsGrid"
-FnName_CmpPrtCpyEditFunc:	.asciz "CmpPrtCpyEditFunc"
-FnName_FE_CompPartCopyMem:	.asciz "FE_CompPartCopyMem"
-FnName_CmpPrtCpyPart:	.asciz "CmpPrtCpyPart"
-FnName_CmpPartCopyOk:	.asciz "CmpPartCopyOk"
-FnName_CmPnCpYes:	.asciz "CmPnCpYes"
-FnName_AttCompPtnCpy1:	.asciz "AttCompPtnCpy1"
-FnName_AttCompPtnCpy2:	.asciz "AttCompPtnCpy2"
-FnName_AttSeqToCompCopy:	.asciz "AttSeqToCompCopy"
-FnName_SeqToCmpCopyGrid:	.asciz "SeqToCmpCopyGrid"
-FnName_FE_SeqToCmpFstMeas:	.asciz "FE_SeqToCmpFstMeas"
-FnName_FE_SeqToCmpLstMeas:	.asciz "FE_SeqToCmpLstMeas"
-FnName_FE_SeqToCmpTrans:	.asciz "FE_SeqToCmpTrans"
-FnName_FE_SeqToCmpMemory:	.asciz "FE_SeqToCmpMemory"
-FnName_FE_SeqToCmpPattern:	.asciz "FE_SeqToCmpPattern"
-FnName_SeqToCmpOK:	.asciz "SeqToCmpOK"
-FnName_Seq2CmpCpEditFunc:	.asciz "Seq2CmpCpEditFunc"
-FnName_SeqToCmpYes:	.asciz "SeqToCmpYes"
-FnName_EasyCompGrid:	.asciz "EasyCompGrid"
-FnName_FE_EasyCompMem:	.asciz "FE_EasyCompMem"
-FnName_CmpEasyCompSet:	.asciz "CmpEasyCompSet"
-FnName_CmpEasyCompEditFunc:	.asciz "CmpEasyCompEditFunc"
-FnName_CmpRecPtChdGrid:	.asciz "CmpRecPtChdGrid"
-FnName_CmpPtChdOK:	.asciz "CmpPtChdOK"
-FnName_CmpDspSetGrid:	.asciz "CmpDspSetGrid"
-FnName_CmpDspSetTglFunc:	.asciz "CmpDspSetTglFunc"
-FnName_AttCompDspSet:	.asciz "AttCompDspSet"
-FnName_AttCompPartSet:	.asciz "AttCompPartSet"
-FnName_FE_CmpCstmCpy:	.asciz "FE_CmpCstmCpy"
-FnName_CmpCstmCpyOK:	.asciz "CmpCstmCpyOK"
-FnName_CmpCstmCpyDirec:	.asciz "CmpCstmCpyDirec"
-FnName_CustomCopySure1:	.asciz "CustomCopySure1"
-FnName_CustomCopySure2:	.asciz "CustomCopySure2"
-FnName_CustomCopySure3:	.asciz "CustomCopySure3"
-FnName_CmpCstmCpySure:	.asciz "CmpCstmCpySure"
-FnName_CmpCstmCpyExe:	.asciz "CmpCstmCpyExe"
-FnName_CmpPartSetGrid1:	.asciz "CmpPartSetGrid1"
-FnName_CmpPartSetGrid2:	.asciz "CmpPartSetGrid2"
-FnName_FE_CmpMCopySPart:	.asciz "FE_CmpMCopySPart"
-FnName_FE_CmpMCopyFstMeas:	.asciz "FE_CmpMCopyFstMeas"
-FnName_FE_CmpMCopyLstMeas:	.asciz "FE_CmpMCopyLstMeas"
-FnName_FE_CmpMCopyDPart:	.asciz "FE_CmpMCopyDPart"
-FnName_FE_CmpMCopySrtMeas:	.asciz "FE_CmpMCopySrtMeas"
-FnName_CmpMCopyOK:	.asciz "CmpMCopyOK"
-FnName_CmpMCopyYes:	.asciz "CmpMCopyYes"
-FnName_FE_CmpMDelFstMeas:	.asciz "FE_CmpMDelFstMeas"
-FnName_FE_CmpMDelLstMeas:	.asciz "FE_CmpMDelLstMeas"
-FnName_CmpMDelOK:	.asciz "CmpMDelOK"
-FnName_CmpMDelYes:	.asciz "CmpMDelYes"
-FnName_AttCompMeasDel:	.asciz "AttCompMeasDel"
-FnName_FE_CmpMErsSPart:	.asciz "FE_CmpMErsSPart"
-FnName_FE_CmpMErsFstMeas:	.asciz "FE_CmpMErsFstMeas"
-FnName_FE_CmpMErsLstMeas:	.asciz "FE_CmpMErsLstMeas"
-FnName_CmpMErsYes:	.asciz "CmpMErsYes"
-FnName_FE_CmpMInsFstMeas:	.asciz "FE_CmpMInsFstMeas"
-FnName_FE_CmpMInsMeasNum:	.asciz "FE_CmpMInsMeasNum"
-FnName_CmpMInsYes:	.asciz "CmpMInsYes"
-FnName_CmpMInsOK:	.asciz "CmpMInsOK"
-FnName_AttCompRec1:	.asciz "AttCompRec1"
-FnName_FE_CmpRecChdModGrp:	.asciz "FE_CmpRecChdModGrp"
-FnName_FE_CmpRecChdModTyp:	.asciz "FE_CmpRecChdModTyp"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24537E, 0x245380
-FnName_MdCmp:	.asciz "MdCmp"
-FnName_TtCmMenu:	.asciz "TtCmMenu"
-FnName_TtCmBksl:	.asciz "TtCmBksl"
-FnName_TtCmBksl_s:	.asciz "TtCmBksl_s"
-FnName_TtCmReal:	.asciz "TtCmReal"
-FnName_TtCmBal:	.asciz "TtCmBal"
-FnName_TtCmPnCp:	.asciz "TtCmPnCp"
-FnName_TtCmEasy:	.asciz "TtCmEasy"
-FnName_TtCmPtChd:	.asciz "TtCmPtChd"
-FnName_TtCmpDspSet:	.asciz "TtCmpDspSet"
-FnName_TtCmPartSet:	.asciz "TtCmPartSet"
-FnName_MainCMP_CmpPatternClear:	.asciz "MainCMP_CmpPatternClear"
-FnName_MainCMP_SetCmpMsrTmSigAftClr:	.asciz "MainCMP_SetCmpMsrTmSigAftClr"
-FnName_MainCMP_SetCmpMeasure:	.asciz "MainCMP_SetCmpMeasure"
-FnName_MainCMP_CmpSectionClear:	.asciz "MainCMP_CmpSectionClear"
-FnName_MainCMP_SetCmpPtnName:	.asciz "MainCMP_SetCmpPtnName"
-FnName_MainCMP_SetCmpVariName:	.asciz "MainCMP_SetCmpVariName"
-FnName_MainCMP_SetCmpRecordChord:	.asciz "MainCMP_SetCmpRecordChord"
-FnName_MainCMP_SetCmpRecSolo:	.asciz "MainCMP_SetCmpRecSolo"
-FnName_MainCMP_SetCmpRecordArrange:	.asciz "MainCMP_SetCmpRecordArrange"
-FnName_MainCMP_SetCmpRecQt:	.asciz "MainCMP_SetCmpRecQt"
-FnName_MainCMP_CmpPartClear:	.asciz "MainCMP_CmpPartClear"
-FnName_MainCMP_SetCmpNoteClear:	.asciz "MainCMP_SetCmpNoteClear"
-FnName_MainCMP_SetCmpAllErase:	.asciz "MainCMP_SetCmpAllErase"
-FnName_MainCOMP_CmpPatternCopy:	.asciz "MainCOMP_CmpPatternCopy"
-FnName_MainCOMP_PutM3Em:	.asciz "MainCOMP_PutM3Em"
-FnName_MainCMP_CmpCompileCopy:	.asciz "MainCMP_CmpCompileCopy"
-FnName_MainCOMP_CmpCopyFromSeq:	.asciz "MainCOMP_CmpCopyFromSeq"
-FnName_MainCMP_CmpEasyCopy:	.asciz "MainCMP_CmpEasyCopy"
-FnName_MainCMP_SetCmpRecArrAll:	.asciz "MainCMP_SetCmpRecArrAll"
-FnName_MainCMP_SetCmpEffectType:	.asciz "MainCMP_SetCmpEffectType"
-FnName_MainCMP_SetCmpEffect1Total:	.asciz "MainCMP_SetCmpEffect1Total"
-FnName_MainCMP_CstmCpyNameDraw:	.asciz "MainCMP_CstmCpyNameDraw"
-FnName_MainCMP_CstmCpyRhyNameDraw:	.asciz "MainCMP_CstmCpyRhyNameDraw"
-FnName_MainCMP_CustomCopy:	.asciz "MainCMP_CustomCopy"
-FnName_MainCMP_CustomToPerformance:	.asciz "MainCMP_CustomToPerformance"
-FnName_MainCMP_SetCmpPartSetting:	.asciz "MainCMP_SetCmpPartSetting"
-FnName_MainCMP_SetCmpEffectPart:	.asciz "MainCMP_SetCmpEffectPart"
-FnName_MainCMP_CmpMeasureCopy:	.asciz "MainCMP_CmpMeasureCopy"
-FnName_MainCMP_CmpMeasureDelete:	.asciz "MainCMP_CmpMeasureDelete"
-FnName_MainCMP_CmpMeasureErase:	.asciz "MainCMP_CmpMeasureErase"
-FnName_MainCMP_CmpMeasureInsert:	.asciz "MainCMP_CmpMeasureInsert"
-.incbin_range "baserom/kn7000_program_b893.rom", 0x2456CA, 0x2456CC
-Str_COMPOSER_MENU:	.asciz "COMPOSER MENU"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMenuScreen, sub=CmpMenuScreen_TitleMenu_EASY_COMPOSER, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PS, window=CmpMenuScreen_window, title=Str_COMPOSER_MENU, icon=77	# title "COMPOSER MENU"
-
-Str_EASY_COMPOSER:	.asciz "EASY COMPOSER "
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMenuScreen_TitleMenu_EASY_COMPOSER, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_PATTERN_COPY, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=CmpMenuScreen_TitleMenu_EASY_COMPOSER_selected, str=Str_EASY_COMPOSER, title=TT_CMEASY, icon=81	# str "EASY COMPOSER "
-
-Str_PATTERN_COPY:	.asciz "PATTERN COPY "
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMenuScreen_TitleMenu_PATTERN_COPY, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, prev=CmpMenuScreen_TitleMenu_EASY_COMPOSER, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=CmpMenuScreen_TitleMenu_PATTERN_COPY_selected, str=Str_PATTERN_COPY, title=TT_CMPNCP, icon=82	# str "PATTERN COPY "
-
-Str_SEQ_TO_COMPOSER_COPY:	.asciz "SEQ TO COMPOSER COPY "
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, prev=CmpMenuScreen_TitleMenu_PATTERN_COPY, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY_selected, str=Str_SEQ_TO_COMPOSER_COPY, title=TT_CMSEQCP, icon=83	# str "SEQ TO COMPOSER COPY "
-
-Str_LOAD_SINGLE_COMPOSER:	.asciz "LOAD SINGLE COMPOSER "
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, super=CmpMenuScreen, next=CmpMenuScreen_Line1, prev=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER_selected, str=Str_LOAD_SINGLE_COMPOSER, title=TT_CMPLDSNGL, icon=84	# str "LOAD SINGLE COMPOSER "
-		VwLine	CmpMenuScreen_Line1, super=CmpMenuScreen, next=CmpMenuScreen_Line2, prev=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, flag=VF_Const, X=70, Y=90, W=10, H=1, color=CL_White, linemode=1
-		VwLine	CmpMenuScreen_Line2, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, prev=CmpMenuScreen_Line1, flag=VF_Const, X=70, Y=132, W=10, H=1, color=CL_White, linemode=1
-
-Str_CUSTOM_STYLE_COPY:	.asciz "CUSTOM STYLE COPY "
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, super=CmpMenuScreen, next=CmpMenuScreen_Line3, prev=CmpMenuScreen_Line2, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY_selected, str=Str_CUSTOM_STYLE_COPY, title=TT_CMCSTMCP, icon=161	# str "CUSTOM STYLE COPY "
-		VwLine	CmpMenuScreen_Line3, super=CmpMenuScreen, next=CmpMenuScreen_Line4, prev=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, flag=VF_Const, X=80, Y=90, W=1, H=85, color=CL_White, linemode=1
-		VwLine	CmpMenuScreen_Line4, super=CmpMenuScreen, next=CmpMenuScreen_Label_RECORDING_MEMORY, prev=CmpMenuScreen_Line3, flag=VF_Const, X=70, Y=174, W=10, H=1, color=CL_White, linemode=1
-
-Str_RECORDING_MEMORY:	.asciz "RECORDING MEMORY"
-	.align	4, 0xFF
-
-		VwLabel	CmpMenuScreen_Label_RECORDING_MEMORY, super=CmpMenuScreen, next=CmpMenuScreen_ExitMode1, prev=CmpMenuScreen_Line4, flag=VF_Const, X=90, Y=124, W=180, H=19, str=Str_RECORDING_MEMORY, font=4, fontcolor=CL_White	# str "RECORDING MEMORY"
-		IvExitMode	CmpMenuScreen_ExitMode1, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_A, prev=CmpMenuScreen_Label_RECORDING_MEMORY, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_A:	.asciz " A"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpMenuScreen_FuncMenu_A, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_B, prev=CmpMenuScreen_ExitMode1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpMenuScreen_FuncMenu_A_selected, str=Str_A, func=FN_CmpRecMemSelFunc, icon=78	# str " A"
-
-Str_B:	.asciz " B"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpMenuScreen_FuncMenu_B, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_C, prev=CmpMenuScreen_FuncMenu_A, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpMenuScreen_FuncMenu_B_selected, str=Str_B, func=FN_CmpRecMemSelFunc, icon=79, vari=1	# str " B"
-
-Str_C:	.asciz " C"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpMenuScreen_FuncMenu_C, super=CmpMenuScreen, prev=CmpMenuScreen_FuncMenu_B, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpMenuScreen_FuncMenu_C_selected, str=Str_C, func=FN_CmpRecMemSelFunc, icon=80, vari=2	# str " C"
-
-Str_RECORD_MEMORY:	.asciz "RECORD MEMORY"
-	.align	4, 0xFF
-
-	TtlScreen	CmpBkslScreen, sub=CmpBkslScreen_IntTitleMenu_DSP_SET, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpBkslScreen_window, title=Str_RECORD_MEMORY, icon=77	# title "RECORD MEMORY"
-
-Str_DSP_SET:	.asciz "DSP SET"
-
-		AcIntTitleMenu	CmpBkslScreen_IntTitleMenu_DSP_SET, super=CmpBkslScreen, next=CmpBkslScreen_TitleMenu_NAMING, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=CmpBkslScreen_IntTitleMenu_DSP_SET_selected, str=Str_DSP_SET, title=TT_CMDSPSET, icon=194	# str "DSP SET"
-
-Str_NAMING:	.asciz "NAMING"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpBkslScreen_TitleMenu_NAMING, super=CmpBkslScreen, next=CmpBkslScreen_Box1, prev=CmpBkslScreen_IntTitleMenu_DSP_SET, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=CmpBkslScreen_TitleMenu_NAMING_selected, str=Str_NAMING, title=TT_CMNAME, icon=153	# str "NAMING"
-		VwBox	CmpBkslScreen_Box1, super=CmpBkslScreen, sub=CmpBkslScreen_CmpMemNameBox1, next=CmpBkslScreen_Label_MEMORY_NAME, prev=CmpBkslScreen_TitleMenu_NAMING, flag=VF_Const, X=8, Y=34, W=472, H=36, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-			AcCmpMemNameBox	CmpBkslScreen_CmpMemNameBox1, super=CmpBkslScreen_Box1, flag=VF_Const, X=220, Y=44, W=200, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_MEMORY_NAME:	.asciz "MEMORY NAME :"
-	.align	4, 0xFF
-
-		VwLabel	CmpBkslScreen_Label_MEMORY_NAME, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES1, prev=CmpBkslScreen_Box1, flag=VF_Const, X=67, Y=45, W=147, H=19, str=Str_MEMORY_NAME, font=4, fontcolor=CL_White	# str "MEMORY NAME :"
-		AcIndexWideES	CmpBkslScreen_IndexWideES1, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES2, prev=CmpBkslScreen_Label_MEMORY_NAME, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
-		AcIndexWideES	CmpBkslScreen_IndexWideES2, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES3, prev=CmpBkslScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
-		AcIndexWideES	CmpBkslScreen_IndexWideES3, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES4, prev=CmpBkslScreen_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=14
-		AcIndexWideES	CmpBkslScreen_IndexWideES4, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES5, prev=CmpBkslScreen_IndexWideES3, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	CmpBkslScreen_IndexWideES5, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES6, prev=CmpBkslScreen_IndexWideES4, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=14
-		AcIndexWideES	CmpBkslScreen_IndexWideES6, super=CmpBkslScreen, next=CmpBkslScreen_Box2, prev=CmpBkslScreen_IndexWideES5, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=14
-		VwBox	CmpBkslScreen_Box2, super=CmpBkslScreen, sub=PatVari2, next=PatVari3, prev=CmpBkslScreen_IndexWideES6, flag=VF_Const, X=8, Y=74, W=472, H=140, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_PATTERN_FILL_IN1_FILL_IN2:	.asciz "PATTERN|FILL IN1|FILL IN2|"
-	.align	4, 0xFF
-
-			AcMultiIndexList	PatVari2, super=CmpBkslScreen_Box2, next=PatVari1, flag=VF_Const, X=166, Y=107, W=72, H=74, color=CL_WallPattern, index=3, font=1, fontcolor=CL_White, row=3, selected=PatVari2_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2	# list "PATTERN|FILL IN1|FILL IN2|"
-
-Str_PATTERN_FILL_IN1_FILL_IN2_2:	.asciz "PATTERN|FILL IN1|FILL IN2|"
-	.align	4, 0xFF
-
-			AcMultiIndexList	PatVari1, super=CmpBkslScreen_Box2, next=PatIntro, prev=PatVari2, flag=VF_Const, X=88, Y=107, W=72, H=74, color=CL_WallPattern, index=2, font=1, fontcolor=CL_White, row=3, selected=PatVari1_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_2	# list "PATTERN|FILL IN1|FILL IN2|"
-
-Str_1_Maj_1_Min_2_Maj_2_Min:	.asciz "1 Maj|1 Min|2 Maj|2 Min"
-
-			AcMultiIndexList	PatIntro, super=CmpBkslScreen_Box2, next=PatVari4, prev=PatVari1, flag=VF_Const, X=16, Y=107, W=72, H=100, color=CL_WallPattern, index=1, font=1, fontcolor=CL_White, row=4, selected=PatIntro_selected, list=Str_1_Maj_1_Min_2_Maj_2_Min	# list "1 Maj|1 Min|2 Maj|2 Min"
-
-Str_PATTERN_FILL_IN1_FILL_IN2_3:	.asciz "PATTERN|FILL IN1|FILL IN2|"
-	.align	4, 0xFF
-
-			AcMultiIndexList	PatVari4, super=CmpBkslScreen_Box2, next=PatEnding, prev=PatIntro, flag=VF_Const, X=322, Y=107, W=72, H=74, color=CL_WallPattern, index=5, font=1, fontcolor=CL_White, row=3, selected=PatVari4_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_3	# list "PATTERN|FILL IN1|FILL IN2|"
-
-Str_1_Maj_1_Min_2_Maj_2_Min_2:	.asciz "1 Maj|1 Min|2 Maj|2 Min"
-
-			AcMultiIndexList	PatEnding, super=CmpBkslScreen_Box2, next=CmpBkslScreen_Line1, prev=PatVari4, flag=VF_Const, X=396, Y=107, W=72, H=100, color=CL_WallPattern, index=6, font=1, fontcolor=CL_White, row=4, selected=PatEnding_selected, list=Str_1_Maj_1_Min_2_Maj_2_Min_2	# list "1 Maj|1 Min|2 Maj|2 Min"
-			VwLine	CmpBkslScreen_Line1, super=CmpBkslScreen_Box2, next=CmpBkslScreen_Label_INTRO_VARI1_VARI2_VA, prev=PatEnding, flag=VF_Const, X=10, Y=102, W=468, H=1, color=CL_White
-
-Str_INTRO_VARI1_VARI2_VARI3_VARI4_ENDING:	.asciz "INTRO    VARI1     VARI2    VARI3     VARI4    ENDING"
-	.align	4, 0xFF
-
-			VwLabel	CmpBkslScreen_Label_INTRO_VARI1_VARI2_VA, super=CmpBkslScreen_Box2, prev=CmpBkslScreen_Line1, flag=VF_Const, X=28, Y=82, W=428, H=19, str=Str_INTRO_VARI1_VARI2_VARI3_VARI4_ENDING, font=1, fontcolor=CL_Yellow	# str "INTRO    VARI1     VARI2    VARI3     VA"
-
-Str_PATTERN_FILL_IN1_FILL_IN2_4:	.asciz "PATTERN|FILL IN1|FILL IN2|"
-	.align	4, 0xFF
-
-		AcMultiIndexList	PatVari3, super=CmpBkslScreen, next=CmpBkslScreen_SureWindowMenu_MEMORY_CLR, prev=CmpBkslScreen_Box2, flag=VF_Const, X=244, Y=107, W=72, H=74, color=CL_WallPattern, index=4, font=1, fontcolor=CL_White, row=3, selected=PatVari3_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_4	# list "PATTERN|FILL IN1|FILL IN2|"
-
-Str_MEMORY_CLR:	.asciz "MEMORY CLR"
-	.align	4, 0xFF
-
-		AcSureWindowMenu	CmpBkslScreen_SureWindowMenu_MEMORY_CLR, super=CmpBkslScreen, next=CmpBkslScreen_ShowHide1, prev=PatVari3, flag=VF_Const, X=507, Y=33, W=125, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=CmpBkslScreen_SureWindowMenu_MEMORY_CLR_selected, str=Str_MEMORY_CLR, window=CmpMemClrWin_id, func=FN_CmpMemClrYes	# str "MEMORY CLR"
-		IvShowHide	CmpBkslScreen_ShowHide1, super=CmpBkslScreen, next=CmpBkslScreen_CmpPatternBox1, prev=CmpBkslScreen_SureWindowMenu_MEMORY_CLR, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmBkslShowHideFunc
-		AcCmpPatternBox	CmpBkslScreen_CmpPatternBox1, super=CmpBkslScreen, next=CmpBkslScreen_FuncEditSw1, prev=CmpBkslScreen_ShowHide1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-		AcFuncEditSw	CmpBkslScreen_FuncEditSw1, super=CmpBkslScreen, prev=CmpBkslScreen_CmpPatternBox1, flag=VF_Const, X=561, Y=208, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right5, style=6, func=FN_CmpPatSelOK
-
-Str_RECORDING:	.asciz "RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	CmpBkslSScreen, sub=CmpBkslSScreen_Label_START_RECORDING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmpBkslSScreen_window, title=Str_RECORDING, icon=77	# title "RECORDING"
-
-Str_START_RECORDING:	.asciz "START RECORDING"
-
-		VwLabel	CmpBkslSScreen_Label_START_RECORDING, super=CmpBkslSScreen, next=CmpBkslSScreen_Line1, flag=VF_Const, X=98, Y=194, W=124, H=19, str=Str_START_RECORDING, fontcolor=CL_SelectedW	# str "START RECORDING"
-		VwLine	CmpBkslSScreen_Line1, super=CmpBkslSScreen, next=CmpBkslSScreen_Line2, prev=CmpBkslSScreen_Label_START_RECORDING, flag=VF_Const, X=5, Y=201, W=80, H=1, color=CL_White, linemode=1
-		VwLine	CmpBkslSScreen_Line2, super=CmpBkslSScreen, next=CmpBkslSScreen_Line3, prev=CmpBkslSScreen_Line1, flag=VF_Const, X=236, Y=201, W=80, H=1, color=CL_White, linemode=1
-		VwLine	CmpBkslSScreen_Line3, super=CmpBkslSScreen, next=CmpBkslSScreen_Line4, prev=CmpBkslSScreen_Line2, flag=VF_Const, X=5, Y=201, W=1, H=12, color=CL_White, linemode=1
-		VwLine	CmpBkslSScreen_Line4, super=CmpBkslSScreen, next=CmpBkslSScreen_IndexWideES1, prev=CmpBkslSScreen_Line3, flag=VF_Const, X=316, Y=201, W=1, H=12, color=CL_White, linemode=1
-		AcIndexWideES	CmpBkslSScreen_IndexWideES1, super=CmpBkslSScreen, next=CmpBkslSScreen_IndexWideES2, prev=CmpBkslSScreen_Line4, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpBkslSScreen_IndexWideES2, super=CmpBkslSScreen, next=CmpBkslSScreen_Box1, prev=CmpBkslSScreen_IndexWideES1, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-		VwBox	CmpBkslSScreen_Box1, super=CmpBkslSScreen, next=CmpBkslSScreen_Line5, prev=CmpBkslSScreen_IndexWideES2, flag=VF_Const, X=400, Y=114, W=160, H=100, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-		VwLine	CmpBkslSScreen_Line5, super=CmpBkslSScreen, next=CmpBkslSScreen_Line6, prev=CmpBkslSScreen_Box1, flag=VF_Const, X=402, Y=160, W=156, H=1, color=CL_White, linemode=1
-		VwLine	CmpBkslSScreen_Line6, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_MEASURE, prev=CmpBkslSScreen_Line5, flag=VF_Const, X=480, Y=116, W=1, H=96, color=CL_White, linemode=1
-
-Str_MEASURE:	.asciz "MEASURE"
-
-		VwLabel	CmpBkslSScreen_Label_MEASURE, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_SIGNATURE, prev=CmpBkslSScreen_Line6, flag=VF_Const, X=410, Y=130, W=60, H=19, str=Str_MEASURE, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_SIGNATURE:	.asciz "SIGNATURE"
-	.align	4, 0xFF
-
-		VwLabel	CmpBkslSScreen_Label_SIGNATURE, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_TIME, prev=CmpBkslSScreen_Label_MEASURE, flag=VF_Const, X=482, Y=138, W=76, H=19, str=Str_SIGNATURE, font=1, fontcolor=CL_Yellow	# str "SIGNATURE"
-
-Str_TIME:	.asciz "TIME"
-	.align	4, 0xFF
-
-		VwLabel	CmpBkslSScreen_Label_TIME, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditBox1, prev=CmpBkslSScreen_Label_SIGNATURE, flag=VF_Const, X=498, Y=122, W=36, H=19, str=Str_TIME, font=1, fontcolor=CL_Yellow	# str "TIME"
-
-Str_empty_40:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpBkslSScreen_FuncEditBox1, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditBox2, prev=CmpBkslSScreen_Label_TIME, flag=VF_Const, X=415, Y=180, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_40, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpBkslSScreen_FuncEditBox1_selected, func=FN_FE_CmpRecMeas	# caption ""
-
-Str_empty_41:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpBkslSScreen_FuncEditBox2, super=CmpBkslSScreen, next=CmpRecTsDisable, prev=CmpBkslSScreen_FuncEditBox1, flag=VF_Const, X=491, Y=180, W=61, H=19, color=CL_WallPattern, index=2, caption=Str_empty_41, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpBkslSScreen_FuncEditBox2_selected, func=FN_FE_CmpRecTS	# caption ""
-		PsParaDrawBox	CmpRecTsDisable, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditSw1, prev=CmpBkslSScreen_FuncEditBox2, flag=VF_Const, X=482, Y=200, W=76, H=12, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
-		AcFuncEditSw	CmpBkslSScreen_FuncEditSw1, super=CmpBkslSScreen, next=CmpBkslSScreen_TitleMenu_KEY_SETTING, prev=CmpRecTsDisable, flag=VF_Const, X=561, Y=165, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMeasTSOK
-
-Str_KEY_SETTING:	.asciz "KEY SETTING"
-
-		AcTitleMenu	CmpBkslSScreen_TitleMenu_KEY_SETTING, super=CmpBkslSScreen, next=CmpBkslSScreen_TitleMenu_MEASURE_EDIT, prev=CmpBkslSScreen_FuncEditSw1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpBkslSScreen_TitleMenu_KEY_SETTING_selected, str=Str_KEY_SETTING, title=TT_CMSET, icon=159	# str "KEY SETTING"
-
-Str_MEASURE_EDIT:	.asciz "MEASURE EDIT"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpBkslSScreen_TitleMenu_MEASURE_EDIT, super=CmpBkslSScreen, next=CmRecBas, prev=CmpBkslSScreen_TitleMenu_KEY_SETTING, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpBkslSScreen_TitleMenu_MEASURE_EDIT_selected, str=Str_MEASURE_EDIT, title=TT_CMMEASEDIT, icon=196	# str "MEASURE EDIT"
-		AcFuncEditSw	CmRecBas, super=CmpBkslSScreen, sub=CmRecBas_Label_BAS, next=CmRecDr2, prev=CmpBkslSScreen_TitleMenu_MEASURE_EDIT, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, func=FN_CmpPartSel
-
-Str_BAS:	.asciz "BAS"
-
-			VwLabel	CmRecBas_Label_BAS, super=CmRecBas, flag=VF_Const, X=286, Y=219, W=28, H=19, str=Str_BAS, fontcolor=CL_BlackW	# str "BAS"
-		AcFuncEditSw	CmRecDr2, super=CmpBkslSScreen, sub=CmRecDr2_Label_DR2, next=CmRecAc1, prev=CmRecBas, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, func=FN_CmpPartSel
-
-Str_DR2:	.asciz "DR2"
-
-			VwLabel	CmRecDr2_Label_DR2, super=CmRecDr2, flag=VF_Const, X=6, Y=219, W=28, H=19, str=Str_DR2, fontcolor=CL_BlackW	# str "DR2"
-		AcFuncEditSw	CmRecAc1, super=CmpBkslSScreen, sub=CmRecAc1_Label_AC1, next=CmRecAc2, prev=CmRecDr2, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, func=FN_CmpPartSel
-
-Str_AC1:	.asciz "AC1"
-
-			VwLabel	CmRecAc1_Label_AC1, super=CmRecAc1, flag=VF_Const, X=246, Y=219, W=28, H=19, str=Str_AC1, fontcolor=CL_BlackW	# str "AC1"
-		AcFuncEditSw	CmRecAc2, super=CmpBkslSScreen, sub=CmRecAc2_Label_AC2, next=CmRecAc3, prev=CmRecAc1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, func=FN_CmpPartSel
-
-Str_AC2:	.asciz "AC2"
-
-			VwLabel	CmRecAc2_Label_AC2, super=CmRecAc2, flag=VF_Const, X=206, Y=219, W=28, H=19, str=Str_AC2, fontcolor=CL_BlackW	# str "AC2"
-		AcFuncEditSw	CmRecAc3, super=CmpBkslSScreen, sub=CmRecAc3_Label_AC3, next=CmRecAc4, prev=CmRecAc2, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, func=FN_CmpPartSel
-
-Str_AC3:	.asciz "AC3"
-
-			VwLabel	CmRecAc3_Label_AC3, super=CmRecAc3, flag=VF_Const, X=166, Y=219, W=28, H=19, str=Str_AC3, fontcolor=CL_BlackW	# str "AC3"
-		AcFuncEditSw	CmRecAc4, super=CmpBkslSScreen, sub=CmRecAc4_Label_AC4, next=CmRecAc5, prev=CmRecAc3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, func=FN_CmpPartSel
-
-Str_AC4:	.asciz "AC4"
-
-			VwLabel	CmRecAc4_Label_AC4, super=CmRecAc4, flag=VF_Const, X=126, Y=219, W=28, H=19, str=Str_AC4, fontcolor=CL_BlackW	# str "AC4"
-		AcFuncEditSw	CmRecAc5, super=CmpBkslSScreen, sub=CmRecAc5_Label_AC5, next=CmRecDr1, prev=CmRecAc4, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, func=FN_CmpPartSel
-
-Str_AC5:	.asciz "AC5"
-
-			VwLabel	CmRecAc5_Label_AC5, super=CmRecAc5, flag=VF_Const, X=86, Y=219, W=28, H=19, str=Str_AC5, fontcolor=CL_BlackW	# str "AC5"
-		AcFuncEditSw	CmRecDr1, super=CmpBkslSScreen, sub=CmRecDr1_Label_DR1, next=CmpBkslSScreen_CmpPatternBox1, prev=CmRecAc5, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, func=FN_CmpPartSel
-
-Str_DR1:	.asciz "DR1"
-
-			VwLabel	CmRecDr1_Label_DR1, super=CmRecDr1, flag=VF_Const, X=46, Y=219, W=28, H=19, str=Str_DR1, fontcolor=CL_BlackW	# str "DR1"
-		AcCmpPatternBox	CmpBkslSScreen_CmpPatternBox1, super=CmpBkslSScreen, next=CmpChordModifyMenu, prev=CmRecDr1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_CHORD_MODIFY_CHANGE:	.asciz "CHORD MODIFY CHANGE"
-Str_CLEAR_THE_ENTIRE_PATTERN:	.asciz "CLEAR THE ENTIRE PATTERN"
-	.align	4, 0xFF
-
-		AcSureWindowMenu	CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT, super=CmpBkslSScreen, next=CmpBkslSScreen_SetDialFocus1, prev=CmpChordModifyMenu, flag=VF_Const, X=8, Y=32, W=280, H=30, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT_selected, str=Str_CLEAR_THE_ENTIRE_PATTERN, window=CmpClrPtnWin_id, func=FN_CmpPtnClrYes	# str "CLEAR THE ENTIRE PATTERN"
-		IvSetDialFocus	CmpBkslSScreen_SetDialFocus1, super=CmpBkslSScreen, next=CmpBkslSScreen_ShowHide1, prev=CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
-		IvShowHide	CmpBkslSScreen_ShowHide1, super=CmpBkslSScreen, prev=CmpBkslSScreen_SetDialFocus1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpBkslSShowHideFunc
-
-Str_NAMING_2:	.asciz "NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	CmNameScreen, sub=CmNameScreen_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmNameScreen_window, title=Str_NAMING_2, icon=153	# title "NAMING"
-		IvNaming	CmNameScreen_Naming1, super=CmNameScreen, next=CmNameScreen_ScreenMenu_VARIATION, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpMemNmChk
-
-Str_VARIATION:	.asciz "VARIATION"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmNameScreen_ScreenMenu_VARIATION, super=CmNameScreen, next=CmNameScreen_FuncEditSw1, prev=CmNameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmNameScreen_ScreenMenu_VARIATION_selected, str=Str_VARIATION, screen=CmVari1NameScreen_id	# str "VARIATION"
-		AcFuncEditSw	CmNameScreen_FuncEditSw1, super=CmNameScreen, next=CmNameScreen_CmpPatternBox1, prev=CmNameScreen_ScreenMenu_VARIATION, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMemNmOk
-		AcCmpPatternBox	CmNameScreen_CmpPatternBox1, super=CmNameScreen, prev=CmNameScreen_FuncEditSw1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
-
-Str_KEY_SETTING_2:	.asciz "KEY SETTING"
-
-	TtlScreen	CmpSetScreen, sub=CmpSetScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpSetScreen_window, title=Str_KEY_SETTING_2, icon=159	# title "KEY SETTING"
-		VwBox	CmpSetScreen_Box1, super=CmpSetScreen, next=CmpSetScreen_Line1, flag=VF_Const, X=160, Y=114, W=320, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-		VwLine	CmpSetScreen_Line1, super=CmpSetScreen, next=CmpSetScreen_Label_CHORD, prev=CmpSetScreen_Box1, flag=VF_Const, X=162, Y=152, W=316, H=1, color=CL_White, linemode=1
-
-Str_CHORD:	.asciz "CHORD"
-	.align	4, 0xFF
-
-		VwLabel	CmpSetScreen_Label_CHORD, super=CmpSetScreen, next=CmpSetScreen_Label_KEY, prev=CmpSetScreen_Line1, flag=VF_Const, X=370, Y=126, W=59, H=19, str=Str_CHORD, font=4, fontcolor=CL_Yellow	# str "CHORD"
-
-Str_KEY:	.asciz "KEY"
-
-		VwLabel	CmpSetScreen_Label_KEY, super=CmpSetScreen, next=CmpSetScreen_FuncEditBox1, prev=CmpSetScreen_Label_CHORD, flag=VF_Const, X=222, Y=126, W=37, H=19, str=Str_KEY, font=4, fontcolor=CL_Yellow	# str "KEY"
-
-Str_empty_42:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpSetScreen_FuncEditBox1, super=CmpSetScreen, next=CmpSetScreen_FuncEditBox2, prev=CmpSetScreen_Label_KEY, flag=VF_Const, X=216, Y=174, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_42, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpSetScreen_FuncEditBox1_selected, func=FN_FE_CmpRecSetKey	# caption ""
-
-Str_empty_43:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpSetScreen_FuncEditBox2, super=CmpSetScreen, next=CmpSetScreen_Line2, prev=CmpSetScreen_FuncEditBox1, flag=VF_Const, X=376, Y=174, W=57, H=19, color=CL_WallPattern, index=2, caption=Str_empty_43, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpSetScreen_FuncEditBox2_selected, func=FN_FE_CmpRecSetChord	# caption ""
-		VwLine	CmpSetScreen_Line2, super=CmpSetScreen, next=CmpSetScreen_IndexWideES1, prev=CmpSetScreen_FuncEditBox2, flag=VF_Const, X=320, Y=116, W=1, H=96, color=CL_White, linemode=1
-		AcIndexWideES	CmpSetScreen_IndexWideES1, super=CmpSetScreen, next=CmpSetScreen_IndexWideES2, prev=CmpSetScreen_Line2, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
-		AcIndexWideES	CmpSetScreen_IndexWideES2, super=CmpSetScreen, next=CmpSetScreen_CmpPatternBox1, prev=CmpSetScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=3
-		AcCmpPatternBox	CmpSetScreen_CmpPatternBox1, super=CmpSetScreen, prev=CmpSetScreen_IndexWideES2, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_REALTIME_RECORDING:	.asciz "REALTIME RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	CmpRealScreen, sub=CmpRealScreen_TitleMenu_PART_BALANCE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpRealScreen_window, title=Str_REALTIME_RECORDING, icon=160	# title "REALTIME RECORDING"
-
-Str_PART_BALANCE:	.asciz "PART BALANCE"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpRealScreen_TitleMenu_PART_BALANCE, super=CmpRealScreen, next=CmpRealScreen_TitleMenu_STEP_RECORD, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpRealScreen_TitleMenu_PART_BALANCE_selected, str=Str_PART_BALANCE, title=TT_CMBAL, icon=143	# str "PART BALANCE"
-
-Str_STEP_RECORD:	.asciz "STEP RECORD"
-
-		AcTitleMenu	CmpRealScreen_TitleMenu_STEP_RECORD, super=CmpRealScreen, next=CmpRealSoloToggle, prev=CmpRealScreen_TitleMenu_PART_BALANCE, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpRealScreen_TitleMenu_STEP_RECORD_selected, str=Str_STEP_RECORD, title=TT_CMSTEP, icon=54	# str "STEP RECORD"
-
-Str_SOLO:	.asciz "SOLO"
-Str_SOLO_2:	.asciz "SOLO"
-	.align	4, 0xFF
-
-		AcFuncToggle	CmpRealSoloToggle, super=CmpRealScreen, next=CmpRealScreen_Box1, prev=CmpRealScreen_TitleMenu_STEP_RECORD, flag=VF_Const, X=8, Y=162, W=60, H=28, font=4, stron=Str_SOLO, stroff=Str_SOLO_2, onoff=CmpRealSoloToggle_onoff, editsw=ES_Left4, func=FN_CmpRecSoloFunc	# stron "SOLO"; stroff "SOLO"
-		VwBox	CmpRealScreen_Box1, super=CmpRealScreen, next=CmpRealScreen_Label_MEASURE, prev=CmpRealSoloToggle, flag=VF_Const, X=188, Y=35, W=290, H=149, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_MEASURE_2:	.asciz "MEASURE ="
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_MEASURE, super=CmpRealScreen, next=CmpRealScreen_Label_MEMORY, prev=CmpRealScreen_Box1, flag=VF_Const, X=228, Y=46, W=103, H=19, str=Str_MEASURE_2, font=4, fontcolor=CL_White	# str "MEASURE ="
-
-Str_MEMORY:	.asciz "MEMORY  ="
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_MEMORY, super=CmpRealScreen, next=CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, prev=CmpRealScreen_Label_MEASURE, flag=VF_Const, X=228, Y=70, W=103, H=19, str=Str_MEMORY, font=4, fontcolor=CL_White	# str "MEMORY  ="
-
-Str_KEY_IN_CHORD_MODIFY:	.asciz "KEY IN CHORD MODIFY"
-
-		VwLabel	CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, super=CmpRealScreen, next=CmpRealScreen_Label_GROUP, prev=CmpRealScreen_Label_MEMORY, flag=VF_Const, X=246, Y=120, W=156, H=19, str=Str_KEY_IN_CHORD_MODIFY, fontcolor=CL_Yellow	# str "KEY IN CHORD MODIFY"
-
-Str_GROUP:	.asciz "GROUP      ="
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_GROUP, super=CmpRealScreen, next=CmpRealScreen_Label_TYPE, prev=CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, flag=VF_Const, X=230, Y=138, W=100, H=19, str=Str_GROUP, font=1, fontcolor=CL_White	# str "GROUP      ="
-
-Str_TYPE_6:	.asciz "TYPE       ="
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_TYPE, super=CmpRealScreen, next=CmpRealScreen_Label_QUANTIZE, prev=CmpRealScreen_Label_GROUP, flag=VF_Const, X=230, Y=160, W=100, H=19, str=Str_TYPE_6, font=1, fontcolor=CL_White	# str "TYPE       ="
-
-Str_QUANTIZE:	.asciz "QUANTIZE   ="
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_QUANTIZE, super=CmpRealScreen, next=CmpRealScreen_CmpBarBox1, prev=CmpRealScreen_Label_TYPE, flag=VF_Const, X=230, Y=98, W=100, H=19, str=Str_QUANTIZE, font=1, fontcolor=CL_White	# str "QUANTIZE   ="
-		AcCmpBarBox	CmpRealScreen_CmpBarBox1, super=CmpRealScreen, next=CmpRealScreen_CmpCapaBox1, prev=CmpRealScreen_Label_QUANTIZE, flag=VF_Const, X=336, Y=46, W=68, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-		AcCmpCapaBox	CmpRealScreen_CmpCapaBox1, super=CmpRealScreen, next=CmpRealScreen_FuncEditBox1, prev=CmpRealScreen_CmpBarBox1, flag=VF_Const, X=346, Y=70, W=60, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_empty_44:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpRealScreen_FuncEditBox1, super=CmpRealScreen, next=CmpRealChdModGrp, prev=CmpRealScreen_CmpCapaBox1, flag=VF_Const, X=346, Y=97, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_44, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealScreen_FuncEditBox1_selected, func=FN_FE_CmpRecQtz	# caption ""
-
-Str_empty_45:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpRealChdModGrp, super=CmpRealScreen, next=CmpRealChdModTyp, prev=CmpRealScreen_FuncEditBox1, flag=VF_Const, X=346, Y=136, W=68, H=19, color=CL_WallPattern, index=2, caption=Str_empty_45, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealChdModGrp_selected, func=FN_FE_CmpRecChdModGrp	# caption ""
-
-Str_empty_46:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpRealChdModTyp, super=CmpRealScreen, next=CmpRealScreen_IndexWideES1, prev=CmpRealChdModGrp, flag=VF_Const, X=346, Y=158, W=117, H=19, color=CL_WallPattern, index=3, caption=Str_empty_46, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealChdModTyp_selected, func=FN_FE_CmpRecChdModTyp	# caption ""
-		AcIndexWideES	CmpRealScreen_IndexWideES1, super=CmpRealScreen, next=CmpRealScreen_IndexWideES2, prev=CmpRealChdModTyp, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpRealScreen_IndexWideES2, super=CmpRealScreen, next=CmpRealScreen_IndexWideES3, prev=CmpRealScreen_IndexWideES1, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-		AcIndexWideES	CmpRealScreen_IndexWideES3, super=CmpRealScreen, next=CmpRealScreen_Label_GROUP2, prev=CmpRealScreen_IndexWideES2, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, style=3
-
-Str_GROUP_2:	.asciz "GROUP"
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_GROUP2, super=CmpRealScreen, next=CmpRealScreen_Label_TYPE2, prev=CmpRealScreen_IndexWideES3, flag=VF_Const, X=502, Y=202, W=34, H=11, str=Str_GROUP_2, font=3, fontcolor=CL_White	# str "GROUP"
-
-Str_TYPE_7:	.asciz "TYPE"
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_TYPE2, super=CmpRealScreen, next=CmpRealScreen_Label_QUANTIZE2, prev=CmpRealScreen_Label_GROUP2, flag=VF_Const, X=586, Y=202, W=28, H=11, str=Str_TYPE_7, font=3, fontcolor=CL_White	# str "TYPE"
-
-Str_QUANTIZE_2:	.asciz "QUANTIZE"
-	.align	4, 0xFF
-
-		VwLabel	CmpRealScreen_Label_QUANTIZE2, super=CmpRealScreen, next=CmpRealScreen_TitleMenu_PART_SETTING, prev=CmpRealScreen_Label_TYPE2, flag=VF_Const, X=404, Y=194, W=68, H=19, str=Str_QUANTIZE_2, fontcolor=CL_White	# str "QUANTIZE"
-
-Str_PART_SETTING_3:	.asciz "PART SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpRealScreen_TitleMenu_PART_SETTING, super=CmpRealScreen, next=CmpRRecBas, prev=CmpRealScreen_Label_QUANTIZE2, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpRealScreen_TitleMenu_PART_SETTING_selected, str=Str_PART_SETTING_3, title=TT_CMPARTSET, icon=159	# str "PART SETTING"
-		AcFuncEditSw	CmpRRecBas, super=CmpRealScreen, sub=CmpRRecBas_Label_BAS, next=CmpRRecDr2, prev=CmpRealScreen_TitleMenu_PART_SETTING, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, func=FN_CmpPartSel
-
-Str_BAS_2:	.asciz "BAS"
-
-			VwLabel	CmpRRecBas_Label_BAS, super=CmpRRecBas, flag=VF_Const, X=286, Y=219, W=28, H=19, str=Str_BAS_2, fontcolor=CL_BlackW	# str "BAS"
-		AcFuncEditSw	CmpRRecDr2, super=CmpRealScreen, sub=CmpRRecDr2_Label_DR2, next=CmpRRecAc1, prev=CmpRRecBas, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, func=FN_CmpPartSel
-
-Str_DR2_2:	.asciz "DR2"
-
-			VwLabel	CmpRRecDr2_Label_DR2, super=CmpRRecDr2, flag=VF_Const, X=6, Y=219, W=28, H=19, str=Str_DR2_2, fontcolor=CL_BlackW	# str "DR2"
-		AcFuncEditSw	CmpRRecAc1, super=CmpRealScreen, sub=CmpRRecAc1_Label_AC1, next=CmpRRecAc2, prev=CmpRRecDr2, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, func=FN_CmpPartSel
-
-Str_AC1_2:	.asciz "AC1"
-
-			VwLabel	CmpRRecAc1_Label_AC1, super=CmpRRecAc1, flag=VF_Const, X=246, Y=219, W=28, H=19, str=Str_AC1_2, fontcolor=CL_BlackW	# str "AC1"
-		AcFuncEditSw	CmpRRecAc2, super=CmpRealScreen, sub=CmpRRecAc2_Label_AC2, next=CmpRRecAc3, prev=CmpRRecAc1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, func=FN_CmpPartSel
-
-Str_AC2_2:	.asciz "AC2"
-
-			VwLabel	CmpRRecAc2_Label_AC2, super=CmpRRecAc2, flag=VF_Const, X=206, Y=219, W=28, H=19, str=Str_AC2_2, fontcolor=CL_BlackW	# str "AC2"
-		AcFuncEditSw	CmpRRecAc3, super=CmpRealScreen, sub=CmpRRecAc3_Label_AC3, next=CmpRRecAc4, prev=CmpRRecAc2, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, func=FN_CmpPartSel
-
-Str_AC3_2:	.asciz "AC3"
-
-			VwLabel	CmpRRecAc3_Label_AC3, super=CmpRRecAc3, flag=VF_Const, X=166, Y=219, W=28, H=19, str=Str_AC3_2, fontcolor=CL_BlackW	# str "AC3"
-		AcFuncEditSw	CmpRRecAc4, super=CmpRealScreen, sub=CmpRRecAc4_Label_AC4, next=CmpRRecAc5, prev=CmpRRecAc3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, func=FN_CmpPartSel
-
-Str_AC4_2:	.asciz "AC4"
-
-			VwLabel	CmpRRecAc4_Label_AC4, super=CmpRRecAc4, flag=VF_Const, X=126, Y=219, W=28, H=19, str=Str_AC4_2, fontcolor=CL_BlackW	# str "AC4"
-		AcFuncEditSw	CmpRRecAc5, super=CmpRealScreen, sub=CmpRRecAc5_Label_AC5, next=CmpRRecDr1, prev=CmpRRecAc4, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, func=FN_CmpPartSel
-
-Str_AC5_2:	.asciz "AC5"
-
-			VwLabel	CmpRRecAc5_Label_AC5, super=CmpRRecAc5, flag=VF_Const, X=86, Y=219, W=28, H=19, str=Str_AC5_2, fontcolor=CL_BlackW	# str "AC5"
-		AcFuncEditSw	CmpRRecDr1, super=CmpRealScreen, sub=CmpRRecDr1_Label_DR1, next=CmpRealScreen_CmpPatternBox1, prev=CmpRRecAc5, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, func=FN_CmpPartSel
-
-Str_DR1_2:	.asciz "DR1"
-
-			VwLabel	CmpRRecDr1_Label_DR1, super=CmpRRecDr1, flag=VF_Const, X=46, Y=219, W=28, H=19, str=Str_DR1_2, fontcolor=CL_BlackW	# str "DR1"
-		AcCmpPatternBox	CmpRealScreen_CmpPatternBox1, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox, prev=CmpRRecDr1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_VwStrBox:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox2, prev=CmpRealScreen_CmpPatternBox1, flag=VF_Const, X=43, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox_selected	# str "VwStrBox"
-
-Str_VwStrBox_2:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox2, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox3, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox, flag=VF_Const, X=3, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_2, part=7, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox2_selected	# str "VwStrBox"
-
-Str_VwStrBox_3:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox3, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox4, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox2, flag=VF_Const, X=83, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_3, part=6, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox3_selected	# str "VwStrBox"
-
-Str_VwStrBox_4:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox4, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox5, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox3, flag=VF_Const, X=123, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_4, part=5, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox4_selected	# str "VwStrBox"
-
-Str_VwStrBox_5:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox5, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox6, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox4, flag=VF_Const, X=163, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_5, part=4, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox5_selected	# str "VwStrBox"
-
-Str_VwStrBox_6:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox6, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox7, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox5, flag=VF_Const, X=203, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_6, part=3, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox6_selected	# str "VwStrBox"
-
-Str_VwStrBox_7:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox7, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox8, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox6, flag=VF_Const, X=243, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_7, part=2, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox7_selected	# str "VwStrBox"
-
-Str_VwStrBox_8:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox8, super=CmpRealScreen, next=CmpRealScreen_FuncEditSw1, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox7, flag=VF_Const, X=283, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_8, part=1, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox8_selected	# str "VwStrBox"
-		AcFuncEditSw	CmpRealScreen_FuncEditSw1, super=CmpRealScreen, sub=CmpRealScreen_Label_PART_CLR, next=CmpRealScreen_FuncESOnOff1, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox8, flag=VF_Const, X=526, Y=33, W=106, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, func=FN_CmpPartClrOk
-
-Str_PART_CLR:	.asciz "PART CLR"
-	.align	4, 0xFF
-
-			VwLabel	CmpRealScreen_Label_PART_CLR, super=CmpRealScreen_FuncEditSw1, flag=VF_Const, X=532, Y=39, W=92, H=19, str=Str_PART_CLR, font=4, fontcolor=CL_BlackW	# str "PART CLR"
-		AcFuncESOnOff	CmpRealScreen_FuncESOnOff1, super=CmpRealScreen, sub=CmpRealScreen_Label_NOTE_CLR, next=CmpRealScreen_FuncESOnOff2, prev=CmpRealScreen_FuncEditSw1, flag=VF_Const, X=525, Y=76, W=107, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, func=FN_CmpInstClrOnOff
-
-Str_NOTE_CLR:	.asciz "NOTE CLR"
-	.align	4, 0xFF
-
-			VwLabel	CmpRealScreen_Label_NOTE_CLR, super=CmpRealScreen_FuncESOnOff1, flag=VF_Const, X=532, Y=82, W=92, H=19, str=Str_NOTE_CLR, font=4, fontcolor=CL_BlackW	# str "NOTE CLR"
-		AcFuncESOnOff	CmpRealScreen_FuncESOnOff2, super=CmpRealScreen, sub=CmpRealScreen_Label_ALL_ERAS, next=CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, prev=CmpRealScreen_FuncESOnOff1, flag=VF_Const, X=525, Y=119, W=107, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, func=FN_CmpAllEraseOnOff
-
-Str_ALL_ERAS:	.asciz "ALL ERAS"
-	.align	4, 0xFF
-
-			VwLabel	CmpRealScreen_Label_ALL_ERAS, super=CmpRealScreen_FuncESOnOff2, flag=VF_Const, X=532, Y=125, W=92, H=19, str=Str_ALL_ERAS, font=4, fontcolor=CL_BlackW	# str "ALL ERAS"
-
-Str_KEY_IN_CHORD_MODIFY_2:	.asciz "KEY IN CHORD MODIFY"
-
-		VwEditSwLabel	CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, super=CmpRealScreen, next=CmpRealScreen_EditSwLine1, prev=CmpRealScreen_FuncESOnOff2, flag=VF_Const, X=500, Y=190, W=118, H=11, str=Str_KEY_IN_CHORD_MODIFY_2, font=3, fontcolor=CL_Yellow, editsw=ES_Bottom13	# str "KEY IN CHORD MODIFY"
-		VwEditSwLine	CmpRealScreen_EditSwLine1, super=CmpRealScreen, next=CmpRealScreen_EditSwLine2, prev=CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, flag=VF_Const, X=481, Y=194, W=12, H=1, color=CL_White, linemode=1, editsw=ES_Bottom13
-		VwEditSwLine	CmpRealScreen_EditSwLine2, super=CmpRealScreen, next=CmpRealScreen_EditSwLine3, prev=CmpRealScreen_EditSwLine1, flag=VF_Const, X=480, Y=194, W=1, H=13, color=CL_White, linemode=1, editsw=ES_Bottom13
-		VwEditSwLine	CmpRealScreen_EditSwLine3, super=CmpRealScreen, next=CmpRealScreen_EditSwLine4, prev=CmpRealScreen_EditSwLine2, flag=VF_Const, X=625, Y=194, W=12, H=1, color=CL_White, linemode=1, editsw=ES_Bottom16
-		VwEditSwLine	CmpRealScreen_EditSwLine4, super=CmpRealScreen, prev=CmpRealScreen_EditSwLine3, flag=VF_Const, X=637, Y=194, W=1, H=13, color=CL_White, linemode=1, editsw=ES_Bottom16
-
-Str_PART_BALANCE_2:	.asciz "PART BALANCE"
-	.align	4, 0xFF
-
-	TtlScreen	CmpBalScreen, sub=CmpBalScreen_MixerVol1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMREAL, window=CmpBalScreen_window, title=Str_PART_BALANCE_2, icon=143	# title "PART BALANCE"
-		AcMixerVol	CmpBalScreen_MixerVol1, super=CmpBalScreen, next=CmpBalScreen_MixerVol2, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=20, editsw=ES_Bottom6
-		AcMixerVol	CmpBalScreen_MixerVol2, super=CmpBalScreen, next=CmpBalScreen_MixerVol3, prev=CmpBalScreen_MixerVol1, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=21, editsw=ES_Bottom5
-		AcMixerVol	CmpBalScreen_MixerVol3, super=CmpBalScreen, next=CmpBalScreen_MixerVol4, prev=CmpBalScreen_MixerVol2, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=22, editsw=ES_Bottom4
-		AcMixerVol	CmpBalScreen_MixerVol4, super=CmpBalScreen, next=CmpBalScreen_MixerVol5, prev=CmpBalScreen_MixerVol3, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=25, editsw=ES_Bottom2
-		AcMixerVol	CmpBalScreen_MixerVol5, super=CmpBalScreen, next=CmpBalScreen_MixerVol6, prev=CmpBalScreen_MixerVol4, flag=VF_Const, X=4, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=26, editsw=ES_Bottom1
-		AcMixerVol	CmpBalScreen_MixerVol6, super=CmpBalScreen, next=CmpBalScreen_MixerVol7, prev=CmpBalScreen_MixerVol5, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=23, editsw=ES_Bottom3
-		AcMixerVol	CmpBalScreen_MixerVol7, super=CmpBalScreen, next=CmpBalScreen_MixerVol8, prev=CmpBalScreen_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=19, editsw=ES_Bottom7
-		AcMixerVol	CmpBalScreen_MixerVol8, super=CmpBalScreen, next=CmpBalScreen_MixerVol9, prev=CmpBalScreen_MixerVol7, flag=VF_Const, X=597, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=32, editsw=ES_Bottom16
-		AcMixerVol	CmpBalScreen_MixerVol9, super=CmpBalScreen, next=CmpBalScreen_CmpPatternBox1, prev=CmpBalScreen_MixerVol8, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=24, editsw=ES_Bottom8
-		AcCmpPatternBox	CmpBalScreen_CmpPatternBox1, super=CmpBalScreen, next=CmpBalScreen_CmpBarBox1, prev=CmpBalScreen_MixerVol9, flag=VF_Const, X=216, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-		AcCmpBarBox	CmpBalScreen_CmpBarBox1, super=CmpBalScreen, prev=CmpBalScreen_CmpPatternBox1, flag=VF_Const, X=512, Y=6, W=48, H=19, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_PATTERN_COPY_2:	.asciz "PATTERN COPY"
-	.align	4, 0xFF
-
-	TtlScreen	CmpNcpScreen, sub=CmpNcpScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpNcpScreen_window, title=Str_PATTERN_COPY_2, icon=82	# title "PATTERN COPY"
-		IvPageControl	CmpNcpScreen_PageControl1, super=CmpNcpScreen, next=CmpNcpScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=CmpPtnCpP1Win_id
-		IvPageControl	CmpNcpScreen_PageControl2, super=CmpNcpScreen, next=CmPnCpPage, prev=CmpNcpScreen_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=CmpPtnCpP2Win_id
-		AcWindowPage	CmPnCpPage, super=CmpNcpScreen, next=CmpNcpScreen_StrBox_TIME_SIGNATURE, prev=CmpNcpScreen_PageControl2, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=CmPnCpPage_page, pagemin=1, pagemax=2
-
-Str_TIME_SIGNATURE:	.asciz "TIME SIGNATURE:"
-
-		VwStrBox	CmpNcpScreen_StrBox_TIME_SIGNATURE, super=CmpNcpScreen, next=CmPnCp_TimeSig, prev=CmPnCpPage, flag=VF_Const, X=326, Y=0, W=156, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=1, str=Str_TIME_SIGNATURE	# str "TIME SIGNATURE:"
-		AcTimeSigBox	CmPnCp_TimeSig, super=CmpNcpScreen, prev=CmpNcpScreen_StrBox_TIME_SIGNATURE, flag=VF_Const, X=448, Y=2, W=40, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White
-
-Str_SEQ_TO_COMPOSER_COPY_2:	.asciz "SEQ TO COMPOSER COPY"
-	.align	4, 0xFF
-
-	TtlScreen	CmpSeqCpScreen, sub=CmpSeqCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpSeqCpScreen_window, title=Str_SEQ_TO_COMPOSER_COPY_2, icon=83	# title "SEQ TO COMPOSER COPY"
-		VwBox	CmpSeqCpScreen_Box1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES1, flag=VF_Const, X=0, Y=216, W=640, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES2, prev=CmpSeqCpScreen_Box1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES3, prev=CmpSeqCpScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES4, prev=CmpSeqCpScreen_IndexWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES4, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES5, prev=CmpSeqCpScreen_IndexWideES3, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=3
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES5, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES6, prev=CmpSeqCpScreen_IndexWideES4, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES6, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES7, prev=CmpSeqCpScreen_IndexWideES5, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, style=14
-		AcIndexWideES	CmpSeqCpScreen_IndexWideES7, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Yajirushi1, prev=CmpSeqCpScreen_IndexWideES6, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=3
-		Yajirushi	CmpSeqCpScreen_Yajirushi1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_SEQUENCER, prev=CmpSeqCpScreen_IndexWideES7, flag=VF_Const, X=164, Y=94, W=92, H=40, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
-
-Str_SEQUENCER_5:	.asciz "SEQUENCER"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_SEQUENCER, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label1, prev=CmpSeqCpScreen_Yajirushi1, flag=VF_Const, X=32, Y=50, W=103, H=19, str=Str_SEQUENCER_5, font=4, fontcolor=CL_White	# str "SEQUENCER"
-
-Str_empty_47:	.asciz "("
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEMORY, prev=CmpSeqCpScreen_Label_SEQUENCER, flag=VF_Const, X=32, Y=68, W=15, H=19, str=Str_empty_47, font=4, fontcolor=CL_White	# str "("
-
-Str_MEMORY_2:	.asciz "MEMORY"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_MEMORY, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_PATTERN, prev=CmpSeqCpScreen_Label1, flag=VF_Const, X=294, Y=198, W=52, H=19, str=Str_MEMORY_2, font=1, fontcolor=CL_White	# str "MEMORY"
-
-Str_PATTERN:	.asciz "PATTERN"
-
-		VwLabel	CmpSeqCpScreen_Label_PATTERN, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_COMPOSER, prev=CmpSeqCpScreen_Label_MEMORY, flag=VF_Const, X=370, Y=198, W=60, H=19, str=Str_PATTERN, font=1, fontcolor=CL_White	# str "PATTERN"
-
-Str_COMPOSER_4:	.asciz "COMPOSER"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_COMPOSER, super=CmpSeqCpScreen, next=CmpSeqCpScreen_SeqSongNameBox1, prev=CmpSeqCpScreen_Label_PATTERN, flag=VF_Const, X=302, Y=60, W=92, H=19, str=Str_COMPOSER_4, font=4, fontcolor=CL_White	# str "COMPOSER"
-		AcSeqSongNameBox	CmpSeqCpScreen_SeqSongNameBox1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label2, prev=CmpSeqCpScreen_Label_COMPOSER, flag=VF_Const, X=47, Y=67, W=72, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_empty_48:	.asciz ")"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_GridBoxDelux1, prev=CmpSeqCpScreen_SeqSongNameBox1, flag=VF_Const, X=120, Y=68, W=15, H=19, str=Str_empty_48, font=4, fontcolor=CL_White	# str ")"
-
-Str_PART_TRACK:	.asciz " PART |TRACK"
-Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3:	.asciz "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
-	.align	4, 0xFF
-
-		AcGridBoxDelux	CmpSeqCpScreen_GridBoxDelux1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box2, prev=CmpSeqCpScreen_Label2, flag=VF_Const, X=440, Y=41, W=145, H=173, color=CL_WallPattern, border=BD_3D_UP2, index=6, font=1, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=CmpSeqCpScreen_GridBoxDelux1_selrow, selcol=CmpSeqCpScreen_GridBoxDelux1_selcol, pcol=CmpSeqCpScreen_GridBoxDelux1_pcol, prow=CmpSeqCpScreen_GridBoxDelux1_prow, crow=CmpSeqCpScreen_GridBoxDelux1_crow, fixedcol=Str_PART_TRACK, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3, func=FN_SeqToCmpCopyGrid	# fixedcol " PART |TRACK"; fixedrow "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCO"
-		VwBox	CmpSeqCpScreen_Box2, super=CmpSeqCpScreen, next=SeqToCmpFstMeas, prev=CmpSeqCpScreen_GridBoxDelux1, flag=VF_Const, X=0, Y=90, W=160, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_49:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToCmpFstMeas, super=CmpSeqCpScreen, next=SeqToCmpLstMeas, prev=CmpSeqCpScreen_Box2, flag=VF_Const, X=20, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_49, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpFstMeas_selected, func=FN_FE_SeqToCmpFstMeas	# caption ""
-
-Str_empty_50:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToCmpLstMeas, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line1, prev=SeqToCmpFstMeas, flag=VF_Const, X=100, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_50, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpLstMeas_selected, func=FN_FE_SeqToCmpLstMeas	# caption ""
-		VwLine	CmpSeqCpScreen_Line1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_FIRST, prev=SeqToCmpLstMeas, flag=VF_Const, X=80, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_FIRST:	.asciz "FIRST"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_FIRST, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEASURE, prev=CmpSeqCpScreen_Line1, flag=VF_Const, X=10, Y=103, W=44, H=19, str=Str_FIRST, font=1, fontcolor=CL_Yellow	# str "FIRST"
-
-Str_MEASURE_3:	.asciz "MEASURE"
-
-		VwLabel	CmpSeqCpScreen_Label_MEASURE, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_LAST, prev=CmpSeqCpScreen_Label_FIRST, flag=VF_Const, X=10, Y=121, W=60, H=19, str=Str_MEASURE_3, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_LAST:	.asciz "LAST"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_LAST, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEASURE2, prev=CmpSeqCpScreen_Label_MEASURE, flag=VF_Const, X=90, Y=103, W=36, H=19, str=Str_LAST, font=1, fontcolor=CL_Yellow	# str "LAST"
-
-Str_MEASURE_4:	.asciz "MEASURE"
-
-		VwLabel	CmpSeqCpScreen_Label_MEASURE2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line2, prev=CmpSeqCpScreen_Label_LAST, flag=VF_Const, X=90, Y=121, W=60, H=19, str=Str_MEASURE_4, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-		VwLine	CmpSeqCpScreen_Line2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box3, prev=CmpSeqCpScreen_Label_MEASURE2, flag=VF_Const, X=2, Y=144, W=156, H=1, color=CL_White, linemode=1
-		VwBox	CmpSeqCpScreen_Box3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_TRANSPOSE, prev=CmpSeqCpScreen_Line2, flag=VF_Const, X=164, Y=142, W=92, H=72, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_TRANSPOSE:	.asciz "TRANSPOSE"
-	.align	4, 0xFF
-
-		VwLabel	CmpSeqCpScreen_Label_TRANSPOSE, super=CmpSeqCpScreen, next=SeqToCmpTrans, prev=CmpSeqCpScreen_Box3, flag=VF_Const, X=172, Y=150, W=76, H=19, str=Str_TRANSPOSE, font=1, fontcolor=CL_Yellow	# str "TRANSPOSE"
-
-Str_empty_51:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToCmpTrans, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line3, prev=CmpSeqCpScreen_Label_TRANSPOSE, flag=VF_Const, X=188, Y=184, W=49, H=19, color=CL_WallPattern, index=3, caption=Str_empty_51, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpTrans_selected, func=FN_FE_SeqToCmpTrans	# caption ""
-		VwLine	CmpSeqCpScreen_Line3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box4, prev=SeqToCmpTrans, flag=VF_Const, X=166, Y=172, W=88, H=1, color=CL_White, linemode=1
-		VwBox	CmpSeqCpScreen_Box4, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEMORY2, prev=CmpSeqCpScreen_Line3, flag=VF_Const, X=258, Y=90, W=182, H=104, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_MEMORY_3:	.asciz "MEMORY:"
-
-		VwLabel	CmpSeqCpScreen_Label_MEMORY2, super=CmpSeqCpScreen, next=SeqToCmpMemory, prev=CmpSeqCpScreen_Box4, flag=VF_Const, X=266, Y=114, W=60, H=19, str=Str_MEMORY_3, font=1, fontcolor=CL_Yellow	# str "MEMORY:"
-
-Str_empty_52:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToCmpMemory, super=CmpSeqCpScreen, next=SeqToCmpPattern, prev=CmpSeqCpScreen_Label_MEMORY2, flag=VF_Const, X=340, Y=112, W=29, H=19, color=CL_WallPattern, index=4, caption=Str_empty_52, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpMemory_selected, func=FN_FE_SeqToCmpMemory	# caption ""
-
-Str_empty_53:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToCmpPattern, super=CmpSeqCpScreen, next=CmpSeqCpScreen_FuncEditSw1, prev=SeqToCmpMemory, flag=VF_Const, X=260, Y=152, W=178, H=19, color=CL_WallPattern, index=5, caption=Str_empty_53, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpPattern_selected, func=FN_FE_SeqToCmpPattern	# caption ""
-		AcFuncEditSw	CmpSeqCpScreen_FuncEditSw1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_FuncMenu_EDIT, prev=SeqToCmpPattern, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SeqToCmpOK
-
-Str_EDIT:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpSeqCpScreen_FuncMenu_EDIT, super=CmpSeqCpScreen, prev=CmpSeqCpScreen_FuncEditSw1, flag=VF_Const, X=587, Y=32, W=45, H=30, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Right1, selected=CmpSeqCpScreen_FuncMenu_EDIT_selected, str=Str_EDIT, func=FN_Seq2CmpCpEditFunc	# str "EDIT"
-
-Str_EASY_COMPOSER_2:	.asciz "EASY COMPOSER"
-	.align	4, 0xFF
-
-	TtlScreen	CmpEasyScreen, sub=CmpEasyScreen_GridBoxDelux1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpEasyScreen_window, title=Str_EASY_COMPOSER_2, icon=81	# title "EASY COMPOSER"
-
-Str_PART_STYLE_VARI:	.asciz "   PART    |     STYLE     |  VARI"
-Str_BsDrum_Snare_HiHat_Cymbal_Percussion_Bas:	.asciz "|-|BsDrum&Snare|HiHat&Cymbal|Percussion|Bass|Accomp 1|Accomp 2|Accomp 3|Accomp 4|Accomp 5"
-	.align	4, 0xFF
-
-		AcGridBoxDelux	CmpEasyScreen_GridBoxDelux1, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES1, flag=VF_Const, X=80, Y=34, W=480, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=11, col=3, vertline=1, selrow=CmpEasyScreen_GridBoxDelux1_selrow, selcol=CmpEasyScreen_GridBoxDelux1_selcol, pcol=CmpEasyScreen_GridBoxDelux1_pcol, prow=CmpEasyScreen_GridBoxDelux1_prow, crow=CmpEasyScreen_GridBoxDelux1_crow, fixedcol=Str_PART_STYLE_VARI, fixedrow=Str_BsDrum_Snare_HiHat_Cymbal_Percussion_Bas, func=FN_EasyCompGrid	# fixedcol "   PART    |     STYLE     |  VARI"; fixedrow "|-|BsDrum&Snare|HiHat&Cymbal|Percussion|"
-		AcIndexWideES	CmpEasyScreen_IndexWideES1, super=CmpEasyScreen, next=CmpEasyScreen_Label_MEM, prev=CmpEasyScreen_GridBoxDelux1, flag=VF_Const, X=84, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom6, style=14
-
-Str_MEM:	.asciz "MEM"
-
-		VwLabel	CmpEasyScreen_Label_MEM, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES2, prev=CmpEasyScreen_IndexWideES1, flag=VF_Const, X=592, Y=61, W=28, H=19, str=Str_MEM, font=1, fontcolor=CL_White	# str "MEM"
-		AcIndexWideES	CmpEasyScreen_IndexWideES2, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES3, prev=CmpEasyScreen_Label_MEM, flag=VF_Const, X=284, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom11, style=3
-		AcIndexWideES	CmpEasyScreen_IndexWideES3, super=CmpEasyScreen, next=CmpEasyScreen_FuncEditBox_MEMORY, prev=CmpEasyScreen_IndexWideES2, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-
-Str_MEMORY_4:	.asciz "MEMORY:"
-
-		AcFuncEditBox	CmpEasyScreen_FuncEditBox_MEMORY, super=CmpEasyScreen, next=CmpEasyScreen_IndexEditSw1, prev=CmpEasyScreen_IndexWideES3, flag=VF_Const, X=256, Y=2, W=261, H=25, color=CL_TitleBar, index=10, caption=Str_MEMORY_4, font=4, fontcolor=CL_White, align=1, length=15, editsw=ES_None, selected=CmpEasyScreen_FuncEditBox_MEMORY_selected, func=FN_FE_EasyCompMem	# caption "MEMORY:"
-		AcIndexEditSw	CmpEasyScreen_IndexEditSw1, super=CmpEasyScreen, next=CmpEasyScreen_IndexEditSw2, prev=CmpEasyScreen_FuncEditBox_MEMORY, flag=VF_Const, X=585, Y=37, W=47, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=1
-		AcIndexEditSw	CmpEasyScreen_IndexEditSw2, super=CmpEasyScreen, next=CmpEasyScreen_FuncEditSw1, prev=CmpEasyScreen_IndexEditSw1, flag=VF_Const, X=585, Y=80, W=47, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=2
-		AcFuncEditSw	CmpEasyScreen_FuncEditSw1, super=CmpEasyScreen, sub=CmpEasyScreen_Label_SET, next=CmpEasyScreen_FuncMenu_EDIT, prev=CmpEasyScreen_IndexEditSw2, flag=VF_Const, X=585, Y=165, W=47, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, func=FN_CmpEasyCompSet
-
-Str_SET_5:	.asciz "SET"
-
-			VwLabel	CmpEasyScreen_Label_SET, super=CmpEasyScreen_FuncEditSw1, flag=VF_Const, X=590, Y=168, W=37, H=19, str=Str_SET_5, font=4, fontcolor=CL_BlackW	# str "SET"
-
-Str_EDIT_2:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpEasyScreen_FuncMenu_EDIT, super=CmpEasyScreen, prev=CmpEasyScreen_FuncEditSw1, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpEasyScreen_FuncMenu_EDIT_selected, str=Str_EDIT_2, func=FN_CmpEasyCompEditFunc	# str "EDIT"
-
-Str_CHORD_MODIFY_CHANGE_2:	.asciz "CHORD MODIFY CHANGE"
-
-	TtlScreen	CmpPtPntChdMdfScreen, sub=CmpPtPntChdMdfScreen_FixWin1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpPtPntChdMdfScreen_window, title=Str_CHORD_MODIFY_CHANGE_2, icon=195	# title "CHORD MODIFY CHANGE"
-		IvFixWin	CmpPtPntChdMdfScreen_FixWin1, super=CmpPtPntChdMdfScreen, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, window=CmSetPage2_id
-
-Str_MEASURE_EDIT_2:	.asciz "MEASURE EDIT"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMeasEditScreen, sub=CmpMeasEditScreen_TitleMenu_MEASURE_COPY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpMeasEditScreen_window, title=Str_MEASURE_EDIT_2, icon=196	# title "MEASURE EDIT"
-
-Str_MEASURE_COPY:	.asciz "MEASURE COPY"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_COPY, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpMeasEditScreen_TitleMenu_MEASURE_COPY_selected, str=Str_MEASURE_COPY, title=TT_CMMEASCPY, icon=71	# str "MEASURE COPY"
-
-Str_MEASURE_ERASE:	.asciz "MEASURE ERASE"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, prev=CmpMeasEditScreen_TitleMenu_MEASURE_COPY, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE_selected, str=Str_MEASURE_ERASE, title=TT_CMMEASERS, icon=72	# str "MEASURE ERASE"
-
-Str_MEASURE_DELETE:	.asciz "MEASURE DELETE"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_INSERT, prev=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE_selected, str=Str_MEASURE_DELETE, title=TT_CMMEASDEL, icon=73	# str "MEASURE DELETE"
-
-Str_MEASURE_INSERT:	.asciz "MEASURE INSERT"
-	.align	4, 0xFF
-
-		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_INSERT, super=CmpMeasEditScreen, prev=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpMeasEditScreen_TitleMenu_MEASURE_INSERT_selected, str=Str_MEASURE_INSERT, title=TT_CMMEASINS, icon=74	# str "MEASURE INSERT"
-
-Str_ACCOMP_DSP_SETTING:	.asciz "ACCOMP DSP SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	CmpDspSetScreen, sub=CMP_CmpDspSetGrid, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CmpDspSetScreen_window, title=Str_ACCOMP_DSP_SETTING, icon=194	# title "ACCOMP DSP SETTING"
-
-Str_DSP_GROUP_TYPE_VARI:	.asciz "  DSP   |     GROUP      |      TYPE      |VARI"
-Str_DSP1_DSP2:	.asciz "|-|DSP1|DSP2"
-	.align	4, 0xFF
-
-		AcGridBoxDelux	CMP_CmpDspSetGrid, super=CmpDspSetScreen, next=CmpDspSetTgl, flag=VF_Const, X=32, Y=86, W=493, H=125, color=CL_WallPattern, border=BD_3D_UP2, index=2, font=1, fontcolor=CL_White, row=4, col=4, vertline=1, selrow=CMP_CmpDspSetGrid_selrow, selcol=CMP_CmpDspSetGrid_selcol, pcol=CMP_CmpDspSetGrid_pcol, prow=CMP_CmpDspSetGrid_prow, crow=CMP_CmpDspSetGrid_crow, fixedcol=Str_DSP_GROUP_TYPE_VARI, fixedrow=Str_DSP1_DSP2, func=FN_CmpDspSetGrid	# fixedcol "  DSP   |     GROUP      |      TYPE    "; fixedrow "|-|DSP1|DSP2"
-
-Str_TOTAL_MODE:	.asciz "TOTAL MODE"
-Str_SOUND_MODE:	.asciz "SOUND MODE"
-	.align	4, 0xFF
-
-		AcFuncToggle	CmpDspSetTgl, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES1, prev=CMP_CmpDspSetGrid, flag=VF_Const, X=541, Y=165, W=91, H=22, font=1, stron=Str_TOTAL_MODE, stroff=Str_SOUND_MODE, onoff=CmpDspSetTgl_onoff, editsw=ES_Right4, func=FN_CmpDspSetTglFunc	# stron "TOTAL MODE"; stroff "SOUND MODE"
-		AcIndexWideES	CmpDspSetScreen_IndexWideES1, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES2, prev=CmpDspSetTgl, flag=VF_Const, X=44, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom3, style=14
-		AcIndexWideES	CmpDspSetScreen_IndexWideES2, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES3, prev=CmpDspSetScreen_IndexWideES1, flag=VF_Const, X=124, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom7, style=3
-		AcIndexWideES	CmpDspSetScreen_IndexWideES3, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES4, prev=CmpDspSetScreen_IndexWideES2, flag=VF_Const, X=324, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpDspSetScreen_IndexWideES4, super=CmpDspSetScreen, next=CmpDspSetScreen_Label_DSP1_MODE, prev=CmpDspSetScreen_IndexWideES3, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=3, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom13, style=11
-
-Str_DSP1_MODE:	.asciz "DSP1 MODE"
-	.align	4, 0xFF
-
-		VwLabel	CmpDspSetScreen_Label_DSP1_MODE, super=CmpDspSetScreen, next=CmpDspSetScreen_CmpPatternBox1, prev=CmpDspSetScreen_IndexWideES4, flag=VF_Const, X=547, Y=146, W=76, H=19, str=Str_DSP1_MODE, fontcolor=CL_White	# str "DSP1 MODE"
-		AcCmpPatternBox	CmpDspSetScreen_CmpPatternBox1, super=CmpDspSetScreen, next=CmpDspSetScreen_LanguageText1, prev=CmpDspSetScreen_Label_DSP1_MODE, flag=VF_Const, X=256, Y=2, W=118, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-		AcLanguageText	CmpDspSetScreen_LanguageText1, super=CmpDspSetScreen, prev=CmpDspSetScreen_CmpPatternBox1, flag=VF_Const, X=12, Y=46, W=536, H=36, color=CL_WallPattern, index=0xFFFF, font=5, fontcolor=CL_Yellow, alignment=1, lines=2, func=FN_AttCompDspSet
-
-Str_CUSTOM_STYLE_COPY_2:	.asciz "CUSTOM STYLE COPY"
-	.align	4, 0xFF
-
-	TtlScreen	CmpCstmCpyScreen, sub=CmpCstmCpyScreen_Yajirushi1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpCstmCpyScreen_window, title=Str_CUSTOM_STYLE_COPY_2, icon=161	# title "CUSTOM STYLE COPY"
-		Yajirushi	CmpCstmCpyScreen_Yajirushi1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Box1, flag=VF_Const, X=260, Y=108, W=80, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
-		VwBox	CmpCstmCpyScreen_Box1, super=CmpCstmCpyScreen, next=CmpCstmCpySrcNum, prev=CmpCstmCpyScreen_Yajirushi1, flag=VF_Const, X=40, Y=62, W=216, H=132, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_54:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpCstmCpySrcNum, super=CmpCstmCpyScreen, next=CmpCstmCpySrcName, prev=CmpCstmCpyScreen_Box1, flag=VF_Const, X=56, Y=82, W=180, H=19, color=CL_WallPattern, index=1, caption=Str_empty_54, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpCstmCpySrcNum_selected, func=FN_FE_CmpCstmCpy	# caption ""
-		PsParaDrawBox	CmpCstmCpySrcName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_RHYTHM, prev=CmpCstmCpySrcNum, flag=VF_Const, X=56, Y=120, W=184, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_RHYTHM_7:	.asciz "RHYTHM :"
-	.align	4, 0xFF
-
-		VwLabel	CmpCstmCpyScreen_Label_RHYTHM, super=CmpCstmCpyScreen, next=CmpCstmCpySrcRhyName, prev=CmpCstmCpySrcName, flag=VF_Const, X=58, Y=158, W=68, H=19, str=Str_RHYTHM_7, fontcolor=CL_White	# str "RHYTHM :"
-		PsParaDrawBox	CmpCstmCpySrcRhyName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_FROM, prev=CmpCstmCpyScreen_Label_RHYTHM, flag=VF_Const, X=128, Y=159, W=116, H=15, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_FROM:	.asciz "FROM"
-	.align	4, 0xFF
-
-		VwLabel	CmpCstmCpyScreen_Label_FROM, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_TO, prev=CmpCstmCpySrcRhyName, flag=VF_Const, X=114, Y=34, W=68, H=31, str=Str_FROM, font=11, fontcolor=CL_White	# str "FROM"
-
-Str_TO:	.asciz "TO"
-	.align	4, 0xFF
-
-		VwLabel	CmpCstmCpyScreen_Label_TO, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_FuncEditSw1, prev=CmpCstmCpyScreen_Label_FROM, flag=VF_Const, X=434, Y=34, W=36, H=31, str=Str_TO, font=11, fontcolor=CL_White	# str "TO"
-		AcFuncEditSw	CmpCstmCpyScreen_FuncEditSw1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_IndexWideES1, prev=CmpCstmCpyScreen_Label_TO, flag=VF_Const, X=562, Y=165, W=70, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpCstmCpyOK
-		AcIndexWideES	CmpCstmCpyScreen_IndexWideES1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_FuncWideES1, prev=CmpCstmCpyScreen_FuncEditSw1, flag=VF_Const, X=404, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom14, style=3
-		AcFuncWideES	CmpCstmCpyScreen_FuncWideES1, super=CmpCstmCpyScreen, sub=CmpCstmCpyScreen_Label_DIRECTION, next=CmpCstmCpyScreen_Box2, prev=CmpCstmCpyScreen_IndexWideES1, flag=VF_Const, X=240, Y=216, W=120, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom9, func=FN_CmpCstmCpyDirec
-
-Str_DIRECTION:	.asciz "DIRECTION"
-	.align	4, 0xFF
-
-			VwLabel	CmpCstmCpyScreen_Label_DIRECTION, super=CmpCstmCpyScreen_FuncWideES1, flag=VF_Const, X=248, Y=219, W=103, H=19, str=Str_DIRECTION, font=4, fontcolor=CL_BlackW	# str "DIRECTION"
-		VwBox	CmpCstmCpyScreen_Box2, super=CmpCstmCpyScreen, next=CmpCstmCpyDstNum, prev=CmpCstmCpyScreen_FuncWideES1, flag=VF_Const, X=344, Y=62, W=216, H=132, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_55:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpCstmCpyDstNum, super=CmpCstmCpyScreen, next=CmpCstmCpyDstName, prev=CmpCstmCpyScreen_Box2, flag=VF_Const, X=360, Y=82, W=180, H=19, color=CL_WallPattern, index=2, caption=Str_empty_55, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpCstmCpyDstNum_selected, func=FN_FE_CmpCstmCpy	# caption ""
-		PsParaDrawBox	CmpCstmCpyDstName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_RHYTHM2, prev=CmpCstmCpyDstNum, flag=VF_Const, X=360, Y=120, W=184, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_RHYTHM_8:	.asciz "RHYTHM :"
-	.align	4, 0xFF
-
-		VwLabel	CmpCstmCpyScreen_Label_RHYTHM2, super=CmpCstmCpyScreen, next=CmpCstmCpyDstRhyName, prev=CmpCstmCpyDstName, flag=VF_Const, X=362, Y=158, W=68, H=19, str=Str_RHYTHM_8, fontcolor=CL_White	# str "RHYTHM :"
-		PsParaDrawBox	CmpCstmCpyDstRhyName, super=CmpCstmCpyScreen, next=CmpCstmCpySrcType, prev=CmpCstmCpyScreen_Label_RHYTHM2, flag=VF_Const, X=432, Y=159, W=116, H=15, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-		PsParaDrawBox	CmpCstmCpySrcType, super=CmpCstmCpyScreen, next=CmpCstmCpyDstType, prev=CmpCstmCpyDstRhyName, flag=VF_Const, X=44, Y=197, W=152, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
-		PsParaDrawBox	CmpCstmCpyDstType, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_IndexWideES2, prev=CmpCstmCpySrcType, flag=VF_Const, X=404, Y=197, W=152, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
-		AcIndexWideES	CmpCstmCpyScreen_IndexWideES2, super=CmpCstmCpyScreen, prev=CmpCstmCpyDstType, flag=VF_Const, X=44, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom5, style=3
-
-Str_PART_SETTING_4:	.asciz "PART SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	CmpPartSetScreen, sub=CmpPartSetScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMREAL, window=CmpPartSetScreen_window, title=Str_PART_SETTING_4, icon=159	# title "PART SETTING"
-		IvPageControl	CmpPartSetScreen_PageControl1, super=CmpPartSetScreen, next=CmpPartSetScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=CmpPartSetP1Win_id
-		IvPageControl	CmpPartSetScreen_PageControl2, super=CmpPartSetScreen, next=CmpPartSetScreen_WindowPage1, prev=CmpPartSetScreen_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=CmpPartSetP2Win_id
-		AcWindowPage	CmpPartSetScreen_WindowPage1, super=CmpPartSetScreen, next=CmpPartSetScreen_CmpPatternBox1, prev=CmpPartSetScreen_PageControl2, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=CmpPartSetScreen_WindowPage1_page, pagemin=1, pagemax=2
-		AcCmpPatternBox	CmpPartSetScreen_CmpPatternBox1, super=CmpPartSetScreen, next=CmpPartSetScreen_CmpBarBox1, prev=CmpPartSetScreen_WindowPage1, flag=VF_Const, X=224, Y=2, W=202, H=25, color=CL_TitleBar, index=0xFFFF, font=1, fontcolor=CL_White, align=1, drawPattern=1
-		AcCmpBarBox	CmpPartSetScreen_CmpBarBox1, super=CmpPartSetScreen, prev=CmpPartSetScreen_CmpPatternBox1, flag=VF_Const, X=440, Y=6, W=48, H=19, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_MEASURE_COPY_2:	.asciz "MEASURE COPY"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMeasCpScreen, sub=CmpMeasCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasCpScreen_window, title=Str_MEASURE_COPY_2, icon=71	# title "MEASURE COPY"
-		VwBox	CmpMeasCpScreen_Box1, super=CmpMeasCpScreen, sub=CmpMeasCpScreen_Line1, next=CmpMeasCpScreen_Label_PART, flag=VF_Const, X=60, Y=90, W=260, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-			VwLine	CmpMeasCpScreen_Line1, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Line2, flag=VF_Const, X=242, Y=92, W=1, H=120, color=CL_White, linemode=1
-			VwLine	CmpMeasCpScreen_Line2, super=CmpMeasCpScreen_Box1, next=CmpMCopySPart, prev=CmpMeasCpScreen_Line1, flag=VF_Const, X=164, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_empty_56:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	CmpMCopySPart, super=CmpMeasCpScreen_Box1, next=CmpMCopyFstMeas, prev=CmpMeasCpScreen_Line2, flag=VF_Const, X=70, Y=170, W=89, H=19, color=CL_WallPattern, index=1, caption=Str_empty_56, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMCopySPart_selected, func=FN_FE_CmpMCopySPart	# caption ""
-
-Str_empty_57:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	CmpMCopyFstMeas, super=CmpMeasCpScreen_Box1, next=CmpMCopyLstMeas, prev=CmpMCopySPart, flag=VF_Const, X=186, Y=170, W=37, H=19, color=CL_WallPattern, index=2, caption=Str_empty_57, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopyFstMeas_selected, func=FN_FE_CmpMCopyFstMeas	# caption ""
-
-Str_empty_58:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	CmpMCopyLstMeas, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Label_FIRST, prev=CmpMCopyFstMeas, flag=VF_Const, X=264, Y=170, W=41, H=19, color=CL_WallPattern, index=3, caption=Str_empty_58, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopyLstMeas_selected, func=FN_FE_CmpMCopyLstMeas	# caption ""
-
-Str_FIRST_2:	.asciz "FIRST"
-	.align	4, 0xFF
-
-			VwLabel	CmpMeasCpScreen_Label_FIRST, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Label_MEASURE, prev=CmpMCopyLstMeas, flag=VF_Const, X=172, Y=99, W=44, H=19, str=Str_FIRST_2, font=1, fontcolor=CL_Yellow	# str "FIRST"
-
-Str_MEASURE_5:	.asciz "MEASURE"
-
-			VwLabel	CmpMeasCpScreen_Label_MEASURE, super=CmpMeasCpScreen_Box1, prev=CmpMeasCpScreen_Label_FIRST, flag=VF_Const, X=172, Y=121, W=60, H=19, str=Str_MEASURE_5, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_PART_2:	.asciz "PART"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasCpScreen_Label_PART, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_LAST, prev=CmpMeasCpScreen_Box1, flag=VF_Const, X=94, Y=110, W=36, H=19, str=Str_PART_2, font=1, fontcolor=CL_Yellow	# str "PART"
-
-Str_LAST_2:	.asciz "LAST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasCpScreen_Label_LAST, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_MEASURE2, prev=CmpMeasCpScreen_Label_PART, flag=VF_Const, X=250, Y=99, W=36, H=19, str=Str_LAST_2, font=1, fontcolor=CL_Yellow	# str "LAST"
-
-Str_MEASURE_6:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasCpScreen_Label_MEASURE2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Line3, prev=CmpMeasCpScreen_Label_LAST, flag=VF_Const, X=250, Y=121, W=60, H=19, str=Str_MEASURE_6, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-		VwLine	CmpMeasCpScreen_Line3, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Box2, prev=CmpMeasCpScreen_Label_MEASURE2, flag=VF_Const, X=62, Y=144, W=256, H=1, color=CL_White, linemode=1
-		VwBox	CmpMeasCpScreen_Box2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES1, prev=CmpMeasCpScreen_Line3, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	CmpMeasCpScreen_IndexWideES1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES2, prev=CmpMeasCpScreen_Box2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	CmpMeasCpScreen_IndexWideES2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES3, prev=CmpMeasCpScreen_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	CmpMeasCpScreen_IndexWideES3, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Box3, prev=CmpMeasCpScreen_IndexWideES2, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		VwBox	CmpMeasCpScreen_Box3, super=CmpMeasCpScreen, sub=CmpMeasCpScreen_Line4, next=CmpMeasCpScreen_Line5, prev=CmpMeasCpScreen_IndexWideES3, flag=VF_Const, X=380, Y=90, W=180, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-			VwLine	CmpMeasCpScreen_Line4, super=CmpMeasCpScreen_Box3, next=CmpMCopyDPart, flag=VF_Const, X=476, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_empty_59:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	CmpMCopyDPart, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_PART2, prev=CmpMeasCpScreen_Line4, flag=VF_Const, X=384, Y=170, W=89, H=19, color=CL_WallPattern, index=4, caption=Str_empty_59, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMCopyDPart_selected, func=FN_FE_CmpMCopyDPart	# caption ""
-
-Str_PART_3:	.asciz "PART"
-	.align	4, 0xFF
-
-			VwLabel	CmpMeasCpScreen_Label_PART2, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_START, prev=CmpMCopyDPart, flag=VF_Const, X=412, Y=110, W=36, H=19, str=Str_PART_3, font=1, fontcolor=CL_Yellow	# str "PART"
-
-Str_START:	.asciz "START"
-	.align	4, 0xFF
-
-			VwLabel	CmpMeasCpScreen_Label_START, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_MEASURE3, prev=CmpMeasCpScreen_Label_PART2, flag=VF_Const, X=488, Y=99, W=44, H=19, str=Str_START, font=1, fontcolor=CL_Yellow	# str "START"
-
-Str_MEASURE_7:	.asciz "MEASURE"
-
-			VwLabel	CmpMeasCpScreen_Label_MEASURE3, super=CmpMeasCpScreen_Box3, next=CmpMCopySrtMeas, prev=CmpMeasCpScreen_Label_START, flag=VF_Const, X=488, Y=121, W=60, H=19, str=Str_MEASURE_7, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_empty_60:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	CmpMCopySrtMeas, super=CmpMeasCpScreen_Box3, prev=CmpMeasCpScreen_Label_MEASURE3, flag=VF_Const, X=502, Y=170, W=37, H=19, color=CL_WallPattern, index=5, caption=Str_empty_60, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopySrtMeas_selected, func=FN_FE_CmpMCopySrtMeas	# caption ""
-		VwLine	CmpMeasCpScreen_Line5, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES4, prev=CmpMeasCpScreen_Box3, flag=VF_Const, X=382, Y=144, W=176, H=1, color=CL_White, linemode=1
-		AcIndexWideES	CmpMeasCpScreen_IndexWideES4, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES5, prev=CmpMeasCpScreen_Line5, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpMeasCpScreen_IndexWideES5, super=CmpMeasCpScreen, next=CmpMeasCpScreen_CmpPatternBox1, prev=CmpMeasCpScreen_IndexWideES4, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-		AcCmpPatternBox	CmpMeasCpScreen_CmpPatternBox1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Yajirushi1, prev=CmpMeasCpScreen_IndexWideES5, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-		Yajirushi	CmpMeasCpScreen_Yajirushi1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_FROM, prev=CmpMeasCpScreen_CmpPatternBox1, flag=VF_Const, X=324, Y=124, W=52, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
-
-Str_FROM_2:	.asciz "FROM"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasCpScreen_Label_FROM, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_TO, prev=CmpMeasCpScreen_Yajirushi1, flag=VF_Const, X=146, Y=62, W=68, H=31, str=Str_FROM_2, font=11, fontcolor=CL_White	# str "FROM"
-
-Str_TO_2:	.asciz "TO"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasCpScreen_Label_TO, super=CmpMeasCpScreen, next=CmpMeasCpScreen_FuncEditSw1, prev=CmpMeasCpScreen_Label_FROM, flag=VF_Const, X=446, Y=62, W=36, H=31, str=Str_TO_2, font=11, fontcolor=CL_White	# str "TO"
-		AcFuncEditSw	CmpMeasCpScreen_FuncEditSw1, super=CmpMeasCpScreen, prev=CmpMeasCpScreen_Label_TO, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMCopyOK
-
-Str_MEASURE_DELETE_2:	.asciz "MEASURE DELETE"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMeasDelScreen, sub=CmpMeasDelScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasDelScreen_window, title=Str_MEASURE_DELETE_2, icon=73	# title "MEASURE DELETE"
-		VwBox	CmpMeasDelScreen_Box1, super=CmpMeasDelScreen, next=CmpMDelFstMeas, flag=VF_Const, X=200, Y=90, W=240, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_61:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMDelFstMeas, super=CmpMeasDelScreen, next=CmpMDelLstMeas, prev=CmpMeasDelScreen_Box1, flag=VF_Const, X=244, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_61, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMDelFstMeas_selected, func=FN_FE_CmpMDelFstMeas	# caption ""
-
-Str_empty_62:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMDelLstMeas, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Line1, prev=CmpMDelFstMeas, flag=VF_Const, X=360, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_62, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMDelLstMeas_selected, func=FN_FE_CmpMDelLstMeas	# caption ""
-		VwLine	CmpMeasDelScreen_Line1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_FIRST, prev=CmpMDelLstMeas, flag=VF_Const, X=320, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_FIRST_3:	.asciz "FIRST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasDelScreen_Label_FIRST, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_MEASURE, prev=CmpMeasDelScreen_Line1, flag=VF_Const, X=222, Y=99, W=59, H=19, str=Str_FIRST_3, font=4, fontcolor=CL_Yellow	# str "FIRST"
-
-Str_MEASURE_8:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasDelScreen_Label_MEASURE, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_LAST, prev=CmpMeasDelScreen_Label_FIRST, flag=VF_Const, X=222, Y=121, W=81, H=19, str=Str_MEASURE_8, font=4, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_LAST_3:	.asciz "LAST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasDelScreen_Label_LAST, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_MEASURE2, prev=CmpMeasDelScreen_Label_MEASURE, flag=VF_Const, X=338, Y=99, W=48, H=19, str=Str_LAST_3, font=4, fontcolor=CL_Yellow	# str "LAST"
-
-Str_MEASURE_9:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasDelScreen_Label_MEASURE2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Line2, prev=CmpMeasDelScreen_Label_LAST, flag=VF_Const, X=338, Y=121, W=81, H=19, str=Str_MEASURE_9, font=4, fontcolor=CL_Yellow	# str "MEASURE"
-		VwLine	CmpMeasDelScreen_Line2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Box2, prev=CmpMeasDelScreen_Label_MEASURE2, flag=VF_Const, X=202, Y=144, W=236, H=1, color=CL_White, linemode=1
-		VwBox	CmpMeasDelScreen_Box2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_IndexWideES1, prev=CmpMeasDelScreen_Line2, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	CmpMeasDelScreen_IndexWideES1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_IndexWideES2, prev=CmpMeasDelScreen_Box2, flag=VF_Const, X=324, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
-		AcIndexWideES	CmpMeasDelScreen_IndexWideES2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_CmpPatternBox1, prev=CmpMeasDelScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=3
-		AcCmpPatternBox	CmpMeasDelScreen_CmpPatternBox1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_FuncEditSw1, prev=CmpMeasDelScreen_IndexWideES2, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-		AcFuncEditSw	CmpMeasDelScreen_FuncEditSw1, super=CmpMeasDelScreen, prev=CmpMeasDelScreen_CmpPatternBox1, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMDelOK
-
-Str_MEASURE_ERASE_2:	.asciz "MEASURE ERASE"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMeasErsScreen, sub=CmpMeasErsScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasErsScreen_window, title=Str_MEASURE_ERASE_2, icon=72	# title "MEASURE ERASE"
-		VwBox	CmpMeasErsScreen_Box1, super=CmpMeasErsScreen, next=CmpMErsPart, flag=VF_Const, X=120, Y=90, W=360, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_63:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMErsPart, super=CmpMeasErsScreen, next=CmpMErsFstMeas, prev=CmpMeasErsScreen_Box1, flag=VF_Const, X=140, Y=170, W=93, H=19, color=CL_WallPattern, index=1, caption=Str_empty_63, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMErsPart_selected, func=FN_FE_CmpMErsSPart	# caption ""
-
-Str_empty_64:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMErsFstMeas, super=CmpMeasErsScreen, next=CmpMErsLstMeas, prev=CmpMErsPart, flag=VF_Const, X=284, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_64, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMErsFstMeas_selected, func=FN_FE_CmpMErsFstMeas	# caption ""
-
-Str_empty_65:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMErsLstMeas, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line1, prev=CmpMErsFstMeas, flag=VF_Const, X=404, Y=170, W=49, H=19, color=CL_WallPattern, index=3, caption=Str_empty_65, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMErsLstMeas_selected, func=FN_FE_CmpMErsLstMeas	# caption ""
-		VwLine	CmpMeasErsScreen_Line1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line2, prev=CmpMErsLstMeas, flag=VF_Const, X=240, Y=92, W=1, H=120, color=CL_White, linemode=1
-		VwLine	CmpMeasErsScreen_Line2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_PART, prev=CmpMeasErsScreen_Line1, flag=VF_Const, X=360, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_PART_4:	.asciz "PART"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasErsScreen_Label_PART, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_FIRST, prev=CmpMeasErsScreen_Line2, flag=VF_Const, X=158, Y=110, W=48, H=19, str=Str_PART_4, font=4, fontcolor=CL_Yellow	# str "PART"
-
-Str_FIRST_4:	.asciz "FIRST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasErsScreen_Label_FIRST, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_MEASURE, prev=CmpMeasErsScreen_Label_PART, flag=VF_Const, X=262, Y=99, W=59, H=19, str=Str_FIRST_4, font=4, fontcolor=CL_Yellow	# str "FIRST"
-
-Str_MEASURE_10:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasErsScreen_Label_MEASURE, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_LAST, prev=CmpMeasErsScreen_Label_FIRST, flag=VF_Const, X=262, Y=121, W=81, H=19, str=Str_MEASURE_10, font=4, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_LAST_4:	.asciz "LAST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasErsScreen_Label_LAST, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_MEASURE2, prev=CmpMeasErsScreen_Label_MEASURE, flag=VF_Const, X=382, Y=99, W=48, H=19, str=Str_LAST_4, font=4, fontcolor=CL_Yellow	# str "LAST"
-
-Str_MEASURE_11:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasErsScreen_Label_MEASURE2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line3, prev=CmpMeasErsScreen_Label_LAST, flag=VF_Const, X=382, Y=121, W=81, H=19, str=Str_MEASURE_11, font=4, fontcolor=CL_Yellow	# str "MEASURE"
-		VwLine	CmpMeasErsScreen_Line3, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Box2, prev=CmpMeasErsScreen_Label_MEASURE2, flag=VF_Const, X=122, Y=144, W=356, H=1, color=CL_White, linemode=1
-		VwBox	CmpMeasErsScreen_Box2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES1, prev=CmpMeasErsScreen_Line3, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	CmpMeasErsScreen_IndexWideES1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES2, prev=CmpMeasErsScreen_Box2, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpMeasErsScreen_IndexWideES2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES3, prev=CmpMeasErsScreen_IndexWideES1, flag=VF_Const, X=244, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom9, style=3
-		AcIndexWideES	CmpMeasErsScreen_IndexWideES3, super=CmpMeasErsScreen, next=CmpMeasErsScreen_CmpPatternBox1, prev=CmpMeasErsScreen_IndexWideES2, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
-		AcCmpPatternBox	CmpMeasErsScreen_CmpPatternBox1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_SureWindowMenu_OK, prev=CmpMeasErsScreen_IndexWideES3, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_OK:	.asciz "OK "
-
-		AcSureWindowMenu	CmpMeasErsScreen_SureWindowMenu_OK, super=CmpMeasErsScreen, prev=CmpMeasErsScreen_CmpPatternBox1, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right4, selected=CmpMeasErsScreen_SureWindowMenu_OK_selected, str=Str_OK, window=CmpMEraseWin_id, func=FN_CmpMErsYes	# str "OK "
-
-Str_MEASURE_INSERT_2:	.asciz "MEASURE INSERT"
-	.align	4, 0xFF
-
-	TtlScreen	CmpMeasInsScreen, sub=CmpMeasInsScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasInsScreen_window, title=Str_MEASURE_INSERT_2, icon=74	# title "MEASURE INSERT"
-		AcCmpPatternBox	CmpMeasInsScreen_CmpPatternBox1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Box1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-		VwBox	CmpMeasInsScreen_Box1, super=CmpMeasInsScreen, next=CmpMInsFstMeas, prev=CmpMeasInsScreen_CmpPatternBox1, flag=VF_Const, X=200, Y=90, W=240, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_66:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMInsFstMeas, super=CmpMeasInsScreen, next=CmpMInsMeasNum, prev=CmpMeasInsScreen_Box1, flag=VF_Const, X=244, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_66, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMInsFstMeas_selected, func=FN_FE_CmpMInsFstMeas	# caption ""
-
-Str_empty_67:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpMInsMeasNum, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Line1, prev=CmpMInsFstMeas, flag=VF_Const, X=360, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_67, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMInsMeasNum_selected, func=FN_FE_CmpMInsMeasNum	# caption ""
-		VwLine	CmpMeasInsScreen_Line1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_FIRST, prev=CmpMInsMeasNum, flag=VF_Const, X=320, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_FIRST_5:	.asciz "FIRST"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasInsScreen_Label_FIRST, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_MEASURE, prev=CmpMeasInsScreen_Line1, flag=VF_Const, X=222, Y=99, W=59, H=19, str=Str_FIRST_5, font=4, fontcolor=CL_Yellow	# str "FIRST"
-
-Str_MEASURE_12:	.asciz "MEASURE"
-
-		VwLabel	CmpMeasInsScreen_Label_MEASURE, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_NUMBER_OF, prev=CmpMeasInsScreen_Label_FIRST, flag=VF_Const, X=222, Y=121, W=81, H=19, str=Str_MEASURE_12, font=4, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_NUMBER_OF:	.asciz "NUMBER OF"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasInsScreen_Label_NUMBER_OF, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_MEASURES, prev=CmpMeasInsScreen_Label_MEASURE, flag=VF_Const, X=330, Y=99, W=103, H=19, str=Str_NUMBER_OF, font=4, fontcolor=CL_Yellow	# str "NUMBER OF"
-
-Str_MEASURES:	.asciz "MEASURES"
-	.align	4, 0xFF
-
-		VwLabel	CmpMeasInsScreen_Label_MEASURES, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Line2, prev=CmpMeasInsScreen_Label_NUMBER_OF, flag=VF_Const, X=330, Y=121, W=92, H=19, str=Str_MEASURES, font=4, fontcolor=CL_Yellow	# str "MEASURES"
-		VwLine	CmpMeasInsScreen_Line2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Box2, prev=CmpMeasInsScreen_Label_MEASURES, flag=VF_Const, X=202, Y=144, W=236, H=1, color=CL_White, linemode=1
-		VwBox	CmpMeasInsScreen_Box2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_IndexWideES1, prev=CmpMeasInsScreen_Line2, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	CmpMeasInsScreen_IndexWideES1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_IndexWideES2, prev=CmpMeasInsScreen_Box2, flag=VF_Const, X=324, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
-		AcIndexWideES	CmpMeasInsScreen_IndexWideES2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_FuncEditSw1, prev=CmpMeasInsScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=3
-		AcFuncEditSw	CmpMeasInsScreen_FuncEditSw1, super=CmpMeasInsScreen, prev=CmpMeasInsScreen_IndexWideES2, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMInsOK
-
-	Window	CmpMemClrWin, sub=CmpMemClrWin_Box1, flag=VF_Const, X=8, Y=102, W=472, H=112, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmpMemClrWin_parent, child=CmpMemClrWin_child
-		VwBox	CmpMemClrWin_Box1, super=CmpMemClrWin, sub=CmpMemClrWin_ScreenMenu_NO, next=CmpMemClrWin_FuncEditSw1, flag=VF_Const, X=480, Y=74, W=160, H=166, color=CL_WallPattern, index=0xFFFF
-
-Str_NO:	.asciz "NO  "
-	.align	4, 0xFF
-
-			AcScreenMenu	CmpMemClrWin_ScreenMenu_NO, super=CmpMemClrWin_Box1, flag=VF_Const, X=553, Y=166, W=79, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right4, selected=CmpMemClrWin_ScreenMenu_NO_selected, str=Str_NO, screen=CmpBkslScreen_id	# str "NO  "
-		AcFuncEditSw	CmpMemClrWin_FuncEditSw1, super=CmpMemClrWin, next=CmpMemClrWin_ExitScreen1, prev=CmpMemClrWin_Box1, flag=VF_Const, X=553, Y=124, W=79, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_CmpMemClrYes
-		IvExitScreen	CmpMemClrWin_ExitScreen1, super=CmpMemClrWin, next=CmpMemClrWin_LanguageText1, prev=CmpMemClrWin_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpBkslScreen_id
-		AcLanguageText	CmpMemClrWin_LanguageText1, super=CmpMemClrWin, prev=CmpMemClrWin_ExitScreen1, flag=VF_Const, X=12, Y=146, W=464, H=24, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
-
-	Window	CmpClrPtnWin, sub=CmpClrPtnWin_FuncEditSw1, flag=VF_Const, X=300, Y=40, W=288, H=64, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmpClrPtnWin_parent, child=CmpClrPtnWin_child
-		AcFuncEditSw	CmpClrPtnWin_FuncEditSw1, super=CmpClrPtnWin, next=CmpClrPtnWin_ScreenMenu_NO, flag=VF_Const, X=593, Y=40, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=9, func=FN_CmpPtnClrYes
-
-Str_NO_2:	.asciz "NO"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmpClrPtnWin_ScreenMenu_NO, super=CmpClrPtnWin, next=CmpClrPtnWin_ExitScreen1, prev=CmpClrPtnWin_FuncEditSw1, flag=VF_Const, X=593, Y=82, W=39, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right2, selected=CmpClrPtnWin_ScreenMenu_NO_selected, str=Str_NO_2, screen=CmpBkslSScreen_id	# str "NO"
-		IvExitScreen	CmpClrPtnWin_ExitScreen1, super=CmpClrPtnWin, next=CmpClrPtnWin_Box1, prev=CmpClrPtnWin_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpBkslSScreen_id
-		VwBox	CmpClrPtnWin_Box1, super=CmpClrPtnWin, next=CmpClrPtnWin_LanguageText1, prev=CmpClrPtnWin_ExitScreen1, flag=VF_Const, X=560, Y=162, W=80, H=28, color=CL_WallPattern, index=0xFFFF
-		AcLanguageText	CmpClrPtnWin_LanguageText1, super=CmpClrPtnWin, prev=CmpClrPtnWin_Box1, flag=VF_Const, X=304, Y=62, W=280, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
-
-Str_VARIATION_NAMING:	.asciz "VARIATION NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	CmVari1NameScreen, sub=CmVari1NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari1NameScreen_window, title=Str_VARIATION_NAMING, icon=153	# title "VARIATION NAMING"
-		AcCmpPatternBox	CmVari1NameScreen_CmpPatternBox1, super=CmVari1NameScreen, next=CmVari1NameScreen_Label_VARI1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
-
-Str_VARI1:	.asciz "- VARI1"
-
-		VwLabel	CmVari1NameScreen_Label_VARI1, super=CmVari1NameScreen, next=CmVari1NameScreen_Naming1, prev=CmVari1NameScreen_CmpPatternBox1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI1, font=1, fontcolor=CL_White	# str "- VARI1"
-		IvNaming	CmVari1NameScreen_Naming1, super=CmVari1NameScreen, next=CmVari1NameScreen_ExitScreen1, prev=CmVari1NameScreen_Label_VARI1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari1NmChk
-		IvExitScreen	CmVari1NameScreen_ExitScreen1, super=CmVari1NameScreen, next=CmVari1NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari1NameScreen_Naming1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
-
-Str_NEXT_VARI:	.asciz "NEXT VARI"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmVari1NameScreen_ScreenMenu_NEXT_VARI, super=CmVari1NameScreen, next=CmVari1NameScreen_FuncEditSw1, prev=CmVari1NameScreen_ExitScreen1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari1NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI, screen=CmVari2NameScreen_id	# str "NEXT VARI"
-		AcFuncEditSw	CmVari1NameScreen_FuncEditSw1, super=CmVari1NameScreen, prev=CmVari1NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
-
-Str_VARIATION_NAMING_2:	.asciz "VARIATION NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	CmVari2NameScreen, sub=CmVari2NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari2NameScreen_window, title=Str_VARIATION_NAMING_2, icon=153	# title "VARIATION NAMING"
-		AcCmpPatternBox	CmVari2NameScreen_CmpPatternBox1, super=CmVari2NameScreen, next=CmVari2NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
-		IvNaming	CmVari2NameScreen_Naming1, super=CmVari2NameScreen, next=CmVari2NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari2NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari2NmChk
-
-Str_NEXT_VARI_2:	.asciz "NEXT VARI"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmVari2NameScreen_ScreenMenu_NEXT_VARI, super=CmVari2NameScreen, next=CmVari2NameScreen_FuncEditSw1, prev=CmVari2NameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari2NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_2, screen=CmVari3NameScreen_id	# str "NEXT VARI"
-		AcFuncEditSw	CmVari2NameScreen_FuncEditSw1, super=CmVari2NameScreen, next=CmVari2NameScreen_Label_VARI2, prev=CmVari2NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
-
-Str_VARI2:	.asciz "- VARI2"
-
-		VwLabel	CmVari2NameScreen_Label_VARI2, super=CmVari2NameScreen, next=CmVari2NameScreen_ExitScreen1, prev=CmVari2NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI2, font=1, fontcolor=CL_White	# str "- VARI2"
-		IvExitScreen	CmVari2NameScreen_ExitScreen1, super=CmVari2NameScreen, prev=CmVari2NameScreen_Label_VARI2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
-
-Str_VARIATION_NAMING_3:	.asciz "VARIATION NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	CmVari3NameScreen, sub=CmVari3NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari3NameScreen_window, title=Str_VARIATION_NAMING_3, icon=153	# title "VARIATION NAMING"
-		AcCmpPatternBox	CmVari3NameScreen_CmpPatternBox1, super=CmVari3NameScreen, next=CmVari3NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
-		IvNaming	CmVari3NameScreen_Naming1, super=CmVari3NameScreen, next=CmVari3NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari3NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari3NmChk
-
-Str_NEXT_VARI_3:	.asciz "NEXT VARI"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmVari3NameScreen_ScreenMenu_NEXT_VARI, super=CmVari3NameScreen, next=CmVari3NameScreen_FuncEditSw1, prev=CmVari3NameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari3NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_3, screen=CmVari4NameScreen_id	# str "NEXT VARI"
-		AcFuncEditSw	CmVari3NameScreen_FuncEditSw1, super=CmVari3NameScreen, next=CmVari3NameScreen_Label_VARI3, prev=CmVari3NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
-
-Str_VARI3:	.asciz "- VARI3"
-
-		VwLabel	CmVari3NameScreen_Label_VARI3, super=CmVari3NameScreen, next=CmVari3NameScreen_ExitScreen1, prev=CmVari3NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI3, font=1, fontcolor=CL_White	# str "- VARI3"
-		IvExitScreen	CmVari3NameScreen_ExitScreen1, super=CmVari3NameScreen, prev=CmVari3NameScreen_Label_VARI3, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
-
-Str_VARIATION_NAMING_4:	.asciz "VARIATION NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	CmVari4NameScreen, sub=CmVari4NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari4NameScreen_window, title=Str_VARIATION_NAMING_4, icon=153	# title "VARIATION NAMING"
-		AcCmpPatternBox	CmVari4NameScreen_CmpPatternBox1, super=CmVari4NameScreen, next=CmVari4NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
-		IvNaming	CmVari4NameScreen_Naming1, super=CmVari4NameScreen, next=CmVari4NameScreen_FuncEditSw1, prev=CmVari4NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari4NmChk
-		AcFuncEditSw	CmVari4NameScreen_FuncEditSw1, super=CmVari4NameScreen, next=CmVari4NameScreen_Label_VARI4, prev=CmVari4NameScreen_Naming1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
-
-Str_VARI4:	.asciz "- VARI4"
-
-		VwLabel	CmVari4NameScreen_Label_VARI4, super=CmVari4NameScreen, next=CmVari4NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari4NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI4, font=1, fontcolor=CL_White	# str "- VARI4"
-
-Str_NEXT_VARI_4:	.asciz "NEXT VARI"
-	.align	4, 0xFF
-
-		AcScreenMenu	CmVari4NameScreen_ScreenMenu_NEXT_VARI, super=CmVari4NameScreen, next=CmVari4NameScreen_ExitScreen1, prev=CmVari4NameScreen_Label_VARI4, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari4NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_4, screen=CmVari1NameScreen_id	# str "NEXT VARI"
-		IvExitScreen	CmVari4NameScreen_ExitScreen1, super=CmVari4NameScreen, prev=CmVari4NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
-
-	Window	CmpPtnCpP1Win, sub=CmpPtnCpP1Win_IndexWideES1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmpPtnCpP1Win_parent, child=CmpPtnCpP1Win_child
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES3, prev=CmpPtnCpP1Win_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES4, prev=CmpPtnCpP1Win_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES4, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES5, prev=CmpPtnCpP1Win_IndexWideES3, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES5, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditSw1, prev=CmpPtnCpP1Win_IndexWideES4, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-		AcFuncEditSw	CmpPtnCpP1Win_FuncEditSw1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_MEMORY, prev=CmpPtnCpP1Win_IndexWideES5, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmPnCpOK
-
-Str_MEMORY_5:	.asciz "MEMORY"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_MEMORY, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN, prev=CmpPtnCpP1Win_FuncEditSw1, flag=VF_Const, X=414, Y=198, W=52, H=19, str=Str_MEMORY_5, fontcolor=CL_White	# str "MEMORY"
-
-Str_PATTERN_2:	.asciz "PATTERN"
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_GROUP, prev=CmpPtnCpP1Win_Label_MEMORY, flag=VF_Const, X=490, Y=198, W=60, H=19, str=Str_PATTERN_2, fontcolor=CL_White	# str "PATTERN"
-
-Str_GROUP_3:	.asciz "GROUP"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_GROUP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_RHYTHM, prev=CmpPtnCpP1Win_Label_PATTERN, flag=VF_Const, X=18, Y=198, W=44, H=19, str=Str_GROUP_3, fontcolor=CL_White	# str "GROUP"
-
-Str_RHYTHM_9:	.asciz "RHYTHM"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_RHYTHM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN2, prev=CmpPtnCpP1Win_Label_GROUP, flag=VF_Const, X=94, Y=198, W=52, H=19, str=Str_RHYTHM_9, fontcolor=CL_White	# str "RHYTHM"
-
-Str_PATTERN_3:	.asciz "PATTERN"
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_TO, prev=CmpPtnCpP1Win_Label_RHYTHM, flag=VF_Const, X=170, Y=198, W=60, H=19, str=Str_PATTERN_3, fontcolor=CL_White	# str "PATTERN"
-
-Str_TO_3:	.asciz "TO"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_TO, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_FROM, prev=CmpPtnCpP1Win_Label_PATTERN2, flag=VF_Const, X=482, Y=50, W=36, H=31, str=Str_TO_3, font=11, fontcolor=CL_White	# str "TO"
-
-Str_FROM_3:	.asciz "FROM"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_FROM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Yajirushi1, prev=CmpPtnCpP1Win_Label_TO, flag=VF_Const, X=94, Y=50, W=68, H=31, str=Str_FROM_3, font=11, fontcolor=CL_White	# str "FROM"
-		Yajirushi	CmpPtnCpP1Win_Yajirushi1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES6, prev=CmpPtnCpP1Win_Label_FROM, flag=VF_Const, X=268, Y=88, W=132, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES6, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_ACCOMP_DSP, prev=CmpPtnCpP1Win_Yajirushi1, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=3
-
-Str_ACCOMP_DSP:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncMenu_EDIT, prev=CmpPtnCpP1Win_IndexWideES6, flag=VF_Const, X=278, Y=198, W=84, H=19, str=Str_ACCOMP_DSP, fontcolor=CL_White	# str "ACCOMP DSP"
-
-Str_EDIT_3:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcFuncMenu	CmpPtnCpP1Win_FuncMenu_EDIT, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box1, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpPtnCpP1Win_FuncMenu_EDIT_selected, str=Str_EDIT_3, func=FN_CmpPnCpEditFunc	# str "EDIT"
-		VwBox	CmpPtnCpP1Win_Box1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_MEMORY2, prev=CmpPtnCpP1Win_FuncMenu_EDIT, flag=VF_Const, X=404, Y=78, W=186, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_MEMORY_6:	.asciz "MEMORY:"
-
-		VwLabel	CmpPtnCpP1Win_Label_MEMORY2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN3, prev=CmpPtnCpP1Win_Box1, flag=VF_Const, X=410, Y=90, W=60, H=19, str=Str_MEMORY_6, fontcolor=CL_Yellow	# str "MEMORY:"
-
-Str_PATTERN_4:	.asciz "PATTERN:"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox1, prev=CmpPtnCpP1Win_Label_MEMORY2, flag=VF_Const, X=410, Y=142, W=68, H=19, str=Str_PATTERN_4, fontcolor=CL_Yellow	# str "PATTERN:"
-
-Str_empty_68:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox1, super=CmpPtnCpP1Win, next=PnCpDstPtn, prev=CmpPtnCpP1Win_Label_PATTERN3, flag=VF_Const, X=410, Y=106, W=177, H=34, color=CL_WallPattern, index=4, caption=Str_empty_68, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox1_selected, func=FN_FuncEdit_rhyDstName	# caption ""
-
-Str_empty_69:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	PnCpDstPtn, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box2, prev=CmpPtnCpP1Win_FuncEditBox1, flag=VF_Const, X=410, Y=160, W=178, H=34, color=CL_WallPattern, index=5, caption=Str_empty_69, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDstPtn_selected, func=FN_FuncEdit_rhyDstPattern	# caption ""
-		VwBox	CmpPtnCpP1Win_Box2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_ACCOMP_DSP2, prev=PnCpDstPtn, flag=VF_Const, X=268, Y=150, W=132, H=48, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_ACCOMP_DSP_2:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP2, super=CmpPtnCpP1Win, next=PnCpDspYN, prev=CmpPtnCpP1Win_Box2, flag=VF_Const, X=270, Y=154, W=64, H=11, str=Str_ACCOMP_DSP_2, font=3, fontcolor=CL_Yellow	# str "ACCOMP DSP"
-
-Str_empty_70:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	PnCpDspYN, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_COPY_OPTION, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP2, flag=VF_Const, X=273, Y=177, W=125, H=15, color=CL_WallPattern, index=6, caption=Str_empty_70, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDspYN_selected, func=FN_FuncEdit_rhyYN	# caption ""
-
-Str_COPY_OPTION:	.asciz "COPY OPTION:"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_COPY_OPTION, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box3, prev=PnCpDspYN, flag=VF_Const, X=276, Y=164, W=76, H=11, str=Str_COPY_OPTION, font=3, fontcolor=CL_Yellow	# str "COPY OPTION:"
-		VwBox	CmpPtnCpP1Win_Box3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_RHYTHM2, prev=CmpPtnCpP1Win_Label_COPY_OPTION, flag=VF_Const, X=0, Y=78, W=264, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_RHYTHM_10:	.asciz "RHYTHM:"
-
-		VwLabel	CmpPtnCpP1Win_Label_RHYTHM2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_GROUP2, prev=CmpPtnCpP1Win_Box3, flag=VF_Const, X=6, Y=130, W=60, H=19, str=Str_RHYTHM_10, fontcolor=CL_Yellow	# str "RHYTHM:"
-
-Str_GROUP_4:	.asciz "GROUP:"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_GROUP2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN4, prev=CmpPtnCpP1Win_Label_RHYTHM2, flag=VF_Const, X=6, Y=94, W=52, H=19, str=Str_GROUP_4, fontcolor=CL_Yellow	# str "GROUP:"
-
-Str_PATTERN_5:	.asciz "PATTERN:"
-	.align	4, 0xFF
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN4, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox2, prev=CmpPtnCpP1Win_Label_GROUP2, flag=VF_Const, X=6, Y=166, W=68, H=19, str=Str_PATTERN_5, fontcolor=CL_Yellow	# str "PATTERN:"
-
-Str_empty_71:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox2, super=CmpPtnCpP1Win, next=PnCpSrcPtn, prev=CmpPtnCpP1Win_Label_PATTERN4, flag=VF_Const, X=72, Y=122, W=189, H=34, color=CL_WallPattern, index=2, caption=Str_empty_71, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox2_selected, func=FN_FuncEdit_rhyName	# caption ""
-
-Str_empty_72:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	PnCpSrcPtn, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox3, prev=CmpPtnCpP1Win_FuncEditBox2, flag=VF_Const, X=72, Y=158, W=189, H=34, color=CL_WallPattern, index=3, caption=Str_empty_72, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpSrcPtn_selected, func=FN_FuncEdit_rhyPattern	# caption ""
-
-Str_empty_73:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox3, super=CmpPtnCpP1Win, prev=PnCpSrcPtn, flag=VF_Const, X=72, Y=86, W=189, H=34, color=CL_WallPattern, index=1, caption=Str_empty_73, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox3_selected, func=FN_FuncEdit_rhyGroup	# caption ""
-
-	Window	CmpPtnCpP2Win, sub=CmpPrtCpySrcGrid, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmpPtnCpP2Win_parent, child=CmpPtnCpP2Win_child
-
-Str_GROUP_RHYTHM_PATTERN_PART:	.asciz "|    GROUP    |     RHYTHM     | PATTERN |  PART   "
-Str_empty_74:	.asciz "|-| | | | | | | | |"
-
-		AcGridBoxDelux	CmpPrtCpySrcGrid, super=CmpPtnCpP2Win, next=CmpPrtCpyDstGrid, flag=VF_Const, X=0, Y=70, W=400, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=10, col=5, vertline=1, selrow=CmpPrtCpySrcGrid_selrow, selcol=CmpPrtCpySrcGrid_selcol, pcol=CmpPrtCpySrcGrid_pcol, prow=CmpPrtCpySrcGrid_prow, crow=CmpPrtCpySrcGrid_crow, fixedcol=Str_GROUP_RHYTHM_PATTERN_PART, fixedrow=Str_empty_74, func=FN_CmpPartCopyGrid	# fixedcol "|    GROUP    |     RHYTHM     | PATTERN"; fixedrow "|-| | | | | | | | |"
-
-Str_PART_FUNC:	.asciz "  PART  |  FUNC  "
-Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_2:	.asciz "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
-	.align	4, 0xFF
-
-		AcGridBoxDelux	CmpPrtCpyDstGrid, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Yajirushi1, prev=CmpPrtCpySrcGrid, flag=VF_Const, X=444, Y=70, W=145, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=6, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=CmpPrtCpyDstGrid_selrow, selcol=CmpPrtCpyDstGrid_selcol, pcol=CmpPrtCpyDstGrid_pcol, prow=CmpPrtCpyDstGrid_prow, crow=CmpPrtCpyDstGrid_crow, fixedcol=Str_PART_FUNC, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_2, func=FN_CmpPrtCpyStsGrid	# fixedcol "  PART  |  FUNC  "; fixedrow "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOM"
-		Yajirushi	CmpPtnCpP2Win_Yajirushi1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES1, prev=CmpPrtCpyDstGrid, flag=VF_Const, X=404, Y=114, W=38, H=64, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES2, prev=CmpPtnCpP2Win_Yajirushi1, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES2, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES3, prev=CmpPtnCpP2Win_IndexWideES1, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES3, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES4, prev=CmpPtnCpP2Win_IndexWideES2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES4, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES5, prev=CmpPtnCpP2Win_IndexWideES3, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES5, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_FROM, prev=CmpPtnCpP2Win_IndexWideES4, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=3

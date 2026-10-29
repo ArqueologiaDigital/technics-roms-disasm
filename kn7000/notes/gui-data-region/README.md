@@ -125,6 +125,54 @@ A record whose ResName is not empty (2,200 of 8,509) is named by it.  The others
 record shows one, numbered when that repeats.  These generated names are the source's; the
 firmware has none for those objects.
 
+## Beyond the GUI (second pass, 2026-10-29)
+
+### The built-in demo songs
+
+The 30 zlib streams of each build are its 10 demo songs, three streams each.  func_48457350
+(941 0x48457350; d0 = the song) takes song n's streams from three 12-entry tables in the
+initialised RAM (`ptrs_50000C20` / `_50000C50` / `_50000C80`) and inflates them with
+func_48533758: the song record into Rec8E0TablePtr(0) (0x8E0 bytes), the event memory into
+0x5003D36C (0x9800 bytes) and a panel-memory bank into the buffer func_4C021A4E /
+func_4C021ADE give.  They are the formats of the floppies' .SQT and .PMT files, so the floppy
+describers type them: `floppy/tools/kd/kn_sqt.py` (typer1: the record, its track directory, its
+panel memory; typer2: the cells, every track's events) and `kn_panel.py` (the bank's name and its
+8 PANEL MEMORY records, PMR_* of `src/include/panel_memory.inc`).  gen_data_s.py translates their
+lines to kn7asm syntax (macros `src/include/kn_song.inc`, `kn_panel_extra.inc`) and puts each
+stream's lines in a `.zlib 6` block: kn7asm compresses them with Python's zlib, which reproduces
+all 30 streams byte-exactly.  Two notes:
+
+- A free cell (in no track's chain) holds what an earlier song left there; it is written as
+  `.byte` rows with that comment (not events).
+- The bank stream is 0x3A80 bytes, 16 fewer than a name plus 8 memories of 0x750: its eighth
+  memory is cut short, and its last record is written as bytes.
+
+### The program's own "Technics Rhythms" resource
+
+TechnicsRhythmsResource (941 0x48729988) has IC18's format (`notes/ic18-rhythm-rom.md`) with a
+single style, "8 Beat 1", the fallback.  `tools/program_rhythm.py` types it with IC18's helpers
+and macros (`gen_ic18_rhythm_s.py`; the macro block of `src/ic18/rhythm.s` is copied to
+`<data dir>/rhythm_macros.inc`): header, count block, the 2048-entry index, the tables, the 8
+count-in patterns, the style record and its 20 variations, every event one line.  The checksum
+and every stream are checked as it is written.  The region 0x486C0000..0x486F0000 the review
+named is not style data: it is the tone generator's curve and level tables (the
+`voice_record.inc` readers cite 0x486D1F54, 0x486D2154, 0x486D2713, 0x486D2805) and other
+tables; it stays split and labelled, not typed (see the lane report).
+
+### Jump and pointer tables into code
+
+A pointer table may now hold code addresses (code region 1): a word with no name is written
+`loc_<ADDR>`, and `<data dir>/code_refs.txt` lists them; gen_program_s.py labels each one
+(or `.equ`s it when it is not an instruction start).  Example: `ptrs_485BC3EC`, the
+chord-type switch of TechniChordCompute (0x48472EBA), 42 entries.
+
+### Event and method ids in the code
+
+`<data dir>/gui_event_ids.inc` defines block 0's EV_ / MT_ ids (slots 5 and 6) numerically and
+is included before the code; gen_program_s.py writes them by name in `mov IMM, dN` and
+`cmp IMM, dN`.  The IDNAME tables compute the same values from their positions, and the code's
+bytes check them (an id that disagreed would change an instruction).
+
 ## Readability census (`tools/gui_readability.py`)
 
 Before: the baseline checkout at b58b8f696 (`--root` of the main checkout); after: this branch at
@@ -142,26 +190,28 @@ Before: the baseline checkout at b58b8f696 (`--root` of the main checkout); afte
 | after, 893           | 8501          | -                | 0       | 0             | 7                 | 8                 | 0              |
 
 "raw ids" counts record fields given as a hex number shaped like a MILK id: every id field is
-named.  The 6 or 7 numeric addresses left are Function-table entries that point at code no label
-names (e.g. `FN_FavSetText, 0x4849ED87`); "code -> data nums" left are ROM views of the RAM-init
-image (the copy loop's source address and the like), which are kept as numbers on purpose.
-GUI ids in the code (`mov 0x00060025, d1`, a method id) are not counted and not named yet.
+named.  The numeric addresses left are pointers into the library image no label names;
+"code -> data nums" left are ROM views of the RAM-init image (the copy loop's source address and
+the like), kept as numbers on purpose.  The EV_ / MT_ ids in the code are named (11,405
+immediates in 941).
 
 ## Binary-include census (`scripts/analysis/data_incbin_census.py`)
 
-Generic entries / bytes; the baseline is the plan's (b58b8f696).  The data region is 2,306,001
-bytes in build 941; what is left generic there is 1,075,427 bytes in 7,269 pieces: 337,508 B in
-pieces of 4 KB or more, 459,876 B in pieces of 256 B .. 4 KB, the rest smaller.
+Generic entries / bytes; the baseline is the plan's (b58b8f696); "first pass" is 52c94b7e5 (the
+GUI, strings, media, the zlib streams declared opaque), "now" is 994e02684 (the demo songs typed
+inside .zlib blocks, the rhythm resource, the jump tables).  The data region is 2,306,001 bytes
+in build 941.
 
-| tree           | before n | before bytes | after n | after bytes | media (n / B)   | opaque (n / B) |
-|----------------|----------|--------------|---------|-------------|-----------------|----------------|
-| kn7000-program | 3        | 2,563,794    | 7269    | 1,075,427   | 10 / 58,992     | 30 / 108,032   |
-| kn7000-b935    | 3        | 2,602,613    | 7271    | 1,074,648   | 10 / 58,992     | 30 / 108,032   |
-| kn7000-b893    | 3        | 2,607,409    | 7285    | 1,075,489   | 10 / 58,992     | 30 / 108,032   |
-| kn7000-sp7001  | 704      | 5,176,151    | 8052    | 3,649,160   | 169 / 1,375,301 | 30 / 108,032   |
+| tree           | before n | before bytes | first pass        | now n | now bytes | media (n / B)   | opaque |
+|----------------|----------|--------------|-------------------|-------|-----------|-----------------|--------|
+| kn7000-program | 3        | 2,563,794    | 7,269 / 1,075,427 | 7019  | 1,036,711 | 10 / 58,992     | 0      |
+| kn7000-b935    | 3        | 2,602,613    | 7,271 / 1,074,648 | 7021  | 1,035,932 | 10 / 58,992     | 0      |
+| kn7000-b893    | 3        | 2,607,409    | 7,285 / 1,075,489 | 7036  | 1,036,941 | 10 / 58,992     | 0      |
+| kn7000-sp7001  | 704      | 5,176,151    | 8,052 / 3,649,160 | 7104  | 1,080,563 | 169 / 1,375,301 | 0      |
 
-(kn7000-sp7001 also holds table build 83, another lane's.)  The count of generic entries rose
-because one blob became thousands of labelled pieces between typed items; the bytes are what fell.
+(kn7000-sp7001 also holds table build 83, which the kn7000-table lane typed meanwhile.)  The
+count of generic entries rose because one blob became thousands of labelled pieces between typed
+items; the bytes are what fell.
 
 ## Open questions and what remains
 
@@ -169,16 +219,12 @@ because one blob became thousands of labelled pieces between typed items; the by
   (address, name, item size) and gen_program_s.py spells every 8-digit immediate that is a data label,
   or lies inside a typed item, as `Label` / `Label+N`.  The two generators read each other's output,
   so `make data-and-code-src` (`tools/regen_data_and_code.sh`) runs them alternately for all four
-  builds until no labels.sym changes: three rounds on 2026-10-29.  GUI ids in the code (`mov 0x00060025, d1` =
-  a method id, object ids, title ids) are still numbers: naming them is the next step.
+  builds until no labels.sym changes (two rounds).  Object, title and class ids in the code are
+  still numbers (EV_ / MT_ are named).
 - About half of the data region's bytes are still `.incbin_range` (see the lane report for the
   list): the built-in style / rhythm data (big-endian records like IC18's, around 0x486D0000 and
   0x48729988), tables the code indexes with computed offsets (0x485BC3EC: a 69 KB run of code
   pointers and signed byte tables), and mostly-0xFF sparse tables.
-- 30 zlib streams are declared opaque: they inflate (MIDI-like event data, "Soloist Sounds"
-  name data, 2,272-byte `ZZZZ` records) and Python's zlib at level 6 re-compresses every one
-  byte-exactly, so typing their inflated payloads and compressing at build time is possible; the
-  inflated bytes are not committed because that would put bulk dump bytes in git.
 - [INFERENCE] the rect's right / bottom are inclusive (from the full-screen objects only).
 - `D` (IvSDPlayTimer / IvSDFwdRewTimer) may be 1 byte rather than 2.
 - The object names this source gives the 6,309 objects with an empty ResName are invented
@@ -203,4 +249,3 @@ because one blob became thousands of labelled pieces between typed items; the by
 > (`kn7000/notes/gui-data-region/menu-map.md`) is generated from that source: all blocks, all
 > screens and the title index.  The layout rules (aligned C structs, unlike the KN5000's packed
 > ones), the registry slots and the id scheme are in `kn7000/notes/gui-data-region/README.md`.
-

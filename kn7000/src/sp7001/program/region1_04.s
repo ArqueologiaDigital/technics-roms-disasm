@@ -14414,7 +14414,7 @@ loc_4848B165:
     jmp     loc_4848B307
 loc_4848B188:
     add     8, a0
-    cmp     data_485F0954, a0
+    cmp     ptrs_485F0954, a0
     bcs     loc_4848B193
     mov     a1, a0
 loc_4848B193:
@@ -16180,9 +16180,10 @@ loc_4848C15F:
 loc_4848C166:
     mov     d3, d0
     asl2    d0
-    mov     data_485F0984, a0
+    mov     ptrs_485F0984, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4848C172:
     mov     a2, d0
     exth    d0
     cmp     0x10, d0
@@ -16220,6 +16221,7 @@ loc_4848C1A1:
 loc_4848C1B8:
     mov     0, a3
     jmp     loc_4848C296
+loc_4848C1BD:
     mov     d3, d0
     mov     2, d1
     call    LibDiv32, 0, 0
@@ -16374,9 +16376,10 @@ loc_4848C2EB:
 loc_4848C2F2:
     mov     d2, d0
     asl2    d0
-    mov     data_485F0954, a0
+    mov     ptrs_485F0954, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4848C2FE:
     mov     a2, d0
     exth    d0
     cmp     0x10, d0
@@ -16409,6 +16412,7 @@ loc_4848C327:
     mov     d0, (0x14, sp)
     mov     0, a3
     jmp     loc_4848C416
+loc_4848C345:
     mov     d2, d0
     mov     2, d1
     call    LibDiv32, 0, 0
@@ -45785,6 +45789,7 @@ loc_4849ED65:
     mov     (0x54, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x4c
+loc_4849ED76:
     cmp     MT_GetLanguagePtr, d1
     beq     loc_4849ED88
     cmp     MT_IsEucCode, d1

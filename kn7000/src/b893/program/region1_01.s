@@ -21143,41 +21143,48 @@ loc_4842A207:
     mov     d3, d0
     sub     0x60010, d0
     asl2    d0
-    mov     data_485ACC94, a0
+    mov     ptrs_485ACC94, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4842A219:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A21D:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetParentClassSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A230:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetProcedureSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A243:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetInstanceSizeSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A256:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetName, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A269:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_CheckClassSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A27C:
     mov     (0xb8, sp), a0
     clr     d0
     mov     a0, a2
@@ -21200,12 +21207,14 @@ loc_4842A207:
 loc_4842A2B8:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A2BC:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetPropCountSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A2CF:
     mov     sp, a2
     add     0x18, a2
     mov     a2, (0x10, sp)
@@ -21242,6 +21251,7 @@ loc_4842A31A:
     mov     d2, d0
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A33B:
     mov     (0xb8, sp), a3
     mov     sp, a2
     add     0x18, a2
@@ -21259,6 +21269,7 @@ loc_4842A31A:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A36E:
     mov     (0xb8, sp), a2
     mov     sp, a3
     add     0x18, a3
@@ -21279,6 +21290,7 @@ loc_4842A31A:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A3A6:
     mov     (0xb8, sp), a3
     mov     sp, a2
     add     0x18, a2
@@ -21299,6 +21311,7 @@ loc_4842A31A:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A3DE:
     mov     (0xb8, sp), a3
     mov     sp, a2
     add     0x18, a2
@@ -21319,6 +21332,7 @@ loc_4842A31A:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
+loc_4842A416:
     mov     (0xb8, sp), a3
     mov     sp, a2
     add     0x18, a2
@@ -21338,18 +21352,21 @@ loc_4842A31A:
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4842A4A0
+loc_4842A44C:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetPropDataSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     bra     loc_4842A4A0
+loc_4842A45E:
     mov     (0xb8, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
     mov     MT_GetPropDataCountSp, d1
     call    ClassProc_entry, [d2,d3,a2,a3], 0x10
     bra     loc_4842A4A0
+loc_4842A470:
     mov     sp, a2
     add     0x18, a2
     mov     a2, (0x10, sp)
@@ -21359,6 +21376,7 @@ loc_4842A31A:
     mov     (0xb8, sp), d0
     movbu   (d0, a2), d0
     bra     loc_4842A4A0
+loc_4842A488:
     mov     (0xb8, sp), a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
@@ -21693,11 +21711,13 @@ loc_4842A7F4:
     mov     d1, d0
     sub     0x60000, d0
     asl2    d0
-    mov     data_485ACCE4, a1
+    mov     ptrs_485ACCE4, a1
     mov     (d0, a1), a1
     jmp     (a1)
+loc_4842A806:
     mov     d3, d0
     jmp     loc_4842AAA7
+loc_4842A80A:
     mov     (0x1c, sp), a0
     exthu   d2
     mov     0x18, d0
@@ -21707,6 +21727,7 @@ loc_4842A7F4:
     add     d2, a0
     mov     (4, a0), d0
     jmp     loc_4842AAA7
+loc_4842A81B:
     mov     (0x1c, sp), a0
     exthu   d2
     mov     0x18, d0
@@ -21715,6 +21736,7 @@ loc_4842A7F4:
     mulu    d2, d0
     mov     (d0, a0), d0
     jmp     loc_4842AAA7
+loc_4842A829:
     mov     (0x1c, sp), a0
     exthu   d2
     mov     0x18, d0
@@ -21724,6 +21746,7 @@ loc_4842A7F4:
     add     d2, a0
     mov     (0xc, a0), d0
     jmp     loc_4842AAA7
+loc_4842A83A:
     exthu   d2
     mov     0x18, d0
     nop
@@ -21732,6 +21755,7 @@ loc_4842A7F4:
     mov     (0x1c, sp), d0
     add     d2, d0
     jmp     loc_4842AAA7
+loc_4842A847:
     mov     (0x1c, sp), a0
     exthu   d2
     mov     0x18, d0
@@ -21741,6 +21765,7 @@ loc_4842A7F4:
     add     d0, a0
     movhu   (8, a0), d0
     jmp     loc_4842AAA7
+loc_4842A858:
     mov     (0x14c, sp), d2
     cmp     -1, d3
     beq     loc_4842A888
@@ -21770,6 +21795,7 @@ loc_4842A869:
 loc_4842A888:
     clr     d0
     jmp     loc_4842AAA7
+loc_4842A88C:
     exthu   d2
     mov     d2, (0x14, sp)
     mov     sp, a0
@@ -21830,6 +21856,7 @@ loc_4842A8D9:
 loc_4842A911:
     clr     d0
     jmp     loc_4842AAA7
+loc_4842A915:
     mov     sp, a2
     add     0x2c, a2
     mov     a2, (0x10, sp)
@@ -21840,6 +21867,7 @@ loc_4842A911:
     call    LibStrlen, 0, 0
     exthu   d0
     jmp     loc_4842AAA7
+loc_4842A932:
     exthu   d2
     mov     d2, d0
     mov     0x18, d1
@@ -21969,6 +21997,7 @@ loc_4842AA28:
 loc_4842AA38:
     clr     d0
     bra     loc_4842AAA7
+loc_4842AA3B:
     mov     (0x14c, sp), a3
     mov     sp, a2
     add     0x2c, a2
@@ -21985,6 +22014,7 @@ loc_4842AA38:
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4842AAA7
+loc_4842AA6B:
     mov     sp, a2
     add     0x2c, a2
     mov     a2, (0x10, sp)
@@ -34104,9 +34134,10 @@ loc_48431422:
     mov     d2, d0
     sub     0x60008, d0
     asl2    d0
-    mov     data_485AD720, a0
+    mov     ptrs_485AD720, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48431434:
     mov     (0x38, sp), a0
     mov     (8, a3), a1
     mov     (4, a0), a2
@@ -34117,22 +34148,29 @@ loc_48431422:
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_48431450:
     movhu   (4, a3), d0
     ret     [d2,d3,a2,a3], 0x28
+loc_48431456:
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_4843145A:
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x28
+loc_4843145F:
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_48431463:
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_48431467:
     mov     (0x38, sp), a0
     mov     data_485AD71C, a1
     mov     (4, a0), a0
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_4843147D:
     mov     (0x38, sp), a2
     mov     4, d1
     mov     (a2), d0
@@ -34187,6 +34225,7 @@ loc_484314CF:
 loc_484314DE:
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
+loc_484314E2:
     clr     d0
     mov     d0, (0x14, sp)
     movhu   (4, a3), d0
@@ -37769,6 +37808,7 @@ loc_48433292:
     mov     d3, d0
 loc_48433293:
     ret     [d2,d3], 0x18
+loc_48433296:
     movbu   (0x50034b6c), d0
     cmp     0, d0
     bne     loc_484332A4
@@ -42279,6 +42319,7 @@ func_48435867:
     call    func_4843FC12_entry, 0, 0x14
     call    func_48435889_entry, 0, 8
     ret     0, 8
+loc_48435879:
     retf    0, 0
 
 func_4843587C:
@@ -44464,6 +44505,7 @@ loc_48436BB6:
     clr     d0
 loc_48436BB7:
     retf    0, 0
+loc_48436BBA:
     mov     d0, d1
     exthu   d1
     cmp     0x64, d1
@@ -44475,6 +44517,7 @@ loc_48436BC4:
     mov     1, d0
 loc_48436BCC:
     retf    0, 0
+loc_48436BCF:
     mov     d0, d1
     exthu   d1
     cmp     0x4000, d1
@@ -45171,6 +45214,7 @@ func_484372B7:
     add     -8, sp
     call    func_484372D2_entry, 0, 8
     ret     0, 8
+loc_484372C2:
     retf    0, 0
 
 func_484372C5:
@@ -48757,6 +48801,7 @@ loc_4843911F:
     clr     d0
 loc_48439120:
     retf    0, 0
+loc_48439123:
     mov     d0, d1
     exthu   d1
     cmp     0x64, d1
@@ -48768,6 +48813,7 @@ loc_4843912D:
     mov     1, d0
 loc_48439135:
     retf    0, 0
+loc_48439138:
     mov     d0, d1
     exthu   d1
     cmp     0x4000, d1

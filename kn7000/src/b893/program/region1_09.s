@@ -4003,17 +4003,22 @@ func_48522D6D_entry:
     cmp     0xa, d0
     bgt     loc_48522DA0
     asl2    d0
-    mov     data_48662750, a0
+    mov     ptrs_48662750, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48522D8D:
     clr     d0
     bra     loc_48522DA1
+loc_48522D90:
     mov     1, d0
     bra     loc_48522DA1
+loc_48522D94:
     mov     2, d0
     bra     loc_48522DA1
+loc_48522D98:
     mov     3, d0
     bra     loc_48522DA1
+loc_48522D9C:
     mov     4, d0
     bra     loc_48522DA1
 loc_48522DA0:
@@ -23378,6 +23383,7 @@ func_4852F3A9_entry:
     clr     d0
     movbu   d0, (0x5006f664)
     ret     [a2], 0x18
+loc_4852F3C6:
     mov     0x500708f2, a0
     retf    0, 0
 
@@ -28363,7 +28369,7 @@ CheckExtMode:
 fmmerror:
     add     -0x14, sp
 fmmerror_entry:
-    mov     data_48662E6C, a1
+    mov     ptrs_48662E6C, a1
     mov     sp, a0
     add     8, a0
     mov     -0xc, d1
@@ -28625,7 +28631,7 @@ fmmtell_entry:
 func_48531E65:
     add     -0x14, sp
 func_48531E65_entry:
-    mov     data_48662EF0, a1
+    mov     ptrs_48662EF0, a1
     mov     sp, a0
     add     8, a0
     mov     -0xc, d1
@@ -28759,6 +28765,7 @@ fmmerror_init:
     clr     d0
     movhu   d0, (0x50071254)
     retf    0, 0
+loc_48531F65:
     movhu   (0x50071254), d0
     retf    0, 0
 
@@ -44067,7 +44074,7 @@ loc_4853B785:
     jmp     loc_4853B854
 loc_4853B7A8:
     add     8, a0
-    cmp     data_4867997C, a0
+    cmp     ptrs_4867997C, a0
     bcs     loc_4853B7B3
     mov     a1, a0
 loc_4853B7B3:
@@ -44384,7 +44391,7 @@ loc_4853BA83:
     jmp     loc_4853C8BE
 loc_4853BAA7:
     add     8, a0
-    cmp     data_48679A28, a0
+    cmp     ptrs_48679A28, a0
     bcs     loc_4853BAB2
     mov     a1, a0
 loc_4853BAB2:
@@ -45571,9 +45578,10 @@ loc_4853C7BB:
     sub     d0, d3
     mov     d3, d0
     asl2    d0
-    mov     data_4867997C, a0
+    mov     ptrs_4867997C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4853C7CB:
     cmp     0, d2
     ble     loc_4853C7D2
     clr     d1
@@ -45586,6 +45594,7 @@ loc_4853C7D4:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853C8BB
+loc_4853C7E7:
     cmp     0, d2
     ble     loc_4853C7EF
     mov     0, a0
@@ -45598,6 +45607,7 @@ loc_4853C7F1:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853C8BB
+loc_4853C804:
     cmp     0, d2
     ble     loc_4853C80C
     mov     0, a0
@@ -45610,6 +45620,7 @@ loc_4853C80E:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853C8BB
+loc_4853C821:
     cmp     0, d2
     ble     loc_4853C828
     clr     d1
@@ -45622,6 +45633,7 @@ loc_4853C82A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853C8BB
+loc_4853C83D:
     cmp     0, d2
     ble     loc_4853C844
     clr     d1
@@ -45634,6 +45646,7 @@ loc_4853C846:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853C8BB
+loc_4853C858:
     cmp     0, d2
     ble     loc_4853C85F
     clr     d1
@@ -45646,6 +45659,7 @@ loc_4853C861:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853C8BB
+loc_4853C873:
     cmp     0, d2
     ble     loc_4853C87A
     clr     d1
@@ -45658,12 +45672,14 @@ loc_4853C87C:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853C8BB
+loc_4853C88E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30054, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853C8BB
+loc_4853C8A1:
     cmp     0, d2
     ble     loc_4853C8A9
     mov     0, a0
@@ -45779,7 +45795,7 @@ loc_4853C986:
     jmp     loc_4853D630
 loc_4853C9AB:
     add     8, a0
-    cmp     data_48679B54, a0
+    cmp     ptrs_48679B54, a0
     bcs     loc_4853C9B6
     mov     a1, a0
 loc_4853C9B6:
@@ -46841,9 +46857,10 @@ loc_4853D4FE:
     sub     d0, d3
     mov     d3, d0
     asl2    d0
-    mov     data_48679A28, a0
+    mov     ptrs_48679A28, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4853D50E:
     cmp     0, d2
     ble     loc_4853D515
     clr     d1
@@ -46856,6 +46873,7 @@ loc_4853D517:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853D62D
+loc_4853D52A:
     cmp     0, d2
     ble     loc_4853D532
     mov     0, a0
@@ -46868,6 +46886,7 @@ loc_4853D534:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853D62D
+loc_4853D547:
     cmp     0, d2
     ble     loc_4853D54F
     mov     0, a0
@@ -46880,6 +46899,7 @@ loc_4853D551:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853D62D
+loc_4853D564:
     cmp     0, d2
     ble     loc_4853D56B
     clr     d1
@@ -46892,6 +46912,7 @@ loc_4853D56D:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853D62D
+loc_4853D580:
     cmp     0, d2
     ble     loc_4853D587
     clr     d1
@@ -46904,6 +46925,7 @@ loc_4853D589:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853D62D
+loc_4853D59C:
     cmp     0, d2
     ble     loc_4853D5A3
     clr     d1
@@ -46916,6 +46938,7 @@ loc_4853D5A5:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853D62D
+loc_4853D5B7:
     cmp     0, d2
     ble     loc_4853D5BE
     clr     d1
@@ -46928,12 +46951,14 @@ loc_4853D5C0:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853D62D
+loc_4853D5D2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30054, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853D62D
+loc_4853D5E5:
     cmp     0, d2
     ble     loc_4853D5ED
     mov     0, a0
@@ -46946,6 +46971,7 @@ loc_4853D5EF:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853D62D
+loc_4853D601:
     cmp     0, d2
     ble     loc_4853D608
     clr     d1
@@ -46958,6 +46984,7 @@ loc_4853D60A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853D62D
+loc_4853D61C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30058, d0
@@ -48037,9 +48064,10 @@ loc_4853E12F:
     mov     a2, d0
     add     -1, d0
     asl2    d0
-    mov     data_48679B54, a0
+    mov     ptrs_48679B54, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4853E13E:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E144
@@ -48050,6 +48078,7 @@ loc_4853E144:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E157:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E15D
@@ -48060,6 +48089,7 @@ loc_4853E15D:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E170:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E178
@@ -48070,6 +48100,7 @@ loc_4853E178:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E18B:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E191
@@ -48080,6 +48111,7 @@ loc_4853E191:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E1A4:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E1AC
@@ -48090,6 +48122,7 @@ loc_4853E1AC:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E1BF:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E1C5
@@ -48100,6 +48133,7 @@ loc_4853E1C5:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E1D8:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E1DE
@@ -48110,6 +48144,7 @@ loc_4853E1DE:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E1F1:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E1F9
@@ -48120,6 +48155,7 @@ loc_4853E1F9:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E20C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e3006e, d0
@@ -48136,12 +48172,14 @@ loc_4853E22A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E23F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30064, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E253:
     movbu   (0x501605e4), d0
     cmp     1, d0
     bne     loc_4853E283
@@ -48172,12 +48210,14 @@ loc_4853E28A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E2B0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30065, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E2C4:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E2CA
@@ -48188,6 +48228,7 @@ loc_4853E2CA:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E2DD:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E2E5
@@ -48198,6 +48239,7 @@ loc_4853E2E5:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E2F8:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E2FE
@@ -48208,24 +48250,28 @@ loc_4853E2FE:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E311:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30069, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E325:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e3006a, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E339:
     movbu   (0x501605e4), d0
     clr     d1
     mov     d0, (0x10, sp)
     mov     0x00e30044, d0
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E352:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E35A
@@ -48236,6 +48282,7 @@ loc_4853E35A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E36D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e004db, d0
@@ -48247,24 +48294,28 @@ loc_4853E35A:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E397:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e3006c, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E3AB:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e3006d, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_4853E445
+loc_4853E3BF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e3006e, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853E445
+loc_4853E3D2:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E3D8
@@ -48275,12 +48326,14 @@ loc_4853E3D8:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853E445
+loc_4853E3EA:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00e30073, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853E445
+loc_4853E3FD:
     mov     0, a0
     cmp     0, d2
     bgt     loc_4853E405
@@ -48291,6 +48344,7 @@ loc_4853E405:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853E445
+loc_4853E417:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E41D
@@ -48301,6 +48355,7 @@ loc_4853E41D:
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_4853E445
+loc_4853E42F:
     clr     d1
     cmp     d1, d2
     bgt     loc_4853E435

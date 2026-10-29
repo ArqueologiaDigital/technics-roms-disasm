@@ -3238,6 +3238,7 @@ class EmitCtx:
         # the typed data region's labels (<data dir>/labels.sym, tools/gen_data_s.py):
         # {addr: name}, and the sorted (start, end, name) of its typed items
         self.data_labels, self.data_items = data_labels or ({}, [])
+        self.event_ids = read_event_ids()
         self.data_starts = [s for s, _e, _n in self.data_items]
         self.used = set()          # addresses of `names` referenced (an .equ unless labelled)
         self.data_used = set()     # addresses of annotation data names referenced
@@ -3296,6 +3297,12 @@ class EmitCtx:
             if nm is None:
                 nm = self.ext.setdefault(t, f"loc_{t:08X}")
             return re.sub(r"0x[0-9a-fA-F]+", nm, ops, count=1)
+
+        if mnem in ("mov", "cmp") and self.event_ids:
+            # an event or method id (`cmp 0x50001, d3`, `mov 0x00060025, d1`) by its EV_ / MT_ name
+            m = re.fullmatch(r"(0x[0-9a-fA-F]+), (d\d)", ops)
+            if m and int(m.group(1), 16) in self.event_ids:
+                return f"{self.event_ids[int(m.group(1), 16)]}, {m.group(2)}"
 
         def one(m):
             nm = self.ref(int(m.group(1), 16))
@@ -3886,6 +3893,37 @@ def lib_split(sym_by_addr, manual):
     return out
 
 
+def event_ids_inc():
+    """The typed data region's gui_event_ids.inc (tools/gen_data_s.py), or None."""
+    if not DATA_SRC:
+        return None
+    path = os.path.join(os.path.dirname(DATA_SRC), "gui_event_ids.inc")
+    return path if os.path.exists(path) else None
+
+
+def read_event_ids():
+    """{value: name} of the MILK event and method ids (EV_*, MT_*: block 0's Event
+    and Method name tables, id = (slot << 16) | index) from gui_event_ids.inc."""
+    path = event_ids_inc()
+    ids = {}
+    if path:
+        for line in open(path):
+            m = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+            if m:
+                ids.setdefault(int(m.group(2), 16), m.group(1))
+    return ids
+
+
+def read_data_code_refs():
+    """The code addresses listed in the typed data region's code_refs.txt."""
+    if not DATA_SRC:
+        return set()
+    path = os.path.join(os.path.dirname(DATA_SRC), "code_refs.txt")
+    if not os.path.exists(path):
+        return set()
+    return {int(x, 16) for x in open(path).read().split() if x.startswith("0x")}
+
+
 def read_data_labels():
     """({addr: name}, [(start, end, name)]) from the typed data region's
     labels.sym, beside DATA_SRC; empty when there is none."""
@@ -3974,7 +4012,9 @@ def main():
          '',
          '.equ PROGRAM_ROM_BASE, 0x48400000',
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
-         f'.include "{SYMBOLS_INC}"',
+         f'.include "{SYMBOLS_INC}"'] + (
+         [f'.include "{event_ids_inc()}"   # EV_ / MT_ ids, named in mov / cmp immediates']
+         if event_ids_inc() else []) + [
          ''] + [BOOT] + [
          '',
          '# ============================================================================',
@@ -4070,6 +4110,9 @@ def main():
                     data_items[BASE + o] = (k, n, c, o)
                     if k == "ptr":            # a pointer word names code like an operand
                         imm_refs.update(struct.unpack_from(f"<{n}I", d, o))
+    # code addresses the typed data region's jump / pointer tables name loc_<ADDR>
+    data_code_refs = read_data_code_refs()
+    imm_refs.update(data_code_refs)
     for at in (0, 0xA):                   # the boot header's two jmp targets
         if d[at] == 0xDC:
             branches.add(BASE + at + int.from_bytes(d[at + 1:at + 5], "little", signed=True))
@@ -4166,6 +4209,9 @@ def main():
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
     ctx = EmitCtx(names, label_of, A, data_names, read_data_labels())
+    for a in data_code_refs:              # one that is no instruction start (or has another name)
+        if label_of.get(a) != f"loc_{a:08X}":
+            ctx.ext.setdefault(a, f"loc_{a:08X}")
     ctx.pro_starts = {p for p, _ins in pro.values()}
     ctx.func_labels = sorted((a, nm) for a, nm in label_of.items() if a in code_starts
                              and not nm.startswith("loc_") and not nm.endswith("_entry"))

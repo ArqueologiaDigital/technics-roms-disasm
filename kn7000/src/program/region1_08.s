@@ -4891,7 +4891,7 @@ loc_48503434:
     jmp     loc_48503513
 loc_48503457:
     add     8, a0
-    cmp     data_486454D8, a0
+    cmp     ptrs_486454D8, a0
     bcs     loc_48503462
     mov     a1, a0
 loc_48503462:
@@ -5324,23 +5324,29 @@ func_485038AC_entry:
     mov     d2, d0
     sub     a0, d0
     asl2    d0
-    mov     data_486454D8, a0
+    mov     ptrs_486454D8, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_485038D4:
     mov     Str_2d_36, a1
     bra     loc_48503912
+loc_485038DC:
     movbu   (0x50152364), d0
     mov     Str_6d_2, a1
     cmp     2, d0
     beq     loc_48503912
     mov     Str_3d_57, a1
     bra     loc_48503912
+loc_485038F4:
     mov     Str_3d_56, a1
     bra     loc_48503912
+loc_485038FC:
     mov     Str_6d, a1
     bra     loc_48503912
+loc_48503904:
     mov     Str_5d, a1
     bra     loc_48503912
+loc_4850390C:
     mov     Str_x_4, a1
 loc_48503912:
     mov     sp, a2
@@ -5392,43 +5398,57 @@ loc_48503981:
     sub     d1, d2
     mov     d2, d0
     asl2    d0
-    mov     data_4864562C, a0
+    mov     ptrs_4864562C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4850398F:
     mov     0x01700026, a2
     jmp     loc_48503C5B
+loc_48503998:
     mov     0x01700012, a2
     jmp     loc_48503C5B
+loc_485039A1:
     mov     0x01700015, a2
     jmp     loc_48503C5B
+loc_485039AA:
     mov     0x01700018, a2
     jmp     loc_48503C5B
+loc_485039B3:
     mov     0x01700027, a2
     jmp     loc_48503C5B
+loc_485039BC:
     mov     0x01700013, a2
     jmp     loc_48503C5B
+loc_485039C5:
     mov     0x01700016, a2
     jmp     loc_48503C5B
+loc_485039CE:
     mov     0x01700019, a2
     jmp     loc_48503C5B
+loc_485039D7:
     mov     0x01700027, a2
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     jmp     loc_48503C5B
+loc_485039E8:
     mov     0x01700013, a2
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     jmp     loc_48503C5B
+loc_485039F9:
     mov     0x01700016, a2
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     jmp     loc_48503C5B
+loc_48503A0A:
     mov     0x01700019, a2
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     jmp     loc_48503C5B
+loc_48503A1B:
     mov     0x0170000d, a2
     jmp     loc_48503C5B
+loc_48503A24:
     mov     (0x38, sp), a0
     call    func_48502E9F, 0, 0
     cmp     0, d0
@@ -5448,8 +5468,10 @@ loc_48503A4C:
 loc_48503A67:
     mov     0x0170000e, a2
     jmp     loc_48503C5B
+loc_48503A70:
     mov     0x01700010, a2
     jmp     loc_48503C5B
+loc_48503A79:
     movbu   (0x50152364), d1
     mov     0x01700042, a2
     cmp     1, d1
@@ -5471,14 +5493,19 @@ loc_48503A9F:
 loc_48503AAD:
     mov     a3, a2
     jmp     loc_48503C5B
+loc_48503AB1:
     mov     0x01700040, a2
     jmp     loc_48503C5B
+loc_48503ABA:
     mov     0x01700041, a2
     jmp     loc_48503C5B
+loc_48503AC3:
     mov     0x01700043, a2
     jmp     loc_48503C5B
+loc_48503ACC:
     mov     0x01700044, a2
     jmp     loc_48503C5B
+loc_48503AD5:
     mov     (0x38, sp), a0
     call    func_48502E9F, 0, 0
     cmp     1, d0
@@ -5528,6 +5555,7 @@ loc_48503B2A:
     mov     0x85, d1
     call    func_48503520_entry, 0, 0x14
     jmp     loc_48503C5B
+loc_48503B63:
     movbu   (0x50152364), d0
     mov     0x0170005a, a2
     cmp     3, d0
@@ -5551,7 +5579,9 @@ loc_48503B76:
     mov     0x85, d1
     call    func_48503520_entry, 0, 0x14
     jmp     loc_48503C5B
+loc_48503BAB:
     mov     0x0170005b, a2
+loc_48503BB1:
     jmp     loc_48503C5B
 loc_48503BB4:
     mov     0x453, d1
@@ -5566,41 +5596,54 @@ loc_48503BC6:
     sub     d1, d2
     mov     d2, d0
     asl2    d0
-    mov     data_486455A4, a0
+    mov     ptrs_486455A4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48503BD4:
     mov     0x0170006c, a2
     jmp     loc_48503C5B
+loc_48503BDD:
     mov     0x01700069, a2
     bra     loc_48503C5B
+loc_48503BE5:
     mov     0x0170006f, a2
     bra     loc_48503C5B
+loc_48503BED:
     mov     0x0170008a, a2
     bra     loc_48503C5B
+loc_48503BF5:
     mov     0x0170006b, a2
     bra     loc_48503C5B
+loc_48503BFD:
     mov     0x01700068, a2
     bra     loc_48503C5B
+loc_48503C05:
     mov     0x0170006e, a2
     bra     loc_48503C5B
+loc_48503C0D:
     mov     0x01700089, a2
     bra     loc_48503C5B
+loc_48503C15:
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     mov     0x0170006b, a2
     bra     loc_48503C5B
+loc_48503C25:
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     mov     0x01700068, a2
     bra     loc_48503C5B
+loc_48503C35:
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     mov     0x0170006e, a2
     bra     loc_48503C5B
+loc_48503C45:
     mov     0x01760009, d0
     mov     d0, (0x14, sp)
     mov     0x01700089, a2
     bra     loc_48503C5B
+loc_48503C55:
     mov     0x01700076, a2
 loc_48503C5B:
     cmp     a3, a2
@@ -11788,31 +11831,39 @@ loc_48507D8F:
     bgt     loc_48507DE7
     mov     d0, d1
     asl2    d1
-    mov     data_4865047C, a1
+    mov     ptrs_4865047C, a1
     mov     (d1, a1), a1
     jmp     (a1)
+loc_48507DAB:
     mov     d2, a3
     bra     loc_48507DEB
+loc_48507DAF:
     mov     0x0090001c, a3
     mov     -3, d0
     add     a0, d0
     mov     d0, a0
     bra     loc_48507DEB
+loc_48507DBD:
     mov     0x00900023, a3
     mov     -6, d0
     add     a0, d0
     mov     d0, a0
     bra     loc_48507DEB
+loc_48507DCB:
     mov     0x0090001f, a3
     add     -9, a0
     bra     loc_48507DEB
+loc_48507DD5:
     add     -0xc, a0
     bra     loc_48507DEB
+loc_48507DD9:
     mov     a2, a3
     add     -0xe, a0
     bra     loc_48507DEB
+loc_48507DDE:
     add     -0xe, a0
     bra     loc_48507DEB
+loc_48507DE2:
     mov     a2, a3
     add     -0x10, a0
     bra     loc_48507DEB
@@ -41087,7 +41138,9 @@ func_4851AADC:
     call    func_485340B4, 0, 0
     call    fmmerror_init, 0, 0
     ret     0, 8
+loc_4851AB15:
     retf    0, 0
+loc_4851AB18:
     retf    0, 0
 
 func_4851AB1B:
