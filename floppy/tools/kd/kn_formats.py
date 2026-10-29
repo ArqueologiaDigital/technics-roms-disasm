@@ -125,11 +125,12 @@ def describe(ctx, model):
     key = (model, ctx.disk, ctx.path)
     if key in AST_IMAGE:
         var = AST_IMAGE[key]
+        src = ('kn7000/src/customdata/%s.s' % var.split('_')[-1]) if model == 'kn7000' else 'kn6000/src/customdata/01ctmini.s'
         return kd_describe.describe_image(ctx, model, var, [
-            'A custom-data flash image, saved by CUSTOM DATA SAVE: the deflate of the whole %d-byte image'
-            % int.from_bytes(ctx.data[4:8], 'little'),
-            '(its SHA-1 is the custom-data dump the make variable %s names; that image\'s typed source is' % var,
-            'the custom-data tree, lane customdata).'])
+            'A custom-data flash image, saved by CUSTOM DATA SAVE (func_4852D0E5, kn7000/notes/custom-data-ic21.md',
+            '".AST file"): the deflate of the whole %d-byte CUSTOM STYLE bank, built from %s'
+            % (int.from_bytes(ctx.data[4:8], 'little'), src),
+            '(make variable %s).' % var])
     if ext == 'CNV' and base in CNV_SOURCE:
         name = CNV_SOURCE[base] + ('_kn6000' if model == 'kn6000' and base == 'TECHNICS' else '')
         kd_describe._reg(model, ctx.disk)[1].append(

@@ -2,12 +2,12 @@
 
 ; 02CUSTM6.AST -- 394208 bytes, clusters 20..789.
 
-; A custom-data flash image, saved by CUSTOM DATA SAVE: the deflate of the whole 1966080-byte image
-; (its SHA-1 is the custom-data dump the make variable KN7000_CUSTOMDATA_02custm6 names; that image's typed source is
-; the custom-data tree, lane customdata).
+; A custom-data flash image, saved by CUSTOM DATA SAVE (func_4852D0E5, kn7000/notes/custom-data-ic21.md
+; ".AST file"): the deflate of the whole 1966080-byte CUSTOM STYLE bank, built from kn7000/src/customdata/02custm6.s
+; (make variable KN7000_CUSTOMDATA_02custm6).
 
 	.include	"kd.inc"
 F_02CUSTM6_AST:
 	k1_head	"J", 1966080		; deflate104, one part
-	.long	0x48582cd3, 0x5006f220	; not read back: see notes/floppy-others-2026-10-29, ".AST"
+	.long	0x48582cd3, 0x5006f220	; never written by func_4852D0E5: the old contents of its stack frame
 F_02CUSTM6_AST_s1:	.incbin	"02CUSTM6.ast.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of $(KN7000_CUSTOMDATA_02custm6)

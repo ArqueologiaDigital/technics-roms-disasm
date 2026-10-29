@@ -8,8 +8,6 @@ take such a file apart and put it back together byte for byte. They let a disk's
 |----------------------|-------------------------------------------------------------------------------------|---------------------------------------------------|
 | `kd.py`              | how is a file wrapped; does every wrapper re-encode from its payload                | `python3 -I kd.py verify FILE...`                 |
 | `lzss_j.py`          | the 'J KD' (KN7000) LZSS: decoder, and the encoder that reproduces the disks        | `python3 -I lzss_j.py encode IN OUT`              |
-| `zdeflate104.c`      | the 'I KD' / 'K1' deflate: zlib 1.0.4, as linked into the instruments' firmware     | `make -C floppy/tools/kd`, then `zdeflate104 < IN` |
-| `zlib-1.0.4/`        | the deflate half of zlib 1.0.4, unmodified (see below)                              | built by the Makefile                             |
 
 ## The containers
 
@@ -27,7 +25,7 @@ A deflate part is the zlib stream **without** its 2-byte header (78 9C) and **wi
 adler32. The header's compressed size counts the absent two bytes. So the instrument wrote a full zlib stream
 and dropped the first two bytes.
 
-## Why zlib 1.0.4, and why vendored
+## Why zlib 1.0.4
 
 The KN7000 program links zlib 1.0.4 (`kn7000/kn7000_manual.sym`, section "zlib 1.0.4 (deflate and
 inflate)"; `deflateInit2_` checks the version string "1.0.4"). Its writers call `deflateInit_(strm, level,
@@ -35,14 +33,16 @@ inflate)"; `deflateInit2_` checks the version string "1.0.4"). Its writers call 
 
 A modern zlib at the same settings reproduces every **single-block** part. It fails on every part longer than
 4096 symbols. The blocks show why: the disks' first block ends after exactly 4096 symbols, while modern zlib
-writes one block. zlib 1.0.4's `_tr_tally()` (trees.c line 973) ends a block early at each multiple of 4096
-symbols when its size estimate says that pays. zlib 1.1 and later compile that test only under
-`-DTRUNCATE_BLOCK`, and at multiples of 8192. So no later release can reproduce these files, and 1.0.4 is
-kept here.
+writes one block. zlib 1.0.4's `_tr_tally()` ends a block early at each multiple of 4096 symbols when its size
+estimate says that pays. zlib 1.1 and later compile that test only under `-DTRUNCATE_BLOCK`, and at multiples of
+8192. So no later release can reproduce these files.
 
-`zlib-1.0.4/` holds the eight files that deflate needs, unmodified from `zlib-1.0.4.tar.gz` (zlib.net/fossils;
-SHA-256 `e5c260cd3db1370fb3e0c193e9cbd9f127a9bd055d622b3fb55b82747f6e5b24`) under the zlib licence (its
-`README` and `zlib.h`). `zdeflate104.c` is the only new C file.
+The coder is `kn7000/tools/zlib10_deflate.py`, lane customdata's pure-Python transcription of 1.0.4's deflate,
+the repository's only one. `kd.py encode deflate104` appends the adler32. Until 2026-10-29 this directory vendored
+zlib 1.0.4's C deflate (zlib.net/fossils `zlib-1.0.4.tar.gz`, SHA-256
+`e5c260cd3db1370fb3e0c193e9cbd9f127a9bd055d622b3fb55b82747f6e5b24`), which gives the same bytes on every part
+of the 27 disks. It was dropped so that there is one implementation. The C version was 40 times faster
+(0.1 s against 3.7 s for a 1.9 MB custom-data image), but it needed a compiler and third-party sources in the tree.
 
 ## Measured
 

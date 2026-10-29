@@ -144,7 +144,7 @@ def k1_rest(ctx, ext, hdr):
     """The rest of a K1 header (after magic and size)."""
     if ext == 'AST':
         a, b = hdr[8:12], hdr[12:16]
-        return ['\t.long\t0x%08x, 0x%08x\t; not read back: see notes/floppy-others-2026-10-29, ".AST"'
+        return ['\t.long\t0x%08x, 0x%08x\t; never written by func_4852D0E5: the old contents of its stack frame'
                 % (int.from_bytes(a, 'little'), int.from_bytes(b, 'little'))]
     return ['\t.byte\t' + ', '.join('0x%02x' % x for x in hdr[8:])]
 
