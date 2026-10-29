@@ -2,5 +2,12 @@
 
 ; 02CUSTM2.LSW -- 4130 bytes, clusters 667..675.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02CUSTM2_LSW:	.incbin	"custom1.img", 0x57400, 4130
+; 02CUSTM2.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_02CUSTM2_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_02CUSTM2_LSW_s1, F_02CUSTM2_LSW_e1, F_02CUSTM2_LSW_s2, F_02CUSTM2_LSW_e2, 0	; lzss_j, two parts
+F_02CUSTM2_LSW_s1:	.incbin	"02CUSTM2.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02CUSTM2.LSW.p1.s
+F_02CUSTM2_LSW_e1:
+F_02CUSTM2_LSW_s2:	.incbin	"02CUSTM2.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02CUSTM2.LSW.p2.s
+F_02CUSTM2_LSW_e2:

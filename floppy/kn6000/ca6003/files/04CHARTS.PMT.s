@@ -2,5 +2,10 @@
 
 ; 04CHARTS.PMT -- 1277 bytes, clusters 242..244.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04CHARTS_PMT:	.incbin	"ca6003.img", 0x22200, 1277
+; 04CHARTS.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04CHARTS_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04CHARTS_PMT_s1:	.incbin	"04CHARTS.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04CHARTS.PMT.p1.s
+F_04CHARTS_PMT_e1:

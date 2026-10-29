@@ -25,6 +25,7 @@ floppy-others-2026-10-29/README.md, "Containers")
 USAGE
   python3 -I kd.py unpack FILE OUTPREFIX     # OUTPREFIX.hdr (the header bytes), OUTPREFIX.p1 [.p2] payloads
   python3 -I kd.py encode CODEC IN OUT       # CODEC = deflate104 | lzss_j: one stream as it sits on disk
+  python3 -I kd.py unpack-dir DIR [--stamp F] # for every container file in DIR: <file>.p1.ref [.p2.ref] payloads
   python3 -I kd.py verify FILE...            # every container of these extracted files re-encodes exactly
 The deflate coder is the C program zdeflate104 (build it with `make -C floppy/tools/kd`); set ZDEFLATE104 to
 its path if it is not next to this script.
@@ -124,6 +125,18 @@ def main(a):
         open(a[2] + ".hdr", "wb").write(hdr)
         for i, (_, p, _) in enumerate(parts, 1):
             open(a[2] + ".p%d" % i, "wb").write(p)
+        return 0
+    if len(a) in (2, 4) and a[0] == "unpack-dir":
+        for f in sorted(os.listdir(a[1])):
+            p = os.path.join(a[1], f)
+            if not os.path.isfile(p) or f.endswith((".ref", ".stamp", ".zd", ".zl", ".po", ".pbin")):
+                continue
+            d = open(p, "rb").read()
+            kind, hdr, parts = parse(d, f.rsplit(".", 1)[-1])
+            for i, (_, pl, _) in enumerate(parts, 1):
+                open(p + ".p%d.ref" % i, "wb").write(pl)
+        if len(a) == 4 and a[2] == "--stamp":
+            open(a[3], "w").write("")
         return 0
     if len(a) == 4 and a[0] == "encode":
         open(a[3], "wb").write(encode(a[1], open(a[2], "rb").read()))

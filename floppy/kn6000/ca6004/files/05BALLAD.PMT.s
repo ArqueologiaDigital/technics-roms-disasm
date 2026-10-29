@@ -2,5 +2,10 @@
 
 ; 05BALLAD.PMT -- 1400 bytes, clusters 175..177.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BALLAD_PMT:	.incbin	"ca6004.img", 0x19c00, 1400
+; 05BALLAD.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05BALLAD_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05BALLAD_PMT_s1:	.incbin	"05BALLAD.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05BALLAD.PMT.p1.s
+F_05BALLAD_PMT_e1:

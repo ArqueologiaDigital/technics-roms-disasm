@@ -2,5 +2,10 @@
 
 ; 03SHUFFL.PMT -- 1572 bytes, clusters 114..117.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SHUFFL_PMT:	.incbin	"ca6007.img", 0x12200, 1572
+; 03SHUFFL.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03SHUFFL_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_03SHUFFL_PMT_s1:	.incbin	"03SHUFFL.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SHUFFL.PMT.p1.s
+F_03SHUFFL_PMT_e1:

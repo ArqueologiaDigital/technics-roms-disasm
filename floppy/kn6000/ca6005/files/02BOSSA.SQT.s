@@ -2,5 +2,12 @@
 
 ; 02BOSSA.SQT -- 1009 bytes, clusters 90..91.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02BOSSA_SQT:	.incbin	"ca6005.img", 0xf200, 1009
+; 02BOSSA.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02BOSSA_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_02BOSSA_SQT_s1, F_02BOSSA_SQT_e1, F_02BOSSA_SQT_s2, F_02BOSSA_SQT_e2, 2	; deflate104, two parts
+F_02BOSSA_SQT_s1:	.incbin	"02BOSSA.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02BOSSA.SQT.p1.s
+F_02BOSSA_SQT_e1:
+F_02BOSSA_SQT_s2:	.incbin	"02BOSSA.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02BOSSA.SQT.p2.s
+F_02BOSSA_SQT_e2:

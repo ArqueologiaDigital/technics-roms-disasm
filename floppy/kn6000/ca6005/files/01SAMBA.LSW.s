@@ -2,5 +2,12 @@
 
 ; 01SAMBA.LSW -- 2050 bytes, clusters 40..44.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SAMBA_LSW:	.incbin	"ca6005.img", 0x8e00, 2050
+; 01SAMBA.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_01SAMBA_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_01SAMBA_LSW_s1, F_01SAMBA_LSW_e1, F_01SAMBA_LSW_s2, F_01SAMBA_LSW_e2, 2	; deflate104, two parts
+F_01SAMBA_LSW_s1:	.incbin	"01SAMBA.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SAMBA.LSW.p1.s
+F_01SAMBA_LSW_e1:
+F_01SAMBA_LSW_s2:	.incbin	"01SAMBA.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SAMBA.LSW.p2.s
+F_01SAMBA_LSW_e2:

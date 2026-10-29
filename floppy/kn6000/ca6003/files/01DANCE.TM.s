@@ -2,5 +2,10 @@
 
 ; 01DANCE.TM -- 8728 bytes, clusters 35..52.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01DANCE_TM:	.incbin	"ca6003.img", 0x8400, 8728
+; 01DANCE.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_01DANCE_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_01DANCE_TM_s1:	.incbin	"01DANCE.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01DANCE.TM.p1.s
+F_01DANCE_TM_e1:

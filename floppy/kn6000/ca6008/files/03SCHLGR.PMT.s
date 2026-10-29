@@ -2,5 +2,10 @@
 
 ; 03SCHLGR.PMT -- 1292 bytes, clusters 190..192.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SCHLGR_PMT:	.incbin	"ca6008.img", 0x1ba00, 1292
+; 03SCHLGR.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03SCHLGR_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_03SCHLGR_PMT_s1:	.incbin	"03SCHLGR.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SCHLGR.PMT.p1.s
+F_03SCHLGR_PMT_e1:

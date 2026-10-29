@@ -2,5 +2,10 @@
 
 ; 03SWING.TM -- 8732 bytes, clusters 183..200.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SWING_TM:	.incbin	"ca6010.img", 0x1ac00, 8732
+; 03SWING.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03SWING_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03SWING_TM_s1:	.incbin	"03SWING.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SWING.TM.p1.s
+F_03SWING_TM_e1:

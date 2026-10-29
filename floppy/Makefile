@@ -77,6 +77,9 @@ endef
 $(foreach m,$(MODELS),$(eval $(call FLOPPY_MODEL,$(m)))\
   $(foreach d,$($(m)_DISKS),$(eval $(call FLOPPY_DISK,$(m),$(d)))))
 
+# The KN6000 / KN7000 compressed files: payload sources -> stored streams (tools/kd/README.md).
+include tools/kd/kd.mk
+
 .SECONDARY:
 
 clean:

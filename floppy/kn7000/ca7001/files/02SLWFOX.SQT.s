@@ -2,5 +2,12 @@
 
 ; 02SLWFOX.SQT -- 944 bytes, clusters 196..197.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02SLWFOX_SQT:	.incbin	"ca7001.img", 0x1c600, 944
+; 02SLWFOX.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02SLWFOX_SQT:
+	kd_two	"J KD", 0x000f, 2272, 0, F_02SLWFOX_SQT_s1, F_02SLWFOX_SQT_e1, F_02SLWFOX_SQT_s2, F_02SLWFOX_SQT_e2, 0	; lzss_j, two parts
+F_02SLWFOX_SQT_s1:	.incbin	"02SLWFOX.sqt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02SLWFOX.SQT.p1.s
+F_02SLWFOX_SQT_e1:
+F_02SLWFOX_SQT_s2:	.incbin	"02SLWFOX.sqt.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02SLWFOX.SQT.p2.s
+F_02SLWFOX_SQT_e2:

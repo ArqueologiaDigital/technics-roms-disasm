@@ -2,5 +2,10 @@
 
 ; 05D-POP.CMP -- 22840 bytes, clusters 222..266.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05D_POP_CMP:	.incbin	"ca6009.img", 0x1fa00, 22840
+; 05D-POP.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05D_POP_CMP:
+	kd_one	"I KD", 0x0000, 89621		; deflate104, one part
+F_05D_POP_CMP_s1:	.incbin	"05D-POP.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05D-POP.CMP.p1.s
+F_05D_POP_CMP_e1:

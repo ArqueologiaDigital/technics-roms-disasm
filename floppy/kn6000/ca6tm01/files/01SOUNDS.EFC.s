@@ -2,5 +2,10 @@
 
 ; 01SOUNDS.EFC -- 945 bytes, clusters 2..3.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SOUNDS_EFC:	.incbin	"ca6tm01.img", 0x4200, 945
+; 01SOUNDS.EFC: an effect (DSP) settings file.
+
+	.include	"kd.inc"
+F_01SOUNDS_EFC:
+	kd_one	"IK D", 0x0000, 3634		; deflate104, one part
+F_01SOUNDS_EFC_s1:	.incbin	"01SOUNDS.efc.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SOUNDS.EFC.p1.s
+F_01SOUNDS_EFC_e1:

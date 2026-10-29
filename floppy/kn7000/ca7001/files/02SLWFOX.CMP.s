@@ -2,5 +2,10 @@
 
 ; 02SLWFOX.CMP -- 21142 bytes, clusters 97..138.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02SLWFOX_CMP:	.incbin	"ca7001.img", 0x10000, 21142
+; 02SLWFOX.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_02SLWFOX_CMP:
+	kd_one	"J KD", 0x0000, 51675		; lzss_j, one part
+F_02SLWFOX_CMP_s1:	.incbin	"02SLWFOX.cmp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02SLWFOX.CMP.p1.s
+F_02SLWFOX_CMP_e1:

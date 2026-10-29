@@ -2,5 +2,12 @@
 
 ; 02DRAWS.SQT -- 1019 bytes, clusters 128..129.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02DRAWS_SQT:	.incbin	"ca6008.img", 0x13e00, 1019
+; 02DRAWS.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02DRAWS_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_02DRAWS_SQT_s1, F_02DRAWS_SQT_e1, F_02DRAWS_SQT_s2, F_02DRAWS_SQT_e2, 2	; deflate104, two parts
+F_02DRAWS_SQT_s1:	.incbin	"02DRAWS.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02DRAWS.SQT.p1.s
+F_02DRAWS_SQT_e1:
+F_02DRAWS_SQT_s2:	.incbin	"02DRAWS.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02DRAWS.SQT.p2.s
+F_02DRAWS_SQT_e2:

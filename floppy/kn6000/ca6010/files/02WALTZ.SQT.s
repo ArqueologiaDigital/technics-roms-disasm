@@ -2,5 +2,12 @@
 
 ; 02WALTZ.SQT -- 588 bytes, clusters 122..123.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02WALTZ_SQT:	.incbin	"ca6010.img", 0x13200, 588
+; 02WALTZ.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02WALTZ_SQT:
+	kd_two	"I KD", 0x000f, 2160, 0, F_02WALTZ_SQT_s1, F_02WALTZ_SQT_e1, F_02WALTZ_SQT_s2, F_02WALTZ_SQT_e2, 2	; deflate104, two parts
+F_02WALTZ_SQT_s1:	.incbin	"02WALTZ.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.SQT.p1.s
+F_02WALTZ_SQT_e1:
+F_02WALTZ_SQT_s2:	.incbin	"02WALTZ.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.SQT.p2.s
+F_02WALTZ_SQT_e2:

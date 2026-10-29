@@ -2,5 +2,10 @@
 
 ; 03MARSH1.TM -- 7215 bytes, clusters 164..178.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03MARSH1_TM:	.incbin	"ca6001.img", 0x18600, 7215
+; 03MARSH1.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03MARSH1_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03MARSH1_TM_s1:	.incbin	"03MARSH1.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03MARSH1.TM.p1.s
+F_03MARSH1_TM_e1:

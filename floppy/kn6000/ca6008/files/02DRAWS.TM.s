@@ -2,5 +2,10 @@
 
 ; 02DRAWS.TM -- 7671 bytes, clusters 130..144.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02DRAWS_TM:	.incbin	"ca6008.img", 0x14200, 7671
+; 02DRAWS.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_02DRAWS_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_02DRAWS_TM_s1:	.incbin	"02DRAWS.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02DRAWS.TM.p1.s
+F_02DRAWS_TM_e1:

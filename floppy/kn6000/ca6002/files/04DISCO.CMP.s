@@ -2,5 +2,10 @@
 
 ; 04DISCO.CMP -- 18350 bytes, clusters 120..155.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04DISCO_CMP:	.incbin	"ca6002.img", 0x12e00, 18350
+; 04DISCO.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_04DISCO_CMP:
+	kd_one	"I KD", 0x0000, 77688		; deflate104, one part
+F_04DISCO_CMP_s1:	.incbin	"04DISCO.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04DISCO.CMP.p1.s
+F_04DISCO_CMP_e1:

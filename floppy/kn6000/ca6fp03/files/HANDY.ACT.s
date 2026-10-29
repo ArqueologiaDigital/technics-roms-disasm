@@ -2,5 +2,41 @@
 
 ; HANDY.ACT -- 381 bytes, clusters 485..485.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_HANDY_ACT:	.incbin	"ca6fp03.img", 0x40800, 381
+; The presentation script (<ACTION> section): which picture each ACT NO shows.
+
+F_HANDY_ACT:
+	.ascii	"<ACTION>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=1>\r\n"
+	.ascii	"<IMG SRC=\"PIC01.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=2>\r\n"
+	.ascii	"<IMG SRC=\"PIC02.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=3>\r\n"
+	.ascii	"<IMG SRC=\"PIC03.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=4>\r\n"
+	.ascii	"<IMG SRC=\"PIC04.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=5>\r\n"
+	.ascii	"<IMG SRC=\"PIC05.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=6>\r\n"
+	.ascii	"<IMG SRC=\"PIC06.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=7>\r\n"
+	.ascii	"<IMG SRC=\"PIC07.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"<ACT NO=8>\r\n"
+	.ascii	"<IMG SRC=\"PIC08.JPG\">\r\n"
+	.ascii	"</ACT>\r\n"
+	.ascii	"\r\n"
+	.ascii	"</ACTION>"

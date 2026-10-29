@@ -2,5 +2,12 @@
 
 ; 01ORGANS.SQT -- 150328 bytes, clusters 102..395.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01ORGANS_SQT:	.incbin	"organs.img", 0x10a00, 150328
+; 01ORGANS.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_01ORGANS_SQT:
+	kd_two	"J KD", 0x00f0, 22720, 203264, F_01ORGANS_SQT_s1, F_01ORGANS_SQT_e1, F_01ORGANS_SQT_s2, F_01ORGANS_SQT_e2, 0	; lzss_j, two parts
+F_01ORGANS_SQT_s1:	.incbin	"01ORGANS.sqt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01ORGANS.SQT.p1.s
+F_01ORGANS_SQT_e1:
+F_01ORGANS_SQT_s2:	.incbin	"01ORGANS.sqt.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01ORGANS.SQT.p2.s
+F_01ORGANS_SQT_e2:

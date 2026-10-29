@@ -2,5 +2,12 @@
 
 ; 01SLWLTZ.LSW -- 4139 bytes, clusters 55..63.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SLWLTZ_LSW:	.incbin	"ca7001.img", 0xac00, 4139
+; 01SLWLTZ.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_01SLWLTZ_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_01SLWLTZ_LSW_s1, F_01SLWLTZ_LSW_e1, F_01SLWLTZ_LSW_s2, F_01SLWLTZ_LSW_e2, 0	; lzss_j, two parts
+F_01SLWLTZ_LSW_s1:	.incbin	"01SLWLTZ.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01SLWLTZ.LSW.p1.s
+F_01SLWLTZ_LSW_e1:
+F_01SLWLTZ_LSW_s2:	.incbin	"01SLWLTZ.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01SLWLTZ.LSW.p2.s
+F_01SLWLTZ_LSW_e2:

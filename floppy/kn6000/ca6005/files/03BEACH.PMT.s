@@ -2,5 +2,10 @@
 
 ; 03BEACH.PMT -- 1284 bytes, clusters 114..116.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03BEACH_PMT:	.incbin	"ca6005.img", 0x12200, 1284
+; 03BEACH.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03BEACH_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_03BEACH_PMT_s1:	.incbin	"03BEACH.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03BEACH.PMT.p1.s
+F_03BEACH_PMT_e1:

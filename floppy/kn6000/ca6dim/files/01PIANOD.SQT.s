@@ -2,5 +2,12 @@
 
 ; 01PIANOD.SQT -- 26306 bytes, clusters 561..612.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01PIANOD_SQT:	.incbin	"ca6dim.img", 0x4a000, 26306
+; 01PIANOD.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_01PIANOD_SQT:
+	kd_two	"I KD", 0x000f, 2160, 63744, F_01PIANOD_SQT_s1, F_01PIANOD_SQT_e1, F_01PIANOD_SQT_s2, F_01PIANOD_SQT_e2, 2	; deflate104, two parts
+F_01PIANOD_SQT_s1:	.incbin	"01PIANOD.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01PIANOD.SQT.p1.s
+F_01PIANOD_SQT_e1:
+F_01PIANOD_SQT_s2:	.incbin	"01PIANOD.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01PIANOD.SQT.p2.s
+F_01PIANOD_SQT_e2:

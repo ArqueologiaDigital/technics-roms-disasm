@@ -2,5 +2,12 @@
 
 ; 01SAMBA.SQT -- 1009 bytes, clusters 48..49.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SAMBA_SQT:	.incbin	"ca6005.img", 0x9e00, 1009
+; 01SAMBA.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_01SAMBA_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_01SAMBA_SQT_s1, F_01SAMBA_SQT_e1, F_01SAMBA_SQT_s2, F_01SAMBA_SQT_e2, 2	; deflate104, two parts
+F_01SAMBA_SQT_s1:	.incbin	"01SAMBA.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SAMBA.SQT.p1.s
+F_01SAMBA_SQT_e1:
+F_01SAMBA_SQT_s2:	.incbin	"01SAMBA.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SAMBA.SQT.p2.s
+F_01SAMBA_SQT_e2:

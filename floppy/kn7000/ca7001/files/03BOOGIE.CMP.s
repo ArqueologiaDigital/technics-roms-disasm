@@ -2,5 +2,10 @@
 
 ; 03BOOGIE.CMP -- 21094 bytes, clusters 198..239.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03BOOGIE_CMP:	.incbin	"ca7001.img", 0x1ca00, 21094
+; 03BOOGIE.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_03BOOGIE_CMP:
+	kd_one	"J KD", 0x0000, 49707		; lzss_j, one part
+F_03BOOGIE_CMP_s1:	.incbin	"03BOOGIE.cmp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/03BOOGIE.CMP.p1.s
+F_03BOOGIE_CMP_e1:

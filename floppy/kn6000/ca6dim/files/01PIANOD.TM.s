@@ -2,5 +2,10 @@
 
 ; 01PIANOD.TM -- 8095 bytes, clusters 545..560.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01PIANOD_TM:	.incbin	"ca6dim.img", 0x48000, 8095
+; 01PIANOD.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_01PIANOD_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_01PIANOD_TM_s1:	.incbin	"01PIANOD.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01PIANOD.TM.p1.s
+F_01PIANOD_TM_e1:

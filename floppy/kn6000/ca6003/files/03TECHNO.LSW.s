@@ -2,5 +2,12 @@
 
 ; 03TECHNO.LSW -- 2076 bytes, clusters 189..193.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03TECHNO_LSW:	.incbin	"ca6003.img", 0x1b800, 2076
+; 03TECHNO.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_03TECHNO_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_03TECHNO_LSW_s1, F_03TECHNO_LSW_e1, F_03TECHNO_LSW_s2, F_03TECHNO_LSW_e2, 2	; deflate104, two parts
+F_03TECHNO_LSW_s1:	.incbin	"03TECHNO.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03TECHNO.LSW.p1.s
+F_03TECHNO_LSW_e1:
+F_03TECHNO_LSW_s2:	.incbin	"03TECHNO.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03TECHNO.LSW.p2.s
+F_03TECHNO_LSW_e2:

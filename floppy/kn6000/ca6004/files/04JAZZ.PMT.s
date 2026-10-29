@@ -2,5 +2,10 @@
 
 ; 04JAZZ.PMT -- 1298 bytes, clusters 132..134.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04JAZZ_PMT:	.incbin	"ca6004.img", 0x14600, 1298
+; 04JAZZ.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04JAZZ_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04JAZZ_PMT_s1:	.incbin	"04JAZZ.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04JAZZ.PMT.p1.s
+F_04JAZZ_PMT_e1:

@@ -2,5 +2,12 @@
 
 ; 02ROCKNR.LSW -- 2046 bytes, clusters 74..77.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02ROCKNR_LSW:	.incbin	"ca6007.img", 0xd200, 2046
+; 02ROCKNR.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_02ROCKNR_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_02ROCKNR_LSW_s1, F_02ROCKNR_LSW_e1, F_02ROCKNR_LSW_s2, F_02ROCKNR_LSW_e2, 2	; deflate104, two parts
+F_02ROCKNR_LSW_s1:	.incbin	"02ROCKNR.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02ROCKNR.LSW.p1.s
+F_02ROCKNR_LSW_e1:
+F_02ROCKNR_LSW_s2:	.incbin	"02ROCKNR.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02ROCKNR.LSW.p2.s
+F_02ROCKNR_LSW_e2:

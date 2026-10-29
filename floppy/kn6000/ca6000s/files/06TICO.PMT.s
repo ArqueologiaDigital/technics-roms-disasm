@@ -2,5 +2,10 @@
 
 ; 06TICO.PMT -- 1317 bytes, clusters 188..190.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06TICO_PMT:	.incbin	"ca6000s.img", 0x1b600, 1317
+; 06TICO.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_06TICO_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_06TICO_PMT_s1:	.incbin	"06TICO.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06TICO.PMT.p1.s
+F_06TICO_PMT_e1:

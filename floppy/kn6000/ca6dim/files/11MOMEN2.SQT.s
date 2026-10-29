@@ -2,5 +2,12 @@
 
 ; 11MOMEN2.SQT -- 43853 bytes, clusters 54..139.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_11MOMEN2_SQT:	.incbin	"ca6dim.img", 0xaa00, 43853
+; 11MOMEN2.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_11MOMEN2_SQT:
+	kd_two	"I KD", 0x000f, 2160, 105216, F_11MOMEN2_SQT_s1, F_11MOMEN2_SQT_e1, F_11MOMEN2_SQT_s2, F_11MOMEN2_SQT_e2, 2	; deflate104, two parts
+F_11MOMEN2_SQT_s1:	.incbin	"11MOMEN2.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/11MOMEN2.SQT.p1.s
+F_11MOMEN2_SQT_e1:
+F_11MOMEN2_SQT_s2:	.incbin	"11MOMEN2.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/11MOMEN2.SQT.p2.s
+F_11MOMEN2_SQT_e2:

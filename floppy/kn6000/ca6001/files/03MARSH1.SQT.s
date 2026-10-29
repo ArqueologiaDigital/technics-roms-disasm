@@ -2,5 +2,12 @@
 
 ; 03MARSH1.SQT -- 1031 bytes, clusters 161..163.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03MARSH1_SQT:	.incbin	"ca6001.img", 0x18000, 1031
+; 03MARSH1.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_03MARSH1_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_03MARSH1_SQT_s1, F_03MARSH1_SQT_e1, F_03MARSH1_SQT_s2, F_03MARSH1_SQT_e2, 2	; deflate104, two parts
+F_03MARSH1_SQT_s1:	.incbin	"03MARSH1.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03MARSH1.SQT.p1.s
+F_03MARSH1_SQT_e1:
+F_03MARSH1_SQT_s2:	.incbin	"03MARSH1.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03MARSH1.SQT.p2.s
+F_03MARSH1_SQT_e2:

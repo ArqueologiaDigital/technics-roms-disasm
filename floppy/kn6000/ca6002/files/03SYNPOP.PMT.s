@@ -2,5 +2,10 @@
 
 ; 03SYNPOP.PMT -- 1213 bytes, clusters 100..102.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SYNPOP_PMT:	.incbin	"ca6002.img", 0x10600, 1213
+; 03SYNPOP.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03SYNPOP_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_03SYNPOP_PMT_s1:	.incbin	"03SYNPOP.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SYNPOP.PMT.p1.s
+F_03SYNPOP_PMT_e1:

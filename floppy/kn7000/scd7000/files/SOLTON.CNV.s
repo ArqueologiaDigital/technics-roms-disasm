@@ -2,5 +2,7 @@
 
 ; SOLTON.CNV -- 96706 bytes, clusters 803..991.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_SOLTON_CNV:	.incbin	"scd7000.img", 0x68400, 96706
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/solton.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_SOLTON_CNV:	.incbin	"SOLTON.cnv.gen"	; census: generated -- kn7000/src/cnv/solton.s (kn7000/tools/kn7asm.py)

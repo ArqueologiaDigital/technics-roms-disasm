@@ -2,5 +2,12 @@
 
 ; WESERL.SQT -- 17319 bytes, clusters 1159..1192.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_WESERL_SQT:	.incbin	"ca6fp01.img", 0x94c00, 17319
+; WESERL.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_WESERL_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 49408, F_WESERL_SQT_s1, F_WESERL_SQT_e1, F_WESERL_SQT_s2, F_WESERL_SQT_e2, 2	; deflate104, two parts
+F_WESERL_SQT_s1:	.incbin	"WESERL.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/WESERL.SQT.p1.s
+F_WESERL_SQT_e1:
+F_WESERL_SQT_s2:	.incbin	"WESERL.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/WESERL.SQT.p2.s
+F_WESERL_SQT_e2:

@@ -2,5 +2,10 @@
 
 ; 05BALLRM.CMP -- 9091 bytes, clusters 181..198.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BALLRM_CMP:	.incbin	"ca6005.img", 0x1a800, 9091
+; 05BALLRM.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05BALLRM_CMP:
+	kd_one	"I KD", 0x0000, 43584		; deflate104, one part
+F_05BALLRM_CMP_s1:	.incbin	"05BALLRM.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05BALLRM.CMP.p1.s
+F_05BALLRM_CMP_e1:

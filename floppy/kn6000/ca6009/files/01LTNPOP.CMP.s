@@ -2,5 +2,10 @@
 
 ; 01LTNPOP.CMP -- 13137 bytes, clusters 2..27.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01LTNPOP_CMP:	.incbin	"ca6009.img", 0x4200, 13137
+; 01LTNPOP.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_01LTNPOP_CMP:
+	kd_one	"I KD", 0x0000, 57820		; deflate104, one part
+F_01LTNPOP_CMP_s1:	.incbin	"01LTNPOP.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01LTNPOP.CMP.p1.s
+F_01LTNPOP_CMP_e1:

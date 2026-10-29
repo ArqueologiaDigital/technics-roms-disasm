@@ -2,5 +2,10 @@
 
 ; 04CARIBN.PMT -- 1316 bytes, clusters 161..163.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04CARIBN_PMT:	.incbin	"ca6005.img", 0x18000, 1316
+; 04CARIBN.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04CARIBN_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04CARIBN_PMT_s1:	.incbin	"04CARIBN.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04CARIBN.PMT.p1.s
+F_04CARIBN_PMT_e1:

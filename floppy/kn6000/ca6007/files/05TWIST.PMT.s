@@ -2,5 +2,10 @@
 
 ; 05TWIST.PMT -- 1283 bytes, clusters 179..181.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05TWIST_PMT:	.incbin	"ca6007.img", 0x1a400, 1283
+; 05TWIST.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05TWIST_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05TWIST_PMT_s1:	.incbin	"05TWIST.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TWIST.PMT.p1.s
+F_05TWIST_PMT_e1:

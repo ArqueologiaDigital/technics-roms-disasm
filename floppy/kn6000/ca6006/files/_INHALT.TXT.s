@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 429 bytes, clusters 307..307.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6006.img", 0x2a400, 429
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6006 PARTYTIME\r\n"
+	.ascii	"-----------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. SCHLAGER: 16 Beat Schlager, 8 Beat Schlager, Happy Schlager\r\n"
+	.ascii	"02. PARTYPOP: Party Pop,        Happy Beat,      Polka Pop\r\n"
+	.ascii	"03. FOXTROT:  Foxtrot,          Disco Fox,       Organ Foxtrot\r\n"
+	.ascii	"04. WALTZ:    Trad. Waltz,      Happy Waltz,     Modern Waltz\r\n"
+	.ascii	"05. LATIN:    Happy Samba,      Salsa Dance,     Mallet Beat\r\n"
+	.ascii	"06. Schlager Demo-Song"

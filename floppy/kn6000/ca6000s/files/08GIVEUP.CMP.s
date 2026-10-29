@@ -2,5 +2,10 @@
 
 ; 08GIVEUP.CMP -- 6198 bytes, clusters 113..125.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08GIVEUP_CMP:	.incbin	"ca6000s.img", 0x12000, 6198
+; 08GIVEUP.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_08GIVEUP_CMP:
+	kd_one	"I KD", 0x0000, 57070		; deflate104, one part
+F_08GIVEUP_CMP_s1:	.incbin	"08GIVEUP.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08GIVEUP.CMP.p1.s
+F_08GIVEUP_CMP_e1:

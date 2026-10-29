@@ -2,5 +2,6 @@
 
 ; PIC17.JPG -- 16416 bytes, clusters 641..673.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_PIC17_JPG:	.incbin	"ca6fp02.img", 0x54000, 16416
+; A baseline JFIF picture (the slide-show / presentation image this disk's .ACT names).
+
+F_PIC17_JPG:	.incbin	"PIC17.jpg"

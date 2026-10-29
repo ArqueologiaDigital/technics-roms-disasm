@@ -2,5 +2,10 @@
 
 ; 02SLWFOX.PMT -- 10869 bytes, clusters 174..195.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02SLWFOX_PMT:	.incbin	"ca7001.img", 0x19a00, 10869
+; 02SLWFOX.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_02SLWFOX_PMT:
+	kd_one	"J KD", 0x0000, 44992		; lzss_j, one part
+F_02SLWFOX_PMT_s1:	.incbin	"02SLWFOX.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/02SLWFOX.PMT.p1.s
+F_02SLWFOX_PMT_e1:

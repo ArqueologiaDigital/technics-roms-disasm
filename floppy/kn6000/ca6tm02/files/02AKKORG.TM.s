@@ -2,5 +2,10 @@
 
 ; 02AKKORG.TM -- 6547 bytes, clusters 21..33.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02AKKORG_TM:	.incbin	"ca6tm02.img", 0x6800, 6547
+; 02AKKORG.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_02AKKORG_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_02AKKORG_TM_s1:	.incbin	"02AKKORG.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02AKKORG.TM.p1.s
+F_02AKKORG_TM_e1:

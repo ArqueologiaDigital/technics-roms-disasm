@@ -2,5 +2,12 @@
 
 ; 03SYNPOP.LSW -- 2023 bytes, clusters 96..99.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SYNPOP_LSW:	.incbin	"ca6002.img", 0xfe00, 2023
+; 03SYNPOP.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_03SYNPOP_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_03SYNPOP_LSW_s1, F_03SYNPOP_LSW_e1, F_03SYNPOP_LSW_s2, F_03SYNPOP_LSW_e2, 2	; deflate104, two parts
+F_03SYNPOP_LSW_s1:	.incbin	"03SYNPOP.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SYNPOP.LSW.p1.s
+F_03SYNPOP_LSW_e1:
+F_03SYNPOP_LSW_s2:	.incbin	"03SYNPOP.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SYNPOP.LSW.p2.s
+F_03SYNPOP_LSW_e2:

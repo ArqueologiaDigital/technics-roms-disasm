@@ -2,5 +2,10 @@
 
 ; 03BOOGIE.MSP -- 5103 bytes, clusters 268..277.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03BOOGIE_MSP:	.incbin	"ca7001.img", 0x25600, 5103
+; 03BOOGIE.MSP: a music-stylist pad set ("TPAD" container).
+
+	.include	"kd.inc"
+F_03BOOGIE_MSP:
+	kd_one	"J KD", 0x0000, 7805		; lzss_j, one part
+F_03BOOGIE_MSP_s1:	.incbin	"03BOOGIE.msp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/03BOOGIE.MSP.p1.s
+F_03BOOGIE_MSP_e1:

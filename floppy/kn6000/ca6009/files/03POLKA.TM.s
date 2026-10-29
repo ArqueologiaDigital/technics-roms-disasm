@@ -2,5 +2,10 @@
 
 ; 03POLKA.TM -- 7523 bytes, clusters 143..157.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03POLKA_TM:	.incbin	"ca6009.img", 0x15c00, 7523
+; 03POLKA.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03POLKA_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03POLKA_TM_s1:	.incbin	"03POLKA.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03POLKA.TM.p1.s
+F_03POLKA_TM_e1:

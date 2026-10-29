@@ -2,5 +2,10 @@
 
 ; 06(DEMO).TM -- 6824 bytes, clusters 293..306.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06x28DEMOx29_TM:	.incbin	"ca6006.img", 0x28800, 6824
+; 06(DEMO).TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_06x28DEMOx29_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_06x28DEMOx29_TM_s1:	.incbin	"06x28DEMOx29.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06x28DEMOx29.TM.p1.s
+F_06x28DEMOx29_TM_e1:

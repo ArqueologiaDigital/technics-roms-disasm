@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 392 bytes, clusters 203..203.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6004.img", 0x1d400, 392
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6004 SWINGIN'\r\n"
+	.ascii	"----------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. BIG BAND:  Big Band,      Miller Band, Big Combo\r\n"
+	.ascii	"02. FOXTROT:   Foxtrot,       Fox Combo,   Orchester Fox\r\n"
+	.ascii	"03. COUNTRY:   Cowboy Ballad, Bluegrass,   Country Pop\r\n"
+	.ascii	"04. JAZZ:      Jazz Swing,    Jazz Ballad, 5/4 Jazz\r\n"
+	.ascii	"05. BALLAD:    Slow Rock 1,   Slow Rock 2, Orchester Ballad\r\n"
+	.ascii	"06. Swing Demo-Song"

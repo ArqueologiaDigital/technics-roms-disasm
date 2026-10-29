@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 406 bytes, clusters 328..328.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6001.img", 0x2ce00, 406
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6001 Volksmusik\r\n"
+	.ascii	"------------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. POLKA 1:  Trad. Polka,    Modern Polka,   Volksmusik\r\n"
+	.ascii	"02. POLKA 2:  Oberkrainer,    Quick Polka,    Polka Pop\r\n"
+	.ascii	"03. MARSCH 1: Dt. Marsch 4/4, Dt. Marsch 6/8, Pop Marsch\r\n"
+	.ascii	"04. MARSCH 2: US Marsch 4/4,  US Marsch 6/8,  Egerl\344nder\r\n"
+	.ascii	"05. WALZER:   Trad. Walzer,   Musette,        Drehorgel\r\n"
+	.ascii	"06. Polka Pop Demo-Song"

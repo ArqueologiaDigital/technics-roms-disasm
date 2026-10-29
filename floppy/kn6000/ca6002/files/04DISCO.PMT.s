@@ -2,5 +2,10 @@
 
 ; 04DISCO.PMT -- 1329 bytes, clusters 161..163.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04DISCO_PMT:	.incbin	"ca6002.img", 0x18000, 1329
+; 04DISCO.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04DISCO_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04DISCO_PMT_s1:	.incbin	"04DISCO.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04DISCO.PMT.p1.s
+F_04DISCO_PMT_e1:

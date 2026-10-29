@@ -2,5 +2,12 @@
 
 ; 05BEGUIN.LSW -- 4139 bytes, clusters 468..476.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BEGUIN_LSW:	.incbin	"ca7001.img", 0x3e600, 4139
+; 05BEGUIN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_05BEGUIN_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_05BEGUIN_LSW_s1, F_05BEGUIN_LSW_e1, F_05BEGUIN_LSW_s2, F_05BEGUIN_LSW_e2, 0	; lzss_j, two parts
+F_05BEGUIN_LSW_s1:	.incbin	"05BEGUIN.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/05BEGUIN.LSW.p1.s
+F_05BEGUIN_LSW_e1:
+F_05BEGUIN_LSW_s2:	.incbin	"05BEGUIN.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/05BEGUIN.LSW.p2.s
+F_05BEGUIN_LSW_e2:

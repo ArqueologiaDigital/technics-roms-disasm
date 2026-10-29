@@ -2,5 +2,7 @@
 
 ; GEM_WX2.CNV -- 108049 bytes, clusters 198..409.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_GEM_WX2_CNV:	.incbin	"scd7000.img", 0x1ca00, 108049
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/gem_wx2.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_GEM_WX2_CNV:	.incbin	"GEM_WX2.cnv.gen"	; census: generated -- kn7000/src/cnv/gem_wx2.s (kn7000/tools/kn7asm.py)

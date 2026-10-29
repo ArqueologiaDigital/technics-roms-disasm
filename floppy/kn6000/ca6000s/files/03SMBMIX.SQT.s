@@ -2,5 +2,12 @@
 
 ; 03SMBMIX.SQT -- 12442 bytes, clusters 346..370.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SMBMIX_SQT:	.incbin	"ca6000s.img", 0x2f200, 12442
+; 03SMBMIX.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_03SMBMIX_SQT:
+	kd_two	"I KD", 0x000f, 2160, 22272, F_03SMBMIX_SQT_s1, F_03SMBMIX_SQT_e1, F_03SMBMIX_SQT_s2, F_03SMBMIX_SQT_e2, 2	; deflate104, two parts
+F_03SMBMIX_SQT_s1:	.incbin	"03SMBMIX.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SMBMIX.SQT.p1.s
+F_03SMBMIX_SQT_e1:
+F_03SMBMIX_SQT_s2:	.incbin	"03SMBMIX.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SMBMIX.SQT.p2.s
+F_03SMBMIX_SQT_e2:

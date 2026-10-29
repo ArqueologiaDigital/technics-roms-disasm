@@ -2,5 +2,10 @@
 
 ; 02DRAWS.CMP -- 20491 bytes, clusters 78..118.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02DRAWS_CMP:	.incbin	"ca6008.img", 0xda00, 20491
+; 02DRAWS.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_02DRAWS_CMP:
+	kd_one	"I KD", 0x0000, 92009		; deflate104, one part
+F_02DRAWS_CMP_s1:	.incbin	"02DRAWS.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02DRAWS.CMP.p1.s
+F_02DRAWS_CMP_e1:

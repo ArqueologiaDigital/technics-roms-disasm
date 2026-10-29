@@ -2,5 +2,10 @@
 
 ; 01DANCE.PMT -- 1358 bytes, clusters 30..32.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01DANCE_PMT:	.incbin	"ca6003.img", 0x7a00, 1358
+; 01DANCE.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_01DANCE_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_01DANCE_PMT_s1:	.incbin	"01DANCE.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01DANCE.PMT.p1.s
+F_01DANCE_PMT_e1:

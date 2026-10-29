@@ -2,5 +2,12 @@
 
 ; 06}DEMO.SQT -- 6887 bytes, clusters 330..343.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06x7dDEMO_SQT:	.incbin	"ca6010.img", 0x2d200, 6887
+; 06}DEMO.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_06x7dDEMO_SQT:
+	kd_two	"I KD", 0x000f, 2160, 14336, F_06x7dDEMO_SQT_s1, F_06x7dDEMO_SQT_e1, F_06x7dDEMO_SQT_s2, F_06x7dDEMO_SQT_e2, 2	; deflate104, two parts
+F_06x7dDEMO_SQT_s1:	.incbin	"06x7dDEMO.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06x7dDEMO.SQT.p1.s
+F_06x7dDEMO_SQT_e1:
+F_06x7dDEMO_SQT_s2:	.incbin	"06x7dDEMO.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06x7dDEMO.SQT.p2.s
+F_06x7dDEMO_SQT_e2:

@@ -2,5 +2,10 @@
 
 ; 08DEMO_3.PMT -- 10906 bytes, clusters 747..768.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08DEMO_3_PMT:	.incbin	"ca7001.img", 0x61400, 10906
+; 08DEMO_3.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_08DEMO_3_PMT:
+	kd_one	"J KD", 0x0000, 44992		; lzss_j, one part
+F_08DEMO_3_PMT_s1:	.incbin	"08DEMO_3.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/08DEMO_3.PMT.p1.s
+F_08DEMO_3_PMT_e1:

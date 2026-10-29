@@ -2,5 +2,10 @@
 
 ; 09SKYDIV.TM -- 6253 bytes, clusters 143..155.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_09SKYDIV_TM:	.incbin	"ca6dim.img", 0x15c00, 6253
+; 09SKYDIV.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_09SKYDIV_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_09SKYDIV_TM_s1:	.incbin	"09SKYDIV.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SKYDIV.TM.p1.s
+F_09SKYDIV_TM_e1:

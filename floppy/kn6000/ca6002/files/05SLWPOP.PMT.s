@@ -2,5 +2,10 @@
 
 ; 05SLWPOP.PMT -- 1343 bytes, clusters 213..215.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05SLWPOP_PMT:	.incbin	"ca6002.img", 0x1e800, 1343
+; 05SLWPOP.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05SLWPOP_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05SLWPOP_PMT_s1:	.incbin	"05SLWPOP.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05SLWPOP.PMT.p1.s
+F_05SLWPOP_PMT_e1:

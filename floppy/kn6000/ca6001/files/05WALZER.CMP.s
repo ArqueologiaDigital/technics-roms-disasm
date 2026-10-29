@@ -2,5 +2,10 @@
 
 ; 05WALZER.CMP -- 16454 bytes, clusters 222..254.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05WALZER_CMP:	.incbin	"ca6001.img", 0x1fa00, 16454
+; 05WALZER.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05WALZER_CMP:
+	kd_one	"I KD", 0x0000, 64665		; deflate104, one part
+F_05WALZER_CMP_s1:	.incbin	"05WALZER.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05WALZER.CMP.p1.s
+F_05WALZER_CMP_e1:

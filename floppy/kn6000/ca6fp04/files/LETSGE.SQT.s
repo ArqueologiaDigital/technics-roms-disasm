@@ -2,5 +2,12 @@
 
 ; LETSGE.SQT -- 15431 bytes, clusters 1120..1150.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_LETSGE_SQT:	.incbin	"ca6fp04.img", 0x8fe00, 15431
+; LETSGE.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_LETSGE_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 34560, F_LETSGE_SQT_s1, F_LETSGE_SQT_e1, F_LETSGE_SQT_s2, F_LETSGE_SQT_e2, 2	; deflate104, two parts
+F_LETSGE_SQT_s1:	.incbin	"LETSGE.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/LETSGE.SQT.p1.s
+F_LETSGE_SQT_e1:
+F_LETSGE_SQT_s2:	.incbin	"LETSGE.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/LETSGE.SQT.p2.s
+F_LETSGE_SQT_e2:

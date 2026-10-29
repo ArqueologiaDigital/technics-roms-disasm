@@ -2,5 +2,12 @@
 
 ; 09SKYDIV.SQT -- 3755 bytes, clusters 156..163.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_09SKYDIV_SQT:	.incbin	"ca6dim.img", 0x17600, 3755
+; 09SKYDIV.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_09SKYDIV_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 7168, F_09SKYDIV_SQT_s1, F_09SKYDIV_SQT_e1, F_09SKYDIV_SQT_s2, F_09SKYDIV_SQT_e2, 2	; deflate104, two parts
+F_09SKYDIV_SQT_s1:	.incbin	"09SKYDIV.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SKYDIV.SQT.p1.s
+F_09SKYDIV_SQT_e1:
+F_09SKYDIV_SQT_s2:	.incbin	"09SKYDIV.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SKYDIV.SQT.p2.s
+F_09SKYDIV_SQT_e2:

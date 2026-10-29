@@ -2,5 +2,10 @@
 
 ; 01POLKA.PMT -- 1402 bytes, clusters 58..60.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01POLKA_PMT:	.incbin	"ca6008.img", 0xb200, 1402
+; 01POLKA.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_01POLKA_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_01POLKA_PMT_s1:	.incbin	"01POLKA.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01POLKA.PMT.p1.s
+F_01POLKA_PMT_e1:

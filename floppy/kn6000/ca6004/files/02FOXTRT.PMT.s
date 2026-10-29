@@ -2,5 +2,10 @@
 
 ; 02FOXTRT.PMT -- 1371 bytes, clusters 74..76.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02FOXTRT_PMT:	.incbin	"ca6004.img", 0xd200, 1371
+; 02FOXTRT.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_02FOXTRT_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_02FOXTRT_PMT_s1:	.incbin	"02FOXTRT.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02FOXTRT.PMT.p1.s
+F_02FOXTRT_PMT_e1:

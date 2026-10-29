@@ -2,5 +2,10 @@
 
 ; 08ENKADC.TM -- 7575 bytes, clusters 171..185.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08ENKADC_TM:	.incbin	"ca6dim.img", 0x19400, 7575
+; 08ENKADC.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_08ENKADC_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_08ENKADC_TM_s1:	.incbin	"08ENKADC.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08ENKADC.TM.p1.s
+F_08ENKADC_TM_e1:

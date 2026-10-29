@@ -2,5 +2,12 @@
 
 ; 01GLUEHW.SQT -- 5791 bytes, clusters 462..473.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01GLUEHW_SQT:	.incbin	"ca6000s.img", 0x3da00, 5791
+; 01GLUEHW.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_01GLUEHW_SQT:
+	kd_two	"I KD", 0x000f, 2160, 9216, F_01GLUEHW_SQT_s1, F_01GLUEHW_SQT_e1, F_01GLUEHW_SQT_s2, F_01GLUEHW_SQT_e2, 2	; deflate104, two parts
+F_01GLUEHW_SQT_s1:	.incbin	"01GLUEHW.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01GLUEHW.SQT.p1.s
+F_01GLUEHW_SQT_e1:
+F_01GLUEHW_SQT_s2:	.incbin	"01GLUEHW.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01GLUEHW.SQT.p2.s
+F_01GLUEHW_SQT_e2:

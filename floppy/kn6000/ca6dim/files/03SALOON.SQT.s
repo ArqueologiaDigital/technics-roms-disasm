@@ -2,5 +2,12 @@
 
 ; 03SALOON.SQT -- 42722 bytes, clusters 383..466.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SALOON_SQT:	.incbin	"ca6dim.img", 0x33c00, 42722
+; 03SALOON.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_03SALOON_SQT:
+	kd_two	"I KD", 0x000f, 2160, 94208, F_03SALOON_SQT_s1, F_03SALOON_SQT_e1, F_03SALOON_SQT_s2, F_03SALOON_SQT_e2, 2	; deflate104, two parts
+F_03SALOON_SQT_s1:	.incbin	"03SALOON.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SALOON.SQT.p1.s
+F_03SALOON_SQT_e1:
+F_03SALOON_SQT_s2:	.incbin	"03SALOON.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SALOON.SQT.p2.s
+F_03SALOON_SQT_e2:

@@ -2,5 +2,12 @@
 
 ; 0216BEAT.LSW -- 2049 bytes, clusters 68..72.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_0216BEAT_LSW:	.incbin	"ca6002.img", 0xc600, 2049
+; 0216BEAT.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_0216BEAT_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_0216BEAT_LSW_s1, F_0216BEAT_LSW_e1, F_0216BEAT_LSW_s2, F_0216BEAT_LSW_e2, 2	; deflate104, two parts
+F_0216BEAT_LSW_s1:	.incbin	"0216BEAT.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/0216BEAT.LSW.p1.s
+F_0216BEAT_LSW_e1:
+F_0216BEAT_LSW_s2:	.incbin	"0216BEAT.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/0216BEAT.LSW.p2.s
+F_0216BEAT_LSW_e2:

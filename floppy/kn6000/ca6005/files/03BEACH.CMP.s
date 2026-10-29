@@ -2,5 +2,10 @@
 
 ; 03BEACH.CMP -- 8509 bytes, clusters 92..108.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03BEACH_CMP:	.incbin	"ca6005.img", 0xf600, 8509
+; 03BEACH.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_03BEACH_CMP:
+	kd_one	"I KD", 0x0000, 41366		; deflate104, one part
+F_03BEACH_CMP_s1:	.incbin	"03BEACH.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03BEACH.CMP.p1.s
+F_03BEACH_CMP_e1:

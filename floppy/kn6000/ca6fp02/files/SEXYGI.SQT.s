@@ -2,5 +2,12 @@
 
 ; SEXYGI.SQT -- 16466 bytes, clusters 2..34.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_SEXYGI_SQT:	.incbin	"ca6fp02.img", 0x4200, 16466
+; SEXYGI.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_SEXYGI_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 39168, F_SEXYGI_SQT_s1, F_SEXYGI_SQT_e1, F_SEXYGI_SQT_s2, F_SEXYGI_SQT_e2, 2	; deflate104, two parts
+F_SEXYGI_SQT_s1:	.incbin	"SEXYGI.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/SEXYGI.SQT.p1.s
+F_SEXYGI_SQT_e1:
+F_SEXYGI_SQT_s2:	.incbin	"SEXYGI.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/SEXYGI.SQT.p2.s
+F_SEXYGI_SQT_e2:

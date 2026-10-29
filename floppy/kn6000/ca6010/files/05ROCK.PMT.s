@@ -2,5 +2,10 @@
 
 ; 05ROCK.PMT -- 1470 bytes, clusters 306..308.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05ROCK_PMT:	.incbin	"ca6010.img", 0x2a200, 1470
+; 05ROCK.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05ROCK_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05ROCK_PMT_s1:	.incbin	"05ROCK.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05ROCK.PMT.p1.s
+F_05ROCK_PMT_e1:

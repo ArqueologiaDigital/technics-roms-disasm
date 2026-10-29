@@ -2,5 +2,12 @@
 
 ; 04CUSTM8.LSW -- 4137 bytes, clusters 2..10.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04CUSTM8_LSW:	.incbin	"custom2.img", 0x4200, 4137
+; 04CUSTM8.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04CUSTM8_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_04CUSTM8_LSW_s1, F_04CUSTM8_LSW_e1, F_04CUSTM8_LSW_s2, F_04CUSTM8_LSW_e2, 0	; lzss_j, two parts
+F_04CUSTM8_LSW_s1:	.incbin	"04CUSTM8.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/04CUSTM8.LSW.p1.s
+F_04CUSTM8_LSW_e1:
+F_04CUSTM8_LSW_s2:	.incbin	"04CUSTM8.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/04CUSTM8.LSW.p2.s
+F_04CUSTM8_LSW_e2:

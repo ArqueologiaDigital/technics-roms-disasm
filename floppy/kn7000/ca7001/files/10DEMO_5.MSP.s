@@ -2,5 +2,10 @@
 
 ; 10DEMO_5.MSP -- 4229 bytes, clusters 924..932.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_10DEMO_5_MSP:	.incbin	"ca7001.img", 0x77600, 4229
+; 10DEMO_5.MSP: a music-stylist pad set ("TPAD" container).
+
+	.include	"kd.inc"
+F_10DEMO_5_MSP:
+	kd_one	"J KD", 0x0000, 6753		; lzss_j, one part
+F_10DEMO_5_MSP_s1:	.incbin	"10DEMO_5.msp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/10DEMO_5.MSP.p1.s
+F_10DEMO_5_MSP_e1:

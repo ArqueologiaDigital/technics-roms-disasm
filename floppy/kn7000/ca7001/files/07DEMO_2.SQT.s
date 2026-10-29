@@ -2,5 +2,12 @@
 
 ; 07DEMO_2.SQT -- 3873 bytes, clusters 678..685.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07DEMO_2_SQT:	.incbin	"ca7001.img", 0x58a00, 3873
+; 07DEMO_2.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_07DEMO_2_SQT:
+	kd_two	"J KD", 0x000f, 2272, 3584, F_07DEMO_2_SQT_s1, F_07DEMO_2_SQT_e1, F_07DEMO_2_SQT_s2, F_07DEMO_2_SQT_e2, 0	; lzss_j, two parts
+F_07DEMO_2_SQT_s1:	.incbin	"07DEMO_2.sqt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/07DEMO_2.SQT.p1.s
+F_07DEMO_2_SQT_e1:
+F_07DEMO_2_SQT_s2:	.incbin	"07DEMO_2.sqt.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/07DEMO_2.SQT.p2.s
+F_07DEMO_2_SQT_e2:

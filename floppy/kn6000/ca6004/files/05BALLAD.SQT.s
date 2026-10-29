@@ -2,5 +2,12 @@
 
 ; 05BALLAD.SQT -- 1021 bytes, clusters 178..179.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BALLAD_SQT:	.incbin	"ca6004.img", 0x1a200, 1021
+; 05BALLAD.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_05BALLAD_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_05BALLAD_SQT_s1, F_05BALLAD_SQT_e1, F_05BALLAD_SQT_s2, F_05BALLAD_SQT_e2, 2	; deflate104, two parts
+F_05BALLAD_SQT_s1:	.incbin	"05BALLAD.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05BALLAD.SQT.p1.s
+F_05BALLAD_SQT_e1:
+F_05BALLAD_SQT_s2:	.incbin	"05BALLAD.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05BALLAD.SQT.p2.s
+F_05BALLAD_SQT_e2:

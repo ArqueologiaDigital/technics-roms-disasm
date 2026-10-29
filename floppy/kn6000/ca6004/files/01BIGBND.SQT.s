@@ -2,5 +2,12 @@
 
 ; 01BIGBND.SQT -- 1021 bytes, clusters 28..29.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01BIGBND_SQT:	.incbin	"ca6004.img", 0x7600, 1021
+; 01BIGBND.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_01BIGBND_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_01BIGBND_SQT_s1, F_01BIGBND_SQT_e1, F_01BIGBND_SQT_s2, F_01BIGBND_SQT_e2, 2	; deflate104, two parts
+F_01BIGBND_SQT_s1:	.incbin	"01BIGBND.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.SQT.p1.s
+F_01BIGBND_SQT_e1:
+F_01BIGBND_SQT_s2:	.incbin	"01BIGBND.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.SQT.p2.s
+F_01BIGBND_SQT_e2:

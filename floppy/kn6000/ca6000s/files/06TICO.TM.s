@@ -2,5 +2,10 @@
 
 ; 06TICO.TM -- 8904 bytes, clusters 154..171.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06TICO_TM:	.incbin	"ca6000s.img", 0x17200, 8904
+; 06TICO.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_06TICO_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_06TICO_TM_s1:	.incbin	"06TICO.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06TICO.TM.p1.s
+F_06TICO_TM_e1:

@@ -2,5 +2,10 @@
 
 ; 01BIGBND.PMT -- 1278 bytes, clusters 25..27.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01BIGBND_PMT:	.incbin	"ca6004.img", 0x7000, 1278
+; 01BIGBND.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_01BIGBND_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_01BIGBND_PMT_s1:	.incbin	"01BIGBND.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.PMT.p1.s
+F_01BIGBND_PMT_e1:

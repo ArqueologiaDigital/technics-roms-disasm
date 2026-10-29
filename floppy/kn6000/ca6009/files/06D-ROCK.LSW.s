@@ -2,5 +2,12 @@
 
 ; 06D-ROCK.LSW -- 2041 bytes, clusters 303..306.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06D_ROCK_LSW:	.incbin	"ca6009.img", 0x29c00, 2041
+; 06D-ROCK.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_06D_ROCK_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_06D_ROCK_LSW_s1, F_06D_ROCK_LSW_e1, F_06D_ROCK_LSW_s2, F_06D_ROCK_LSW_e2, 2	; deflate104, two parts
+F_06D_ROCK_LSW_s1:	.incbin	"06D-ROCK.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06D-ROCK.LSW.p1.s
+F_06D_ROCK_LSW_e1:
+F_06D_ROCK_LSW_s2:	.incbin	"06D-ROCK.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06D-ROCK.LSW.p2.s
+F_06D_ROCK_LSW_e2:

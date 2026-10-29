@@ -2,5 +2,10 @@
 
 ; 04JAZZ.CMP -- 7720 bytes, clusters 112..127.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04JAZZ_CMP:	.incbin	"ca6004.img", 0x11e00, 7720
+; 04JAZZ.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_04JAZZ_CMP:
+	kd_one	"I KD", 0x0000, 36585		; deflate104, one part
+F_04JAZZ_CMP_s1:	.incbin	"04JAZZ.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04JAZZ.CMP.p1.s
+F_04JAZZ_CMP_e1:

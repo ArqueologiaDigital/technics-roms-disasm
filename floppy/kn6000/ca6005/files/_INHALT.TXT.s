@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 394 bytes, clusters 243..243.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6005.img", 0x22400, 394
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6005 LATIN\r\n"
+	.ascii	"-------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. SAMBA:     Samba,         Samba Draws,   Modern Samba\r\n"
+	.ascii	"02. BOSSANOVA: Bossa Band,    Fast Bossa,    Modern Bossa\r\n"
+	.ascii	"03. BEACH:     Fox Hawaii,    Rhumba Hawaii, Beach Beguine\r\n"
+	.ascii	"04. CARIBBEAN: Swingy Reggae, Modern Reggae, Calypso\r\n"
+	.ascii	"05. BALLROOM:  Cha Cha,       Tango,         Beguine\r\n"
+	.ascii	"06: Bossanova Demo-Song"

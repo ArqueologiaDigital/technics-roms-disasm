@@ -2,5 +2,10 @@
 
 ; 02PRTPOP.CMP -- 13485 bytes, clusters 59..85.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02PRTPOP_CMP:	.incbin	"ca6006.img", 0xb400, 13485
+; 02PRTPOP.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_02PRTPOP_CMP:
+	kd_one	"I KD", 0x0000, 62613		; deflate104, one part
+F_02PRTPOP_CMP_s1:	.incbin	"02PRTPOP.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02PRTPOP.CMP.p1.s
+F_02PRTPOP_CMP_e1:

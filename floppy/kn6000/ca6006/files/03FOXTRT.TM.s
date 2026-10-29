@@ -2,5 +2,10 @@
 
 ; 03FOXTRT.TM -- 8525 bytes, clusters 131..147.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03FOXTRT_TM:	.incbin	"ca6006.img", 0x14400, 8525
+; 03FOXTRT.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03FOXTRT_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03FOXTRT_TM_s1:	.incbin	"03FOXTRT.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03FOXTRT.TM.p1.s
+F_03FOXTRT_TM_e1:

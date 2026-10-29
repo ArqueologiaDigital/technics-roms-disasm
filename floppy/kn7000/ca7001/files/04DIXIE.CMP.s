@@ -2,5 +2,10 @@
 
 ; 04DIXIE.CMP -- 20063 bytes, clusters 302..341.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04DIXIE_CMP:	.incbin	"ca7001.img", 0x29a00, 20063
+; 04DIXIE.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_04DIXIE_CMP:
+	kd_one	"J KD", 0x0000, 47308		; lzss_j, one part
+F_04DIXIE_CMP_s1:	.incbin	"04DIXIE.cmp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/04DIXIE.CMP.p1.s
+F_04DIXIE_CMP_e1:

@@ -2,5 +2,12 @@
 
 ; 05WALZER.LSW -- 2074 bytes, clusters 255..259.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05WALZER_LSW:	.incbin	"ca6001.img", 0x23c00, 2074
+; 05WALZER.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_05WALZER_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_05WALZER_LSW_s1, F_05WALZER_LSW_e1, F_05WALZER_LSW_s2, F_05WALZER_LSW_e2, 2	; deflate104, two parts
+F_05WALZER_LSW_s1:	.incbin	"05WALZER.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05WALZER.LSW.p1.s
+F_05WALZER_LSW_e1:
+F_05WALZER_LSW_s2:	.incbin	"05WALZER.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05WALZER.LSW.p2.s
+F_05WALZER_LSW_e2:

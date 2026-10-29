@@ -2,5 +2,10 @@
 
 ; 03BOOGIE.PMT -- 10906 bytes, clusters 278..299.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03BOOGIE_PMT:	.incbin	"ca7001.img", 0x26a00, 10906
+; 03BOOGIE.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03BOOGIE_PMT:
+	kd_one	"J KD", 0x0000, 44992		; lzss_j, one part
+F_03BOOGIE_PMT_s1:	.incbin	"03BOOGIE.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/03BOOGIE.PMT.p1.s
+F_03BOOGIE_PMT_e1:

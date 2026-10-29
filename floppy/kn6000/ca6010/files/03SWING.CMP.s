@@ -2,5 +2,10 @@
 
 ; 03SWING.CMP -- 17479 bytes, clusters 139..173.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SWING_CMP:	.incbin	"ca6010.img", 0x15400, 17479
+; 03SWING.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_03SWING_CMP:
+	kd_one	"I KD", 0x0000, 67641		; deflate104, one part
+F_03SWING_CMP_s1:	.incbin	"03SWING.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SWING.CMP.p1.s
+F_03SWING_CMP_e1:

@@ -2,5 +2,10 @@
 
 ; 02RAVE.CMP -- 34582 bytes, clusters 53..120.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02RAVE_CMP:	.incbin	"ca6003.img", 0xa800, 34582
+; 02RAVE.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_02RAVE_CMP:
+	kd_one	"I KD", 0x0000, 113746		; deflate104, one part
+F_02RAVE_CMP_s1:	.incbin	"02RAVE.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02RAVE.CMP.p1.s
+F_02RAVE_CMP_e1:

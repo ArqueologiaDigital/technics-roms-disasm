@@ -2,5 +2,10 @@
 
 ; 03SCHLGR.TM -- 7473 bytes, clusters 195..209.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SCHLGR_TM:	.incbin	"ca6008.img", 0x1c400, 7473
+; 03SCHLGR.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03SCHLGR_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03SCHLGR_TM_s1:	.incbin	"03SCHLGR.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SCHLGR.TM.p1.s
+F_03SCHLGR_TM_e1:

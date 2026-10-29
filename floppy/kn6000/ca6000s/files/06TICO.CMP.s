@@ -2,5 +2,10 @@
 
 ; 06TICO.CMP -- 19159 bytes, clusters 196..233.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06TICO_CMP:	.incbin	"ca6000s.img", 0x1c600, 19159
+; 06TICO.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_06TICO_CMP:
+	kd_one	"I KD", 0x0000, 73769		; deflate104, one part
+F_06TICO_CMP_s1:	.incbin	"06TICO.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06TICO.CMP.p1.s
+F_06TICO_CMP_e1:

@@ -2,5 +2,12 @@
 
 ; 08ENKADC.SQT -- 21466 bytes, clusters 186..227.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08ENKADC_SQT:	.incbin	"ca6dim.img", 0x1b200, 21466
+; 08ENKADC.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_08ENKADC_SQT:
+	kd_two	"I KD", 0x000f, 2160, 53760, F_08ENKADC_SQT_s1, F_08ENKADC_SQT_e1, F_08ENKADC_SQT_s2, F_08ENKADC_SQT_e2, 2	; deflate104, two parts
+F_08ENKADC_SQT_s1:	.incbin	"08ENKADC.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08ENKADC.SQT.p1.s
+F_08ENKADC_SQT_e1:
+F_08ENKADC_SQT_s2:	.incbin	"08ENKADC.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08ENKADC.SQT.p2.s
+F_08ENKADC_SQT_e2:

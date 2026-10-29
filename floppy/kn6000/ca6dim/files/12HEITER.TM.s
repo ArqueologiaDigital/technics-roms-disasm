@@ -2,5 +2,10 @@
 
 ; 12HEITER.TM -- 6526 bytes, clusters 2..14.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_12HEITER_TM:	.incbin	"ca6dim.img", 0x4200, 6526
+; 12HEITER.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_12HEITER_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_12HEITER_TM_s1:	.incbin	"12HEITER.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.TM.p1.s
+F_12HEITER_TM_e1:

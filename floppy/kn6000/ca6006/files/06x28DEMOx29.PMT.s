@@ -2,5 +2,10 @@
 
 ; 06(DEMO).PMT -- 1616 bytes, clusters 273..276.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06x28DEMOx29_PMT:	.incbin	"ca6006.img", 0x26000, 1616
+; 06(DEMO).PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_06x28DEMOx29_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_06x28DEMOx29_PMT_s1:	.incbin	"06x28DEMOx29.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06x28DEMOx29.PMT.p1.s
+F_06x28DEMOx29_PMT_e1:

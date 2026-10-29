@@ -2,5 +2,12 @@
 
 ; 01ORGANS.LSW -- 4133 bytes, clusters 2..10.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01ORGANS_LSW:	.incbin	"organs.img", 0x4200, 4133
+; 01ORGANS.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_01ORGANS_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_01ORGANS_LSW_s1, F_01ORGANS_LSW_e1, F_01ORGANS_LSW_s2, F_01ORGANS_LSW_e2, 0	; lzss_j, two parts
+F_01ORGANS_LSW_s1:	.incbin	"01ORGANS.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01ORGANS.LSW.p1.s
+F_01ORGANS_LSW_e1:
+F_01ORGANS_LSW_s2:	.incbin	"01ORGANS.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01ORGANS.LSW.p2.s
+F_01ORGANS_LSW_e2:

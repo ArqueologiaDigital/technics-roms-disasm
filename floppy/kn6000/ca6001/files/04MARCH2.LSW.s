@@ -2,5 +2,12 @@
 
 ; 04MARCH2.LSW -- 2048 bytes, clusters 197..200.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04MARCH2_LSW:	.incbin	"ca6001.img", 0x1c800, 2048
+; 04MARCH2.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04MARCH2_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_04MARCH2_LSW_s1, F_04MARCH2_LSW_e1, F_04MARCH2_LSW_s2, F_04MARCH2_LSW_e2, 2	; deflate104, two parts
+F_04MARCH2_LSW_s1:	.incbin	"04MARCH2.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04MARCH2.LSW.p1.s
+F_04MARCH2_LSW_e1:
+F_04MARCH2_LSW_s2:	.incbin	"04MARCH2.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04MARCH2.LSW.p2.s
+F_04MARCH2_LSW_e2:

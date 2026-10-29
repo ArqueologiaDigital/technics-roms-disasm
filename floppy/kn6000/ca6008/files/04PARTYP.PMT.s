@@ -2,5 +2,10 @@
 
 ; 04PARTYP.PMT -- 1389 bytes, clusters 248..250.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04PARTYP_PMT:	.incbin	"ca6008.img", 0x22e00, 1389
+; 04PARTYP.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04PARTYP_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04PARTYP_PMT_s1:	.incbin	"04PARTYP.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04PARTYP.PMT.p1.s
+F_04PARTYP_PMT_e1:

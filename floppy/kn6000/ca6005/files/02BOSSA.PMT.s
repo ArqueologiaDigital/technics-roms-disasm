@@ -2,5 +2,10 @@
 
 ; 02BOSSA.PMT -- 1215 bytes, clusters 87..89.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02BOSSA_PMT:	.incbin	"ca6005.img", 0xec00, 1215
+; 02BOSSA.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_02BOSSA_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_02BOSSA_PMT_s1:	.incbin	"02BOSSA.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02BOSSA.PMT.p1.s
+F_02BOSSA_PMT_e1:

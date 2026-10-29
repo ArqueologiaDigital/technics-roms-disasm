@@ -2,5 +2,6 @@
 
 ; 14.JPG -- 31344 bytes, clusters 918..979.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_14_JPG:	.incbin	"ca6fp04.img", 0x76a00, 31344
+; A baseline JFIF picture (the slide-show / presentation image this disk's .ACT names).
+
+F_14_JPG:	.incbin	"14.jpg"

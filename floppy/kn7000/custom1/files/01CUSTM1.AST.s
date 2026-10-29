@@ -2,5 +2,12 @@
 
 ; 01CUSTM1.AST -- 334140 bytes, clusters 1915..2567.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01CUSTM1_AST:	.incbin	"custom1.img", 0xf3400, 334140
+; A custom-data flash image, saved by CUSTOM DATA SAVE: the deflate of the whole 1966080-byte image
+; (its SHA-1 is the custom-data dump the make variable KN7000_CUSTOMDATA_01custm1 names; that image's typed source is
+; the custom-data tree, lane customdata).
+
+	.include	"kd.inc"
+F_01CUSTM1_AST:
+	k1_head	"J", 1966080		; deflate104, one part
+	.long	0x48582cd3, 0x5006f220	; not read back: see notes/floppy-others-2026-10-29, ".AST"
+F_01CUSTM1_AST_s1:	.incbin	"01CUSTM1.ast.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of $(KN7000_CUSTOMDATA_01custm1)

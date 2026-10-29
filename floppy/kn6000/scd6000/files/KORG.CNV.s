@@ -2,5 +2,7 @@
 
 ; KORG.CNV -- 108912 bytes, clusters 410..622.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_KORG_CNV:	.incbin	"scd6000.img", 0x37200, 108912
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/korg.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_KORG_CNV:	.incbin	"KORG.cnv.gen"	; census: generated -- kn7000/src/cnv/korg.s (kn7000/tools/kn7asm.py)

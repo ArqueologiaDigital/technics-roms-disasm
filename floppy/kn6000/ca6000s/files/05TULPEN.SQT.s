@@ -2,5 +2,12 @@
 
 ; 05TULPEN.SQT -- 5026 bytes, clusters 234..243.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05TULPEN_SQT:	.incbin	"ca6000s.img", 0x21200, 5026
+; 05TULPEN.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_05TULPEN_SQT:
+	kd_two	"I KD", 0x000f, 2160, 7936, F_05TULPEN_SQT_s1, F_05TULPEN_SQT_e1, F_05TULPEN_SQT_s2, F_05TULPEN_SQT_e2, 2	; deflate104, two parts
+F_05TULPEN_SQT_s1:	.incbin	"05TULPEN.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TULPEN.SQT.p1.s
+F_05TULPEN_SQT_e1:
+F_05TULPEN_SQT_s2:	.incbin	"05TULPEN.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TULPEN.SQT.p2.s
+F_05TULPEN_SQT_e2:

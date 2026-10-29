@@ -2,5 +2,10 @@
 
 ; 08DEMO_3.CMP -- 21094 bytes, clusters 686..727.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08DEMO_3_CMP:	.incbin	"ca7001.img", 0x59a00, 21094
+; 08DEMO_3.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_08DEMO_3_CMP:
+	kd_one	"J KD", 0x0000, 49707		; lzss_j, one part
+F_08DEMO_3_CMP_s1:	.incbin	"08DEMO_3.cmp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/08DEMO_3.CMP.p1.s
+F_08DEMO_3_CMP_e1:

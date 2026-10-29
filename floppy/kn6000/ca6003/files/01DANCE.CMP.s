@@ -2,5 +2,10 @@
 
 ; 01DANCE.CMP -- 12248 bytes, clusters 2..25.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01DANCE_CMP:	.incbin	"ca6003.img", 0x4200, 12248
+; 01DANCE.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_01DANCE_CMP:
+	kd_one	"I KD", 0x0000, 58749		; deflate104, one part
+F_01DANCE_CMP_s1:	.incbin	"01DANCE.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01DANCE.CMP.p1.s
+F_01DANCE_CMP_e1:

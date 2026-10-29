@@ -2,5 +2,10 @@
 
 ; 06(DEMO).CMP -- 7818 bytes, clusters 253..268.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_06x28DEMOx29_CMP:	.incbin	"ca6006.img", 0x23800, 7818
+; 06(DEMO).CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_06x28DEMOx29_CMP:
+	kd_one	"I KD", 0x0000, 48951		; deflate104, one part
+F_06x28DEMOx29_CMP_s1:	.incbin	"06x28DEMOx29.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/06x28DEMOx29.CMP.p1.s
+F_06x28DEMOx29_CMP_e1:

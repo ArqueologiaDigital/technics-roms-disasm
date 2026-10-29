@@ -2,5 +2,10 @@
 
 ; 03MARSH1.PMT -- 1513 bytes, clusters 158..160.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03MARSH1_PMT:	.incbin	"ca6001.img", 0x17a00, 1513
+; 03MARSH1.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_03MARSH1_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_03MARSH1_PMT_s1:	.incbin	"03MARSH1.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03MARSH1.PMT.p1.s
+F_03MARSH1_PMT_e1:

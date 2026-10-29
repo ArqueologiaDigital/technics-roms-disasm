@@ -2,5 +2,10 @@
 
 ; 01SLWLTZ.PMT -- 10946 bytes, clusters 73..94.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SLWLTZ_PMT:	.incbin	"ca7001.img", 0xd000, 10946
+; 01SLWLTZ.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_01SLWLTZ_PMT:
+	kd_one	"J KD", 0x0000, 44992		; lzss_j, one part
+F_01SLWLTZ_PMT_s1:	.incbin	"01SLWLTZ.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01SLWLTZ.PMT.p1.s
+F_01SLWLTZ_PMT_e1:

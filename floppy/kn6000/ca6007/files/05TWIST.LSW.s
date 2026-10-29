@@ -2,5 +2,12 @@
 
 ; 05TWIST.LSW -- 2042 bytes, clusters 175..178.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05TWIST_LSW:	.incbin	"ca6007.img", 0x19c00, 2042
+; 05TWIST.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_05TWIST_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_05TWIST_LSW_s1, F_05TWIST_LSW_e1, F_05TWIST_LSW_s2, F_05TWIST_LSW_e2, 2	; deflate104, two parts
+F_05TWIST_LSW_s1:	.incbin	"05TWIST.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TWIST.LSW.p1.s
+F_05TWIST_LSW_e1:
+F_05TWIST_LSW_s2:	.incbin	"05TWIST.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TWIST.LSW.p2.s
+F_05TWIST_LSW_e2:

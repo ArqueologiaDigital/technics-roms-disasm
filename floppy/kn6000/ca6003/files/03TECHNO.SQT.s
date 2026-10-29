@@ -2,5 +2,12 @@
 
 ; 03TECHNO.SQT -- 1016 bytes, clusters 197..198.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03TECHNO_SQT:	.incbin	"ca6003.img", 0x1c800, 1016
+; 03TECHNO.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_03TECHNO_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_03TECHNO_SQT_s1, F_03TECHNO_SQT_e1, F_03TECHNO_SQT_s2, F_03TECHNO_SQT_e2, 2	; deflate104, two parts
+F_03TECHNO_SQT_s1:	.incbin	"03TECHNO.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03TECHNO.SQT.p1.s
+F_03TECHNO_SQT_e1:
+F_03TECHNO_SQT_s2:	.incbin	"03TECHNO.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03TECHNO.SQT.p2.s
+F_03TECHNO_SQT_e2:

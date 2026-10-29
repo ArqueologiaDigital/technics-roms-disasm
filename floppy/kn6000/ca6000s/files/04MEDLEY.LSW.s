@@ -2,5 +2,12 @@
 
 ; 04MEDLEY.LSW -- 2051 bytes, clusters 284..288.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04MEDLEY_LSW:	.incbin	"ca6000s.img", 0x27600, 2051
+; 04MEDLEY.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04MEDLEY_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_04MEDLEY_LSW_s1, F_04MEDLEY_LSW_e1, F_04MEDLEY_LSW_s2, F_04MEDLEY_LSW_e2, 2	; deflate104, two parts
+F_04MEDLEY_LSW_s1:	.incbin	"04MEDLEY.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04MEDLEY.LSW.p1.s
+F_04MEDLEY_LSW_e1:
+F_04MEDLEY_LSW_s2:	.incbin	"04MEDLEY.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04MEDLEY.LSW.p2.s
+F_04MEDLEY_LSW_e2:

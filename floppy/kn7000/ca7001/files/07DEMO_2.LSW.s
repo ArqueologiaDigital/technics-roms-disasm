@@ -2,5 +2,12 @@
 
 ; 07DEMO_2.LSW -- 4105 bytes, clusters 638..646.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07DEMO_2_LSW:	.incbin	"ca7001.img", 0x53a00, 4105
+; 07DEMO_2.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_07DEMO_2_LSW:
+	kd_two	"J KD", 0x0000, 2064, 6144, F_07DEMO_2_LSW_s1, F_07DEMO_2_LSW_e1, F_07DEMO_2_LSW_s2, F_07DEMO_2_LSW_e2, 0	; lzss_j, two parts
+F_07DEMO_2_LSW_s1:	.incbin	"07DEMO_2.lsw.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/07DEMO_2.LSW.p1.s
+F_07DEMO_2_LSW_e1:
+F_07DEMO_2_LSW_s2:	.incbin	"07DEMO_2.lsw.p2.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/07DEMO_2.LSW.p2.s
+F_07DEMO_2_LSW_e2:

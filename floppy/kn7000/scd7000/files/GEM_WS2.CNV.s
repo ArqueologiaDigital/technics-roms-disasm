@@ -2,5 +2,7 @@
 
 ; GEM_WS2.CNV -- 99857 bytes, clusters 2..197.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_GEM_WS2_CNV:	.incbin	"scd7000.img", 0x4200, 99857
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/gem_ws2.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_GEM_WS2_CNV:	.incbin	"GEM_WS2.cnv.gen"	; census: generated -- kn7000/src/cnv/gem_ws2.s (kn7000/tools/kn7asm.py)

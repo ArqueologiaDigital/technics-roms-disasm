@@ -2,5 +2,10 @@
 
 ; 05LATIN.PMT -- 1412 bytes, clusters 248..250.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05LATIN_PMT:	.incbin	"ca6006.img", 0x22e00, 1412
+; 05LATIN.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05LATIN_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05LATIN_PMT_s1:	.incbin	"05LATIN.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05LATIN.PMT.p1.s
+F_05LATIN_PMT_e1:

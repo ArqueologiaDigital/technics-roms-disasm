@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 424 bytes, clusters 232..232.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6007.img", 0x20e00, 424
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6007 Rockin' Days\r\n"
+	.ascii	"--------------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. ROCK:        Hard Rock,    Classic Rock,    Hard R&R\r\n"
+	.ascii	"02. ROCK'N'ROLL: Big Band R&R, Combo R&R,       Soul R&R\r\n"
+	.ascii	"03. SHUFFLE:     Shuffle Band, Surfing Shuffle, Soul Shuffle\r\n"
+	.ascii	"04. BOOGIE:      Piano Boogie, Combo Boogie,    Boogie Rock\r\n"
+	.ascii	"05. TWIST:       Piano Twist,  Organ Twist,     Twist Combo\r\n"
+	.ascii	"06. Rock'n'Roll Demo-Song"

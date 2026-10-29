@@ -2,5 +2,10 @@
 
 ; 09SUNSHN.CMP -- 6735 bytes, clusters 64..77.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_09SUNSHN_CMP:	.incbin	"ca6000s.img", 0xbe00, 6735
+; 09SUNSHN.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_09SUNSHN_CMP:
+	kd_one	"I KD", 0x0000, 34372		; deflate104, one part
+F_09SUNSHN_CMP_s1:	.incbin	"09SUNSHN.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SUNSHN.CMP.p1.s
+F_09SUNSHN_CMP_e1:

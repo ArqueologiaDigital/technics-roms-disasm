@@ -2,5 +2,10 @@
 
 ; 04CHARTS.TM -- 7380 bytes, clusters 247..261.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04CHARTS_TM:	.incbin	"ca6003.img", 0x22c00, 7380
+; 04CHARTS.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_04CHARTS_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_04CHARTS_TM_s1:	.incbin	"04CHARTS.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04CHARTS.TM.p1.s
+F_04CHARTS_TM_e1:

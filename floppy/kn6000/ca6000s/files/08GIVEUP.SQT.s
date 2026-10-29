@@ -2,5 +2,12 @@
 
 ; 08GIVEUP.SQT -- 4512 bytes, clusters 96..104.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08GIVEUP_SQT:	.incbin	"ca6000s.img", 0xfe00, 4512
+; 08GIVEUP.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_08GIVEUP_SQT:
+	kd_two	"I KD", 0x000f, 2160, 7936, F_08GIVEUP_SQT_s1, F_08GIVEUP_SQT_e1, F_08GIVEUP_SQT_s2, F_08GIVEUP_SQT_e2, 2	; deflate104, two parts
+F_08GIVEUP_SQT_s1:	.incbin	"08GIVEUP.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08GIVEUP.SQT.p1.s
+F_08GIVEUP_SQT_e1:
+F_08GIVEUP_SQT_s2:	.incbin	"08GIVEUP.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08GIVEUP.SQT.p2.s
+F_08GIVEUP_SQT_e2:

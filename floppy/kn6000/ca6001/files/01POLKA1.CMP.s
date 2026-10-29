@@ -2,5 +2,10 @@
 
 ; 01POLKA1.CMP -- 11805 bytes, clusters 2..25.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01POLKA1_CMP:	.incbin	"ca6001.img", 0x4200, 11805
+; 01POLKA1.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_01POLKA1_CMP:
+	kd_one	"I KD", 0x0000, 49162		; deflate104, one part
+F_01POLKA1_CMP_s1:	.incbin	"01POLKA1.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01POLKA1.CMP.p1.s
+F_01POLKA1_CMP_e1:

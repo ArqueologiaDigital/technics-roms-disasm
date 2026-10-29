@@ -2,5 +2,9 @@
 
 ; FEATURE.PRE -- 80 bytes, clusters 1117..1117.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_FEATURE_PRE:	.incbin	"ca6fp04.img", 0x8f800, 80
+; The presentation file (<PRESENTATION>): the song to play and its title.
+
+F_FEATURE_PRE:
+	.ascii	"<PRESENTATION>\r\n"
+	.ascii	"<EXEC SONG=1 SRC=\"LETSGE\" NAME=\"LETS GET BACK\">\r\n"
+	.ascii	"</PRESENTATION>"

@@ -2,5 +2,10 @@
 
 ; 05BEGUIN.MSP -- 4229 bytes, clusters 477..485.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BEGUIN_MSP:	.incbin	"ca7001.img", 0x3f800, 4229
+; 05BEGUIN.MSP: a music-stylist pad set ("TPAD" container).
+
+	.include	"kd.inc"
+F_05BEGUIN_MSP:
+	kd_one	"J KD", 0x0000, 6753		; lzss_j, one part
+F_05BEGUIN_MSP_s1:	.incbin	"05BEGUIN.msp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/05BEGUIN.MSP.p1.s
+F_05BEGUIN_MSP_e1:

@@ -2,5 +2,12 @@
 
 ; 09SUNSHN.SQT -- 7225 bytes, clusters 40..54.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_09SUNSHN_SQT:	.incbin	"ca6000s.img", 0x8e00, 7225
+; 09SUNSHN.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_09SUNSHN_SQT:
+	kd_two	"I KD", 0x000f, 2160, 11776, F_09SUNSHN_SQT_s1, F_09SUNSHN_SQT_e1, F_09SUNSHN_SQT_s2, F_09SUNSHN_SQT_e2, 2	; deflate104, two parts
+F_09SUNSHN_SQT_s1:	.incbin	"09SUNSHN.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SUNSHN.SQT.p1.s
+F_09SUNSHN_SQT_e1:
+F_09SUNSHN_SQT_s2:	.incbin	"09SUNSHN.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SUNSHN.SQT.p2.s
+F_09SUNSHN_SQT_e2:

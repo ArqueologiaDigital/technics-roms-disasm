@@ -2,5 +2,10 @@
 
 ; 01BIGBND.CMP -- 9194 bytes, clusters 2..19.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01BIGBND_CMP:	.incbin	"ca6004.img", 0x4200, 9194
+; 01BIGBND.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_01BIGBND_CMP:
+	kd_one	"I KD", 0x0000, 40325		; deflate104, one part
+F_01BIGBND_CMP_s1:	.incbin	"01BIGBND.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.CMP.p1.s
+F_01BIGBND_CMP_e1:

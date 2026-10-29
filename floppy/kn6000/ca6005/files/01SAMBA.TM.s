@@ -2,5 +2,10 @@
 
 ; 01SAMBA.TM -- 7653 bytes, clusters 50..64.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SAMBA_TM:	.incbin	"ca6005.img", 0xa200, 7653
+; 01SAMBA.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_01SAMBA_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_01SAMBA_TM_s1:	.incbin	"01SAMBA.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01SAMBA.TM.p1.s
+F_01SAMBA_TM_e1:

@@ -2,5 +2,12 @@
 
 ; 01BIGBND.LSW -- 2072 bytes, clusters 20..24.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01BIGBND_LSW:	.incbin	"ca6004.img", 0x6600, 2072
+; 01BIGBND.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_01BIGBND_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_01BIGBND_LSW_s1, F_01BIGBND_LSW_e1, F_01BIGBND_LSW_s2, F_01BIGBND_LSW_e2, 2	; deflate104, two parts
+F_01BIGBND_LSW_s1:	.incbin	"01BIGBND.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.LSW.p1.s
+F_01BIGBND_LSW_e1:
+F_01BIGBND_LSW_s2:	.incbin	"01BIGBND.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01BIGBND.LSW.p2.s
+F_01BIGBND_LSW_e2:

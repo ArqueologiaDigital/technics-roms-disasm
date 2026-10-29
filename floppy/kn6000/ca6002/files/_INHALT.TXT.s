@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 416 bytes, clusters 281..281.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6002.img", 0x27000, 416
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6002 Popmusik\r\n"
+	.ascii	"----------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. 8 BEAT:    8 Bt. Pop,       8 Bt. Standard, 8 Bt. Ballad\r\n"
+	.ascii	"02. 16 BEAT:   16 Bt. Standard, 16 Bt. Pop,     Electro Pop\r\n"
+	.ascii	"03. SYNTH POP: Synthy Pop,      Synthy Ballad,  Synth Bounce\r\n"
+	.ascii	"04. DISCO:     80's Disco,      90's Disco,     Disco Funk\r\n"
+	.ascii	"05. SLOW POP:  8 Bt. Ballad,    Piano Ballad,   Soul Ballad\r\n"
+	.ascii	"06. Disco-Demo-Song"

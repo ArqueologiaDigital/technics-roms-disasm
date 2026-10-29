@@ -2,5 +2,18 @@
 
 ; _INHALT.TXT -- 476 bytes, clusters 397..397.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6010.img", 0x35800, 476
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6010 Happy Akkordeon\r\n"
+	.ascii	"-----------------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01: POLKA : Fast Polka,     Polka Party,   Modern Polka     - 06: Polka Demo-Song\r\n"
+	.ascii	"02: WALTZ : Waltz,          Musette Waltz, Alpin Combo      - 07: Musette-Waltz Demo-Song\r\n"
+	.ascii	"03: SWING : Swing Fox,      Jazz Fox,      Swing Waltz\r\n"
+	.ascii	"04: LATIN : Rhumba,         Samba,         Cha Cha          - 09: Samba Demo-Song\r\n"
+	.ascii	"05: ROCK  : Mdrn Rock&Roll, Alpen Rock,    6/8 Rock Ballad"

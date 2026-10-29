@@ -2,5 +2,10 @@
 
 ; 05SWING.PMT -- 1333 bytes, clusters 302..304.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05SWING_PMT:	.incbin	"ca6008.img", 0x29a00, 1333
+; 05SWING.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05SWING_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05SWING_PMT_s1:	.incbin	"05SWING.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05SWING.PMT.p1.s
+F_05SWING_PMT_e1:

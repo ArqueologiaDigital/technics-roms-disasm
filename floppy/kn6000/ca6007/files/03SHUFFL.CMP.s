@@ -2,5 +2,10 @@
 
 ; 03SHUFFL.CMP -- 12806 bytes, clusters 83..108.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SHUFFL_CMP:	.incbin	"ca6007.img", 0xe400, 12806
+; 03SHUFFL.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_03SHUFFL_CMP:
+	kd_one	"I KD", 0x0000, 57485		; deflate104, one part
+F_03SHUFFL_CMP_s1:	.incbin	"03SHUFFL.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SHUFFL.CMP.p1.s
+F_03SHUFFL_CMP_e1:

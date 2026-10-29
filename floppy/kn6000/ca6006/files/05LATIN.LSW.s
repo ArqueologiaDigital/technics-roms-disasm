@@ -2,5 +2,12 @@
 
 ; 05LATIN.LSW -- 2045 bytes, clusters 244..247.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05LATIN_LSW:	.incbin	"ca6006.img", 0x22600, 2045
+; 05LATIN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_05LATIN_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_05LATIN_LSW_s1, F_05LATIN_LSW_e1, F_05LATIN_LSW_s2, F_05LATIN_LSW_e2, 2	; deflate104, two parts
+F_05LATIN_LSW_s1:	.incbin	"05LATIN.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05LATIN.LSW.p1.s
+F_05LATIN_LSW_e1:
+F_05LATIN_LSW_s2:	.incbin	"05LATIN.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05LATIN.LSW.p2.s
+F_05LATIN_LSW_e2:

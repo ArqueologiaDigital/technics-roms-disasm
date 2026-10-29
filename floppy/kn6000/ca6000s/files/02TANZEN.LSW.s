@@ -2,5 +2,12 @@
 
 ; 02TANZEN.LSW -- 2067 bytes, clusters 438..442.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02TANZEN_LSW:	.incbin	"ca6000s.img", 0x3aa00, 2067
+; 02TANZEN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_02TANZEN_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_02TANZEN_LSW_s1, F_02TANZEN_LSW_e1, F_02TANZEN_LSW_s2, F_02TANZEN_LSW_e2, 2	; deflate104, two parts
+F_02TANZEN_LSW_s1:	.incbin	"02TANZEN.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02TANZEN.LSW.p1.s
+F_02TANZEN_LSW_e1:
+F_02TANZEN_LSW_s2:	.incbin	"02TANZEN.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02TANZEN.LSW.p2.s
+F_02TANZEN_LSW_e2:

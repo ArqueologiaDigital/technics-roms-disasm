@@ -2,5 +2,12 @@
 
 ; 02FOXTRT.SQT -- 1021 bytes, clusters 77..78.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02FOXTRT_SQT:	.incbin	"ca6004.img", 0xd800, 1021
+; 02FOXTRT.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02FOXTRT_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 0, F_02FOXTRT_SQT_s1, F_02FOXTRT_SQT_e1, F_02FOXTRT_SQT_s2, F_02FOXTRT_SQT_e2, 2	; deflate104, two parts
+F_02FOXTRT_SQT_s1:	.incbin	"02FOXTRT.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02FOXTRT.SQT.p1.s
+F_02FOXTRT_SQT_e1:
+F_02FOXTRT_SQT_s2:	.incbin	"02FOXTRT.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02FOXTRT.SQT.p2.s
+F_02FOXTRT_SQT_e2:

@@ -2,5 +2,10 @@
 
 ; 04MARCH2.CMP -- 9084 bytes, clusters 179..196.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04MARCH2_CMP:	.incbin	"ca6001.img", 0x1a400, 9084
+; 04MARCH2.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_04MARCH2_CMP:
+	kd_one	"I KD", 0x0000, 42088		; deflate104, one part
+F_04MARCH2_CMP_s1:	.incbin	"04MARCH2.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04MARCH2.CMP.p1.s
+F_04MARCH2_CMP_e1:

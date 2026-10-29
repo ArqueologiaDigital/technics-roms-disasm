@@ -2,5 +2,10 @@
 
 ; 01LTNPOP.TM -- 7687 bytes, clusters 38..53.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01LTNPOP_TM:	.incbin	"ca6009.img", 0x8a00, 7687
+; 01LTNPOP.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_01LTNPOP_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_01LTNPOP_TM_s1:	.incbin	"01LTNPOP.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01LTNPOP.TM.p1.s
+F_01LTNPOP_TM_e1:

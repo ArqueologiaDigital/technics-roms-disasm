@@ -2,5 +2,10 @@
 
 ; 05ROCK.CMP -- 22539 bytes, clusters 256..300.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05ROCK_CMP:	.incbin	"ca6010.img", 0x23e00, 22539
+; 05ROCK.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05ROCK_CMP:
+	kd_one	"I KD", 0x0000, 82314		; deflate104, one part
+F_05ROCK_CMP_s1:	.incbin	"05ROCK.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05ROCK.CMP.p1.s
+F_05ROCK_CMP_e1:

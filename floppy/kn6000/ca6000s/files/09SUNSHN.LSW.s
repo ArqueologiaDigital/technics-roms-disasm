@@ -2,5 +2,12 @@
 
 ; 09SUNSHN.LSW -- 2095 bytes, clusters 59..63.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_09SUNSHN_LSW:	.incbin	"ca6000s.img", 0xb400, 2095
+; 09SUNSHN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_09SUNSHN_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_09SUNSHN_LSW_s1, F_09SUNSHN_LSW_e1, F_09SUNSHN_LSW_s2, F_09SUNSHN_LSW_e2, 2	; deflate104, two parts
+F_09SUNSHN_LSW_s1:	.incbin	"09SUNSHN.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SUNSHN.LSW.p1.s
+F_09SUNSHN_LSW_e1:
+F_09SUNSHN_LSW_s2:	.incbin	"09SUNSHN.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/09SUNSHN.LSW.p2.s
+F_09SUNSHN_LSW_e2:

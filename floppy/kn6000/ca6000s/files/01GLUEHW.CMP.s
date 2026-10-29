@@ -2,5 +2,10 @@
 
 ; 01GLUEHW.CMP -- 10191 bytes, clusters 2..21.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01GLUEHW_CMP:	.incbin	"ca6000s.img", 0x4200, 10191
+; 01GLUEHW.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_01GLUEHW_CMP:
+	kd_one	"I KD", 0x0000, 43019		; deflate104, one part
+F_01GLUEHW_CMP_s1:	.incbin	"01GLUEHW.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01GLUEHW.CMP.p1.s
+F_01GLUEHW_CMP_e1:

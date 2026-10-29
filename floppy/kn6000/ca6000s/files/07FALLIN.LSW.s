@@ -2,5 +2,12 @@
 
 ; 07FALLIN.LSW -- 2045 bytes, clusters 140..143.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07FALLIN_LSW:	.incbin	"ca6000s.img", 0x15600, 2045
+; 07FALLIN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_07FALLIN_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_07FALLIN_LSW_s1, F_07FALLIN_LSW_e1, F_07FALLIN_LSW_s2, F_07FALLIN_LSW_e2, 2	; deflate104, two parts
+F_07FALLIN_LSW_s1:	.incbin	"07FALLIN.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/07FALLIN.LSW.p1.s
+F_07FALLIN_LSW_e1:
+F_07FALLIN_LSW_s2:	.incbin	"07FALLIN.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/07FALLIN.LSW.p2.s
+F_07FALLIN_LSW_e2:

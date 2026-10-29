@@ -2,5 +2,10 @@
 
 ; 04DIXIE.MSP -- 4532 bytes, clusters 367..375.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04DIXIE_MSP:	.incbin	"ca7001.img", 0x31c00, 4532
+; 04DIXIE.MSP: a music-stylist pad set ("TPAD" container).
+
+	.include	"kd.inc"
+F_04DIXIE_MSP:
+	kd_one	"J KD", 0x0000, 6772		; lzss_j, one part
+F_04DIXIE_MSP_s1:	.incbin	"04DIXIE.msp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/04DIXIE.MSP.p1.s
+F_04DIXIE_MSP_e1:

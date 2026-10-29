@@ -2,5 +2,10 @@
 
 ; 03SMBMIX.TM -- 7217 bytes, clusters 331..345.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SMBMIX_TM:	.incbin	"ca6000s.img", 0x2d400, 7217
+; 03SMBMIX.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03SMBMIX_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03SMBMIX_TM_s1:	.incbin	"03SMBMIX.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SMBMIX.TM.p1.s
+F_03SMBMIX_TM_e1:

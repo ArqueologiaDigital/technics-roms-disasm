@@ -2,5 +2,10 @@
 
 ; 05LATIN.CMP -- 19905 bytes, clusters 205..243.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05LATIN_CMP:	.incbin	"ca6006.img", 0x1d800, 19905
+; 05LATIN.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05LATIN_CMP:
+	kd_one	"I KD", 0x0000, 88072		; deflate104, one part
+F_05LATIN_CMP_s1:	.incbin	"05LATIN.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05LATIN.CMP.p1.s
+F_05LATIN_CMP_e1:

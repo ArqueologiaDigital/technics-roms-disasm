@@ -2,5 +2,12 @@
 
 ; 01DANCE.LSW -- 2029 bytes, clusters 26..29.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01DANCE_LSW:	.incbin	"ca6003.img", 0x7200, 2029
+; 01DANCE.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_01DANCE_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_01DANCE_LSW_s1, F_01DANCE_LSW_e1, F_01DANCE_LSW_s2, F_01DANCE_LSW_e2, 2	; deflate104, two parts
+F_01DANCE_LSW_s1:	.incbin	"01DANCE.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01DANCE.LSW.p1.s
+F_01DANCE_LSW_e1:
+F_01DANCE_LSW_s2:	.incbin	"01DANCE.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/01DANCE.LSW.p2.s
+F_01DANCE_LSW_e2:

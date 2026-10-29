@@ -2,5 +2,10 @@
 
 ; 02AKKORG.EFC -- 945 bytes, clusters 2..3.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02AKKORG_EFC:	.incbin	"ca6tm02.img", 0x4200, 945
+; 02AKKORG.EFC: an effect (DSP) settings file.
+
+	.include	"kd.inc"
+F_02AKKORG_EFC:
+	kd_one	"IK D", 0x0000, 3634		; deflate104, one part
+F_02AKKORG_EFC_s1:	.incbin	"02AKKORG.efc.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02AKKORG.EFC.p1.s
+F_02AKKORG_EFC_e1:

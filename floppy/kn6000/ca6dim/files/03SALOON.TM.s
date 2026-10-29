@@ -2,5 +2,10 @@
 
 ; 03SALOON.TM -- 7310 bytes, clusters 368..382.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SALOON_TM:	.incbin	"ca6dim.img", 0x31e00, 7310
+; 03SALOON.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03SALOON_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03SALOON_TM_s1:	.incbin	"03SALOON.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SALOON.TM.p1.s
+F_03SALOON_TM_e1:

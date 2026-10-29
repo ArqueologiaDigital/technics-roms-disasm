@@ -2,5 +2,12 @@
 
 ; 04DISCO.LSW -- 2049 bytes, clusters 156..160.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04DISCO_LSW:	.incbin	"ca6002.img", 0x17600, 2049
+; 04DISCO.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04DISCO_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_04DISCO_LSW_s1, F_04DISCO_LSW_e1, F_04DISCO_LSW_s2, F_04DISCO_LSW_e2, 2	; deflate104, two parts
+F_04DISCO_LSW_s1:	.incbin	"04DISCO.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04DISCO.LSW.p1.s
+F_04DISCO_LSW_e1:
+F_04DISCO_LSW_s2:	.incbin	"04DISCO.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04DISCO.LSW.p2.s
+F_04DISCO_LSW_e2:

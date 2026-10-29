@@ -2,5 +2,10 @@
 
 ; 02WALTZ.CMP -- 19917 bytes, clusters 74..112.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02WALTZ_CMP:	.incbin	"ca6010.img", 0xd200, 19917
+; 02WALTZ.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_02WALTZ_CMP:
+	kd_one	"I KD", 0x0000, 69269		; deflate104, one part
+F_02WALTZ_CMP_s1:	.incbin	"02WALTZ.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.CMP.p1.s
+F_02WALTZ_CMP_e1:

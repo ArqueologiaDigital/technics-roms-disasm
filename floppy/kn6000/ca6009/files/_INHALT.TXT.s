@@ -2,5 +2,21 @@
 
 ; _INHALT.TXT -- 451 bytes, clusters 344..344.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6009.img", 0x2ee00, 451
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6009 Stars & Hits\r\n"
+	.ascii	"--------------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. LATIN POP:    Lambada,     Cha Cha,       Caribbean Pop\r\n"
+	.ascii	"02. OLDIES:       Fast Fox,    Paris Fox,     Twist\r\n"
+	.ascii	"03. POLKA:        Last Polka,  Polka Band,    Comedy Polka\r\n"
+	.ascii	"04. SCHLAGER:     16 Beat,     Schlager Pop,  Polka Pop\r\n"
+	.ascii	"05. DEUTSCH POP:  16 Pop,      Pop Shuffle,   Pop Ballad\r\n"
+	.ascii	"(BONUS)\r\n"
+	.ascii	"06. DEUTSCH Rock: Deutsch Rock\r\n"
+	.ascii	"07. Pop-Rock-Demo-Song"

@@ -2,5 +2,12 @@
 
 ; 04CARIBN.LSW -- 2055 bytes, clusters 156..160.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04CARIBN_LSW:	.incbin	"ca6005.img", 0x17600, 2055
+; 04CARIBN.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04CARIBN_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_04CARIBN_LSW_s1, F_04CARIBN_LSW_e1, F_04CARIBN_LSW_s2, F_04CARIBN_LSW_e2, 2	; deflate104, two parts
+F_04CARIBN_LSW_s1:	.incbin	"04CARIBN.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04CARIBN.LSW.p1.s
+F_04CARIBN_LSW_e1:
+F_04CARIBN_LSW_s2:	.incbin	"04CARIBN.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04CARIBN.LSW.p2.s
+F_04CARIBN_LSW_e2:

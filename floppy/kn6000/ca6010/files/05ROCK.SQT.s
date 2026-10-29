@@ -2,5 +2,12 @@
 
 ; 05ROCK.SQT -- 588 bytes, clusters 309..310.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05ROCK_SQT:	.incbin	"ca6010.img", 0x2a800, 588
+; 05ROCK.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_05ROCK_SQT:
+	kd_two	"I KD", 0x000f, 2160, 0, F_05ROCK_SQT_s1, F_05ROCK_SQT_e1, F_05ROCK_SQT_s2, F_05ROCK_SQT_e2, 2	; deflate104, two parts
+F_05ROCK_SQT_s1:	.incbin	"05ROCK.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05ROCK.SQT.p1.s
+F_05ROCK_SQT_e1:
+F_05ROCK_SQT_s2:	.incbin	"05ROCK.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05ROCK.SQT.p2.s
+F_05ROCK_SQT_e2:

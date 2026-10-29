@@ -2,5 +2,7 @@
 
 ; ROLAND.CNV -- 91872 bytes, clusters 623..802.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_ROLAND_CNV:	.incbin	"scd6000.img", 0x51c00, 91872
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/roland.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_ROLAND_CNV:	.incbin	"ROLAND.cnv.gen"	; census: generated -- kn7000/src/cnv/roland.s (kn7000/tools/kn7asm.py)

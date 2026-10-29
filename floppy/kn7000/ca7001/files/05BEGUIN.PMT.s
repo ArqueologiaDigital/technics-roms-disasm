@@ -2,5 +2,10 @@
 
 ; 05BEGUIN.PMT -- 10910 bytes, clusters 486..507.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05BEGUIN_PMT:	.incbin	"ca7001.img", 0x40a00, 10910
+; 05BEGUIN.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05BEGUIN_PMT:
+	kd_one	"J KD", 0x0000, 44992		; lzss_j, one part
+F_05BEGUIN_PMT_s1:	.incbin	"05BEGUIN.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/05BEGUIN.PMT.p1.s
+F_05BEGUIN_PMT_e1:

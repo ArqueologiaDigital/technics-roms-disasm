@@ -2,5 +2,12 @@
 
 ; 05SWING.LSW -- 2051 bytes, clusters 297..301.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05SWING_LSW:	.incbin	"ca6008.img", 0x29000, 2051
+; 05SWING.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_05SWING_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_05SWING_LSW_s1, F_05SWING_LSW_e1, F_05SWING_LSW_s2, F_05SWING_LSW_e2, 2	; deflate104, two parts
+F_05SWING_LSW_s1:	.incbin	"05SWING.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05SWING.LSW.p1.s
+F_05SWING_LSW_e1:
+F_05SWING_LSW_s2:	.incbin	"05SWING.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05SWING.LSW.p2.s
+F_05SWING_LSW_e2:

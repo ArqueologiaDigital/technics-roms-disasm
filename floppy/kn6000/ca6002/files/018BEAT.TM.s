@@ -2,5 +2,10 @@
 
 ; 018BEAT.TM -- 6596 bytes, clusters 30..42.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_018BEAT_TM:	.incbin	"ca6002.img", 0x7a00, 6596
+; 018BEAT.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_018BEAT_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_018BEAT_TM_s1:	.incbin	"018BEAT.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/018BEAT.TM.p1.s
+F_018BEAT_TM_e1:

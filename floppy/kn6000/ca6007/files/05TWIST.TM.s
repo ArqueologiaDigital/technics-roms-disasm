@@ -2,5 +2,10 @@
 
 ; 05TWIST.TM -- 8654 bytes, clusters 184..200.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05TWIST_TM:	.incbin	"ca6007.img", 0x1ae00, 8654
+; 05TWIST.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_05TWIST_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_05TWIST_TM_s1:	.incbin	"05TWIST.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TWIST.TM.p1.s
+F_05TWIST_TM_e1:

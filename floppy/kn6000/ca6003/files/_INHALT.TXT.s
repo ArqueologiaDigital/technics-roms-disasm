@@ -2,5 +2,19 @@
 
 ; _INHALT.TXT -- 361 bytes, clusters 366..366.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca6003.img", 0x31a00, 361
+; Text: the disk's table of contents, CR LF lines.
+
+F__INHALT_TXT:
+	.ascii	"***************\r\n"
+	.ascii	"* I N H A L T *\r\n"
+	.ascii	"***************\r\n"
+	.ascii	"\r\n"
+	.ascii	"CA-6003 Dance & Techno\r\n"
+	.ascii	"----------------------\r\n"
+	.ascii	"\r\n"
+	.ascii	"01. DANCE:  Dance 1,  Dance Shuffle, Dance 2\r\n"
+	.ascii	"02. RAVE:   Rave 1,   Rave 2,        Rave 3\r\n"
+	.ascii	"03. TECHNO: Techno 1, Techno 2,      Techno 3\r\n"
+	.ascii	"04. CHARTS: Techno 4, Rap,           Modern Reggae\r\n"
+	.ascii	"05. FUNK:   Funk,     Funky Dance,   Funky Pop\r\n"
+	.ascii	"06. Techno-Demo-Song"

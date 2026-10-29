@@ -2,5 +2,10 @@
 
 ; 05WALZER.PMT -- 1533 bytes, clusters 260..262.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05WALZER_PMT:	.incbin	"ca6001.img", 0x24600, 1533
+; 05WALZER.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_05WALZER_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_05WALZER_PMT_s1:	.incbin	"05WALZER.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05WALZER.PMT.p1.s
+F_05WALZER_PMT_e1:

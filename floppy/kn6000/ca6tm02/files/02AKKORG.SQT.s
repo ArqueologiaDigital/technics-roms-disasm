@@ -2,5 +2,12 @@
 
 ; 02AKKORG.SQT -- 8395 bytes, clusters 4..20.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02AKKORG_SQT:	.incbin	"ca6tm02.img", 0x4600, 8395
+; 02AKKORG.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_02AKKORG_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 12800, F_02AKKORG_SQT_s1, F_02AKKORG_SQT_e1, F_02AKKORG_SQT_s2, F_02AKKORG_SQT_e2, 2	; deflate104, two parts
+F_02AKKORG_SQT_s1:	.incbin	"02AKKORG.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02AKKORG.SQT.p1.s
+F_02AKKORG_SQT_e1:
+F_02AKKORG_SQT_s2:	.incbin	"02AKKORG.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02AKKORG.SQT.p2.s
+F_02AKKORG_SQT_e2:

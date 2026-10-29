@@ -2,5 +2,12 @@
 
 ; 01CTMINI.AST -- 163894 bytes, clusters 40..360.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01CTMINI_AST:	.incbin	"idd6000.img", 0x8e00, 163894
+; A custom-data flash image, saved by CUSTOM DATA SAVE: the deflate of the whole 1966080-byte image
+; (its SHA-1 is the custom-data dump the make variable KN6000_CUSTOMDATA_01ctmini names; that image's typed source is
+; the custom-data tree, lane customdata).
+
+	.include	"kd.inc"
+F_01CTMINI_AST:
+	k1_head	"I", 1966080		; deflate104, one part
+	.long	0x00000000, 0x50052930	; not read back: see notes/floppy-others-2026-10-29, ".AST"
+F_01CTMINI_AST_s1:	.incbin	"01CTMINI.ast.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of $(KN6000_CUSTOMDATA_01ctmini)

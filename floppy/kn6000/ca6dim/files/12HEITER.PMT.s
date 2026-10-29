@@ -2,5 +2,10 @@
 
 ; 12HEITER.PMT -- 2429 bytes, clusters 34..38.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_12HEITER_PMT:	.incbin	"ca6dim.img", 0x8200, 2429
+; 12HEITER.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_12HEITER_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_12HEITER_PMT_s1:	.incbin	"12HEITER.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.PMT.p1.s
+F_12HEITER_PMT_e1:

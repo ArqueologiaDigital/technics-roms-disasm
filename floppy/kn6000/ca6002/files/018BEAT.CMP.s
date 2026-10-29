@@ -2,5 +2,10 @@
 
 ; 018BEAT.CMP -- 9656 bytes, clusters 2..20.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_018BEAT_CMP:	.incbin	"ca6002.img", 0x4200, 9656
+; 018BEAT.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_018BEAT_CMP:
+	kd_one	"I KD", 0x0000, 46609		; deflate104, one part
+F_018BEAT_CMP_s1:	.incbin	"018BEAT.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/018BEAT.CMP.p1.s
+F_018BEAT_CMP_e1:

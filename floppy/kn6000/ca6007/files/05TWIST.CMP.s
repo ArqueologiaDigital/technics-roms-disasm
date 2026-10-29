@@ -2,5 +2,10 @@
 
 ; 05TWIST.CMP -- 9589 bytes, clusters 156..174.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05TWIST_CMP:	.incbin	"ca6007.img", 0x17600, 9589
+; 05TWIST.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_05TWIST_CMP:
+	kd_one	"I KD", 0x0000, 45867		; deflate104, one part
+F_05TWIST_CMP_s1:	.incbin	"05TWIST.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/05TWIST.CMP.p1.s
+F_05TWIST_CMP_e1:

@@ -2,5 +2,12 @@
 
 ; 04BOOGIE.LSW -- 2060 bytes, clusters 146..150.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04BOOGIE_LSW:	.incbin	"ca6007.img", 0x16200, 2060
+; 04BOOGIE.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_04BOOGIE_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_04BOOGIE_LSW_s1, F_04BOOGIE_LSW_e1, F_04BOOGIE_LSW_s2, F_04BOOGIE_LSW_e2, 2	; deflate104, two parts
+F_04BOOGIE_LSW_s1:	.incbin	"04BOOGIE.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04BOOGIE.LSW.p1.s
+F_04BOOGIE_LSW_e1:
+F_04BOOGIE_LSW_s2:	.incbin	"04BOOGIE.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04BOOGIE.LSW.p2.s
+F_04BOOGIE_LSW_e2:

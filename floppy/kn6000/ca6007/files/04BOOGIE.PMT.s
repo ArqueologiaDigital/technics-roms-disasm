@@ -2,5 +2,10 @@
 
 ; 04BOOGIE.PMT -- 1486 bytes, clusters 151..153.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04BOOGIE_PMT:	.incbin	"ca6007.img", 0x16c00, 1486
+; 04BOOGIE.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_04BOOGIE_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_04BOOGIE_PMT_s1:	.incbin	"04BOOGIE.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/04BOOGIE.PMT.p1.s
+F_04BOOGIE_PMT_e1:

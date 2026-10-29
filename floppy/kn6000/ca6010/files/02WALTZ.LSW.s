@@ -2,5 +2,12 @@
 
 ; 02WALTZ.LSW -- 2063 bytes, clusters 113..117.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02WALTZ_LSW:	.incbin	"ca6010.img", 0x12000, 2063
+; 02WALTZ.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_02WALTZ_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_02WALTZ_LSW_s1, F_02WALTZ_LSW_e1, F_02WALTZ_LSW_s2, F_02WALTZ_LSW_e2, 2	; deflate104, two parts
+F_02WALTZ_LSW_s1:	.incbin	"02WALTZ.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.LSW.p1.s
+F_02WALTZ_LSW_e1:
+F_02WALTZ_LSW_s2:	.incbin	"02WALTZ.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.LSW.p2.s
+F_02WALTZ_LSW_e2:

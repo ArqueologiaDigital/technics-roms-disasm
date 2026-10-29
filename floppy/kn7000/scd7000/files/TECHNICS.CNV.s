@@ -2,5 +2,7 @@
 
 ; TECHNICS.CNV -- 101992 bytes, clusters 992..1191.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_TECHNICS_CNV:	.incbin	"scd7000.img", 0x7fe00, 101992
+; A Style Convert converter (MN10300 code), the build output of kn7000/src/cnv/technics.s
+; (make -C kn7000 build-cnv; verify-cnv checks it against this disk).
+
+F_TECHNICS_CNV:	.incbin	"TECHNICS.cnv.gen"	; census: generated -- kn7000/src/cnv/technics.s (kn7000/tools/kn7asm.py)

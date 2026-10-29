@@ -2,5 +2,10 @@
 
 ; 07FALLIN.CMP -- 5083 bytes, clusters 144..153.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07FALLIN_CMP:	.incbin	"ca6000s.img", 0x15e00, 5083
+; 07FALLIN.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_07FALLIN_CMP:
+	kd_one	"I KD", 0x0000, 24198		; deflate104, one part
+F_07FALLIN_CMP_s1:	.incbin	"07FALLIN.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/07FALLIN.CMP.p1.s
+F_07FALLIN_CMP_e1:

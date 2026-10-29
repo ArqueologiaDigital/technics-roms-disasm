@@ -2,5 +2,12 @@
 
 ; 12HEITER.LSW -- 2354 bytes, clusters 39..43.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_12HEITER_LSW:	.incbin	"ca6dim.img", 0x8c00, 2354
+; 12HEITER.LSW: one-touch / panel settings, two parts.
+
+	.include	"kd.inc"
+F_12HEITER_LSW:
+	kd_two	"I KD", 0x0000, 1984, 5120, F_12HEITER_LSW_s1, F_12HEITER_LSW_e1, F_12HEITER_LSW_s2, F_12HEITER_LSW_e2, 2	; deflate104, two parts
+F_12HEITER_LSW_s1:	.incbin	"12HEITER.lsw.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.LSW.p1.s
+F_12HEITER_LSW_e1:
+F_12HEITER_LSW_s2:	.incbin	"12HEITER.lsw.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.LSW.p2.s
+F_12HEITER_LSW_e2:

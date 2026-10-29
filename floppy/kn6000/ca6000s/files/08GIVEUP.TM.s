@@ -2,5 +2,10 @@
 
 ; 08GIVEUP.TM -- 8918 bytes, clusters 78..95.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_08GIVEUP_TM:	.incbin	"ca6000s.img", 0xda00, 8918
+; 08GIVEUP.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_08GIVEUP_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_08GIVEUP_TM_s1:	.incbin	"08GIVEUP.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/08GIVEUP.TM.p1.s
+F_08GIVEUP_TM_e1:

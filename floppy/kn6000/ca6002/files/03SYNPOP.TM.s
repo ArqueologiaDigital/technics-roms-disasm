@@ -2,5 +2,10 @@
 
 ; 03SYNPOP.TM -- 7278 bytes, clusters 105..119.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SYNPOP_TM:	.incbin	"ca6002.img", 0x11000, 7278
+; 03SYNPOP.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_03SYNPOP_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_03SYNPOP_TM_s1:	.incbin	"03SYNPOP.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SYNPOP.TM.p1.s
+F_03SYNPOP_TM_e1:

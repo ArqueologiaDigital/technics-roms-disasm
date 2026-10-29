@@ -2,5 +2,10 @@
 
 ; 0216BEAT.PMT -- 1225 bytes, clusters 73..75.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_0216BEAT_PMT:	.incbin	"ca6002.img", 0xd000, 1225
+; 0216BEAT.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_0216BEAT_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_0216BEAT_PMT_s1:	.incbin	"0216BEAT.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/0216BEAT.PMT.p1.s
+F_0216BEAT_PMT_e1:

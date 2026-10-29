@@ -2,5 +2,10 @@
 
 ; 01ORGANS.PMT -- 46091 bytes, clusters 11..101.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01ORGANS_PMT:	.incbin	"organs.img", 0x5400, 46091
+; 01ORGANS.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_01ORGANS_PMT:
+	kd_one	"J KD", 0x0000, 194912		; lzss_j, one part
+F_01ORGANS_PMT_s1:	.incbin	"01ORGANS.pmt.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01ORGANS.PMT.p1.s
+F_01ORGANS_PMT_e1:

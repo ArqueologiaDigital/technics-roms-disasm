@@ -2,5 +2,12 @@
 
 ; 12HEITER.SQT -- 9629 bytes, clusters 15..33.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_12HEITER_SQT:	.incbin	"ca6dim.img", 0x5c00, 9629
+; 12HEITER.SQT: a composer song, two parts (song records, then the 256-byte event cells).
+
+	.include	"kd.inc"
+F_12HEITER_SQT:
+	kd_two	"I KD", 0x00f0, 21600, 14848, F_12HEITER_SQT_s1, F_12HEITER_SQT_e1, F_12HEITER_SQT_s2, F_12HEITER_SQT_e2, 2	; deflate104, two parts
+F_12HEITER_SQT_s1:	.incbin	"12HEITER.sqt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.SQT.p1.s
+F_12HEITER_SQT_e1:
+F_12HEITER_SQT_s2:	.incbin	"12HEITER.sqt.p2.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/12HEITER.SQT.p2.s
+F_12HEITER_SQT_e2:

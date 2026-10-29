@@ -2,5 +2,10 @@
 
 ; 01SLWLTZ.MSP -- 4254 bytes, clusters 64..72.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SLWLTZ_MSP:	.incbin	"ca7001.img", 0xbe00, 4254
+; 01SLWLTZ.MSP: a music-stylist pad set ("TPAD" container).
+
+	.include	"kd.inc"
+F_01SLWLTZ_MSP:
+	kd_one	"J KD", 0x0000, 6342		; lzss_j, one part
+F_01SLWLTZ_MSP_s1:	.incbin	"01SLWLTZ.msp.p1.zl"	; census: generated -- floppy/tools/kd/kd.py encode lzss_j (LZSS, 8 KB ring) of payload/01SLWLTZ.MSP.p1.s
+F_01SLWLTZ_MSP_e1:

@@ -2,5 +2,10 @@
 
 ; 03SCHLGR.CMP -- 20349 bytes, clusters 145..184.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03SCHLGR_CMP:	.incbin	"ca6008.img", 0x16000, 20349
+; 03SCHLGR.CMP: a style ("TCMP" container: style records, variation records, event streams).
+
+	.include	"kd.inc"
+F_03SCHLGR_CMP:
+	kd_one	"I KD", 0x0000, 91290		; deflate104, one part
+F_03SCHLGR_CMP_s1:	.incbin	"03SCHLGR.cmp.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/03SCHLGR.CMP.p1.s
+F_03SCHLGR_CMP_e1:

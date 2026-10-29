@@ -2,5 +2,10 @@
 
 ; 02WALTZ.TM -- 7534 bytes, clusters 124..138.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02WALTZ_TM:	.incbin	"ca6010.img", 0x13600, 7534
+; 02WALTZ.TM: a sound (tone) edit file.
+
+	.include	"kd.inc"
+F_02WALTZ_TM:
+	kd_one	"I KD", 0x0000, 47098		; deflate104, one part
+F_02WALTZ_TM_s1:	.incbin	"02WALTZ.tm.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/02WALTZ.TM.p1.s
+F_02WALTZ_TM_e1:

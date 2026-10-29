@@ -2,5 +2,10 @@
 
 ; 07FALLIN.PMT -- 1546 bytes, clusters 136..139.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07FALLIN_PMT:	.incbin	"ca6000s.img", 0x14e00, 1546
+; 07FALLIN.PMT: a panel-memory bank (registrations).
+
+	.include	"kd.inc"
+F_07FALLIN_PMT:
+	kd_one	"I KD", 0x0000, 43072		; deflate104, one part
+F_07FALLIN_PMT_s1:	.incbin	"07FALLIN.pmt.p1.zd"	; census: generated -- floppy/tools/kd/kd.py encode deflate104 (zlib 1.0.4, level 6) of payload/07FALLIN.PMT.p1.s
+F_07FALLIN_PMT_e1:
