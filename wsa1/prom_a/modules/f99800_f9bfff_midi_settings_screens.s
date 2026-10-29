@@ -115,7 +115,7 @@ ScreenLeave_SysexBulkDump_Entry:
 ; ---------------------------------------------------------------------
 ScreenButton_SysexBulkDump_Entry:
 	ld XIX,ScreenButtonRow_SysexBulkDump                        ; F99835  44 70 98 f9 00
-	ld e, (0x2740:16)                                   ; F9983A  c1 40 27 25
+	ld e, (MidiScreen_SubPage:16)                                   ; F9983A  c1 40 27 25
 	call T_PanelButton_CallPageTableEntry                                        ; F9983E  1d 0c 1b f4
 	ret                                                  ; F99842  0e
 T_F4171C_Nop:
@@ -182,7 +182,7 @@ ScreenLeave_GeneralMidiMode_Entry:
 ; ---------------------------------------------------------------------
 ScreenButton_GeneralMidiMode_Entry:
 	ld XIX,ScreenButtonRow_GeneralMidi_Page0                   ; F9984C  44 f0 98 f9 00
-	ld e, (0x2740:16)                                   ; F99851  c1 40 27 25
+	ld e, (MidiScreen_SubPage:16)                                   ; F99851  c1 40 27 25
 	call T_PanelButton_CallPageTableEntry                                        ; F99855  1d 0c 1b f4
 	ret                                                  ; F99859  0e
 T_F4172C_Nop:
@@ -420,7 +420,7 @@ Paint_SysexBulkDump:
 	cp (UI_ScreenLatch_Previous:16), a                                    ; F99A0C  c1 7b 20 f9
 	jr z, .LF99A25                                       ; F99A10  66 13
 	call T_Transport_StopAllRunning                                        ; F99A12  1d ac 09 f4
-	ld (0x2740:16), 0x00                                 ; F99A16  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F99A16  f1 40 27 00 00
 	or	(0x2094:16), 0x40                            ; F99A1B  c1 94 20 3e 40
 	ld (UI_ScreenItem:16), 0x00                                 ; F99A20  f1 20 27 00 00
 .LF99A25:
@@ -859,7 +859,7 @@ Paint_GeneralMidiMode:
 	cp	a, (UI_ScreenLatch_Previous:16)                               ; F99D14  c1 7b 20 f1
 	jr z, .LF99D30                                       ; F99D18  66 16
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; F99D1A  1d 94 25 f4
-	ld (0x2740:16), 0x00                                 ; F99D1E  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F99D1E  f1 40 27 00 00
 	ld (0x274c:16), 0x00                                 ; F99D23  f1 4c 27 00 00
 	ld a, (0x7f4d:16)                                   ; F99D28  c1 4d 7f 21
 	ld (UI_ScreenItem:16), a                                   ; F99D2C  f1 20 27 41
@@ -870,7 +870,7 @@ Paint_GeneralMidiMode:
 	jrl .LF99DC5                                         ; F99D3C  78 86 00
 .LF99D3F:
 	calr LCD_ScreenRedraw_Begin                                      ; F99D3F  1e ae fc
-	cp	(0x2740:16), 0x00                            ; F99D42  c1 40 27 3f 00
+	cp	(MidiScreen_SubPage:16), 0x00                            ; F99D42  c1 40 27 3f 00
 	jr nz, .LF99D76                                      ; F99D47  6e 2d
 	bit	1, (0x274c:16)                               ; F99D49  f1 4c 27 c9
 	jr z, .LF99D5D                                       ; F99D4D  66 0e
@@ -946,7 +946,7 @@ LcdKeyRow1_GeneralMidiMode_Page0:   ; entry: named by 1 `.long` operand, first a
 	jr z, .LF99DF2                                       ; F99DE1  66 0f
 	bit 0x07,W                                           ; F99DE3  c8 33 07
 	jr nz, .LF99DF2                                      ; F99DE6  6e 0a
-	ld (0x2740:16), 0x01                                 ; F99DE8  f1 40 27 00 01
+	ld (MidiScreen_SubPage:16), 0x01                                 ; F99DE8  f1 40 27 00 01
 	ld (UI_Request_Hi:16), 0x10                                 ; F99DED  f1 71 20 00 10
 .LF99DF2:
 	ret                                                  ; F99DF2  0e
@@ -1087,7 +1087,7 @@ LcdKeyRow3_GeneralMidiYesNo:   ; entry: named by 1 `.long` operand, first at 0xF
 	ld d, 0x03:opc                                          ; F99EB5  24 03
 	call T_Queue2C00_AppendRegs                          ; F99EB7  1d 38 0f f4
 .LF99EBB:
-	ld (0x2740:16), 0x00                                 ; F99EBB  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F99EBB  f1 40 27 00 00
 	ld (UI_StatusCode:16), 0x23                                 ; F99EC0  f1 80 28 00 23
 	or	(0x274c:16), 0x04                            ; F99EC5  c1 4c 27 3e 04
 	ldw (UI_Request:16), 0x40ab                              ; F99ECA  f1 70 20 02 ab 40
@@ -1100,7 +1100,7 @@ LcdKeyRow3_GeneralMidiYesNo:   ; entry: named by 1 `.long` operand, first at 0xF
 LcdKeyRow4_GeneralMidiYesNo:   ; entry: named by 1 `.long` operand, first at 0xF9999C
 	bit 0x07,W                                           ; F99ED1  c8 33 07
 	jr nz, .LF99EE0                                      ; F99ED4  6e 0a
-	ld (0x2740:16), 0x00                                 ; F99ED6  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F99ED6  f1 40 27 00 00
 	ld (UI_Request_Hi:16), 0x10                                 ; F99EDB  f1 71 20 00 10
 .LF99EE0:
 	ret                                                  ; F99EE0  0e
@@ -1116,7 +1116,7 @@ ScreenButtonRow_GeneralMidi_YesNo_Nop14:   ; entry: named by 1 `.long` operand, 
 ExitKey_GeneralMidiYesNo:   ; entry: named by 1 `.long` operand, first at 0xF999AC
 	bit 0x07,W                                           ; F99EE4  c8 33 07
 	jr nz, .LF99EF3                                      ; F99EE7  6e 0a
-	ld (0x2740:16), 0x00                                 ; F99EE9  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F99EE9  f1 40 27 00 00
 	ld (UI_Request_Hi:16), 0x10                                 ; F99EEE  f1 71 20 00 10
 .LF99EF3:
 	ret                                                  ; F99EF3  0e
@@ -1593,7 +1593,7 @@ Paint_MidiTotalMode:
 	jr z, .LF9A1C8                                       ; F9A1B9  66 0d
 	and (XIX),0xef                                       ; F9A1BB  84 3c ef
 	ld (UI_ScreenItem:16), 0x00                                 ; F9A1BE  f1 20 27 00 00
-	ld (0x2721:16), 0x00                                 ; F9A1C3  f1 21 27 00 00
+	ld (UI_CursorBox:16), 0x00                                 ; F9A1C3  f1 21 27 00 00
 .LF9A1C8:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F9A1C8  1d 80 2e f4
 	sub XBC,XBC                                          ; F9A1CC  e9 a1
@@ -1645,7 +1645,7 @@ Paint_MidiTotalMode:
 	push XWA                                             ; F9A256  38
 	call T_DisplayListB_Run_Stack                        ; F9A257  1d 04 2e f4
 	ld c, (UI_ScreenItem:16)                                   ; F9A25B  c1 20 27 23
-	ld (0x2721:16), c                                   ; F9A25F  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; F9A25F  f1 21 27 43
 	call T_LCD_ShowAllLayers_StackFrame_Copy                                        ; F9A263  1d 14 2e f4
 	inc 8,XSP                                            ; F9A267  ef 60
 	pop XIX                                              ; F9A269  5c
@@ -1951,7 +1951,7 @@ JumpTable_F9A3C7_Code_Skip:
 Draw_MultiSingleOmni:
 	ld c, (MidiCfg_InOutMode:16)                                   ; F9A418  c1 35 7f 23
 	and C,0x0f                                           ; F9A41C  cb cc 0f
-	ld (0x2740:16), c                                   ; F9A41F  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A41F  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A423  f1 40 25 00 00
 	lda xbc, (DL_MultiSingle:24)                         ; F9A428  f2 3e ca f0 31
 	push XBC                                             ; F9A42D  39
@@ -1964,7 +1964,7 @@ Draw_MultiSingle:
 	ld c, (MidiCfg_InOutMode:16)                                   ; F9A43B  c1 35 7f 23
 	and C,0xf0                                           ; F9A43F  cb cc f0
 	srl c, 0x04                                          ; F9A442  cb ef 04
-	ld (0x2740:16), c                                   ; F9A445  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A445  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A449  f1 40 25 00 00
 	lda xbc, (DL_F0CA4D:24)                              ; F9A44E  f2 4d ca f0 31
 	push XBC                                             ; F9A453  39
@@ -1981,7 +1981,7 @@ Draw_MultiSingle:
 MidiTotalMode_PaintSingleChannel:
 	ld c, (MidiCfg_SingleChannel:16)                                   ; F9A461  c1 36 7f 23
 	and C,0x0f                                           ; F9A465  cb cc 0f
-	ld (0x2740:16), c                                   ; F9A468  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A468  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A46C  f1 40 25 00 00
 	lda xbc, (MidiTotalMode_PaintSingleChannel_DL:24)                              ; F9A471  f2 5c ca f0 31
 	push XBC                                             ; F9A476  39
@@ -2001,7 +2001,7 @@ MidiTotalMode_PaintLocalTotal:
 	ld c, (MidiCfg_SingleChannel:16)                                   ; F9A48A  c1 36 7f 23
 	and C,0x20                                           ; F9A48E  cb cc 20
 	srl c, 0x05                                          ; F9A491  cb ef 05
-	ld (0x2740:16), c                                   ; F9A494  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A494  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A498  f1 40 25 00 00
 	lda xbc, (DL_NormalTechRemap:24)                     ; F9A49D  f2 6b ca f0 31
 	push XBC                                             ; F9A4A2  39
@@ -2016,7 +2016,7 @@ MidiTotalMode_PaintLocalTotal:
 Draw_NormalTechRemap:
 	ld c, (MidiCfg_ModeBits:16)                                   ; F9A4B0  c1 32 7f 23
 	and C,0x03                                           ; F9A4B4  cb cc 03
-	ld (0x2740:16), c                                   ; F9A4B7  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A4B7  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A4BB  f1 40 25 00 00
 	lda xbc, (DL_F0CA7A:24)                              ; F9A4C0  f2 7a ca f0 31
 	push XBC                                             ; F9A4C5  39
@@ -2034,7 +2034,7 @@ MidiTotalMode_PaintSingleChProgChange:
 	ld c, (MidiCfg_ModeBits:16)                                   ; F9A4D3  c1 32 7f 23
 	and C,0x08                                           ; F9A4D7  cb cc 08
 	srl c, 0x03                                          ; F9A4DA  cb ef 03
-	ld (0x2740:16), c                                   ; F9A4DD  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9A4DD  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9A4E1  f1 40 25 00 00
 	lda xbc, (DL_F0CA89:24)                              ; F9A4E6  f2 89 ca f0 31
 	push XBC                                             ; F9A4EB  39
@@ -2556,10 +2556,10 @@ Draw_RealtimeCommandsClock:
 	jr nz, .LF9A8A9                                      ; F9A847  6e 60
 	cp	(UI_ScreenItem:16), 0x00                            ; F9A849  c1 20 27 3f 00
 	jr nz, .LF9A870                                      ; F9A84E  6e 20
-	ld c, (0x7f34:16)                                   ; F9A850  c1 34 7f 23
+	ld c, (MidiFilter_Realtime:16)                                   ; F9A850  c1 34 7f 23
 	and C,0x04                                           ; F9A854  cb cc 04
 	jrl nz, .LF9A8E0                                     ; F9A857  7e 86 00
-	set	2, (0x7f34:16)                               ; F9A85A  f1 34 7f ba
+	set	2, (MidiFilter_Realtime:16)                               ; F9A85A  f1 34 7f ba
 	pushw 0x04                                           ; F9A85E  0b 04 00
 	pushw 0x04                                           ; F9A861  0b 04 00
 	pushw 0x02                                           ; F9A864  0b 02 00
@@ -2616,10 +2616,10 @@ Draw_RealtimeCommandsClock_2:
 	jr nz, .LF9A950                                      ; F9A8F1  6e 5d
 	cp	(UI_ScreenItem:16), 0x00                            ; F9A8F3  c1 20 27 3f 00
 	jr nz, .LF9A919                                      ; F9A8F8  6e 1f
-	ld c, (0x7f34:16)                                   ; F9A8FA  c1 34 7f 23
+	ld c, (MidiFilter_Realtime:16)                                   ; F9A8FA  c1 34 7f 23
 	and C,0x04                                           ; F9A8FE  cb cc 04
 	jr z, .LF9A950                                       ; F9A901  66 4d
-	res	2, (0x7f34:16)                               ; F9A903  f1 34 7f b2
+	res	2, (MidiFilter_Realtime:16)                               ; F9A903  f1 34 7f b2
 	pushw 0x04                                           ; F9A907  0b 04 00
 	pushw 0xfb                                           ; F9A90A  0b fb 00
 	pushw 0x02                                           ; F9A90D  0b 02 00
@@ -2715,7 +2715,7 @@ Paint_MidiInputOutputFilter:
 	jr z, .LF9A9B8                                       ; F9A9A9  66 0d
 	and (XIX),0xef                                       ; F9A9AB  84 3c ef
 	ld (UI_ScreenItem:16), 0x00                                 ; F9A9AE  f1 20 27 00 00
-	ld (0x2721:16), 0x00                                 ; F9A9B3  f1 21 27 00 00
+	ld (UI_CursorBox:16), 0x00                                 ; F9A9B3  f1 21 27 00 00
 .LF9A9B8:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F9A9B8  1d 80 2e f4
 	sub XBC,XBC                                          ; F9A9BC  e9 a1
@@ -2760,7 +2760,7 @@ Paint_MidiInputOutputFilter:
 	push XWA                                             ; F9AA38  38
 	call T_DisplayListB_Run_Stack                        ; F9AA39  1d 04 2e f4
 	ld c, (UI_ScreenItem:16)                                   ; F9AA3D  c1 20 27 23
-	ld (0x2721:16), c                                   ; F9AA41  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; F9AA41  f1 21 27 43
 	call T_LCD_ShowAllLayers_StackFrame_Copy                                        ; F9AA45  1d 14 2e f4
 	inc 8,XSP                                            ; F9AA49  ef 60
 	pop XIX                                              ; F9AA4B  5c
@@ -3067,7 +3067,7 @@ MidiInputOutputFilter_PaintProgramChange:
 	ld c, (MidiFilter_ChannelMsgs:16)                                   ; F9ABEF  c1 39 7f 23
 	and C,0x10                                           ; F9ABF3  cb cc 10
 	srl c, 0x04                                          ; F9ABF6  cb ef 04
-	ld (0x2740:16), c                                   ; F9ABF9  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9ABF9  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9ABFD  f1 40 25 00 00
 	lda xbc, (DL_F0CDF6:24)                              ; F9AC02  f2 f6 cd f0 31
 	push XBC                                             ; F9AC07  39
@@ -3084,7 +3084,7 @@ MidiInputOutputFilter_PaintBankSelect:
 	ld c, (MidiFilter_BankSelect:16)                                   ; F9AC15  c1 3a 7f 23
 	and C,0x80                                           ; F9AC19  cb cc 80
 	srl c, 0x07                                          ; F9AC1C  cb ef 07
-	ld (0x2740:16), c                                   ; F9AC1F  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9AC1F  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9AC23  f1 40 25 00 00
 	lda xbc, (DL_F0CE05:24)                              ; F9AC28  f2 05 ce f0 31
 	push XBC                                             ; F9AC2D  39
@@ -3101,7 +3101,7 @@ MidiInputOutputFilter_PaintPitchBend:
 	ld c, (MidiFilter_ChannelMsgs:16)                                   ; F9AC3B  c1 39 7f 23
 	and C,0x40                                           ; F9AC3F  cb cc 40
 	srl c, 0x06                                          ; F9AC42  cb ef 06
-	ld (0x2740:16), c                                   ; F9AC45  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9AC45  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9AC49  f1 40 25 00 00
 	lda xbc, (DL_F0CE14:24)                              ; F9AC4E  f2 14 ce f0 31
 	push XBC                                             ; F9AC53  39
@@ -3118,7 +3118,7 @@ MidiInputOutputFilter_PaintControlChange:
 	ld c, (MidiFilter_ChannelMsgs:16)                                   ; F9AC61  c1 39 7f 23
 	and C,0x08                                           ; F9AC65  cb cc 08
 	srl c, 0x03                                          ; F9AC68  cb ef 03
-	ld (0x2740:16), c                                   ; F9AC6B  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9AC6B  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9AC6F  f1 40 25 00 00
 	lda xbc, (DL_F0CE23:24)                              ; F9AC74  f2 23 ce f0 31
 	push XBC                                             ; F9AC79  39
@@ -3134,7 +3134,7 @@ MidiInputOutputFilter_PaintControlChange:
 MidiInputOutputFilter_PaintResetAllCtrl:
 	ld c, (MidiFilter_ResetAllCtrl:16)                                   ; F9AC87  c1 3b 7f 23
 	and C,0x01                                           ; F9AC8B  cb cc 01
-	ld (0x2740:16), c                                   ; F9AC8E  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9AC8E  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9AC92  f1 40 25 00 00
 	lda xbc, (DL_F0CE32:24)                              ; F9AC97  f2 32 ce f0 31
 	push XBC                                             ; F9AC9C  39
@@ -3151,7 +3151,7 @@ MidiInputOutputFilter_PaintChannelPressure:
 	ld c, (MidiFilter_ChannelMsgs:16)                                   ; F9ACAA  c1 39 7f 23
 	and C,0x20                                           ; F9ACAE  cb cc 20
 	srl c, 0x05                                          ; F9ACB1  cb ef 05
-	ld (0x2740:16), c                                   ; F9ACB4  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9ACB4  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9ACB8  f1 40 25 00 00
 	lda xbc, (DL_F0CE41:24)                              ; F9ACBD  f2 41 ce f0 31
 	push XBC                                             ; F9ACC2  39
@@ -3168,7 +3168,7 @@ MidiInputOutputFilter_PaintSongSelect:
 	ld c, (MidiFilter_SongSelect:16)                                   ; F9ACD0  c1 33 7f 23
 	and C,0x08                                           ; F9ACD4  cb cc 08
 	srl c, 0x03                                          ; F9ACD7  cb ef 03
-	ld (0x2740:16), c                                   ; F9ACDA  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9ACDA  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9ACDE  f1 40 25 00 00
 	lda xbc, (DL_F0CE50:24)                              ; F9ACE3  f2 50 ce f0 31
 	push XBC                                             ; F9ACE8  39
@@ -3182,11 +3182,11 @@ MidiInputOutputFilter_PaintSongSelect:
 ; Evidence: DL_F0CE50 reads (0x2740) and draws at IX 0x1AFC, the text row of "EXCLUSIVE        :" (IX 0x1AE9);
 ;   called by Paint_MidiInputOutputFilter and MidiInputOutputFilter_EditExclusive.
 MidiInputOutputFilter_PaintExclusive:
-	ld (0x2740:16), 0x01                                 ; F9ACF6  f1 40 27 00 01
+	ld (MidiScreen_SubPage:16), 0x01                                 ; F9ACF6  f1 40 27 00 01
 	ld c, (MidiFilter_Exclusive:16)                                   ; F9ACFB  c1 38 7f 23
 	and C,0x0f                                           ; F9ACFF  cb cc 0f
 	jr nz, .LF9AD09                                      ; F9AD02  6e 05
-	ld (0x2740:16), 0x00                                 ; F9AD04  f1 40 27 00 00
+	ld (MidiScreen_SubPage:16), 0x00                                 ; F9AD04  f1 40 27 00 00
 .LF9AD09:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9AD09  f1 40 25 00 00
 	lda xbc, (DL_F0CE5F:24)                              ; F9AD0E  f2 5f ce f0 31
@@ -3541,7 +3541,7 @@ MidiInputOutputFilter_EditExclusive:
 Paint_MidiOutProgramChange:
 	link XIZ,0xffe9                                      ; F9AF61  ee 0c e9 ff
 	push XIX                                             ; F9AF65  3c
-	lda xix, (0x2741:16)                                ; F9AF66  f1 41 27 34
+	lda xix, (MidiOutPgm_SendShown:16)                                ; F9AF66  f1 41 27 34
 	ld xbc, (MidiOutPC_Paint_InitBox:24)                               ; F9AF6A  e2 7f b6 f9 21
 	ld (xiz-8), xbc                                      ; F9AF6F  be f8 61
 	ld xbc, (MidiOutPC_Paint_InitBox+4:24)                               ; F9AF72  e2 83 b6 f9 21
@@ -3559,7 +3559,7 @@ Paint_MidiOutProgramChange:
 	jr z, .LF9AFAA                                       ; F9AF97  66 11
 	res	4, (UI_ScreenFlags:16)                               ; F9AF99  f1 95 20 b4
 	ld (UI_ScreenItem:16), 0x00                                 ; F9AF9D  f1 20 27 00 00
-	ld (0x2721:16), 0x00                                 ; F9AFA2  f1 21 27 00 00
+	ld (UI_CursorBox:16), 0x00                                 ; F9AFA2  f1 21 27 00 00
 	ld (XIX),0x00                                        ; F9AFA7  b4 00 00
 .LF9AFAA:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F9AFAA  1d 80 2e f4
@@ -3613,7 +3613,7 @@ Paint_MidiOutProgramChange:
 	push XWA                                             ; F9B03C  38
 	call T_DisplayListB_Run_Stack                        ; F9B03D  1d 04 2e f4
 	ld c, (UI_ScreenItem:16)                                   ; F9B041  c1 20 27 23
-	ld (0x2721:16), c                                   ; F9B045  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; F9B045  f1 21 27 43
 	push 0x00                                            ; F9B049  09 00
 	push	(UI_ScreenItem:16)                                  ; F9B04B  c1 20 27 04
 	calr MidiOutProgramChange_EnableBlinkForItem                                          ; F9B04F  1e 00 06
@@ -3901,7 +3901,7 @@ MidiOutProgramChange_Send:
 	push XBC                                             ; F9B21F  39
 	call T_DisplayListB_RunOne_Stack                     ; F9B220  1d 0c 2e f4
 	ld (0x20ab:16), 0x02                                 ; F9B224  f1 ab 20 00 02
-	ld (0x2741:16), 0x01                                 ; F9B229  f1 41 27 00 01
+	ld (MidiOutPgm_SendShown:16), 0x01                                 ; F9B229  f1 41 27 00 01
 	call T_Blink_Stop                                    ; F9B22E  1d 24 2e f4
 	inc 8,XSP                                            ; F9B232  ef 60
 	inc 2,XSP                                            ; F9B234  ef 62
@@ -3939,7 +3939,7 @@ MidiOutProgramChange_NumberPadEntry:
 ;   in DL_ProgramChangeMidiOutMidi; called by Paint_MidiOutProgramChange and the field's editors.
 MidiOutProgramChange_PaintMidiCh:
 	ld c, (MidiOutPgm_Channel:16)                                   ; F9B260  c1 46 27 23
-	ld (0x2740:16), c                                   ; F9B264  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B264  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B268  f1 40 25 00 00
 	lda xbc, (DL_F0D005:24)                              ; F9B26D  f2 05 d0 f0 31
 	push XBC                                             ; F9B272  39
@@ -3955,7 +3955,7 @@ MidiOutProgramChange_PaintMidiCh:
 MidiOutProgramChange_PaintProgram:
 	ld c, (MidiOutPgm_Program:16)                                   ; F9B280  c1 47 27 23
 	inc 1,C                                              ; F9B284  cb 61
-	ld (0x2740:16), c                                   ; F9B286  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B286  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B28A  f1 40 25 00 00
 	lda xbc, (DL_F0D00F:24)                              ; F9B28F  f2 0f d0 f0 31
 	push XBC                                             ; F9B294  39
@@ -3969,7 +3969,7 @@ MidiOutProgramChange_PaintProgram:
 ;   in DL_ProgramChangeMidiOutMidi; called by Paint_MidiOutProgramChange and the field's editors.
 MidiOutProgramChange_PaintBankMsb:
 	ld c, (MidiOutPgm_BankMsb:16)                                   ; F9B2A2  c1 48 27 23
-	ld (0x2740:16), c                                   ; F9B2A6  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B2A6  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B2AA  f1 40 25 00 00
 	lda xbc, (DL_F0D019:24)                              ; F9B2AF  f2 19 d0 f0 31
 	push XBC                                             ; F9B2B4  39
@@ -3983,7 +3983,7 @@ MidiOutProgramChange_PaintBankMsb:
 ;   in DL_ProgramChangeMidiOutMidi; called by Paint_MidiOutProgramChange and the field's editors.
 MidiOutProgramChange_PaintBankLsb:
 	ld c, (MidiOutPgm_BankLsb:16)                                   ; F9B2C2  c1 49 27 23
-	ld (0x2740:16), c                                   ; F9B2C6  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B2C6  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B2CA  f1 40 25 00 00
 	lda xbc, (MidiOutProgramChange_PaintBankLsb_DL:24)                              ; F9B2CF  f2 23 d0 f0 31
 	push XBC                                             ; F9B2D4  39
@@ -4251,7 +4251,7 @@ MidiOutProgramChange_NumberPadProgram:
 .LF9B4FF:
 	ld c, (MidiOutPgm_Program:16)                                   ; F9B4FF  c1 47 27 23
 	inc 1,C                                              ; F9B503  cb 61
-	ld (0x2740:16), c                                   ; F9B505  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B505  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B509  f1 40 25 00 00
 	lda xbc, (DL_F0D005:24)                              ; F9B50E  f2 05 d0 f0 31
 	push XBC                                             ; F9B513  39
@@ -4308,7 +4308,7 @@ MidiOutProgramChange_NumberPadBankMsb:
 	call T_Blink_Stop                                    ; F9B580  1d 24 2e f4
 .LF9B584:
 	ld C,(XIX)                                           ; F9B584  84 23
-	ld (0x2740:16), c                                   ; F9B586  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B586  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B58A  f1 40 25 00 00
 	lda xbc, (DL_F0D00F:24)                              ; F9B58F  f2 0f d0 f0 31
 	push XBC                                             ; F9B594  39
@@ -4373,7 +4373,7 @@ MidiOutProgramChange_NumberPadBankLsb:
 	calr MidiOutProgramChange_PaintBankSelect                                      ; F9B619  1e c6 fc
 .LF9B61C:
 	ld C,(XIX)                                           ; F9B61C  84 23
-	ld (0x2740:16), c                                   ; F9B61E  f1 40 27 43
+	ld (MidiScreen_SubPage:16), c                                   ; F9B61E  f1 40 27 43
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9B622  f1 40 25 00 00
 	lda xbc, (DL_F0D019:24)                              ; F9B627  f2 19 d0 f0 31
 	push XBC                                             ; F9B62C  39

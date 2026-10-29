@@ -160,8 +160,8 @@ CreatorSelectController_Boxes2:		; 8 entries of 8 bytes, index (0x2640) & 0x07
 ;   XWA,0xF4C36F` / `call T_DisplayListB_Run_Stack` at 0xF4C61F.
 ; --------------------------------------------------------------------------
 DLB_CreatorSelectController_Names:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002950, width=13, x=56, y=119
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002940, width=13, x=56, y=139
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=NameList_SourceMembers, width=13, x=56, y=119
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=NameList_SourceGroup, width=13, x=56, y=139
 
 
 ; --------------------------------------------------------------------------
@@ -798,14 +798,14 @@ CreatorSelectController_CopyNameLabels:
 	push	xiy	; F4C704  push XIY
 	call	T_UiText_CopyLabel13_To_22F0	; F4C705  call 0xf43330
 	ld	xiy, DiskSave_PasswordEntry	; F4C709  ld XIY,0x000022f0
-	ld	xix, 10560	; F4C70E  ld XIX,0x00002940
+	ld	xix, NameList_SourceGroup	; F4C70E  ld XIX,0x00002940
 	ldw	bc, 7	; F4C713  ld BC,0x0007
 	ldirw	; F4C716  ldirw
 	pop	xiy	; F4C718  pop XIY
 	ld	a, (xiy+1)	; F4C719  ld A,(XIY+0x01)
 	call	T_UiText_CopyLabel13_To_22F0	; F4C71C  call 0xf43330
 	ld	xiy, DiskSave_PasswordEntry	; F4C720  ld XIY,0x000022f0
-	ld	xix, 10576	; F4C725  ld XIX,0x00002950
+	ld	xix, NameList_SourceMembers	; F4C725  ld XIX,0x00002950
 	ldw	bc, 7	; F4C72A  ld BC,0x0007
 	ldirw	; F4C72D  ldirw
 	pop	xiz	; F4C72F  pop XIZ

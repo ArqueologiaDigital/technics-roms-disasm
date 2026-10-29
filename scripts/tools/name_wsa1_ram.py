@@ -15,7 +15,8 @@ QUESTION THIS ANSWERS / JOB IT DOES
   (m_ld_mm16 / m_ldw_mm16 / m_ld_m16m: the other 16-bit address) and 24-bit immediates (`ld XIY,0x006007db`: at that width
   only an address) change; a 16-bit immediate equal to the number may be a value, and data
   (`.byte` / `.short`) is left alone -- except the +0x02 field of an interpreter-B display-list
-  record (`.short 0x27A7 ; +0x02 source variable`), which IS the 16-bit address of the variable drawn.  Comments keep the numbers -- the WSA1 tools read
+  record (`.short 0x27A7 ; +0x02 source variable`), which IS the 16-bit address of the variable drawn, and the
+  `var=` / `table=` fields of the display-list macros (include/wsa1_gui.inc), which are the same addresses.  Comments keep the numbers -- the WSA1 tools read
   `; F8E85F  f1 58 25 41` and the evidence headers cite `(0x2540)`.
   prom_c is another CPU with its own RAM: its sources are not touched, and it does not include
   wsa1_ram.inc.  Same bytes: `make gate-all`.
@@ -693,6 +694,111 @@ GROUPS = [
         0x178E: ("Disk_Fcb", "the file-control block every DiskFile_* call passes (DOS layout: +1..+11 the 8.3 name, +0x10 the size)",
                  "DiskFile_SetFcbName copies Disk_FileName to +1; DiskFile_Open / _Close / _ReadBlock / ... push it; the stream uses it too"),
     }),
+    # ---- lane gui-wsa1, round 2: the cells the display-list macros still spelled as numbers
+    ("wsa1/notes/gui-data-2026-10-29/README.md", "8.1 Screen working cells", {
+        0x26B0: ("EditScreen_DrawNumber", "the 16-bit number an edit-screen field draws next: measure, beat, tick, velocity, length, note", "EditScreen_DrawMeasure / _DrawBeat / _DrawTick / _DrawEventVelocity, DrumEdit_DrawRowNote0..11 store it; 53 records draw it"),
+        0x2674: ("SoundGroup_PreviousBank", "the bank before the selection was reloaded; its highlight box is erased", "SoundGroup_LoadSelectionFromPart: (0x2674) = old (0x216A)"),
+        0x2721: ("UI_CursorBox", "the index of the box a screen draws its cursor highlight in", "Paint_MidiTotalMode, MidiFileSave_MoveNameCursor, S0ngSelectName_CursorLeft/Right"),
+        0x2740: ("MidiScreen_SubPage", "which page / key row a MIDI settings screen shows", "LcdKeyRow1_GeneralMidiMode_Page0 sets 1 (YES/NO); ScreenButton_GeneralMidiMode_Entry reads it"),
+        0x2741: ("MidiOutPgm_SendShown", "1 while the SEND box is drawn", "MidiOutProgramChange_Send sets it; Paint_MidiOutProgramChange erases the box"),
+        0x2742: ("MidiOutPgm_Cell2742", "TODO: drawn by MidiOutPgm_SendShown's box table; no writer under any spelling", "DLTable_F0D530 only"),
+        0x2768: ("CombiEdit_DrawnPage", "the COMBINATION EDIT page last drawn", "Draw_ReverbDepth, CombiEditMixer_ShowOtherParts: := CombiEdit_Page"),
+        0x276A: ("CombiEdit_DrawnRow", "the COMBINATION EDIT row last drawn", "CombiEditMixer_DrawPartBoxRow: := CombiEdit_Row; CombiEditMixer_ResetRowForPage"),
+        0x27A3: ("ToneEdit_TouchCurveSlot", "the touch-curve slot 1..4", "Var27A3_SetSlot: (0x27A3) = n when 1 <= n <= 4, else 1"),
+        0x27BE: ("SoundEditFilter_TypeShown", "the filter page whose name the MODE box prints (low 3 bits)", "SoundEditFilter_PaintModeField: (0x27BE) := UI_ScreenLatch"),
+        0x2808: ("ToneEdit_LayerResonator", "layer 1's resonator type 0..63; layers 2-4 at +1..+3", "Arr2808_Set1: ((u8 *)0x2808)[layer - 1] = value; drawn through DLTable_OriginalStringCylinder"),
+        0x2809: ("ToneEdit_LayerResonator+1", "", ""),
+        0x280A: ("ToneEdit_LayerResonator+2", "", ""),
+        0x280B: ("ToneEdit_LayerResonator+3", "", ""),
+        0x2881: ("MessageScreen_Arg", "a byte the message screen draws with its message", "MessageScreen_Paint copies (0x0C12) here for message 0x1A"),
+    }),
+    ("wsa1/notes/gui-data-2026-10-29/README.md", "8.2 The disk and MIDI-file screens", {
+        0x2728: ("LoadSingle_BankA", "a USER bank of the LOAD SINGLE screens, drawn at the left; TODO source or destination", "L0adSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]"),
+        0x2736: ("LoadSingle_BankB", "the other USER bank, drawn at the right; page 1 lists its groups", "SoftKeyCol2_L0adSingleS0und_Page0 writes 1 / 2; L0adSingleS0und_DrawGroupList"),
+        0x2738: ("LoadSingle_SelectedItem", "the item selected on LOAD SINGLE page 0", "ScreenEnter_L0adSingleS0und_Page0, SoftKeyCol5_L0adSingleS0und_Page0"),
+        0x2739: ("LoadSingle_ListCursorRow", "page 1's cursor row 0..7", "SoftKeyCols7_8_L0adSingle_Page1"),
+        0x2729: ("NameEdit_CharBox", "the character cell the name-entry grid highlights", "MidiFileSave_MoveNameCursor: (0x2729) := NameEdit_CharIndex"),
+        0x272A: ("DiskSave_Cell272A", "TODO: bit 0 picks a fill or a clear by the password field; no writer under any spelling", "DL_F589B2, DL_F589CD only"),
+        0x272D: ("MidiFile_ListCursorRow", "the MIDI FILE screens' list cursor row", "0 on Paint_MidiFileDirectPlay / _L0ad; MidiFile_LcdKeyRow4 decrements it"),
+        0x2730: ("DiskScreen_RowOption", "the option the last LCD-row key chose; each row key writes its own number", "LcdKeyRow1..5_MidiFileSave_Page1 write 0, 0, 1, 2, 3"),
+        0x2731: ("MidiFileSave_Options", "two one-bit options of MIDI FILE SAVE page 1, each drawn OFF / ON", "ScreenEnter_MidiFileSave_Page1"),
+        0x2733: ("DiskLoad_SongNumber", "the song number the row-4 / row-5 keys step", "LcdKeyRow4/5_DiskL0adFile, LcdKeyRow4/5_MidiFileL0ad"),
+    }),
+    ("wsa1/notes/gui-data-2026-10-29/README.md", "8.3 Text buffers the records draw as string tables", {
+        0x1012: ("StepRecord_PrevRowText", "STEP RECORD's previous-measure row, 30 characters", "StepRecord_BuildPrevMeasureRow (ld XIX,0x1012), StepRecord_BlankPrevRowText"),
+        0x1030: ("StepRecord_CurrentRowText", "the current-measure row, 30 characters", "ld XIX,0x1030 in the middle-row builder; StepRecord_BlankCurrentRowText"),
+        0x104E: ("StepRecord_NextRowText", "the next-measure row, 30 characters", "StepRecord_BuildNextMeasureRow (ld XIX,0x104E)"),
+        0x2300: ("SoundEditText_Slot2", "text slot 2 of 4 (slot 1 is 0x22F0), 13 characters", "SoundEditText_SetSlot: ld (XBC+0x2300),D"),
+        0x2310: ("SoundEditText_Slot3", "text slot 3, 13 characters", "SoundEditText_SetSlot: ld (XBC+0x2310),D"),
+        0x2320: ("SoundEditText_Slot4", "text slot 4, 13 characters", "SoundEditText_SetSlot: ld (XBC+0x2320),D"),
+        0x2940: ("NameList_SourceGroup", "the source list's group name, 16 characters", "SoundCopy_LoadNameBuffers, ReMapEdit_LoadNameBuffers"),
+        0x2950: ("NameList_SourceMembers", "its member names, 16 characters each", "SoundCopy_LoadNameBuffers, ReMapEdit_LoadNameBuffers"),
+        0x7622: ("Combination_Current+2", "", ""),
+    }),
+    ("wsa1/notes/gui-data-2026-10-29/README.md", "8.4 The current combination's part records", {
+        0x76A5: ("CombiPart_Volume", "part 1's VOL (record +0x03; part n+1 at +n*0x40)", "C0mbinati0nM0de_DrawPart1Vol; C0mbinati0nM0de_StepPartVol steps it"),
+        0x76A7: ("CombiPart_Effect1Send", "part 1's EFFECT1 SEND (record +0x05)", "Cpu2Query_ApplyPartRecordEffects"),
+        0x76A8: ("CombiPart_Effect2OnOff", "part 1's EFFECT2 ON/OFF (record +0x06)", "Cpu2Query_ApplyPartRecordEffects"),
+        0x76A9: ("CombiPart_ReverbSend", "part 1's REVERB SEND (record +0x07)", "Cpu2Query_ApplyPartRecordEffects"),
+        0x76AA: ("CombiPart_Pan", "part 1's PAN (record +0x08)", "C0mbinati0nM0de_DrawPart1Pan, Msg0716_RepostPart0Pan"),
+        0x76AF: ("CombiPart_Flags", "part 1's flags (record +0x0D): bit 5 INT; bit 6 TODO", "C0mbinati0nM0de_SetPartInt; MidiOut_ParamGate_Part0 tests bit 6"),
+        0x76DF: ("CombiPart_SoundBank", "part 1's sound bank (record +0x3D)", "SoundGroup_LoadSelectionFromPart: (0x216A) = record +0x3D"),
+        0x76E5: ("CombiPart_Volume+1*0x40", "", ""),
+        0x76E7: ("CombiPart_Effect1Send+1*0x40", "", ""),
+        0x76E8: ("CombiPart_Effect2OnOff+1*0x40", "", ""),
+        0x76E9: ("CombiPart_ReverbSend+1*0x40", "", ""),
+        0x76EA: ("CombiPart_Pan+1*0x40", "", ""),
+        0x76EF: ("CombiPart_Flags+1*0x40", "", ""),
+        0x771F: ("CombiPart_SoundBank+1*0x40", "", ""),
+        0x7725: ("CombiPart_Volume+2*0x40", "", ""),
+        0x7727: ("CombiPart_Effect1Send+2*0x40", "", ""),
+        0x7728: ("CombiPart_Effect2OnOff+2*0x40", "", ""),
+        0x7729: ("CombiPart_ReverbSend+2*0x40", "", ""),
+        0x772A: ("CombiPart_Pan+2*0x40", "", ""),
+        0x772F: ("CombiPart_Flags+2*0x40", "", ""),
+        0x775F: ("CombiPart_SoundBank+2*0x40", "", ""),
+        0x7765: ("CombiPart_Volume+3*0x40", "", ""),
+        0x7767: ("CombiPart_Effect1Send+3*0x40", "", ""),
+        0x7768: ("CombiPart_Effect2OnOff+3*0x40", "", ""),
+        0x7769: ("CombiPart_ReverbSend+3*0x40", "", ""),
+        0x776A: ("CombiPart_Pan+3*0x40", "", ""),
+        0x776F: ("CombiPart_Flags+3*0x40", "", ""),
+        0x779F: ("CombiPart_SoundBank+3*0x40", "", ""),
+        0x77A5: ("CombiPart_Volume+4*0x40", "", ""),
+        0x77A7: ("CombiPart_Effect1Send+4*0x40", "", ""),
+        0x77A8: ("CombiPart_Effect2OnOff+4*0x40", "", ""),
+        0x77A9: ("CombiPart_ReverbSend+4*0x40", "", ""),
+        0x77AA: ("CombiPart_Pan+4*0x40", "", ""),
+        0x77AF: ("CombiPart_Flags+4*0x40", "", ""),
+        0x77DF: ("CombiPart_SoundBank+4*0x40", "", ""),
+        0x77E5: ("CombiPart_Volume+5*0x40", "", ""),
+        0x77E7: ("CombiPart_Effect1Send+5*0x40", "", ""),
+        0x77E8: ("CombiPart_Effect2OnOff+5*0x40", "", ""),
+        0x77E9: ("CombiPart_ReverbSend+5*0x40", "", ""),
+        0x77EA: ("CombiPart_Pan+5*0x40", "", ""),
+        0x77EF: ("CombiPart_Flags+5*0x40", "", ""),
+        0x781F: ("CombiPart_SoundBank+5*0x40", "", ""),
+        0x7825: ("CombiPart_Volume+6*0x40", "", ""),
+        0x7827: ("CombiPart_Effect1Send+6*0x40", "", ""),
+        0x7828: ("CombiPart_Effect2OnOff+6*0x40", "", ""),
+        0x7829: ("CombiPart_ReverbSend+6*0x40", "", ""),
+        0x782A: ("CombiPart_Pan+6*0x40", "", ""),
+        0x782F: ("CombiPart_Flags+6*0x40", "", ""),
+        0x785F: ("CombiPart_SoundBank+6*0x40", "", ""),
+        0x7865: ("CombiPart_Volume+7*0x40", "", ""),
+        0x7867: ("CombiPart_Effect1Send+7*0x40", "", ""),
+        0x7868: ("CombiPart_Effect2OnOff+7*0x40", "", ""),
+        0x7869: ("CombiPart_ReverbSend+7*0x40", "", ""),
+        0x786A: ("CombiPart_Pan+7*0x40", "", ""),
+        0x786F: ("CombiPart_Flags+7*0x40", "", ""),
+        0x789F: ("CombiPart_SoundBank+7*0x40", "", ""),
+        0x7659: ("Combination_Effect1On", "bit 0: EFF1 (Combination_Current+0x39); inferred from the caption", "cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF1 / ----"),
+        0x7679: ("Combination_Effect2On", "bit 0: EFF2 (Combination_Current+0x59); inferred from the caption", "cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF2 / ----"),
+        0x7699: ("Combination_ReverbOn", "bit 0: REV (Combination_Current+0x79); inferred from the caption", "cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws REV / ---"),
+    }),
+    ("wsa1/notes/gui-data-2026-10-29/README.md", "8.5 MIDI, and the records with no variable", {
+        0x7F34: ("MidiFilter_Realtime", "the REALTIME COMMANDS filter bits; bit 2 = SONG POSITION", "MidiIn_SongPosition pends only while bit 2 is set; DL_RealtimeCommandsClock draws bit 2"),
+    }),
 ]
 NAMES = {a: v for _, _, g in GROUPS for a, v in g.items()}
 MEM = re.compile(r'\((0x[0-9a-fA-F]+|\d+)(:8|:16|:24)?\)')   # :8 -- the direct page, `cp (0xc4:8), 2`
@@ -700,6 +806,9 @@ MAC = re.compile(r'\b(MB8|MW8|MD8|ML8|MB16|MW16|MD16|ML16|MB24|MW24|MD24|ML24),(
 # an interpreter-B display-list record's +0x02 field is the 16-bit address of the RAM variable it
 # draws (wsa1/notes/FINDINGS-ui-display-list-interpreter-b.md): `.short 0x27A7\t; +0x02 source variable`
 SRCVAR = re.compile(r'^(\s*\.short\s+)(0x[0-9a-fA-F]+|\d+)(\s*;\s*\+0x02 source variable.*)$')
+# the var= / table= fields of an interpreter-B display-list macro (include/wsa1_gui.inc): a variable address and a
+# 32-bit pointer that, below 0x100000, is a RAM text buffer -- both are addresses, never values
+VARARG = re.compile(r'(\b(?:var|table)=)(0x[0-9a-fA-F]+)\b')
 # an indexed operand whose displacement is a named address -- `ld (XBC+0x27a6),A`, element XBC of the
 # array there; same encoding (d16) with the absolute symbol
 IDX = re.compile(r'\((x[a-z]{2})\s*\+\s*(0x[0-9a-fA-F]{3,}|\d{3,})\)', re.I)
@@ -780,6 +889,15 @@ def main():
                 code = l.split(";")[0]
                 # a data directive is a value, also after a label: `Draw_..._Data:\t.short\t0x0910` is a
                 # KeyValueList key, not MIDI_Parser_SavedXIX (2026-10-03)
+                if re.match(r'^\s*dl_\w+\s', code):
+                    continue                    # interpreter-A records: geometry and text, no addresses
+                if re.match(r'^\s*dlb_\w+\s', code):
+                    for m in VARARG.finditer(code):
+                        v = int(m.group(2), 16)
+                        if v in NAMES and v < 0x100000:
+                            left += 1
+                            print("%s:%d: %s" % (os.path.relpath(p, REPO), k + 1, code.strip()))
+                    continue
                 if not code.strip() or re.sub(r'^[\w.$]+:\s*', '', code.strip()).startswith("."):
                     continue
                 for m in re.finditer(r'(0x[0-9a-fA-F]+|\b\d+\b)', code):
@@ -805,6 +923,16 @@ def main():
             if sv and int(sv.group(2), 0) in NAMES:
                 L[i] = sv.group(1) + NAMES[int(sv.group(2), 0)][0] + sv.group(3)
                 n += 1
+                continue
+            vm = VARARG.search(l)
+            if vm and re.match(r'^\s*dlb_\w+\s', l):
+                def varg(m):
+                    v = int(m.group(2), 16)
+                    return m.group(1) + NAMES[v][0] if v in NAMES and v < 0x100000 else m.group(0)
+                new = VARARG.sub(varg, l)
+                if new != l:
+                    n += len([1 for m in VARARG.finditer(l) if int(m.group(2), 16) in NAMES and int(m.group(2), 16) < 0x100000])
+                    L[i] = new
                 continue
             code, sep, cmt = l.partition(";")
             s = code.strip()

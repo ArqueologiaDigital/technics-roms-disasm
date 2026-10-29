@@ -240,3 +240,99 @@ reached by a symbol in code, never by an index.
 >
 > The disassembly spells all of this as macros (`wsa1/include/wsa1_gui.inc`), and a generated menu map lists
 > every screen, what it draws, which key does what, and which key leads to it (`wsa1/docs/gui-menu-map.md`).
+
+## 8. The RAM cells the display lists draw, named from their writers (round 2)
+
+After the respelling, 65 distinct variable addresses (230 `var=` uses) and 30 table pointers (`table=`) were
+still numbers. This section names them. A name comes from the routine that **writes** the cell, because a
+display record says only where a cell is shown. Every row was produced by
+`python3 notes/gui-data-2026-10-29-probes/gui_var_writers.py <address>`, which lists every converted
+instruction in prom_a / prom_b that writes or reads the address (hex, decimal and indexed spellings), and every
+record that draws it. A cell written only through a computed pointer shows no direct writer; for those the row
+cites the routine whose own header names the address. Cells with no writer under any spelling keep a neutral
+name and a TODO.
+
+The names live in `scripts/tools/name_wsa1_ram.py`, one group per table below. That script generates
+`include/wsa1_ram.inc` and spells the addresses in code operands and in the macros' `var=` / `table=` fields. A
+name with `+` is an element of a named array or record.
+
+### 8.1 Screen working cells
+
+| address  | name                        | what it holds                                                                  | established by                                                                                                                          |
+|----------|-----------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `0x26B0` | `EditScreen_DrawNumber`     | the 16-bit number an edit-screen field draws next (measure, beat, tick, ...)   | 44 stores by `EditScreen_DrawMeasure`, `_DrawBeat`, `_DrawTick`, `_DrawEventVelocity`, `_DrawEventLength`, `DrumEdit_DrawRowNote0..11` |
+| `0x2674` | `SoundGroup_PreviousBank`   | the bank before the selection was reloaded; its highlight box is erased        | `SoundGroup_LoadSelectionFromPart` / `_FromGlobal`: `(0x2674) = old (0x216A)`                                                           |
+| `0x2721` | `UI_CursorBox`              | the box a screen draws its cursor highlight in                                 | `Paint_MidiTotalMode`, `Paint_MidiOutProgramChange`, `MidiFileSave_MoveNameCursor` ("mirrored in (0x2721)"), `S0ngSelectName_Cursor*`   |
+| `0x2740` | `MidiScreen_SubPage`        | which page / key row a MIDI settings screen shows                              | `LcdKeyRow1_GeneralMidiMode_Page0` (1 = YES/NO page), `ExitKey_GeneralMidiYesNo` (0); read by `ScreenButton_GeneralMidiMode_Entry`     |
+| `0x2741` | `MidiOutPgm_SendShown`      | 1 while the SEND box is drawn                                                  | `MidiOutProgramChange_Send` sets it; `Paint_MidiOutProgramChange` erases the box                                                        |
+| `0x2742` | `MidiOutPgm_Cell2742`       | TODO: drawn by the same box table; no writer under any spelling                | `DLTable_F0D530` only                                                                                                                   |
+| `0x2768` | `CombiEdit_DrawnPage`       | the COMBINATION EDIT page last drawn                                           | `Draw_ReverbDepth`, `CombiEditMixer_ShowOtherParts` (`:= CombiEdit_Page`); 0 on enter                                                  |
+| `0x276A` | `CombiEdit_DrawnRow`        | the COMBINATION EDIT row last drawn                                            | `CombiEditMixer_DrawPartBoxRow` (`:= CombiEdit_Row`), `CombiEditMixer_ResetRowForPage`                                                  |
+| `0x27A3` | `ToneEdit_TouchCurveSlot`   | the touch-curve slot 1..4                                                      | `Var27A3_SetSlot`: `(0x27A3) = n` when 1 <= n <= 4, else 1                                                                              |
+| `0x27BE` | `SoundEditFilter_TypeShown` | the filter page whose name the M0DE box prints (low 3 bits)                    | `SoundEditFilter_PaintModeField`: `(0x27BE) := UI_ScreenLatch`, prints `DLTable_F04D1F[(0x27BE) & 7]`                                  |
+| `0x2808` | `ToneEdit_LayerResonator`   | layer 1's resonator type, 0..63; layers 2-4 at +1..+3                          | `Arr2808_Set1`: `((u8 *)0x2808)[layer - 1] = value`; drawn through `DLTable_OriginalStringCylinder` (64 names)                         |
+| `0x2881` | `MessageScreen_Arg`         | a byte the message screen draws with its message                               | `MessageScreen_Paint` copies `(0x0C12)` here for message 0x1A                                                                           |
+
+### 8.2 The disk and MIDI-file screens
+
+| address  | name                       | what it holds                                                                 | established by                                                                                                     |
+|----------|----------------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| `0x2728` | `LoadSingle_BankA`         | a USER bank of the LOAD SINGLE screens, drawn at the left                     | `L0adSingle_DrawBankAndNumber`: `Text_UserBankAbbrevs[(0x2728)]`; TODO: source or destination                      |
+| `0x2736` | `LoadSingle_BankB`         | the other USER bank, drawn at the right; page 1 lists its groups              | `SoftKeyCol2_L0adSingleS0und_Page0` writes 1 / 2; `L0adSingleS0und_DrawGroupList` uses `Table_FF4039[(0x2736)]`   |
+| `0x2738` | `LoadSingle_SelectedItem`  | the item selected on LOAD SINGLE page 0                                       | `ScreenEnter_L0adSingleS0und_Page0`, `SoftKeyCol5_L0adSingleS0und_Page0`; read by `DiskFile_BuildLinkCopyRecords`  |
+| `0x2739` | `LoadSingle_ListCursorRow` | page 1's cursor row, 0..7                                                     | `SoftKeyCols7_8_L0adSingle_Page1` moves it                                                                         |
+| `0x2729` | `NameEdit_CharBox`         | the character cell the name-entry grid highlights                             | `MidiFileSave_MoveNameCursor`: `(0x2729) := NameEdit_CharIndex`; `SoftKeyCol1..5_DiskSaveFile_Page0`                |
+| `0x272A` | `DiskSave_Cell272A`        | TODO: bit 0 picks a fill or a clear by the password field; no writer found    | `DL_F589B2`, `DL_F589CD` only                                                                                      |
+| `0x272D` | `MidiFile_ListCursorRow`   | the MIDI FILE screens' list cursor row                                        | 0 on `Paint_MidiFileDirectPlay` / `_L0ad`; `MidiFile_LcdKeyRow4` decrements it                                     |
+| `0x2730` | `DiskScreen_RowOption`     | the option the last LCD-row key chose (each row key writes its own number)    | `LcdKeyRow1..5_MidiFileSave_Page1` write 0, 0, 1, 2, 3; the row-4 / row-5 keys read it back                         |
+| `0x2731` | `MidiFileSave_Options`     | two one-bit options of MIDI FILE SAVE page 1, each drawn OFF / ON             | `ScreenEnter_MidiFileSave_Page1`                                                                                   |
+| `0x2733` | `DiskLoad_SongNumber`      | the song number the row-4 / row-5 keys step                                   | `LcdKeyRow4/5_DiskL0adFile`, `LcdKeyRow4/5_MidiFileL0ad`                                                           |
+
+### 8.3 Text buffers the records draw as string tables
+
+| address  | name                        | what it holds                                         | established by                                                                       |
+|----------|-----------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------|
+| `0x1012` | `StepRecord_PrevRowText`    | STEP RECORD's previous-measure row, 30 characters     | `StepRecord_BuildPrevMeasureRow` (`ld XIX,0x1012`), `StepRecord_BlankPrevRowText`    |
+| `0x1030` | `StepRecord_CurrentRowText` | the current-measure row                               | the middle-row builder (`ld XIX,0x1030`), `StepRecord_BlankCurrentRowText`           |
+| `0x104E` | `StepRecord_NextRowText`    | the next-measure row                                  | `StepRecord_BuildNextMeasureRow` (`ld XIX,0x104E`)                                   |
+| `0x2300` | `SoundEditText_Slot2`       | text slot 2 of 4 (slot 1 is 0x22F0), 13 characters    | `SoundEditText_SetSlot` (`ld (XBC+0x2300),D`)                                        |
+| `0x2310` | `SoundEditText_Slot3`       | text slot 3                                           | the same, `ld (XBC+0x2310),D`                                                        |
+| `0x2320` | `SoundEditText_Slot4`       | text slot 4                                           | the same, `ld (XBC+0x2320),D`                                                        |
+| `0x2940` | `NameList_SourceGroup`      | the source list's group name, 16 characters           | `SoundCopy_LoadNameBuffers`, `ReMapEdit_LoadNameBuffers` ("source bank (0x2940, 0x2950..)") |
+| `0x2950` | `NameList_SourceMembers`    | its member names, 16 characters each                  | the same                                                                             |
+
+Six more pointers are spelled over names that already exist:
+
+- `DisplayListB_Stage+1`, `+2` and `+8` (0x12F7, 0x12F8, 0x12FE);
+- `UI_DrawScratch+12` and `+16` (0x264C, 0x2650);
+- `Combination_Current+2` (0x7622), the combination's name.
+
+### 8.4 The current combination's part records
+
+`PartRecord_GetPtr`'s array holds eight 0x40-byte part records inside `Combination_Current`, starting at 0x76A2.
+`C0mbinati0nM0de_DrawPart1Int` states that "0x76AF is +0x0D of part record 1 (0x76A2)", and
+`SoftKeyCol4_SineWaveCheckMode` states that "(0x76A7) = 0x76A2 + 5". Each field below is named at part 1.
+Part n + 1 is spelled `Name+n*0x40`.
+
+| address  | name                     | field   | what it holds                    | established by                                                                         |
+|----------|--------------------------|---------|----------------------------------|----------------------------------------------------------------------------------------|
+| `0x76A5` | `CombiPart_Volume`       | `+0x03` | VOL                              | `C0mbinati0nM0de_DrawPart1Vol`; `C0mbinati0nM0de_StepPartVol` steps it                 |
+| `0x76A7` | `CombiPart_Effect1Send`  | `+0x05` | EFFECT1 SEND                     | `Cpu2Query_ApplyPartRecordEffects` ("EFFECT1 SEND (0x76A7)")                           |
+| `0x76A8` | `CombiPart_Effect2OnOff` | `+0x06` | EFFECT2 ON/OFF                   | the same ("EFFECT2 ON/OFF (0x76A8)")                                                   |
+| `0x76A9` | `CombiPart_ReverbSend`   | `+0x07` | REVERB SEND                      | the same                                                                               |
+| `0x76AA` | `CombiPart_Pan`          | `+0x08` | PAN                              | `C0mbinati0nM0de_DrawPart1Pan`, `Msg0716_RepostPart0Pan`                               |
+| `0x76AF` | `CombiPart_Flags`        | `+0x0D` | bit 5 INT; bit 6 TODO            | `C0mbinati0nM0de_SetPartInt` (bit 5); `MidiOut_ParamGate_Part0` tests bit 6            |
+| `0x76DF` | `CombiPart_SoundBank`    | `+0x3D` | the sound's bank                 | `SoundGroup_LoadSelectionFromPart`: `(0x216A) = record +0x3D`                          |
+
+0x7659, 0x7679 and 0x7699 are `Combination_Current+0x39`, `+0x59` and `+0x79`.
+`CombinationNaming_WriteToUserMemory` and `SysExParam_SetCombinationWriteRequest` clear all three before a
+write, and `EffectEditor_PaintJob2_DL1` draws bit 0 of each as `EFF1/----`, `EFF2/----` and `REV/---`. They are
+named `Combination_Effect1On`, `Combination_Effect2On` and `Combination_ReverbOn`. ⚠ That naming is an
+inference from the captions: no reader that acts on the bit has been traced.
+
+### 8.5 MIDI, and the records with no variable
+
+| address  | name                  | what it holds                                       | established by                                                                                                    |
+|----------|-----------------------|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `0x7F34` | `MidiFilter_Realtime` | the REALTIME COMMANDS filter bits; bit 2 = SONG POSITION | `MidiIn_SongPosition` pends "only while (0x7F34) bit 2 enables it"; `DL_RealtimeCommandsClock` draws bit 2 |
+| `0x0000` | `DLB_NoVariable`      | not a cell: with mask 0 the field is always 0       | `DisplayListB_ExtractField`: `A = (IX) & (XIY+4)`; 47 records use it (an equate in `include/wsa1_gui.inc`)       |

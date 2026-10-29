@@ -360,6 +360,11 @@
 ; handler implies (FINDINGS-ui-display-list-interpreter-b.md).
 ; ==============================================================================
 
+; ---- var= of a record whose mask is 0: DisplayListB_ExtractField computes
+;      A = (var) & mask, so with mask 0 the field is 0 whatever var names and the
+;      record always draws value 0 / entry 0 -- the address is not a variable.
+	.equ DLB_NoVariable, 0x0000
+
 ; ---- the value as decimal digits at a display-RAM position -> DLB_Handler_Decimal
 ;      (T_Value_ToAsciiDigits3_RightJustified; digits = 3 / 2 / else 1 picks the
 ;      first of the three digits drawn).  10 bytes.  dlb_number16 reads the

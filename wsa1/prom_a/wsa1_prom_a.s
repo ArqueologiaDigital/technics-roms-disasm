@@ -387,6 +387,11 @@
 ; (best non-structural name).  The gate checks every VALUE; `--check-equates`
 ; checks the NAMES against prom_b after a rename there.  Regenerate, never edit
 ; the names or values; a trailing comment on an equate is kept.
+	.set DLText_OffOn,                            0x00f034d2
+	.set DLText_OffOn_F034D8,                     0x00f034d8
+	.set DLText_SinTriSqrSaw,                     0x00f05469
+	.set DLTable_F0574D,                          0x00f0574d
+	.set DLText_NoteNamesCm2ToG8,                 0x00f05b60
 	.set ScaleTuningOffsets,                      0x00f06800
 	.set ToneGroupNames,                          0x00f068b4
 	.set GroupMaxMemberIndex_ToneGroups,          0x00f06eb4
@@ -1002,6 +1007,7 @@
 	.set RamDefault_SoundRemap,                   0x00f30810
 	.set RamDefault_CombiRemap,                   0x00f30e60
 	.set RamDefault_DrumMap,                      0x00f314b0
+	.set DLText_CtrLRRdm,                         0x00f32a4e
 	.set DL_F3934C,                               0x00f3934c
 	.set DL_F394E3,                               0x00f394e3
 	.set DL_F39551,                               0x00f39551

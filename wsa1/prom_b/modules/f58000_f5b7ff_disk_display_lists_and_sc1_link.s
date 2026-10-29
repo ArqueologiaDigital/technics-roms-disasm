@@ -207,8 +207,8 @@ DL_F583F0:
 	dlb_rect_entry	var=Disk_SelectedEntry, mask=0x3f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F58455 + 0x18
 	dlb_string	var=Disk_ContentType, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F585AD, width=12, x=152, y=212
 DL_F5840A:
-	dlb_rect_entry_op08	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5841F
-	dlb_number	var=0x2733, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=185, digits=2
+	dlb_rect_entry_op08	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5841F
+	dlb_number	var=DiskLoad_SongNumber, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=185, digits=2
 
 ; --------------------------------------------------------------------------
 ; DLTab_F5841F -- 0xF5841F-0xF5843E, 4 rows x 8 bytes
@@ -403,11 +403,11 @@ DL_SaveFileDeletePositionAbc789:
 	dl_box_shadow2	x0=165, y0=210, x1=195, y1=236
 	dl_box_shadow2	x0=245, y0=210, x1=275, y1=236
 DL_F58786:
-	dlb_rect_entry	var=0x2721, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F587D7
-	dlb_rect_entry	var=0x2729, mask=0x3f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5881F
+	dlb_rect_entry	var=UI_CursorBox, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F587D7
+	dlb_rect_entry	var=NameEdit_CharBox, mask=0x3f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5881F
 DL_F5879C:
-	dlb_rect_entry_op08	var=0x2721, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F587D7
-	dlb_rect_entry_op08	var=0x2729, mask=0x3f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5881F
+	dlb_rect_entry_op08	var=UI_CursorBox, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F587D7
+	dlb_rect_entry_op08	var=NameEdit_CharBox, mask=0x3f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5881F
 
 ; --------------------------------------------------------------------------
 ; CharPalette_F587B2 -- 0xF587B2-0xF587D6, 37 bytes, STRUCTURE NOT ESTABLISHED
@@ -518,9 +518,9 @@ DL_F5898F:
 DL_F58999:
 	dl_box	x0=269, y0=28, x1=307, y1=43
 DL_F589A3:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DiskSave_Password, width=2, x=136, y=69
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DiskSave_Password, width=2, x=136, y=69
 DL_F589B2:
-	dlb_rect_entry	var=0x272a, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F589BD
+	dlb_rect_entry	var=DiskSave_Cell272A, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F589BD
 
 ; --------------------------------------------------------------------------
 ; DLTab_F589BD -- 0xF589BD-0xF589CC, 2 rows x 8 bytes
@@ -538,7 +538,7 @@ DLTab_F589BD:
 ;    table below.
 ; --------------------------------------------------------------------------
 DL_F589CD:
-	dlb_area_entry	var=0x272a, mask=0x01, shift=0, svc=LCDSVC_ClearColumns, table=DLTab_F589D8
+	dlb_area_entry	var=DiskSave_Cell272A, mask=0x01, shift=0, svc=LCDSVC_ClearColumns, table=DLTab_F589D8
 
 ; --------------------------------------------------------------------------
 ; DLTab_F589D8 -- 0xF589D8-0xF589E3, 2 rows x 6 bytes
@@ -927,11 +927,11 @@ DL_F590DD:
 DL_F590E7:
 	dl_fill_rect	x0=256, y0=34, x1=304, y1=45
 DL_F590F1:
-	dlb_string	var=0x2728, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59128, width=10, x=40, y=124
-	dlb_string	var=0x2736, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_F59128, width=10, x=200, y=59
+	dlb_string	var=LoadSingle_BankA, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59128, width=10, x=40, y=124
+	dlb_string	var=LoadSingle_BankB, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_F59128, width=10, x=200, y=59
 DL_F5910F:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=9, x=40, y=84
-	dlb_number	var=0x2730, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=164, digits=2
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=9, x=40, y=84
+	dlb_number	var=DiskScreen_RowOption, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=164, digits=2
 
 ; --------------------------------------------------------------------------
 ; DLText_F59128 -- 0xF59128-0xF5914F, 4 rows x 10 bytes
@@ -957,9 +957,9 @@ DLText_F59128:
 ;    0xFF7623`). Both point at the table below.
 ; --------------------------------------------------------------------------
 DL_F59150:
-	dlb_rect_entry	var=0x2739, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59166
+	dlb_rect_entry	var=LoadSingle_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59166
 DL_F5915B:
-	dlb_rect_entry_op08	var=0x2739, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59166
+	dlb_rect_entry_op08	var=LoadSingle_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59166
 
 ; --------------------------------------------------------------------------
 ; DLTab_F59166 -- 0xF59166-0xF591A5, 8 rows x 8 bytes
@@ -983,9 +983,9 @@ DLTab_F59166:
 ;    0xFF6D26, 0xFF6FF6.
 ; --------------------------------------------------------------------------
 DL_F591A6:
-	dlb_rect_entry	var=0x2738, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F591BC
+	dlb_rect_entry	var=LoadSingle_SelectedItem, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F591BC
 DL_F591B1:
-	dlb_rect_entry_op08	var=0x2738, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F591BC
+	dlb_rect_entry_op08	var=LoadSingle_SelectedItem, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F591BC
 
 ; --------------------------------------------------------------------------
 ; DLTab_F591BC -- 0xF591BC-0xF591FB, 8 rows x 8 bytes
@@ -1116,11 +1116,11 @@ Paint_MidiFileL0ad_DL:
 ;    sites 0xFF6163-0xFF6369.
 ; --------------------------------------------------------------------------
 DL_F593F3:
-	dlb_rect_entry	var=0x2730, mask=0x03, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59414
+	dlb_rect_entry	var=DiskScreen_RowOption, mask=0x03, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59414
 DL_F593FE:
-	dlb_rect_entry_op08	var=0x2730, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59414
+	dlb_rect_entry_op08	var=DiskScreen_RowOption, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59414
 DL_F59409:
-	dlb_rect_entry_op08	var=0x2730, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59414 + 0x18
+	dlb_rect_entry_op08	var=DiskScreen_RowOption, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F59414 + 0x18
 
 ; --------------------------------------------------------------------------
 ; DLTab_F59414 -- 0xF59414-0xF5944B, 7 rows x 8 bytes
@@ -1198,9 +1198,9 @@ Paint_MidiFileDirectPlay_DL:
 ;    0xFF4512 and 0xFF4733, 0xF59522 from 0xFF4506, 0xFF4603, 0xFF4623.
 ; --------------------------------------------------------------------------
 DL_F59517:
-	dlb_rect_entry	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5952D
+	dlb_rect_entry	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5952D
 DL_F59522:
-	dlb_rect_entry_op08	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5952D
+	dlb_rect_entry_op08	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5952D
 
 ; --------------------------------------------------------------------------
 ; DLTab_F5952D -- 0xF5952D-0xF59534, 1 rows x 8 bytes
@@ -1230,17 +1230,17 @@ DLText_F59535:
 ;    0xFF46EC).
 ; --------------------------------------------------------------------------
 DL_F5953B:
-	dlb_rect_entry	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5975D
+	dlb_rect_entry	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5975D
 DL_F59546:
-	dlb_rect_entry_op08	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5975D
+	dlb_rect_entry_op08	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5975D
 DL_F59551:
-	dlb_rect_entry	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5957D
+	dlb_rect_entry	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5957D
 DL_F5955C:
-	dlb_rect_entry_op08	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5957D
+	dlb_rect_entry_op08	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5957D
 DL_F59567:
-	dlb_rect_entry	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5975D + 0x78
+	dlb_rect_entry	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTab_F5975D + 0x78
 DL_F59572:
-	dlb_rect_entry_op08	var=0x272d, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5975D + 0x78
+	dlb_rect_entry_op08	var=MidiFile_ListCursorRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTab_F5975D + 0x78
 
 ; --------------------------------------------------------------------------
 ; DLTab_F5957D -- 0xF5957D-0xF595CC, 10 rows x 8 bytes
@@ -1481,9 +1481,9 @@ DL_ComposerLoad:
 ; --------------------------------------------------------------------------
 ScreenEnter_MidiFileSave_Page1_DL3:
 ; ; drawn (start operand) by ScreenEnter_MidiFileSave_Page1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x2731, mask=0x01, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59535, width=3, x=176, y=175
-	dlb_string	var=0x2731, mask=0x02, shift=1, svc=LCDSVC_DrawText8x14, table=DLText_F59535, width=3, x=176, y=205
-	dlb_rect_entry	var=0x2730, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59414 + 0x18
+	dlb_string	var=MidiFileSave_Options, mask=0x01, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59535, width=3, x=176, y=175
+	dlb_string	var=MidiFileSave_Options, mask=0x02, shift=1, svc=LCDSVC_DrawText8x14, table=DLText_F59535, width=3, x=176, y=205
+	dlb_rect_entry	var=DiskScreen_RowOption, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59414 + 0x18
 
 ; --------------------------------------------------------------------------
 ; 0xF5993E-0xF59951 -- 2 display-list record(s), 20 bytes -- interpreter B
@@ -1495,9 +1495,9 @@ ScreenEnter_MidiFileSave_Page1_DL3:
 ;    interpreter B's op-00 handler.
 ; --------------------------------------------------------------------------
 DL_F5993E:
-	dlb_number	var=0x2733, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=146, digits=2
+	dlb_number	var=DiskLoad_SongNumber, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=146, digits=2
 DL_F59948:
-	dlb_number	var=0x2733, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=181, digits=2
+	dlb_number	var=DiskLoad_SongNumber, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=181, digits=2
 
 ; --------------------------------------------------------------------------
 ; 0xF59952-0xF5995B -- 1 display-list records, 10 bytes -- interpreter A
@@ -1673,7 +1673,7 @@ DLText_F59C2C:
 ;    located entry.
 ; --------------------------------------------------------------------------
 DL_F59C30:
-	dlb_rect_entry	var=0x2730, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59C3B
+	dlb_rect_entry	var=DiskScreen_RowOption, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F59C3B
 
 ; --------------------------------------------------------------------------
 ; DLTab_F59C3B -- 0xF59C3B-0xF59C4A, 2 rows x 8 bytes

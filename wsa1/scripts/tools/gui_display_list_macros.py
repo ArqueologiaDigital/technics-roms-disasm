@@ -337,6 +337,8 @@ class Ctx:
         sources already spell that address so (e.g. DisplayListB_Stage+1); else the number."""
         if isinstance(v, str):
             return v
+        if v == 0:
+            return "DLB_NoVariable"         # mask 0 with address 0: include/wsa1_gui.inc
         if v in self.ram:
             return self.ram[v]
         if v in self.ram_spelled:

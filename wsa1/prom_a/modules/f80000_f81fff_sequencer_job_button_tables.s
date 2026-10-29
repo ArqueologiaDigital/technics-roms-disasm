@@ -2929,7 +2929,7 @@ S0ngSelectName_CursorLeft:
 	cp a, 0x00:i3                                          ; F81536  c9 d8
 	jr lt, .LF81552                                      ; F81538  61 18
 	ld (NameEdit_CursorPos:16), a                                   ; F8153A  f1 2d 22 41
-	ld (0x2721:16), a                                   ; F8153E  f1 21 27 41
+	ld (UI_CursorBox:16), a                                   ; F8153E  f1 21 27 41
 	ld (DisplayListB_Stage+11:16), a                                   ; F81542  f1 01 13 41
 	call SongName_CharIndexAtCursor                                      ; F81546  1d 88 16 f8
 	ld a, (NameEdit_CharIndex:16)                                   ; F8154A  c1 f9 21 21
@@ -2957,7 +2957,7 @@ S0ngSelectName_CursorRight:
 	cp a, 0x05:i3                                          ; F81598  c9 dd
 	jr gt, .LF815B4                                      ; F8159A  6a 18
 	ld (NameEdit_CursorPos:16), a                                   ; F8159C  f1 2d 22 41
-	ld (0x2721:16), a                                   ; F815A0  f1 21 27 41
+	ld (UI_CursorBox:16), a                                   ; F815A0  f1 21 27 41
 	ld (DisplayListB_Stage+11:16), a                                   ; F815A4  f1 01 13 41
 	call SongName_CharIndexAtCursor                                      ; F815A8  1d 88 16 f8
 	ld a, (NameEdit_CharIndex:16)                                   ; F815AC  c1 f9 21 21

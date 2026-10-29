@@ -398,7 +398,7 @@ DL_F3987A:
 ; ------------------------------------------------------------------
 Paint_SongClear_DL3:
 ; ; drawn (start operand) by Paint_SongClear -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=0x000012f7, width=6, x=128, y=86
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage+1, width=6, x=128, y=86
 	dlb_number16_xy	var=DisplayListB_Stage+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=248, y=73, digits=3
 	dlb_number_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=93, y=86, digits=2
 	dlb_number_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=238, y=86, digits=3
@@ -524,7 +524,7 @@ Paint_SongClear_DL4:
 	dl_erase_rect	x0=17, y0=40, x1=268, y1=81
 Paint_SongClear_DL6:
 ; ; drawn (start operand) by Paint_SongClear -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=0x000012f7, width=6, x=104, y=58
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage+1, width=6, x=104, y=58
 	dlb_number16_xy	var=DisplayListB_Stage+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=226, y=44, digits=3
 	dlb_number_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=72, y=58, digits=2
 	dlb_number_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=216, y=58, digits=3
@@ -2855,10 +2855,10 @@ DL_AllAll:
 	dl_text8x16	x=192, y=123, text="  ALL   "
 S0ngC0py_DrawFromSong_DL2:
 ; ; drawn (start operand) by S0ngC0py_DrawFromSong -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=0x000012f8, width=6, x=64, y=87
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=DisplayListB_Stage+2, width=6, x=64, y=87
 S0ngC0py_DrawToSong_DL:
 ; ; drawn (start operand) by S0ngC0py_DrawToSong -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=0x000012fe, width=6, x=200, y=87
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=DisplayListB_Stage+8, width=6, x=200, y=87
 S0ngC0py_DrawTracks_DL:
 ; ; drawn (start operand) by S0ngC0py_DrawTracks -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dlb_string	var=DisplayListB_Stage+14, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_0To17All, width=3, x=96, y=123
@@ -2933,7 +2933,7 @@ DL_S0ngSelectNameKbS0ngName:
 	dl_vline	x0=316, y0=186, x1=316, y1=191
 S0ngSelectName_DrawValues_DL:
 ; ; drawn (start operand) by S0ngSelectName_DrawValues -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage, width=6, x=128, y=61
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage, width=6, x=128, y=61
 	dlb_number_xy	var=DisplayListB_Stage+6, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=92, y=61, digits=2
 	dlb_number16_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=248, y=48, digits=3
 	dlb_number_xy	var=DisplayListB_Stage+9, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=240, y=61, digits=3
@@ -3364,7 +3364,7 @@ SequencerMedley_DrawPlayState_DL2:
 ; ; drawn (start operand) by SequencerMedley_DrawPlayState -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dl_text8x16	x=32, y=37, text="N0W PLAYING S0NG "
 	dl_text8x16	x=192, y=37, text=" :"
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Medley_DisplayName, width=11, x=208, y=37
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Medley_DisplayName, width=11, x=208, y=37
 
 ; ------------------------------------------------------------------
 ; 0xF3C89D-0xF3C946 -- 9 display-list records, 170 bytes -- interpreter A (8 records) and B (1)
@@ -3866,7 +3866,7 @@ DL_F3D37B:
 DL_F3D380:
 	dlb_number	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=16, digits=2
 DL_F3D38A:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=MsgLine_Text, width=30, x=8, y=180
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=MsgLine_Text, width=30, x=8, y=180
 DLTable_BlankEndRep:
 	.ascii	"    "
 	.ascii	"END "
@@ -3874,13 +3874,13 @@ DLTable_BlankEndRep:
 	.ascii	"\033   "
 	.ascii	"\034   "
 DL_F3D3AD:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=0x00001012, width=30, x=8, y=52
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_PrevRowText, width=30, x=8, y=52
 	dlb_string	var=DisplayListB_Stage+10, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=66
 DL_F3D3CB:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=0x00001030, width=30, x=8, y=97
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_CurrentRowText, width=30, x=8, y=97
 	dlb_string	var=DisplayListB_Stage+11, mask=0x0c, shift=130, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=111
 DL_F3D3E9:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=0x0000104e, width=30, x=8, y=142
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_NextRowText, width=30, x=8, y=142
 	dlb_string	var=DisplayListB_Stage+12, mask=0x30, shift=132, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=156
 DL_F3D407:
 	dlb_string	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=8, y=52
