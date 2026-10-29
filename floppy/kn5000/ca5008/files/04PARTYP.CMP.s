@@ -2,5 +2,9769 @@
 
 ; 04PARTYP.CMP -- 71680 bytes, clusters 1147..1286.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04PARTYP_CMP:	.incbin	"ca5008.img", 0x93400, 71680
+; COMPOSER, file type 3: one accompaniment-style bank.  FileIO_SaveRegion3_ExtMem
+; (v10 0xf87d2c) writes RHYTHM_PATTERN_BUF_A for the size cmp_sv_mae returns.  The
+; bank is the IC19 custom-data style format (docs/accompaniment-style-format.md; cell
+; grammar in scripts/build/style_events.py, which decodes it with zero malformed events).
+F_04PARTYP_CMP_Bank:
+; Style bank: "H\0K\0" header, 30-record style directory at +0x60, 256-byte cells.
+	.ascii	"H\000K\000"	; bank magic
+	.incbin	"04PARTYP.cmp", 0x4, 92	; bank header +4..+0x5f (fields not established)
+; style 0
+	.short	0x0000, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x6c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"  Party Pop     "	; style name
+	.incbin	"04PARTYP.cmp", 0xb0, 16	; record +0x50..+0x5f (fields not established)
+; style 1
+	.short	0x0005, 0x0000, 0x0006, 0x0007, 0x0008, 0x0009	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0xcc, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"  Party Pop     "	; style name
+	.incbin	"04PARTYP.cmp", 0x110, 16	; record +0x50..+0x5f (fields not established)
+; style 2
+	.short	0x000a, 0x0000, 0x000b, 0x000c, 0x000d, 0x000e	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x12c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"  Party Pop     "	; style name
+	.incbin	"04PARTYP.cmp", 0x170, 16	; record +0x50..+0x5f (fields not established)
+; style 3
+	.short	0x000f, 0x0000, 0x0010, 0x0011, 0x0012, 0x0013	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x18c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"  Party Pop     "	; style name
+	.incbin	"04PARTYP.cmp", 0x1d0, 16	; record +0x50..+0x5f (fields not established)
+; style 4
+	.short	0x0014, 0x0000, 0x0015, 0x0016, 0x0017, 0x0018	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x1ec, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Disco Party    "	; style name
+	.incbin	"04PARTYP.cmp", 0x230, 16	; record +0x50..+0x5f (fields not established)
+; style 5
+	.short	0x0019, 0x0000, 0x001a, 0x001b, 0x001c, 0x001d	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x24c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Disco Party    "	; style name
+	.incbin	"04PARTYP.cmp", 0x290, 16	; record +0x50..+0x5f (fields not established)
+; style 6
+	.short	0x001e, 0x0000, 0x001f, 0x0020, 0x0021, 0x0022	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x2ac, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Disco Party    "	; style name
+	.incbin	"04PARTYP.cmp", 0x2f0, 16	; record +0x50..+0x5f (fields not established)
+; style 7
+	.short	0x0023, 0x0000, 0x0024, 0x0025, 0x0026, 0x0027	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x30c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Disco Party    "	; style name
+	.incbin	"04PARTYP.cmp", 0x350, 16	; record +0x50..+0x5f (fields not established)
+; style 8
+	.short	0x0028, 0x0000, 0x0029, 0x002a, 0x002b, 0x002c	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x36c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Party Band     "	; style name
+	.incbin	"04PARTYP.cmp", 0x3b0, 16	; record +0x50..+0x5f (fields not established)
+; style 9
+	.short	0x002d, 0x0000, 0x002e, 0x002f, 0x0030, 0x0031	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x3cc, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Party Band     "	; style name
+	.incbin	"04PARTYP.cmp", 0x410, 16	; record +0x50..+0x5f (fields not established)
+; style 10
+	.short	0x0032, 0x0000, 0x0033, 0x0034, 0x0035, 0x0036	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x42c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Party Band     "	; style name
+	.incbin	"04PARTYP.cmp", 0x470, 16	; record +0x50..+0x5f (fields not established)
+; style 11
+	.short	0x0037, 0x0000, 0x0038, 0x0039, 0x003a, 0x003b	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x48c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" Party Band     "	; style name
+	.incbin	"04PARTYP.cmp", 0x4d0, 16	; record +0x50..+0x5f (fields not established)
+; style 12
+	.short	0x003c, 0x0000, 0x003d, 0x003e, 0x003f, 0x0040	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x4ec, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro A1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x530, 16	; record +0x50..+0x5f (fields not established)
+; style 13
+	.short	0x0041, 0x0000, 0x0042, 0x0043, 0x0044, 0x0045	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x54c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro A2 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x590, 16	; record +0x50..+0x5f (fields not established)
+; style 14
+	.short	0x0046, 0x0000, 0x0047, 0x0048, 0x0049, 0x004a	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x5ac, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" * Fill A1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x5f0, 16	; record +0x50..+0x5f (fields not established)
+; style 15
+	.short	0x004b, 0x0000, 0x004c, 0x004d, 0x004e, 0x004f	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x60c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" * Fill A2 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x650, 16	; record +0x50..+0x5f (fields not established)
+; style 16
+	.short	0x0050, 0x0000, 0x0051, 0x0052, 0x0053, 0x0054	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x66c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending A1 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0x6b0, 16	; record +0x50..+0x5f (fields not established)
+; style 17
+	.short	0x0055, 0x0000, 0x0056, 0x0057, 0x0058, 0x0059	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x6cc, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending A2 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0x710, 16	; record +0x50..+0x5f (fields not established)
+; style 18
+	.short	0x005a, 0x0000, 0x005b, 0x005c, 0x005d, 0x005e	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x72c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro B1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x770, 16	; record +0x50..+0x5f (fields not established)
+; style 19
+	.short	0x005f, 0x0000, 0x0060, 0x0061, 0x0062, 0x0063	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x78c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro B2 * t.1"	; style name
+	.incbin	"04PARTYP.cmp", 0x7d0, 16	; record +0x50..+0x5f (fields not established)
+; style 20
+	.short	0x0064, 0x0000, 0x0065, 0x0066, 0x0067, 0x0068	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x7ec, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" * Fill B1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x830, 16	; record +0x50..+0x5f (fields not established)
+; style 21
+	.short	0x0069, 0x0000, 0x006a, 0x006b, 0x006c, 0x006d	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x84c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" * Fill B2 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x890, 16	; record +0x50..+0x5f (fields not established)
+; style 22
+	.short	0x006e, 0x0000, 0x006f, 0x0070, 0x0071, 0x0072	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x8ac, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending B1 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0x8f0, 16	; record +0x50..+0x5f (fields not established)
+; style 23
+	.short	0x0073, 0x0000, 0x0074, 0x0075, 0x0076, 0x0077	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x90c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending B2 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0x950, 16	; record +0x50..+0x5f (fields not established)
+; style 24
+	.short	0x0078, 0x0000, 0x0079, 0x007a, 0x007b, 0x007c	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x96c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro C1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0x9b0, 16	; record +0x50..+0x5f (fields not established)
+; style 25
+	.short	0x007d, 0x0000, 0x007e, 0x007f, 0x0080, 0x0081	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0x9cc, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Intro C2 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0xa10, 16	; record +0x50..+0x5f (fields not established)
+; style 26
+	.short	0x0082, 0x0000, 0x0083, 0x0084, 0x0085, 0x0086	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0xa2c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	" * Fill C1 *    "	; style name
+	.incbin	"04PARTYP.cmp", 0xa70, 16	; record +0x50..+0x5f (fields not established)
+; style 27
+	.short	0x0087, 0x0000, 0x0088, 0x0089, 0x008a, 0x008b	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0xa8c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Fill C2 *     "	; style name
+	.incbin	"04PARTYP.cmp", 0xad0, 16	; record +0x50..+0x5f (fields not established)
+; style 28
+	.short	0x008c, 0x0000, 0x008d, 0x008e, 0x008f, 0x0090	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0xaec, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending C1 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0xb30, 16	; record +0x50..+0x5f (fields not established)
+; style 29
+	.short	0x0091, 0x0000, 0x0092, 0x0093, 0x0094, 0x0095	; chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md
+	.incbin	"04PARTYP.cmp", 0xb4c, 52	; record +0x0c..+0x3f (fields not established)
+	.ascii	"* Ending C2 *   "	; style name
+	.incbin	"04PARTYP.cmp", 0xb90, 16	; record +0x50..+0x5f (fields not established)
+	.incbin	"04PARTYP.cmp", 0xba0, 2144	; between the directory and the first cell (not established)
+	style_cell	0x80, 0xffff, 0xffff	; block 20, chain 0 cell 0
+	st_note	0, 49, 90, 11, 0
+	st_note	0, 36, 114, 39, 0
+	st_note	48, 48, 73, 14, 0
+	st_note	72, 48, 95, 13, 0
+	st_beat
+	st_note	0, 37, 103, 17, 0
+	st_note	0, 38, 102, 22, 0
+	st_note	48, 48, 83, 13, 0
+	st_note	72, 48, 95, 13, 0
+	st_beat
+	st_note	0, 36, 114, 42, 0
+	st_note	48, 48, 90, 13, 0
+	st_note	72, 48, 98, 15, 0
+	st_beat
+	st_note	0, 37, 110, 16, 0
+	st_note	0, 38, 98, 17, 0
+	st_note	48, 48, 80, 50, 0
+	st_beat
+	st_note	0, 49, 90, 6, 0
+	st_note	0, 36, 114, 34, 0
+	st_note	48, 48, 88, 11, 0
+	st_note	72, 48, 93, 14, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 110, 17, 0
+	st_note	48, 48, 93, 10, 0
+	st_note	72, 48, 93, 13, 0
+	st_beat
+	st_note	0, 36, 119, 26, 0
+	st_note	48, 48, 90, 14, 0
+	st_note	72, 48, 98, 13, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 110, 17, 0
+	st_note	48, 48, 78, 86, 0
+	st_beat
+	st_end
+	.fill	72, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 21, chain 1 cell 0
+	st_note	0, 36, 93, 58, 0
+	st_note	0, 36, 102, 50, 0
+	st_beat
+	st_note	0, 31, 95, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 98, 33, 0
+	st_beat
+	st_note	0, 31, 102, 50, 0
+	st_note2	48, 33, 102, 38, 0, 0, 17
+	st_beat
+	st_note	0, 36, 98, 51, 0
+	st_beat
+	st_note	0, 31, 98, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 102, 29, 0
+	st_beat
+	st_note2	0, 33, 110, 40, 0, 0, 17
+	st_note	48, 31, 88, 39, 0
+	st_beat
+	st_end
+	.fill	158, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 22, chain 2 cell 0
+	st_note	48, 60, 74, 18, 0
+	st_note2	48, 67, 87, 17, 0, 3, 0
+	st_note2	48, 64, 90, 11, 0, 0, 17
+	st_note	48, 67, 78, 16, 0
+	st_beat
+	st_note2	48, 67, 92, 17, 0, 3, 0
+	st_note	48, 60, 79, 15, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	st_note	48, 67, 83, 16, 0
+	st_beat
+	st_note	48, 60, 78, 17, 0
+	st_note2	48, 67, 87, 15, 0, 3, 0
+	st_note2	48, 64, 91, 13, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 83, 15, 0
+	st_note2	48, 67, 93, 16, 0, 3, 0
+	st_note2	48, 64, 93, 13, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 80, 17, 0
+	st_note2	48, 67, 91, 17, 0, 3, 0
+	st_note2	48, 64, 93, 12, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 92, 15, 0, 3, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note	48, 67, 83, 15, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 88, 15, 0, 3, 0
+	st_note2	48, 64, 91, 13, 0, 0, 17
+	st_note	48, 67, 80, 15, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 91, 15, 0, 3, 0
+	st_note2	48, 64, 92, 13, 0, 0, 17
+	st_note	48, 67, 83, 14, 0
+	st_beat
+	st_end
+	.fill	16, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 23, chain 3 cell 0
+	st_note	0, 60, 102, 12, 0
+	st_note	48, 48, 96, 11, 0
+	st_beat
+	st_note2	0, 52, 96, 15, 0, 0, 17
+	st_note	48, 48, 96, 12, 0
+	st_beat
+	st_note	0, 58, 101, 14, 0
+	st_note	48, 58, 98, 15, 0
+	st_beat
+	st_note	0, 55, 102, 15, 0
+	st_note	48, 58, 101, 16, 0
+	st_beat
+	st_note	0, 60, 95, 17, 0
+	st_note	48, 48, 98, 13, 0
+	st_beat
+	st_note2	0, 52, 99, 15, 0, 0, 17
+	st_note	48, 48, 103, 15, 0
+	st_beat
+	st_note	0, 58, 104, 14, 0
+	st_note	48, 58, 104, 14, 0
+	st_beat
+	st_note2	0, 59, 98, 14, 0, 17, 17
+	st_note2	48, 59, 98, 16, 0, 17, 17
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x54, 0x02, 0x00, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00, 0x81, 0x91, 0x00, 0x40, 0x54	; after st_end
+	.byte	0x08, 0x00, 0x08, 0x11, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x46, 0x54, 0x08
+	.byte	0x00, 0x90, 0x30, 0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x43, 0x54, 0x06, 0x00, 0x90, 0x30
+	.byte	0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x48, 0x54, 0x04, 0x00, 0x90, 0x30, 0x3c, 0x54, 0x08
+	.byte	0x00, 0x81, 0x91, 0x00, 0x40, 0x54, 0x08, 0x00, 0x08, 0x11, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00
+	.byte	0x81, 0x90, 0x00, 0x46, 0x54, 0x08, 0x00, 0x90, 0x30, 0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00
+	.byte	0x47, 0x54, 0x06, 0x00, 0x90, 0x30, 0x47, 0x54, 0x08, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 24, chain 4 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x5f, 0x06, 0x00, 0x91, 0x00, 0x40, 0x53, 0x08, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48, 0x62, 0x0b	; after st_end
+	.byte	0x00, 0x90, 0x30, 0x43, 0x66, 0x08, 0x00, 0x91, 0x30, 0x40, 0x58, 0x0b, 0x00, 0x00, 0x11, 0x81
+	.byte	0x81, 0x90, 0x30, 0x48, 0x5f, 0x0d, 0x00, 0x91, 0x30, 0x40, 0x56, 0x0d, 0x00, 0x00, 0x11, 0x81
+	.byte	0x91, 0x00, 0x45, 0x5f, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x58, 0x0d, 0x00, 0x90, 0x30
+	.byte	0x3c, 0x58, 0x0c, 0x00, 0x90, 0x30, 0x43, 0x66, 0x06, 0x00, 0x81, 0x90, 0x00, 0x3c, 0x5a, 0x0e
+	.byte	0x00, 0x91, 0x00, 0x40, 0x6a, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x50, 0x0b, 0x00, 0x91
+	.byte	0x30, 0x34, 0x4a, 0x0c, 0x00, 0x00, 0x11, 0x81, 0x90, 0x00, 0x3c, 0x62, 0x0f, 0x00, 0x91, 0x00
+	.byte	0x34, 0x58, 0x10, 0x00, 0x00, 0x11, 0x81, 0x91, 0x30, 0x40, 0x5a, 0x0c, 0x00, 0x00, 0x11, 0x90
+	.byte	0x30, 0x3c, 0x53, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x41, 0x5f, 0x0c, 0x00, 0x90, 0x00, 0x3e, 0x58
+	.byte	0x0a, 0x00, 0x90, 0x30, 0x43, 0x5d, 0x0f, 0x00, 0x91, 0x30, 0x40, 0x66, 0x0c, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 25, chain 5 cell 0
+	st_note	0, 49, 90, 11, 0
+	st_note	0, 36, 114, 39, 0
+	st_note	48, 48, 73, 14, 0
+	st_note	72, 48, 95, 13, 0
+	st_beat
+	st_note	0, 37, 103, 17, 0
+	st_note	0, 38, 102, 22, 0
+	st_note	0, 74, 108, 5, 1
+	st_note	48, 48, 83, 13, 0
+	st_note	72, 48, 95, 13, 0
+	st_beat
+	st_note	0, 36, 114, 42, 0
+	st_note	48, 48, 90, 13, 0
+	st_note	72, 48, 98, 15, 0
+	st_beat
+	st_note	0, 37, 110, 16, 0
+	st_note	0, 38, 98, 17, 0
+	st_note	0, 74, 112, 93, 0
+	st_note	48, 50, 93, 12, 0
+	st_beat
+	st_note	0, 49, 90, 6, 0
+	st_note	0, 36, 114, 34, 0
+	st_note	48, 48, 88, 11, 0
+	st_note	72, 48, 93, 14, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 110, 17, 0
+	st_note	0, 74, 105, 74, 0
+	st_note	48, 48, 93, 10, 0
+	st_note	72, 48, 93, 13, 0
+	st_beat
+	st_note	0, 36, 119, 26, 0
+	st_note	48, 48, 90, 14, 0
+	st_note	72, 48, 98, 13, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 110, 17, 0
+	st_note	0, 74, 116, 53, 0
+	st_note	48, 50, 90, 11, 0
+	st_beat
+	st_end
+	.fill	48, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 26, chain 6 cell 0
+	st_note	0, 36, 93, 58, 0
+	st_note	0, 36, 102, 50, 0
+	st_beat
+	st_note	0, 31, 95, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 98, 33, 0
+	st_beat
+	st_note	0, 31, 102, 50, 0
+	st_note2	48, 33, 102, 38, 0, 0, 17
+	st_beat
+	st_note	0, 36, 98, 51, 0
+	st_beat
+	st_note	0, 31, 98, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 102, 29, 0
+	st_beat
+	st_note2	0, 33, 110, 40, 0, 0, 17
+	st_note	48, 31, 88, 39, 0
+	st_beat
+	st_end
+	.fill	158, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 27, chain 7 cell 0
+	st_note	48, 60, 74, 18, 0
+	st_note2	48, 67, 87, 17, 0, 3, 0
+	st_note2	48, 64, 90, 11, 0, 0, 17
+	st_note	48, 67, 78, 16, 0
+	st_beat
+	st_note2	48, 67, 92, 17, 0, 3, 0
+	st_note	48, 60, 79, 15, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	st_note	48, 67, 83, 16, 0
+	st_beat
+	st_note	48, 60, 78, 17, 0
+	st_note2	48, 67, 87, 15, 0, 3, 0
+	st_note2	48, 64, 91, 13, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 83, 15, 0
+	st_note2	48, 67, 93, 16, 0, 3, 0
+	st_note2	48, 64, 93, 13, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 80, 17, 0
+	st_note2	48, 67, 91, 17, 0, 3, 0
+	st_note2	48, 64, 93, 12, 0, 0, 17
+	st_note	48, 67, 80, 16, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 92, 15, 0, 3, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note	48, 67, 83, 15, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 88, 15, 0, 3, 0
+	st_note2	48, 64, 91, 13, 0, 0, 17
+	st_note	48, 67, 80, 15, 0
+	st_beat
+	st_note	48, 60, 78, 16, 0
+	st_note2	48, 67, 91, 15, 0, 3, 0
+	st_note2	48, 64, 92, 13, 0, 0, 17
+	st_note	48, 67, 83, 14, 0
+	st_beat
+	st_end
+	.fill	16, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 28, chain 8 cell 0
+	st_note	0, 60, 102, 12, 0
+	st_note	48, 48, 96, 11, 0
+	st_beat
+	st_note2	0, 52, 96, 15, 0, 0, 17
+	st_note	48, 48, 96, 12, 0
+	st_beat
+	st_note	0, 58, 101, 14, 0
+	st_note	48, 58, 98, 15, 0
+	st_beat
+	st_note	0, 55, 102, 15, 0
+	st_note	48, 58, 101, 16, 0
+	st_beat
+	st_note	0, 60, 95, 17, 0
+	st_note	48, 48, 98, 13, 0
+	st_beat
+	st_note2	0, 52, 99, 15, 0, 0, 17
+	st_note	48, 48, 103, 15, 0
+	st_beat
+	st_note	0, 58, 104, 14, 0
+	st_note	48, 58, 104, 14, 0
+	st_beat
+	st_note2	0, 59, 98, 14, 0, 17, 17
+	st_note2	48, 59, 98, 16, 0, 17, 17
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x54, 0x02, 0x00, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00, 0x81, 0x91, 0x00, 0x40, 0x54	; after st_end
+	.byte	0x08, 0x00, 0x08, 0x11, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x46, 0x54, 0x08
+	.byte	0x00, 0x90, 0x30, 0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x43, 0x54, 0x06, 0x00, 0x90, 0x30
+	.byte	0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00, 0x48, 0x54, 0x04, 0x00, 0x90, 0x30, 0x3c, 0x54, 0x08
+	.byte	0x00, 0x81, 0x91, 0x00, 0x40, 0x54, 0x08, 0x00, 0x08, 0x11, 0x90, 0x30, 0x3c, 0x54, 0x08, 0x00
+	.byte	0x81, 0x90, 0x00, 0x46, 0x54, 0x08, 0x00, 0x90, 0x30, 0x46, 0x54, 0x08, 0x00, 0x81, 0x90, 0x00
+	.byte	0x47, 0x54, 0x06, 0x00, 0x90, 0x30, 0x47, 0x54, 0x08, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 29, chain 9 cell 0
+	st_note	0, 72, 90, 8, 0
+	st_note	0, 67, 95, 6, 0
+	st_note2	0, 64, 83, 8, 0, 0, 17
+	st_note	48, 72, 98, 11, 0
+	st_note	48, 67, 102, 8, 0
+	st_note2	48, 64, 88, 11, 0, 0, 17
+	st_beat
+	st_beat
+	st_note	48, 72, 95, 13, 0
+	st_note2	48, 64, 86, 13, 0, 0, 17
+	st_beat
+	st_note2	0, 69, 95, 14, 0, 0, 17
+	st_note	0, 60, 88, 13, 0
+	st_note	48, 60, 88, 12, 0
+	st_note	48, 67, 102, 6, 0
+	st_beat
+	st_note	0, 60, 90, 14, 0
+	st_note2	0, 64, 106, 12, 0, 0, 17
+	st_note	48, 60, 80, 11, 0
+	st_note2	48, 52, 74, 12, 0, 0, 17
+	st_beat
+	st_note	0, 60, 98, 15, 0
+	st_note2	0, 52, 88, 16, 0, 0, 17
+	st_beat
+	st_note2	48, 64, 90, 12, 0, 0, 17
+	st_note	48, 60, 83, 12, 0
+	st_beat
+	st_note	0, 65, 95, 12, 0
+	st_note	0, 62, 88, 10, 0
+	st_note	48, 67, 93, 15, 0
+	st_note2	48, 64, 102, 12, 0, 0, 17
+	st_beat
+	st_end
+	.fill	78, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x0096	; block 30, chain 10 cell 0
+	st_note	0, 36, 110, 15, 0
+	st_note	0, 48, 65, 39, 0
+	st_note	0, 48, 76, 16, 0
+	st_note	0, 58, 77, 14, 0
+	st_note	48, 36, 110, 15, 0
+	st_note	48, 50, 56, 31, 0
+	st_beat
+	st_note	0, 37, 103, 17, 0
+	st_note	0, 38, 98, 52, 0
+	st_note	0, 48, 66, 26, 0
+	st_note	0, 69, 114, 43, 0
+	st_note	0, 58, 79, 19, 0
+	st_note	0, 74, 110, 47, 1
+	st_note	48, 50, 66, 20, 0
+	st_beat
+	st_note	0, 36, 110, 18, 0
+	st_note	0, 48, 64, 22, 0
+	st_note	0, 58, 82, 19, 0
+	st_note	48, 50, 62, 18, 0
+	st_note	72, 58, 82, 13, 0
+	st_beat
+	st_note	0, 37, 110, 16, 0
+	st_note	0, 38, 106, 49, 0
+	st_note	0, 48, 64, 20, 0
+	st_note	0, 69, 114, 28, 0
+	st_note	0, 58, 86, 15, 0
+	st_note	0, 74, 110, 55, 1
+	st_note	48, 50, 64, 18, 0
+	st_note	48, 58, 82, 14, 0
+	st_beat
+	st_note	0, 36, 110, 15, 0
+	st_note	0, 48, 66, 16, 0
+	st_note	0, 58, 82, 17, 0
+	st_note	48, 50, 68, 18, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 106, 24, 0
+	st_note	0, 48, 73, 12, 0
+	st_note	0, 69, 114, 22, 0
+	st_note	0, 58, 79, 18, 0
+	st_note	0, 74, 112, 49, 1
+	st_note	48, 50, 68, 17, 0
+	st_beat
+	st_note	0, 36, 114, 13, 0
+	st_note	0, 48, 74, 15, 0
+	st_note	0, 58, 82, 18, 0
+	.byte	0x90, 0x30, 0x24	; first 3 bytes of st_note 48, 36, 106, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 31, chain 11 cell 0
+	st_note	0, 36, 93, 58, 0
+	st_note	0, 36, 102, 50, 0
+	st_beat
+	st_note	0, 31, 95, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 98, 33, 0
+	st_beat
+	st_note	0, 31, 102, 50, 0
+	st_note2	48, 33, 102, 38, 0, 0, 17
+	st_beat
+	st_note	0, 36, 98, 51, 0
+	st_beat
+	st_note	0, 31, 98, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 102, 29, 0
+	st_beat
+	st_note2	0, 33, 110, 40, 0, 0, 17
+	st_note	48, 31, 88, 39, 0
+	st_beat
+	st_end
+	.fill	158, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x0097	; block 32, chain 12 cell 0
+	st_note	48, 67, 93, 59, 0
+	st_note2	48, 64, 98, 57, 0, 0, 17
+	st_note	48, 60, 88, 57, 0
+	st_note2	48, 67, 99, 66, 0, 3, 0
+	st_beat
+	st_note	48, 67, 95, 17, 0
+	st_note2	48, 64, 98, 13, 0, 0, 17
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 67, 86, 20, 0, 3, 0
+	st_beat
+	st_note	48, 67, 95, 68, 0
+	st_note2	48, 64, 98, 66, 0, 0, 17
+	st_note	48, 60, 88, 66, 0
+	st_note2	48, 67, 93, 66, 0, 3, 0
+	st_beat
+	st_note	48, 67, 95, 14, 0
+	st_note2	48, 64, 98, 10, 0, 0, 17
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 67, 90, 21, 0, 3, 0
+	st_beat
+	st_note	48, 67, 95, 69, 0
+	st_note2	48, 64, 95, 69, 0, 0, 17
+	st_note	48, 60, 86, 67, 0
+	st_note2	48, 67, 95, 66, 0, 3, 0
+	st_beat
+	st_note	48, 67, 90, 13, 0
+	st_note2	48, 64, 90, 10, 0, 0, 17
+	st_note	48, 60, 82, 13, 0
+	st_note2	48, 67, 87, 20, 0, 3, 0
+	st_beat
+	st_note	48, 67, 95, 63, 0
+	st_note2	48, 64, 98, 62, 0, 0, 17
+	st_note	48, 60, 88, 62, 0
+	st_note2	48, 67, 96, 70, 0, 3, 0
+	st_beat
+	st_note	0, 67, 90, 18, 0
+	st_note2	0, 64, 93, 18, 0, 0, 17
+	st_note	0, 60, 82, 18, 0
+	st_note2	0, 67, 99, 27, 0, 3, 0
+	st_note	48, 67, 95, 14, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	.byte	0x90, 0x30, 0x3c, 0x53	; first 4 bytes of st_note 48, 60, 83, 18, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 33, chain 13 cell 0
+	st_note	0, 60, 114, 14, 0
+	st_note	48, 48, 110, 12, 0
+	st_note	72, 48, 105, 11, 0
+	st_beat
+	st_note2	0, 52, 107, 14, 0, 0, 17
+	st_note	48, 48, 109, 13, 0
+	st_beat
+	st_note	0, 58, 107, 15, 0
+	st_note	48, 58, 107, 17, 0
+	st_beat
+	st_note2	0, 52, 109, 16, 0, 0, 17
+	st_note	48, 58, 108, 17, 0
+	st_beat
+	st_note	0, 60, 114, 15, 0
+	st_note	48, 48, 98, 9, 0
+	st_note	72, 48, 107, 13, 0
+	st_beat
+	st_note2	0, 52, 108, 13, 0, 0, 17
+	st_note	0, 53, 87, 2, 0
+	st_note	48, 48, 109, 13, 0
+	st_beat
+	st_note	0, 58, 114, 13, 0
+	st_note	48, 58, 110, 13, 0
+	st_beat
+	st_note2	0, 59, 90, 9, 0, 17, 17
+	st_note2	24, 59, 114, 11, 0, 17, 17
+	st_note2	48, 59, 112, 16, 0, 17, 17
+	st_beat
+	st_end
+	.fill	108, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 34, chain 14 cell 0
+	st_note2	0, 76, 86, 75, 0, 0, 17
+	st_note	0, 67, 86, 75, 0
+	st_beat
+	st_note	0, 65, 76, 17, 0
+	st_note	0, 74, 62, 12, 0
+	st_note	0, 72, 69, 9, 0
+	st_note	48, 72, 74, 79, 0
+	st_note2	48, 64, 80, 78, 0, 0, 17
+	st_beat
+	st_note2	48, 69, 93, 46, 0, 0, 17
+	st_note	48, 65, 83, 44, 0
+	st_beat
+	st_note	0, 67, 90, 11, 0
+	st_note2	0, 64, 82, 11, 0, 0, 17
+	st_note2	48, 69, 90, 8, 0, 0, 17
+	st_note	48, 65, 90, 11, 0
+	st_beat
+	st_note	0, 67, 98, 12, 0
+	st_note2	0, 64, 86, 12, 0, 0, 17
+	st_note2	48, 64, 95, 11, 0, 0, 17
+	st_note	48, 60, 86, 11, 0
+	st_beat
+	st_note2	0, 64, 93, 95, 0, 0, 17
+	st_note	0, 60, 80, 92, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	110, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x0098	; block 35, chain 15 cell 0
+	st_note	0, 36, 110, 15, 0
+	st_note	0, 48, 76, 16, 0
+	st_note	0, 69, 107, 17, 0
+	st_note	0, 74, 94, 19, 0
+	st_note	0, 58, 102, 15, 0
+	st_note	48, 36, 110, 15, 0
+	st_note	48, 74, 90, 17, 0
+	st_note	48, 28, 98, 60, 0
+	st_note	72, 58, 84, 13, 0
+	st_beat
+	st_note	0, 37, 103, 17, 0
+	st_note	0, 38, 98, 52, 0
+	st_note	0, 48, 66, 26, 0
+	st_note	0, 69, 114, 43, 0
+	st_note	0, 74, 112, 60, 0
+	st_note	0, 58, 107, 15, 0
+	st_note	48, 74, 91, 16, 0
+	st_note	48, 28, 102, 67, 0
+	st_beat
+	st_note	0, 36, 110, 18, 0
+	st_note	0, 48, 64, 22, 0
+	st_note	0, 69, 109, 28, 0
+	st_note	0, 74, 108, 61, 0
+	st_note	0, 58, 108, 15, 0
+	st_note	48, 74, 92, 17, 0
+	st_note	48, 28, 95, 60, 0
+	st_note	72, 58, 92, 13, 0
+	st_beat
+	st_note	0, 37, 110, 16, 0
+	st_note	0, 38, 106, 49, 0
+	st_note	0, 48, 64, 20, 0
+	st_note	0, 69, 114, 28, 0
+	st_note	0, 74, 107, 58, 0
+	st_note	0, 58, 105, 15, 0
+	st_note	48, 38, 106, 11, 1
+	st_note	48, 74, 93, 18, 0
+	st_note	48, 28, 101, 66, 0
+	st_note	48, 58, 104, 15, 0
+	st_note	72, 36, 105, 91, 0
+	st_beat
+	st_note	0, 36, 110, 15, 0
+	st_note	0, 48, 66, 16, 0
+	st_note	0, 69, 110, 28, 0
+	st_note	0, 74, 107, 53, 0
+	.byte	0x90, 0x00, 0x3a, 0x68, 0x0f	; first 5 bytes of st_note 0, 58, 104, 15, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 36, chain 16 cell 0
+	st_note	0, 36, 93, 58, 0
+	st_note	0, 36, 102, 50, 0
+	st_beat
+	st_note	0, 31, 95, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 98, 33, 0
+	st_beat
+	st_note	0, 31, 102, 50, 0
+	st_note2	48, 33, 102, 38, 0, 0, 17
+	st_beat
+	st_note	0, 36, 98, 51, 0
+	st_beat
+	st_note	0, 31, 98, 51, 0
+	st_beat
+	st_note	0, 36, 102, 24, 0
+	st_note	48, 36, 102, 29, 0
+	st_beat
+	st_note2	0, 33, 110, 40, 0, 0, 17
+	st_note	48, 31, 88, 39, 0
+	st_beat
+	st_end
+	.fill	158, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x0099	; block 37, chain 17 cell 0
+	st_note	0, 48, 98, 60, 0
+	st_note	48, 67, 93, 59, 0
+	st_note2	48, 64, 98, 57, 0, 0, 17
+	st_note	48, 60, 88, 57, 0
+	st_note2	48, 67, 99, 66, 0, 3, 0
+	st_beat
+	st_note	0, 43, 95, 61, 0
+	st_note	48, 67, 95, 17, 0
+	st_note2	48, 64, 98, 13, 0, 0, 17
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 67, 86, 20, 0, 3, 0
+	st_beat
+	st_note	0, 48, 98, 19, 0
+	st_note	48, 67, 95, 68, 0
+	st_note2	48, 64, 98, 66, 0, 0, 17
+	st_note	48, 60, 88, 66, 0
+	st_note2	48, 67, 93, 66, 0, 3, 0
+	st_note	48, 48, 97, 43, 0
+	st_beat
+	st_note	0, 43, 99, 43, 0
+	st_note	48, 67, 95, 14, 0
+	st_note2	48, 64, 98, 10, 0, 0, 17
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 67, 90, 21, 0, 3, 0
+	st_note	48, 45, 99, 39, 0
+	st_beat
+	st_note	0, 48, 87, 64, 0
+	st_note	48, 67, 95, 69, 0
+	st_note2	48, 64, 95, 69, 0, 0, 17
+	st_note	48, 60, 86, 67, 0
+	st_note2	48, 67, 95, 66, 0, 3, 0
+	st_beat
+	st_note	0, 43, 96, 58, 0
+	st_note	48, 67, 90, 13, 0
+	st_note2	48, 64, 90, 10, 0, 0, 17
+	st_note	48, 60, 82, 13, 0
+	st_note2	48, 67, 87, 20, 0, 3, 0
+	st_beat
+	st_note	0, 48, 96, 18, 0
+	st_note	48, 67, 95, 63, 0
+	st_note2	48, 64, 98, 62, 0, 0, 17
+	st_note	48, 60, 88, 62, 0
+	.byte	0x91	; first 1 bytes of st_note2 48, 67, 96, 70, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 38, chain 18 cell 0
+	st_note	0, 60, 114, 14, 0
+	st_note	48, 48, 110, 12, 0
+	st_note	72, 48, 105, 11, 0
+	st_beat
+	st_note2	0, 52, 107, 14, 0, 0, 17
+	st_note	48, 48, 109, 13, 0
+	st_beat
+	st_note	0, 58, 107, 15, 0
+	st_note	48, 58, 107, 17, 0
+	st_beat
+	st_note2	0, 52, 109, 16, 0, 0, 17
+	st_note	48, 58, 108, 17, 0
+	st_beat
+	st_note	0, 60, 114, 15, 0
+	st_note	48, 48, 98, 9, 0
+	st_note	72, 48, 107, 13, 0
+	st_beat
+	st_note2	0, 52, 108, 13, 0, 0, 17
+	st_note	0, 53, 87, 2, 0
+	st_note	48, 48, 109, 13, 0
+	st_beat
+	st_note	0, 58, 114, 13, 0
+	st_note	48, 58, 110, 13, 0
+	st_beat
+	st_note2	0, 59, 90, 9, 0, 17, 17
+	st_note2	24, 59, 114, 11, 0, 17, 17
+	st_note2	48, 59, 112, 16, 0, 17, 17
+	st_beat
+	st_end
+	.fill	108, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 39, chain 19 cell 0
+	st_note2	0, 76, 86, 75, 0, 0, 17
+	st_note	0, 67, 86, 75, 0
+	st_beat
+	st_note	0, 65, 76, 17, 0
+	st_note	0, 74, 62, 12, 0
+	st_note	0, 72, 69, 9, 0
+	st_note	48, 72, 74, 79, 0
+	st_note2	48, 64, 80, 78, 0, 0, 17
+	st_beat
+	st_note2	48, 69, 93, 46, 0, 0, 17
+	st_note	48, 65, 83, 44, 0
+	st_beat
+	st_note	0, 67, 90, 11, 0
+	st_note2	0, 64, 82, 11, 0, 0, 17
+	st_note2	48, 69, 90, 8, 0, 0, 17
+	st_note	48, 65, 90, 11, 0
+	st_beat
+	st_note	0, 67, 98, 12, 0
+	st_note2	0, 64, 86, 12, 0, 0, 17
+	st_note2	48, 64, 95, 11, 0, 0, 17
+	st_note	48, 60, 86, 11, 0
+	st_beat
+	st_note2	0, 64, 93, 95, 0, 0, 17
+	st_note	0, 60, 80, 92, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	110, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x009a	; block 40, chain 20 cell 0
+	st_note	0, 48, 100, 12, 0
+	st_note	0, 36, 107, 52, 0
+	st_note	24, 48, 89, 14, 0
+	st_note	48, 48, 70, 9, 0
+	st_note	72, 48, 78, 13, 0
+	st_beat
+	st_note	0, 48, 102, 14, 0
+	st_note	0, 36, 109, 55, 0
+	st_note	0, 38, 114, 88, 0
+	st_note	24, 48, 59, 15, 0
+	st_note	48, 48, 76, 10, 0
+	st_note	72, 48, 66, 12, 0
+	st_beat
+	st_note	0, 48, 102, 15, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	24, 48, 54, 13, 0
+	st_note	48, 48, 66, 9, 0
+	st_note	72, 48, 66, 15, 0
+	st_beat
+	st_note	0, 48, 102, 14, 0
+	st_note	0, 36, 99, 49, 0
+	st_note	0, 38, 112, 69, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 62, 9, 0
+	st_note	72, 48, 66, 15, 0
+	st_beat
+	st_note	0, 48, 100, 14, 0
+	st_note	0, 36, 104, 54, 0
+	st_note	24, 48, 55, 15, 0
+	st_note	48, 48, 72, 11, 0
+	st_note	72, 48, 74, 15, 0
+	st_beat
+	st_note	0, 48, 104, 17, 0
+	st_note	0, 36, 104, 56, 0
+	st_note	0, 38, 110, 70, 0
+	st_note	24, 48, 62, 15, 0
+	st_note	48, 48, 69, 12, 0
+	st_note	72, 48, 73, 14, 0
+	st_beat
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 107, 53, 0
+	st_note	24, 48, 69, 15, 0
+	st_note	48, 48, 69, 13, 0
+	st_note	72, 48, 74, 14, 0
+	st_beat
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 105, 51, 0
+	.byte	0x90, 0x00	; first 2 bytes of st_note 0, 38, 107, 77, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 41, chain 21 cell 0
+	st_note	0, 36, 109, 22, 0
+	st_note	48, 36, 107, 47, 0
+	st_beat
+	st_note	0, 31, 108, 49, 0
+	st_note	48, 33, 104, 46, 0
+	st_beat
+	st_note	0, 36, 108, 29, 0
+	st_note	48, 36, 104, 46, 0
+	st_beat
+	st_note	0, 31, 102, 51, 0
+	st_note	48, 33, 103, 41, 0
+	st_beat
+	st_note	0, 36, 107, 27, 0
+	st_note	48, 36, 106, 49, 0
+	st_beat
+	st_note	0, 31, 102, 57, 0
+	st_note	48, 33, 98, 43, 0
+	st_beat
+	st_note	0, 36, 109, 28, 0
+	st_note	48, 36, 102, 43, 0
+	st_beat
+	st_note	0, 31, 103, 51, 0
+	st_note	48, 33, 106, 45, 0
+	st_beat
+	st_note	0, 36, 106, 29, 0
+	st_note	48, 36, 102, 44, 0
+	st_beat
+	st_note	0, 31, 102, 51, 0
+	st_note	48, 33, 102, 43, 0
+	st_beat
+	st_note	0, 36, 109, 27, 0
+	st_note	48, 36, 100, 47, 0
+	st_beat
+	st_note	0, 31, 109, 50, 0
+	st_note	48, 33, 106, 45, 0
+	st_beat
+	st_note	0, 36, 109, 26, 0
+	st_note	48, 36, 106, 47, 0
+	st_beat
+	st_note	0, 31, 103, 57, 0
+	st_note	48, 33, 103, 43, 0
+	st_beat
+	st_note	0, 36, 111, 28, 0
+	st_note	48, 36, 105, 47, 0
+	st_beat
+	st_note	0, 31, 108, 55, 0
+	st_note	48, 33, 110, 49, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x24, 0x6c, 0x2e, 0x00, 0x90, 0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00, 0x2b, 0x70	; after st_end
+	.byte	0x29, 0x00, 0x90, 0x30, 0x2d, 0x74, 0x2f, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6c, 0x2d, 0x00, 0x90
+	.byte	0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x009c	; block 42, chain 22 cell 0
+	st_note	0, 72, 68, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 79, 80, 13, 0
+	st_note2	0, 67, 78, 16, 0, 3, 0
+	st_note	48, 72, 69, 13, 0
+	st_note	48, 79, 78, 14, 0
+	st_note2	48, 76, 78, 13, 0, 0, 17
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_beat
+	st_note	0, 72, 67, 14, 0
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note	0, 79, 74, 13, 0
+	st_note2	0, 67, 74, 16, 0, 3, 0
+	st_note	48, 72, 69, 14, 0
+	st_note2	48, 76, 78, 13, 0, 0, 17
+	st_note	48, 79, 75, 13, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_beat
+	st_note	0, 72, 67, 14, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note	0, 79, 72, 13, 0
+	st_note2	0, 67, 75, 15, 0, 3, 0
+	st_note	48, 72, 66, 14, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note	48, 79, 74, 14, 0
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_beat
+	st_note	0, 72, 66, 15, 0
+	st_note2	0, 76, 78, 15, 0, 0, 17
+	st_note	0, 79, 75, 15, 0
+	st_note2	0, 67, 72, 13, 0, 3, 0
+	st_note	48, 79, 73, 16, 0
+	st_note	48, 72, 66, 15, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note2	48, 67, 73, 14, 0, 3, 0
+	st_beat
+	st_note	0, 72, 68, 15, 0
+	st_note	0, 79, 75, 15, 0
+	st_note2	0, 76, 78, 14, 0, 0, 17
+	.byte	0x91	; first 1 bytes of st_note2 0, 67, 71, 14, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x009f	; block 43, chain 23 cell 0
+	st_note	0, 60, 90, 17, 0
+	st_note	0, 67, 102, 12, 0
+	st_note2	0, 64, 104, 10, 0, 0, 17
+	st_note2	0, 55, 81, 15, 0, 3, 0
+	st_note	48, 60, 83, 17, 0
+	st_note	48, 67, 96, 17, 0
+	st_note2	48, 64, 99, 15, 0, 0, 17
+	st_note2	48, 55, 84, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 86, 18, 0
+	st_note	0, 67, 96, 17, 0
+	st_note2	0, 64, 99, 15, 0, 0, 17
+	st_note2	0, 55, 87, 17, 0, 3, 0
+	st_note	48, 67, 93, 18, 0
+	st_note	48, 60, 81, 18, 0
+	st_note2	48, 64, 98, 15, 0, 0, 17
+	st_note2	48, 55, 81, 18, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 18, 0
+	st_note	0, 60, 82, 17, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 79, 17, 0, 3, 0
+	st_note	48, 60, 80, 17, 0
+	st_note	48, 67, 95, 18, 0
+	st_note2	48, 64, 95, 15, 0, 0, 17
+	st_note2	48, 55, 79, 18, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 18, 0
+	st_note	0, 60, 86, 16, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 81, 17, 0, 3, 0
+	st_note	48, 60, 80, 17, 0
+	st_note	48, 67, 95, 16, 0
+	st_note2	48, 64, 94, 15, 0, 0, 17
+	st_note2	48, 55, 82, 17, 0, 3, 0
+	st_beat
+	st_note	0, 67, 97, 18, 0
+	st_note	0, 60, 84, 17, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	.byte	0x91	; first 1 bytes of st_note2 0, 55, 80, 16, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 44, chain 24 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x4f, 0x4b, 0x49, 0x00, 0x81, 0x90, 0x00, 0x54, 0x50, 0x1a, 0x01, 0x81, 0x81, 0x81, 0x81, 0x81	; after st_end
+	.byte	0x81, 0x90, 0x00, 0x4f, 0x4f, 0x52, 0x00, 0x81, 0x90, 0x00, 0x5b, 0x53, 0x53, 0x00, 0x81, 0x83
+	.byte	0x81, 0x81, 0x81, 0x83, 0x81, 0x81, 0x91, 0x30, 0x58, 0x5d, 0x1f, 0x01, 0x00, 0x11, 0x81, 0x81
+	.byte	0x81, 0x83, 0x58, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5c, 0x04, 0x01, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x91, 0x00, 0x58, 0x67, 0x0f, 0x00, 0x00, 0x11, 0x90, 0x30, 0x59
+	.byte	0x69, 0x0e, 0x00, 0x81, 0x91, 0x00, 0x58, 0x69, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x30, 0x54, 0x64
+	.byte	0x43, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00a2	; block 45, chain 25 cell 0
+	st_note	0, 48, 100, 12, 0
+	st_note	0, 36, 107, 52, 0
+	st_note	24, 48, 89, 14, 0
+	st_note	48, 48, 70, 9, 0
+	st_note	72, 48, 78, 13, 0
+	st_beat
+	st_note	0, 48, 102, 14, 0
+	st_note	0, 36, 109, 55, 0
+	st_note	0, 38, 114, 88, 0
+	st_note	24, 48, 59, 15, 0
+	st_note	48, 48, 76, 10, 0
+	st_note	72, 48, 66, 12, 0
+	st_beat
+	st_note	0, 48, 102, 15, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	24, 48, 54, 13, 0
+	st_note	48, 48, 66, 9, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	72, 48, 66, 15, 0
+	st_beat
+	st_note	0, 48, 102, 14, 0
+	st_note	0, 36, 99, 49, 0
+	st_note	0, 38, 112, 69, 0
+	st_note	0, 102, 105, 12, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 62, 9, 0
+	st_note	48, 102, 105, 11, 0
+	st_note	72, 48, 66, 15, 0
+	st_note	72, 102, 110, 12, 0
+	st_beat
+	st_note	0, 48, 100, 14, 0
+	st_note	0, 36, 104, 54, 0
+	st_note	24, 48, 55, 15, 0
+	st_note	48, 48, 72, 11, 0
+	st_note	72, 48, 74, 15, 0
+	st_beat
+	st_note	0, 48, 104, 17, 0
+	st_note	0, 36, 104, 56, 0
+	st_note	0, 38, 110, 70, 0
+	st_note	24, 48, 62, 15, 0
+	st_note	48, 48, 69, 12, 0
+	st_note	72, 48, 73, 14, 0
+	st_beat
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 107, 53, 0
+	st_note	24, 48, 69, 15, 0
+	.byte	0x90, 0x30, 0x30	; first 3 bytes of st_note 48, 48, 69, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 46, chain 26 cell 0
+	st_note	0, 36, 109, 22, 0
+	st_note	48, 36, 107, 47, 0
+	st_beat
+	st_note	0, 31, 108, 49, 0
+	st_note	48, 33, 104, 46, 0
+	st_beat
+	st_note	0, 36, 108, 29, 0
+	st_note	48, 36, 104, 46, 0
+	st_beat
+	st_note	0, 31, 102, 51, 0
+	st_note	48, 33, 103, 41, 0
+	st_beat
+	st_note	0, 36, 107, 27, 0
+	st_note	48, 36, 106, 49, 0
+	st_beat
+	st_note	0, 31, 102, 57, 0
+	st_note	48, 33, 98, 43, 0
+	st_beat
+	st_note	0, 36, 109, 28, 0
+	st_note	48, 36, 102, 43, 0
+	st_beat
+	st_note	0, 31, 103, 51, 0
+	st_note	48, 33, 106, 45, 0
+	st_beat
+	st_note	0, 36, 106, 29, 0
+	st_note	48, 36, 102, 44, 0
+	st_beat
+	st_note	0, 31, 102, 51, 0
+	st_note	48, 33, 102, 43, 0
+	st_beat
+	st_note	0, 36, 109, 27, 0
+	st_note	48, 36, 100, 47, 0
+	st_beat
+	st_note	0, 31, 109, 50, 0
+	st_note	48, 33, 106, 45, 0
+	st_beat
+	st_note	0, 36, 109, 26, 0
+	st_note	48, 36, 106, 47, 0
+	st_beat
+	st_note	0, 31, 103, 57, 0
+	st_note	48, 33, 103, 43, 0
+	st_beat
+	st_note	0, 36, 111, 28, 0
+	st_note	48, 36, 105, 47, 0
+	st_beat
+	st_note	0, 31, 108, 55, 0
+	st_note	48, 33, 110, 49, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x24, 0x6c, 0x2e, 0x00, 0x90, 0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00, 0x2b, 0x70	; after st_end
+	.byte	0x29, 0x00, 0x90, 0x30, 0x2d, 0x74, 0x2f, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6c, 0x2d, 0x00, 0x90
+	.byte	0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00a4	; block 47, chain 27 cell 0
+	st_note2	0, 76, 79, 14, 0, 0, 17
+	st_note	0, 79, 78, 10, 0
+	st_note	0, 72, 69, 9, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 12, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 84, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 75, 11, 0, 0, 17
+	st_note	0, 72, 69, 11, 0
+	st_note2	0, 67, 78, 13, 0, 3, 0
+	st_note2	48, 76, 75, 13, 0, 0, 17
+	st_note	48, 79, 75, 14, 0
+	st_note	48, 72, 67, 11, 0
+	st_note2	48, 67, 81, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 72, 14, 0
+	st_note2	48, 76, 73, 13, 0, 0, 17
+	st_note	48, 72, 64, 12, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 74, 13, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note	0, 72, 68, 11, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 75, 16, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note	48, 72, 66, 14, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note	0, 72, 69, 13, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00a8	; block 48, chain 28 cell 0
+	st_note	0, 60, 90, 17, 0
+	st_note	0, 67, 102, 12, 0
+	st_note2	0, 64, 104, 10, 0, 0, 17
+	st_note2	0, 55, 81, 15, 0, 3, 0
+	st_note	48, 60, 83, 17, 0
+	st_note	48, 67, 96, 17, 0
+	st_note2	48, 64, 99, 15, 0, 0, 17
+	st_note2	48, 55, 84, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 86, 18, 0
+	st_note	0, 67, 96, 17, 0
+	st_note2	0, 64, 99, 15, 0, 0, 17
+	st_note2	0, 55, 87, 17, 0, 3, 0
+	st_note	48, 67, 93, 18, 0
+	st_note	48, 60, 81, 18, 0
+	st_note2	48, 64, 98, 15, 0, 0, 17
+	st_note2	48, 55, 81, 18, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 18, 0
+	st_note	0, 60, 82, 17, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 79, 17, 0, 3, 0
+	st_note	48, 60, 80, 17, 0
+	st_note	48, 67, 95, 18, 0
+	st_note2	48, 64, 95, 15, 0, 0, 17
+	st_note2	48, 55, 79, 18, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 18, 0
+	st_note	0, 60, 86, 16, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 81, 17, 0, 3, 0
+	st_note	48, 60, 80, 17, 0
+	st_note	48, 67, 95, 16, 0
+	st_note2	48, 64, 94, 15, 0, 0, 17
+	st_note2	48, 55, 82, 17, 0, 3, 0
+	st_beat
+	st_note	0, 67, 97, 18, 0
+	st_note	0, 60, 84, 17, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	.byte	0x91	; first 1 bytes of st_note2 0, 55, 80, 16, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 49, chain 29 cell 0
+	st_note2	0, 88, 83, 1, 1, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 75, 73, 0
+	st_beat
+	st_note	0, 84, 80, 26, 1
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 79, 82, 0
+	st_beat
+	st_note	0, 91, 83, 83, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x81, 0x81, 0x83, 0x81, 0x81, 0x91, 0x30, 0x58, 0x5d, 0x1f, 0x01, 0x00, 0x11, 0x81, 0x81	; after st_end
+	.byte	0x81, 0x83, 0x58, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5c, 0x04, 0x01, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x91, 0x00, 0x58, 0x67, 0x0f, 0x00, 0x00, 0x11, 0x90, 0x30, 0x59
+	.byte	0x69, 0x0e, 0x00, 0x81, 0x91, 0x00, 0x58, 0x69, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x30, 0x54, 0x64
+	.byte	0x43, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00ab	; block 50, chain 30 cell 0
+	st_note	0, 36, 107, 52, 0
+	st_note	0, 48, 97, 16, 0
+	st_note	0, 51, 107, 65, 0
+	st_note	0, 74, 114, 16, 0
+	st_note	24, 74, 95, 12, 0
+	st_note	48, 50, 97, 19, 0
+	st_note	48, 74, 91, 13, 0
+	st_note	72, 74, 86, 13, 0
+	st_beat
+	st_note	0, 36, 109, 55, 0
+	st_note	0, 48, 100, 17, 0
+	st_note	0, 74, 116, 17, 0
+	st_note	0, 38, 109, 74, 0
+	st_note	24, 74, 87, 14, 0
+	st_note	48, 50, 103, 17, 0
+	st_note	48, 74, 94, 10, 0
+	st_note	72, 74, 87, 11, 0
+	st_beat
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 48, 88, 11, 0
+	st_note	0, 74, 114, 15, 0
+	st_note	24, 48, 93, 11, 0
+	st_note	24, 74, 82, 10, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 96, 43, 0
+	st_note	48, 74, 84, 11, 0
+	st_note	72, 74, 83, 10, 0
+	st_beat
+	st_note	0, 36, 99, 49, 0
+	st_note	0, 102, 105, 12, 0
+	st_note	0, 48, 87, 14, 0
+	st_note	0, 74, 112, 16, 0
+	st_note	0, 38, 110, 69, 0
+	st_note	24, 74, 71, 11, 0
+	st_note	48, 102, 105, 11, 0
+	st_note	48, 50, 102, 30, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	72, 102, 110, 12, 0
+	st_note	72, 74, 75, 12, 0
+	st_beat
+	st_note	0, 36, 104, 54, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 62, 10, 0
+	.byte	0x90, 0x30, 0x32, 0x60, 0x10	; first 5 bytes of st_note 48, 50, 96, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 51, chain 31 cell 0
+	st_note	0, 36, 104, 40, 0
+	st_note	48, 48, 114, 45, 0
+	st_beat
+	st_note	0, 43, 99, 49, 0
+	st_note	48, 45, 100, 51, 0
+	st_beat
+	st_note	0, 36, 103, 45, 0
+	st_note	48, 48, 114, 45, 0
+	st_beat
+	st_note	0, 43, 99, 51, 0
+	st_note	48, 45, 102, 51, 0
+	st_beat
+	st_note	0, 36, 104, 45, 0
+	st_note	48, 48, 109, 44, 0
+	st_beat
+	st_note	0, 43, 97, 50, 0
+	st_note	48, 45, 99, 46, 0
+	st_beat
+	st_note	0, 36, 104, 52, 0
+	st_note	48, 48, 109, 44, 0
+	st_beat
+	st_note	0, 43, 104, 52, 0
+	st_note	48, 45, 102, 46, 0
+	st_beat
+	st_note	0, 36, 102, 50, 0
+	st_note	48, 48, 107, 42, 0
+	st_beat
+	st_note	0, 43, 99, 53, 0
+	st_note	48, 45, 108, 51, 0
+	st_beat
+	st_note	0, 36, 102, 45, 0
+	st_note	48, 48, 104, 42, 0
+	st_beat
+	st_note	0, 43, 102, 50, 0
+	st_note	48, 45, 100, 48, 0
+	st_beat
+	st_note	0, 36, 100, 50, 0
+	st_note	48, 48, 107, 43, 0
+	st_beat
+	st_note	0, 43, 102, 49, 0
+	st_note	48, 45, 103, 46, 0
+	st_beat
+	st_note	0, 36, 107, 49, 0
+	st_note	48, 48, 107, 43, 0
+	st_beat
+	st_note	0, 43, 102, 52, 0
+	st_note	48, 45, 105, 53, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x24, 0x6c, 0x2e, 0x00, 0x90, 0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00, 0x2b, 0x70	; after st_end
+	.byte	0x29, 0x00, 0x90, 0x30, 0x2d, 0x74, 0x2f, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6c, 0x2d, 0x00, 0x90
+	.byte	0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00ae	; block 52, chain 32 cell 0
+	st_note2	0, 76, 79, 14, 0, 0, 17
+	st_note	0, 79, 78, 10, 0
+	st_note	0, 72, 69, 9, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 12, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 84, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 75, 11, 0, 0, 17
+	st_note	0, 72, 69, 11, 0
+	st_note2	0, 67, 78, 13, 0, 3, 0
+	st_note2	48, 76, 75, 13, 0, 0, 17
+	st_note	48, 79, 75, 14, 0
+	st_note	48, 72, 67, 11, 0
+	st_note2	48, 67, 81, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 72, 14, 0
+	st_note2	48, 76, 73, 13, 0, 0, 17
+	st_note	48, 72, 64, 12, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 74, 13, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note	0, 72, 68, 11, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 75, 16, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note	48, 72, 66, 14, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note	0, 72, 69, 13, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00b2	; block 53, chain 33 cell 0
+	st_note	0, 60, 90, 54, 0
+	st_note2	0, 64, 93, 53, 0, 0, 17
+	st_note2	0, 67, 105, 53, 0, 3, 0
+	st_note	0, 72, 90, 53, 0
+	st_note2	0, 55, 99, 58, 0, 3, 0
+	st_note	0, 67, 97, 58, 0
+	st_beat
+	st_note	0, 60, 90, 16, 0
+	st_note2	0, 64, 92, 16, 0, 0, 17
+	st_note2	0, 67, 103, 13, 0, 3, 0
+	st_note	0, 72, 89, 13, 0
+	st_note2	0, 55, 94, 16, 0, 3, 0
+	st_note	0, 67, 95, 16, 0
+	st_note	48, 60, 97, 16, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_note2	48, 67, 99, 14, 0, 3, 0
+	st_note	48, 72, 86, 13, 0
+	st_note2	48, 55, 90, 17, 0, 3, 0
+	st_note	48, 67, 90, 15, 0
+	st_beat
+	st_note	0, 60, 97, 15, 0
+	st_note2	0, 64, 91, 16, 0, 0, 17
+	st_note	0, 72, 87, 15, 0
+	st_note2	0, 67, 102, 14, 0, 3, 0
+	st_note2	0, 55, 94, 15, 0, 3, 0
+	st_note	0, 67, 90, 17, 0
+	st_note	48, 60, 99, 54, 0
+	st_note2	48, 64, 90, 58, 0, 0, 17
+	st_note2	48, 67, 100, 55, 0, 3, 0
+	st_note	48, 72, 86, 56, 0
+	st_note2	48, 55, 89, 55, 0, 3, 0
+	st_note	48, 67, 87, 55, 0
+	st_beat
+	st_note	48, 60, 99, 51, 0
+	st_note2	48, 67, 107, 52, 0, 3, 0
+	st_note2	48, 64, 93, 51, 0, 0, 17
+	st_note	48, 72, 90, 51, 0
+	st_note2	48, 55, 93, 58, 0, 3, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 54, chain 34 cell 0
+	st_note	0, 84, 84, 43, 0
+	st_note2	0, 88, 79, 41, 0, 0, 17
+	st_note	0, 79, 76, 42, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 82, 79, 0
+	st_note	0, 84, 71, 80, 0
+	st_note2	0, 76, 76, 69, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note2	0, 88, 76, 56, 0, 0, 17
+	st_note	0, 84, 75, 53, 0
+	st_note2	0, 76, 86, 47, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 84, 65, 75, 0
+	st_note2	0, 76, 72, 66, 0, 0, 17
+	st_note	0, 72, 71, 52, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x90, 0x30, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52	; after st_end
+	.byte	0x16, 0x00, 0x81, 0x83, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83
+	.byte	0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x90, 0x30, 0x54, 0x52
+	.byte	0x16, 0x00, 0x81, 0x83, 0x90, 0x30, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52, 0x16, 0x00
+	.byte	0x81, 0x83, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52, 0x16, 0x00, 0x81, 0x83, 0x54, 0x52
+	.byte	0x16, 0x00, 0x81, 0x83, 0x37, 0x00, 0x81, 0x91, 0x00, 0x58, 0x3e, 0x2c, 0x00, 0x00, 0x11, 0x90
+	.byte	0x30, 0x54, 0x3f, 0x16, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x4e, 0x15, 0x00, 0x91, 0x30, 0x4c, 0x31
+	.byte	0x0e, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00b5	; block 55, chain 35 cell 0
+	st_note	0, 36, 107, 52, 0
+	st_note	0, 48, 97, 16, 0
+	st_note	0, 51, 107, 65, 0
+	st_note	0, 74, 114, 16, 0
+	st_note	24, 74, 95, 12, 0
+	st_note	48, 50, 97, 19, 0
+	st_note	48, 74, 91, 13, 0
+	st_note	48, 57, 105, 16, 0
+	st_note	72, 74, 86, 13, 0
+	st_beat
+	st_note	0, 36, 109, 55, 0
+	st_note	0, 38, 114, 88, 0
+	st_note	0, 48, 100, 17, 0
+	st_note	0, 74, 116, 17, 0
+	st_note	0, 69, 108, 84, 0
+	st_note	24, 74, 87, 14, 0
+	st_note	48, 50, 103, 17, 0
+	st_note	48, 74, 94, 10, 0
+	st_note	48, 55, 102, 15, 0
+	st_note	72, 74, 87, 11, 0
+	st_beat
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 48, 88, 11, 0
+	st_note	0, 74, 114, 15, 0
+	st_note	0, 53, 96, 12, 0
+	st_note	24, 48, 93, 11, 0
+	st_note	24, 74, 82, 10, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 96, 43, 0
+	st_note	48, 74, 84, 11, 0
+	st_note	48, 55, 87, 13, 0
+	st_note	72, 74, 83, 10, 0
+	st_beat
+	st_note	0, 36, 99, 49, 0
+	st_note	0, 38, 112, 69, 0
+	st_note	0, 102, 105, 12, 0
+	st_note	0, 48, 87, 14, 0
+	st_note	0, 74, 112, 16, 0
+	st_note	0, 69, 112, 69, 0
+	st_note	24, 74, 71, 11, 0
+	st_note	48, 102, 105, 11, 0
+	st_note	48, 50, 102, 30, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	48, 53, 102, 12, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 56, chain 36 cell 0
+	st_note	0, 36, 104, 40, 0
+	st_note	48, 48, 114, 45, 0
+	st_beat
+	st_note	0, 43, 99, 49, 0
+	st_note	48, 45, 100, 51, 0
+	st_beat
+	st_note	0, 36, 103, 45, 0
+	st_note	48, 48, 114, 45, 0
+	st_beat
+	st_note	0, 43, 99, 51, 0
+	st_note	48, 45, 102, 51, 0
+	st_beat
+	st_note	0, 36, 104, 45, 0
+	st_note	48, 48, 109, 44, 0
+	st_beat
+	st_note	0, 43, 97, 50, 0
+	st_note	48, 45, 99, 46, 0
+	st_beat
+	st_note	0, 36, 104, 52, 0
+	st_note	48, 48, 109, 44, 0
+	st_beat
+	st_note	0, 43, 104, 52, 0
+	st_note	48, 45, 102, 46, 0
+	st_beat
+	st_note	0, 36, 102, 50, 0
+	st_note	48, 48, 107, 42, 0
+	st_beat
+	st_note	0, 43, 99, 53, 0
+	st_note	48, 45, 108, 51, 0
+	st_beat
+	st_note	0, 36, 102, 45, 0
+	st_note	48, 48, 104, 42, 0
+	st_beat
+	st_note	0, 43, 102, 50, 0
+	st_note	48, 45, 100, 48, 0
+	st_beat
+	st_note	0, 36, 100, 50, 0
+	st_note	48, 48, 107, 43, 0
+	st_beat
+	st_note	0, 43, 102, 49, 0
+	st_note	48, 45, 103, 46, 0
+	st_beat
+	st_note	0, 36, 107, 49, 0
+	st_note	48, 48, 107, 43, 0
+	st_beat
+	st_note	0, 43, 102, 52, 0
+	st_note	48, 45, 105, 53, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x24, 0x6c, 0x2e, 0x00, 0x90, 0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00, 0x2b, 0x70	; after st_end
+	.byte	0x29, 0x00, 0x90, 0x30, 0x2d, 0x74, 0x2f, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6c, 0x2d, 0x00, 0x90
+	.byte	0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00b9	; block 57, chain 37 cell 0
+	st_note2	0, 76, 79, 14, 0, 0, 17
+	st_note	0, 79, 78, 10, 0
+	st_note	0, 72, 69, 9, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 12, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 84, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 75, 11, 0, 0, 17
+	st_note	0, 72, 69, 11, 0
+	st_note2	0, 67, 78, 13, 0, 3, 0
+	st_note2	48, 76, 75, 13, 0, 0, 17
+	st_note	48, 79, 75, 14, 0
+	st_note	48, 72, 67, 11, 0
+	st_note2	48, 67, 81, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 72, 14, 0
+	st_note2	48, 76, 73, 13, 0, 0, 17
+	st_note	48, 72, 64, 12, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 74, 13, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note	0, 72, 68, 11, 0
+	st_note2	0, 67, 79, 14, 0, 3, 0
+	st_note	48, 79, 75, 16, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note	48, 72, 66, 14, 0
+	st_note2	48, 67, 78, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note	0, 72, 69, 13, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00bd	; block 58, chain 38 cell 0
+	st_note	0, 60, 90, 54, 0
+	st_note2	0, 64, 93, 53, 0, 0, 17
+	st_note2	0, 67, 105, 53, 0, 3, 0
+	st_note	0, 72, 90, 53, 0
+	st_note2	0, 55, 99, 58, 0, 3, 0
+	st_note	0, 67, 97, 58, 0
+	st_beat
+	st_note	0, 60, 90, 16, 0
+	st_note2	0, 64, 92, 16, 0, 0, 17
+	st_note2	0, 67, 103, 13, 0, 3, 0
+	st_note	0, 72, 89, 13, 0
+	st_note2	0, 55, 94, 16, 0, 3, 0
+	st_note	0, 67, 95, 16, 0
+	st_note	48, 60, 97, 16, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_note2	48, 67, 99, 14, 0, 3, 0
+	st_note	48, 72, 86, 13, 0
+	st_note2	48, 55, 90, 17, 0, 3, 0
+	st_note	48, 67, 90, 15, 0
+	st_beat
+	st_note	0, 60, 97, 15, 0
+	st_note2	0, 64, 91, 16, 0, 0, 17
+	st_note	0, 72, 87, 15, 0
+	st_note2	0, 67, 102, 14, 0, 3, 0
+	st_note2	0, 55, 94, 15, 0, 3, 0
+	st_note	0, 67, 90, 17, 0
+	st_note	48, 60, 99, 54, 0
+	st_note2	48, 64, 90, 58, 0, 0, 17
+	st_note2	48, 67, 100, 55, 0, 3, 0
+	st_note	48, 72, 86, 56, 0
+	st_note2	48, 55, 89, 55, 0, 3, 0
+	st_note	48, 67, 87, 55, 0
+	st_beat
+	st_note	48, 60, 99, 51, 0
+	st_note2	48, 67, 107, 52, 0, 3, 0
+	st_note2	48, 64, 93, 51, 0, 0, 17
+	st_note	48, 72, 90, 51, 0
+	st_note2	48, 55, 93, 58, 0, 3, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 59, chain 39 cell 0
+	st_note	0, 84, 84, 43, 0
+	st_note2	0, 88, 79, 41, 0, 0, 17
+	st_note	0, 79, 76, 42, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 82, 79, 0
+	st_note	0, 84, 71, 80, 0
+	st_note2	0, 76, 76, 69, 0, 0, 17
+	st_beat
+	st_beat
+	st_note	0, 67, 72, 20, 0
+	st_note	0, 79, 74, 23, 0
+	st_note	48, 72, 66, 17, 0
+	st_note	48, 84, 72, 19, 0
+	st_beat
+	st_note2	0, 76, 69, 15, 0, 0, 17
+	st_note2	0, 88, 72, 19, 0, 0, 17
+	st_note	48, 79, 72, 14, 0
+	st_note	48, 91, 75, 19, 0
+	st_beat
+	st_note2	0, 88, 76, 56, 0, 0, 17
+	st_note	0, 84, 75, 53, 0
+	st_note2	0, 76, 86, 47, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 88, 9, 1
+	st_beat
+	st_note	0, 84, 65, 75, 0
+	st_note2	0, 76, 72, 66, 0, 0, 17
+	st_note	0, 72, 71, 52, 0
+	st_beat
+	st_beat
+	st_note	0, 96, 88, 49, 1
+	st_note	48, 91, 78, 12, 1
+	st_beat
+	st_note2	0, 88, 90, 58, 0, 0, 17
+	st_note	48, 84, 82, 22, 0
+	st_beat
+	st_end
+	.byte	0x37, 0x00, 0x81, 0x91, 0x00, 0x58, 0x3e, 0x2c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x54, 0x3f, 0x16	; after st_end
+	.byte	0x00, 0x81, 0x90, 0x00, 0x4f, 0x4e, 0x15, 0x00, 0x91, 0x30, 0x4c, 0x31, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c0	; block 60, chain 40 cell 0
+	st_note	0, 36, 109, 53, 0
+	st_note	0, 49, 56, 14, 0
+	st_note	48, 48, 86, 19, 0
+	st_beat
+	st_note	0, 36, 105, 54, 0
+	st_note	0, 38, 103, 78, 0
+	st_note	0, 74, 110, 91, 0
+	st_note	0, 49, 17, 13, 0
+	st_note	48, 48, 85, 16, 0
+	st_beat
+	st_note	0, 36, 111, 54, 0
+	st_note	0, 49, 51, 12, 0
+	st_note	48, 48, 85, 16, 0
+	st_beat
+	st_note	0, 36, 109, 56, 0
+	st_note	0, 38, 108, 67, 0
+	st_note	0, 74, 107, 92, 0
+	st_note	0, 49, 51, 11, 0
+	st_note	48, 48, 83, 15, 0
+	st_beat
+	st_note	0, 36, 108, 59, 0
+	st_note	0, 49, 58, 11, 0
+	st_note	48, 48, 86, 16, 0
+	st_beat
+	st_note	0, 36, 110, 52, 0
+	st_note	0, 38, 104, 65, 0
+	st_note	0, 74, 102, 2, 1
+	st_note	0, 49, 62, 12, 0
+	st_note	48, 48, 85, 17, 0
+	st_beat
+	st_note	0, 36, 112, 56, 0
+	st_note	0, 49, 65, 10, 0
+	st_note	48, 48, 86, 16, 0
+	st_beat
+	st_note	0, 36, 112, 55, 0
+	st_note	0, 38, 102, 69, 0
+	st_note	0, 74, 105, 0, 1
+	st_note	0, 49, 63, 10, 0
+	st_note	48, 48, 90, 17, 0
+	st_beat
+	st_note	0, 36, 116, 56, 0
+	st_note	0, 49, 67, 12, 0
+	st_note	48, 48, 85, 18, 0
+	st_beat
+	st_note	0, 36, 112, 57, 0
+	st_note	0, 38, 105, 62, 0
+	st_note	0, 74, 107, 88, 0
+	st_note	0, 49, 60, 12, 0
+	st_note	48, 48, 85, 17, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 61, chain 41 cell 0
+	st_note	0, 36, 108, 51, 0
+	st_beat
+	st_note	0, 31, 102, 46, 0
+	st_beat
+	st_note	0, 36, 103, 53, 0
+	st_beat
+	st_note	0, 31, 104, 50, 0
+	st_beat
+	st_note	0, 36, 106, 51, 0
+	st_beat
+	st_note	0, 31, 107, 51, 0
+	st_beat
+	st_note	0, 36, 107, 53, 0
+	st_beat
+	st_note	0, 31, 105, 49, 0
+	st_beat
+	st_note	0, 36, 108, 54, 0
+	st_beat
+	st_note	0, 31, 103, 53, 0
+	st_beat
+	st_note	0, 36, 108, 55, 0
+	st_beat
+	st_note	0, 31, 106, 52, 0
+	st_beat
+	st_note	0, 36, 107, 56, 0
+	st_beat
+	st_note	0, 31, 108, 46, 0
+	st_beat
+	st_note	0, 36, 108, 55, 0
+	st_beat
+	st_note	0, 31, 112, 59, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x81, 0x91, 0x00, 0x2f, 0x70, 0x46, 0x00, 0x11, 0x11, 0x81, 0x90, 0x00, 0x2d, 0x72, 0x2b	; after st_end
+	.byte	0x00, 0x90, 0x30, 0x2b, 0x69, 0x2c, 0x00, 0x81, 0x91, 0x00, 0x28, 0x74, 0x2f, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x26, 0x6e, 0x2a, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c1	; block 62, chain 42 cell 0
+	st_note2	48, 55, 79, 19, 0, 3, 0
+	st_note	48, 60, 91, 17, 0
+	st_note2	48, 64, 87, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 82, 18, 0
+	st_note2	48, 64, 80, 17, 0, 0, 17
+	st_note2	48, 55, 62, 17, 0, 3, 0
+	st_beat
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note2	48, 64, 81, 18, 0, 0, 17
+	st_note	48, 60, 87, 18, 0
+	st_beat
+	st_note2	48, 55, 78, 38, 0, 3, 0
+	st_note	48, 60, 93, 37, 0
+	st_note2	48, 64, 87, 37, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_note2	48, 64, 85, 16, 0, 0, 17
+	st_note	48, 60, 86, 14, 0
+	st_beat
+	st_note2	48, 55, 76, 18, 0, 3, 0
+	st_note2	48, 64, 84, 16, 0, 0, 17
+	st_note	48, 60, 85, 15, 0
+	st_beat
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note	48, 60, 86, 16, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 39, 0, 3, 0
+	st_note	48, 60, 90, 39, 0
+	st_note2	48, 64, 85, 39, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note	48, 60, 87, 17, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 83, 19, 0
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note2	48, 64, 83, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 87, 18, 0
+	.byte	0x91, 0x30, 0x40, 0x54, 0x11	; first 5 bytes of st_note2 48, 64, 84, 17, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c2	; block 63, chain 43 cell 0
+	st_note2	0, 67, 79, 15, 0, 3, 0
+	st_note2	0, 64, 82, 8, 0, 0, 17
+	st_note	0, 60, 73, 10, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note	48, 60, 64, 11, 0
+	st_note2	72, 67, 82, 16, 0, 3, 0
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 64, 66, 13, 0, 0, 17
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note2	48, 64, 73, 13, 0, 0, 17
+	st_note	48, 60, 63, 13, 0
+	st_note2	48, 67, 73, 14, 0, 3, 0
+	st_note	72, 60, 57, 17, 0
+	st_note2	72, 64, 69, 16, 0, 0, 17
+	st_note2	72, 67, 75, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note2	0, 64, 87, 17, 0, 0, 17
+	st_note2	0, 67, 82, 18, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	72, 67, 75, 16, 0, 3, 0
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 74, 15, 0
+	st_note2	0, 64, 84, 15, 0, 0, 17
+	st_note2	0, 67, 78, 16, 0, 3, 0
+	st_note2	24, 64, 72, 16, 0, 0, 17
+	st_note	24, 60, 62, 16, 0
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	.byte	0x90, 0x30, 0x3c, 0x3d	; first 4 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 64, chain 44 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x4f, 0x13, 0x00, 0x90, 0x48, 0x43, 0x68, 0x1c, 0x00, 0x90	; after st_end
+	.byte	0x48, 0x30, 0x4f, 0x24, 0x00, 0x81, 0x91, 0x00, 0x40, 0x61, 0x1a, 0x00, 0x00, 0x11, 0x90, 0x18
+	.byte	0x3c, 0x54, 0x15, 0x00, 0x90, 0x30, 0x43, 0x6c, 0x1c, 0x00, 0x90, 0x30, 0x30, 0x54, 0x2b, 0x00
+	.byte	0x91, 0x48, 0x40, 0x59, 0x1a, 0x00, 0x00, 0x11, 0x81, 0x90, 0x00, 0x3c, 0x5a, 0x12, 0x00, 0x90
+	.byte	0x18, 0x43, 0x63, 0x1b, 0x00, 0x91, 0x30, 0x40, 0x5c, 0x17, 0x00, 0x00, 0x11, 0x90, 0x30, 0x30
+	.byte	0x5a, 0x25, 0x00, 0x90, 0x48, 0x3c, 0x5b, 0x12, 0x00, 0x81, 0x90, 0x00, 0x43, 0x66, 0x1b, 0x00
+	.byte	0x91, 0x18, 0x40, 0x61, 0x19, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x5f, 0x14, 0x00, 0x90, 0x48
+	.byte	0x43, 0x68, 0x1b, 0x00, 0x81, 0x91, 0x00, 0x40, 0x61, 0x18, 0x00, 0x00, 0x11, 0x90, 0x00, 0x30
+	.byte	0x55, 0x2d, 0x00, 0x90, 0x18, 0x3c, 0x59, 0x12, 0x00, 0x90, 0x30, 0x43, 0x69, 0x1d, 0x00, 0x91
+	.byte	0x48, 0x40, 0x5d, 0x17, 0x00, 0x00, 0x11, 0x90, 0x48, 0x30, 0x46, 0x22, 0x00, 0x81, 0x90, 0x00
+	.byte	0x3c, 0x5a, 0x15, 0x00, 0x90, 0x18, 0x43, 0x66, 0x1d, 0x00, 0x91, 0x30, 0x40, 0x5d, 0x19, 0x00
+	.byte	0x00, 0x11, 0x90, 0x30, 0x30, 0x50, 0x30, 0x00, 0x90, 0x48, 0x3c, 0x54, 0x16, 0x00, 0x81, 0x90
+	.byte	0x00, 0x43, 0x67, 0x1d, 0x00, 0x91, 0x18, 0x40, 0x5c, 0x16, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c
+	.byte	0x5a, 0x15, 0x00, 0x90, 0x30, 0x30, 0x56, 0x2c, 0x00, 0x90, 0x48, 0x43, 0x66, 0x1d, 0x00, 0x81
+	.byte	0x91, 0x00, 0x40, 0x61, 0x1a, 0x00, 0x00, 0x11
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c6	; block 65, chain 45 cell 0
+	st_note	0, 36, 109, 53, 0
+	st_note	0, 49, 56, 14, 0
+	st_note	0, 74, 53, 14, 0
+	st_note	48, 48, 86, 19, 0
+	st_note	48, 74, 87, 15, 0
+	st_beat
+	st_note	0, 36, 105, 54, 0
+	st_note	0, 38, 103, 78, 0
+	st_note	0, 74, 110, 91, 0
+	st_note	0, 49, 17, 13, 0
+	st_note	48, 48, 85, 16, 0
+	st_note	48, 74, 81, 13, 0
+	st_beat
+	st_note	0, 36, 111, 54, 0
+	st_note	0, 49, 51, 12, 0
+	st_note	0, 74, 45, 14, 0
+	st_note	48, 48, 85, 16, 0
+	st_note	48, 74, 87, 14, 0
+	st_beat
+	st_note	0, 36, 109, 56, 0
+	st_note	0, 38, 108, 67, 0
+	st_note	0, 74, 107, 92, 0
+	st_note	0, 49, 51, 11, 0
+	st_note	48, 74, 81, 12, 0
+	st_note	48, 50, 90, 56, 0
+	st_beat
+	st_note	0, 36, 108, 59, 0
+	st_note	0, 49, 58, 11, 0
+	st_note	0, 74, 58, 10, 0
+	st_note	48, 48, 86, 16, 0
+	st_note	48, 74, 83, 13, 0
+	st_beat
+	st_note	0, 36, 110, 52, 0
+	st_note	0, 38, 104, 65, 0
+	st_note	0, 74, 102, 2, 1
+	st_note	0, 49, 62, 12, 0
+	st_note	48, 48, 85, 17, 0
+	st_note	48, 74, 71, 12, 0
+	st_beat
+	st_note	0, 36, 112, 56, 0
+	st_note	0, 49, 65, 10, 0
+	st_note	0, 74, 74, 11, 0
+	st_note	48, 48, 86, 16, 0
+	st_note	48, 74, 82, 12, 0
+	st_beat
+	st_note	0, 36, 112, 55, 0
+	st_note	0, 38, 102, 69, 0
+	.byte	0x90, 0x00	; first 2 bytes of st_note 0, 74, 105, 0, 1 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 66, chain 46 cell 0
+	st_note	0, 36, 108, 51, 0
+	st_beat
+	st_note	0, 31, 102, 46, 0
+	st_beat
+	st_note	0, 36, 103, 53, 0
+	st_beat
+	st_note	0, 31, 104, 50, 0
+	st_beat
+	st_note	0, 36, 106, 51, 0
+	st_beat
+	st_note	0, 31, 107, 51, 0
+	st_beat
+	st_note	0, 36, 107, 53, 0
+	st_beat
+	st_note	0, 31, 105, 49, 0
+	st_beat
+	st_note	0, 36, 108, 54, 0
+	st_beat
+	st_note	0, 31, 103, 53, 0
+	st_beat
+	st_note	0, 36, 108, 55, 0
+	st_beat
+	st_note	0, 31, 106, 52, 0
+	st_beat
+	st_note	0, 36, 107, 56, 0
+	st_beat
+	st_note	0, 31, 108, 46, 0
+	st_beat
+	st_note	0, 36, 108, 55, 0
+	st_beat
+	st_note	0, 31, 112, 59, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x81, 0x91, 0x00, 0x2f, 0x70, 0x46, 0x00, 0x11, 0x11, 0x81, 0x90, 0x00, 0x2d, 0x72, 0x2b	; after st_end
+	.byte	0x00, 0x90, 0x30, 0x2b, 0x69, 0x2c, 0x00, 0x81, 0x91, 0x00, 0x28, 0x74, 0x2f, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x26, 0x6e, 0x2a, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c8	; block 67, chain 47 cell 0
+	st_note2	48, 55, 79, 19, 0, 3, 0
+	st_note	48, 60, 91, 17, 0
+	st_note2	48, 64, 87, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 82, 18, 0
+	st_note2	48, 64, 80, 17, 0, 0, 17
+	st_note2	48, 55, 62, 17, 0, 3, 0
+	st_beat
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note2	48, 64, 81, 18, 0, 0, 17
+	st_note	48, 60, 87, 18, 0
+	st_beat
+	st_note2	48, 55, 78, 38, 0, 3, 0
+	st_note	48, 60, 93, 37, 0
+	st_note2	48, 64, 87, 37, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_note2	48, 64, 85, 16, 0, 0, 17
+	st_note	48, 60, 86, 14, 0
+	st_beat
+	st_note2	48, 55, 76, 18, 0, 3, 0
+	st_note2	48, 64, 84, 16, 0, 0, 17
+	st_note	48, 60, 85, 15, 0
+	st_beat
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note	48, 60, 86, 16, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 39, 0, 3, 0
+	st_note	48, 60, 90, 39, 0
+	st_note2	48, 64, 85, 39, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note	48, 60, 87, 17, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 83, 19, 0
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note2	48, 64, 83, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 87, 18, 0
+	.byte	0x91, 0x30, 0x40, 0x54, 0x11	; first 5 bytes of st_note2 48, 64, 84, 17, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00c9	; block 68, chain 48 cell 0
+	st_note2	0, 67, 79, 15, 0, 3, 0
+	st_note2	0, 64, 82, 8, 0, 0, 17
+	st_note	0, 60, 73, 10, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note	48, 60, 64, 11, 0
+	st_note2	72, 67, 82, 16, 0, 3, 0
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 64, 66, 13, 0, 0, 17
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note2	48, 64, 73, 13, 0, 0, 17
+	st_note	48, 60, 63, 13, 0
+	st_note2	48, 67, 73, 14, 0, 3, 0
+	st_note	72, 60, 57, 17, 0
+	st_note2	72, 64, 69, 16, 0, 0, 17
+	st_note2	72, 67, 75, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note2	0, 64, 87, 17, 0, 0, 17
+	st_note2	0, 67, 82, 18, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	72, 67, 75, 16, 0, 3, 0
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 74, 15, 0
+	st_note2	0, 64, 84, 15, 0, 0, 17
+	st_note2	0, 67, 78, 16, 0, 3, 0
+	st_note2	24, 64, 72, 16, 0, 0, 17
+	st_note	24, 60, 62, 16, 0
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	.byte	0x90, 0x30, 0x3c, 0x3d	; first 4 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00cd	; block 69, chain 49 cell 0
+	st_note	0, 72, 104, 22, 0
+	st_note2	24, 67, 94, 20, 0, 3, 0
+	st_note2	48, 64, 98, 20, 0, 0, 17
+	st_note	72, 72, 89, 28, 0
+	st_beat
+	st_note2	0, 67, 99, 24, 0, 3, 0
+	st_note2	24, 64, 96, 19, 0, 0, 17
+	st_note	48, 72, 96, 46, 0
+	st_beat
+	st_note2	0, 67, 112, 15, 0, 3, 0
+	st_note2	48, 64, 100, 11, 0, 0, 17
+	st_beat
+	st_note	0, 60, 100, 7, 0
+	st_note2	48, 55, 97, 11, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 109, 28, 0, 0, 17
+	st_note	0, 74, 89, 2, 0
+	st_note	24, 72, 93, 23, 0
+	st_note2	48, 67, 93, 20, 0, 3, 0
+	st_note2	72, 76, 107, 28, 0, 0, 17
+	st_beat
+	st_note	0, 72, 97, 25, 0
+	st_note2	24, 67, 99, 17, 0, 3, 0
+	st_note2	48, 76, 108, 41, 0, 0, 17
+	st_beat
+	st_note2	0, 67, 114, 11, 0, 3, 0
+	st_note	48, 72, 114, 13, 0
+	st_beat
+	st_note2	0, 64, 103, 17, 0, 0, 17
+	st_note2	48, 67, 114, 16, 0, 3, 0
+	st_beat
+	st_note	0, 72, 102, 26, 0
+	st_note2	24, 67, 90, 22, 0, 3, 0
+	st_note2	48, 64, 97, 19, 0, 0, 17
+	st_note	72, 72, 84, 31, 0
+	st_beat
+	st_note2	0, 67, 96, 23, 0, 3, 0
+	st_note2	24, 64, 100, 15, 0, 0, 17
+	st_note	48, 72, 85, 48, 0
+	st_beat
+	st_note2	0, 67, 108, 16, 0, 3, 0
+	st_note2	48, 64, 112, 14, 0, 0, 17
+	st_beat
+	.byte	0x90, 0x00, 0x3c, 0x6a	; first 4 bytes of st_note 0, 60, 106, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00ce	; block 70, chain 50 cell 0
+	st_note	0, 48, 83, 47, 0
+	st_note	0, 36, 107, 63, 0
+	st_note	48, 50, 80, 26, 0
+	st_note	72, 49, 74, 25, 0
+	st_beat
+	st_note	0, 48, 80, 47, 0
+	st_note	0, 36, 107, 62, 0
+	st_note	0, 38, 98, 14, 1
+	st_note	0, 74, 107, 52, 1
+	st_note	48, 50, 89, 19, 0
+	st_note	72, 49, 54, 28, 0
+	st_beat
+	st_note	0, 48, 81, 52, 0
+	st_note	0, 36, 104, 61, 0
+	st_note	48, 50, 78, 27, 0
+	st_note	72, 49, 83, 28, 0
+	st_beat
+	st_note	0, 48, 81, 50, 0
+	st_note	0, 36, 100, 61, 0
+	st_note	0, 38, 111, 12, 1
+	st_note	0, 74, 108, 56, 1
+	st_note	48, 50, 76, 30, 0
+	st_note	72, 49, 73, 25, 0
+	st_beat
+	st_note	0, 48, 72, 47, 0
+	st_note	0, 36, 97, 59, 0
+	st_note	48, 50, 75, 28, 0
+	st_note	72, 49, 72, 26, 0
+	st_beat
+	st_note	0, 48, 70, 46, 0
+	st_note	0, 36, 97, 59, 0
+	st_note	0, 38, 104, 91, 0
+	st_note	0, 74, 110, 54, 1
+	st_note	48, 50, 81, 25, 0
+	st_note	72, 49, 77, 28, 0
+	st_beat
+	st_note	0, 48, 69, 52, 0
+	st_note	0, 36, 100, 63, 0
+	st_note	48, 50, 81, 27, 0
+	st_note	72, 49, 68, 32, 0
+	st_beat
+	st_note	0, 48, 85, 43, 0
+	st_note	0, 36, 99, 60, 0
+	st_note	0, 38, 111, 16, 1
+	st_note	0, 74, 112, 51, 1
+	st_note	48, 50, 75, 28, 0
+	st_note	72, 49, 78, 25, 0
+	st_beat
+	.byte	0x90	; first 1 bytes of st_note 0, 48, 83, 39, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 71, chain 51 cell 0
+	st_note	0, 36, 112, 53, 0
+	st_beat
+	st_note	0, 31, 104, 56, 0
+	st_beat
+	st_note	0, 36, 108, 61, 0
+	st_beat
+	st_note2	0, 40, 109, 50, 0, 0, 17
+	st_note	48, 43, 107, 47, 0
+	st_beat
+	st_note	0, 36, 110, 55, 0
+	st_beat
+	st_note	0, 31, 110, 55, 0
+	st_beat
+	st_note	0, 36, 109, 61, 0
+	st_beat
+	st_note2	0, 40, 109, 47, 0, 0, 17
+	st_note	48, 43, 107, 41, 0
+	st_beat
+	st_note	0, 36, 114, 54, 0
+	st_beat
+	st_note	0, 31, 107, 56, 0
+	st_beat
+	st_note	0, 36, 105, 65, 0
+	st_beat
+	st_note2	0, 40, 112, 44, 0, 0, 17
+	st_note	48, 43, 102, 46, 0
+	st_beat
+	st_note	0, 48, 109, 73, 0
+	st_beat
+	st_note2	0, 47, 112, 70, 0, 17, 17
+	st_beat
+	st_note	0, 45, 114, 43, 0
+	st_note	48, 43, 105, 44, 0
+	st_beat
+	st_note2	0, 40, 116, 47, 0, 0, 17
+	st_note	48, 38, 110, 42, 0
+	st_beat
+	st_end
+	.fill	96, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00cf	; block 72, chain 52 cell 0
+	st_note	0, 60, 90, 16, 0
+	st_note2	0, 55, 79, 16, 0, 3, 0
+	st_note2	0, 64, 85, 12, 0, 0, 17
+	st_note2	48, 55, 79, 19, 0, 3, 0
+	st_note	48, 60, 91, 17, 0
+	st_note2	48, 64, 87, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 82, 18, 0
+	st_note2	48, 64, 80, 17, 0, 0, 17
+	st_note2	48, 55, 62, 17, 0, 3, 0
+	st_beat
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note2	48, 64, 81, 18, 0, 0, 17
+	st_note	48, 60, 87, 18, 0
+	st_beat
+	st_note2	48, 55, 78, 38, 0, 3, 0
+	st_note	48, 60, 93, 37, 0
+	st_note2	48, 64, 87, 37, 0, 0, 17
+	st_beat
+	st_note2	0, 55, 72, 16, 0, 3, 0
+	st_note	0, 60, 90, 14, 0
+	st_note2	0, 64, 90, 13, 0, 0, 17
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_note2	48, 64, 85, 16, 0, 0, 17
+	st_note	48, 60, 86, 14, 0
+	st_beat
+	st_note2	48, 55, 76, 18, 0, 3, 0
+	st_note2	48, 64, 84, 16, 0, 0, 17
+	st_note	48, 60, 85, 15, 0
+	st_beat
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note	48, 60, 86, 16, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 39, 0, 3, 0
+	st_note	48, 60, 90, 39, 0
+	st_note2	48, 64, 85, 39, 0, 0, 17
+	st_beat
+	st_note2	0, 64, 78, 14, 0, 0, 17
+	st_note2	0, 55, 69, 15, 0, 3, 0
+	.byte	0x90, 0x00, 0x3c, 0x50, 0x0d	; first 5 bytes of st_note 0, 60, 80, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00d0	; block 73, chain 53 cell 0
+	st_note2	0, 67, 79, 15, 0, 3, 0
+	st_note2	0, 64, 82, 8, 0, 0, 17
+	st_note	0, 60, 73, 10, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note	48, 60, 64, 11, 0
+	st_note2	72, 67, 82, 16, 0, 3, 0
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 64, 66, 13, 0, 0, 17
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note2	48, 64, 73, 13, 0, 0, 17
+	st_note	48, 60, 63, 13, 0
+	st_note2	48, 67, 73, 14, 0, 3, 0
+	st_note	72, 60, 57, 17, 0
+	st_note2	72, 64, 69, 16, 0, 0, 17
+	st_note2	72, 67, 75, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note2	0, 64, 87, 17, 0, 0, 17
+	st_note2	0, 67, 82, 18, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	72, 67, 75, 16, 0, 3, 0
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 74, 15, 0
+	st_note2	0, 64, 84, 15, 0, 0, 17
+	st_note2	0, 67, 78, 16, 0, 3, 0
+	st_note2	24, 64, 72, 16, 0, 0, 17
+	st_note	24, 60, 62, 16, 0
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	.byte	0x90, 0x30, 0x3c, 0x3d	; first 4 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00d4	; block 74, chain 54 cell 0
+	st_note	0, 67, 111, 24, 0
+	st_note	0, 48, 93, 46, 0
+	st_note2	24, 64, 87, 25, 0, 0, 17
+	st_note	48, 60, 79, 19, 0
+	st_note	72, 67, 104, 28, 0
+	st_note	72, 48, 79, 36, 0
+	st_beat
+	st_note2	0, 64, 97, 26, 0, 0, 17
+	st_note	24, 60, 84, 21, 0
+	st_note	48, 67, 108, 28, 0
+	st_note	48, 48, 84, 43, 0
+	st_note2	72, 64, 89, 26, 0, 0, 17
+	st_beat
+	st_note	0, 60, 90, 18, 0
+	st_note	24, 67, 99, 27, 0
+	st_note2	48, 64, 92, 23, 0, 0, 17
+	st_note	48, 48, 90, 37, 0
+	st_note	72, 60, 91, 18, 0
+	st_beat
+	st_note	0, 67, 102, 27, 0
+	st_note2	24, 64, 97, 25, 0, 0, 17
+	st_note	48, 60, 95, 20, 0
+	st_note	72, 67, 104, 27, 0
+	st_beat
+	st_note2	0, 64, 97, 24, 0, 0, 17
+	st_note	0, 48, 85, 45, 0
+	st_note	24, 60, 89, 18, 0
+	st_note	48, 67, 105, 29, 0
+	st_note2	72, 64, 93, 23, 0, 0, 17
+	st_note	72, 48, 70, 34, 0
+	st_beat
+	st_note	0, 60, 90, 21, 0
+	st_note	24, 67, 102, 29, 0
+	st_note2	48, 64, 93, 25, 0, 0, 17
+	st_note	48, 48, 80, 48, 0
+	st_note	72, 60, 84, 22, 0
+	st_beat
+	st_note	0, 67, 103, 29, 0
+	st_note2	24, 64, 92, 22, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	48, 48, 86, 44, 0
+	st_note	72, 67, 102, 29, 0
+	st_beat
+	st_note2	0, 64, 97, 26, 0, 0, 17
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00d6	; block 75, chain 55 cell 0
+	st_note	0, 48, 83, 47, 0
+	st_note	0, 36, 107, 63, 0
+	st_note	0, 74, 81, 11, 0
+	st_note	0, 52, 93, 68, 0
+	st_note	48, 50, 80, 26, 0
+	st_note	48, 38, 102, 25, 0
+	st_note	48, 74, 116, 17, 0
+	st_note	72, 49, 74, 25, 0
+	st_beat
+	st_note	0, 48, 80, 47, 0
+	st_note	0, 36, 107, 62, 0
+	st_note	0, 74, 77, 13, 0
+	st_note	0, 52, 72, 69, 0
+	st_note	48, 50, 89, 19, 0
+	st_note	48, 38, 107, 21, 0
+	st_note	48, 74, 112, 16, 0
+	st_note	72, 49, 54, 28, 0
+	st_beat
+	st_note	0, 48, 81, 52, 0
+	st_note	0, 36, 104, 61, 0
+	st_note	0, 74, 68, 12, 0
+	st_note	0, 52, 71, 65, 0
+	st_note	48, 50, 78, 27, 0
+	st_note	48, 38, 106, 21, 0
+	st_note	48, 74, 108, 15, 0
+	st_note	72, 49, 83, 28, 0
+	st_beat
+	st_note	0, 48, 81, 50, 0
+	st_note	0, 36, 100, 61, 0
+	st_note	0, 74, 75, 11, 0
+	st_note	0, 52, 72, 64, 0
+	st_note	24, 38, 93, 8, 0
+	st_note	48, 50, 76, 30, 0
+	st_note	48, 38, 118, 21, 0
+	st_note	48, 74, 108, 15, 0
+	st_note	72, 49, 73, 25, 0
+	st_beat
+	st_note	0, 48, 72, 47, 0
+	st_note	0, 36, 97, 59, 0
+	st_note	0, 74, 72, 12, 0
+	st_note	0, 52, 82, 68, 0
+	st_note	48, 50, 75, 28, 0
+	st_note	48, 38, 110, 17, 0
+	st_note	48, 74, 108, 15, 0
+	.byte	0x90, 0x48, 0x31, 0x48, 0x1a	; first 5 bytes of st_note 72, 49, 72, 26, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 76, chain 56 cell 0
+	st_note	0, 36, 112, 53, 0
+	st_beat
+	st_note	0, 31, 104, 56, 0
+	st_beat
+	st_note	0, 36, 108, 61, 0
+	st_beat
+	st_note2	0, 40, 109, 50, 0, 0, 17
+	st_note	48, 43, 107, 47, 0
+	st_beat
+	st_note	0, 36, 110, 55, 0
+	st_beat
+	st_note	0, 31, 110, 55, 0
+	st_beat
+	st_note	0, 36, 109, 61, 0
+	st_beat
+	st_note2	0, 40, 109, 47, 0, 0, 17
+	st_note	48, 43, 107, 41, 0
+	st_beat
+	st_note	0, 36, 114, 54, 0
+	st_beat
+	st_note	0, 31, 107, 56, 0
+	st_beat
+	st_note	0, 36, 105, 65, 0
+	st_beat
+	st_note2	0, 40, 112, 44, 0, 0, 17
+	st_note	48, 43, 102, 46, 0
+	st_beat
+	st_note	0, 48, 109, 73, 0
+	st_beat
+	st_note2	0, 47, 112, 70, 0, 17, 17
+	st_beat
+	st_note	0, 45, 114, 43, 0
+	st_note	48, 43, 105, 44, 0
+	st_beat
+	st_note2	0, 40, 116, 47, 0, 0, 17
+	st_note	48, 38, 110, 42, 0
+	st_beat
+	st_end
+	.fill	96, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00d9	; block 77, chain 57 cell 0
+	st_note	0, 60, 90, 16, 0
+	st_note2	0, 55, 79, 16, 0, 3, 0
+	st_note2	0, 64, 85, 12, 0, 0, 17
+	st_note	0, 48, 105, 25, 0
+	st_note2	48, 55, 79, 19, 0, 3, 0
+	st_note	48, 60, 91, 17, 0
+	st_note2	48, 64, 87, 17, 0, 0, 17
+	st_beat
+	st_note	0, 43, 100, 22, 0
+	st_note	48, 60, 82, 18, 0
+	st_note2	48, 64, 80, 17, 0, 0, 17
+	st_note2	48, 55, 62, 17, 0, 3, 0
+	st_beat
+	st_note	0, 48, 106, 22, 0
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note2	48, 64, 81, 18, 0, 0, 17
+	st_note	48, 60, 87, 18, 0
+	st_beat
+	st_note	0, 43, 105, 21, 0
+	st_note2	48, 55, 78, 38, 0, 3, 0
+	st_note	48, 60, 93, 37, 0
+	st_note2	48, 64, 87, 37, 0, 0, 17
+	st_beat
+	st_note2	0, 55, 72, 16, 0, 3, 0
+	st_note	0, 60, 90, 14, 0
+	st_note2	0, 64, 90, 13, 0, 0, 17
+	st_note	0, 48, 102, 22, 0
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_note2	48, 64, 85, 16, 0, 0, 17
+	st_note	48, 60, 86, 14, 0
+	st_beat
+	st_note	0, 43, 103, 19, 0
+	st_note2	48, 55, 76, 18, 0, 3, 0
+	st_note2	48, 64, 84, 16, 0, 0, 17
+	st_note	48, 60, 85, 15, 0
+	st_beat
+	st_note	0, 48, 102, 23, 0
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note	48, 60, 86, 16, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	.byte	0x90, 0x00	; first 2 bytes of st_note 0, 43, 105, 22, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00db	; block 78, chain 58 cell 0
+	st_note2	0, 67, 79, 15, 0, 3, 0
+	st_note2	0, 64, 82, 8, 0, 0, 17
+	st_note	0, 60, 73, 10, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note	48, 60, 64, 11, 0
+	st_note2	72, 67, 82, 16, 0, 3, 0
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 64, 66, 13, 0, 0, 17
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note2	48, 64, 73, 13, 0, 0, 17
+	st_note	48, 60, 63, 13, 0
+	st_note2	48, 67, 73, 14, 0, 3, 0
+	st_note	72, 60, 57, 17, 0
+	st_note2	72, 64, 69, 16, 0, 0, 17
+	st_note2	72, 67, 75, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note2	0, 64, 87, 17, 0, 0, 17
+	st_note2	0, 67, 82, 18, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	72, 67, 75, 16, 0, 3, 0
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 74, 15, 0
+	st_note2	0, 64, 84, 15, 0, 0, 17
+	st_note2	0, 67, 78, 16, 0, 3, 0
+	st_note2	24, 64, 72, 16, 0, 0, 17
+	st_note	24, 60, 62, 16, 0
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	.byte	0x90, 0x30, 0x3c, 0x3d	; first 4 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00df	; block 79, chain 59 cell 0
+	st_note	0, 67, 111, 24, 0
+	st_note	0, 48, 93, 46, 0
+	st_note2	24, 64, 87, 25, 0, 0, 17
+	st_note	48, 60, 79, 19, 0
+	st_note	72, 67, 104, 28, 0
+	st_note	72, 48, 79, 36, 0
+	st_beat
+	st_note2	0, 64, 97, 26, 0, 0, 17
+	st_note	24, 60, 84, 21, 0
+	st_note	48, 67, 108, 28, 0
+	st_note	48, 48, 84, 43, 0
+	st_note2	72, 64, 89, 26, 0, 0, 17
+	st_beat
+	st_note	0, 60, 90, 18, 0
+	st_note	24, 67, 99, 27, 0
+	st_note2	48, 64, 92, 23, 0, 0, 17
+	st_note	48, 48, 90, 37, 0
+	st_note	72, 60, 91, 18, 0
+	st_beat
+	st_note	0, 67, 102, 27, 0
+	st_note2	24, 64, 97, 25, 0, 0, 17
+	st_note	48, 60, 95, 20, 0
+	st_note	72, 67, 104, 27, 0
+	st_beat
+	st_note2	0, 64, 97, 24, 0, 0, 17
+	st_note	0, 48, 85, 45, 0
+	st_note	24, 60, 89, 18, 0
+	st_note	48, 67, 105, 29, 0
+	st_note2	72, 64, 93, 23, 0, 0, 17
+	st_note	72, 48, 70, 34, 0
+	st_beat
+	st_note	0, 60, 90, 21, 0
+	st_note	24, 67, 102, 29, 0
+	st_note2	48, 64, 93, 25, 0, 0, 17
+	st_note	48, 48, 80, 48, 0
+	st_note	72, 60, 84, 22, 0
+	st_beat
+	st_note	0, 67, 103, 29, 0
+	st_note2	24, 64, 92, 22, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	48, 48, 86, 44, 0
+	st_note	72, 67, 102, 29, 0
+	st_beat
+	st_note2	0, 64, 97, 26, 0, 0, 17
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 80, chain 60 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 48, 97, 55, 0
+	st_note	48, 38, 88, 8, 0
+	st_beat
+	st_note	0, 38, 99, 11, 0
+	st_note	0, 48, 99, 53, 0
+	st_note	72, 38, 96, 8, 0
+	st_beat
+	st_note	0, 38, 103, 12, 0
+	st_note	0, 36, 117, 59, 0
+	st_note	0, 48, 102, 57, 0
+	st_note	48, 38, 102, 14, 0
+	st_beat
+	st_note	0, 38, 96, 11, 0
+	st_note	0, 36, 117, 60, 0
+	st_note	0, 48, 98, 32, 0
+	st_note	24, 38, 112, 6, 0
+	st_note	48, 38, 117, 14, 0
+	st_note	48, 50, 103, 50, 0
+	st_note	92, 51, 107, 51, 0
+	st_beat
+	st_end
+	.byte	0x33, 0x6b, 0x33, 0x00, 0x81, 0x83, 0x33, 0x6b, 0x33, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 81, chain 61 cell 0
+	st_note	0, 36, 86, 64, 0
+	st_beat
+	st_note	0, 31, 83, 60, 0
+	st_beat
+	st_note	0, 36, 90, 29, 0
+	st_note	48, 36, 83, 36, 0
+	st_beat
+	st_note	0, 31, 90, 47, 0
+	st_note	48, 33, 90, 43, 0
+	st_beat
+	st_note	0, 36, 88, 64, 0
+	st_beat
+	st_note	0, 31, 88, 73, 0
+	st_beat
+	st_note	0, 36, 88, 31, 0
+	st_note	48, 36, 80, 47, 0
+	st_beat
+	st_note	0, 31, 93, 45, 0
+	st_note	48, 33, 93, 52, 0
+	st_beat
+	st_end
+	.fill	168, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 82, chain 62 cell 0
+	st_note	48, 72, 66, 17, 0
+	st_note	48, 67, 78, 15, 0
+	st_note2	48, 64, 72, 17, 0, 0, 17
+	st_beat
+	st_note	48, 72, 66, 18, 0
+	st_note	48, 67, 76, 16, 0
+	st_note2	48, 64, 69, 18, 0, 0, 17
+	st_beat
+	st_note	48, 72, 69, 18, 0
+	st_note	48, 67, 78, 14, 0
+	st_note2	48, 64, 69, 16, 0, 0, 17
+	st_beat
+	st_note	48, 72, 69, 19, 0
+	st_note2	48, 64, 72, 18, 0, 0, 17
+	st_note	48, 67, 78, 12, 0
+	st_beat
+	st_note	48, 72, 71, 17, 0
+	st_note	48, 67, 78, 13, 0
+	st_note2	48, 64, 69, 15, 0, 0, 17
+	st_beat
+	st_note	48, 72, 68, 18, 0
+	st_note	48, 67, 69, 13, 0
+	st_note2	48, 64, 59, 16, 0, 0, 17
+	st_beat
+	st_note	48, 72, 69, 16, 0
+	st_note	48, 67, 74, 12, 0
+	st_note2	48, 64, 69, 15, 0, 0, 17
+	st_beat
+	st_note	0, 72, 72, 13, 0
+	st_note	0, 67, 80, 12, 0
+	st_note2	0, 64, 72, 13, 0, 0, 17
+	st_note	48, 72, 72, 18, 0
+	st_note	48, 67, 76, 16, 0
+	st_note2	48, 64, 69, 18, 0, 0, 17
+	st_beat
+	st_end
+	.fill	60, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 83, chain 63 cell 0
+	st_note	0, 60, 86, 11, 0
+	st_note	48, 48, 71, 12, 0
+	st_beat
+	st_note2	0, 52, 69, 14, 0, 0, 17
+	st_note	48, 48, 66, 12, 0
+	st_beat
+	st_note	0, 58, 71, 13, 0
+	st_note	48, 58, 71, 13, 0
+	st_beat
+	st_note	0, 55, 72, 12, 0
+	st_note	48, 58, 74, 13, 0
+	st_beat
+	st_note	0, 60, 83, 15, 0
+	st_note	48, 48, 74, 13, 0
+	st_beat
+	st_note2	0, 52, 72, 14, 0, 0, 17
+	st_note	48, 48, 79, 15, 0
+	st_beat
+	st_note	0, 58, 82, 14, 0
+	st_note	48, 58, 77, 12, 0
+	st_beat
+	st_note2	0, 59, 70, 12, 0, 17, 17
+	st_note2	48, 59, 83, 15, 0, 17, 17
+	st_beat
+	st_end
+	.byte	0x00, 0x90, 0x30, 0x3c, 0x48, 0x0c, 0x00, 0x81, 0x91, 0x00, 0x40, 0x47, 0x0c, 0x00, 0x00, 0x11	; after st_end
+	.byte	0x90, 0x30, 0x3c, 0x39, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x46, 0x43, 0x0c, 0x00, 0x90, 0x30, 0x46
+	.byte	0x43, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x43, 0x42, 0x0c, 0x00, 0x90, 0x30, 0x46, 0x4a, 0x0c, 0x00
+	.byte	0x81, 0x90, 0x00, 0x48, 0x48, 0x0c, 0x00, 0x90, 0x30, 0x3c, 0x3c, 0x0c, 0x00, 0x81, 0x91, 0x00
+	.byte	0x40, 0x48, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x36, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x46
+	.byte	0x40, 0x0c, 0x00, 0x90, 0x30, 0x46, 0x3e, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x43, 0x42, 0x0c, 0x00
+	.byte	0x90, 0x30, 0x46, 0x46, 0x0c, 0x00, 0x81, 0x90, 0x00, 0x48, 0x45, 0x0c, 0x00, 0x90, 0x30, 0x3c
+	.byte	0x41, 0x0c, 0x00, 0x81, 0x91, 0x00, 0x40, 0x4c, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x3c
+	.byte	0x0c, 0x00, 0x81, 0x90, 0x00, 0x46, 0x44, 0x0c
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 84, chain 64 cell 0
+	st_note	0, 72, 78, 13, 0
+	st_note	0, 67, 86, 11, 0
+	st_note2	0, 64, 78, 11, 0, 0, 17
+	st_note	48, 72, 81, 16, 0
+	st_note	48, 67, 92, 13, 0
+	st_note2	48, 64, 81, 16, 0, 0, 17
+	st_beat
+	st_beat
+	st_note	48, 72, 88, 16, 0
+	st_note2	48, 64, 88, 13, 0, 0, 17
+	st_beat
+	st_note	0, 69, 84, 14, 0
+	st_note	0, 60, 83, 13, 0
+	st_note	48, 67, 93, 14, 0
+	st_note	48, 60, 83, 14, 0
+	st_beat
+	st_note2	0, 64, 93, 12, 0, 0, 17
+	st_note	0, 60, 90, 11, 0
+	st_note	48, 60, 83, 13, 0
+	st_note2	48, 52, 98, 10, 0, 0, 17
+	st_beat
+	st_note	0, 60, 96, 14, 0
+	st_note2	0, 52, 96, 14, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x40, 0x5c, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x83, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x83, 0x0d, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x81, 0x83, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x83, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x83
+	.byte	0x40, 0x5c, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x83, 0x81, 0x90, 0x00, 0x43, 0x5c, 0x0a, 0x00, 0x91
+	.byte	0x00, 0x40, 0x50, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x58, 0x0c, 0x00, 0x90, 0x30, 0x48
+	.byte	0x53, 0x0e, 0x00, 0x90, 0x30, 0x43, 0x5d, 0x0d, 0x00, 0x91, 0x30, 0x40, 0x54, 0x0e, 0x00, 0x00
+	.byte	0x11, 0x81, 0x81, 0x90, 0x30, 0x48, 0x53, 0x10, 0x00, 0x91, 0x30, 0x40, 0x56, 0x0e, 0x00, 0x00
+	.byte	0x11, 0x81, 0x90, 0x00, 0x3c, 0x58, 0x0d, 0x00, 0x90, 0x00, 0x45, 0x54, 0x0e, 0x00, 0x90, 0x30
+	.byte	0x43, 0x5d, 0x0c, 0x00, 0x90, 0x30, 0x3c, 0x56
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e1	; block 85, chain 65 cell 0
+	st_note	0, 36, 114, 57, 0
+	st_note	0, 24, 110, 14, 0
+	st_note	48, 48, 86, 10, 0
+	st_note	72, 48, 93, 13, 0
+	st_beat
+	st_note	0, 36, 118, 56, 0
+	st_note	0, 47, 107, 10, 1
+	st_note	0, 74, 110, 21, 1
+	st_note	48, 48, 89, 13, 0
+	st_note	72, 48, 91, 15, 0
+	st_beat
+	st_note	0, 36, 118, 54, 0
+	st_note	48, 48, 86, 14, 0
+	st_note	72, 48, 98, 20, 0
+	st_beat
+	st_note	0, 36, 116, 54, 0
+	st_note	0, 47, 108, 0, 1
+	st_note	0, 74, 107, 9, 1
+	st_note	48, 48, 85, 12, 0
+	st_note	72, 48, 92, 15, 0
+	st_beat
+	st_note	0, 36, 117, 52, 0
+	st_note	48, 48, 79, 12, 0
+	st_note	72, 48, 96, 15, 0
+	st_beat
+	st_note	0, 36, 117, 57, 0
+	st_note	0, 47, 104, 95, 0
+	st_note	0, 74, 105, 3, 1
+	st_note	48, 48, 83, 11, 0
+	st_note	72, 48, 93, 14, 0
+	st_beat
+	st_note	0, 36, 117, 55, 0
+	st_note	48, 48, 79, 10, 0
+	st_note	72, 48, 92, 12, 0
+	st_beat
+	st_note	0, 36, 116, 50, 0
+	st_note	0, 47, 108, 93, 0
+	st_note	0, 50, 85, 39, 0
+	st_note	0, 74, 108, 79, 0
+	st_note	48, 48, 81, 10, 0
+	st_note	72, 48, 98, 13, 0
+	st_beat
+	st_note	0, 36, 114, 51, 0
+	st_note	48, 48, 78, 13, 0
+	st_note	72, 48, 98, 13, 0
+	st_beat
+	st_note	0, 36, 117, 54, 0
+	st_note	0, 47, 108, 13, 1
+	st_note	0, 50, 97, 36, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 86, chain 66 cell 0
+	st_note	0, 36, 104, 67, 0
+	st_beat
+	st_note	0, 31, 99, 60, 0
+	st_beat
+	st_note	0, 38, 106, 68, 0
+	st_beat
+	st_note	0, 31, 103, 57, 0
+	st_beat
+	st_note	0, 38, 106, 64, 0
+	st_beat
+	st_note	0, 31, 108, 60, 0
+	st_beat
+	st_note	0, 36, 104, 22, 0
+	st_note	48, 36, 108, 39, 0
+	st_beat
+	st_note	0, 38, 107, 43, 0
+	st_note2	48, 40, 102, 31, 0, 0, 17
+	st_beat
+	st_note	0, 41, 116, 74, 0
+	st_beat
+	st_note	0, 36, 109, 69, 0
+	st_beat
+	st_note	0, 43, 114, 41, 0
+	st_note	48, 31, 103, 49, 0
+	st_beat
+	st_note	0, 33, 109, 48, 0
+	st_note2	48, 35, 107, 38, 0, 17, 17
+	st_beat
+	st_note	0, 36, 111, 68, 0
+	st_beat
+	st_note	0, 31, 108, 73, 0
+	st_beat
+	st_note	0, 36, 112, 43, 0
+	st_note	48, 33, 112, 54, 0
+	st_beat
+	st_note	0, 31, 100, 51, 0
+	st_note	48, 33, 114, 45, 0
+	st_beat
+	st_end
+	.fill	96, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e2	; block 87, chain 67 cell 0
+	st_note	0, 48, 90, 49, 0
+	st_note2	48, 64, 92, 52, 0, 0, 17
+	st_note	48, 60, 62, 53, 0
+	st_note	48, 67, 78, 52, 0
+	st_beat
+	st_note2	0, 40, 93, 50, 0, 0, 17
+	st_note	48, 60, 69, 56, 0
+	st_note2	48, 64, 90, 54, 0, 0, 17
+	st_note	48, 67, 80, 54, 0
+	st_beat
+	st_note	0, 43, 96, 48, 0
+	st_note2	48, 59, 72, 49, 0, 17, 17
+	st_note	48, 62, 89, 49, 0
+	st_note	48, 67, 87, 49, 0
+	st_beat
+	st_note	0, 38, 89, 51, 0
+	st_note2	48, 59, 69, 50, 0, 17, 17
+	st_note	48, 62, 87, 49, 0
+	st_note	48, 67, 81, 51, 0
+	st_beat
+	st_note	0, 43, 93, 48, 0
+	st_note2	48, 59, 69, 51, 0, 17, 17
+	st_note	48, 62, 87, 51, 0
+	st_note	48, 67, 82, 51, 0
+	st_beat
+	st_note2	0, 47, 94, 51, 0, 17, 17
+	st_note	48, 62, 89, 54, 0
+	st_note	48, 67, 84, 53, 0
+	st_note2	48, 59, 71, 51, 0, 17, 17
+	st_beat
+	st_note	0, 48, 93, 47, 0
+	st_note	48, 60, 74, 51, 0
+	st_note	48, 67, 84, 50, 0
+	st_note2	48, 64, 93, 49, 0, 0, 17
+	st_beat
+	st_note2	0, 40, 95, 51, 0, 0, 17
+	st_note	48, 60, 71, 48, 0
+	st_note2	48, 64, 88, 46, 0, 0, 17
+	st_note	48, 67, 81, 45, 0
+	st_beat
+	st_note	0, 41, 93, 54, 0
+	st_note	48, 60, 81, 50, 0
+	st_note	48, 57, 72, 50, 0
+	st_note	48, 65, 80, 50, 0
+	st_beat
+	.byte	0x90, 0x00	; first 2 bytes of st_note 0, 45, 97, 51, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 88, chain 68 cell 0
+	st_note	0, 60, 100, 14, 0
+	st_note	48, 48, 93, 13, 0
+	st_beat
+	st_note2	0, 52, 96, 13, 0, 0, 17
+	st_note2	48, 51, 98, 11, 0, 0, 17
+	st_beat
+	st_note	0, 50, 92, 13, 0
+	st_note	48, 50, 99, 14, 0
+	st_beat
+	st_beat
+	st_note	0, 55, 93, 12, 0
+	st_note	48, 55, 97, 15, 0
+	st_beat
+	st_note	0, 57, 103, 13, 0
+	st_note2	48, 59, 92, 13, 0, 17, 17
+	st_beat
+	st_note	0, 60, 97, 12, 0
+	st_note	48, 60, 104, 15, 0
+	st_note2	48, 59, 89, 8, 0, 17, 17
+	st_beat
+	st_beat
+	st_note	0, 53, 107, 12, 0
+	st_note	0, 55, 75, 2, 0
+	st_note	48, 53, 94, 13, 0
+	st_beat
+	st_note	0, 48, 97, 14, 0
+	st_note	48, 53, 75, 13, 0
+	st_beat
+	st_note	0, 55, 102, 15, 0
+	st_note	48, 55, 96, 15, 0
+	st_beat
+	st_note	0, 50, 93, 14, 0
+	st_note	48, 55, 94, 13, 0
+	st_beat
+	st_note	0, 60, 105, 18, 0
+	st_note	48, 48, 96, 13, 0
+	st_beat
+	st_note2	0, 52, 102, 15, 0, 0, 17
+	st_note	48, 48, 96, 14, 0
+	st_beat
+	st_note	0, 55, 99, 8, 0
+	st_note	48, 58, 101, 17, 0
+	st_beat
+	st_note	0, 55, 93, 16, 0
+	st_note	48, 58, 102, 14, 0
+	st_beat
+	st_end
+	.fill	42, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 89, chain 69 cell 0
+	st_note2	0, 76, 97, 72, 0, 0, 17
+	st_note	0, 67, 93, 67, 0
+	st_beat
+	st_note2	0, 75, 93, 16, 0, 0, 17
+	st_note	0, 66, 98, 15, 0
+	st_note	48, 74, 90, 16, 2
+	st_note	48, 65, 96, 10, 2
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 65, 85, 72, 0
+	st_note	0, 74, 94, 70, 0
+	st_beat
+	st_note2	0, 76, 79, 17, 0, 0, 17
+	st_note	0, 67, 87, 13, 0
+	st_note2	48, 64, 87, 13, 2, 0, 17
+	st_note	48, 72, 87, 19, 2
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 65, 78, 83, 0
+	st_note	0, 69, 96, 81, 0
+	st_beat
+	st_note	0, 72, 91, 82, 0
+	st_note	0, 69, 97, 80, 0
+	st_beat
+	st_note	0, 67, 95, 13, 0
+	st_note2	0, 71, 93, 15, 0, 17, 17
+	st_note	48, 67, 92, 71, 0
+	st_note2	48, 76, 82, 70, 0, 0, 17
+	st_note	48, 77, 87, 16, 0
+	st_beat
+	st_note	48, 65, 84, 16, 0
+	st_note	48, 74, 98, 13, 0
+	st_beat
+	st_note2	0, 64, 81, 14, 2, 0, 17
+	st_note	0, 72, 90, 17, 2
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x43, 0x64, 0x07, 0x00, 0x81, 0x83, 0x43, 0x64, 0x07, 0x00, 0x81, 0x83, 0x43, 0x64, 0x07, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 90, chain 70 cell 0
+	st_note	0, 36, 110, 29, 0
+	st_note	0, 51, 110, 93, 0
+	st_note	48, 38, 66, 16, 0
+	st_note	48, 48, 78, 12, 0
+	st_note	72, 48, 89, 14, 0
+	st_beat
+	st_note	0, 38, 71, 14, 0
+	st_note	0, 36, 114, 52, 0
+	st_note	48, 38, 82, 13, 0
+	st_note	48, 48, 85, 14, 0
+	st_note	72, 48, 87, 15, 0
+	st_beat
+	st_note	0, 38, 89, 12, 0
+	st_note	0, 36, 112, 46, 0
+	st_note	48, 38, 102, 11, 0
+	st_note	48, 48, 75, 16, 0
+	st_note	72, 48, 86, 15, 0
+	st_beat
+	st_note	0, 38, 99, 12, 0
+	st_note	0, 36, 112, 46, 0
+	st_note	48, 38, 112, 15, 0
+	st_note	48, 48, 84, 14, 0
+	st_note	72, 48, 89, 17, 0
+	st_note	92, 25, 98, 57, 1
+	st_beat
+	st_end
+	.byte	0x3a, 0x56, 0x0f, 0x00, 0x90, 0x30, 0x32, 0x40, 0x12, 0x00, 0x90, 0x30, 0x3a, 0x52, 0x0e, 0x00	; after st_end
+	.byte	0x81, 0x90, 0x00, 0x24, 0x6e, 0x0f, 0x00, 0x90, 0x00, 0x30, 0x42, 0x10, 0x00, 0x90, 0x00, 0x3a
+	.byte	0x52, 0x11, 0x00, 0x90, 0x30, 0x32, 0x44, 0x12, 0x00, 0x81, 0x90, 0x00, 0x25, 0x6e, 0x0e, 0x00
+	.byte	0x90, 0x00, 0x26, 0x6a, 0x18, 0x00, 0x90, 0x00, 0x30, 0x49, 0x0c, 0x00, 0x90, 0x00, 0x45, 0x72
+	.byte	0x16, 0x00, 0x90, 0x00, 0x3a, 0x4f, 0x12, 0x00, 0x90, 0x30, 0x32, 0x44, 0x11, 0x00, 0x81, 0x90
+	.byte	0x00, 0x24, 0x72, 0x0d, 0x00, 0x90, 0x00, 0x30, 0x4a, 0x0f, 0x00, 0x90, 0x00, 0x3a, 0x52, 0x12
+	.byte	0x00, 0x90, 0x30, 0x24, 0x6a, 0x0d, 0x00, 0x90, 0x30, 0x32, 0x47, 0x0e, 0x00, 0x90, 0x48, 0x3a
+	.byte	0x56, 0x0d, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 91, chain 71 cell 0
+	st_note	0, 36, 105, 38, 0
+	st_note	48, 48, 100, 51, 0
+	st_beat
+	st_note	0, 46, 98, 52, 0
+	st_note	48, 43, 87, 42, 0
+	st_beat
+	st_note2	0, 40, 87, 46, 0, 0, 17
+	st_note	48, 36, 99, 52, 0
+	st_beat
+	st_note	0, 31, 107, 46, 0
+	st_note	48, 34, 105, 48, 0
+	st_beat
+	st_end
+	.byte	0x90, 0x00, 0x1f, 0x62, 0x33, 0x00, 0x81, 0x90, 0x00, 0x24, 0x66, 0x18, 0x00, 0x90, 0x30, 0x24	; after st_end
+	.byte	0x66, 0x1d, 0x00, 0x81, 0x91, 0x00, 0x21, 0x6e, 0x28, 0x00, 0x00, 0x11, 0x90, 0x30, 0x1f, 0x58
+	.byte	0x27, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 92, chain 72 cell 0
+	st_note	0, 60, 61, 19, 0
+	st_note2	0, 64, 73, 13, 0, 0, 17
+	st_note	0, 67, 71, 16, 0
+	st_note2	0, 67, 66, 17, 0, 3, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x11, 0x00, 0x91, 0x30, 0x40, 0x62, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x58, 0x11, 0x00	; after st_end
+	.byte	0x91, 0x30, 0x43, 0x56, 0x14, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5f, 0x44, 0x00, 0x91
+	.byte	0x30, 0x40, 0x62, 0x42, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x58, 0x42, 0x00, 0x91, 0x30, 0x43
+	.byte	0x5d, 0x42, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5f, 0x0e, 0x00, 0x91, 0x30, 0x40, 0x62
+	.byte	0x0a, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x5a, 0x0e, 0x00, 0x91, 0x30, 0x43, 0x5a, 0x15, 0x00
+	.byte	0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5f, 0x45, 0x00, 0x91, 0x30, 0x40, 0x5f, 0x45, 0x00, 0x00
+	.byte	0x11, 0x90, 0x30, 0x3c, 0x56, 0x43, 0x00, 0x91, 0x30, 0x43, 0x5f, 0x42, 0x00, 0x03, 0x00, 0x81
+	.byte	0x90, 0x30, 0x43, 0x5a, 0x0d, 0x00, 0x91, 0x30, 0x40, 0x5a, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x30
+	.byte	0x3c, 0x52, 0x0d, 0x00, 0x91, 0x30, 0x43, 0x57, 0x14, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43
+	.byte	0x5f, 0x3f, 0x00, 0x91, 0x30, 0x40, 0x62, 0x3e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x58, 0x3e
+	.byte	0x00, 0x91, 0x30, 0x43, 0x60, 0x46, 0x00, 0x03, 0x00, 0x81, 0x90, 0x00, 0x43, 0x5a, 0x12, 0x00
+	.byte	0x91, 0x00, 0x40, 0x5d, 0x12, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x52, 0x12, 0x00, 0x91, 0x00
+	.byte	0x43, 0x63, 0x1b, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x5f, 0x0e, 0x00, 0x91, 0x30, 0x40, 0x5f
+	.byte	0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x53
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 93, chain 73 cell 0
+	st_note	48, 60, 88, 14, 0
+	st_beat
+	st_note	0, 58, 98, 14, 0
+	st_note	48, 55, 92, 16, 0
+	st_beat
+	st_note2	0, 52, 96, 14, 0, 0, 17
+	st_note	48, 48, 96, 16, 0
+	st_beat
+	st_note	0, 43, 103, 14, 0
+	st_note	48, 46, 104, 15, 0
+	st_beat
+	st_end
+	.byte	0x10, 0x00, 0x81, 0x83, 0x00, 0x11, 0x90, 0x30, 0x3a, 0x6c, 0x11, 0x00, 0x81, 0x90, 0x00, 0x3c	; after st_end
+	.byte	0x72, 0x0f, 0x00, 0x90, 0x30, 0x30, 0x62, 0x09, 0x00, 0x90, 0x48, 0x30, 0x6b, 0x0d, 0x00, 0x81
+	.byte	0x91, 0x00, 0x34, 0x6c, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x00, 0x35, 0x57, 0x02, 0x00, 0x90, 0x30
+	.byte	0x30, 0x6d, 0x0d, 0x00, 0x81, 0x90, 0x00, 0x3a, 0x72, 0x0d, 0x00, 0x90, 0x30, 0x3a, 0x6e, 0x0d
+	.byte	0x00, 0x81, 0x91, 0x00, 0x3b, 0x5a, 0x09, 0x00, 0x11, 0x11, 0x91, 0x18, 0x3b, 0x72, 0x0b, 0x00
+	.byte	0x11, 0x11, 0x91, 0x30, 0x3b, 0x70, 0x10, 0x00, 0x11, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 94, chain 74 cell 0
+	st_note2	48, 76, 100, 16, 0, 0, 17
+	st_beat
+	st_note	0, 74, 103, 17, 0
+	st_note	48, 70, 101, 18, 0
+	st_beat
+	st_note	0, 67, 103, 18, 0
+	st_note2	48, 64, 100, 18, 0, 0, 17
+	st_beat
+	st_note	0, 58, 104, 18, 0
+	st_note	48, 62, 99, 19, 0
+	st_beat
+	st_end
+	.byte	0x5d, 0x2e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x41, 0x53, 0x2c, 0x00, 0x81, 0x90, 0x00, 0x43, 0x5a	; after st_end
+	.byte	0x0b, 0x00, 0x91, 0x00, 0x40, 0x52, 0x0b, 0x00, 0x00, 0x11, 0x91, 0x30, 0x45, 0x5a, 0x08, 0x00
+	.byte	0x00, 0x11, 0x90, 0x30, 0x41, 0x5a, 0x0b, 0x00, 0x81, 0x90, 0x00, 0x43, 0x62, 0x0c, 0x00, 0x91
+	.byte	0x00, 0x40, 0x56, 0x0c, 0x00, 0x00, 0x11, 0x91, 0x30, 0x40, 0x5f, 0x0b, 0x00, 0x00, 0x11, 0x90
+	.byte	0x30, 0x3c, 0x56, 0x0b, 0x00, 0x81, 0x91, 0x00, 0x40, 0x5d, 0x5f, 0x00, 0x00, 0x11, 0x90, 0x00
+	.byte	0x3c, 0x50, 0x5c, 0x00, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 95, chain 75 cell 0
+	st_note	0, 51, 114, 87, 0
+	st_note	0, 36, 103, 14, 0
+	st_note	0, 48, 89, 40, 0
+	st_note	0, 58, 94, 49, 0
+	st_note	0, 69, 114, 34, 0
+	st_note	48, 36, 110, 20, 0
+	st_note	48, 50, 88, 50, 0
+	st_beat
+	st_note	0, 48, 93, 44, 0
+	st_note	0, 58, 91, 56, 0
+	st_note	0, 69, 120, 44, 0
+	st_note	0, 38, 108, 67, 0
+	st_note	48, 50, 86, 46, 0
+	st_beat
+	st_note	0, 24, 107, 38, 0
+	st_note	0, 36, 111, 57, 0
+	st_note	0, 48, 93, 49, 0
+	st_note	0, 58, 98, 43, 0
+	st_note	0, 69, 117, 39, 0
+	st_note	48, 38, 108, 14, 0
+	st_beat
+	st_note	0, 38, 90, 12, 0
+	st_note	24, 38, 112, 11, 0
+	st_note	48, 38, 112, 16, 0
+	st_note	92, 25, 110, 6, 0
+	st_beat
+	st_end
+	.byte	0x32, 0x40, 0x12, 0x00, 0x90, 0x30, 0x3a, 0x52, 0x0e, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6e, 0x0f	; after st_end
+	.byte	0x00, 0x90, 0x00, 0x30, 0x42, 0x10, 0x00, 0x90, 0x00, 0x3a, 0x52, 0x11, 0x00, 0x90, 0x30, 0x32
+	.byte	0x44, 0x12, 0x00, 0x81, 0x90, 0x00, 0x25, 0x6e, 0x0e, 0x00, 0x90, 0x00, 0x26, 0x6a, 0x18, 0x00
+	.byte	0x90, 0x00, 0x30, 0x49, 0x0c, 0x00, 0x90, 0x00, 0x45, 0x72, 0x16, 0x00, 0x90, 0x00, 0x3a, 0x4f
+	.byte	0x12, 0x00, 0x90, 0x30, 0x32, 0x44, 0x11, 0x00, 0x81, 0x90, 0x00, 0x24, 0x72, 0x0d, 0x00, 0x90
+	.byte	0x00, 0x30, 0x4a, 0x0f, 0x00, 0x90, 0x00, 0x3a, 0x52, 0x12, 0x00, 0x90, 0x30, 0x24, 0x6a, 0x0d
+	.byte	0x00, 0x90, 0x30, 0x32, 0x47, 0x0e, 0x00, 0x90, 0x48, 0x3a, 0x56, 0x0d, 0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 96, chain 76 cell 0
+	st_note	0, 36, 103, 64, 0
+	st_beat
+	st_note	0, 31, 107, 58, 0
+	st_beat
+	st_note	0, 36, 100, 48, 0
+	st_note	48, 31, 97, 51, 0
+	st_beat
+	st_note	0, 33, 111, 43, 0
+	st_note2	48, 35, 103, 46, 0, 17, 17
+	st_beat
+	st_end
+	.byte	0x1f, 0x6b, 0x2e, 0x00, 0x90, 0x30, 0x22, 0x69, 0x30, 0x00, 0x81, 0x83, 0x90, 0x00, 0x1f, 0x62	; after st_end
+	.byte	0x33, 0x00, 0x81, 0x90, 0x00, 0x24, 0x66, 0x18, 0x00, 0x90, 0x30, 0x24, 0x66, 0x1d, 0x00, 0x81
+	.byte	0x91, 0x00, 0x21, 0x6e, 0x28, 0x00, 0x00, 0x11, 0x90, 0x30, 0x1f, 0x58, 0x27, 0x00, 0x81, 0x83
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 97, chain 77 cell 0
+	st_note	48, 67, 80, 68, 0
+	st_note	48, 60, 69, 65, 0
+	st_note2	48, 64, 83, 64, 0, 0, 17
+	st_note2	48, 67, 78, 63, 0, 3, 0
+	st_beat
+	st_note	48, 67, 84, 18, 0
+	st_note	48, 60, 73, 17, 0
+	st_note2	48, 64, 88, 13, 0, 0, 17
+	st_note2	48, 67, 75, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 75, 23, 0
+	st_note	0, 67, 89, 24, 0
+	st_note2	0, 64, 93, 19, 0, 0, 17
+	st_note2	0, 67, 81, 21, 0, 3, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x43, 0x5f, 0x0e, 0x00, 0x91, 0x30, 0x40, 0x62, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x5a	; after st_end
+	.byte	0x0e, 0x00, 0x91, 0x30, 0x43, 0x5a, 0x15, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5f, 0x45
+	.byte	0x00, 0x91, 0x30, 0x40, 0x5f, 0x45, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x56, 0x43, 0x00, 0x91
+	.byte	0x30, 0x43, 0x5f, 0x42, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5a, 0x0d, 0x00, 0x91, 0x30
+	.byte	0x40, 0x5a, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x52, 0x0d, 0x00, 0x91, 0x30, 0x43, 0x57
+	.byte	0x14, 0x00, 0x03, 0x00, 0x81, 0x90, 0x30, 0x43, 0x5f, 0x3f, 0x00, 0x91, 0x30, 0x40, 0x62, 0x3e
+	.byte	0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x58, 0x3e, 0x00, 0x91, 0x30, 0x43, 0x60, 0x46, 0x00, 0x03
+	.byte	0x00, 0x81, 0x90, 0x00, 0x43, 0x5a, 0x12, 0x00, 0x91, 0x00, 0x40, 0x5d, 0x12, 0x00, 0x00, 0x11
+	.byte	0x90, 0x00, 0x3c, 0x52, 0x12, 0x00, 0x91, 0x00, 0x43, 0x63, 0x1b, 0x00, 0x03, 0x00, 0x90, 0x30
+	.byte	0x43, 0x5f, 0x0e, 0x00, 0x91, 0x30, 0x40, 0x5f, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x53
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 98, chain 78 cell 0
+	st_note	0, 60, 102, 13, 0
+	st_note	48, 48, 88, 11, 0
+	st_note	72, 48, 87, 13, 0
+	st_beat
+	st_note	0, 48, 87, 12, 0
+	st_note	48, 48, 93, 9, 0
+	st_beat
+	st_note	0, 48, 94, 13, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x90, 0x30, 0x2e, 0x68, 0x0f, 0x00, 0x81, 0x83, 0x10, 0x00, 0x81, 0x83, 0x00, 0x11, 0x90, 0x30	; after st_end
+	.byte	0x3a, 0x6c, 0x11, 0x00, 0x81, 0x90, 0x00, 0x3c, 0x72, 0x0f, 0x00, 0x90, 0x30, 0x30, 0x62, 0x09
+	.byte	0x00, 0x90, 0x48, 0x30, 0x6b, 0x0d, 0x00, 0x81, 0x91, 0x00, 0x34, 0x6c, 0x0d, 0x00, 0x00, 0x11
+	.byte	0x90, 0x00, 0x35, 0x57, 0x02, 0x00, 0x90, 0x30, 0x30, 0x6d, 0x0d, 0x00, 0x81, 0x90, 0x00, 0x3a
+	.byte	0x72, 0x0d, 0x00, 0x90, 0x30, 0x3a, 0x6e, 0x0d, 0x00, 0x81, 0x91, 0x00, 0x3b, 0x5a, 0x09, 0x00
+	.byte	0x11, 0x11, 0x91, 0x18, 0x3b, 0x72, 0x0b, 0x00, 0x11, 0x11, 0x91, 0x30, 0x3b, 0x70, 0x10, 0x00
+	.byte	0x11, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 99, chain 79 cell 0
+	st_note2	0, 64, 85, 17, 0, 0, 17
+	st_note	0, 72, 82, 17, 0
+	st_beat
+	st_note2	0, 64, 87, 17, 0, 0, 17
+	st_note	0, 72, 89, 16, 0
+	st_note2	72, 64, 82, 14, 0, 0, 17
+	st_note	72, 72, 84, 13, 0
+	st_beat
+	st_note2	0, 64, 90, 19, 0, 0, 17
+	st_note	0, 72, 88, 17, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x81, 0x90, 0x00, 0x43, 0x5a, 0x0b, 0x00, 0x91, 0x00, 0x40, 0x52, 0x0b, 0x00, 0x00, 0x11	; after st_end
+	.byte	0x91, 0x30, 0x45, 0x5a, 0x08, 0x00, 0x00, 0x11, 0x90, 0x30, 0x41, 0x5a, 0x0b, 0x00, 0x81, 0x90
+	.byte	0x00, 0x43, 0x62, 0x0c, 0x00, 0x91, 0x00, 0x40, 0x56, 0x0c, 0x00, 0x00, 0x11, 0x91, 0x30, 0x40
+	.byte	0x5f, 0x0b, 0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x56, 0x0b, 0x00, 0x81, 0x91, 0x00, 0x40, 0x5d
+	.byte	0x5f, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x50, 0x5c, 0x00, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 100, chain 80 cell 0
+	st_note	0, 51, 103, 36, 0
+	st_note	0, 69, 98, 23, 0
+	st_note	0, 36, 119, 11, 0
+	st_note	0, 38, 110, 5, 0
+	st_beat
+	st_note	0, 51, 103, 31, 0
+	st_note	0, 69, 102, 21, 0
+	st_note	0, 36, 119, 9, 0
+	st_note	48, 51, 31, 10, 0
+	st_note	72, 69, 90, 11, 0
+	st_note	73, 51, 49, 23, 0
+	st_note	84, 51, 52, 94, 0
+	st_beat
+	st_note	0, 69, 47, 9, 0
+	st_note	0, 51, 54, 9, 0
+	st_note	24, 51, 60, 10, 0
+	st_note	36, 51, 72, 8, 0
+	st_note	48, 69, 106, 8, 0
+	st_note	48, 51, 90, 8, 0
+	st_note	48, 38, 93, 6, 0
+	st_note	60, 51, 98, 10, 0
+	st_note	72, 38, 106, 7, 0
+	st_note	84, 51, 103, 12, 0
+	st_beat
+	st_note	0, 51, 110, 37, 0
+	st_note	0, 69, 110, 6, 0
+	st_note	0, 36, 126, 57, 0
+	st_note	0, 38, 119, 6, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	90, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 101, chain 81 cell 0
+	st_note	0, 36, 110, 65, 0
+	st_ctl2	72, 62
+	st_beat
+	st_ctl2	0, 57
+	st_ctl2	0, 53
+	st_note2	0, 40, 110, 75, 0, 0, 17
+	st_ctl2	24, 55
+	st_ctl2	24, 57
+	st_ctl2	48, 58
+	st_ctl2	48, 60
+	st_ctl2	48, 61
+	st_ctl2	48, 62
+	st_ctl2	48, 63
+	st_ctl2	72, 64
+	st_note	72, 38, 90, 12, 0
+	st_beat
+	st_note	0, 36, 98, 20, 0
+	st_note	48, 36, 114, 19, 0
+	st_beat
+	st_note	0, 36, 114, 31, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	169, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 102, chain 82 cell 0
+	st_note	0, 72, 95, 76, 0
+	st_note	0, 67, 98, 76, 0
+	st_note2	0, 64, 90, 76, 0, 0, 17
+	st_beat
+	st_note	0, 72, 93, 15, 0
+	st_note	0, 67, 106, 12, 0
+	st_note2	0, 64, 93, 13, 0, 0, 17
+	st_note	72, 72, 98, 10, 0
+	st_note	72, 67, 110, 8, 0
+	st_note2	72, 64, 88, 12, 0, 0, 17
+	st_beat
+	st_note	0, 72, 95, 10, 0
+	st_note	0, 67, 102, 10, 0
+	st_note2	0, 64, 90, 10, 0, 0, 17
+	st_note	48, 72, 102, 10, 0
+	st_note2	48, 64, 93, 10, 0, 0, 17
+	st_note	48, 67, 106, 4, 0
+	st_beat
+	st_note	0, 72, 106, 8, 0
+	st_note2	0, 64, 98, 11, 0, 0, 17
+	st_note	0, 67, 114, 6, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	120, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 103, chain 83 cell 0
+	st_note	0, 60, 114, 15, 0
+	st_note	48, 48, 102, 12, 0
+	st_note	72, 48, 89, 13, 0
+	st_beat
+	st_note	0, 55, 102, 14, 0
+	st_note	24, 48, 97, 14, 0
+	st_note	48, 58, 102, 12, 0
+	st_note	72, 48, 98, 17, 0
+	st_beat
+	st_note	0, 60, 114, 15, 0
+	st_note2	0, 59, 79, 2, 0, 17, 17
+	st_note	48, 60, 114, 15, 0
+	st_beat
+	st_note	0, 60, 117, 21, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	172, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 104, chain 84 cell 0
+	st_note	0, 67, 88, 14, 0
+	st_note2	0, 76, 93, 10, 0, 0, 17
+	st_beat
+	st_note2	0, 76, 106, 13, 0, 0, 17
+	st_note	0, 67, 98, 13, 0
+	st_note	72, 74, 106, 10, 0
+	st_note	72, 65, 98, 10, 0
+	st_beat
+	st_note	0, 72, 114, 9, 0
+	st_note	0, 65, 106, 6, 0
+	st_note2	0, 64, 98, 9, 0, 0, 17
+	st_note	48, 72, 114, 10, 0
+	st_note2	48, 64, 106, 10, 0, 0, 17
+	st_beat
+	st_note	0, 72, 114, 10, 0
+	st_note2	0, 64, 98, 10, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	152, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e3	; block 105, chain 85 cell 0
+	st_note	0, 36, 116, 47, 0
+	st_note	0, 24, 120, 15, 0
+	st_note	0, 51, 125, 87, 0
+	st_note	0, 48, 110, 20, 0
+	st_note	0, 69, 114, 54, 0
+	st_note	0, 74, 112, 13, 0
+	st_note	0, 111, 120, 54, 1
+	st_note	48, 50, 106, 23, 0
+	st_note	48, 52, 98, 11, 0
+	st_note	48, 74, 81, 11, 0
+	st_beat
+	st_note	0, 36, 117, 55, 0
+	st_note	0, 38, 120, 57, 0
+	st_note	0, 48, 99, 19, 0
+	st_note	0, 69, 114, 53, 0
+	st_note	0, 74, 110, 18, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 28, 107, 15, 0
+	st_note	48, 74, 83, 12, 0
+	st_beat
+	st_note	0, 36, 116, 55, 0
+	st_note	0, 48, 98, 18, 0
+	st_note	0, 69, 110, 54, 0
+	st_note	0, 74, 101, 10, 0
+	st_note	24, 38, 114, 13, 0
+	st_note	48, 50, 102, 17, 0
+	st_note	48, 28, 108, 18, 0
+	st_note	48, 74, 114, 14, 0
+	st_beat
+	st_note	0, 36, 121, 49, 0
+	st_note	0, 38, 121, 14, 0
+	st_note	0, 48, 99, 17, 0
+	st_note	0, 69, 110, 56, 0
+	st_note	0, 74, 73, 13, 0
+	st_note	48, 38, 114, 12, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 28, 110, 15, 0
+	st_note	48, 74, 116, 14, 0
+	st_note	72, 36, 120, 13, 0
+	st_note	72, 38, 121, 13, 0
+	st_beat
+	st_note	0, 36, 118, 45, 0
+	st_note	0, 48, 99, 19, 0
+	st_note	0, 69, 114, 56, 0
+	.byte	0x90, 0x00, 0x4a, 0x52, 0x0b	; first 5 bytes of st_note 0, 74, 82, 11, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 106, chain 86 cell 0
+	st_note	0, 36, 99, 65, 0
+	st_beat
+	st_note	0, 31, 96, 72, 0
+	st_beat
+	st_note	0, 36, 99, 88, 0
+	st_beat
+	st_note	0, 38, 92, 48, 0
+	st_note2	48, 40, 90, 47, 0, 0, 17
+	st_beat
+	st_note	0, 41, 92, 77, 0
+	st_beat
+	st_note	0, 36, 82, 76, 0
+	st_beat
+	st_note	0, 41, 94, 79, 0
+	st_beat
+	st_note	0, 42, 94, 82, 0
+	st_beat
+	st_note	0, 43, 98, 79, 0
+	st_beat
+	st_note	0, 31, 99, 82, 0
+	st_beat
+	st_note	0, 33, 99, 61, 0
+	st_beat
+	st_note2	0, 35, 95, 65, 0, 17, 17
+	st_beat
+	st_note	0, 36, 96, 79, 0
+	st_beat
+	st_note	0, 31, 95, 89, 0
+	st_beat
+	st_note	0, 36, 97, 43, 0
+	st_note	48, 43, 98, 47, 0
+	st_beat
+	st_note	0, 36, 105, 52, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x90, 0x00, 0x24, 0x72, 0x14, 0x00, 0x90, 0x30, 0x1f, 0x79, 0x15, 0x00, 0x81, 0x90, 0x00	; after st_end
+	.byte	0x24, 0x7c, 0x20, 0x00, 0x81, 0x83, 0x1f, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e6	; block 107, chain 87 cell 0
+	st_note	0, 48, 93, 46, 0
+	st_note2	48, 64, 88, 48, 0, 0, 17
+	st_note	48, 60, 69, 48, 0
+	st_note	48, 67, 81, 47, 0
+	st_beat
+	st_note	0, 43, 93, 48, 0
+	st_note	48, 60, 68, 54, 0
+	st_note2	48, 64, 85, 52, 0, 0, 17
+	st_note	48, 67, 76, 53, 0
+	st_beat
+	st_note	0, 48, 97, 60, 0
+	st_note	48, 60, 68, 53, 0
+	st_note2	48, 64, 87, 51, 0, 0, 17
+	st_note	48, 67, 76, 53, 0
+	st_beat
+	st_note	0, 50, 93, 60, 0
+	st_note	48, 60, 70, 52, 0
+	st_note2	48, 64, 90, 51, 0, 0, 17
+	st_note	48, 67, 79, 52, 0
+	st_note2	48, 52, 93, 43, 0, 0, 17
+	st_beat
+	st_note	0, 53, 93, 58, 0
+	st_note	48, 60, 71, 49, 0
+	st_note	48, 65, 84, 49, 0
+	st_note	48, 69, 69, 47, 0
+	st_beat
+	st_note	0, 48, 91, 62, 0
+	st_note	48, 60, 74, 54, 0
+	st_note	48, 65, 88, 53, 0
+	st_note	48, 69, 78, 52, 0
+	st_beat
+	st_note	0, 53, 97, 71, 0
+	st_note	48, 60, 66, 58, 0
+	st_note	48, 65, 82, 55, 0
+	st_note	48, 69, 74, 56, 0
+	st_beat
+	st_note	0, 54, 101, 66, 0
+	st_note	48, 60, 76, 53, 0
+	st_note	48, 65, 90, 51, 0
+	st_note	48, 69, 82, 50, 0
+	st_beat
+	st_note	0, 55, 96, 52, 0
+	st_note2	48, 59, 69, 51, 0, 17, 17
+	st_note	48, 62, 90, 48, 0
+	st_note	48, 67, 84, 52, 0
+	st_beat
+	st_note	0, 43, 93, 55, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 108, chain 88 cell 0
+	st_note	0, 60, 92, 7, 0
+	st_note	48, 48, 91, 12, 0
+	st_beat
+	st_note2	0, 52, 89, 12, 0, 0, 17
+	st_note	48, 48, 60, 8, 0
+	st_beat
+	st_note	0, 58, 93, 12, 0
+	st_note	48, 58, 94, 7, 0
+	st_beat
+	st_note2	0, 52, 93, 10, 0, 0, 17
+	st_note	48, 55, 84, 12, 0
+	st_beat
+	st_note	0, 60, 95, 13, 0
+	st_note	48, 48, 81, 12, 0
+	st_beat
+	st_note	0, 53, 78, 13, 0
+	st_note	48, 57, 93, 12, 0
+	st_beat
+	st_note	0, 60, 87, 16, 0
+	st_note	48, 65, 100, 15, 0
+	st_beat
+	st_note	0, 60, 89, 14, 0
+	st_note	48, 57, 93, 11, 0
+	st_beat
+	st_note	0, 55, 95, 10, 0
+	st_beat
+	st_note	0, 57, 93, 14, 0
+	st_note	24, 55, 83, 17, 0
+	st_note	48, 54, 86, 20, 0
+	st_note	72, 55, 93, 13, 0
+	st_beat
+	st_note	0, 67, 95, 13, 0
+	st_note	72, 67, 81, 14, 0
+	st_beat
+	st_note	0, 65, 97, 16, 0
+	st_note2	48, 59, 86, 13, 0, 17, 17
+	st_beat
+	st_note	0, 60, 98, 12, 0
+	st_beat
+	st_note	0, 55, 97, 18, 0
+	st_beat
+	st_note	0, 60, 104, 14, 0
+	st_note2	48, 64, 103, 14, 0, 0, 17
+	st_beat
+	st_note	0, 60, 93, 10, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x90, 0x30, 0x3c, 0x6e, 0x0b, 0x00, 0x90, 0x48, 0x3c, 0x6a, 0x07, 0x00, 0x81, 0x90, 0x00	; after st_end
+	.byte	0x3c, 0x78, 0x0b, 0x00, 0x81, 0x83, 0x17, 0x00, 0x91, 0x30, 0x40, 0x64, 0x1a, 0x00, 0x00, 0x11
+	.byte	0x90, 0x48, 0x43, 0x42, 0x16, 0x00, 0x90, 0x48, 0x41, 0x3f, 0x0e, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e7	; block 109, chain 89 cell 0
+	st_note2	0, 76, 96, 91, 0, 0, 17
+	st_note	0, 67, 92, 75, 0
+	st_beat
+	st_note	0, 65, 84, 55, 0
+	st_note	0, 74, 89, 48, 0
+	st_note2	48, 64, 85, 83, 0, 0, 17
+	st_note	48, 72, 87, 0, 1
+	st_beat
+	st_note2	48, 64, 85, 49, 0, 0, 17
+	st_note	48, 67, 91, 50, 0
+	st_beat
+	st_note2	0, 63, 86, 47, 0, 0, 17
+	st_note	0, 66, 94, 44, 0
+	st_note	48, 67, 94, 42, 0
+	st_note2	48, 64, 84, 40, 0, 0, 17
+	st_beat
+	st_note	0, 69, 90, 93, 0
+	st_note	0, 77, 88, 0, 1
+	st_beat
+	st_note	0, 67, 87, 47, 0
+	st_note2	0, 76, 88, 45, 0, 0, 17
+	st_note	48, 74, 79, 91, 0
+	st_note	48, 65, 84, 74, 0
+	st_beat
+	st_note	48, 65, 78, 54, 0
+	st_note	48, 69, 96, 44, 0
+	st_beat
+	st_note	0, 68, 92, 46, 0
+	st_note2	0, 64, 66, 43, 0, 0, 17
+	st_note	48, 69, 92, 40, 0
+	st_note	48, 65, 76, 38, 0
+	st_beat
+	st_note	0, 67, 83, 9, 1
+	st_note2	0, 71, 91, 41, 1, 17, 17
+	st_beat
+	st_note	48, 67, 103, 26, 0
+	st_beat
+	st_note	0, 67, 93, 59, 0
+	st_note2	0, 76, 72, 51, 0, 0, 17
+	st_note	72, 69, 92, 13, 0
+	st_note	72, 77, 87, 30, 0
+	st_beat
+	st_note	0, 67, 86, 18, 0
+	st_note2	0, 76, 90, 16, 0, 0, 17
+	st_note	48, 74, 89, 16, 0
+	st_note	48, 65, 75, 20, 0
+	st_beat
+	.byte	0x91, 0x00, 0x40, 0x55, 0x11, 0x02, 0x00	; first 7 bytes of st_note2 0, 64, 85, 17, 2, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e8	; block 110, chain 90 cell 0
+	st_note	0, 24, 113, 50, 0
+	st_note	0, 38, 120, 44, 0
+	st_note	0, 74, 113, 11, 0
+	st_note	24, 74, 96, 8, 0
+	st_note	48, 36, 112, 16, 0
+	st_note	48, 48, 112, 49, 0
+	st_note	48, 67, 80, 5, 0
+	st_note	48, 74, 89, 5, 0
+	st_note	72, 67, 92, 8, 0
+	st_note	72, 74, 113, 6, 0
+	st_beat
+	st_note	0, 38, 120, 30, 0
+	st_note	0, 24, 120, 50, 0
+	st_note	0, 67, 116, 9, 0
+	st_note	0, 74, 120, 17, 0
+	st_note	48, 36, 120, 15, 0
+	st_note	48, 48, 105, 46, 0
+	st_note	48, 107, 116, 51, 2
+	st_note	72, 38, 112, 7, 0
+	st_beat
+	st_note	0, 45, 108, 9, 0
+	st_note	0, 36, 120, 54, 0
+	st_note	0, 74, 113, 44, 0
+	st_note	12, 74, 100, 9, 0
+	st_note	24, 74, 82, 9, 0
+	st_note	24, 45, 98, 10, 0
+	st_note	36, 74, 59, 9, 0
+	st_note	48, 74, 44, 9, 0
+	st_note	48, 48, 112, 46, 0
+	st_note	48, 102, 113, 10, 0
+	st_note	60, 74, 42, 9, 0
+	st_note	72, 74, 39, 9, 0
+	st_note	72, 43, 120, 10, 0
+	st_note	84, 74, 44, 9, 0
+	st_beat
+	st_note	0, 74, 56, 9, 0
+	st_note	0, 36, 120, 59, 0
+	st_note	0, 102, 113, 10, 0
+	st_note	12, 74, 72, 9, 0
+	st_note	24, 74, 76, 9, 0
+	st_note	24, 43, 116, 3, 0
+	st_note	36, 74, 80, 9, 0
+	st_note	48, 74, 100, 9, 0
+	st_note	48, 41, 124, 11, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 111, chain 91 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x81, 0x90, 0x00, 0x24, 0x78, 0x5b, 0x00, 0x90, 0x48, 0x24, 0x69, 0x0f, 0x00, 0x81, 0x90	; after st_end
+	.byte	0x00, 0x30, 0x7c, 0x12, 0x00, 0x90, 0x18, 0x2d, 0x74, 0x10, 0x00, 0x90, 0x48, 0x2b, 0x6c, 0x13
+	.byte	0x00, 0x81, 0x91, 0x18, 0x28, 0x70, 0x13, 0x00, 0x00, 0x11, 0x90, 0x30, 0x26, 0x64, 0x21, 0x00
+	.byte	0x81, 0x83, 0x2b, 0x62, 0x17, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 112, chain 92 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x90, 0x00, 0x4f, 0x57, 0x13, 0x00, 0x91, 0x00, 0x4c, 0x5d, 0x11, 0x00, 0x00, 0x11, 0x91	; after st_end
+	.byte	0x00, 0x43, 0x5a, 0x21, 0x00, 0x03, 0x00, 0x81, 0x91, 0x00, 0x4c, 0x60, 0x53, 0x00, 0x00, 0x11
+	.byte	0x90, 0x00, 0x48, 0x57, 0x54, 0x00, 0x90, 0x00, 0x4f, 0x5b, 0x53, 0x00, 0x91, 0x00, 0x43, 0x5d
+	.byte	0x58, 0x00, 0x03, 0x00, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 113, chain 93 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x91, 0x00, 0x40, 0x69, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x60, 0x11, 0x00, 0x91	; after st_end
+	.byte	0x00, 0x37, 0x62, 0x18, 0x00, 0x03, 0x00, 0x81, 0x90, 0x00, 0x43, 0x67, 0x00, 0x01, 0x91, 0x00
+	.byte	0x40, 0x6c, 0x00, 0x01, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x62, 0x5e, 0x00, 0x91, 0x00, 0x37, 0x5d
+	.byte	0x49, 0x00, 0x03, 0x00, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 114, chain 94 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x90, 0x30, 0x5b, 0x3b, 0x0d, 0x00, 0x81, 0x90, 0x00, 0x5d, 0x4c, 0x0e, 0x00, 0x91, 0x30	; after st_end
+	.byte	0x58, 0x42, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x90, 0x00, 0x5b, 0x48, 0x0b, 0x00, 0x90, 0x30, 0x56
+	.byte	0x50, 0x10, 0x00, 0x81, 0x91, 0x00, 0x58, 0x4a, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x51
+	.byte	0x0a, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00e9	; block 115, chain 95 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 48, 108, 16, 0
+	st_note	24, 48, 75, 16, 0
+	st_note	48, 48, 74, 8, 0
+	st_note	72, 48, 80, 17, 0
+	st_beat
+	st_note	0, 48, 108, 12, 0
+	st_note	24, 48, 78, 14, 0
+	st_note	48, 48, 78, 7, 0
+	st_note	72, 48, 83, 13, 0
+	st_beat
+	st_note	0, 48, 108, 10, 0
+	st_note	24, 48, 71, 13, 0
+	st_note	48, 48, 84, 7, 0
+	st_note	72, 48, 88, 13, 0
+	st_beat
+	st_note	0, 50, 69, 19, 0
+	st_note	24, 48, 88, 12, 0
+	st_note	48, 50, 100, 10, 0
+	st_note	72, 48, 92, 11, 0
+	st_beat
+	st_note	0, 36, 116, 59, 0
+	st_note	0, 48, 112, 10, 0
+	st_note	24, 48, 90, 11, 0
+	st_note	48, 48, 80, 5, 0
+	st_note	72, 48, 90, 12, 0
+	st_beat
+	st_note	0, 36, 120, 55, 0
+	st_note	0, 48, 108, 9, 0
+	st_note	0, 74, 113, 70, 0
+	st_note	24, 48, 90, 13, 0
+	st_note	48, 48, 92, 12, 0
+	st_note	72, 48, 96, 12, 0
+	st_beat
+	st_note	0, 36, 120, 56, 0
+	st_note	0, 48, 105, 14, 0
+	st_note	24, 48, 86, 14, 0
+	st_note	48, 48, 79, 6, 0
+	st_note	48, 102, 120, 9, 0
+	st_note	72, 48, 88, 14, 0
+	st_beat
+	st_note	0, 36, 116, 50, 0
+	st_note	0, 48, 103, 15, 0
+	st_note	0, 102, 120, 11, 0
+	st_note	24, 48, 81, 14, 0
+	st_note	48, 48, 79, 5, 0
+	.byte	0x90, 0x30	; first 2 bytes of st_note 48, 102, 108, 7, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 116, chain 96 cell 0
+	st_note	0, 36, 30, 52, 6
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	48, 38, 79, 41, 0
+	st_beat
+	st_note2	0, 40, 76, 49, 0, 0, 17
+	st_note	48, 41, 83, 48, 0
+	st_beat
+	st_note	0, 43, 96, 5, 6
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 45, 90, 44, 0
+	st_note	48, 43, 92, 53, 0
+	st_beat
+	st_note2	0, 40, 90, 47, 0, 0, 17
+	st_note	48, 41, 86, 48, 0
+	st_beat
+	st_note	0, 43, 92, 43, 6
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	48, 41, 92, 48, 0
+	st_beat
+	st_note2	0, 40, 88, 47, 0, 0, 17
+	st_note	48, 38, 96, 45, 0
+	st_beat
+	st_note	0, 36, 105, 35, 0
+	st_note	48, 36, 108, 49, 0
+	st_beat
+	st_note	0, 31, 112, 49, 0
+	st_note	48, 33, 112, 42, 0
+	st_beat
+	st_note	0, 36, 112, 32, 0
+	st_note	48, 36, 105, 45, 0
+	st_beat
+	st_note	0, 31, 112, 47, 0
+	st_note	48, 33, 112, 46, 0
+	st_beat
+	st_note	0, 36, 116, 32, 0
+	st_note	48, 36, 108, 48, 0
+	st_beat
+	st_note	0, 31, 112, 52, 0
+	st_note	48, 33, 112, 42, 0
+	st_beat
+	st_note	0, 36, 120, 49, 0
+	st_note	48, 31, 120, 53, 0
+	st_beat
+	st_note	0, 33, 112, 39, 0
+	st_note2	48, 35, 120, 47, 0, 17, 17
+	st_beat
+	st_end
+	.byte	0x30, 0x26, 0x67, 0x28, 0x00, 0x81, 0x90, 0x00, 0x1f, 0x64, 0x2d, 0x00, 0x90, 0x30, 0x21, 0x60	; after st_end
+	.byte	0x30, 0x00, 0x81, 0x90, 0x00, 0x26, 0x67, 0x1d, 0x00, 0x90, 0x30, 0x26, 0x6c, 0x29, 0x00, 0x81
+	.byte	0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00ec	; block 117, chain 97 cell 0
+	st_note	0, 79, 93, 16, 0
+	st_note	0, 72, 83, 15, 0
+	st_note2	0, 76, 100, 13, 0, 0, 17
+	st_note	48, 72, 78, 15, 0
+	st_note	48, 79, 84, 15, 0
+	st_note2	48, 76, 92, 14, 0, 0, 17
+	st_beat
+	st_note	0, 79, 88, 15, 0
+	st_note2	0, 76, 96, 14, 0, 0, 17
+	st_note	0, 72, 79, 15, 0
+	st_note	48, 79, 86, 16, 0
+	st_note2	48, 76, 93, 15, 0, 0, 17
+	st_note	48, 72, 78, 15, 0
+	st_beat
+	st_note	0, 79, 92, 14, 0
+	st_note	0, 77, 96, 14, 0
+	st_note	0, 74, 98, 14, 0
+	st_note	0, 72, 81, 14, 0
+	st_note	48, 77, 93, 15, 0
+	st_note	48, 72, 75, 15, 0
+	st_note	48, 79, 86, 13, 0
+	st_note	48, 74, 92, 12, 0
+	st_beat
+	st_note	0, 79, 84, 14, 0
+	st_note	0, 77, 90, 15, 0
+	st_note	0, 72, 75, 14, 0
+	st_note	0, 74, 90, 12, 0
+	st_note	48, 79, 83, 13, 0
+	st_note	48, 77, 92, 14, 0
+	st_note	48, 74, 90, 13, 0
+	st_note	48, 72, 75, 14, 0
+	st_note	72, 79, 92, 11, 0
+	st_note	72, 77, 98, 11, 0
+	st_note	72, 74, 98, 8, 0
+	st_note	72, 72, 86, 12, 0
+	st_beat
+	st_note	0, 79, 79, 11, 0
+	st_note2	0, 76, 98, 12, 0, 0, 17
+	st_note	0, 72, 83, 13, 0
+	st_note	48, 79, 92, 14, 0
+	st_note2	48, 76, 98, 13, 0, 0, 17
+	st_note	48, 72, 88, 15, 0
+	st_beat
+	.byte	0x90, 0x00, 0x48, 0x51	; first 4 bytes of st_note 0, 72, 81, 15, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00f2	; block 118, chain 98 cell 0
+	st_note	0, 67, 88, 12, 0
+	st_note2	0, 64, 96, 12, 0, 0, 17
+	st_note	0, 60, 81, 13, 0
+	st_note	48, 67, 88, 13, 0
+	st_note2	48, 64, 96, 13, 0, 0, 17
+	st_note	48, 60, 81, 13, 0
+	st_beat
+	st_note	0, 67, 86, 14, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note	0, 60, 81, 15, 0
+	st_note	48, 67, 90, 14, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note	48, 60, 80, 15, 0
+	st_beat
+	st_note	0, 67, 88, 12, 0
+	st_note	0, 60, 80, 13, 0
+	st_note	0, 65, 93, 10, 0
+	st_note	0, 62, 92, 10, 0
+	st_note	48, 67, 84, 13, 0
+	st_note	48, 65, 90, 13, 0
+	st_note	48, 62, 92, 13, 0
+	st_note	48, 60, 79, 15, 0
+	st_beat
+	st_note	0, 67, 83, 13, 0
+	st_note	0, 65, 90, 12, 0
+	st_note	0, 62, 93, 12, 0
+	st_note	0, 60, 75, 14, 0
+	st_note	48, 60, 81, 16, 0
+	st_note	48, 67, 86, 13, 0
+	st_note	48, 65, 92, 13, 0
+	st_note	48, 62, 93, 13, 0
+	st_beat
+	st_note	0, 67, 90, 13, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note	0, 60, 81, 13, 0
+	st_note	48, 67, 81, 13, 0
+	st_note2	48, 64, 92, 14, 0, 0, 17
+	st_note	48, 60, 74, 15, 0
+	st_beat
+	st_note	0, 67, 86, 15, 0
+	st_note2	0, 64, 93, 15, 0, 0, 17
+	st_note	0, 60, 79, 15, 0
+	st_note	48, 67, 90, 14, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 64, 92, 14, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 119, chain 99 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x0f, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x60, 0x05, 0x01, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81	; after st_end
+	.byte	0x81, 0x91, 0x00, 0x58, 0x67, 0x10, 0x00, 0x00, 0x11, 0x90, 0x30, 0x59, 0x60, 0x0f, 0x00, 0x81
+	.byte	0x91, 0x00, 0x58, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5c, 0x04, 0x01, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x91, 0x00, 0x58, 0x67, 0x0f, 0x00, 0x00, 0x11, 0x90, 0x30, 0x59
+	.byte	0x69, 0x0e, 0x00, 0x81, 0x91, 0x00, 0x58, 0x69, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x30, 0x54, 0x64
+	.byte	0x43, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00f7	; block 120, chain 100 cell 0
+	st_note	0, 24, 113, 50, 0
+	st_note	0, 38, 120, 44, 0
+	st_note	0, 74, 113, 11, 0
+	st_note	24, 74, 96, 8, 0
+	st_note	48, 36, 112, 16, 0
+	st_note	48, 48, 112, 49, 0
+	st_note	48, 67, 80, 5, 0
+	st_note	48, 74, 89, 5, 0
+	st_note	72, 67, 92, 8, 0
+	st_note	72, 74, 113, 6, 0
+	st_beat
+	st_note	0, 38, 120, 30, 0
+	st_note	0, 24, 120, 50, 0
+	st_note	0, 67, 116, 9, 0
+	st_note	0, 74, 120, 17, 0
+	st_note	48, 36, 120, 15, 0
+	st_note	48, 48, 105, 46, 0
+	st_note	48, 107, 116, 51, 2
+	st_note	72, 38, 112, 7, 0
+	st_beat
+	st_note	0, 45, 108, 9, 0
+	st_note	0, 36, 120, 54, 0
+	st_note	0, 74, 113, 44, 0
+	st_note	12, 74, 100, 9, 0
+	st_note	24, 74, 82, 9, 0
+	st_note	24, 45, 98, 10, 0
+	st_note	36, 74, 59, 9, 0
+	st_note	48, 74, 44, 9, 0
+	st_note	48, 48, 112, 46, 0
+	st_note	48, 102, 113, 10, 0
+	st_note	60, 74, 42, 9, 0
+	st_note	72, 74, 39, 9, 0
+	st_note	72, 43, 120, 10, 0
+	st_note	84, 74, 44, 9, 0
+	st_beat
+	st_note	0, 74, 56, 9, 0
+	st_note	0, 36, 120, 59, 0
+	st_note	0, 102, 113, 10, 0
+	st_note	12, 74, 72, 9, 0
+	st_note	24, 74, 76, 9, 0
+	st_note	24, 43, 116, 3, 0
+	st_note	36, 74, 80, 9, 0
+	st_note	48, 74, 100, 9, 0
+	st_note	48, 41, 124, 11, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 121, chain 101 cell 0
+	st_note	0, 36, 120, 49, 0
+	st_beat
+	st_note	0, 36, 120, 91, 0
+	st_note	72, 36, 105, 15, 0
+	st_beat
+	st_note	0, 48, 124, 18, 0
+	st_note	24, 45, 116, 16, 0
+	st_note	72, 43, 108, 19, 0
+	st_beat
+	st_note2	24, 40, 112, 19, 0, 0, 17
+	st_note	48, 38, 100, 33, 0
+	st_beat
+	st_end
+	.byte	0x2b, 0x62, 0x17, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 122, chain 102 cell 0
+	st_note	0, 72, 83, 23, 0
+	st_note	0, 79, 87, 19, 0
+	st_note2	0, 76, 93, 17, 0, 0, 17
+	st_note2	0, 67, 90, 33, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 96, 83, 0, 0, 17
+	st_note	0, 72, 87, 84, 0
+	st_note	0, 79, 91, 83, 0
+	st_note2	0, 67, 93, 88, 0, 3, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	188, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 123, chain 103 cell 0
+	st_note	0, 67, 98, 14, 0
+	st_note2	0, 64, 105, 14, 0, 0, 17
+	st_note	0, 60, 96, 17, 0
+	st_note2	0, 55, 98, 24, 0, 3, 0
+	st_beat
+	st_note	0, 67, 103, 0, 1
+	st_note2	0, 64, 108, 0, 1, 0, 17
+	st_note	0, 60, 98, 94, 0
+	st_note2	0, 55, 93, 73, 0, 3, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.fill	188, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 124, chain 104 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x90, 0x30, 0x5b, 0x3b, 0x0d, 0x00, 0x81, 0x90, 0x00, 0x5d, 0x4c, 0x0e, 0x00, 0x91, 0x30	; after st_end
+	.byte	0x58, 0x42, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x90, 0x00, 0x5b, 0x48, 0x0b, 0x00, 0x90, 0x30, 0x56
+	.byte	0x50, 0x10, 0x00, 0x81, 0x91, 0x00, 0x58, 0x4a, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x51
+	.byte	0x0a, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 125, chain 105 cell 0
+	st_note	0, 36, 117, 41, 0
+	st_note	0, 24, 110, 20, 0
+	st_note	0, 74, 102, 13, 0
+	st_note	24, 74, 84, 8, 0
+	st_note	48, 38, 111, 43, 0
+	st_note	48, 51, 114, 81, 0
+	st_note	48, 74, 77, 10, 0
+	st_note	72, 74, 89, 10, 0
+	st_beat
+	st_note	0, 74, 108, 14, 0
+	st_note	24, 74, 90, 10, 0
+	st_note	48, 38, 116, 25, 0
+	st_note	48, 74, 78, 8, 0
+	st_note	72, 74, 90, 8, 0
+	st_beat
+	st_note	0, 38, 117, 17, 0
+	st_note	0, 25, 112, 43, 0
+	st_note	0, 67, 108, 14, 0
+	st_note	0, 74, 110, 14, 0
+	st_note	24, 67, 90, 13, 0
+	st_note	24, 74, 91, 12, 0
+	st_note	48, 102, 108, 12, 0
+	st_note	48, 67, 84, 12, 0
+	st_note	48, 74, 81, 7, 0
+	st_note	72, 67, 87, 12, 0
+	st_note	72, 74, 91, 12, 0
+	st_beat
+	st_note	0, 38, 118, 11, 0
+	st_note	0, 25, 122, 57, 0
+	st_note	0, 102, 101, 11, 0
+	st_note	0, 67, 109, 15, 0
+	st_note	0, 107, 117, 13, 0
+	st_note	0, 74, 114, 14, 0
+	st_note	24, 38, 120, 12, 0
+	st_note	24, 102, 102, 8, 0
+	st_note	24, 74, 94, 12, 0
+	st_note	48, 38, 108, 11, 0
+	st_note	48, 102, 110, 14, 0
+	st_note	48, 74, 88, 11, 0
+	st_note	72, 38, 121, 15, 0
+	st_note	72, 74, 96, 9, 0
+	st_beat
+	st_end
+	.byte	0x4a, 0x50, 0x09, 0x00, 0x90, 0x30, 0x4a, 0x64, 0x09, 0x00, 0x90, 0x30, 0x29, 0x7c, 0x0b, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 126, chain 106 cell 0
+	st_note	0, 36, 114, 39, 0
+	st_note	48, 36, 120, 37, 0
+	st_beat
+	st_note	48, 36, 118, 40, 0
+	st_beat
+	st_note	0, 31, 117, 53, 0
+	st_beat
+	st_note	0, 31, 121, 42, 0
+	st_note	48, 33, 121, 48, 0
+	st_beat
+	st_end
+	.byte	0x28, 0x70, 0x13, 0x00, 0x00, 0x11, 0x90, 0x30, 0x26, 0x64, 0x21, 0x00, 0x81, 0x83, 0x2b, 0x62	; after st_end
+	.byte	0x17, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 127, chain 107 cell 0
+	st_note2	48, 67, 86, 46, 0, 3, 0
+	st_note	48, 72, 93, 43, 0
+	st_note2	48, 76, 89, 46, 0, 0, 17
+	st_note	48, 79, 94, 41, 0
+	st_beat
+	st_note2	48, 76, 87, 21, 0, 0, 17
+	st_note2	48, 67, 90, 21, 0, 3, 0
+	st_note	48, 72, 94, 20, 0
+	st_note	48, 79, 93, 23, 0
+	st_beat
+	st_note2	0, 76, 88, 41, 0, 0, 17
+	st_note2	0, 67, 85, 41, 0, 3, 0
+	st_note	0, 72, 89, 39, 0
+	st_note	0, 79, 98, 46, 0
+	st_beat
+	st_note2	0, 67, 90, 43, 0, 3, 0
+	st_note2	0, 76, 89, 44, 0, 0, 17
+	st_note	0, 72, 93, 42, 0
+	st_note	0, 79, 93, 58, 0
+	st_beat
+	st_end
+	.fill	132, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 128, chain 108 cell 0
+	st_note2	48, 64, 106, 35, 0, 0, 17
+	st_note	48, 60, 90, 36, 0
+	st_note	48, 67, 95, 35, 0
+	st_note2	48, 55, 95, 35, 0, 3, 0
+	st_beat
+	st_note	48, 60, 90, 18, 0
+	st_note2	48, 64, 102, 16, 0, 0, 17
+	st_note	48, 67, 84, 15, 0
+	st_note2	48, 55, 93, 21, 0, 3, 0
+	st_beat
+	st_note	0, 60, 90, 40, 0
+	st_note2	0, 64, 104, 38, 0, 0, 17
+	st_note	0, 67, 93, 39, 0
+	st_note2	0, 55, 84, 47, 0, 3, 0
+	st_beat
+	st_note	0, 60, 90, 43, 0
+	st_note2	0, 64, 103, 43, 0, 0, 17
+	st_note	0, 67, 87, 45, 0
+	st_note2	0, 55, 95, 46, 0, 3, 0
+	st_beat
+	st_end
+	.fill	132, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 129, chain 109 cell 0
+	st_note	0, 72, 70, 35, 0
+	st_note	0, 84, 80, 35, 0
+	st_beat
+	st_beat
+	st_note	0, 96, 94, 59, 1
+	st_note	48, 91, 87, 17, 1
+	st_beat
+	st_note2	0, 88, 93, 66, 0, 0, 17
+	st_note	48, 84, 95, 20, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x54, 0x5f, 0x14, 0x00, 0x81, 0x83, 0x54, 0x5f, 0x14, 0x00, 0x81, 0x83, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 130, chain 110 cell 0
+	st_note	0, 24, 113, 50, 0
+	st_note	0, 38, 120, 44, 0
+	st_note	0, 74, 113, 11, 0
+	st_note	24, 74, 96, 8, 0
+	st_note	48, 36, 112, 16, 0
+	st_note	48, 48, 112, 49, 0
+	st_note	48, 67, 80, 5, 0
+	st_note	48, 74, 89, 5, 0
+	st_note	72, 67, 92, 8, 0
+	st_note	72, 74, 113, 6, 0
+	st_beat
+	st_note	0, 38, 120, 30, 0
+	st_note	0, 24, 120, 50, 0
+	st_note	0, 67, 116, 9, 0
+	st_note	0, 74, 120, 17, 0
+	st_note	0, 36, 117, 90, 0
+	st_beat
+	st_note	0, 29, 108, 31, 1
+	st_beat
+	st_beat
+	st_end
+	.byte	0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c
+	.byte	0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83
+	.byte	0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00
+	.byte	0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c
+	.byte	0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83
+	.byte	0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00
+	.byte	0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c
+	.byte	0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83, 0x19, 0x6c, 0x33, 0x00, 0x81, 0x83
+	.byte	0x19, 0x6c, 0x33, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 131, chain 111 cell 0
+	st_note	0, 36, 121, 48, 0
+	st_beat
+	st_note	0, 36, 123, 29, 1
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x0f, 0x00, 0x81, 0x90, 0x00, 0x30, 0x7c, 0x12, 0x00, 0x90, 0x18, 0x2d, 0x74, 0x10, 0x00, 0x90	; after st_end
+	.byte	0x48, 0x2b, 0x6c, 0x13, 0x00, 0x81, 0x91, 0x18, 0x28, 0x70, 0x13, 0x00, 0x00, 0x11, 0x90, 0x30
+	.byte	0x26, 0x64, 0x21, 0x00, 0x81, 0x83, 0x2b, 0x62, 0x17, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 132, chain 112 cell 0
+	st_note	0, 79, 87, 32, 0
+	st_note2	0, 76, 94, 28, 0, 0, 17
+	st_note	0, 67, 91, 27, 0
+	st_note	0, 72, 95, 26, 0
+	st_beat
+	st_note2	0, 76, 92, 12, 1, 0, 17
+	st_note	0, 67, 87, 11, 1
+	st_note	0, 79, 87, 9, 1
+	st_note	0, 72, 91, 8, 1
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 133, chain 113 cell 0
+	st_note	0, 67, 97, 28, 0
+	st_note	0, 60, 89, 22, 0
+	st_note2	0, 64, 98, 21, 0, 0, 17
+	st_note	0, 55, 93, 27, 0
+	st_beat
+	st_note	0, 55, 98, 61, 1
+	st_note	0, 60, 87, 55, 1
+	st_note2	0, 64, 96, 56, 1, 0, 17
+	st_note	0, 67, 98, 59, 1
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x81, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 134, chain 114 cell 0
+	st_beat
+	st_note	72, 72, 90, 30, 0
+	st_note	85, 84, 96, 17, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x0e, 0x00, 0x91, 0x30, 0x58, 0x42, 0x0d, 0x00, 0x00, 0x11, 0x81, 0x90, 0x00, 0x5b, 0x48, 0x0b	; after st_end
+	.byte	0x00, 0x90, 0x30, 0x56, 0x50, 0x10, 0x00, 0x81, 0x91, 0x00, 0x58, 0x4a, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x4f, 0x51, 0x0a, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00f8	; block 135, chain 115 cell 0
+	st_note	0, 36, 107, 52, 0
+	st_note	0, 48, 97, 16, 0
+	st_note	0, 51, 107, 65, 0
+	st_note	0, 74, 114, 16, 0
+	st_note	24, 74, 95, 12, 0
+	st_note	48, 50, 97, 19, 0
+	st_note	48, 74, 91, 13, 0
+	st_note	48, 57, 99, 11, 0
+	st_note	72, 74, 86, 13, 0
+	st_beat
+	st_note	0, 36, 109, 55, 0
+	st_note	0, 38, 114, 88, 0
+	st_note	0, 48, 100, 17, 0
+	st_note	0, 74, 116, 17, 0
+	st_note	0, 55, 93, 11, 0
+	st_note	0, 69, 116, 89, 0
+	st_note	24, 74, 87, 14, 0
+	st_note	48, 50, 103, 17, 0
+	st_note	48, 74, 94, 10, 0
+	st_note	48, 53, 88, 9, 0
+	st_note	72, 74, 87, 11, 0
+	st_note	72, 53, 102, 13, 0
+	st_beat
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 48, 88, 11, 0
+	st_note	0, 74, 114, 15, 0
+	st_note	24, 48, 93, 11, 0
+	st_note	24, 74, 82, 10, 0
+	st_note	24, 38, 92, 21, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 96, 43, 0
+	st_note	48, 74, 84, 11, 0
+	st_note	48, 55, 102, 10, 0
+	st_note	72, 74, 83, 10, 0
+	st_beat
+	st_note	0, 36, 99, 49, 0
+	st_note	0, 38, 112, 69, 0
+	st_note	0, 102, 105, 12, 0
+	st_note	0, 48, 87, 14, 0
+	st_note	0, 74, 112, 16, 0
+	st_note	0, 55, 96, 13, 0
+	st_note	0, 69, 112, 68, 0
+	st_note	24, 74, 71, 11, 0
+	st_note	48, 102, 105, 11, 0
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 136, chain 116 cell 0
+	st_note	0, 36, 116, 44, 0
+	st_note	48, 48, 112, 47, 0
+	st_beat
+	st_note	0, 43, 105, 52, 0
+	st_note	48, 45, 110, 45, 0
+	st_beat
+	st_note	0, 31, 105, 45, 0
+	st_note	48, 43, 111, 47, 0
+	st_beat
+	st_note	0, 38, 106, 50, 0
+	st_note2	48, 40, 105, 46, 0, 0, 17
+	st_beat
+	st_note	0, 36, 110, 46, 0
+	st_note	48, 48, 116, 43, 0
+	st_beat
+	st_note	0, 43, 108, 52, 0
+	st_note	48, 45, 114, 50, 0
+	st_beat
+	st_note	0, 31, 109, 46, 0
+	st_note	48, 43, 111, 48, 0
+	st_beat
+	st_note2	0, 35, 114, 48, 0, 17, 17
+	st_note2	48, 47, 112, 50, 0, 17, 17
+	st_beat
+	st_note	0, 36, 114, 45, 0
+	st_note	48, 48, 114, 49, 0
+	st_beat
+	st_note	0, 43, 107, 46, 0
+	st_note	48, 45, 114, 48, 0
+	st_beat
+	st_note	0, 31, 110, 45, 0
+	st_note	48, 43, 117, 43, 0
+	st_beat
+	st_note	0, 38, 108, 53, 0
+	st_note2	48, 40, 106, 44, 0, 0, 17
+	st_beat
+	st_note	0, 36, 118, 1, 1
+	st_beat
+	st_note	0, 36, 120, 91, 2
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x00, 0x24, 0x6b, 0x31, 0x00, 0x90, 0x30, 0x30, 0x6b, 0x2b, 0x00, 0x81, 0x90, 0x00	; after st_end
+	.byte	0x2b, 0x66, 0x34, 0x00, 0x90, 0x30, 0x2d, 0x69, 0x35, 0x00, 0x81, 0x83, 0x00, 0x24, 0x6c, 0x2e
+	.byte	0x00, 0x90, 0x30, 0x30, 0x74, 0x29, 0x00, 0x81, 0x90, 0x00, 0x2b, 0x70, 0x29, 0x00, 0x90, 0x30
+	.byte	0x2d, 0x74, 0x2f, 0x00, 0x81, 0x90, 0x00, 0x24, 0x6c, 0x2d, 0x00, 0x90, 0x30, 0x30, 0x74, 0x29
+	.byte	0x00, 0x81, 0x90, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00fc	; block 137, chain 117 cell 0
+	st_note	0, 72, 84, 16, 0
+	st_note	0, 67, 96, 13, 0
+	st_note2	0, 76, 98, 11, 0, 0, 17
+	st_note	0, 79, 96, 11, 0
+	st_note	48, 67, 87, 19, 0
+	st_note	48, 72, 75, 15, 0
+	st_note	48, 79, 90, 15, 0
+	st_note2	48, 76, 90, 13, 0, 0, 17
+	st_beat
+	st_note	0, 72, 72, 16, 0
+	st_note	0, 79, 85, 17, 0
+	st_note2	0, 76, 84, 15, 0, 0, 17
+	st_note	0, 67, 87, 17, 0
+	st_note	48, 79, 87, 19, 0
+	st_note	48, 72, 72, 16, 0
+	st_note2	48, 76, 87, 15, 0, 0, 17
+	st_note	48, 67, 81, 17, 0
+	st_beat
+	st_note	0, 77, 89, 15, 0
+	st_note	0, 72, 71, 14, 0
+	st_note	0, 79, 87, 15, 0
+	st_note	0, 74, 89, 14, 0
+	st_note	0, 67, 83, 16, 0
+	st_note	48, 77, 87, 15, 0
+	st_note	48, 79, 84, 15, 0
+	st_note	48, 72, 75, 14, 0
+	st_note	48, 74, 86, 13, 0
+	st_note	48, 67, 78, 16, 0
+	st_beat
+	st_note	0, 72, 80, 16, 0
+	st_note	0, 67, 80, 17, 0
+	st_note	0, 77, 91, 16, 0
+	st_note	0, 79, 90, 15, 0
+	st_note	0, 74, 91, 13, 0
+	st_note	48, 72, 80, 16, 0
+	st_note	48, 67, 81, 16, 0
+	st_note	48, 74, 93, 14, 0
+	st_note	48, 77, 92, 14, 0
+	st_note	48, 79, 88, 14, 0
+	st_beat
+	st_note	0, 72, 80, 16, 0
+	st_note	0, 79, 90, 15, 0
+	st_note2	0, 76, 94, 13, 0, 0, 17
+	.byte	0x90	; first 1 bytes of st_note 0, 67, 78, 15, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0x00ff	; block 138, chain 118 cell 0
+	st_note	0, 55, 93, 55, 0
+	st_note	0, 60, 82, 57, 0
+	st_note	0, 67, 92, 55, 0
+	st_note2	0, 64, 95, 56, 0, 0, 17
+	st_beat
+	st_note	0, 55, 92, 16, 0
+	st_note	0, 60, 79, 18, 0
+	st_note2	0, 64, 98, 16, 0, 0, 17
+	st_note	0, 67, 90, 16, 0
+	st_note	48, 60, 82, 17, 0
+	st_note	48, 55, 90, 17, 0
+	st_note	48, 67, 91, 16, 0
+	st_note2	48, 64, 99, 16, 0, 0, 17
+	st_beat
+	st_note	0, 55, 87, 18, 0
+	st_note	0, 67, 88, 16, 0
+	st_note	0, 60, 80, 17, 0
+	st_note	0, 65, 98, 15, 0
+	st_note	0, 62, 90, 14, 0
+	st_note	48, 55, 93, 64, 0
+	st_note	48, 60, 83, 65, 0
+	st_note	48, 65, 96, 65, 0
+	st_note	48, 62, 93, 63, 0
+	st_note	48, 67, 87, 63, 0
+	st_beat
+	st_note	48, 60, 87, 60, 0
+	st_note2	48, 64, 103, 60, 0, 0, 17
+	st_note	48, 55, 93, 56, 0
+	st_note	48, 67, 94, 58, 0
+	st_beat
+	st_note	48, 60, 86, 61, 0
+	st_note2	48, 64, 99, 61, 0, 0, 17
+	st_note	48, 55, 91, 59, 0
+	st_note	48, 67, 91, 62, 0
+	st_beat
+	st_note2	48, 64, 102, 18, 0, 0, 17
+	st_note	48, 60, 90, 19, 0
+	st_note	48, 67, 93, 19, 0
+	st_note	48, 55, 87, 18, 0
+	st_beat
+	st_note	0, 55, 93, 57, 0
+	st_note	0, 67, 90, 58, 0
+	st_note	0, 60, 79, 58, 0
+	st_note	0, 62, 94, 54, 0
+	.byte	0x90, 0x00, 0x41	; first 3 bytes of st_note 0, 65, 103, 56, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 139, chain 119 cell 0
+	st_note	0, 84, 84, 43, 0
+	st_note2	0, 88, 79, 41, 0, 0, 17
+	st_note	0, 79, 76, 42, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 82, 79, 0
+	st_note	0, 84, 71, 80, 0
+	st_note2	0, 76, 76, 69, 0, 0, 17
+	st_beat
+	st_beat
+	st_note	0, 67, 72, 20, 0
+	st_note	0, 79, 74, 23, 0
+	st_note	48, 72, 66, 17, 0
+	st_note	48, 84, 72, 19, 0
+	st_beat
+	st_note2	0, 76, 69, 15, 0, 0, 17
+	st_note2	0, 88, 72, 19, 0, 0, 17
+	st_note	48, 79, 72, 14, 0
+	st_note	48, 91, 75, 19, 0
+	st_beat
+	st_note2	0, 88, 76, 56, 0, 0, 17
+	st_note	0, 84, 75, 53, 0
+	st_note2	0, 76, 86, 47, 0, 0, 17
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 79, 88, 9, 1
+	st_beat
+	st_note	0, 84, 65, 75, 0
+	st_note2	0, 76, 72, 66, 0, 0, 17
+	st_note	0, 72, 71, 52, 0
+	st_note	79, 84, 71, 67, 0
+	st_note2	86, 88, 64, 61, 0, 0, 17
+	st_beat
+	st_note	2, 91, 87, 51, 0
+	st_note	10, 96, 94, 45, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x37, 0x00, 0x81, 0x91, 0x00, 0x58, 0x3e, 0x2c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x54, 0x3f, 0x16	; after st_end
+	.byte	0x00, 0x81, 0x90, 0x00, 0x4f, 0x4e, 0x15, 0x00, 0x91, 0x30, 0x4c, 0x31, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 140, chain 120 cell 0
+	st_note	0, 36, 116, 17, 0
+	st_note	0, 50, 96, 9, 0
+	st_note	0, 74, 110, 55, 0
+	st_note	8, 49, 62, 6, 0
+	st_beat
+	st_beat
+	st_note	48, 36, 116, 82, 0
+	st_beat
+	st_note	0, 38, 121, 9, 0
+	st_note	0, 74, 114, 78, 0
+	st_note	12, 38, 73, 9, 0
+	st_note	24, 38, 56, 9, 0
+	st_note	36, 38, 17, 9, 0
+	st_note	48, 38, 30, 9, 0
+	st_note	60, 38, 66, 9, 0
+	st_note	72, 38, 90, 9, 0
+	st_note	84, 38, 114, 9, 0
+	st_note	92, 24, 101, 51, 0
+	st_beat
+	st_end
+	.byte	0x18, 0x65, 0x33, 0x00, 0x81, 0x83, 0x18, 0x65, 0x33, 0x00, 0x81, 0x83, 0x18, 0x65, 0x33, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 141, chain 121 cell 0
+	st_note	0, 36, 118, 39, 0
+	st_beat
+	st_note2	0, 40, 116, 67, 0, 0, 17
+	st_note	72, 43, 111, 20, 0
+	st_beat
+	st_note	0, 36, 109, 37, 0
+	st_note	48, 31, 103, 49, 0
+	st_beat
+	st_note	0, 33, 100, 40, 0
+	st_note2	48, 35, 103, 48, 0, 17, 17
+	st_beat
+	st_end
+	.fill	198, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 142, chain 122 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x91, 0x00, 0x37, 0x53, 0x12, 0x00, 0x03, 0x00, 0x91, 0x00, 0x40, 0x5a, 0x0f, 0x00, 0x00	; after st_end
+	.byte	0x11, 0x81, 0x90, 0x00, 0x3c, 0x60, 0x13, 0x00, 0x91, 0x00, 0x37, 0x57, 0x13, 0x00, 0x03, 0x00
+	.byte	0x91, 0x00, 0x40, 0x60, 0x11, 0x00, 0x00, 0x11, 0x90, 0x48, 0x3c, 0x60, 0x0f, 0x00, 0x91, 0x48
+	.byte	0x37, 0x54, 0x10, 0x00, 0x03, 0x00, 0x91, 0x48, 0x40, 0x5d, 0x0e, 0x00, 0x00, 0x11, 0x81, 0x91
+	.byte	0x00, 0x37, 0x54, 0x15, 0x00, 0x03, 0x00, 0x90, 0x00, 0x3c, 0x67, 0x13, 0x00, 0x91, 0x00, 0x40
+	.byte	0x63, 0x13, 0x00, 0x00, 0x11, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 143, chain 123 cell 0
+	st_beat
+	st_beat
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note	48, 60, 62, 15, 0
+	st_note2	48, 67, 72, 13, 0, 3, 0
+	st_note2	72, 64, 65, 17, 0, 0, 17
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 67, 70, 13, 0, 3, 0
+	st_beat
+	st_note	0, 60, 62, 16, 0
+	st_note2	0, 64, 78, 16, 0, 0, 17
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 64, 80, 10, 0, 0, 17
+	st_note2	24, 67, 81, 11, 0, 3, 0
+	st_note	24, 60, 66, 10, 0
+	st_note	48, 60, 78, 47, 0
+	st_note2	48, 64, 90, 48, 0, 0, 17
+	st_note2	48, 67, 89, 50, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59	; after st_end
+	.byte	0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00
+	.byte	0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00
+	.byte	0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00
+	.byte	0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83
+	.byte	0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 144, chain 124 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x00, 0x11, 0x90, 0x18, 0x48, 0x5d, 0x13, 0x00, 0x90, 0x30, 0x43, 0x5f, 0x15, 0x00, 0x90	; after st_end
+	.byte	0x48, 0x48, 0x66, 0x17, 0x00, 0x81, 0x90, 0x00, 0x43, 0x61, 0x19, 0x00, 0x91, 0x18, 0x40, 0x63
+	.byte	0x12, 0x00, 0x00, 0x11, 0x90, 0x30, 0x43, 0x6e, 0x1c, 0x00, 0x91, 0x48, 0x40, 0x75, 0x10, 0x00
+	.byte	0x00, 0x11, 0x81, 0x90, 0x00, 0x3c, 0x78, 0x19, 0x00, 0x81, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 145, chain 125 cell 0
+	st_note	0, 36, 112, 29, 0
+	st_note	0, 38, 114, 24, 0
+	st_note	0, 51, 110, 35, 0
+	st_beat
+	st_note	0, 74, 105, 84, 0
+	st_beat
+	st_beat
+	st_note	0, 74, 107, 20, 1
+	st_beat
+	st_beat
+	st_note	0, 74, 107, 45, 1
+	st_note	0, 38, 106, 15, 0
+	st_note	72, 38, 92, 11, 0
+	st_beat
+	st_note	0, 38, 116, 21, 0
+	st_note	48, 38, 98, 10, 0
+	st_beat
+	st_note	0, 74, 108, 75, 0
+	st_note	0, 38, 102, 10, 0
+	st_note	24, 38, 118, 10, 0
+	st_note	48, 38, 120, 16, 0
+	st_note	92, 25, 112, 76, 0
+	st_beat
+	st_end
+	.byte	0x00, 0x43, 0x40, 0x03, 0x00, 0x81, 0x90, 0x00, 0x43, 0x40, 0x03, 0x00, 0x81, 0x83, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 146, chain 126 cell 0
+	st_note	0, 36, 118, 54, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 43, 120, 0, 1
+	st_beat
+	st_note	0, 31, 112, 22, 0
+	st_note	48, 31, 114, 42, 0
+	st_beat
+	st_note	0, 33, 116, 49, 0
+	st_note2	48, 35, 114, 48, 0, 17, 17
+	st_beat
+	st_end
+	.fill	202, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 147, chain 127 cell 0
+	st_note	0, 60, 108, 18, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note	0, 72, 96, 17, 0
+	st_note	0, 67, 109, 14, 0
+	st_note	48, 67, 99, 42, 0
+	st_note	48, 55, 91, 47, 0
+	st_beat
+	st_note	0, 56, 95, 46, 0
+	st_note	0, 68, 94, 43, 0
+	st_note	48, 67, 96, 42, 0
+	st_note	48, 55, 69, 45, 0
+	st_beat
+	st_note	0, 69, 99, 44, 0
+	st_note	0, 57, 88, 44, 0
+	st_note	48, 55, 87, 51, 0
+	st_note	48, 67, 93, 43, 0
+	st_beat
+	st_note	0, 70, 102, 43, 0
+	st_note	0, 58, 94, 50, 0
+	st_note	48, 67, 97, 42, 0
+	st_note	48, 55, 89, 44, 0
+	st_beat
+	st_note2	0, 71, 114, 20, 0, 17, 17
+	st_note2	0, 59, 97, 26, 0, 17, 17
+	st_beat
+	st_note	0, 79, 94, 27, 0
+	st_note	0, 74, 102, 23, 0
+	st_note	0, 67, 94, 24, 0
+	st_note2	0, 71, 104, 20, 0, 17, 17
+	st_beat
+	st_note	0, 55, 96, 91, 1
+	st_note	0, 43, 98, 89, 1
+	st_beat
+	st_beat
+	st_end
+	.byte	0x0f, 0x00, 0x81, 0x90, 0x00, 0x37, 0x62, 0x5c, 0x01, 0x90, 0x00, 0x2b, 0x63, 0x5a, 0x01, 0x81	; after st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 148, chain 128 cell 0
+	st_note	0, 72, 93, 28, 0
+	st_note2	0, 64, 100, 26, 0, 0, 17
+	st_note	0, 67, 109, 25, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 67, 109, 92, 0
+	st_beat
+	st_note	0, 68, 100, 89, 0
+	st_beat
+	st_note	0, 69, 100, 95, 0
+	st_beat
+	st_note2	0, 71, 87, 3, 1, 17, 17
+	st_note	0, 65, 91, 95, 0
+	st_beat
+	st_end
+	.fill	188, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 149, chain 129 cell 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	48, 67, 117, 52, 0
+	st_beat
+	st_note	0, 65, 111, 43, 0
+	st_note	48, 62, 108, 41, 0
+	st_beat
+	st_note2	0, 59, 103, 46, 0, 17, 17
+	st_note	48, 55, 109, 44, 0
+	st_beat
+	st_note	0, 53, 102, 50, 0
+	st_note	48, 50, 105, 48, 0
+	st_beat
+	st_end
+	.fill	196, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 150, chain 130 cell 0
+	st_note	0, 36, 116, 17, 0
+	st_note	0, 50, 96, 9, 0
+	st_note	0, 74, 110, 55, 0
+	st_note	8, 49, 62, 6, 0
+	st_beat
+	st_note	0, 38, 121, 31, 0
+	st_note	72, 38, 69, 8, 0
+	st_beat
+	st_note	0, 38, 118, 24, 0
+	st_note	48, 36, 116, 82, 0
+	st_beat
+	st_note	0, 38, 121, 9, 0
+	st_note	0, 74, 114, 78, 0
+	st_note	12, 38, 73, 9, 0
+	st_note	24, 38, 56, 9, 0
+	st_note	36, 38, 17, 9, 0
+	st_note	48, 38, 30, 9, 0
+	st_note	60, 38, 66, 9, 0
+	st_note	72, 38, 90, 9, 0
+	st_note	84, 38, 114, 9, 0
+	st_note	92, 24, 101, 51, 0
+	st_beat
+	st_end
+	.fill	136, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 151, chain 131 cell 0
+	st_note	0, 36, 118, 39, 0
+	st_beat
+	st_note2	0, 40, 116, 67, 0, 0, 17
+	st_note	72, 43, 111, 20, 0
+	st_beat
+	st_note	0, 36, 109, 37, 0
+	st_note	48, 31, 103, 49, 0
+	st_beat
+	st_note	0, 33, 100, 40, 0
+	st_note2	48, 35, 103, 48, 0, 17, 17
+	st_beat
+	st_end
+	.fill	198, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 152, chain 132 cell 0
+	st_note	0, 60, 93, 19, 0
+	st_note2	0, 55, 83, 18, 0, 3, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_beat
+	st_note	0, 60, 96, 19, 0
+	st_note2	0, 55, 87, 19, 0, 3, 0
+	st_note2	0, 64, 96, 17, 0, 0, 17
+	st_note	72, 60, 96, 15, 0
+	st_note2	72, 55, 84, 16, 0, 3, 0
+	st_note2	72, 64, 93, 14, 0, 0, 17
+	st_beat
+	st_note2	0, 55, 84, 21, 0, 3, 0
+	st_note	0, 60, 103, 19, 0
+	st_note2	0, 64, 99, 19, 0, 0, 17
+	st_beat
+	st_beat
+	st_end
+	.fill	156, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 153, chain 133 cell 0
+	st_note2	0, 67, 82, 21, 0, 3, 0
+	st_note	0, 60, 68, 15, 0
+	st_note2	0, 64, 81, 13, 0, 0, 17
+	st_beat
+	st_note2	0, 64, 87, 16, 0, 0, 17
+	st_note	0, 60, 75, 17, 0
+	st_note2	0, 67, 87, 19, 0, 3, 0
+	st_note2	72, 67, 81, 14, 0, 3, 0
+	st_note2	72, 64, 84, 14, 0, 0, 17
+	st_note	72, 60, 48, 11, 0
+	st_beat
+	st_note2	0, 64, 87, 16, 0, 0, 17
+	st_note	0, 60, 73, 16, 0
+	st_note2	0, 67, 82, 16, 0, 3, 0
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note	48, 60, 62, 15, 0
+	st_note2	48, 67, 72, 13, 0, 3, 0
+	st_note2	72, 64, 65, 17, 0, 0, 17
+	st_note	72, 60, 62, 15, 0
+	st_note2	72, 67, 70, 13, 0, 3, 0
+	st_beat
+	st_note	0, 60, 62, 16, 0
+	st_note2	0, 64, 78, 16, 0, 0, 17
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 64, 80, 10, 0, 0, 17
+	st_note2	24, 67, 81, 11, 0, 3, 0
+	st_note	24, 60, 66, 10, 0
+	st_note	48, 60, 78, 47, 0
+	st_note2	48, 64, 90, 48, 0, 0, 17
+	st_note2	48, 67, 89, 50, 0, 3, 0
+	st_beat
+	st_end
+	.fill	46, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 154, chain 134 cell 0
+	st_note2	0, 76, 116, 30, 0, 0, 17
+	st_note	24, 72, 93, 19, 0
+	st_note	48, 67, 95, 21, 0
+	st_note	72, 72, 102, 23, 0
+	st_beat
+	st_note	0, 67, 97, 25, 0
+	st_note2	24, 64, 99, 18, 0, 0, 17
+	st_note	48, 67, 110, 28, 0
+	st_note2	72, 64, 117, 16, 0, 0, 17
+	st_beat
+	st_note	0, 60, 120, 25, 0
+	st_beat
+	st_beat
+	st_end
+	.fill	184, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 155, chain 135 cell 0
+	st_note	0, 36, 111, 38, 0
+	st_note	0, 38, 111, 40, 0
+	st_note	0, 51, 112, 35, 0
+	st_note	0, 74, 114, 55, 0
+	st_beat
+	st_note	0, 48, 96, 56, 0
+	st_beat
+	st_note	0, 48, 102, 52, 0
+	st_note	48, 45, 117, 15, 0
+	st_beat
+	st_note	0, 48, 104, 67, 0
+	st_note	0, 43, 114, 13, 0
+	st_note	24, 41, 114, 9, 0
+	st_note	48, 95, 117, 12, 0
+	st_beat
+	st_end
+	.byte	0x26, 0x42, 0x09, 0x00, 0x90, 0x48, 0x26, 0x5a, 0x09, 0x00, 0x90, 0x54, 0x26, 0x72, 0x09, 0x00	; after st_end
+	.byte	0x90, 0x5c, 0x18, 0x65, 0x33, 0x00, 0x81, 0x83, 0x18, 0x65, 0x33, 0x00, 0x81, 0x83, 0x18, 0x65
+	.byte	0x33, 0x00, 0x81, 0x83, 0x18, 0x65, 0x33, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 156, chain 136 cell 0
+	st_note	0, 36, 114, 51, 0
+	st_beat
+	st_note2	0, 40, 108, 70, 0, 0, 17
+	st_note	72, 45, 109, 27, 0
+	st_beat
+	st_note	0, 43, 103, 32, 0
+	st_note	48, 41, 100, 29, 0
+	st_beat
+	st_note2	0, 40, 110, 29, 0, 0, 17
+	st_note	48, 38, 104, 32, 0
+	st_beat
+	st_end
+	.fill	198, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 157, chain 137 cell 0
+	st_note2	0, 55, 96, 22, 0, 3, 0
+	st_note	0, 60, 107, 18, 0
+	st_note2	0, 64, 98, 18, 0, 0, 17
+	st_beat
+	st_note2	0, 52, 120, 67, 0, 0, 17
+	st_note2	0, 40, 111, 70, 0, 0, 17
+	st_note	72, 57, 110, 25, 0
+	st_note	72, 45, 111, 25, 0
+	st_beat
+	st_note	0, 55, 109, 17, 0
+	st_note	0, 43, 112, 21, 0
+	st_note	48, 53, 109, 17, 0
+	st_note	48, 41, 111, 20, 0
+	st_beat
+	st_note2	0, 52, 107, 17, 0, 0, 17
+	st_note2	0, 40, 109, 21, 0, 0, 17
+	st_note	48, 50, 109, 21, 0
+	st_note	48, 38, 107, 21, 0
+	st_beat
+	st_end
+	.byte	0x17, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 158, chain 138 cell 0
+	st_note	0, 60, 90, 24, 0
+	st_note	0, 67, 96, 19, 0
+	st_note2	0, 64, 99, 17, 0, 0, 17
+	st_beat
+	st_beat
+	st_note2	48, 59, 79, 15, 0, 17, 17
+	st_note	48, 65, 87, 16, 0
+	st_note	48, 67, 84, 16, 0
+	st_beat
+	st_note	0, 65, 84, 13, 0
+	st_note	0, 67, 83, 14, 0
+	st_note2	0, 59, 75, 11, 0, 17, 17
+	st_note	24, 67, 87, 18, 0
+	st_note	24, 65, 85, 17, 0
+	st_note2	24, 59, 69, 15, 0, 17, 17
+	st_note2	48, 59, 86, 48, 0, 17, 17
+	st_note	48, 65, 96, 47, 0
+	st_note	48, 67, 93, 49, 0
+	st_beat
+	st_end
+	.byte	0x91, 0x30, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83
+	.byte	0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59
+	.byte	0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00
+	.byte	0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00
+	.byte	0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 159, chain 139 cell 0
+	st_note	0, 60, 102, 23, 0
+	st_beat
+	st_beat
+	st_note	0, 67, 109, 27, 0
+	st_note2	0, 71, 108, 25, 0, 17, 17
+	st_note	24, 65, 81, 23, 0
+	st_note	24, 67, 94, 21, 0
+	st_note2	48, 59, 76, 22, 0, 17, 17
+	st_note	48, 65, 94, 17, 0
+	st_note	72, 67, 90, 27, 0
+	st_note2	72, 71, 98, 26, 0, 17, 17
+	st_beat
+	st_note	0, 65, 83, 29, 0
+	st_note	0, 67, 96, 25, 0
+	st_note2	24, 59, 96, 31, 0, 17, 17
+	st_note	24, 65, 84, 15, 0
+	st_note	48, 67, 110, 43, 0
+	st_note2	48, 71, 114, 42, 0, 17, 17
+	st_beat
+	st_end
+	.fill	144, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 160, chain 140 cell 0
+	st_note	0, 36, 121, 31, 0
+	st_note	0, 38, 121, 24, 0
+	st_note	0, 51, 116, 49, 0
+	st_note	0, 74, 114, 33, 0
+	st_beat
+	st_note	0, 38, 107, 9, 0
+	st_note	0, 48, 102, 25, 0
+	st_note	0, 74, 107, 16, 0
+	st_note	12, 38, 75, 9, 0
+	st_note	24, 38, 60, 9, 0
+	st_note	36, 38, 51, 9, 0
+	st_note	48, 38, 59, 9, 0
+	st_note	48, 74, 89, 12, 0
+	st_note	60, 38, 82, 9, 0
+	st_note	72, 38, 97, 9, 0
+	st_note	84, 38, 110, 9, 0
+	st_beat
+	st_note	0, 38, 126, 9, 0
+	st_note	0, 36, 118, 48, 0
+	st_note	0, 48, 104, 24, 0
+	st_note	0, 25, 114, 38, 1
+	st_note	0, 74, 116, 25, 0
+	st_beat
+	st_beat
+	st_end
+	.fill	124, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 161, chain 141 cell 0
+	st_note	0, 36, 111, 43, 0
+	st_beat
+	st_note	0, 43, 123, 92, 0
+	st_beat
+	st_note	0, 36, 114, 40, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x00, 0x2b, 0x67, 0x20, 0x00, 0x90, 0x30, 0x29, 0x64, 0x1d, 0x00, 0x81, 0x91, 0x00, 0x28, 0x6e	; after st_end
+	.byte	0x1d, 0x00, 0x00, 0x11, 0x90, 0x30, 0x26, 0x68, 0x20, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 162, chain 142 cell 0
+	st_note2	0, 64, 103, 22, 0, 0, 17
+	st_note	0, 55, 97, 20, 0
+	st_note	0, 60, 105, 18, 0
+	st_beat
+	st_note	0, 67, 98, 23, 0
+	st_note	0, 65, 104, 21, 0
+	st_note2	0, 59, 96, 20, 0, 17, 17
+	st_note	0, 62, 108, 18, 0
+	st_note	0, 43, 111, 29, 0
+	st_beat
+	st_note	0, 72, 102, 27, 0
+	st_note2	0, 64, 103, 26, 0, 0, 17
+	st_note	0, 60, 106, 25, 0
+	st_note	0, 67, 116, 25, 0
+	st_note	0, 69, 116, 24, 0
+	st_note	0, 36, 118, 52, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x32, 0x6d, 0x15, 0x00, 0x90, 0x30, 0x26, 0x6b, 0x15, 0x00, 0x81, 0x83, 0x17, 0x00, 0x81, 0x83	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 163, chain 143 cell 0
+	st_note	0, 60, 98, 20, 0
+	st_note	0, 67, 105, 23, 0
+	st_note2	0, 64, 108, 20, 0, 0, 17
+	st_beat
+	st_note2	0, 59, 95, 19, 0, 17, 17
+	st_note	0, 65, 104, 21, 0
+	st_note	0, 67, 99, 21, 0
+	st_note	0, 62, 106, 15, 0
+	st_beat
+	st_note	0, 72, 96, 28, 0
+	st_note2	0, 64, 100, 25, 0, 0, 17
+	st_note	0, 67, 114, 26, 0
+	st_note	0, 69, 112, 24, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x3b, 0x45, 0x0f, 0x00, 0x11, 0x11, 0x91, 0x30, 0x3b, 0x56, 0x30, 0x00, 0x11, 0x11, 0x90, 0x30	; after st_end
+	.byte	0x41, 0x60, 0x2f, 0x00, 0x90, 0x30, 0x43, 0x5d, 0x31, 0x00, 0x81, 0x83, 0x91, 0x30, 0x43, 0x59
+	.byte	0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00
+	.byte	0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00
+	.byte	0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00
+	.byte	0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83
+	.byte	0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59
+	.byte	0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x43, 0x59, 0x32, 0x00, 0x03, 0x00, 0x81, 0x83, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 164, chain 144 cell 0
+	st_note	0, 60, 116, 29, 0
+	st_beat
+	st_note2	0, 59, 82, 22, 0, 17, 17
+	st_note	3, 62, 102, 16, 0
+	st_note	7, 67, 102, 19, 0
+	st_note2	95, 64, 94, 29, 0, 0, 17
+	st_beat
+	st_note	2, 67, 110, 23, 0
+	st_note	6, 72, 106, 27, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x5a, 0x1b, 0x00, 0x91, 0x48, 0x47, 0x62, 0x1a, 0x00, 0x11, 0x11, 0x81, 0x90, 0x00, 0x41, 0x53	; after st_end
+	.byte	0x1d, 0x00, 0x90, 0x00, 0x43, 0x60, 0x19, 0x00, 0x91, 0x18, 0x3b, 0x60, 0x1f, 0x00, 0x11, 0x11
+	.byte	0x90, 0x18, 0x41, 0x54, 0x0f, 0x00, 0x90, 0x30, 0x43, 0x6e, 0x2b, 0x00, 0x91, 0x30, 0x47, 0x72
+	.byte	0x2a, 0x00, 0x11, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 165, chain 145 cell 0
+	st_note	0, 36, 112, 29, 0
+	st_note	0, 38, 114, 24, 0
+	st_note	0, 51, 110, 35, 0
+	st_beat
+	st_note	0, 74, 105, 84, 0
+	st_beat
+	st_beat
+	st_note	0, 74, 107, 20, 1
+	st_beat
+	st_beat
+	st_note	0, 74, 107, 45, 1
+	st_note	0, 38, 106, 15, 0
+	st_note	72, 38, 92, 11, 0
+	st_beat
+	st_note	0, 38, 116, 21, 0
+	st_note	48, 38, 98, 10, 0
+	st_beat
+	st_note	0, 51, 114, 19, 0
+	st_note	0, 36, 117, 19, 0
+	st_note	0, 74, 108, 75, 0
+	st_note	0, 38, 112, 10, 0
+	st_beat
+	st_end
+	.byte	0x19, 0x70, 0x4c, 0x00, 0x81, 0x83, 0x00, 0x43, 0x40, 0x03, 0x00, 0x81, 0x90, 0x00, 0x43, 0x40	; after st_end
+	.byte	0x03, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 166, chain 146 cell 0
+	st_note	0, 36, 116, 51, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	0, 43, 118, 88, 0
+	st_beat
+	st_note	0, 36, 112, 37, 0
+	st_note	48, 31, 116, 37, 0
+	st_beat
+	st_note	0, 36, 120, 49, 0
+	st_beat
+	st_end
+	.byte	0x23, 0x72, 0x30, 0x00, 0x11, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 167, chain 147 cell 0
+	st_note	0, 60, 108, 18, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note	0, 72, 96, 17, 0
+	st_note	0, 67, 109, 14, 0
+	st_note	48, 67, 99, 42, 0
+	st_note	48, 55, 91, 47, 0
+	st_beat
+	st_note	0, 56, 95, 46, 0
+	st_note	0, 68, 94, 43, 0
+	st_note	48, 67, 96, 42, 0
+	st_note	48, 55, 69, 45, 0
+	st_beat
+	st_note	0, 69, 99, 44, 0
+	st_note	0, 57, 88, 44, 0
+	st_note	48, 55, 87, 51, 0
+	st_note	48, 67, 93, 43, 0
+	st_beat
+	st_note	0, 70, 102, 43, 0
+	st_note	0, 58, 94, 50, 0
+	st_note	48, 67, 97, 42, 0
+	st_note	48, 55, 89, 44, 0
+	st_beat
+	st_note2	0, 71, 114, 20, 0, 17, 17
+	st_note2	0, 59, 97, 26, 0, 17, 17
+	st_beat
+	st_note	0, 79, 94, 27, 0
+	st_note	0, 74, 102, 23, 0
+	st_note	0, 67, 94, 24, 0
+	st_note2	0, 71, 104, 20, 0, 17, 17
+	st_beat
+	st_note	0, 48, 96, 91, 1
+	st_note	0, 36, 98, 89, 1
+	st_beat
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x81, 0x90, 0x00, 0x37, 0x62, 0x5c, 0x01, 0x90, 0x00, 0x2b, 0x63, 0x5a, 0x01, 0x81	; after st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 168, chain 148 cell 0
+	st_note	0, 67, 114, 37, 0
+	st_note2	0, 64, 100, 38, 0, 0, 17
+	st_note	0, 72, 99, 35, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note2	0, 71, 103, 92, 0, 17, 17
+	st_note	0, 65, 99, 81, 0
+	st_note	0, 67, 109, 84, 0
+	st_note	0, 62, 102, 87, 0
+	st_beat
+	st_note	0, 60, 93, 24, 0
+	st_note	0, 67, 105, 24, 0
+	st_note2	0, 64, 99, 25, 0, 0, 17
+	st_note	0, 72, 93, 26, 0
+	st_beat
+	st_note	0, 60, 108, 26, 0
+	st_note2	0, 64, 99, 29, 0, 0, 17
+	st_note	0, 67, 109, 26, 0
+	st_note	0, 72, 96, 27, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0xffff, 0xffff	; block 169, chain 149 cell 0
+	st_note2	0, 64, 102, 35, 0, 0, 17
+	st_note	0, 72, 103, 31, 0
+	st_beat
+	st_beat
+	st_beat
+	st_beat
+	st_note	48, 67, 117, 52, 0
+	st_beat
+	st_note	0, 65, 111, 43, 0
+	st_note	48, 62, 108, 41, 0
+	st_beat
+	st_note	0, 60, 103, 46, 0
+	st_note	48, 55, 109, 44, 0
+	st_note2	95, 52, 85, 34, 0, 0, 17
+	st_beat
+	st_note	2, 48, 103, 30, 0
+	st_note	2, 55, 100, 25, 0
+	st_note	8, 60, 92, 27, 0
+	st_beat
+	st_end
+	.fill	170, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x000a, 0xffff	; block 170, chain 10 cell 1
+	.byte	0x6a, 0x0d, 0x00	; last 3 bytes of st_note 48, 36, 106, 13, 0 (split by a cell boundary)
+	st_note	48, 50, 71, 14, 0
+	st_note	72, 58, 86, 13, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 106, 25, 0
+	st_note	0, 48, 74, 15, 0
+	st_note	0, 69, 110, 23, 0
+	st_note	0, 58, 86, 15, 0
+	st_note	0, 74, 112, 85, 0
+	st_note	48, 50, 73, 18, 0
+	st_note	48, 58, 90, 13, 0
+	st_beat
+	st_end
+	.fill	183, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x000c, 0xffff	; block 171, chain 12 cell 1
+	.byte	0x12, 0x00	; last 2 bytes of st_note 48, 60, 83, 18, 0 (split by a cell boundary)
+	st_note2	48, 67, 93, 20, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x30, 0x4a, 0x0f, 0x00, 0x90, 0x00, 0x45, 0x6e, 0x17, 0x00, 0x90, 0x00, 0x3a, 0x56, 0x0f, 0x00	; after st_end
+	.byte	0x90, 0x30, 0x32, 0x49, 0x12, 0x00, 0x90, 0x30, 0x3a, 0x5a, 0x0d, 0x00, 0x81, 0x83, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x000f, 0xffff	; block 172, chain 15 cell 1
+	.byte	0x00	; last 1 bytes of st_note 0, 58, 104, 15, 0 (split by a cell boundary)
+	st_note	48, 74, 98, 18, 0
+	st_note	48, 28, 98, 68, 0
+	st_note	72, 58, 91, 14, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 106, 24, 0
+	st_note	0, 48, 73, 12, 0
+	st_note	0, 69, 114, 22, 0
+	st_note	0, 74, 110, 55, 0
+	st_note	0, 58, 107, 15, 0
+	st_note	48, 74, 98, 17, 0
+	st_note	48, 28, 101, 62, 0
+	st_beat
+	st_note	0, 36, 114, 13, 0
+	st_note	0, 48, 74, 15, 0
+	st_note	0, 69, 109, 26, 0
+	st_note	0, 74, 98, 54, 0
+	st_note	0, 58, 108, 15, 0
+	st_note	48, 36, 106, 13, 0
+	st_note	48, 74, 101, 19, 0
+	st_note	48, 28, 101, 57, 0
+	st_note	72, 58, 93, 13, 0
+	st_beat
+	st_note	0, 37, 110, 14, 0
+	st_note	0, 38, 106, 25, 0
+	st_note	0, 48, 74, 15, 0
+	st_note	0, 69, 110, 23, 0
+	st_note	0, 74, 112, 65, 0
+	st_note	0, 58, 107, 13, 0
+	st_note	48, 38, 108, 68, 0
+	st_note	48, 74, 102, 18, 0
+	st_note	48, 28, 107, 49, 0
+	st_note	48, 58, 108, 14, 0
+	st_note	72, 36, 100, 23, 1
+	st_beat
+	st_end
+	.fill	57, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0011, 0xffff	; block 173, chain 17 cell 1
+	.byte	0x30, 0x43, 0x60, 0x46, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 48, 67, 96, 70, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 48, 94, 45, 0
+	st_beat
+	st_note	0, 67, 90, 18, 0
+	st_note2	0, 64, 93, 18, 0, 0, 17
+	st_note	0, 60, 82, 18, 0
+	st_note2	0, 67, 99, 27, 0, 3, 0
+	st_note	0, 45, 112, 50, 0
+	st_note	48, 67, 95, 14, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	st_note	48, 60, 83, 18, 0
+	st_note2	48, 67, 93, 20, 0, 3, 0
+	st_note	48, 43, 97, 48, 0
+	st_beat
+	st_end
+	.fill	165, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0014, 0x009b	; block 174, chain 20 cell 1
+	.byte	0x26, 0x6b, 0x4d, 0x00	; last 4 bytes of st_note 0, 38, 107, 77, 0 (split by a cell boundary)
+	st_note	24, 48, 69, 16, 0
+	st_note	48, 48, 75, 12, 0
+	st_note	72, 48, 78, 15, 0
+	st_beat
+	st_note	0, 48, 99, 16, 0
+	st_note	0, 36, 105, 52, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 50, 9, 0
+	st_note	72, 48, 72, 15, 0
+	st_beat
+	st_note	0, 48, 99, 15, 0
+	st_note	0, 36, 103, 57, 0
+	st_note	0, 38, 109, 70, 0
+	st_note	24, 48, 73, 15, 0
+	st_note	48, 48, 76, 11, 0
+	st_note	72, 48, 78, 14, 0
+	st_beat
+	st_note	0, 48, 100, 16, 0
+	st_note	0, 36, 105, 55, 0
+	st_note	24, 48, 63, 16, 0
+	st_note	48, 48, 75, 12, 0
+	st_note	72, 48, 69, 15, 0
+	st_beat
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 98, 52, 0
+	st_note	0, 38, 109, 74, 0
+	st_note	24, 48, 63, 14, 0
+	st_note	48, 48, 80, 12, 0
+	st_note	72, 48, 65, 14, 0
+	st_beat
+	st_note	0, 48, 102, 17, 0
+	st_note	0, 36, 107, 58, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 72, 13, 0
+	st_note	72, 48, 74, 14, 0
+	st_beat
+	st_note	0, 48, 103, 15, 0
+	st_note	0, 36, 110, 56, 0
+	st_note	0, 38, 110, 67, 0
+	st_note	24, 48, 62, 16, 0
+	st_note	48, 48, 66, 12, 0
+	st_note	72, 48, 69, 15, 0
+	st_beat
+	st_note	0, 48, 100, 15, 0
+	st_note	0, 36, 106, 50, 0
+	st_note	24, 48, 70, 14, 0
+	.byte	0x90, 0x30, 0x30, 0x48	; first 4 bytes of st_note 48, 48, 72, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x009a, 0xffff	; block 175, chain 20 cell 2
+	.byte	0x0c, 0x00	; last 2 bytes of st_note 48, 48, 72, 12, 0 (split by a cell boundary)
+	st_note	72, 48, 75, 13, 0
+	st_beat
+	st_note	0, 48, 93, 16, 0
+	st_note	0, 36, 111, 39, 0
+	st_note	0, 38, 109, 59, 0
+	st_note	24, 48, 78, 14, 0
+	st_note	48, 48, 92, 13, 0
+	st_note	72, 48, 74, 7, 0
+	st_beat
+	st_end
+	.byte	0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a
+	.byte	0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83
+	.byte	0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00
+	.byte	0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a
+	.byte	0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83
+	.byte	0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00
+	.byte	0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a, 0x07, 0x00, 0x81, 0x83, 0x30, 0x4a
+	.byte	0x07, 0x00, 0x81, 0x83, 0x90, 0x00, 0x45, 0x70, 0x0a, 0x00, 0x90, 0x18, 0x30, 0x51, 0x0e, 0x00
+	.byte	0x90, 0x18, 0x43, 0x64, 0x08, 0x00, 0x90, 0x30, 0x30, 0x50, 0x0a, 0x00, 0x90, 0x30, 0x43, 0x70
+	.byte	0x06, 0x00, 0x90, 0x30, 0x45, 0x70, 0x11, 0x00, 0x90, 0x48, 0x30, 0x5a, 0x0e, 0x00, 0x90, 0x48
+	.byte	0x43, 0x70, 0x09, 0x00, 0x90, 0x48, 0x6b, 0x7c, 0x36, 0x01, 0x81, 0x90, 0x00, 0x24, 0x7c, 0x39
+	.byte	0x00, 0x90, 0x00, 0x30, 0x70, 0x0e, 0x00, 0x90, 0x18, 0x30
+	style_cell_end	
+	style_cell	0x80, 0x0016, 0x009d	; block 176, chain 22 cell 1
+	.byte	0x00, 0x43, 0x47, 0x0e, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 67, 71, 14, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 79, 73, 14, 0
+	st_note	48, 72, 66, 14, 0
+	st_note2	48, 76, 74, 13, 0, 0, 17
+	st_note2	48, 67, 69, 14, 0, 3, 0
+	st_beat
+	st_note	0, 72, 69, 14, 0
+	st_note	0, 79, 76, 14, 0
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note2	0, 67, 72, 14, 0, 3, 0
+	st_note	48, 72, 68, 15, 0
+	st_note	48, 79, 76, 15, 0
+	st_note2	48, 76, 78, 14, 0, 0, 17
+	st_note2	48, 67, 73, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 15, 0
+	st_note	0, 72, 68, 14, 0
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note2	0, 67, 78, 15, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note	48, 72, 68, 13, 0
+	st_note2	48, 76, 78, 11, 0, 0, 17
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 72, 16, 0
+	st_note	0, 72, 66, 14, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note	48, 79, 72, 15, 0
+	st_note2	48, 76, 74, 12, 0, 0, 17
+	st_note	48, 72, 63, 13, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_beat
+	st_note	0, 72, 68, 15, 0
+	st_note	0, 79, 75, 15, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note2	0, 67, 76, 16, 0, 3, 0
+	st_note	48, 79, 72, 15, 0
+	st_note	48, 72, 65, 16, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 76, 74, 16, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x009c, 0x009e	; block 177, chain 22 cell 2
+	.byte	0x4c, 0x4a, 0x10, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 76, 74, 16, 0, 0, 17 (split by a cell boundary)
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_beat
+	st_note	0, 72, 66, 16, 0
+	st_note2	0, 76, 75, 13, 0, 0, 17
+	st_note	0, 79, 74, 14, 0
+	st_note2	0, 67, 76, 15, 0, 3, 0
+	st_note	48, 72, 63, 16, 0
+	st_note	48, 79, 72, 15, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note2	48, 67, 71, 14, 0, 3, 0
+	st_beat
+	st_note	0, 72, 65, 16, 0
+	st_note2	0, 76, 74, 15, 0, 0, 17
+	st_note	0, 79, 72, 15, 0
+	st_note2	0, 67, 75, 15, 0, 3, 0
+	st_note	48, 79, 73, 15, 0
+	st_note	48, 72, 65, 14, 0
+	st_note2	48, 76, 74, 13, 0, 0, 17
+	st_note2	48, 67, 72, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 16, 0
+	st_note	0, 72, 68, 15, 0
+	st_note2	0, 76, 76, 14, 0, 0, 17
+	st_note2	0, 67, 73, 16, 0, 3, 0
+	st_note	48, 79, 75, 14, 0
+	st_note2	48, 76, 76, 13, 0, 0, 17
+	st_note	48, 72, 66, 13, 0
+	st_note2	48, 67, 72, 15, 0, 3, 0
+	st_beat
+	st_note	0, 72, 69, 14, 0
+	st_note	0, 79, 78, 13, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note2	0, 67, 74, 16, 0, 3, 0
+	st_note	48, 79, 75, 15, 0
+	st_note	48, 72, 66, 13, 0
+	st_note2	48, 76, 76, 12, 0, 0, 17
+	st_note2	48, 67, 71, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 14, 0
+	style_cell_end	
+	style_cell	0x80, 0x009d, 0xffff	; block 178, chain 22 cell 3
+	st_note	0, 72, 69, 15, 0
+	st_note2	0, 76, 80, 13, 0, 0, 17
+	st_note2	0, 67, 73, 17, 0, 3, 0
+	st_note	48, 79, 76, 15, 0
+	st_note	48, 72, 70, 15, 0
+	st_note2	48, 76, 79, 14, 0, 0, 17
+	st_note2	48, 67, 69, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 78, 15, 0
+	st_note	0, 72, 68, 15, 0
+	st_note2	0, 76, 78, 14, 0, 0, 17
+	st_note2	0, 67, 74, 16, 0, 3, 0
+	st_note	48, 72, 66, 15, 0
+	st_note	48, 79, 75, 14, 0
+	st_note2	48, 76, 75, 14, 0, 0, 17
+	st_note2	48, 67, 72, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note	0, 72, 66, 14, 0
+	st_note2	0, 76, 76, 12, 0, 0, 17
+	st_note2	0, 67, 72, 17, 0, 3, 0
+	st_note	48, 79, 76, 16, 0
+	st_note	48, 72, 69, 15, 0
+	st_note2	48, 76, 79, 14, 0, 0, 17
+	st_note2	48, 67, 72, 17, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x5c, 0x20, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48, 0x55, 0x20, 0x00, 0x90, 0x30, 0x4f, 0x5b, 0x20	; after st_end
+	.byte	0x00, 0x91, 0x30, 0x43, 0x59, 0x1f, 0x00, 0x03, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x4c, 0x0d, 0x00
+	.byte	0x90, 0x00, 0x48, 0x39, 0x0a, 0x00, 0x91, 0x00, 0x4c, 0x48, 0x0b, 0x00, 0x00, 0x11, 0x91, 0x00
+	.byte	0x43, 0x52, 0x10, 0x00, 0x03, 0x00, 0x91, 0x18, 0x4c, 0x50, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x18
+	.byte	0x48, 0x4b, 0x0b, 0x00, 0x90, 0x18, 0x4f, 0x59, 0x0a, 0x00, 0x91, 0x18, 0x43, 0x5a, 0x0e, 0x00
+	.byte	0x03, 0x00, 0x91
+	style_cell_end	
+	style_cell	0x80, 0x0017, 0x00a0	; block 179, chain 23 cell 1
+	.byte	0x00, 0x37, 0x50, 0x10, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 55, 80, 16, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 67, 96, 15, 0
+	st_note	48, 60, 81, 15, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note	0, 67, 93, 17, 0
+	st_note2	0, 64, 93, 15, 0, 0, 17
+	st_note2	0, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 78, 17, 0
+	st_note	48, 67, 93, 16, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 17, 0
+	st_note	0, 67, 93, 16, 0
+	st_note2	0, 64, 94, 15, 0, 0, 17
+	st_note2	0, 55, 76, 16, 0, 3, 0
+	st_note	48, 60, 75, 16, 0
+	st_note	48, 67, 92, 15, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 93, 15, 0
+	st_note2	0, 64, 95, 15, 0, 0, 17
+	st_note2	0, 55, 81, 15, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 79, 16, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 82, 16, 0, 3, 0
+	st_beat
+	st_note	0, 67, 96, 15, 0
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note2	0, 55, 83, 16, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 79, 16, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 64, 95, 15, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x009f, 0x00a1	; block 180, chain 23 cell 2
+	.byte	0x40, 0x5f, 0x0f, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 64, 95, 15, 0, 0, 17 (split by a cell boundary)
+	st_note2	48, 55, 83, 16, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 16, 0
+	st_note	0, 60, 82, 15, 0
+	st_note2	0, 64, 96, 14, 0, 0, 17
+	st_note2	0, 55, 84, 16, 0, 3, 0
+	st_note	48, 67, 90, 16, 0
+	st_note	48, 60, 73, 15, 0
+	st_note2	48, 64, 92, 14, 0, 0, 17
+	st_note2	48, 55, 87, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note	0, 67, 93, 16, 0
+	st_note2	0, 64, 94, 14, 0, 0, 17
+	st_note2	0, 55, 87, 16, 0, 3, 0
+	st_note	48, 67, 90, 16, 0
+	st_note	48, 60, 75, 16, 0
+	st_note2	48, 64, 91, 14, 0, 0, 17
+	st_note2	48, 55, 85, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 81, 16, 0
+	st_note	0, 67, 96, 15, 0
+	st_note2	0, 64, 95, 14, 0, 0, 17
+	st_note2	0, 55, 83, 17, 0, 3, 0
+	st_note	48, 67, 90, 15, 0
+	st_note	48, 60, 73, 15, 0
+	st_note2	48, 64, 93, 13, 0, 0, 17
+	st_note2	48, 55, 80, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 95, 17, 0
+	st_note2	0, 64, 94, 14, 0, 0, 17
+	st_note2	0, 55, 86, 17, 0, 3, 0
+	st_note	48, 67, 93, 17, 0
+	st_note	48, 60, 75, 16, 0
+	st_note2	48, 64, 94, 14, 0, 0, 17
+	st_note2	48, 55, 79, 15, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	style_cell_end	
+	style_cell	0x80, 0x00a0, 0xffff	; block 181, chain 23 cell 3
+	st_note	0, 67, 96, 16, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note2	0, 55, 82, 15, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 75, 15, 0
+	st_note2	48, 64, 94, 14, 0, 0, 17
+	st_note2	48, 55, 82, 15, 0, 3, 0
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note	0, 67, 97, 15, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 83, 16, 0, 3, 0
+	st_note	48, 60, 78, 15, 0
+	st_note	48, 67, 94, 15, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 82, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 17, 0
+	st_note	0, 67, 94, 16, 0
+	st_note2	0, 64, 95, 15, 0, 0, 17
+	st_note2	0, 55, 82, 17, 0, 3, 0
+	st_note	48, 67, 94, 19, 0
+	st_note	48, 60, 81, 17, 0
+	st_note2	48, 64, 95, 17, 0, 0, 17
+	st_note2	48, 55, 85, 17, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0019, 0x00a3	; block 182, chain 25 cell 1
+	.byte	0x45, 0x0d, 0x00	; last 3 bytes of st_note 48, 48, 69, 13, 0 (split by a cell boundary)
+	st_note	72, 48, 74, 14, 0
+	st_beat
+	st_note	0, 67, 106, 19, 0
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 38, 107, 77, 0
+	st_note	0, 69, 111, 15, 0
+	st_note	24, 67, 108, 19, 0
+	st_note	24, 48, 69, 16, 0
+	st_note	48, 67, 105, 19, 0
+	st_note	48, 48, 75, 12, 0
+	st_note	48, 69, 108, 18, 0
+	st_note	72, 107, 114, 19, 0
+	st_note	72, 67, 106, 19, 0
+	st_note	72, 48, 78, 15, 0
+	st_beat
+	st_note	0, 48, 99, 16, 0
+	st_note	0, 36, 105, 52, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 50, 9, 0
+	st_note	72, 48, 72, 15, 0
+	st_beat
+	st_note	0, 48, 99, 15, 0
+	st_note	0, 36, 103, 57, 0
+	st_note	0, 38, 109, 70, 0
+	st_note	24, 48, 73, 15, 0
+	st_note	48, 48, 76, 11, 0
+	st_note	72, 48, 78, 14, 0
+	st_beat
+	st_note	0, 48, 100, 16, 0
+	st_note	0, 36, 105, 55, 0
+	st_note	24, 48, 63, 16, 0
+	st_note	48, 48, 75, 12, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	72, 48, 69, 15, 0
+	st_beat
+	st_note	0, 48, 102, 16, 0
+	st_note	0, 36, 98, 52, 0
+	st_note	0, 38, 109, 74, 0
+	st_note	0, 102, 107, 12, 0
+	st_note	24, 48, 63, 14, 0
+	st_note	48, 48, 80, 12, 0
+	st_note	48, 102, 107, 12, 0
+	st_note	72, 48, 65, 14, 0
+	st_note	72, 102, 107, 12, 0
+	st_beat
+	style_cell_end	
+	style_cell	0x80, 0x00a2, 0xffff	; block 183, chain 25 cell 2
+	st_note	0, 48, 102, 17, 0
+	st_note	0, 36, 107, 58, 0
+	st_note	24, 48, 66, 15, 0
+	st_note	48, 48, 72, 13, 0
+	st_note	72, 48, 74, 14, 0
+	st_beat
+	st_note	0, 48, 103, 15, 0
+	st_note	0, 36, 110, 56, 0
+	st_note	0, 38, 110, 67, 0
+	st_note	24, 48, 62, 16, 0
+	st_note	48, 48, 66, 12, 0
+	st_note	72, 48, 69, 15, 0
+	st_beat
+	st_note	0, 48, 100, 15, 0
+	st_note	0, 36, 106, 50, 0
+	st_note	24, 48, 70, 14, 0
+	st_note	48, 48, 72, 12, 0
+	st_note	72, 48, 75, 13, 0
+	st_beat
+	st_note	0, 67, 108, 19, 0
+	st_note	0, 50, 93, 16, 0
+	st_note	0, 36, 111, 39, 0
+	st_note	0, 38, 109, 59, 0
+	st_note	0, 69, 111, 16, 0
+	st_note	24, 67, 99, 19, 0
+	st_note	24, 48, 78, 14, 0
+	st_note	48, 67, 104, 19, 0
+	st_note	48, 50, 92, 13, 0
+	st_note	48, 69, 108, 18, 0
+	st_note	72, 107, 106, 19, 0
+	st_note	72, 67, 107, 19, 0
+	st_note	72, 48, 74, 7, 0
+	st_beat
+	st_end
+	.byte	0x90, 0x00, 0x45, 0x70, 0x0a, 0x00, 0x90, 0x18, 0x30, 0x51, 0x0e, 0x00, 0x90, 0x18, 0x43, 0x64	; after st_end
+	.byte	0x08, 0x00, 0x90, 0x30, 0x30, 0x50, 0x0a, 0x00, 0x90, 0x30, 0x43, 0x70, 0x06, 0x00, 0x90, 0x30
+	.byte	0x45, 0x70, 0x11, 0x00, 0x90, 0x48, 0x30, 0x5a, 0x0e, 0x00, 0x90, 0x48, 0x43, 0x70, 0x09, 0x00
+	.byte	0x90, 0x48, 0x6b, 0x7c, 0x36, 0x01, 0x81, 0x90, 0x00, 0x24, 0x7c, 0x39, 0x00, 0x90, 0x00, 0x30
+	.byte	0x70, 0x0e, 0x00, 0x90, 0x18, 0x30
+	style_cell_end	
+	style_cell	0x80, 0x001b, 0x00a5	; block 184, chain 27 cell 1
+	.byte	0x00, 0x43, 0x4f, 0x0f, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 79, 75, 15, 0
+	st_note	48, 72, 67, 13, 0
+	st_note2	48, 76, 73, 12, 0, 0, 17
+	st_note2	48, 67, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note2	0, 67, 79, 13, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 78, 15, 0, 0, 17
+	st_note	48, 72, 70, 13, 0
+	st_note2	48, 67, 82, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 12, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 71, 10, 0
+	st_note2	0, 67, 83, 14, 0, 3, 0
+	st_note2	24, 76, 78, 14, 0, 0, 17
+	st_note	24, 79, 80, 13, 0
+	st_note	24, 72, 69, 12, 0
+	st_note2	24, 67, 87, 12, 0, 3, 0
+	st_note	48, 79, 85, 32, 0
+	st_note2	48, 76, 87, 31, 0, 0, 17
+	st_note	48, 72, 80, 27, 0
+	st_note2	48, 67, 89, 30, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 72, 13, 0, 0, 17
+	st_note	0, 79, 76, 14, 0
+	st_note	0, 72, 63, 12, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	24, 76, 83, 13, 0, 0, 17
+	st_note	24, 79, 89, 12, 0
+	st_note	24, 72, 78, 12, 0
+	st_note2	24, 67, 86, 12, 0, 3, 0
+	st_note	48, 72, 82, 38, 0
+	st_note2	48, 76, 89, 41, 0, 0, 17
+	.byte	0x90	; first 1 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00a4, 0x00a6	; block 185, chain 27 cell 2
+	.byte	0x30, 0x4f, 0x56, 0x27, 0x00	; last 5 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	st_note2	48, 67, 93, 31, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 61, 12, 0, 0, 17
+	st_note	0, 79, 69, 12, 0
+	st_note	0, 72, 60, 10, 0
+	st_note2	0, 67, 69, 15, 0, 3, 0
+	st_note	48, 79, 78, 16, 0
+	st_note2	48, 76, 79, 15, 0, 0, 17
+	st_note	48, 72, 72, 13, 0
+	st_note2	48, 67, 87, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 78, 14, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 72, 12, 0
+	st_note2	0, 67, 82, 14, 0, 3, 0
+	st_note	48, 79, 80, 15, 0
+	st_note	48, 72, 75, 14, 0
+	st_note2	48, 76, 80, 13, 0, 0, 17
+	st_note2	48, 67, 85, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 15, 0
+	st_note	0, 72, 74, 14, 0
+	st_note2	0, 76, 82, 12, 0, 0, 17
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 76, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 66, 11, 0
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 72, 70, 13, 0
+	st_note	48, 79, 76, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 72, 12, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 14, 0
+	.byte	0x90	; first 1 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00a5, 0x00a7	; block 186, chain 27 cell 3
+	.byte	0x00, 0x48, 0x48, 0x0d, 0x00	; last 5 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 79, 13, 0, 0, 17
+	st_note	48, 72, 72, 12, 0
+	st_note2	48, 67, 72, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 14, 0
+	st_note	0, 72, 72, 13, 0
+	st_note2	0, 76, 79, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note	48, 79, 79, 14, 0
+	st_note2	48, 76, 82, 14, 0, 0, 17
+	st_note	48, 72, 73, 13, 0
+	st_note2	48, 67, 79, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 13, 0
+	st_note2	0, 76, 82, 10, 0, 0, 17
+	st_note	0, 72, 73, 10, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note2	24, 76, 80, 11, 0, 0, 17
+	st_note	24, 79, 80, 10, 0
+	st_note	24, 72, 69, 10, 0
+	st_note2	24, 67, 80, 13, 0, 3, 0
+	st_note2	48, 76, 92, 32, 0, 0, 17
+	st_note	48, 72, 85, 32, 0
+	st_note	48, 79, 91, 32, 0
+	st_note2	48, 67, 89, 31, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 13, 0
+	st_note	0, 72, 57, 10, 0
+	st_note2	0, 76, 72, 11, 0, 0, 17
+	st_note2	0, 67, 82, 16, 0, 3, 0
+	st_note2	24, 76, 80, 10, 0, 0, 17
+	st_note	24, 72, 75, 11, 0
+	st_note	24, 79, 89, 10, 0
+	st_note2	24, 67, 90, 14, 0, 3, 0
+	.byte	0x91	; first 1 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00a6, 0xffff	; block 187, chain 27 cell 4
+	.byte	0x30, 0x4c, 0x5b, 0x2b, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 72, 85, 42, 0
+	st_note	48, 79, 93, 44, 0
+	st_note2	48, 67, 90, 44, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x90, 0x30, 0x4d, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x4a, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x48, 0x50	; after st_end
+	.byte	0x0d, 0x00, 0x90, 0x48, 0x4f, 0x4f, 0x0b, 0x00, 0x90, 0x48, 0x4d, 0x5c, 0x09, 0x00, 0x90, 0x48
+	.byte	0x4a, 0x5a, 0x09, 0x00, 0x90, 0x48, 0x48, 0x45, 0x0b, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x50, 0x0b
+	.byte	0x00, 0x91, 0x00, 0x4c, 0x5c, 0x09, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x45, 0x0c, 0x00, 0x90
+	.byte	0x30, 0x4f, 0x5a, 0x0f, 0x00, 0x91, 0x30, 0x4c, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48
+	.byte	0x4f, 0x0f, 0x00, 0x81, 0x90, 0x00, 0x48, 0x54, 0x0e, 0x00, 0x90, 0x00, 0x4f, 0x5d, 0x0c, 0x00
+	.byte	0x91, 0x00, 0x4c, 0x64, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5a, 0x10, 0x00, 0x91, 0x30
+	.byte	0x4c, 0x62, 0x10, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48, 0x51, 0x10, 0x00, 0x81, 0x90, 0x00, 0x4a
+	.byte	0x67, 0x09, 0x00, 0x90, 0x00, 0x48, 0x51, 0x0d, 0x00, 0x90, 0x00, 0x4f, 0x5c, 0x0a, 0x00, 0x90
+	.byte	0x00, 0x4d, 0x67, 0x09, 0x00, 0x90, 0x18, 0x48, 0x41, 0x0c, 0x00, 0x90, 0x18, 0x4f, 0x4f, 0x0a
+	.byte	0x00, 0x90, 0x18, 0x4d, 0x56, 0x08, 0x00, 0x90, 0x18, 0x4a, 0x53, 0x08, 0x00, 0x90, 0x30, 0x4f
+	.byte	0x54, 0x20, 0x00, 0x90, 0x30, 0x4d, 0x5d, 0x21, 0x00, 0x90, 0x30, 0x4a, 0x5c, 0x21, 0x00, 0x90
+	.byte	0x30, 0x48, 0x4c, 0x22, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x54, 0x0b, 0x00, 0x90, 0x00, 0x4d, 0x5d
+	.byte	0x09, 0x00, 0x90, 0x00, 0x4a, 0x5c, 0x09, 0x00, 0x90, 0x00, 0x48, 0x50
+	style_cell_end	
+	style_cell	0x80, 0x001c, 0x00a9	; block 188, chain 28 cell 1
+	.byte	0x00, 0x37, 0x50, 0x10, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 55, 80, 16, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 67, 96, 15, 0
+	st_note	48, 60, 81, 15, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 78, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 78, 16, 0
+	st_note	0, 67, 93, 17, 0
+	st_note2	0, 64, 93, 15, 0, 0, 17
+	st_note2	0, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 78, 17, 0
+	st_note	48, 67, 93, 16, 0
+	st_note2	48, 64, 95, 14, 0, 0, 17
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 17, 0
+	st_note	0, 67, 93, 16, 0
+	st_note2	0, 64, 94, 15, 0, 0, 17
+	st_note2	0, 55, 76, 16, 0, 3, 0
+	st_note	48, 60, 75, 16, 0
+	st_note	48, 67, 92, 15, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 93, 15, 0
+	st_note2	0, 64, 95, 15, 0, 0, 17
+	st_note2	0, 55, 81, 15, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 79, 16, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 82, 16, 0, 3, 0
+	st_beat
+	st_note	0, 67, 96, 15, 0
+	st_note	0, 60, 82, 16, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note2	0, 55, 83, 16, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 79, 16, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 64, 95, 15, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00a8, 0x00aa	; block 189, chain 28 cell 2
+	.byte	0x40, 0x5f, 0x0f, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 64, 95, 15, 0, 0, 17 (split by a cell boundary)
+	st_note2	48, 55, 83, 16, 0, 3, 0
+	st_beat
+	st_note	0, 67, 95, 16, 0
+	st_note	0, 60, 82, 15, 0
+	st_note2	0, 64, 96, 14, 0, 0, 17
+	st_note2	0, 55, 84, 16, 0, 3, 0
+	st_note	48, 67, 90, 16, 0
+	st_note	48, 60, 73, 15, 0
+	st_note2	48, 64, 92, 14, 0, 0, 17
+	st_note2	48, 55, 87, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note	0, 67, 93, 16, 0
+	st_note2	0, 64, 94, 14, 0, 0, 17
+	st_note2	0, 55, 87, 16, 0, 3, 0
+	st_note	48, 67, 90, 16, 0
+	st_note	48, 60, 75, 16, 0
+	st_note2	48, 64, 91, 14, 0, 0, 17
+	st_note2	48, 55, 85, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 81, 16, 0
+	st_note	0, 67, 96, 15, 0
+	st_note2	0, 64, 95, 14, 0, 0, 17
+	st_note2	0, 55, 83, 17, 0, 3, 0
+	st_note	48, 67, 90, 15, 0
+	st_note	48, 60, 73, 15, 0
+	st_note2	48, 64, 93, 13, 0, 0, 17
+	st_note2	48, 55, 80, 16, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 95, 17, 0
+	st_note2	0, 64, 94, 14, 0, 0, 17
+	st_note2	0, 55, 86, 17, 0, 3, 0
+	st_note	48, 67, 93, 17, 0
+	st_note	48, 60, 75, 16, 0
+	st_note2	48, 64, 94, 14, 0, 0, 17
+	st_note2	48, 55, 79, 15, 0, 3, 0
+	st_beat
+	st_note	0, 60, 79, 16, 0
+	style_cell_end	
+	style_cell	0x80, 0x00a9, 0xffff	; block 190, chain 28 cell 3
+	st_note	0, 67, 96, 16, 0
+	st_note2	0, 64, 96, 13, 0, 0, 17
+	st_note2	0, 55, 82, 15, 0, 3, 0
+	st_note	48, 67, 93, 15, 0
+	st_note	48, 60, 75, 15, 0
+	st_note2	48, 64, 94, 14, 0, 0, 17
+	st_note2	48, 55, 82, 15, 0, 3, 0
+	st_beat
+	st_note	0, 60, 82, 16, 0
+	st_note	0, 67, 97, 15, 0
+	st_note2	0, 64, 96, 15, 0, 0, 17
+	st_note2	0, 55, 83, 16, 0, 3, 0
+	st_note	48, 60, 78, 15, 0
+	st_note	48, 67, 94, 15, 0
+	st_note2	48, 64, 95, 13, 0, 0, 17
+	st_note2	48, 55, 82, 17, 0, 3, 0
+	st_beat
+	st_note	0, 60, 80, 17, 0
+	st_note	0, 67, 94, 16, 0
+	st_note2	0, 64, 95, 15, 0, 0, 17
+	st_note2	0, 55, 82, 17, 0, 3, 0
+	st_note	48, 67, 94, 19, 0
+	st_note	48, 60, 81, 17, 0
+	st_note2	48, 64, 95, 17, 0, 0, 17
+	st_note2	48, 55, 85, 17, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x001e, 0x00ac	; block 191, chain 30 cell 1
+	.byte	0x00	; last 1 bytes of st_note 48, 50, 96, 16, 0 (split by a cell boundary)
+	st_note	48, 74, 84, 11, 0
+	st_note	72, 74, 72, 11, 0
+	st_beat
+	st_note	0, 36, 104, 56, 0
+	st_note	0, 48, 98, 13, 0
+	st_note	0, 74, 114, 17, 0
+	st_note	0, 38, 111, 62, 0
+	st_note	24, 74, 71, 12, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 74, 82, 11, 0
+	st_note	72, 74, 54, 11, 0
+	st_beat
+	st_note	0, 36, 107, 53, 0
+	st_note	0, 48, 92, 11, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	24, 48, 98, 10, 0
+	st_note	24, 74, 80, 13, 0
+	st_note	24, 38, 98, 12, 0
+	st_note	48, 50, 102, 38, 0
+	st_note	48, 74, 86, 13, 0
+	st_note	72, 74, 75, 12, 0
+	st_beat
+	st_note	0, 67, 106, 19, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 48, 87, 12, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 38, 110, 59, 0
+	st_note	24, 67, 108, 19, 0
+	st_note	24, 48, 96, 13, 0
+	st_note	24, 74, 62, 10, 0
+	st_note	48, 67, 105, 19, 0
+	st_note	48, 50, 99, 40, 0
+	st_note	48, 74, 83, 12, 0
+	st_note	72, 107, 114, 19, 0
+	st_note	72, 67, 106, 19, 0
+	st_note	72, 74, 78, 15, 0
+	st_beat
+	st_note	0, 36, 105, 52, 0
+	st_note	0, 48, 93, 13, 0
+	st_note	0, 24, 105, 69, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 80, 10, 0
+	st_note	48, 50, 102, 18, 0
+	st_note	48, 74, 77, 11, 0
+	.byte	0x90, 0x48, 0x4a, 0x47	; first 4 bytes of st_note 72, 74, 71, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ab, 0x00ad	; block 192, chain 30 cell 2
+	.byte	0x0d, 0x00	; last 2 bytes of st_note 72, 74, 71, 13, 0 (split by a cell boundary)
+	st_beat
+	st_note	0, 36, 103, 57, 0
+	st_note	0, 48, 96, 15, 0
+	st_note	0, 74, 110, 16, 0
+	st_note	0, 38, 109, 59, 0
+	st_note	24, 74, 78, 11, 0
+	st_note	48, 50, 102, 16, 0
+	st_note	48, 74, 77, 12, 0
+	st_note	72, 74, 77, 12, 0
+	st_beat
+	st_note	0, 36, 105, 55, 0
+	st_note	0, 48, 99, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 84, 11, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 104, 16, 0
+	st_note	48, 74, 81, 12, 0
+	st_note	72, 74, 83, 12, 0
+	st_beat
+	st_note	0, 36, 98, 52, 0
+	st_note	0, 102, 107, 12, 0
+	st_note	0, 48, 94, 12, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 38, 108, 60, 0
+	st_note	24, 48, 94, 11, 0
+	st_note	24, 74, 92, 12, 0
+	st_note	48, 102, 107, 12, 0
+	st_note	48, 50, 102, 39, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	72, 102, 107, 12, 0
+	st_note	72, 74, 87, 12, 0
+	st_beat
+	st_note	0, 36, 107, 58, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	24, 74, 86, 13, 0
+	st_note	48, 50, 100, 18, 0
+	st_note	48, 74, 82, 13, 0
+	st_note	72, 74, 74, 14, 0
+	st_beat
+	st_note	0, 36, 110, 56, 0
+	st_note	0, 48, 98, 14, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 38, 109, 80, 0
+	st_note	24, 74, 78, 12, 0
+	.byte	0x90, 0x30	; first 2 bytes of st_note 48, 50, 100, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ac, 0xffff	; block 193, chain 30 cell 3
+	.byte	0x32, 0x64, 0x10, 0x00	; last 4 bytes of st_note 48, 50, 100, 16, 0 (split by a cell boundary)
+	st_note	48, 74, 77, 12, 0
+	st_note	72, 74, 80, 14, 0
+	st_beat
+	st_note	0, 36, 106, 50, 0
+	st_note	0, 48, 98, 12, 0
+	st_note	0, 74, 116, 17, 0
+	st_note	24, 48, 97, 11, 0
+	st_note	24, 74, 75, 10, 0
+	st_note	24, 38, 100, 15, 0
+	st_note	48, 50, 103, 28, 0
+	st_note	48, 74, 90, 11, 0
+	st_note	72, 74, 81, 13, 0
+	st_beat
+	st_note	0, 67, 108, 19, 0
+	st_note	0, 36, 111, 39, 0
+	st_note	0, 48, 90, 10, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 38, 109, 47, 0
+	st_note	24, 67, 99, 19, 0
+	st_note	24, 48, 98, 11, 0
+	st_note	24, 74, 84, 13, 0
+	st_note	48, 67, 104, 19, 0
+	st_note	48, 50, 99, 21, 0
+	st_note	48, 74, 94, 12, 0
+	st_note	72, 107, 106, 19, 0
+	st_note	72, 67, 107, 19, 0
+	st_note	72, 74, 92, 9, 0
+	st_note	72, 38, 102, 49, 0
+	st_beat
+	st_end
+	.byte	0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c
+	.byte	0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83, 0x4a, 0x5c, 0x09, 0x00, 0x81, 0x83
+	.byte	0x5a, 0x25, 0x00, 0x90, 0x30, 0x4d, 0x60, 0x26, 0x00, 0x90, 0x30, 0x4a, 0x5c, 0x26, 0x00, 0x90
+	.byte	0x30, 0x48, 0x51, 0x23, 0x00, 0x81, 0x83, 0x4a, 0x5d, 0x0a, 0x00, 0x91, 0x00, 0x47, 0x4f, 0x0c
+	.byte	0x00, 0x11, 0x11, 0x90, 0x30
+	style_cell_end	
+	style_cell	0x80, 0x0020, 0x00af	; block 194, chain 32 cell 1
+	.byte	0x00, 0x43, 0x4f, 0x0f, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 79, 75, 15, 0
+	st_note	48, 72, 67, 13, 0
+	st_note2	48, 76, 73, 12, 0, 0, 17
+	st_note2	48, 67, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note2	0, 67, 79, 13, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 78, 15, 0, 0, 17
+	st_note	48, 72, 70, 13, 0
+	st_note2	48, 67, 82, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 12, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 71, 10, 0
+	st_note2	0, 67, 83, 14, 0, 3, 0
+	st_note2	24, 76, 78, 14, 0, 0, 17
+	st_note	24, 79, 80, 13, 0
+	st_note	24, 72, 69, 12, 0
+	st_note2	24, 67, 87, 12, 0, 3, 0
+	st_note	48, 79, 85, 32, 0
+	st_note2	48, 76, 87, 31, 0, 0, 17
+	st_note	48, 72, 80, 27, 0
+	st_note2	48, 67, 89, 30, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 72, 13, 0, 0, 17
+	st_note	0, 79, 76, 14, 0
+	st_note	0, 72, 63, 12, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	24, 76, 83, 13, 0, 0, 17
+	st_note	24, 79, 89, 12, 0
+	st_note	24, 72, 78, 12, 0
+	st_note2	24, 67, 86, 12, 0, 3, 0
+	st_note	48, 72, 82, 38, 0
+	st_note2	48, 76, 89, 41, 0, 0, 17
+	.byte	0x90	; first 1 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ae, 0x00b0	; block 195, chain 32 cell 2
+	.byte	0x30, 0x4f, 0x56, 0x27, 0x00	; last 5 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	st_note2	48, 67, 93, 31, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 61, 12, 0, 0, 17
+	st_note	0, 79, 69, 12, 0
+	st_note	0, 72, 60, 10, 0
+	st_note2	0, 67, 69, 15, 0, 3, 0
+	st_note	48, 79, 78, 16, 0
+	st_note2	48, 76, 79, 15, 0, 0, 17
+	st_note	48, 72, 72, 13, 0
+	st_note2	48, 67, 87, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 78, 14, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 72, 12, 0
+	st_note2	0, 67, 82, 14, 0, 3, 0
+	st_note	48, 79, 80, 15, 0
+	st_note	48, 72, 75, 14, 0
+	st_note2	48, 76, 80, 13, 0, 0, 17
+	st_note2	48, 67, 85, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 15, 0
+	st_note	0, 72, 74, 14, 0
+	st_note2	0, 76, 82, 12, 0, 0, 17
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 76, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 66, 11, 0
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 72, 70, 13, 0
+	st_note	48, 79, 76, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 72, 12, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 14, 0
+	.byte	0x90	; first 1 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00af, 0x00b1	; block 196, chain 32 cell 3
+	.byte	0x00, 0x48, 0x48, 0x0d, 0x00	; last 5 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 79, 13, 0, 0, 17
+	st_note	48, 72, 72, 12, 0
+	st_note2	48, 67, 72, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 14, 0
+	st_note	0, 72, 72, 13, 0
+	st_note2	0, 76, 79, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note	48, 79, 79, 14, 0
+	st_note2	48, 76, 82, 14, 0, 0, 17
+	st_note	48, 72, 73, 13, 0
+	st_note2	48, 67, 79, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 13, 0
+	st_note2	0, 76, 82, 10, 0, 0, 17
+	st_note	0, 72, 73, 10, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note2	24, 76, 80, 11, 0, 0, 17
+	st_note	24, 79, 80, 10, 0
+	st_note	24, 72, 69, 10, 0
+	st_note2	24, 67, 80, 13, 0, 3, 0
+	st_note2	48, 76, 92, 32, 0, 0, 17
+	st_note	48, 72, 85, 32, 0
+	st_note	48, 79, 91, 32, 0
+	st_note2	48, 67, 89, 31, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 13, 0
+	st_note	0, 72, 57, 10, 0
+	st_note2	0, 76, 72, 11, 0, 0, 17
+	st_note2	0, 67, 82, 16, 0, 3, 0
+	st_note2	24, 76, 80, 10, 0, 0, 17
+	st_note	24, 72, 75, 11, 0
+	st_note	24, 79, 89, 10, 0
+	st_note2	24, 67, 90, 14, 0, 3, 0
+	.byte	0x91	; first 1 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b0, 0xffff	; block 197, chain 32 cell 4
+	.byte	0x30, 0x4c, 0x5b, 0x2b, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 72, 85, 42, 0
+	st_note	48, 79, 93, 44, 0
+	st_note2	48, 67, 90, 44, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x90, 0x30, 0x4d, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x4a, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x48, 0x50	; after st_end
+	.byte	0x0d, 0x00, 0x90, 0x48, 0x4f, 0x4f, 0x0b, 0x00, 0x90, 0x48, 0x4d, 0x5c, 0x09, 0x00, 0x90, 0x48
+	.byte	0x4a, 0x5a, 0x09, 0x00, 0x90, 0x48, 0x48, 0x45, 0x0b, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x50, 0x0b
+	.byte	0x00, 0x91, 0x00, 0x4c, 0x5c, 0x09, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x45, 0x0c, 0x00, 0x90
+	.byte	0x30, 0x4f, 0x5a, 0x0f, 0x00, 0x91, 0x30, 0x4c, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48
+	.byte	0x4f, 0x0f, 0x00, 0x81, 0x90, 0x00, 0x48, 0x54, 0x0e, 0x00, 0x90, 0x00, 0x4f, 0x5d, 0x0c, 0x00
+	.byte	0x91, 0x00, 0x4c, 0x64, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5a, 0x10, 0x00, 0x91, 0x30
+	.byte	0x4c, 0x62, 0x10, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48, 0x51, 0x10, 0x00, 0x81, 0x90, 0x00, 0x4a
+	.byte	0x67, 0x09, 0x00, 0x90, 0x00, 0x48, 0x51, 0x0d, 0x00, 0x90, 0x00, 0x4f, 0x5c, 0x0a, 0x00, 0x90
+	.byte	0x00, 0x4d, 0x67, 0x09, 0x00, 0x90, 0x18, 0x48, 0x41, 0x0c, 0x00, 0x90, 0x18, 0x4f, 0x4f, 0x0a
+	.byte	0x00, 0x90, 0x18, 0x4d, 0x56, 0x08, 0x00, 0x90, 0x18, 0x4a, 0x53, 0x08, 0x00, 0x90, 0x30, 0x4f
+	.byte	0x54, 0x20, 0x00, 0x90, 0x30, 0x4d, 0x5d, 0x21, 0x00, 0x90, 0x30, 0x4a, 0x5c, 0x21, 0x00, 0x90
+	.byte	0x30, 0x48, 0x4c, 0x22, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x54, 0x0b, 0x00, 0x90, 0x00, 0x4d, 0x5d
+	.byte	0x09, 0x00, 0x90, 0x00, 0x4a, 0x5c, 0x09, 0x00, 0x90, 0x00, 0x48, 0x50
+	style_cell_end	
+	style_cell	0x80, 0x0021, 0x00b3	; block 198, chain 33 cell 1
+	st_note	48, 67, 91, 55, 0
+	st_beat
+	st_note	48, 60, 93, 53, 0
+	st_note2	48, 64, 93, 55, 0, 0, 17
+	st_note2	48, 67, 104, 53, 0, 3, 0
+	st_note	48, 72, 87, 54, 0
+	st_note2	48, 55, 93, 57, 0, 3, 0
+	st_note	48, 67, 96, 56, 0
+	st_beat
+	st_note2	48, 64, 90, 14, 0, 0, 17
+	st_note2	48, 67, 99, 11, 0, 3, 0
+	st_note	48, 72, 83, 12, 0
+	st_note	48, 60, 94, 13, 0
+	st_note2	48, 55, 93, 15, 0, 3, 0
+	st_note	48, 67, 95, 17, 0
+	st_beat
+	st_note	0, 60, 95, 51, 0
+	st_note2	0, 64, 90, 54, 0, 0, 17
+	st_note	0, 72, 87, 53, 0
+	st_note2	0, 67, 100, 52, 0, 3, 0
+	st_note2	0, 55, 93, 53, 0, 3, 0
+	st_note	0, 67, 92, 57, 0
+	st_beat
+	st_note	0, 60, 94, 50, 0
+	st_note2	0, 64, 93, 54, 0, 0, 17
+	st_note2	0, 67, 103, 54, 0, 3, 0
+	st_note	0, 72, 80, 54, 0
+	st_note2	0, 55, 88, 56, 0, 3, 0
+	st_note	0, 67, 94, 54, 0
+	st_beat
+	st_note	0, 60, 93, 52, 0
+	st_note2	0, 67, 103, 54, 0, 3, 0
+	st_note2	0, 64, 93, 53, 0, 0, 17
+	st_note	0, 72, 83, 54, 0
+	st_note2	0, 55, 93, 59, 0, 3, 0
+	st_note	0, 67, 93, 61, 0
+	st_beat
+	st_note	0, 60, 88, 15, 0
+	st_note2	0, 64, 94, 15, 0, 0, 17
+	st_note2	0, 67, 102, 14, 0, 3, 0
+	.byte	0x90, 0x00, 0x48, 0x57, 0x0c	; first 5 bytes of st_note 0, 72, 87, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b2, 0x00b4	; block 199, chain 33 cell 2
+	.byte	0x00	; last 1 bytes of st_note 0, 72, 87, 12, 0 (split by a cell boundary)
+	st_note2	0, 55, 92, 15, 0, 3, 0
+	st_note	0, 67, 93, 19, 0
+	st_note	48, 60, 85, 14, 0
+	st_note2	48, 64, 87, 15, 0, 0, 17
+	st_note2	48, 67, 96, 12, 0, 3, 0
+	st_note	48, 72, 83, 12, 0
+	st_note2	48, 55, 92, 15, 0, 3, 0
+	st_note	48, 67, 90, 17, 0
+	st_beat
+	st_note	0, 60, 83, 15, 0
+	st_note2	0, 64, 82, 14, 0, 0, 17
+	st_note2	0, 67, 93, 12, 0, 3, 0
+	st_note	0, 72, 79, 11, 0
+	st_note2	0, 55, 93, 15, 0, 3, 0
+	st_note	0, 67, 92, 17, 0
+	st_note	48, 60, 90, 55, 0
+	st_note2	48, 64, 86, 56, 0, 0, 17
+	st_note2	48, 67, 97, 53, 0, 3, 0
+	st_note	48, 72, 82, 54, 0
+	st_note2	48, 55, 90, 57, 0, 3, 0
+	st_note	48, 67, 90, 58, 0
+	st_beat
+	st_note	48, 60, 93, 54, 0
+	st_note2	48, 64, 90, 55, 0, 0, 17
+	st_note2	48, 67, 100, 52, 0, 3, 0
+	st_note	48, 72, 84, 53, 0
+	st_note2	48, 55, 90, 55, 0, 3, 0
+	st_note	48, 67, 92, 56, 0
+	st_beat
+	st_note2	48, 64, 92, 56, 0, 0, 17
+	st_note2	48, 67, 103, 53, 0, 3, 0
+	st_note	48, 60, 87, 52, 0
+	st_note	48, 72, 84, 53, 0
+	st_note2	48, 55, 90, 55, 0, 3, 0
+	st_note	48, 67, 90, 56, 0
+	st_beat
+	st_note	48, 60, 90, 16, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	.byte	0x91, 0x30, 0x43, 0x67, 0x0c, 0x00	; first 6 bytes of st_note2 48, 67, 103, 12, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b3, 0xffff	; block 200, chain 33 cell 3
+	.byte	0x03, 0x00	; last 2 bytes of st_note2 48, 67, 103, 12, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 72, 87, 11, 0
+	st_note2	48, 55, 94, 16, 0, 3, 0
+	st_note	48, 67, 91, 16, 0
+	st_beat
+	st_note	0, 60, 89, 52, 0
+	st_note2	0, 64, 90, 51, 0, 0, 17
+	st_note2	0, 67, 99, 50, 0, 3, 0
+	st_note	0, 72, 83, 50, 0
+	st_note2	0, 55, 96, 51, 0, 3, 0
+	st_note	0, 67, 88, 55, 0
+	st_beat
+	st_note	0, 60, 92, 67, 0
+	st_note2	0, 64, 93, 68, 0, 0, 17
+	st_note2	0, 67, 102, 68, 0, 3, 0
+	st_note	0, 72, 86, 68, 0
+	st_note2	0, 55, 97, 58, 0, 3, 0
+	st_note	0, 67, 93, 62, 0
+	st_beat
+	st_end
+	.byte	0x3c, 0x50, 0x11, 0x00, 0x90, 0x00, 0x43, 0x5e, 0x10, 0x00, 0x91, 0x00, 0x40, 0x5f, 0x0f, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x91, 0x00, 0x37, 0x52, 0x11, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x5e, 0x13, 0x00
+	.byte	0x90, 0x30, 0x3c, 0x51, 0x11, 0x00, 0x91, 0x30, 0x40, 0x5f, 0x11, 0x00, 0x00, 0x11, 0x91, 0x30
+	.byte	0x37, 0x55, 0x11, 0x00, 0x03, 0x00, 0x81, 0x83, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0023, 0x00b6	; block 201, chain 35 cell 1
+	st_note	72, 102, 110, 12, 0
+	st_note	72, 74, 75, 12, 0
+	st_note	72, 53, 107, 14, 0
+	st_beat
+	st_note	0, 36, 104, 54, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 62, 10, 0
+	st_note	48, 50, 96, 16, 0
+	st_note	48, 74, 84, 11, 0
+	st_note	48, 57, 104, 12, 0
+	st_note	72, 74, 72, 11, 0
+	st_beat
+	st_note	0, 36, 104, 56, 0
+	st_note	0, 38, 110, 70, 0
+	st_note	0, 48, 98, 13, 0
+	st_note	0, 74, 114, 17, 0
+	st_note	0, 69, 114, 79, 0
+	st_note	0, 55, 102, 13, 0
+	st_note	24, 74, 71, 12, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 74, 82, 11, 0
+	st_note	48, 53, 99, 12, 0
+	st_note	72, 74, 54, 11, 0
+	st_note	72, 53, 95, 13, 0
+	st_beat
+	st_note	0, 36, 107, 53, 0
+	st_note	0, 48, 92, 11, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	24, 48, 98, 10, 0
+	st_note	24, 74, 80, 13, 0
+	st_note	48, 50, 102, 38, 0
+	st_note	48, 74, 86, 13, 0
+	st_note	48, 55, 104, 11, 0
+	st_note	72, 74, 75, 12, 0
+	st_beat
+	st_note	0, 67, 106, 19, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 38, 107, 77, 0
+	st_note	0, 69, 111, 15, 0
+	st_note	0, 48, 87, 12, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 55, 99, 12, 0
+	st_note	24, 67, 108, 19, 0
+	.byte	0x90, 0x18, 0x30, 0x60, 0x0d	; first 5 bytes of st_note 24, 48, 96, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b5, 0x00b7	; block 202, chain 35 cell 2
+	.byte	0x00	; last 1 bytes of st_note 24, 48, 96, 13, 0 (split by a cell boundary)
+	st_note	24, 74, 62, 10, 0
+	st_note	48, 67, 105, 19, 0
+	st_note	48, 69, 108, 18, 0
+	st_note	48, 50, 99, 40, 0
+	st_note	48, 74, 83, 12, 0
+	st_note	48, 53, 102, 14, 0
+	st_note	72, 107, 114, 19, 0
+	st_note	72, 67, 106, 19, 0
+	st_note	72, 38, 93, 72, 0
+	st_note	72, 74, 78, 15, 0
+	st_beat
+	st_note	0, 36, 105, 52, 0
+	st_note	0, 48, 93, 13, 0
+	st_note	0, 24, 105, 69, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 80, 10, 0
+	st_note	48, 50, 102, 18, 0
+	st_note	48, 74, 77, 11, 0
+	st_note	48, 57, 106, 15, 0
+	st_note	72, 74, 71, 13, 0
+	st_beat
+	st_note	0, 36, 103, 57, 0
+	st_note	0, 38, 109, 70, 0
+	st_note	0, 48, 96, 15, 0
+	st_note	0, 74, 110, 16, 0
+	st_note	0, 69, 112, 81, 0
+	st_note	24, 74, 78, 11, 0
+	st_note	48, 50, 102, 16, 0
+	st_note	48, 74, 77, 12, 0
+	st_note	48, 55, 102, 14, 0
+	st_note	72, 74, 77, 12, 0
+	st_beat
+	st_note	0, 36, 105, 55, 0
+	st_note	0, 48, 99, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	0, 53, 103, 14, 0
+	st_note	24, 74, 84, 11, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 104, 16, 0
+	st_note	48, 74, 81, 12, 0
+	st_note	72, 74, 83, 12, 0
+	st_beat
+	st_note	0, 36, 98, 52, 0
+	st_note	0, 38, 109, 74, 0
+	.byte	0x90, 0x00, 0x66, 0x6b	; first 4 bytes of st_note 0, 102, 107, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b6, 0x00b8	; block 203, chain 35 cell 3
+	.byte	0x0c, 0x00	; last 2 bytes of st_note 0, 102, 107, 12, 0 (split by a cell boundary)
+	st_note	0, 48, 94, 12, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 69, 114, 73, 0
+	st_note	0, 55, 108, 13, 0
+	st_note	24, 48, 94, 11, 0
+	st_note	24, 74, 92, 12, 0
+	st_note	48, 102, 107, 12, 0
+	st_note	48, 50, 102, 39, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	48, 53, 98, 12, 0
+	st_note	72, 102, 107, 12, 0
+	st_note	72, 74, 87, 12, 0
+	st_note	72, 53, 104, 17, 0
+	st_beat
+	st_note	0, 36, 107, 58, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	24, 74, 86, 13, 0
+	st_note	48, 50, 100, 18, 0
+	st_note	48, 38, 96, 90, 0
+	st_note	48, 74, 82, 13, 0
+	st_note	48, 57, 97, 11, 0
+	st_note	72, 74, 74, 14, 0
+	st_beat
+	st_note	0, 36, 110, 56, 0
+	st_note	0, 38, 110, 67, 0
+	st_note	0, 48, 98, 14, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 69, 116, 81, 0
+	st_note	0, 55, 99, 12, 0
+	st_note	24, 74, 78, 12, 0
+	st_note	48, 50, 100, 16, 0
+	st_note	48, 74, 77, 12, 0
+	st_note	48, 53, 96, 13, 0
+	st_note	72, 38, 90, 17, 0
+	st_note	72, 74, 80, 14, 0
+	st_note	72, 53, 104, 14, 0
+	st_beat
+	st_note	0, 36, 106, 50, 0
+	st_note	0, 48, 98, 12, 0
+	st_note	0, 74, 116, 17, 0
+	st_note	24, 48, 97, 11, 0
+	st_note	24, 74, 75, 10, 0
+	.byte	0x90, 0x30, 0x32, 0x67	; first 4 bytes of st_note 48, 50, 103, 28, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b7, 0xffff	; block 204, chain 35 cell 4
+	.byte	0x1c, 0x00	; last 2 bytes of st_note 48, 50, 103, 28, 0 (split by a cell boundary)
+	st_note	48, 38, 89, 12, 0
+	st_note	48, 74, 90, 11, 0
+	st_note	48, 55, 104, 12, 0
+	st_note	72, 74, 81, 13, 0
+	st_beat
+	st_note	0, 67, 108, 19, 0
+	st_note	0, 36, 111, 39, 0
+	st_note	0, 38, 109, 59, 0
+	st_note	0, 69, 111, 16, 0
+	st_note	0, 48, 90, 10, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 55, 100, 12, 0
+	st_note	24, 67, 99, 19, 0
+	st_note	24, 48, 98, 11, 0
+	st_note	24, 38, 102, 11, 0
+	st_note	24, 74, 84, 13, 0
+	st_note	48, 67, 104, 19, 0
+	st_note	48, 69, 108, 18, 0
+	st_note	48, 50, 99, 21, 0
+	st_note	48, 38, 103, 24, 0
+	st_note	48, 74, 94, 12, 0
+	st_note	48, 53, 107, 15, 0
+	st_note	72, 107, 106, 19, 0
+	st_note	72, 67, 107, 19, 0
+	st_note	72, 74, 92, 9, 0
+	st_beat
+	st_end
+	.fill	100, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0025, 0x00ba	; block 205, chain 37 cell 1
+	.byte	0x00, 0x43, 0x4f, 0x0f, 0x00, 0x03, 0x00	; last 7 bytes of st_note2 0, 67, 79, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 79, 75, 15, 0
+	st_note	48, 72, 67, 13, 0
+	st_note2	48, 76, 73, 12, 0, 0, 17
+	st_note2	48, 67, 78, 16, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 14, 0
+	st_note	0, 72, 69, 12, 0
+	st_note2	0, 76, 75, 12, 0, 0, 17
+	st_note2	0, 67, 79, 13, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 78, 15, 0, 0, 17
+	st_note	48, 72, 70, 13, 0
+	st_note2	48, 67, 82, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 12, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 71, 10, 0
+	st_note2	0, 67, 83, 14, 0, 3, 0
+	st_note2	24, 76, 78, 14, 0, 0, 17
+	st_note	24, 79, 80, 13, 0
+	st_note	24, 72, 69, 12, 0
+	st_note2	24, 67, 87, 12, 0, 3, 0
+	st_note	48, 79, 85, 32, 0
+	st_note2	48, 76, 87, 31, 0, 0, 17
+	st_note	48, 72, 80, 27, 0
+	st_note2	48, 67, 89, 30, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 72, 13, 0, 0, 17
+	st_note	0, 79, 76, 14, 0
+	st_note	0, 72, 63, 12, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	24, 76, 83, 13, 0, 0, 17
+	st_note	24, 79, 89, 12, 0
+	st_note	24, 72, 78, 12, 0
+	st_note2	24, 67, 86, 12, 0, 3, 0
+	st_note	48, 72, 82, 38, 0
+	st_note2	48, 76, 89, 41, 0, 0, 17
+	.byte	0x90	; first 1 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00b9, 0x00bb	; block 206, chain 37 cell 2
+	.byte	0x30, 0x4f, 0x56, 0x27, 0x00	; last 5 bytes of st_note 48, 79, 86, 39, 0 (split by a cell boundary)
+	st_note2	48, 67, 93, 31, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 61, 12, 0, 0, 17
+	st_note	0, 79, 69, 12, 0
+	st_note	0, 72, 60, 10, 0
+	st_note2	0, 67, 69, 15, 0, 3, 0
+	st_note	48, 79, 78, 16, 0
+	st_note2	48, 76, 79, 15, 0, 0, 17
+	st_note	48, 72, 72, 13, 0
+	st_note2	48, 67, 87, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 78, 14, 0
+	st_note2	0, 76, 80, 12, 0, 0, 17
+	st_note	0, 72, 72, 12, 0
+	st_note2	0, 67, 82, 14, 0, 3, 0
+	st_note	48, 79, 80, 15, 0
+	st_note	48, 72, 75, 14, 0
+	st_note2	48, 76, 80, 13, 0, 0, 17
+	st_note2	48, 67, 85, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 15, 0
+	st_note	0, 72, 74, 14, 0
+	st_note2	0, 76, 82, 12, 0, 0, 17
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 79, 76, 13, 0
+	st_note	48, 72, 69, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 76, 15, 0, 3, 0
+	st_beat
+	st_note	0, 79, 75, 13, 0
+	st_note2	0, 76, 78, 12, 0, 0, 17
+	st_note	0, 72, 66, 11, 0
+	st_note2	0, 67, 78, 14, 0, 3, 0
+	st_note	48, 72, 70, 13, 0
+	st_note	48, 79, 76, 13, 0
+	st_note2	48, 76, 78, 12, 0, 0, 17
+	st_note2	48, 67, 72, 12, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 14, 0
+	.byte	0x90	; first 1 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ba, 0x00bc	; block 207, chain 37 cell 3
+	.byte	0x00, 0x48, 0x48, 0x0d, 0x00	; last 5 bytes of st_note 0, 72, 72, 13, 0 (split by a cell boundary)
+	st_note2	0, 76, 78, 13, 0, 0, 17
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note	48, 79, 78, 15, 0
+	st_note2	48, 76, 79, 13, 0, 0, 17
+	st_note	48, 72, 72, 12, 0
+	st_note2	48, 67, 72, 14, 0, 3, 0
+	st_beat
+	st_note	0, 79, 79, 14, 0
+	st_note	0, 72, 72, 13, 0
+	st_note2	0, 76, 79, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note	48, 79, 79, 14, 0
+	st_note2	48, 76, 82, 14, 0, 0, 17
+	st_note	48, 72, 73, 13, 0
+	st_note2	48, 67, 79, 13, 0, 3, 0
+	st_beat
+	st_note	0, 79, 80, 13, 0
+	st_note2	0, 76, 82, 10, 0, 0, 17
+	st_note	0, 72, 73, 10, 0
+	st_note2	0, 67, 80, 12, 0, 3, 0
+	st_note2	24, 76, 80, 11, 0, 0, 17
+	st_note	24, 79, 80, 10, 0
+	st_note	24, 72, 69, 10, 0
+	st_note2	24, 67, 80, 13, 0, 3, 0
+	st_note2	48, 76, 92, 32, 0, 0, 17
+	st_note	48, 72, 85, 32, 0
+	st_note	48, 79, 91, 32, 0
+	st_note2	48, 67, 89, 31, 0, 3, 0
+	st_beat
+	st_note	0, 79, 76, 13, 0
+	st_note	0, 72, 57, 10, 0
+	st_note2	0, 76, 72, 11, 0, 0, 17
+	st_note2	0, 67, 82, 16, 0, 3, 0
+	st_note2	24, 76, 80, 10, 0, 0, 17
+	st_note	24, 72, 75, 11, 0
+	st_note	24, 79, 89, 10, 0
+	st_note2	24, 67, 90, 14, 0, 3, 0
+	.byte	0x91	; first 1 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00bb, 0xffff	; block 208, chain 37 cell 4
+	.byte	0x30, 0x4c, 0x5b, 0x2b, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 48, 76, 91, 43, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 72, 85, 42, 0
+	st_note	48, 79, 93, 44, 0
+	st_note2	48, 67, 90, 44, 0, 3, 0
+	st_beat
+	st_end
+	.byte	0x90, 0x30, 0x4d, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x4a, 0x62, 0x0a, 0x00, 0x90, 0x30, 0x48, 0x50	; after st_end
+	.byte	0x0d, 0x00, 0x90, 0x48, 0x4f, 0x4f, 0x0b, 0x00, 0x90, 0x48, 0x4d, 0x5c, 0x09, 0x00, 0x90, 0x48
+	.byte	0x4a, 0x5a, 0x09, 0x00, 0x90, 0x48, 0x48, 0x45, 0x0b, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x50, 0x0b
+	.byte	0x00, 0x91, 0x00, 0x4c, 0x5c, 0x09, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x45, 0x0c, 0x00, 0x90
+	.byte	0x30, 0x4f, 0x5a, 0x0f, 0x00, 0x91, 0x30, 0x4c, 0x62, 0x0e, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48
+	.byte	0x4f, 0x0f, 0x00, 0x81, 0x90, 0x00, 0x48, 0x54, 0x0e, 0x00, 0x90, 0x00, 0x4f, 0x5d, 0x0c, 0x00
+	.byte	0x91, 0x00, 0x4c, 0x64, 0x0c, 0x00, 0x00, 0x11, 0x90, 0x30, 0x4f, 0x5a, 0x10, 0x00, 0x91, 0x30
+	.byte	0x4c, 0x62, 0x10, 0x00, 0x00, 0x11, 0x90, 0x30, 0x48, 0x51, 0x10, 0x00, 0x81, 0x90, 0x00, 0x4a
+	.byte	0x67, 0x09, 0x00, 0x90, 0x00, 0x48, 0x51, 0x0d, 0x00, 0x90, 0x00, 0x4f, 0x5c, 0x0a, 0x00, 0x90
+	.byte	0x00, 0x4d, 0x67, 0x09, 0x00, 0x90, 0x18, 0x48, 0x41, 0x0c, 0x00, 0x90, 0x18, 0x4f, 0x4f, 0x0a
+	.byte	0x00, 0x90, 0x18, 0x4d, 0x56, 0x08, 0x00, 0x90, 0x18, 0x4a, 0x53, 0x08, 0x00, 0x90, 0x30, 0x4f
+	.byte	0x54, 0x20, 0x00, 0x90, 0x30, 0x4d, 0x5d, 0x21, 0x00, 0x90, 0x30, 0x4a, 0x5c, 0x21, 0x00, 0x90
+	.byte	0x30, 0x48, 0x4c, 0x22, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x54, 0x0b, 0x00, 0x90, 0x00, 0x4d, 0x5d
+	.byte	0x09, 0x00, 0x90, 0x00, 0x4a, 0x5c, 0x09, 0x00, 0x90, 0x00, 0x48, 0x50
+	style_cell_end	
+	style_cell	0x80, 0x0026, 0x00be	; block 209, chain 38 cell 1
+	st_note	48, 67, 91, 55, 0
+	st_beat
+	st_note	48, 60, 93, 53, 0
+	st_note2	48, 64, 93, 55, 0, 0, 17
+	st_note2	48, 67, 104, 53, 0, 3, 0
+	st_note	48, 72, 87, 54, 0
+	st_note2	48, 55, 93, 57, 0, 3, 0
+	st_note	48, 67, 96, 56, 0
+	st_beat
+	st_note2	48, 64, 90, 14, 0, 0, 17
+	st_note2	48, 67, 99, 11, 0, 3, 0
+	st_note	48, 72, 83, 12, 0
+	st_note	48, 60, 94, 13, 0
+	st_note2	48, 55, 93, 15, 0, 3, 0
+	st_note	48, 67, 95, 17, 0
+	st_beat
+	st_note	0, 60, 95, 51, 0
+	st_note2	0, 64, 90, 54, 0, 0, 17
+	st_note	0, 72, 87, 53, 0
+	st_note2	0, 67, 100, 52, 0, 3, 0
+	st_note2	0, 55, 93, 53, 0, 3, 0
+	st_note	0, 67, 92, 57, 0
+	st_beat
+	st_note	0, 60, 94, 50, 0
+	st_note2	0, 64, 93, 54, 0, 0, 17
+	st_note2	0, 67, 103, 54, 0, 3, 0
+	st_note	0, 72, 80, 54, 0
+	st_note2	0, 55, 88, 56, 0, 3, 0
+	st_note	0, 67, 94, 54, 0
+	st_beat
+	st_note	0, 60, 93, 52, 0
+	st_note2	0, 67, 103, 54, 0, 3, 0
+	st_note2	0, 64, 93, 53, 0, 0, 17
+	st_note	0, 72, 83, 54, 0
+	st_note2	0, 55, 93, 59, 0, 3, 0
+	st_note	0, 67, 93, 61, 0
+	st_beat
+	st_note	0, 60, 88, 15, 0
+	st_note2	0, 64, 94, 15, 0, 0, 17
+	st_note2	0, 67, 102, 14, 0, 3, 0
+	.byte	0x90, 0x00, 0x48, 0x57, 0x0c	; first 5 bytes of st_note 0, 72, 87, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00bd, 0x00bf	; block 210, chain 38 cell 2
+	.byte	0x00	; last 1 bytes of st_note 0, 72, 87, 12, 0 (split by a cell boundary)
+	st_note2	0, 55, 92, 15, 0, 3, 0
+	st_note	0, 67, 93, 19, 0
+	st_note	48, 60, 85, 14, 0
+	st_note2	48, 64, 87, 15, 0, 0, 17
+	st_note2	48, 67, 96, 12, 0, 3, 0
+	st_note	48, 72, 83, 12, 0
+	st_note2	48, 55, 92, 15, 0, 3, 0
+	st_note	48, 67, 90, 17, 0
+	st_beat
+	st_note	0, 60, 83, 15, 0
+	st_note2	0, 64, 82, 14, 0, 0, 17
+	st_note2	0, 67, 93, 12, 0, 3, 0
+	st_note	0, 72, 79, 11, 0
+	st_note2	0, 55, 93, 15, 0, 3, 0
+	st_note	0, 67, 92, 17, 0
+	st_note	48, 60, 90, 55, 0
+	st_note2	48, 64, 86, 56, 0, 0, 17
+	st_note2	48, 67, 97, 53, 0, 3, 0
+	st_note	48, 72, 82, 54, 0
+	st_note2	48, 55, 90, 57, 0, 3, 0
+	st_note	48, 67, 90, 58, 0
+	st_beat
+	st_note	48, 60, 93, 54, 0
+	st_note2	48, 64, 90, 55, 0, 0, 17
+	st_note2	48, 67, 100, 52, 0, 3, 0
+	st_note	48, 72, 84, 53, 0
+	st_note2	48, 55, 90, 55, 0, 3, 0
+	st_note	48, 67, 92, 56, 0
+	st_beat
+	st_note2	48, 64, 92, 56, 0, 0, 17
+	st_note2	48, 67, 103, 53, 0, 3, 0
+	st_note	48, 60, 87, 52, 0
+	st_note	48, 72, 84, 53, 0
+	st_note2	48, 55, 90, 55, 0, 3, 0
+	st_note	48, 67, 90, 56, 0
+	st_beat
+	st_note	48, 60, 90, 16, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	.byte	0x91, 0x30, 0x43, 0x67, 0x0c, 0x00	; first 6 bytes of st_note2 48, 67, 103, 12, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00be, 0xffff	; block 211, chain 38 cell 3
+	.byte	0x03, 0x00	; last 2 bytes of st_note2 48, 67, 103, 12, 0, 3, 0 (split by a cell boundary)
+	st_note	48, 72, 87, 11, 0
+	st_note2	48, 55, 94, 16, 0, 3, 0
+	st_note	48, 67, 91, 16, 0
+	st_beat
+	st_note	0, 60, 89, 52, 0
+	st_note2	0, 64, 90, 51, 0, 0, 17
+	st_note2	0, 67, 99, 50, 0, 3, 0
+	st_note	0, 72, 83, 50, 0
+	st_note2	0, 55, 96, 51, 0, 3, 0
+	st_note	0, 67, 88, 55, 0
+	st_beat
+	st_note	0, 60, 92, 67, 0
+	st_note2	0, 64, 93, 68, 0, 0, 17
+	st_note2	0, 67, 102, 68, 0, 3, 0
+	st_note	0, 72, 86, 68, 0
+	st_note2	0, 55, 97, 58, 0, 3, 0
+	st_note	0, 67, 93, 62, 0
+	st_beat
+	st_end
+	.byte	0x3c, 0x50, 0x11, 0x00, 0x90, 0x00, 0x43, 0x5e, 0x10, 0x00, 0x91, 0x00, 0x40, 0x5f, 0x0f, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x91, 0x00, 0x37, 0x52, 0x11, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x5e, 0x13, 0x00
+	.byte	0x90, 0x30, 0x3c, 0x51, 0x11, 0x00, 0x91, 0x30, 0x40, 0x5f, 0x11, 0x00, 0x00, 0x11, 0x91, 0x30
+	.byte	0x37, 0x55, 0x11, 0x00, 0x03, 0x00, 0x81, 0x83, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0028, 0xffff	; block 212, chain 40 cell 1
+	st_beat
+	st_note	0, 36, 112, 53, 0
+	st_note	0, 49, 66, 13, 0
+	st_note	48, 48, 87, 17, 0
+	st_beat
+	st_note	0, 36, 112, 57, 0
+	st_note	0, 38, 109, 66, 0
+	st_note	0, 74, 107, 2, 1
+	st_note	0, 49, 67, 12, 0
+	st_note	48, 48, 90, 13, 0
+	st_beat
+	st_note	0, 36, 114, 57, 0
+	st_note	0, 49, 70, 12, 0
+	st_note	48, 48, 83, 13, 0
+	st_beat
+	st_note	0, 36, 114, 58, 0
+	st_note	0, 38, 109, 63, 0
+	st_note	0, 74, 107, 4, 1
+	st_note	0, 49, 74, 13, 0
+	st_note	48, 48, 83, 11, 0
+	st_beat
+	st_note	0, 36, 111, 52, 0
+	st_note	0, 49, 72, 12, 0
+	st_note	48, 48, 92, 12, 0
+	st_beat
+	st_note	0, 36, 114, 56, 0
+	st_note	0, 38, 109, 64, 0
+	st_note	0, 74, 112, 31, 0
+	st_note	0, 49, 77, 13, 0
+	st_note	48, 48, 90, 12, 0
+	st_beat
+	st_end
+	.byte	0x2d, 0x00, 0x90, 0x00, 0x24, 0x63, 0x3f, 0x00, 0x90, 0x00, 0x26, 0x6c, 0x0f, 0x01, 0x90, 0x00	; after st_end
+	.byte	0x4a, 0x6e, 0x35, 0x01, 0x90, 0x30, 0x32, 0x4e, 0x1b, 0x00, 0x90, 0x48, 0x31, 0x4d, 0x19, 0x00
+	.byte	0x81, 0x90, 0x00, 0x30, 0x4f, 0x2c, 0x00, 0x90, 0x00, 0x24, 0x63, 0x3e, 0x00, 0x90, 0x30, 0x32
+	.byte	0x4e, 0x1c, 0x00, 0x90, 0x48, 0x31, 0x47, 0x18, 0x00, 0x81, 0x90, 0x00, 0x30, 0x45, 0x2e, 0x00
+	.byte	0x90, 0x00, 0x24, 0x6c, 0x44, 0x00, 0x90, 0x00, 0x26, 0x6f, 0x01, 0x01, 0x90, 0x00, 0x4a, 0x6e
+	.byte	0x26, 0x00, 0x90, 0x30, 0x32, 0x49, 0x18, 0x00, 0x90, 0x48, 0x31, 0x56, 0x16, 0x00, 0x81, 0x83
+	.byte	0x31
+	style_cell_end	
+	style_cell	0x80, 0x002a, 0xffff	; block 213, chain 42 cell 1
+	.byte	0x00, 0x00, 0x11	; last 3 bytes of st_note2 48, 64, 84, 17, 0, 0, 17 (split by a cell boundary)
+	st_beat
+	st_note2	48, 55, 78, 37, 0, 3, 0
+	st_note	48, 60, 93, 35, 0
+	st_note2	48, 64, 92, 33, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 16, 0, 3, 0
+	st_note	48, 60, 84, 18, 0
+	st_note2	48, 64, 85, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 64, 84, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 51, 0, 3, 0
+	st_note	48, 60, 90, 49, 0
+	st_note2	48, 64, 90, 51, 0, 0, 17
+	st_beat
+	st_end
+	.byte	0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a	; after st_end
+	.byte	0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00
+	style_cell_end	
+	style_cell	0x80, 0x002b, 0x00c3	; block 214, chain 43 cell 1
+	.byte	0x0e, 0x00	; last 2 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	st_note2	48, 67, 75, 16, 0, 3, 0
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note2	72, 64, 72, 15, 0, 0, 17
+	st_note2	72, 67, 72, 14, 0, 3, 0
+	st_note	72, 60, 60, 13, 0
+	st_beat
+	st_note2	0, 64, 83, 17, 0, 0, 17
+	st_note2	0, 67, 76, 19, 0, 3, 0
+	st_note	0, 60, 73, 16, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	72, 64, 67, 14, 0, 0, 17
+	st_note2	72, 67, 71, 14, 0, 3, 0
+	st_note	72, 60, 51, 13, 0
+	st_beat
+	st_note2	0, 64, 87, 18, 0, 0, 17
+	st_note	0, 60, 75, 16, 0
+	st_note2	0, 67, 80, 18, 0, 3, 0
+	st_note	48, 60, 65, 13, 0
+	st_note2	48, 67, 73, 13, 0, 3, 0
+	st_note2	48, 64, 75, 11, 0, 0, 17
+	st_note2	72, 67, 67, 19, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note	72, 60, 54, 16, 0
+	st_beat
+	st_note	0, 60, 76, 17, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note2	48, 64, 79, 13, 0, 0, 17
+	st_note2	72, 67, 66, 19, 0, 3, 0
+	st_note2	72, 64, 60, 17, 0, 0, 17
+	st_note	72, 60, 57, 18, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00c2, 0x00c4	; block 215, chain 43 cell 2
+	.byte	0x00, 0x40, 0x51, 0x0e, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 67, 68, 16, 0, 3, 0
+	st_note2	24, 64, 58, 14, 0, 0, 17
+	st_note	24, 60, 47, 13, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	48, 64, 80, 13, 0, 0, 17
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 74, 14, 0, 3, 0
+	st_note	72, 60, 62, 14, 0
+	st_beat
+	st_note2	0, 67, 78, 19, 0, 3, 0
+	st_note	0, 60, 72, 17, 0
+	st_note2	0, 64, 85, 18, 0, 0, 17
+	st_note2	48, 67, 73, 17, 0, 3, 0
+	st_note2	48, 64, 78, 15, 0, 0, 17
+	st_note	48, 60, 63, 14, 0
+	st_note2	72, 67, 69, 16, 0, 3, 0
+	st_note2	72, 64, 66, 16, 0, 0, 17
+	st_note	72, 60, 59, 16, 0
+	st_beat
+	st_note	0, 60, 75, 18, 0
+	st_note2	0, 64, 86, 17, 0, 0, 17
+	st_note2	0, 67, 79, 19, 0, 3, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note2	48, 64, 79, 14, 0, 0, 17
+	st_note	48, 60, 65, 14, 0
+	st_note2	72, 64, 64, 16, 0, 0, 17
+	st_note2	72, 67, 71, 16, 0, 3, 0
+	st_note	72, 60, 56, 15, 0
+	st_beat
+	st_note2	0, 67, 79, 17, 0, 3, 0
+	st_note2	0, 64, 84, 16, 0, 0, 17
+	st_note	0, 60, 78, 16, 0
+	st_note	48, 60, 66, 15, 0
+	.byte	0x91, 0x30, 0x43, 0x48, 0x0f	; first 5 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00c3, 0x00c5	; block 216, chain 43 cell 3
+	.byte	0x00, 0x03, 0x00	; last 3 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	st_note2	48, 64, 75, 13, 0, 0, 17
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note2	72, 67, 75, 15, 0, 3, 0
+	st_note	72, 60, 54, 14, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	0, 64, 82, 13, 0, 0, 17
+	st_note	24, 60, 57, 16, 0
+	st_note2	24, 64, 66, 15, 0, 0, 17
+	st_note2	24, 67, 69, 14, 0, 3, 0
+	st_note	48, 60, 65, 14, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 73, 13, 0, 3, 0
+	st_note	72, 60, 59, 14, 0
+	st_beat
+	st_note	0, 60, 72, 16, 0
+	st_note2	0, 64, 82, 15, 0, 0, 17
+	st_note2	0, 67, 78, 15, 0, 3, 0
+	st_note	48, 60, 70, 14, 0
+	st_note2	48, 64, 81, 12, 0, 0, 17
+	st_note2	48, 67, 78, 12, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note2	72, 67, 69, 15, 0, 3, 0
+	st_note	72, 60, 55, 15, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note2	0, 64, 90, 16, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 76, 12, 0, 3, 0
+	st_note2	48, 64, 81, 11, 0, 0, 17
+	st_note2	72, 64, 62, 15, 0, 0, 17
+	.byte	0x91, 0x48, 0x43, 0x42, 0x0f, 0x00, 0x03	; first 7 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00c4, 0xffff	; block 217, chain 43 cell 4
+	.byte	0x00	; last 1 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	72, 60, 45, 14, 0
+	st_beat
+	st_note	0, 60, 73, 16, 0
+	st_note2	0, 67, 81, 16, 0, 3, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note	48, 60, 66, 14, 0
+	st_note2	48, 64, 76, 12, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 72, 17, 0, 0, 17
+	st_note2	72, 67, 74, 16, 0, 3, 0
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 75, 15, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note2	24, 64, 69, 15, 0, 0, 17
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	st_note	24, 60, 50, 13, 0
+	st_note2	48, 64, 83, 14, 0, 0, 17
+	st_note	48, 60, 72, 14, 0
+	st_note2	48, 67, 76, 14, 0, 3, 0
+	st_note2	72, 64, 76, 21, 0, 0, 17
+	st_note2	72, 67, 78, 20, 0, 3, 0
+	st_note	72, 60, 68, 16, 0
+	st_beat
+	st_end
+	.fill	84, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x002d, 0x00c7	; block 218, chain 45 cell 1
+	.byte	0x4a, 0x69, 0x00, 0x01	; last 4 bytes of st_note 0, 74, 105, 0, 1 (split by a cell boundary)
+	st_note	0, 49, 63, 10, 0
+	st_note	48, 74, 73, 10, 0
+	st_note	48, 50, 78, 61, 0
+	st_beat
+	st_note	0, 36, 116, 56, 0
+	st_note	0, 49, 67, 12, 0
+	st_note	0, 74, 68, 13, 0
+	st_note	48, 48, 85, 18, 0
+	st_note	48, 74, 83, 15, 0
+	st_beat
+	st_note	0, 36, 112, 57, 0
+	st_note	0, 38, 105, 62, 0
+	st_note	0, 74, 107, 88, 0
+	st_note	0, 49, 60, 12, 0
+	st_note	48, 48, 85, 17, 0
+	st_note	48, 74, 74, 12, 0
+	st_beat
+	st_note	0, 36, 112, 53, 0
+	st_note	0, 49, 66, 13, 0
+	st_note	0, 74, 76, 11, 0
+	st_note	48, 48, 87, 17, 0
+	st_note	48, 74, 82, 15, 0
+	st_beat
+	st_note	0, 36, 112, 57, 0
+	st_note	0, 38, 109, 66, 0
+	st_note	0, 74, 107, 2, 1
+	st_note	0, 49, 67, 12, 0
+	st_note	48, 74, 71, 12, 0
+	st_note	48, 50, 82, 59, 0
+	st_beat
+	st_note	0, 36, 114, 57, 0
+	st_note	0, 49, 70, 12, 0
+	st_note	0, 74, 81, 13, 0
+	st_note	48, 48, 83, 13, 0
+	st_note	48, 74, 86, 13, 0
+	st_beat
+	st_note	0, 36, 114, 58, 0
+	st_note	0, 38, 109, 63, 0
+	st_note	0, 74, 107, 4, 1
+	st_note	0, 49, 74, 13, 0
+	st_note	48, 48, 83, 11, 0
+	st_note	48, 74, 69, 13, 0
+	st_beat
+	st_note	0, 36, 111, 52, 0
+	st_note	0, 49, 72, 12, 0
+	st_note	0, 74, 84, 12, 0
+	.byte	0x90, 0x30, 0x30, 0x5c	; first 4 bytes of st_note 48, 48, 92, 12, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00c6, 0xffff	; block 219, chain 45 cell 2
+	.byte	0x0c, 0x00	; last 2 bytes of st_note 48, 48, 92, 12, 0 (split by a cell boundary)
+	st_note	48, 74, 89, 12, 0
+	st_beat
+	st_note	0, 36, 114, 56, 0
+	st_note	0, 38, 109, 64, 0
+	st_note	0, 74, 112, 31, 0
+	st_note	0, 49, 77, 13, 0
+	st_note	48, 74, 83, 14, 0
+	st_note	48, 50, 82, 57, 0
+	st_beat
+	st_end
+	.byte	0x32, 0x52, 0x39, 0x00, 0x81, 0x83, 0x32, 0x52, 0x39, 0x00, 0x81, 0x83, 0x32, 0x52, 0x39, 0x00	; after st_end
+	.byte	0x81, 0x83, 0x32, 0x52, 0x39, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x002f, 0xffff	; block 220, chain 47 cell 1
+	.byte	0x00, 0x00, 0x11	; last 3 bytes of st_note2 48, 64, 84, 17, 0, 0, 17 (split by a cell boundary)
+	st_beat
+	st_note2	48, 55, 78, 37, 0, 3, 0
+	st_note	48, 60, 93, 35, 0
+	st_note2	48, 64, 92, 33, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 16, 0, 3, 0
+	st_note	48, 60, 84, 18, 0
+	st_note2	48, 64, 85, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 64, 84, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 51, 0, 3, 0
+	st_note	48, 60, 90, 49, 0
+	st_note2	48, 64, 90, 51, 0, 0, 17
+	st_beat
+	st_end
+	.byte	0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a	; after st_end
+	.byte	0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x5a, 0x33, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x33, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00
+	style_cell_end	
+	style_cell	0x80, 0x0030, 0x00ca	; block 221, chain 48 cell 1
+	.byte	0x0e, 0x00	; last 2 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	st_note2	48, 67, 75, 16, 0, 3, 0
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note2	72, 64, 72, 15, 0, 0, 17
+	st_note2	72, 67, 72, 14, 0, 3, 0
+	st_note	72, 60, 60, 13, 0
+	st_beat
+	st_note2	0, 64, 83, 17, 0, 0, 17
+	st_note2	0, 67, 76, 19, 0, 3, 0
+	st_note	0, 60, 73, 16, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	72, 64, 67, 14, 0, 0, 17
+	st_note2	72, 67, 71, 14, 0, 3, 0
+	st_note	72, 60, 51, 13, 0
+	st_beat
+	st_note2	0, 64, 87, 18, 0, 0, 17
+	st_note	0, 60, 75, 16, 0
+	st_note2	0, 67, 80, 18, 0, 3, 0
+	st_note	48, 60, 65, 13, 0
+	st_note2	48, 67, 73, 13, 0, 3, 0
+	st_note2	48, 64, 75, 11, 0, 0, 17
+	st_note2	72, 67, 67, 19, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note	72, 60, 54, 16, 0
+	st_beat
+	st_note	0, 60, 76, 17, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note2	48, 64, 79, 13, 0, 0, 17
+	st_note2	72, 67, 66, 19, 0, 3, 0
+	st_note2	72, 64, 60, 17, 0, 0, 17
+	st_note	72, 60, 57, 18, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00c9, 0x00cb	; block 222, chain 48 cell 2
+	.byte	0x00, 0x40, 0x51, 0x0e, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 67, 68, 16, 0, 3, 0
+	st_note2	24, 64, 58, 14, 0, 0, 17
+	st_note	24, 60, 47, 13, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	48, 64, 80, 13, 0, 0, 17
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 74, 14, 0, 3, 0
+	st_note	72, 60, 62, 14, 0
+	st_beat
+	st_note2	0, 67, 78, 19, 0, 3, 0
+	st_note	0, 60, 72, 17, 0
+	st_note2	0, 64, 85, 18, 0, 0, 17
+	st_note2	48, 67, 73, 17, 0, 3, 0
+	st_note2	48, 64, 78, 15, 0, 0, 17
+	st_note	48, 60, 63, 14, 0
+	st_note2	72, 67, 69, 16, 0, 3, 0
+	st_note2	72, 64, 66, 16, 0, 0, 17
+	st_note	72, 60, 59, 16, 0
+	st_beat
+	st_note	0, 60, 75, 18, 0
+	st_note2	0, 64, 86, 17, 0, 0, 17
+	st_note2	0, 67, 79, 19, 0, 3, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note2	48, 64, 79, 14, 0, 0, 17
+	st_note	48, 60, 65, 14, 0
+	st_note2	72, 64, 64, 16, 0, 0, 17
+	st_note2	72, 67, 71, 16, 0, 3, 0
+	st_note	72, 60, 56, 15, 0
+	st_beat
+	st_note2	0, 67, 79, 17, 0, 3, 0
+	st_note2	0, 64, 84, 16, 0, 0, 17
+	st_note	0, 60, 78, 16, 0
+	st_note	48, 60, 66, 15, 0
+	.byte	0x91, 0x30, 0x43, 0x48, 0x0f	; first 5 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ca, 0x00cc	; block 223, chain 48 cell 3
+	.byte	0x00, 0x03, 0x00	; last 3 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	st_note2	48, 64, 75, 13, 0, 0, 17
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note2	72, 67, 75, 15, 0, 3, 0
+	st_note	72, 60, 54, 14, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	0, 64, 82, 13, 0, 0, 17
+	st_note	24, 60, 57, 16, 0
+	st_note2	24, 64, 66, 15, 0, 0, 17
+	st_note2	24, 67, 69, 14, 0, 3, 0
+	st_note	48, 60, 65, 14, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 73, 13, 0, 3, 0
+	st_note	72, 60, 59, 14, 0
+	st_beat
+	st_note	0, 60, 72, 16, 0
+	st_note2	0, 64, 82, 15, 0, 0, 17
+	st_note2	0, 67, 78, 15, 0, 3, 0
+	st_note	48, 60, 70, 14, 0
+	st_note2	48, 64, 81, 12, 0, 0, 17
+	st_note2	48, 67, 78, 12, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note2	72, 67, 69, 15, 0, 3, 0
+	st_note	72, 60, 55, 15, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note2	0, 64, 90, 16, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 76, 12, 0, 3, 0
+	st_note2	48, 64, 81, 11, 0, 0, 17
+	st_note2	72, 64, 62, 15, 0, 0, 17
+	.byte	0x91, 0x48, 0x43, 0x42, 0x0f, 0x00, 0x03	; first 7 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00cb, 0xffff	; block 224, chain 48 cell 4
+	.byte	0x00	; last 1 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	72, 60, 45, 14, 0
+	st_beat
+	st_note	0, 60, 73, 16, 0
+	st_note2	0, 67, 81, 16, 0, 3, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note	48, 60, 66, 14, 0
+	st_note2	48, 64, 76, 12, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 72, 17, 0, 0, 17
+	st_note2	72, 67, 74, 16, 0, 3, 0
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 75, 15, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note2	24, 64, 69, 15, 0, 0, 17
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	st_note	24, 60, 50, 13, 0
+	st_note2	48, 64, 83, 14, 0, 0, 17
+	st_note	48, 60, 72, 14, 0
+	st_note2	48, 67, 76, 14, 0, 3, 0
+	st_note2	72, 64, 76, 21, 0, 0, 17
+	st_note2	72, 67, 78, 20, 0, 3, 0
+	st_note	72, 60, 68, 16, 0
+	st_beat
+	st_end
+	.fill	84, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0031, 0xffff	; block 225, chain 49 cell 1
+	.byte	0x0c, 0x00	; last 2 bytes of st_note 0, 60, 106, 12, 0 (split by a cell boundary)
+	st_note2	48, 55, 110, 15, 0, 3, 0
+	st_beat
+	st_note2	0, 76, 114, 24, 0, 0, 17
+	st_note	24, 72, 96, 20, 0
+	st_note2	48, 67, 99, 19, 0, 3, 0
+	st_note2	72, 76, 103, 34, 0, 0, 17
+	st_beat
+	st_note	0, 72, 99, 25, 0
+	st_note2	24, 67, 91, 19, 0, 3, 0
+	st_note2	48, 76, 114, 46, 0, 0, 17
+	st_beat
+	st_note2	0, 67, 114, 13, 0, 3, 0
+	st_note	48, 72, 106, 16, 0
+	st_beat
+	st_note2	0, 64, 112, 17, 0, 0, 17
+	st_note2	48, 67, 114, 19, 0, 3, 0
+	st_beat
+	st_end
+	.fill	151, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0032, 0xffff	; block 226, chain 50 cell 1
+	.byte	0x00, 0x30, 0x53, 0x27, 0x00	; last 5 bytes of st_note 0, 48, 83, 39, 0 (split by a cell boundary)
+	st_note	0, 36, 98, 60, 0
+	st_note	48, 50, 76, 24, 0
+	st_note	72, 49, 74, 28, 0
+	st_beat
+	st_note	0, 48, 78, 42, 0
+	st_note	0, 36, 100, 59, 0
+	st_note	0, 38, 107, 93, 0
+	st_note	0, 74, 110, 58, 1
+	st_note	48, 50, 75, 26, 0
+	st_note	72, 49, 82, 22, 0
+	st_beat
+	st_note	0, 48, 80, 42, 0
+	st_note	0, 36, 99, 62, 0
+	st_note	48, 50, 75, 26, 0
+	st_note	72, 49, 68, 25, 0
+	st_beat
+	st_note	0, 48, 78, 41, 0
+	st_note	0, 36, 103, 59, 0
+	st_note	0, 38, 111, 19, 1
+	st_note	0, 74, 108, 54, 1
+	st_note	48, 50, 78, 27, 0
+	st_note	72, 49, 77, 23, 0
+	st_beat
+	st_note	0, 48, 81, 46, 0
+	st_note	0, 36, 103, 59, 0
+	st_note	48, 50, 69, 26, 0
+	st_note	72, 49, 49, 25, 0
+	st_beat
+	st_note	0, 48, 80, 45, 0
+	st_note	0, 36, 99, 63, 0
+	st_note	0, 38, 108, 15, 1
+	st_note	0, 74, 110, 53, 1
+	st_note	48, 50, 78, 27, 0
+	st_note	72, 49, 77, 25, 0
+	st_beat
+	st_note	0, 48, 79, 44, 0
+	st_note	0, 36, 99, 62, 0
+	st_note	48, 50, 78, 28, 0
+	st_note	72, 49, 71, 24, 0
+	st_beat
+	st_note	0, 48, 69, 46, 0
+	st_note	0, 36, 108, 68, 0
+	st_note	0, 38, 111, 1, 1
+	st_note	0, 74, 110, 38, 0
+	st_note	48, 50, 73, 24, 0
+	st_note	72, 49, 86, 22, 0
+	st_beat
+	st_end
+	.fill	1, 1, 0x31	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0034, 0xffff	; block 227, chain 52 cell 1
+	.byte	0x00	; last 1 bytes of st_note 0, 60, 80, 13, 0 (split by a cell boundary)
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note	48, 60, 87, 17, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note	48, 60, 83, 19, 0
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note2	48, 64, 83, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 87, 18, 0
+	st_note2	48, 64, 84, 17, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 37, 0, 3, 0
+	st_note	48, 60, 93, 35, 0
+	st_note2	48, 64, 92, 33, 0, 0, 17
+	st_beat
+	st_note2	0, 55, 76, 15, 0, 3, 0
+	st_note	0, 60, 91, 12, 0
+	st_note2	0, 64, 93, 13, 0, 0, 17
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 16, 0, 3, 0
+	st_note	48, 60, 84, 18, 0
+	st_note2	48, 64, 85, 18, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 64, 84, 15, 0, 0, 17
+	st_beat
+	st_note2	48, 55, 78, 51, 0, 3, 0
+	st_note	48, 60, 90, 49, 0
+	st_note2	48, 64, 90, 51, 0, 0, 17
+	st_beat
+	st_end
+	.fill	41, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0035, 0x00d1	; block 228, chain 53 cell 1
+	.byte	0x0e, 0x00	; last 2 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	st_note2	48, 67, 75, 16, 0, 3, 0
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note2	72, 64, 72, 15, 0, 0, 17
+	st_note2	72, 67, 72, 14, 0, 3, 0
+	st_note	72, 60, 60, 13, 0
+	st_beat
+	st_note2	0, 64, 83, 17, 0, 0, 17
+	st_note2	0, 67, 76, 19, 0, 3, 0
+	st_note	0, 60, 73, 16, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	72, 64, 67, 14, 0, 0, 17
+	st_note2	72, 67, 71, 14, 0, 3, 0
+	st_note	72, 60, 51, 13, 0
+	st_beat
+	st_note2	0, 64, 87, 18, 0, 0, 17
+	st_note	0, 60, 75, 16, 0
+	st_note2	0, 67, 80, 18, 0, 3, 0
+	st_note	48, 60, 65, 13, 0
+	st_note2	48, 67, 73, 13, 0, 3, 0
+	st_note2	48, 64, 75, 11, 0, 0, 17
+	st_note2	72, 67, 67, 19, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note	72, 60, 54, 16, 0
+	st_beat
+	st_note	0, 60, 76, 17, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note2	48, 64, 79, 13, 0, 0, 17
+	st_note2	72, 67, 66, 19, 0, 3, 0
+	st_note2	72, 64, 60, 17, 0, 0, 17
+	st_note	72, 60, 57, 18, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d0, 0x00d2	; block 229, chain 53 cell 2
+	.byte	0x00, 0x40, 0x51, 0x0e, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 67, 68, 16, 0, 3, 0
+	st_note2	24, 64, 58, 14, 0, 0, 17
+	st_note	24, 60, 47, 13, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	48, 64, 80, 13, 0, 0, 17
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 74, 14, 0, 3, 0
+	st_note	72, 60, 62, 14, 0
+	st_beat
+	st_note2	0, 67, 78, 19, 0, 3, 0
+	st_note	0, 60, 72, 17, 0
+	st_note2	0, 64, 85, 18, 0, 0, 17
+	st_note2	48, 67, 73, 17, 0, 3, 0
+	st_note2	48, 64, 78, 15, 0, 0, 17
+	st_note	48, 60, 63, 14, 0
+	st_note2	72, 67, 69, 16, 0, 3, 0
+	st_note2	72, 64, 66, 16, 0, 0, 17
+	st_note	72, 60, 59, 16, 0
+	st_beat
+	st_note	0, 60, 75, 18, 0
+	st_note2	0, 64, 86, 17, 0, 0, 17
+	st_note2	0, 67, 79, 19, 0, 3, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note2	48, 64, 79, 14, 0, 0, 17
+	st_note	48, 60, 65, 14, 0
+	st_note2	72, 64, 64, 16, 0, 0, 17
+	st_note2	72, 67, 71, 16, 0, 3, 0
+	st_note	72, 60, 56, 15, 0
+	st_beat
+	st_note2	0, 67, 79, 17, 0, 3, 0
+	st_note2	0, 64, 84, 16, 0, 0, 17
+	st_note	0, 60, 78, 16, 0
+	st_note	48, 60, 66, 15, 0
+	.byte	0x91, 0x30, 0x43, 0x48, 0x0f	; first 5 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d1, 0x00d3	; block 230, chain 53 cell 3
+	.byte	0x00, 0x03, 0x00	; last 3 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	st_note2	48, 64, 75, 13, 0, 0, 17
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note2	72, 67, 75, 15, 0, 3, 0
+	st_note	72, 60, 54, 14, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	0, 64, 82, 13, 0, 0, 17
+	st_note	24, 60, 57, 16, 0
+	st_note2	24, 64, 66, 15, 0, 0, 17
+	st_note2	24, 67, 69, 14, 0, 3, 0
+	st_note	48, 60, 65, 14, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 73, 13, 0, 3, 0
+	st_note	72, 60, 59, 14, 0
+	st_beat
+	st_note	0, 60, 72, 16, 0
+	st_note2	0, 64, 82, 15, 0, 0, 17
+	st_note2	0, 67, 78, 15, 0, 3, 0
+	st_note	48, 60, 70, 14, 0
+	st_note2	48, 64, 81, 12, 0, 0, 17
+	st_note2	48, 67, 78, 12, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note2	72, 67, 69, 15, 0, 3, 0
+	st_note	72, 60, 55, 15, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note2	0, 64, 90, 16, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 76, 12, 0, 3, 0
+	st_note2	48, 64, 81, 11, 0, 0, 17
+	st_note2	72, 64, 62, 15, 0, 0, 17
+	.byte	0x91, 0x48, 0x43, 0x42, 0x0f, 0x00, 0x03	; first 7 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d2, 0xffff	; block 231, chain 53 cell 4
+	.byte	0x00	; last 1 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	72, 60, 45, 14, 0
+	st_beat
+	st_note	0, 60, 73, 16, 0
+	st_note2	0, 67, 81, 16, 0, 3, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note	48, 60, 66, 14, 0
+	st_note2	48, 64, 76, 12, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 72, 17, 0, 0, 17
+	st_note2	72, 67, 74, 16, 0, 3, 0
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 75, 15, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note2	24, 64, 69, 15, 0, 0, 17
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	st_note	24, 60, 50, 13, 0
+	st_note2	48, 64, 83, 14, 0, 0, 17
+	st_note	48, 60, 72, 14, 0
+	st_note2	48, 67, 76, 14, 0, 3, 0
+	st_note2	72, 64, 76, 21, 0, 0, 17
+	st_note2	72, 67, 78, 20, 0, 3, 0
+	st_note	72, 60, 68, 16, 0
+	st_beat
+	st_end
+	.fill	84, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0036, 0x00d5	; block 232, chain 54 cell 1
+	st_note	24, 60, 87, 21, 0
+	st_note	24, 48, 79, 37, 0
+	st_note	48, 67, 105, 32, 0
+	st_note2	72, 64, 95, 25, 0, 0, 17
+	st_beat
+	st_note	0, 60, 91, 21, 0
+	st_note	0, 48, 83, 44, 0
+	st_note	24, 67, 95, 30, 0
+	st_note2	48, 64, 96, 23, 0, 0, 17
+	st_note	72, 60, 83, 21, 0
+	st_note	72, 48, 81, 37, 0
+	st_beat
+	st_note	0, 67, 104, 28, 0
+	st_note2	24, 64, 96, 22, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	48, 48, 83, 50, 0
+	st_note	72, 67, 102, 29, 0
+	st_beat
+	st_note2	0, 64, 94, 23, 0, 0, 17
+	st_note	24, 60, 83, 20, 0
+	st_note	48, 67, 99, 28, 0
+	st_note	48, 48, 85, 51, 0
+	st_note2	72, 64, 97, 26, 0, 0, 17
+	st_beat
+	st_note	0, 60, 91, 20, 0
+	st_note	24, 67, 93, 31, 0
+	st_note2	48, 64, 95, 25, 0, 0, 17
+	st_note	72, 60, 90, 18, 0
+	st_beat
+	st_note	0, 67, 103, 29, 0
+	st_note	0, 48, 90, 48, 0
+	st_note2	24, 64, 98, 27, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	72, 67, 103, 30, 0
+	st_note	72, 48, 81, 39, 0
+	st_beat
+	st_note2	0, 64, 96, 28, 0, 0, 17
+	st_note	24, 60, 76, 21, 0
+	st_note	48, 67, 105, 31, 0
+	st_note	48, 48, 86, 49, 0
+	st_note2	72, 64, 97, 23, 0, 0, 17
+	st_beat
+	st_note	0, 60, 83, 22, 0
+	st_note	24, 67, 104, 30, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 64, 94, 26, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d4, 0xffff	; block 233, chain 54 cell 2
+	.byte	0x40, 0x5e, 0x1a, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 64, 94, 26, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 48, 92, 47, 0
+	st_note	72, 60, 85, 21, 0
+	st_beat
+	st_note	0, 67, 93, 34, 0
+	st_note2	24, 64, 92, 21, 0, 0, 17
+	st_note	24, 48, 86, 53, 0
+	st_note	48, 60, 97, 22, 0
+	st_note2	72, 64, 96, 27, 0, 0, 17
+	st_beat
+	st_end
+	.byte	0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x1b, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0037, 0x00d7	; block 234, chain 55 cell 1
+	.byte	0x00	; last 1 bytes of st_note 72, 49, 72, 26, 0 (split by a cell boundary)
+	st_beat
+	st_note	0, 48, 70, 46, 0
+	st_note	0, 36, 97, 59, 0
+	st_note	0, 74, 62, 12, 0
+	st_note	0, 52, 80, 67, 0
+	st_note	48, 50, 81, 25, 0
+	st_note	48, 38, 106, 18, 0
+	st_note	48, 74, 108, 16, 0
+	st_note	72, 49, 77, 28, 0
+	st_beat
+	st_note	0, 48, 69, 52, 0
+	st_note	0, 36, 100, 63, 0
+	st_note	0, 74, 76, 13, 0
+	st_note	0, 52, 78, 67, 0
+	st_note	48, 50, 81, 27, 0
+	st_note	48, 38, 118, 19, 0
+	st_note	48, 74, 105, 16, 0
+	st_note	72, 49, 68, 32, 0
+	st_beat
+	st_note	0, 48, 85, 43, 0
+	st_note	0, 36, 99, 60, 0
+	st_note	0, 38, 78, 14, 0
+	st_note	0, 74, 69, 13, 0
+	st_note	0, 52, 85, 60, 0
+	st_note	24, 38, 103, 11, 0
+	st_note	48, 50, 75, 28, 0
+	st_note	48, 38, 116, 23, 0
+	st_note	48, 74, 107, 16, 0
+	st_note	72, 49, 78, 25, 0
+	st_beat
+	st_note	0, 48, 83, 39, 0
+	st_note	0, 36, 98, 60, 0
+	st_note	0, 74, 62, 12, 0
+	st_note	0, 52, 75, 62, 0
+	st_note	48, 50, 76, 24, 0
+	st_note	48, 38, 105, 24, 0
+	st_note	48, 74, 105, 14, 0
+	st_note	72, 49, 74, 28, 0
+	st_beat
+	st_note	0, 48, 78, 42, 0
+	st_note	0, 36, 100, 59, 0
+	st_note	0, 74, 63, 11, 0
+	st_note	0, 52, 80, 62, 0
+	st_note	48, 50, 75, 26, 0
+	st_note	48, 38, 109, 20, 0
+	.byte	0x90, 0x30, 0x4a	; first 3 bytes of st_note 48, 74, 105, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d6, 0x00d8	; block 235, chain 55 cell 2
+	.byte	0x69, 0x10, 0x00	; last 3 bytes of st_note 48, 74, 105, 16, 0 (split by a cell boundary)
+	st_note	72, 49, 82, 22, 0
+	st_beat
+	st_note	0, 48, 80, 42, 0
+	st_note	0, 36, 99, 62, 0
+	st_note	0, 74, 65, 12, 0
+	st_note	0, 52, 85, 56, 0
+	st_note	48, 50, 75, 26, 0
+	st_note	48, 38, 108, 20, 0
+	st_note	48, 74, 105, 14, 0
+	st_note	72, 49, 68, 25, 0
+	st_beat
+	st_note	0, 48, 78, 41, 0
+	st_note	0, 36, 103, 59, 0
+	st_note	0, 74, 71, 16, 0
+	st_note	0, 52, 79, 52, 0
+	st_note	24, 38, 104, 11, 0
+	st_note	48, 50, 78, 27, 0
+	st_note	48, 38, 120, 24, 0
+	st_note	48, 74, 107, 16, 0
+	st_note	72, 49, 77, 23, 0
+	st_beat
+	st_note	0, 48, 81, 46, 0
+	st_note	0, 36, 103, 59, 0
+	st_note	0, 74, 72, 15, 0
+	st_note	0, 52, 89, 61, 0
+	st_note	48, 50, 69, 26, 0
+	st_note	48, 38, 109, 19, 0
+	st_note	48, 74, 104, 16, 0
+	st_note	72, 49, 49, 25, 0
+	st_beat
+	st_note	0, 48, 80, 45, 0
+	st_note	0, 36, 99, 63, 0
+	st_note	0, 74, 65, 14, 0
+	st_note	0, 52, 79, 59, 0
+	st_note	48, 50, 78, 27, 0
+	st_note	48, 38, 108, 11, 0
+	st_note	48, 74, 110, 16, 0
+	st_note	72, 49, 77, 25, 0
+	st_beat
+	st_note	0, 48, 79, 44, 0
+	st_note	0, 36, 99, 62, 0
+	st_note	0, 38, 121, 15, 0
+	st_note	0, 74, 74, 13, 0
+	st_note	0, 52, 90, 57, 0
+	st_note	48, 50, 78, 28, 0
+	.byte	0x90	; first 1 bytes of st_note 48, 38, 120, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d7, 0xffff	; block 236, chain 55 cell 3
+	.byte	0x30, 0x26, 0x78, 0x10, 0x00	; last 5 bytes of st_note 48, 38, 120, 16, 0 (split by a cell boundary)
+	st_note	48, 74, 110, 17, 0
+	st_note	72, 49, 71, 24, 0
+	st_beat
+	st_note	0, 48, 69, 46, 0
+	st_note	0, 36, 108, 68, 0
+	st_note	0, 38, 75, 10, 0
+	st_note	0, 74, 68, 13, 0
+	st_note	0, 52, 81, 62, 0
+	st_note	24, 38, 96, 10, 0
+	st_note	48, 50, 73, 24, 0
+	st_note	48, 38, 124, 19, 0
+	st_note	48, 74, 110, 19, 0
+	st_note	72, 49, 86, 22, 0
+	st_beat
+	st_end
+	.byte	0x31, 0x56, 0x16, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; after st_end
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0039, 0x00da	; block 237, chain 57 cell 1
+	.byte	0x2b, 0x69, 0x16, 0x00	; last 4 bytes of st_note 0, 43, 105, 22, 0 (split by a cell boundary)
+	st_note2	48, 55, 75, 39, 0, 3, 0
+	st_note	48, 60, 90, 39, 0
+	st_note2	48, 64, 85, 39, 0, 0, 17
+	st_beat
+	st_note2	0, 64, 78, 14, 0, 0, 17
+	st_note2	0, 55, 69, 15, 0, 3, 0
+	st_note	0, 60, 80, 13, 0
+	st_note	0, 48, 102, 23, 0
+	st_note2	48, 55, 78, 19, 0, 3, 0
+	st_note	48, 60, 87, 17, 0
+	st_note2	48, 64, 85, 17, 0, 0, 17
+	st_beat
+	st_note	0, 43, 103, 20, 0
+	st_note	48, 60, 83, 19, 0
+	st_note2	48, 55, 75, 18, 0, 3, 0
+	st_note2	48, 64, 83, 18, 0, 0, 17
+	st_beat
+	st_note	0, 48, 102, 23, 0
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 87, 18, 0
+	st_note2	48, 64, 84, 17, 0, 0, 17
+	st_beat
+	st_note	0, 43, 103, 21, 0
+	st_note2	48, 55, 78, 37, 0, 3, 0
+	st_note	48, 60, 93, 35, 0
+	st_note2	48, 64, 92, 33, 0, 0, 17
+	st_beat
+	st_note2	0, 55, 76, 15, 0, 3, 0
+	st_note	0, 60, 91, 12, 0
+	st_note2	0, 64, 93, 13, 0, 0, 17
+	st_note	0, 48, 100, 21, 0
+	st_note2	48, 55, 78, 16, 0, 3, 0
+	st_note	48, 60, 90, 14, 0
+	st_note2	48, 64, 90, 15, 0, 0, 17
+	st_beat
+	st_note	0, 43, 109, 21, 0
+	st_note2	48, 55, 75, 16, 0, 3, 0
+	st_note	48, 60, 84, 18, 0
+	st_note2	48, 64, 85, 18, 0, 0, 17
+	st_beat
+	.byte	0x90, 0x00, 0x30, 0x64	; first 4 bytes of st_note 0, 48, 100, 20, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00d9, 0xffff	; block 238, chain 57 cell 2
+	.byte	0x14, 0x00	; last 2 bytes of st_note 0, 48, 100, 20, 0 (split by a cell boundary)
+	st_note2	48, 55, 75, 19, 0, 3, 0
+	st_note	48, 60, 88, 17, 0
+	st_note2	48, 64, 84, 15, 0, 0, 17
+	st_note	48, 43, 107, 43, 0
+	st_beat
+	st_note	0, 45, 106, 49, 0
+	st_note2	48, 55, 78, 51, 0, 3, 0
+	st_note	48, 60, 90, 49, 0
+	st_note2	48, 64, 90, 51, 0, 0, 17
+	st_note2	48, 47, 106, 49, 0, 17, 17
+	st_beat
+	st_end
+	.fill	180, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x003a, 0x00dc	; block 239, chain 58 cell 1
+	.byte	0x0e, 0x00	; last 2 bytes of st_note 48, 60, 61, 14, 0 (split by a cell boundary)
+	st_note2	48, 67, 75, 16, 0, 3, 0
+	st_note2	48, 64, 75, 15, 0, 0, 17
+	st_note2	72, 64, 72, 15, 0, 0, 17
+	st_note2	72, 67, 72, 14, 0, 3, 0
+	st_note	72, 60, 60, 13, 0
+	st_beat
+	st_note2	0, 64, 83, 17, 0, 0, 17
+	st_note2	0, 67, 76, 19, 0, 3, 0
+	st_note	0, 60, 73, 16, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 64, 78, 14, 0, 0, 17
+	st_note2	72, 64, 67, 14, 0, 0, 17
+	st_note2	72, 67, 71, 14, 0, 3, 0
+	st_note	72, 60, 51, 13, 0
+	st_beat
+	st_note2	0, 64, 87, 18, 0, 0, 17
+	st_note	0, 60, 75, 16, 0
+	st_note2	0, 67, 80, 18, 0, 3, 0
+	st_note	48, 60, 65, 13, 0
+	st_note2	48, 67, 73, 13, 0, 3, 0
+	st_note2	48, 64, 75, 11, 0, 0, 17
+	st_note2	72, 67, 67, 19, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note	72, 60, 54, 16, 0
+	st_beat
+	st_note	0, 60, 76, 17, 0
+	st_note2	0, 64, 90, 15, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 75, 14, 0, 3, 0
+	st_note2	48, 64, 79, 13, 0, 0, 17
+	st_note2	72, 67, 66, 19, 0, 3, 0
+	st_note2	72, 64, 60, 17, 0, 0, 17
+	st_note	72, 60, 57, 18, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	.byte	0x91	; first 1 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00db, 0x00dd	; block 240, chain 58 cell 2
+	.byte	0x00, 0x40, 0x51, 0x0e, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 0, 64, 81, 14, 0, 0, 17 (split by a cell boundary)
+	st_note2	0, 67, 75, 14, 0, 3, 0
+	st_note2	24, 67, 68, 16, 0, 3, 0
+	st_note2	24, 64, 58, 14, 0, 0, 17
+	st_note	24, 60, 47, 13, 0
+	st_note	48, 60, 69, 14, 0
+	st_note2	48, 67, 75, 15, 0, 3, 0
+	st_note2	48, 64, 80, 13, 0, 0, 17
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 74, 14, 0, 3, 0
+	st_note	72, 60, 62, 14, 0
+	st_beat
+	st_note2	0, 67, 78, 19, 0, 3, 0
+	st_note	0, 60, 72, 17, 0
+	st_note2	0, 64, 85, 18, 0, 0, 17
+	st_note2	48, 67, 73, 17, 0, 3, 0
+	st_note2	48, 64, 78, 15, 0, 0, 17
+	st_note	48, 60, 63, 14, 0
+	st_note2	72, 67, 69, 16, 0, 3, 0
+	st_note2	72, 64, 66, 16, 0, 0, 17
+	st_note	72, 60, 59, 16, 0
+	st_beat
+	st_note	0, 60, 75, 18, 0
+	st_note2	0, 64, 86, 17, 0, 0, 17
+	st_note2	0, 67, 79, 19, 0, 3, 0
+	st_note2	48, 67, 74, 16, 0, 3, 0
+	st_note2	48, 64, 79, 14, 0, 0, 17
+	st_note	48, 60, 65, 14, 0
+	st_note2	72, 64, 64, 16, 0, 0, 17
+	st_note2	72, 67, 71, 16, 0, 3, 0
+	st_note	72, 60, 56, 15, 0
+	st_beat
+	st_note2	0, 67, 79, 17, 0, 3, 0
+	st_note2	0, 64, 84, 16, 0, 0, 17
+	st_note	0, 60, 78, 16, 0
+	st_note	48, 60, 66, 15, 0
+	.byte	0x91, 0x30, 0x43, 0x48, 0x0f	; first 5 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00dc, 0x00de	; block 241, chain 58 cell 3
+	.byte	0x00, 0x03, 0x00	; last 3 bytes of st_note2 48, 67, 72, 15, 0, 3, 0 (split by a cell boundary)
+	st_note2	48, 64, 75, 13, 0, 0, 17
+	st_note2	72, 64, 70, 14, 0, 0, 17
+	st_note2	72, 67, 75, 15, 0, 3, 0
+	st_note	72, 60, 54, 14, 0
+	st_beat
+	st_note	0, 60, 71, 15, 0
+	st_note2	0, 67, 76, 14, 0, 3, 0
+	st_note2	0, 64, 82, 13, 0, 0, 17
+	st_note	24, 60, 57, 16, 0
+	st_note2	24, 64, 66, 15, 0, 0, 17
+	st_note2	24, 67, 69, 14, 0, 3, 0
+	st_note	48, 60, 65, 14, 0
+	st_note2	48, 64, 78, 13, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 73, 14, 0, 0, 17
+	st_note2	72, 67, 73, 13, 0, 3, 0
+	st_note	72, 60, 59, 14, 0
+	st_beat
+	st_note	0, 60, 72, 16, 0
+	st_note2	0, 64, 82, 15, 0, 0, 17
+	st_note2	0, 67, 78, 15, 0, 3, 0
+	st_note	48, 60, 70, 14, 0
+	st_note2	48, 64, 81, 12, 0, 0, 17
+	st_note2	48, 67, 78, 12, 0, 3, 0
+	st_note2	72, 64, 62, 16, 0, 0, 17
+	st_note2	72, 67, 69, 15, 0, 3, 0
+	st_note	72, 60, 55, 15, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note2	0, 64, 90, 16, 0, 0, 17
+	st_note2	0, 67, 83, 16, 0, 3, 0
+	st_note	48, 60, 69, 13, 0
+	st_note2	48, 67, 76, 12, 0, 3, 0
+	st_note2	48, 64, 81, 11, 0, 0, 17
+	st_note2	72, 64, 62, 15, 0, 0, 17
+	.byte	0x91, 0x48, 0x43, 0x42, 0x0f, 0x00, 0x03	; first 7 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00dd, 0xffff	; block 242, chain 58 cell 4
+	.byte	0x00	; last 1 bytes of st_note2 72, 67, 66, 15, 0, 3, 0 (split by a cell boundary)
+	st_note	72, 60, 45, 14, 0
+	st_beat
+	st_note	0, 60, 73, 16, 0
+	st_note2	0, 67, 81, 16, 0, 3, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note	48, 60, 66, 14, 0
+	st_note2	48, 64, 76, 12, 0, 0, 17
+	st_note2	48, 67, 74, 13, 0, 3, 0
+	st_note2	72, 64, 72, 17, 0, 0, 17
+	st_note2	72, 67, 74, 16, 0, 3, 0
+	st_note	72, 60, 59, 15, 0
+	st_beat
+	st_note	0, 60, 75, 15, 0
+	st_note2	0, 64, 85, 13, 0, 0, 17
+	st_note2	0, 67, 81, 14, 0, 3, 0
+	st_note2	24, 64, 69, 15, 0, 0, 17
+	st_note2	24, 67, 68, 13, 0, 3, 0
+	st_note	24, 60, 50, 13, 0
+	st_note2	48, 64, 83, 14, 0, 0, 17
+	st_note	48, 60, 72, 14, 0
+	st_note2	48, 67, 76, 14, 0, 3, 0
+	st_note2	72, 64, 76, 21, 0, 0, 17
+	st_note2	72, 67, 78, 20, 0, 3, 0
+	st_note	72, 60, 68, 16, 0
+	st_beat
+	st_end
+	.fill	84, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x003b, 0x00e0	; block 243, chain 59 cell 1
+	st_note	24, 60, 87, 21, 0
+	st_note	24, 48, 79, 37, 0
+	st_note	48, 67, 105, 32, 0
+	st_note2	72, 64, 95, 25, 0, 0, 17
+	st_beat
+	st_note	0, 60, 91, 21, 0
+	st_note	0, 48, 83, 44, 0
+	st_note	24, 67, 95, 30, 0
+	st_note2	48, 64, 96, 23, 0, 0, 17
+	st_note	72, 60, 83, 21, 0
+	st_note	72, 48, 81, 37, 0
+	st_beat
+	st_note	0, 67, 104, 28, 0
+	st_note2	24, 64, 96, 22, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	48, 48, 83, 50, 0
+	st_note	72, 67, 102, 29, 0
+	st_beat
+	st_note2	0, 64, 94, 23, 0, 0, 17
+	st_note	24, 60, 83, 20, 0
+	st_note	48, 67, 99, 28, 0
+	st_note	48, 48, 85, 51, 0
+	st_note2	72, 64, 97, 26, 0, 0, 17
+	st_beat
+	st_note	0, 60, 91, 20, 0
+	st_note	24, 67, 93, 31, 0
+	st_note2	48, 64, 95, 25, 0, 0, 17
+	st_note	72, 60, 90, 18, 0
+	st_beat
+	st_note	0, 67, 103, 29, 0
+	st_note	0, 48, 90, 48, 0
+	st_note2	24, 64, 98, 27, 0, 0, 17
+	st_note	48, 60, 90, 21, 0
+	st_note	72, 67, 103, 30, 0
+	st_note	72, 48, 81, 39, 0
+	st_beat
+	st_note2	0, 64, 96, 28, 0, 0, 17
+	st_note	24, 60, 76, 21, 0
+	st_note	48, 67, 105, 31, 0
+	st_note	48, 48, 86, 49, 0
+	st_note2	72, 64, 97, 23, 0, 0, 17
+	st_beat
+	st_note	0, 60, 83, 22, 0
+	st_note	24, 67, 104, 30, 0
+	.byte	0x91, 0x30	; first 2 bytes of st_note2 48, 64, 94, 26, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00df, 0xffff	; block 244, chain 59 cell 2
+	.byte	0x40, 0x5e, 0x1a, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 64, 94, 26, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 48, 92, 47, 0
+	st_note	72, 60, 85, 21, 0
+	st_beat
+	st_note	0, 67, 93, 34, 0
+	st_note2	24, 64, 92, 21, 0, 0, 17
+	st_note	24, 48, 86, 53, 0
+	st_note	48, 60, 97, 22, 0
+	st_note2	72, 64, 96, 27, 0, 0, 17
+	st_beat
+	st_end
+	.byte	0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x1b, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00
+	.byte	0x00, 0x11, 0x81, 0x83, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x40, 0x60, 0x1b, 0x00, 0x00, 0x11
+	.byte	0x81, 0x83, 0x1b, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0041, 0xffff	; block 245, chain 65 cell 1
+	st_note	0, 74, 107, 86, 0
+	st_note	48, 48, 78, 13, 0
+	st_note	72, 48, 102, 11, 0
+	st_beat
+	st_note	0, 36, 117, 54, 0
+	st_note	48, 48, 80, 12, 0
+	st_note	72, 48, 99, 12, 0
+	st_beat
+	st_note	0, 36, 118, 54, 0
+	st_note	0, 47, 112, 81, 0
+	st_note	0, 50, 93, 41, 0
+	st_note	0, 74, 102, 79, 0
+	st_note	48, 48, 86, 12, 0
+	st_note	72, 48, 96, 13, 0
+	st_beat
+	st_note	0, 36, 118, 53, 0
+	st_note	0, 51, 112, 88, 0
+	st_note	48, 48, 83, 11, 0
+	st_note	72, 48, 99, 13, 0
+	st_beat
+	st_note	0, 36, 118, 56, 0
+	st_note	0, 47, 112, 52, 0
+	st_note	0, 74, 110, 57, 0
+	st_note	48, 48, 81, 12, 0
+	st_note	72, 48, 93, 14, 0
+	st_beat
+	st_note	0, 36, 117, 53, 0
+	st_note	0, 48, 89, 13, 0
+	st_note	0, 74, 108, 52, 0
+	st_note	0, 45, 114, 16, 0
+	st_note	24, 48, 97, 12, 0
+	st_note	48, 38, 86, 12, 0
+	st_note	48, 43, 112, 15, 0
+	st_beat
+	st_note	0, 36, 117, 69, 0
+	st_note	0, 38, 93, 12, 0
+	st_note	0, 48, 88, 14, 0
+	st_note	0, 74, 110, 50, 0
+	st_note	0, 41, 111, 14, 0
+	st_note	24, 38, 110, 11, 0
+	st_note	24, 48, 98, 12, 0
+	st_note	48, 38, 102, 16, 0
+	st_note	48, 95, 110, 13, 0
+	st_note	92, 25, 107, 38, 0
+	st_beat
+	st_end
+	.byte	0x19, 0x6b, 0x26, 0x00, 0x81, 0x83, 0x19, 0x6b, 0x26, 0x00, 0x81, 0x83, 0x19	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0043, 0xffff	; block 246, chain 67 cell 1
+	.byte	0x2d, 0x61, 0x33, 0x00	; last 4 bytes of st_note 0, 45, 97, 51, 0 (split by a cell boundary)
+	st_note	48, 60, 85, 43, 0
+	st_note	48, 57, 74, 43, 0
+	st_note	48, 65, 89, 44, 0
+	st_beat
+	st_note	0, 43, 95, 51, 0
+	st_note2	48, 59, 78, 46, 0, 17, 17
+	st_note	48, 62, 93, 44, 0
+	st_note	48, 67, 90, 46, 0
+	st_beat
+	st_note2	0, 47, 98, 52, 0, 17, 17
+	st_note	48, 67, 87, 47, 0
+	st_note	48, 62, 90, 45, 0
+	st_note2	48, 59, 73, 45, 0, 17, 17
+	st_beat
+	st_note	48, 60, 74, 50, 0
+	st_note2	48, 64, 87, 49, 0, 0, 17
+	st_note	48, 67, 85, 48, 0
+	st_beat
+	st_note	48, 60, 82, 48, 0
+	st_note	48, 67, 91, 47, 0
+	st_note2	48, 64, 93, 46, 0, 0, 17
+	st_beat
+	st_note	48, 60, 80, 21, 0
+	st_note2	48, 64, 95, 19, 0, 0, 17
+	st_note	48, 67, 92, 20, 0
+	st_beat
+	st_beat
+	st_end
+	.byte	0x40, 0x64, 0x4c, 0x00, 0x00, 0x11, 0x81, 0x83, 0x4c, 0x00, 0x00, 0x11, 0x81, 0x83, 0x4c, 0x00	; after st_end
+	.byte	0x00, 0x11, 0x81, 0x83, 0x4c, 0x00, 0x00, 0x11, 0x81, 0x83, 0x4c, 0x00, 0x00, 0x11, 0x81, 0x83
+	.byte	0x4c, 0x00, 0x00, 0x11, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0055, 0x00e4	; block 247, chain 85 cell 1
+	.byte	0x00	; last 1 bytes of st_note 0, 74, 82, 11, 0 (split by a cell boundary)
+	st_note	0, 24, 114, 15, 0
+	st_note	48, 50, 97, 16, 0
+	st_note	48, 28, 108, 17, 0
+	st_note	48, 74, 110, 16, 0
+	st_beat
+	st_note	0, 36, 120, 48, 0
+	st_note	0, 38, 123, 61, 0
+	st_note	0, 48, 99, 19, 0
+	st_note	0, 69, 112, 56, 0
+	st_note	0, 74, 87, 13, 0
+	st_note	48, 50, 99, 18, 0
+	st_note	48, 28, 108, 18, 0
+	st_note	48, 74, 112, 16, 0
+	st_beat
+	st_note	0, 36, 120, 14, 0
+	st_note	0, 48, 99, 20, 0
+	st_note	0, 69, 118, 54, 0
+	st_note	0, 74, 87, 12, 0
+	st_note	48, 36, 120, 48, 0
+	st_note	48, 38, 116, 13, 0
+	st_note	48, 50, 102, 17, 0
+	st_note	48, 28, 110, 20, 0
+	st_note	48, 74, 116, 17, 0
+	st_beat
+	st_note	0, 38, 117, 13, 0
+	st_note	0, 48, 98, 19, 0
+	st_note	0, 69, 117, 55, 0
+	st_note	0, 74, 77, 13, 0
+	st_note	24, 38, 111, 10, 0
+	st_note	48, 36, 118, 14, 0
+	st_note	48, 38, 112, 15, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 28, 108, 19, 0
+	st_note	48, 74, 112, 16, 0
+	st_beat
+	st_note	0, 36, 118, 52, 0
+	st_note	0, 48, 98, 20, 0
+	st_note	0, 69, 114, 58, 0
+	st_note	0, 74, 78, 11, 0
+	st_note	48, 50, 99, 16, 0
+	st_note	48, 28, 108, 20, 0
+	st_note	48, 74, 112, 16, 0
+	st_beat
+	st_note	0, 36, 117, 45, 0
+	st_note	0, 38, 117, 54, 0
+	.byte	0x90, 0x00, 0x30	; first 3 bytes of st_note 0, 48, 100, 19, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00e3, 0x00e5	; block 248, chain 85 cell 2
+	.byte	0x64, 0x13, 0x00	; last 3 bytes of st_note 0, 48, 100, 19, 0 (split by a cell boundary)
+	st_note	0, 69, 112, 56, 0
+	st_note	0, 74, 88, 13, 0
+	st_note	48, 50, 104, 15, 0
+	st_note	48, 28, 108, 18, 0
+	st_note	48, 74, 112, 15, 0
+	st_note	72, 36, 116, 11, 0
+	st_beat
+	st_note	0, 36, 118, 53, 0
+	st_note	0, 48, 102, 20, 0
+	st_note	0, 69, 116, 54, 0
+	st_note	0, 74, 84, 11, 0
+	st_note	48, 38, 95, 11, 0
+	st_note	48, 50, 102, 17, 0
+	st_note	48, 28, 108, 21, 0
+	st_note	48, 74, 112, 14, 0
+	st_note	72, 38, 116, 10, 0
+	st_beat
+	st_note	0, 36, 120, 51, 0
+	st_note	0, 38, 116, 14, 0
+	st_note	0, 48, 103, 21, 0
+	st_note	0, 69, 114, 53, 0
+	st_note	0, 74, 90, 14, 0
+	st_note	48, 38, 111, 11, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 28, 110, 18, 0
+	st_note	48, 74, 114, 15, 0
+	st_beat
+	st_note	0, 36, 120, 17, 0
+	st_note	0, 38, 124, 14, 0
+	st_note	0, 48, 102, 21, 0
+	st_note	0, 69, 116, 51, 0
+	st_note	0, 74, 84, 12, 0
+	st_note	48, 50, 99, 17, 0
+	st_note	48, 28, 108, 18, 0
+	st_note	48, 74, 112, 15, 0
+	st_note	48, 45, 107, 9, 0
+	st_note	72, 45, 114, 9, 0
+	st_beat
+	st_note	0, 36, 118, 18, 0
+	st_note	0, 48, 99, 20, 0
+	st_note	0, 69, 114, 55, 0
+	st_note	0, 74, 91, 12, 0
+	st_note	0, 43, 118, 11, 0
+	st_note	48, 50, 104, 22, 0
+	.byte	0x90, 0x30	; first 2 bytes of st_note 48, 28, 110, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00e4, 0xffff	; block 249, chain 85 cell 3
+	.byte	0x1c, 0x6e, 0x10, 0x00	; last 4 bytes of st_note 48, 28, 110, 16, 0 (split by a cell boundary)
+	st_note	48, 74, 107, 13, 0
+	st_note	48, 41, 114, 12, 0
+	st_beat
+	st_note	0, 36, 118, 13, 0
+	st_note	0, 48, 99, 19, 0
+	st_note	0, 28, 110, 12, 0
+	st_note	0, 74, 98, 12, 0
+	st_note	0, 95, 127, 11, 0
+	st_note	24, 74, 86, 7, 0
+	st_note	48, 36, 114, 13, 0
+	st_note	48, 50, 108, 40, 0
+	st_note	48, 69, 124, 16, 0
+	st_note	48, 74, 86, 9, 0
+	st_note	48, 25, 118, 55, 0
+	st_note	72, 36, 116, 10, 0
+	st_note	72, 74, 108, 8, 0
+	st_beat
+	st_note	0, 36, 124, 19, 0
+	st_note	0, 38, 126, 26, 0
+	st_note	0, 48, 107, 19, 0
+	st_note	0, 69, 127, 31, 0
+	st_note	0, 74, 122, 14, 0
+	st_note	0, 51, 127, 34, 1
+	st_beat
+	st_end
+	.fill	115, 1, 0x00	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0057, 0xffff	; block 250, chain 87 cell 1
+	st_note2	48, 59, 69, 52, 0, 17, 17
+	st_note	48, 62, 87, 50, 0
+	st_note	48, 67, 85, 51, 0
+	st_beat
+	st_note	0, 45, 96, 49, 0
+	st_note2	48, 59, 69, 49, 0, 17, 17
+	st_note	48, 67, 79, 50, 0
+	st_note	48, 62, 85, 48, 0
+	st_beat
+	st_note2	0, 47, 97, 52, 0, 17, 17
+	st_note2	48, 59, 69, 48, 0, 17, 17
+	st_note	48, 62, 86, 46, 0
+	st_note	48, 67, 82, 48, 0
+	st_beat
+	st_note	0, 48, 97, 51, 0
+	st_note	48, 60, 70, 54, 0
+	st_note2	48, 64, 91, 51, 0, 0, 17
+	st_note	48, 67, 84, 52, 0
+	st_beat
+	st_note	48, 60, 78, 55, 0
+	st_note2	48, 64, 93, 53, 0, 0, 17
+	st_note	48, 67, 87, 53, 0
+	st_beat
+	st_note	48, 60, 83, 18, 0
+	st_note2	48, 64, 98, 16, 0, 0, 17
+	st_note	48, 67, 93, 16, 0
+	st_beat
+	st_note	0, 60, 90, 45, 0
+	st_note	0, 67, 100, 45, 0
+	st_note2	0, 64, 104, 43, 0, 0, 17
+	st_beat
+	st_end
+	.byte	0x19, 0x00, 0x91, 0x00, 0x40, 0x70, 0x17, 0x00, 0x00, 0x11, 0x81, 0x83, 0x11, 0x00, 0x91, 0x00	; after st_end
+	.byte	0x40, 0x6f, 0x0f, 0x00, 0x00, 0x11, 0x90, 0x00, 0x43, 0x6f, 0x10, 0x00, 0x81, 0x83, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00
+	style_cell_end	
+	style_cell	0x80, 0x0059, 0xffff	; block 251, chain 89 cell 1
+	.byte	0x11	; last 1 bytes of st_note2 0, 64, 85, 17, 2, 0, 17 (split by a cell boundary)
+	st_note	0, 72, 93, 17, 2
+	st_beat
+	st_beat
+	st_note2	48, 64, 96, 19, 0, 0, 17
+	st_note	48, 72, 96, 16, 0
+	st_beat
+	st_note2	0, 64, 90, 24, 0, 0, 17
+	st_note	0, 72, 96, 22, 0
+	st_beat
+	st_end
+	.byte	0x74, 0x0d, 0x00, 0x81, 0x91, 0x00, 0x40, 0x68, 0x10, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x6d	; after st_end
+	.byte	0x11, 0x00, 0x90, 0x00, 0x43, 0x75, 0x0f, 0x00, 0x81, 0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x00
+	style_cell_end	
+	style_cell	0x80, 0x005a, 0xffff	; block 252, chain 90 cell 1
+	st_note	48, 48, 108, 24, 0
+	st_note	48, 102, 108, 7, 0
+	st_note	60, 74, 104, 9, 0
+	st_note	72, 74, 113, 9, 0
+	st_note	72, 102, 113, 6, 0
+	st_note	84, 74, 113, 9, 0
+	st_note	92, 25, 108, 51, 0
+	st_beat
+	st_end
+	.byte	0x40, 0x5d, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x51, 0x0e, 0x00, 0x90, 0x00, 0x43, 0x5a	; after st_end
+	.byte	0x0c, 0x00, 0x90, 0x30, 0x43, 0x54, 0x0d, 0x00, 0x91, 0x30, 0x40, 0x5c, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x3c, 0x4a, 0x0e, 0x00, 0x81, 0x91, 0x00, 0x40, 0x5c, 0x0d, 0x00, 0x00, 0x11, 0x90
+	.byte	0x00, 0x3c, 0x4c, 0x0c, 0x00, 0x90, 0x00, 0x43, 0x56, 0x0c, 0x00, 0x91, 0x30, 0x40, 0x60, 0x10
+	.byte	0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x4f, 0x10, 0x00, 0x90, 0x30, 0x43, 0x56, 0x0e, 0x00, 0x81
+	.byte	0x90, 0x00, 0x43, 0x53, 0x0d, 0x00, 0x90, 0x00, 0x41, 0x5a, 0x0c, 0x00, 0x90, 0x00, 0x3e, 0x5a
+	.byte	0x0c, 0x00, 0x90, 0x00, 0x3c, 0x50, 0x0d, 0x00, 0x90, 0x30, 0x43, 0x51, 0x0d, 0x00, 0x90, 0x30
+	.byte	0x41, 0x56, 0x0d, 0x00, 0x90, 0x30, 0x3e, 0x58, 0x0d, 0x00, 0x90, 0x30, 0x3c, 0x4e, 0x0e, 0x00
+	.byte	0x81, 0x90, 0x00, 0x43, 0x56, 0x10, 0x00, 0x90, 0x00, 0x41, 0x58, 0x0f, 0x00, 0x90, 0x00, 0x3e
+	.byte	0x5c, 0x0f, 0x00, 0x90, 0x00, 0x3c, 0x53, 0x10, 0x00, 0x90, 0x30, 0x3c, 0x4f, 0x0f, 0x00, 0x90
+	.byte	0x30, 0x43, 0x4f, 0x0d, 0x00, 0x90, 0x30, 0x41, 0x53, 0x0d, 0x00, 0x90, 0x30, 0x3e, 0x58, 0x0d
+	.byte	0x00, 0x81, 0x90, 0x00, 0x43, 0x53, 0x0e, 0x00, 0x90, 0x00, 0x41, 0x5a, 0x0e, 0x00, 0x90, 0x00
+	.byte	0x3e, 0x5c, 0x0e, 0x00, 0x90, 0x00, 0x3c, 0x54, 0x0e, 0x00, 0x90, 0x30, 0x43
+	style_cell_end	
+	style_cell	0x80, 0x005f, 0x00ea	; block 253, chain 95 cell 1
+	.byte	0x66, 0x6c, 0x07, 0x00	; last 4 bytes of st_note 48, 102, 108, 7, 0 (split by a cell boundary)
+	st_note	72, 48, 83, 14, 0
+	st_note	72, 102, 108, 10, 0
+	st_beat
+	st_note	0, 36, 124, 51, 0
+	st_note	0, 48, 112, 14, 0
+	st_note	24, 48, 75, 14, 0
+	st_note	48, 48, 78, 9, 0
+	st_note	72, 48, 83, 15, 0
+	st_beat
+	st_note	0, 36, 120, 51, 0
+	st_note	0, 48, 105, 14, 0
+	st_note	0, 74, 113, 69, 0
+	st_note	24, 48, 80, 11, 0
+	st_note	48, 48, 72, 7, 0
+	st_note	72, 48, 84, 14, 0
+	st_beat
+	st_note	0, 36, 120, 52, 0
+	st_note	0, 48, 103, 15, 0
+	st_note	24, 48, 83, 13, 0
+	st_note	48, 48, 65, 6, 0
+	st_note	72, 48, 86, 14, 0
+	st_beat
+	st_note	0, 36, 120, 50, 0
+	st_note	0, 48, 112, 16, 0
+	st_note	0, 67, 116, 8, 0
+	st_note	0, 69, 112, 10, 0
+	st_note	24, 48, 81, 14, 0
+	st_note	24, 67, 100, 8, 0
+	st_note	48, 48, 80, 10, 0
+	st_note	48, 67, 112, 6, 0
+	st_note	48, 69, 112, 17, 0
+	st_note	72, 48, 90, 14, 0
+	st_note	72, 67, 112, 9, 0
+	st_note	72, 107, 124, 54, 1
+	st_beat
+	st_note	0, 36, 124, 57, 0
+	st_note	0, 48, 112, 14, 0
+	st_note	24, 48, 83, 13, 0
+	st_note	48, 48, 83, 7, 0
+	st_note	72, 48, 86, 13, 0
+	st_beat
+	st_note	0, 36, 120, 54, 0
+	st_note	0, 48, 108, 14, 0
+	st_note	0, 74, 120, 61, 0
+	st_note	24, 48, 66, 7, 0
+	.byte	0x90, 0x30, 0x30, 0x4c, 0x07	; first 5 bytes of st_note 48, 48, 76, 7, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00e9, 0x00eb	; block 254, chain 95 cell 2
+	.byte	0x00	; last 1 bytes of st_note 48, 48, 76, 7, 0 (split by a cell boundary)
+	st_note	72, 48, 76, 13, 0
+	st_beat
+	st_note	0, 36, 124, 53, 0
+	st_note	0, 48, 108, 14, 0
+	st_note	24, 48, 88, 13, 0
+	st_note	48, 48, 79, 8, 0
+	st_note	48, 102, 120, 10, 0
+	st_note	72, 48, 88, 15, 0
+	st_beat
+	st_note	0, 36, 120, 54, 0
+	st_note	0, 48, 105, 13, 0
+	st_note	0, 102, 113, 10, 0
+	st_note	24, 48, 84, 14, 0
+	st_note	48, 48, 57, 7, 0
+	st_note	48, 102, 113, 8, 0
+	st_note	72, 48, 86, 14, 0
+	st_note	72, 102, 108, 9, 0
+	st_beat
+	st_note	0, 36, 120, 52, 0
+	st_note	0, 48, 100, 14, 0
+	st_note	24, 48, 78, 13, 0
+	st_note	48, 48, 69, 8, 0
+	st_note	72, 48, 83, 13, 0
+	st_beat
+	st_note	0, 38, 120, 49, 0
+	st_note	0, 36, 120, 52, 0
+	st_note	0, 48, 105, 12, 0
+	st_note	0, 74, 113, 61, 0
+	st_note	24, 48, 79, 12, 0
+	st_note	48, 48, 75, 8, 0
+	st_note	72, 48, 88, 12, 0
+	st_beat
+	st_note	0, 36, 120, 43, 0
+	st_note	0, 48, 103, 9, 0
+	st_note	24, 38, 116, 46, 0
+	st_note	24, 48, 81, 13, 0
+	st_note	48, 48, 86, 8, 0
+	st_note	72, 36, 112, 80, 0
+	st_note	72, 48, 92, 12, 0
+	st_beat
+	st_note	0, 38, 124, 19, 0
+	st_note	0, 50, 105, 15, 0
+	st_note	0, 67, 120, 9, 0
+	st_note	0, 69, 116, 10, 0
+	st_note	24, 48, 90, 14, 0
+	st_note	24, 67, 100, 8, 0
+	.byte	0x90, 0x30	; first 2 bytes of st_note 48, 38, 120, 7, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ea, 0xffff	; block 255, chain 95 cell 3
+	.byte	0x26, 0x78, 0x07, 0x00	; last 4 bytes of st_note 48, 38, 120, 7, 0 (split by a cell boundary)
+	st_note	48, 50, 108, 15, 0
+	st_note	48, 67, 112, 7, 0
+	st_note	48, 69, 116, 19, 0
+	st_note	72, 38, 112, 15, 0
+	st_note	72, 48, 100, 7, 0
+	st_note	72, 67, 112, 7, 0
+	st_note	72, 107, 120, 2, 2
+	st_note	92, 51, 108, 57, 1
+	st_beat
+	st_end
+	.byte	0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02	; after st_end
+	.byte	0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78
+	.byte	0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83
+	.byte	0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02
+	.byte	0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78
+	.byte	0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83
+	.byte	0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02
+	.byte	0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78
+	.byte	0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83
+	.byte	0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02
+	.byte	0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78
+	.byte	0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83, 0x6b, 0x78, 0x02, 0x02, 0x81, 0x83
+	.byte	0x6b, 0x78, 0x02
+	style_cell_end	
+	style_cell	0x80, 0x0061, 0x00ed	; block 256, chain 97 cell 1
+	.byte	0x0f, 0x00	; last 2 bytes of st_note 0, 72, 81, 15, 0 (split by a cell boundary)
+	st_note	0, 79, 88, 14, 0
+	st_note2	0, 76, 93, 14, 0, 0, 17
+	st_note	48, 79, 90, 17, 0
+	st_note2	48, 76, 100, 16, 0, 0, 17
+	st_note	48, 72, 84, 17, 0
+	st_beat
+	st_note	0, 79, 90, 11, 0
+	st_note	0, 77, 100, 10, 0
+	st_note	0, 74, 93, 9, 0
+	st_note	0, 72, 84, 15, 0
+	st_note	24, 79, 79, 12, 0
+	st_note	24, 77, 84, 8, 0
+	st_note	24, 74, 86, 8, 0
+	st_note	24, 72, 72, 10, 0
+	st_note	48, 74, 88, 35, 0
+	st_note	48, 79, 83, 34, 0
+	st_note	48, 77, 92, 34, 0
+	st_note	48, 72, 75, 34, 0
+	st_beat
+	st_note	0, 79, 83, 10, 0
+	st_note	0, 77, 92, 9, 0
+	st_note	0, 74, 90, 10, 0
+	st_note	0, 72, 75, 11, 0
+	st_note	24, 77, 90, 9, 0
+	st_note	24, 79, 83, 9, 0
+	st_note	24, 74, 90, 8, 0
+	st_note	24, 72, 78, 10, 0
+	st_note	48, 74, 88, 29, 0
+	st_note	48, 72, 71, 31, 0
+	st_note	48, 79, 84, 30, 0
+	st_note	48, 77, 92, 30, 0
+	st_beat
+	st_note	0, 79, 88, 14, 0
+	st_note2	0, 76, 96, 13, 0, 0, 17
+	st_note	0, 72, 79, 14, 0
+	st_note	48, 79, 90, 15, 0
+	st_note	48, 72, 76, 15, 0
+	st_note2	48, 76, 93, 13, 0, 0, 17
+	st_beat
+	st_note	0, 79, 92, 14, 0
+	st_note2	0, 76, 98, 12, 0, 0, 17
+	st_note	0, 72, 79, 13, 0
+	.byte	0x90, 0x30, 0x4f, 0x5a, 0x0e	; first 5 bytes of st_note 48, 79, 90, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ec, 0x00ee	; block 257, chain 97 cell 2
+	.byte	0x00	; last 1 bytes of st_note 48, 79, 90, 14, 0 (split by a cell boundary)
+	st_note2	48, 76, 98, 13, 0, 0, 17
+	st_note	48, 72, 78, 14, 0
+	st_beat
+	st_note	0, 79, 88, 11, 0
+	st_note	0, 77, 100, 11, 0
+	st_note	0, 74, 93, 10, 0
+	st_note	0, 72, 83, 13, 0
+	st_note	48, 72, 80, 14, 0
+	st_note	48, 79, 86, 12, 0
+	st_note	48, 77, 93, 12, 0
+	st_note	48, 74, 93, 12, 0
+	st_beat
+	st_note	0, 72, 81, 15, 0
+	st_note	0, 79, 88, 12, 0
+	st_note	0, 77, 96, 12, 0
+	st_note	0, 74, 93, 11, 0
+	st_note	48, 77, 100, 11, 0
+	st_note	48, 79, 92, 10, 0
+	st_note	48, 74, 93, 9, 0
+	st_note	48, 72, 79, 12, 0
+	st_note	72, 79, 86, 10, 0
+	st_note	72, 77, 96, 10, 0
+	st_note	72, 74, 92, 9, 0
+	st_note	72, 72, 72, 12, 0
+	st_beat
+	st_note	0, 79, 81, 12, 0
+	st_note2	0, 76, 96, 11, 0, 0, 17
+	st_note	0, 72, 68, 13, 0
+	st_note	48, 79, 92, 14, 0
+	st_note2	48, 76, 100, 12, 0, 0, 17
+	st_note	48, 72, 84, 14, 0
+	st_beat
+	st_note	0, 79, 93, 13, 0
+	st_note2	0, 76, 100, 13, 0, 0, 17
+	st_note	0, 72, 83, 13, 0
+	st_note2	48, 76, 96, 15, 0, 0, 17
+	st_note	48, 72, 80, 15, 0
+	st_note	48, 79, 90, 13, 0
+	st_beat
+	st_note	0, 77, 103, 10, 0
+	st_note	0, 74, 100, 10, 0
+	st_note	0, 79, 98, 10, 0
+	st_note	0, 72, 83, 13, 0
+	.byte	0x90, 0x18, 0x4f, 0x4e, 0x0a	; first 5 bytes of st_note 24, 79, 78, 10, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ed, 0x00ef	; block 258, chain 97 cell 3
+	.byte	0x00	; last 1 bytes of st_note 24, 79, 78, 10, 0 (split by a cell boundary)
+	st_note	24, 77, 88, 10, 0
+	st_note	24, 74, 84, 8, 0
+	st_note	24, 72, 66, 10, 0
+	st_note	48, 79, 92, 34, 0
+	st_note	48, 77, 98, 35, 0
+	st_note	48, 74, 96, 34, 0
+	st_note	48, 72, 78, 35, 0
+	st_beat
+	st_note	0, 72, 76, 14, 0
+	st_note	0, 79, 86, 12, 0
+	st_note	0, 77, 92, 10, 0
+	st_note	0, 74, 92, 10, 0
+	st_note	24, 77, 92, 11, 0
+	st_note	24, 79, 83, 10, 0
+	st_note	24, 74, 90, 9, 0
+	st_note	24, 72, 69, 11, 0
+	st_note	48, 79, 92, 32, 0
+	st_note	48, 77, 98, 33, 0
+	st_note	48, 74, 96, 31, 0
+	st_note	48, 72, 80, 31, 0
+	st_beat
+	st_note	0, 79, 88, 13, 0
+	st_note2	0, 76, 98, 11, 0, 0, 17
+	st_note	0, 72, 83, 13, 0
+	st_note	48, 79, 90, 12, 0
+	st_note2	48, 76, 98, 12, 0, 0, 17
+	st_note	48, 72, 83, 13, 0
+	st_beat
+	st_note2	0, 76, 103, 14, 0, 0, 17
+	st_note	0, 72, 86, 15, 0
+	st_note	0, 79, 93, 12, 0
+	st_note	48, 79, 93, 12, 0
+	st_note2	48, 76, 103, 13, 0, 0, 17
+	st_note	48, 72, 84, 15, 0
+	st_beat
+	st_note	0, 77, 98, 14, 0
+	st_note	0, 74, 96, 14, 0
+	st_note	0, 72, 83, 15, 0
+	st_note	0, 79, 92, 11, 0
+	st_note	48, 77, 92, 14, 0
+	st_note	48, 74, 93, 12, 0
+	st_note	48, 72, 81, 14, 0
+	st_note	48, 79, 86, 11, 0
+	st_beat
+	.byte	0x90	; first 1 bytes of st_note 0, 79, 86, 13, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ee, 0x00f0	; block 259, chain 97 cell 4
+	.byte	0x00, 0x4f, 0x56, 0x0d, 0x00	; last 5 bytes of st_note 0, 79, 86, 13, 0 (split by a cell boundary)
+	st_note	0, 77, 96, 14, 0
+	st_note	0, 74, 96, 13, 0
+	st_note	0, 72, 83, 14, 0
+	st_note	48, 79, 93, 10, 0
+	st_note	48, 77, 98, 10, 0
+	st_note	48, 74, 98, 10, 0
+	st_note	48, 72, 80, 13, 0
+	st_note	72, 79, 79, 11, 0
+	st_note	72, 77, 92, 9, 0
+	st_note	72, 74, 90, 9, 0
+	st_note	72, 72, 69, 11, 0
+	st_beat
+	st_note	0, 79, 80, 11, 0
+	st_note2	0, 76, 92, 9, 0, 0, 17
+	st_note	0, 72, 69, 12, 0
+	st_note	48, 79, 90, 15, 0
+	st_note2	48, 76, 98, 14, 0, 0, 17
+	st_note	48, 72, 79, 15, 0
+	st_beat
+	st_note	0, 72, 84, 14, 0
+	st_note	0, 79, 93, 12, 0
+	st_note2	0, 76, 100, 12, 0, 0, 17
+	st_note	48, 79, 90, 16, 0
+	st_note2	48, 76, 98, 16, 0, 0, 17
+	st_note	48, 72, 81, 16, 0
+	st_beat
+	st_note	0, 74, 103, 9, 0
+	st_note	0, 72, 81, 13, 0
+	st_note	0, 79, 92, 10, 0
+	st_note	0, 77, 103, 9, 0
+	st_note	24, 72, 65, 12, 0
+	st_note	24, 79, 79, 10, 0
+	st_note	24, 77, 86, 8, 0
+	st_note	24, 74, 83, 8, 0
+	st_note	48, 79, 84, 32, 0
+	st_note	48, 77, 93, 33, 0
+	st_note	48, 74, 92, 33, 0
+	st_note	48, 72, 76, 34, 0
+	st_beat
+	st_note	0, 79, 84, 11, 0
+	st_note	0, 77, 93, 9, 0
+	st_note	0, 74, 92, 9, 0
+	.byte	0x90, 0x00, 0x48, 0x50	; first 4 bytes of st_note 0, 72, 80, 11, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ef, 0x00f1	; block 260, chain 97 cell 5
+	.byte	0x0b, 0x00	; last 2 bytes of st_note 0, 72, 80, 11, 0 (split by a cell boundary)
+	st_note	24, 79, 81, 10, 0
+	st_note	24, 77, 90, 8, 0
+	st_note	24, 74, 86, 8, 0
+	st_note	24, 72, 68, 10, 0
+	st_note	48, 77, 98, 33, 0
+	st_note	48, 74, 90, 32, 0
+	st_note	48, 72, 76, 33, 0
+	st_note	48, 79, 90, 29, 0
+	st_beat
+	st_note2	0, 76, 96, 11, 0, 0, 17
+	st_note	0, 72, 76, 12, 0
+	st_note	0, 79, 86, 11, 0
+	st_note	48, 79, 96, 12, 0
+	st_note2	48, 76, 98, 12, 0, 0, 17
+	st_note	48, 72, 80, 13, 0
+	st_beat
+	st_note	0, 72, 83, 14, 0
+	st_note	0, 79, 96, 13, 0
+	st_note2	0, 76, 98, 12, 0, 0, 17
+	st_note	48, 79, 93, 14, 0
+	st_note2	48, 76, 98, 13, 0, 0, 17
+	st_note	48, 72, 81, 14, 0
+	st_beat
+	st_note	0, 72, 83, 13, 0
+	st_note	0, 79, 92, 11, 0
+	st_note	0, 77, 100, 12, 0
+	st_note	0, 74, 98, 11, 0
+	st_note	48, 72, 80, 15, 0
+	st_note	48, 79, 88, 13, 0
+	st_note	48, 77, 96, 14, 0
+	st_note	48, 74, 93, 13, 0
+	st_beat
+	st_note	0, 79, 93, 14, 0
+	st_note	0, 77, 98, 14, 0
+	st_note	0, 74, 100, 14, 0
+	st_note	0, 72, 83, 15, 0
+	st_note	48, 79, 90, 10, 0
+	st_note	48, 77, 98, 10, 0
+	st_note	48, 72, 80, 12, 0
+	st_note	48, 74, 93, 8, 0
+	st_note	72, 79, 80, 9, 0
+	st_note	72, 77, 90, 8, 0
+	st_note	72, 74, 88, 8, 0
+	.byte	0x90	; first 1 bytes of st_note 72, 72, 66, 7, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00f0, 0xffff	; block 261, chain 97 cell 6
+	.byte	0x48, 0x48, 0x42, 0x07, 0x00	; last 5 bytes of st_note 72, 72, 66, 7, 0 (split by a cell boundary)
+	st_beat
+	st_note	0, 79, 88, 12, 0
+	st_note2	0, 76, 92, 11, 0, 0, 17
+	st_note	0, 72, 72, 14, 0
+	st_note	48, 72, 80, 15, 0
+	st_note	48, 79, 93, 12, 0
+	st_note2	48, 76, 98, 12, 0, 0, 17
+	st_beat
+	st_note	0, 72, 83, 15, 0
+	st_note	0, 79, 96, 14, 0
+	st_note2	0, 76, 103, 13, 0, 0, 17
+	st_note	48, 79, 96, 14, 0
+	st_note2	48, 76, 105, 14, 0, 0, 17
+	st_note	48, 72, 84, 16, 0
+	st_beat
+	st_note	0, 79, 98, 12, 0
+	st_note	0, 77, 108, 11, 0
+	st_note	0, 74, 108, 11, 0
+	st_note	0, 72, 90, 15, 0
+	st_note	24, 74, 90, 8, 0
+	st_note	24, 72, 72, 10, 0
+	st_note	24, 79, 84, 7, 0
+	st_note	24, 77, 90, 6, 0
+	st_note	48, 74, 92, 31, 0
+	st_note	48, 72, 75, 30, 0
+	st_note	48, 79, 90, 30, 0
+	st_note	48, 77, 96, 30, 0
+	st_beat
+	st_note	0, 79, 90, 11, 0
+	st_note	0, 77, 93, 10, 0
+	st_note	0, 74, 90, 10, 0
+	st_note	0, 72, 78, 12, 0
+	st_note	24, 77, 93, 11, 0
+	st_note	24, 74, 88, 11, 0
+	st_note	24, 79, 83, 10, 0
+	st_note	24, 72, 69, 11, 0
+	st_note	48, 79, 90, 37, 0
+	st_note	48, 77, 96, 38, 0
+	st_note	48, 74, 92, 38, 0
+	st_note	48, 72, 81, 35, 0
+	st_beat
+	st_end
+	.byte	0x4a, 0x5d, 0x0a, 0x00, 0x91, 0x00, 0x47, 0x4f, 0x0c, 0x00, 0x11, 0x11, 0x90, 0x30	; after st_end
+	style_cell_end	
+	style_cell	0x80, 0x0062, 0x00f3	; block 262, chain 98 cell 1
+	.byte	0x40, 0x5c, 0x0e, 0x00, 0x00, 0x11	; last 6 bytes of st_note2 48, 64, 92, 14, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 60, 75, 14, 0
+	st_beat
+	st_note	0, 60, 78, 15, 0
+	st_note	0, 67, 88, 14, 0
+	st_note	0, 65, 93, 14, 0
+	st_note	0, 62, 92, 13, 0
+	st_note	48, 67, 83, 15, 0
+	st_note	48, 65, 90, 15, 0
+	st_note	48, 62, 92, 15, 0
+	st_note	48, 60, 78, 17, 0
+	st_beat
+	st_note	0, 60, 80, 16, 0
+	st_note	0, 67, 83, 14, 0
+	st_note	0, 65, 92, 14, 0
+	st_note	0, 62, 92, 14, 0
+	st_note	48, 62, 93, 15, 0
+	st_note	48, 60, 79, 16, 0
+	st_note	48, 67, 81, 11, 0
+	st_note	48, 65, 92, 13, 0
+	st_beat
+	st_note	0, 67, 86, 14, 0
+	st_note2	0, 64, 96, 14, 0, 0, 17
+	st_note	0, 60, 80, 15, 0
+	st_note	48, 60, 72, 16, 0
+	st_note	48, 67, 79, 12, 0
+	st_note2	48, 64, 90, 12, 0, 0, 17
+	st_beat
+	st_note2	0, 64, 93, 16, 0, 0, 17
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 84, 14, 0
+	st_note2	48, 64, 93, 15, 0, 0, 17
+	st_note	48, 60, 78, 16, 0
+	st_note	48, 67, 86, 14, 0
+	st_beat
+	st_note	0, 67, 90, 14, 0
+	st_note	0, 65, 93, 13, 0
+	st_note	0, 62, 92, 13, 0
+	st_note	0, 60, 80, 14, 0
+	st_note	48, 67, 81, 12, 0
+	st_note	48, 62, 92, 12, 0
+	st_note	48, 60, 78, 14, 0
+	st_note	48, 65, 90, 10, 0
+	st_beat
+	st_note	0, 67, 84, 15, 0
+	.byte	0x90	; first 1 bytes of st_note 0, 60, 78, 16, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00f2, 0x00f4	; block 263, chain 98 cell 2
+	.byte	0x00, 0x3c, 0x4e, 0x10, 0x00	; last 5 bytes of st_note 0, 60, 78, 16, 0 (split by a cell boundary)
+	st_note	0, 65, 92, 12, 0
+	st_note	0, 62, 93, 12, 0
+	st_note	48, 60, 80, 16, 0
+	st_note	48, 67, 88, 14, 0
+	st_note	48, 65, 93, 14, 0
+	st_note	48, 62, 93, 14, 0
+	st_beat
+	st_note	0, 67, 90, 14, 0
+	st_note2	0, 64, 100, 13, 0, 0, 17
+	st_note	0, 60, 83, 14, 0
+	st_note	48, 67, 84, 13, 0
+	st_note2	48, 64, 93, 14, 0, 0, 17
+	st_note	48, 60, 72, 14, 0
+	st_beat
+	st_note	0, 60, 79, 17, 0
+	st_note	0, 67, 90, 15, 0
+	st_note2	0, 64, 93, 14, 0, 0, 17
+	st_note	48, 67, 88, 15, 0
+	st_note2	48, 64, 92, 16, 0, 0, 17
+	st_note	48, 60, 75, 16, 0
+	st_beat
+	st_note	0, 60, 80, 15, 0
+	st_note	0, 67, 88, 10, 0
+	st_note	0, 65, 93, 10, 0
+	st_note	0, 62, 96, 10, 0
+	st_note	48, 67, 86, 10, 0
+	st_note	48, 65, 92, 11, 0
+	st_note	48, 62, 93, 11, 0
+	st_note	48, 60, 74, 12, 0
+	st_beat
+	st_note	0, 60, 81, 14, 0
+	st_note	0, 67, 86, 12, 0
+	st_note	0, 65, 92, 12, 0
+	st_note	0, 62, 93, 12, 0
+	st_note	48, 60, 78, 17, 0
+	st_note	48, 67, 88, 15, 0
+	st_note	48, 65, 92, 16, 0
+	st_note	48, 62, 93, 14, 0
+	st_beat
+	st_note	0, 60, 76, 15, 0
+	st_note	0, 67, 86, 14, 0
+	st_note2	0, 64, 92, 14, 0, 0, 17
+	st_note	48, 67, 84, 15, 0
+	.byte	0x91	; first 1 bytes of st_note2 48, 64, 93, 15, 0, 0, 17 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00f3, 0x00f5	; block 264, chain 98 cell 3
+	.byte	0x30, 0x40, 0x5d, 0x0f, 0x00, 0x00, 0x11	; last 7 bytes of st_note2 48, 64, 93, 15, 0, 0, 17 (split by a cell boundary)
+	st_note	48, 60, 80, 15, 0
+	st_beat
+	st_note	0, 67, 86, 16, 0
+	st_note	0, 60, 78, 14, 0
+	st_note2	0, 64, 93, 13, 0, 0, 17
+	st_note	48, 60, 80, 16, 0
+	st_note	48, 67, 90, 14, 0
+	st_note2	48, 64, 96, 14, 0, 0, 17
+	st_beat
+	st_note	0, 65, 93, 14, 0
+	st_note	0, 62, 93, 14, 0
+	st_note	0, 60, 79, 16, 0
+	st_note	0, 67, 92, 13, 0
+	st_note	48, 67, 84, 14, 0
+	st_note	48, 65, 92, 15, 0
+	st_note	48, 62, 90, 14, 0
+	st_note	48, 60, 78, 15, 0
+	st_beat
+	st_note	0, 67, 86, 13, 0
+	st_note	0, 65, 93, 13, 0
+	st_note	0, 62, 93, 13, 0
+	st_note	0, 60, 78, 13, 0
+	st_note	48, 65, 96, 14, 0
+	st_note	48, 62, 93, 13, 0
+	st_note	48, 60, 76, 14, 0
+	st_note	48, 67, 88, 12, 0
+	st_beat
+	st_note	0, 67, 92, 13, 0
+	st_note2	0, 64, 98, 11, 0, 0, 17
+	st_note	0, 60, 80, 13, 0
+	st_note	48, 67, 88, 13, 0
+	st_note2	48, 64, 93, 13, 0, 0, 17
+	st_note	48, 60, 78, 14, 0
+	st_beat
+	st_note	0, 60, 79, 15, 0
+	st_note	0, 67, 90, 14, 0
+	st_note2	0, 64, 93, 14, 0, 0, 17
+	st_note	48, 67, 88, 14, 0
+	st_note2	48, 64, 93, 16, 0, 0, 17
+	st_note	48, 60, 79, 16, 0
+	st_beat
+	st_note	0, 67, 88, 15, 0
+	st_note	0, 65, 96, 14, 0
+	.byte	0x90, 0x00	; first 2 bytes of st_note 0, 62, 96, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00f4, 0x00f6	; block 265, chain 98 cell 4
+	.byte	0x3e, 0x60, 0x0e, 0x00	; last 4 bytes of st_note 0, 62, 96, 14, 0 (split by a cell boundary)
+	st_note	0, 60, 83, 15, 0
+	st_note	48, 67, 86, 13, 0
+	st_note	48, 65, 93, 13, 0
+	st_note	48, 62, 93, 13, 0
+	st_note	48, 60, 80, 14, 0
+	st_beat
+	st_note	0, 67, 84, 15, 0
+	st_note	0, 65, 93, 15, 0
+	st_note	0, 62, 96, 14, 0
+	st_note	0, 60, 81, 15, 0
+	st_note	48, 67, 86, 13, 0
+	st_note	48, 65, 96, 14, 0
+	st_note	48, 62, 93, 12, 0
+	st_note	48, 60, 79, 14, 0
+	st_beat
+	st_note	0, 60, 81, 16, 0
+	st_note	0, 67, 90, 15, 0
+	st_note2	0, 64, 100, 14, 0, 0, 17
+	st_note	48, 67, 90, 15, 0
+	st_note2	48, 64, 92, 15, 0, 0, 17
+	st_note	48, 60, 71, 16, 0
+	st_beat
+	st_note	0, 67, 88, 15, 0
+	st_note2	0, 64, 98, 15, 0, 0, 17
+	st_note	0, 60, 80, 15, 0
+	st_note	48, 60, 78, 17, 0
+	st_note	48, 67, 88, 15, 0
+	st_note2	48, 64, 93, 16, 0, 0, 17
+	st_beat
+	st_note	0, 60, 79, 15, 0
+	st_note	0, 67, 86, 14, 0
+	st_note	0, 65, 96, 13, 0
+	st_note	0, 62, 96, 13, 0
+	st_note	48, 60, 79, 16, 0
+	st_note	48, 67, 86, 13, 0
+	st_note	48, 65, 92, 14, 0
+	st_note	48, 62, 93, 13, 0
+	st_beat
+	st_note	0, 60, 81, 15, 0
+	st_note	0, 67, 88, 13, 0
+	st_note	0, 65, 93, 13, 0
+	st_note	0, 62, 93, 13, 0
+	st_note	48, 60, 80, 16, 0
+	.byte	0x90, 0x30, 0x43, 0x5a	; first 4 bytes of st_note 48, 67, 90, 14, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00f5, 0xffff	; block 266, chain 98 cell 5
+	.byte	0x0e, 0x00	; last 2 bytes of st_note 48, 67, 90, 14, 0 (split by a cell boundary)
+	st_note	48, 65, 96, 14, 0
+	st_note	48, 62, 96, 14, 0
+	st_beat
+	st_note	0, 67, 92, 14, 0
+	st_note2	0, 64, 100, 16, 0, 0, 17
+	st_note	0, 60, 81, 16, 0
+	st_note	48, 60, 75, 16, 0
+	st_note	48, 67, 84, 14, 0
+	st_note2	48, 64, 93, 15, 0, 0, 17
+	st_beat
+	st_note	0, 67, 86, 14, 0
+	st_note2	0, 64, 92, 14, 0, 0, 17
+	st_note	0, 60, 78, 15, 0
+	st_note	48, 67, 90, 15, 0
+	st_note2	48, 64, 96, 16, 0, 0, 17
+	st_note	48, 60, 80, 16, 0
+	st_beat
+	st_note	0, 67, 92, 15, 0
+	st_note	0, 65, 92, 13, 0
+	st_note	0, 62, 96, 13, 0
+	st_note	0, 60, 81, 15, 0
+	st_note	48, 67, 90, 14, 0
+	st_note	48, 60, 80, 15, 0
+	st_note	48, 65, 96, 12, 0
+	st_note	48, 62, 98, 11, 0
+	st_beat
+	st_note	0, 60, 83, 16, 0
+	st_note	0, 67, 92, 14, 0
+	st_note	0, 65, 98, 14, 0
+	st_note	0, 62, 98, 14, 0
+	st_note	48, 67, 96, 15, 0
+	st_note	48, 65, 100, 15, 0
+	st_note	48, 62, 100, 14, 0
+	st_note	48, 60, 86, 15, 0
+	st_beat
+	st_end
+	.byte	0x5a, 0x0e, 0x00, 0x90, 0x00, 0x3e, 0x58, 0x0d, 0x00, 0x90, 0x00, 0x3c, 0x4c, 0x0e, 0x00, 0x90	; after st_end
+	.byte	0x00, 0x43, 0x54, 0x0c, 0x00, 0x90, 0x30, 0x43, 0x53, 0x0b, 0x00, 0x90, 0x30, 0x41, 0x54, 0x0b
+	.byte	0x00, 0x90, 0x30, 0x3e, 0x58, 0x0d, 0x00, 0x90, 0x30, 0x3c, 0x48, 0x0d, 0x00, 0x81, 0x90, 0x00
+	.byte	0x3c, 0x4c, 0x0f, 0x00, 0x90
+	style_cell_end	
+	style_cell	0x80, 0x0064, 0xffff	; block 267, chain 100 cell 1
+	st_note	48, 48, 108, 24, 0
+	st_note	48, 102, 108, 7, 0
+	st_note	60, 74, 104, 9, 0
+	st_note	72, 74, 113, 9, 0
+	st_note	72, 102, 113, 6, 0
+	st_note	84, 74, 113, 9, 0
+	st_note	92, 25, 108, 51, 0
+	st_beat
+	st_end
+	.byte	0x40, 0x5d, 0x0d, 0x00, 0x00, 0x11, 0x90, 0x00, 0x3c, 0x51, 0x0e, 0x00, 0x90, 0x00, 0x43, 0x5a	; after st_end
+	.byte	0x0c, 0x00, 0x90, 0x30, 0x43, 0x54, 0x0d, 0x00, 0x91, 0x30, 0x40, 0x5c, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x3c, 0x4a, 0x0e, 0x00, 0x81, 0x91, 0x00, 0x40, 0x5c, 0x0d, 0x00, 0x00, 0x11, 0x90
+	.byte	0x00, 0x3c, 0x4c, 0x0c, 0x00, 0x90, 0x00, 0x43, 0x56, 0x0c, 0x00, 0x91, 0x30, 0x40, 0x60, 0x10
+	.byte	0x00, 0x00, 0x11, 0x90, 0x30, 0x3c, 0x4f, 0x10, 0x00, 0x90, 0x30, 0x43, 0x56, 0x0e, 0x00, 0x81
+	.byte	0x90, 0x00, 0x43, 0x53, 0x0d, 0x00, 0x90, 0x00, 0x41, 0x5a, 0x0c, 0x00, 0x90, 0x00, 0x3e, 0x5a
+	.byte	0x0c, 0x00, 0x90, 0x00, 0x3c, 0x50, 0x0d, 0x00, 0x90, 0x30, 0x43, 0x51, 0x0d, 0x00, 0x90, 0x30
+	.byte	0x41, 0x56, 0x0d, 0x00, 0x90, 0x30, 0x3e, 0x58, 0x0d, 0x00, 0x90, 0x30, 0x3c, 0x4e, 0x0e, 0x00
+	.byte	0x81, 0x90, 0x00, 0x43, 0x56, 0x10, 0x00, 0x90, 0x00, 0x41, 0x58, 0x0f, 0x00, 0x90, 0x00, 0x3e
+	.byte	0x5c, 0x0f, 0x00, 0x90, 0x00, 0x3c, 0x53, 0x10, 0x00, 0x90, 0x30, 0x3c, 0x4f, 0x0f, 0x00, 0x90
+	.byte	0x30, 0x43, 0x4f, 0x0d, 0x00, 0x90, 0x30, 0x41, 0x53, 0x0d, 0x00, 0x90, 0x30, 0x3e, 0x58, 0x0d
+	.byte	0x00, 0x81, 0x90, 0x00, 0x43, 0x53, 0x0e, 0x00, 0x90, 0x00, 0x41, 0x5a, 0x0e, 0x00, 0x90, 0x00
+	.byte	0x3e, 0x5c, 0x0e, 0x00, 0x90, 0x00, 0x3c, 0x54, 0x0e, 0x00, 0x90, 0x30, 0x43
+	style_cell_end	
+	style_cell	0x80, 0x0073, 0x00f9	; block 268, chain 115 cell 1
+	st_note	48, 50, 102, 30, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	48, 53, 90, 13, 0
+	st_note	72, 102, 110, 12, 0
+	st_note	72, 74, 75, 12, 0
+	st_note	72, 38, 97, 22, 0
+	st_note	72, 53, 89, 11, 0
+	st_beat
+	st_note	0, 36, 104, 54, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 62, 10, 0
+	st_note	48, 50, 96, 16, 0
+	st_note	48, 74, 84, 11, 0
+	st_note	48, 55, 82, 7, 0
+	st_note	72, 74, 72, 11, 0
+	st_beat
+	st_note	0, 36, 104, 56, 0
+	st_note	0, 38, 110, 70, 0
+	st_note	0, 48, 98, 13, 0
+	st_note	0, 74, 114, 17, 0
+	st_note	0, 55, 91, 12, 0
+	st_note	0, 69, 116, 66, 0
+	st_note	24, 74, 71, 12, 0
+	st_note	48, 50, 100, 17, 0
+	st_note	48, 74, 82, 11, 0
+	st_note	48, 53, 95, 11, 0
+	st_note	72, 74, 54, 11, 0
+	st_note	72, 45, 104, 11, 0
+	st_note	72, 53, 98, 12, 0
+	st_beat
+	st_note	0, 36, 107, 53, 0
+	st_note	0, 48, 92, 11, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 25, 108, 48, 0
+	st_note	0, 45, 114, 10, 0
+	st_note	0, 111, 104, 9, 6
+	st_note	24, 48, 98, 10, 0
+	st_note	24, 74, 80, 13, 0
+	st_note	24, 53, 102, 6, 0
+	st_note	48, 50, 102, 38, 0
+	st_note	48, 74, 86, 13, 0
+	st_note	48, 43, 117, 12, 0
+	st_note	48, 55, 106, 11, 0
+	style_cell_end	
+	style_cell	0x80, 0x00f8, 0x00fa	; block 269, chain 115 cell 2
+	st_note	72, 74, 75, 12, 0
+	st_beat
+	st_note	0, 67, 106, 19, 0
+	st_note	0, 36, 105, 51, 0
+	st_note	0, 38, 107, 77, 0
+	st_note	0, 69, 111, 15, 0
+	st_note	0, 48, 87, 12, 0
+	st_note	0, 74, 114, 18, 0
+	st_note	0, 25, 116, 57, 0
+	st_note	0, 41, 108, 13, 0
+	st_note	0, 57, 109, 14, 0
+	st_note	2, 67, 93, 15, 0
+	st_note	23, 69, 60, 23, 0
+	st_note	24, 67, 108, 19, 0
+	st_note	24, 48, 96, 13, 0
+	st_note	24, 74, 62, 10, 0
+	st_note	24, 41, 112, 9, 0
+	st_note	24, 95, 97, 5, 0
+	st_note	48, 67, 105, 19, 0
+	st_note	48, 69, 108, 18, 0
+	st_note	48, 50, 99, 40, 0
+	st_note	48, 74, 83, 12, 0
+	st_note	48, 95, 116, 14, 0
+	st_note	48, 55, 102, 12, 0
+	st_note	51, 108, 47, 11, 0
+	st_note	72, 107, 114, 19, 0
+	st_note	72, 67, 106, 19, 0
+	st_note	72, 38, 93, 72, 0
+	st_note	72, 74, 78, 15, 0
+	st_note	72, 55, 99, 10, 0
+	st_note	72, 53, 93, 8, 0
+	st_beat
+	st_note	0, 36, 105, 52, 0
+	st_note	0, 48, 93, 13, 0
+	st_note	0, 24, 105, 69, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	0, 51, 114, 31, 2
+	st_note	24, 74, 80, 10, 0
+	st_note	48, 50, 102, 18, 0
+	st_note	48, 74, 77, 11, 0
+	st_note	48, 57, 109, 14, 0
+	st_note	72, 74, 71, 13, 0
+	st_beat
+	st_note	0, 36, 103, 57, 0
+	style_cell_end	
+	style_cell	0x80, 0x00f9, 0x00fb	; block 270, chain 115 cell 3
+	st_note	0, 38, 109, 70, 0
+	st_note	0, 48, 96, 15, 0
+	st_note	0, 74, 110, 16, 0
+	st_note	0, 55, 107, 12, 0
+	st_note	0, 69, 110, 67, 0
+	st_note	24, 74, 78, 11, 0
+	st_note	48, 50, 102, 16, 0
+	st_note	48, 74, 77, 12, 0
+	st_note	48, 53, 99, 13, 0
+	st_note	72, 74, 77, 12, 0
+	st_note	72, 53, 108, 12, 0
+	st_beat
+	st_note	0, 36, 105, 55, 0
+	st_note	0, 48, 99, 13, 0
+	st_note	0, 74, 112, 17, 0
+	st_note	24, 74, 84, 11, 0
+	st_note	24, 38, 72, 14, 0
+	st_note	24, 53, 102, 7, 0
+	st_note	48, 102, 110, 13, 0
+	st_note	48, 50, 104, 16, 0
+	st_note	48, 74, 81, 12, 0
+	st_note	48, 55, 107, 11, 0
+	st_note	72, 74, 83, 12, 0
+	st_beat
+	st_note	0, 36, 98, 52, 0
+	st_note	0, 38, 109, 74, 0
+	st_note	0, 102, 107, 12, 0
+	st_note	0, 48, 94, 12, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 55, 111, 13, 0
+	st_note	0, 69, 111, 76, 0
+	st_note	24, 48, 94, 11, 0
+	st_note	24, 74, 92, 12, 0
+	st_note	48, 102, 107, 12, 0
+	st_note	48, 50, 102, 39, 0
+	st_note	48, 74, 87, 13, 0
+	st_note	48, 43, 117, 10, 0
+	st_note	48, 55, 109, 10, 0
+	st_note	72, 102, 107, 12, 0
+	st_note	72, 74, 87, 12, 0
+	st_beat
+	st_note	0, 36, 107, 58, 0
+	st_note	0, 48, 92, 13, 0
+	st_note	0, 74, 114, 18, 0
+	style_cell_end	
+	style_cell	0x80, 0x00fa, 0xffff	; block 271, chain 115 cell 4
+	st_note	0, 24, 116, 28, 0
+	st_note	0, 41, 120, 13, 0
+	st_note	0, 53, 93, 14, 0
+	st_note	24, 74, 86, 13, 0
+	st_note	48, 50, 100, 18, 0
+	st_note	48, 38, 96, 90, 0
+	st_note	48, 74, 82, 13, 0
+	st_note	72, 74, 74, 14, 0
+	st_beat
+	st_note	0, 36, 110, 56, 0
+	st_note	0, 38, 110, 67, 0
+	st_note	0, 48, 98, 14, 0
+	st_note	0, 74, 112, 18, 0
+	st_note	0, 25, 122, 90, 0
+	st_note	0, 95, 116, 18, 0
+	st_note	0, 55, 108, 11, 0
+	st_note	0, 29, 108, 1, 2
+	st_note	0, 69, 118, 45, 0
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x30, 0x40, 0x56, 0x38, 0x00, 0x00, 0x11, 0x91, 0x30, 0x43, 0x61, 0x35, 0x00, 0x03, 0x00, 0x90	; after st_end
+	.byte	0x30, 0x48, 0x52, 0x36, 0x00, 0x91, 0x30, 0x37, 0x5a, 0x39, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43
+	.byte	0x5a, 0x3a, 0x00, 0x81, 0x90, 0x30, 0x3c, 0x5d, 0x36, 0x00, 0x91, 0x30, 0x40, 0x5a, 0x37, 0x00
+	.byte	0x00, 0x11, 0x91, 0x30, 0x43, 0x64, 0x34, 0x00, 0x03, 0x00, 0x90, 0x30, 0x48, 0x54, 0x35, 0x00
+	.byte	0x91, 0x30, 0x37, 0x5a, 0x37, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x5c, 0x38, 0x00, 0x81, 0x91
+	.byte	0x30, 0x40, 0x5c, 0x38, 0x00, 0x00, 0x11, 0x91, 0x30, 0x43, 0x67, 0x35, 0x00, 0x03, 0x00, 0x90
+	.byte	0x30, 0x3c, 0x57, 0x34, 0x00, 0x90, 0x30, 0x48, 0x54, 0x35, 0x00, 0x91, 0x30, 0x37, 0x5a, 0x37
+	.byte	0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x5a, 0x38, 0x00, 0x81, 0x90, 0x30, 0x3c, 0x5a, 0x10, 0x00
+	.byte	0x91, 0x30, 0x40, 0x5d, 0x0e, 0x00, 0x00, 0x11, 0x91, 0x30, 0x43, 0x67, 0x0c, 0x00
+	style_cell_end	
+	style_cell	0x80, 0x0075, 0x00fd	; block 272, chain 117 cell 1
+	.byte	0x00, 0x43, 0x4e, 0x0f, 0x00	; last 5 bytes of st_note 0, 67, 78, 15, 0 (split by a cell boundary)
+	st_note	48, 72, 75, 16, 0
+	st_note	48, 79, 90, 15, 0
+	st_note2	48, 76, 93, 13, 0, 0, 17
+	st_note	48, 67, 82, 15, 0
+	st_beat
+	st_note	0, 79, 93, 15, 0
+	st_note	0, 72, 78, 15, 0
+	st_note2	0, 76, 91, 13, 0, 0, 17
+	st_note	0, 67, 84, 14, 0
+	st_note	48, 72, 81, 15, 0
+	st_note	48, 79, 93, 16, 0
+	st_note2	48, 76, 94, 13, 0, 0, 17
+	st_note	48, 67, 87, 14, 0
+	st_beat
+	st_note	0, 67, 95, 13, 0
+	st_note	0, 79, 100, 13, 0
+	st_note	0, 72, 86, 14, 0
+	st_note	0, 74, 102, 11, 0
+	st_note	0, 77, 107, 10, 0
+	st_note	24, 77, 93, 9, 0
+	st_note	24, 72, 72, 8, 0
+	st_note	24, 79, 86, 8, 0
+	st_note	24, 74, 92, 7, 0
+	st_note	24, 67, 91, 9, 0
+	st_note	48, 79, 105, 36, 0
+	st_note	48, 74, 104, 35, 0
+	st_note	48, 77, 109, 35, 0
+	st_note	48, 72, 93, 34, 0
+	st_note	48, 67, 92, 34, 0
+	st_beat
+	st_note	0, 74, 87, 9, 0
+	st_note	0, 77, 89, 8, 0
+	st_note	0, 72, 71, 10, 0
+	st_note	0, 79, 84, 9, 0
+	st_note	0, 67, 83, 10, 0
+	st_note	24, 74, 74, 7, 0
+	st_note	24, 79, 71, 7, 0
+	st_note	24, 77, 75, 6, 0
+	st_note	24, 72, 58, 7, 0
+	st_note	24, 67, 90, 10, 0
+	st_note	48, 74, 96, 39, 0
+	st_note	48, 77, 99, 40, 0
+	.byte	0x90	; first 1 bytes of st_note 48, 79, 96, 40, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00fc, 0x00fe	; block 273, chain 117 cell 2
+	.byte	0x30, 0x4f, 0x60, 0x28, 0x00	; last 5 bytes of st_note 48, 79, 96, 40, 0 (split by a cell boundary)
+	st_note	48, 72, 83, 39, 0
+	st_note	48, 67, 95, 38, 0
+	st_beat
+	st_note	0, 72, 71, 13, 0
+	st_note2	0, 76, 90, 11, 0, 0, 17
+	st_note	0, 79, 88, 12, 0
+	st_note	0, 67, 83, 13, 0
+	st_note	48, 67, 86, 15, 0
+	st_note	48, 72, 84, 16, 0
+	st_note	48, 79, 90, 14, 0
+	st_note2	48, 76, 96, 14, 0, 0, 17
+	st_beat
+	st_note	0, 72, 78, 14, 0
+	st_note	0, 67, 87, 15, 0
+	st_note2	0, 76, 93, 12, 0, 0, 17
+	st_note	0, 79, 93, 13, 0
+	st_note	48, 72, 79, 14, 0
+	st_note2	48, 76, 93, 14, 0, 0, 17
+	st_note	48, 79, 93, 16, 0
+	st_note	48, 67, 82, 14, 0
+	st_beat
+	st_note	0, 77, 99, 16, 0
+	st_note	0, 72, 81, 14, 0
+	st_note	0, 74, 93, 13, 0
+	st_note	0, 67, 85, 14, 0
+	st_note	0, 79, 93, 12, 0
+	st_note	48, 72, 78, 15, 0
+	st_note	48, 67, 86, 16, 0
+	st_note	48, 77, 93, 16, 0
+	st_note	48, 74, 90, 13, 0
+	st_note	48, 79, 90, 13, 0
+	st_beat
+	st_note	0, 67, 90, 16, 0
+	st_note	0, 72, 78, 15, 0
+	st_note	0, 77, 91, 16, 0
+	st_note	0, 74, 89, 13, 0
+	st_note	0, 79, 90, 14, 0
+	st_note	48, 67, 93, 20, 0
+	st_note	48, 77, 90, 19, 0
+	st_note	48, 72, 76, 16, 0
+	st_note	48, 74, 90, 15, 0
+	st_note	48, 79, 87, 16, 0
+	st_beat
+	.byte	0x90, 0x00, 0x48	; first 3 bytes of st_note 0, 72, 85, 20, 0 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00fd, 0xffff	; block 274, chain 117 cell 3
+	.byte	0x55, 0x14, 0x00	; last 3 bytes of st_note 0, 72, 85, 20, 0 (split by a cell boundary)
+	st_note2	0, 76, 95, 20, 0, 0, 17
+	st_note	0, 79, 99, 24, 0
+	st_note	0, 67, 98, 20, 0
+	st_beat
+	st_note	0, 84, 85, 79, 2
+	st_note	0, 72, 90, 76, 2
+	st_note2	0, 76, 78, 78, 2, 0, 17
+	st_note	0, 81, 92, 75, 2
+	st_note	0, 79, 92, 74, 2
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x0d, 0x00, 0x91, 0x00, 0x4c, 0x4f, 0x0d, 0x00, 0x00, 0x11, 0x91, 0x00, 0x43, 0x51, 0x0e, 0x00	; after st_end
+	.byte	0x03, 0x00, 0x90, 0x30, 0x4f, 0x4f, 0x0e, 0x00, 0x91, 0x30, 0x4c, 0x52, 0x0e, 0x00, 0x00, 0x11
+	.byte	0x90, 0x30, 0x48, 0x49, 0x0d, 0x00, 0x91, 0x30, 0x43, 0x4f, 0x0d, 0x00, 0x03, 0x00, 0x81, 0x90
+	.byte	0x00, 0x4f, 0x50, 0x0d, 0x00, 0x91, 0x00, 0x4c, 0x52, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48
+	.byte	0x49, 0x0a, 0x00, 0x91, 0x00, 0x43, 0x50, 0x0c, 0x00, 0x03, 0x00, 0x91, 0x18, 0x4c, 0x50, 0x0b
+	.byte	0x00, 0x00, 0x11, 0x90, 0x18, 0x4f, 0x50, 0x0a, 0x00, 0x90, 0x18, 0x48, 0x45, 0x0a, 0x00, 0x91
+	.byte	0x18, 0x43, 0x50, 0x0d, 0x00, 0x03, 0x00, 0x91, 0x30, 0x4c, 0x5c, 0x20, 0x00, 0x00, 0x11, 0x90
+	.byte	0x30, 0x48, 0x55, 0x20, 0x00, 0x90, 0x30, 0x4f, 0x5b, 0x20, 0x00, 0x91, 0x30, 0x43, 0x59, 0x1f
+	.byte	0x00, 0x03, 0x00, 0x81, 0x90, 0x00, 0x4f, 0x4c, 0x0d, 0x00, 0x90, 0x00, 0x48, 0x39, 0x0a, 0x00
+	.byte	0x91, 0x00, 0x4c, 0x48, 0x0b, 0x00, 0x00, 0x11, 0x91, 0x00, 0x43, 0x52, 0x10, 0x00, 0x03, 0x00
+	.byte	0x91, 0x18, 0x4c, 0x50, 0x0a, 0x00, 0x00, 0x11, 0x90, 0x18, 0x48, 0x4b, 0x0b, 0x00, 0x90, 0x18
+	.byte	0x4f, 0x59, 0x0a, 0x00, 0x91, 0x18, 0x43, 0x5a, 0x0e, 0x00, 0x03, 0x00, 0x91
+	style_cell_end	
+	style_cell	0x80, 0x0076, 0x0100	; block 275, chain 118 cell 1
+	.byte	0x67, 0x38, 0x00	; last 3 bytes of st_note 0, 65, 103, 56, 0 (split by a cell boundary)
+	st_beat
+	st_note	0, 55, 91, 61, 0
+	st_note	0, 65, 97, 61, 0
+	st_note	0, 60, 85, 61, 0
+	st_note	0, 67, 86, 59, 0
+	st_note	0, 62, 96, 58, 0
+	st_beat
+	st_note	0, 55, 93, 56, 0
+	st_note	0, 60, 90, 59, 0
+	st_note2	0, 64, 103, 56, 0, 0, 17
+	st_note	0, 67, 92, 56, 0
+	st_beat
+	st_note	0, 60, 84, 17, 0
+	st_note	0, 55, 90, 18, 0
+	st_note2	0, 64, 100, 15, 0, 0, 17
+	st_note	0, 67, 90, 16, 0
+	st_note	48, 60, 85, 18, 0
+	st_note2	48, 64, 98, 17, 0, 0, 17
+	st_note	48, 55, 90, 18, 0
+	st_note	48, 67, 91, 17, 0
+	st_beat
+	st_note	0, 55, 93, 21, 0
+	st_note	0, 60, 79, 18, 0
+	st_note	0, 65, 100, 17, 0
+	st_note	0, 67, 87, 18, 0
+	st_note	0, 62, 96, 15, 0
+	st_note	48, 55, 92, 60, 0
+	st_note	48, 60, 81, 60, 0
+	st_note	48, 65, 99, 61, 0
+	st_note	48, 62, 94, 59, 0
+	st_note	48, 67, 86, 62, 0
+	st_beat
+	st_note	48, 55, 98, 32, 0
+	st_note	48, 62, 98, 35, 0
+	st_note	48, 67, 91, 32, 0
+	st_note	48, 60, 90, 27, 0
+	st_note	48, 65, 102, 33, 0
+	st_beat
+	st_note2	0, 64, 99, 39, 0, 0, 17
+	st_note	0, 60, 97, 34, 0
+	st_note	0, 67, 95, 37, 0
+	st_note	0, 55, 98, 33, 0
+	st_beat
+	st_note	0, 60, 102, 77, 2
+	st_note	0, 72, 90, 75, 2
+	.byte	0x90, 0x00, 0x43	; first 3 bytes of st_note 0, 67, 102, 74, 2 (split by a cell boundary)
+	style_cell_end	
+	style_cell	0x80, 0x00ff, 0xffff	; block 276, chain 118 cell 2
+	.byte	0x66, 0x4a, 0x02	; last 3 bytes of st_note 0, 67, 102, 74, 2 (split by a cell boundary)
+	st_note2	0, 64, 90, 73, 2, 0, 17
+	st_note	0, 69, 99, 74, 2
+	st_beat
+	st_beat
+	st_beat
+	st_end
+	.byte	0x91, 0x30, 0x43, 0x68, 0x35, 0x00, 0x03, 0x00, 0x90, 0x30, 0x48, 0x57, 0x36, 0x00, 0x91, 0x30	; after st_end
+	.byte	0x37, 0x5d, 0x39, 0x00, 0x03, 0x00, 0x90, 0x30, 0x43, 0x60, 0x38, 0x00, 0x81, 0x91, 0x30, 0x40
+	.byte	0x5a, 0x0e, 0x00, 0x00, 0x11, 0x91, 0x30, 0x43, 0x63, 0x0b, 0x00, 0x03, 0x00, 0x90, 0x30, 0x48
+	.byte	0x53, 0x0c, 0x00, 0x90, 0x30, 0x3c, 0x5e, 0x0d, 0x00, 0x91, 0x30, 0x37, 0x5d, 0x0f, 0x00, 0x03
+	.byte	0x00, 0x90, 0x30, 0x43, 0x5f, 0x11, 0x00, 0x81, 0x90, 0x00, 0x3c, 0x5f, 0x33, 0x00, 0x91, 0x00
+	.byte	0x40, 0x5a, 0x36, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x57, 0x35, 0x00, 0x91, 0x00, 0x43, 0x64
+	.byte	0x34, 0x00, 0x03, 0x00, 0x91, 0x00, 0x37, 0x5d, 0x35, 0x00, 0x03, 0x00, 0x90, 0x00, 0x43, 0x5c
+	.byte	0x39, 0x00, 0x81, 0x90, 0x00, 0x3c, 0x5e, 0x32, 0x00, 0x91, 0x00, 0x40, 0x5d, 0x36, 0x00, 0x00
+	.byte	0x11, 0x91, 0x00, 0x43, 0x67, 0x36, 0x00, 0x03, 0x00, 0x90, 0x00, 0x48, 0x50, 0x36, 0x00, 0x91
+	.byte	0x00, 0x37, 0x58, 0x38, 0x00, 0x03, 0x00, 0x90, 0x00, 0x43, 0x5e, 0x36, 0x00, 0x81, 0x90, 0x00
+	.byte	0x3c, 0x5d, 0x34, 0x00, 0x91, 0x00, 0x43, 0x67, 0x36, 0x00, 0x03, 0x00, 0x91, 0x00, 0x40, 0x5d
+	.byte	0x35, 0x00, 0x00, 0x11, 0x90, 0x00, 0x48, 0x53, 0x36, 0x00, 0x91, 0x00, 0x37, 0x5d, 0x3b, 0x00
+	.byte	0x03, 0x00, 0x90, 0x00, 0x43, 0x5d, 0x3d, 0x00, 0x81, 0x90, 0x00, 0x3c, 0x58, 0x0f, 0x00, 0x91
+	.byte	0x00, 0x40, 0x5e, 0x0f, 0x00, 0x00, 0x11, 0x91, 0x00, 0x43, 0x66, 0x0e, 0x00, 0x03, 0x00, 0x90
+	.byte	0x00, 0x48, 0x57, 0x0c
+	style_cell_end	
+	style_cell	0x00, 0xffff, 0xffff	; block 277, unlinked template block
+	.fill	249, 1, 0x00	; not decoded: status 0x00 is not in the IC19 grammar
+	style_cell_end	
+	style_cell	0x00, 0xffff, 0xffff	; block 278, unlinked template block
+	.fill	249, 1, 0x00	; not decoded: status 0x00 is not in the IC19 grammar
+	style_cell_end	
+	style_cell	0x00, 0xffff, 0xffff	; block 279, unlinked template block
+	.fill	249, 1, 0x00	; not decoded: status 0x00 is not in the IC19 grammar
+	style_cell_end	

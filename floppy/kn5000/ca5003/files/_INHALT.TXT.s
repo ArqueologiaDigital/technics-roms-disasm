@@ -2,5 +2,20 @@
 
 ; _INHALT.TXT -- 361 bytes, clusters 2013..2013.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca5003.img", 0xff800, 361
+; Plain text, CR LF line ends: the disk's table of contents, read by people, not by
+; the instrument (no KN5000 file type is .TXT: FileIO_TypeExtensions, v10 0xea0340).
+; Bytes above 0x7e are code page 437/850 (0xe4 = a umlaut).
+F__INHALT_TXT_Text:
+	.ascii	"***************\015\012"
+	.ascii	"* I N H A L T *\015\012"
+	.ascii	"***************\015\012"
+	.ascii	"\015\012"
+	.ascii	"CA-5003 Dance & Techno\015\012"
+	.ascii	"----------------------\015\012"
+	.ascii	"\015\012"
+	.ascii	"01. DANCE:  Dance 1,  Dance Shuffle, Dance 2\015\012"
+	.ascii	"02. RAVE:   Rave 1,   Rave 2,        Rave 3\015\012"
+	.ascii	"03. TECHNO: Techno 1, Techno 2,      Techno 3\015\012"
+	.ascii	"04. CHARTS: Techno 4, Rap,           Modern Reggae\015\012"
+	.ascii	"05. FUNK:   Funk,     Funky Dance,   Funky Pop\015\012"
+	.ascii	"06. Techno-Demo-Song"

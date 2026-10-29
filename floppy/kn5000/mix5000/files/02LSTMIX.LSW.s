@@ -2,5 +2,165 @@
 
 ; 02LSTMIX.LSW -- 3648 bytes, clusters 1209..1216.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02LSTMIX_LSW:	.incbin	"mix5000.img", 0x9b000, 3648
+; CURRENT PANEL, file type 0.  FileIO_SaveRegion0_VRAM (v10 0xf87af6) writes 0x640 bytes
+; of the live panel area 0xf980..0xffc0 (header, block 0 at 0xf9a0, block 1 at 0xfd60)
+; and the 0x800 bytes at 0x1e7800, between PreLswSave and PostLswSave.
+F_02LSTMIX_LSW_Header:
+	.byte	0x5a, 0x5a, 0x00, 0x00	; header +0..+3
+	.ascii	"HK"	; FileIO_CheckRegionSignature(0) requires "HK" at +4
+	.fill	26, 1, 0x00	; header +6..+0x1f
+F_02LSTMIX_LSW_Block0:
+; Block 0 (RAM 0xf9a0): the first 43 of the 46 records of PanelTlv_Block0_Layout; the rest differ (an older firmware's
+; block, [INFERENCE]: the v5..v10 lists are all the same).
+	panel_tlv	0x78, 18	; record 0
+	.incbin	"02LSTMIX.lsw", 0x22, 18	; tag 0x78 payload
+	panel_tlv	0x00, 24	; part 0
+	.incbin	"02LSTMIX.lsw", 0x36, 24	; tag 0x00 payload
+	panel_tlv	0x01, 24	; part 1
+	.incbin	"02LSTMIX.lsw", 0x50, 24	; tag 0x01 payload
+	panel_tlv	0x02, 24	; part 2
+	.incbin	"02LSTMIX.lsw", 0x6a, 24	; tag 0x02 payload
+	panel_tlv	0x03, 24	; part 3
+	.incbin	"02LSTMIX.lsw", 0x84, 24	; tag 0x03 payload
+	panel_tlv	0x04, 24	; part 4
+	.incbin	"02LSTMIX.lsw", 0x9e, 24	; tag 0x04 payload
+	panel_tlv	0x05, 24	; part 5
+	.incbin	"02LSTMIX.lsw", 0xb8, 24	; tag 0x05 payload
+	panel_tlv	0x06, 24	; part 6
+	.incbin	"02LSTMIX.lsw", 0xd2, 24	; tag 0x06 payload
+	panel_tlv	0x07, 24	; part 7
+	.incbin	"02LSTMIX.lsw", 0xec, 24	; tag 0x07 payload
+	panel_tlv	0x08, 24	; part 8
+	.incbin	"02LSTMIX.lsw", 0x106, 24	; tag 0x08 payload
+	panel_tlv	0x09, 24	; part 9
+	.incbin	"02LSTMIX.lsw", 0x120, 24	; tag 0x09 payload
+	panel_tlv	0x0a, 24	; part 10
+	.incbin	"02LSTMIX.lsw", 0x13a, 24	; tag 0x0a payload
+	panel_tlv	0x0b, 24	; part 11
+	.incbin	"02LSTMIX.lsw", 0x154, 24	; tag 0x0b payload
+	panel_tlv	0x0c, 24	; part 12
+	.incbin	"02LSTMIX.lsw", 0x16e, 24	; tag 0x0c payload
+	panel_tlv	0x0d, 24	; part 13
+	.incbin	"02LSTMIX.lsw", 0x188, 24	; tag 0x0d payload
+	panel_tlv	0x0e, 24	; part 14
+	.incbin	"02LSTMIX.lsw", 0x1a2, 24	; tag 0x0e payload
+	panel_tlv	0x0f, 24	; part 15
+	.incbin	"02LSTMIX.lsw", 0x1bc, 24	; tag 0x0f payload
+	panel_tlv	0x10, 24	; part 16
+	.incbin	"02LSTMIX.lsw", 0x1d6, 24	; tag 0x10 payload
+	panel_tlv	0x11, 24	; part 17
+	.incbin	"02LSTMIX.lsw", 0x1f0, 24	; tag 0x11 payload
+	panel_tlv	0x12, 24	; part 18
+	.incbin	"02LSTMIX.lsw", 0x20a, 24	; tag 0x12 payload
+	panel_tlv	0x13, 24	; part 19
+	.incbin	"02LSTMIX.lsw", 0x224, 24	; tag 0x13 payload
+	panel_tlv	0x14, 24	; part 20
+	.incbin	"02LSTMIX.lsw", 0x23e, 24	; tag 0x14 payload
+	panel_tlv	0x15, 24	; part 21
+	.incbin	"02LSTMIX.lsw", 0x258, 24	; tag 0x15 payload
+	panel_tlv	0x16, 24	; part 22
+	.incbin	"02LSTMIX.lsw", 0x272, 24	; tag 0x16 payload
+	panel_tlv	0x19, 24	; record 24
+	.incbin	"02LSTMIX.lsw", 0x28c, 24	; tag 0x19 payload
+	panel_tlv	0x44, 10	; record 25
+	.incbin	"02LSTMIX.lsw", 0x2a6, 10	; tag 0x44 payload
+	panel_tlv	0x45, 10	; record 26
+	.incbin	"02LSTMIX.lsw", 0x2b2, 10	; tag 0x45 payload
+	panel_tlv	0x46, 10	; record 27
+	.incbin	"02LSTMIX.lsw", 0x2be, 10	; tag 0x46 payload
+	panel_tlv	0x47, 8	; record 28
+	.incbin	"02LSTMIX.lsw", 0x2ca, 8	; tag 0x47 payload
+	panel_tlv	0x43, 4	; record 29
+	.incbin	"02LSTMIX.lsw", 0x2d4, 4	; tag 0x43 payload
+	panel_tlv	0x48, 10	; record 30
+	.incbin	"02LSTMIX.lsw", 0x2da, 10	; tag 0x48 payload
+	panel_tlv	0x90, 6	; record 31
+	.incbin	"02LSTMIX.lsw", 0x2e6, 6	; tag 0x90 payload
+	panel_tlv	0x60, 4	; record 32
+	.incbin	"02LSTMIX.lsw", 0x2ee, 4	; tag 0x60 payload
+	panel_tlv	0x61, 24	; record 33
+	.incbin	"02LSTMIX.lsw", 0x2f4, 24	; tag 0x61 payload
+	panel_tlv	0x63, 24	; record 34
+	.incbin	"02LSTMIX.lsw", 0x30e, 24	; tag 0x63 payload
+	panel_tlv	0x64, 24	; record 35
+	.incbin	"02LSTMIX.lsw", 0x328, 24	; tag 0x64 payload
+	panel_tlv	0x65, 24	; record 36
+	.incbin	"02LSTMIX.lsw", 0x342, 24	; tag 0x65 payload
+	panel_tlv	0x66, 24	; record 37
+	.incbin	"02LSTMIX.lsw", 0x35c, 24	; tag 0x66 payload
+	panel_tlv	0x68, 10	; record 38
+	.incbin	"02LSTMIX.lsw", 0x376, 10	; tag 0x68 payload
+	panel_tlv	0x70, 8	; record 39
+	.incbin	"02LSTMIX.lsw", 0x382, 8	; tag 0x70 payload
+	panel_tlv	0x72, 14	; record 40
+	.incbin	"02LSTMIX.lsw", 0x38c, 14	; tag 0x72 payload
+	panel_tlv	0x92, 14	; record 41
+	.incbin	"02LSTMIX.lsw", 0x39c, 14	; tag 0x92 payload
+	panel_tlv	0x71, 2	; record 42
+	.incbin	"02LSTMIX.lsw", 0x3ac, 2	; tag 0x71 payload
+	.incbin	"02LSTMIX.lsw", 0x3ae, 50	; rest of the block
+F_02LSTMIX_LSW_Block1:
+; Block 1 (RAM 0xfd60): the first 28 of the 30 records of PanelTlv_Block1_Layout; the rest differ (an older firmware's
+; block, [INFERENCE]: the v5..v10 lists are all the same).
+	panel_tlv	0x17, 24	; record 0
+	.incbin	"02LSTMIX.lsw", 0x3e2, 24	; tag 0x17 payload
+	panel_tlv	0x18, 24	; record 1
+	.incbin	"02LSTMIX.lsw", 0x3fc, 24	; tag 0x18 payload
+	panel_tlv	0x98, 18	; record 2
+	.incbin	"02LSTMIX.lsw", 0x416, 18	; tag 0x98 payload
+	panel_tlv	0x91, 10	; record 3
+	.incbin	"02LSTMIX.lsw", 0x42a, 10	; tag 0x91 payload
+	panel_tlv	0x93, 34	; record 4
+	.incbin	"02LSTMIX.lsw", 0x436, 34	; tag 0x93 payload
+	panel_tlv	0xc0, 18	; record 5
+	.incbin	"02LSTMIX.lsw", 0x45a, 18	; tag 0xc0 payload
+	panel_tlv	0xc1, 18	; record 6
+	.incbin	"02LSTMIX.lsw", 0x46e, 18	; tag 0xc1 payload
+	panel_tlv	0xc2, 18	; record 7
+	.incbin	"02LSTMIX.lsw", 0x482, 18	; tag 0xc2 payload
+	panel_tlv	0xc3, 18	; record 8
+	.incbin	"02LSTMIX.lsw", 0x496, 18	; tag 0xc3 payload
+	panel_tlv	0xc4, 18	; record 9
+	.incbin	"02LSTMIX.lsw", 0x4aa, 18	; tag 0xc4 payload
+	panel_tlv	0xc5, 18	; record 10
+	.incbin	"02LSTMIX.lsw", 0x4be, 18	; tag 0xc5 payload
+	panel_tlv	0xc6, 18	; record 11
+	.incbin	"02LSTMIX.lsw", 0x4d2, 18	; tag 0xc6 payload
+	panel_tlv	0xc7, 18	; record 12
+	.incbin	"02LSTMIX.lsw", 0x4e6, 18	; tag 0xc7 payload
+	panel_tlv	0xc8, 18	; record 13
+	.incbin	"02LSTMIX.lsw", 0x4fa, 18	; tag 0xc8 payload
+	panel_tlv	0xc9, 18	; record 14
+	.incbin	"02LSTMIX.lsw", 0x50e, 18	; tag 0xc9 payload
+	panel_tlv	0xca, 18	; record 15
+	.incbin	"02LSTMIX.lsw", 0x522, 18	; tag 0xca payload
+	panel_tlv	0xcb, 18	; record 16
+	.incbin	"02LSTMIX.lsw", 0x536, 18	; tag 0xcb payload
+	panel_tlv	0xcc, 18	; record 17
+	.incbin	"02LSTMIX.lsw", 0x54a, 18	; tag 0xcc payload
+	panel_tlv	0xcd, 18	; record 18
+	.incbin	"02LSTMIX.lsw", 0x55e, 18	; tag 0xcd payload
+	panel_tlv	0xce, 18	; record 19
+	.incbin	"02LSTMIX.lsw", 0x572, 18	; tag 0xce payload
+	panel_tlv	0xcf, 18	; record 20
+	.incbin	"02LSTMIX.lsw", 0x586, 18	; tag 0xcf payload
+	panel_tlv	0xd0, 18	; record 21
+	.incbin	"02LSTMIX.lsw", 0x59a, 18	; tag 0xd0 payload
+	panel_tlv	0xd1, 18	; record 22
+	.incbin	"02LSTMIX.lsw", 0x5ae, 18	; tag 0xd1 payload
+	panel_tlv	0xd2, 18	; record 23
+	.incbin	"02LSTMIX.lsw", 0x5c2, 18	; tag 0xd2 payload
+	panel_tlv	0xd3, 18	; record 24
+	.incbin	"02LSTMIX.lsw", 0x5d6, 18	; tag 0xd3 payload
+	panel_tlv	0xd4, 18	; record 25
+	.incbin	"02LSTMIX.lsw", 0x5ea, 18	; tag 0xd4 payload
+	panel_tlv	0xd7, 18	; record 26
+	.incbin	"02LSTMIX.lsw", 0x5fe, 18	; tag 0xd7 payload
+	panel_tlv	0x49, 16	; record 27
+	.incbin	"02LSTMIX.lsw", 0x612, 16	; tag 0x49 payload
+	panel_tlv	0x04, 26	; not in the v10 list at this position
+	.incbin	"02LSTMIX.lsw", 0x624, 26	; tag 0x04 payload
+	panel_tlv	0xff, 0xff	; end of block
+F_02LSTMIX_LSW_Ram1E7800:
+	; census: opaque -- unknown-dump: what the firmware keeps at RAM 0x1e7800..0x1e8000 is not identified (docs/kn-disk-file-formats.md, "still unmapped")
+	.incbin	"02LSTMIX.lsw", 0x640, 2048	; RAM 0x1e7800..0x1e8000

@@ -2,5 +2,7071 @@
 
 ; 07(DEMO).SQT -- 37632 bytes, clusters 1947..2020.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_07x28DEMOx29_SQT:	.incbin	"ca5009.img", 0xf7400, 37632
+; SEQUENCER, file type 2.  Song-slot headers of 0x800 bytes (RAM SEQ_SONG_SLOTS 0xab000,
+; 10 slots), then the event memory as linked 256-byte cells.  +4 = 1: all 10 slots, as
+; FileIO_SaveRegion2_ExtMem (v10 0xf87cac) writes them (0x5000, then the event memory
+; from 0xb0000 for the size SeqSavePre returns); +4 = 0: one song.  "01 08" at +5 is
+; the signature HD-AE5000 checks (technics-docs hdae5000-filesystem.md).
+F_07x28DEMOx29_SQT_Song_1:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	1, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x7, 249	; slot +7..+0xff (fields not established)
+	.ascii	" Pop Rock Demo  "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_2:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x807, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x910, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_3:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x1007, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x1110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_4:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x1807, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x1910, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_5:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x2007, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x2110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_6:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x2807, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x2910, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_7:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x3007, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x3110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_8:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x3807, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x3910, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_9:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x4007, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x4110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Song_10:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"07x28DEMOx29.sqt", 0x4807, 249	; slot +7..+0xff (fields not established)
+	.ascii	"______          "	; song name
+	.incbin	"07x28DEMOx29.sqt", 0x4910, 1776	; slot +0x110..+0x7ff (fields not established)
+F_07x28DEMOx29_SQT_Events:
+; Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the
+; demo-song grammar; analysis/disk-format-probes/disk_seq_chains.py).  A chain starts at
+; a cell whose PREV is 0 and byte 0 is not 0; which track each chain is, the slot header
+; says somewhere not yet established.  Byte-0 = 0 cells are the free list.
+	seq_cell	0x80, 0, 0xffff	; cell 1: chain from cell 1, cell 1 of its chain
+	sq_ev	0x82, 0, 26, 4, 2, 127
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81	; after the end of track
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x90, 0x02, 0x3c, 0x68, 0x36, 0x00, 0x81, 0x90, 0x01, 0x3c, 0x68, 0x3f, 0x00, 0x81, 0x81, 0x90
+	.byte	0x02, 0x3c, 0x69, 0x2d, 0x00, 0x90, 0x33, 0x3e, 0x66, 0x34, 0x00, 0x81, 0x90, 0x32, 0x3e, 0x6b
+	.byte	0x3a, 0x00, 0x81, 0x90, 0x32, 0x3c, 0x6e, 0x15, 0x00, 0x81, 0x90, 0x00, 0x40, 0x72, 0x01, 0x01
+	.byte	0x90, 0x5f, 0x3e, 0x6c, 0x5b, 0x00, 0x81, 0x81, 0x90, 0x01, 0x3c, 0x66, 0x3b, 0x00, 0x81, 0x90
+	.byte	0x04, 0x3c, 0x68, 0x3e, 0x00
+	seq_cell	0x80, 0, 0xffff	; cell 2: chain from cell 2, cell 1 of its chain
+	sq_ev	0x82
+	.byte	0x81, 0x90, 0x00, 0x3c, 0x66, 0x2e, 0x00, 0x90, 0x33, 0x3e, 0x63, 0x2e, 0x00, 0x81, 0x90, 0x32	; after the end of track
+	.byte	0x3e, 0x6a, 0x36, 0x00, 0x81, 0x90, 0x2f, 0x3c, 0x67, 0x15, 0x00, 0x90, 0x5e, 0x40, 0x6b, 0x00
+	.byte	0x02, 0x81, 0x81, 0x81, 0x90, 0x03, 0x3c, 0x6a, 0x36, 0x00, 0x90, 0x5f, 0x3c, 0x6a, 0x3f, 0x00
+	.byte	0x81, 0x81, 0x90, 0x5a, 0x3c, 0x6b, 0x2f, 0x00, 0x81, 0x90, 0x2f, 0x3e, 0x67, 0x34, 0x00, 0x81
+	.byte	0x90, 0x2d, 0x3e, 0x68, 0x11, 0x00, 0x90, 0x5d, 0x3e, 0x68, 0x15, 0x00, 0x81, 0x90, 0x2e, 0x3c
+	.byte	0x66, 0x13, 0x00, 0x90, 0x5d, 0x40, 0x69, 0x3b, 0x00, 0x81, 0x90, 0x5c, 0x40, 0x6a, 0x5d, 0x00
+	.byte	0x81, 0x90, 0x5c, 0x3c, 0x68, 0x44, 0x02, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x90, 0x01, 0x3c, 0x6c, 0x35, 0x00, 0x81, 0x90, 0x03, 0x3c, 0x6d, 0x39, 0x00, 0x81, 0x90, 0x5f
+	.byte	0x3c, 0x67, 0x2d, 0x00, 0x81, 0x90, 0x30, 0x3e, 0x64, 0x35, 0x00, 0x81, 0x90, 0x2f, 0x3e, 0x6b
+	.byte	0x41, 0x00, 0x81, 0x90, 0x2f, 0x3c, 0x6b, 0x15, 0x00, 0x90, 0x5b, 0x40, 0x6e, 0x0a, 0x01, 0x81
+	.byte	0x90, 0x5e, 0x3e, 0x69, 0x53, 0x00, 0x81, 0x90, 0x5a, 0x3c, 0x66, 0x38, 0x00, 0x81, 0x90, 0x5f
+	.byte	0x3c, 0x6a, 0x39, 0x00, 0x81, 0x81, 0x90, 0x59, 0x3c, 0x66, 0x36, 0x00, 0x81, 0x90, 0x30, 0x3e
+	.byte	0x63, 0x30, 0x00, 0x81, 0x90, 0x34, 0x3e, 0x6b, 0x41, 0x00, 0x81, 0x90, 0x2d, 0x3c, 0x68, 0x26
+	.byte	0x00, 0x90, 0x5f, 0x40, 0x6a, 0x5e, 0x01, 0x81, 0x81, 0x81, 0x90, 0x01, 0x3c, 0x68, 0x36, 0x00
+	.byte	0x90, 0x5f, 0x3c, 0x68, 0x3a, 0x00, 0x81, 0x81, 0x90, 0x58, 0x3c, 0x6a, 0x36, 0x00, 0x81, 0x90
+	.byte	0x2f, 0x3e, 0x64, 0x32, 0x00, 0x81, 0x90, 0x2a, 0x3e, 0x6d
+	seq_cell	0x80, 67, 4	; cell 3: chain from cell 66, cell 3 of its chain
+	.byte	0x15, 0x00	; last 2 bytes of sq_note 0x90, 42, 62, 109, 21, 0 (split by a cell boundary)
+	sq_note	0x90, 94, 62, 111, 41, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 96, 47, 0
+	sq_note	0x90, 93, 64, 106, 59, 0
+	sq_beat
+	sq_note	0x90, 89, 64, 106, 1, 1
+	sq_beat
+	sq_note	0x90, 93, 60, 98, 7, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 60, 112, 56, 0
+	sq_beat
+	sq_note	0x90, 94, 60, 110, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 60, 111, 47, 0
+	sq_note	0x90, 54, 62, 105, 51, 0
+	sq_beat
+	sq_note	0x90, 50, 62, 112, 59, 0
+	sq_beat
+	sq_note	0x90, 49, 60, 110, 25, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 114, 5, 1
+	sq_note	0x90, 95, 62, 111, 92, 0
+	sq_beat
+	sq_note	0x90, 95, 60, 99, 58, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 111, 65, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 110, 49, 0
+	sq_note	0x90, 52, 62, 100, 48, 0
+	sq_beat
+	sq_note	0x90, 47, 62, 112, 60, 0
+	sq_beat
+	sq_note	0x90, 48, 60, 109, 25, 0
+	sq_note	0x90, 95, 64, 111, 95, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 60, 105, 60, 0
+	seq_cell	0x80, 3, 5	; cell 4: chain from cell 66, cell 4 of its chain
+	sq_beat
+	sq_note	0x90, 94, 60, 109, 63, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 60, 108, 45, 0
+	sq_note	0x90, 47, 62, 107, 56, 0
+	sq_beat
+	sq_note	0x90, 44, 62, 108, 18, 0
+	sq_note	0x90, 90, 62, 108, 25, 0
+	sq_beat
+	sq_note	0x90, 41, 60, 106, 25, 0
+	sq_note	0x90, 91, 64, 114, 66, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 111, 1, 1
+	sq_beat
+	sq_note	0x90, 95, 60, 102, 8, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 60, 114, 58, 0
+	sq_beat
+	sq_note	0x90, 94, 60, 110, 75, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 6, 60, 108, 46, 0
+	sq_note	0x90, 51, 62, 108, 59, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 102, 70, 0
+	sq_note	0x90, 47, 60, 90, 4, 0
+	sq_beat
+	sq_note	0x90, 44, 60, 112, 27, 0
+	sq_note	0x90, 46, 57, 52, 8, 0
+	sq_note	0x90, 90, 64, 111, 8, 1
+	sq_beat
+	sq_note	0x90, 90, 62, 108, 91, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 104, 62, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 60, 108, 61, 0
+	sq_beat
+	sq_note	0x90, 91, 60, 111, 49, 0
+	sq_beat
+	sq_note	0x90, 45, 62, 102, 58, 0
+	sq_beat
+	sq_note	0x90, 44, 62, 109, 93, 0
+	sq_beat
+	sq_note	0x90, 47, 60, 95, 48, 0
+	sq_note	0x90, 95, 64, 108, 0, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 103, 56, 0
+	sq_note	0x90, 92, 60, 109, 70, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 60, 110, 49, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 106, 55, 0
+	sq_beat
+	sq_note	0x90, 42, 62, 109, 18, 0
+	sq_note	0x90, 91, 62, 108, 23, 0
+	sq_beat
+	sq_note	0x90, 42, 60, 109, 24, 0
+	sq_note	0x90, 90, 64, 111, 64, 0
+	sq_beat
+	sq_note	0x90, 89, 64, 111, 6, 1
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 95, 60, 102, 5, 6 (split by a cell boundary)
+	seq_cell	0x80, 4, 6	; cell 5: chain from cell 66, cell 5 of its chain
+	.byte	0x5f, 0x3c, 0x66, 0x05, 0x06	; last 5 bytes of sq_note 0x90, 95, 60, 102, 5, 6 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 60, 112, 53, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 111, 73, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 60, 111, 46, 0
+	sq_note	0x90, 4, 57, 59, 7, 0
+	sq_note	0x90, 46, 62, 107, 55, 0
+	sq_beat
+	sq_note	0x90, 42, 62, 111, 65, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 111, 23, 0
+	sq_note	0x90, 47, 59, 85, 13, 0
+	sq_note	0x90, 93, 64, 110, 5, 1
+	sq_beat
+	sq_note	0x90, 91, 62, 109, 93, 0
+	sq_beat
+	sq_note	0x90, 94, 60, 99, 60, 0
+	sq_beat
+	sq_note	0x90, 94, 60, 108, 71, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 60, 95, 36, 0
+	sq_note	0x90, 90, 62, 98, 32, 0
+	sq_beat
+	sq_note	0x90, 49, 62, 106, 61, 0
+	sq_beat
+	sq_note	0x90, 44, 62, 108, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 60, 109, 45, 0
+	sq_note	0x90, 93, 64, 107, 0, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 106, 56, 0
+	sq_beat
+	sq_note	0x90, 2, 60, 108, 63, 0
+	sq_beat
+	sq_note	0x90, 93, 60, 109, 47, 0
+	sq_beat
+	sq_note	0x90, 42, 62, 102, 58, 0
+	sq_beat
+	sq_note	0x90, 41, 62, 107, 18, 0
+	sq_note	0x90, 88, 62, 106, 28, 0
+	sq_beat
+	sq_note	0x90, 43, 60, 105, 28, 0
+	sq_note	0x90, 91, 64, 111, 64, 0
+	sq_beat
+	sq_note	0x90, 90, 64, 108, 4, 1
+	sq_beat
+	sq_note	0x90, 93, 60, 103, 95, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 60, 111, 56, 0
+	sq_beat
+	sq_note	0x90, 92, 60, 94, 81, 0
+	sq_note	0x90, 93, 62, 98, 37, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 60, 109, 54, 0
+	sq_beat
+	sq_note	0x90, 44, 62, 110, 61, 0
+	sq_beat
+	.byte	0x90, 0x2b, 0x3e	; first 3 bytes of sq_note 0x90, 43, 62, 106, 69, 0 (split by a cell boundary)
+	seq_cell	0x80, 5, 7	; cell 6: chain from cell 66, cell 6 of its chain
+	.byte	0x6a, 0x45, 0x00	; last 3 bytes of sq_note 0x90, 43, 62, 106, 69, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 47, 60, 107, 23, 0
+	sq_note	0x90, 91, 64, 114, 14, 1
+	sq_beat
+	sq_note	0x90, 95, 62, 110, 90, 0
+	sq_beat
+	sq_note	0x90, 92, 60, 110, 55, 0
+	sq_beat
+	sq_note	0x90, 91, 60, 111, 68, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 60, 110, 52, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 107, 60, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 110, 67, 0
+	sq_beat
+	sq_note	0x90, 47, 60, 108, 27, 0
+	sq_note	0x90, 95, 64, 112, 2, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 60, 98, 58, 0
+	sq_beat
+	sq_note	0x90, 94, 60, 109, 76, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 60, 106, 50, 0
+	sq_beat
+	sq_note	0x90, 51, 62, 111, 55, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 102, 18, 0
+	sq_note	0x90, 91, 62, 100, 28, 0
+	sq_beat
+	sq_note	0x90, 45, 60, 105, 25, 0
+	sq_note	0x90, 92, 64, 106, 63, 0
+	sq_beat
+	sq_note	0x90, 90, 64, 105, 5, 1
+	sq_beat
+	sq_note	0x90, 94, 60, 99, 20, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 55, 83, 58, 0
+	sq_note	0x90, 95, 64, 106, 57, 0
+	sq_beat
+	sq_note	0x90, 89, 55, 89, 62, 0
+	sq_note	0x90, 89, 64, 104, 63, 0
+	sq_note	0x90, 92, 60, 100, 59, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 60, 78, 58, 0
+	sq_note	0x90, 92, 64, 102, 43, 0
+	sq_note	0x90, 93, 55, 87, 45, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 97, 56, 0
+	sq_note	0x90, 45, 65, 92, 57, 0
+	sq_note	0x90, 46, 62, 87, 58, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 100, 59, 0
+	sq_note	0x90, 42, 65, 99, 65, 0
+	sq_note	0x90, 43, 62, 99, 63, 0
+	sq_beat
+	sq_note	0x90, 41, 55, 87, 23, 0
+	.byte	0x90, 0x2b, 0x3c, 0x48, 0x16	; first 5 bytes of sq_note 0x90, 43, 60, 72, 22, 0 (split by a cell boundary)
+	seq_cell	0x80, 6, 8	; cell 7: chain from cell 66, cell 7 of its chain
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 43, 60, 72, 22, 0 (split by a cell boundary)
+	sq_note	0x90, 44, 64, 102, 19, 0
+	sq_note	0x90, 90, 59, 85, 9, 1
+	sq_note	0x90, 91, 64, 93, 78, 0
+	sq_note	0x90, 93, 67, 87, 5, 1
+	sq_beat
+	sq_note	0x90, 88, 62, 91, 92, 0
+	sq_note	0x90, 90, 65, 93, 94, 0
+	sq_note	0x90, 95, 57, 75, 81, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 79, 61, 0
+	sq_note	0x90, 90, 55, 79, 59, 0
+	sq_note	0x90, 91, 64, 102, 61, 0
+	sq_beat
+	sq_note	0x90, 93, 55, 93, 61, 0
+	sq_note	0x90, 93, 60, 85, 63, 0
+	sq_note	0x90, 94, 64, 105, 61, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 64, 105, 45, 0
+	sq_note	0x90, 86, 60, 64, 59, 0
+	sq_note	0x90, 87, 55, 90, 50, 0
+	sq_beat
+	sq_note	0x90, 38, 57, 99, 50, 0
+	sq_note	0x90, 40, 65, 90, 53, 0
+	sq_note	0x90, 41, 62, 90, 55, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 99, 60, 0
+	sq_note	0x90, 45, 62, 96, 59, 0
+	sq_note	0x90, 47, 57, 105, 52, 0
+	sq_beat
+	sq_note	0x90, 40, 60, 71, 25, 0
+	sq_note	0x90, 41, 55, 90, 22, 0
+	sq_note	0x90, 41, 64, 102, 20, 0
+	sq_note	0x90, 88, 59, 88, 80, 1
+	sq_note	0x90, 90, 57, 79, 33, 0
+	sq_note	0x90, 91, 64, 93, 76, 1
+	sq_note	0x90, 91, 67, 91, 89, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 60, 80, 58, 0
+	sq_note	0x90, 95, 64, 102, 57, 0
+	sq_beat
+	sq_note	0x90, 1, 55, 92, 55, 0
+	sq_note	0x90, 95, 55, 98, 59, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 75, 56, 0
+	sq_note	0x90, 0, 64, 104, 55, 0
+	sq_beat
+	sq_note	0x90, 93, 55, 93, 44, 0
+	sq_note	0x90, 93, 60, 81, 54, 0
+	sq_note	0x90, 94, 64, 105, 49, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 96, 48, 0
+	.byte	0x90, 0x2c	; first 2 bytes of sq_note 0x90, 44, 65, 92, 53, 0 (split by a cell boundary)
+	seq_cell	0x80, 7, 0xffff	; cell 8: chain from cell 66, cell 8 of its chain
+	.byte	0x41, 0x5c, 0x35, 0x00	; last 4 bytes of sq_note 0x90, 44, 65, 92, 53, 0 (split by a cell boundary)
+	sq_note	0x90, 44, 62, 90, 54, 0
+	sq_beat
+	sq_note	0x90, 42, 65, 98, 14, 0
+	sq_note	0x90, 42, 62, 97, 15, 0
+	sq_note	0x90, 44, 57, 99, 18, 0
+	sq_note	0x90, 91, 65, 95, 37, 0
+	sq_note	0x90, 91, 57, 90, 48, 0
+	sq_note	0x90, 92, 62, 93, 37, 0
+	sq_beat
+	sq_note	0x90, 40, 55, 80, 39, 0
+	sq_note	0x90, 42, 64, 99, 28, 0
+	sq_note	0x90, 42, 60, 83, 32, 0
+	sq_note	0x90, 89, 59, 91, 61, 0
+	sq_note	0x90, 90, 64, 90, 65, 0
+	sq_note	0x90, 92, 67, 90, 60, 0
+	sq_beat
+	sq_note	0x90, 91, 64, 99, 76, 0
+	sq_note	0x90, 92, 67, 86, 82, 0
+	sq_note	0x90, 94, 59, 95, 83, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 97, 78, 4
+	sq_note	0x90, 90, 64, 94, 79, 4
+	sq_note	0x90, 93, 55, 90, 68, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0xd2, 0x31, 0x00, 0x38, 0xd2, 0x33, 0x40, 0x35, 0xd2, 0x33, 0x00, 0x32, 0xd2, 0x36, 0x40, 0x2e	; after the end of track
+	.byte	0xd2, 0x38, 0x00, 0x2b, 0xd2, 0x3b, 0x40, 0x28, 0xd2, 0x3d, 0x00, 0x26, 0xd2, 0x3d, 0x00, 0x25
+	.byte	0xd2, 0x3f, 0x00, 0x24, 0xd2, 0x4c, 0x00, 0x3d, 0xd2, 0x4e, 0x00, 0x40, 0x90, 0x54, 0x43, 0x5a
+	.byte	0x2f, 0x00, 0x81, 0x90, 0x28, 0x40, 0x63, 0x00, 0x01, 0x81, 0xd2, 0x25, 0x00, 0x3d, 0xd2, 0x25
+	.byte	0x40, 0x39, 0xd2, 0x28, 0x40, 0x35, 0xd2, 0x2a, 0x40, 0x30, 0x90, 0x2b, 0x41, 0x5d, 0x2c, 0x00
+	.byte	0xd2, 0x2d, 0x00, 0x29, 0xd2, 0x2f, 0x00, 0x23, 0xd2, 0x2f, 0x00, 0x1c, 0xd2, 0x31, 0x00, 0x18
+	.byte	0xd2, 0x34, 0x00, 0x14, 0xd2, 0x3b, 0x40, 0x22, 0xd2, 0x3e, 0x00, 0x38, 0xd2, 0x40, 0x00, 0x40
+	.byte	0x90, 0x5c, 0x43
+	seq_cell	0x80, 0, 10	; cell 9: chain from cell 9, cell 1 of its chain
+	sq_ev	0xb4, 0, 26, 5, 2, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 46, 68, 94, 12, 0
+	sq_note	0x90, 49, 69, 94, 32, 1
+	sq_note	0x90, 50, 72, 84, 26, 1
+	sq_beat
+	sq_note	0x90, 93, 67, 90, 76, 0
+	sq_beat
+	sq_note	0x90, 0, 72, 75, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 56, 95, 27, 0
+	sq_note	0x90, 45, 60, 80, 27, 1
+	sq_note	0x90, 46, 57, 103, 32, 1
+	sq_beat
+	sq_note	0x90, 91, 55, 97, 78, 0
+	sq_note	0x90, 93, 60, 78, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 64, 99, 58, 0
+	sq_beat
+	sq_note	0x90, 93, 64, 96, 62, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 99, 50, 0
+	sq_note	0x90, 51, 65, 93, 57, 0
+	sq_beat
+	sq_note	0x90, 49, 65, 97, 59, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 97, 27, 0
+	sq_note	0x90, 95, 67, 96, 95, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 65, 93, 84, 0
+	sq_note	0x90, 93, 64, 98, 53, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 98, 54, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 103, 45, 0
+	sq_note	0x90, 51, 65, 82, 53, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 99, 70, 0
+	sq_beat
+	sq_note	0x90, 52, 64, 99, 25, 0
+	sq_beat
+	sq_note	0x90, 3, 67, 96, 3, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 64, 95, 49, 0
+	sq_note	0x90, 95, 64, 91, 83, 0
+	sq_beat
+	sq_note	0x90, 0, 65, 85, 39, 0
+	sq_beat
+	sq_note	0x90, 89, 64, 99, 45, 0
+	sq_beat
+	.byte	0x90, 0x2e, 0x41, 0x5d	; first 4 bytes of sq_note 0x90, 46, 65, 93, 56, 0 (split by a cell boundary)
+	seq_cell	0x80, 9, 11	; cell 10: chain from cell 9, cell 2 of its chain
+	.byte	0x38, 0x00	; last 2 bytes of sq_note 0x90, 46, 65, 93, 56, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 41, 65, 96, 19, 0
+	sq_note	0x90, 94, 65, 99, 29, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 94, 23, 0
+	sq_note	0x90, 95, 67, 92, 64, 0
+	sq_beat
+	sq_note	0x90, 93, 67, 87, 92, 0
+	sq_note	0x90, 94, 69, 71, 5, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 94, 83, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 64, 99, 56, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 99, 65, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 64, 102, 43, 0
+	sq_note	0x90, 50, 65, 93, 53, 0
+	sq_beat
+	sq_note	0x90, 47, 65, 102, 68, 0
+	sq_beat
+	sq_note	0x90, 51, 64, 95, 33, 0
+	sq_note	0x90, 94, 67, 99, 0, 1
+	sq_beat
+	sq_note	0x90, 94, 65, 90, 93, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 90, 59, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 96, 62, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 100, 45, 0
+	sq_beat
+	sq_note	0x90, 47, 65, 90, 53, 0
+	sq_beat
+	sq_note	0x90, 50, 65, 99, 59, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 102, 26, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 93, 67, 99, 21, 1 (split by a cell boundary)
+	seq_cell	0x80, 10, 12	; cell 11: chain from cell 9, cell 3 of its chain
+	.byte	0x5d, 0x43, 0x63, 0x15, 0x01	; last 5 bytes of sq_note 0x90, 93, 67, 99, 21, 1 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 103, 49, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 96, 59, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 107, 41, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 96, 53, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 99, 20, 0
+	sq_note	0x90, 94, 65, 93, 40, 0
+	sq_beat
+	sq_note	0x90, 47, 64, 91, 38, 0
+	sq_note	0x90, 90, 67, 99, 60, 0
+	sq_beat
+	sq_note	0x90, 89, 67, 97, 94, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 99, 11, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 100, 51, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 102, 59, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 64, 106, 40, 0
+	sq_note	0x90, 48, 65, 87, 55, 0
+	sq_beat
+	sq_note	0x90, 48, 65, 100, 63, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 100, 28, 0
+	sq_note	0x90, 91, 67, 102, 6, 1
+	sq_beat
+	sq_note	0x90, 95, 65, 93, 92, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 94, 52, 0
+	sq_beat
+	sq_note	0x90, 93, 64, 96, 59, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 5, 64, 106, 40, 0
+	sq_note	0x90, 49, 65, 90, 56, 0
+	sq_beat
+	sq_note	0x90, 49, 65, 96, 70, 0
+	sq_beat
+	sq_note	0x90, 51, 64, 99, 24, 0
+	sq_note	0x90, 94, 67, 102, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 64, 105, 47, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 105, 55, 0
+	sq_beat
+	sq_note	0x90, 91, 64, 103, 43, 0
+	sq_beat
+	sq_note	0x90, 43, 65, 99, 56, 0
+	sq_beat
+	sq_note	0x90, 45, 64, 90, 13, 0
+	sq_note	0x90, 45, 65, 90, 14, 0
+	sq_note	0x90, 92, 65, 103, 45, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 90, 43, 0
+	sq_note	0x90, 95, 67, 104, 60, 0
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 93, 67, 102, 90, 0 (split by a cell boundary)
+	seq_cell	0x80, 11, 13	; cell 12: chain from cell 9, cell 4 of its chain
+	.byte	0x5d, 0x43, 0x66, 0x5a, 0x00	; last 5 bytes of sq_note 0x90, 93, 67, 102, 90, 0 (split by a cell boundary)
+	sq_note	0x90, 95, 65, 86, 27, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 100, 60, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 53, 62, 45, 12, 0
+	sq_note	0x90, 67, 60, 28, 3, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 91, 56, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 95, 60, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 105, 44, 0
+	sq_note	0x90, 49, 65, 94, 56, 0
+	sq_beat
+	sq_note	0x90, 46, 65, 97, 67, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 102, 34, 0
+	sq_note	0x90, 89, 67, 96, 7, 1
+	sq_beat
+	sq_note	0x90, 93, 65, 92, 93, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 91, 59, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 99, 60, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 102, 44, 0
+	sq_note	0x90, 48, 65, 93, 54, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 102, 61, 0
+	sq_beat
+	sq_note	0x90, 44, 64, 102, 29, 0
+	sq_note	0x90, 92, 67, 97, 4, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 97, 57, 0
+	sq_beat
+	.byte	0x90, 0x5d, 0x40, 0x62	; first 4 bytes of sq_note 0x90, 93, 64, 98, 65, 0 (split by a cell boundary)
+	seq_cell	0x80, 12, 14	; cell 13: chain from cell 9, cell 5 of its chain
+	.byte	0x41, 0x00	; last 2 bytes of sq_note 0x90, 93, 64, 98, 65, 0 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 99, 45, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 95, 53, 0
+	sq_beat
+	sq_note	0x90, 40, 65, 96, 20, 0
+	sq_note	0x90, 91, 65, 91, 45, 0
+	sq_beat
+	sq_note	0x90, 44, 64, 86, 42, 0
+	sq_note	0x90, 90, 67, 95, 65, 0
+	sq_beat
+	sq_note	0x90, 90, 67, 99, 93, 0
+	sq_beat
+	sq_note	0x90, 91, 64, 96, 20, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 64, 93, 57, 0
+	sq_beat
+	sq_note	0x90, 92, 64, 99, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 105, 43, 0
+	sq_note	0x90, 47, 65, 93, 58, 0
+	sq_beat
+	sq_note	0x90, 47, 65, 99, 69, 0
+	sq_beat
+	sq_note	0x90, 47, 64, 103, 24, 0
+	sq_note	0x90, 91, 67, 103, 92, 0
+	sq_beat
+	sq_note	0x90, 91, 65, 95, 92, 0
+	sq_beat
+	sq_note	0x90, 91, 64, 93, 57, 0
+	sq_beat
+	sq_note	0x90, 93, 64, 100, 61, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 104, 43, 0
+	sq_note	0x90, 48, 65, 96, 56, 0
+	sq_beat
+	sq_note	0x90, 47, 65, 99, 88, 0
+	sq_beat
+	sq_note	0x90, 45, 64, 102, 45, 0
+	sq_note	0x90, 92, 67, 102, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 64, 103, 56, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 103, 60, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 103, 42, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 94, 54, 0
+	sq_beat
+	sq_note	0x90, 40, 65, 97, 21, 0
+	sq_note	0x90, 89, 65, 92, 47, 0
+	sq_beat
+	sq_note	0x90, 44, 64, 90, 41, 0
+	sq_note	0x90, 88, 67, 99, 62, 0
+	sq_beat
+	sq_note	0x90, 86, 67, 102, 3, 1
+	sq_beat
+	sq_note	0x90, 89, 64, 105, 11, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x01, 0x40	; first 3 bytes of sq_note 0x90, 1, 64, 100, 52, 0 (split by a cell boundary)
+	seq_cell	0x80, 13, 15	; cell 14: chain from cell 9, cell 6 of its chain
+	.byte	0x64, 0x34, 0x00	; last 3 bytes of sq_note 0x90, 1, 64, 100, 52, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 1, 64, 94, 66, 0
+	sq_beat
+	sq_note	0x90, 93, 64, 103, 44, 0
+	sq_beat
+	sq_note	0x90, 43, 65, 91, 59, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 99, 88, 0
+	sq_beat
+	sq_note	0x90, 41, 64, 94, 44, 0
+	sq_note	0x90, 87, 67, 102, 5, 1
+	sq_beat
+	sq_note	0x90, 90, 65, 96, 91, 0
+	sq_beat
+	sq_note	0x90, 86, 64, 90, 58, 0
+	sq_beat
+	sq_note	0x90, 92, 64, 97, 58, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 102, 43, 0
+	sq_beat
+	sq_note	0x90, 42, 65, 93, 58, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 96, 91, 0
+	sq_beat
+	sq_note	0x90, 45, 64, 90, 45, 0
+	sq_note	0x90, 91, 67, 99, 0, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 98, 59, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 98, 61, 0
+	sq_beat
+	sq_note	0x90, 95, 64, 103, 44, 0
+	sq_beat
+	sq_note	0x90, 46, 65, 95, 53, 0
+	sq_beat
+	sq_note	0x90, 42, 65, 99, 19, 0
+	sq_note	0x90, 89, 65, 94, 44, 0
+	sq_beat
+	sq_note	0x90, 42, 64, 93, 44, 0
+	sq_note	0x90, 89, 67, 99, 65, 0
+	sq_beat
+	sq_note	0x90, 91, 67, 99, 90, 0
+	sq_beat
+	sq_note	0x90, 89, 64, 104, 56, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 97, 53, 0
+	sq_note	0x90, 94, 64, 99, 69, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 64, 106, 46, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 93, 56, 0
+	sq_beat
+	sq_note	0x90, 43, 65, 91, 90, 0
+	sq_beat
+	sq_note	0x90, 42, 64, 97, 45, 0
+	sq_note	0x90, 88, 67, 102, 4, 1
+	sq_beat
+	sq_note	0x90, 92, 65, 93, 93, 0
+	sq_beat
+	sq_note	0x90, 90, 64, 87, 57, 0
+	sq_beat
+	sq_note	0x90, 89, 64, 90, 67, 0
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x5d	; first 2 bytes of sq_note 0x90, 93, 64, 99, 45, 0 (split by a cell boundary)
+	seq_cell	0x80, 14, 16	; cell 15: chain from cell 9, cell 7 of its chain
+	.byte	0x40, 0x63, 0x2d, 0x00	; last 4 bytes of sq_note 0x90, 93, 64, 99, 45, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 44, 65, 85, 51, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 94, 64, 0
+	sq_beat
+	sq_note	0x90, 48, 64, 99, 30, 0
+	sq_note	0x90, 91, 67, 98, 84, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 64, 96, 52, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 99, 57, 0
+	sq_beat
+	sq_note	0x90, 93, 64, 97, 44, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 83, 58, 0
+	sq_beat
+	sq_note	0x90, 44, 65, 81, 19, 0
+	sq_note	0x90, 92, 65, 96, 47, 0
+	sq_beat
+	sq_note	0x90, 45, 64, 90, 42, 0
+	sq_note	0x90, 92, 67, 102, 59, 0
+	sq_beat
+	sq_note	0x90, 92, 67, 96, 3, 1
+	sq_beat
+	sq_note	0x90, 95, 64, 103, 4, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 64, 103, 44, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 90, 48, 0
+	sq_beat
+	sq_note	0x90, 43, 65, 88, 65, 0
+	sq_beat
+	sq_note	0x90, 45, 64, 96, 32, 0
+	sq_note	0x90, 91, 67, 104, 1, 1
+	sq_beat
+	sq_note	0x90, 95, 65, 94, 72, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 64, 98, 38, 0
+	sq_note	0x90, 44, 65, 90, 62, 0
+	sq_beat
+	sq_note	0x90, 52, 65, 87, 90, 0
+	sq_beat
+	sq_note	0x90, 49, 64, 96, 40, 0
+	sq_note	0x90, 92, 67, 102, 8, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 64, 103, 44, 0
+	sq_beat
+	sq_note	0x90, 45, 65, 82, 55, 0
+	sq_beat
+	sq_note	0x90, 40, 65, 87, 17, 0
+	sq_note	0x90, 90, 65, 91, 47, 0
+	sq_beat
+	sq_note	0x90, 46, 64, 90, 42, 0
+	sq_note	0x90, 91, 67, 103, 62, 0
+	sq_beat
+	sq_note	0x90, 91, 67, 98, 94, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 100, 44, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 15, 0xffff	; cell 16: chain from cell 9, cell 8 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0x81, 0xd2, 0x0d, 0x00, 0x2f, 0xd2, 0x0f, 0x00, 0x32, 0xd2, 0x12, 0x00, 0x35, 0xd2, 0x14, 0x40	; after the end of track
+	.byte	0x37, 0xd2, 0x16, 0x00, 0x3a, 0xd2, 0x16, 0x40, 0x3c, 0xd2, 0x19, 0x00, 0x3f, 0xd2, 0x1b, 0x00
+	.byte	0x40, 0xd2, 0x4a, 0x00, 0x3e, 0xd2, 0x4a, 0x00, 0x3b, 0xd2, 0x4c, 0x00, 0x38, 0xd2, 0x4e, 0x40
+	.byte	0x35, 0xd2, 0x51, 0x40, 0x32, 0xd2, 0x53, 0x00, 0x2e, 0xd2, 0x56, 0x00, 0x2a, 0xd2, 0x56, 0x40
+	.byte	0x26, 0x90, 0x58, 0x3b, 0x64, 0x54, 0x00, 0xd2, 0x58, 0x00, 0x24, 0xd2, 0x5b, 0x00, 0x22, 0xd2
+	.byte	0x5d, 0x40, 0x1f, 0xd2, 0x5f, 0x00, 0x1d, 0xd2, 0x5f, 0x00, 0x1c, 0x81, 0xd2, 0x04, 0x40, 0x1a
+	.byte	0xd2, 0x07, 0x00, 0x1a, 0xd2, 0x11, 0x00, 0x1d, 0xd2, 0x13, 0x00, 0x1f, 0xd2, 0x13, 0x00, 0x21
+	.byte	0xd2, 0x15, 0x00, 0x24, 0xd2, 0x18, 0x00, 0x27, 0xd2, 0x1a, 0x00, 0x2b, 0xd2, 0x1d, 0x40, 0x2e
+	.byte	0xd2, 0x1f, 0x00, 0x31, 0xd2, 0x1f, 0x40, 0x33, 0xd2, 0x22, 0x00, 0x35, 0xd2, 0x24, 0x00, 0x37
+	.byte	0xd2, 0x26, 0x40, 0x38, 0xd2, 0x29, 0x00, 0x3a, 0xd2, 0x29, 0x40, 0x3c, 0xd2, 0x2b, 0x40, 0x3e
+	.byte	0xd2, 0x2e, 0x00, 0x40, 0x90, 0x55, 0x37, 0x60, 0x1f, 0x01, 0x81, 0xd2, 0x43, 0x40, 0x3f, 0xd2
+	.byte	0x45, 0x00, 0x3f, 0xd2, 0x48, 0x00, 0x3e, 0xd2, 0x4a, 0x40, 0x3d, 0xd2, 0x4c, 0x40, 0x3c, 0xd2
+	.byte	0x4f, 0x40, 0x3b, 0xd2, 0x4f, 0x40, 0x3a, 0xd2, 0x51, 0x40, 0x39, 0xd2, 0x54, 0x00, 0x39, 0xd2
+	.byte	0x56, 0x00, 0x38, 0xd2, 0x59, 0x40, 0x37, 0xd2, 0x59, 0x40, 0x36, 0xd2, 0x5b, 0x00, 0x36, 0xd2
+	.byte	0x5d, 0x00, 0x35, 0x81, 0xd2, 0x00
+	seq_cell	0x80, 0, 18	; cell 17: chain from cell 17, cell 1 of its chain
+	sq_ev	0xb4, 0, 26, 6, 2, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 55, 93, 59, 0
+	sq_note	0x90, 93, 55, 98, 62, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 55, 99, 43, 0
+	sq_note	0x90, 47, 57, 99, 62, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 98, 90, 0
+	sq_beat
+	sq_note	0x90, 43, 55, 93, 44, 0
+	sq_note	0x90, 90, 59, 93, 2, 1
+	sq_beat
+	sq_note	0x90, 93, 57, 90, 93, 0
+	sq_beat
+	sq_note	0x90, 92, 55, 93, 66, 0
+	sq_beat
+	sq_note	0x90, 91, 55, 97, 64, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 100, 48, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 102, 54, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 103, 62, 0
+	sq_beat
+	sq_note	0x90, 45, 55, 102, 45, 0
+	sq_note	0x90, 93, 59, 96, 15, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 55, 99, 55, 0
+	sq_note	0x90, 92, 55, 99, 63, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 102, 49, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 96, 58, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 103, 24, 0
+	sq_note	0x90, 89, 57, 90, 51, 0
+	sq_beat
+	sq_note	0x90, 45, 55, 84, 40, 0
+	sq_note	0x90, 89, 59, 93, 65, 0
+	sq_beat
+	sq_note	0x90, 89, 59, 93, 93, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 93, 4, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 17, 19	; cell 18: chain from cell 17, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 99, 60, 0
+	sq_beat
+	sq_note	0x90, 91, 55, 99, 69, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 98, 48, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 96, 60, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 93, 62, 0
+	sq_beat
+	sq_note	0x90, 42, 55, 95, 43, 0
+	sq_note	0x90, 90, 59, 90, 2, 1
+	sq_beat
+	sq_note	0x90, 91, 57, 89, 0, 1
+	sq_beat
+	sq_note	0x90, 90, 55, 90, 68, 0
+	sq_beat
+	sq_note	0x90, 90, 55, 88, 70, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 94, 48, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 95, 61, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 94, 65, 0
+	sq_beat
+	sq_note	0x90, 40, 55, 87, 48, 0
+	sq_note	0x90, 87, 59, 84, 0, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 87, 70, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 91, 68, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 93, 47, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 94, 54, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 94, 22, 0
+	sq_note	0x90, 88, 57, 91, 45, 0
+	sq_beat
+	sq_note	0x90, 39, 55, 84, 42, 0
+	sq_note	0x90, 85, 59, 85, 64, 0
+	sq_beat
+	sq_note	0x90, 86, 59, 90, 94, 0
+	sq_beat
+	.byte	0x90, 0x57, 0x37	; first 3 bytes of sq_note 0x90, 87, 55, 89, 7, 1 (split by a cell boundary)
+	seq_cell	0x80, 18, 20	; cell 19: chain from cell 17, cell 3 of its chain
+	.byte	0x59, 0x07, 0x01	; last 3 bytes of sq_note 0x90, 87, 55, 89, 7, 1 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 96, 58, 0
+	sq_beat
+	sq_note	0x90, 90, 55, 97, 65, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 93, 49, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 94, 54, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 99, 21, 0
+	sq_note	0x90, 88, 57, 93, 53, 0
+	sq_beat
+	sq_note	0x90, 44, 55, 83, 41, 0
+	sq_note	0x90, 89, 59, 87, 93, 0
+	sq_beat
+	sq_note	0x90, 87, 57, 90, 88, 0
+	sq_beat
+	sq_note	0x90, 86, 55, 90, 62, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 93, 65, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 93, 44, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 90, 52, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 91, 92, 0
+	sq_beat
+	sq_note	0x90, 41, 55, 93, 43, 0
+	sq_note	0x90, 87, 59, 88, 59, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 91, 61, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 90, 69, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 84, 55, 96, 46, 0
+	sq_beat
+	sq_note	0x90, 35, 57, 98, 58, 0
+	sq_beat
+	sq_note	0x90, 37, 57, 93, 23, 0
+	sq_note	0x90, 85, 57, 93, 50, 0
+	sq_beat
+	sq_note	0x90, 39, 55, 87, 46, 0
+	sq_note	0x90, 87, 59, 96, 63, 0
+	sq_beat
+	sq_note	0x90, 86, 59, 87, 2, 1
+	sq_beat
+	sq_note	0x90, 87, 55, 87, 49, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 19, 21	; cell 20: chain from cell 17, cell 4 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 55, 99, 54, 0
+	sq_beat
+	sq_note	0x90, 86, 55, 98, 69, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 90, 47, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 93, 59, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 100, 91, 0
+	sq_beat
+	sq_note	0x90, 39, 55, 86, 49, 0
+	sq_note	0x90, 85, 59, 93, 9, 1
+	sq_beat
+	sq_note	0x90, 87, 57, 98, 0, 1
+	sq_beat
+	sq_note	0x90, 87, 55, 84, 63, 0
+	sq_beat
+	sq_note	0x90, 86, 55, 93, 70, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 55, 96, 47, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 96, 61, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 100, 87, 0
+	sq_beat
+	sq_note	0x90, 40, 55, 83, 47, 0
+	sq_note	0x90, 85, 59, 93, 11, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 82, 61, 0
+	sq_beat
+	sq_note	0x90, 91, 55, 96, 65, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 90, 49, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 96, 55, 0
+	sq_beat
+	sq_note	0x90, 35, 57, 102, 23, 0
+	sq_note	0x90, 84, 57, 100, 46, 0
+	sq_beat
+	sq_note	0x90, 35, 55, 90, 51, 0
+	sq_note	0x90, 84, 59, 91, 67, 0
+	sq_beat
+	sq_note	0x90, 83, 59, 92, 3, 1
+	sq_beat
+	sq_note	0x90, 81, 55, 91, 2, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 103, 59, 0
+	sq_beat
+	sq_note	0x90, 86, 55, 102, 70, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 93, 51, 0
+	sq_beat
+	.byte	0x90, 0x2a, 0x39	; first 3 bytes of sq_note 0x90, 42, 57, 95, 63, 0 (split by a cell boundary)
+	seq_cell	0x80, 20, 22	; cell 21: chain from cell 17, cell 5 of its chain
+	.byte	0x5f, 0x3f, 0x00	; last 3 bytes of sq_note 0x90, 42, 57, 95, 63, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 39, 57, 102, 95, 0
+	sq_beat
+	sq_note	0x90, 36, 55, 78, 51, 0
+	sq_note	0x90, 83, 59, 93, 9, 1
+	sq_beat
+	sq_note	0x90, 85, 57, 87, 94, 0
+	sq_beat
+	sq_note	0x90, 84, 55, 87, 63, 0
+	sq_beat
+	sq_note	0x90, 87, 55, 92, 78, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 94, 44, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 92, 59, 0
+	sq_beat
+	sq_note	0x90, 38, 57, 94, 95, 0
+	sq_beat
+	sq_note	0x90, 41, 55, 76, 52, 0
+	sq_note	0x90, 90, 59, 92, 0, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 55, 98, 55, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 92, 78, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 95, 47, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 95, 55, 0
+	sq_beat
+	sq_note	0x90, 34, 57, 100, 27, 0
+	sq_note	0x90, 85, 57, 98, 47, 0
+	sq_beat
+	sq_note	0x90, 38, 55, 84, 48, 0
+	sq_note	0x90, 85, 59, 93, 69, 0
+	sq_beat
+	sq_note	0x90, 91, 59, 98, 93, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 81, 23, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 102, 59, 0
+	sq_beat
+	sq_note	0x90, 89, 55, 99, 76, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 55, 102, 50, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 98, 61, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 97, 93, 0
+	sq_beat
+	sq_note	0x90, 38, 55, 90, 48, 0
+	sq_note	0x90, 85, 59, 98, 9, 1
+	sq_beat
+	sq_note	0x90, 87, 57, 90, 87, 0
+	sq_beat
+	sq_note	0x90, 82, 55, 93, 65, 0
+	sq_beat
+	sq_note	0x90, 84, 55, 98, 73, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 99, 46, 0
+	sq_beat
+	sq_note	0x90, 38, 57, 93, 60, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 107, 87, 0
+	sq_beat
+	.byte	0x90, 0x21	; first 2 bytes of sq_note 0x90, 33, 55, 87, 59, 0 (split by a cell boundary)
+	seq_cell	0x80, 21, 23	; cell 22: chain from cell 17, cell 6 of its chain
+	.byte	0x37, 0x57, 0x3b, 0x00	; last 4 bytes of sq_note 0x90, 33, 55, 87, 59, 0 (split by a cell boundary)
+	sq_note	0x90, 83, 59, 95, 11, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 93, 62, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 92, 90, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 94, 48, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 94, 55, 0
+	sq_beat
+	sq_note	0x90, 30, 57, 95, 25, 0
+	sq_note	0x90, 81, 57, 100, 48, 0
+	sq_beat
+	sq_note	0x90, 33, 55, 83, 53, 0
+	sq_note	0x90, 85, 59, 98, 69, 0
+	sq_beat
+	sq_note	0x90, 83, 59, 94, 4, 1
+	sq_beat
+	sq_note	0x90, 85, 55, 80, 11, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 97, 63, 0
+	sq_beat
+	sq_note	0x90, 86, 55, 96, 77, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 98, 46, 0
+	sq_beat
+	sq_note	0x90, 38, 57, 86, 56, 0
+	sq_beat
+	sq_note	0x90, 38, 57, 94, 95, 0
+	sq_beat
+	sq_note	0x90, 41, 55, 93, 49, 0
+	sq_note	0x90, 88, 59, 96, 9, 1
+	sq_beat
+	sq_note	0x90, 89, 57, 99, 92, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 83, 56, 0
+	sq_beat
+	sq_note	0x90, 89, 55, 96, 85, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 95, 48, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 92, 61, 0
+	sq_beat
+	sq_note	0x90, 39, 57, 99, 95, 0
+	sq_beat
+	sq_note	0x90, 42, 55, 89, 52, 0
+	sq_note	0x90, 91, 59, 93, 4, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 85, 59, 0
+	sq_beat
+	sq_note	0x90, 93, 55, 95, 92, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 99, 47, 0
+	sq_beat
+	sq_note	0x90, 41, 57, 82, 60, 0
+	sq_beat
+	sq_note	0x90, 34, 57, 92, 29, 0
+	sq_note	0x90, 86, 57, 100, 49, 0
+	sq_beat
+	sq_note	0x90, 38, 55, 78, 51, 0
+	sq_note	0x90, 87, 59, 93, 68, 0
+	sq_beat
+	.byte	0x90, 0x56	; first 2 bytes of sq_note 0x90, 86, 59, 90, 5, 1 (split by a cell boundary)
+	seq_cell	0x80, 22, 0xffff	; cell 23: chain from cell 17, cell 7 of its chain
+	.byte	0x3b, 0x5a, 0x05, 0x01	; last 4 bytes of sq_note 0x90, 86, 59, 90, 5, 1 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 88, 55, 76, 22, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 55, 99, 55, 0
+	sq_note	0x90, 91, 55, 93, 67, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 90, 43, 0
+	sq_beat
+	sq_note	0x90, 37, 57, 90, 60, 0
+	sq_beat
+	sq_note	0x90, 32, 57, 93, 3, 1
+	sq_beat
+	sq_note	0x90, 38, 55, 78, 49, 0
+	sq_note	0x90, 85, 59, 93, 12, 1
+	sq_beat
+	sq_note	0x90, 86, 57, 89, 3, 1
+	sq_beat
+	sq_note	0x90, 87, 55, 90, 57, 0
+	sq_beat
+	sq_note	0x90, 84, 55, 89, 82, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 91, 46, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 98, 62, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 99, 92, 0
+	sq_beat
+	sq_note	0x90, 38, 55, 73, 49, 0
+	sq_note	0x90, 87, 59, 95, 66, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 92, 58, 0
+	sq_beat
+	sq_note	0x90, 91, 55, 87, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 55, 99, 43, 0
+	sq_note	0x90, 42, 57, 91, 54, 0
+	sq_beat
+	sq_note	0x90, 35, 57, 98, 26, 0
+	sq_note	0x90, 86, 57, 93, 44, 0
+	sq_beat
+	sq_note	0x90, 37, 55, 72, 48, 0
+	sq_note	0x90, 84, 59, 97, 67, 0
+	sq_beat
+	sq_note	0x90, 83, 59, 91, 4, 1
+	sq_beat
+	sq_note	0x90, 88, 55, 69, 71, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 0, 60
+	.byte	0x90, 0x57, 0x3f, 0x32, 0x06, 0x00, 0x90, 0x57, 0x40, 0x66, 0x2e, 0x00, 0xd2, 0x58, 0x00, 0x3a	; after the end of track
+	.byte	0xd2, 0x5b, 0x00, 0x38, 0xd2
+	seq_cell	0x80, 0, 25	; cell 24: chain from cell 24, cell 1 of its chain
+	sq_ev	0xb1, 0, 72, 3, 106, 7
+	sq_note	0x90, 0, 52, 64, 24, 0
+	sq_note	0x90, 0, 48, 72, 20, 0
+	sq_note	0x90, 0, 43, 66, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 24, 0xffff	; cell 25: chain from cell 24, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.fill	41, 1, 0x81	; after the end of track
+	seq_cell	0x80, 0, 27	; cell 26: chain from cell 26, cell 1 of its chain
+	sq_ev	0xb1, 0, 72, 3, 106, 8
+	sq_ev	0xd3, 0, 127
+	sq_ev	0x80, 0, 124, 0
+	sq_ev	0x85, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 94, 72, 0, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 13, 72, 0, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 14, 72, 0, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 25, 72, 0, 4, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 26, 28	; cell 27: chain from cell 26, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 88, 72, 0, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 11, 72, 0, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 6, 72, 0, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc1, 1, 72, 0, 4, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb2, 78, 112, 2, 7, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 27, 0xffff	; cell 28: chain from cell 26, cell 3 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 72, 72, 5, 16, 16
+	sq_beat
+	sq_ev	0xb0, 25, 72, 5, 0, 16
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 0
+	.byte	0x90, 0x5d, 0x53, 0x5f, 0x0d, 0x00, 0x81, 0x90, 0x2c, 0x4f, 0x57, 0x10, 0x00, 0x90, 0x5c, 0x4d	; after the end of track
+	.byte	0x55, 0x13, 0x00, 0x81, 0x90, 0x2a, 0x4a, 0x5d, 0x0e, 0x00, 0x81, 0x90, 0x32, 0x48, 0x3a, 0x09
+	.byte	0x00, 0x90, 0x47, 0x4c, 0x37, 0x16, 0x00, 0x90, 0x5d, 0x4f, 0x58, 0x14, 0x00, 0x81, 0x90, 0x2f
+	.byte	0x54, 0x59, 0x0e, 0x00, 0x90, 0x5e, 0x53, 0x54, 0x0a, 0x00, 0x90, 0x5e, 0x51, 0x55, 0x0c, 0x00
+	.byte	0x81, 0x90, 0x2f, 0x4c, 0x58, 0x0d, 0x00, 0x90, 0x5d, 0x48, 0x53, 0x0c, 0x00, 0x81, 0x90, 0x2b
+	.byte	0x4c, 0x5f, 0x0d, 0x00, 0x81, 0x90, 0x47, 0x4d, 0x56, 0x17, 0x00, 0x81, 0x90, 0x01, 0x51, 0x59
+	.byte	0x12, 0x00, 0x90, 0x31, 0x54, 0x5d, 0x0e, 0x00, 0x90, 0x5e, 0x53, 0x5f, 0x0d, 0x00, 0x81, 0x90
+	.byte	0x2f, 0x4f, 0x56, 0x0d, 0x00, 0x90, 0x5d, 0x4d, 0x54, 0x0f, 0x00, 0x81, 0x90, 0x2c, 0x4a, 0x5d
+	.byte	0x0e, 0x00, 0x81, 0x90, 0x2c, 0x48, 0x43, 0x0c, 0x00, 0x90, 0x44, 0x4c
+	seq_cell	0x80, 0, 30	; cell 29: chain from cell 29, cell 1 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 29, 31	; cell 30: chain from cell 29, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 50, 72, 93, 17, 0
+	sq_note	0x90, 73, 76, 78, 20, 0
+	sq_note	0x90, 93, 79, 63, 21, 0
+	sq_beat
+	sq_note	0x90, 48, 84, 91, 17, 0
+	sq_note	0x90, 94, 81, 78, 19, 0
+	sq_beat
+	sq_note	0x90, 48, 76, 76, 14, 0
+	sq_note	0x90, 94, 72, 85, 10, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 90, 13, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 85, 11, 0
+	sq_note	0x90, 68, 77, 78, 20, 0
+	sq_note	0x90, 90, 81, 81, 21, 0
+	sq_beat
+	sq_note	0x90, 41, 84, 87, 21, 0
+	sq_note	0x90, 88, 83, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 40, 79, 86, 18, 0
+	sq_note	0x90, 88, 77, 87, 17, 0
+	sq_beat
+	.byte	0x90, 0x2b, 0x4a, 0x58, 0x0c	; first 5 bytes of sq_note 0x90, 43, 74, 88, 12, 0 (split by a cell boundary)
+	seq_cell	0x80, 30, 32	; cell 31: chain from cell 29, cell 3 of its chain
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 43, 74, 88, 12, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 41, 72, 93, 18, 0
+	sq_note	0x90, 70, 76, 80, 19, 0
+	sq_note	0x90, 89, 79, 78, 21, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 87, 20, 0
+	sq_note	0x90, 89, 81, 86, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 84, 16, 0
+	sq_note	0x90, 91, 72, 90, 16, 0
+	sq_beat
+	sq_note	0x90, 39, 76, 90, 16, 0
+	sq_beat
+	sq_note	0x90, 41, 74, 90, 18, 0
+	sq_note	0x90, 67, 77, 80, 20, 0
+	sq_note	0x90, 91, 81, 81, 21, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 87, 20, 0
+	sq_note	0x90, 88, 83, 81, 20, 0
+	sq_beat
+	sq_note	0x90, 43, 79, 78, 17, 0
+	sq_note	0x90, 90, 77, 81, 16, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 84, 14, 0
+	sq_beat
+	sq_note	0x90, 46, 72, 84, 16, 0
+	sq_note	0x90, 73, 76, 80, 19, 0
+	sq_note	0x90, 94, 79, 79, 20, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 84, 19, 0
+	sq_note	0x90, 92, 81, 89, 21, 0
+	sq_beat
+	sq_note	0x90, 46, 76, 76, 16, 0
+	sq_note	0x90, 93, 72, 85, 16, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 87, 16, 0
+	sq_beat
+	sq_note	0x90, 42, 74, 86, 13, 0
+	sq_note	0x90, 66, 77, 66, 21, 0
+	sq_note	0x90, 90, 81, 63, 21, 0
+	sq_beat
+	sq_note	0x90, 41, 84, 82, 21, 0
+	sq_note	0x90, 87, 83, 76, 15, 0
+	sq_beat
+	sq_note	0x90, 38, 79, 86, 17, 0
+	sq_note	0x90, 86, 77, 90, 18, 0
+	sq_beat
+	sq_note	0x90, 41, 74, 88, 11, 0
+	sq_beat
+	sq_note	0x90, 41, 72, 84, 15, 0
+	sq_note	0x90, 65, 76, 74, 22, 0
+	sq_note	0x90, 85, 79, 76, 23, 0
+	sq_beat
+	sq_note	0x90, 41, 84, 86, 18, 0
+	sq_note	0x90, 89, 81, 89, 20, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 82, 18, 0
+	.byte	0x90, 0x5b, 0x48	; first 3 bytes of sq_note 0x90, 91, 72, 88, 19, 0 (split by a cell boundary)
+	seq_cell	0x80, 31, 33	; cell 32: chain from cell 29, cell 4 of its chain
+	.byte	0x58, 0x13, 0x00	; last 3 bytes of sq_note 0x90, 91, 72, 88, 19, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 43, 76, 86, 15, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 84, 17, 0
+	sq_note	0x90, 70, 77, 70, 20, 0
+	sq_note	0x90, 90, 81, 83, 22, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 82, 21, 0
+	sq_note	0x90, 94, 83, 80, 19, 0
+	sq_beat
+	sq_note	0x90, 45, 79, 83, 18, 0
+	sq_note	0x90, 93, 77, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 82, 11, 0
+	sq_beat
+	sq_note	0x90, 44, 72, 82, 16, 0
+	sq_note	0x90, 70, 76, 55, 20, 0
+	sq_note	0x90, 89, 79, 80, 23, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 85, 19, 0
+	sq_note	0x90, 90, 81, 87, 19, 0
+	sq_beat
+	sq_note	0x90, 44, 76, 84, 15, 0
+	sq_note	0x90, 91, 72, 85, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 87, 16, 0
+	sq_beat
+	sq_note	0x90, 40, 74, 87, 21, 0
+	sq_note	0x90, 67, 77, 74, 20, 0
+	sq_note	0x90, 87, 81, 87, 23, 0
+	sq_beat
+	sq_note	0x90, 41, 84, 87, 22, 0
+	sq_note	0x90, 87, 83, 83, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 79, 85, 17, 0
+	sq_note	0x90, 90, 77, 87, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 74, 89, 15, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 82, 17, 0
+	sq_note	0x90, 67, 76, 78, 22, 0
+	sq_note	0x90, 90, 79, 85, 23, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 90, 20, 0
+	sq_note	0x90, 88, 81, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 73, 14, 0
+	sq_note	0x90, 90, 72, 84, 18, 0
+	sq_beat
+	sq_note	0x90, 40, 76, 88, 15, 0
+	sq_beat
+	sq_note	0x90, 39, 74, 90, 20, 0
+	sq_note	0x90, 64, 77, 78, 21, 0
+	sq_note	0x90, 87, 81, 88, 23, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 88, 21, 0
+	sq_note	0x90, 90, 83, 83, 19, 0
+	sq_beat
+	seq_cell	0x80, 32, 34	; cell 33: chain from cell 29, cell 5 of its chain
+	sq_note	0x90, 43, 79, 86, 19, 0
+	sq_note	0x90, 91, 77, 90, 18, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 92, 17, 0
+	sq_beat
+	sq_note	0x90, 45, 72, 87, 16, 0
+	sq_note	0x90, 71, 76, 76, 19, 0
+	sq_note	0x90, 89, 79, 93, 24, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 94, 20, 0
+	sq_note	0x90, 91, 81, 87, 21, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 87, 16, 0
+	sq_note	0x90, 93, 72, 92, 17, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 90, 17, 0
+	sq_beat
+	sq_note	0x90, 42, 74, 87, 16, 0
+	sq_note	0x90, 67, 77, 69, 20, 0
+	sq_note	0x90, 87, 81, 93, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 84, 13, 0
+	sq_note	0x90, 87, 83, 90, 18, 0
+	sq_beat
+	sq_note	0x90, 40, 79, 88, 18, 0
+	sq_note	0x90, 87, 77, 93, 21, 0
+	sq_beat
+	sq_note	0x90, 39, 74, 90, 17, 0
+	sq_beat
+	sq_note	0x90, 42, 72, 89, 19, 0
+	sq_note	0x90, 68, 76, 79, 21, 0
+	sq_note	0x90, 91, 79, 85, 21, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 87, 18, 0
+	sq_note	0x90, 91, 81, 94, 19, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 83, 18, 0
+	sq_note	0x90, 92, 72, 81, 16, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 87, 15, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 87, 15, 0
+	sq_note	0x90, 69, 77, 76, 21, 0
+	sq_note	0x90, 90, 81, 81, 23, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 83, 20, 0
+	sq_note	0x90, 93, 83, 83, 16, 0
+	sq_beat
+	sq_note	0x90, 46, 79, 87, 18, 0
+	sq_note	0x90, 91, 77, 85, 17, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 88, 11, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 87, 19, 0
+	sq_note	0x90, 70, 76, 76, 21, 0
+	sq_note	0x90, 90, 79, 90, 21, 0
+	sq_beat
+	.byte	0x90, 0x2a, 0x54, 0x55	; first 4 bytes of sq_note 0x90, 42, 84, 85, 17, 0 (split by a cell boundary)
+	seq_cell	0x80, 33, 35	; cell 34: chain from cell 29, cell 6 of its chain
+	.byte	0x11, 0x00	; last 2 bytes of sq_note 0x90, 42, 84, 85, 17, 0 (split by a cell boundary)
+	sq_note	0x90, 91, 79, 90, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 80, 14, 0
+	sq_note	0x90, 93, 72, 86, 15, 0
+	sq_beat
+	sq_note	0x90, 44, 76, 86, 14, 0
+	sq_beat
+	sq_note	0x90, 43, 74, 81, 19, 0
+	sq_note	0x90, 67, 77, 78, 21, 0
+	sq_note	0x90, 88, 81, 83, 28, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 85, 22, 0
+	sq_note	0x90, 86, 83, 78, 21, 0
+	sq_beat
+	sq_note	0x90, 40, 79, 86, 19, 0
+	sq_note	0x90, 88, 77, 90, 20, 0
+	sq_beat
+	sq_note	0x90, 43, 74, 87, 14, 0
+	sq_beat
+	sq_note	0x90, 42, 72, 88, 20, 0
+	sq_note	0x90, 67, 76, 72, 23, 0
+	sq_note	0x90, 89, 79, 90, 22, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 86, 18, 0
+	sq_note	0x90, 90, 81, 86, 22, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 80, 18, 0
+	sq_note	0x90, 92, 72, 82, 20, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 74, 85, 18, 0
+	sq_note	0x90, 66, 77, 87, 22, 0
+	sq_note	0x90, 90, 81, 90, 23, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 85, 21, 0
+	sq_note	0x90, 90, 83, 78, 19, 0
+	sq_beat
+	sq_note	0x90, 43, 79, 85, 19, 0
+	sq_note	0x90, 91, 77, 82, 19, 0
+	sq_beat
+	sq_note	0x90, 46, 74, 89, 14, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 86, 21, 0
+	sq_note	0x90, 69, 76, 73, 21, 0
+	sq_note	0x90, 88, 79, 90, 22, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 88, 19, 0
+	sq_note	0x90, 92, 81, 63, 19, 0
+	sq_note	0x90, 94, 83, 52, 10, 0
+	sq_beat
+	sq_note	0x90, 44, 76, 82, 15, 0
+	sq_note	0x90, 90, 72, 82, 17, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 91, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 74, 84, 23, 0
+	.byte	0x90, 0x42	; first 2 bytes of sq_note 0x90, 66, 77, 75, 22, 0 (split by a cell boundary)
+	seq_cell	0x80, 34, 36	; cell 35: chain from cell 29, cell 7 of its chain
+	.byte	0x4d, 0x4b, 0x16, 0x00	; last 4 bytes of sq_note 0x90, 66, 77, 75, 22, 0 (split by a cell boundary)
+	sq_note	0x90, 88, 81, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 80, 20, 0
+	sq_note	0x90, 87, 83, 74, 20, 0
+	sq_beat
+	sq_note	0x90, 40, 79, 84, 19, 0
+	sq_note	0x90, 87, 77, 90, 21, 0
+	sq_beat
+	sq_note	0x90, 41, 74, 91, 16, 0
+	sq_beat
+	sq_note	0x90, 40, 72, 84, 20, 0
+	sq_note	0x90, 67, 76, 74, 22, 0
+	sq_note	0x90, 89, 79, 85, 24, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 83, 21, 0
+	sq_note	0x90, 90, 81, 85, 21, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 84, 18, 0
+	sq_note	0x90, 90, 72, 79, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 91, 17, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 82, 22, 0
+	sq_note	0x90, 67, 77, 78, 23, 0
+	sq_note	0x90, 90, 81, 87, 25, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 87, 20, 0
+	sq_note	0x90, 90, 83, 78, 21, 0
+	sq_beat
+	sq_note	0x90, 42, 79, 90, 19, 0
+	sq_note	0x90, 89, 77, 90, 19, 0
+	sq_beat
+	sq_note	0x90, 43, 74, 87, 12, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 87, 20, 0
+	sq_note	0x90, 68, 76, 83, 23, 0
+	sq_note	0x90, 90, 79, 83, 24, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 90, 21, 0
+	sq_note	0x90, 89, 81, 81, 19, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 84, 17, 0
+	sq_note	0x90, 90, 72, 83, 18, 0
+	sq_beat
+	sq_note	0x90, 40, 76, 84, 17, 0
+	sq_beat
+	sq_note	0x90, 43, 74, 83, 18, 0
+	sq_note	0x90, 66, 77, 81, 23, 0
+	sq_note	0x90, 90, 81, 87, 23, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 84, 21, 0
+	sq_note	0x90, 87, 83, 80, 20, 0
+	sq_beat
+	sq_note	0x90, 39, 79, 87, 19, 0
+	sq_note	0x90, 87, 77, 90, 18, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 89, 17, 0
+	seq_cell	0x80, 35, 37	; cell 36: chain from cell 29, cell 8 of its chain
+	sq_beat
+	sq_note	0x90, 46, 72, 88, 23, 0
+	sq_note	0x90, 73, 76, 86, 20, 0
+	sq_note	0x90, 91, 79, 84, 24, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 87, 23, 0
+	sq_note	0x90, 92, 81, 79, 21, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 89, 19, 0
+	sq_note	0x90, 92, 72, 90, 22, 0
+	sq_beat
+	sq_note	0x90, 45, 76, 87, 16, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 83, 19, 0
+	sq_note	0x90, 67, 77, 84, 24, 0
+	sq_note	0x90, 92, 81, 82, 24, 0
+	sq_beat
+	sq_note	0x90, 46, 84, 75, 21, 0
+	sq_note	0x90, 90, 83, 85, 21, 0
+	sq_beat
+	sq_note	0x90, 42, 79, 84, 18, 0
+	sq_note	0x90, 89, 77, 87, 22, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 86, 17, 0
+	sq_beat
+	sq_note	0x90, 42, 72, 93, 19, 0
+	sq_note	0x90, 68, 76, 81, 21, 0
+	sq_note	0x90, 87, 79, 89, 24, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 88, 23, 0
+	sq_note	0x90, 90, 81, 89, 21, 0
+	sq_beat
+	sq_note	0x90, 43, 76, 80, 17, 0
+	sq_note	0x90, 91, 72, 90, 19, 0
+	sq_beat
+	sq_note	0x90, 41, 76, 92, 17, 0
+	sq_beat
+	sq_note	0x90, 41, 74, 85, 18, 0
+	sq_note	0x90, 65, 77, 83, 24, 0
+	sq_note	0x90, 89, 81, 84, 24, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 87, 22, 0
+	sq_note	0x90, 89, 83, 84, 20, 0
+	sq_beat
+	sq_note	0x90, 41, 79, 87, 21, 0
+	sq_note	0x90, 89, 77, 91, 21, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 85, 16, 0
+	sq_beat
+	sq_note	0x90, 47, 72, 84, 20, 0
+	sq_note	0x90, 73, 76, 83, 24, 0
+	sq_beat
+	sq_note	0x90, 1, 79, 84, 25, 0
+	sq_note	0x90, 47, 84, 80, 22, 0
+	sq_note	0x90, 91, 81, 86, 20, 0
+	sq_beat
+	sq_note	0x90, 44, 76, 86, 17, 0
+	.byte	0x90, 0x5c, 0x48, 0x56	; first 4 bytes of sq_note 0x90, 92, 72, 86, 19, 0 (split by a cell boundary)
+	seq_cell	0x80, 36, 38	; cell 37: chain from cell 29, cell 9 of its chain
+	.byte	0x13, 0x00	; last 2 bytes of sq_note 0x90, 92, 72, 86, 19, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 42, 76, 94, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 89, 16, 0
+	sq_note	0x90, 69, 77, 87, 20, 0
+	sq_note	0x90, 89, 81, 83, 25, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 81, 23, 0
+	sq_note	0x90, 89, 83, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 44, 79, 79, 20, 0
+	sq_note	0x90, 91, 77, 81, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 74, 90, 15, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 87, 19, 0
+	sq_note	0x90, 68, 76, 74, 23, 0
+	sq_note	0x90, 89, 79, 87, 22, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 87, 21, 0
+	sq_note	0x90, 91, 81, 83, 20, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 84, 18, 0
+	sq_note	0x90, 90, 72, 88, 19, 0
+	sq_beat
+	sq_note	0x90, 39, 76, 89, 17, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 87, 17, 0
+	sq_note	0x90, 67, 77, 81, 22, 0
+	sq_note	0x90, 90, 81, 84, 24, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 87, 20, 0
+	sq_note	0x90, 89, 83, 78, 20, 0
+	sq_beat
+	sq_note	0x90, 44, 79, 87, 21, 0
+	sq_note	0x90, 90, 77, 90, 22, 0
+	sq_beat
+	sq_note	0x90, 46, 74, 82, 14, 0
+	sq_beat
+	sq_note	0x90, 43, 72, 78, 17, 0
+	sq_note	0x90, 65, 76, 79, 23, 0
+	sq_note	0x90, 89, 79, 87, 23, 0
+	sq_beat
+	sq_note	0x90, 40, 84, 82, 20, 0
+	sq_note	0x90, 88, 81, 93, 24, 0
+	sq_beat
+	sq_note	0x90, 41, 76, 87, 20, 0
+	sq_note	0x90, 90, 72, 84, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 91, 19, 0
+	sq_beat
+	sq_note	0x90, 46, 74, 83, 19, 0
+	sq_note	0x90, 68, 77, 73, 24, 0
+	sq_note	0x90, 91, 81, 81, 26, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 81, 22, 0
+	sq_note	0x90, 91, 83, 74, 21, 0
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 43, 79, 90, 22, 0 (split by a cell boundary)
+	seq_cell	0x80, 37, 0xffff	; cell 38: chain from cell 29, cell 10 of its chain
+	.byte	0x2b, 0x4f, 0x5a, 0x16, 0x00	; last 5 bytes of sq_note 0x90, 43, 79, 90, 22, 0 (split by a cell boundary)
+	sq_note	0x90, 88, 77, 86, 22, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 85, 17, 0
+	sq_beat
+	sq_note	0x90, 42, 72, 81, 19, 0
+	sq_note	0x90, 69, 76, 73, 23, 0
+	sq_note	0x90, 90, 79, 82, 26, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 80, 23, 0
+	sq_note	0x90, 91, 81, 87, 22, 0
+	sq_beat
+	sq_note	0x90, 46, 76, 78, 17, 0
+	sq_note	0x90, 93, 72, 83, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 76, 93, 18, 0
+	sq_beat
+	sq_note	0x90, 43, 74, 78, 20, 0
+	sq_note	0x90, 63, 77, 79, 28, 0
+	sq_note	0x90, 90, 81, 88, 24, 0
+	sq_beat
+	sq_note	0x90, 40, 84, 86, 23, 0
+	sq_note	0x90, 88, 83, 85, 20, 0
+	sq_beat
+	sq_note	0x90, 42, 79, 96, 22, 0
+	sq_note	0x90, 91, 77, 93, 19, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 96, 21, 0
+	sq_note	0x90, 90, 72, 100, 66, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0x82, 0x90, 0x44, 0x4d, 0x3e, 0x16, 0x00, 0x90, 0x5c, 0x51, 0x48, 0x13, 0x00, 0x81, 0x90, 0x2e	; after the end of track
+	.byte	0x54, 0x5a, 0x0d, 0x00, 0x90, 0x5f, 0x53, 0x57, 0x0b, 0x00, 0x81, 0x90, 0x30, 0x4f, 0x4e, 0x0c
+	.byte	0x00, 0x90, 0x5b, 0x4d, 0x5d, 0x12, 0x00, 0x81, 0x90, 0x2b, 0x4a, 0x5a, 0x0f, 0x00, 0x81, 0x90
+	.byte	0x2d, 0x48, 0x4e, 0x0e, 0x00, 0x90, 0x43, 0x4c, 0x49, 0x17, 0x00, 0x90, 0x5b, 0x4f, 0x5f, 0x12
+	.byte	0x00, 0x81, 0x90, 0x2e, 0x54, 0x52, 0x0e, 0x00, 0x90, 0x5d, 0x51, 0x5f, 0x0d, 0x00, 0x81, 0x90
+	.byte	0x2e, 0x4c, 0x5b, 0x0f, 0x00, 0x90, 0x5e, 0x48, 0x58, 0x0f, 0x00, 0x81, 0x90, 0x2c, 0x4c, 0x5b
+	.byte	0x0e, 0x00, 0x81, 0x90, 0x2d, 0x4a, 0x4b, 0x0b, 0x00, 0x90, 0x42, 0x4d, 0x42, 0x19, 0x00, 0x90
+	.byte	0x5c, 0x51, 0x59, 0x13, 0x00
+	seq_cell	0x80, 0, 40	; cell 39: chain from cell 39, cell 1 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 91, 75, 16, 0
+	sq_beat
+	sq_note	0x90, 46, 89, 96, 14, 0
+	sq_beat
+	sq_note	0x90, 0, 88, 95, 16, 0
+	sq_note	0x90, 49, 86, 103, 15, 0
+	sq_beat
+	sq_note	0x90, 2, 84, 99, 14, 0
+	sq_note	0x90, 48, 83, 107, 17, 0
+	sq_beat
+	sq_note	0x90, 1, 81, 100, 12, 0
+	sq_note	0x90, 47, 79, 117, 27, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 9, 91, 112, 16, 0
+	sq_note	0x90, 48, 89, 90, 16, 0
+	sq_beat
+	sq_note	0x90, 1, 88, 96, 15, 0
+	sq_note	0x90, 46, 86, 106, 16, 0
+	sq_note	0x90, 95, 84, 100, 16, 0
+	sq_beat
+	sq_note	0x90, 46, 83, 104, 15, 0
+	sq_note	0x90, 94, 81, 100, 17, 0
+	sq_beat
+	sq_note	0x90, 45, 79, 110, 20, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 107, 17, 0
+	sq_note	0x90, 73, 77, 98, 18, 0
+	sq_note	0x90, 89, 81, 93, 18, 0
+	sq_note	0x90, 90, 79, 80, 14, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 100, 16, 0
+	sq_note	0x90, 92, 83, 114, 26, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 108, 20, 0
+	sq_note	0x90, 74, 77, 96, 17, 0
+	sq_note	0x90, 92, 81, 93, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 102, 18, 0
+	sq_note	0x90, 93, 83, 111, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 74, 96, 15, 0
+	sq_note	0x90, 68, 77, 90, 17, 0
+	sq_note	0x90, 86, 81, 97, 20, 0
+	sq_beat
+	.byte	0x90, 0x2e	; first 2 bytes of sq_note 0x90, 46, 84, 98, 15, 0 (split by a cell boundary)
+	seq_cell	0x80, 39, 41	; cell 40: chain from cell 39, cell 2 of its chain
+	.byte	0x54, 0x62, 0x0f, 0x00	; last 4 bytes of sq_note 0x90, 46, 84, 98, 15, 0 (split by a cell boundary)
+	sq_note	0x90, 93, 83, 106, 22, 0
+	sq_beat
+	sq_note	0x90, 94, 79, 110, 43, 0
+	sq_beat
+	sq_note	0x90, 91, 84, 106, 57, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 84, 117, 60, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 82, 110, 48, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 81, 112, 63, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 79, 110, 2, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 84, 104, 50, 1
+	sq_beat
+	sq_note	0x90, 94, 82, 108, 47, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 81, 111, 52, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 79, 104, 59, 1
+	sq_beat
+	sq_note	0x90, 95, 84, 107, 64, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 82, 107, 42, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 81, 111, 44, 1
+	sq_beat
+	sq_note	0x90, 92, 79, 114, 47, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 79, 108, 53, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 81, 106, 47, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 84, 110, 2, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 91, 117, 16, 0
+	sq_note	0x90, 46, 89, 110, 18, 0
+	sq_note	0x90, 93, 88, 102, 17, 0
+	sq_beat
+	sq_note	0x90, 45, 86, 107, 14, 0
+	sq_note	0x90, 95, 84, 114, 43, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 40, 42	; cell 41: chain from cell 39, cell 3 of its chain
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 74, 102, 15, 0
+	sq_note	0x90, 69, 77, 97, 21, 0
+	sq_note	0x90, 90, 81, 90, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 98, 16, 0
+	sq_note	0x90, 93, 83, 114, 33, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 42, 74, 107, 17, 0
+	sq_note	0x90, 68, 77, 96, 17, 0
+	sq_note	0x90, 85, 81, 102, 18, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 104, 18, 0
+	sq_beat
+	sq_note	0x90, 0, 83, 114, 52, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 74, 106, 19, 0
+	sq_note	0x90, 72, 77, 90, 17, 0
+	sq_note	0x90, 89, 81, 98, 18, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 103, 17, 0
+	sq_note	0x90, 91, 83, 114, 54, 0
+	sq_beat
+	sq_note	0x90, 88, 79, 114, 56, 0
+	sq_beat
+	sq_note	0x90, 90, 84, 108, 82, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 104, 16, 0
+	sq_note	0x90, 71, 77, 97, 17, 0
+	sq_note	0x90, 89, 81, 95, 20, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 102, 19, 0
+	sq_note	0x90, 94, 83, 111, 63, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 74, 108, 21, 0
+	sq_note	0x90, 70, 77, 91, 20, 0
+	sq_note	0x90, 89, 81, 100, 21, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 103, 19, 0
+	sq_note	0x90, 93, 83, 114, 77, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 74, 102, 19, 0
+	sq_note	0x90, 69, 77, 96, 19, 0
+	sq_note	0x90, 87, 81, 99, 22, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 103, 20, 0
+	sq_note	0x90, 91, 83, 111, 54, 0
+	sq_beat
+	sq_note	0x90, 88, 79, 110, 56, 0
+	sq_beat
+	seq_cell	0x80, 41, 43	; cell 42: chain from cell 39, cell 4 of its chain
+	sq_note	0x90, 88, 84, 110, 84, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 84, 107, 50, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 82, 104, 37, 1
+	sq_beat
+	sq_note	0x90, 94, 81, 107, 52, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 79, 100, 55, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 84, 103, 53, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 82, 100, 39, 1
+	sq_beat
+	sq_note	0x90, 94, 81, 103, 51, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 79, 102, 54, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 84, 99, 44, 1
+	sq_beat
+	sq_note	0x90, 92, 82, 102, 42, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 93, 81, 105, 46, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 79, 97, 34, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 79, 102, 39, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 81, 106, 38, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 84, 104, 60, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 94, 91, 106, 21, 0
+	sq_beat
+	sq_note	0x90, 47, 89, 109, 19, 0
+	sq_note	0x90, 95, 88, 99, 18, 0
+	sq_beat
+	sq_note	0x90, 47, 86, 103, 19, 0
+	sq_note	0x90, 95, 84, 110, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 55, 74, 97, 19, 0
+	sq_note	0x90, 76, 77, 93, 19, 0
+	.byte	0x90, 0x5c, 0x51, 0x5d	; first 4 bytes of sq_note 0x90, 92, 81, 93, 21, 0 (split by a cell boundary)
+	seq_cell	0x80, 42, 44	; cell 43: chain from cell 39, cell 5 of its chain
+	.byte	0x15, 0x00	; last 2 bytes of sq_note 0x90, 92, 81, 93, 21, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 47, 84, 93, 20, 0
+	sq_note	0x90, 95, 83, 110, 71, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 74, 102, 21, 0
+	sq_note	0x90, 73, 77, 90, 24, 0
+	sq_note	0x90, 94, 81, 91, 25, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 93, 21, 0
+	sq_note	0x90, 46, 83, 78, 14, 0
+	sq_note	0x90, 93, 83, 112, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 46, 74, 99, 18, 0
+	sq_note	0x90, 69, 77, 98, 20, 0
+	sq_note	0x90, 88, 81, 94, 20, 0
+	sq_beat
+	sq_note	0x90, 41, 84, 102, 19, 0
+	sq_note	0x90, 88, 83, 114, 62, 0
+	sq_beat
+	sq_note	0x90, 91, 79, 109, 62, 0
+	sq_beat
+	sq_note	0x90, 89, 84, 109, 92, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 105, 20, 0
+	sq_note	0x90, 73, 77, 93, 19, 0
+	sq_note	0x90, 89, 81, 98, 21, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 96, 19, 0
+	sq_note	0x90, 91, 83, 111, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 74, 110, 21, 0
+	sq_note	0x90, 67, 77, 94, 22, 0
+	sq_note	0x90, 88, 81, 96, 21, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 104, 24, 0
+	sq_note	0x90, 94, 83, 114, 75, 0
+	sq_note	0x90, 95, 84, 86, 8, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 74, 112, 21, 0
+	sq_note	0x90, 70, 77, 100, 20, 0
+	sq_note	0x90, 88, 81, 106, 21, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 109, 20, 0
+	sq_note	0x90, 91, 83, 116, 58, 0
+	sq_beat
+	sq_note	0x90, 88, 79, 112, 59, 0
+	sq_beat
+	sq_note	0x90, 89, 84, 114, 14, 1
+	seq_cell	0x80, 43, 45	; cell 44: chain from cell 39, cell 6 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 91, 114, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 89, 103, 17, 0
+	sq_note	0x90, 94, 88, 103, 15, 0
+	sq_beat
+	sq_note	0x90, 44, 86, 108, 14, 0
+	sq_beat
+	sq_note	0x90, 1, 84, 118, 23, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 74, 102, 17, 0
+	sq_note	0x90, 71, 77, 94, 18, 0
+	sq_note	0x90, 86, 81, 103, 20, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 108, 20, 0
+	sq_note	0x90, 90, 83, 117, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 109, 15, 0
+	sq_note	0x90, 68, 77, 97, 20, 0
+	sq_note	0x90, 87, 81, 102, 21, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 105, 18, 0
+	sq_note	0x90, 91, 83, 118, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 74, 107, 20, 0
+	sq_note	0x90, 70, 77, 98, 17, 0
+	sq_note	0x90, 88, 81, 102, 20, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 107, 20, 0
+	sq_note	0x90, 90, 83, 117, 61, 0
+	sq_beat
+	sq_note	0x90, 89, 79, 114, 58, 0
+	sq_beat
+	sq_note	0x90, 88, 84, 117, 85, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 91, 114, 18, 0
+	sq_beat
+	sq_note	0x90, 42, 89, 107, 20, 0
+	sq_note	0x90, 93, 88, 105, 18, 0
+	sq_beat
+	sq_note	0x90, 45, 86, 114, 18, 0
+	sq_note	0x90, 92, 84, 114, 55, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 43, 74, 109, 20, 0
+	sq_note	0x90, 66, 77, 96, 18, 0
+	sq_note	0x90, 82, 81, 102, 21, 0
+	sq_beat
+	sq_note	0x90, 39, 84, 105, 22, 0
+	sq_note	0x90, 92, 83, 116, 76, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 50, 74, 109, 19, 0
+	seq_cell	0x80, 44, 46	; cell 45: chain from cell 39, cell 7 of its chain
+	sq_note	0x90, 73, 77, 97, 18, 0
+	sq_note	0x90, 90, 81, 100, 20, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 104, 21, 0
+	sq_note	0x90, 93, 83, 117, 76, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 43, 74, 108, 17, 0
+	sq_note	0x90, 65, 77, 93, 20, 0
+	sq_note	0x90, 82, 81, 99, 21, 0
+	sq_beat
+	sq_note	0x90, 39, 84, 107, 21, 0
+	sq_note	0x90, 87, 83, 114, 62, 0
+	sq_beat
+	sq_note	0x90, 89, 79, 111, 58, 0
+	sq_beat
+	sq_note	0x90, 91, 84, 118, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 91, 117, 15, 0
+	sq_beat
+	sq_note	0x90, 46, 89, 108, 14, 0
+	sq_note	0x90, 94, 88, 107, 15, 0
+	sq_beat
+	sq_note	0x90, 46, 86, 109, 15, 0
+	sq_note	0x90, 93, 84, 117, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 74, 102, 21, 0
+	sq_note	0x90, 72, 77, 104, 19, 0
+	sq_note	0x90, 90, 81, 99, 22, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 103, 21, 0
+	sq_note	0x90, 90, 83, 116, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 74, 108, 20, 0
+	sq_note	0x90, 75, 77, 104, 18, 0
+	sq_note	0x90, 91, 81, 98, 20, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 103, 21, 0
+	sq_note	0x90, 92, 83, 114, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 110, 20, 0
+	sq_note	0x90, 71, 77, 96, 18, 0
+	sq_note	0x90, 88, 81, 99, 21, 0
+	sq_beat
+	sq_note	0x90, 43, 84, 105, 19, 0
+	sq_note	0x90, 89, 83, 110, 59, 0
+	sq_beat
+	sq_note	0x90, 90, 79, 109, 59, 0
+	sq_beat
+	sq_note	0x90, 90, 84, 118, 90, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x5e, 0x5b, 0x75	; first 4 bytes of sq_note 0x90, 94, 91, 117, 17, 0 (split by a cell boundary)
+	seq_cell	0x80, 45, 0xffff	; cell 46: chain from cell 39, cell 8 of its chain
+	.byte	0x11, 0x00	; last 2 bytes of sq_note 0x90, 94, 91, 117, 17, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 45, 89, 110, 18, 0
+	sq_note	0x90, 95, 88, 102, 16, 0
+	sq_beat
+	sq_note	0x90, 47, 86, 105, 16, 0
+	sq_note	0x90, 93, 84, 112, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 74, 104, 19, 0
+	sq_note	0x90, 70, 77, 94, 20, 0
+	sq_note	0x90, 88, 81, 96, 24, 0
+	sq_beat
+	sq_note	0x90, 42, 84, 98, 22, 0
+	sq_note	0x90, 91, 83, 114, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 74, 107, 19, 0
+	sq_note	0x90, 70, 77, 95, 20, 0
+	sq_note	0x90, 88, 81, 102, 22, 0
+	sq_beat
+	sq_note	0x90, 45, 84, 100, 21, 0
+	sq_note	0x90, 94, 83, 114, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 74, 105, 20, 0
+	sq_note	0x90, 68, 77, 93, 21, 0
+	sq_note	0x90, 87, 81, 100, 20, 0
+	sq_beat
+	sq_note	0x90, 44, 84, 103, 20, 0
+	sq_note	0x90, 93, 83, 114, 61, 0
+	sq_beat
+	sq_note	0x90, 95, 79, 107, 56, 0
+	sq_note	0x90, 95, 81, 96, 33, 0
+	sq_beat
+	sq_note	0x90, 95, 84, 116, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x82, 0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81	; after the end of track
+	.byte	0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81
+	.byte	0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81, 0x81, 0x80, 0x80, 0x81
+	.byte	0x81, 0x80, 0x80, 0x81, 0x81
+	seq_cell	0x80, 0, 48	; cell 47: chain from cell 47, cell 1 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 117, 51, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 114, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 121, 51, 0
+	sq_beat
+	sq_note	0x90, 91, 60, 120, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 118, 48, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 117, 69, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 116, 53, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 117, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 121, 53, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 117, 83, 0
+	seq_cell	0x80, 47, 49	; cell 48: chain from cell 47, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 118, 49, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 116, 75, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 116, 48, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 120, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 55, 120, 55, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 116, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 118, 49, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 114, 64, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 117, 51, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 114, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 117, 53, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 120, 80, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 121, 51, 0
+	sq_beat
+	sq_note	0x90, 87, 60, 114, 73, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 118, 53, 0
+	sq_beat
+	sq_note	0x90, 87, 60, 114, 73, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	seq_cell	0x80, 48, 50	; cell 49: chain from cell 47, cell 3 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 117, 51, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 110, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 84, 55, 118, 53, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 114, 77, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 55, 118, 50, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 117, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 84, 55, 121, 52, 0
+	sq_beat
+	sq_note	0x90, 87, 60, 117, 80, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 55, 117, 49, 0
+	sq_beat
+	sq_note	0x90, 92, 60, 109, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 116, 49, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 114, 76, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 56, 108, 56, 0
+	sq_beat
+	sq_note	0x90, 86, 60, 117, 87, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 55, 120, 55, 0
+	sq_beat
+	sq_note	0x90, 83, 60, 110, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 55, 121, 55, 0
+	sq_beat
+	sq_note	0x90, 84, 60, 120, 90, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 121, 49, 0
+	sq_beat
+	sq_note	0x90, 85, 60, 109, 76, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 120, 50, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 118, 83, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 55, 120, 48, 0
+	sq_beat
+	sq_note	0x90, 88, 60, 116, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 55, 120, 48, 0
+	sq_beat
+	seq_cell	0x80, 49, 0xffff	; cell 50: chain from cell 47, cell 4 of its chain
+	sq_note	0x90, 87, 60, 109, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 55, 120, 46, 0
+	sq_beat
+	sq_note	0x90, 91, 60, 114, 2, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 118, 46, 0
+	sq_beat
+	sq_note	0x90, 92, 60, 117, 87, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 55, 124, 53, 0
+	sq_beat
+	sq_note	0x90, 82, 60, 120, 79, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 121, 51, 0
+	sq_beat
+	sq_note	0x90, 86, 60, 114, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 55, 120, 53, 0
+	sq_beat
+	sq_note	0x90, 85, 60, 118, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 55, 114, 45, 0
+	sq_beat
+	sq_note	0x90, 89, 60, 118, 84, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 60, 123, 79, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 55, 114, 61, 0
+	.byte	0x81, 0x90, 0x5a, 0x3c, 0x6d, 0x55, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x90, 0x5b	; after the end of track
+	.byte	0x37, 0x6f, 0x41, 0x00, 0x81, 0x90, 0x5a, 0x3c, 0x72, 0x5d, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x90, 0x56, 0x37, 0x69, 0x42, 0x00
+	.byte	0x81, 0x90
+	seq_cell	0x80, 0, 52	; cell 51: chain from cell 51, cell 1 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 64, 114, 19, 0
+	sq_note	0x90, 49, 65, 82, 9, 0
+	sq_note	0x90, 93, 64, 107, 19, 0
+	sq_beat
+	sq_note	0x90, 42, 64, 102, 19, 0
+	sq_note	0x90, 92, 64, 114, 53, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 50, 62, 111, 20, 0
+	sq_beat
+	sq_note	0x90, 1, 62, 108, 20, 0
+	sq_note	0x90, 47, 62, 112, 19, 0
+	sq_note	0x90, 94, 62, 109, 67, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 60, 110, 16, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 105, 16, 0
+	sq_note	0x90, 46, 60, 107, 17, 0
+	sq_note	0x90, 94, 60, 112, 62, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 60, 105, 16, 0
+	sq_note	0x90, 94, 60, 110, 18, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 109, 19, 0
+	sq_note	0x90, 94, 60, 114, 0, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 62, 109, 76, 0
+	sq_note	0x90, 91, 64, 105, 50, 0
+	sq_beat
+	sq_note	0x90, 49, 55, 102, 72, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 64, 116, 80, 0
+	sq_beat
+	sq_note	0x90, 36, 65, 104, 53, 0
+	sq_note	0x90, 92, 64, 118, 16, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 46, 65, 114, 85, 0
+	sq_beat
+	.byte	0x90, 0x25, 0x43, 0x67	; first 4 bytes of sq_note 0x90, 37, 67, 103, 56, 0 (split by a cell boundary)
+	seq_cell	0x80, 51, 53	; cell 52: chain from cell 51, cell 2 of its chain
+	.byte	0x38, 0x00	; last 2 bytes of sq_note 0x90, 37, 67, 103, 56, 0 (split by a cell boundary)
+	sq_note	0x90, 95, 64, 110, 42, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 49, 62, 107, 44, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 108, 55, 0
+	sq_note	0x90, 52, 62, 105, 22, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 60, 102, 46, 0
+	sq_note	0x90, 93, 62, 99, 61, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 64, 111, 17, 0
+	sq_note	0x90, 91, 64, 103, 16, 0
+	sq_beat
+	sq_note	0x90, 43, 64, 109, 16, 0
+	sq_note	0x90, 94, 64, 111, 53, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 62, 108, 15, 0
+	sq_beat
+	sq_note	0x90, 1, 62, 105, 15, 0
+	sq_note	0x90, 48, 62, 107, 16, 0
+	sq_note	0x90, 94, 62, 110, 63, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 50, 60, 107, 14, 0
+	sq_beat
+	sq_note	0x90, 1, 60, 107, 14, 0
+	sq_note	0x90, 47, 60, 99, 13, 0
+	sq_note	0x90, 95, 60, 108, 15, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 60, 107, 15, 0
+	sq_note	0x90, 93, 60, 103, 17, 0
+	sq_beat
+	sq_note	0x90, 45, 60, 105, 18, 0
+	sq_note	0x90, 90, 60, 106, 1, 1
+	sq_beat
+	sq_note	0x90, 93, 62, 107, 79, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 64, 118, 40, 0
+	sq_note	0x90, 51, 55, 104, 67, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 64, 117, 87, 0
+	sq_beat
+	sq_note	0x90, 39, 65, 108, 54, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 121, 70, 0
+	sq_note	0x90, 74, 62, 110, 65, 0
+	sq_beat
+	sq_note	0x90, 47, 60, 104, 88, 0
+	sq_beat
+	sq_note	0x90, 44, 62, 104, 82, 0
+	sq_beat
+	sq_note	0x90, 36, 64, 109, 41, 0
+	sq_beat
+	sq_note	0x90, 3, 64, 108, 70, 0
+	sq_note	0x90, 78, 62, 105, 46, 0
+	sq_beat
+	sq_note	0x90, 48, 62, 104, 27, 1
+	sq_beat
+	.byte	0x90, 0x5e, 0x45, 0x76	; first 4 bytes of sq_note 0x90, 94, 69, 118, 80, 0 (split by a cell boundary)
+	seq_cell	0x80, 52, 54	; cell 53: chain from cell 51, cell 3 of its chain
+	.byte	0x50, 0x00	; last 2 bytes of sq_note 0x90, 94, 69, 118, 80, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 95, 67, 118, 12, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 46, 64, 112, 16, 0
+	sq_note	0x90, 90, 64, 103, 15, 0
+	sq_beat
+	sq_note	0x90, 42, 64, 107, 14, 0
+	sq_note	0x90, 90, 64, 112, 56, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 62, 108, 17, 0
+	sq_beat
+	sq_note	0x90, 2, 62, 107, 14, 0
+	sq_note	0x90, 50, 62, 109, 13, 0
+	sq_note	0x90, 94, 62, 114, 30, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 43, 62, 18, 5, 0
+	sq_note	0x90, 53, 60, 96, 11, 0
+	sq_note	0x90, 95, 60, 96, 12, 0
+	sq_beat
+	sq_note	0x90, 45, 60, 106, 13, 0
+	sq_note	0x90, 94, 60, 112, 20, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 60, 105, 14, 0
+	sq_beat
+	sq_note	0x90, 1, 60, 104, 14, 0
+	sq_note	0x90, 50, 60, 109, 13, 0
+	sq_note	0x90, 95, 60, 112, 78, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 62, 109, 69, 0
+	sq_note	0x90, 93, 64, 112, 42, 0
+	sq_beat
+	sq_note	0x90, 46, 55, 100, 60, 1
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x2f, 0x40	; first 3 bytes of sq_note 0x90, 47, 64, 117, 70, 0 (split by a cell boundary)
+	seq_cell	0x80, 53, 55	; cell 54: chain from cell 51, cell 4 of its chain
+	.byte	0x75, 0x46, 0x00	; last 3 bytes of sq_note 0x90, 47, 64, 117, 70, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 39, 65, 111, 43, 0
+	sq_note	0x90, 94, 64, 121, 70, 0
+	sq_beat
+	sq_note	0x90, 74, 62, 105, 63, 0
+	sq_beat
+	sq_note	0x90, 43, 60, 97, 80, 0
+	sq_beat
+	sq_note	0x90, 45, 62, 111, 67, 0
+	sq_beat
+	sq_note	0x90, 32, 64, 117, 41, 0
+	sq_note	0x90, 94, 64, 111, 91, 0
+	sq_beat
+	sq_note	0x90, 95, 62, 107, 20, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 107, 89, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 106, 88, 0
+	sq_beat
+	sq_note	0x90, 46, 62, 108, 13, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 60, 120, 85, 0
+	sq_note	0x90, 92, 62, 114, 35, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 64, 105, 14, 0
+	sq_note	0x90, 92, 64, 99, 13, 0
+	sq_beat
+	sq_note	0x90, 44, 64, 105, 13, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 109, 47, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 51, 62, 97, 12, 0
+	sq_beat
+	sq_note	0x90, 1, 62, 99, 14, 0
+	sq_note	0x90, 46, 62, 105, 14, 0
+	sq_note	0x90, 94, 62, 114, 40, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 60, 96, 12, 0
+	sq_note	0x90, 93, 60, 104, 13, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 104, 13, 0
+	sq_note	0x90, 91, 60, 111, 15, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 46, 60, 94, 12, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 102, 16, 0
+	sq_note	0x90, 47, 60, 100, 17, 0
+	sq_note	0x90, 95, 60, 112, 85, 0
+	sq_beat
+	sq_note	0x90, 95, 62, 112, 74, 0
+	sq_beat
+	sq_note	0x90, 94, 64, 116, 43, 0
+	sq_beat
+	sq_note	0x90, 52, 55, 104, 59, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 64, 118, 64, 0
+	sq_beat
+	sq_note	0x90, 36, 65, 111, 37, 0
+	sq_note	0x90, 94, 64, 118, 56, 0
+	sq_beat
+	.byte	0x90, 0x45, 0x3e, 0x66	; first 4 bytes of sq_note 0x90, 69, 62, 102, 55, 0 (split by a cell boundary)
+	seq_cell	0x80, 54, 0xffff	; cell 55: chain from cell 51, cell 5 of its chain
+	.byte	0x37, 0x00	; last 2 bytes of sq_note 0x90, 69, 62, 102, 55, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 36, 60, 105, 37, 0
+	sq_note	0x90, 91, 60, 95, 59, 0
+	sq_beat
+	sq_note	0x90, 67, 62, 108, 55, 0
+	sq_beat
+	sq_note	0x90, 39, 64, 114, 32, 0
+	sq_beat
+	sq_note	0x90, 2, 64, 108, 23, 0
+	sq_note	0x90, 25, 65, 92, 22, 0
+	sq_note	0x90, 37, 64, 87, 24, 0
+	sq_note	0x90, 57, 62, 94, 39, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 62, 116, 68, 0
+	sq_beat
+	sq_note	0x90, 31, 69, 116, 52, 0
+	sq_note	0x90, 93, 67, 123, 7, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 29, 0
+	.byte	0x81, 0x90, 0x18, 0x37, 0x11, 0x15, 0x00, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x90	; after the end of track
+	.byte	0x5b, 0x15, 0x24, 0x3b, 0x00, 0x81, 0x90, 0x59, 0x37, 0x41, 0x0c, 0x00, 0x81, 0x81, 0x90, 0x5d
+	.byte	0x37, 0x44, 0x30, 0x00, 0x81, 0x90, 0x2d, 0x39, 0x62, 0x1d, 0x00, 0x81, 0x90, 0x08, 0x39, 0x61
+	.byte	0x5d, 0x00, 0x81, 0x90, 0x26, 0x15, 0x18, 0x30, 0x00, 0x80, 0x15, 0x3b, 0x22, 0x09, 0x01, 0x81
+	.byte	0x90, 0x55, 0x39, 0x5a, 0x17, 0x00, 0x81, 0x90, 0x12, 0x35, 0x1d, 0x41, 0x00, 0x81, 0x90, 0x54
+	.byte	0x37, 0x60, 0x09, 0x00, 0x81, 0x81, 0x90, 0x59, 0x37, 0x61, 0x2e, 0x00, 0x81, 0x90, 0x24, 0x39
+	.byte	0x5d, 0x1c, 0x00, 0x81, 0x90, 0x08, 0x39, 0x69, 0x17, 0x00, 0x81, 0x90, 0x21
+	seq_cell	0x80, 0, 57	; cell 56: chain from cell 56, cell 1 of its chain
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 48, 89, 1, 2
+	sq_note	0x90, 87, 72, 68, 86, 23
+	sq_note	0x90, 88, 64, 67, 76, 1
+	sq_note	0x90, 88, 67, 78, 76, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 46, 80, 7, 2
+	sq_note	0x90, 83, 70, 59, 90, 1
+	sq_note	0x90, 83, 62, 72, 77, 1
+	sq_note	0x90, 84, 65, 79, 83, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 45, 59, 91, 1
+	sq_note	0x90, 88, 65, 78, 61, 1
+	sq_note	0x90, 89, 69, 75, 54, 1
+	sq_note	0x90, 90, 60, 68, 75, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 76, 60, 43, 93, 1
+	sq_note	0x90, 78, 67, 82, 91, 1
+	sq_note	0x90, 78, 43, 87, 6, 2
+	sq_note	0x90, 79, 62, 84, 84, 1
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x53, 0x30, 0x51	; first 4 bytes of sq_note 0x90, 83, 48, 81, 92, 1 (split by a cell boundary)
+	seq_cell	0x80, 56, 58	; cell 57: chain from cell 56, cell 2 of its chain
+	.byte	0x5c, 0x01	; last 2 bytes of sq_note 0x90, 83, 48, 81, 92, 1 (split by a cell boundary)
+	sq_note	0x90, 84, 60, 63, 76, 1
+	sq_note	0x90, 85, 64, 85, 79, 1
+	sq_note	0x90, 86, 67, 81, 81, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 46, 83, 91, 1
+	sq_note	0x90, 84, 70, 65, 78, 1
+	sq_note	0x90, 87, 62, 87, 78, 1
+	sq_note	0x90, 87, 65, 87, 82, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 45, 82, 88, 1
+	sq_note	0x90, 90, 65, 85, 72, 1
+	sq_note	0x90, 90, 60, 87, 74, 3
+	sq_note	0x90, 91, 69, 89, 69, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 43, 90, 94, 1
+	sq_note	0x90, 85, 67, 90, 79, 1
+	sq_note	0x90, 86, 62, 84, 73, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 48, 90, 90, 1
+	sq_note	0x90, 84, 64, 99, 76, 1
+	sq_note	0x90, 85, 60, 78, 74, 1
+	sq_note	0x90, 85, 67, 91, 81, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 46, 92, 11, 2
+	sq_note	0x90, 81, 70, 67, 88, 1
+	sq_note	0x90, 82, 65, 83, 89, 1
+	sq_note	0x90, 82, 62, 83, 85, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 45, 90, 1, 2
+	sq_note	0x90, 88, 69, 76, 68, 1
+	sq_note	0x90, 89, 65, 76, 67, 1
+	sq_note	0x90, 90, 60, 78, 61, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 43, 96, 8, 2
+	sq_note	0x90, 81, 67, 66, 87, 1
+	sq_note	0x90, 83, 62, 69, 71, 1
+	sq_note	0x90, 83, 64, 64, 28, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 67, 70, 11, 2
+	sq_note	0x90, 82, 60, 84, 73, 3
+	sq_note	0x90, 83, 48, 90, 2, 2
+	sq_note	0x90, 83, 64, 93, 78, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 45, 90, 94, 1
+	sq_note	0x90, 83, 69, 83, 87, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 76, 38, 88, 12, 2
+	sq_note	0x90, 77, 72, 73, 90, 1
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 77, 65, 79, 79, 1 (split by a cell boundary)
+	seq_cell	0x80, 57, 59	; cell 58: chain from cell 56, cell 3 of its chain
+	.byte	0x4d, 0x41, 0x4f, 0x4f, 0x01	; last 5 bytes of sq_note 0x90, 77, 65, 79, 79, 1 (split by a cell boundary)
+	sq_note	0x90, 78, 74, 86, 19, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 43, 94, 0, 2
+	sq_note	0x90, 81, 72, 83, 88, 0
+	sq_note	0x90, 83, 76, 87, 8, 1
+	sq_note	0x90, 83, 69, 85, 74, 0
+	sq_beat
+	sq_note	0x90, 80, 74, 78, 9, 1
+	sq_note	0x90, 80, 71, 80, 76, 0
+	sq_note	0x90, 81, 67, 90, 73, 0
+	sq_beat
+	sq_note	0x90, 80, 48, 89, 77, 0
+	sq_note	0x90, 81, 72, 71, 72, 0
+	sq_note	0x90, 82, 64, 85, 72, 0
+	sq_note	0x90, 82, 67, 90, 72, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 48, 98, 92, 1
+	sq_note	0x90, 88, 64, 73, 71, 1
+	sq_note	0x90, 88, 72, 75, 77, 15
+	sq_note	0x90, 88, 67, 89, 71, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 75, 46, 91, 11, 2
+	sq_note	0x90, 80, 70, 68, 73, 1
+	.byte	0x90, 0x51, 0x41, 0x5d	; first 4 bytes of sq_note 0x90, 81, 65, 93, 80, 1 (split by a cell boundary)
+	seq_cell	0x80, 58, 60	; cell 59: chain from cell 56, cell 4 of its chain
+	.byte	0x50, 0x01	; last 2 bytes of sq_note 0x90, 81, 65, 93, 80, 1 (split by a cell boundary)
+	sq_note	0x90, 82, 62, 86, 73, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 45, 89, 86, 1
+	sq_note	0x90, 79, 65, 75, 63, 1
+	sq_note	0x90, 80, 69, 71, 60, 1
+	sq_note	0x90, 80, 60, 66, 1, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 43, 85, 14, 2
+	sq_note	0x90, 74, 67, 89, 91, 1
+	sq_note	0x90, 75, 62, 81, 83, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 84, 67, 95, 79, 1
+	sq_note	0x90, 84, 64, 102, 76, 1
+	sq_note	0x90, 85, 48, 84, 84, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 79, 46, 91, 5, 2
+	sq_note	0x90, 84, 70, 67, 74, 1
+	sq_note	0x90, 85, 65, 90, 80, 1
+	sq_note	0x90, 85, 62, 95, 77, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 79, 45, 87, 82, 1
+	sq_note	0x90, 84, 69, 79, 57, 1
+	sq_note	0x90, 84, 65, 81, 55, 1
+	sq_note	0x90, 84, 60, 85, 67, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 75, 60, 72, 85, 1
+	sq_note	0x90, 76, 43, 87, 8, 2
+	sq_note	0x90, 77, 67, 93, 87, 1
+	sq_note	0x90, 77, 62, 84, 79, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 48, 93, 83, 1
+	sq_note	0x90, 88, 64, 102, 67, 1
+	sq_note	0x90, 89, 67, 99, 71, 1
+	sq_note	0x90, 90, 72, 96, 68, 7
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 46, 94, 79, 1
+	sq_note	0x90, 83, 62, 93, 75, 1
+	sq_note	0x90, 83, 70, 80, 78, 1
+	sq_note	0x90, 83, 65, 94, 75, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 77, 45, 90, 3, 2
+	sq_note	0x90, 82, 69, 83, 71, 1
+	sq_note	0x90, 82, 60, 90, 69, 3
+	sq_note	0x90, 82, 65, 93, 68, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 79, 43, 92, 1, 2
+	sq_note	0x90, 81, 67, 84, 76, 1
+	sq_note	0x90, 81, 62, 89, 70, 1
+	sq_beat
+	seq_cell	0x80, 59, 61	; cell 60: chain from cell 56, cell 5 of its chain
+	sq_beat
+	sq_note	0x90, 78, 67, 81, 6, 2
+	sq_note	0x90, 78, 48, 94, 0, 2
+	sq_note	0x90, 78, 60, 87, 83, 3
+	sq_note	0x90, 79, 64, 93, 74, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 45, 96, 2, 2
+	sq_note	0x90, 80, 69, 92, 88, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 76, 69, 52, 89, 1
+	sq_note	0x90, 79, 72, 89, 90, 1
+	sq_note	0x90, 79, 65, 93, 82, 1
+	sq_note	0x90, 80, 38, 89, 95, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 43, 93, 5, 2
+	sq_note	0x90, 84, 72, 90, 83, 0
+	sq_note	0x90, 84, 69, 96, 82, 0
+	sq_note	0x90, 85, 76, 95, 78, 0
+	sq_note	0x90, 86, 65, 94, 84, 0
+	sq_beat
+	sq_note	0x90, 84, 71, 87, 86, 0
+	sq_note	0x90, 85, 65, 81, 75, 0
+	sq_note	0x90, 85, 67, 98, 83, 0
+	sq_note	0x90, 85, 74, 85, 85, 0
+	sq_beat
+	sq_note	0x90, 82, 48, 94, 87, 0
+	sq_note	0x90, 87, 67, 96, 77, 0
+	sq_note	0x90, 87, 72, 86, 80, 0
+	sq_note	0x90, 88, 64, 100, 77, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 60, 69, 90, 5
+	sq_note	0x90, 81, 67, 79, 3, 2
+	sq_note	0x90, 82, 64, 81, 91, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 84, 69, 83, 89, 6
+	sq_beat
+	sq_beat
+	sq_note	0x90, 74, 65, 79, 12, 4
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x49, 0x3e, 0x4f	; first 4 bytes of sq_note 0x90, 73, 62, 79, 83, 1 (split by a cell boundary)
+	seq_cell	0x80, 60, 62	; cell 61: chain from cell 56, cell 6 of its chain
+	.byte	0x53, 0x01	; last 2 bytes of sq_note 0x90, 73, 62, 79, 83, 1 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 79, 60, 75, 4, 4
+	sq_note	0x90, 80, 64, 82, 82, 3
+	sq_beat
+	sq_note	0x90, 69, 67, 68, 18, 1
+	sq_beat
+	sq_note	0x90, 80, 69, 90, 94, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 65, 73, 20, 4
+	sq_note	0x90, 83, 62, 72, 90, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 67, 72, 14, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 60, 82, 68, 3
+	sq_note	0x90, 90, 64, 58, 88, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 69, 78, 77, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 77, 65, 78, 88, 3
+	sq_note	0x90, 80, 62, 66, 64, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 70, 67, 66, 12, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 71, 64, 72, 78, 3
+	sq_note	0x90, 73, 60, 83, 75, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 77, 69, 74, 70, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 77, 72, 62, 70, 1
+	sq_note	0x90, 78, 65, 69, 63, 1
+	sq_note	0x90, 80, 62, 66, 57, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 75, 55, 80, 95, 1
+	sq_note	0x90, 76, 72, 88, 95, 0
+	sq_note	0x90, 77, 69, 82, 65, 1
+	sq_note	0x90, 77, 76, 85, 11, 1
+	sq_beat
+	sq_note	0x90, 73, 74, 74, 70, 0
+	sq_beat
+	sq_note	0x90, 77, 60, 79, 78, 3
+	sq_note	0x90, 79, 67, 93, 12, 2
+	sq_note	0x90, 80, 64, 87, 83, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 69, 79, 89, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 65, 75, 69, 3
+	sq_note	0x90, 84, 62, 78, 66, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 75, 67, 78, 13, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 82, 64, 73, 3, 4
+	sq_note	0x90, 83, 60, 82, 77, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 69, 80, 91, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 65, 75, 81, 3
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 84, 62, 59, 70, 3 (split by a cell boundary)
+	seq_cell	0x80, 61, 63	; cell 62: chain from cell 56, cell 7 of its chain
+	.byte	0x54, 0x3e, 0x3b, 0x46, 0x03	; last 5 bytes of sq_note 0x90, 84, 62, 59, 70, 3 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 67, 79, 15, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 60, 78, 82, 3
+	sq_note	0x90, 81, 64, 84, 4, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 69, 79, 86, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 65, 69, 15, 4
+	sq_note	0x90, 86, 62, 63, 63, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 67, 78, 13, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 72, 72, 15, 7
+	sq_note	0x90, 74, 60, 84, 9, 2
+	sq_note	0x90, 76, 64, 72, 18, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 57, 60, 5, 2
+	sq_note	0x90, 78, 69, 71, 78, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 50, 75, 88, 1
+	sq_beat
+	sq_note	0x90, 11, 65, 59, 79, 1
+	sq_beat
+	sq_note	0x90, 77, 76, 76, 12, 1
+	sq_note	0x90, 77, 69, 78, 80, 0
+	sq_note	0x90, 77, 55, 87, 4, 2
+	sq_beat
+	sq_note	0x90, 79, 74, 74, 86, 0
+	sq_note	0x90, 81, 71, 72, 81, 0
+	sq_beat
+	sq_note	0x90, 85, 60, 73, 2, 2
+	sq_note	0x90, 85, 64, 70, 93, 3
+	sq_note	0x90, 86, 67, 86, 2, 2
+	sq_note	0x90, 87, 72, 81, 93, 6
+	sq_beat
+	sq_beat
+	sq_note	0x90, 82, 69, 78, 92, 3
+	sq_note	0x90, 84, 57, 84, 94, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 65, 81, 71, 3
+	sq_note	0x90, 82, 50, 81, 88, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 55, 82, 0, 2
+	sq_note	0x90, 75, 67, 90, 14, 4
+	sq_beat
+	sq_note	0x90, 75, 71, 86, 11, 1
+	sq_beat
+	sq_note	0x90, 75, 60, 72, 5, 2
+	sq_note	0x90, 78, 72, 84, 9, 7
+	sq_note	0x90, 81, 64, 83, 2, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 57, 89, 6, 2
+	sq_note	0x90, 82, 69, 78, 3, 4
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x52, 0x41, 0x56	; first 4 bytes of sq_note 0x90, 82, 65, 86, 75, 3 (split by a cell boundary)
+	seq_cell	0x80, 62, 64	; cell 63: chain from cell 56, cell 8 of its chain
+	.byte	0x4b, 0x03	; last 2 bytes of sq_note 0x90, 82, 65, 86, 75, 3 (split by a cell boundary)
+	sq_note	0x90, 82, 50, 79, 95, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 55, 90, 95, 1
+	sq_note	0x90, 80, 67, 87, 8, 4
+	sq_beat
+	sq_note	0x90, 79, 71, 93, 5, 1
+	sq_beat
+	sq_note	0x90, 81, 60, 78, 2, 2
+	sq_note	0x90, 84, 72, 71, 3, 7
+	sq_note	0x90, 85, 64, 84, 13, 4
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 57, 90, 95, 1
+	sq_note	0x90, 84, 69, 85, 94, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 50, 76, 94, 1
+	sq_note	0x90, 84, 65, 93, 72, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 55, 90, 6, 2
+	sq_note	0x90, 77, 67, 88, 5, 4
+	sq_beat
+	sq_note	0x90, 78, 71, 84, 7, 1
+	sq_beat
+	sq_note	0x90, 82, 60, 83, 92, 1
+	sq_note	0x90, 83, 72, 71, 72, 5
+	sq_note	0x90, 84, 64, 75, 64, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 77, 69, 75, 74, 3
+	sq_note	0x90, 82, 57, 41, 91, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 76, 50, 79, 90, 1
+	sq_note	0x90, 79, 65, 71, 79, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 73, 55, 87, 92, 1
+	sq_note	0x90, 74, 72, 80, 86, 0
+	sq_note	0x90, 75, 76, 74, 87, 0
+	sq_note	0x90, 75, 69, 87, 78, 0
+	sq_beat
+	sq_note	0x90, 75, 74, 76, 80, 0
+	sq_note	0x90, 75, 71, 80, 80, 0
+	sq_note	0x90, 76, 67, 87, 78, 0
+	sq_beat
+	sq_note	0x90, 83, 60, 79, 0, 2
+	sq_note	0x90, 85, 72, 75, 3, 7
+	sq_note	0x90, 85, 64, 75, 95, 3
+	sq_note	0x90, 86, 67, 81, 1, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 57, 86, 3, 2
+	sq_note	0x90, 82, 69, 80, 94, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 81, 50, 76, 0, 2
+	sq_note	0x90, 82, 65, 92, 67, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 79, 67, 90, 13, 4
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 80, 55, 86, 91, 1 (split by a cell boundary)
+	seq_cell	0x80, 63, 65	; cell 64: chain from cell 56, cell 9 of its chain
+	.byte	0x50, 0x37, 0x56, 0x5b, 0x01	; last 5 bytes of sq_note 0x90, 80, 55, 86, 91, 1 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 81, 71, 95, 8, 1
+	sq_beat
+	sq_note	0x90, 78, 60, 70, 10, 2
+	sq_note	0x90, 82, 72, 81, 11, 7
+	sq_note	0x90, 83, 64, 84, 84, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 57, 87, 1, 2
+	sq_note	0x90, 88, 69, 79, 92, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 50, 79, 92, 1
+	sq_note	0x90, 91, 65, 51, 65, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 55, 85, 90, 1
+	sq_note	0x90, 83, 67, 89, 4, 4
+	sq_beat
+	sq_note	0x90, 84, 71, 85, 2, 1
+	sq_beat
+	sq_note	0x90, 86, 60, 78, 90, 1
+	sq_note	0x90, 86, 72, 67, 6, 7
+	sq_note	0x90, 88, 64, 80, 82, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 83, 69, 75, 71, 3
+	sq_note	0x90, 83, 57, 85, 3, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 87, 50, 81, 88, 1
+	sq_note	0x90, 94, 65, 54, 66, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 67, 72, 12, 4
+	sq_note	0x90, 78, 55, 84, 4, 2
+	sq_beat
+	sq_note	0x90, 86, 71, 81, 1, 1
+	sq_beat
+	sq_note	0x90, 86, 72, 71, 78, 5
+	sq_note	0x90, 87, 60, 76, 91, 1
+	sq_note	0x90, 89, 64, 79, 68, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 85, 69, 83, 67, 3
+	sq_note	0x90, 86, 57, 83, 88, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 80, 50, 78, 95, 1
+	sq_note	0x90, 82, 65, 69, 87, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 78, 72, 75, 81, 0
+	sq_note	0x90, 79, 69, 83, 82, 0
+	sq_note	0x90, 81, 76, 81, 73, 0
+	sq_note	0x90, 82, 55, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 85, 67, 79, 65, 0
+	sq_note	0x90, 85, 71, 92, 69, 0
+	sq_note	0x90, 86, 74, 84, 62, 0
+	sq_note	0x90, 88, 55, 84, 62, 0
+	sq_beat
+	.byte	0x90, 0x56, 0x3c, 0x62	; first 4 bytes of sq_note 0x90, 86, 60, 98, 72, 0 (split by a cell boundary)
+	seq_cell	0x80, 64, 0xffff	; cell 65: chain from cell 56, cell 10 of its chain
+	.byte	0x48, 0x00	; last 2 bytes of sq_note 0x90, 86, 60, 98, 72, 0 (split by a cell boundary)
+	sq_note	0x90, 87, 72, 90, 73, 0
+	sq_note	0x90, 87, 67, 99, 71, 0
+	sq_note	0x90, 88, 64, 93, 70, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff, 0xff	; after the end of track
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff
+	.byte	0xff, 0xf7, 0xf7, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xb7, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	.byte	0xff, 0xf7, 0xbf, 0xff, 0xff, 0xff, 0xbf, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff
+	.byte	0xff, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xbf, 0xff
+	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 0xff, 0xff, 0xff, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	.byte	0xff, 0xf7, 0xbf, 0xff, 0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	.byte	0xff, 0xff, 0xbf, 0xff, 0xff, 0xff, 0xff
+	seq_cell	0x80, 0, 67	; cell 66: chain from cell 66, cell 1 of its chain
+	sq_ev	0xb4, 0, 26, 4, 2, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 60, 104, 54, 0
+	sq_beat
+	sq_note	0x90, 1, 60, 104, 63, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 60, 105, 45, 0
+	sq_note	0x90, 51, 62, 102, 52, 0
+	sq_beat
+	sq_note	0x90, 50, 62, 107, 58, 0
+	sq_beat
+	sq_note	0x90, 50, 60, 110, 21, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 114, 1, 1
+	sq_note	0x90, 95, 62, 108, 91, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 102, 59, 0
+	sq_beat
+	sq_note	0x90, 4, 60, 104, 62, 0
+	seq_cell	0x80, 66, 3	; cell 67: chain from cell 66, cell 2 of its chain
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 60, 102, 46, 0
+	sq_note	0x90, 51, 62, 99, 46, 0
+	sq_beat
+	sq_note	0x90, 50, 62, 106, 54, 0
+	sq_beat
+	sq_note	0x90, 47, 60, 103, 21, 0
+	sq_note	0x90, 94, 64, 107, 0, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 60, 106, 54, 0
+	sq_note	0x90, 95, 60, 106, 63, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 60, 107, 47, 0
+	sq_beat
+	sq_note	0x90, 47, 62, 103, 52, 0
+	sq_beat
+	sq_note	0x90, 45, 62, 104, 17, 0
+	sq_note	0x90, 93, 62, 104, 21, 0
+	sq_beat
+	sq_note	0x90, 46, 60, 102, 19, 0
+	sq_note	0x90, 93, 64, 105, 59, 0
+	sq_beat
+	sq_note	0x90, 92, 64, 106, 93, 0
+	sq_beat
+	sq_note	0x90, 92, 60, 104, 68, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 108, 53, 0
+	sq_beat
+	sq_note	0x90, 3, 60, 109, 57, 0
+	sq_beat
+	sq_note	0x90, 95, 60, 103, 45, 0
+	sq_beat
+	sq_note	0x90, 48, 62, 100, 53, 0
+	sq_beat
+	sq_note	0x90, 47, 62, 107, 65, 0
+	sq_beat
+	sq_note	0x90, 47, 60, 107, 21, 0
+	sq_note	0x90, 91, 64, 110, 10, 1
+	sq_beat
+	sq_note	0x90, 94, 62, 105, 83, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 102, 56, 0
+	sq_beat
+	sq_note	0x90, 95, 60, 106, 57, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 89, 60, 102, 54, 0
+	sq_beat
+	sq_note	0x90, 48, 62, 99, 48, 0
+	sq_beat
+	sq_note	0x90, 52, 62, 107, 65, 0
+	sq_beat
+	sq_note	0x90, 45, 60, 104, 38, 0
+	sq_note	0x90, 95, 64, 106, 94, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 60, 104, 54, 0
+	sq_note	0x90, 95, 60, 104, 58, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 88, 60, 106, 54, 0
+	sq_beat
+	sq_note	0x90, 47, 62, 100, 50, 0
+	sq_beat
+	.byte	0x90, 0x2a, 0x3e, 0x6d	; first 4 bytes of sq_note 0x90, 42, 62, 109, 21, 0 (split by a cell boundary)

@@ -2,5 +2,16 @@
 
 ; PAPAGEI.BMP -- 79810 bytes, clusters 938..1093.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_PAPAGEI_BMP:	.incbin	"ca5000w.img", 0x79200, 79810
+; A Windows BMP, 8 bpp.  The KN5000 writes and reads this form itself: CaptureLcd
+; (v10 0xfaf030) emits bfSize 0x13036 = 77,878 bytes (320 x 240, 256-entry palette) and
+; Gfx_LoadSplashBMP (v10 0xfae86d) loads it as the LCD wallpaper into Custom Data Flash
+; 0x3c0000 (technics-docs custom-data-flash.md).  Header fields as stored.
+; bfSize says 39905; the file is 79810 bytes.
+F_PAPAGEI_BMP_FileHeader:
+	bmp_file_header	39905, 0, 0, 1078
+F_PAPAGEI_BMP_InfoHeader:
+	bmp_info_header	323, 243, 1, 8, 0, 78732, 5866, 5866, 0, 0
+F_PAPAGEI_BMP_Palette:
+	.incbin	"PAPAGEI.bmp", 54, 1024	; palette: 256 BGR0 entries
+F_PAPAGEI_BMP_Pixels:
+	.incbin	"PAPAGEI.bmp", 1078, 78732	; pixels: 323 x 243, bottom-up rows

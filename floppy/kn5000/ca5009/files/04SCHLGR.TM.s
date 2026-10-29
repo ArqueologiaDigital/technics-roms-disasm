@@ -2,5 +2,135 @@
 
 ; 04SCHLGR.TM -- 29354 bytes, clusters 1294..1351.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04SCHLGR_TM:	.incbin	"ca5009.img", 0xa5a00, 29354
+; SOUND MEMORY, file type 4.  FileIO_SaveRegion4_VRAM (v10 0xf87e41) writes RAM
+; 0x1e0000, 0x72aa bytes, between PreTmSave and PostTmSave; at boot the firmware compares
+; the 16-byte header with "KN5000 SOUND RAM" and sends the image to sub-CPU 0x7800
+; (SendPartDataBlock_ClearByte4).  40 records of 470 bytes follow it, the size of the
+; Flash section-7 small slots (Flash_CopyBlocksToSlots), each opening with a 16-byte
+; name; then one record named like a drum kit.  [INFERENCE] the 40 are the sound
+; memories: their names are sound names.  No parameter byte is identified.
+F_04SCHLGR_TM_Header:
+	.ascii	"KN5000 SOUND RAM"	; checked at boot
+F_04SCHLGR_TM_Sound_1:
+	.ascii	"  Synth Vibes   "	; name
+	.incbin	"04SCHLGR.tm", 0x20, 454	; sound 1 parameters
+F_04SCHLGR_TM_Sound_2:
+	.ascii	"EchoTubularBells"	; name
+	.incbin	"04SCHLGR.tm", 0x1f6, 454	; sound 2 parameters
+F_04SCHLGR_TM_Sound_3:
+	.ascii	" Electric Clavi "	; name
+	.incbin	"04SCHLGR.tm", 0x3cc, 454	; sound 3 parameters
+F_04SCHLGR_TM_Sound_4:
+	.ascii	"  Steel Guitar  "	; name
+	.incbin	"04SCHLGR.tm", 0x5a2, 454	; sound 4 parameters
+F_04SCHLGR_TM_Sound_5:
+	.ascii	"   Echo Banjo   "	; name
+	.incbin	"04SCHLGR.tm", 0x778, 454	; sound 5 parameters
+F_04SCHLGR_TM_Sound_6:
+	.ascii	"  Steamy Keys   "	; name
+	.incbin	"04SCHLGR.tm", 0x94e, 454	; sound 6 parameters
+F_04SCHLGR_TM_Sound_7:
+	.ascii	"   Sweep Pad    "	; name
+	.incbin	"04SCHLGR.tm", 0xb24, 454	; sound 7 parameters
+F_04SCHLGR_TM_Sound_8:
+	.ascii	"    Sine Pad    "	; name
+	.incbin	"04SCHLGR.tm", 0xcfa, 454	; sound 8 parameters
+F_04SCHLGR_TM_Sound_9:
+	.ascii	"OrchestraStrings"	; name
+	.incbin	"04SCHLGR.tm", 0xed0, 454	; sound 9 parameters
+F_04SCHLGR_TM_Sound_10:
+	.ascii	" Magic Strings  "	; name
+	.incbin	"04SCHLGR.tm", 0x10a6, 454	; sound 10 parameters
+F_04SCHLGR_TM_Sound_11:
+	.ascii	" Brass & Flute  "	; name
+	.incbin	"04SCHLGR.tm", 0x127c, 454	; sound 11 parameters
+F_04SCHLGR_TM_Sound_12:
+	.ascii	"Wah Synth Brass "	; name
+	.incbin	"04SCHLGR.tm", 0x1452, 454	; sound 12 parameters
+F_04SCHLGR_TM_Sound_13:
+	.ascii	"  Synth Brass   "	; name
+	.incbin	"04SCHLGR.tm", 0x1628, 454	; sound 13 parameters
+F_04SCHLGR_TM_Sound_14:
+	.ascii	"  Accordion 1   "	; name
+	.incbin	"04SCHLGR.tm", 0x17fe, 454	; sound 14 parameters
+F_04SCHLGR_TM_Sound_15:
+	.ascii	"  Accordion 2   "	; name
+	.incbin	"04SCHLGR.tm", 0x19d4, 454	; sound 15 parameters
+F_04SCHLGR_TM_Sound_16:
+	.ascii	"    Synth 4     "	; name
+	.incbin	"04SCHLGR.tm", 0x1baa, 454	; sound 16 parameters
+F_04SCHLGR_TM_Sound_17:
+	.ascii	"    Sine Pad    "	; name
+	.incbin	"04SCHLGR.tm", 0x1d80, 454	; sound 17 parameters
+F_04SCHLGR_TM_Sound_18:
+	.ascii	"  Steel Guitar  "	; name
+	.incbin	"04SCHLGR.tm", 0x1f56, 454	; sound 18 parameters
+F_04SCHLGR_TM_Sound_19:
+	.ascii	"    Acoustic    "	; name
+	.incbin	"04SCHLGR.tm", 0x212c, 454	; sound 19 parameters
+F_04SCHLGR_TM_Sound_20:
+	.ascii	"    Electric    "	; name
+	.incbin	"04SCHLGR.tm", 0x2302, 454	; sound 20 parameters
+F_04SCHLGR_TM_Sound_21:
+	.ascii	"     Fidel      "	; name
+	.incbin	"04SCHLGR.tm", 0x24d8, 454	; sound 21 parameters
+F_04SCHLGR_TM_Sound_22:
+	.ascii	"   Akkordeon    "	; name
+	.incbin	"04SCHLGR.tm", 0x26ae, 454	; sound 22 parameters
+F_04SCHLGR_TM_Sound_23:
+	.ascii	" Electric Clavi "	; name
+	.incbin	"04SCHLGR.tm", 0x2884, 454	; sound 23 parameters
+F_04SCHLGR_TM_Sound_24:
+	.ascii	"   Special 3    "	; name
+	.incbin	"04SCHLGR.tm", 0x2a5a, 454	; sound 24 parameters
+F_04SCHLGR_TM_Sound_25:
+	.ascii	"   S.Brass12    "	; name
+	.incbin	"04SCHLGR.tm", 0x2c30, 454	; sound 25 parameters
+F_04SCHLGR_TM_Sound_26:
+	.ascii	"  Pipe Organ 4  "	; name
+	.incbin	"04SCHLGR.tm", 0x2e06, 454	; sound 26 parameters
+F_04SCHLGR_TM_Sound_27:
+	.ascii	"Clar & Akk & Vl "	; name
+	.incbin	"04SCHLGR.tm", 0x2fdc, 454	; sound 27 parameters
+F_04SCHLGR_TM_Sound_28:
+	.ascii	"Ob & Hpsc & Clar"	; name
+	.incbin	"04SCHLGR.tm", 0x31b2, 454	; sound 28 parameters
+F_04SCHLGR_TM_Sound_29:
+	.ascii	"      Gong      "	; name
+	.incbin	"04SCHLGR.tm", 0x3388, 454	; sound 29 parameters
+F_04SCHLGR_TM_Sound_30:
+	.ascii	"   Tom Repeat   "	; name
+	.incbin	"04SCHLGR.tm", 0x355e, 454	; sound 30 parameters
+F_04SCHLGR_TM_Sound_31:
+	.ascii	"  Smack Bass 2  "	; name
+	.incbin	"04SCHLGR.tm", 0x3734, 454	; sound 31 parameters
+F_04SCHLGR_TM_Sound_32:
+	.ascii	"  Wire Bass 2   "	; name
+	.incbin	"04SCHLGR.tm", 0x390a, 454	; sound 32 parameters
+F_04SCHLGR_TM_Sound_33:
+	.ascii	"   Moog Bass    "	; name
+	.incbin	"04SCHLGR.tm", 0x3ae0, 454	; sound 33 parameters
+F_04SCHLGR_TM_Sound_34:
+	.ascii	" Melodic Drums  "	; name
+	.incbin	"04SCHLGR.tm", 0x3cb6, 454	; sound 34 parameters
+F_04SCHLGR_TM_Sound_35:
+	.ascii	"     Space      "	; name
+	.incbin	"04SCHLGR.tm", 0x3e8c, 454	; sound 35 parameters
+F_04SCHLGR_TM_Sound_36:
+	.ascii	"      Gong      "	; name
+	.incbin	"04SCHLGR.tm", 0x4062, 454	; sound 36 parameters
+F_04SCHLGR_TM_Sound_37:
+	.ascii	" Roll Synth Tom "	; name
+	.incbin	"04SCHLGR.tm", 0x4238, 454	; sound 37 parameters
+F_04SCHLGR_TM_Sound_38:
+	.ascii	"  Multi Pitch   "	; name
+	.incbin	"04SCHLGR.tm", 0x440e, 454	; sound 38 parameters
+F_04SCHLGR_TM_Sound_39:
+	.ascii	"  Under Water   "	; name
+	.incbin	"04SCHLGR.tm", 0x45e4, 454	; sound 39 parameters
+F_04SCHLGR_TM_Sound_40:
+	.ascii	"   Halloween    "	; name
+	.incbin	"04SCHLGR.tm", 0x47ba, 454	; sound 40 parameters
+F_04SCHLGR_TM_Kit:
+	.ascii	"    CA - Kit    "	; name
+	.incbin	"04SCHLGR.tm", 0x4990, 10522	; kit record (10522 bytes)

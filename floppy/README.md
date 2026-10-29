@@ -126,7 +126,11 @@ uses it. `ctx` carries these fields:
 | `ctx.extracted` | the name of the file's own copy under `build/<model>/<disk>/` (on `-I`)         |
 | `ctx.disk`      | the disk name                                                                   |
 
-A unit must emit exactly `ctx.entry.size` bytes, and `disk.s` asserts that it does. Its macros go in
+A unit must emit exactly `ctx.entry.size` bytes, and `disk.s` asserts that it does. Prefer
+`.incbin "<ctx.extracted>", offset-in-file, n` to `.incbin "<ctx.ref>", ctx.offset + ..., n`:
+llvm-mc reads the named file once per `.incbin`, so a unit with thousands of them is several
+times faster against the file's own copy than against the whole image. Its offsets are also the
+file's own. Its macros go in
 `<model>/include/*.inc` (or in `tools/` when they are not model-specific). Each one has a header
 naming the firmware routine that reads the structure. A module may also set `BOOT_NOTE`, a list of
 comment lines put at the top of every `boot.s`, to say which firmware routine writes that boot
