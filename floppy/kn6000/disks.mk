@@ -25,3 +25,10 @@ kn6000_SHA1_ca6fp04 := 971cfee255fda6869e6a91ad40e9214d98c436a8
 kn6000_SHA1_ca6tm01 := 49f83a36387d1136300dfba3d2410ea140a46c59
 kn6000_SHA1_ca6tm02 := d819cdd2f77197f4b4417a4e72356697200c94fb
 kn6000_SHA1_scd6000 := c2c284e38b59bcbc3ac6d6aead515881bbc1d12e
+
+# The .TM records are content-addressed include files shared by every disk (floppy/tools/kd/
+# kn_soundram.py): start each regeneration from an empty directory so none is left stale.
+src-kn6000: | kn6000-tm-clean
+.PHONY: kn6000-tm-clean
+kn6000-tm-clean:
+	rm -rf -- kn6000/include/tm
