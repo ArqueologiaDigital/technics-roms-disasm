@@ -79,14 +79,16 @@ dialogs, then for each one:
 
 ## Tools
 
-| script                                             | job                                                                                                                                                               | run                                                                             |
-|----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| `scripts/converters/hdae5000_ui_tree.py`           | wrote the tree, the macro file, the tables, the state-block labels and the RAM records from the ROM; idempotent on the built tree; refuses on any layout surprise | `python3 scripts/converters/hdae5000_ui_tree.py v2_06i v2_01i --macros --write` |
-| `scripts/analysis/hdae5000_menu_map.py`            | the menu maps, from the source; `--check` is in `make gate`                                                                                                       | `make hdae5000-menu-map`                                                        |
-| `scripts/analysis/hdae5000_gui_readability.py`     | the readability census (below); reads either source form, `--rev` for a past revision                                                                             | `python3 scripts/analysis/hdae5000_gui_readability.py [--rev REV]`              |
-| `scripts/analysis/hdae5000_obj_constants_check.py` | every `HDAE5000_OBJ_*` (from the ELF) against the reference image's name table; in `make gate`, rewritten for the tree                                            | `python3 scripts/analysis/hdae5000_obj_constants_check.py`                      |
-| `probes/tree_preorder.py`                          | ROM-only proof that the nesting is lossless                                                                                                                       | see `probes/README.md`                                                          |
-| `probes/editsw_geometry.py`                        | geometric cross-check of the `ES_*` switch names                                                                                                                  | see `probes/README.md`                                                          |
+| script                                                      | job                                                                                                                                                               | run                                                                             |
+|-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `scripts/converters/hdae5000_ui_tree.py`                    | wrote the tree, the macro file, the tables, the state-block labels and the RAM records from the ROM; idempotent on the built tree; refuses on any layout surprise | `python3 scripts/converters/hdae5000_ui_tree.py v2_06i v2_01i --macros --write` |
+| `scripts/analysis/hdae5000_menu_map.py`                     | the menu maps, from the source; `--check` is in `make gate`                                                                                                       | `make hdae5000-menu-map`                                                        |
+| `scripts/analysis/hdae5000_gui_readability.py`              | the readability census (below); reads either source form, `--rev` for a past revision                                                                             | `python3 scripts/analysis/hdae5000_gui_readability.py [--rev REV]`              |
+| `scripts/analysis/hdae5000_obj_constants_check.py`          | every `HDAE5000_OBJ_*` (from the ELF) against the reference image's name table; in `make gate`, rewritten for the tree                                            | `python3 scripts/analysis/hdae5000_obj_constants_check.py`                      |
+| `scripts/converters/hdae5000_ram_image_refs.py`             | code operands into the copied .data image (the registration's tables, version bytes, buffers) as `HDAE5000_RAM_<label>`; refuses unless each equals its number    | `python3 scripts/converters/hdae5000_ram_image_refs.py [--write]`               |
+| `scripts/generators/gen_naka_gui_headers.py` (gui-kn5000's) | also writes `hdae5000/shared/naka_values.s`, the `.equ` twins of the C value names; `--check` in `make gate`                                                      | `python3 scripts/generators/gen_naka_gui_headers.py [--check]`                  |
+| `probes/tree_preorder.py`                                   | ROM-only proof that the nesting is lossless                                                                                                                       | see `probes/README.md`                                                          |
+| `probes/editsw_geometry.py`                                 | geometric cross-check of the `ES_*` switch names                                                                                                                  | see `probes/README.md`                                                          |
 
 `scripts/tools/port_hdae5000_version.py uitables <ver>` now runs the converter. The retired
 `scripts/generators/gen_hdae5000_ui_pool.py` wrote the previous form, typed records with numeric
@@ -162,49 +164,61 @@ each are the generated images. This lane added no `.incbin`.
 
 ## Conventions shared with the other GUI lanes
 
-By its commit ff38e293f, the main-CPU lane (gui-kn5000) writes its C records with the same model:
+The main-CPU lane (gui-kn5000) writes its C records with the same model:
 
-- one type per NAKA class, the propname fields;
+- one type per NAKA class, with the propname fields;
 - `NAKA_XYWH` geometry;
 - links named, with the table in preorder;
-- the firmware's own value names (`CL_*`, `ES_*`, ...).
+- the firmware's own value names.
 
-This lane's assembler form follows it:
+Since the follow-up (2026-10-29, after both lanes merged), the value names come from **one
+generator**. `scripts/generators/gen_naka_gui_headers.py` writes the C `#define`s in
+`v10/maincpu/ui_widgets/naka_classes.h`, with copies for v9/v7/v6/v5. It also writes their `.equ`
+twins in `hdae5000/shared/naka_values.s`, in the same pass from the same v10 tables, and `--check`
+(in `make gate`) covers both. The twins cover:
 
-- class macros named by the class;
-- the same field names;
-- `x, y, w, h`;
-- the same value names, read the same way from the same table;
-- `NAKA_NONE` (0xFFFF) for a missing link.
+- the `CF_*`, `VF_*`, `CL_*`, `BD_*`, `AL_*`, `ES_*`, `SS_*`, `LM_*`, `FR_*`, `PT_*`, `TR_*`, `IT_*`
+  and `idu*` value names;
+- fonts `idCHARA*`, bitmaps and icons `idICON_*`;
+- `NAKA_NONE` (0xFFFF, a missing link) and `NAKA_NO_OBJECT` (0xFFFFFFFF, an object-id field
+  naming no object), now `#define`d on the C side too.
 
-`NAKA_NO_OBJECT` (0xFFFFFFFF) is this lane's name for an empty object-id field. The C side spells it
-otherwise, and one shared name would be better. A shared assembler include of the value names
-(`.equ` twins of `naka_classes.h`'s `#define`s) would let `naka_ui_macros.s` drop its guarded copies:
-
-- the `.ifndef`-guarded value names;
-- the `NAKA_CLASS_*` constants that `shared/event_codes.s` lacks.
-
-That is proposed, not done: the main-CPU header is theirs.
+`naka_ui_macros.s` includes the file instead of keeping its own guarded copies. Only the
+`NAKA_CLASS_*` constants that `shared/event_codes.s` lacks are still defined there.
 
 ## Open questions
 
-1. **Button texts.** The 122 `AcLanguageText1` objects draw entry `index` of a language text.
-   `NAKA_APFUNC_LanguageTextReturn` (`HDAE5000_LanguageTextReturn`) answers `EVT_GET_LANGUAGE_PTR` with
-   `HDAE5000_TextPtrs_LANENG001_to_LANENG006`. That table holds six resource names (`LANENG001`,
-   `LANDEU002`, `LANFRA003` ...), not texts.
-   - The texts themselves are not in this ROM. Where the main CPU loads `LANxxxnnn` from is not traced.
-   - Until it is, many buttons show as `text #n` and their names fall back to the destination they open.
+1. **Button texts (resolved in the follow-up).** The texts are in this ROM. `HDAE5000_AcLanguageText1Proc`
+   draws message `index` of its own switch (`HDAE5000_LangText_CaseTable`: index 1-67 and 200-212),
+   using the strings `HDAE5000_LangMsg_<n>_EN`, `_DE` and `_FR`.
+   - The function `NAKA_APFUNC_LanguageTextReturn` returns `LANENG001` / `LANDEU002` / `LANFRA003` ....
+     These are language tags, of which the proc compares the first 8 characters, not resource names.
+   - Every AcLanguageText1 object of both versions has a message (122 in v2.06i, 116 in v2.01i).
+   - Each tree line now ends in `; EN "<text>"`, and the menu map shows the text.
+   - The generated names come from the texts (`HDDMENU_COPY_FD_TO_HARD_DISK`, `<button>_Text`).
 2. **Fonts / icons.** These are named by their dump names (`idCHARA1`, `idICON_i129`), which are
    the firmware's own but terse. What each icon looks like is not in this lane's notes.
-3. **Handles in the state block.** Some 8-byte state variables (`SelectList.str_adr` and others) start
-   with words 0x0070xxxx.
-   - [INFERENCE] These are run-time handles. No code of this ROM names them.
-4. **Registration code.** `HDAE5000_Handler_Registration` still loads the RAM tables by number, for
-   example `lda xwa, (0x2397ea:24)`.
-   - The `.equ` names of some of them are misnomers. In `hdae5000_ui_display.s`,
-     `HDAE5000_RAM_DATA_A_SIZE` = 0x239822 is the ResEvent count and `HDAE5000_SERIAL_DATA_1` =
-     0x239872 is the Function table.
-   - This is code, not GUI data, so it was left for a code lane.
+3. **The 0x0070xxxx words in the state block (explained in the follow-up).** They are the initial
+   values of 29 of the 31 `SelectList.str_adr` variables, which are 4 bytes each, not the "8-byte
+   records" an older note described. They are inert. Measured with `probes/str_adr_initial_values.py`:
+   - `HDAE5000_SelectListProc` draws only while the list's `en_paradraw` variable is 1, and all 31
+     start at 0;
+   - a screen enables its list and gives it its row strings with `EVT_HDAE_SET_STR_ADR`, which stores
+     into `str_adr`;
+   - between v2.01i and v2.06i the values move by 680-684 bytes for 16 lists and stay the same for
+     the other 15.
+
+   [INFERENCE] They are link-time addresses of another build or memory configuration. No consistent
+   base maps them onto this ROM's labels, its RAM symbols or any HD-AE5000 dump's strings. The main
+   CPU's IC14 rhythm ROM, which sits at 0x400000-0x7FFFFF, holds sample data rather than such tables.
+   The state block marks each one `; inert: ...`.
+4. **Registration code (resolved in the follow-up).** `HDAE5000_Handler_Registration`'s eleven tables
+   are now spelled `HDAE5000_RAM_<label>`, the RAM copies of the `hdae5000_init_data.s` labels, defined
+   from them at the end of that file. Its two object counts are `HDAE5000_UI_OBJECT_COUNT`.
+   - `scripts/converters/hdae5000_ram_image_refs.py` does the same for every other code operand that
+     lands in the copied image: version bytes and name and lyric buffers, 45 lines and 16 names per tree.
+   - The unused, misnamed `.equ`s are gone (`HDAE5000_RAM_DATA_A_SIZE` = the ResEvent count ...). In
+     v2.01i they had kept v2.06i's values.
 5. **C.** The GUI brief assumes the HD-AE5000 tree already compiles C. It does not. Its 10 generated
    includes are the PNG-built images (`scripts/build/hdae5000_images.py`).
    - Assembler macros were used instead. They let the tree compute its links from the nesting, which
@@ -215,10 +229,11 @@ That is proposed, not done: the main-CPU header is theirs.
 ## Shared files touched
 
 - `Makefile`: `make gate` runs `hdae5000_menu_map.py --check`, and a new target `hdae5000-menu-map`
-  was added. Two small blocks.
-- `CLAUDE.md` was **not** edited. Its symbol table now understates two rows: `hdae5000` went from
-  5,298 to 7,197 symbols and `hdae5000_v2_01i` from 5,209 to 7,099. Both counts come from
-  `l2_symbol_reference.py --regen`, and the integrator should update them.
+  was added.
+- `scripts/analysis/data_range_census.py`: the `census: data` declaration on a `.macro` line.
+- In the follow-up:
+  - `scripts/generators/gen_naka_gui_headers.py` now also writes `hdae5000/shared/naka_values.s`;
+  - `naka_classes.h` in all five trees gained `NAKA_NO_OBJECT` and one comment line.
 
 ## Website page draft
 

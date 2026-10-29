@@ -118,19 +118,19 @@
 		AcScreenMenu	HDDMENU_SETUP_TOOLS, x=8, y=72, w=149, h=26, editsw=ES_Left2, selected=HdaeUiVar_HDDMENU_SETUP_TOOLS_selected, screen=HDAE5000_OBJ_SETUPS_TOOLS, icon=idICON_i6, str="SETUP & TOOLS  "
 		AcScreenMenu	HDDMENU_Go_LOAD_BY_NUM, x=163, y=114, w=149, h=26, editsw=ES_Right3, selected=HdaeUiVar_HDDMENU_Go_LOAD_BY_NUM_selected, screen=HDAE5000_OBJ_LOAD_BY_NUM, icon=idICON_i172, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_Go_LOAD_BY_NUM_Text6, x=170, y=114, w=112, h=32, index=6, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2
+			AcLanguageText1	HDDMENU_Go_LOAD_BY_NUM_Text, x=170, y=114, w=112, h=32, index=6, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2	; EN "LOAD BY     NUMBER"
 		ui_endsub
 		AcScreenMenu	HDDMENU_Go_FLS_SELECT, x=163, y=156, w=149, h=26, align=AL_RightJustify, editsw=ES_Right4, selected=HdaeUiVar_HDDMENU_Go_FLS_SELECT_selected, screen=HDAE5000_OBJ_FLS_SELECT, icon=idICON_i173, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_Go_FLS_SELECT_Text7, x=170, y=156, w=112, h=32, index=7, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2
+			AcLanguageText1	HDDMENU_Go_FLS_SELECT_Text, x=170, y=156, w=112, h=32, index=7, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2	; EN "SELECT FILE LOAD SCRIPT"
 		ui_endsub
-		AcScreenMenu	HDDMENU_AcScreenMenu, x=8, y=114, w=149, h=26, editsw=ES_Left3, selected=HdaeUiVar_HDDMENU_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=idICON_i113, str=""
+		AcScreenMenu	HDDMENU_COPY_FD_TO_HARD_DISK, x=8, y=114, w=149, h=26, editsw=ES_Left3, selected=HdaeUiVar_HDDMENU_COPY_FD_TO_HARD_DISK_selected, screen=NAKA_NO_OBJECT, icon=idICON_i113, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_AcScreenMenu_Text3, x=36, y=114, w=125, h=32, index=3, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2
+			AcLanguageText1	HDDMENU_COPY_FD_TO_HARD_DISK_Text, x=36, y=114, w=125, h=32, index=3, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2	; EN "COPY FD TO HARD DISK"
 		ui_endsub
 		AcScreenMenu	HDDMENU_Go_OUTPUT_SETTING, x=8, y=156, w=149, h=26, editsw=ES_Left4, selected=HdaeUiVar_HDDMENU_Go_OUTPUT_SETTING_selected, screen=HDAE5000_OBJ_OUTPUT_SETTING, icon=idICON_i31, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_Go_OUTPUT_SETTING_Text4, x=36, y=156, w=125, h=32, index=4, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	HDDMENU_Go_OUTPUT_SETTING_Text, x=36, y=156, w=125, h=32, index=4, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "OUTPUT SETTING"
 		ui_endsub
 		SelectList	HARD_DISK_OPT, x=8, y=188, w=302, h=50, color=CL_WallPattern, index=100, str_adr=HdaeUiVar_HARD_DISK_OPT_str_adr, row=3, sel_num=HdaeUiVar_HARD_DISK_OPT_sel_num, en_paradraw=HdaeUiVar_HARD_DISK_OPT_en_paradraw
 		IvCatchEvent	HDDMENU_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_HdTitleEventCatch
@@ -138,12 +138,12 @@
 		VwUserBitmap	HDDMENU_VwUserBitmap, x=93, y=1, w=27, h=27
 		AcScreenMenu	HDDMENU_Go_SELECT_DIR, x=163, y=72, w=149, h=26, align=AL_LeftJustify, editsw=ES_Right2, selected=HdaeUiVar_HDDMENU_Go_SELECT_DIR_selected, screen=HDAE5000_OBJ_SELECT_DIR, icon=idICON_i171, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_Go_SELECT_DIR_Text5, x=170, y=72, w=112, h=32, index=5, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2
+			AcLanguageText1	HDDMENU_Go_SELECT_DIR_Text, x=170, y=72, w=112, h=32, index=5, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2	; EN "SELECT BY   NAME    "
 		ui_endsub
-		AcLanguageText1	HDDMENU_Text62, x=40, y=40, w=240, h=18, index=62, font=idCHARA1W, fontcolor=CL_Text, lines=1
+		AcLanguageText1	HDDMENU_Evaluation_01_01_99, x=40, y=40, w=240, h=18, index=62, font=idCHARA1W, fontcolor=CL_Text, lines=1	; EN "Evaluation 01-01-99"
 		AcScreenMenu	HDDMENU_Go_Tech_lyrics, x=310, y=30, w=5, h=26, align=AL_LeftJustify, editsw=ES_Right1, selected=HdaeUiVar_HDDMENU_Go_Tech_lyrics_selected, screen=HDAE5000_OBJ_Tech_lyrics, icon=idICON_None, str=""
 		ui_sub
-			AcLanguageText1	HDDMENU_Go_Tech_lyrics_Text5, x=170, y=72, w=112, h=32, index=5, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2
+			AcLanguageText1	HDDMENU_Go_Tech_lyrics_Text, x=170, y=72, w=112, h=32, index=5, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=2	; EN "SELECT BY   NAME    "
 		ui_endsub
 		TextBox	HDDMENU_LYRIC_WINDOW, x=273, y=34, w=46, h=20, color=CL_Transparent, border=BD_None, font=idCHARA4, fontcolor=CL_LightGreen, alignment=AL_LeftJustify, lines=2, text="LYRIC WINDOW"
 	ui_endsub
@@ -362,15 +362,15 @@
 			VwUserBitmap	SETUP_TOOLS_P1_PC_DATA_LINK_VwUserBitmap, x=283, y=155, w=27, h=27
 		ui_endsub
 		AcIndexWideES	SETUP_TOOLS_P1_AcIndexWideES, x=244, y=216, w=72, h=23, index=0, editsw=ES_Bottom7, editsw2=ES_Bottom8
-		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox, x=8, y=72, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left2, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_selected, func=NAKA_APFUNC_WriteProtectEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_data, caption=""
+		AcRamEditBox	SETUP_TOOLS_P1_WRITE_PROTECT, x=8, y=72, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left2, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_WRITE_PROTECT_selected, func=NAKA_APFUNC_WriteProtectEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_WRITE_PROTECT_data, caption=""
 		ui_sub
-			AcLanguageText1	SETUP_TOOLS_P1_AcRamEditBox_Text8, x=8, y=72, w=121, h=32, index=8, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	SETUP_TOOLS_P1_WRITE_PROTECT_Text, x=8, y=72, w=121, h=32, index=8, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "WRITE PROTECT: "
 		ui_endsub
 		AcRamEditBox	SETUP_TOOLS_P1_QUICK_LD_MODE, x=8, y=156, w=149, h=26, index=0, length=2, editsw=ES_Left4, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_selected, func=NAKA_APFUNC_QuickLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_data, caption="QUICK LD MODE:"
 		AcRamEditBox	SETUP_TOOLS_P1_JUMP_AFTER_LD, x=163, y=72, w=149, h=26, index=0, length=2, editsw=ES_Right2, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_selected, func=NAKA_APFUNC_JumpAfterLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_data, caption="JUMP AFTER LD.:"
-		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox_2, x=8, y=114, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left3, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_selected, func=NAKA_APFUNC_WriteConfirmEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_data, caption=""
+		AcRamEditBox	SETUP_TOOLS_P1_WRITE_CONFIRM, x=8, y=114, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left3, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_WRITE_CONFIRM_selected, func=NAKA_APFUNC_WriteConfirmEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_WRITE_CONFIRM_data, caption=""
 		ui_sub
-			AcLanguageText1	SETUP_TOOLS_P1_AcRamEditBox_2_Text9, x=8, y=114, w=121, h=32, index=9, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	SETUP_TOOLS_P1_WRITE_CONFIRM_Text, x=8, y=114, w=121, h=32, index=9, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "WRITE CONFIRM: "
 		ui_endsub
 		AcRamEditBox	SETUP_TOOLS_P1_LD_BY_NUM_M, x=8, y=198, w=149, h=26, index=0, length=2, editsw=ES_Left5, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_selected, func=NAKA_APFUNC_LoadByNumberModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_data, caption="LD BY NUM. M.:"
 		AcScreenMenu	SETUP_TOOLS_P1_LYRIC_SETTINGS, x=163, y=114, w=149, h=26, editsw=ES_Right3, selected=HdaeUiVar_SETUP_TOOLS_P1_LYRIC_SETTINGS_selected, screen=HDAE5000_OBJ_LyrSettings, icon=idICON_i129, str="LYRIC SETTINGS"
@@ -385,9 +385,9 @@
 ; -----------------------------------------------------------------------------
 	Window	SETUP_TOOLS_P2, x=60, y=84, w=200, h=48, color=CL_Transparent, border=BD_None, parent=HdaeUiVar_SETUP_TOOLS_P2_parent, child=HdaeUiVar_SETUP_TOOLS_P2_child
 	ui_sub
-		AcScreenMenu	SETUP_TOOLS_P2_AcScreenMenu, x=8, y=198, w=120, h=26, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Left5, selected=HdaeUiVar_SETUP_TOOLS_P2_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=idICON_None, str=""
+		AcScreenMenu	SETUP_TOOLS_P2_SAVE_SETUP, x=8, y=198, w=120, h=26, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Left5, selected=HdaeUiVar_SETUP_TOOLS_P2_SAVE_SETUP_selected, screen=NAKA_NO_OBJECT, icon=idICON_None, str=""
 		ui_sub
-			AcLanguageText1	SETUP_TOOLS_P2_AcScreenMenu_Text11, x=6, y=198, w=124, h=32, index=11, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	SETUP_TOOLS_P2_SAVE_SETUP_Text, x=6, y=198, w=124, h=32, index=11, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "SAVE SETUP"
 		ui_endsub
 		AcScreenMenu	SETUP_TOOLS_P2_HD_AE_INFOS, x=163, y=198, w=149, h=26, editsw=ES_Right5, selected=HdaeUiVar_SETUP_TOOLS_P2_HD_AE_INFOS_selected, screen=NAKA_NO_OBJECT, icon=idICON_Default, str="HD-AE INFOS  "
 		ui_sub
@@ -402,7 +402,7 @@
 		AcScreenMenu	SETUP_TOOLS_P2_Go_ABOUT_HELP, x=163, y=156, w=149, h=26, editsw=ES_Right4, selected=HdaeUiVar_SETUP_TOOLS_P2_Go_ABOUT_HELP_selected, screen=HDAE5000_OBJ_ABOUT_HELP, icon=idICON_Default, str=""
 		ui_sub
 			VwUserBitmap	SETUP_TOOLS_P2_Go_ABOUT_HELP_VwUserBitmap, x=283, y=155, w=27, h=27
-			AcLanguageText1	SETUP_TOOLS_P2_Go_ABOUT_HELP_Text10, x=169, y=156, w=125, h=32, index=10, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	SETUP_TOOLS_P2_Go_ABOUT_HELP_Text, x=169, y=156, w=125, h=32, index=10, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "ABOUT & HELP "
 		ui_endsub
 	ui_endsub
 
@@ -417,10 +417,10 @@
 		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox, x=12, y=72, w=300, h=26, index=0, align=AL_RightJustify, length=16, editsw=ES_Left2, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_selected, func=NAKA_APFUNC_SeparateOutputModeCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_data, caption=""
 		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_2, x=12, y=114, w=300, h=26, index=0, align=AL_RightJustify, length=6, editsw=ES_Left3, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_selected, func=NAKA_APFUNC_SeparateDrumPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_data, caption=""
 		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_3, x=12, y=156, w=300, h=26, index=0, align=AL_RightJustify, length=6, editsw=ES_Left4, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_selected, func=NAKA_APFUNC_SeparateBassPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_data, caption=""
-		AcLanguageText1	OUTPUT_SETTING_Text13, x=12, y=72, w=190, h=32, index=13, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
-		AcLanguageText1	OUTPUT_SETTING_Text14, x=12, y=114, w=252, h=32, index=14, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
-		AcLanguageText1	OUTPUT_SETTING_Text15, x=12, y=156, w=252, h=32, index=15, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
-		AcLanguageText1	OUTPUT_SETTING_Text16, x=6, y=184, w=225, h=54, index=16, font=idCHARA1W, fontcolor=CL_Text, alignment=AL_LeftJustify, lines=3
+		AcLanguageText1	OUTPUT_SETTING_SEPARATE_OUTPUT_MODE, x=12, y=72, w=190, h=32, index=13, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "SEPARATE OUTPUT MODE:"
+		AcLanguageText1	OUTPUT_SETTING_PART_SELECT_FOR_SEQ_DRUM, x=12, y=114, w=252, h=32, index=14, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "PART SELECT FOR SEQ.DRUMS OUT:"
+		AcLanguageText1	OUTPUT_SETTING_PART_SELECT_FOR_SEQ_BASS, x=12, y=156, w=252, h=32, index=15, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "PART SELECT FOR SEQ.BASS  OUT:"
+		AcLanguageText1	OUTPUT_SETTING_The_separate_outputs_can, x=6, y=184, w=225, h=54, index=16, font=idCHARA1W, fontcolor=CL_Text, alignment=AL_LeftJustify, lines=3	; EN "! The separate outputs cannot be controlled by the internal volume control."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -473,7 +473,7 @@
 		SelectList	LBN_FILENAME_BOX, x=34, y=68, w=216, h=22, color=CL_WallPattern, index=100, font=idCHARA1, fontcolor=CL_Selected, str_adr=HdaeUiVar_LBN_FILENAME_BOX_str_adr, row=1, sel_num=HdaeUiVar_LBN_FILENAME_BOX_sel_num, en_paradraw=HdaeUiVar_LBN_FILENAME_BOX_en_paradraw
 		IvCatchEvent	LBN_P1_IvCatchEvent, x=0, y=96, w=32, h=32, func=NAKA_APFUNC_LBNPage1SwCatch
 		AcIndexWideES	LBN_P1_AcIndexWideES, x=204, y=221, w=112, h=19, index=0xffff, editsw=ES_Bottom6, editsw2=ES_Bottom8
-		AcLanguageText1	LBN_P1_Text21, x=2, y=116, w=210, h=54, index=21, font=idCHARA1W, fontcolor=CL_Text, alignment=AL_LeftJustify, lines=3
+		AcLanguageText1	LBN_P1_Press_3_digits_for_direc, x=2, y=116, w=210, h=54, index=21, font=idCHARA1W, fontcolor=CL_Text, alignment=AL_LeftJustify, lines=3	; EN "Press 3 digits for directory and 2 digits for the file."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1008,19 +1008,19 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	ATTEN_DEL_DIR, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_DIR_window, icon=idICON_None, title=""
 	ui_sub
-		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_DIR_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_DIR_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_DIR_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
+		VwWideESBox	ATTEN_DEL_DIR_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_DIR_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_DIR_NO_Text, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 		ui_endsub
 		IvCatchEvent	ATTEN_DEL_DIR_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenDelDirSwCatch
-		AcLanguageText1	ATTEN_DEL_DIR_Text210, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4
+		AcLanguageText1	ATTEN_DEL_DIR_ATTENTION, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4	; EN "!ATTENTION!"
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_DIR_Text210_Text211, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3
-			AcLanguageText1	ATTEN_DEL_DIR_Text210_Text1, x=44, y=108, w=232, h=48, index=1, font=idCHARA1W, fontcolor=CL_FireRed, lines=3
+			AcLanguageText1	ATTEN_DEL_DIR_ATTENTION_Press_YES_for_confirmati, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
+			AcLanguageText1	ATTEN_DEL_DIR_ATTENTION_Would_you_really_delete_, x=44, y=108, w=232, h=48, index=1, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "Would you really delete the selected directory?"
 		ui_endsub
 	ui_endsub
 
@@ -1043,13 +1043,13 @@
 		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		IvCatchEvent	ATTEN_DEL_FILE_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenDelFileSwCatch
 		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
-		AcLanguageText1	ATTEN_DEL_FILE_Text210, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4
+		AcLanguageText1	ATTEN_DEL_FILE_ATTENTION, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4	; EN "!ATTENTION!"
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FILE_Text210_Text211, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3
-			AcLanguageText1	ATTEN_DEL_FILE_Text210_Text2, x=44, y=108, w=232, h=48, index=2, font=idCHARA1W, fontcolor=CL_FireRed, lines=3
+			AcLanguageText1	ATTEN_DEL_FILE_ATTENTION_Press_YES_for_confirmati, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
+			AcLanguageText1	ATTEN_DEL_FILE_ATTENTION_Would_you_really_delete_, x=44, y=108, w=232, h=48, index=2, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "Would you really delete the selected title?"
 		ui_endsub
-		AcLanguageText1	ATTEN_DEL_FILE_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ATTEN_DEL_FILE_Text201, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1
+		AcLanguageText1	ATTEN_DEL_FILE_YES, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
+		AcLanguageText1	ATTEN_DEL_FILE_NO, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1059,18 +1059,18 @@
 	TtlScreenR	ATTEN_OVER_FLS, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_OVER_FLS_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_OVER_FLS_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsOverWrSwCatch
-		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_OVER_FLS_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_OVER_FLS_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_OVER_FLS_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
+		VwWideESBox	ATTEN_OVER_FLS_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_OVER_FLS_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_OVER_FLS_NO_Text, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 		ui_endsub
-		AcLanguageText1	ATTEN_OVER_FLS_Text210, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4
+		AcLanguageText1	ATTEN_OVER_FLS_ATTENTION, x=40, y=76, w=240, h=130, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=4	; EN "!ATTENTION!"
 		ui_sub
-			AcLanguageText1	ATTEN_OVER_FLS_Text210_Text211, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3
-			AcLanguageText1	ATTEN_OVER_FLS_Text210_Text28, x=44, y=108, w=232, h=48, index=28, font=idCHARA1W, fontcolor=CL_FireRed, lines=3
+			AcLanguageText1	ATTEN_OVER_FLS_ATTENTION_Press_YES_for_confirmati, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
+			AcLanguageText1	ATTEN_OVER_FLS_ATTENTION_You_are_going_to_overwri, x=44, y=108, w=232, h=48, index=28, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "You are going to overwrite a FLS entry. Are you sure?"
 		ui_endsub
 	ui_endsub
 
@@ -1081,19 +1081,19 @@
 	TtlScreenR	ATTEN_DEL_FLS2, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_FLS2_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_DEL_FLS2_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsDel2SwCatch
-		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS2_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS2_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS2_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
+		VwWideESBox	ATTEN_DEL_FLS2_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS2_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS2_NO_Text, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 		ui_endsub
-		AcLanguageText1	ATTEN_DEL_FLS2_Text210, x=40, y=44, w=240, h=166, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=5
+		AcLanguageText1	ATTEN_DEL_FLS2_ATTENTION, x=40, y=44, w=240, h=166, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=5	; EN "!ATTENTION!"
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS2_Text210_Text211, x=44, y=160, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3
-			AcLanguageText1	ATTEN_DEL_FLS2_Text210_Text27, x=44, y=76, w=232, h=48, index=27, font=idCHARA1W, fontcolor=CL_FireRed, lines=3
-			AcLanguageText1	ATTEN_DEL_FLS2_Text210_Text61, x=44, y=124, w=232, h=36, index=61, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ATTEN_DEL_FLS2_ATTENTION_Press_YES_for_confirmati, x=44, y=160, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
+			AcLanguageText1	ATTEN_DEL_FLS2_ATTENTION_You_are_going_to_delete_, x=44, y=76, w=232, h=48, index=27, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "You are going to delete a FLS entry. Are you sure?"
+			AcLanguageText1	ATTEN_DEL_FLS2_ATTENTION_All_following_entries_wi, x=44, y=124, w=232, h=36, index=61, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "All following entries will be moved."
 		ui_endsub
 	ui_endsub
 
@@ -1103,8 +1103,8 @@
 ; -----------------------------------------------------------------------------
 	Window	WAIT_DEL_FILE, x=26, y=30, w=268, h=56, border=BD_EditSwitch, parent=HdaeUiVar_WAIT_DEL_FILE_parent, child=HdaeUiVar_WAIT_DEL_FILE_child
 	ui_sub
-		AcLanguageText1	WAIT_DEL_FILE_Text56, x=40, y=34, w=240, h=24, index=56, font=idCHARA1, fontcolor=CL_Black, lines=1
-		AcLanguageText1	WAIT_DEL_FILE_Text49, x=32, y=56, w=260, h=24, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1
+		AcLanguageText1	WAIT_DEL_FILE_Delete_file_from_hard_di, x=40, y=34, w=240, h=24, index=56, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "Delete file from hard disk:"
+		AcLanguageText1	WAIT_DEL_FILE_Please_wait, x=32, y=56, w=260, h=24, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1	; EN "Please wait ..."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1115,12 +1115,12 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	ATTEN_HD_FORMAT, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_HD_FORMAT_window, icon=idICON_None, title="   HD FORMAT"
 	ui_sub
-		TextBox	ATTEN_HD_FORMAT_TextBox, x=36, y=38, w=248, h=176, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
+		TextBox	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all, x=36, y=38, w=248, h=176, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
 		ui_sub
-			AcLanguageText1	ATTEN_HD_FORMAT_TextBox_Text24, x=38, y=70, w=244, h=34, index=24, font=idCHARA1W, fontcolor=CL_Text, lines=2
-			AcLanguageText1	ATTEN_HD_FORMAT_TextBox_Text26, x=38, y=164, w=244, h=48, index=26, font=idCHARA1W, fontcolor=CL_Text, lines=3
-			AcLanguageText1	ATTEN_HD_FORMAT_TextBox_Text25, x=38, y=104, w=244, h=64, index=25, font=idCHARA1W, fontcolor=CL_Black, lines=4
-			AcLanguageText1	ATTEN_HD_FORMAT_TextBox_Text210, x=38, y=46, w=244, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_Text, x=38, y=70, w=244, h=34, index=24, font=idCHARA1W, fontcolor=CL_Text, lines=2	; EN "HD FORMAT will erase all files at once."
+			AcLanguageText1	ATTEN_After_your_code_input_al, x=38, y=164, w=244, h=48, index=26, font=idCHARA1W, fontcolor=CL_Text, lines=3	; EN "After your code input all data will be deleted irrevocable!"
+			AcLanguageText1	ATTEN_Therefore_you_need_a_6_d, x=38, y=104, w=244, h=64, index=25, font=idCHARA1W, fontcolor=CL_Black, lines=4	; EN "Therefore you need a 6-digit key code. Please refer your owners manual chapter SETUP & TOOLS."
+			AcLanguageText1	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_ATTENTION, x=38, y=46, w=244, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
 		ui_endsub
 		VwUserBitmap	ATTEN_HD_FORMAT_VwUserBitmap, x=93, y=1, w=27, h=27
 		VwWideESBox	ATTEN_HD_FORMAT_CANCEL, x=244, y=216, w=72, h=23, border=BD_3D_UP1, editsw=ES_Bottom7, editsw2=ES_Bottom8, str="CANCEL"
@@ -1133,9 +1133,9 @@
 ; -----------------------------------------------------------------------------
 	Window	WAIT_HD_FORMAT, x=26, y=30, w=268, h=184, border=BD_EditSwitch, parent=HdaeUiVar_WAIT_HD_FORMAT_parent, child=HdaeUiVar_WAIT_HD_FORMAT_child
 	ui_sub
-		AcLanguageText1	WAIT_HD_FORMAT_Text57, x=32, y=38, w=256, h=56, index=57, font=idCHARA1, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=3
-		AcLanguageText1	WAIT_HD_FORMAT_Text58, x=32, y=98, w=256, h=56, index=58, font=idCHARA1, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=3
-		AcLanguageText1	WAIT_HD_FORMAT_Text49, x=32, y=154, w=260, h=48, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1
+		AcLanguageText1	WAIT_HD_FORMAT_The_hard_disk_will_now_b, x=32, y=38, w=256, h=56, index=57, font=idCHARA1, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=3	; EN "The hard disk will now be formatted. This procedure can take about 2-3 minutes."
+		AcLanguageText1	WAIT_HD_FORMAT_We_recommend_to_turn_ON_, x=32, y=98, w=256, h=56, index=58, font=idCHARA1, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=3	; EN "We recommend to turn ON and OFF again the power after the complete format."
+		AcLanguageText1	WAIT_HD_FORMAT_Please_wait, x=32, y=154, w=260, h=48, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1	; EN "Please wait ..."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1168,23 +1168,23 @@
 	TtlScreenR	ATTEN_DEL_FLS1, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_FLS1_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_DEL_FLS1_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsDel1SwCatch
-		AcLanguageText1	ATTEN_DEL_FLS1_Text210, x=40, y=44, w=240, h=166, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=5
+		AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION, x=40, y=44, w=240, h=166, color=CL_Silver, border=BD_EditSwitch, index=210, font=idCHARA3, fontcolor=CL_Black, lines=5	; EN "!ATTENTION!"
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_Text210_Text211, x=44, y=158, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3
-			AcLanguageText1	ATTEN_DEL_FLS1_Text210_Text27, x=44, y=76, w=232, h=48, index=27, font=idCHARA1W, fontcolor=CL_FireRed, lines=3
-			AcLanguageText1	ATTEN_DEL_FLS1_Text210_Text60, x=44, y=124, w=232, h=36, index=60, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION_Press_YES_for_confirmati, x=44, y=158, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
+			AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION_You_are_going_to_delete_, x=44, y=76, w=232, h=48, index=27, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "You are going to delete a FLS entry. Are you sure?"
+			AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION_The_FLS_entry_remains_fr, x=44, y=124, w=232, h=36, index=60, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "The FLS entry remains free."
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS1_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_2, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_YES_2, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_2_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS1_YES_2_YES, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_3, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_3_Text201, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS1_NO_Text, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 		ui_endsub
 	ui_endsub
 
@@ -1226,13 +1226,13 @@
 	ui_sub
 		IvCatchEvent	ATTEN_CPHD_WR_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenCpToHDSwCatch
 		VwWideESBox	ATTEN_CPHD_WR_VwWideESBox, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
-		TextBox	ATTEN_CPHD_WR_TextBox, x=40, y=84, w=240, h=116, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ATTEN_CPHD_WR_The_hard_disk_is_write_p, x=40, y=84, w=240, h=116, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ATTEN_CPHD_WR_TextBox_Text29, x=42, y=120, w=244, h=38, index=29, font=idCHARA1W, fontcolor=CL_Red, lines=2
-			AcLanguageText1	ATTEN_CPHD_WR_TextBox_Text30, x=40, y=160, w=240, h=38, index=30, font=idCHARA1W, fontcolor=CL_Black, lines=2
+			AcLanguageText1	ATTEN_CPHD_WR_The_hard_disk_is_write_p_Text, x=42, y=120, w=244, h=38, index=29, font=idCHARA1W, fontcolor=CL_Red, lines=2	; EN "The hard disk is write protected!"
+			AcLanguageText1	ATTEN_Please_set_the_write_pro, x=40, y=160, w=240, h=38, index=30, font=idCHARA1W, fontcolor=CL_Black, lines=2	; EN "Please set the write protect mode to OFF."
 		ui_endsub
-		AcLanguageText1	ATTEN_CPHD_WR_Text210, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ATTEN_CPHD_WR_Text203, x=248, y=220, w=68, h=20, index=203, font=idCHARA1, fontcolor=CL_Black, lines=1
+		AcLanguageText1	ATTEN_CPHD_WR_ATTENTION, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
+		AcLanguageText1	ATTEN_CPHD_WR_CANCEL, x=248, y=220, w=68, h=20, index=203, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "CANCEL"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1240,12 +1240,12 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_NOT_FMT, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_NOT_FMT_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_NOT_FMT_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_NOT_FMT_The_hard_disk_is_not_for, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_NOT_FMT_TextBox_Text31, x=38, y=124, w=244, h=40, index=31, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_NOT_FMT_The_hard_disk_is_not_for_Text, x=38, y=124, w=244, h=40, index=31, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "The hard disk is not formatted!"
 		ui_endsub
-		AcLanguageText1	ERR_HD_NOT_FMT_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_NOT_FMT_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_NOT_FMT_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_NOT_FMT_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1254,9 +1254,9 @@
 	TtlScreenR	ERR_HD_SRAM, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_SRAM_window, icon=idICON_None, title=""
 	ui_sub
 		TextBox	ERR_HD_SRAM_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
-		AcLanguageText1	ERR_HD_SRAM_Text32, x=40, y=122, w=240, h=40, index=32, font=idCHARA1, fontcolor=CL_Yellow, lines=2
-		AcLanguageText1	ERR_HD_SRAM_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_SRAM_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_SRAM_Hard_disk_SRAM_error, x=40, y=122, w=240, h=40, index=32, font=idCHARA1, fontcolor=CL_Yellow, lines=2	; EN "Hard disk SRAM error."
+		AcLanguageText1	ERR_HD_SRAM_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_SRAM_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1265,9 +1265,9 @@
 	TtlScreenR	ERR_HD_RESET, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_RESET_window, icon=idICON_None, title=""
 	ui_sub
 		TextBox	ERR_HD_RESET_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
-		AcLanguageText1	ERR_HD_RESET_Text33, x=40, y=122, w=240, h=40, index=33, font=idCHARA1, fontcolor=CL_Yellow, lines=2
-		AcLanguageText1	ERR_HD_RESET_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_RESET_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_RESET_Hard_disk_reset_error, x=40, y=122, w=240, h=40, index=33, font=idCHARA1, fontcolor=CL_Yellow, lines=2	; EN "Hard disk reset error."
+		AcLanguageText1	ERR_HD_RESET_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_RESET_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1275,12 +1275,12 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_READ, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_READ_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_READ_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_READ_Hard_disk_read_error, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_READ_TextBox_Text34, x=34, y=124, w=244, h=38, index=34, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_READ_Hard_disk_read_error_Text, x=34, y=124, w=244, h=38, index=34, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "Hard disk read error."
 		ui_endsub
-		AcLanguageText1	ERR_HD_READ_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_READ_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_READ_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_READ_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1288,12 +1288,12 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_ID_READ, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_ID_READ_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_ID_READ_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_ID_READ_Hard_disk_ID_read_error, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_ID_READ_TextBox_Text35, x=38, y=124, w=244, h=38, index=35, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_ID_READ_Hard_disk_ID_read_error_Text, x=38, y=124, w=244, h=38, index=35, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "Hard disk ID read error."
 		ui_endsub
-		AcLanguageText1	ERR_HD_ID_READ_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_ID_READ_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_ID_READ_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_ID_READ_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1301,12 +1301,12 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_TRACK_0, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_TRACK_0_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_TRACK_0_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_TRACK_0_Hard_disk_track_0_error, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_TRACK_0_TextBox_Text36, x=38, y=120, w=244, h=38, index=36, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_TRACK_0_Hard_disk_track_0_error_Text, x=38, y=120, w=244, h=38, index=36, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "Hard disk track 0 error."
 		ui_endsub
-		AcLanguageText1	ERR_HD_TRACK_0_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-		AcLanguageText1	ERR_HD_TRACK_0_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
+		AcLanguageText1	ERR_HD_TRACK_0_SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+		AcLanguageText1	ERR_HD_TRACK_0_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1314,11 +1314,11 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_FAT, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_FAT_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_FAT_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_FAT_SYSTEM_ERROR, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_FAT_TextBox_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ERR_HD_FAT_TextBox_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
-			AcLanguageText1	ERR_HD_FAT_TextBox_Text37, x=38, y=120, w=244, h=38, index=37, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_FAT_SYSTEM_ERROR_Text, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+			AcLanguageText1	ERR_HD_FAT_SYSTEM_ERROR_Please_call_your_dealer_, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
+			AcLanguageText1	ERR_HD_FAT_SYSTEM_ERROR_Hard_disk_FAT_read_error, x=38, y=120, w=244, h=38, index=37, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "Hard disk FAT read error."
 		ui_endsub
 	ui_endsub
 
@@ -1327,11 +1327,11 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR	ERR_HD_FSB, x=0, y=0, w=320, h=240, window=HdaeUiVar_ERR_HD_FSB_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	ERR_HD_FSB_TextBox, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_HD_FSB_Please_call_your_dealer_, x=36, y=84, w=248, h=120, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_FSB_TextBox_Text212, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2
-			AcLanguageText1	ERR_HD_FSB_TextBox_Text209, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ERR_HD_FSB_TextBox_Text38, x=38, y=120, w=244, h=38, index=38, font=idCHARA1W, fontcolor=CL_Yellow, lines=2
+			AcLanguageText1	ERR_HD_FSB_Please_call_your_dealer__Text, x=40, y=164, w=240, h=40, index=212, font=idCHARA1, fontcolor=CL_Black, lines=2	; EN "Please call your dealer or service center."
+			AcLanguageText1	ERR_HD_FSB_Please_call_your_dealer__SYSTEM_ERROR, x=39, y=94, w=244, h=24, index=209, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!SYSTEM ERROR!"
+			AcLanguageText1	ERR_HD_FSB_Please_call_your_dealer__Hard_disk_FSB_read_error, x=38, y=120, w=244, h=38, index=38, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "Hard disk FSB read error."
 		ui_endsub
 	ui_endsub
 
@@ -1342,14 +1342,14 @@
 	TtlScreenR	ATTEN_CPFD_MARK, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_CPFD_MARK_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_CPFD_MARK_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenCpToMarkSwCatch
-		VwWideESBox	ATTEN_CPFD_MARK_VwWideESBox, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
+		VwWideESBox	ATTEN_CPFD_MARK_CANCEL, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_CPFD_MARK_VwWideESBox_Text203, x=248, y=220, w=68, h=20, index=203, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_CPFD_MARK_CANCEL_Text, x=248, y=220, w=68, h=20, index=203, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "CANCEL"
 		ui_endsub
-		TextBox	ATTEN_CPFD_MARK_TextBox, x=40, y=84, w=240, h=85, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
+		TextBox	ATTEN_CPFD_MARK_ATTENTION, x=40, y=84, w=240, h=85, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
 		ui_sub
-			AcLanguageText1	ATTEN_CPFD_MARK_TextBox_Text210, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ATTEN_CPFD_MARK_TextBox_Text39, x=40, y=122, w=240, h=38, index=39, font=idCHARA1W, fontcolor=CL_Red, lines=2
+			AcLanguageText1	ATTEN_CPFD_MARK_ATTENTION_Text, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
+			AcLanguageText1	ATTEN_CPFD_MARK_ATTENTION_There_are_no_files_marke, x=40, y=122, w=240, h=38, index=39, font=idCHARA1W, fontcolor=CL_Red, lines=2	; EN "There are no files marked for copy to HD!"
 		ui_endsub
 	ui_endsub
 
@@ -1365,26 +1365,26 @@
 			Label	ABOUT_HELP_TextBox_Label, x=29, y=69, w=4, h=11, font=idCHARA4, fontcolor=CL_Black, str=""
 			Label	ABOUT_HELP_TextBox_Technosoft_CH_Samstagern, x=29, y=84, w=204, h=19, font=idCHARA1, fontcolor=CL_Black, str="Technosoft, CH-Samstagern"
 			Label	ABOUT_HELP_TextBox_Pointstyle_CH_Buttisholz, x=29, y=100, w=204, h=19, font=idCHARA1, fontcolor=CL_Black, str="Pointstyle, CH-Buttisholz"
-			AcLanguageText1	ABOUT_HELP_TextBox_Text17, x=27, y=69, w=260, h=16, index=17, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	ABOUT_HELP_TextBox_Hardware_and_software_de, x=27, y=69, w=260, h=16, index=17, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1	; EN "Hardware and software developement:"
 		ui_endsub
 		TextBox	ABOUT_HELP_TextBox_2, x=25, y=120, w=270, h=60, color=CL_Silver, border=BD_3D_UP1, font=idCHARA1, alignment=AL_LeftJustify, lines=3, text=""
 		ui_sub
 			Label	ABOUT_HELP_TextBox_2_KEY_SOFT_SERVICE_CH_Sche, x=29, y=137, w=236, h=19, font=idCHARA1, fontcolor=CL_Black, str="KEY SOFT SERVICE, CH-Schenkon"
 			Label	ABOUT_HELP_TextBox_2_Fax_41_41_922_03_15, x=29, y=154, w=136, h=11, font=idCHARA4, fontcolor=CL_Black, str="Fax.  +41-41-922 03 15"
 			Label	ABOUT_HELP_TextBox_2_email_keysoftservice_blu, x=29, y=165, w=190, h=11, font=idCHARA4, fontcolor=CL_Black, str="email:keysoftservice@bluewin.ch"
-			AcLanguageText1	ABOUT_HELP_TextBox_2_Text18, x=27, y=122, w=260, h=16, index=18, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	ABOUT_HELP_TextBox_2_Conception_marketing_sal, x=27, y=122, w=260, h=16, index=18, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1	; EN "Conception, marketing, sales and service:"
 		ui_endsub
-		TextBox	ABOUT_HELP_TextBox_3, x=25, y=180, w=270, h=20, color=CL_Silver, border=BD_3D_UP1, font=idCHARA1, alignment=AL_LeftJustify, lines=3, text=""
+		TextBox	ABOUT_HELP_All_rigths_reserved_by_t, x=25, y=180, w=270, h=20, color=CL_Silver, border=BD_3D_UP1, font=idCHARA1, alignment=AL_LeftJustify, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ABOUT_HELP_TextBox_3_Text19, x=27, y=182, w=268, h=16, index=19, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	ABOUT_HELP_All_rigths_reserved_by_t_Text, x=27, y=182, w=268, h=16, index=19, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1	; EN "All rigths reserved by the called companies"
 		ui_endsub
-		TextBox	ABOUT_HELP_TextBox_4, x=25, y=205, w=270, h=33, color=CL_Silver, border=BD_3D_UP1, font=idCHARA1, alignment=AL_LeftJustify, lines=3, text=""
+		TextBox	ABOUT_HELP_TextBox_3, x=25, y=205, w=270, h=33, color=CL_Silver, border=BD_3D_UP1, font=idCHARA1, alignment=AL_LeftJustify, lines=3, text=""
 		ui_sub
-			Label	ABOUT_HELP_TextBox_4_Mr_T_Hamaguchi_and_Mr_M_, x=29, y=218, w=261, h=19, font=idCHARA1P, fontcolor=CL_Black, str="Mr. T.Hamaguchi and Mr. M.Kitajima"
-			AcLanguageText1	ABOUT_HELP_TextBox_4_Text20, x=27, y=206, w=200, h=16, index=20, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1
+			Label	ABOUT_HELP_TextBox_3_Mr_T_Hamaguchi_and_Mr_M_, x=29, y=218, w=261, h=19, font=idCHARA1P, fontcolor=CL_Black, str="Mr. T.Hamaguchi and Mr. M.Kitajima"
+			AcLanguageText1	ABOUT_HELP_TextBox_3_Special_thanks_to, x=27, y=206, w=200, h=16, index=20, font=idCHARA4, fontcolor=CL_Black, alignment=AL_LeftJustify, lines=1	; EN "Special thanks to:"
 		ui_endsub
 		IvExitScreen	ABOUT_HELP_Exit_SETUPS_TOOLS, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_SETUPS_TOOLS
-		AcLanguageText1	ABOUT_HELP_Text10, x=101, y=0, w=180, h=32, index=10, font=idCHARA5W, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+		AcLanguageText1	ABOUT_HELP_Text, x=101, y=0, w=180, h=32, index=10, font=idCHARA5W, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "ABOUT & HELP "
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1393,8 +1393,8 @@
 ; -----------------------------------------------------------------------------
 	Window	WAIT_TR0_RECOVER, x=26, y=30, w=268, h=60, border=BD_EditSwitch, parent=HdaeUiVar_WAIT_TR0_RECOVER_parent, child=HdaeUiVar_WAIT_TR0_RECOVER_child
 	ui_sub
-		AcLanguageText1	WAIT_TR0_RECOVER_Text59, x=40, y=34, w=240, h=24, index=59, font=idCHARA1, fontcolor=CL_Black, lines=1
-		AcLanguageText1	WAIT_TR0_RECOVER_Text49, x=32, y=58, w=260, h=24, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1
+		AcLanguageText1	WAIT_TR0_RECOVER_Track_O_will_be_recovere, x=40, y=34, w=240, h=24, index=59, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "Track O will be recovered:"
+		AcLanguageText1	WAIT_TR0_RECOVER_Please_wait, x=32, y=58, w=260, h=24, index=49, font=idCHARA3, fontcolor=CL_Red, lines=1	; EN "Please wait ..."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1407,11 +1407,11 @@
 	ui_sub
 		ui_ram_object	ERR_SAVE_EXIT, IvExitScreen
 		IvCatchEvent	ERR_SAVE_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ERR_SAVE_TextBox, x=40, y=84, w=240, h=110, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_SAVE_Please_make_a_safety_bac, x=40, y=84, w=240, h=110, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_SAVE_TextBox_Text41, x=40, y=120, w=240, h=72, index=41, font=idCHARA1W, fontcolor=CL_Yellow, lines=4
+			AcLanguageText1	ERR_SAVE_Please_make_a_safety_bac_Text, x=40, y=120, w=240, h=72, index=41, font=idCHARA1W, fontcolor=CL_Yellow, lines=4	; EN "Please make a safety backup of your data and call your service center."
 		ui_endsub
-		AcLanguageText1	ERR_SAVE_Text210, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
+		AcLanguageText1	ERR_SAVE_ATTENTION, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1422,11 +1422,11 @@
 	ui_sub
 		ui_ram_object	ERR_LOAD_EXIT, IvExitScreen
 		IvCatchEvent	ERR_LOAD_CATCH, x=0, y=36, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ERR_LOAD_TextBox, x=40, y=84, w=240, h=110, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
+		TextBox	ERR_LOAD_ATTENTION, x=40, y=84, w=240, h=110, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=3, text=""
 		ui_sub
-			AcLanguageText1	ERR_LOAD_TextBox_Text210, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ERR_LOAD_ATTENTION_Text, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
 		ui_endsub
-		AcLanguageText1	ERR_LOAD_Text41, x=40, y=120, w=240, h=72, index=41, font=idCHARA1W, fontcolor=CL_Yellow, lines=4
+		AcLanguageText1	ERR_LOAD_Please_make_a_safety_bac, x=40, y=120, w=240, h=72, index=41, font=idCHARA1W, fontcolor=CL_Yellow, lines=4	; EN "Please make a safety backup of your data and call your service center."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1437,10 +1437,10 @@
 	ui_sub
 		IvExitScreen	ERR_NO_HK_DATA_Exit_CP_FD, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_CP_FD
 		IvCatchEvent	ERR_NO_HK_DATA_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ERR_NO_HK_DATA_TextBox, x=40, y=84, w=240, h=120, color=CL_Silver, border=BD_EditSwitch, font=idCHARA1, lines=5, text=""
+		TextBox	ERR_NO_HK_DATA_ATTENTION, x=40, y=84, w=240, h=120, color=CL_Silver, border=BD_EditSwitch, font=idCHARA1, lines=5, text=""
 		ui_sub
-			AcLanguageText1	ERR_NO_HK_DATA_TextBox_Text210, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ERR_NO_HK_DATA_TextBox_Text42, x=40, y=124, w=240, h=72, index=42, font=idCHARA1W, fontcolor=CL_Red, lines=4
+			AcLanguageText1	ERR_NO_HK_DATA_ATTENTION_Text, x=40, y=94, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
+			AcLanguageText1	ERR_NO_HK_DATA_ATTENTION_The_data_on_the_disk_you, x=40, y=124, w=240, h=72, index=42, font=idCHARA1W, fontcolor=CL_Red, lines=4	; EN "The data on the disk you would like to copy to HD has no KN5000 format or some data are corrupted."
 		ui_endsub
 	ui_endsub
 
@@ -1452,11 +1452,11 @@
 	ui_sub
 		IvExitScreen	ATTEN_FULL_DIR_Exit_CP_FD_DIRSEL, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_CP_FD_DIRSEL
 		IvCatchEvent	ATTEN_FULL_DIR_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ATTEN_FULL_DIR_TextBox, x=40, y=50, w=240, h=160, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=4, text=""
+		TextBox	ATTEN_FULL_DIR_ATTENTION, x=40, y=50, w=240, h=160, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=4, text=""
 		ui_sub
-			AcLanguageText1	ATTEN_FULL_DIR_TextBox_Text210, x=40, y=56, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ATTEN_FULL_DIR_TextBox_Text43, x=40, y=82, w=240, h=72, index=43, font=idCHARA1W, fontcolor=CL_Red, lines=4
-			AcLanguageText1	ATTEN_FULL_DIR_TextBox_Text44, x=40, y=152, w=240, h=52, index=44, font=idCHARA1W, fontcolor=CL_Yellow, lines=3
+			AcLanguageText1	ATTEN_FULL_DIR_ATTENTION_Text, x=40, y=56, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
+			AcLanguageText1	ATTEN_FULL_DIR_ATTENTION_The_number_or_marked_son, x=40, y=82, w=240, h=72, index=43, font=idCHARA1W, fontcolor=CL_Red, lines=4	; EN "The number or marked songs cannot fit in the free space of the selected directory."
+			AcLanguageText1	ATTEN_FULL_DIR_ATTENTION_Reduce_the_number_of_sel, x=40, y=152, w=240, h=52, index=44, font=idCHARA1W, fontcolor=CL_Yellow, lines=3	; EN "Reduce the number of selected songs or find a free directory."
 		ui_endsub
 	ui_endsub
 
@@ -1468,11 +1468,11 @@
 	ui_sub
 		IvExitScreen	ATTEN_CP_UNNAMED_Exit_CP_FD_DIRSEL, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_CP_FD_DIRSEL
 		IvCatchEvent	ATTEN_CP_UNNAMED_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ATTEN_CP_UNNAMED_TextBox, x=40, y=50, w=240, h=160, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=4, text=""
+		TextBox	ATTEN_CP_UNNAMED_Please_use_a_named_direc, x=40, y=50, w=240, h=160, color=CL_IconBack, border=BD_EditSwitch, font=idCHARA3, lines=4, text=""
 		ui_sub
-			AcLanguageText1	ATTEN_CP_UNNAMED_TextBox_Text46, x=40, y=140, w=240, h=68, index=46, font=idCHARA1, fontcolor=CL_Black, lines=4
-			AcLanguageText1	ATTEN_CP_UNNAMED_TextBox_Text210, x=40, y=56, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ATTEN_CP_UNNAMED_TextBox_Text45, x=40, y=84, w=240, h=52, index=45, font=idCHARA1W, fontcolor=CL_Red, lines=3
+			AcLanguageText1	ATTEN_CP_UNNAMED_Please_use_a_named_direc_Text, x=40, y=140, w=240, h=68, index=46, font=idCHARA1, fontcolor=CL_Black, lines=4	; EN "Please use a named directory or create the new directory with EDIT first."
+			AcLanguageText1	ATTEN_CP_UNNAMED_Please_use_a_named_direc_ATTENTION, x=40, y=56, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
+			AcLanguageText1	ATTEN_You_cannot_copy_files_so, x=40, y=84, w=240, h=52, index=45, font=idCHARA1W, fontcolor=CL_Red, lines=3	; EN "You cannot copy files/songs to an unnamed directory."
 		ui_endsub
 	ui_endsub
 
@@ -1483,11 +1483,11 @@
 	IvScreenR2	DIR_OUT_RANGE, x=0, y=0, w=320, h=240, window=HdaeUiVar_DIR_OUT_RANGE_window
 	ui_sub
 		IvCatchEvent	DIR_OUT_RANGE_CATCH, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatchLBN
-		TextBox	DIR_OUT_RANGE_TextBox, x=40, y=84, w=240, h=80, color=CL_Silver, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
+		TextBox	DIR_OUT_RANGE_The_DIR_number_is_out_of, x=40, y=84, w=240, h=80, color=CL_Silver, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
 		ui_sub
-			AcLanguageText1	DIR_OUT_RANGE_TextBox_Text47, x=40, y=120, w=240, h=40, index=47, font=idCHARA1W, fontcolor=CL_Red, lines=2
+			AcLanguageText1	DIR_OUT_RANGE_The_DIR_number_is_out_of_Text, x=40, y=120, w=240, h=40, index=47, font=idCHARA1W, fontcolor=CL_Red, lines=2	; EN "The DIR number is out of range."
 		ui_endsub
-		AcLanguageText1	DIR_OUT_RANGE_Text210, x=40, y=92, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
+		AcLanguageText1	DIR_OUT_RANGE_ATTENTION, x=40, y=92, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1497,11 +1497,11 @@
 	IvScreenR2	FILE_OUT_RANGE, x=0, y=0, w=320, h=240, window=HdaeUiVar_FILE_OUT_RANGE_window
 	ui_sub
 		IvCatchEvent	FILE_OUT_RANGE_CATCH, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatchLBN
-		TextBox	FILE_OUT_RANGE_TextBox, x=40, y=84, w=240, h=80, color=CL_Silver, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
+		TextBox	FILE_OUT_RANGE_ATTENTION, x=40, y=84, w=240, h=80, color=CL_Silver, border=BD_EditSwitch, font=idCHARA3, lines=2, text=""
 		ui_sub
-			AcLanguageText1	FILE_OUT_RANGE_TextBox_Text210, x=40, y=92, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1
+			AcLanguageText1	FILE_OUT_RANGE_ATTENTION_Text, x=40, y=92, w=240, h=24, index=210, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!ATTENTION!"
 		ui_endsub
-		AcLanguageText1	FILE_OUT_RANGE_Text48, x=44, y=120, w=230, h=40, index=48, font=idCHARA1W, fontcolor=CL_Red, lines=2
+		AcLanguageText1	FILE_OUT_RANGE_The_file_number_is_out_o, x=44, y=120, w=230, h=40, index=48, font=idCHARA1W, fontcolor=CL_Red, lines=2	; EN "The file number is out of range."
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -1513,9 +1513,9 @@
 ; -----------------------------------------------------------------------------
 	IvScreenR2	HD_PLEASE, x=0, y=0, w=320, h=240, window=HdaeUiVar_HD_PLEASE_window
 	ui_sub
-		TextBox	HD_PLEASE_TextBox, x=60, y=84, w=200, h=48, color=CL_Orange, border=BD_3D_UP2, font=idCHARA2, lines=1, text=""
+		TextBox	HD_PLEASE_Please_wait, x=60, y=84, w=200, h=48, color=CL_Orange, border=BD_3D_UP2, font=idCHARA2, lines=1, text=""
 		ui_sub
-			AcLanguageText1	HD_PLEASE_TextBox_Text49, x=72, y=98, w=170, h=24, index=49, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	HD_PLEASE_Please_wait_Text, x=72, y=98, w=170, h=24, index=49, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "Please wait ..."
 		ui_endsub
 	ui_endsub
 
@@ -1527,11 +1527,11 @@
 	ui_sub
 		IvExitScreen	ERR_HD_FORMAT_Exit_ATTEN_HD_FORMAT, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_ATTEN_HD_FORMAT
 		IvCatchEvent	ERR_HD_FORMAT_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	ERR_HD_FORMAT_TextBox, x=32, y=78, w=256, h=150, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
+		TextBox	ERR_HD_FORMAT_The_automatic_HD_format_, x=32, y=78, w=256, h=150, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
 		ui_sub
-			AcLanguageText1	ERR_HD_FORMAT_TextBox_Text51, x=40, y=116, w=240, h=36, index=51, font=idCHARA1, fontcolor=CL_Yellow, lines=2
-			AcLanguageText1	ERR_HD_FORMAT_TextBox_Text50, x=30, y=80, w=260, h=36, index=50, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	ERR_HD_FORMAT_TextBox_Text52, x=40, y=156, w=240, h=72, index=52, font=idCHARA1W, fontcolor=CL_Black, lines=4
+			AcLanguageText1	ERR_HD_FORMAT_The_automatic_HD_format__Text, x=40, y=116, w=240, h=36, index=51, font=idCHARA1, fontcolor=CL_Yellow, lines=2	; EN "The automatic HD format was not successful!"
+			AcLanguageText1	ERR_HD_FORMAT_The_automatic_HD_format__FORMAT_ERROR, x=30, y=80, w=260, h=36, index=50, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "!FORMAT ERROR!"
+			AcLanguageText1	ERR_Please_try_once_more_ref, x=40, y=156, w=240, h=72, index=52, font=idCHARA1W, fontcolor=CL_Black, lines=4	; EN "Please try once more, refer your owners manual or ask your dealer/service center."
 		ui_endsub
 	ui_endsub
 
@@ -1543,11 +1543,11 @@
 	ui_sub
 		IvExitScreen	AGAIN_HD_FORMAT_Exit_ATTEN_HD_FORMAT, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_ATTEN_HD_FORMAT
 		IvCatchEvent	AGAIN_HD_FORMAT_CATCH, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_ErrMsgTimerCatch
-		TextBox	AGAIN_HD_FORMAT_TextBox, x=32, y=78, w=256, h=150, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
+		TextBox	AGAIN_HD_FORMAT_Input_error, x=32, y=78, w=256, h=150, color=CL_Red, border=BD_EditSwitch, font=idCHARA3, lines=5, text=""
 		ui_sub
-			AcLanguageText1	AGAIN_HD_FORMAT_TextBox_Text53, x=34, y=80, w=260, h=36, index=53, font=idCHARA3, fontcolor=CL_Black, lines=1
-			AcLanguageText1	AGAIN_HD_FORMAT_TextBox_Text54, x=40, y=116, w=240, h=36, index=54, font=idCHARA1, fontcolor=CL_Yellow, lines=2
-			AcLanguageText1	AGAIN_HD_FORMAT_TextBox_Text55, x=40, y=152, w=240, h=72, index=55, font=idCHARA1W, fontcolor=CL_Black, lines=4
+			AcLanguageText1	AGAIN_HD_FORMAT_Input_error_Text, x=34, y=80, w=260, h=36, index=53, font=idCHARA3, fontcolor=CL_Black, lines=1	; EN "Input error!"
+			AcLanguageText1	AGAIN_HD_FORMAT_Input_error_The_key_code_input_was_w, x=40, y=116, w=240, h=36, index=54, font=idCHARA1, fontcolor=CL_Yellow, lines=2	; EN "The key code input was wrong!"
+			AcLanguageText1	AGAIN_HD_FORMAT_Input_error_Please_try_once_more_ref, x=40, y=152, w=240, h=72, index=55, font=idCHARA1W, fontcolor=CL_Black, lines=4	; EN "Please try once more, refer your owners manual or ask your dealer/service center."
 		ui_endsub
 	ui_endsub
 
@@ -1656,9 +1656,9 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	FD_PLEASE, x=0, y=0, w=320, h=240, window=HdaeUiVar_FD_PLEASE_window, icon=idICON_None, title=""
 	ui_sub
-		TextBox	FD_PLEASE_TextBox, x=60, y=84, w=200, h=48, color=CL_Orange, border=BD_3D_UP2, font=idCHARA2, lines=1, text=""
+		TextBox	FD_PLEASE_Please_wait, x=60, y=84, w=200, h=48, color=CL_Orange, border=BD_3D_UP2, font=idCHARA2, lines=1, text=""
 		ui_sub
-			AcLanguageText1	FD_PLEASE_TextBox_Text49, x=72, y=98, w=170, h=24, index=49, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	FD_PLEASE_Please_wait_Text, x=72, y=98, w=170, h=24, index=49, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "Please wait ..."
 		ui_endsub
 	ui_endsub
 
@@ -1669,9 +1669,9 @@
 	TtlScreenR2	LyrSettings, x=0, y=0, w=320, h=240, window=HdaeUiVar_LyrSettings_window, icon=idICON_i58, title="Lyric Settings"
 	ui_sub
 		IvExitScreen	LyrSettings_Exit_SETUPS_TOOLS, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_SETUPS_TOOLS
-		AcRamEditBox	LyrSettings_AcRamEditBox, x=8, y=72, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left2, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_selected, func=NAKA_APFUNC_LyricJumpEditCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_data, caption=""
+		AcRamEditBox	LyrSettings_Jump_after_Load, x=8, y=72, w=156, h=26, index=0, align=AL_RightJustify, length=4, editsw=ES_Left2, dial=1, selected=HdaeUiVar_LyrSettings_Jump_after_Load_selected, func=NAKA_APFUNC_LyricJumpEditCheck, data=HdaeUiVar_LyrSettings_Jump_after_Load_data, caption=""
 		ui_sub
-			AcLanguageText1	LyrSettings_AcRamEditBox_Text64, x=8, y=72, w=135, h=32, index=64, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1
+			AcLanguageText1	LyrSettings_Jump_after_Load_Text, x=8, y=72, w=135, h=32, index=64, font=idCHARA1, fontcolor=CL_White, alignment=AL_LeftJustify, lines=1	; EN "Jump after Load"
 		ui_endsub
 	ui_endsub
 
@@ -1707,12 +1707,12 @@ HDAE5000_UiObjectName_PtrTable:
 HDAE5000_UiObjectName_Pool:
 	ui_noname	_TableEnd
 	ui_name	WriteIn
-	ui_noname	LyrSettings_AcRamEditBox_Text64
-	ui_noname	LyrSettings_AcRamEditBox
+	ui_noname	LyrSettings_Jump_after_Load_Text
+	ui_noname	LyrSettings_Jump_after_Load
 	ui_noname	LyrSettings_Exit_SETUPS_TOOLS
 	ui_name	LyrSettings
-	ui_noname	FD_PLEASE_TextBox_Text49
-	ui_noname	FD_PLEASE_TextBox
+	ui_noname	FD_PLEASE_Please_wait_Text
+	ui_noname	FD_PLEASE_Please_wait
 	ui_name	FD_PLEASE
 	ui_noname	LoadLyricFD_FDFileSelect
 	ui_noname	LoadLyricFD_Save
@@ -1771,139 +1771,139 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	SELECT_FILE_A_Z_Page_FILE_LOAD_A_Z
 	ui_noname	SELECT_FILE_A_Z_Exit_SELECT_DIR
 	ui_name	SELECT_FILE_A_Z
-	ui_noname	AGAIN_HD_FORMAT_TextBox_Text55
-	ui_noname	AGAIN_HD_FORMAT_TextBox_Text54
-	ui_noname	AGAIN_HD_FORMAT_TextBox_Text53
-	ui_noname	AGAIN_HD_FORMAT_TextBox
+	ui_noname	AGAIN_HD_FORMAT_Input_error_Please_try_once_more_ref
+	ui_noname	AGAIN_HD_FORMAT_Input_error_The_key_code_input_was_w
+	ui_noname	AGAIN_HD_FORMAT_Input_error_Text
+	ui_noname	AGAIN_HD_FORMAT_Input_error
 	ui_name	AGAIN_HD_FORMAT_CATCH
 	ui_noname	AGAIN_HD_FORMAT_Exit_ATTEN_HD_FORMAT
 	ui_name	AGAIN_HD_FORMAT
-	ui_noname	ERR_HD_FORMAT_TextBox_Text52
-	ui_noname	ERR_HD_FORMAT_TextBox_Text50
-	ui_noname	ERR_HD_FORMAT_TextBox_Text51
-	ui_noname	ERR_HD_FORMAT_TextBox
+	ui_noname	ERR_Please_try_once_more_ref
+	ui_noname	ERR_HD_FORMAT_The_automatic_HD_format__FORMAT_ERROR
+	ui_noname	ERR_HD_FORMAT_The_automatic_HD_format__Text
+	ui_noname	ERR_HD_FORMAT_The_automatic_HD_format_
 	ui_name	ERR_HD_FORMAT_CATCH
 	ui_noname	ERR_HD_FORMAT_Exit_ATTEN_HD_FORMAT
 	ui_name	ERR_HD_FORMAT
-	ui_noname	HD_PLEASE_TextBox_Text49
-	ui_noname	HD_PLEASE_TextBox
+	ui_noname	HD_PLEASE_Please_wait_Text
+	ui_noname	HD_PLEASE_Please_wait
 	ui_name	HD_PLEASE
-	ui_noname	FILE_OUT_RANGE_Text48
-	ui_noname	FILE_OUT_RANGE_TextBox_Text210
-	ui_noname	FILE_OUT_RANGE_TextBox
+	ui_noname	FILE_OUT_RANGE_The_file_number_is_out_o
+	ui_noname	FILE_OUT_RANGE_ATTENTION_Text
+	ui_noname	FILE_OUT_RANGE_ATTENTION
 	ui_name	FILE_OUT_RANGE_CATCH
 	ui_name	FILE_OUT_RANGE
-	ui_noname	DIR_OUT_RANGE_Text210
-	ui_noname	DIR_OUT_RANGE_TextBox_Text47
-	ui_noname	DIR_OUT_RANGE_TextBox
+	ui_noname	DIR_OUT_RANGE_ATTENTION
+	ui_noname	DIR_OUT_RANGE_The_DIR_number_is_out_of_Text
+	ui_noname	DIR_OUT_RANGE_The_DIR_number_is_out_of
 	ui_name	DIR_OUT_RANGE_CATCH
 	ui_name	DIR_OUT_RANGE
-	ui_noname	ATTEN_CP_UNNAMED_TextBox_Text45
-	ui_noname	ATTEN_CP_UNNAMED_TextBox_Text210
-	ui_noname	ATTEN_CP_UNNAMED_TextBox_Text46
-	ui_noname	ATTEN_CP_UNNAMED_TextBox
+	ui_noname	ATTEN_You_cannot_copy_files_so
+	ui_noname	ATTEN_CP_UNNAMED_Please_use_a_named_direc_ATTENTION
+	ui_noname	ATTEN_CP_UNNAMED_Please_use_a_named_direc_Text
+	ui_noname	ATTEN_CP_UNNAMED_Please_use_a_named_direc
 	ui_name	ATTEN_CP_UNNAMED_CATCH
 	ui_noname	ATTEN_CP_UNNAMED_Exit_CP_FD_DIRSEL
 	ui_name	ATTEN_CP_UNNAMED
-	ui_noname	ATTEN_FULL_DIR_TextBox_Text44
-	ui_noname	ATTEN_FULL_DIR_TextBox_Text43
-	ui_noname	ATTEN_FULL_DIR_TextBox_Text210
-	ui_noname	ATTEN_FULL_DIR_TextBox
+	ui_noname	ATTEN_FULL_DIR_ATTENTION_Reduce_the_number_of_sel
+	ui_noname	ATTEN_FULL_DIR_ATTENTION_The_number_or_marked_son
+	ui_noname	ATTEN_FULL_DIR_ATTENTION_Text
+	ui_noname	ATTEN_FULL_DIR_ATTENTION
 	ui_name	ATTEN_FULL_DIR_CATCH
 	ui_noname	ATTEN_FULL_DIR_Exit_CP_FD_DIRSEL
 	ui_name	ATTEN_FULL_DIR
-	ui_noname	ERR_NO_HK_DATA_TextBox_Text42
-	ui_noname	ERR_NO_HK_DATA_TextBox_Text210
-	ui_noname	ERR_NO_HK_DATA_TextBox
+	ui_noname	ERR_NO_HK_DATA_ATTENTION_The_data_on_the_disk_you
+	ui_noname	ERR_NO_HK_DATA_ATTENTION_Text
+	ui_noname	ERR_NO_HK_DATA_ATTENTION
 	ui_name	ERR_NO_HK_DATA_CATCH
 	ui_noname	ERR_NO_HK_DATA_Exit_CP_FD
 	ui_name	ERR_NO_HK_DATA
-	ui_noname	ERR_LOAD_Text41
-	ui_noname	ERR_LOAD_TextBox_Text210
-	ui_noname	ERR_LOAD_TextBox
+	ui_noname	ERR_LOAD_Please_make_a_safety_bac
+	ui_noname	ERR_LOAD_ATTENTION_Text
+	ui_noname	ERR_LOAD_ATTENTION
 	ui_name	ERR_LOAD_CATCH
 	ui_name	ERR_LOAD_EXIT
 	ui_name	ERR_LOAD
-	ui_noname	ERR_SAVE_Text210
-	ui_noname	ERR_SAVE_TextBox_Text41
-	ui_noname	ERR_SAVE_TextBox
+	ui_noname	ERR_SAVE_ATTENTION
+	ui_noname	ERR_SAVE_Please_make_a_safety_bac_Text
+	ui_noname	ERR_SAVE_Please_make_a_safety_bac
 	ui_name	ERR_SAVE_CATCH
 	ui_name	ERR_SAVE_EXIT
 	ui_name	ERR_SAVE
-	ui_noname	WAIT_TR0_RECOVER_Text49
-	ui_noname	WAIT_TR0_RECOVER_Text59
+	ui_noname	WAIT_TR0_RECOVER_Please_wait
+	ui_noname	WAIT_TR0_RECOVER_Track_O_will_be_recovere
 	ui_name	WAIT_TR0_RECOVER
-	ui_noname	ABOUT_HELP_Text10
+	ui_noname	ABOUT_HELP_Text
 	ui_noname	ABOUT_HELP_Exit_SETUPS_TOOLS
-	ui_noname	ABOUT_HELP_TextBox_4_Text20
-	ui_noname	ABOUT_HELP_TextBox_4_Mr_T_Hamaguchi_and_Mr_M_
-	ui_noname	ABOUT_HELP_TextBox_4
-	ui_noname	ABOUT_HELP_TextBox_3_Text19
+	ui_noname	ABOUT_HELP_TextBox_3_Special_thanks_to
+	ui_noname	ABOUT_HELP_TextBox_3_Mr_T_Hamaguchi_and_Mr_M_
 	ui_noname	ABOUT_HELP_TextBox_3
-	ui_noname	ABOUT_HELP_TextBox_2_Text18
+	ui_noname	ABOUT_HELP_All_rigths_reserved_by_t_Text
+	ui_noname	ABOUT_HELP_All_rigths_reserved_by_t
+	ui_noname	ABOUT_HELP_TextBox_2_Conception_marketing_sal
 	ui_noname	ABOUT_HELP_TextBox_2_email_keysoftservice_blu
 	ui_noname	ABOUT_HELP_TextBox_2_Fax_41_41_922_03_15
 	ui_noname	ABOUT_HELP_TextBox_2_KEY_SOFT_SERVICE_CH_Sche
 	ui_noname	ABOUT_HELP_TextBox_2
-	ui_noname	ABOUT_HELP_TextBox_Text17
+	ui_noname	ABOUT_HELP_TextBox_Hardware_and_software_de
 	ui_noname	ABOUT_HELP_TextBox_Pointstyle_CH_Buttisholz
 	ui_noname	ABOUT_HELP_TextBox_Technosoft_CH_Samstagern
 	ui_noname	ABOUT_HELP_TextBox_Label
 	ui_noname	ABOUT_HELP_TextBox
 	ui_noname	ABOUT_HELP_VwUserBitmap
 	ui_name	ABOUT_HELP
-	ui_noname	ATTEN_CPFD_MARK_TextBox_Text39
-	ui_noname	ATTEN_CPFD_MARK_TextBox_Text210
-	ui_noname	ATTEN_CPFD_MARK_TextBox
-	ui_noname	ATTEN_CPFD_MARK_VwWideESBox_Text203
-	ui_noname	ATTEN_CPFD_MARK_VwWideESBox
+	ui_noname	ATTEN_CPFD_MARK_ATTENTION_There_are_no_files_marke
+	ui_noname	ATTEN_CPFD_MARK_ATTENTION_Text
+	ui_noname	ATTEN_CPFD_MARK_ATTENTION
+	ui_noname	ATTEN_CPFD_MARK_CANCEL_Text
+	ui_noname	ATTEN_CPFD_MARK_CANCEL
 	ui_noname	ATTEN_CPFD_MARK_IvCatchEvent
 	ui_name	ATTEN_CPFD_MARK
-	ui_noname	ERR_HD_FSB_TextBox_Text38
-	ui_noname	ERR_HD_FSB_TextBox_Text209
-	ui_noname	ERR_HD_FSB_TextBox_Text212
-	ui_noname	ERR_HD_FSB_TextBox
+	ui_noname	ERR_HD_FSB_Please_call_your_dealer__Hard_disk_FSB_read_error
+	ui_noname	ERR_HD_FSB_Please_call_your_dealer__SYSTEM_ERROR
+	ui_noname	ERR_HD_FSB_Please_call_your_dealer__Text
+	ui_noname	ERR_HD_FSB_Please_call_your_dealer_
 	ui_name	ERR_HD_FSB
-	ui_noname	ERR_HD_FAT_TextBox_Text37
-	ui_noname	ERR_HD_FAT_TextBox_Text212
-	ui_noname	ERR_HD_FAT_TextBox_Text209
-	ui_noname	ERR_HD_FAT_TextBox
+	ui_noname	ERR_HD_FAT_SYSTEM_ERROR_Hard_disk_FAT_read_error
+	ui_noname	ERR_HD_FAT_SYSTEM_ERROR_Please_call_your_dealer_
+	ui_noname	ERR_HD_FAT_SYSTEM_ERROR_Text
+	ui_noname	ERR_HD_FAT_SYSTEM_ERROR
 	ui_name	ERR_HD_FAT
-	ui_noname	ERR_HD_TRACK_0_Text212
-	ui_noname	ERR_HD_TRACK_0_Text209
-	ui_noname	ERR_HD_TRACK_0_TextBox_Text36
-	ui_noname	ERR_HD_TRACK_0_TextBox
+	ui_noname	ERR_HD_TRACK_0_Please_call_your_dealer_
+	ui_noname	ERR_HD_TRACK_0_SYSTEM_ERROR
+	ui_noname	ERR_HD_TRACK_0_Hard_disk_track_0_error_Text
+	ui_noname	ERR_HD_TRACK_0_Hard_disk_track_0_error
 	ui_name	ERR_HD_TRACK_0
-	ui_noname	ERR_HD_ID_READ_Text212
-	ui_noname	ERR_HD_ID_READ_Text209
-	ui_noname	ERR_HD_ID_READ_TextBox_Text35
-	ui_noname	ERR_HD_ID_READ_TextBox
+	ui_noname	ERR_HD_ID_READ_Please_call_your_dealer_
+	ui_noname	ERR_HD_ID_READ_SYSTEM_ERROR
+	ui_noname	ERR_HD_ID_READ_Hard_disk_ID_read_error_Text
+	ui_noname	ERR_HD_ID_READ_Hard_disk_ID_read_error
 	ui_name	ERR_HD_ID_READ
-	ui_noname	ERR_HD_READ_Text212
-	ui_noname	ERR_HD_READ_Text209
-	ui_noname	ERR_HD_READ_TextBox_Text34
-	ui_noname	ERR_HD_READ_TextBox
+	ui_noname	ERR_HD_READ_Please_call_your_dealer_
+	ui_noname	ERR_HD_READ_SYSTEM_ERROR
+	ui_noname	ERR_HD_READ_Hard_disk_read_error_Text
+	ui_noname	ERR_HD_READ_Hard_disk_read_error
 	ui_name	ERR_HD_READ
-	ui_noname	ERR_HD_RESET_Text212
-	ui_noname	ERR_HD_RESET_Text209
-	ui_noname	ERR_HD_RESET_Text33
+	ui_noname	ERR_HD_RESET_Please_call_your_dealer_
+	ui_noname	ERR_HD_RESET_SYSTEM_ERROR
+	ui_noname	ERR_HD_RESET_Hard_disk_reset_error
 	ui_noname	ERR_HD_RESET_TextBox
 	ui_name	ERR_HD_RESET
-	ui_noname	ERR_HD_SRAM_Text212
-	ui_noname	ERR_HD_SRAM_Text209
-	ui_noname	ERR_HD_SRAM_Text32
+	ui_noname	ERR_HD_SRAM_Please_call_your_dealer_
+	ui_noname	ERR_HD_SRAM_SYSTEM_ERROR
+	ui_noname	ERR_HD_SRAM_Hard_disk_SRAM_error
 	ui_noname	ERR_HD_SRAM_TextBox
 	ui_name	ERR_HD_SRAM
-	ui_noname	ERR_HD_NOT_FMT_Text212
-	ui_noname	ERR_HD_NOT_FMT_Text209
-	ui_noname	ERR_HD_NOT_FMT_TextBox_Text31
-	ui_noname	ERR_HD_NOT_FMT_TextBox
+	ui_noname	ERR_HD_NOT_FMT_Please_call_your_dealer_
+	ui_noname	ERR_HD_NOT_FMT_SYSTEM_ERROR
+	ui_noname	ERR_HD_NOT_FMT_The_hard_disk_is_not_for_Text
+	ui_noname	ERR_HD_NOT_FMT_The_hard_disk_is_not_for
 	ui_name	ERR_HD_NOT_FMT
-	ui_noname	ATTEN_CPHD_WR_Text203
-	ui_noname	ATTEN_CPHD_WR_Text210
-	ui_noname	ATTEN_CPHD_WR_TextBox_Text30
-	ui_noname	ATTEN_CPHD_WR_TextBox_Text29
-	ui_noname	ATTEN_CPHD_WR_TextBox
+	ui_noname	ATTEN_CPHD_WR_CANCEL
+	ui_noname	ATTEN_CPHD_WR_ATTENTION
+	ui_noname	ATTEN_Please_set_the_write_pro
+	ui_noname	ATTEN_CPHD_WR_The_hard_disk_is_write_p_Text
+	ui_noname	ATTEN_CPHD_WR_The_hard_disk_is_write_p
 	ui_noname	ATTEN_CPHD_WR_VwWideESBox
 	ui_noname	ATTEN_CPHD_WR_IvCatchEvent
 	ui_name	ATTEN_CPHD_WR
@@ -1919,16 +1919,16 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	ATTEN_OVER_FILE_JA
 	ui_noname	ATTEN_OVER_FILE_IvCatchEvent
 	ui_name	ATTEN_OVER_FILE
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_3_Text201
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_3
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_2_Text200
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_2
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox
-	ui_noname	ATTEN_DEL_FLS1_Text210_Text60
-	ui_noname	ATTEN_DEL_FLS1_Text210_Text27
-	ui_noname	ATTEN_DEL_FLS1_Text210_Text211
-	ui_noname	ATTEN_DEL_FLS1_Text210
+	ui_noname	ATTEN_DEL_FLS1_NO_Text
+	ui_noname	ATTEN_DEL_FLS1_NO
+	ui_noname	ATTEN_DEL_FLS1_YES_2_YES
+	ui_noname	ATTEN_DEL_FLS1_YES_2
+	ui_noname	ATTEN_DEL_FLS1_YES_Text
+	ui_noname	ATTEN_DEL_FLS1_YES
+	ui_noname	ATTEN_DEL_FLS1_ATTENTION_The_FLS_entry_remains_fr
+	ui_noname	ATTEN_DEL_FLS1_ATTENTION_You_are_going_to_delete_
+	ui_noname	ATTEN_DEL_FLS1_ATTENTION_Press_YES_for_confirmati
+	ui_noname	ATTEN_DEL_FLS1_ATTENTION
 	ui_noname	ATTEN_DEL_FLS1_IvCatchEvent
 	ui_name	ATTEN_DEL_FLS1
 	ui_noname	DBG_MEMO_SCREEN_DbMemo
@@ -1939,46 +1939,46 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	SETUP_HDINFO_HD_INFO
 	ui_noname	SETUP_HDINFO_Exit_SETUPS_TOOLS
 	ui_name	SETUP_HDINFO
-	ui_noname	WAIT_HD_FORMAT_Text49
-	ui_noname	WAIT_HD_FORMAT_Text58
-	ui_noname	WAIT_HD_FORMAT_Text57
+	ui_noname	WAIT_HD_FORMAT_Please_wait
+	ui_noname	WAIT_HD_FORMAT_We_recommend_to_turn_ON_
+	ui_noname	WAIT_HD_FORMAT_The_hard_disk_will_now_b
 	ui_name	WAIT_HD_FORMAT
 	ui_name	HD_FORMAT_CATCH
 	ui_noname	ATTEN_HD_FORMAT_CANCEL
 	ui_noname	ATTEN_HD_FORMAT_VwUserBitmap
-	ui_noname	ATTEN_HD_FORMAT_TextBox_Text210
-	ui_noname	ATTEN_HD_FORMAT_TextBox_Text25
-	ui_noname	ATTEN_HD_FORMAT_TextBox_Text26
-	ui_noname	ATTEN_HD_FORMAT_TextBox_Text24
-	ui_noname	ATTEN_HD_FORMAT_TextBox
+	ui_noname	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_ATTENTION
+	ui_noname	ATTEN_Therefore_you_need_a_6_d
+	ui_noname	ATTEN_After_your_code_input_al
+	ui_noname	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_Text
+	ui_noname	ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all
 	ui_name	ATTEN_HD_FORMAT
-	ui_noname	WAIT_DEL_FILE_Text49
-	ui_noname	WAIT_DEL_FILE_Text56
+	ui_noname	WAIT_DEL_FILE_Please_wait
+	ui_noname	WAIT_DEL_FILE_Delete_file_from_hard_di
 	ui_name	WAIT_DEL_FILE
-	ui_noname	ATTEN_DEL_FLS2_Text210_Text61
-	ui_noname	ATTEN_DEL_FLS2_Text210_Text27
-	ui_noname	ATTEN_DEL_FLS2_Text210_Text211
-	ui_noname	ATTEN_DEL_FLS2_Text210
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox_2_Text201
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox_2
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox
+	ui_noname	ATTEN_DEL_FLS2_ATTENTION_All_following_entries_wi
+	ui_noname	ATTEN_DEL_FLS2_ATTENTION_You_are_going_to_delete_
+	ui_noname	ATTEN_DEL_FLS2_ATTENTION_Press_YES_for_confirmati
+	ui_noname	ATTEN_DEL_FLS2_ATTENTION
+	ui_noname	ATTEN_DEL_FLS2_NO_Text
+	ui_noname	ATTEN_DEL_FLS2_NO
+	ui_noname	ATTEN_DEL_FLS2_YES_Text
+	ui_noname	ATTEN_DEL_FLS2_YES
 	ui_noname	ATTEN_DEL_FLS2_IvCatchEvent
 	ui_name	ATTEN_DEL_FLS2
-	ui_noname	ATTEN_OVER_FLS_Text210_Text28
-	ui_noname	ATTEN_OVER_FLS_Text210_Text211
-	ui_noname	ATTEN_OVER_FLS_Text210
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox_2_Text201
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox_2
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox_Text200
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox
+	ui_noname	ATTEN_OVER_FLS_ATTENTION_You_are_going_to_overwri
+	ui_noname	ATTEN_OVER_FLS_ATTENTION_Press_YES_for_confirmati
+	ui_noname	ATTEN_OVER_FLS_ATTENTION
+	ui_noname	ATTEN_OVER_FLS_NO_Text
+	ui_noname	ATTEN_OVER_FLS_NO
+	ui_noname	ATTEN_OVER_FLS_YES_Text
+	ui_noname	ATTEN_OVER_FLS_YES
 	ui_noname	ATTEN_OVER_FLS_IvCatchEvent
 	ui_name	ATTEN_OVER_FLS
-	ui_noname	ATTEN_DEL_FILE_Text201
-	ui_noname	ATTEN_DEL_FILE_Text200
-	ui_noname	ATTEN_DEL_FILE_Text210_Text2
-	ui_noname	ATTEN_DEL_FILE_Text210_Text211
-	ui_noname	ATTEN_DEL_FILE_Text210
+	ui_noname	ATTEN_DEL_FILE_NO
+	ui_noname	ATTEN_DEL_FILE_YES
+	ui_noname	ATTEN_DEL_FILE_ATTENTION_Would_you_really_delete_
+	ui_noname	ATTEN_DEL_FILE_ATTENTION_Press_YES_for_confirmati
+	ui_noname	ATTEN_DEL_FILE_ATTENTION
 	ui_noname	ATTEN_DEL_FILE_VwWideESBox_2
 	ui_noname	ATTEN_DEL_FILE_IvCatchEvent
 	ui_noname	ATTEN_DEL_FILE_VwWideESBox
@@ -1986,14 +1986,14 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	WAIT_DEL_DIR_PLEASE_WAIT
 	ui_noname	WAIT_DEL_DIR_DELETE_DIRECTORY_FROM_HA
 	ui_name	WAIT_DEL_DIR
-	ui_noname	ATTEN_DEL_DIR_Text210_Text1
-	ui_noname	ATTEN_DEL_DIR_Text210_Text211
-	ui_noname	ATTEN_DEL_DIR_Text210
+	ui_noname	ATTEN_DEL_DIR_ATTENTION_Would_you_really_delete_
+	ui_noname	ATTEN_DEL_DIR_ATTENTION_Press_YES_for_confirmati
+	ui_noname	ATTEN_DEL_DIR_ATTENTION
 	ui_noname	ATTEN_DEL_DIR_IvCatchEvent
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox_2_Text201
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox_2
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox
+	ui_noname	ATTEN_DEL_DIR_NO_Text
+	ui_noname	ATTEN_DEL_DIR_NO
+	ui_noname	ATTEN_DEL_DIR_YES_Text
+	ui_noname	ATTEN_DEL_DIR_YES
 	ui_name	ATTEN_DEL_DIR
 	ui_name	IV_HDDMENU
 	ui_name	HD_MENU_BMP
@@ -2315,7 +2315,7 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	LBN_P2_CURRENT_PANEL
 	ui_noname	LBN_P2_AcRamEditBox
 	ui_name	LBN_P2
-	ui_noname	LBN_P1_Text21
+	ui_noname	LBN_P1_Press_3_digits_for_direc
 	ui_noname	LBN_P1_AcIndexWideES
 	ui_noname	LBN_P1_IvCatchEvent
 	ui_name	LBN_FILENAME_BOX
@@ -2347,17 +2347,17 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	LOAD_BY_NUM_Page_LBN_P1
 	ui_noname	LOAD_BY_NUM_Exit_HDDMENU
 	ui_name	LOAD_BY_NUM
-	ui_noname	OUTPUT_SETTING_Text16
-	ui_noname	OUTPUT_SETTING_Text15
-	ui_noname	OUTPUT_SETTING_Text14
-	ui_noname	OUTPUT_SETTING_Text13
+	ui_noname	OUTPUT_SETTING_The_separate_outputs_can
+	ui_noname	OUTPUT_SETTING_PART_SELECT_FOR_SEQ_BASS
+	ui_noname	OUTPUT_SETTING_PART_SELECT_FOR_SEQ_DRUM
+	ui_noname	OUTPUT_SETTING_SEPARATE_OUTPUT_MODE
 	ui_noname	OUTPUT_SETTING_AcRamEditBox_3
 	ui_noname	OUTPUT_SETTING_AcRamEditBox_2
 	ui_noname	OUTPUT_SETTING_AcRamEditBox
 	ui_noname	OUTPUT_SETTING_AcIndexWideES
 	ui_noname	OUTPUT_SETTING_Exit_HDDMENU
 	ui_name	OUTPUT_SETTING
-	ui_noname	SETUP_TOOLS_P2_Go_ABOUT_HELP_Text10
+	ui_noname	SETUP_TOOLS_P2_Go_ABOUT_HELP_Text
 	ui_noname	SETUP_TOOLS_P2_Go_ABOUT_HELP_VwUserBitmap
 	ui_noname	SETUP_TOOLS_P2_Go_ABOUT_HELP
 	ui_noname	SW_HD_FORMAT_VwUserBitmap
@@ -2365,18 +2365,18 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	SETUP_TOOLS_P2_IvMainEditSw
 	ui_noname	SETUP_TOOLS_P2_HD_AE_INFOS_VwUserBitmap
 	ui_noname	SETUP_TOOLS_P2_HD_AE_INFOS
-	ui_noname	SETUP_TOOLS_P2_AcScreenMenu_Text11
-	ui_noname	SETUP_TOOLS_P2_AcScreenMenu
+	ui_noname	SETUP_TOOLS_P2_SAVE_SETUP_Text
+	ui_noname	SETUP_TOOLS_P2_SAVE_SETUP
 	ui_name	SETUP_TOOLS_P2
 	ui_noname	SETUP_TOOLS_P1_LYRIC_SETTINGS_VwUserBitmap
 	ui_noname	SETUP_TOOLS_P1_LYRIC_SETTINGS
 	ui_noname	SETUP_TOOLS_P1_LD_BY_NUM_M
-	ui_noname	SETUP_TOOLS_P1_AcRamEditBox_2_Text9
-	ui_noname	SETUP_TOOLS_P1_AcRamEditBox_2
+	ui_noname	SETUP_TOOLS_P1_WRITE_CONFIRM_Text
+	ui_noname	SETUP_TOOLS_P1_WRITE_CONFIRM
 	ui_noname	SETUP_TOOLS_P1_JUMP_AFTER_LD
 	ui_noname	SETUP_TOOLS_P1_QUICK_LD_MODE
-	ui_noname	SETUP_TOOLS_P1_AcRamEditBox_Text8
-	ui_noname	SETUP_TOOLS_P1_AcRamEditBox
+	ui_noname	SETUP_TOOLS_P1_WRITE_PROTECT_Text
+	ui_noname	SETUP_TOOLS_P1_WRITE_PROTECT
 	ui_noname	SETUP_TOOLS_P1_AcIndexWideES
 	ui_noname	SETUP_TOOLS_P1_PC_DATA_LINK_VwUserBitmap
 	ui_noname	SETUP_TOOLS_P1_PC_DATA_LINK
@@ -2473,22 +2473,22 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	SETUPS_TOOLS_Exit_HDDMENU
 	ui_name	SETUPS_TOOLS
 	ui_noname	HDDMENU_LYRIC_WINDOW
-	ui_noname	HDDMENU_Go_Tech_lyrics_Text5
+	ui_noname	HDDMENU_Go_Tech_lyrics_Text
 	ui_noname	HDDMENU_Go_Tech_lyrics
-	ui_noname	HDDMENU_Text62
-	ui_noname	HDDMENU_Go_SELECT_DIR_Text5
+	ui_noname	HDDMENU_Evaluation_01_01_99
+	ui_noname	HDDMENU_Go_SELECT_DIR_Text
 	ui_noname	HDDMENU_Go_SELECT_DIR
 	ui_noname	HDDMENU_VwUserBitmap
 	ui_noname	HDDMENU_IvMainEditSw
 	ui_noname	HDDMENU_IvCatchEvent
 	ui_name	HARD_DISK_OPT
-	ui_noname	HDDMENU_Go_OUTPUT_SETTING_Text4
+	ui_noname	HDDMENU_Go_OUTPUT_SETTING_Text
 	ui_noname	HDDMENU_Go_OUTPUT_SETTING
-	ui_noname	HDDMENU_AcScreenMenu_Text3
-	ui_noname	HDDMENU_AcScreenMenu
-	ui_noname	HDDMENU_Go_FLS_SELECT_Text7
+	ui_noname	HDDMENU_COPY_FD_TO_HARD_DISK_Text
+	ui_noname	HDDMENU_COPY_FD_TO_HARD_DISK
+	ui_noname	HDDMENU_Go_FLS_SELECT_Text
 	ui_noname	HDDMENU_Go_FLS_SELECT
-	ui_noname	HDDMENU_Go_LOAD_BY_NUM_Text6
+	ui_noname	HDDMENU_Go_LOAD_BY_NUM_Text
 	ui_noname	HDDMENU_Go_LOAD_BY_NUM
 	ui_noname	HDDMENU_SETUP_TOOLS
 	ui_name	HDDMENU

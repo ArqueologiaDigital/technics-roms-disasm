@@ -202,6 +202,15 @@ class Version:
         ram = [p for p in self.ptr if p < BASE]
         # first RAM record is 8 bytes after the WindowGeometry_Init label (four 0xffff words)
         self.ramb = min(ram) - (self.geom + 8 - self.img)
+        # the language texts AcLanguageText1 objects draw: message n (the view's `index`) is
+        # HDAE5000_LangMsg_<n>_EN / _DE / _FR, chosen by HDAE5000_AcLanguageText1Proc's message
+        # switch (HDAE5000_LangText_CaseTable) from the language its function names
+        # (LANENG00x / LANDEU00x / LANFRA00x, the first 8 characters compared)
+        self.langmsg = {}
+        for k, a in self.sym.items():
+            m = re.match(r"^HDAE5000_LangMsg_(\d+)_EN$", k)
+            if m:
+                self.langmsg[int(m.group(1))] = self.cstr(a).decode("latin-1")
         self.load_classes()
         self.load_objects()
 
@@ -353,10 +362,36 @@ class Version:
                                 "IvFixWin": "Win"}.get(o["cname"], "Go")
                         return "%s_%s" % (verb, t)
         if o["cname"].startswith("AcLanguageText"):
-            return "Text%d" % self.u16(o["a"] + flds["index"][0])
+            n = self.u16(o["a"] + flds["index"][0])
+            t = ident(self.langmsg.get(n, ""))[:24]
+            par = self.objs[o["super"]].get("name", "") if o["super"] != NONE else ""
+            if not t:
+                return "Text%d" % n
+            # the label of a button named after it, or after the screen it opens: just "Text"
+            if par.endswith(t) or (o["super"] != NONE and self.objs[o["super"]]["cname"] in
+                                   ("AcScreenMenu", "VwMenuBox", "AcIndexEditSw", "VwEditSwBox")
+                                   and "_Go_" in par):
+                return "Text"
+            return t
         if o["cname"] == "IvExitScreen":
             return "Exit"
+        # a button whose label is its language-text child: named after that text
+        k = o["i"] + 1
+        if o["sub"] == k and k < self.nobj:
+            c = self.objs[k]
+            if c["cname"].startswith("AcLanguageText"):
+                off = [f[0] for f in c["fields"] if f[1] == "index"][0]
+                t = ident(self.langmsg.get(self.u16(c["a"] + off), ""))
+                if t:
+                    return t[:24]
         return o["cname"]
+
+    def text_of(self, o):
+        """The English language text an AcLanguageText object draws, or None."""
+        if not o["cname"].startswith("AcLanguageText"):
+            return None
+        off = [f[0] for f in o["fields"] if f[1] == "index"][0]
+        return self.langmsg.get(self.u16(o["a"] + off))
 
     # ------------------------------------------------------------ spelling
     def best_label(self, a):
@@ -504,6 +539,7 @@ class Version:
                 lab = self.str_label(val)
                 args.append((fn + "_at", lab))
         o["args"] = args
+        o["text"] = self.text_of(o)
         # whatever the arena leaves over: explicit strings after the macro
         tail = []
         while pos < end:
@@ -628,19 +664,10 @@ def macro_text(classes, hd_cids, used_values):
     w("; value most records of the class share; an object that differs says so.")
     w("; =============================================================================")
     w("")
-    w("\t.equ\tNAKA_NONE, 0xffff\t\t; no object (a Viewable link)")
-    w("\t.equ\tNAKA_NO_OBJECT, 0xffffffff\t; no object (a 32-bit object id field)")
-    w("; Property values by the firmware's own names: the main CPU's SupportClass_PropTypeRecords")
-    w("; (one entry per propdata letter: {proc, count, size, -> {name, value}}), and for fonts /")
-    w("; bitmaps / icons the index tables FontIDProc_FontNameTable / BitmapIDProc_PtrTable /")
-    w("; IconIDProc_NameTable spelled as EVT_MAKE_DUMP writes them.  Only the ones the HD-AE5000's")
-    w("; records use.  ES_* (edit switches): Bottom1-8 the buttons under the LCD, Left1-5 / Right1-5")
-    w("; the side rows; every HD-AE5000 object with one sits next to it")
-    w("; (notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py).")
-    for n, val in sorted(used_values.items(), key=lambda kv: (kv[0].split("_")[0], kv[1])):
-        w("\t.ifndef\t%s" % n)
-        w("\t.equ\t%s, 0x%02x" % (n, val))
-        w("\t.endif")
+    w("; NAKA_NONE, NAKA_NO_OBJECT and the property values by the firmware's own names (CL_*, BD_*,")
+    w("; VF_*, AL_*, ES_*, SS_*, LM_*, idCHARA*, idICON_* ...): the assembler twin of the main CPU's")
+    w("; naka_classes.h, written by the same generator (scripts/generators/gen_naka_gui_headers.py).")
+    w("\t.include\t\"shared/naka_values.s\"")
     w("")
     w("; class ids: shared/event_codes.s names the main CPU's most used ones; the rest, and the")
     w("; HD-AE5000's own 13 (class table 0x16A, HDAE5000_RECORD_TABLE), are defined here")
@@ -955,7 +982,10 @@ def obj_line(c, o, indent):
         if d.get(p) == t:
             continue
         args.append("%s=%s" % (p, t))
-    return "%s%s\t%s" % (indent, o["cname"], ", ".join([o["name"]] + args))
+    line = "%s%s\t%s" % (indent, o["cname"], ", ".join([o["name"]] + args))
+    if o.get("text") is not None:
+        line += "\t; EN %s" % esc(o["text"].encode("latin-1"))
+    return line
 
 
 def caption_of(o):
@@ -1182,8 +1212,13 @@ def state_text(v, classes):
     w("; no code of this ROM spells one of these RAM addresses (so, [INFERENCE], the main CPU's class procedures")
     w("; reach them through the record).  Generated by")
     w("; scripts/converters/hdae5000_ui_tree.py.")
-    w("; [INFERENCE] the 0x0070xxxx words in some 8-byte variables (str_adr) look like run-time")
-    w("; handles; no code in this ROM reads them through a named address.")
+    w("; SelectList.str_adr variables: 29 of the 31 start at 0x006Fxxxx / 0x0070xxxx.  They are never")
+    w("; drawn: HDAE5000_SelectListProc draws only when the list's en_paradraw variable is 1, and all")
+    w("; 31 start at 0; a screen enables its list and gives it its row strings with")
+    w("; EVT_HDAE_SET_STR_ADR, which overwrites str_adr.  [INFERENCE] the initial values are link-time")
+    w("; addresses of another build (they move by 680-684 bytes between v2.01i and v2.06i for 16 lists")
+    w("; and map onto nothing in this image): notes/data-gui-hdae5000-2026-10-29/probes/")
+    w("; str_adr_initial_values.py.")
     w("; ----------------------------------------------------------------------------")
     for a0, a1 in zip(cuts, cuts[1:]):
         for n in keep.get(a0, []):
@@ -1194,6 +1229,8 @@ def state_text(v, classes):
             fail("odd state segment 0x%06x" % a0)
         if lab and a1 - a0 == 4:
             body = "\t.long\t0x%08x" % v.u32(a0)
+            if lab.endswith("_str_adr") and v.u32(a0):
+                body += "\t; inert: not drawn while en_paradraw is 0 (its initial value); screens set it with EVT_HDAE_SET_STR_ADR"
         else:
             body = None
         prefix = ("%s:" % lab) if lab else ""

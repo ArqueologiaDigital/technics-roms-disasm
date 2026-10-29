@@ -1532,7 +1532,7 @@ HDAE5000_FlsNamingCheck:
 	pushw 0x9ff6		; dest = tile buffer at 0x239FF6
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 0x0a)
-	ld (0x23a006:24), 0x00; clear dirty flag (tile updated)
+	ld (HDAE5000_RAM_Name_EditBuffer+16:24), 0x00; clear dirty flag (tile updated)
 	ld xhl, xiz
 	jrl t, .LFS_RdFSB__a_exit
 .LFS_RdFSB__a_evt84:                           ; EVT 0x84: Acknowledge — no action needed
@@ -1638,7 +1638,7 @@ HDAE5000_FlsNamingCheck2:
 	pushw 0x9ff6		; dest = tile buffer at 0x239FF6
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 0x0a)
-	ld (0x23a006:24), 0x00; clear dirty flag
+	ld (HDAE5000_RAM_Name_EditBuffer+16:24), 0x00; clear dirty flag
 	ld xhl, xiz
 	jrl t, .LFS_RdFSB__b_exit
 .LFS_RdFSB__b_evt84:                           ; EVT 0x84: Acknowledge — no-op
@@ -4101,7 +4101,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	pushw 0x9ff6
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 0x0a)
-	ld (0x23a006:24), 0x00
+	ld (HDAE5000_RAM_Name_EditBuffer+16:24), 0x00
 	ld xhl, xiz
 	jrl t, .LFSD__hB_exit2
 .LFSD__hB_84:				; Event 0x01E00084
@@ -4227,7 +4227,7 @@ HDAE5000_WrConfirmEventCatch:
 	or xhl, xhl
 	jrl nz, .LFSD__hC_default
 .LFSD__hC_key_1:			; Key 0 or 1: register menu + display
-	lda xwa, (0x239fd6:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	ld xde, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
