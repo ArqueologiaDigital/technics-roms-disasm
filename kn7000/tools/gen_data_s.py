@@ -50,9 +50,11 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import milk_model as MM  # noqa: E402
-from milk_model import BASE, NONE16  # noqa: E402
+from milk_model import NONE16  # noqa: E402
 
-KN7 = os.path.dirname(HERE)
+REPO = os.path.dirname(os.path.dirname(HERE))
+KN7 = os.path.dirname(HERE)       # the tree of the profile being generated (configure())
+BASE = MM.BASE
 LINES_PER_FILE = 40000
 # The program builds this generator knows: the image, its converted code, its
 # symbol files, the previous build's labels, and the layout gen_program_s.py
@@ -74,20 +76,47 @@ PROFILES = {
                          "kn7000_sp7001_exports.sym"],
                    labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785),
 }
+# The MN10300 "MILK" siblings (sources from tools/gen_image_s.py, one file per
+# image).  Extra keys, each optional, with the KN7000's value as default:
+#   tree    the model's directory, relative to the repository root ("kn7000");
+#           every other path of the profile is relative to it
+#   base    CPU address of file offset 0 (0x48400000)
+#   code    glob of the converted code (<src>/*.s)
+#   labels  a list of label files is accepted: `name 0xADDR` lines (kn7asm
+#           --labels) or `.equ name, 0xADDR` lines (gen_image_s.py's
+#           symbols.inc / labels.inc)
+#   consts  the MILK constants include (src/constants.inc, tools/gen_constants.py)
+#   pal     None when the image has no palette this generator knows
+#   what    how the header names the image ("program build <profile>")
+#   cite    True: the firmware addresses the comments cite are read from the
+#           profile's symbol files (ClassProc, RegisterTitle, ...)
+SIBLING_PROFILES = {
+    "kn2400": dict(tree="kn2400", rom="baserom/kn2400_program.rom", src="src", prog="src/program.s",
+                   code="src/program.s",
+                   syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
+                   labels=["src/symbols.inc", "src/labels.inc"], consts="src/constants.inc",
+                   r1=0x00000F, pal=None, end=0x1E427C, cite=True, raminit_by="crt0_start",
+                   what="the SX-KN2400 / SX-KN2600 program image v1.1"),
+}
+PROFILES.update(SIBLING_PROFILES)
 PROFILE = "941"
 
 
 def configure(name):
     """Bind the module's layout constants to program build `name`."""
-    global PROFILE, P, ROMQ, R1_END, PALETTE, DATA_END, OUTDIR
+    global PROFILE, P, ROMQ, R1_END, PALETTE, DATA_END, OUTDIR, KN7, BASE, CODE_GLOB, CONSTS
     global RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN, RAMINIT_OFF, RAMINIT_END, RAM_MNBASE
     PROFILE, P = name, PROFILES[name]
+    KN7 = os.path.join(REPO, P.get("tree", "kn7000"))
+    BASE = MM.BASE = P.get("base", 0x48400000)
+    CODE_GLOB = P.get("code", P["src"] + "/*.s")
+    CONSTS = P.get("consts", "src/constants.inc")
     ROMQ = f'"{P["rom"]}"'
     R1_END = P["r1"]             # end of code region 1 (file offset)
     PALETTE = P["pal"]           # display palette, 512 x u32
     DATA_END = P["end"]          # the library image starts here (gen_program_s LIB_FILE_BASE)
     OUTDIR = P["src"] + "/data"
-    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = MM.find_raminit(os.path.join(KN7, P["src"], "*.s"))
+    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = MM.find_raminit(os.path.join(KN7, CODE_GLOB))
     MM.RAMINIT_ROM, MM.RAMINIT_RAM, MM.RAMINIT_LEN = RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN
     RAMINIT_OFF = RAMINIT_ROM - BASE
     RAMINIT_END = RAMINIT_OFF + RAMINIT_LEN
@@ -135,8 +164,9 @@ class Item:
 
 class Gen:
     def __init__(self):
-        self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=os.path.join(KN7, P["src"], "*.s"),
-                          sym_paths=[os.path.join(KN7, f) for f in P["syms"]])
+        self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=os.path.join(KN7, CODE_GLOB),
+                          sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
+                          **({"label_paths": [os.path.join(KN7, OUTDIR, "labels.sym")]} if "tree" in P else {}))
         m = self.m
         self.rom = m.rom
         self.items = {}               # file offset -> Item
@@ -151,13 +181,8 @@ class Gen:
     # -- names ---------------------------------------------------------------
     def _load_names(self):
         m = self.m
-        lab = os.path.join(KN7, P["labels"])
-        if not os.path.exists(lab):
-            sys.exit(f"gen_data_s: {P['labels']} missing: build this program first")
         self.prev_data_label = {}       # name -> address of the previous build's data labels
-        for line in open(lab):
-            n, v = line.split()
-            a = int(v, 16)
+        for n, a in self.label_file_rows():
             if self.in_data(a):
                 self.prev_data_label[n] = a
                 continue          # this generator's own labels: made again below
@@ -184,7 +209,7 @@ class Gen:
         import glob
         nx = re.compile(r"\b([A-Za-z_]\w*)\b")
         self.code_names = set()
-        for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
+        for f in glob.glob(os.path.join(KN7, CODE_GLOB)):
             for line in open(f, encoding="latin-1"):
                 self.code_names.update(nx.findall(line.split("#", 1)[0]))
         for n, a in self.prev_data_label.items():
@@ -196,15 +221,38 @@ class Gen:
             if mo and self.in_data(int(mo.group(2), 16)):
                 self.fixed.setdefault(int(mo.group(2), 16), mo.group(1))
                 self.names.add(mo.group(1))
-        for line in open(os.path.join(KN7, "src", "constants.inc")):
+        for line in open(os.path.join(KN7, CONSTS)):
             mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if mo:
                 self.names.add(mo.group(1))
         self.const = collections.defaultdict(dict)    # prefix -> value -> name
-        for line in open(os.path.join(KN7, "src", "constants.inc")):
+        for line in open(os.path.join(KN7, CONSTS)):
             mo = re.match(r"\.equ\s+(([A-Z]+)_\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if mo:
                 self.const[mo.group(2)].setdefault(int(mo.group(3), 16), mo.group(1))
+
+    @staticmethod
+    def label_file_rows():
+        """(name, address) of every row of the profile's label files."""
+        for rel in ([P["labels"]] if isinstance(P["labels"], str) else P["labels"]):
+            lab = os.path.join(KN7, rel)
+            if not os.path.exists(lab):
+                sys.exit(f"gen_data_s: {rel} missing: build this program first")
+            for line in open(lab):
+                mo = re.match(r"\.equ\s+([A-Za-z_]\w*)\s*,\s*(0x[0-9A-Fa-f]+)\s*$", line)
+                if mo:
+                    yield mo.group(1), int(mo.group(2), 16)
+                elif line.strip() and not line.lstrip().startswith(("#", ";", ".")):
+                    n, v = line.split()
+                    yield n, int(v, 16)
+
+    def cite(self, name, kn7000_addr):
+        """`name 0xADDR`: the routine a comment cites, at its address in this image
+        (a KN7000 profile keeps the text it always had)."""
+        if not P.get("cite"):
+            return f"{name} {kn7000_addr}"
+        a = self.m.sym_by_name.get(name)
+        return f"{name} 0x{a:08X}" if a is not None else f"{name} ?"
 
     @staticmethod
     def in_data(a):
@@ -369,8 +417,8 @@ class Gen:
             tlabel = self.name_at(r["table"], tab)
 
             def render(g, it, ks=ks, slot=slot, tlabel=tlabel):
-                out = [f"# {len(ks)} classes; a class id is ({slot:#x} << 16) | its index here (ClassProc"
-                       " 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)",
+                out = [f"# {len(ks)} classes; a class id is ({slot:#x} << 16) | its index here ("
+                       + g.cite("ClassProc", "0x4842A802") + " reads entry id & 0xFFFF, 0x18 bytes each)",
                        f".equ {tlabel}_SLOT, {slot:#x}"]
                 out.append(f"{it.label}:")
                 for k in ks:
@@ -759,11 +807,12 @@ class Gen:
     def code_refs(self):
         """Every data-region address the converted code names as an immediate."""
         import glob
-        rx = re.compile(r"\b0x(4[89][0-9a-fA-F]{6}|500[0-7][0-9a-fA-F]{4})\b")
+        rx = re.compile(r"\b0x(4[89][0-9a-fA-F]{6}|500[0-7][0-9a-fA-F]{4})\b" if "tree" not in P
+                        else r"\b0x([0-9a-fA-F]{8})\b")
         # the code names a data address it refers to by the label the previous
         # generation gave it (gen_program_s.py reads labels.sym), or as a number
         nx = re.compile(r"\b([A-Za-z_]\w*)(?:\+(\d+))?")
-        for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
+        for f in glob.glob(os.path.join(KN7, CODE_GLOB)):
             for line in open(f, encoding="latin-1"):
                 code = line.split("#", 1)[0]
                 for mo in rx.finditer(code):
@@ -1060,7 +1109,8 @@ class Gen:
             want = mnbase_for(o)
             if want != cur_base:
                 body += ["", f".mnbase 0x{want:08X}" + ("   # the initialised-RAM image: labels are the RAM"
-                                                        " addresses ResetEntry copies it to"
+                                                        " addresses " + P.get("raminit_by", "ResetEntry")
+                                                        + " copies it to"
                                                         if want != BASE else "   # flash addresses again"), ""]
                 cur_base = want
             for n in sorted(gap_labels.get(o, [])):
@@ -1089,12 +1139,13 @@ class Gen:
                "# Licensed under the terms of the GNU General Public License v3 or later",
                "#"]
         top = hdr + [
-            f"# The data region of program build {PROFILE} (file 0x{R1_END:06X}..0x{DATA_END:06X}), GENERATED by",
-            f"# tools/gen_data_s.py --profile {PROFILE} -- do not edit by hand.  Included by {P['prog']}",
-            "# after code region 1; the library image follows.  See tools/gen_data_s.py and",
+            f"# The data region of {P.get('what', 'program build ' + PROFILE)} (file 0x{R1_END:06X}..0x{DATA_END:06X}), GENERATED by",
+            f"# {'kn7000/' if 'tree' in P else ''}tools/gen_data_s.py --profile {PROFILE} -- do not edit by hand.  Included by {P['prog']}",
+            ("# after code region 1; the library image follows." if "tree" not in P else
+             "# in place of the region's bytes (gen_image_s.py --data-include).") + "  See tools/gen_data_s.py and",
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
-            '.include "src/constants.inc"',
+            f'.include "{CONSTS}"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
             "",
@@ -1170,7 +1221,7 @@ class Gen:
             ".equ NONE_ix, 0xFFFF",
             ".equ NOCLASS, 0xFFFFFFFF",
             "",
-            "# class table record (ClassProc 0x4842A802: proc +0, parent +4, allsize +8, selfsize +10,",
+            "# class table record (" + self.cite("ClassProc", "0x4842A802") + ": proc +0, parent +4, allsize +8, selfsize +10,",
             "# name +12, propdata +16, propname +20); `id` is the class id the records hold",
             ".macro CLASS this, id, table, proc=0, parent=NOCLASS, allsize=0, selfsize=0, cname=0, sig=0, fields=0",
             "\\this\\():",
@@ -1199,7 +1250,9 @@ class Gen:
     def ids_inc(self):
         m = self.m
         out = ["# The OT-block, title and mode ids, GENERATED by tools/gen_data_s.py from the start-up code's",
-               "# RegisterOTBlock (0x484317D1), RegisterTitle (0x48431836) and RegisterMode (0x484317EC) calls:",
+               "# {} ({}), {} ({}) and {} ({}) calls:".format(*(x for n, a in (
+                   ("RegisterOTBlock", "0x484317D1"), ("RegisterTitle", "0x48431836"),
+                   ("RegisterMode", "0x484317EC")) for x in self.cite(n, a).split(" ", 1))),
                "# id = (registry slot << 16) | index, slot 0xC OT blocks, 0xF titles, 0xE modes; each name is",
                "# the string the call registers.", ""]
         for title, d in (("OT blocks", m.otblocks), ("titles", m.titles), ("modes", m.modes)):
@@ -1220,7 +1273,8 @@ class Gen:
 
     def run(self, outdir):
         self.gui()
-        self.palette()
+        if PALETTE is not None:
+            self.palette()
         self.media()
         self.code_refs()
         self.typed_refs()

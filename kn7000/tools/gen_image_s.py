@@ -49,6 +49,12 @@
 #   * everything outside the code ranges is .incbin_range from the reference image,
 #     except the typed data ranges (--long-table, --text, --reflection-tables); a
 #     --sym name at the start of one labels it.
+#   * --data-include LO:HI:PATH replaces the file range [LO, HI) by `.include PATH`:
+#     a data region typed by tools/gen_data_s.py (--profile <model>), whose
+#     labels.sym (--data-labels) also names the code's 8-digit immediates that are
+#     data addresses (`Label`, or `Label+N` inside a typed item), as
+#     gen_program_s.py does for the KN7000.  The two generators read each other's
+#     output: tools/regen_sibling_data_and_code.sh runs them to a fixpoint.
 #
 # Usage:
 #   gen_image_s.py --rom baserom/X.rom --base 0x48400000 --code LO:HI[:CPU] [--code ...]
@@ -272,6 +278,10 @@ def main():
                          "range are entries (repeatable)")
     ap.add_argument("--text", action="append", default=[], metavar="LO:HI",
                     help="data range to emit as .byte rows with the text beside them")
+    ap.add_argument("--data-include", action="append", default=[], metavar="LO:HI:PATH",
+                    help="emit `.include PATH` for the file range [LO, HI) (a typed data region)")
+    ap.add_argument("--data-labels", help="labels.sym of the typed data region "
+                    "(`0xADDR name size` rows): the code names data addresses by them")
     ap.add_argument("--reflection-tables", action="store_true",
                     help="emit the code-pointer half of every MILK reflection table "
                          "gen_symbols.py finds as .long rows of names")
@@ -454,6 +464,15 @@ def main():
             t = img.off(t) if t is not None else None
             if t is not None and t in labels:
                 ops = re.sub(r"^0x[0-9a-fA-F]+", labels[t], ops)
+            elif dlab:
+                def one(m):
+                    v = int(m.group(1), 16)
+                    nm = data_ref(v)
+                    if nm is None:
+                        return m.group(1)
+                    used_data[nm.split("+")[0]] = v if "+" not in nm else v - int(nm.split("+")[1])
+                    return nm
+                ops = re.sub(r"\b(0x[0-9a-fA-F]{8})\b", one, ops)
             if all(n in taken or n in label_names for n in idents_of(ops) - REGS):
                 return f"\t{mnem}\t{ops}" if ops else f"\t{mnem}"
         hexb = ", ".join(f"0x{x:02x}" for x in b)
@@ -487,7 +506,35 @@ def main():
             if not img.in_code(co):
                 typed.append((co, co + 4 * n, "long"))
                 n_reflect += 1
+    includes = []
+    for r in a.data_include:
+        lo, hi, path = r.split(":", 2)
+        includes.append((int(lo, 0), int(hi, 0), path))
+    typed = [t for t in typed if not any(lo <= t[0] < hi for lo, hi, _p in includes)]
     typed.sort()
+    # the typed data region's labels: {cpu: name} and sorted (start, end, name) items
+    dlab, ditems = {}, []
+    if a.data_labels and os.path.exists(a.data_labels):
+        for line in open(a.data_labels):
+            if line.startswith(";"):
+                continue
+            ad, nm, sz = line.split()
+            ad, sz = int(ad, 16), int(sz)
+            dlab[ad] = nm
+            if sz:
+                ditems.append((ad, ad + sz, nm))
+        ditems.sort()
+    dstarts = [x[0] for x in ditems]
+    taken |= set(dlab.values())
+
+    def data_ref(v):
+        if v in dlab:
+            return dlab[v]
+        i = bisect.bisect_right(dstarts, v) - 1
+        if i >= 0 and ditems[i][0] < v < ditems[i][1]:
+            return f"{ditems[i][2]}+{v - ditems[i][0]}"
+        return None
+    used_data = {}
     label_at = {cpu_of(o): nm for o, nm in labels.items()}
     # a --sym name outside the code ranges labels the typed data range it starts
     # (the .long rows that hold its address then print the name)
@@ -515,6 +562,16 @@ def main():
         and emitting the typed data ranges."""
         nonlocal cur, mnbase
         while cur < to:
+            inc = next((x for x in includes if x[0] <= cur < x[1]), None)
+            if inc is not None:
+                if cur != inc[0] or to < inc[1]:
+                    sys.exit(f"gen_image_s: --data-include {inc[0]:#x}:{inc[1]:#x} cut at {cur:#x}..{to:#x}")
+                if base != mnbase:
+                    body.append(f".mnbase 0x{base:08x}")
+                    mnbase = base
+                body.append(f'.include "{inc[2]}"')
+                cur = inc[1]
+                continue
             r = img.rng(cur)
             t = next((t for t in typed if t[0] <= cur < t[1]), None)
             if r is None and t is not None:
@@ -531,7 +588,8 @@ def main():
             stop = to
             if r is None:
                 nxt = [lo for lo, _h, _d in code if cur < lo < to] + \
-                      [lo for lo, _h, _k in typed if cur < lo < to]
+                      [lo for lo, _h, _k in typed if cur < lo < to] + \
+                      [lo for lo, _h, _p in includes if cur < lo < to]
                 stop = min(nxt) if nxt else to
             else:
                 stop = min(to, r[1])
@@ -587,6 +645,7 @@ def main():
             used |= idents_of(line.split("\t", 2)[-1])
     rev = {v: c for c, v in names.items()}
     rev.update({nm: cpu_of(o) for o, nm in labels.items()})
+    rev.update(used_data)       # data labels the code uses: declared ahead too
     eq = sorted((n for n in (defined | used) - REGS - inc_names if n in rev), key=lambda n: (rev[n], n))
     LI = ["# Labels of " + a.out + " (generated by kn7000/tools/gen_image_s.py -- do not edit).",
           "# Entry names the generator made up (func_<ADDR>, <name>_entry) and local branch",

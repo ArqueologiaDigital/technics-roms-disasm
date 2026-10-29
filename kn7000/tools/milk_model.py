@@ -66,7 +66,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KN7 = os.path.dirname(HERE)
-BASE = 0x48400000
+BASE = 0x48400000          # CPU address of file offset 0 (tools/gen_data_s.py sets a sibling's)
 NONE16 = 0xFFFF
 # The initialised work-RAM image: ResetEntry (CPU 0x4840FF7E, the loop at
 # loc_48410068) copies 0x7F34 bytes from ROM 0x487B0B78 to RAM 0x50000010
@@ -80,7 +80,7 @@ def find_raminit(src_glob):
     build's converted code: `mov N, d1 / cmp 0, d1 / ble ... / mov SRC, a0 /
     mov 0x50000010, a1`."""
     rx = re.compile(r"mov\s+(0x[0-9a-fA-F]+), d1\n\s+cmp\s+0, d1\n\s+ble\s+\S+\n"
-                    r"\s+mov\s+(0x48[0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
+                    r"\s+mov\s+(0x[0-9a-fA-F]{8}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
     # (the destination is a number, or, once the data region is typed, its label <kind>_<ADDR>)
     for f in sorted(glob.glob(src_glob)):
         m = rx.search(open(f, encoding="latin-1").read())
@@ -136,7 +136,10 @@ def parse_calls(src_glob, by_name):
         regval, stack, func = {}, {}, None
         for i, l in enumerate(open(f, encoding="latin-1").read().split("\n")):
             m = re.match(r"^([A-Za-z_]\w*):", l)
-            if m and not m.group(1).startswith("loc_") and not m.group(1).endswith("_entry"):
+            # a function label resets the tracker; a branch label (loc_..., and
+            # gen_image_s.py's <entry>_L<hex>) does not
+            if m and not m.group(1).startswith("loc_") and not m.group(1).endswith("_entry") \
+                    and not re.search(r"_L[0-9a-f]+_*$", m.group(1)):
                 func = m.group(1)
                 regval, stack = {}, {}
             m = re.match(r"\s+mov\s+sp, (a\d)$", l)
