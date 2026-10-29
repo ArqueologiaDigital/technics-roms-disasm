@@ -28,7 +28,8 @@ live in their own folders, each migrated with its full history rewritten to its 
   `kn7000/notes/migration-commit-map.txt` maps its old commit hashes). CPU: Panasonic MN10300
   (MN103002A), so it has its own assembler, `kn7000/tools/kn7asm.py` (Python, no LLVM), and its own
   `kn7000/README.md`. `make kn7000`, and `make gate-kn7000` = `make -C kn7000 verify verify-sp7001
-  verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
+  verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave
+  verify-customdata`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
   regenerates them from the update disks, the private romset and the softlist floppy set beside this
   tree. `verify-cnv` covers the seven Style Convert Disk converters (`kn7000/src/cnv/`, fully
   disassembled from the `scd7000` / `scd6000` softlist disks; names in `kn7000/cnv_manual.sym`).
@@ -40,6 +41,9 @@ live in their own folders, each migrated with its full history rewritten to its 
   `verify-wave` the four wave ROMs (IC203/IC204, IC207/IC208): `kn7000/src/wave/main.s` / `sub.s` describe
   each tone generator's Y+X stream (directory, records, labelled PCM), split into chips by `kn7000/tools/wave_pair.py`
   (`kn7000/notes/wave-roms-2026-10-29.md`).
+  `verify-customdata` rebuilds the nine factory CUSTOM STYLE banks of IC21 (`kn7000/src/customdata/`,
+  references inflated from the `.AST` files of the `idd7000` / `custom1` / `custom2` softlist floppies;
+  `kn7000/notes/custom-data-ic21.md`); `make gate-kn6000` runs the KN6000's twin, `kn6000/src/customdata/`.
 
 - **`kn2400/`, `kn6000/`, `kn6500/`, `hdsx3/`**: the other Panasonic MN10300 "MILK" firmwares
   (2026-10-24): SX-KN2400 = SX-KN2600 program v1.1 (linked at 0x48400000, with a part linked for RAM

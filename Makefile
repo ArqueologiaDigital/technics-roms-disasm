@@ -80,7 +80,8 @@ wsa1-clean:
 #   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), table
 #                      build 80 (src/b80/table.s), the IC18 boot ROM (src/ic18/boot.s), all of
 #                      IC18 with its rhythm data (src/ic18/ic18.s), program builds 935 and 893
-#                      (src/b935/, src/b893/, ported from 941) and the four wave ROMs (src/wave/)
+#                      (src/b935/, src/b893/, ported from 941) the four wave ROMs (src/wave/)
+#                      and the nine factory custom-style banks (src/customdata/*.s)
 kn7000:
 	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom build-cnv
 
@@ -88,7 +89,7 @@ kn7000-clean:
 	$(MAKE) -C kn7000 clean
 
 gate-kn7000:
-	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave
+	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave verify-customdata
 
 # ------------------------------------------- the other MN10300 "MILK" firmwares
 # Added 2026-10-24, one folder each, made like kn7000/ and using its tools by
@@ -113,7 +114,7 @@ hdsx3:
 gate-kn2400:
 	$(MAKE) -C kn2400 verify verify-kn2600
 gate-kn6000:
-	$(MAKE) -C kn6000 verify
+	$(MAKE) -C kn6000 verify verify-customdata
 gate-kn6500:
 	$(MAKE) -C kn6500 verify
 gate-hdsx3:
