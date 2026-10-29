@@ -378,7 +378,11 @@ exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.
 	    baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --fix
 
 .PHONY: symbols-sp7001 program-src-sp7001
-symbols-sp7001 kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
+# (symbols-sp7001 is a phony that depends on the files: inside the grouped target it
+# made the recipe run on every verify-sp7001, rewriting tracked files)
+symbols-sp7001: kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
+	kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc
+kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
 kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc &: \
 		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py tools/sp7001_exports.py \
 		kn7000.sym kn7000_manual.sym kn7000_sp7001_new.sym $(REFS) $(SP7001_REFS)

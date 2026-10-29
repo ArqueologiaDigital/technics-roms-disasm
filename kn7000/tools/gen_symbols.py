@@ -169,6 +169,18 @@ def _is_strptr(data, ident_offsets, v):
     return (v - PROGRAM_BASE) in ident_offsets
 
 
+def _is_empty_str_after_ident(data, ident_offsets, v):
+    """v points at the empty string that ends a list of names: a NUL right after an
+    identifier string's NUL (the "" that closes a propname / name list)."""
+    o = v - PROGRAM_BASE
+    if not (1 <= o < len(data)) or data[o] != 0 or data[o - 1] != 0:
+        return False
+    k = o - 2
+    while k >= 0 and 0x20 < data[k] < 0x7F:
+        k -= 1
+    return (k + 1) in ident_offsets
+
+
 def _prologue(data, cpu):
     o = cpu - PROGRAM_BASE
     if not (0 <= o < len(data) - 1):
@@ -231,8 +243,14 @@ def find_tables(data, ident_offsets):
         # count 111 and the code array 0x485CFA58.)
         # (--start-aligned; opt-in, as it renames procedures in trees not checked against
         # their registrations, e.g. kn7000_sp7001_table.sym)
+        # The walk stops at a word that points at an identifier string: where the code
+        # range also covers the image's data (the SP7001 table-flash plug-in), the
+        # NUL-ended pointer list of the previous table (class names) would otherwise
+        # read as more code and shift every name (0x483F90C4 ff., 2026-10-29).
         k = name_off - 8
-        while START_ALIGNED and k >= 0 and _is_code(read_u32(data, k)):
+        while START_ALIGNED and k >= 0 and _is_code(read_u32(data, k)) \
+                and not _is_strptr(data, ident_offsets, read_u32(data, k)) \
+                and not _is_empty_str_after_ident(data, ident_offsets, read_u32(data, k)):
             k -= 4
         if START_ALIGNED and (name_off - 8 - k) // 4 > n_names:
             code_off = k + 4
