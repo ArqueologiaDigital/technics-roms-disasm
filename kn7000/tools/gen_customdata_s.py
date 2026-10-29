@@ -18,8 +18,12 @@ src/include/panel_memory.inc / voice_record.inc), one include file per record:
     the event streams one event per line) and the "TPAD" container (header, bank, six pads,
     their streams);
   * erased flash as `.space N, 0xff`.
-Only the residue past a record's end and the partial stale data in free blocks stay
-`.incbin_range` of the (git-ignored) reference, declared opaque.
+The residue (stale bytes past a record's end and in free blocks) goes to its own include file,
+typed by class Cover: spans that repeat a typed record of the --corpus images (same record-
+relative offset first, then any offset) are spelled with that record's lines; whole event
+streams, variation records and pad records that no record holds, and runs of events, with their
+macros; only splinters that match nothing and do not parse stay `.incbin_range` of the
+(git-ignored) reference, declared opaque.
 
 Every item is checked here: the generator models each macro's bytes and compares them with
 the image, so a source it writes either rebuilds the image or the generator stops.
@@ -30,6 +34,7 @@ Usage:
 """
 import argparse
 import os
+import re
 import struct
 import sys
 
@@ -58,6 +63,50 @@ def ev_len(d, o):
     if c == 0xF0:
         return d[o + 1] + 2
     return {0x90: 6, 0xB0: 3, 0xC0: 4, 0xD0: 2, 0xE0: 3}.get(c & 0xF0, 1)
+
+
+def event_line(d, p, e):
+    """(line, length) of the event at d[p], or None when the bytes there are no event the
+    firmware's stream reader takes (RhyEventLenByStatus) or it runs past e."""
+    c = d[p]
+    n = ev_len(d, p)
+    if p + n > e:
+        return None
+    a = d[p + 1:p + n]
+    k = c & 0xF0
+    if c >= 0x80 and c != 0xF0 and any(x >= 0x80 for x in a):
+        return None
+    if c == 0xF4:
+        return "\tev_beat", 1
+    if c == 0xF5:
+        return "\tev_end", 1
+    if c < 0x80:
+        return (f"\tev_at\t{c}", 1) if c <= 95 else None
+    if k == 0x90:
+        return f"\tev_note\t{c & 15}, {a[0]}, {a[1]}, {a[2]}, {a[3]}, {a[4]}", n
+    if k == 0xB0:
+        return f"\tev_cc\t{c & 15}, {a[0]}, {a[1]}", n
+    if k == 0xC0:
+        return f"\tev_pc\t{c & 15}, {a[0]:#04x}, {a[1]:#04x}, {a[2]:#04x}", n
+    if k == 0xD0:
+        return f"\tev_press\t{c & 15}, {a[0]}", n
+    if k == 0xE0:
+        return f"\tev_bend\t{c & 15}, {a[0]}, {a[1]}", n
+    if c == 0xF0 and n == 6:
+        return "\tev_sysex4\t" + ", ".join(f"{x:#04x}" for x in a[1:]), n
+    return None
+
+
+def parse_events(d, s, e):
+    """[(line, length)] for d[s:e] when it parses exactly as events, else None."""
+    out, p = [], s
+    while p < e:
+        ev = event_line(d, p, e)
+        if ev is None:
+            return None
+        out.append(ev)
+        p += ev[1]
+    return out
 
 
 def event_lines(d, s, e, what):
@@ -91,6 +140,7 @@ def event_lines(d, s, e, what):
             out.append("\tev_sysex4\t" + ", ".join(f"{x:#04x}" for x in a[1:]))
         else:
             raise SystemExit(f"{what}: event {c:#x} (length {n}) at {p:#x} has no macro")
+        out[-1] = (out[-1], n)
         p += n
     if p != e:
         raise SystemExit(f"{what}: events overrun the stream end")
@@ -128,8 +178,13 @@ class Out:
         self.ref = ref
         self.data = data
         self.pos = 0          # image offset the next emitted byte has
+        self.trace = []       # (pos, length, text, comment) of every emitted item
+        self.labels = {}      # label -> image offset
 
     def w(self, s=""):
+        m = re.fullmatch(r"(\w+):", s)
+        if m:
+            self.labels[m.group(1)] = self.pos
         self.lines.append(s)
 
     def emit(self, label, text, model, comment=None):
@@ -138,16 +193,21 @@ class Out:
         if got != model:
             raise SystemExit(f"model mismatch at {self.pos:#x} for {text!r}: {got.hex()} != {model.hex()}")
         lab = f"{label}:" if label else ""
+        if label:
+            self.labels[label] = self.pos
         line = f"{lab}\t{text}" if lab else f"\t{text}"
         if comment:
             line += f"\t# {comment}"
         self.lines.append(line)
+        self.trace.append((self.pos, len(model), text, comment))
         self.pos += len(model)
 
-    def raw(self, lines, n):
-        """Lines already checked to produce the next n bytes."""
-        self.lines += lines
-        self.pos += n
+    def raw(self, items, n):
+        """(line, length) items already checked to produce the next n bytes."""
+        for line, k in items:
+            self.lines.append(line)
+            self.trace.append((self.pos, k, line.strip(), None))
+            self.pos += k
 
     def incbin(self, label, n, comment, census=None):
         a, b = self.pos, self.pos + n
@@ -404,16 +464,245 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     return size
 
 
-def residue(o, d, end, what):
-    """Non-erased bytes from o.pos up to the last non-0xFF byte before `end`, as opaque."""
+OPAQUE_WHY = ("unknown-dump: residue of an earlier write that no typed record of the nine sets holds "
+              "(no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)")
+COVER_STATS = {"donor": 0, "stream": 0, "events": 0, "opaque": 0}
+
+
+def residue(o, d, end, what, cover, base=None, put=None, name=None):
+    """The non-erased bytes from o.pos up to the last non-0xFF byte before `end`: typed from the
+    records whose bytes they repeat, parsed as event streams, else declared opaque; then the
+    erased rest."""
     e = end
     while e > o.pos and d[e - 1] == 0xFF:
         e -= 1
     if e > o.pos:
-        o.incbin(None, e - o.pos, what,
-                 census=f"opaque -- unknown-dump: {what}, a fragment of an earlier record whose start is gone, so no "
-                        f"field can be anchored; no accessor reads it (probe slack_origin.py)")
+        if cover is None:
+            o.pos = e                      # a dry run (building the corpus): the residue is not needed
+        else:
+            main_lines, o.lines = o.lines, []
+            o.w(f"# {what}: stale bytes of earlier writes, {e - o.pos:#x} bytes from {o.pos:#x}")
+            cover.emit(o, d, o.pos, e, base)
+            body, o.lines = o.lines, main_lines
+            o.w(f'.include "{put(name, body)}"')
     o.fill_ff(end - o.pos)
+
+
+NUM_ARG = re.compile(r"[0-9a-fA-Fx\s+\-()]+")
+
+
+def numeric(text, labels):
+    """A donor's line with its label names replaced by their values and each argument folded to
+    one number, so it can stand anywhere."""
+    t = re.sub(r"\b[A-Za-z_]\w*\b", lambda m: hex(labels[m.group(0)]) if m.group(0) in labels else m.group(0), text)
+    parts = t.split(None, 1)
+    if len(parts) < 2:
+        return t
+    args = []
+    for a in re.findall(r'"(?:[^"\\]|\\.)*"|[^,]+', parts[1]):
+        a = a.strip()
+        if NUM_ARG.fullmatch(a) and re.search(r"[+\-]", a):
+            v = eval(a, {"__builtins__": {}}, {})
+            a = f"{v:#x}"
+        args.append(a)
+    return parts[0] + " " + ", ".join(args)
+
+
+class Cover:
+    """Types residue from a corpus of typed records (every record of every set given)."""
+    K = 32
+
+    def __init__(self, corpus):
+        self.recs = corpus            # [(name, data, base, size, items, labels)]
+        self.idx = {}
+        for ci, (name, data, base, size, items, labels) in enumerate(corpus):
+            for off in range(0, size - self.K + 1, 8):
+                self.idx.setdefault(data[base + off:base + off + self.K], (ci, off))
+
+    def match(self, d, p, e):
+        best = None
+        for j in range(8):
+            if p + j + self.K > e:
+                break
+            h = self.idx.get(bytes(d[p + j:p + j + self.K]))
+            if h is None:
+                continue
+            ci, off = h[0], h[1] - j
+            if off < 0:
+                continue
+            name, data, base, size, _, _ = self.recs[ci]
+            n = 0
+            lim = min(e - p, size - off)
+            while n < lim and data[base + off + n] == d[p + n]:
+                n += 1
+            if n >= self.K and (best is None or n > best[2]):
+                best = (ci, off, n)
+        return best
+
+    def same_offset(self, d, p, e, rel):
+        """The longest match for d[p:e] in a record at the same record-relative offset `rel`."""
+        best = None
+        for ci, (name, data, base, size, _, _) in enumerate(self.recs):
+            if rel >= size or data[base + rel:base + rel + self.K] != d[p:p + self.K]:
+                continue
+            n, lim = 0, min(e - p, size - rel)
+            while n < lim and data[base + rel + n] == d[p + n]:
+                n += 1
+            if best is None or n > best[2]:
+                best = (ci, rel, n)
+        return best
+
+    def emit(self, o, d, s, e, base=None):
+        p, gap = s, s
+        while p < e:
+            m = None
+            if base is not None and p == gap and p + self.K <= e:
+                m = self.same_offset(d, p, e, p - base)
+            if m is None:
+                m = self.match(d, p, e) if p + self.K <= e else None
+            if m is None:
+                p += 1
+                continue
+            if gap < p:
+                self.gap(o, d, gap, p)
+            self.donor(o, m)
+            p += m[2]
+            gap = p
+        if gap < e:
+            self.gap(o, d, gap, e)
+
+    def donor(self, o, m):
+        ci, off, n = m
+        name, data, base, size, items, labels = self.recs[ci]
+        a, b = base + off, base + off + n
+        first = True
+        note = f"stale tail of an earlier write; same bytes as {name} +{off:#x}..+{off + n:#x}"
+        for pos, k, text, comment in items:
+            if pos + k <= a or pos >= b:
+                continue
+            lo, hi = max(pos, a), min(pos + k, b)
+            if lo == pos and hi == pos + k:
+                o.emit(None, numeric(text, labels), data[pos:pos + k], note if first else None)
+            else:
+                o.bytes_run(data[lo:hi], (note + "; " if first else "") + f"bytes {lo - pos}..{hi - pos - 1} of `"
+                            + text.split(None, 1)[0] + "`")
+            first = False
+        COVER_STATS["donor"] += n
+
+    @staticmethod
+    def stream_at(d, h, e):
+        """The length of a whole event stream {index, u24 count, F4 .. F5} at h, or None."""
+        if h + 5 > e or d[h] >= 20:
+            return None
+        n = u24(d, h + 1)
+        if n < 2 or h + 4 + n > e or d[h + 4] != 0xF4 or d[h + 3 + n] != 0xF5:
+            return None
+        return 4 + n if parse_events(d, h + 4, h + 4 + n) is not None else None
+
+    @staticmethod
+    def var_at(d, x, e):
+        """True when d[x:x+0xE0] has the shape of a TCMP variation record: its zero fields, per-part
+        bytes in {0, 1, 0x10, 0x11} and eight part set-ups with CC94 = 64 and CC96 = 12."""
+        if x + 0xE0 > e or d[x + 0x0C:x + 0x10] != bytes(4) or d[x + 0x12:x + 0x15] != bytes(3) \
+                or d[x + 0x1A:x + 0x20] != bytes(6) or any(b not in (0, 1, 0x10, 0x11) for b in d[x + 4:x + 12]):
+            return False
+        return all(d[x + 0x20 + 0x18 * k + 5] == 0x40 and d[x + 0x20 + 0x18 * k + 9] == 0x0C for k in range(8))
+
+    @staticmethod
+    def pad_at(d, x, e):
+        """True when d[x:x+0x60] has the shape of a TPAD pad record: a printable 16-byte name, its
+        zero fields and two part set-ups with CC94 = 64."""
+        if x + 0x60 > e or any(not (0x20 <= b <= 0x7E) for b in d[x:x + 16]) \
+                or d[x + 0x20:x + 0x28] != bytes(8) or d[x + 0x58:x + 0x60] != bytes(8):
+            return False
+        return d[x + 0x28 + 5] == 0x40 and d[x + 0x40 + 5] == 0x40
+
+    def gap(self, o, d, s, e):
+        """Bytes no record holds: whole streams and variation records, the tail of a stream before
+        one, events, else opaque."""
+        p = s
+        while p < e:
+            h = next((x for x in range(p, e) if self.stream_at(d, x, e) or self.var_at(d, x, e)
+                      or self.pad_at(d, x, e)), None)
+            if h is None:
+                self.events_or_opaque(o, d, p, e, tail=False)
+                return
+            if h > p:
+                self.events_or_opaque(o, d, p, h, tail=True)
+            if self.var_at(d, h, e):
+                r = d[h:h + 0xE0]
+                args = [f"{x:#04x}" for x in r[0:12]] + [str(r[0x10]), str(r[0x11]), f"{u24(r, 0x15):#x}",
+                                                        f"{r[0x18]:#04x}", f"{r[0x19]:#04x}"]
+                o.emit(None, "TCMP_VAR " + ", ".join(args), r[0:0x20],
+                       "stale variation record of an earlier write (no record holds it; it has the record's shape)")
+                for k in range(8):
+                    o.emit(None, part_setup(r[0x20 + 0x18 * k:0x38 + 0x18 * k]), r[0x20 + 0x18 * k:0x38 + 0x18 * k])
+                COVER_STATS["var"] = COVER_STATS.get("var", 0) + 0xE0
+                p = h + 0xE0
+                continue
+            if self.pad_at(d, h, e):
+                r = d[h:h + 0x60]
+                args = [qstr(r[0:16])] + [f"{x:#04x}" for x in r[0x10:0x1D]] + [f"{u24(r, 0x1D):#x}"]
+                o.emit(None, "TPAD_PAD " + ", ".join(args), r[0:0x28],
+                       "stale pad record of an earlier write (no record holds it; it has the record's shape)")
+                for k in range(2):
+                    o.emit(None, part_setup(r[0x28 + 0x18 * k:0x40 + 0x18 * k]), r[0x28 + 0x18 * k:0x40 + 0x18 * k])
+                o.emit(None, ".space 8", bytes(8))
+                COVER_STATS["pad"] = COVER_STATS.get("pad", 0) + 0x60
+                p = h + 0x60
+                continue
+            n = self.stream_at(d, h, e)
+            o.emit(None, f"STREAM_HEADER {d[h]}, {n - 4:#x}", d[h:h + 4],
+                   "stale stream of an earlier write (no record holds it; it parses as events)")
+            o.raw(parse_events(d, h + 4, h + n), n - 4)
+            COVER_STATS["stream"] += n
+            p = h + n
+
+    @staticmethod
+    def run_end(d, p, e):
+        """How far events parse from p, with the stream rules the firmware's own streams keep: a
+        position byte (0..95) is followed by an event, and positions rise within a beat.  Returns
+        (end, number of status events)."""
+        q, last, nst, ok = p, -1, 0, p
+        while q < e:
+            ev = event_line(d, q, e)
+            if ev is None:
+                break
+            c = d[q]
+            if c < 0x80:
+                if c <= last or q + 1 >= e or d[q + 1] < 0x80 or d[q + 1] in (0xF4, 0xF5):
+                    break
+                last = c
+            elif c == 0xF4:
+                last = -1
+            else:
+                nst += 1
+            q += ev[1]
+            if c >= 0x80:
+                ok = q
+            if c == 0xF5:
+                break
+        return ok, nst
+
+    def events_or_opaque(self, o, d, s, e, tail):
+        """d[s:e], which no record holds and which holds no whole stream: runs of at least 16 bytes
+        and two status events that parse as events (ev_*), the rest opaque."""
+        p, opq = s, s
+        while p < e:
+            q, nst = self.run_end(d, p, e)
+            if q - p >= 16 and nst >= 2:
+                if opq < p:
+                    o.incbin(None, p - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY}")
+                    COVER_STATS["opaque"] += p - opq
+                o.w("\t# stale events of an earlier write: no record holds them; they parse as events")
+                o.raw(parse_events(d, p, q), q - p)
+                COVER_STATS["events"] += q - p
+                p = opq = q
+            else:
+                p += 1
+        if opq < e:
+            o.incbin(None, e - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY}")
+            COVER_STATS["opaque"] += e - opq
 
 
 def main():
@@ -428,28 +717,61 @@ def main():
                     help="directory of panel_memory.inc / voice_record.inc as the source names it")
     ap.add_argument("--inc-dir", help="directory of the per-record include files, as the source names it"
                                       " and relative to the current directory (default: --out without .s)")
+    ap.add_argument("--corpus", nargs="*", default=[],
+                    help="images (NAME=PATH) whose records type the residue; the image itself is added")
     a = ap.parse_args()
-    d = open(a.rom, "rb").read()
+    corpus = []
+    me = os.path.basename(a.out)[:-2]
+    for spec in [c for c in a.corpus if c.split("=", 1)[0] != me] + [f"{me}={a.rom}"]:
+        name, path = spec.split("=", 1)
+        data = open(path, "rb").read()
+        oc, _, _ = generate(a, data, None, dry=True)
+        for lab, base, size, items in oc.records:
+            corpus.append((f"{name} {lab}", data, base, size, items, oc.labels))
+    cover = Cover(corpus)
+    MASK_MISS.clear()
+    TAIL_OLD.clear()
+    o, written, inc_dir = generate(a, open(a.rom, "rb").read(), cover)
+    open(a.out, "w").write("\n".join(o.lines) + "\n")
+    for f in sorted(os.listdir(inc_dir)):
+        if f.endswith(".inc") and f not in written:
+            os.remove(os.path.join(inc_dir, f))
+    print(f"wrote {a.out}: {len(o.lines)} lines; {len(MASK_MISS)} stored bytes outside their field mask, "
+          f"{len(TAIL_OLD)} settings without the 941 part tails; residue bytes {COVER_STATS}")
+
+
+def generate(a, d, cover, dry=False):
+    """The image source's lines (o.lines) and its records' traces (o.records); a dry run writes no
+    include files and skips the residue."""
     if len(d) != NBLOCKS * BLOCK:
-        sys.exit(f"{a.rom}: {len(d):#x} bytes, expected {NBLOCKS * BLOCK:#x}")
+        sys.exit(f"image: {len(d):#x} bytes, expected {NBLOCKS * BLOCK:#x}")
     o = Out(a.ref, d)
+    o.records = []
     inc_dir = a.inc_dir or a.out[:-2]
-    os.makedirs(inc_dir, exist_ok=True)
+    if not dry:
+        os.makedirs(inc_dir, exist_ok=True)
     written = set()
 
     def record(lab, *args):
         """gen_record into its own include file, which the image source includes."""
         main_lines = o.lines
         o.lines = []
-        gen_record(o, d, *args[:1], lab, *args[1:])
+        t0 = len(o.trace)
+        size = gen_record(o, d, *args[:1], lab, *args[1:])
+        o.records.append((lab, args[0], size, o.trace[t0:]))
         body, o.lines = o.lines, main_lines
-        path = os.path.join(inc_dir, f"{lab}.inc")
-        with open(path, "w") as f:
-            f.write(f"# {lab}: one record of {os.path.basename(a.out)}; GENERATED by "
-                    f"kn7000/tools/gen_customdata_s.py\n" + "\n".join(body) + "\n")
-        written.add(f"{lab}.inc")
+        if dry:
+            return
         o.w()
-        o.w(f'.include "{path}"')
+        o.w(f'.include "{put(lab, body)}"')
+
+    def put(name, body):
+        path = os.path.join(inc_dir, f"{name}.inc")
+        with open(path, "w") as f:
+            f.write(f"# {name}: part of {os.path.basename(a.out)}; GENERATED by "
+                    f"kn7000/tools/gen_customdata_s.py\n" + "\n".join(body) + "\n")
+        written.add(f"{name}.inc")
+        return path
     o.w("# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>")
     o.w("# Licensed under the terms of the GNU General Public License v3 or later")
     o.w("#")
@@ -492,7 +814,7 @@ def main():
             name = printable(d[start + 4:start + 20])
             record(f"Slot{s:02d}", start, a.model, f"{b}, {n}", s,
                        f"slot {s}: \"{name}\", " + (f"block {b}" if n == 1 else f"blocks {b}..{b + n - 1}"))
-            residue(o, d, start + n * BLOCK, "residue past the record's end")
+            residue(o, d, start + n * BLOCK, "residue past the record's end", cover, start, put, f"Slot{s:02d}_Residue")
             b += n
             continue
         if d[0x2A + b]:
@@ -510,23 +832,19 @@ def main():
         except ValueError:
             o.w()
             o.w(f"# ---- block {b}: free, holding part of an older record (its start was overwritten)")
-            residue(o, d, start + BLOCK, f"block {b}: stale data of an overwritten record")
+            residue(o, d, start + BLOCK, f"block {b}: stale data of an overwritten record", cover, None, put,
+                    f"Block{b:02d}_Residue")
             b += 1
             continue
         name = printable(d[start + 4:start + 20])
         rec = d[start:start + 0x100]
         record(f"Stale{b:02d}", start, a.model, f"{rec[0xA4]}, {rec[0xA5]}", None,
                    f"blocks {b}..{b + n - 1}: free, holding a complete older record \"{name}\" that no slot points at")
-        residue(o, d, start + n * BLOCK, "residue past the stale record's end")
+        residue(o, d, start + n * BLOCK, "residue past the stale record's end", cover, start, put, f"Stale{b:02d}_Residue")
         b += n
-    if o.pos != len(d):
+    if o.pos != len(d) and not dry:
         sys.exit(f"emitted {o.pos:#x} bytes, image is {len(d):#x}")
-    open(a.out, "w").write("\n".join(o.lines) + "\n")
-    for f in sorted(os.listdir(inc_dir)):
-        if f.endswith(".inc") and f not in written:
-            os.remove(os.path.join(inc_dir, f))
-    print(f"wrote {a.out}: {len(o.lines)} lines; {len(MASK_MISS)} stored bytes outside their field mask, "
-          f"{len(TAIL_OLD)} settings without the 941 part tails")
+    return o, written, inc_dir
 
 
 if __name__ == "__main__":

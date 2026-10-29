@@ -44,99 +44,79 @@ CustDir:	CUSTDIR_SIGNATURE
 	.space 0x7f9a, 0xff	# erased: the rest of the directory block
 
 .include "src/customdata/04custm4/Slot00.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0xe71b, 0xf14f	# residue past the record's end
+.include "src/customdata/04custm4/Slot00_Residue.inc"
 	.space 0xeb1, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot08.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x16b1d, 0x17b98	# residue past the record's end
+.include "src/customdata/04custm4/Slot08_Residue.inc"
 	.space 0x468, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot09.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x1f087, 0x1fa75	# residue past the record's end
+.include "src/customdata/04custm4/Slot09_Residue.inc"
 	.space 0x58b, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot07.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x2bac3, 0x2dd7c	# residue past the record's end
+.include "src/customdata/04custm4/Slot07_Residue.inc"
 	.space 0x2284, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot01.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x37434, 0x38000	# residue past the record's end
+.include "src/customdata/04custm4/Slot01_Residue.inc"
 
 .include "src/customdata/04custm4/Slot03.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x3f23e, 0x3f45b	# residue past the record's end
+.include "src/customdata/04custm4/Slot03_Residue.inc"
 	.space 0xba5, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot02.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x4b3ed, 0x4df93	# residue past the record's end
+.include "src/customdata/04custm4/Slot02_Residue.inc"
 	.space 0x206d, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot10.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x5237f, 0x58000	# residue past the record's end
+.include "src/customdata/04custm4/Slot10_Residue.inc"
 
 .include "src/customdata/04custm4/Slot11.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x5a37f, 0x5e3af	# residue past the record's end
+.include "src/customdata/04custm4/Slot11_Residue.inc"
 	.space 0x1c51, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot12.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x6237f, 0x6681a	# residue past the record's end
+.include "src/customdata/04custm4/Slot12_Residue.inc"
 	.space 0x17e6, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot13.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x6a37f, 0x6e110	# residue past the record's end
+.include "src/customdata/04custm4/Slot13_Residue.inc"
 	.space 0x1ef0, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot14.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x7237f, 0x7776b	# residue past the record's end
+.include "src/customdata/04custm4/Slot14_Residue.inc"
 	.space 0x895, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot15.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x7a37f, 0x7f184	# residue past the record's end
+.include "src/customdata/04custm4/Slot15_Residue.inc"
 	.space 0xe7c, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot16.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x8237f, 0x88000	# residue past the record's end
+.include "src/customdata/04custm4/Slot16_Residue.inc"
 
 .include "src/customdata/04custm4/Slot17.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x8a37f, 0x8ea94	# residue past the record's end
+.include "src/customdata/04custm4/Slot17_Residue.inc"
 	.space 0x156c, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot18.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x9237f, 0x96a7d	# residue past the record's end
+.include "src/customdata/04custm4/Slot18_Residue.inc"
 	.space 0x1583, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot19.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0x9a37f, 0x9f634	# residue past the record's end
+.include "src/customdata/04custm4/Slot19_Residue.inc"
 	.space 0x9cc, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Stale20.inc"
-	# census: opaque -- unknown-dump: residue past the stale record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0xa75b5, 0xa8000	# residue past the stale record's end
+.include "src/customdata/04custm4/Stale20_Residue.inc"
 
 .include "src/customdata/04custm4/Slot05.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0xae5c1, 0xaf434	# residue past the record's end
+.include "src/customdata/04custm4/Slot05_Residue.inc"
 	.space 0xbcc, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot04.inc"
-	# census: opaque -- unknown-dump: residue past the record's end, a fragment of an earlier record whose start is gone, so no field can be anchored; no accessor reads it (probe slack_origin.py)
-	.incbin_range "baserom/customdata/04custm4.ic21", 0xb8086, 0xb956d	# residue past the record's end
+.include "src/customdata/04custm4/Slot04_Residue.inc"
 	.space 0x6a93, 0xff	# erased flash
 
 .include "src/customdata/04custm4/Slot06.inc"

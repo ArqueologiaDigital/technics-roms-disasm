@@ -834,6 +834,7 @@ verify-customdata-ast: $(CD_REFS) tools/ast_file.py tools/zlib10_deflate.py
 # Regenerate src/customdata/*.s from the references. The committed files are the result.
 customdata-src: tools/gen_customdata_s.py $(CD_REFS)
 	$(foreach n,$(CUSTOMDATA),$(PYTHON) tools/gen_customdata_s.py --rom baserom/customdata/$(n).ic21 \
+	    --corpus $(foreach m,$(CUSTOMDATA),$(m)=baserom/customdata/$(m).ic21) \
 	    --ref baserom/customdata/$(n).ic21 --out src/customdata/$(n).s --model kn7000 \
 	    --include src/customdata/customdata.inc \
 	    --title 'Technics SX-KN7000 factory CUSTOM STYLE memory "$(n)" (IC21, bank 0x96820000) - byte-exact.' \
