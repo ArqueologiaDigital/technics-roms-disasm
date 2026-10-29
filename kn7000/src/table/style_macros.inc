@@ -124,3 +124,62 @@
 .macro tpad_ref a, b, flags
 	.byte	\a, \b, \flags
 .endm
+# ---- the 'JK' internal voice archive (src/table/voices/; tools/gen_table_voices.py) ----
+# A parameter record (0x10 bytes; VoiceParamRecFetchBanked 0x48449925 indexes them):
+#   ms, zones   offsets of its multisample header and zone list (TgVoiceRoutePtrCalc 0x4C02BE45)
+#   flags       bit 7: the zones are 8 bytes and carry a fine tune (TgVoiceRoutePtrCalc steps 8
+#               or 6; TgPitchNoteResolve 0x4C02FB79 adds zone +6); the low bits: no reader traced
+#   key_lo, key_hi  the sample's mapped key window, notes (TgPitchZoneFold 0x4C02FB25 folds the
+#               pitch by octaves into [key_lo << 8, (key_hi << 8) + 0xFF])
+#   b11         no reader traced (66 in nearly all records)
+#   center      the zone centre pitch, 16-bit (TgPitchZoneFold -> librec +0x0C)
+#   b14, b15    no reader traced
+.macro jk_param ms, zones, flags, key_lo, key_hi, b11, center, b14, b15
+	.long	\ms, \zones
+	.byte	\flags, \key_lo, \key_hi, \b11
+	.word	\center
+	.byte	\b14, \b15
+.endm
+# A zone: the halfword +0 is the wave page (low byte; TgVoiceRouteFieldSet 0x4C037C16 puts
+# it in bits 19:12 of the voice's select) with the TG side in bits 10/11 (0x400 / 0x800;
+# TgVoiceSideSelect 0x4C02BECB) and bits 12-15 not traced; +2 the wave directory entry
+# (TgElemNoteOnStd 0x4C030A98: & 0xFFF into bits 11:0); +4, +5 not traced (+5 is 0 in
+# every zone); the 8-byte kind adds a signed fine tune (+6; TgPitchNoteResolve).
+.macro jk_zone6 page, flags, entry, b4, b5
+	.byte	\page, \flags
+	.word	\entry
+	.byte	\b4, \b5
+.endm
+.macro jk_zone8 page, flags, entry, b4, b5, tune
+	.byte	\page, \flags
+	.word	\entry
+	.byte	\b4, \b5
+	.word	\tune
+.endm
+# A tone record's head (0x54 bytes; the part tone block's descriptor, 0x500CE404 + part *
+# 0x130 +0; TgPartProgramApply 0x4C03893D stores it). After the 16-byte name:
+#   class   +0x10: & 0xC0 picks the note-on path (TgNoteOn 0x4C036832): 0x00/0xC0 melodic,
+#           0x40 table (TgPartToneIsTableClass), 0x80 kit; & 0xCF = 0x81..0x83 kit layers
+#   b11     +0x11: no reader traced
+#   mod_src +0x12: 2-bit mod source fields (TgPartToneModSetupMelodic 0x4C03A3CD)
+#   type    +0x44: low nibble the tone TYPE / LFO group (TgPartEditLfoGroupLoad 0x4C00CF8B,
+#           TgVoiceEgSegParamGet 0x4C03A20F)
+#   b45     +0x45: the flag TgVoiceEgSegParamGet tests for types 0xA/0xB
+# tone_head covers +0x10..+0x12 and tone_type +0x44..+0x45; the bytes between and after,
+# whose readers are not traced, follow as .byte rows with their offsets.
+.macro tone_head class, b11, mod_src
+	.byte	\class, \b11, \mod_src
+.endm
+.macro tone_type type, b45
+	.byte	\type, \b45
+.endm
+# A TABLE tone (class 0x40): the head is 0x27 bytes, then one 3-byte entry per note that
+# TgNoteOnTableTone (0x4C03600D) reads at +0x27 + note x 3: it enables up to two synth
+# layers (0x4C035EAA builds them).
+.macro tone_head_table class, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26
+	.byte	\class, \b11, \b12, \b13, \b14, \b15, \b16, \b17, \b18, \b19, \b1a, \b1b, \b1c, \b1d, \b1e, \b1f
+	.byte	\b20, \b21, \b22, \b23, \b24, \b25, \b26
+.endm
+.macro tone_note a, b, c
+	.byte	\a, \b, \c
+.endm
