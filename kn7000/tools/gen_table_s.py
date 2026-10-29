@@ -35,6 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_program_s as G     # noqa: E402  (disasm_function, encoder, name_target)
 import gen_symbols as GS      # noqa: E402  (find_tables)
 import table_segments as TS   # noqa: E402  (what each directory segment is)
+import table_png as TP        # noqa: E402  (raw pictures <-> indexed PNG files)
 
 BASE = 0x48000000
 
@@ -117,12 +118,33 @@ def put_jpeg(jpg_dir, name, jpeg):
     open(path, "wb").write(jpeg)
 
 
-def gui_resource_tables(d, s, e, ROMQ):
+PNG_OUT = "build/table_png"     # where `make` puts the bytes tools/table_png.py makes from the PNGs
+
+
+def png_item(jpg_dir, rel, fmt, raw, what):
+    """Keep `raw` as the PNG <jpg_dir>/<rel>.png (tools/table_png.py) and return the
+    .incbin line of the bytes `make` rebuilds from it."""
+    TP.write_item(os.path.join(jpg_dir, rel + ".png"), fmt, raw)
+    return (f'    .incbin\t"{PNG_OUT}/{rel}.bin"   # census: generated -- tools/table_png.py '
+            f"from {jpg_dir}/{rel}.png ({what})")
+
+
+def tail_lines(d, a, b):
+    """Bytes after an item up to the next one: zero fill, or 0xFF up to a 4-byte boundary."""
+    gap = d[a:b]
+    if gap and gap == b"\xff" * len(gap) and len(gap) < 4 and b % 4 == 0:
+        return ["    .align\t4, 0xff"]
+    assert gap == bytes(b - a), f"GUI tables: unexpected bytes at 0x{a:x}..0x{b:x}"
+    return [f"    .space\t{b - a}, 0x00"] if b > a else []
+
+
+def gui_resource_tables(d, s, e, ROMQ, jpg_dir):
     """Segment 0: five header words (four table pointers and a 0) copied out by
     InitializeResource, zeros, then the four tables. The bitmap, frame-piece and icon
     tables are {s16 width, s16 height, u8 *pixels} rows ended by an all-zero row, the
     font table 0x14-byte descriptors ended by an all-zero one; then the pixel and
-    glyph data the rows point at. All pointers are CPU addresses."""
+    glyph data the rows point at, each item a PNG in <jpg_dir>/gui/ (tools/table_png.py).
+    All pointers are CPU addresses."""
     tabs = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
     ptrs = [u32(d, s + 4 * k) for k in range(5)]
     offs = [p - BASE for p in ptrs[:4]]
@@ -134,27 +156,15 @@ def gui_resource_tables(d, s, e, ROMQ):
         assert d[cur:to] == bytes(to - cur), f"GUI tables: non-zero bytes at 0x{cur:x}"
         return [f"    .space\t0x{to - cur:x}, 0x00"] if to > cur else []
 
-    def blobs(names, end):
-        """Each pointed-at block once, under its first name, up to the next one."""
-        first = {}
-        for p, nm in names:
-            first.setdefault(p, nm)
-        keys = sorted(first)
-        out = []
-        for n, p in enumerate(keys):
-            nxt = keys[n + 1] if n + 1 < len(keys) else end
-            out += [f"{first[p]}:", f"    .incbin_range\t{ROMQ}, 0x{p - BASE:06x}, 0x{nxt - BASE:06x}"]
-        return out, keys
-
     bounds = offs + [e]
     for t, (tab, o) in enumerate(zip(tabs, offs)):
         B += fill(o)
         B.append(f"{tab}:")
         hi = BASE + bounds[t + 1]
-        names = []
+        items = []                                   # (cpu address, label, size, png rel, fmt, what)
         if tab != "ResFontTable":
-            stem = {"ResBitmapTable": "ResBitmap", "ResFrameTable": "ResFrame",
-                    "ResIconTable": "ResIcon"}[tab]
+            stem, file = {"ResBitmapTable": ("ResBitmap", "bitmap"), "ResFrameTable": ("ResFrame", "frame"),
+                          "ResIconTable": ("ResIcon", "icon")}[tab]
             rows = []
             while True:
                 w, h, p = struct.unpack_from("<hhI", d, o + 8 * len(rows))
@@ -162,37 +172,68 @@ def gui_resource_tables(d, s, e, ROMQ):
                     break
                 assert BASE + o < p < hi, f"{tab}[{len(rows)}] points outside its table's area"
                 rows.append((w, h, p))
-            names = [(p, f"{stem}{k:03d}") for k, (w, h, p) in enumerate(rows)]
             first = {}
-            for p, nm in names:
-                first.setdefault(p, nm)              # a shared block keeps the first row's name
+            for k, (w, h, p) in enumerate(rows):
+                if p in first:
+                    continue                         # a shared block keeps the first row's name
+                first[p] = f"{stem}{k:03d}"
+                if stem == "ResIcon":                # DrawIcons_Impl: always 24 x 24, 4 bpp
+                    items.append((p, first[p], 288, f"gui/{file}_{k:03d}", "p4 24 24", "24x24, 4 bpp"))
+                else:                                # one byte per pixel, rows padded to even
+                    items.append((p, first[p], (w + (w & 1)) * h, f"gui/{file}_{k:03d}",
+                                  f"p8 {w} {h}", f"{w}x{h}, 8 bpp"))
             for w, h, p in rows:
                 B += [f"    .word\t{w}, {h}", f"    .long\t{first[p]}"]
-            k = len(rows)
             B.append("    .long\t0, 0   # end of the table")
-            cur = o + 8 * (k + 1)
+            cur = o + 8 * (len(rows) + 1)
         else:
-            k = 0
+            k, fonts = 0, []
             while True:
                 w, h, desc, cols, gl, kern, dbcs = struct.unpack_from("<HHhHIII", d, o + 0x14 * k)
                 if gl == 0:
                     assert d[o + 0x14 * k:o + 0x14 * (k + 1)] == bytes(0x14), "font table end"
                     break
-                names.append((gl, f"ResFont{k:02d}Glyphs"))
-                row = [f"ResFont{k:02d}Glyphs"]
-                for q, nm in ((kern, f"ResFont{k:02d}Kern"), (dbcs, f"ResFont{k:02d}Sjis")):
-                    if q:
-                        assert BASE + o < q < hi, f"font {k}: pointer outside the table's area"
-                        names.append((q, nm))
-                    row.append(nm if q else "0")
+                assert dbcs == 0, f"font {k}: a Shift-JIS table (not handled)"
+                row = [f"ResFont{k:02d}Glyphs", f"ResFont{k:02d}Kern" if kern else "0", "0"]
                 B += [f"    .word\t{w}, {h}, {desc}, {cols}", f"    .long\t{', '.join(row)}"]
+                fonts.append((k, w, h, cols, gl, kern))
                 k += 1
             B.append("    .space\t0x14, 0x00   # end of the table")
             cur = o + 0x14 * (k + 1)
-        lo = min(p for p, _ in names) - BASE
-        B += fill(lo)
-        bl, _keys = blobs(names, hi)
-        B += bl
+            starts = sorted([f[4] for f in fonts] + [f[5] for f in fonts if f[5]]) + [hi]
+            nxt = lambda p: starts[starts.index(p) + 1]          # noqa: E731
+            for k, w, h, cols, gl, kern in fonts:
+                if kern:                             # proportional: {u8 width, 0, u16 offset} from 0x20
+                    n = (nxt(kern) - kern) // 4
+                    ents = [struct.unpack_from("<BBH", d, kern - BASE + 4 * c) for c in range(n)]
+                    offs_k = [x[2] for x in ents] + [nxt(gl) - gl]
+                    assert offs_k == sorted(offs_k) and offs_k[0] == 0, f"font {k}: glyphs out of order"
+                    widths = [(offs_k[c + 1] - offs_k[c]) // h for c in range(n)]
+                    assert all((offs_k[c + 1] - offs_k[c]) % h == 0 for c in range(n))
+                    fmt = f"font 0 {h} {n} columns={','.join(map(str, widths))}"
+                    items.append((gl, f"ResFont{k:02d}Glyphs", offs_k[-1], f"gui/font_{k:02d}", fmt,
+                                  f"{n} proportional 1-bpp glyphs from 0x20, {h} high"))
+                    items.append((kern, f"ResFont{k:02d}Kern", 4 * n, None, ents, None))
+                else:
+                    n = (nxt(gl) - gl) // (cols * h)
+                    items.append((gl, f"ResFont{k:02d}Glyphs", n * cols * h, f"gui/font_{k:02d}",
+                                  f"font {cols} {h} {n}", f"{n} 1-bpp glyphs from 0x20, {8 * cols}x{h}"))
+        items.sort()
+        B += fill(items[0][0] - BASE)
+        for n_, (p, lab, size, rel, fmt, what) in enumerate(items):
+            end = items[n_ + 1][0] if n_ + 1 < len(items) else hi
+            a = p - BASE
+            assert a + size <= end - BASE, f"{lab}: overlaps the next item"
+            B.append(f"{lab}:")
+            if rel is None:                          # a kern table
+                B.append("    # {u8 advance width, u8 0, u16 offset of the glyph from ResFontNNGlyphs}")
+                for c, (wd, z, off) in enumerate(fmt):
+                    ch = chr(0x20 + c)
+                    shown = repr(ch) if 0x20 + c < 0x7F else f"0x{0x20 + c:02x}"
+                    B += [f"    .byte\t{wd}, {z}", f"    .word\t{off}   # {shown}"]
+            else:
+                B.append(png_item(jpg_dir, rel, fmt, d[a:a + size], what))
+            B += tail_lines(d, a + size, end - BASE)
         cur = bounds[t + 1]
     return B
 
@@ -417,7 +458,7 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
             assert b"\0" not in text, f"segment {i} ({label}): a NUL inside the marker text"
             B.append(f"    {op}\t" + asm_string(text).replace("\\x0a", "\\n"))
         elif kind == "gui":
-            B += gui_resource_tables(d, s, e, ROMQ)
+            B += gui_resource_tables(d, s, e, ROMQ, jpg_dir)
         elif kind == "help":
             B += help_texts(d, s, e, label)
         elif kind == "offtab":

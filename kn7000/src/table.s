@@ -228,111 +228,112 @@ ResBitmapTable:
     .long	ResBitmap052
     .long	0, 0   # end of the table
 ResBitmap000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0003f0, 0x000630
+    .incbin	"build/table_png/gui/bitmap_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_000.png (24x24, 8 bpp)
 ResBitmap001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x000630, 0x000870
+    .incbin	"build/table_png/gui/bitmap_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_001.png (24x24, 8 bpp)
 ResBitmap002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x000870, 0x003e94
+    .incbin	"build/table_png/gui/bitmap_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_002.png (307x45, 8 bpp)
 ResBitmap003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x003e94, 0x0045c0
+    .incbin	"build/table_png/gui/bitmap_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_003.png (33x54, 8 bpp)
 ResBitmap004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0045c0, 0x004780
+    .incbin	"build/table_png/gui/bitmap_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_004.png (32x14, 8 bpp)
 ResBitmap005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004780, 0x0048b2
+    .incbin	"build/table_png/gui/bitmap_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_005.png (17x17, 8 bpp)
 ResBitmap006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0048b2, 0x0048be
+    .incbin	"build/table_png/gui/bitmap_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_006.png (3x3, 8 bpp)
 ResBitmap007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0048be, 0x004ab6
+    .incbin	"build/table_png/gui/bitmap_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_007.png (27x18, 8 bpp)
 ResBitmap008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004ab6, 0x004cae
+    .incbin	"build/table_png/gui/bitmap_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_008.png (27x18, 8 bpp)
 ResBitmap009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004cae, 0x004ea6
+    .incbin	"build/table_png/gui/bitmap_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_009.png (27x18, 8 bpp)
 ResBitmap010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004ea6, 0x00509e
+    .incbin	"build/table_png/gui/bitmap_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_010.png (27x18, 8 bpp)
 ResBitmap011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00509e, 0x005296
+    .incbin	"build/table_png/gui/bitmap_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_011.png (27x18, 8 bpp)
 ResBitmap012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x005296, 0x00548e
+    .incbin	"build/table_png/gui/bitmap_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_012.png (27x18, 8 bpp)
 ResBitmap013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00548e, 0x00588e
+    .incbin	"build/table_png/gui/bitmap_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_013.png (32x32, 8 bpp)
 ResBitmap014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00588e, 0x005c8e
+    .incbin	"build/table_png/gui/bitmap_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_014.png (32x32, 8 bpp)
 ResBitmap015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x005c8e, 0x00608e
+    .incbin	"build/table_png/gui/bitmap_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_015.png (32x32, 8 bpp)
 ResBitmap016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00608e, 0x00648e
+    .incbin	"build/table_png/gui/bitmap_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_016.png (32x32, 8 bpp)
 ResBitmap017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00648e, 0x00688e
+    .incbin	"build/table_png/gui/bitmap_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_017.png (32x32, 8 bpp)
 ResBitmap018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00688e, 0x006c8e
+    .incbin	"build/table_png/gui/bitmap_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_018.png (32x32, 8 bpp)
 ResBitmap019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x006c8e, 0x00708e
+    .incbin	"build/table_png/gui/bitmap_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_019.png (32x32, 8 bpp)
 ResBitmap020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00708e, 0x00748e
+    .incbin	"build/table_png/gui/bitmap_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_020.png (32x32, 8 bpp)
 ResBitmap021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00748e, 0x00788e
+    .incbin	"build/table_png/gui/bitmap_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_021.png (32x32, 8 bpp)
 ResBitmap022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00788e, 0x007c8e
+    .incbin	"build/table_png/gui/bitmap_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_022.png (32x32, 8 bpp)
 ResBitmap023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x007c8e, 0x00808e
+    .incbin	"build/table_png/gui/bitmap_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_023.png (32x32, 8 bpp)
 ResBitmap024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00808e, 0x00848e
+    .incbin	"build/table_png/gui/bitmap_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_024.png (32x32, 8 bpp)
 ResBitmap025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00848e, 0x00888e
+    .incbin	"build/table_png/gui/bitmap_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_025.png (32x32, 8 bpp)
 ResBitmap026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00888e, 0x008c8e
+    .incbin	"build/table_png/gui/bitmap_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_026.png (32x32, 8 bpp)
 ResBitmap027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x008c8e, 0x00908e
+    .incbin	"build/table_png/gui/bitmap_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_027.png (32x32, 8 bpp)
 ResBitmap028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00908e, 0x00948e
+    .incbin	"build/table_png/gui/bitmap_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_028.png (32x32, 8 bpp)
 ResBitmap029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00948e, 0x00988e
+    .incbin	"build/table_png/gui/bitmap_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_029.png (32x32, 8 bpp)
 ResBitmap030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00988e, 0x00993e
+    .incbin	"build/table_png/gui/bitmap_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_030.png (15x11, 8 bpp)
 ResBitmap031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00993e, 0x0099ee
+    .incbin	"build/table_png/gui/bitmap_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_031.png (15x11, 8 bpp)
 ResBitmap032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0099ee, 0x009dee
+    .incbin	"build/table_png/gui/bitmap_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_032.png (32x32, 8 bpp)
 ResBitmap033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x009dee, 0x00a1ee
+    .incbin	"build/table_png/gui/bitmap_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_033.png (32x32, 8 bpp)
 ResBitmap034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a1ee, 0x00a5ee
+    .incbin	"build/table_png/gui/bitmap_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_034.png (32x32, 8 bpp)
 ResBitmap035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a5ee, 0x00a9ee
+    .incbin	"build/table_png/gui/bitmap_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_035.png (32x32, 8 bpp)
 ResBitmap036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a9ee, 0x00adee
+    .incbin	"build/table_png/gui/bitmap_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_036.png (32x32, 8 bpp)
 ResBitmap037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00adee, 0x00b1ee
+    .incbin	"build/table_png/gui/bitmap_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_037.png (32x32, 8 bpp)
 ResBitmap038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b1ee, 0x00b5ee
+    .incbin	"build/table_png/gui/bitmap_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_038.png (32x32, 8 bpp)
 ResBitmap039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b5ee, 0x00b9ee
+    .incbin	"build/table_png/gui/bitmap_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_039.png (32x32, 8 bpp)
 ResBitmap040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b9ee, 0x00bdee
+    .incbin	"build/table_png/gui/bitmap_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_040.png (32x32, 8 bpp)
 ResBitmap041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00bdee, 0x00c1ee
+    .incbin	"build/table_png/gui/bitmap_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_041.png (32x32, 8 bpp)
 ResBitmap042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c1ee, 0x00c5ee
+    .incbin	"build/table_png/gui/bitmap_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_042.png (32x32, 8 bpp)
 ResBitmap043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c5ee, 0x00c9ee
+    .incbin	"build/table_png/gui/bitmap_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_043.png (32x32, 8 bpp)
 ResBitmap044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c9ee, 0x00cdee
+    .incbin	"build/table_png/gui/bitmap_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_044.png (32x32, 8 bpp)
 ResBitmap045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00cdee, 0x00d51a
+    .incbin	"build/table_png/gui/bitmap_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_045.png (33x54, 8 bpp)
 ResBitmap046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00d51a, 0x00d6da
+    .incbin	"build/table_png/gui/bitmap_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_046.png (32x14, 8 bpp)
 ResBitmap047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00d6da, 0x00de06
+    .incbin	"build/table_png/gui/bitmap_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_047.png (33x54, 8 bpp)
 ResBitmap048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00de06, 0x00dfc6
+    .incbin	"build/table_png/gui/bitmap_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_048.png (32x14, 8 bpp)
 ResBitmap049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00dfc6, 0x00e22a
+    .incbin	"build/table_png/gui/bitmap_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_049.png (34x18, 8 bpp)
 ResBitmap050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e22a, 0x00e48e
+    .incbin	"build/table_png/gui/bitmap_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_050.png (34x18, 8 bpp)
 ResBitmap051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e48e, 0x00e686
+    .incbin	"build/table_png/gui/bitmap_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_051.png (27x18, 8 bpp)
 ResBitmap052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e686, 0x00e880
+    .incbin	"build/table_png/gui/bitmap_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_052.png (27x18, 8 bpp)
+    .align	4, 0xff
 ResFrameTable:
     .word	1, 1
     .long	ResFrame000
@@ -482,151 +483,151 @@ ResFrameTable:
     .long	ResFrame072
     .long	0, 0   # end of the table
 ResFrame000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead0, 0x00ead2
+    .incbin	"build/table_png/gui/frame_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_000.png (1x1, 8 bpp)
 ResFrame001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead2, 0x00ead4
+    .incbin	"build/table_png/gui/frame_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_001.png (1x1, 8 bpp)
 ResFrame002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead4, 0x00ead6
+    .incbin	"build/table_png/gui/frame_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_002.png (1x1, 8 bpp)
 ResFrame003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead6, 0x00ead8
+    .incbin	"build/table_png/gui/frame_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_003.png (1x1, 8 bpp)
 ResFrame004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead8, 0x00eadc
+    .incbin	"build/table_png/gui/frame_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_004.png (2x2, 8 bpp)
 ResFrame005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eadc, 0x00eae0
+    .incbin	"build/table_png/gui/frame_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_005.png (2x2, 8 bpp)
 ResFrame006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae0, 0x00eae4
+    .incbin	"build/table_png/gui/frame_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_006.png (2x2, 8 bpp)
 ResFrame007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae4, 0x00eae8
+    .incbin	"build/table_png/gui/frame_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_007.png (2x2, 8 bpp)
 ResFrame008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae8, 0x00eb06
+    .incbin	"build/table_png/gui/frame_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_008.png (5x5, 8 bpp)
 ResFrame009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb06, 0x00eb24
+    .incbin	"build/table_png/gui/frame_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_009.png (5x5, 8 bpp)
 ResFrame010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb24, 0x00eb42
+    .incbin	"build/table_png/gui/frame_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_010.png (5x5, 8 bpp)
 ResFrame011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb42, 0x00eb60
+    .incbin	"build/table_png/gui/frame_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_011.png (5x5, 8 bpp)
 ResFrame012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb60, 0x00ebba
+    .incbin	"build/table_png/gui/frame_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_012.png (9x9, 8 bpp)
 ResFrame013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ebba, 0x00ec14
+    .incbin	"build/table_png/gui/frame_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_013.png (9x9, 8 bpp)
 ResFrame014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ec14, 0x00ec6e
+    .incbin	"build/table_png/gui/frame_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_014.png (9x9, 8 bpp)
 ResFrame015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ec6e, 0x00ecc8
+    .incbin	"build/table_png/gui/frame_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_015.png (9x9, 8 bpp)
 ResFrame016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ecc8, 0x00ed8c
+    .incbin	"build/table_png/gui/frame_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_016.png (14x14, 8 bpp)
 ResFrame017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ed8c, 0x00ee50
+    .incbin	"build/table_png/gui/frame_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_017.png (14x14, 8 bpp)
 ResFrame018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ee50, 0x00ef14
+    .incbin	"build/table_png/gui/frame_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_018.png (14x14, 8 bpp)
 ResFrame019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ef14, 0x00efd8
+    .incbin	"build/table_png/gui/frame_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_019.png (14x14, 8 bpp)
 ResFrame020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efd8, 0x00efda
+    .incbin	"build/table_png/gui/frame_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_020.png (1x1, 8 bpp)
 ResFrame021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efda, 0x00efdc
+    .incbin	"build/table_png/gui/frame_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_021.png (1x1, 8 bpp)
 ResFrame022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efdc, 0x00efde
+    .incbin	"build/table_png/gui/frame_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_022.png (1x1, 8 bpp)
 ResFrame023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efde, 0x00efe0
+    .incbin	"build/table_png/gui/frame_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_023.png (1x1, 8 bpp)
 ResFrame024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe0, 0x00efe4
+    .incbin	"build/table_png/gui/frame_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_024.png (2x2, 8 bpp)
 ResFrame025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe4, 0x00efe8
+    .incbin	"build/table_png/gui/frame_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_025.png (2x2, 8 bpp)
 ResFrame026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe8, 0x00efec
+    .incbin	"build/table_png/gui/frame_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_026.png (2x2, 8 bpp)
 ResFrame027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efec, 0x00eff0
+    .incbin	"build/table_png/gui/frame_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_027.png (2x2, 8 bpp)
 ResFrame028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eff0, 0x00f00e
+    .incbin	"build/table_png/gui/frame_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_028.png (5x5, 8 bpp)
 ResFrame029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f00e, 0x00f02c
+    .incbin	"build/table_png/gui/frame_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_029.png (5x5, 8 bpp)
 ResFrame030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f02c, 0x00f04a
+    .incbin	"build/table_png/gui/frame_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_030.png (5x5, 8 bpp)
 ResFrame031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f04a, 0x00f068
+    .incbin	"build/table_png/gui/frame_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_031.png (5x5, 8 bpp)
 ResFrame032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f068, 0x00f0c2
+    .incbin	"build/table_png/gui/frame_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_032.png (9x9, 8 bpp)
 ResFrame033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f0c2, 0x00f11c
+    .incbin	"build/table_png/gui/frame_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_033.png (9x9, 8 bpp)
 ResFrame034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f11c, 0x00f176
+    .incbin	"build/table_png/gui/frame_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_034.png (9x9, 8 bpp)
 ResFrame035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f176, 0x00f1d0
+    .incbin	"build/table_png/gui/frame_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_035.png (9x9, 8 bpp)
 ResFrame036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f1d0, 0x00f294
+    .incbin	"build/table_png/gui/frame_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_036.png (14x14, 8 bpp)
 ResFrame037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f294, 0x00f358
+    .incbin	"build/table_png/gui/frame_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_037.png (14x14, 8 bpp)
 ResFrame038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f358, 0x00f41c
+    .incbin	"build/table_png/gui/frame_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_038.png (14x14, 8 bpp)
 ResFrame039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f41c, 0x00f4e0
+    .incbin	"build/table_png/gui/frame_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_039.png (14x14, 8 bpp)
 ResFrame040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f4e0, 0x00f528
+    .incbin	"build/table_png/gui/frame_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_040.png (5x12, 8 bpp)
 ResFrame041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f528, 0x00f588
+    .incbin	"build/table_png/gui/frame_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_041.png (6x16, 8 bpp)
 ResFrame042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f588, 0x00f648
+    .incbin	"build/table_png/gui/frame_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_042.png (8x24, 8 bpp)
 ResFrame043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f648, 0x00f788
+    .incbin	"build/table_png/gui/frame_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_043.png (10x32, 8 bpp)
 ResFrame044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f788, 0x00fa88
+    .incbin	"build/table_png/gui/frame_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_044.png (15x48, 8 bpp)
 ResFrame045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fa88, 0x00fad0
+    .incbin	"build/table_png/gui/frame_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_045.png (5x12, 8 bpp)
 ResFrame046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fad0, 0x00fb30
+    .incbin	"build/table_png/gui/frame_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_046.png (6x16, 8 bpp)
 ResFrame047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fb30, 0x00fbf0
+    .incbin	"build/table_png/gui/frame_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_047.png (8x24, 8 bpp)
 ResFrame048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fbf0, 0x00fd30
+    .incbin	"build/table_png/gui/frame_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_048.png (10x32, 8 bpp)
 ResFrame049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fd30, 0x010030
+    .incbin	"build/table_png/gui/frame_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_049.png (15x48, 8 bpp)
 ResFrame050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010030, 0x010170
+    .incbin	"build/table_png/gui/frame_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_050.png (20x16, 8 bpp)
 ResFrame051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010170, 0x0103b0
+    .incbin	"build/table_png/gui/frame_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_051.png (24x24, 8 bpp)
 ResFrame052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0103b0, 0x010770
+    .incbin	"build/table_png/gui/frame_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_052.png (29x32, 8 bpp)
 ResFrame053:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010770, 0x010dd0
+    .incbin	"build/table_png/gui/frame_053.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_053.png (34x48, 8 bpp)
 ResFrame054:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010dd0, 0x010f10
+    .incbin	"build/table_png/gui/frame_054.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_054.png (20x16, 8 bpp)
 ResFrame055:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010f10, 0x011150
+    .incbin	"build/table_png/gui/frame_055.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_055.png (24x24, 8 bpp)
 ResFrame056:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011150, 0x011510
+    .incbin	"build/table_png/gui/frame_056.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_056.png (29x32, 8 bpp)
 ResFrame057:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011510, 0x011b70
+    .incbin	"build/table_png/gui/frame_057.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_057.png (34x48, 8 bpp)
 ResFrame058:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011b70, 0x011c70
+    .incbin	"build/table_png/gui/frame_058.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_058.png (16x16, 8 bpp)
 ResFrame059:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011c70, 0x011d70
+    .incbin	"build/table_png/gui/frame_059.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_059.png (16x16, 8 bpp)
 ResFrame060:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011d70, 0x011d8e
+    .incbin	"build/table_png/gui/frame_060.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_060.png (5x5, 8 bpp)
 ResFrame061:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011d8e, 0x011dac
+    .incbin	"build/table_png/gui/frame_061.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_061.png (5x5, 8 bpp)
 ResFrame062:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011dac, 0x011dca
+    .incbin	"build/table_png/gui/frame_062.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_062.png (5x5, 8 bpp)
 ResFrame063:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011dca, 0x011de8
+    .incbin	"build/table_png/gui/frame_063.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_063.png (5x5, 8 bpp)
 ResFrame064:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011de8, 0x011e06
+    .incbin	"build/table_png/gui/frame_064.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_064.png (5x5, 8 bpp)
 ResFrame065:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e06, 0x011e24
+    .incbin	"build/table_png/gui/frame_065.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_065.png (5x5, 8 bpp)
 ResFrame066:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e24, 0x011e42
+    .incbin	"build/table_png/gui/frame_066.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_066.png (5x5, 8 bpp)
 ResFrame067:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e42, 0x011e60
+    .incbin	"build/table_png/gui/frame_067.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_067.png (5x5, 8 bpp)
 ResFrame068:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e60, 0x011e7e
+    .incbin	"build/table_png/gui/frame_068.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_068.png (5x5, 8 bpp)
 ResFrame069:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e7e, 0x011e9c
+    .incbin	"build/table_png/gui/frame_069.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_069.png (5x5, 8 bpp)
 ResFrame070:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e9c, 0x011eba
+    .incbin	"build/table_png/gui/frame_070.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_070.png (5x5, 8 bpp)
 ResFrame071:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011eba, 0x011ed8
+    .incbin	"build/table_png/gui/frame_071.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_071.png (5x5, 8 bpp)
 ResFrame072:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011ed8, 0x01221c
+    .incbin	"build/table_png/gui/frame_072.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_072.png (76x11, 8 bpp)
 ResIconTable:
     .word	24, 24
     .long	ResIcon000
@@ -1110,485 +1111,485 @@ ResIconTable:
     .long	ResIcon239
     .long	0, 0   # end of the table
 ResIcon000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0129a4, 0x012ac4
+    .incbin	"build/table_png/gui/icon_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_000.png (24x24, 4 bpp)
 ResIcon001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012ac4, 0x012be4
+    .incbin	"build/table_png/gui/icon_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_001.png (24x24, 4 bpp)
 ResIcon002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012be4, 0x012d04
+    .incbin	"build/table_png/gui/icon_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_002.png (24x24, 4 bpp)
 ResIcon003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012d04, 0x012e24
+    .incbin	"build/table_png/gui/icon_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_003.png (24x24, 4 bpp)
 ResIcon004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012e24, 0x012f44
+    .incbin	"build/table_png/gui/icon_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_004.png (24x24, 4 bpp)
 ResIcon005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012f44, 0x013064
+    .incbin	"build/table_png/gui/icon_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_005.png (24x24, 4 bpp)
 ResIcon006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013064, 0x013184
+    .incbin	"build/table_png/gui/icon_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_006.png (24x24, 4 bpp)
 ResIcon007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013184, 0x0132a4
+    .incbin	"build/table_png/gui/icon_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_007.png (24x24, 4 bpp)
 ResIcon008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0132a4, 0x0133c4
+    .incbin	"build/table_png/gui/icon_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_008.png (24x24, 4 bpp)
 ResIcon009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0133c4, 0x0134e4
+    .incbin	"build/table_png/gui/icon_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_009.png (24x24, 4 bpp)
 ResIcon010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0134e4, 0x013604
+    .incbin	"build/table_png/gui/icon_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_010.png (24x24, 4 bpp)
 ResIcon011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013604, 0x013724
+    .incbin	"build/table_png/gui/icon_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_011.png (24x24, 4 bpp)
 ResIcon012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013724, 0x013844
+    .incbin	"build/table_png/gui/icon_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_012.png (24x24, 4 bpp)
 ResIcon013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013844, 0x013964
+    .incbin	"build/table_png/gui/icon_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_013.png (24x24, 4 bpp)
 ResIcon014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013964, 0x013a84
+    .incbin	"build/table_png/gui/icon_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_014.png (24x24, 4 bpp)
 ResIcon015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013a84, 0x013ba4
+    .incbin	"build/table_png/gui/icon_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_015.png (24x24, 4 bpp)
 ResIcon016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013ba4, 0x013cc4
+    .incbin	"build/table_png/gui/icon_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_016.png (24x24, 4 bpp)
 ResIcon017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013cc4, 0x013de4
+    .incbin	"build/table_png/gui/icon_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_017.png (24x24, 4 bpp)
 ResIcon018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013de4, 0x013f04
+    .incbin	"build/table_png/gui/icon_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_018.png (24x24, 4 bpp)
 ResIcon019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013f04, 0x014024
+    .incbin	"build/table_png/gui/icon_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_019.png (24x24, 4 bpp)
 ResIcon020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014024, 0x014144
+    .incbin	"build/table_png/gui/icon_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_020.png (24x24, 4 bpp)
 ResIcon021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014144, 0x014264
+    .incbin	"build/table_png/gui/icon_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_021.png (24x24, 4 bpp)
 ResIcon022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014264, 0x014384
+    .incbin	"build/table_png/gui/icon_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_022.png (24x24, 4 bpp)
 ResIcon023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014384, 0x0144a4
+    .incbin	"build/table_png/gui/icon_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_023.png (24x24, 4 bpp)
 ResIcon024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0144a4, 0x0145c4
+    .incbin	"build/table_png/gui/icon_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_024.png (24x24, 4 bpp)
 ResIcon025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0145c4, 0x0146e4
+    .incbin	"build/table_png/gui/icon_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_025.png (24x24, 4 bpp)
 ResIcon026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0146e4, 0x014804
+    .incbin	"build/table_png/gui/icon_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_026.png (24x24, 4 bpp)
 ResIcon027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014804, 0x014924
+    .incbin	"build/table_png/gui/icon_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_027.png (24x24, 4 bpp)
 ResIcon028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014924, 0x014a44
+    .incbin	"build/table_png/gui/icon_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_028.png (24x24, 4 bpp)
 ResIcon029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014a44, 0x014b64
+    .incbin	"build/table_png/gui/icon_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_029.png (24x24, 4 bpp)
 ResIcon030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014b64, 0x014c84
+    .incbin	"build/table_png/gui/icon_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_030.png (24x24, 4 bpp)
 ResIcon031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014c84, 0x014da4
+    .incbin	"build/table_png/gui/icon_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_031.png (24x24, 4 bpp)
 ResIcon032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014da4, 0x014ec4
+    .incbin	"build/table_png/gui/icon_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_032.png (24x24, 4 bpp)
 ResIcon033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014ec4, 0x014fe4
+    .incbin	"build/table_png/gui/icon_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_033.png (24x24, 4 bpp)
 ResIcon034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014fe4, 0x015104
+    .incbin	"build/table_png/gui/icon_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_034.png (24x24, 4 bpp)
 ResIcon035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015104, 0x015224
+    .incbin	"build/table_png/gui/icon_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_035.png (24x24, 4 bpp)
 ResIcon036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015224, 0x015344
+    .incbin	"build/table_png/gui/icon_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_036.png (24x24, 4 bpp)
 ResIcon037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015344, 0x015464
+    .incbin	"build/table_png/gui/icon_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_037.png (24x24, 4 bpp)
 ResIcon038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015464, 0x015584
+    .incbin	"build/table_png/gui/icon_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_038.png (24x24, 4 bpp)
 ResIcon039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015584, 0x0156a4
+    .incbin	"build/table_png/gui/icon_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_039.png (24x24, 4 bpp)
 ResIcon040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0156a4, 0x0157c4
+    .incbin	"build/table_png/gui/icon_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_040.png (24x24, 4 bpp)
 ResIcon041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0157c4, 0x0158e4
+    .incbin	"build/table_png/gui/icon_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_041.png (24x24, 4 bpp)
 ResIcon042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0158e4, 0x015a04
+    .incbin	"build/table_png/gui/icon_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_042.png (24x24, 4 bpp)
 ResIcon043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015a04, 0x015b24
+    .incbin	"build/table_png/gui/icon_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_043.png (24x24, 4 bpp)
 ResIcon044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015b24, 0x015c44
+    .incbin	"build/table_png/gui/icon_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_044.png (24x24, 4 bpp)
 ResIcon045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015c44, 0x015d64
+    .incbin	"build/table_png/gui/icon_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_045.png (24x24, 4 bpp)
 ResIcon046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015d64, 0x015e84
+    .incbin	"build/table_png/gui/icon_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_046.png (24x24, 4 bpp)
 ResIcon047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015e84, 0x015fa4
+    .incbin	"build/table_png/gui/icon_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_047.png (24x24, 4 bpp)
 ResIcon048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015fa4, 0x0160c4
+    .incbin	"build/table_png/gui/icon_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_048.png (24x24, 4 bpp)
 ResIcon049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0160c4, 0x0161e4
+    .incbin	"build/table_png/gui/icon_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_049.png (24x24, 4 bpp)
 ResIcon050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0161e4, 0x016304
+    .incbin	"build/table_png/gui/icon_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_050.png (24x24, 4 bpp)
 ResIcon051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016304, 0x016424
+    .incbin	"build/table_png/gui/icon_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_051.png (24x24, 4 bpp)
 ResIcon052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016424, 0x016544
+    .incbin	"build/table_png/gui/icon_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_052.png (24x24, 4 bpp)
 ResIcon053:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016544, 0x016664
+    .incbin	"build/table_png/gui/icon_053.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_053.png (24x24, 4 bpp)
 ResIcon054:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016664, 0x016784
+    .incbin	"build/table_png/gui/icon_054.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_054.png (24x24, 4 bpp)
 ResIcon055:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016784, 0x0168a4
+    .incbin	"build/table_png/gui/icon_055.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_055.png (24x24, 4 bpp)
 ResIcon056:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0168a4, 0x0169c4
+    .incbin	"build/table_png/gui/icon_056.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_056.png (24x24, 4 bpp)
 ResIcon057:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0169c4, 0x016ae4
+    .incbin	"build/table_png/gui/icon_057.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_057.png (24x24, 4 bpp)
 ResIcon058:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016ae4, 0x016c04
+    .incbin	"build/table_png/gui/icon_058.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_058.png (24x24, 4 bpp)
 ResIcon059:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016c04, 0x016d24
+    .incbin	"build/table_png/gui/icon_059.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_059.png (24x24, 4 bpp)
 ResIcon060:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016d24, 0x016e44
+    .incbin	"build/table_png/gui/icon_060.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_060.png (24x24, 4 bpp)
 ResIcon061:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016e44, 0x016f64
+    .incbin	"build/table_png/gui/icon_061.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_061.png (24x24, 4 bpp)
 ResIcon062:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016f64, 0x017084
+    .incbin	"build/table_png/gui/icon_062.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_062.png (24x24, 4 bpp)
 ResIcon063:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017084, 0x0171a4
+    .incbin	"build/table_png/gui/icon_063.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_063.png (24x24, 4 bpp)
 ResIcon064:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0171a4, 0x0172c4
+    .incbin	"build/table_png/gui/icon_064.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_064.png (24x24, 4 bpp)
 ResIcon065:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0172c4, 0x0173e4
+    .incbin	"build/table_png/gui/icon_065.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_065.png (24x24, 4 bpp)
 ResIcon066:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0173e4, 0x017504
+    .incbin	"build/table_png/gui/icon_066.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_066.png (24x24, 4 bpp)
 ResIcon067:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017504, 0x017624
+    .incbin	"build/table_png/gui/icon_067.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_067.png (24x24, 4 bpp)
 ResIcon068:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017624, 0x017744
+    .incbin	"build/table_png/gui/icon_068.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_068.png (24x24, 4 bpp)
 ResIcon069:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017744, 0x017864
+    .incbin	"build/table_png/gui/icon_069.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_069.png (24x24, 4 bpp)
 ResIcon070:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017864, 0x017984
+    .incbin	"build/table_png/gui/icon_070.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_070.png (24x24, 4 bpp)
 ResIcon071:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017984, 0x017aa4
+    .incbin	"build/table_png/gui/icon_071.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_071.png (24x24, 4 bpp)
 ResIcon072:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017aa4, 0x017bc4
+    .incbin	"build/table_png/gui/icon_072.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_072.png (24x24, 4 bpp)
 ResIcon073:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017bc4, 0x017ce4
+    .incbin	"build/table_png/gui/icon_073.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_073.png (24x24, 4 bpp)
 ResIcon074:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017ce4, 0x017e04
+    .incbin	"build/table_png/gui/icon_074.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_074.png (24x24, 4 bpp)
 ResIcon075:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017e04, 0x017f24
+    .incbin	"build/table_png/gui/icon_075.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_075.png (24x24, 4 bpp)
 ResIcon076:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017f24, 0x018044
+    .incbin	"build/table_png/gui/icon_076.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_076.png (24x24, 4 bpp)
 ResIcon077:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018044, 0x018164
+    .incbin	"build/table_png/gui/icon_077.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_077.png (24x24, 4 bpp)
 ResIcon078:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018164, 0x018284
+    .incbin	"build/table_png/gui/icon_078.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_078.png (24x24, 4 bpp)
 ResIcon079:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018284, 0x0183a4
+    .incbin	"build/table_png/gui/icon_079.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_079.png (24x24, 4 bpp)
 ResIcon080:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0183a4, 0x0184c4
+    .incbin	"build/table_png/gui/icon_080.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_080.png (24x24, 4 bpp)
 ResIcon081:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0184c4, 0x0185e4
+    .incbin	"build/table_png/gui/icon_081.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_081.png (24x24, 4 bpp)
 ResIcon082:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0185e4, 0x018704
+    .incbin	"build/table_png/gui/icon_082.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_082.png (24x24, 4 bpp)
 ResIcon083:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018704, 0x018824
+    .incbin	"build/table_png/gui/icon_083.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_083.png (24x24, 4 bpp)
 ResIcon084:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018824, 0x018944
+    .incbin	"build/table_png/gui/icon_084.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_084.png (24x24, 4 bpp)
 ResIcon085:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018944, 0x018a64
+    .incbin	"build/table_png/gui/icon_085.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_085.png (24x24, 4 bpp)
 ResIcon086:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018a64, 0x018b84
+    .incbin	"build/table_png/gui/icon_086.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_086.png (24x24, 4 bpp)
 ResIcon087:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018b84, 0x018ca4
+    .incbin	"build/table_png/gui/icon_087.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_087.png (24x24, 4 bpp)
 ResIcon088:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018ca4, 0x018dc4
+    .incbin	"build/table_png/gui/icon_088.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_088.png (24x24, 4 bpp)
 ResIcon089:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018dc4, 0x018ee4
+    .incbin	"build/table_png/gui/icon_089.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_089.png (24x24, 4 bpp)
 ResIcon090:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018ee4, 0x019004
+    .incbin	"build/table_png/gui/icon_090.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_090.png (24x24, 4 bpp)
 ResIcon091:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019004, 0x019124
+    .incbin	"build/table_png/gui/icon_091.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_091.png (24x24, 4 bpp)
 ResIcon092:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019124, 0x019244
+    .incbin	"build/table_png/gui/icon_092.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_092.png (24x24, 4 bpp)
 ResIcon093:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019244, 0x019364
+    .incbin	"build/table_png/gui/icon_093.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_093.png (24x24, 4 bpp)
 ResIcon094:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019364, 0x019484
+    .incbin	"build/table_png/gui/icon_094.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_094.png (24x24, 4 bpp)
 ResIcon095:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019484, 0x0195a4
+    .incbin	"build/table_png/gui/icon_095.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_095.png (24x24, 4 bpp)
 ResIcon096:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0195a4, 0x0196c4
+    .incbin	"build/table_png/gui/icon_096.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_096.png (24x24, 4 bpp)
 ResIcon097:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0196c4, 0x0197e4
+    .incbin	"build/table_png/gui/icon_097.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_097.png (24x24, 4 bpp)
 ResIcon098:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0197e4, 0x019904
+    .incbin	"build/table_png/gui/icon_098.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_098.png (24x24, 4 bpp)
 ResIcon099:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019904, 0x019a24
+    .incbin	"build/table_png/gui/icon_099.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_099.png (24x24, 4 bpp)
 ResIcon100:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019a24, 0x019b44
+    .incbin	"build/table_png/gui/icon_100.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_100.png (24x24, 4 bpp)
 ResIcon101:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019b44, 0x019c64
+    .incbin	"build/table_png/gui/icon_101.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_101.png (24x24, 4 bpp)
 ResIcon102:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019c64, 0x019d84
+    .incbin	"build/table_png/gui/icon_102.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_102.png (24x24, 4 bpp)
 ResIcon103:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019d84, 0x019ea4
+    .incbin	"build/table_png/gui/icon_103.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_103.png (24x24, 4 bpp)
 ResIcon104:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019ea4, 0x019fc4
+    .incbin	"build/table_png/gui/icon_104.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_104.png (24x24, 4 bpp)
 ResIcon105:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019fc4, 0x01a0e4
+    .incbin	"build/table_png/gui/icon_105.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_105.png (24x24, 4 bpp)
 ResIcon106:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a0e4, 0x01a204
+    .incbin	"build/table_png/gui/icon_106.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_106.png (24x24, 4 bpp)
 ResIcon107:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a204, 0x01a324
+    .incbin	"build/table_png/gui/icon_107.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_107.png (24x24, 4 bpp)
 ResIcon108:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a324, 0x01a444
+    .incbin	"build/table_png/gui/icon_108.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_108.png (24x24, 4 bpp)
 ResIcon109:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a444, 0x01a564
+    .incbin	"build/table_png/gui/icon_109.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_109.png (24x24, 4 bpp)
 ResIcon110:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a564, 0x01a684
+    .incbin	"build/table_png/gui/icon_110.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_110.png (24x24, 4 bpp)
 ResIcon111:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a684, 0x01a7a4
+    .incbin	"build/table_png/gui/icon_111.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_111.png (24x24, 4 bpp)
 ResIcon112:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a7a4, 0x01a8c4
+    .incbin	"build/table_png/gui/icon_112.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_112.png (24x24, 4 bpp)
 ResIcon113:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a8c4, 0x01a9e4
+    .incbin	"build/table_png/gui/icon_113.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_113.png (24x24, 4 bpp)
 ResIcon114:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a9e4, 0x01ab04
+    .incbin	"build/table_png/gui/icon_114.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_114.png (24x24, 4 bpp)
 ResIcon115:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ab04, 0x01ac24
+    .incbin	"build/table_png/gui/icon_115.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_115.png (24x24, 4 bpp)
 ResIcon116:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ac24, 0x01ad44
+    .incbin	"build/table_png/gui/icon_116.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_116.png (24x24, 4 bpp)
 ResIcon117:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ad44, 0x01ae64
+    .incbin	"build/table_png/gui/icon_117.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_117.png (24x24, 4 bpp)
 ResIcon118:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ae64, 0x01af84
+    .incbin	"build/table_png/gui/icon_118.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_118.png (24x24, 4 bpp)
 ResIcon119:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01af84, 0x01b0a4
+    .incbin	"build/table_png/gui/icon_119.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_119.png (24x24, 4 bpp)
 ResIcon120:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b0a4, 0x01b1c4
+    .incbin	"build/table_png/gui/icon_120.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_120.png (24x24, 4 bpp)
 ResIcon121:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b1c4, 0x01b2e4
+    .incbin	"build/table_png/gui/icon_121.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_121.png (24x24, 4 bpp)
 ResIcon122:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b2e4, 0x01b404
+    .incbin	"build/table_png/gui/icon_122.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_122.png (24x24, 4 bpp)
 ResIcon123:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b404, 0x01b524
+    .incbin	"build/table_png/gui/icon_123.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_123.png (24x24, 4 bpp)
 ResIcon124:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b524, 0x01b644
+    .incbin	"build/table_png/gui/icon_124.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_124.png (24x24, 4 bpp)
 ResIcon125:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b644, 0x01b764
+    .incbin	"build/table_png/gui/icon_125.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_125.png (24x24, 4 bpp)
 ResIcon126:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b764, 0x01b884
+    .incbin	"build/table_png/gui/icon_126.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_126.png (24x24, 4 bpp)
 ResIcon127:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b884, 0x01b9a4
+    .incbin	"build/table_png/gui/icon_127.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_127.png (24x24, 4 bpp)
 ResIcon128:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b9a4, 0x01bac4
+    .incbin	"build/table_png/gui/icon_128.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_128.png (24x24, 4 bpp)
 ResIcon129:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bac4, 0x01bbe4
+    .incbin	"build/table_png/gui/icon_129.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_129.png (24x24, 4 bpp)
 ResIcon130:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bbe4, 0x01bd04
+    .incbin	"build/table_png/gui/icon_130.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_130.png (24x24, 4 bpp)
 ResIcon131:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bd04, 0x01be24
+    .incbin	"build/table_png/gui/icon_131.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_131.png (24x24, 4 bpp)
 ResIcon132:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01be24, 0x01bf44
+    .incbin	"build/table_png/gui/icon_132.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_132.png (24x24, 4 bpp)
 ResIcon133:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bf44, 0x01c064
+    .incbin	"build/table_png/gui/icon_133.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_133.png (24x24, 4 bpp)
 ResIcon134:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c064, 0x01c184
+    .incbin	"build/table_png/gui/icon_134.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_134.png (24x24, 4 bpp)
 ResIcon135:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c184, 0x01c2a4
+    .incbin	"build/table_png/gui/icon_135.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_135.png (24x24, 4 bpp)
 ResIcon136:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c2a4, 0x01c3c4
+    .incbin	"build/table_png/gui/icon_136.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_136.png (24x24, 4 bpp)
 ResIcon137:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c3c4, 0x01c4e4
+    .incbin	"build/table_png/gui/icon_137.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_137.png (24x24, 4 bpp)
 ResIcon138:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c4e4, 0x01c604
+    .incbin	"build/table_png/gui/icon_138.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_138.png (24x24, 4 bpp)
 ResIcon139:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c604, 0x01c724
+    .incbin	"build/table_png/gui/icon_139.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_139.png (24x24, 4 bpp)
 ResIcon140:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c724, 0x01c844
+    .incbin	"build/table_png/gui/icon_140.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_140.png (24x24, 4 bpp)
 ResIcon141:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c844, 0x01c964
+    .incbin	"build/table_png/gui/icon_141.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_141.png (24x24, 4 bpp)
 ResIcon142:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c964, 0x01ca84
+    .incbin	"build/table_png/gui/icon_142.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_142.png (24x24, 4 bpp)
 ResIcon143:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ca84, 0x01cba4
+    .incbin	"build/table_png/gui/icon_143.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_143.png (24x24, 4 bpp)
 ResIcon144:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cba4, 0x01ccc4
+    .incbin	"build/table_png/gui/icon_144.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_144.png (24x24, 4 bpp)
 ResIcon145:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ccc4, 0x01cde4
+    .incbin	"build/table_png/gui/icon_145.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_145.png (24x24, 4 bpp)
 ResIcon146:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cde4, 0x01cf04
+    .incbin	"build/table_png/gui/icon_146.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_146.png (24x24, 4 bpp)
 ResIcon147:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cf04, 0x01d024
+    .incbin	"build/table_png/gui/icon_147.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_147.png (24x24, 4 bpp)
 ResIcon148:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d024, 0x01d144
+    .incbin	"build/table_png/gui/icon_148.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_148.png (24x24, 4 bpp)
 ResIcon149:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d144, 0x01d264
+    .incbin	"build/table_png/gui/icon_149.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_149.png (24x24, 4 bpp)
 ResIcon150:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d264, 0x01d384
+    .incbin	"build/table_png/gui/icon_150.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_150.png (24x24, 4 bpp)
 ResIcon151:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d384, 0x01d4a4
+    .incbin	"build/table_png/gui/icon_151.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_151.png (24x24, 4 bpp)
 ResIcon152:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d4a4, 0x01d5c4
+    .incbin	"build/table_png/gui/icon_152.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_152.png (24x24, 4 bpp)
 ResIcon153:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d5c4, 0x01d6e4
+    .incbin	"build/table_png/gui/icon_153.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_153.png (24x24, 4 bpp)
 ResIcon154:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d6e4, 0x01d804
+    .incbin	"build/table_png/gui/icon_154.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_154.png (24x24, 4 bpp)
 ResIcon155:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d804, 0x01d924
+    .incbin	"build/table_png/gui/icon_155.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_155.png (24x24, 4 bpp)
 ResIcon156:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d924, 0x01da44
+    .incbin	"build/table_png/gui/icon_156.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_156.png (24x24, 4 bpp)
 ResIcon157:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01da44, 0x01db64
+    .incbin	"build/table_png/gui/icon_157.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_157.png (24x24, 4 bpp)
 ResIcon158:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01db64, 0x01dc84
+    .incbin	"build/table_png/gui/icon_158.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_158.png (24x24, 4 bpp)
 ResIcon159:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dc84, 0x01dda4
+    .incbin	"build/table_png/gui/icon_159.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_159.png (24x24, 4 bpp)
 ResIcon160:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dda4, 0x01dec4
+    .incbin	"build/table_png/gui/icon_160.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_160.png (24x24, 4 bpp)
 ResIcon161:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dec4, 0x01dfe4
+    .incbin	"build/table_png/gui/icon_161.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_161.png (24x24, 4 bpp)
 ResIcon162:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dfe4, 0x01e104
+    .incbin	"build/table_png/gui/icon_162.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_162.png (24x24, 4 bpp)
 ResIcon163:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e104, 0x01e224
+    .incbin	"build/table_png/gui/icon_163.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_163.png (24x24, 4 bpp)
 ResIcon164:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e224, 0x01e344
+    .incbin	"build/table_png/gui/icon_164.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_164.png (24x24, 4 bpp)
 ResIcon165:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e344, 0x01e464
+    .incbin	"build/table_png/gui/icon_165.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_165.png (24x24, 4 bpp)
 ResIcon166:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e464, 0x01e584
+    .incbin	"build/table_png/gui/icon_166.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_166.png (24x24, 4 bpp)
 ResIcon167:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e584, 0x01e6a4
+    .incbin	"build/table_png/gui/icon_167.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_167.png (24x24, 4 bpp)
 ResIcon168:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e6a4, 0x01e7c4
+    .incbin	"build/table_png/gui/icon_168.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_168.png (24x24, 4 bpp)
 ResIcon169:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e7c4, 0x01e8e4
+    .incbin	"build/table_png/gui/icon_169.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_169.png (24x24, 4 bpp)
 ResIcon170:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e8e4, 0x01ea04
+    .incbin	"build/table_png/gui/icon_170.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_170.png (24x24, 4 bpp)
 ResIcon171:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ea04, 0x01eb24
+    .incbin	"build/table_png/gui/icon_171.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_171.png (24x24, 4 bpp)
 ResIcon172:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01eb24, 0x01ec44
+    .incbin	"build/table_png/gui/icon_172.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_172.png (24x24, 4 bpp)
 ResIcon173:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ec44, 0x01ed64
+    .incbin	"build/table_png/gui/icon_173.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_173.png (24x24, 4 bpp)
 ResIcon174:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ed64, 0x01ee84
+    .incbin	"build/table_png/gui/icon_174.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_174.png (24x24, 4 bpp)
 ResIcon175:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ee84, 0x01efa4
+    .incbin	"build/table_png/gui/icon_175.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_175.png (24x24, 4 bpp)
 ResIcon176:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01efa4, 0x01f0c4
+    .incbin	"build/table_png/gui/icon_176.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_176.png (24x24, 4 bpp)
 ResIcon177:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f0c4, 0x01f1e4
+    .incbin	"build/table_png/gui/icon_177.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_177.png (24x24, 4 bpp)
 ResIcon178:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f1e4, 0x01f304
+    .incbin	"build/table_png/gui/icon_178.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_178.png (24x24, 4 bpp)
 ResIcon179:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f304, 0x01f424
+    .incbin	"build/table_png/gui/icon_179.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_179.png (24x24, 4 bpp)
 ResIcon180:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f424, 0x01f544
+    .incbin	"build/table_png/gui/icon_180.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_180.png (24x24, 4 bpp)
 ResIcon181:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f544, 0x01f664
+    .incbin	"build/table_png/gui/icon_181.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_181.png (24x24, 4 bpp)
 ResIcon182:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f664, 0x01f784
+    .incbin	"build/table_png/gui/icon_182.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_182.png (24x24, 4 bpp)
 ResIcon183:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f784, 0x01f8a4
+    .incbin	"build/table_png/gui/icon_183.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_183.png (24x24, 4 bpp)
 ResIcon184:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f8a4, 0x01f9c4
+    .incbin	"build/table_png/gui/icon_184.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_184.png (24x24, 4 bpp)
 ResIcon185:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f9c4, 0x01fae4
+    .incbin	"build/table_png/gui/icon_185.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_185.png (24x24, 4 bpp)
 ResIcon186:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fae4, 0x01fc04
+    .incbin	"build/table_png/gui/icon_186.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_186.png (24x24, 4 bpp)
 ResIcon187:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fc04, 0x01fd24
+    .incbin	"build/table_png/gui/icon_187.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_187.png (24x24, 4 bpp)
 ResIcon188:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fd24, 0x01fe44
+    .incbin	"build/table_png/gui/icon_188.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_188.png (24x24, 4 bpp)
 ResIcon189:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fe44, 0x01ff64
+    .incbin	"build/table_png/gui/icon_189.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_189.png (24x24, 4 bpp)
 ResIcon190:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ff64, 0x020084
+    .incbin	"build/table_png/gui/icon_190.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_190.png (24x24, 4 bpp)
 ResIcon191:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020084, 0x0201a4
+    .incbin	"build/table_png/gui/icon_191.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_191.png (24x24, 4 bpp)
 ResIcon192:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0201a4, 0x0202c4
+    .incbin	"build/table_png/gui/icon_192.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_192.png (24x24, 4 bpp)
 ResIcon193:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0202c4, 0x0203e4
+    .incbin	"build/table_png/gui/icon_193.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_193.png (24x24, 4 bpp)
 ResIcon194:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0203e4, 0x020504
+    .incbin	"build/table_png/gui/icon_194.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_194.png (24x24, 4 bpp)
 ResIcon195:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020504, 0x020624
+    .incbin	"build/table_png/gui/icon_195.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_195.png (24x24, 4 bpp)
 ResIcon196:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020624, 0x020744
+    .incbin	"build/table_png/gui/icon_196.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_196.png (24x24, 4 bpp)
 ResIcon197:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020744, 0x020864
+    .incbin	"build/table_png/gui/icon_197.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_197.png (24x24, 4 bpp)
 ResIcon198:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020864, 0x020984
+    .incbin	"build/table_png/gui/icon_198.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_198.png (24x24, 4 bpp)
 ResIcon199:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020984, 0x020aa4
+    .incbin	"build/table_png/gui/icon_199.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_199.png (24x24, 4 bpp)
 ResIcon200:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020aa4, 0x020bc4
+    .incbin	"build/table_png/gui/icon_200.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_200.png (24x24, 4 bpp)
 ResIcon201:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020bc4, 0x020ce4
+    .incbin	"build/table_png/gui/icon_201.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_201.png (24x24, 4 bpp)
 ResIcon202:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020ce4, 0x020e04
+    .incbin	"build/table_png/gui/icon_202.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_202.png (24x24, 4 bpp)
 ResIcon203:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020e04, 0x020f24
+    .incbin	"build/table_png/gui/icon_203.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_203.png (24x24, 4 bpp)
 ResIcon204:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020f24, 0x021044
+    .incbin	"build/table_png/gui/icon_204.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_204.png (24x24, 4 bpp)
 ResIcon205:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021044, 0x021164
+    .incbin	"build/table_png/gui/icon_205.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_205.png (24x24, 4 bpp)
 ResIcon206:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021164, 0x021284
+    .incbin	"build/table_png/gui/icon_206.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_206.png (24x24, 4 bpp)
 ResIcon207:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021284, 0x0213a4
+    .incbin	"build/table_png/gui/icon_207.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_207.png (24x24, 4 bpp)
 ResIcon208:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0213a4, 0x0214c4
+    .incbin	"build/table_png/gui/icon_208.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_208.png (24x24, 4 bpp)
 ResIcon209:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0214c4, 0x0215e4
+    .incbin	"build/table_png/gui/icon_209.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_209.png (24x24, 4 bpp)
 ResIcon210:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0215e4, 0x021704
+    .incbin	"build/table_png/gui/icon_210.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_210.png (24x24, 4 bpp)
 ResIcon211:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021704, 0x021824
+    .incbin	"build/table_png/gui/icon_211.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_211.png (24x24, 4 bpp)
 ResIcon212:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021824, 0x021944
+    .incbin	"build/table_png/gui/icon_212.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_212.png (24x24, 4 bpp)
 ResIcon213:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021944, 0x021a64
+    .incbin	"build/table_png/gui/icon_213.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_213.png (24x24, 4 bpp)
 ResIcon214:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021a64, 0x021b84
+    .incbin	"build/table_png/gui/icon_214.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_214.png (24x24, 4 bpp)
 ResIcon215:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021b84, 0x021ca4
+    .incbin	"build/table_png/gui/icon_215.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_215.png (24x24, 4 bpp)
 ResIcon216:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021ca4, 0x021dc4
+    .incbin	"build/table_png/gui/icon_216.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_216.png (24x24, 4 bpp)
 ResIcon217:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021dc4, 0x021ee4
+    .incbin	"build/table_png/gui/icon_217.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_217.png (24x24, 4 bpp)
 ResIcon218:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021ee4, 0x022004
+    .incbin	"build/table_png/gui/icon_218.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_218.png (24x24, 4 bpp)
 ResIcon219:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022004, 0x022124
+    .incbin	"build/table_png/gui/icon_219.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_219.png (24x24, 4 bpp)
 ResIcon220:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022124, 0x022244
+    .incbin	"build/table_png/gui/icon_220.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_220.png (24x24, 4 bpp)
 ResIcon221:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022244, 0x022364
+    .incbin	"build/table_png/gui/icon_221.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_221.png (24x24, 4 bpp)
 ResIcon222:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022364, 0x022484
+    .incbin	"build/table_png/gui/icon_222.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_222.png (24x24, 4 bpp)
 ResIcon223:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022484, 0x0225a4
+    .incbin	"build/table_png/gui/icon_223.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_223.png (24x24, 4 bpp)
 ResIcon224:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0225a4, 0x0226c4
+    .incbin	"build/table_png/gui/icon_224.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_224.png (24x24, 4 bpp)
 ResIcon225:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0226c4, 0x0227e4
+    .incbin	"build/table_png/gui/icon_225.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_225.png (24x24, 4 bpp)
 ResIcon226:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0227e4, 0x022904
+    .incbin	"build/table_png/gui/icon_226.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_226.png (24x24, 4 bpp)
 ResIcon227:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022904, 0x022a24
+    .incbin	"build/table_png/gui/icon_227.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_227.png (24x24, 4 bpp)
 ResIcon228:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022a24, 0x022b44
+    .incbin	"build/table_png/gui/icon_228.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_228.png (24x24, 4 bpp)
 ResIcon229:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022b44, 0x022c64
+    .incbin	"build/table_png/gui/icon_229.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_229.png (24x24, 4 bpp)
 ResIcon230:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022c64, 0x022d84
+    .incbin	"build/table_png/gui/icon_230.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_230.png (24x24, 4 bpp)
 ResIcon231:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022d84, 0x022ea4
+    .incbin	"build/table_png/gui/icon_231.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_231.png (24x24, 4 bpp)
 ResIcon232:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022ea4, 0x022fc4
+    .incbin	"build/table_png/gui/icon_232.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_232.png (24x24, 4 bpp)
 ResIcon233:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022fc4, 0x0230e4
+    .incbin	"build/table_png/gui/icon_233.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_233.png (24x24, 4 bpp)
 ResIcon234:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0230e4, 0x023204
+    .incbin	"build/table_png/gui/icon_234.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_234.png (24x24, 4 bpp)
 ResIcon235:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023204, 0x023324
+    .incbin	"build/table_png/gui/icon_235.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_235.png (24x24, 4 bpp)
 ResIcon236:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023324, 0x023444
+    .incbin	"build/table_png/gui/icon_236.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_236.png (24x24, 4 bpp)
 ResIcon237:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023444, 0x023564
+    .incbin	"build/table_png/gui/icon_237.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_237.png (24x24, 4 bpp)
 ResIcon238:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023564, 0x023684
+    .incbin	"build/table_png/gui/icon_238.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_238.png (24x24, 4 bpp)
 ResIcon239:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023684, 0x0237a4
+    .incbin	"build/table_png/gui/icon_239.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_239.png (24x24, 4 bpp)
 ResFontTable:
     .word	8, 16, 4, 1
     .long	ResFont00Glyphs, 0, 0
@@ -1616,31 +1617,479 @@ ResFontTable:
     .long	ResFont11Glyphs, 0, 0
     .space	0x14, 0x00   # end of the table
 ResFont00Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0238a8, 0x0246a8
+    .incbin	"build/table_png/gui/font_00.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_00.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont01Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0246a8, 0x0254a8
+    .incbin	"build/table_png/gui/font_01.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_01.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont02Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0254a8, 0x0270a8
+    .incbin	"build/table_png/gui/font_02.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_02.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont03Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0270a8, 0x0277a8
+    .incbin	"build/table_png/gui/font_03.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_03.png (224 1-bpp glyphs from 0x20, 8x8)
 ResFont04Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0277a8, 0x0293a8
+    .incbin	"build/table_png/gui/font_04.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_04.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont05Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0293a8, 0x02a218
+    .incbin	"build/table_png/gui/font_05.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_05.png (224 proportional 1-bpp glyphs from 0x20, 16 high)
 ResFont05Kern:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02a218, 0x02a598
+    # {u8 advance width, u8 0, u16 offset of the glyph from ResFontNNGlyphs}
+    .byte	8, 0
+    .word	0   # ' '
+    .byte	5, 0
+    .word	16   # '!'
+    .byte	8, 0
+    .word	32   # '"'
+    .byte	8, 0
+    .word	48   # '#'
+    .byte	8, 0
+    .word	64   # '$'
+    .byte	8, 0
+    .word	80   # '%'
+    .byte	8, 0
+    .word	96   # '&'
+    .byte	5, 0
+    .word	112   # "'"
+    .byte	8, 0
+    .word	128   # '('
+    .byte	8, 0
+    .word	144   # ')'
+    .byte	8, 0
+    .word	160   # '*'
+    .byte	8, 0
+    .word	176   # '+'
+    .byte	5, 0
+    .word	192   # ','
+    .byte	8, 0
+    .word	208   # '-'
+    .byte	5, 0
+    .word	224   # '.'
+    .byte	8, 0
+    .word	240   # '/'
+    .byte	8, 0
+    .word	256   # '0'
+    .byte	7, 0
+    .word	272   # '1'
+    .byte	8, 0
+    .word	288   # '2'
+    .byte	8, 0
+    .word	304   # '3'
+    .byte	8, 0
+    .word	320   # '4'
+    .byte	8, 0
+    .word	336   # '5'
+    .byte	8, 0
+    .word	352   # '6'
+    .byte	8, 0
+    .word	368   # '7'
+    .byte	8, 0
+    .word	384   # '8'
+    .byte	8, 0
+    .word	400   # '9'
+    .byte	5, 0
+    .word	416   # ':'
+    .byte	5, 0
+    .word	432   # ';'
+    .byte	7, 0
+    .word	448   # '<'
+    .byte	8, 0
+    .word	464   # '='
+    .byte	7, 0
+    .word	480   # '>'
+    .byte	8, 0
+    .word	496   # '?'
+    .byte	8, 0
+    .word	512   # '@'
+    .byte	8, 0
+    .word	528   # 'A'
+    .byte	8, 0
+    .word	544   # 'B'
+    .byte	8, 0
+    .word	560   # 'C'
+    .byte	8, 0
+    .word	576   # 'D'
+    .byte	8, 0
+    .word	592   # 'E'
+    .byte	8, 0
+    .word	608   # 'F'
+    .byte	8, 0
+    .word	624   # 'G'
+    .byte	8, 0
+    .word	640   # 'H'
+    .byte	7, 0
+    .word	656   # 'I'
+    .byte	8, 0
+    .word	672   # 'J'
+    .byte	8, 0
+    .word	688   # 'K'
+    .byte	8, 0
+    .word	704   # 'L'
+    .byte	10, 0
+    .word	720   # 'M'
+    .byte	8, 0
+    .word	752   # 'N'
+    .byte	8, 0
+    .word	768   # 'O'
+    .byte	8, 0
+    .word	784   # 'P'
+    .byte	8, 0
+    .word	800   # 'Q'
+    .byte	8, 0
+    .word	816   # 'R'
+    .byte	8, 0
+    .word	832   # 'S'
+    .byte	7, 0
+    .word	848   # 'T'
+    .byte	8, 0
+    .word	864   # 'U'
+    .byte	8, 0
+    .word	880   # 'V'
+    .byte	10, 0
+    .word	896   # 'W'
+    .byte	8, 0
+    .word	928   # 'X'
+    .byte	7, 0
+    .word	944   # 'Y'
+    .byte	8, 0
+    .word	960   # 'Z'
+    .byte	8, 0
+    .word	976   # '['
+    .byte	8, 0
+    .word	992   # '\\'
+    .byte	8, 0
+    .word	1008   # ']'
+    .byte	7, 0
+    .word	1024   # '^'
+    .byte	8, 0
+    .word	1040   # '_'
+    .byte	5, 0
+    .word	1056   # '`'
+    .byte	8, 0
+    .word	1072   # 'a'
+    .byte	8, 0
+    .word	1088   # 'b'
+    .byte	8, 0
+    .word	1104   # 'c'
+    .byte	8, 0
+    .word	1120   # 'd'
+    .byte	8, 0
+    .word	1136   # 'e'
+    .byte	7, 0
+    .word	1152   # 'f'
+    .byte	8, 0
+    .word	1168   # 'g'
+    .byte	8, 0
+    .word	1184   # 'h'
+    .byte	5, 0
+    .word	1200   # 'i'
+    .byte	8, 0
+    .word	1216   # 'j'
+    .byte	8, 0
+    .word	1232   # 'k'
+    .byte	6, 0
+    .word	1248   # 'l'
+    .byte	9, 0
+    .word	1264   # 'm'
+    .byte	8, 0
+    .word	1296   # 'n'
+    .byte	8, 0
+    .word	1312   # 'o'
+    .byte	8, 0
+    .word	1328   # 'p'
+    .byte	8, 0
+    .word	1344   # 'q'
+    .byte	8, 0
+    .word	1360   # 'r'
+    .byte	8, 0
+    .word	1376   # 's'
+    .byte	7, 0
+    .word	1392   # 't'
+    .byte	8, 0
+    .word	1408   # 'u'
+    .byte	8, 0
+    .word	1424   # 'v'
+    .byte	10, 0
+    .word	1440   # 'w'
+    .byte	8, 0
+    .word	1472   # 'x'
+    .byte	8, 0
+    .word	1488   # 'y'
+    .byte	8, 0
+    .word	1504   # 'z'
+    .byte	8, 0
+    .word	1520   # '{'
+    .byte	5, 0
+    .word	1536   # '|'
+    .byte	8, 0
+    .word	1552   # '}'
+    .byte	8, 0
+    .word	1568   # '~'
+    .byte	8, 0
+    .word	1584   # 0x7f
+    .byte	8, 0
+    .word	1600   # 0x80
+    .byte	8, 0
+    .word	1616   # 0x81
+    .byte	5, 0
+    .word	1632   # 0x82
+    .byte	7, 0
+    .word	1648   # 0x83
+    .byte	8, 0
+    .word	1664   # 0x84
+    .byte	10, 0
+    .word	1680   # 0x85
+    .byte	8, 0
+    .word	1712   # 0x86
+    .byte	8, 0
+    .word	1728   # 0x87
+    .byte	5, 0
+    .word	1744   # 0x88
+    .byte	10, 0
+    .word	1760   # 0x89
+    .byte	8, 0
+    .word	1792   # 0x8a
+    .byte	4, 0
+    .word	1808   # 0x8b
+    .byte	8, 0
+    .word	1824   # 0x8c
+    .byte	8, 0
+    .word	1840   # 0x8d
+    .byte	8, 0
+    .word	1856   # 0x8e
+    .byte	8, 0
+    .word	1872   # 0x8f
+    .byte	8, 0
+    .word	1888   # 0x90
+    .byte	5, 0
+    .word	1904   # 0x91
+    .byte	5, 0
+    .word	1920   # 0x92
+    .byte	7, 0
+    .word	1936   # 0x93
+    .byte	7, 0
+    .word	1952   # 0x94
+    .byte	5, 0
+    .word	1968   # 0x95
+    .byte	6, 0
+    .word	1984   # 0x96
+    .byte	10, 0
+    .word	2000   # 0x97
+    .byte	6, 0
+    .word	2032   # 0x98
+    .byte	8, 0
+    .word	2048   # 0x99
+    .byte	8, 0
+    .word	2064   # 0x9a
+    .byte	4, 0
+    .word	2080   # 0x9b
+    .byte	8, 0
+    .word	2096   # 0x9c
+    .byte	8, 0
+    .word	2112   # 0x9d
+    .byte	8, 0
+    .word	2128   # 0x9e
+    .byte	7, 0
+    .word	2144   # 0x9f
+    .byte	8, 0
+    .word	2160   # 0xa0
+    .byte	3, 0
+    .word	2176   # 0xa1
+    .byte	8, 0
+    .word	2192   # 0xa2
+    .byte	8, 0
+    .word	2208   # 0xa3
+    .byte	8, 0
+    .word	2224   # 0xa4
+    .byte	8, 0
+    .word	2240   # 0xa5
+    .byte	3, 0
+    .word	2256   # 0xa6
+    .byte	8, 0
+    .word	2272   # 0xa7
+    .byte	6, 0
+    .word	2288   # 0xa8
+    .byte	8, 0
+    .word	2304   # 0xa9
+    .byte	8, 0
+    .word	2320   # 0xaa
+    .byte	8, 0
+    .word	2336   # 0xab
+    .byte	8, 0
+    .word	2352   # 0xac
+    .byte	5, 0
+    .word	2368   # 0xad
+    .byte	8, 0
+    .word	2384   # 0xae
+    .byte	8, 0
+    .word	2400   # 0xaf
+    .byte	5, 0
+    .word	2416   # 0xb0
+    .byte	8, 0
+    .word	2432   # 0xb1
+    .byte	5, 0
+    .word	2448   # 0xb2
+    .byte	5, 0
+    .word	2464   # 0xb3
+    .byte	4, 0
+    .word	2480   # 0xb4
+    .byte	8, 0
+    .word	2496   # 0xb5
+    .byte	8, 0
+    .word	2512   # 0xb6
+    .byte	8, 0
+    .word	2528   # 0xb7
+    .byte	5, 0
+    .word	2544   # 0xb8
+    .byte	4, 0
+    .word	2560   # 0xb9
+    .byte	5, 0
+    .word	2576   # 0xba
+    .byte	8, 0
+    .word	2592   # 0xbb
+    .byte	8, 0
+    .word	2608   # 0xbc
+    .byte	8, 0
+    .word	2624   # 0xbd
+    .byte	8, 0
+    .word	2640   # 0xbe
+    .byte	8, 0
+    .word	2656   # 0xbf
+    .byte	8, 0
+    .word	2672   # 0xc0
+    .byte	8, 0
+    .word	2688   # 0xc1
+    .byte	8, 0
+    .word	2704   # 0xc2
+    .byte	8, 0
+    .word	2720   # 0xc3
+    .byte	8, 0
+    .word	2736   # 0xc4
+    .byte	8, 0
+    .word	2752   # 0xc5
+    .byte	8, 0
+    .word	2768   # 0xc6
+    .byte	8, 0
+    .word	2784   # 0xc7
+    .byte	8, 0
+    .word	2800   # 0xc8
+    .byte	8, 0
+    .word	2816   # 0xc9
+    .byte	8, 0
+    .word	2832   # 0xca
+    .byte	8, 0
+    .word	2848   # 0xcb
+    .byte	7, 0
+    .word	2864   # 0xcc
+    .byte	7, 0
+    .word	2880   # 0xcd
+    .byte	8, 0
+    .word	2896   # 0xce
+    .byte	7, 0
+    .word	2912   # 0xcf
+    .byte	8, 0
+    .word	2928   # 0xd0
+    .byte	8, 0
+    .word	2944   # 0xd1
+    .byte	8, 0
+    .word	2960   # 0xd2
+    .byte	8, 0
+    .word	2976   # 0xd3
+    .byte	8, 0
+    .word	2992   # 0xd4
+    .byte	8, 0
+    .word	3008   # 0xd5
+    .byte	8, 0
+    .word	3024   # 0xd6
+    .byte	8, 0
+    .word	3040   # 0xd7
+    .byte	8, 0
+    .word	3056   # 0xd8
+    .byte	8, 0
+    .word	3072   # 0xd9
+    .byte	8, 0
+    .word	3088   # 0xda
+    .byte	8, 0
+    .word	3104   # 0xdb
+    .byte	8, 0
+    .word	3120   # 0xdc
+    .byte	7, 0
+    .word	3136   # 0xdd
+    .byte	8, 0
+    .word	3152   # 0xde
+    .byte	8, 0
+    .word	3168   # 0xdf
+    .byte	8, 0
+    .word	3184   # 0xe0
+    .byte	8, 0
+    .word	3200   # 0xe1
+    .byte	8, 0
+    .word	3216   # 0xe2
+    .byte	8, 0
+    .word	3232   # 0xe3
+    .byte	8, 0
+    .word	3248   # 0xe4
+    .byte	8, 0
+    .word	3264   # 0xe5
+    .byte	8, 0
+    .word	3280   # 0xe6
+    .byte	8, 0
+    .word	3296   # 0xe7
+    .byte	8, 0
+    .word	3312   # 0xe8
+    .byte	8, 0
+    .word	3328   # 0xe9
+    .byte	8, 0
+    .word	3344   # 0xea
+    .byte	8, 0
+    .word	3360   # 0xeb
+    .byte	4, 0
+    .word	3376   # 0xec
+    .byte	4, 0
+    .word	3392   # 0xed
+    .byte	5, 0
+    .word	3408   # 0xee
+    .byte	7, 0
+    .word	3424   # 0xef
+    .byte	8, 0
+    .word	3440   # 0xf0
+    .byte	8, 0
+    .word	3456   # 0xf1
+    .byte	8, 0
+    .word	3472   # 0xf2
+    .byte	8, 0
+    .word	3488   # 0xf3
+    .byte	8, 0
+    .word	3504   # 0xf4
+    .byte	8, 0
+    .word	3520   # 0xf5
+    .byte	8, 0
+    .word	3536   # 0xf6
+    .byte	8, 0
+    .word	3552   # 0xf7
+    .byte	8, 0
+    .word	3568   # 0xf8
+    .byte	8, 0
+    .word	3584   # 0xf9
+    .byte	8, 0
+    .word	3600   # 0xfa
+    .byte	8, 0
+    .word	3616   # 0xfb
+    .byte	8, 0
+    .word	3632   # 0xfc
+    .byte	8, 0
+    .word	3648   # 0xfd
+    .byte	8, 0
+    .word	3664   # 0xfe
+    .byte	8, 0
+    .word	3680   # 0xff
 ResFont06Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02a598, 0x02ae58
+    .incbin	"build/table_png/gui/font_06.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_06.png (224 1-bpp glyphs from 0x20, 8x10)
 ResFont07Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02ae58, 0x02bc58
+    .incbin	"build/table_png/gui/font_07.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_07.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont08Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02bc58, 0x02ca58
+    .incbin	"build/table_png/gui/font_08.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_08.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont09Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02ca58, 0x02e658
+    .incbin	"build/table_png/gui/font_09.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_09.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont10Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02e658, 0x031758
+    .incbin	"build/table_png/gui/font_10.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_10.png (224 1-bpp glyphs from 0x20, 16x28)
 ResFont11Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x031758, 0x034858
+    .incbin	"build/table_png/gui/font_11.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_11.png (224 1-bpp glyphs from 0x20, 16x28)
 
 # dir[1], 0x14b0 bytes.
 # 'ZZZJ', 0x00, 'K', 0x00, 0xdc (the 8-byte signature the reader compares with the

@@ -87,7 +87,16 @@ program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manua
 # serve the SP7001 table, whose copies are identical; the rest comes from baserom/.
 TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 
-build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table.rom
+# The raw pictures (GUI bitmaps, frame pieces, icons, fonts, TCD and USER HP menu
+# pictures) are indexed PNGs in src/table/<subdir>/; tools/table_png.py turns them back
+# into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
+TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
+build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
+	@mkdir -p build/table_png
+	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)
+	@touch $@
+
+build/kn7000_table.rom: src/table.s $(TABLE_JPGS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
 
@@ -234,7 +243,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
