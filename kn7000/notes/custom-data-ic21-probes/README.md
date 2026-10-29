@@ -7,13 +7,14 @@ private romsets. Run from this directory:
 
     R=../../baserom/customdata; K6=../../../kn6000/baserom/01ctmini.ic18
 
-| script                | question it answers                                                                                            | command                                                                         |
-|-----------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| `layout_check.py`     | does every bank follow the directory / record / container layout exactly; which free blocks hold data?         | `python3 -I layout_check.py $R/*.ic21 $K6`                                      |
-| `stream_census.py`    | do all TCMP and TPAD streams parse with the firmware's event lengths; which events, how many?                  | `python3 -I stream_census.py $R/*.ic21 $K6`                                     |
-| `slack_origin.py`     | where do the bytes past a record's end come from (same bytes at the same offsets in another record)?           | `python3 -I slack_origin.py $R/*.ic21 $K6`                                      |
-| `panel_memory_map.py` | the writer's field-map tables; do the stored one-touch settings follow them (masks, 941 tails, KN6000 part 3)? | `python3 -I panel_memory_map.py ../../baserom/kn7000_program.rom $R/*.ic21 $K6` |
-| `zlib104_drv.c`       | does zlib 1.0.4 itself reproduce an `.AST` payload (Python's zlib 1.3.1 does not)?                             | below                                                                           |
+| script                | question it answers                                                                                               | command                                                                                                |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `layout_check.py`     | does every bank follow the directory / record / container layout exactly; which free blocks hold data?            | `python3 -I layout_check.py $R/*.ic21 $K6`                                                             |
+| `stream_census.py`    | do all TCMP and TPAD streams parse with the firmware's event lengths; which events, how many?                     | `python3 -I stream_census.py $R/*.ic21 $K6`                                                            |
+| `slack_origin.py`     | where do the bytes past a record's end come from (same bytes at the same offsets in another record)?              | `python3 -I slack_origin.py $R/*.ic21 $K6`                                                             |
+| `panel_memory_map.py` | the writer's field-map tables; do the stored one-touch settings follow them (masks, 941 tails, KN6000 part 3)?    | `python3 -I panel_memory_map.py ../../baserom/kn7000_program.rom $R/*.ic21 $K6`                        |
+| `residue_cover.py`    | how much of the residue repeats a typed record, is a whole stream or record, parses as events, or is left opaque? | `python3 -I notes/custom-data-ic21-probes/residue_cover.py baserom/customdata/*.ic21` (from `kn7000/`) |
+| `zlib104_drv.c`       | does zlib 1.0.4 itself reproduce an `.AST` payload (Python's zlib 1.3.1 does not)?                                | below                                                                                                  |
 
 What each prints, as measured 2026-10-29:
 
@@ -26,6 +27,8 @@ What each prints, as measured 2026-10-29:
 - `panel_memory_map.py`: 0 part bytes outside their masks in the KN7000 banks; settings without
   the 941 part tails: 01ctmini 76, 02custm6 0 (live records); KN6000: 880 bytes outside, all 80
   settings with part 3 all 0xFF.
+- `residue_cover.py` (all nine images): record copies 2,202,310 B, whole streams 195,442, event
+  runs 185,705, variation and pad records 4,672, opaque 4,179 (per image: custom-data-ic21.md).
 - `slack_origin.py`: 166 records with residue past their end, 122 of them with the same bytes at
   the same offsets in another record.
 

@@ -220,18 +220,63 @@ index) and `func_484385DD` sets bits 2/3 of `+0x1A` for pads 4 and 5.
 A record's blocks are programmed whole, from a RAM buffer that still held what was built there
 before. So:
 
-- **Past a record's end** its blocks hold the tail of an earlier, longer record. 166 records have
-  such residue; for 122 of them another record of the sets has the same bytes at the same offsets
-  (`slack_origin.py`). No accessor reads past `+0x00`'s size. These runs are declared
-  `census: opaque -- unknown-dump`: they start in the middle of a record whose header is gone, so
-  no field can be anchored.
+- **Past a record's end** its blocks hold the tail of an earlier, longer write. 166 records have
+  such residue (`slack_origin.py`); no accessor reads past `+0x00`'s size.
 - **Free blocks** (map 0) are not erased in the nine KN7000 sets: they hold 41 complete older
   records (no slot points at them; their `+0xA4` gives the block they were written for) and one
-  fragment. The complete ones are typed like live records (`StaleNN.inc`), e.g. "Revival Rock"
-  (in 7 sets) and "Soloist Sounds" (4). The fragment (01ctmini block 21) is opaque.
+  fragment (01ctmini block 21). The complete ones are typed like live records (`StaleNN.inc`),
+  e.g. "Revival Rock" (in 7 sets) and "Soloist Sounds" (4).
 - The 80 "Blank" slots of the eight custom1/custom2 sets are each 0x237F bytes.
 
-The KN6000 bank has no stale records and no residue except past record ends.
+The KN6000 bank has no stale records and no residue.
+
+**How the residue is typed** (third round; `gen_customdata_s.py`, class `Cover`; each run is an
+include file `<image>/SlotNN_Residue.inc`, `StaleNN_Residue.inc` or `BlockNN_Residue.inc`):
+
+1. **Copies of typed records.** At the start of a run, and after each matched piece, the
+   generator first looks for a record of the nine sets with the same bytes at the **same
+   record-relative offset** (32 bytes or more), then for the longest match at **any offset** in
+   any record. A match is spelled with that record's own lines (its macros, every label folded
+   to a number), from the first whole line to the last; partial lines at the edges are bytes
+   with a comment naming the line they are part of. The first line carries
+   `stale tail of an earlier write; same bytes as <image> <Record> +0x..+0x..`.
+   Many residue runs equal *other residue* at the same offsets (122 of 166, the first round's
+   finding), which is not typed anywhere; those are typed by the next two steps.
+2. **Structures that no record holds.** In what is left: whole event streams (`{index, u24
+   count, F4 .. F5}` that parse with the firmware's event lengths), TCMP variation records
+   (zero fields, per-part bytes, eight part set-ups with CC94 = 64 and CC96 = 12) and TPAD pad
+   records (printable name, zero fields, two part set-ups), each spelled with its macros
+   (`STREAM_HEADER` + `ev_*`, `TCMP_VAR` + `PART_SETUP`, `TPAD_PAD` + `PART_SETUP`).
+3. **Runs of events.** Any run of 16 bytes or more with at least two status events that parses
+   under the stream rules the firmware's own streams keep (a position byte 0-95 is followed by
+   an event, positions rise within a beat) is spelled with `ev_*` lines.
+4. **Opaque**: what is left matches no typed record at 32 bytes and does not parse: mostly
+   1-15-byte splinters between matched pieces (partial events, the bytes of a header cut by the
+   next write).
+
+Tally, all nine sets (bytes; `residue_cover.py` prints it per image):
+
+| image      | record copies | streams | events | variation / pad records | opaque |
+|------------|---------------|---------|--------|-------------------------|--------|
+| `01ctmini` | 62,671        | 50,763  | 42,037 | 4,480                   | 232    |
+| `01custm1` | 211,092       | 37,226  | 30,778 | 0                       | 130    |
+| `02custm2` | 283,708       | 4,549   | 7,456  | 0                       | 187    |
+| `03custm3` | 286,424       | 4,549   | 7,445  | 0                       | 187    |
+| `04custm4` | 205,350       | 19,845  | 15,498 | 0                       | 108    |
+| `01custm5` | 245,989       | 15,916  | 23,885 | 192                     | 2,374  |
+| `02custm6` | 268,267       | 54,958  | 38,750 | 0                       | 410    |
+| `03custm7` | 326,793       | 3,818   | 10,353 | 0                       | 309    |
+| `04custm8` | 312,016       | 3,818   | 9,503  | 0                       | 242    |
+
+Totals: 2,202,310 record copies, 195,442 in whole streams, 185,705 in event runs, 4,672 in
+variation and pad records, 4,179 opaque: of the 2,592,308 residue bytes the first rounds declared
+opaque, 2,588,129 (99.84%) are typed and 4,179 remain opaque, in 679 entries (the census figure).
+
+**PMR and SOUND records.** floppy-others' `PMR_*` (the full 0x750 / 0x700-byte PANEL MEMORY
+record) and `SOUND_HEAD` / `SOUND_MOD` (the 0x2C8-byte SOUND EDIT record) are in the shared
+includes, but IC21 holds neither: panel memories live in the backup SRAM (`0x84000824..`),
+IC21 holds only the 0xA0-byte one-touch settings built from them (`PM_*`), and no factory record
+has a SOUND EDIT dependency section. They would apply to a user's own IC21 with such sections.
 
 ## The .AST file
 
@@ -259,13 +304,14 @@ it to regenerate these files.
 
 `scripts/analysis/data_incbin_census.py`, 2026-10-29 on this branch (count / bytes):
 
-| tree                | opaque          | generic n | generic bytes |
-|---------------------|-----------------|-----------|---------------|
-| `kn7000-customdata` | 183 / 2,592,308 | 0         | 0             |
-| `kn6000-customdata` | 0 / 0           | 0         | 0             |
+| tree                | opaque      | generic n | generic bytes |
+|---------------------|-------------|-----------|---------------|
+| `kn7000-customdata` | 679 / 4,179 | 0         | 0             |
+| `kn6000-customdata` | 0 / 0       | 0         | 0             |
 
 Generic is 0 in both trees: the panel memories and the voice records are typed since the second
-round (`panel_memory.inc`, `voice_record.inc`). The opaque entries are the residue runs above.
+round (`panel_memory.inc`, `voice_record.inc`). The opaque entries are the residue splinters
+above (third round; it was 183 / 2,592,308 before).
 
 ## Open questions
 
