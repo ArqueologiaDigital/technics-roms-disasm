@@ -16440,7 +16440,7 @@ OpeningFrame05:
 # (kn7000_manual.sym, the five bank sources). Typed as far as traced in
 # src/table/voices/ (tools/gen_table_voices.py).
 InternalVoiceArchive:
-    .include	"src/table/voices/internal_archive_b83.s"
+    .include	"src/sp7001/internal_voice_archive.s"
 
 # dir[7], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
 # The table build number, ASCII digits and a line feed. The boot code parses the

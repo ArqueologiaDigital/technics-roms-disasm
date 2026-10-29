@@ -245,7 +245,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
