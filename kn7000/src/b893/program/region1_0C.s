@@ -1355,7 +1355,7 @@ InitializeBlock15:
 InitializeBlock15_entry:
     mov     sp, a3
     add     0x1c, a3
-    mov     0x00040004, d0
+    mov     CLASS_Class, d0
     mov     d0, (0x1c, sp)
     mov     ClassProc, d0
     mov     d0, (0x20, sp)
@@ -1366,7 +1366,7 @@ InitializeBlock15_entry:
     mov     0xf4, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040009, d0
+    mov     CLASS_Event, d0
     mov     d0, (0x1c, sp)
     mov     EventProc, d0
     mov     d0, (0x20, sp)
@@ -1377,7 +1377,7 @@ InitializeBlock15_entry:
     mov     0xf5, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x0004000a, d0
+    mov     CLASS_Method, d0
     mov     d0, (0x1c, sp)
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
@@ -1388,7 +1388,7 @@ InitializeBlock15_entry:
     mov     0xf6, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040001, d2
+    mov     CLASS_Function, d2
     mov     d2, (0x1c, sp)
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
@@ -1406,7 +1406,7 @@ InitializeBlock15_entry:
     mov     0xf9, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040002, d3
+    mov     CLASS_ApFunction, d3
     mov     d3, (0x1c, sp)
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -1425,7 +1425,7 @@ InitializeBlock15_entry:
     mov     0xfa, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040003, d2
+    mov     CLASS_MainFunction, d2
     mov     d2, (0x1c, sp)
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -1445,7 +1445,7 @@ InitializeBlock15_entry:
     mov     0xfb, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040011, d0
+    mov     CLASS_Viewable, d0
     mov     d0, (0x1c, sp)
     mov     ViewableProc, d0
     mov     d0, (0x20, sp)
@@ -1456,7 +1456,7 @@ InitializeBlock15_entry:
     mov     0xf0, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040010, d0
+    mov     CLASS_ResName, d0
     mov     d0, (0x1c, sp)
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
@@ -1470,9 +1470,9 @@ InitializeBlock15_entry:
     mov     Str_OTB_HELP, a0
     mov     Str_iaphelp, a1
     call    RegisterOTBlock_entry, [a2], 4
-    mov     0x000f00f1, d0
+    mov     TT_HELP, d0
     mov     d0, (0x10, sp)
-    mov     0x000c000f, d0
+    mov     OTB_HELP, d0
     mov     d0, (0x14, sp)
     mov     0x11, d0
     mov     0x00020000, d1
@@ -1480,34 +1480,34 @@ InitializeBlock15_entry:
     call    RegisterMode_entry, [a2], 4
     mov     0x00f00000, d0
     mov     d0, (0x10, sp)
-    mov     0x000c000f, d0
+    mov     OTB_HELP, d0
     mov     d0, (0x14, sp)
     mov     0xf1, d0
-    mov     0x00f30003, d1
+    mov     FN_HelpTitleFunc, d1
     mov     Str_TT_HELP, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x00f0000e, d0
+    mov     HelpAPCMENU_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c000f, d0
+    mov     OTB_HELP, d0
     mov     d0, (0x14, sp)
     mov     0x12c, d0
-    mov     0x00f30004, d1
+    mov     FN_HelpAPCMENUTitleFunc, d1
     mov     Str_TT_HELPAPCMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x00f00015, d0
+    mov     HelpPRGMENU_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c000f, d0
+    mov     OTB_HELP, d0
     mov     d0, (0x14, sp)
     mov     0x12d, d0
-    mov     0x00f30005, d1
+    mov     FN_HelpPRGMENUTitleFunc, d1
     mov     Str_TT_HELPPRGMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x00f00008, d0
+    mov     HelpText_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c000f, d0
+    mov     OTB_HELP, d0
     mov     d0, (0x14, sp)
     mov     0x12e, d0
-    mov     0x00f30006, d1
+    mov     FN_HelpTEXTTitleFunc, d1
     mov     Str_TT_HELPTEXT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
@@ -2135,7 +2135,7 @@ CheckHelpDebugWindow:
     bne     loc_485814A3
 loc_4858148F:
     mov     (0x24, sp), a0
-    mov     0x00f00020, d0
+    mov     CheckHelp_id, d0
     mov     a0, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -2354,7 +2354,7 @@ LangSetChkFunc2:
     jmp     loc_48581712
 loc_48581690:
     mov     (0x28, sp), a0
-    mov     0x00f30001, d0
+    mov     FN_LangSetChkMain2, d0
     mov     a0, (0x10, sp)
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -2386,7 +2386,7 @@ loc_485816A5:
     mov     0x48, d1
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
     mov     a2, (0x10, sp)
-    mov     0x00f30002, d0
+    mov     FN_LangSetFlashFunc2, d0
     mov     0x00f60006, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -2664,7 +2664,7 @@ loc_485819B1:
     extbu   d0
     movhu   d0, (0x500c4d24)
     mov     a0, (0x10, sp)
-    mov     0x00f30001, d0
+    mov     FN_LangSetChkMain2, d0
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_485819E2
@@ -2692,7 +2692,7 @@ LangSetOKFunc2:
     mov     0x25, d1
     call    InterruptTitleDirect_entry, [d2,d3], 0x20
     mov     (0x24, sp), a0
-    mov     0x00f30002, d0
+    mov     FN_LangSetFlashFunc2, d0
     mov     a0, (0x10, sp)
     mov     0x00f60005, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
@@ -3766,7 +3766,7 @@ InitializeBlock40:
 InitializeBlock40_entry:
     mov     sp, a3
     add     0x1c, a3
-    mov     0x00040004, d0
+    mov     CLASS_Class, d0
     mov     d0, (0x1c, sp)
     mov     ClassProc, d0
     mov     d0, (0x20, sp)
@@ -3777,7 +3777,7 @@ InitializeBlock40_entry:
     mov     0x284, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040009, d0
+    mov     CLASS_Event, d0
     mov     d0, (0x1c, sp)
     mov     EventProc, d0
     mov     d0, (0x20, sp)
@@ -3788,7 +3788,7 @@ InitializeBlock40_entry:
     mov     0x285, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x0004000a, d0
+    mov     CLASS_Method, d0
     mov     d0, (0x1c, sp)
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
@@ -3799,7 +3799,7 @@ InitializeBlock40_entry:
     mov     0x286, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040001, d2
+    mov     CLASS_Function, d2
     mov     d2, (0x1c, sp)
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
@@ -3819,7 +3819,7 @@ InitializeBlock40_entry:
     mov     0x289, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040002, d3
+    mov     CLASS_ApFunction, d3
     mov     d3, (0x1c, sp)
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -3838,7 +3838,7 @@ InitializeBlock40_entry:
     mov     0x28a, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040003, d3
+    mov     CLASS_MainFunction, d3
     mov     d3, (0x1c, sp)
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -3857,7 +3857,7 @@ InitializeBlock40_entry:
     mov     0x28b, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040011, d0
+    mov     CLASS_Viewable, d0
     mov     d0, (0x1c, sp)
     mov     ViewableProc, d0
     mov     d0, (0x20, sp)
@@ -3868,7 +3868,7 @@ InitializeBlock40_entry:
     mov     0x280, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040010, d0
+    mov     CLASS_ResName, d0
     mov     d0, (0x1c, sp)
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
@@ -3884,7 +3884,7 @@ InitializeBlock40_entry:
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x02800000, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0028, d0
+    mov     OTB_PCCOM, d0
     mov     d0, (0x14, sp)
     mov     0x12f, d0
     mov     0x02830000, d1
@@ -5141,7 +5141,7 @@ InitializeBlock41:
 InitializeBlock41_entry:
     mov     sp, a3
     add     0x1c, a3
-    mov     0x00040004, d0
+    mov     CLASS_Class, d0
     mov     d0, (0x1c, sp)
     mov     ClassProc, d0
     mov     d0, (0x20, sp)
@@ -5152,7 +5152,7 @@ InitializeBlock41_entry:
     mov     0x294, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040009, d0
+    mov     CLASS_Event, d0
     mov     d0, (0x1c, sp)
     mov     EventProc, d0
     mov     d0, (0x20, sp)
@@ -5163,7 +5163,7 @@ InitializeBlock41_entry:
     mov     0x295, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x0004000a, d0
+    mov     CLASS_Method, d0
     mov     d0, (0x1c, sp)
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
@@ -5174,7 +5174,7 @@ InitializeBlock41_entry:
     mov     0x296, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040001, d2
+    mov     CLASS_Function, d2
     mov     d2, (0x1c, sp)
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
@@ -5194,7 +5194,7 @@ InitializeBlock41_entry:
     mov     0x299, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040002, d3
+    mov     CLASS_ApFunction, d3
     mov     d3, (0x1c, sp)
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -5213,7 +5213,7 @@ InitializeBlock41_entry:
     mov     0x29a, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040003, d2
+    mov     CLASS_MainFunction, d2
     mov     d2, (0x1c, sp)
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -5233,7 +5233,7 @@ InitializeBlock41_entry:
     mov     0x29b, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040011, d0
+    mov     CLASS_Viewable, d0
     mov     d0, (0x1c, sp)
     mov     ViewableProc, d0
     mov     d0, (0x20, sp)
@@ -5244,7 +5244,7 @@ InitializeBlock41_entry:
     mov     0x290, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040010, d0
+    mov     CLASS_ResName, d0
     mov     d0, (0x1c, sp)
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
@@ -5258,9 +5258,9 @@ InitializeBlock41_entry:
     mov     Str_OTB_DEMORUN, a0
     mov     Str_idemorun, a1
     call    RegisterOTBlock_entry, [a2], 4
-    mov     0x02900001, d0
+    mov     demo1_1_Label_Dummy_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0029, d0
+    mov     OTB_DEMORUN, d0
     mov     d0, (0x14, sp)
     mov     0x130, d0
     mov     0x00020000, d1

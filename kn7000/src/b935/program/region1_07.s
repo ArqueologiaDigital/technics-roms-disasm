@@ -1038,28 +1038,28 @@ loc_484E0B7D:
 loc_484E0BB9:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004c, d0
+    mov     GraphKeyLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0BD2:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004d, d0
+    mov     GraphKeyLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0BEB:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004e, d0
+    mov     GraphKeyLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0C04:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004f, d0
+    mov     GraphKeyLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
@@ -1093,28 +1093,28 @@ loc_484E0C1D:
 loc_484E0C55:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004c, d0
+    mov     GraphKeyLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0C6E:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004d, d0
+    mov     GraphKeyLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0C87:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004e, d0
+    mov     GraphKeyLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0CA0:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004f, d0
+    mov     GraphKeyLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
@@ -1148,28 +1148,28 @@ loc_484E0CB9:
 loc_484E0CF1:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004c, d0
+    mov     GraphKeyLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0D0A:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004d, d0
+    mov     GraphKeyLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0D23:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004e, d0
+    mov     GraphKeyLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
 loc_484E0D3C:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004f, d0
+    mov     GraphKeyLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E0DEE
@@ -1205,28 +1205,28 @@ loc_484E0D55:
 loc_484E0D90:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004c, d0
+    mov     GraphKeyLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E0DEE
 loc_484E0DA8:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004d, d0
+    mov     GraphKeyLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E0DEE
 loc_484E0DC0:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004e, d0
+    mov     GraphKeyLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E0DEE
 loc_484E0DD8:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0004f, d0
+    mov     GraphKeyLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484E0DEE:
@@ -1648,28 +1648,28 @@ loc_484E1147:
 loc_484E117B:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006e, d0
+    mov     GraphVelLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E1194:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006f, d0
+    mov     GraphVelLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E11AD:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00070, d0
+    mov     GraphVelLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E11C6:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00071, d0
+    mov     GraphVelLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
@@ -1704,28 +1704,28 @@ loc_484E11DF:
 loc_484E1217:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006e, d0
+    mov     GraphVelLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E1230:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006f, d0
+    mov     GraphVelLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E1249:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00070, d0
+    mov     GraphVelLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E1262:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00071, d0
+    mov     GraphVelLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
@@ -1760,28 +1760,28 @@ loc_484E127B:
 loc_484E12B3:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006e, d0
+    mov     GraphVelLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E12CC:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006f, d0
+    mov     GraphVelLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E12E5:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00070, d0
+    mov     GraphVelLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
 loc_484E12FE:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00071, d0
+    mov     GraphVelLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484E13A8
@@ -1814,28 +1814,28 @@ loc_484E1317:
 loc_484E134A:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006e, d0
+    mov     GraphVelLay1_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E13A8
 loc_484E1362:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b0006f, d0
+    mov     GraphVelLay2_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E13A8
 loc_484E137A:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00070, d0
+    mov     GraphVelLay3_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484E13A8
 loc_484E1392:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00071, d0
+    mov     GraphVelLay4_id, d0
     mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484E13A8:
@@ -13761,7 +13761,7 @@ loc_484E814D:
     jmp     (a0)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00083, d0
+    mov     Tset1On_id, d0
     mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     1, d0
@@ -13772,7 +13772,7 @@ loc_484E814D:
 loc_484E8175:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00084, d0
+    mov     Tset2On_id, d0
     mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     1, d0
@@ -13783,7 +13783,7 @@ loc_484E8175:
 loc_484E8199:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00085, d0
+    mov     Tset3On_id, d0
     mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     1, d0
@@ -13794,7 +13794,7 @@ loc_484E8199:
 loc_484E81BD:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01b00086, d0
+    mov     Tset4On_id, d0
     mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     3, d1
@@ -44621,7 +44621,7 @@ InitializeBlock19:
 InitializeBlock19_entry:
     mov     sp, a3
     add     0x1c, a3
-    mov     0x00040004, d0
+    mov     CLASS_Class, d0
     mov     d0, (0x1c, sp)
     mov     ClassProc, d0
     mov     d0, (0x20, sp)
@@ -44632,7 +44632,7 @@ InitializeBlock19_entry:
     mov     0x134, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040009, d0
+    mov     CLASS_Event, d0
     mov     d0, (0x1c, sp)
     mov     EventProc, d0
     mov     d0, (0x20, sp)
@@ -44643,7 +44643,7 @@ InitializeBlock19_entry:
     mov     0x135, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x0004000a, d0
+    mov     CLASS_Method, d0
     mov     d0, (0x1c, sp)
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
@@ -44654,7 +44654,7 @@ InitializeBlock19_entry:
     mov     0x136, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040001, d2
+    mov     CLASS_Function, d2
     mov     d2, (0x1c, sp)
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
@@ -44672,7 +44672,7 @@ InitializeBlock19_entry:
     mov     0x139, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040002, d3
+    mov     CLASS_ApFunction, d3
     mov     d3, (0x1c, sp)
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -44691,7 +44691,7 @@ InitializeBlock19_entry:
     mov     0x13a, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040003, d3
+    mov     CLASS_MainFunction, d3
     mov     d3, (0x1c, sp)
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -44710,7 +44710,7 @@ InitializeBlock19_entry:
     mov     0x13b, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040011, d0
+    mov     CLASS_Viewable, d0
     mov     d0, (0x1c, sp)
     mov     ViewableProc, d0
     mov     d0, (0x20, sp)
@@ -44721,7 +44721,7 @@ InitializeBlock19_entry:
     mov     0x130, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040010, d0
+    mov     CLASS_ResName, d0
     mov     d0, (0x1c, sp)
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
@@ -44735,68 +44735,68 @@ InitializeBlock19_entry:
     mov     Str_OTB_APDP, a0
     mov     Str_iapdp, a1
     call    RegisterOTBlock_entry, [a2], 4
-    mov     0x0130000f, d0
+    mov     DpSmfScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xc7, d0
     mov     0x01330000, d1
     mov     Str_TT_DPSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x01300066, d0
+    mov     DpDocScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xc8, d0
-    mov     0x01330001, d1
+    mov     FN_DpDocTtlFunc, d1
     mov     Str_TT_DPDOC, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x01300071, d0
+    mov     DpPDScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xc9, d0
-    mov     0x01330002, d1
+    mov     FN_DpPdTtlFunc, d1
     mov     Str_TT_DPPD, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x0130002c, d0
+    mov     DpSmfLyrScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xca, d0
-    mov     0x01330009, d1
+    mov     FN_DpSmfLyrTtlFunc, d1
     mov     Str_TT_DPSMFLYR, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x01300032, d0
+    mov     DpMdlySmfScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xcb, d0
-    mov     0x01330003, d1
+    mov     FN_DpMdlySmfTtlFunc, d1
     mov     Str_TT_DPMDLYSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x01300056, d0
+    mov     DpMdlyDocScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xcc, d0
-    mov     0x01330004, d1
+    mov     FN_DpMdlyDocTtlFunc, d1
     mov     Str_TT_DPMDLYDOC, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x0130007b, d0
+    mov     DpMdlyPDScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xcd, d0
-    mov     0x01330005, d1
+    mov     FN_DpMdlyPdTtlFunc, d1
     mov     Str_TT_DPMDLYPD, a0
     call    RegisterTitle_entry, [d2,a2], 8
-    mov     0x01300050, d0
+    mov     DpMdlySmfLyrScreen_id, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0013, d0
+    mov     OTB_APDP, d0
     mov     d0, (0x14, sp)
     mov     0xce, d0
-    mov     0x0133000a, d1
+    mov     FN_DpMdlySmfLyrTtlFunc, d1
     mov     Str_TT_DPMDLYSMFLYR, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
@@ -45055,7 +45055,7 @@ loc_484F9D97:
 DpMuteFunc:
     movm    [d2], (sp)
     add     -0x38, sp
-    mov     data_4863F7C4, a1
+    mov     DpMuteFunc_Table, a1
     mov     sp, a0
     add     0x14, a0
     mov     -0x24, d2
@@ -45109,7 +45109,7 @@ loc_484F9DE4:
     movhu   d0, (0x50151c06)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330007, d0
+    mov     FN_MainDP_CallMuteOp, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     cmp     0x10, d2
@@ -45131,7 +45131,7 @@ loc_484F9E3A:
     movhu   d1, (0x50151c06)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330007, d0
+    mov     FN_MainDP_CallMuteOp, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -45151,7 +45151,7 @@ SeqLyricsShowHide:
 loc_484F9E7E:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350002, d1
     call    PostEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -45182,7 +45182,7 @@ func_484F9EBB:
 func_484F9EBB_entry:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300030, d0
+    mov     LyricsFunc_id, d0
     mov     0x01350014, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
@@ -45192,12 +45192,12 @@ func_484F9ED7:
 func_484F9ED7_entry:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300030, d0
+    mov     LyricsFunc_id, d0
     mov     0x01350014, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300030, d0
+    mov     LyricsFunc_id, d0
     mov     0x01350016, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
@@ -45802,7 +45802,7 @@ func_484FA479_entry:
     clr     d0
     movbu   d0, (0x50152050)
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3], 0x20
@@ -45850,7 +45850,7 @@ loc_484FA4F4:
     movhu   d0, (0x50151f4c)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x50151f4a), d0
     mov     0x50152050, a1
@@ -45884,7 +45884,7 @@ loc_484FA4F4:
     clr     d0
     movbu   d0, (0x50152050)
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_484FA5D9
@@ -45994,7 +45994,7 @@ loc_484FA680:
     movhu   d0, (0x50151f4c)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x50151f4a), d0
     exth    d0
@@ -46069,19 +46069,19 @@ loc_484FA748:
     exth    d0
     add     -1, d0
     movhu   d0, (0x50151f4e)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    ApDeleteEvent_entry, [d2], 0x18
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     MT_Draw, d1
     call    PostEvent_entry, [d2,d3], 0x24
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     0x01350006, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     0x01350006, d1
     call    PostEvent_entry, [d2,d3], 0x24
     movbu   (0x50151d30), d0
@@ -46089,7 +46089,7 @@ loc_484FA748:
     beq     loc_484FA811
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330008, d0
+    mov     FN_MainDP_LyricsCharaReq, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_484FA816
@@ -46202,7 +46202,7 @@ loc_484FA919:
     movhu   d1, (0x50151f44)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     0x01350004, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x50151f46), d0
@@ -46288,7 +46288,7 @@ loc_484FA9F4:
 loc_484FAA38:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300030, d0
+    mov     LyricsFunc_id, d0
     mov     0x01350015, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -46342,7 +46342,7 @@ loc_484FAAA0:
 loc_484FAAC6:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     0x01350003, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484FABBA
@@ -46388,7 +46388,7 @@ loc_484FAAED:
     movhu   d0, (0x50151f4c)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x50151f4a), d0
     exth    d0
@@ -46420,7 +46420,7 @@ loc_484FAB8B:
 loc_484FABA4:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300087, d0
+    mov     APDP_LyricsData_id, d0
     mov     0x01350003, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484FABBA:
@@ -46511,7 +46511,7 @@ loc_484FAC7A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x0136000e, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46599,7 +46599,7 @@ loc_484FAD71:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x0136000f, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46671,7 +46671,7 @@ loc_484FAE3A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360010, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46743,7 +46743,7 @@ loc_484FAF03:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360011, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46828,7 +46828,7 @@ loc_484FAFF6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360003, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46894,7 +46894,7 @@ loc_484FB0CB:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360005, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -46960,7 +46960,7 @@ loc_484FB1A0:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360002, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47026,7 +47026,7 @@ loc_484FB275:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360004, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47253,7 +47253,7 @@ loc_484FB4C0:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360007, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47319,7 +47319,7 @@ loc_484FB595:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360006, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47385,7 +47385,7 @@ loc_484FB66A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360009, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47451,7 +47451,7 @@ loc_484FB73F:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01330006, d0
+    mov     FN_NameGetFuncCall, d0
     mov     0x01360008, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -47493,7 +47493,7 @@ func_484FB7C8_entry:
     movbu   (0x50151c08), d0
     mov     MT_RefreshParaDraw, d1
     mov     d0, (0x10, sp)
-    mov     0x0130000d, d0
+    mov     PlayDisp_id, d0
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
 
@@ -47514,7 +47514,7 @@ func_484FB7EF_entry:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FB833:
@@ -47559,222 +47559,222 @@ loc_484FB88A:
 loc_484FB88D:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130001c, d0
+    mov     SMFMuteSw1_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130001d, d0
+    mov     SMFMuteSw2_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130001e, d0
+    mov     SMFMuteSw3_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130001f, d0
+    mov     SMFMuteSw4_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300020, d0
+    mov     SMFMuteSw5_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300021, d0
+    mov     SMFMuteSw6_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300022, d0
+    mov     SMFMuteSw7_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300023, d0
+    mov     SMFMuteSw8_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300024, d0
+    mov     SMFMuteSw9_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300025, d0
+    mov     SMFMuteSw10_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300026, d0
+    mov     SMFMuteSw11_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300027, d0
+    mov     SMFMuteSw12_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300028, d0
+    mov     SMFMuteSw13_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300029, d0
+    mov     SMFMuteSw14_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130002a, d0
+    mov     SMFMuteSw15_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130002b, d0
+    mov     SMFMuteSw16_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
 loc_484FB9F0:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300040, d0
+    mov     SMFMedMuteSw1_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300041, d0
+    mov     SMFMedMuteSw2_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300042, d0
+    mov     SMFMedMuteSw3_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300043, d0
+    mov     SMFMedMuteSw4_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300044, d0
+    mov     SMFMedMuteSw5_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300045, d0
+    mov     SMFMedMuteSw6_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300046, d0
+    mov     SMFMedMuteSw7_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300047, d0
+    mov     SMFMedMuteSw8_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300048, d0
+    mov     SMFMedMuteSw9_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300049, d0
+    mov     SMFMedMuteSw10_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004a, d0
+    mov     SMFMedMuteSw11_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004b, d0
+    mov     SMFMedMuteSw12_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004c, d0
+    mov     SMFMedMuteSw13_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004d, d0
+    mov     SMFMedMuteSw14_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004e, d0
+    mov     SMFMedMuteSw15_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130004f, d0
+    mov     SMFMedMuteSw16_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
 loc_484FBB53:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130006e, d0
+    mov     DOCR1Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130006f, d0
+    mov     DOCR2Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300070, d0
+    mov     DOCOrchSw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
 loc_484FBB98:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130005f, d0
+    mov     DOCMedR1Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300060, d0
+    mov     DOCMedR2Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300061, d0
+    mov     DOCMedOrchSw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FBC36
 loc_484FBBDC:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300079, d0
+    mov     PDR1Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0130007a, d0
+    mov     PDOrchSw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FBC36
 loc_484FBC0A:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300084, d0
+    mov     PDMedR1Sw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300085, d0
+    mov     PDMedOrchSw_id, d0
     mov     MT_SetParam, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FBC36:
@@ -47825,7 +47825,7 @@ func_484FBC8B:
     mov     2, d0
     movbu   d0, (0x50151c08)
     mov     d0, (0x10, sp)
-    mov     0x0130000d, d0
+    mov     PlayDisp_id, d0
     mov     MT_RefreshParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
@@ -47835,7 +47835,7 @@ func_484FBCAE:
     mov     1, d0
     movbu   d0, (0x50151c08)
     mov     d0, (0x10, sp)
-    mov     0x0130000d, d0
+    mov     PlayDisp_id, d0
     mov     MT_RefreshParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
@@ -47852,7 +47852,7 @@ func_484FBCD1_entry:
 loc_484FBCE6:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300030, d0
+    mov     LyricsFunc_id, d0
     mov     0x01350013, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    func_48530468_entry, 0, 0xc
@@ -47870,7 +47870,7 @@ loc_484FBCE6:
     bne     loc_484FBD43
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FBD43:
@@ -48341,7 +48341,7 @@ loc_484FC2C0:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    func_484FD2F7_entry, 0, 0xc
@@ -48395,7 +48395,7 @@ loc_484FC37A:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    func_484FD2F7_entry, 0, 0xc
@@ -48493,7 +48493,7 @@ func_484FC4AC_entry:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC518
@@ -48507,7 +48507,7 @@ loc_484FC4E1:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC518
@@ -48521,7 +48521,7 @@ func_484FC51B:
 func_484FC51B_entry:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     0, 0x14
@@ -48554,7 +48554,7 @@ func_484FC56B_entry:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
@@ -48607,7 +48607,7 @@ loc_484FC5F8:
     call    func_484FB849_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    func_484FBCD1_entry, [a2,a3], 0x1c
@@ -48629,7 +48629,7 @@ loc_484FC641:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FC671:
@@ -48679,7 +48679,7 @@ loc_484FC6BC:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC78E
@@ -48695,7 +48695,7 @@ loc_484FC6FF:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC78E
@@ -48774,7 +48774,7 @@ loc_484FC7BE:
 loc_484FC7D3:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350002, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC922
@@ -48784,7 +48784,7 @@ loc_484FC7EC:
 loc_484FC7F4:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350002, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC922
@@ -48832,7 +48832,7 @@ loc_484FC850:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC922
@@ -48848,7 +48848,7 @@ loc_484FC893:
     call    func_48480E89_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC922
@@ -49560,7 +49560,7 @@ loc_484FD042:
     call    func_484FB849_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FD07F:
@@ -49623,7 +49623,7 @@ loc_484FD0E5:
     call    func_484FB849_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FD130:
@@ -49631,7 +49631,7 @@ loc_484FD130:
 loc_484FD137:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350002, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FD1A7
@@ -49648,7 +49648,7 @@ loc_484FD14F:
 loc_484FD173:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350002, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FD1A7
@@ -50760,7 +50760,7 @@ loc_484FDAD2:
     clr     d1
     movbu   d1, (d0, a2)
     mov     a2, (0x10, sp)
-    mov     0x01300064, d0
+    mov     APDP_SeqLyricsFunc_id, d0
     mov     0x0136000d, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
@@ -50779,7 +50779,7 @@ loc_484FDB28:
     bne     loc_484FDB46
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300064, d0
+    mov     APDP_SeqLyricsFunc_id, d0
     mov     0x01350014, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FDB46:
@@ -50792,7 +50792,7 @@ func_484FDB4E:
 func_484FDB4E_entry:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300064, d0
+    mov     APDP_SeqLyricsFunc_id, d0
     mov     0x01350014, d1
     call    PostEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -50803,7 +50803,7 @@ func_484FDB6B:
 func_484FDB6B_entry:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300064, d0
+    mov     APDP_SeqLyricsFunc_id, d0
     mov     0x01350014, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -50820,7 +50820,7 @@ func_484FDB88_entry:
     clr     d0
 loc_484FDB99:
     mov     d0, (0x10, sp)
-    mov     0x0133000b, d0
+    mov     FN_MainSEQ_Read_1EventLyrics, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     ret     0, 0x14
@@ -50839,12 +50839,12 @@ AppSEQ_InitSmfLyrics:
     call    func_484FD2F7_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300064, d0
+    mov     APDP_SeqLyricsFunc_id, d0
     mov     0x01350013, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01300086, d0
+    mov     Lyrics_id, d0
     mov     0x01350001, d1
     call    SendEvent_entry, [d2,d3], 0x24
     call    func_484FDB4E_entry, 0, 0x14
@@ -50866,7 +50866,7 @@ InitializeBlock23:
 InitializeBlock23_entry:
     mov     sp, a3
     add     0x1c, a3
-    mov     0x00040004, d0
+    mov     CLASS_Class, d0
     mov     d0, (0x1c, sp)
     mov     ClassProc, d0
     mov     d0, (0x20, sp)
@@ -50877,7 +50877,7 @@ InitializeBlock23_entry:
     mov     0x174, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040009, d0
+    mov     CLASS_Event, d0
     mov     d0, (0x1c, sp)
     mov     EventProc, d0
     mov     d0, (0x20, sp)
@@ -50888,7 +50888,7 @@ InitializeBlock23_entry:
     mov     0x175, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x0004000a, d0
+    mov     CLASS_Method, d0
     mov     d0, (0x1c, sp)
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
@@ -50899,7 +50899,7 @@ InitializeBlock23_entry:
     mov     0x176, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040001, d3
+    mov     CLASS_Function, d3
     mov     d3, (0x1c, sp)
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
@@ -50918,7 +50918,7 @@ InitializeBlock23_entry:
     mov     0x179, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040002, d3
+    mov     CLASS_ApFunction, d3
     mov     d3, (0x1c, sp)
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -50937,7 +50937,7 @@ InitializeBlock23_entry:
     mov     0x17a, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040003, d3
+    mov     CLASS_MainFunction, d3
     mov     d3, (0x1c, sp)
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
@@ -50956,7 +50956,7 @@ InitializeBlock23_entry:
     mov     0x17b, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040011, d0
+    mov     CLASS_Viewable, d0
     mov     d0, (0x1c, sp)
     mov     ViewableProc, d0
     mov     d0, (0x20, sp)
@@ -50967,7 +50967,7 @@ InitializeBlock23_entry:
     mov     0x170, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
-    mov     0x00040010, d0
+    mov     CLASS_ResName, d0
     mov     d0, (0x1c, sp)
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
@@ -50983,7 +50983,7 @@ InitializeBlock23_entry:
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x01700000, d0
     mov     d0, (0x10, sp)
-    mov     0x000c0017, d0
+    mov     OTB_CMPMSPCMN, d0
     mov     d0, (0x14, sp)
     mov     0x101, d0
     mov     0x00020000, d1
@@ -50996,7 +50996,7 @@ GetCmpMspStepScreenID:
     retf    0, 0
 # GetMspChdStepScreenID  (CPU 0x484fddf3)
 GetMspChdStepScreenID:
-    mov     0x01700061, d0
+    mov     MspChdStepScreen_id, d0
     retf    0, 0
 # SetMspPartSetG1ID  (CPU 0x484fddfc)
 SetMspPartSetG1ID:
@@ -51309,7 +51309,7 @@ loc_484FE145:
     call    GetViewInstance, 0, 0
     mov     a0, a2
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_484FE1B8
     mov     (0x28, a2), d0
     cmp     0, d0
@@ -51344,7 +51344,7 @@ loc_484FE1B4:
     ret     [d2,d3,a2], 0x28
 loc_484FE1B8:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0009, d0
+    cmp     MD_MSP, d0
     beq     loc_484FE1CA
     jmp     loc_484FE259
 loc_484FE1CA:
@@ -51449,7 +51449,7 @@ AcCmpRecMuteBoxProc:
     mov     d0, (0x2c, sp)
     mov     d1, d3
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_484FE301
     movbu   (0x5015233c), d0
     movbu   d0, (0x14, sp)
@@ -51458,7 +51458,7 @@ AcCmpRecMuteBoxProc:
     bra     loc_484FE322
 loc_484FE301:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0009, d0
+    cmp     MD_MSP, d0
     bne     loc_484FE322
     movbu   (0x50152345), d0
     movbu   d0, (0x14, sp)
@@ -52367,7 +52367,7 @@ loc_484FEAC5:
     mov     d2, d1
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730005, d0
+    mov     FN_MainSEQ_SongNameParaDraw, d0
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484FEB01
@@ -52797,14 +52797,14 @@ loc_484FEEA2:
     bra     loc_484FEF08
 loc_484FEEC1:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_484FEEDB
     mov     (0x28, sp), a0
     call    func_4843BD68_entry, [a2,a3], 0x1c
     bra     loc_484FEEFA
 loc_484FEEDB:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0009, d0
+    cmp     MD_MSP, d0
     bne     loc_484FEEFA
     mov     (0x50152340), d0
     mov     (0x28, sp), a0
@@ -52828,22 +52828,22 @@ func_484FEF0B_entry:
     bne     loc_484FEF60
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x30, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x40, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x41, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x4f, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     ret     0, 0x14
@@ -52855,27 +52855,27 @@ loc_484FEF60:
 loc_484FEF68:
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x30, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x4f, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x40, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x43, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x44, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     ret     0, 0x14
@@ -52887,34 +52887,34 @@ loc_484FEFC7:
 loc_484FEFCF:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x30, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x4f, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x41, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_484FF03F
 loc_484FF008:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x30, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x4f, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x01730006, d0
+    mov     FN_MainSNDARG_SwFlagCheck, d0
     mov     0x41, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
 loc_484FF03F:
@@ -53052,7 +53052,7 @@ loc_484FF156:
     bne     loc_484FF170
     jmp     loc_484FF21B
 loc_484FF170:
-    mov     0x00040038, d0
+    mov     CLASS_PsWideESBox, d0
     mov     d0, (0x10, sp)
     mov     d2, d0
     mov     MT_CheckClass, d1
@@ -53083,28 +53083,28 @@ loc_484FF1B6:
     beq     loc_484FF1D5
     exth    d3
     mov     d3, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_INDEXSW_DOWN, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484FF21B
 loc_484FF1D5:
     exth    d3
     mov     d3, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_INDEXSW_UP, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484FF21B
 loc_484FF1ED:
     exth    d3
     mov     d3, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_INDEXSW_UP, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484FF21B
 loc_484FF205:
     exth    d3
     mov     d3, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_INDEXSW_DOWN, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484FF21B:
@@ -53139,18 +53139,18 @@ loc_484FF22F:
     cmp     -1, d0
     beq     loc_484FF2AD
     mov     a2, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_SWOFF, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, d0
     or      0x80, d0
     mov     d0, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_SWOFF, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d2
     mov     d2, (0x10, sp)
-    mov     0x01700021, d0
+    mov     CmpStepCatch_id, d0
     mov     EV_INDEXSW_BOTH, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484FF2AD:
@@ -53349,7 +53349,7 @@ loc_484FF46E:
     mov     d0, d2
 loc_484FF483:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_484FF4C3
     movbu   (0x5015233c), d0
     cmp     0, d0
@@ -53458,7 +53458,7 @@ loc_484FF59E:
     mov     d0, d2
 loc_484FF5B3:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_484FF5F3
     movbu   (0x5015233c), d0
     cmp     0, d0
@@ -54281,7 +54281,7 @@ loc_484FFDBC:
     movhu   (d0, a0), d1
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0173000a, d0
+    mov     FN_MainCMP_StepDialogCommand, d0
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
 loc_484FFDDF:
     cmp     0x1e, d2
@@ -54326,22 +54326,22 @@ loc_484FFE32:
     movbu   (d3, a1), d2
     mov     3, d0
     mov     d0, (0x10, sp)
-    mov     0x01730001, d0
+    mov     FN_TtCmStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     extbu   d2
     mov     d2, (0x10, sp)
-    mov     0x0173000b, d0
+    mov     FN_MainCMP_SetCmpRecPart, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     2, d0
     mov     d0, (0x10, sp)
-    mov     0x01730001, d0
+    mov     FN_TtCmStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     8, d0
     mov     d0, (0x10, sp)
-    mov     0x01730001, d0
+    mov     FN_TtCmStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_484FFF06
@@ -54365,22 +54365,22 @@ loc_484FFE93:
     bge     loc_484FFF06
     mov     3, d0
     mov     d0, (0x10, sp)
-    mov     0x01730003, d0
+    mov     FN_TtMspStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     extbu   d2
     mov     d2, (0x10, sp)
-    mov     0x0173000c, d0
+    mov     FN_MainPAD_SetUserPadRecPart, d0
     clr     d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     2, d0
     mov     d0, (0x10, sp)
-    mov     0x01730003, d0
+    mov     FN_TtMspStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     8, d0
     mov     d0, (0x10, sp)
-    mov     0x01730003, d0
+    mov     FN_TtMspStep, d0
     mov     EV_ACTIVATE, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
 loc_484FFF06:
@@ -54532,7 +54532,7 @@ loc_4850000C:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     bne     loc_4850004A
     movhu   (data_50003B0C), d1
     movhu   (0x5015233e), d0
@@ -54548,7 +54548,7 @@ loc_4850000C:
     bra     loc_4850007B
 loc_4850004A:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0009, d0
+    cmp     MD_MSP, d0
     bne     loc_4850007B
     movhu   (data_50003B0C), d1
     movhu   (0x50152348), d0
@@ -54577,7 +54577,7 @@ loc_4850007F:
     ret     [d2], 0x1c
 loc_4850009F:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0007, d0
+    cmp     MD_CMP, d0
     beq     loc_485000B1
     jmp     loc_48500133
 loc_485000B1:
@@ -54624,7 +54624,7 @@ loc_48500113:
     jmp     loc_485001C2
 loc_48500133:
     call    GetModeNow_entry, 0, 0x10
-    cmp     0xe0009, d0
+    cmp     MD_MSP, d0
     beq     loc_48500145
     jmp     loc_485001C2
 loc_48500145:

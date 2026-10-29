@@ -3901,12 +3901,22 @@ def event_ids_inc():
     return path if os.path.exists(path) else None
 
 
+def code_ids_inc():
+    """The typed data region's gui_code_ids.inc (title / mode / class / function /
+    object ids, tools/gen_data_s.py), or None."""
+    p = event_ids_inc()
+    p = p and os.path.join(os.path.dirname(p), "gui_code_ids.inc")
+    return p if p and os.path.exists(p) else None
+
+
 def read_event_ids():
-    """{value: name} of the MILK event and method ids (EV_*, MT_*: block 0's Event
-    and Method name tables, id = (slot << 16) | index) from gui_event_ids.inc."""
-    path = event_ids_inc()
+    """{value: name} of the MILK ids the code passes: event and method ids (EV_*,
+    MT_*, gui_event_ids.inc) first, then title, mode, class, function and object
+    ids (gui_code_ids.inc); id = (slot << 16) | index."""
     ids = {}
-    if path:
+    for path in (event_ids_inc(), code_ids_inc()):
+        if not path:
+            continue
         for line in open(path):
             m = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if m:
@@ -4014,7 +4024,9 @@ def main():
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
          f'.include "{SYMBOLS_INC}"'] + (
          [f'.include "{event_ids_inc()}"   # EV_ / MT_ ids, named in mov / cmp immediates']
-         if event_ids_inc() else []) + [
+         if event_ids_inc() else []) + (
+         [f'.include "{code_ids_inc()}"   # TT_ / MD_ / CLASS_ / FN_ / object ids, likewise']
+         if code_ids_inc() else []) + [
          ''] + [BOOT] + [
          '',
          '# ============================================================================',

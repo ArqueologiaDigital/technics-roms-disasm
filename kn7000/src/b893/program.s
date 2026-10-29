@@ -29,6 +29,7 @@
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/b893/symbols.inc"
 .include "src/b893/program/data/gui_event_ids.inc"   # EV_ / MT_ ids, named in mov / cmp immediates
+.include "src/b893/program/data/gui_code_ids.inc"   # TT_ / MD_ / CLASS_ / FN_ / object ids, likewise
 
 # 2 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
