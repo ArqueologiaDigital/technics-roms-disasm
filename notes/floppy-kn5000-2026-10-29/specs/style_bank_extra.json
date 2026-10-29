@@ -1,0 +1,100 @@
+{
+ "style_bank_extra": {
+  "scope": "Findings beyond scripts/build/style_events.py BANK LAYOUT (merged fab0c09d4). Offsets: bank-relative for the header, record-relative (record = bank + 0x60 + 0x60*section) otherwise. Measured over the 75 CMP files (2,250 records).",
+  "header": [
+   {
+    "off": 14,
+    "size": 2,
+    "name": "w_0x0e",
+    "evidence": "medley.s SetCurrentSlotIndex / GetCurrentSlotIndex (4146, 4151) use RAM 0x9480e as the current medley slot -- RAM shared with the style image while the medley runs [INFERENCE]; 0 in 75/75 files",
+    "inference": true
+   },
+   {
+    "off": 16,
+    "size": 1,
+    "name": "composer_mode",
+    "evidence": "AcCmpMdBox (flash_floppy_handlers.s:5880-5934): the composer MODE grid box reads 0x94810 (MainRamGet) and CmpSetP1_TtlDispatch stores the selection there; AccPatch_ConvertLegacyStyleImage tests (image+0x10) and AccPatch_ConvertLegacySectionLayout copies header byte +16. 1 in 72 files, 0 in 3",
+    "inference": true
+   },
+   {
+    "off": 46,
+    "size": 2,
+    "name": "used_size16",
+    "evidence": "already in the docstring; measured: value*16 == CMP file size in 75/75",
+    "inference": false
+   }
+  ],
+  "record": [
+   {
+    "off": 12,
+    "size": 1,
+    "name": "time_signature_code",
+    "evidence": "Part_LoadAndIndexVoiceTable (accompaniment_engine.s:29693) stores (rec+12) - 3 in STYLE_SECTION_BEATS; AccTone_LookupByProgram maps (rec+12) through AccTone_LookupByProgram_Table to beats per measure; Tempo_DisplayBPMReturn writes (0x3986)+3 there. Values 7 (2069), 9, 6, 0x0b, 4, 8, 5",
+    "inference": false
+   },
+   {
+    "off": 13,
+    "size": 1,
+    "name": "section_last_measure",
+    "evidence": "Part_LoadAndIndexVoiceTable copies (rec+13) to STYLE_SECTION_LAST_MEASURE; Tempo_DisplayMeasureRange writes (0x398c)-(0x398a) there. Values 0..7",
+    "inference": true
+   },
+   {
+    "off": 14,
+    "size": 1,
+    "name": "b_0x0e",
+    "evidence": "00 / 0x20 / 0x60 (bit field by values); template AccPatch_SlotRecordTemplate has 0x20",
+    "inference": true
+   },
+   {
+    "off": 15,
+    "size": 1,
+    "name": "section_flags",
+    "evidence": "Tempo_DisplayMeasureRange clears bit 7 (resm 7,(xiz+15)); template 0x80; 0x80 in 431 records",
+    "inference": true
+   },
+   {
+    "off": 16,
+    "size": 2,
+    "name": "tone_pair",
+    "evidence": "AccTone (accompaniment_engine.s:12940-12960, 13161, 13252, 14078): c = (rec+16), e = (rec+17) are stored as the two bytes of a PANEL_STYLE-like {number, bank} pair and compared as a word with 0x208 / 0x318; 0x58 0x02 in most records",
+    "inference": true
+   },
+   {
+    "off": 18,
+    "size": 6,
+    "name": "zero_12",
+    "evidence": "0 in 2250/2250 records",
+    "inference": false
+   },
+   {
+    "off": 24,
+    "size": 8,
+    "name": "part_group",
+    "repeat": {
+     "count": 5,
+     "stride": 8
+    },
+    "evidence": "MainCmpSetFunc (accompaniment_engine.s:35011..): part record = rec + 16 + 8*part (part 1..5 -> +0x18..+0x38). Inside a group: +0 u16 sound number (wide variety, high byte 0..7) [INFERENCE]; +2 pan: EVT_PAN_UP / EVT_PAN_DN (MT_PanUp/Dn) step it 0..127, AccPatch_ResetSectionPartByte2Defaults rewrites it 64,12,116,64 at +0x22/+0x2a/+0x32/+0x3a on every legacy-format load (which is why those bytes are constant in the files); +3 flag 0/1; +4 0x50 mostly (0x40/0x44/0x45) unknown; +5 range limit: EVT_RLMT_UP / _DN (MT_RLmtUp/Dn) step it 0..11, default 6; +6 0x7f or 0xff (bit 7 + 0x7f) unknown; +7 0. Group 0 (+0x18) is zero in the template and holds small values 0..0x0e at +0x18",
+    "inference": true
+   }
+  ],
+  "after_directory": [
+   {
+    "off": 2976,
+    "size": 160,
+    "name": "chord_map_records",
+    "evidence": "AccDemo_LoadVariation_DataBlock copies 5 x 32 B here (index 0..4, ff ff ff, 12 zero, 16-char name 'chord map n'); NoteEvent_LoadSoundGenParams zeroes the same 5 x 32 B; accompaniment_engine.s:28316 reads a 32-byte record at +0xba0 + 32*(0x390a). Zero in every file bank (docstring)",
+    "inference": true
+   },
+   {
+    "off": 3136,
+    "size": 1920,
+    "name": "measure_start_table",
+    "evidence": "accompaniment_engine.s:13098 / 15113 comments and code: word at +0xc40 + 160*slot + 32*part + 4*measure (12 slots x 5 parts x 8 measures x 4 B); NoteEvent_LoadSoundGenParams writes the 12 x 160 B groups (outer loop to +0xc40+1760); the AccDemo default writes {u16 index, u16 6} per entry. Ends at +0x13c0 where the fill-in cell starts",
+    "inference": true
+   }
+  ],
+  "probe": "~/compartilhado/tmp/data-floppy-kn5000/agentB/scripts/cmp_var.py <extracted dir> hdr|rec LO HI (scratch; promote before quoting)"
+ }
+}

@@ -12,153 +12,84 @@ F_0216BEAT_LSW_Header:
 F_0216BEAT_LSW_Block0:
 ; Block 0 (RAM 0xf9a0): the first 43 of the 46 records of PanelTlv_Block0_Layout; the rest differ (an older firmware's
 ; block, [INFERENCE]: the v5..v10 lists are all the same).
-	panel_tlv	0x78, 18	; record 0
-	.incbin	"0216BEAT.lsw", 0x22, 18	; tag 0x78 payload
-	panel_tlv	0x00, 24	; part 0
-	.incbin	"0216BEAT.lsw", 0x36, 24	; tag 0x00 payload
-	panel_tlv	0x01, 24	; part 1
-	.incbin	"0216BEAT.lsw", 0x50, 24	; tag 0x01 payload
-	panel_tlv	0x02, 24	; part 2
-	.incbin	"0216BEAT.lsw", 0x6a, 24	; tag 0x02 payload
-	panel_tlv	0x03, 24	; part 3
-	.incbin	"0216BEAT.lsw", 0x84, 24	; tag 0x03 payload
-	panel_tlv	0x04, 24	; part 4
-	.incbin	"0216BEAT.lsw", 0x9e, 24	; tag 0x04 payload
-	panel_tlv	0x05, 24	; part 5
-	.incbin	"0216BEAT.lsw", 0xb8, 24	; tag 0x05 payload
-	panel_tlv	0x06, 24	; part 6
-	.incbin	"0216BEAT.lsw", 0xd2, 24	; tag 0x06 payload
-	panel_tlv	0x07, 24	; part 7
-	.incbin	"0216BEAT.lsw", 0xec, 24	; tag 0x07 payload
-	panel_tlv	0x08, 24	; part 8
-	.incbin	"0216BEAT.lsw", 0x106, 24	; tag 0x08 payload
-	panel_tlv	0x09, 24	; part 9
-	.incbin	"0216BEAT.lsw", 0x120, 24	; tag 0x09 payload
-	panel_tlv	0x0a, 24	; part 10
-	.incbin	"0216BEAT.lsw", 0x13a, 24	; tag 0x0a payload
-	panel_tlv	0x0b, 24	; part 11
-	.incbin	"0216BEAT.lsw", 0x154, 24	; tag 0x0b payload
-	panel_tlv	0x0c, 24	; part 12
-	.incbin	"0216BEAT.lsw", 0x16e, 24	; tag 0x0c payload
-	panel_tlv	0x0d, 24	; part 13
-	.incbin	"0216BEAT.lsw", 0x188, 24	; tag 0x0d payload
-	panel_tlv	0x0e, 24	; part 14
-	.incbin	"0216BEAT.lsw", 0x1a2, 24	; tag 0x0e payload
-	panel_tlv	0x0f, 24	; part 15
-	.incbin	"0216BEAT.lsw", 0x1bc, 24	; tag 0x0f payload
-	panel_tlv	0x10, 24	; part 16
-	.incbin	"0216BEAT.lsw", 0x1d6, 24	; tag 0x10 payload
-	panel_tlv	0x11, 24	; part 17
-	.incbin	"0216BEAT.lsw", 0x1f0, 24	; tag 0x11 payload
-	panel_tlv	0x12, 24	; part 18
-	.incbin	"0216BEAT.lsw", 0x20a, 24	; tag 0x12 payload
-	panel_tlv	0x13, 24	; part 19
-	.incbin	"0216BEAT.lsw", 0x224, 24	; tag 0x13 payload
-	panel_tlv	0x14, 24	; part 20
-	.incbin	"0216BEAT.lsw", 0x23e, 24	; tag 0x14 payload
-	panel_tlv	0x15, 24	; part 21
-	.incbin	"0216BEAT.lsw", 0x258, 24	; tag 0x15 payload
-	panel_tlv	0x16, 24	; part 22
-	.incbin	"0216BEAT.lsw", 0x272, 24	; tag 0x16 payload
-	panel_tlv	0x19, 24	; record 24
-	.incbin	"0216BEAT.lsw", 0x28c, 24	; tag 0x19 payload
-	panel_tlv	0x44, 10	; record 25
-	.incbin	"0216BEAT.lsw", 0x2a6, 10	; tag 0x44 payload
-	panel_tlv	0x45, 10	; record 26
-	.incbin	"0216BEAT.lsw", 0x2b2, 10	; tag 0x45 payload
-	panel_tlv	0x46, 10	; record 27
-	.incbin	"0216BEAT.lsw", 0x2be, 10	; tag 0x46 payload
-	panel_tlv	0x47, 8	; record 28
-	.incbin	"0216BEAT.lsw", 0x2ca, 8	; tag 0x47 payload
-	panel_tlv	0x43, 4	; record 29
-	.incbin	"0216BEAT.lsw", 0x2d4, 4	; tag 0x43 payload
-	panel_tlv	0x48, 10	; record 30
-	.incbin	"0216BEAT.lsw", 0x2da, 10	; tag 0x48 payload
-	panel_tlv	0x90, 6	; record 31
-	.incbin	"0216BEAT.lsw", 0x2e6, 6	; tag 0x90 payload
-	panel_tlv	0x60, 4	; record 32
-	.incbin	"0216BEAT.lsw", 0x2ee, 4	; tag 0x60 payload
-	panel_tlv	0x61, 24	; record 33
-	.incbin	"0216BEAT.lsw", 0x2f4, 24	; tag 0x61 payload
-	panel_tlv	0x63, 24	; record 34
-	.incbin	"0216BEAT.lsw", 0x30e, 24	; tag 0x63 payload
-	panel_tlv	0x64, 24	; record 35
-	.incbin	"0216BEAT.lsw", 0x328, 24	; tag 0x64 payload
-	panel_tlv	0x65, 24	; record 36
-	.incbin	"0216BEAT.lsw", 0x342, 24	; tag 0x65 payload
-	panel_tlv	0x66, 24	; record 37
-	.incbin	"0216BEAT.lsw", 0x35c, 24	; tag 0x66 payload
-	panel_tlv	0x68, 10	; record 38
-	.incbin	"0216BEAT.lsw", 0x376, 10	; tag 0x68 payload
-	panel_tlv	0x70, 8	; record 39
-	.incbin	"0216BEAT.lsw", 0x382, 8	; tag 0x70 payload
-	panel_tlv	0x72, 14	; record 40
-	.incbin	"0216BEAT.lsw", 0x38c, 14	; tag 0x72 payload
-	panel_tlv	0x92, 14	; record 41
-	.incbin	"0216BEAT.lsw", 0x39c, 14	; tag 0x92 payload
-	panel_tlv	0x71, 2	; record 42
-	.incbin	"0216BEAT.lsw", 0x3ac, 2	; tag 0x71 payload
-	.incbin	"0216BEAT.lsw", 0x3ae, 50	; rest of the block
+	ptlv_style_name	0x78, "  Variation 1   ", 0, 0
+	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 32, 64, 0x80, 0x01, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
+	ptlv_part	0x01, 100, 0, 0, 100, 0x3d, 0, 0, 64, -32, 64, 0x80, 0x01, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; ClassicalStrings
+	ptlv_part	0x02, 104, 0x03, 0, 90, 0x0d, 0, 0, 64, -32, 64, 0x80, 0x01, 0x20, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Vocal Ah
+	ptlv_part	0x03, 40, 0x05, 0, 118, 0x25, 0, 0, 64, 0, 76, 0x80, 0x01, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x04, 23, 0, 0, 107, 0x25, 0, 0, 64, -64, 64, 0x80, 0x01, 0x20, 0x04, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; 12 String Guitar
+	ptlv_part	0x05, 57, 0, 0, 107, 0x65, 0, 0, 64, 63, 64, 0x80, 0x01, 0x20, 0x05, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Marching Brass
+	ptlv_part	0x06, 54, 0, 0, 118, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x06, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Closed Fr.Horn
+	ptlv_part	0x07, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0e, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x01, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0f, 240, 0, 0, 118, 0x20, 0, 0, 64, 0, 64, 0x80, 0x01, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 0, 0, 0, 107, 0x15, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x11, 5, 0, 0, 107, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; E.Piano 1
+	ptlv_part	0x12, 100, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; ClassicalStrings
+	ptlv_part	0x13, 46, 0x01, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Analog Bass
+	ptlv_part	0x14, 248, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 23, 0, 0, 107, 0x05, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; 12 String Guitar
+	ptlv_part	0x16, 40, 0x01, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright E.Bass
+	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
+	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
+	ptlv_style_select	0x48, 128, 0, 234, 0, 0, 0, 0, 108
+	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
+	ptlv_tag60	0x60, 0, 0x80, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
+	ptlv_dsp_slot	0x63, 21, 39, 0, 60, 18, 80, 78, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag70	0x70, 0x05, 0x3c, 5, 0xff, 0, 2, 4, 0x07
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x1d, 0x33, 0x5f, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag71	0x71, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
+	.byte	0x00, 0x00, 0x82, 0x01, 0x02, 0x81, 0x00, 0x10, 0x11, 0x12, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x80, 0x0e, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
+	.byte	0xff, 0xff
 F_0216BEAT_LSW_Block1:
 ; Block 1 (RAM 0xfd60): 30 records, the tag and length list of PanelTlv_Block1_Layout exactly.
-	panel_tlv	0x17, 24	; record 0
-	.incbin	"0216BEAT.lsw", 0x3e2, 24	; tag 0x17 payload
-	panel_tlv	0x18, 24	; record 1
-	.incbin	"0216BEAT.lsw", 0x3fc, 24	; tag 0x18 payload
-	panel_tlv	0x98, 18	; record 2
-	.incbin	"0216BEAT.lsw", 0x416, 18	; tag 0x98 payload
-	panel_tlv	0x91, 10	; record 3
-	.incbin	"0216BEAT.lsw", 0x42a, 10	; tag 0x91 payload
-	panel_tlv	0x93, 34	; record 4
-	.incbin	"0216BEAT.lsw", 0x436, 34	; tag 0x93 payload
-	panel_tlv	0xc0, 18	; record 5
-	.incbin	"0216BEAT.lsw", 0x45a, 18	; tag 0xc0 payload
-	panel_tlv	0xc1, 18	; record 6
-	.incbin	"0216BEAT.lsw", 0x46e, 18	; tag 0xc1 payload
-	panel_tlv	0xc2, 18	; record 7
-	.incbin	"0216BEAT.lsw", 0x482, 18	; tag 0xc2 payload
-	panel_tlv	0xc3, 18	; record 8
-	.incbin	"0216BEAT.lsw", 0x496, 18	; tag 0xc3 payload
-	panel_tlv	0xc4, 18	; record 9
-	.incbin	"0216BEAT.lsw", 0x4aa, 18	; tag 0xc4 payload
-	panel_tlv	0xc5, 18	; record 10
-	.incbin	"0216BEAT.lsw", 0x4be, 18	; tag 0xc5 payload
-	panel_tlv	0xc6, 18	; record 11
-	.incbin	"0216BEAT.lsw", 0x4d2, 18	; tag 0xc6 payload
-	panel_tlv	0xc7, 18	; record 12
-	.incbin	"0216BEAT.lsw", 0x4e6, 18	; tag 0xc7 payload
-	panel_tlv	0xc8, 18	; record 13
-	.incbin	"0216BEAT.lsw", 0x4fa, 18	; tag 0xc8 payload
-	panel_tlv	0xc9, 18	; record 14
-	.incbin	"0216BEAT.lsw", 0x50e, 18	; tag 0xc9 payload
-	panel_tlv	0xca, 18	; record 15
-	.incbin	"0216BEAT.lsw", 0x522, 18	; tag 0xca payload
-	panel_tlv	0xcb, 18	; record 16
-	.incbin	"0216BEAT.lsw", 0x536, 18	; tag 0xcb payload
-	panel_tlv	0xcc, 18	; record 17
-	.incbin	"0216BEAT.lsw", 0x54a, 18	; tag 0xcc payload
-	panel_tlv	0xcd, 18	; record 18
-	.incbin	"0216BEAT.lsw", 0x55e, 18	; tag 0xcd payload
-	panel_tlv	0xce, 18	; record 19
-	.incbin	"0216BEAT.lsw", 0x572, 18	; tag 0xce payload
-	panel_tlv	0xcf, 18	; record 20
-	.incbin	"0216BEAT.lsw", 0x586, 18	; tag 0xcf payload
-	panel_tlv	0xd0, 18	; record 21
-	.incbin	"0216BEAT.lsw", 0x59a, 18	; tag 0xd0 payload
-	panel_tlv	0xd1, 18	; record 22
-	.incbin	"0216BEAT.lsw", 0x5ae, 18	; tag 0xd1 payload
-	panel_tlv	0xd2, 18	; record 23
-	.incbin	"0216BEAT.lsw", 0x5c2, 18	; tag 0xd2 payload
-	panel_tlv	0xd3, 18	; record 24
-	.incbin	"0216BEAT.lsw", 0x5d6, 18	; tag 0xd3 payload
-	panel_tlv	0xd4, 18	; record 25
-	.incbin	"0216BEAT.lsw", 0x5ea, 18	; tag 0xd4 payload
-	panel_tlv	0xd7, 18	; record 26
-	.incbin	"0216BEAT.lsw", 0x5fe, 18	; tag 0xd7 payload
-	panel_tlv	0x49, 16	; record 27
-	.incbin	"0216BEAT.lsw", 0x612, 16	; tag 0x49 payload
-	panel_tlv	0x9a, 26	; record 28
-	.incbin	"0216BEAT.lsw", 0x624, 26	; tag 0x9a payload
+	ptlv_part	0x17, 0, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0xc1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 0x40, 1, 0, 16, 0x76, 0, 0, 0x7c, 0x5a, 0x01, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag91	0x91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag93	0x93, 6, 0, 127, 127, 1, 5, 148, 0, 255, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x3f, 0x3f, 0xff, 0xff, 0xff, 0xff, 0, 0, 0
+	ptlv_tagc0	0xc0, 0, 0x0a, 0, 0x0d, 0x01, 0x0b, 0x01, 0, 0, 0, 0x06, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc1	0xc1, 0x0b, 0, 0x0a, 0x0d, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc2	0xc2, 0, 0, 0x07, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc3	0xc3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x02, 0, 0, 0, 0, 0, 0
+	ptlv_tagc4	0xc4, 0, 0x0d, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc5	0xc5, 0, 0, 0, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc6	0xc6, 0, 0, 0, 0x08, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc7	0xc7, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc8	0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagc9	0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagca	0xca, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagcb	0xcb, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagcc	0xcc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagcd	0xcd, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagce	0xce, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagcf	0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x03, 0, 0
+	ptlv_tagd0	0xd0, 0, 0x05, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagd1	0xd1, 0x05, 0x05, 0, 0x03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagd2	0xd2, 0x05, 0, 0x0a, 0x08, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tagd3	0xd3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x08, 0, 0, 0, 0, 0, 0
+	ptlv_tagd4	0xd4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x07, 0, 0
+	ptlv_tagd7	0xd7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag49	0x49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x17, 0
+	ptlv_tag9a	0x9a, 0, 0, 0, 0, 0x05, 0x05, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	panel_tlv	0xff, 0xff	; end of block
 F_0216BEAT_LSW_Ram1E7800:
 	; census: opaque -- unknown-dump: what the firmware keeps at RAM 0x1e7800..0x1e8000 is not identified (docs/kn-disk-file-formats.md, "still unmapped")

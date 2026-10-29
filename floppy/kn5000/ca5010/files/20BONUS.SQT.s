@@ -2,6 +2,8 @@
 
 ; 20BONUS.SQT -- 3072 bytes, clusters 2227..2232.
 
+; Slot fields: notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json (RAM image of the
+; current-song record 0xf180; the +0xd0 track table gives each present track's first cell).
 ; SEQUENCER, file type 2.  Song-slot headers of 0x800 bytes (RAM SEQ_SONG_SLOTS 0xab000,
 ; 10 slots), then the event memory as linked 256-byte cells.  +4 = 1: all 10 slots, as
 ; FileIO_SaveRegion2_ExtMem (v10 0xf87cac) writes them (0x5000, then the event memory
@@ -10,9 +12,111 @@
 F_20BONUS_SQT_Song_1:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
-	.incbin	"20BONUS.sqt", 0x7, 249	; slot +7..+0xff (fields not established)
+	sqt_slot_a_0	0, 0x0c, "02TICO__\000", 0, 0, 0, 256, 46, 1312, 0, 24, 0, 2, 1, 13, 15, 16, 12, 11, 8, 9, 10, 3, 4, 5, 6, 7, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 65535, 0, 1, 2, 3, 1
+	sqt_slot_a_1	1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 65535, 65535, 65535, 1, 4, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 5, 5, 5, 28, 33, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 0, 0, 3, 1234, 0, 0, 0, 0
+	sqt_slot_a_2	0, 1, 2, 0, 0, 0, 0, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0, 24, 0, 0, 0, 0, 0, 0, 0, 65535, 0, 65535, 0, 65535, 0x80, 1, 0x80, 2, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"Composer Game 01"	; song name
-	.incbin	"20BONUS.sqt", 0x110, 1776	; slot +0x110..+0x7ff (fields not established)
+	sqt_slot_b_head_0	0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; init_zero_113 (TODO: purpose unknown)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0x90, 0x0c, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; The song's copy of panel block 0 (taken when the song is recorded): the first 43 of the 46 records of PanelTlv_Block0_Layout; the rest differ (an older firmware's
+; block, [INFERENCE]: the v5..v10 lists are all the same).
+	ptlv_style_name	0x78, "                ", 0, 0
+	ptlv_part	0x00, 81, 0x05, 0, 110, 0x75, 0, 0, 64, 32, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Italian Acdn Bs2
+	ptlv_part	0x01, 82, 0x06, 0, 127, 0x75, 0, 0, 64, -32, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; German Acdn 5
+	ptlv_part	0x02, 91, 0, 0, 90, 0x45, 0, 0, 64, -32, 64, 0x80, 0x02, 0x20, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; 16' & 1'
+	ptlv_part	0x03, 40, 0, 0, 100, 0x25, 0, 0, 0, 0, 76, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x04, 0, 0, 0, 107, 0x25, 0, 0, 64, -64, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 56, 0, 0, 100, 0x25, 0, 0, 64, 63, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bigband Brass
+	ptlv_part	0x06, 65, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Jazz Flute
+	ptlv_part	0x07, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0e, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0f, 241, 0, 0, 107, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 81, 0x06, 0, 104, 0x55, 0, 0, 70, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; German Acdn Bs1
+	ptlv_part	0x11, 81, 0x07, 0, 102, 0x55, 0, 0, 90, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; German Acdn Bs2
+	ptlv_part	0x12, 82, 0x04, 0, 112, 0x55, 0, 0, 100, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Folk Accordion
+	ptlv_part	0x13, 40, 0, 0, 112, 0x15, 0, 0, 40, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x14, 246, 0, 0, 110, 0, 0, 0, 80, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 0, 0, 0, 107, 0x05, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x16, 40, 0, 0, 100, 0x15, 0, 0, 0, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
+	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
+	ptlv_style_select	0x48, 128, 0, 226, 0, 0x04, 0, 0, 150
+	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
+	ptlv_tag60	0x60, 0, 0x80, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
+	ptlv_dsp_slot	0x63, 19, 41, 0, 50, 16, 67, 73, 18, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp_slot	0x64, 79, 3, 0, 3, 88, 3, 154, 3, 192, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag70	0x70, 0x05, 0x3c, 3, 0xff, 0, 2, 8, 0x07
+	ptlv_tag72	0x72, 0, 0, 0, 0x6b, 0, 0, 0, 0x40, 0x1b, 0x1d, 0x12, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag71	0x71, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
+	.byte	0x00, 0x00, 0x82, 0x01, 0x02, 0x81, 0x00, 0x10, 0x11, 0x12, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0x80, 0x0e, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
+	.byte	0xff, 0xff
+	.byte	0x17, 0x18, 0xf0, 0x01, 0, 0x76, 0x15, 0, 0, 0x40, 0x40, 0x40, 0x80, 0x02, 0x20, 0xc0	; song_panel_block1_head
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
+	.byte	0x15, 0, 0, 0x40, 0x40, 0x40, 0x80, 0x02, 0x20, 0xc1, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0x98, 0x12, 0x40, 0x03, 0, 0x20, 0x6b, 0, 0, 0x7c, 0x5a, 0x01
+	.byte	0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
+	.byte	0, 0x01, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x0a, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0x01, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x0a, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02
+	.byte	0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x02, 0xff, 0xff, 0, 0x0a, 0xff, 0xff
 F_20BONUS_SQT_Events:
 ; Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the
 ; demo-song grammar; analysis/disk-format-probes/disk_seq_chains.py).  A chain starts at

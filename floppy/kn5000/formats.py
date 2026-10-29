@@ -22,8 +22,22 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import events  # noqa: E402
+import panel_fields  # noqa: E402
+import spec_struct  # noqa: E402
 
-INCLUDES = ['kn5000_files.inc']
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'analysis' / 'disk-format-probes'))
+import lsw_voice_selector_names as _voices  # noqa: E402
+_TDROM = (pathlib.Path(__file__).resolve().parents[2] / 'original_ROMs' / 'kn5000_table_data.rom').read_bytes()
+
+
+def sound_name(payload):
+    try:
+        name, _tone = _voices.option_name(_TDROM, payload[1] & 7, payload[0])
+    except Exception:
+        return None
+    return name
+
+INCLUDES = ['kn5000_files.inc', 'kn5000_panel.inc', 'kn5000_specs.inc']
 
 BOOT_NOTE = [
     'The KN5000 formatter writes these first 32 bytes: FDC_Format2HD_WriteBoot (v10/v9 0xf522f5)',
@@ -93,6 +107,16 @@ class Out:
             self.put('\t.fill\t%d, 1, 0x%02x\t; %s' % (len(b), b[0], what), len(b))
         else:
             self.inc(len(b), what)
+
+    def struct(self, st, b):
+        for line, n in st.lines(b):
+            self.put(line, n)
+
+    def fill_or_bytes(self, b, what):
+        if not b:
+            return
+        for line, n in events.raw_lines(b, what):
+            self.put(line, n)
 
     def done(self):
         assert self.pos == len(self.ctx.data), (self.ctx.path, self.pos, len(self.ctx.data))
@@ -207,25 +231,25 @@ def emit_block(o, d, start, end, blkname, title):
                   (title, k, len(want), blkname))
         o.comment('block, [INFERENCE]: the v5..v10 lists are all the same).')
     q = start
+    recs = []
     for i in range(k):
         t, n = want[i]
-        if t == 0xFF:
-            o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
-        else:
-            o.raw('panel_tlv', ['0x%02x' % t, str(n)], 2, 'part %d' % t if t <= 0x16 else 'record %d' % i)
-            o.inc(n, 'tag 0x%02x payload' % t)
+        recs.append((q, t, n, True))
         q += 2 if t == 0xFF else 2 + n
     if k < len(want):
-        recs, stop = tlv_records(d, q, end)
-        if recs:
-            for (r, t, n) in recs:
-                if t == 0xFF and n == 0xFF:
-                    o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
-                else:
-                    o.raw('panel_tlv', ['0x%02x' % t, str(n)], 2, 'not in the v10 list at this position')
-                    o.inc(n, 'tag 0x%02x payload' % t)
+        more, stop = tlv_records(d, q, end)
+        if more:
+            recs += [(r, t, n, False) for (r, t, n) in more]
             q = stop
-    o.fill_or_inc(d[q:end], 'rest of the block')
+    for (r, t, n, inlist) in recs:
+        if t == 0xFF and n == 0xFF:
+            o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
+            continue
+        pay = d[r + 2:r + 2 + n]
+        line = panel_fields.record_line(t, n, pay, sound_name(pay) if t in panel_fields.PART_TAGS and n == 24 else None) \
+            if inlist else None
+        o.put(line or panel_fields.raw_line(t, n, pay), 2 + n)
+    o.fill_or_bytes(d[q:end], 'rest of the block')
     return True
 
 
@@ -277,21 +301,17 @@ def describe_pmt(ctx):
             o.ascii(nm, 'bank %d name' % (k + 1))
         else:
             o.inc(16, 'bank %d name field' % (k + 1))
-    want = layout()['PanelTlv_Block0_Layout']
     for k in range(count):
         base = 0xB0 + k * slot
-        m, _ = match_layout(d, base, base + slot, want)
         o.label('Memory_%d_%d' % (k // 8 + 1, k % 8 + 1))
-        o.inc(slot, 'bank %d memory %d: %s' % (
-            k // 8 + 1, k % 8 + 1,
-            'the %d records of PanelTlv_Block0_Layout (checked)' % m if m == len(want) else
-            'opens with the first %d records of PanelTlv_Block0_Layout (checked)' % m))
+        emit_block(o, d, base, base + slot, 'PanelTlv_Block0_Layout', 'Bank %d memory %d' % (k // 8 + 1, k % 8 + 1))
     return o.done()
 
 
 # ---------------------------------------------------------------------------------------------
 # TM: SOUND MEMORY, the 0x72aa-byte RAM image at 0x1e0000
 
+SS = spec_struct.structs()
 SOUND_RAM_MAGICS = (b'KN5000 SOUND RAM', b'KN3000 SOUND RAM', b'KN1500 SOUND RAM')
 
 
@@ -314,22 +334,26 @@ def describe_tm(ctx):
     o.comment('0x1e0000, 0x72aa bytes, between PreTmSave and PostTmSave; at boot the firmware compares')
     o.comment('the 16-byte header with "KN5000 SOUND RAM" and sends the image to sub-CPU 0x7800')
     o.comment('(SendPartDataBlock_ClearByte4).  40 records of 470 bytes follow it, the size of the')
-    o.comment('Flash section-7 small slots (Flash_CopyBlocksToSlots), each opening with a 16-byte')
-    o.comment('name; then one record named like a drum kit.  [INFERENCE] the 40 are the sound')
-    o.comment('memories: their names are sound names.  No parameter byte is identified.')
+    o.comment('Flash section-7 small slots (Flash_CopyBlocksToSlots): the sub-CPU\'s own 426-byte tone')
+    o.comment('record plus four 11-byte velocity-split records; then the kit record (128 user drum')
+    o.comment('instruments of 80 B) ending with the edit index and the image checksum.  Field map, with')
+    o.comment('evidence per field: notes/floppy-kn5000-2026-10-29/specs/tm_sound_record.json.')
     o.label('Header')
     o.ascii(d[:16], 'checked at boot')
     p = 16
     for k in range(40):
         nm = d[p:p + 16]
         o.label('Sound_%d' % (k + 1))
-        o.ascii(nm, 'name')
-        o.inc(454, 'sound %d parameters' % (k + 1))
+        o.struct(SS['tm_sound'], d[p:p + 470])
         p += 470
-    nm = d[p:p + 16]
     o.label('Kit')
-    o.ascii(nm, 'name')
-    o.inc(len(d) - p - 16, 'kit record (%d bytes)' % (len(d) - p - 16))
+    h, e, t = SS['tm_kit_head'], SS['tm_kit_entry'], SS['tm_kit_tail']
+    o.struct(h, d[p:p + h.size])
+    for n in range(128):
+        q = p + e.base + 80 * n
+        o.comment('drum instrument for note %d' % n)
+        o.struct(e, d[q:q + 80])
+    o.struct(t, d[p + t.base:p + t.base + t.size])
     return o.done()
 
 
@@ -337,11 +361,19 @@ def describe_tm(ctx):
 # Style banks: CMP (COMPOSER) and the sections of RCM (RHYTHM CUSTOM)
 
 DIR0, NREC, REC = 0x60, 30, 0x60
+# STYLE_SECTION 0..29 (AccDemo_LoadVariation_EntryLoop_Data's order; scripts/build/style_events.py).
+SECTION_ROLE = ['a-variation1', 'a-variation2', 'a-variation3', 'a-variation4',
+                'b-variation1', 'b-variation2', 'b-variation3', 'b-variation4',
+                'c-variation1', 'c-variation2', 'c-variation3', 'c-variation4',
+                'a-intro 1', 'a-intro 2', 'a-fill in 1', 'a-fill in 2', 'a-ending 1', 'a-ending 2',
+                'b-intro 1', 'b-intro 2', 'b-fill in 1', 'b-fill in 2', 'b-ending 1', 'b-ending 2',
+                'c-intro 1', 'c-intro 2', 'c-fill in 1', 'c-fill in 2', 'c-ending 1', 'c-ending 2']
 
 
 # Cell pointers count blocks from block 20 of the bank (bank + 0x1400), in every bank on these
-# disks: no other base makes a single link mutual (probe kn5000_floppy_formats.py, BASE).  Three
-# CMPs hold cell-shaped blocks 12..19 below that base; they are typed as unlinked blocks.
+# disks: no other base makes 1/10 as many links mutual (probe kn5000_floppy_formats.py, BASE), and
+# AccPatch_InitSlotChain allocates the cells from base + 0x1400.  Three CMPs hold cell-shaped
+# bytes in data_ba0 below that base; they are spelled as bytes there.
 CELL_BASE_BLOCK = 20
 
 
@@ -353,29 +385,34 @@ def emit_style_bank(o, d, base, end, title):
     """One IC19-format style bank at d[base:end]: header, directory, then 256-byte blocks."""
     if d[base:base + 4] != b'H\0K\0':
         return False
-    o.comment('%s: "H\\0K\\0" header, 30-record style directory at +0x60, 256-byte cells.' % title)
+    o.comment('%s: one Composer style image (the bank layout of scripts/build/style_events.py, shared' % title)
+    o.comment('with the IC19 custom-data banks): header, 30 STYLE_SECTION records, the fill-in cell at')
+    o.comment('+0x13c0, then 256-byte cells from +0x1400 (AccPatch_InitSlotChain: base + 0x1400).')
     o.ascii(d[base:base + 4], 'bank magic')
-    o.inc(DIR0 - 4, 'bank header +4..+0x5f (fields not established)')
+    o.fill_or_bytes(d[base + 4:base + 0x1E], 'hdr_04: 26 bytes, the same in every bank (TODO: not established)')
+    w = struct.unpack_from('<9H', d, base + 0x1E)
+    o.put('\tstyle_bank_sizes\t0x%04x, 0x%02x, 0x%02x, %d, 0x%03x, %d, 0x%02x, 0x%04x, 0x%04x' % w, 18)
+    o.fill_or_bytes(d[base + 0x30:base + 0x60], 'hdr_30 (TODO: not established)')
     for k in range(NREC):
         r = base + DIR0 + k * REC
-        nm = d[r + 0x40:r + 0x50]
         v = struct.unpack_from('<6H', d, r)
-        o.comment('style %d' % k)
-        o.raw('.short', ['0x%04x' % x for x in v], 12,
-              'chain pointers +0, +4..+0xa (+2 is 0); docs/accompaniment-style-format.md')
-        o.inc(0x34, 'record +0x0c..+0x3f (fields not established)')
-        if printable(nm):
-            o.ascii(nm, 'style name')
-        else:
-            o.inc(16, 'name field, not text')
-        o.inc(0x10, 'record +0x50..+0x5f (fields not established)')
-    p = base + DIR0 + NREC * REC
-    # the first cell-aligned block at or after the directory's end
-    first = base + ((p - base + 255) // 256) * 256
-    blk = first
-    while blk + 256 <= end and not is_cell(d[blk:blk + 256]):
-        blk += 256
-    o.inc(blk - p, 'between the directory and the first cell (not established)')
+        g = struct.unpack_from('<20H', d, r + 0x18)
+        vals = ['0x%04x' % x for x in v] + ['0x%02x' % x if x else '0' for x in d[r + 0x0C:r + 0x18]] + \
+            ['0x%04x' % x if x else '0' for x in g] + [s_escape(d[r + 0x40:r + 0x50])] + \
+            ['0x%02x' % x if x else '0' for x in d[r + 0x50:r + 0x60]]
+        o.put('\tstyle_section\t%s\t; %d %s' % (', '.join(vals), k, SECTION_ROLE[k]), REC)
+    o.fill_or_bytes(d[base + 0xBA0:base + 0x13C0], 'data_ba0 (AccDemo_LoadVariation_DataBlock and the table '
+                    'after it; zero in the factory banks; TODO: fields not established)')
+    f = base + 0x13C0
+    if d[f + 5] == 0x87:
+        o.raw('style_cell', ['0x%02x' % d[f]] + ['0x%04x' % x for x in struct.unpack_from('<HH', d, f + 1)], 6,
+              'the 64-byte fill-in cell (AccDemo_LoadFillIn copies 0x40 bytes here)')
+        stream = d[f + 6:f + 0x40]
+        for line, n in events.cut(stream, events.tokenize_style(stream), [(0, len(stream))])[0]:
+            o.put(line, n)
+    else:
+        o.fill_or_bytes(d[f:f + 0x40], 'the fill-in cell area, not cell-shaped here')
+    blk = base + 0x1400
     cells = []
     c = blk
     while c + 256 <= end and is_cell(d[c:c + 256]):
@@ -473,7 +510,8 @@ def describe_rcm(ctx):
     o.comment('section number into the directory pointers on the way (Pack12BitValueWithBank 0xf1710c).')
     o.label('Header')
     o.ascii(d[:4], 'magic')
-    o.inc(0x3C, 'header +4..+0x3f (fields not established)')
+    o.raw('.long', ['0x%x' % x for x in struct.unpack_from('<15I', d, 4)], 60,
+          'header +4..+0x3f as u32 words (TODO: not named; FileIO_LoadRcmToFlash reads only the table at +0x40)')
     o.label('ChunkLengths')
     o.raw('.long', ['0x%x' % x for x in lens], 36, 'header, sections 0..6, unused (0xf400 is used)')
     o.fill_or_inc(d[0x64:0x400], 'rest of the header')
@@ -488,10 +526,22 @@ def describe_rcm(ctx):
             o.comment('Section 7, the block slot store (technics-docs custom-data-flash.md):')
             o.comment('"H\\0K\\0", slot counts at +8 / +0xa, owner maps at +0x10 / +0x50.')
             o.ascii(d[p:p + 4], 'magic')
-            o.inc(4, 'header +4..+7')
+            o.raw('.short', ['0x%04x' % x for x in struct.unpack_from('<2H', d, p + 4)], 4,
+                  'header +4..+7 (TODO: not named)')
             o.raw('.short', [str(x) for x in struct.unpack_from('<2H', d, p + 8)], 4,
                   'small slots, large slots')
-            o.fill_or_inc(d[p + 12:p + n], 'slot store body')
+            o.fill_or_bytes(d[p + 12:p + 0x10], 'header +0xc..+0xf (TODO: not named)')
+            o.fill_or_bytes(d[p + 0x10:p + 0x38], 'owner byte per small slot, 0 = free (Flash_WriteSlotOwnerMap)')
+            o.fill_or_bytes(d[p + 0x38:p + 0x50], 'between the owner maps (TODO: not named)')
+            o.fill_or_bytes(d[p + 0x50:p + 0x54], 'owner byte per large slot')
+            o.fill_or_bytes(d[p + 0x54:p + 0x410], 'up to the slots (TODO: not named)')
+            for k in range(40):
+                q = p + 0x410 + 470 * k
+                o.fill_or_bytes(d[q:q + 470], 'small slot %d (a sound-memory record, 470 B; erased here)' % k)
+            for k in range(4):
+                q = p + 0x4D80 + 10535 * k
+                o.fill_or_bytes(d[q:q + 10535], 'large slot %d (10,535 B; erased here)' % k)
+            o.fill_or_bytes(d[p + 0x4D80 + 4 * 10535:p + n], 'rest of the sector chunk')
         p += n
     return o.done()
 
@@ -507,6 +557,8 @@ def describe_sqt(ctx):
     if d[4] not in (0, 1) or len(d) < nslots * 0x800:
         return None
     o = Out(ctx)
+    o.comment('Slot fields: notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json (RAM image of the')
+    o.comment('current-song record 0xf180; the +0xd0 track table gives each present track\'s first cell).')
     o.comment('SEQUENCER, file type 2.  Song-slot headers of 0x800 bytes (RAM SEQ_SONG_SLOTS 0xab000,')
     o.comment('10 slots), then the event memory as linked 256-byte cells.  +4 = 1: all 10 slots, as')
     o.comment('FileIO_SaveRegion2_ExtMem (v10 0xf87cac) writes them (0x5000, then the event memory')
@@ -518,13 +570,18 @@ def describe_sqt(ctx):
         o.ascii(d[b:b + 4], 'slot signature')
         o.raw('.byte', ['%d' % d[b + 4], '0x%02x' % d[b + 5], '0x%02x' % d[b + 6]], 3,
               'all-songs flag, signature')
-        o.inc(0xF9, 'slot +7..+0xff (fields not established)')
+        o.struct(SS['sqt_slot_a'], d[b + 7:b + 0x100])
         nm = d[b + 0x100:b + 0x110]
         if printable(nm):
             o.ascii(nm, 'song name')
         else:
             o.inc(16, 'song name field, not text')
-        o.inc(0x6F0, 'slot +0x110..+0x7ff (fields not established)')
+        hd, tl = SS['sqt_slot_b_head'], SS['sqt_slot_b_tail']
+        o.struct(hd, d[b + 0x110:b + 0x110 + hd.size])
+        pb, pn = tl.panel
+        emit_block(o, d, b + pb, b + pb + pn, 'PanelTlv_Block0_Layout',
+                   'The song\'s copy of panel block 0 (taken when the song is recorded)')
+        o.struct(tl, d[b + pb + pn:b + 0x800])
     p = nslots * 0x800
     o.label('Events')
     o.comment('Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the')

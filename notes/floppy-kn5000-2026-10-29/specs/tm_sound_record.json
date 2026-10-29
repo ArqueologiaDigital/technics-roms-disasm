@@ -1,0 +1,6425 @@
+{
+ "record_size": 470,
+ "source_files": "the 45 KN5000-format .TM files of floppy/kn5000/baserom/*.img (ca5000r/03FOLKS2.TM is a 29,696-byte KN3000 SOUND RAM image and is excluded); 723 distinct sound records, 42 distinct kit tails",
+ "fields": [
+  {
+   "off": 0,
+   "size": 16,
+   "name": "name",
+   "kind": "ascii",
+   "evidence": "maincpu v10 SingleLoadSrc_ReadTmSoundName 0xF8A319 (16 B at 16 + 470*n); clamp 32..127 for offsets 0..15 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C))",
+   "inference": false,
+   "clamp": {
+    "min": 32,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 723,
+    "distinct": 455,
+    "top": [
+     [
+      "Synth Strings 3 ",
+      9
+     ],
+     [
+      "    Fantasy     ",
+      7
+     ],
+     [
+      "    Glimmer     ",
+      6
+     ],
+     [
+      "  Street Organ  ",
+      6
+     ]
+    ]
+   }
+  },
+  {
+   "off": 16,
+   "size": 1,
+   "name": "part_mode",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 Voice_SetVelocity 0x02C8E4 switches on &0xC0 (0x00 melodic, 0x40 drawbar, 0x80 drum kit, 0xC0 silent); bit 4 via Voice_Calc_LevelPair_PatchAtk 0x025636; table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 5,
+    "top": [
+     [
+      "20",
+      464
+     ],
+     [
+      "00",
+      187
+     ],
+     [
+      "30",
+      41
+     ],
+     [
+      "10",
+      29
+     ]
+    ],
+    "min": 0,
+    "max": 96
+   }
+  },
+  {
+   "off": 17,
+   "size": 1,
+   "name": "partial_mask",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 mask table 0x00FB4E {0x01,0x04,0x10,0x40} = partial 0..3 present; EFFSlotScan_AssignPath 0x032295; table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 9,
+    "top": [
+     [
+      "15",
+      292
+     ],
+     [
+      "05",
+      197
+     ],
+     [
+      "01",
+      113
+     ],
+     [
+      "11",
+      99
+     ]
+    ],
+    "min": 0,
+    "max": 85
+   }
+  },
+  {
+   "off": 18,
+   "size": 1,
+   "name": "b_0x12",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 Partial_Build_Present_Word 0x032B1E tests bits 1:0",
+   "inference": false,
+   "todo": "reader known, meaning not; 0 in all 723 distinct corpus records",
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 1,
+    "top": [
+     [
+      "00",
+      723
+     ]
+    ],
+    "min": 0,
+    "max": 0
+   }
+  },
+  {
+   "off": 19,
+   "size": 1,
+   "name": "bend_type",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Pitch_Compute_Inactive 0x023698 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..66",
+   "inference": false,
+   "clamp": {
+    "min": 0,
+    "max": 66,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 723,
+    "distinct": 1,
+    "top": [
+     [
+      "00",
+      723
+     ]
+    ],
+    "min": 0,
+    "max": 0,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 20,
+   "size": 1,
+   "name": "ctrl_part_switches",
+   "kind": "bits",
+   "evidence": "byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes the address of group 0 (+0x14). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "inference": true,
+   "todo": "per-tone (1ST..4TH) switch reading of the 2-bit fields is an inference from the 0x55 pattern and the SeCtr2/SeCtr3 \"1ST 2ND 3RD 4TH\" captions",
+   "repeat": {
+    "count": 7,
+    "stride": 3
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 5061,
+    "distinct": 6,
+    "top": [
+     [
+      "55",
+      3602
+     ],
+     [
+      "00",
+      1452
+     ],
+     [
+      "54",
+      2
+     ],
+     [
+      "45",
+      2
+     ]
+    ],
+    "min": 0,
+    "max": 85
+   }
+  },
+  {
+   "off": 21,
+   "size": 1,
+   "name": "ctrl_b1",
+   "kind": "bits",
+   "evidence": "clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "inference": false,
+   "todo": "no subcpu reader identified; bit 7 is a flag (0x81 in group 0 of every record)",
+   "repeat": {
+    "count": 7,
+    "stride": 3
+   },
+   "clamp": {
+    "min": 0,
+    "max": 49,
+    "value_mask": 127
+   },
+   "observed": {
+    "samples": 5061,
+    "distinct": 9,
+    "top": [
+     [
+      "00",
+      3408
+     ],
+     [
+      "05",
+      746
+     ],
+     [
+      "81",
+      723
+     ],
+     [
+      "03",
+      94
+     ]
+    ],
+    "min": 0,
+    "max": 129,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 22,
+   "size": 1,
+   "name": "ctrl_b2",
+   "kind": "dec",
+   "evidence": "clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "inference": false,
+   "todo": "no subcpu reader identified; 0x40 in most records",
+   "repeat": {
+    "count": 7,
+    "stride": 3
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 5061,
+    "distinct": 7,
+    "top": [
+     [
+      "40",
+      5051
+     ],
+     [
+      "20",
+      4
+     ],
+     [
+      "7f",
+      2
+     ],
+     [
+      "44",
+      1
+     ]
+    ],
+    "min": 32,
+    "max": 127,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 41,
+   "size": 1,
+   "name": "octave_shift",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Pitch_Compute 0x023584 -> Pitch_Get_Patch_Octave_Shift (low nibble); clamp 6..10, 8 = no shift (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C))",
+   "inference": false,
+   "clamp": {
+    "min": 6,
+    "max": 10,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 723,
+    "distinct": 4,
+    "top": [
+     [
+      "08",
+      548
+     ],
+     [
+      "07",
+      140
+     ],
+     [
+      "09",
+      33
+     ],
+     [
+      "06",
+      2
+     ]
+    ],
+    "min": 6,
+    "max": 9,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 42,
+   "size": 1,
+   "name": "program_lookup_nibbles",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 Instrument_LookupProgram_HiNibble 0x02289D / _LoNibble 0x0228D9 index byte table 0x011ACF with each nibble",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 6,
+    "top": [
+     [
+      "89",
+      340
+     ],
+     [
+      "79",
+      302
+     ],
+     [
+      "78",
+      57
+     ],
+     [
+      "8a",
+      15
+     ]
+    ],
+    "min": 120,
+    "max": 153
+   }
+  },
+  {
+   "off": 43,
+   "size": 1,
+   "name": "lfo_b0",
+   "kind": "dec",
+   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
+   "inference": true,
+   "todo": "which UI caption (speed/delay/depth) is this byte not traced: the page params 0x661..0x664 arrive from the subcpu, not read from the record",
+   "repeat": {
+    "count": 12,
+    "stride": 4
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 8676,
+    "distinct": 30,
+    "top": [
+     [
+      "0f",
+      2168
+     ],
+     [
+      "5a",
+      2163
+     ],
+     [
+      "0c",
+      2160
+     ],
+     [
+      "00",
+      900
+     ]
+    ],
+    "min": 0,
+    "max": 90,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 44,
+   "size": 1,
+   "name": "lfo_b1",
+   "kind": "dec",
+   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
+   "inference": true,
+   "todo": "caption not traced",
+   "repeat": {
+    "count": 12,
+    "stride": 4
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 8676,
+    "distinct": 26,
+    "top": [
+     [
+      "17",
+      7347
+     ],
+     [
+      "1a",
+      576
+     ],
+     [
+      "1e",
+      256
+     ],
+     [
+      "20",
+      93
+     ]
+    ],
+    "min": 0,
+    "max": 43,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 45,
+   "size": 1,
+   "name": "lfo_b2_onoff",
+   "kind": "bits",
+   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bit 7 = ON/OFF, bits 6:0 = 0..50",
+   "inference": true,
+   "repeat": {
+    "count": 12,
+    "stride": 4
+   },
+   "clamp": {
+    "min": 0,
+    "max": 50,
+    "value_mask": 127
+   },
+   "observed": {
+    "samples": 8676,
+    "distinct": 7,
+    "top": [
+     [
+      "00",
+      7948
+     ],
+     [
+      "28",
+      719
+     ],
+     [
+      "05",
+      3
+     ],
+     [
+      "a8",
+      3
+     ]
+    ],
+    "min": 0,
+    "max": 168,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 46,
+   "size": 1,
+   "name": "lfo_b3_wave",
+   "kind": "bits",
+   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bits 7:6 = wave (SIN TRI SQR SAW, inference), bits 5:0 = 0..30",
+   "inference": true,
+   "repeat": {
+    "count": 12,
+    "stride": 4
+   },
+   "clamp": {
+    "min": 0,
+    "max": 30,
+    "value_mask": 63
+   },
+   "observed": {
+    "samples": 8676,
+    "distinct": 28,
+    "top": [
+     [
+      "00",
+      7832
+     ],
+     [
+      "0f",
+      252
+     ],
+     [
+      "12",
+      179
+     ],
+     [
+      "10",
+      65
+     ]
+    ],
+    "min": 0,
+    "max": 80,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 91,
+   "size": 1,
+   "name": "b_0x5b",
+   "kind": "dec",
+   "evidence": "clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)",
+   "inference": false,
+   "todo": "no subcpu reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)",
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 723,
+    "distinct": 2,
+    "top": [
+     [
+      "00",
+      698
+     ],
+     [
+      "6d",
+      25
+     ]
+    ],
+    "min": 0,
+    "max": 109,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 92,
+   "size": 1,
+   "name": "level_offset",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Level_Build_Reg0C0 0x0253FE: level offset centred on 0x40 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..127",
+   "inference": false,
+   "bias": 64,
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 723,
+    "distinct": 17,
+    "top": [
+     [
+      "40",
+      570
+     ],
+     [
+      "50",
+      51
+     ],
+     [
+      "64",
+      37
+     ],
+     [
+      "54",
+      11
+     ]
+    ],
+    "min": 40,
+    "max": 232,
+    "in_clamp_range": 0.9986
+   }
+  },
+  {
+   "off": 93,
+   "size": 1,
+   "name": "algorithm_type",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 AlgoType_StateWrite 0x033557 and Partial_Build_Present_Word 0x032B1E read the low nibble",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 34,
+    "top": [
+     [
+      "40",
+      164
+     ],
+     [
+      "c3",
+      93
+     ],
+     [
+      "c1",
+      85
+     ],
+     [
+      "43",
+      60
+     ]
+    ],
+    "min": 0,
+    "max": 203
+   }
+  },
+  {
+   "off": 94,
+   "size": 4,
+   "name": "partial_descriptor",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 Voice_Build_Partial_Descriptor 0x02B717 (ROM tables 0x012038/0x012057/0x012095); +0x5E/+0x60 also DSP_ChanFreq_WritePacket1 0x033B8B, +0x5F & 0x3F AlgoType_AB_LoadIndex 0x033B70",
+   "inference": false,
+   "todo": "per-byte meaning not established; kept as one 4-byte field",
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 150,
+    "top": [
+     [
+      "0f190a00",
+      155
+     ],
+     [
+      "14140f16",
+      40
+     ],
+     [
+      "0a280801",
+      30
+     ],
+     [
+      "0c250a00",
+      25
+     ]
+    ]
+   }
+  },
+  {
+   "off": 98,
+   "size": 2,
+   "name": "b_0x62",
+   "kind": "hex",
+   "evidence": "no reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); unclamped",
+   "inference": false,
+   "todo": "no reader found",
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 16,
+    "top": [
+     [
+      "6400",
+      489
+     ],
+     [
+      "0000",
+      160
+     ],
+     [
+      "0200",
+      35
+     ],
+     [
+      "6404",
+      11
+     ]
+    ]
+   }
+  },
+  {
+   "off": 100,
+   "size": 1,
+   "name": "secondary_param_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_SecondaryParam_Path2 0x033DAA",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 31,
+    "top": [
+     [
+      "00",
+      616
+     ],
+     [
+      "03",
+      25
+     ],
+     [
+      "04",
+      14
+     ],
+     [
+      "05",
+      9
+     ]
+    ],
+    "min": 0,
+    "max": 254
+   }
+  },
+  {
+   "off": 101,
+   "size": 1,
+   "name": "secondary_param_b",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_SecondaryParam_Path2_Epilogue 0x033DD3",
+   "inference": false,
+   "clamp": "none",
+   "observed": {
+    "samples": 723,
+    "distinct": 19,
+    "top": [
+     [
+      "00",
+      573
+     ],
+     [
+      "02",
+      53
+     ],
+     [
+      "05",
+      21
+     ],
+     [
+      "03",
+      13
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  },
+  {
+   "off": 102,
+   "size": 1,
+   "name": "partial_gate_ctl",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
+   "todo": "name from the readers only; meaning not established",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 5,
+    "top": [
+     [
+      "00",
+      2888
+     ],
+     [
+      "0f",
+      1
+     ],
+     [
+      "19",
+      1
+     ],
+     [
+      "28",
+      1
+     ]
+    ],
+    "min": 0,
+    "max": 128,
+    "in_clamp_range": 0.9997
+   }
+  },
+  {
+   "off": 103,
+   "size": 1,
+   "name": "partial_b_0x01",
+   "kind": "dec",
+   "evidence": "clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 128,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 37,
+    "top": [
+     [
+      "40",
+      2715
+     ],
+     [
+      "7f",
+      23
+     ],
+     [
+      "22",
+      22
+     ],
+     [
+      "5e",
+      21
+     ]
+    ],
+    "min": 0,
+    "max": 127,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 104,
+   "size": 1,
+   "name": "partial_wave",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 115,
+    "top": [
+     [
+      "00",
+      738
+     ],
+     [
+      "2e",
+      130
+     ],
+     [
+      "76",
+      79
+     ],
+     [
+      "6b",
+      71
+     ]
+    ],
+    "min": 0,
+    "max": 136,
+    "in_clamp_range": 0.9997
+   }
+  },
+  {
+   "off": 105,
+   "size": 1,
+   "name": "partial_wave_family",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 21,
+    "top": [
+     [
+      "00",
+      1574
+     ],
+     [
+      "10",
+      596
+     ],
+     [
+      "01",
+      274
+     ],
+     [
+      "80",
+      141
+     ]
+    ],
+    "min": 0,
+    "max": 240
+   }
+  },
+  {
+   "off": 106,
+   "size": 1,
+   "name": "partial_coarse_tune",
+   "kind": "signed",
+   "evidence": "clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
+   "bias": 0,
+   "todo": "semitone reading from range and corpus only; no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -24,
+    "max": 24,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 28,
+    "top": [
+     [
+      "00",
+      2457
+     ],
+     [
+      "0c",
+      145
+     ],
+     [
+      "f4",
+      101
+     ],
+     [
+      "18",
+      49
+     ]
+    ],
+    "min": 0,
+    "max": 253,
+    "in_clamp_range": 0.9997
+   }
+  },
+  {
+   "off": 107,
+   "size": 1,
+   "name": "partial_partial_detune",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 38,
+    "top": [
+     [
+      "00",
+      1520
+     ],
+     [
+      "fc",
+      199
+     ],
+     [
+      "fb",
+      166
+     ],
+     [
+      "04",
+      153
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  },
+  {
+   "off": 108,
+   "size": 1,
+   "name": "partial_b_0x06",
+   "kind": "hex",
+   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 12,
+    "top": [
+     [
+      "00",
+      1897
+     ],
+     [
+      "20",
+      972
+     ],
+     [
+      "03",
+      6
+     ],
+     [
+      "01",
+      5
+     ]
+    ],
+    "min": 0,
+    "max": 240
+   }
+  },
+  {
+   "off": 109,
+   "size": 1,
+   "name": "partial_env2_start_level",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp -50..50 and corpus values 0/+50/+30/-20 show a signed level; SePitEnv1 / SeFilEnv1 captions START PITCH / START [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
+   "bias": 0,
+   "todo": "start-level reading is an inference; the header calls it a sign flag",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 11,
+    "top": [
+     [
+      "00",
+      2451
+     ],
+     [
+      "32",
+      373
+     ],
+     [
+      "1e",
+      48
+     ],
+     [
+      "ec",
+      7
+     ]
+    ],
+    "min": 0,
+    "max": 246,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 110,
+   "size": 1,
+   "name": "partial_env2_porta_level",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 9,
+    "top": [
+     [
+      "00",
+      2863
+     ],
+     [
+      "1e",
+      11
+     ],
+     [
+      "11",
+      7
+     ],
+     [
+      "2d",
+      3
+     ]
+    ],
+    "min": 0,
+    "max": 246,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 111,
+   "size": 1,
+   "name": "partial_env2_seg1_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 10,
+    "top": [
+     [
+      "1e",
+      2840
+     ],
+     [
+      "00",
+      26
+     ],
+     [
+      "14",
+      7
+     ],
+     [
+      "19",
+      7
+     ]
+    ],
+    "min": 0,
+    "max": 71,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 112,
+   "size": 1,
+   "name": "partial_env2_seg1_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 11,
+    "top": [
+     [
+      "00",
+      2852
+     ],
+     [
+      "f6",
+      14
+     ],
+     [
+      "ec",
+      10
+     ],
+     [
+      "f0",
+      5
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 113,
+   "size": 1,
+   "name": "partial_env2_seg2_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 16,
+    "top": [
+     [
+      "1e",
+      2841
+     ],
+     [
+      "28",
+      14
+     ],
+     [
+      "00",
+      8
+     ],
+     [
+      "1c",
+      7
+     ]
+    ],
+    "min": 0,
+    "max": 90,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 114,
+   "size": 1,
+   "name": "partial_env2_seg2_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 11,
+    "top": [
+     [
+      "00",
+      2857
+     ],
+     [
+      "0e",
+      7
+     ],
+     [
+      "f8",
+      5
+     ],
+     [
+      "0a",
+      5
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 115,
+   "size": 1,
+   "name": "partial_env2_seg3_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 10,
+    "top": [
+     [
+      "1e",
+      2837
+     ],
+     [
+      "28",
+      10
+     ],
+     [
+      "32",
+      9
+     ],
+     [
+      "20",
+      8
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 116,
+   "size": 1,
+   "name": "partial_env2_seg3_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 3,
+    "top": [
+     [
+      "00",
+      2886
+     ],
+     [
+      "2c",
+      4
+     ],
+     [
+      "1a",
+      2
+     ]
+    ],
+    "min": 0,
+    "max": 44,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 117,
+   "size": 1,
+   "name": "partial_env2_seg4_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 8,
+    "top": [
+     [
+      "1e",
+      2864
+     ],
+     [
+      "00",
+      8
+     ],
+     [
+      "3c",
+      7
+     ],
+     [
+      "1b",
+      4
+     ]
+    ],
+    "min": 0,
+    "max": 97,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 118,
+   "size": 1,
+   "name": "partial_env2_seg4_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 3,
+    "top": [
+     [
+      "00",
+      2884
+     ],
+     [
+      "2d",
+      6
+     ],
+     [
+      "ea",
+      2
+     ]
+    ],
+    "min": 0,
+    "max": 234,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 119,
+   "size": 1,
+   "name": "partial_env2_key_scale",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 1,
+    "top": [
+     [
+      "00",
+      2892
+     ]
+    ],
+    "min": 0,
+    "max": 0,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 120,
+   "size": 1,
+   "name": "partial_env2_b_0x12",
+   "kind": "signed",
+   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 5,
+    "top": [
+     [
+      "00",
+      2870
+     ],
+     [
+      "14",
+      12
+     ],
+     [
+      "03",
+      5
+     ],
+     [
+      "28",
+      4
+     ]
+    ],
+    "min": 0,
+    "max": 40,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 121,
+   "size": 1,
+   "name": "partial_env2_velocity_base",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 9,
+    "top": [
+     [
+      "42",
+      2827
+     ],
+     [
+      "36",
+      24
+     ],
+     [
+      "3c",
+      12
+     ],
+     [
+      "4e",
+      11
+     ]
+    ],
+    "min": 42,
+    "max": 90,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 122,
+   "size": 2,
+   "name": "partial_env2_velocity_depth",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "two int8, not one int16",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 4,
+    "top": [
+     [
+      "0000",
+      2875
+     ],
+     [
+      "fb01",
+      12
+     ],
+     [
+      "0014",
+      4
+     ],
+     [
+      "000b",
+      1
+     ]
+    ],
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 124,
+   "size": 1,
+   "name": "partial_env2_egb_0x16",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 1,
+    "top": [
+     [
+      "00",
+      2892
+     ]
+    ],
+    "min": 0,
+    "max": 0,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 125,
+   "size": 1,
+   "name": "partial_channel_detune",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 86,
+    "top": [
+     [
+      "62",
+      575
+     ],
+     [
+      "5a",
+      278
+     ],
+     [
+      "50",
+      187
+     ],
+     [
+      "54",
+      128
+     ]
+    ],
+    "min": 3,
+    "max": 232,
+    "in_clamp_range": 0.9986
+   }
+  },
+  {
+   "off": 126,
+   "size": 1,
+   "name": "partial_fine_detune",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 44,
+    "top": [
+     [
+      "15",
+      587
+     ],
+     [
+      "12",
+      411
+     ],
+     [
+      "0f",
+      374
+     ],
+     [
+      "16",
+      344
+     ]
+    ],
+    "min": 0,
+    "max": 254,
+    "in_clamp_range": 0.9955
+   }
+  },
+  {
+   "off": 127,
+   "size": 1,
+   "name": "partial_pitch_curve",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 7,
+    "top": [
+     [
+      "60",
+      1896
+     ],
+     [
+      "80",
+      753
+     ],
+     [
+      "00",
+      98
+     ],
+     [
+      "a0",
+      62
+     ]
+    ],
+    "min": 0,
+    "max": 192
+   }
+  },
+  {
+   "off": 128,
+   "size": 3,
+   "name": "partial_pitch_params",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "three bytes, individual meaning not established",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 78,
+    "top": [
+     [
+      "42184f",
+      1595
+     ],
+     [
+      "48217f",
+      568
+     ],
+     [
+      "421860",
+      368
+     ],
+     [
+      "421866",
+      113
+     ]
+    ],
+    "in_clamp_range": 0.9995
+   }
+  },
+  {
+   "off": 131,
+   "size": 1,
+   "name": "partial_b_0x1d",
+   "kind": "signed",
+   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 46,
+    "top": [
+     [
+      "00",
+      1057
+     ],
+     [
+      "fb",
+      808
+     ],
+     [
+      "f6",
+      275
+     ],
+     [
+      "ec",
+      146
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 132,
+   "size": 8,
+   "name": "partial_b_0x1e",
+   "kind": "dec",
+   "evidence": "clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 36,
+    "top": [
+     [
+      "00007f7f00007f7f",
+      2838
+     ],
+     [
+      "0000303c00007f7f",
+      3
+     ],
+     [
+      "00007f7f28117f7f",
+      3
+     ],
+     [
+      "2b2b7f7f00007f7f",
+      2
+     ]
+    ],
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 140,
+   "size": 1,
+   "name": "partial_b_0x26",
+   "kind": "hex",
+   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 3,
+    "top": [
+     [
+      "00",
+      1921
+     ],
+     [
+      "20",
+      970
+     ],
+     [
+      "30",
+      1
+     ]
+    ],
+    "min": 0,
+    "max": 48
+   }
+  },
+  {
+   "off": 141,
+   "size": 1,
+   "name": "partial_env1_seg1_target",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 49,
+    "top": [
+     [
+      "00",
+      1944
+     ],
+     [
+      "04",
+      112
+     ],
+     [
+      "10",
+      98
+     ],
+     [
+      "0e",
+      74
+     ]
+    ],
+    "min": 0,
+    "max": 254,
+    "in_clamp_range": 0.9997
+   }
+  },
+  {
+   "off": 142,
+   "size": 1,
+   "name": "partial_env1_seg1_rate",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 7,
+    "top": [
+     [
+      "64",
+      2879
+     ],
+     [
+      "62",
+      5
+     ],
+     [
+      "5b",
+      3
+     ],
+     [
+      "32",
+      2
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 143,
+   "size": 1,
+   "name": "partial_env1_seg2_target",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 57,
+    "top": [
+     [
+      "4a",
+      580
+     ],
+     [
+      "64",
+      543
+     ],
+     [
+      "3c",
+      488
+     ],
+     [
+      "50",
+      177
+     ]
+    ],
+    "min": 0,
+    "max": 254,
+    "in_clamp_range": 0.9993
+   }
+  },
+  {
+   "off": 144,
+   "size": 1,
+   "name": "partial_env1_seg2_rate",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 53,
+    "top": [
+     [
+      "00",
+      850
+     ],
+     [
+      "64",
+      620
+     ],
+     [
+      "32",
+      595
+     ],
+     [
+      "5c",
+      102
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 145,
+   "size": 1,
+   "name": "partial_env1_seg3_target",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 48,
+    "top": [
+     [
+      "64",
+      587
+     ],
+     [
+      "4e",
+      585
+     ],
+     [
+      "3c",
+      377
+     ],
+     [
+      "50",
+      269
+     ]
+    ],
+    "min": 0,
+    "max": 204,
+    "in_clamp_range": 0.9993
+   }
+  },
+  {
+   "off": 146,
+   "size": 1,
+   "name": "partial_env1_seg3_rate",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 47,
+    "top": [
+     [
+      "00",
+      1617
+     ],
+     [
+      "64",
+      623
+     ],
+     [
+      "50",
+      138
+     ],
+     [
+      "44",
+      64
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 147,
+   "size": 1,
+   "name": "partial_env1_level",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 59,
+    "top": [
+     [
+      "2e",
+      588
+     ],
+     [
+      "20",
+      322
+     ],
+     [
+      "28",
+      222
+     ],
+     [
+      "1a",
+      179
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 148,
+   "size": 2,
+   "name": "partial_env1_key_scale",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "two int8",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 27,
+    "top": [
+     [
+      "0400",
+      718
+     ],
+     [
+      "0800",
+      617
+     ],
+     [
+      "0f06",
+      568
+     ],
+     [
+      "0000",
+      514
+     ]
+    ],
+    "in_clamp_range": 0.9993
+   }
+  },
+  {
+   "off": 150,
+   "size": 3,
+   "name": "partial_env1_velocity_ctl",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "three bytes",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 40,
+    "top": [
+     [
+      "421860",
+      1326
+     ],
+     [
+      "42187f",
+      833
+     ],
+     [
+      "422870",
+      583
+     ],
+     [
+      "42346e",
+      22
+     ]
+    ],
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 153,
+   "size": 2,
+   "name": "partial_env1_depth",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "two int8",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 32,
+    "top": [
+     [
+      "0000",
+      2165
+     ],
+     [
+      "000f",
+      578
+     ],
+     [
+      "0015",
+      27
+     ],
+     [
+      "0019",
+      15
+     ]
+    ],
+    "in_clamp_range": 0.9997
+   }
+  },
+  {
+   "off": 155,
+   "size": 1,
+   "name": "partial_env1_ega_0x35",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 9,
+    "top": [
+     [
+      "00",
+      2284
+     ],
+     [
+      "0f",
+      568
+     ],
+     [
+      "14",
+      13
+     ],
+     [
+      "0a",
+      12
+     ]
+    ],
+    "min": 0,
+    "max": 246,
+    "in_clamp_range": 0.9993
+   }
+  },
+  {
+   "off": 156,
+   "size": 1,
+   "name": "partial_filter_type",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 23,
+    "top": [
+     [
+      "60",
+      911
+     ],
+     [
+      "61",
+      857
+     ],
+     [
+      "41",
+      608
+     ],
+     [
+      "a1",
+      198
+     ]
+    ],
+    "min": 0,
+    "max": 195
+   }
+  },
+  {
+   "off": 157,
+   "size": 1,
+   "name": "partial_filter_key_follow_depth",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 49,
+    "top": [
+     [
+      "14",
+      1156
+     ],
+     [
+      "20",
+      742
+     ],
+     [
+      "28",
+      184
+     ],
+     [
+      "00",
+      109
+     ]
+    ],
+    "min": 0,
+    "max": 127,
+    "in_clamp_range": 0.9979
+   }
+  },
+  {
+   "off": 158,
+   "size": 1,
+   "name": "partial_b_0x38",
+   "kind": "hex",
+   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 2,
+    "top": [
+     [
+      "00",
+      2891
+     ],
+     [
+      "30",
+      1
+     ]
+    ],
+    "min": 0,
+    "max": 48
+   }
+  },
+  {
+   "off": 159,
+   "size": 1,
+   "name": "partial_level_scale_offset",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 19,
+    "top": [
+     [
+      "42",
+      2182
+     ],
+     [
+      "48",
+      596
+     ],
+     [
+      "36",
+      23
+     ],
+     [
+      "4e",
+      21
+     ]
+    ],
+    "min": 0,
+    "max": 90,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 160,
+   "size": 1,
+   "name": "partial_level_scale_low",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 33,
+    "top": [
+     [
+      "18",
+      1905
+     ],
+     [
+      "3c",
+      583
+     ],
+     [
+      "42",
+      126
+     ],
+     [
+      "00",
+      115
+     ]
+    ],
+    "min": 0,
+    "max": 83,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 161,
+   "size": 1,
+   "name": "partial_level_scale_high",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 19,
+    "top": [
+     [
+      "60",
+      1924
+     ],
+     [
+      "7f",
+      776
+     ],
+     [
+      "4e",
+      99
+     ],
+     [
+      "6c",
+      32
+     ]
+    ],
+    "min": 0,
+    "max": 127,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 162,
+   "size": 1,
+   "name": "partial_level_scale_depth",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 41,
+    "top": [
+     [
+      "00",
+      1792
+     ],
+     [
+      "0a",
+      579
+     ],
+     [
+      "04",
+      67
+     ],
+     [
+      "f6",
+      62
+     ]
+    ],
+    "min": 0,
+    "max": 253,
+    "in_clamp_range": 0.999
+   }
+  },
+  {
+   "off": 163,
+   "size": 1,
+   "name": "partial_env3_start_level",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of env2 +0x07); clamp -50..50, corpus 0/-30/-40/-20 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
+   "bias": 0,
+   "todo": "start-level reading is an inference from the env2 twin",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 13,
+    "top": [
+     [
+      "00",
+      2849
+     ],
+     [
+      "e2",
+      12
+     ],
+     [
+      "d8",
+      5
+     ],
+     [
+      "ec",
+      4
+     ]
+    ],
+    "min": 0,
+    "max": 254,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 164,
+   "size": 1,
+   "name": "partial_env3_porta_level",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 16,
+    "top": [
+     [
+      "00",
+      2855
+     ],
+     [
+      "06",
+      5
+     ],
+     [
+      "e1",
+      4
+     ],
+     [
+      "f5",
+      4
+     ]
+    ],
+    "min": 0,
+    "max": 254,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 165,
+   "size": 1,
+   "name": "partial_env3_seg1_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 29,
+    "top": [
+     [
+      "00",
+      2281
+     ],
+     [
+      "1e",
+      520
+     ],
+     [
+      "0a",
+      19
+     ],
+     [
+      "0b",
+      8
+     ]
+    ],
+    "min": 0,
+    "max": 94,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 166,
+   "size": 1,
+   "name": "partial_env3_seg1_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 29,
+    "top": [
+     [
+      "00",
+      2787
+     ],
+     [
+      "28",
+      22
+     ],
+     [
+      "ec",
+      13
+     ],
+     [
+      "1e",
+      11
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 167,
+   "size": 1,
+   "name": "partial_env3_seg2_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 34,
+    "top": [
+     [
+      "50",
+      2261
+     ],
+     [
+      "1e",
+      506
+     ],
+     [
+      "2d",
+      16
+     ],
+     [
+      "00",
+      10
+     ]
+    ],
+    "min": 0,
+    "max": 95,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 168,
+   "size": 1,
+   "name": "partial_env3_seg2_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 32,
+    "top": [
+     [
+      "00",
+      2786
+     ],
+     [
+      "0f",
+      19
+     ],
+     [
+      "0a",
+      12
+     ],
+     [
+      "14",
+      7
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 169,
+   "size": 1,
+   "name": "partial_env3_seg3_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 33,
+    "top": [
+     [
+      "58",
+      2260
+     ],
+     [
+      "1e",
+      504
+     ],
+     [
+      "3c",
+      23
+     ],
+     [
+      "50",
+      10
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 170,
+   "size": 1,
+   "name": "partial_env3_seg3_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 23,
+    "top": [
+     [
+      "00",
+      2822
+     ],
+     [
+      "f6",
+      13
+     ],
+     [
+      "e4",
+      6
+     ],
+     [
+      "f9",
+      5
+     ]
+    ],
+    "min": 0,
+    "max": 251,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 171,
+   "size": 1,
+   "name": "partial_env3_seg4_a",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 100,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 31,
+    "top": [
+     [
+      "46",
+      2259
+     ],
+     [
+      "1e",
+      521
+     ],
+     [
+      "64",
+      18
+     ],
+     [
+      "28",
+      12
+     ]
+    ],
+    "min": 0,
+    "max": 100,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 172,
+   "size": 1,
+   "name": "partial_env3_seg4_b",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "target vs rate not settled",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 6,
+    "top": [
+     [
+      "00",
+      2849
+     ],
+     [
+      "ec",
+      27
+     ],
+     [
+      "f6",
+      7
+     ],
+     [
+      "d8",
+      4
+     ]
+    ],
+    "min": 0,
+    "max": 246,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 173,
+   "size": 1,
+   "name": "partial_env3_key_scale",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 7,
+    "top": [
+     [
+      "07",
+      2266
+     ],
+     [
+      "00",
+      588
+     ],
+     [
+      "05",
+      25
+     ],
+     [
+      "0a",
+      8
+     ]
+    ],
+    "min": 0,
+    "max": 15,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 174,
+   "size": 1,
+   "name": "partial_env3_b_0x48",
+   "kind": "signed",
+   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "no reader found",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 6,
+    "top": [
+     [
+      "1e",
+      2264
+     ],
+     [
+      "00",
+      569
+     ],
+     [
+      "32",
+      30
+     ],
+     [
+      "28",
+      24
+     ]
+    ],
+    "min": 0,
+    "max": 50,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 175,
+   "size": 1,
+   "name": "partial_env3_velocity_base",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 8,
+    "top": [
+     [
+      "42",
+      2838
+     ],
+     [
+      "36",
+      26
+     ],
+     [
+      "4e",
+      10
+     ],
+     [
+      "2a",
+      7
+     ]
+    ],
+    "min": 42,
+    "max": 90,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 176,
+   "size": 2,
+   "name": "partial_env3_velocity_depth",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "todo": "two int8",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 5,
+    "top": [
+     [
+      "00f1",
+      2259
+     ],
+     [
+      "0000",
+      628
+     ],
+     [
+      "f9fb",
+      2
+     ],
+     [
+      "01fb",
+      2
+     ]
+    ],
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 178,
+   "size": 1,
+   "name": "partial_env3_egc_0x4c",
+   "kind": "signed",
+   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 2,
+    "top": [
+     [
+      "0f",
+      2259
+     ],
+     [
+      "00",
+      633
+     ]
+    ],
+    "min": 0,
+    "max": 15,
+    "in_clamp_range": 1.0
+   }
+  },
+  {
+   "off": 179,
+   "size": 1,
+   "name": "partial_filter_cutoff",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 TVF_Build_Full 0x023D01 (cutoff seed); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 88,
+    "top": [
+     [
+      "7f",
+      978
+     ],
+     [
+      "64",
+      627
+     ],
+     [
+      "60",
+      127
+     ],
+     [
+      "66",
+      110
+     ]
+    ],
+    "min": 1,
+    "max": 128
+   }
+  },
+  {
+   "off": 180,
+   "size": 1,
+   "name": "partial_filter_slope_mode",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 6,
+    "top": [
+     [
+      "01",
+      2614
+     ],
+     [
+      "02",
+      164
+     ],
+     [
+      "03",
+      42
+     ],
+     [
+      "04",
+      33
+     ]
+    ],
+    "min": 0,
+    "max": 5
+   }
+  },
+  {
+   "off": 181,
+   "size": 2,
+   "name": "partial_filter_pair",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "todo": "two bytes",
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 71,
+    "top": [
+     [
+      "428b",
+      2252
+     ],
+     [
+      "4087",
+      481
+     ],
+     [
+      "408a",
+      16
+     ],
+     [
+      "428c",
+      8
+     ]
+    ]
+   }
+  },
+  {
+   "off": 426,
+   "size": 3,
+   "name": "vsel_thresholds",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 Velocity_Select_Split_Zone 0x022824: three ascending velocity thresholds -> zone 0..3; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "todo": "only ~80% of corpus bytes in this 44-B tail fall in the clamp ranges (0xFF / 0x00 fills): subcpu v1.42 WaveSel_Cache_VelSplitPtr takes this RAM copy only when part flags bit 0 is set, else the ROM table, so the tail may be stale in many records; not verified",
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 396,
+    "top": [
+     [
+      "7f7f7f",
+      1016
+     ],
+     [
+      "000000",
+      48
+     ],
+     [
+      "ffffff",
+      38
+     ],
+     [
+      "0000ff",
+      26
+     ]
+    ],
+    "in_clamp_range": 0.7986
+   }
+  },
+  {
+   "off": 429,
+   "size": 1,
+   "name": "vsel_zone0_wave",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 147,
+    "top": [
+     [
+      "00",
+      762
+     ],
+     [
+      "ff",
+      175
+     ],
+     [
+      "18",
+      67
+     ],
+     [
+      "60",
+      64
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 0.8126
+   }
+  },
+  {
+   "off": 430,
+   "size": 1,
+   "name": "vsel_zone0_family",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 118,
+    "top": [
+     [
+      "00",
+      1205
+     ],
+     [
+      "ff",
+      178
+     ],
+     [
+      "01",
+      156
+     ],
+     [
+      "80",
+      65
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  },
+  {
+   "off": 431,
+   "size": 1,
+   "name": "vsel_zone1_wave",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 163,
+    "top": [
+     [
+      "00",
+      652
+     ],
+     [
+      "ff",
+      143
+     ],
+     [
+      "18",
+      99
+     ],
+     [
+      "20",
+      77
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 0.7898
+   }
+  },
+  {
+   "off": 432,
+   "size": 1,
+   "name": "vsel_zone1_family",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 130,
+    "top": [
+     [
+      "00",
+      1197
+     ],
+     [
+      "01",
+      133
+     ],
+     [
+      "ff",
+      113
+     ],
+     [
+      "18",
+      81
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  },
+  {
+   "off": 433,
+   "size": 1,
+   "name": "vsel_zone2_wave",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 151,
+    "top": [
+     [
+      "00",
+      692
+     ],
+     [
+      "ff",
+      135
+     ],
+     [
+      "18",
+      93
+     ],
+     [
+      "60",
+      57
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 0.8102
+   }
+  },
+  {
+   "off": 434,
+   "size": 1,
+   "name": "vsel_zone2_family",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 126,
+    "top": [
+     [
+      "00",
+      1163
+     ],
+     [
+      "01",
+      144
+     ],
+     [
+      "ff",
+      136
+     ],
+     [
+      "80",
+      87
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  },
+  {
+   "off": 435,
+   "size": 1,
+   "name": "vsel_zone3_wave",
+   "kind": "dec",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   },
+   "observed": {
+    "samples": 2892,
+    "distinct": 159,
+    "top": [
+     [
+      "00",
+      722
+     ],
+     [
+      "ff",
+      134
+     ],
+     [
+      "18",
+      77
+     ],
+     [
+      "20",
+      64
+     ]
+    ],
+    "min": 0,
+    "max": 255,
+    "in_clamp_range": 0.7991
+   }
+  },
+  {
+   "off": 436,
+   "size": 1,
+   "name": "vsel_zone3_family",
+   "kind": "hex",
+   "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.42 SlotParam_WriteType3 0x032517 (RamBank + 0x1D6*n + 0x1BA + 0x0B*p, bank base includes the 16-byte header), Audio_Cmd_DSPGlobal_Param_Store 0x0301E3; same layout as table_data ToneDB_MixerDefaultTable (CORRECTED 2026-09-25 header)]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 11
+   },
+   "clamp": "none",
+   "observed": {
+    "samples": 2892,
+    "distinct": 133,
+    "top": [
+     [
+      "00",
+      1127
+     ],
+     [
+      "ff",
+      156
+     ],
+     [
+      "01",
+      142
+     ],
+     [
+      "18",
+      127
+     ]
+    ],
+    "min": 0,
+    "max": 255
+   }
+  }
+ ],
+ "kit": {
+  "file_offset": 18816,
+  "size": 10538,
+  "fields": [
+   {
+    "off": 0,
+    "size": 16,
+    "name": "kit_name",
+    "kind": "ascii",
+    "evidence": "maincpu v10 SingleLoadSrc_ReadTmUserKitName 0xF8A394 (16 B at file 0x4980); subcpu v1.42 Audio_Cmd_PatchByte_Write_And_Echo 0x03021F echoes kit-record bytes to 0x1E0000 + 0x4980 + offset",
+    "inference": false,
+    "clamp": {
+     "min": 32,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 42,
+     "distinct": 3,
+     "top": [
+      [
+       "    CA - Kit    ",
+       39
+      ],
+      [
+       "    User Kit    ",
+       2
+      ],
+      [
+       "  Oriental-Kit  ",
+       1
+      ]
+     ]
+    }
+   },
+   {
+    "off": 16,
+    "size": 1,
+    "name": "part_mode",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 Voice_SetVelocity 0x02C8E4: 0x80 = drum kit (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": false,
+    "clamp": "none",
+    "observed": {
+     "samples": 42,
+     "distinct": 1,
+     "top": [
+      [
+       "80",
+       42
+      ]
+     ],
+     "min": 128,
+     "max": 128
+    }
+   },
+   {
+    "off": 17,
+    "size": 1,
+    "name": "b_0x11",
+    "kind": "dec",
+    "evidence": "maincpu v10 HdaeRom_DataDispatch_Block3 0xFF03FB inserts this byte (shifts +0x11..0x72A6 up one) and stores 1 when converting a KN3000-format image; ROM kits hold 0..6 here, no reader (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": false,
+    "todo": "no reader found",
+    "clamp": "none",
+    "observed": {
+     "samples": 42,
+     "distinct": 2,
+     "top": [
+      [
+       "01",
+       38
+      ],
+      [
+       "02",
+       4
+      ]
+     ],
+     "min": 1,
+     "max": 2
+    }
+   },
+   {
+    "off": 18,
+    "size": 1,
+    "name": "ctrl_part_switches",
+    "kind": "bits",
+    "evidence": "kit twin of the sound record's +0x14 groups: same clamp ranges with period 3 over kit offsets 18..38 (maincpu v10 unlabelled kit clamp 0xFEEE10 after Param_SignExtendReturn_Skip5 (ParamSx_CaseMapD/E, SwitchD/E/F)); identical in all 26 ROM kits (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": true,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 7,
+     "stride": 3
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 294,
+     "distinct": 2,
+     "top": [
+      [
+       "55",
+       252
+      ],
+      [
+       "ff",
+       42
+      ]
+     ],
+     "min": 85,
+     "max": 255
+    }
+   },
+   {
+    "off": 19,
+    "size": 1,
+    "name": "ctrl_b1",
+    "kind": "bits",
+    "evidence": "kit twin of the sound record's +0x14 groups: same clamp ranges with period 3 over kit offsets 18..38 (maincpu v10 unlabelled kit clamp 0xFEEE10 after Param_SignExtendReturn_Skip5 (ParamSx_CaseMapD/E, SwitchD/E/F)); identical in all 26 ROM kits (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": true,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 7,
+     "stride": 3
+    },
+    "clamp": {
+     "min": 0,
+     "max": 49,
+     "value_mask": 127
+    },
+    "observed": {
+     "samples": 294,
+     "distinct": 3,
+     "top": [
+      [
+       "00",
+       210
+      ],
+      [
+       "81",
+       42
+      ],
+      [
+       "03",
+       42
+      ]
+     ],
+     "min": 0,
+     "max": 129,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 20,
+    "size": 1,
+    "name": "ctrl_b2",
+    "kind": "dec",
+    "evidence": "kit twin of the sound record's +0x14 groups: same clamp ranges with period 3 over kit offsets 18..38 (maincpu v10 unlabelled kit clamp 0xFEEE10 after Param_SignExtendReturn_Skip5 (ParamSx_CaseMapD/E, SwitchD/E/F)); identical in all 26 ROM kits (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": true,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 7,
+     "stride": 3
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 294,
+     "distinct": 1,
+     "top": [
+      [
+       "40",
+       294
+      ]
+     ],
+     "min": 64,
+     "max": 64,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 39,
+    "size": 1,
+    "name": "note_inst",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 ToneDB_Find_SubToneRecord 0x032AE0 reads rec[0x27+2n] for MIDI note n; ToneDB_Resolve_NamedToneRecord 0x032A08 -> DrumKit_NoteMapA[slot&0x1F][wave] (table_data/tone_database_aux.s PercInst/DrumKit headers)",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 2
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 102,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "2b",
+       110
+      ],
+      [
+       "26",
+       97
+      ],
+      [
+       "3a",
+       84
+      ]
+     ],
+     "min": 0,
+     "max": 127
+    }
+   },
+   {
+    "off": 40,
+    "size": 1,
+    "name": "note_bank",
+    "kind": "bits",
+    "evidence": "subcpu v1.42 ToneDB_Find_SubToneRecord 0x032AE0 reads rec[0x28+2n]: bits 4:0 = NoteMapA row, bit 5 = user RAM entry; maincpu v10 HdaeRom_DataDispatch_Block3 0xFF03FB forces bits 5:4 = 10 on all 128",
+    "inference": false,
+    "todo": "bit 6 (0x60..0x6E seen) not explained",
+    "repeat": {
+     "count": 128,
+     "stride": 2
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 16,
+     "top": [
+      [
+       "20",
+       4557
+      ],
+      [
+       "23",
+       237
+      ],
+      [
+       "24",
+       177
+      ],
+      [
+       "22",
+       153
+      ]
+     ],
+     "min": 32,
+     "max": 110
+    }
+   },
+   {
+    "off": 295,
+    "size": 13,
+    "name": "entry_name",
+    "kind": "ascii",
+    "evidence": "PercInst +0x00 13-char name; kit clamp 32..127 for entry offsets 0..12 [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 32,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 353,
+     "top": [
+      [
+       "Silent       ",
+       923
+      ],
+      [
+       "Cabasa 1     ",
+       77
+      ],
+      [
+       "ReverseSnare1",
+       76
+      ],
+      [
+       "ElectricTom 3",
+       63
+      ]
+     ]
+    }
+   },
+   {
+    "off": 308,
+    "size": 1,
+    "name": "entry_layer_mask",
+    "kind": "bits",
+    "evidence": "subcpu v1.42 Voice_Allocate_Type2 0x02C12B: bit 0 = layer 0, bit 2 = layer 1, bit 5 = fixed level (Voice_WriteVolume_OrPan 0x026C16) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 4,
+     "top": [
+      [
+       "01",
+       5236
+      ],
+      [
+       "21",
+       87
+      ],
+      [
+       "05",
+       52
+      ],
+      [
+       "7f",
+       1
+      ]
+     ],
+     "min": 1,
+     "max": 127
+    }
+   },
+   {
+    "off": 309,
+    "size": 1,
+    "name": "entry_b_0x0e",
+    "kind": "dec",
+    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "00",
+       5375
+      ],
+      [
+       "01",
+       1
+      ]
+     ],
+     "min": 0,
+     "max": 1,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 310,
+    "size": 1,
+    "name": "entry_b_0x0f",
+    "kind": "dec",
+    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 17,
+     "top": [
+      [
+       "40",
+       4142
+      ],
+      [
+       "48",
+       491
+      ],
+      [
+       "50",
+       405
+      ],
+      [
+       "30",
+       141
+      ]
+     ],
+     "min": 10,
+     "max": 127,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 311,
+    "size": 1,
+    "name": "entry_layer0_b_0x00",
+    "kind": "dec",
+    "evidence": "clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 128,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 44,
+     "top": [
+      [
+       "40",
+       1421
+      ],
+      [
+       "4c",
+       672
+      ],
+      [
+       "20",
+       428
+      ],
+      [
+       "14",
+       369
+      ]
+     ],
+     "min": 0,
+     "max": 114,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 312,
+    "size": 1,
+    "name": "entry_layer0_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 wave byte; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 90,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "43",
+       501
+      ],
+      [
+       "26",
+       264
+      ],
+      [
+       "3d",
+       233
+      ]
+     ],
+     "min": 0,
+     "max": 109,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 313,
+    "size": 1,
+    "name": "entry_layer0_wave_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 family byte (0x40..0x4F percussion) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 8,
+     "top": [
+      [
+       "50",
+       4353
+      ],
+      [
+       "51",
+       431
+      ],
+      [
+       "53",
+       250
+      ],
+      [
+       "54",
+       206
+      ]
+     ],
+     "min": 0,
+     "max": 86
+    }
+   },
+   {
+    "off": 314,
+    "size": 1,
+    "name": "entry_layer0_coarse_tune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed semitones); clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 55,
+     "top": [
+      [
+       "00",
+       3614
+      ],
+      [
+       "03",
+       164
+      ],
+      [
+       "0c",
+       153
+      ],
+      [
+       "07",
+       145
+      ]
+     ],
+     "min": 0,
+     "max": 255,
+     "in_clamp_range": 0.9998
+    }
+   },
+   {
+    "off": 315,
+    "size": 1,
+    "name": "entry_layer0_fine_tune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed fine step x2) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 22,
+     "top": [
+      [
+       "00",
+       5327
+      ],
+      [
+       "ff",
+       16
+      ],
+      [
+       "fc",
+       3
+      ],
+      [
+       "e1",
+       3
+      ]
+     ],
+     "min": 0,
+     "max": 255
+    }
+   },
+   {
+    "off": 316,
+    "size": 1,
+    "name": "entry_layer0_channel_detune",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_ApplyPortamento2 0x026684: +(value - 0x64), 0 = fixed -0x200; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 59,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "4c",
+       293
+      ],
+      [
+       "54",
+       273
+      ],
+      [
+       "50",
+       242
+      ]
+     ],
+     "min": 0,
+     "max": 127,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 317,
+    "size": 1,
+    "name": "entry_layer0_detune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_ComputePitch_Mono 0x026533 signed detune; clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 9,
+     "top": [
+      [
+       "14",
+       1568
+      ],
+      [
+       "12",
+       1370
+      ],
+      [
+       "16",
+       1012
+      ],
+      [
+       "00",
+       923
+      ]
+     ],
+     "min": 0,
+     "max": 26,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 318,
+    "size": 1,
+    "name": "entry_layer0_pitch_curve",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 Voice_ComputePitch_Mono 0x026533 curve selector, 0xE0 = direct note table [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 3,
+     "top": [
+      [
+       "60",
+       5115
+      ],
+      [
+       "a0",
+       259
+      ],
+      [
+       "c0",
+       2
+      ]
+     ],
+     "min": 96,
+     "max": 192
+    }
+   },
+   {
+    "off": 319,
+    "size": 1,
+    "name": "entry_layer0_amp_seg0_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 15,
+     "top": [
+      [
+       "00",
+       5002
+      ],
+      [
+       "08",
+       94
+      ],
+      [
+       "32",
+       76
+      ],
+      [
+       "04",
+       62
+      ]
+     ],
+     "min": 0,
+     "max": 60,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 320,
+    "size": 1,
+    "name": "entry_layer0_amp_seg1_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 59,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "44",
+       449
+      ],
+      [
+       "2d",
+       331
+      ],
+      [
+       "32",
+       289
+      ]
+     ],
+     "min": 0,
+     "max": 100,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 321,
+    "size": 1,
+    "name": "entry_layer0_amp_seg1_rate",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 45,
+     "top": [
+      [
+       "00",
+       3890
+      ],
+      [
+       "62",
+       415
+      ],
+      [
+       "46",
+       124
+      ],
+      [
+       "26",
+       120
+      ]
+     ],
+     "min": 0,
+     "max": 100,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 322,
+    "size": 1,
+    "name": "entry_layer0_amp_seg2_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 60,
+     "top": [
+      [
+       "00",
+       1094
+      ],
+      [
+       "2d",
+       367
+      ],
+      [
+       "44",
+       304
+      ],
+      [
+       "30",
+       247
+      ]
+     ],
+     "min": 0,
+     "max": 91,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 323,
+    "size": 1,
+    "name": "entry_layer0_amp_seg2_rate",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 6,
+     "top": [
+      [
+       "00",
+       5289
+      ],
+      [
+       "64",
+       82
+      ],
+      [
+       "36",
+       2
+      ],
+      [
+       "57",
+       1
+      ]
+     ],
+     "min": 0,
+     "max": 100,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 324,
+    "size": 1,
+    "name": "entry_layer0_fixed_level",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_WriteVolume_OrPan 0x026C16 (used when mask bit 5 set); clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 55,
+     "top": [
+      [
+       "00",
+       1088
+      ],
+      [
+       "2d",
+       368
+      ],
+      [
+       "44",
+       313
+      ],
+      [
+       "30",
+       248
+      ]
+     ],
+     "min": 0,
+     "max": 91,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 325,
+    "size": 1,
+    "name": "entry_layer0_amp_seg0_key_scale",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 9,
+     "top": [
+      [
+       "14",
+       1629
+      ],
+      [
+       "00",
+       1395
+      ],
+      [
+       "10",
+       902
+      ],
+      [
+       "04",
+       518
+      ]
+     ],
+     "min": 0,
+     "max": 20,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 326,
+    "size": 1,
+    "name": "entry_layer0_filter_type",
+    "kind": "bits",
+    "evidence": "subcpu v1.42 TVF_BuildEmit_Short_Dispatch 0x024300 bits 2:0; bits 7:5 key-follow curve (TVF_Calc_Cutoff_NoKeyFollow 0x022C99) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 3,
+     "top": [
+      [
+       "61",
+       5373
+      ],
+      [
+       "81",
+       2
+      ],
+      [
+       "41",
+       1
+      ]
+     ],
+     "min": 65,
+     "max": 129
+    }
+   },
+   {
+    "off": 327,
+    "size": 1,
+    "name": "entry_layer0_filter_key_follow_depth",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 TVF_Calc_Cutoff_NoKeyFollow 0x022C99; clamp 0..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 14,
+     "top": [
+      [
+       "15",
+       1161
+      ],
+      [
+       "10",
+       1070
+      ],
+      [
+       "00",
+       923
+      ],
+      [
+       "06",
+       626
+      ]
+     ],
+     "min": 0,
+     "max": 32,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 328,
+    "size": 1,
+    "name": "entry_layer0_filter_cutoff",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 8,
+     "top": [
+      [
+       "67",
+       2693
+      ],
+      [
+       "60",
+       923
+      ],
+      [
+       "62",
+       840
+      ],
+      [
+       "64",
+       800
+      ]
+     ],
+     "min": 83,
+     "max": 103
+    }
+   },
+   {
+    "off": 329,
+    "size": 1,
+    "name": "entry_layer0_filter_slope",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "01",
+       5374
+      ],
+      [
+       "03",
+       2
+      ]
+     ],
+     "min": 1,
+     "max": 3
+    }
+   },
+   {
+    "off": 330,
+    "size": 2,
+    "name": "entry_layer0_filter_bias_depth",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E: bias, depth [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "two bytes",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 10,
+     "top": [
+      [
+       "478a",
+       3014
+      ],
+      [
+       "4087",
+       947
+      ],
+      [
+       "4787",
+       942
+      ],
+      [
+       "408a",
+       208
+      ]
+     ]
+    }
+   },
+   {
+    "off": 332,
+    "size": 1,
+    "name": "entry_layer1_b_0x00",
+    "kind": "dec",
+    "evidence": "clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "no reader found",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 128,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 25,
+     "top": [
+      [
+       "40",
+       1426
+      ],
+      [
+       "4c",
+       677
+      ],
+      [
+       "20",
+       431
+      ],
+      [
+       "14",
+       376
+      ]
+     ],
+     "min": 0,
+     "max": 108,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 333,
+    "size": 1,
+    "name": "entry_layer1_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 wave byte; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 87,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "43",
+       498
+      ],
+      [
+       "3d",
+       234
+      ],
+      [
+       "42",
+       216
+      ]
+     ],
+     "min": 0,
+     "max": 109,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 334,
+    "size": 1,
+    "name": "entry_layer1_wave_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 family byte (0x40..0x4F percussion) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 7,
+     "top": [
+      [
+       "50",
+       4358
+      ],
+      [
+       "51",
+       436
+      ],
+      [
+       "53",
+       250
+      ],
+      [
+       "54",
+       201
+      ]
+     ],
+     "min": 80,
+     "max": 86
+    }
+   },
+   {
+    "off": 335,
+    "size": 1,
+    "name": "entry_layer1_coarse_tune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed semitones); clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 42,
+     "top": [
+      [
+       "00",
+       3721
+      ],
+      [
+       "0c",
+       160
+      ],
+      [
+       "07",
+       146
+      ],
+      [
+       "03",
+       133
+      ]
+     ],
+     "min": 0,
+     "max": 255,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 336,
+    "size": 1,
+    "name": "entry_layer1_fine_tune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed fine step x2) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 8,
+     "top": [
+      [
+       "00",
+       5366
+      ],
+      [
+       "02",
+       2
+      ],
+      [
+       "fe",
+       2
+      ],
+      [
+       "e7",
+       2
+      ]
+     ],
+     "min": 0,
+     "max": 254
+    }
+   },
+   {
+    "off": 337,
+    "size": 1,
+    "name": "entry_layer1_channel_detune",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_ApplyPortamento2 0x026684: +(value - 0x64), 0 = fixed -0x200; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 63,
+     "top": [
+      [
+       "00",
+       924
+      ],
+      [
+       "4c",
+       301
+      ],
+      [
+       "54",
+       274
+      ],
+      [
+       "48",
+       260
+      ]
+     ],
+     "min": 0,
+     "max": 121,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 338,
+    "size": 1,
+    "name": "entry_layer1_detune",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_ComputePitch_Mono 0x026533 signed detune; clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 9,
+     "top": [
+      [
+       "14",
+       1568
+      ],
+      [
+       "12",
+       1370
+      ],
+      [
+       "16",
+       1012
+      ],
+      [
+       "00",
+       923
+      ]
+     ],
+     "min": 0,
+     "max": 26,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 339,
+    "size": 1,
+    "name": "entry_layer1_pitch_curve",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 Voice_ComputePitch_Mono 0x026533 curve selector, 0xE0 = direct note table [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "60",
+       5115
+      ],
+      [
+       "a0",
+       261
+      ]
+     ],
+     "min": 96,
+     "max": 160
+    }
+   },
+   {
+    "off": 340,
+    "size": 1,
+    "name": "entry_layer1_amp_seg0_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 10,
+     "top": [
+      [
+       "00",
+       5005
+      ],
+      [
+       "08",
+       98
+      ],
+      [
+       "32",
+       76
+      ],
+      [
+       "04",
+       60
+      ]
+     ],
+     "min": 0,
+     "max": 56,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 341,
+    "size": 1,
+    "name": "entry_layer1_amp_seg1_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 50,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "44",
+       466
+      ],
+      [
+       "2d",
+       334
+      ],
+      [
+       "32",
+       291
+      ]
+     ],
+     "min": 0,
+     "max": 99,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 342,
+    "size": 1,
+    "name": "entry_layer1_amp_seg1_rate",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 30,
+     "top": [
+      [
+       "00",
+       3910
+      ],
+      [
+       "62",
+       418
+      ],
+      [
+       "46",
+       125
+      ],
+      [
+       "26",
+       121
+      ]
+     ],
+     "min": 0,
+     "max": 100,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 343,
+    "size": 1,
+    "name": "entry_layer1_amp_seg2_target",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 53,
+     "top": [
+      [
+       "00",
+       1088
+      ],
+      [
+       "2d",
+       367
+      ],
+      [
+       "44",
+       316
+      ],
+      [
+       "30",
+       249
+      ]
+     ],
+     "min": 0,
+     "max": 91,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 344,
+    "size": 1,
+    "name": "entry_layer1_amp_seg2_rate",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "00",
+       5294
+      ],
+      [
+       "64",
+       82
+      ]
+     ],
+     "min": 0,
+     "max": 100,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 345,
+    "size": 1,
+    "name": "entry_layer1_fixed_level",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Voice_WriteVolume_OrPan 0x026C16 (used when mask bit 5 set); clamp 0..100 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 100,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 54,
+     "top": [
+      [
+       "00",
+       1087
+      ],
+      [
+       "2d",
+       367
+      ],
+      [
+       "44",
+       316
+      ],
+      [
+       "30",
+       249
+      ]
+     ],
+     "min": 0,
+     "max": 91,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 346,
+    "size": 1,
+    "name": "entry_layer1_amp_seg0_key_scale",
+    "kind": "signed",
+    "evidence": "subcpu v1.42 Voice_Calc_LevelPair_FixedAtk 0x025A35; clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "bias": 0,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": -50,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 8,
+     "top": [
+      [
+       "14",
+       1630
+      ],
+      [
+       "00",
+       1394
+      ],
+      [
+       "10",
+       902
+      ],
+      [
+       "04",
+       520
+      ]
+     ],
+     "min": 0,
+     "max": 20,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 347,
+    "size": 1,
+    "name": "entry_layer1_filter_type",
+    "kind": "bits",
+    "evidence": "subcpu v1.42 TVF_BuildEmit_Short_Dispatch 0x024300 bits 2:0; bits 7:5 key-follow curve (TVF_Calc_Cutoff_NoKeyFollow 0x022C99) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "61",
+       5376
+      ]
+     ],
+     "min": 97,
+     "max": 97
+    }
+   },
+   {
+    "off": 348,
+    "size": 1,
+    "name": "entry_layer1_filter_key_follow_depth",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 TVF_Calc_Cutoff_NoKeyFollow 0x022C99; clamp 0..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 50,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 15,
+     "top": [
+      [
+       "15",
+       1161
+      ],
+      [
+       "10",
+       1070
+      ],
+      [
+       "00",
+       923
+      ],
+      [
+       "06",
+       626
+      ]
+     ],
+     "min": 0,
+     "max": 32,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 349,
+    "size": 1,
+    "name": "entry_layer1_filter_cutoff",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 7,
+     "top": [
+      [
+       "67",
+       2694
+      ],
+      [
+       "60",
+       923
+      ],
+      [
+       "62",
+       840
+      ],
+      [
+       "64",
+       803
+      ]
+     ],
+     "min": 76,
+     "max": 103
+    }
+   },
+   {
+    "off": 350,
+    "size": 1,
+    "name": "entry_layer1_filter_slope",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 3,
+     "top": [
+      [
+       "01",
+       5373
+      ],
+      [
+       "03",
+       2
+      ],
+      [
+       "05",
+       1
+      ]
+     ],
+     "min": 1,
+     "max": 5
+    }
+   },
+   {
+    "off": 351,
+    "size": 2,
+    "name": "entry_layer1_filter_bias_depth",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 TVF_Build_Short 0x02413E: bias, depth [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "todo": "two bytes",
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 11,
+     "top": [
+      [
+       "478a",
+       3013
+      ],
+      [
+       "4087",
+       947
+      ],
+      [
+       "4787",
+       942
+      ],
+      [
+       "408a",
+       210
+      ]
+     ]
+    }
+   },
+   {
+    "off": 353,
+    "size": 3,
+    "name": "entry_vsel0_thresholds",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Velocity_Select_Split_Zone 0x022824; clamp 0..127 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 3,
+     "top": [
+      [
+       "7f7f7f",
+       5259
+      ],
+      [
+       "647f7f",
+       96
+      ],
+      [
+       "6e7f7f",
+       21
+      ]
+     ],
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 356,
+    "size": 1,
+    "name": "entry_vsel0_zone0_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 89,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "43",
+       501
+      ],
+      [
+       "26",
+       264
+      ],
+      [
+       "3d",
+       233
+      ]
+     ],
+     "min": 0,
+     "max": 109,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 357,
+    "size": 1,
+    "name": "entry_vsel0_zone0_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 7,
+     "top": [
+      [
+       "40",
+       4354
+      ],
+      [
+       "41",
+       431
+      ],
+      [
+       "43",
+       250
+      ],
+      [
+       "44",
+       206
+      ]
+     ],
+     "min": 64,
+     "max": 70
+    }
+   },
+   {
+    "off": 358,
+    "size": 1,
+    "name": "entry_vsel0_zone1_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 5,
+     "top": [
+      [
+       "00",
+       5255
+      ],
+      [
+       "2b",
+       75
+      ],
+      [
+       "0e",
+       24
+      ],
+      [
+       "0d",
+       21
+      ]
+     ],
+     "min": 0,
+     "max": 43,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 359,
+    "size": 1,
+    "name": "entry_vsel0_zone1_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "40",
+       5255
+      ],
+      [
+       "41",
+       121
+      ]
+     ],
+     "min": 64,
+     "max": 65
+    }
+   },
+   {
+    "off": 360,
+    "size": 1,
+    "name": "entry_vsel0_zone2_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "00",
+       5376
+      ]
+     ],
+     "min": 0,
+     "max": 0,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 361,
+    "size": 1,
+    "name": "entry_vsel0_zone2_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "40",
+       5376
+      ]
+     ],
+     "min": 64,
+     "max": 64
+    }
+   },
+   {
+    "off": 362,
+    "size": 1,
+    "name": "entry_vsel0_zone3_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "00",
+       5376
+      ]
+     ],
+     "min": 0,
+     "max": 0,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 363,
+    "size": 1,
+    "name": "entry_vsel0_zone3_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 0 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "40",
+       5376
+      ]
+     ],
+     "min": 64,
+     "max": 64
+    }
+   },
+   {
+    "off": 364,
+    "size": 3,
+    "name": "entry_vsel1_thresholds",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 Velocity_Select_Split_Zone 0x022824; clamp 0..127 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 3,
+     "top": [
+      [
+       "7f7f7f",
+       5249
+      ],
+      [
+       "647f7f",
+       103
+      ],
+      [
+       "6e7f7f",
+       24
+      ]
+     ],
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 367,
+    "size": 1,
+    "name": "entry_vsel1_zone0_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 87,
+     "top": [
+      [
+       "00",
+       923
+      ],
+      [
+       "43",
+       498
+      ],
+      [
+       "3d",
+       234
+      ],
+      [
+       "42",
+       216
+      ]
+     ],
+     "min": 0,
+     "max": 109,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 368,
+    "size": 1,
+    "name": "entry_vsel1_zone0_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 7,
+     "top": [
+      [
+       "40",
+       4358
+      ],
+      [
+       "41",
+       436
+      ],
+      [
+       "43",
+       250
+      ],
+      [
+       "44",
+       201
+      ]
+     ],
+     "min": 64,
+     "max": 70
+    }
+   },
+   {
+    "off": 369,
+    "size": 1,
+    "name": "entry_vsel1_zone1_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 5,
+     "top": [
+      [
+       "00",
+       5249
+      ],
+      [
+       "2b",
+       76
+      ],
+      [
+       "0e",
+       27
+      ],
+      [
+       "0d",
+       21
+      ]
+     ],
+     "min": 0,
+     "max": 43,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 370,
+    "size": 1,
+    "name": "entry_vsel1_zone1_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 2,
+     "top": [
+      [
+       "40",
+       5249
+      ],
+      [
+       "41",
+       127
+      ]
+     ],
+     "min": 64,
+     "max": 65
+    }
+   },
+   {
+    "off": 371,
+    "size": 1,
+    "name": "entry_vsel1_zone2_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "00",
+       5376
+      ]
+     ],
+     "min": 0,
+     "max": 0,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 372,
+    "size": 1,
+    "name": "entry_vsel1_zone2_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "40",
+       5376
+      ]
+     ],
+     "min": 64,
+     "max": 64
+    }
+   },
+   {
+    "off": 373,
+    "size": 1,
+    "name": "entry_vsel1_zone3_wave",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": {
+     "min": 0,
+     "max": 127,
+     "value_mask": null
+    },
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "00",
+       5376
+      ]
+     ],
+     "min": 0,
+     "max": 0,
+     "in_clamp_range": 1.0
+    }
+   },
+   {
+    "off": 374,
+    "size": 1,
+    "name": "entry_vsel1_zone3_family",
+    "kind": "hex",
+    "evidence": "subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copies it to 0x4AE1 + 80*n + 11*unit; Audio_Cmd_ToneEdit_Field_Write_And_Reply 0x030535; layout of ToneDB_PercMixerDefaultTable] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "inference": false,
+    "repeat": {
+     "count": 128,
+     "stride": 80
+    },
+    "clamp": "none",
+    "observed": {
+     "samples": 5376,
+     "distinct": 1,
+     "top": [
+      [
+       "40",
+       5376
+      ]
+     ],
+     "min": 64,
+     "max": 64
+    }
+   },
+   {
+    "off": 10535,
+    "size": 1,
+    "name": "kit_edit_index",
+    "kind": "dec",
+    "evidence": "subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F and tone-edit opcodes 0x14-0x16 read the edit-entry index at ToneDB_RamBankA + 0x72A7 (= file 0x72A7); InterCPU_SendEditBufferToMain 0x02ED44",
+    "inference": false,
+    "todo": "corpus values run 1..252, so values >= 128 would index past the 128 entries; not checksummed",
+    "clamp": "none",
+    "observed": {
+     "samples": 42,
+     "distinct": 38,
+     "top": [
+      [
+       "dd",
+       2
+      ],
+      [
+       "f6",
+       2
+      ],
+      [
+       "31",
+       2
+      ],
+      [
+       "e2",
+       2
+      ]
+     ],
+     "min": 1,
+     "max": 252
+    }
+   },
+   {
+    "off": 10536,
+    "size": 2,
+    "name": "image_checksum",
+    "kind": "hex",
+    "evidence": "maincpu v10 SoundRam_WriteIdAndChecksum 0xFF03DC / SendPartDataBlock_SetWord5 0xFEF93B: LE16 = ~(sum of the 0x24B8 words from 0x1E0010), i.e. the 40 sound records only; SendPartDataBlock_ClearByte4 0xFEF950 checks it at boot (header + this word) before the E1 copy to subcpu 0x7800. Verified on 45/45 KN5000 files",
+    "inference": false,
+    "clamp": "none",
+    "observed": {
+     "samples": 42,
+     "distinct": 41,
+     "top": [
+      [
+       "dd1e",
+       2
+      ],
+      [
+       "017f",
+       1
+      ],
+      [
+       "09be",
+       1
+      ],
+      [
+       "6190",
+       1
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "notes": "FILE: \"KN5000 SOUND RAM\" (16 B, checked at boot by SendPartDataBlock_ClearByte4 0xFEF950) + 40 x 470-B sound records at 0x10 + 470*n (MEMORY A 1..20, B 1..20) + the user-kit tail at 0x4980 (not 0x4990: 16 + 40*470 = 0x4980; the kit NAME is its first 16 B). The tail is 295-B kit header + 128 x 80-B user drum instruments + 1-B edit index + 2-B checksum; the checksum covers only 0x10..0x497F. RECORD = the subcpu tone-record format (table_data/tone_database_records.s, 21 + 81*N with N = 5) at its full 426 B: head +0x00..+0x14, common block +0x15..+0x65, four partial blocks +0x66 + 81*p; DSP_Reinit_VoiceSlots 0x035323 copies the 40 ROM staging streams (tone table indices 338-377) into the RAM image as 426 B each = the factory defaults; then 44 B = four 11-B velocity-split records, the RAM copy of the ToneDB_MixerDefaultTable record a ROM tone would look up. The task note \"factory defaults at v10 file offset 0x0A0150 (0x72A6 B)\" does not hold: 0x0A0150 (0xEA0150) is only the 16-B header string; the 426-B SoundRam_DefaultRecord 0xEED59D (\"    Initial     \") is what SoundRam_FillDefaultRecord 0xFEFD28 puts under converted KN1500/KN2000 records, and the 40 factory sounds come from table_data via the subcpu. The clamp tables (ParamSx_*) give a (min, max, value_mask) per offset; they are range ARGUMENTS of the call at 0xFEEE06 -> 0xFEEC3F, whose body as decoded (ld HL,WA; cpl BC; and HL,BC; retd 4) does not apply them, so they document the intended ranges rather than enforce them; \"observed.in_clamp_range\" tests them on the corpus. KINDS: signed = int8 two's complement unless \"bias\" is 64 (stored value - 64). bits = flags/packed fields named in evidence. REPEAT: a field with repeat {count, stride} stands for count copies at off + k*stride, named <name>_<k>. Field tiling of both blocks is checked by gen_tm_spec.py (every byte exactly once after repeat expansion). Old-format images: HdaeRom_DataHandler 0xFF024E dispatches on the 16-B id (SoundRam_Id_KN2000 / MKA / MKB / KN3000 / KN1500 / KN5000); KN3000 images lack the kit +0x11 byte (HdaeRom_DataDispatch_Block3 0xFF03FB inserts it), KN1500 records are 289 B (SoundRam_ConvertKn1500Record 0xFEF9B4), KN2000/MKA/MKB 144 B (SoundRam_ConvertKn2000Record 0xFEFD77). Producers: scratch scripts clamp_ranges.py (ROM tables + unidasm) and gen_tm_spec.py under ~/compartilhado/tmp/data-floppy-kn5000/agentA/scripts/ (not committed by this agent)."
+}

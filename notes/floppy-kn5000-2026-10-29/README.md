@@ -60,11 +60,11 @@ layout of its region. The writers below come from `v10/maincpu/demo/file_demo_pr
 
 | ext | type | on-screen name   | writer (v10)                                                      | what it holds                                                                            | typed here                                                                                                                                                                                    |
 |-----|------|------------------|-------------------------------------------------------------------|------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| LSW | 0    | CURRENT PANEL    | `FileIO_SaveRegion0_VRAM` 0xf87af6                                | RAM 0xf980..0xffc0 (32-B header, panel block 0, block 1) + 0x800 from 0x1e7800 = 0xe40 B | header and its `"HK"` (`FileIO_CheckRegionSignature(0)`); every record's tag and length (`panel_tlv`), checked against `PanelTlv_Block0_Layout` / `_Block1_Layout`                         |
-| PMT | 1    | PANEL MEMORY     | `FileIO_SaveRegion1_VRAM` 0xf87b88                                | RAM 0x1ed350..0x200000: header, 10 bank names, 80 x 960-B panel blocks                   | header, the size fields read through 0x1ed350 + 13 (960 B, count 80 or 8), the bank names, one label per memory                                                                              |
-| SQT | 2    | SEQUENCER        | `FileIO_SaveRegion2_ExtMem` 0xf87cac                              | 0x800-B song slots (SEQ_SONG_SLOTS 0xab000) + event memory (0xb0000)                     | slot signature `"ZZZZ"`, all-songs flag, `01 08` signature, song name; every event cell (`seq_cell`) and **every event, one per line** (`sq_*`)                                             |
-| CMP | 3    | COMPOSER         | `FileIO_SaveRegion3_ExtMem` 0xf87d2c                              | RHYTHM_PATTERN_BUF_A, size from `cmp_sv_mae`: one IC19-format style bank                 | bank magic, the 30 directory records (5 chain pointers, name), every cell (`style_cell`) and **every event, one per line** (`st_*`)                                                         |
-| TM  | 4    | SOUND MEMORY     | `FileIO_SaveRegion4_VRAM` 0xf87e41                                | RAM 0x1e0000, 0x72aa B                                                                   | `"KN5000 SOUND RAM"` header (checked at boot), 40 x 470-B records and one kit record, each by its 16-B name                                                                                  |
+| LSW | 0    | CURRENT PANEL    | `FileIO_SaveRegion0_VRAM` 0xf87af6                                | RAM 0xf980..0xffc0 (32-B header, panel block 0, block 1) + 0x800 from 0x1e7800 = 0xe40 B | header and its `"HK"` (`FileIO_CheckRegionSignature(0)`); every record field by field (`ptlv_*`), checked against `PanelTlv_Block0_Layout` / `_Block1_Layout`                         |
+| PMT | 1    | PANEL MEMORY     | `FileIO_SaveRegion1_VRAM` 0xf87b88                                | RAM 0x1ed350..0x200000: header, 10 bank names, 80 x 960-B panel blocks                   | header, the size fields read through 0x1ed350 + 13 (960 B, count 80 or 8), the bank names, every memory's records field by field (`ptlv_*`)                                                                              |
+| SQT | 2    | SEQUENCER        | `FileIO_SaveRegion2_ExtMem` 0xf87cac                              | 0x800-B song slots (SEQ_SONG_SLOTS 0xab000) + event memory (0xb0000)                     | slot fields (`specs/sqt_slot_header.json`), the song's panel copy (`ptlv_*`); every event cell (`seq_cell`) and **every event, one per line** (`sq_*`)                                             |
+| CMP | 3    | COMPOSER         | `FileIO_SaveRegion3_ExtMem` 0xf87d2c                              | RHYTHM_PATTERN_BUF_A, size from `cmp_sv_mae`: one IC19-format style bank                 | the shared bank layout: header size words, the 30 STYLE_SECTION records, the fill-in cell, every cell and **every event, one per line** (`st_*`)                                                         |
+| TM  | 4    | SOUND MEMORY     | `FileIO_SaveRegion4_VRAM` 0xf87e41                                | RAM 0x1e0000, 0x72aa B                                                                   | `"KN5000 SOUND RAM"` header (checked at boot), 40 x 470-B sound records and the kit record, field by field (`specs/tm_sound_record.json`)                                                                                  |
 | RCM | 6    | RHYTHM CUSTOM    | `FileIO_SaveRegion6_Simple` 0xf87e00 / `FileIO_LoadRcmToFlash` 0xf186a9 | header + 8 chunks for Custom Data Flash sections 0..7                                    | magic, the chunk-length table at +0x40, sections 0..6 as style banks (as CMP, events one per line), section 7's slot counts                                                                 |
 | BMP | -    | (wallpaper)      | `CaptureLcd` 0xfaf030; read by `Gfx_LoadSplashBMP` 0xfae86d        | Windows BMP, 8 bpp                                                                       | BITMAPFILEHEADER / BITMAPINFOHEADER fields (`bmp_*` macros); palette and pixels are `.incbin`s of the extracted `.bmp` (census: media)                                                       |
 | TXT | -    | -                | (a PC)                                                            | the disk's table of contents, CR LF text                                                 | every line as `.ascii`                                                                                                                                                                        |
@@ -129,39 +129,92 @@ memories) and the LSW block-1 variants (28 and 29 records) come from an older fi
 dumped revision. That is an [INFERENCE]: all of these files date from 1997-98. The describers type
 each such block as far as it follows the list, then as tag/length records up to its FF FF mark.
 
+## Field-level typing (second pass, 2026-10-29)
+
+At the integrator's request the parameter payloads and headers are typed field by field. Each
+field is a named macro parameter, with its value in its domain: decimal levels, signed values,
+hex flags and text.
+
+- **Panel records** (LSW blocks, the 80 memories of each PMT, the song's panel copy inside each
+  SQT slot). `floppy/kn5000/panel_fields.py` reads the firmware's record lists and rule lists
+  (`PanelTlv_Block0/1_Layout`, `PanelTlv_Rules_*`) and generates `include/kn5000_panel.inc`: one
+  macro per record kind, each field's rule listed beside it. The names come from
+  `analysis/disk-format-probes/README-lsw-*.md`:
+  - **part records** (tags 0x00..0x19): `sound` (with the tone database's name in a comment,
+    `lsw_voice_selector_names.py`), `bank`, `fx_flags`, `level`, signed `pan`, `midi_channel`,
+    `status` and the I/O bytes;
+  - **0x78**: the style name;
+  - **0x44..0x46**: the drawbars, as nibble pairs;
+  - **0x48**: the style number and tempo;
+  - **0x61/63/64/65/66**: the five DSP slots' algorithm.
+
+  The other tags' bytes are `f<offset>`, a TODO in the macro header saying the rule list is all
+  that is known. Records outside the v10 list (the older revision's blocks) are `ptlv_raw`.
+- **TM sound records and the kit** come from `specs/tm_sound_record.json`, typed by
+  `floppy/kn5000/spec_struct.py` into `include/kn5000_specs.inc`.
+  - The 470-byte record is the sub-CPU's 426-byte tone record plus four 11-byte velocity-split
+    records. The names are the sub-CPU reader table's (`table_data/tone_database_records.s`).
+  - The ranges come from the sound-RAM byte clamp at v10 0xfeec48 (`clamp_ranges.py`), which also
+    settles which fields are signed.
+  - The kit record has a 295-byte header and 128 user drum instruments of 80 bytes, then the edit
+    index and the image checksum. The checksum is `~sum` of the 0x24b8 words from +0x10, checked
+    on all 45 KN5000 files.
+  - 406 of 470 record bytes are named (71 of them by inference). 10,025 of 10,538 kit bytes are
+    named.
+- **SQT slot headers** come from `specs/sqt_slot_header.json`: the RAM image of the current-song
+  record 0xf180. The names come from the `.equ` names and from the constant offsets passed to
+  the slot accessors (`partcalls.py`). They cover:
+  - the track mask and track assignment;
+  - the TT_SQ* edit parameters;
+  - per-track tail cells (+0x78) and write offsets (+0x98);
+  - the free list;
+  - the punch-in fields;
+  - `event_used_size16`;
+  - the **+0xd0 track table**, whose first cells are the chain heads of all 132 present tracks.
+
+  ⚠ **CORRECTION:** an earlier version of this note said every +0xd0 start field read 0xffff.
+  Only absent tracks do. The song's panel copy at +0x2e0 is typed with the panel records above.
+- **Style banks** use the shared bank layout of `scripts/build/style_events.py` (lane
+  kn5000-existing):
+  - **the 30 directory records are the 30 STYLE_SECTION records of one style**, not 30 styles
+    (`style_section`, the role in each line's comment);
+  - the header's size words are typed by `style_bank_sizes`, and `used_size16 * 16` is the .CMP
+    size;
+  - `data_ba0` and the 64-byte fill-in cell at +0x13c0 (`AccDemo_LoadFillIn`) are typed too.
+
+  `specs/style_bank_extra.json` holds further readings not yet adopted, so that both lanes can
+  rename together: +0x0c time-signature code, part-group byte 2 pan, byte 5 range limit, the
+  +0xba0 chord-map records.
+- **RCM**: the header words, and section 7's slot store (owner maps, 40 small and 4 large slots,
+  erased on the factory disk).
+
+Text against binary: PMT 4.8x, CMP 5.1x, SQT 5.8x, RCM 4.3x, TM 4.3x, LSW 2.2x. All are under
+the 6x limit.
+
 ## What is not typed, and why
 
-These payloads stay `.incbin`s of the file's extracted copy, and the census counts them as
-**generic**. Each is labelled per item, and its comment says what it is:
+Census `kn5000-floppy` after this pass: **generic 0**.
 
-- **PMT memories (960 B each), LSW record payloads, TM sound records (454 B each) and the kit
-  record**: panel and sound parameters. Their framing is typed (record tags and lengths, names).
-  The field values are not: the firmware's per-field rules (`PanelTlv_Rules_*`, RULE_* in
-  `naka_extension_device.c`) give a type, offset, mask and range per field, but no names. A
-  describer that spells each field through those rules is the next step. These bytes are the
-  largest remainder.
-- **CMP / RCM directory bytes** at record +0x0c..+0x3f and +0x50..+0x5f, the bank header
-  +4..+0x5f, and the region between the directory and block 20. No field has been identified
-  (`docs/accompaniment-style-format.md`).
-- **SQT slot header** +7..+0xff and +0x110..+0x7ff. The demo-preset layout (track table at
-  +0xd0) does **not** hold here: every start field read 0xffff. So which chain is which track is
-  open.
-
-Declared opaque (`unknown-dump`):
-
-- the LSW's 0x800 bytes from RAM 0x1e7800, a region nothing in the firmware has been mapped to;
-- the body of `ca5000r/03FOLKS2.TM`, a 29,696-byte `"KN3000 SOUND RAM"` image whose layout is
-  another model's.
+- **opaque 64 / 158,704 B**:
+  - the LSW's 0x800 bytes from RAM 0x1e7800, which nothing has been mapped to (63 files);
+  - the body of `ca5000r/03FOLKS2.TM`, a "KN3000 SOUND RAM" image in another model's layout.
+- **media 58 / 2,303,264 B**: BMP palettes and pixels, as `.incbin`s of the extracted `.bmp`.
+- **Typed but unnamed**: fields named `f<offset>`, `b_<offset>`, `p<n>`, `r0c_*`, `gN_*`, `t*`,
+  `hdr_04` and `hdr_30` carry a TODO saying what was tried. Long unnamed stretches are `.byte`
+  rows under a neutral name. Examples: SQT slot +0x113..+0x2df (461 B, zeroed by the song init,
+  no reader) and +0x702..+0x7ff (stale RAM).
 
 ## Open questions
 
 1. What do 0xd4 / 0xd5 do in the style player? The argument count is measured; the meaning is not.
-2. Where does an SQT slot name its tracks' first cells?
-3. Thirteen style links and seven SQT links are not mutual. Are they edits left behind, or a
+2. Thirteen style links and seven SQT links are not mutual. Are they edits left behind, or a
    second link convention?
-4. The two style chains that stop at 0x10 / 0x87: is that corruption in the archives, or another
+3. The two style chains that stop at 0x10 / 0x87: is that corruption in the archives, or another
    status?
-5. Which firmware revision wrote the 43-record panel blocks? A v1-v4 dump would settle it.
+4. Which firmware revision wrote the 43-record panel blocks? A v1-v4 dump would settle it.
+5. Are envelope pairs 2/3 of the sound record target-then-rate or the reverse? Which UI caption
+   is each LFO byte, and what are the controller groups (`specs/tm_sound_record.json` notes)?
+6. Should `style_bank_extra.json`'s readings be adopted, in both lanes at once?
 
 ## Website page draft (for technics-docs, "KN5000 disk files")
 

@@ -107,3 +107,35 @@
 	.macro	sq_data data:vararg
 	.byte	\data
 	.endm
+
+; ---- Style bank header and section records (CMP, RCM sections 0..6, and the IC19 custom-data
+; banks: the layout and field names of scripts/build/style_events.py's BANK LAYOUT docstring).
+; The size words at +0x1e..+0x2f; capacity16 and used_size16 count 16-byte units.  used_size16 is
+; written by AccPatch_InitSlotChain; cmp_sv_mae returns it * 16 as the .CMP size and
+; FileIO_SaveRcmFromFlash reads it for the .RCM chunk lengths.  The other words are constant in
+; every bank ([INFERENCE] from their values and the code's matching constants).
+	.macro	style_bank_sizes capacity16, dir_offset, record_size, record_count, cell_size, cell_count, name_offset, hdr_2c, used_size16
+	.short	\capacity16, \dir_offset, \record_size, \record_count, \cell_size, \cell_count, \name_offset, \hdr_2c, \used_size16
+	.endm
+
+; One of the 30 STYLE_SECTION records (a/b/c variation 1-4, then intro, fill-in and ending 1-2).
+;   part0, w02, part1..part4  the five parts' first cells: (section nibble << 12) | cell entry; w02 = 0
+;                             (AccDemo_LoadVariation: "five consecutive block numbers, the second word 0")
+;   r0c_0..r0c_11             +0x0c, 12 bytes copied from AccDemo_LoadVariation_EntryLoop_Data_2
+;                             (TODO: not named)
+;   gN_0..gN_3                +0x18 + 8N: four u16 per part N [INFERENCE: grouping by shape; TODO: not named]
+;   name                      +0x40, 16 bytes: the pattern source the section came from
+;   t0..t15                   +0x50, AccDemo_SectionRecordTail's 16 bytes (TODO: not named)
+	.macro	style_section part0, w02, part1, part2, part3, part4, r0c_0, r0c_1, r0c_2, r0c_3, r0c_4, r0c_5, r0c_6, r0c_7, r0c_8, r0c_9, r0c_10, r0c_11, g0_0, g0_1, g0_2, g0_3, g1_0, g1_1, g1_2, g1_3, g2_0, g2_1, g2_2, g2_3, g3_0, g3_1, g3_2, g3_3, g4_0, g4_1, g4_2, g4_3, name, t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15
+	.short	\part0, \w02, \part1, \part2, \part3, \part4
+	.byte	\r0c_0, \r0c_1, \r0c_2, \r0c_3, \r0c_4, \r0c_5, \r0c_6, \r0c_7, \r0c_8, \r0c_9, \r0c_10, \r0c_11
+	.short	\g0_0, \g0_1, \g0_2, \g0_3, \g1_0, \g1_1, \g1_2, \g1_3, \g2_0, \g2_1, \g2_2, \g2_3
+	.short	\g3_0, \g3_1, \g3_2, \g3_3, \g4_0, \g4_1, \g4_2, \g4_3
+.Lssn\@:
+	.ascii	"\name"
+.Lsse\@:
+	.if	(.Lsse\@ - .Lssn\@) - 16
+	.error	"style_section: name is not 16 bytes"
+	.endif
+	.byte	\t0, \t1, \t2, \t3, \t4, \t5, \t6, \t7, \t8, \t9, \t10, \t11, \t12, \t13, \t14, \t15
+	.endm
