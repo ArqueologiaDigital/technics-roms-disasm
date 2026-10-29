@@ -940,7 +940,87 @@ BitMapOut_CopyExtTable_Loop:
 
 
 
-BitMapOut_CopyExtTable_Check:	.incbin "includes/romslices/v7_block_bitmapout_copyexttable_check.bin", 0, 0xb5
+BitMapOut_CopyExtTable_Check:
+	ld	a, (0xfcc1:16)
+	extz	wa
+	cp	bc, wa
+	jr	c, BitMapOut_CopyExtTable_Loop
+	ld	bc, 0:i3
+	jr	PanelMemory_RecallRecords_Join
+PanelMemory_RecallRecords_Loop:
+	lda	xwa, (0xfcf6:16)
+	ld	de, bc
+	extz	xde
+	add	xde, xwa
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xsp+16)
+	ld	xwa, (xwa)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	inc	1, bc
+PanelMemory_RecallRecords_Join:
+	ld	a, (0xfcf5:16)
+	extz	wa
+	cp	bc, wa
+	jr	c, PanelMemory_RecallRecords_Loop
+	ld	xhl, (xsp+8)
+	lda	xbc, (xhl+3)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xix, (xsp+12)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (xhl+1)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (xhl+4)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (0xfd0c:16)
+	lda	xde, (xbc+3)
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xix)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	lda	xde, (xbc+6)
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xix)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	inc	7, xbc
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (0xfd2c:16)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xhl, xix
+	ld	xwa, (xhl)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	pop	xiz
+	lda	xsp, (xsp+16)
+	ret
 ; wa = slot: copy it over the live panel, then put back from the backup (RAM 0x3C8E4) tag 0x48 payload bytes
 ; 0, 1 (style number) and 7, the low 3 bits of byte 4, and tag 0x72 payload bytes 8-10 -- the current style
 ; survives the recall.

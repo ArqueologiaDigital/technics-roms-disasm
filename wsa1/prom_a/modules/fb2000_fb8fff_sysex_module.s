@@ -6015,9 +6015,9 @@ SysExParam_SetCombinationWriteRequest:
 	jrl ugt, .LFB5368                                    ; FB5271  7b f4 00
 	ld (UI_StatusCode:16), 0x25                                 ; FB5274  f1 80 28 00 25
 	call MessageScreen_Paint_SaveRegs                                      ; FB5279  1d 9b 7e fb
-	ld (0x7659:16), 0x00                                 ; FB527D  f1 59 76 00 00
-	ld (0x7679:16), 0x00                                 ; FB5282  f1 79 76 00 00
-	ld (0x7699:16), 0x00                                 ; FB5287  f1 99 76 00 00
+	ld (Combination_Effect1On:16), 0x00                                 ; FB527D  f1 59 76 00 00
+	ld (Combination_Effect2On:16), 0x00                                 ; FB5282  f1 79 76 00 00
+	ld (Combination_ReverbOn:16), 0x00                                 ; FB5287  f1 99 76 00 00
 	ld XBC,0x00ec0300                                    ; FB528C  41 00 03 ec 00
 	ld (xiz-8), xbc                                      ; FB5291  be f8 61
 	ld A,H                                               ; FB5294  ce 89

@@ -2888,7 +2888,7 @@ GetCurrentPartSelect:
 	ld l, (PART_SELECT:16)
 	ret
 
-UI_PostPartChangeEvent:
+UI_ChangeModeByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff
@@ -2903,7 +2903,7 @@ UI_PostPartChangeEvent:
 	inc 2, xsp
 	ret
 
-UI_PostModeChangeEvent:
+UI_ChangeTitleByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff
@@ -2918,16 +2918,11 @@ UI_PostModeChangeEvent:
 	inc 2, xsp
 	ret
 
-; ============================================================================
-; SoundCtrl_SendCommand - Send a command to the sound controller
-; ============================================================================
-; Input:  A = command parameter (sound control value)
-; Output: None
-; Sends a message (event 0x1c00016) to the sound controller subsystem.
-; Packs the parameter into address 0x1a00000+param and dispatches via the
-; system event handler at 0xfa9d58.
-; ============================================================================
-SoundCtrl_SendCommand:
+; Shows title TITLE_PS + A on top of the current one (an interrupt title: a message, error or
+; progress screen): removes any queued EVT_INTERRUPT_TITLE (DeleteEvent) and posts a new one with
+; that title to the current target (ApPostEvent).  Was SoundCtrl_SendCommand.
+;   In:  A = title offset from TITLE_PS (a TT_* constant).
+UI_InterruptTitleByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff

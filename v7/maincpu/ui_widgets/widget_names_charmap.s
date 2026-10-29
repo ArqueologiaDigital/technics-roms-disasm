@@ -72,847 +72,847 @@ NakaData_WidgetNames:	.incbin "includes/generated/naka_widget_names_charmap.bin"
 ; [nakarest] naka_widget_names_charmap+0x2  +0x2..+0x10 (0xead472, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 105 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwUserBitmap.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2, 0xE
+ClassName_VwUserBitmap:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2, 0xE
 ; [nakarest] naka_widget_names_charmap+0x10  +0x10..+0x12 (0xead480, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 104 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TrChordBox "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x10, 0x2
+ClassPropdata_TrChordBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x10, 0x2
 ; [nakarest] naka_widget_names_charmap+0x12  +0x12..+0x1e (0xead482, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 104 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TrChordBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12, 0xC
+ClassName_TrChordBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12, 0xC
 ; [nakarest] naka_widget_names_charmap+0x1e  +0x1e..+0x20 (0xead48e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 103 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TrTransposeBox "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1E, 0x2
+ClassPropdata_TrTransposeBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1E, 0x2
 ; [nakarest] naka_widget_names_charmap+0x20  +0x20..+0x30 (0xead490, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 103 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TrTransposeBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x20, 0x10
+ClassName_TrTransposeBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x20, 0x10
 ; [nakarest] naka_widget_names_charmap+0x30  +0x30..+0x32 (0xead4a0, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 102 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLanguageText "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x30, 0x2
+ClassPropdata_AcLanguageText:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x30, 0x2
 ; [nakarest] naka_widget_names_charmap+0x32  +0x32..+0x42 (0xead4a2, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 102 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLanguageText.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32, 0x10
+ClassName_AcLanguageText:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32, 0x10
 ; [nakarest] naka_widget_names_charmap+0x42  +0x42..+0x48 (0xead4b2, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 101 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTextBox "c^dB".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x42, 0x6
+ClassPropdata_PsTextBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x42, 0x6
 ; [nakarest] naka_widget_names_charmap+0x48  +0x48..+0x52 (0xead4b8, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 101 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTextBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x48, 0xA
+ClassName_PsTextBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x48, 0xA
 ; [nakarest] naka_widget_names_charmap+0x52  +0x52..+0x54 (0xead4c2, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 100 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvShowHide "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x52, 0x2
+ClassPropdata_IvShowHide:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x52, 0x2
 ; [nakarest] naka_widget_names_charmap+0x54  +0x54..+0x60 (0xead4c4, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 100 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvShowHide.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x54, 0xC
+ClassName_IvShowHide:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x54, 0xC
 ; [nakarest] naka_widget_names_charmap+0x60  +0x60..+0x62 (0xead4d0, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 99 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntEasySet "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60, 0x2
+ClassPropdata_IvIntEasySet:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60, 0x2
 ; [nakarest] naka_widget_names_charmap+0x62  +0x62..+0x70 (0xead4d2, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 99 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntEasySet.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x62, 0xE
+ClassName_IvIntEasySet:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x62, 0xE
 ; [nakarest] naka_widget_names_charmap+0x70  +0x70..+0x72 (0xead4e0, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 98 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntVari "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x70, 0x2
+ClassPropdata_IvIntVari:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x70, 0x2
 ; [nakarest] naka_widget_names_charmap+0x72  +0x72..+0x7c (0xead4e2, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 98 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntVari.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x72, 0xA
+ClassName_IvIntVari:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x72, 0xA
 ; [nakarest] naka_widget_names_charmap+0x7c  +0x7c..+0x7e (0xead4ec, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 97 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntComplete "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x7C, 0x2
+ClassPropdata_IvIntComplete:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x7C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x7e  +0x7e..+0x8c (0xead4ee, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 97 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntComplete.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x7E, 0xE
+ClassName_IvIntComplete:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x7E, 0xE
 ; [nakarest] naka_widget_names_charmap+0x8c  +0x8c..+0x8e (0xead4fc, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 96 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntError "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x8C, 0x2
+ClassPropdata_IvIntError:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x8C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x8e  +0x8e..+0x9a (0xead4fe, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 96 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntError.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x8E, 0xC
+ClassName_IvIntError:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x8E, 0xC
 ; [nakarest] naka_widget_names_charmap+0x9a  +0x9a..+0x9c (0xead50a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 95 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntReminder "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x9A, 0x2
+ClassPropdata_IvIntReminder:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x9A, 0x2
 ; [nakarest] naka_widget_names_charmap+0x9c  +0x9c..+0xaa (0xead50c, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 95 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvIntReminder.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x9C, 0xE
+ClassName_IvIntReminder:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x9C, 0xE
 ; [nakarest] naka_widget_names_charmap+0xaa  +0xaa..+0xac (0xead51a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 94 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvInterrupt "w".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xAA, 0x2
+ClassPropdata_IvInterrupt:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xAA, 0x2
 ; [nakarest] naka_widget_names_charmap+0xac  +0xac..+0xb8 (0xead51c, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 94 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvInterrupt.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xAC, 0xC
+ClassName_IvInterrupt:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xAC, 0xC
 ; [nakarest] naka_widget_names_charmap+0xb8  +0xb8..+0xba (0xead528, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 93 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbMemoryDump "s".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xB8, 0x2
+ClassPropdata_DbMemoryDump:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xB8, 0x2
 ; [nakarest] naka_widget_names_charmap+0xba  +0xba..+0xc8 (0xead52a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 93 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbMemoryDump.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xBA, 0xE
+ClassName_DbMemoryDump:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xBA, 0xE
 ; [nakarest] naka_widget_names_charmap+0xc8  +0xc8..+0xca (0xead538, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 92 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitWindow "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xC8, 0x2
+ClassPropdata_IvExitWindow:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xC8, 0x2
 ; [nakarest] naka_widget_names_charmap+0xca  +0xca..+0xd8 (0xead53a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 92 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitWindow.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xCA, 0xE
+ClassName_IvExitWindow:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xCA, 0xE
 ; [nakarest] naka_widget_names_charmap+0xd8  +0xd8..+0xda (0xead548, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 91 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvTrackSwitch "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xD8, 0x2
+ClassPropdata_IvTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xD8, 0x2
 ; [nakarest] naka_widget_names_charmap+0xda  +0xda..+0xe8 (0xead54a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 91 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvTrackSwitch.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xDA, 0xE
+ClassName_IvTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xDA, 0xE
 ; [nakarest] naka_widget_names_charmap+0xe8  +0xe8..+0xea (0xead558, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 90 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvDirmdScreen "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xE8, 0x2
+ClassPropdata_IvDirmdScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xE8, 0x2
 ; [nakarest] naka_widget_names_charmap+0xea  +0xea..+0xf8 (0xead55a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 90 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvDirmdScreen.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xEA, 0xE
+ClassName_IvDirmdScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xEA, 0xE
 ; [nakarest] naka_widget_names_charmap+0xf8  +0xf8..+0xfa (0xead568, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 89 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTrackSwitch "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xF8, 0x2
+ClassPropdata_AcTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xF8, 0x2
 ; [nakarest] naka_widget_names_charmap+0xfa  +0xfa..+0x108 (0xead56a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 89 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTrackSwitch.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xFA, 0xE
+ClassName_AcTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0xFA, 0xE
 ; [nakarest] naka_widget_names_charmap+0x108  +0x108..+0x10e (0xead578, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 88 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTrackSwitch "vmnn".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x108, 0x6
+ClassPropdata_PsTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x108, 0x6
 ; [nakarest] naka_widget_names_charmap+0x10e  +0x10e..+0x11c (0xead57e, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 88 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTrackSwitch.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x10E, 0xE
+ClassName_PsTrackSwitch:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x10E, 0xE
 ; [nakarest] naka_widget_names_charmap+0x11c  +0x11c..+0x11e (0xead58c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 87 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbDebugMenu "n".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x11C, 0x2
+ClassPropdata_DbDebugMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x11C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x11e  +0x11e..+0x12a (0xead58e, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 87 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbDebugMenu.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x11E, 0xC
+ClassName_DbDebugMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x11E, 0xC
 ; [nakarest] naka_widget_names_charmap+0x12a  +0x12a..+0x12e (0xead59a, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 86 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcGridBox "XXj".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12A, 0x4
+ClassPropdata_AcGridBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12A, 0x4
 ; [nakarest] naka_widget_names_charmap+0x12e  +0x12e..+0x138 (0xead59e, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 86 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcGridBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12E, 0xA
+ClassName_AcGridBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x12E, 0xA
 ; [nakarest] naka_widget_names_charmap+0x138  +0x138..+0x13c (0xead5a8, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 85 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcListBox "XG".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x138, 0x4
+ClassPropdata_AcListBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x138, 0x4
 ; [nakarest] naka_widget_names_charmap+0x13c  +0x13c..+0x146 (0xead5ac, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 85 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcListBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x13C, 0xA
+ClassName_AcListBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x13C, 0xA
 ; [nakarest] naka_widget_names_charmap+0x146  +0x146..+0x152 (0xead5b6, 12 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 84 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsGridBox "c^dBBGnnsss".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x146, 0xC
+ClassPropdata_PsGridBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x146, 0xC
 ; [nakarest] naka_widget_names_charmap+0x152  +0x152..+0x15c (0xead5c2, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 84 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsGridBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x152, 0xA
+ClassName_PsGridBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x152, 0xA
 ; [nakarest] naka_widget_names_charmap+0x15c  +0x15c..+0x162 (0xead5cc, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 83 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsListBox "c^dBn".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x15C, 0x6
+ClassPropdata_PsListBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x15C, 0x6
 ; [nakarest] naka_widget_names_charmap+0x162  +0x162..+0x16c (0xead5d2, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 83 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsListBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x162, 0xA
+ClassName_PsListBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x162, 0xA
 ; [nakarest] naka_widget_names_charmap+0x16c  +0x16c..+0x16e (0xead5dc, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 82 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvCatchEvent "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x16C, 0x2
+ClassPropdata_IvCatchEvent:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x16C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x16e  +0x16e..+0x17c (0xead5de, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 82 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvCatchEvent.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x16E, 0xE
+ClassName_IvCatchEvent:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x16E, 0xE
 ; [nakarest] naka_widget_names_charmap+0x17c  +0x17c..+0x17e (0xead5ec, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 81 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcStrRadioBox "X".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x17C, 0x2
+ClassPropdata_AcStrRadioBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x17C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x17e  +0x17e..+0x18c (0xead5ee, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 81 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcStrRadioBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x17E, 0xE
+ClassName_AcStrRadioBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x17E, 0xE
 ; [nakarest] naka_widget_names_charmap+0x18c  +0x18c..+0x194 (0xead5fc, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 80 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsRadioBox "c^demA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x18C, 0x8
+ClassPropdata_PsRadioBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x18C, 0x8
 ; [nakarest] naka_widget_names_charmap+0x194  +0x194..+0x1a0 (0xead604, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 80 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsRadioBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x194, 0xC
+ClassName_PsRadioBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x194, 0xC
 ; [nakarest] naka_widget_names_charmap+0x1a0  +0x1a0..+0x1a4 (0xead610, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 79 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRamBox "jr".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1A0, 0x4
+ClassPropdata_AcRamBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1A0, 0x4
 ; [nakarest] naka_widget_names_charmap+0x1a4  +0x1a4..+0x1ae (0xead614, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 79 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRamBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1A4, 0xA
+ClassName_AcRamBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1A4, 0xA
 ; [nakarest] naka_widget_names_charmap+0x1ae  +0x1ae..+0x1b2 (0xead61e, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 78 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexToggle "AA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1AE, 0x4
+ClassPropdata_AcIndexToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1AE, 0x4
 ; [nakarest] naka_widget_names_charmap+0x1b2  +0x1b2..+0x1c0 (0xead622, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 78 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexToggle.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1B2, 0xE
+ClassName_AcIndexToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1B2, 0xE
 ; [nakarest] naka_widget_names_charmap+0x1c0  +0x1c0..+0x1c2 (0xead630, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 77 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvNaming "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1C0, 0x2
+ClassPropdata_IvNaming:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1C0, 0x2
 ; [nakarest] naka_widget_names_charmap+0x1c2  +0x1c2..+0x1cc (0xead632, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 77 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvNaming.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1C2, 0xA
+ClassName_IvNaming:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1C2, 0xA
 ; [nakarest] naka_widget_names_charmap+0x1cc  +0x1cc..+0x1ce (0xead63c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 76 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsCursorBox "n".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1CC, 0x2
+ClassPropdata_PsCursorBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1CC, 0x2
 ; [nakarest] naka_widget_names_charmap+0x1ce  +0x1ce..+0x1da (0xead63e, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 76 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsCursorBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1CE, 0xC
+ClassName_PsCursorBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1CE, 0xC
 ; [nakarest] naka_widget_names_charmap+0x1da  +0x1da..+0x1dc (0xead64a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 75 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcNamingWindow "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1DA, 0x2
+ClassPropdata_AcNamingWindow:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1DA, 0x2
 ; [nakarest] naka_widget_names_charmap+0x1dc  +0x1dc..+0x1ec (0xead64c, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 75 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcNamingWindow.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1DC, 0x10
+ClassName_AcNamingWindow:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1DC, 0x10
 ; [nakarest] naka_widget_names_charmap+0x1ec  +0x1ec..+0x1ee (0xead65c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 74 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvFixWin "t".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1EC, 0x2
+ClassPropdata_IvFixWin:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1EC, 0x2
 ; [nakarest] naka_widget_names_charmap+0x1ee  +0x1ee..+0x1f8 (0xead65e, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 74 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvFixWin.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1EE, 0xA
+ClassName_IvFixWin:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1EE, 0xA
 ; [nakarest] naka_widget_names_charmap+0x1f8  +0x1f8..+0x1fa (0xead668, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 73 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitScreen "N".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1F8, 0x2
+ClassPropdata_IvExitScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1F8, 0x2
 ; [nakarest] naka_widget_names_charmap+0x1fa  +0x1fa..+0x208 (0xead66a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 73 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitScreen.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1FA, 0xE
+ClassName_IvExitScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x1FA, 0xE
 ; [nakarest] naka_widget_names_charmap+0x208  +0x208..+0x20a (0xead678, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 72 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitMode "`".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x208, 0x2
+ClassPropdata_IvExitMode:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x208, 0x2
 ; [nakarest] naka_widget_names_charmap+0x20a  +0x20a..+0x216 (0xead67a, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 72 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExitMode.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x20A, 0xC
+ClassName_IvExitMode:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x20A, 0xC
 ; [nakarest] naka_widget_names_charmap+0x216  +0x216..+0x218 (0xead686, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 71 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExit "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x216, 0x2
+ClassPropdata_IvExit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x216, 0x2
 ; [nakarest] naka_widget_names_charmap+0x218  +0x218..+0x220 (0xead688, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 71 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvExit.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x218, 0x8
+ClassName_IvExit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x218, 0x8
 ; [nakarest] naka_widget_names_charmap+0x220  +0x220..+0x222 (0xead690, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 70 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbMemo "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x220, 0x2
+ClassPropdata_DbMemo:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x220, 0x2
 ; [nakarest] naka_widget_names_charmap+0x222  +0x222..+0x22a (0xead692, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 70 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): DbMemo.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x222, 0x8
+ClassName_DbMemo:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x222, 0x8
 ; [nakarest] naka_widget_names_charmap+0x22a  +0x22a..+0x22c (0xead69a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 69 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsWideToggle "e".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x22A, 0x2
+ClassPropdata_PsWideToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x22A, 0x2
 ; [nakarest] naka_widget_names_charmap+0x22c  +0x22c..+0x23a (0xead69c, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 69 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsWideToggle.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x22C, 0xE
+ClassName_PsWideToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x22C, 0xE
 ; [nakarest] naka_widget_names_charmap+0x23a  +0x23a..+0x23c (0xead6aa, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 68 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncToggle "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x23A, 0x2
+ClassPropdata_AcFuncToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x23A, 0x2
 ; [nakarest] naka_widget_names_charmap+0x23c  +0x23c..+0x24a (0xead6ac, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 68 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncToggle.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x23C, 0xE
+ClassName_AcFuncToggle:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x23C, 0xE
 ; [nakarest] naka_widget_names_charmap+0x24a  +0x24a..+0x24e (0xead6ba, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 67 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcBitEditBox "jm".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x24A, 0x4
+ClassPropdata_AcBitEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x24A, 0x4
 ; [nakarest] naka_widget_names_charmap+0x24e  +0x24e..+0x25c (0xead6be, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 67 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcBitEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x24E, 0xE
+ClassName_AcBitEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x24E, 0xE
 ; [nakarest] naka_widget_names_charmap+0x25c  +0x25c..+0x260 (0xead6cc, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 66 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcWindowMenu "Xtb".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x25C, 0x4
+ClassPropdata_AcWindowMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x25C, 0x4
 ; [nakarest] naka_widget_names_charmap+0x260  +0x260..+0x26e (0xead6d0, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 66 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcWindowMenu.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x260, 0xE
+ClassName_AcWindowMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x260, 0xE
 ; [nakarest] naka_widget_names_charmap+0x26e  +0x26e..+0x272 (0xead6de, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 65 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcScreenMenu "XNb".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x26E, 0x4
+ClassPropdata_AcScreenMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x26E, 0x4
 ; [nakarest] naka_widget_names_charmap+0x272  +0x272..+0x280 (0xead6e2, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 65 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcScreenMenu.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x272, 0xE
+ClassName_AcScreenMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x272, 0xE
 ; [nakarest] naka_widget_names_charmap+0x280  +0x280..+0x284 (0xead6f0, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 64 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcModeMenu "X`b".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x280, 0x4
+ClassPropdata_AcModeMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x280, 0x4
 ; [nakarest] naka_widget_names_charmap+0x284  +0x284..+0x290 (0xead6f4, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 64 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcModeMenu.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x284, 0xC
+ClassName_AcModeMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x284, 0xC
 ; [nakarest] naka_widget_names_charmap+0x290  +0x290..+0x294 (0xead700, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 63 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwWideESBox "fX".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x290, 0x4
+ClassPropdata_VwWideESBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x290, 0x4
 ; [nakarest] naka_widget_names_charmap+0x294  +0x294..+0x2a0 (0xead704, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 63 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwWideESBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x294, 0xC
+ClassName_VwWideESBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x294, 0xC
 ; [nakarest] naka_widget_names_charmap+0x2a0  +0x2a0..+0x2a4 (0xead710, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 62 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwEditSwBox "fX".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2A0, 0x4
+ClassPropdata_VwEditSwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2A0, 0x4
 ; [nakarest] naka_widget_names_charmap+0x2a4  +0x2a4..+0x2b0 (0xead714, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 62 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwEditSwBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2A4, 0xC
+ClassName_VwEditSwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2A4, 0xC
 ; [nakarest] naka_widget_names_charmap+0x2b0  +0x2b0..+0x2b4 (0xead720, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 61 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwMenuBox "Xb".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2B0, 0x4
+ClassPropdata_VwMenuBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2B0, 0x4
 ; [nakarest] naka_widget_names_charmap+0x2b4  +0x2b4..+0x2be (0xead724, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 61 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwMenuBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2B4, 0xA
+ClassName_VwMenuBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2B4, 0xA
 ; [nakarest] naka_widget_names_charmap+0x2be  +0x2be..+0x2c2 (0xead72e, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 60 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcMixerVol "ue".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2BE, 0x4
+ClassPropdata_AcMixerVol:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2BE, 0x4
 ; [nakarest] naka_widget_names_charmap+0x2c2  +0x2c2..+0x2ce (0xead732, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 60 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcMixerVol.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2C2, 0xC
+ClassName_AcMixerVol:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2C2, 0xC
 ; [nakarest] naka_widget_names_charmap+0x2ce  +0x2ce..+0x2d0 (0xead73e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 59 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcPmemName "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2CE, 0x2
+ClassPropdata_AcPmemName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2CE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x2d0  +0x2d0..+0x2dc (0xead740, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 59 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcPmemName.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2D0, 0xC
+ClassName_AcPmemName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2D0, 0xC
 ; [nakarest] naka_widget_names_charmap+0x2dc  +0x2dc..+0x2de (0xead74c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 58 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRhythmName "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2DC, 0x2
+ClassPropdata_AcRhythmName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2DC, 0x2
 ; [nakarest] naka_widget_names_charmap+0x2de  +0x2de..+0x2ec (0xead74e, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 58 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRhythmName.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2DE, 0xE
+ClassName_AcRhythmName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2DE, 0xE
 ; [nakarest] naka_widget_names_charmap+0x2ec  +0x2ec..+0x2f2 (0xead75c, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 57 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TitleEdit "akNlX".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2EC, 0x6
+ClassPropdata_TitleEdit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2EC, 0x6
 ; [nakarest] naka_widget_names_charmap+0x2f2  +0x2f2..+0x2fc (0xead762, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 57 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TitleEdit.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2F2, 0xA
+ClassName_TitleEdit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2F2, 0xA
 ; [nakarest] naka_widget_names_charmap+0x2fc  +0x2fc..+0x302 (0xead76c, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 56 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ModeEdit "`kalX".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2FC, 0x6
+ClassPropdata_ModeEdit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2FC, 0x6
 ; [nakarest] naka_widget_names_charmap+0x302  +0x302..+0x30c (0xead772, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 56 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ModeEdit.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x302, 0xA
+ClassName_ModeEdit:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x302, 0xA
 ; [nakarest] naka_widget_names_charmap+0x30c  +0x30c..+0x312 (0xead77c, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 55 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): StringBox "Xc^d".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x30C, 0x6
+ClassPropdata_StringBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x30C, 0x6
 ; [nakarest] naka_widget_names_charmap+0x312  +0x312..+0x31c (0xead782, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 55 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): StringBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x312, 0xA
+ClassName_StringBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x312, 0xA
 ; [nakarest] naka_widget_names_charmap+0x31c  +0x31c..+0x322 (0xead78c, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 54 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TextBox "Xc^dB".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x31C, 0x6
+ClassPropdata_TextBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x31C, 0x6
 ; [nakarest] naka_widget_names_charmap+0x322  +0x322..+0x32a (0xead792, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 54 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TextBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x322, 0x8
+ClassName_TextBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x322, 0x8
 ; [nakarest] naka_widget_names_charmap+0x32a  +0x32a..+0x32e (0xead79a, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 53 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Window "Grr".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32A, 0x4
+ClassPropdata_Window:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32A, 0x4
 ; [nakarest] naka_widget_names_charmap+0x32e  +0x32e..+0x336 (0xead79e, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 53 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Window.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32E, 0x8
+ClassName_Window:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x32E, 0x8
 ; [nakarest] naka_widget_names_charmap+0x336  +0x336..+0x33a (0xead7a6, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 52 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TtlScreen "Xb".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x336, 0x4
+ClassPropdata_TtlScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x336, 0x4
 ; [nakarest] naka_widget_names_charmap+0x33a  +0x33a..+0x344 (0xead7aa, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 52 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): TtlScreen.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x33A, 0xA
+ClassName_TtlScreen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x33A, 0xA
 ; [nakarest] naka_widget_names_charmap+0x344  +0x344..+0x348 (0xead7b4, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 51 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Screen "ar".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x344, 0x4
+ClassPropdata_Screen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x344, 0x4
 ; [nakarest] naka_widget_names_charmap+0x348  +0x348..+0x350 (0xead7b8, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 51 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Screen.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x348, 0x8
+ClassName_Screen:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x348, 0x8
 ; [nakarest] naka_widget_names_charmap+0x350  +0x350..+0x352 (0xead7c0, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 50 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): GroupBox "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x350, 0x2
+ClassPropdata_GroupBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x350, 0x2
 ; [nakarest] naka_widget_names_charmap+0x352  +0x352..+0x35c (0xead7c2, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 50 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): GroupBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x352, 0xA
+ClassName_GroupBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x352, 0xA
 ; [nakarest] naka_widget_names_charmap+0x35c  +0x35c..+0x360 (0xead7cc, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 49 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Box "^_".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x35C, 0x4
+ClassPropdata_Box:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x35C, 0x4
 ; [nakarest] naka_widget_names_charmap+0x360  +0x360..+0x364 (0xead7d0, 4 B)
 ; [nakarest] class-name strings (the +12 name) of classes 49 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Box.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x360, 0x4
+ClassName_Box:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x360, 0x4
 ; [nakarest] naka_widget_names_charmap+0x364  +0x364..+0x368 (0xead7d4, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 48 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): EditSw "ejA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x364, 0x4
+ClassPropdata_EditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x364, 0x4
 ; [nakarest] naka_widget_names_charmap+0x368  +0x368..+0x370 (0xead7d8, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 48 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): EditSw.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x368, 0x8
+ClassName_EditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x368, 0x8
 ; [nakarest] naka_widget_names_charmap+0x370  +0x370..+0x374 (0xead7e0, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 47 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Frame "hA^".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x370, 0x4
+ClassPropdata_Frame:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x370, 0x4
 ; [nakarest] naka_widget_names_charmap+0x374  +0x374..+0x37a (0xead7e4, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 47 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Frame.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x374, 0x6
+ClassName_Frame:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x374, 0x6
 ; [nakarest] naka_widget_names_charmap+0x37a  +0x37a..+0x37e (0xead7ea, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 46 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Line "^g".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x37A, 0x4
+ClassPropdata_Line:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x37A, 0x4
 ; [nakarest] naka_widget_names_charmap+0x37e  +0x37e..+0x384 (0xead7ee, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 46 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Line.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x37E, 0x6
+ClassName_Line:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x37E, 0x6
 ; [nakarest] naka_widget_names_charmap+0x384  +0x384..+0x386 (0xead7f4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 45 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Icon "b".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x384, 0x2
+ClassPropdata_Icon:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x384, 0x2
 ; [nakarest] naka_widget_names_charmap+0x386  +0x386..+0x38c (0xead7f6, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 45 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Icon.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x386, 0x6
+ClassName_Icon:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x386, 0x6
 ; [nakarest] naka_widget_names_charmap+0x38c  +0x38c..+0x38e (0xead7fc, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 44 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Bitmap "i".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x38C, 0x2
+ClassPropdata_Bitmap:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x38C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x38e  +0x38e..+0x396 (0xead7fe, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 44 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Bitmap.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x38E, 0x8
+ClassName_Bitmap:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x38E, 0x8
 ; [nakarest] naka_widget_names_charmap+0x396  +0x396..+0x39a (0xead806, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 43 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Label "Xc^".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x396, 0x4
+ClassPropdata_Label:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x396, 0x4
 ; [nakarest] naka_widget_names_charmap+0x39a  +0x39a..+0x3a0 (0xead80a, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 43 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Label.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x39A, 0x6
+ClassName_Label:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x39A, 0x6
 ; [nakarest] naka_widget_names_charmap+0x3a0  +0x3a0..+0x3a2 (0xead810, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 42 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcSoundName "u".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3A0, 0x2
+ClassPropdata_AcSoundName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3A0, 0x2
 ; [nakarest] naka_widget_names_charmap+0x3a2  +0x3a2..+0x3ae (0xead812, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 42 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcSoundName.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3A2, 0xC
+ClassName_AcSoundName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3A2, 0xC
 ; [nakarest] naka_widget_names_charmap+0x3ae  +0x3ae..+0x3b0 (0xead81e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 41 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvMainEditSw "k".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3AE, 0x2
+ClassPropdata_IvMainEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3AE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x3b0  +0x3b0..+0x3be (0xead820, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 41 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvMainEditSw.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3B0, 0xE
+ClassName_IvMainEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3B0, 0xE
 ; [nakarest] naka_widget_names_charmap+0x3be  +0x3be..+0x3c2 (0xead82e, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 40 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvPageControl "At".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3BE, 0x4
+ClassPropdata_IvPageControl:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3BE, 0x4
 ; [nakarest] naka_widget_names_charmap+0x3c2  +0x3c2..+0x3d0 (0xead832, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 40 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): IvPageControl.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3C2, 0xE
+ClassName_IvPageControl:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3C2, 0xE
 ; [nakarest] naka_widget_names_charmap+0x3d0  +0x3d0..+0x3d2 (0xead840, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 39 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsInvisibleBox "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3D0, 0x2
+ClassPropdata_PsInvisibleBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3D0, 0x2
 ; [nakarest] naka_widget_names_charmap+0x3d2  +0x3d2..+0x3e2 (0xead842, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 39 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsInvisibleBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3D2, 0x10
+ClassName_PsInvisibleBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3D2, 0x10
 ; [nakarest] naka_widget_names_charmap+0x3e2  +0x3e2..+0x3e8 (0xead852, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 38 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsToggleBox "cXXme".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3E2, 0x6
+ClassPropdata_PsToggleBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3E2, 0x6
 ; [nakarest] naka_widget_names_charmap+0x3e8  +0x3e8..+0x3f4 (0xead858, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 38 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsToggleBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3E8, 0xC
+ClassName_PsToggleBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3E8, 0xC
 ; [nakarest] naka_widget_names_charmap+0x3f4  +0x3f4..+0x3f8 (0xead864, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 37 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcWindowPage "AA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3F4, 0x4
+ClassPropdata_AcWindowPage:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3F4, 0x4
 ; [nakarest] naka_widget_names_charmap+0x3f8  +0x3f8..+0x406 (0xead868, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 37 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcWindowPage.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3F8, 0xE
+ClassName_AcWindowPage:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3F8, 0xE
 ; [nakarest] naka_widget_names_charmap+0x406  +0x406..+0x408 (0xead876, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 36 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsPageBox "n".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x406, 0x2
+ClassPropdata_PsPageBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x406, 0x2
 ; [nakarest] naka_widget_names_charmap+0x408  +0x408..+0x412 (0xead878, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 36 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsPageBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x408, 0xA
+ClassName_PsPageBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x408, 0xA
 ; [nakarest] naka_widget_names_charmap+0x412  +0x412..+0x416 (0xead882, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 35 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncWideES "fj".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x412, 0x4
+ClassPropdata_AcFuncWideES:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x412, 0x4
 ; [nakarest] naka_widget_names_charmap+0x416  +0x416..+0x424 (0xead886, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 35 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncWideES.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x416, 0xE
+ClassName_AcFuncWideES:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x416, 0xE
 ; [nakarest] naka_widget_names_charmap+0x424  +0x424..+0x426 (0xead894, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 34 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexWideES "f".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x424, 0x2
+ClassPropdata_AcIndexWideES:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x424, 0x2
 ; [nakarest] naka_widget_names_charmap+0x426  +0x426..+0x434 (0xead896, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 34 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexWideES.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x426, 0xE
+ClassName_AcIndexWideES:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x426, 0xE
 ; [nakarest] naka_widget_names_charmap+0x434  +0x434..+0x436 (0xead8a4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 33 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsWideESBox "e".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x434, 0x2
+ClassPropdata_PsWideESBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x434, 0x2
 ; [nakarest] naka_widget_names_charmap+0x436  +0x436..+0x442 (0xead8a6, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 33 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsWideESBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x436, 0xC
+ClassName_PsWideESBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x436, 0xC
 ; [nakarest] naka_widget_names_charmap+0x442  +0x442..+0x446 (0xead8b2, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 32 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncEditSw "fj".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x442, 0x4
+ClassPropdata_AcFuncEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x442, 0x4
 ; [nakarest] naka_widget_names_charmap+0x446  +0x446..+0x454 (0xead8b6, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 32 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcFuncEditSw.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x446, 0xE
+ClassName_AcFuncEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x446, 0xE
 ; [nakarest] naka_widget_names_charmap+0x454  +0x454..+0x456 (0xead8c4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 31 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexEditSw "f".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x454, 0x2
+ClassPropdata_AcIndexEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x454, 0x2
 ; [nakarest] naka_widget_names_charmap+0x456  +0x456..+0x464 (0xead8c6, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 31 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcIndexEditSw.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x456, 0xE
+ClassName_AcIndexEditSw:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x456, 0xE
 ; [nakarest] naka_widget_names_charmap+0x464  +0x464..+0x46a (0xead8d4, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 30 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsEditSwBox "c^de".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x464, 0x6
+ClassPropdata_PsEditSwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x464, 0x6
 ; [nakarest] naka_widget_names_charmap+0x46a  +0x46a..+0x476 (0xead8da, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 30 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsEditSwBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x46A, 0xC
+ClassName_PsEditSwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x46A, 0xC
 ; [nakarest] naka_widget_names_charmap+0x476  +0x476..+0x47a (0xead8e6, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 29 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTitleMenu "Xab".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x476, 0x4
+ClassPropdata_AcTitleMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x476, 0x4
 ; [nakarest] naka_widget_names_charmap+0x47a  +0x47a..+0x486 (0xead8ea, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 29 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTitleMenu.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x47A, 0xC
+ClassName_AcTitleMenu:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x47A, 0xC
 ; [nakarest] naka_widget_names_charmap+0x486  +0x486..+0x48c (0xead8f6, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 28 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsMenuBox "c^dem".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x486, 0x6
+ClassPropdata_PsMenuBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x486, 0x6
 ; [nakarest] naka_widget_names_charmap+0x48c  +0x48c..+0x496 (0xead8fc, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 28 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsMenuBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x48C, 0xA
+ClassName_PsMenuBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x48C, 0xA
 ; [nakarest] naka_widget_names_charmap+0x496  +0x496..+0x49a (0xead906, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 27 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRamEditBox "jr".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x496, 0x4
+ClassPropdata_AcRamEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x496, 0x4
 ; [nakarest] naka_widget_names_charmap+0x49a  +0x49a..+0x4a8 (0xead90a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 27 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcRamEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x49A, 0xE
+ClassName_AcRamEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x49A, 0xE
 ; [nakarest] naka_widget_names_charmap+0x4a8  +0x4a8..+0x4ac (0xead918, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 26 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLswEditBox "jn".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4A8, 0x4
+ClassPropdata_AcLswEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4A8, 0x4
 ; [nakarest] naka_widget_names_charmap+0x4ac  +0x4ac..+0x4ba (0xead91c, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 26 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLswEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4AC, 0xE
+ClassName_AcLswEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4AC, 0xE
 ; [nakarest] naka_widget_names_charmap+0x4ba  +0x4ba..+0x4c2 (0xead92a, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 25 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcNumEditBox "nAAAAA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4BA, 0x8
+ClassPropdata_AcNumEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4BA, 0x8
 ; [nakarest] naka_widget_names_charmap+0x4c2  +0x4c2..+0x4d0 (0xead932, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 25 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcNumEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4C2, 0xE
+ClassName_AcNumEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4C2, 0xE
 ; [nakarest] naka_widget_names_charmap+0x4d0  +0x4d0..+0x4d2 (0xead940, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 24 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcOnOffBox "m".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4D0, 0x2
+ClassPropdata_AcOnOffBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4D0, 0x2
 ; [nakarest] naka_widget_names_charmap+0x4d2  +0x4d2..+0x4de (0xead942, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 24 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcOnOffBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4D2, 0xC
+ClassName_AcOnOffBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4D2, 0xC
 ; [nakarest] naka_widget_names_charmap+0x4de  +0x4de..+0x4e0 (0xead94e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 23 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTblEditBox "j".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4DE, 0x2
+ClassPropdata_PsTblEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4DE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x4e0  +0x4e0..+0x4ee (0xead950, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 23 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsTblEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4E0, 0xE
+ClassName_PsTblEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4E0, 0xE
 ; [nakarest] naka_widget_names_charmap+0x4ee  +0x4ee..+0x4f0 (0xead95e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 22 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsNumEditBox "A".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4EE, 0x2
+ClassPropdata_PsNumEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4EE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x4f0  +0x4f0..+0x4fe (0xead960, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 22 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsNumEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4F0, 0xE
+ClassName_PsNumEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4F0, 0xE
 ; [nakarest] naka_widget_names_charmap+0x4fe  +0x4fe..+0x508 (0xead96e, 10 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 21 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsEditBox "Xc^dBeGm".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4FE, 0xA
+ClassPropdata_PsEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x4FE, 0xA
 ; [nakarest] naka_widget_names_charmap+0x508  +0x508..+0x512 (0xead978, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 21 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsEditBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x508, 0xA
+ClassName_PsEditBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x508, 0xA
 ; [nakarest] naka_widget_names_charmap+0x512  +0x512..+0x514 (0xead982, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 20 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTempoBox "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x512, 0x2
+ClassPropdata_AcTempoBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x512, 0x2
 ; [nakarest] naka_widget_names_charmap+0x514  +0x514..+0x520 (0xead984, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 20 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcTempoBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x514, 0xC
+ClassName_AcTempoBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x514, 0xC
 ; [nakarest] naka_widget_names_charmap+0x520  +0x520..+0x524 (0xead990, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 19 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLswBox "jn".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x520, 0x4
+ClassPropdata_AcLswBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x520, 0x4
 ; [nakarest] naka_widget_names_charmap+0x524  +0x524..+0x52e (0xead994, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 19 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): AcLswBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x524, 0xA
+ClassName_AcLswBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x524, 0xA
 ; [nakarest] naka_widget_names_charmap+0x52e  +0x52e..+0x532 (0xead99e, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 18 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsParaBox "c^d".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x52E, 0x4
+ClassPropdata_PsParaBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x52E, 0x4
 ; [nakarest] naka_widget_names_charmap+0x532  +0x532..+0x53c (0xead9a2, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 18 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): PsParaBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x532, 0xA
+ClassName_PsParaBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x532, 0xA
 ; [nakarest] naka_widget_names_charmap+0x53c  +0x53c..+0x540 (0xead9ac, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 17 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwBox "^_A".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x53C, 0x4
+ClassPropdata_VwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x53C, 0x4
 ; [nakarest] naka_widget_names_charmap+0x540  +0x540..+0x546 (0xead9b0, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 17 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): VwBox.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x540, 0x6
+ClassName_VwBox:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x540, 0x6
 ; [nakarest] naka_widget_names_charmap+0x546  +0x546..+0x54e (0xead9b6, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 16 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Viewable "M[[[[]P".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x546, 0x8
+ClassPropdata_Viewable:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x546, 0x8
 ; [nakarest] naka_widget_names_charmap+0x54e  +0x54e..+0x558 (0xead9be, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 16 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Viewable.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x54E, 0xA
+ClassName_Viewable:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x54E, 0xA
 ; [nakarest] naka_widget_names_charmap+0x558  +0x558..+0x55a (0xead9c8, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 15 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResName "X".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x558, 0x2
+ClassPropdata_ResName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x558, 0x2
 ; [nakarest] naka_widget_names_charmap+0x55a  +0x55a..+0x562 (0xead9ca, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 15 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResName.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x55A, 0x8
+ClassName_ResName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x55A, 0x8
 ; [nakarest] naka_widget_names_charmap+0x562  +0x562..+0x564 (0xead9d2, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 14 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResString "B".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x562, 0x2
+ClassPropdata_ResString:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x562, 0x2
 ; [nakarest] naka_widget_names_charmap+0x564  +0x564..+0x56e (0xead9d4, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 14 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResString.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x564, 0xA
+ClassName_ResString:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x564, 0xA
 ; [nakarest] naka_widget_names_charmap+0x56e  +0x56e..+0x570 (0xead9de, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 13 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResMethod "X".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x56E, 0x2
+ClassPropdata_ResMethod:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x56E, 0x2
 ; [nakarest] naka_widget_names_charmap+0x570  +0x570..+0x57a (0xead9e0, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 13 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResMethod.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x570, 0xA
+ClassName_ResMethod:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x570, 0xA
 ; [nakarest] naka_widget_names_charmap+0x57a  +0x57a..+0x57c (0xead9ea, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 12 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResEvent "X".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x57A, 0x2
+ClassPropdata_ResEvent:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x57A, 0x2
 ; [nakarest] naka_widget_names_charmap+0x57c  +0x57c..+0x586 (0xead9ec, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 12 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResEvent.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x57C, 0xA
+ClassName_ResEvent:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x57C, 0xA
 ; [nakarest] naka_widget_names_charmap+0x586  +0x586..+0x588 (0xead9f6, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 11 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResFont "B".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x586, 0x2
+ClassPropdata_ResFont:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x586, 0x2
 ; [nakarest] naka_widget_names_charmap+0x588  +0x588..+0x590 (0xead9f8, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 11 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResFont.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x588, 0x8
+ClassName_ResFont:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x588, 0x8
 ; [nakarest] naka_widget_names_charmap+0x590  +0x590..+0x592 (0xeada00, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 10 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResIcon "B".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x590, 0x2
+ClassPropdata_ResIcon:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x590, 0x2
 ; [nakarest] naka_widget_names_charmap+0x592  +0x592..+0x59a (0xeada02, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 10 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResIcon.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x592, 0x8
+ClassName_ResIcon:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x592, 0x8
 ; [nakarest] naka_widget_names_charmap+0x59a  +0x59a..+0x59c (0xeada0a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 9 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResFrame "B".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x59A, 0x2
+ClassPropdata_ResFrame:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x59A, 0x2
 ; [nakarest] naka_widget_names_charmap+0x59c  +0x59c..+0x5a6 (0xeada0c, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 9 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): ResFrame.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x59C, 0xA
+ClassName_ResFrame:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x59C, 0xA
 ; [nakarest] naka_widget_names_charmap+0x5a6  +0x5a6..+0x5a8 (0xeada16, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 8 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ResBitmap "B".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5A6, 0x2
+ClassPropdata_ResBitmap:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5A6, 0x2
 ; [nakarest] naka_widget_names_charmap+0x5a8  +0x5a8..+0x5b2 (0xeada18, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 8 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): ResBitmap.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5A8, 0xA
+ClassName_ResBitmap:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5A8, 0xA
 ; [nakarest] naka_widget_names_charmap+0x5b2  +0x5b2..+0x5ba (0xeada22, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 7 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Title "kNlXNAA".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5B2, 0x8
+ClassPropdata_Title:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5B2, 0x8
 ; [nakarest] naka_widget_names_charmap+0x5ba  +0x5ba..+0x5c0 (0xeada2a, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 7 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): Title.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5BA, 0x6
+ClassName_Title:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5BA, 0x6
 ; [nakarest] naka_widget_names_charmap+0x5c0  +0x5c0..+0x5c6 (0xeada30, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 6 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Mode "kalX".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5C0, 0x6
+ClassPropdata_Mode:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5C0, 0x6
 ; [nakarest] naka_widget_names_charmap+0x5c6  +0x5c6..+0x5cc (0xeada36, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 6 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): Mode.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5C6, 0x6
+ClassName_Mode:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5C6, 0x6
 ; [nakarest] naka_widget_names_charmap+0x5cc  +0x5cc..+0x5d2 (0xeada3c, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 5 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): SupportClass "JBBK".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5CC, 0x6
+ClassPropdata_SupportClass:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5CC, 0x6
 ; [nakarest] naka_widget_names_charmap+0x5d2  +0x5d2..+0x5e0 (0xeada42, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 5 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): SupportClass.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5D2, 0xE
+ClassName_SupportClass:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5D2, 0xE
 ; [nakarest] naka_widget_names_charmap+0x5e0  +0x5e0..+0x5e8 (0xeada50, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 4 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Class "JMBBXXL".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5E0, 0x8
+ClassPropdata_Class:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5E0, 0x8
 ; [nakarest] naka_widget_names_charmap+0x5e8  +0x5e8..+0x5ee (0xeada58, 6 B)
 ; [nakarest] class-name strings (the +12 name) of classes 4 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): Class.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5E8, 0x6
+ClassName_Class:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5E8, 0x6
 ; [nakarest] naka_widget_names_charmap+0x5ee  +0x5ee..+0x5f0 (0xeada5e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 3 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): MainFunction "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5EE, 0x2
+ClassPropdata_MainFunction:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5EE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x5f0  +0x5f0..+0x5fe (0xeada60, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 3 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): MainFunction.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5F0, 0xE
+ClassName_MainFunction:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5F0, 0xE
 ; [nakarest] naka_widget_names_charmap+0x5fe  +0x5fe..+0x600 (0xeada6e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 2 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): ApFunction "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5FE, 0x2
+ClassPropdata_ApFunction:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x5FE, 0x2
 ; [nakarest] naka_widget_names_charmap+0x600  +0x600..+0x60c (0xeada70, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 2 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): ApFunction.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x600, 0xC
+ClassName_ApFunction:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x600, 0xC
 ; [nakarest] naka_widget_names_charmap+0x60c  +0x60c..+0x60e (0xeada7c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 1 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Function "I".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60C, 0x2
+ClassPropdata_Function:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60C, 0x2
 ; [nakarest] naka_widget_names_charmap+0x60e  +0x60e..+0x618 (0xeada7e, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 1 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): Function.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60E, 0xA
+ClassName_Function:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x60E, 0xA
 ; [nakarest] naka_widget_names_charmap+0x618  +0x618..+0x61a (0xeada88, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 0 of Class slot 0x160 (table
 ; [nakarest] 0xeac9ee, 109 entries, InitializeRoot): Object "".
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x618, 0x2
+ClassPropdata_Object:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x618, 0x2
 ; [nakarest] naka_widget_names_charmap+0x61a  +0x61a..+0x622 (0xeada8a, 8 B)
 ; [nakarest] class-name strings (the +12 name) of classes 0 of Class slot 0x160 (table 0xeac9ee,
 ; [nakarest] 109 entries, InitializeRoot): Object.
-	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x61A, 0x8
+ClassName_Object:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x61A, 0x8
 ; [nakarest] naka_widget_names_charmap+0x622  +0x622..+0x624 (0xeada92, 2 B)
 ; [nakarest] Text (2 B at 0xeada92), first string "m"; no registered NAKA table points into it;
 ; [nakarest] reached through source references InitializeRoot (display/graphics_text_vga.s:

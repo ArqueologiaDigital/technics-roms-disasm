@@ -120,7 +120,7 @@ DemoStyle_EncoderHandler:
 	jr nz, DemoStyleTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoStyleTtlFunc_Exit
-	ldw wa, 0xe2
+	ldw wa, TT_DEMOSOUND
 	jr DemoStyle_PostEventCommon
 
 DemoStyle_DirectionHandler:
@@ -128,10 +128,10 @@ DemoStyle_DirectionHandler:
 	jr nz, DemoStyleTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoStyleTtlFunc_Exit
-	ldw wa, 0xe3
+	ldw wa, TT_DEMORHY
 
 DemoStyle_PostEventCommon:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr DemoStyleTtlFunc_Exit
 
 DemoStyle_EnterHandler:
@@ -201,7 +201,7 @@ DemoSound_EncoderHandler:
 	jr nz, DemoSoundTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoSoundTtlFunc_Exit
-	ldw wa, 0xe1
+	ldw wa, TT_DEMOSTYLE
 	jr DemoSound_PostEventCommon
 
 DemoSound_DirectionHandler:
@@ -209,10 +209,10 @@ DemoSound_DirectionHandler:
 	jr nz, DemoSoundTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoSoundTtlFunc_Exit
-	ldw wa, 0xe3
+	ldw wa, TT_DEMORHY
 
 DemoSound_PostEventCommon:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr DemoSoundTtlFunc_Exit
 
 DemoSound_EnterHandler:
@@ -282,7 +282,7 @@ DemoRhythm_EncoderHandler:
 	jr nz, DemoRhyTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoRhyTtlFunc_Exit
-	ldw wa, 0xe1
+	ldw wa, TT_DEMOSTYLE
 	jr DemoRhythm_PostEventCommon
 
 DemoRhythm_DirectionHandler:
@@ -290,10 +290,10 @@ DemoRhythm_DirectionHandler:
 	jr nz, DemoRhyTtlFunc_Exit
 	cp (DEMO_TIMER_COUNTDOWN:16), 0
 	jr nz, DemoRhyTtlFunc_Exit
-	ldw wa, 0xe2
+	ldw wa, TT_DEMOSOUND
 
 DemoRhythm_PostEventCommon:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr DemoRhyTtlFunc_Exit
 
 DemoRhythm_EnterHandler:

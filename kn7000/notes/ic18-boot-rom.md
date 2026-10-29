@@ -198,12 +198,11 @@ routine and `placeholders.py` what is still unnamed (only branch targets and the
 
 ## The rest of IC18: rhythm data
 
-From `0x10000` the chip holds the style data the firmware reads: the `"Technics Rhythms"` header at
-`0x40010000`, which the firmware's probe finds at its third candidate address. The 16-bit word at `+0x10`
-(`0xE2DA`) is the big-endian word sum of the `0x100000` words from `0x110000`, and the byte at `+0x2A` is
-220, the number of styles; `"jkr_33.ssf"` at `0x3FFFE8` is the version the SP7001 DEBUG TOOLS screen
-shows as RHYTHM 33 (`ic18_layout.py` recomputes these). That part is data only; a byte-exact target for
-the whole 4 MB is not done: it would be one `.incbin` until the style format is typed.
+From `0x10000` the chip holds the style data the firmware reads, the `"Technics Rhythms"` resource at
+`0x40010000`: 169 styles, their variations and eight count-in patterns, then an older build's leftovers
+and the version string `"jkr_33.ssf"` (RHYTHM 33). [`ic18-rhythm-rom.md`](ic18-rhythm-rom.md) describes
+it; `src/ic18/rhythm.s` types it, and `make verify-ic18-full` rebuilds all 4 MB of the chip from
+`src/ic18/ic18.s` (this boot ROM and that data).
 
 ## Probes
 

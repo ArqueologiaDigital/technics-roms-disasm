@@ -348,43 +348,6 @@ typedef struct __attribute__((packed)) {
 } Dial_State_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint16_t index;
-} Cheap_SingleBankToggleView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t title;
-    uint32_t icon;
-} Cheap_HardDiskMenuView_t;
-
-typedef struct __attribute__((packed)) {
     uint32_t DiskMenu_Window;
     uint16_t StyleConvert_AcTitleMenu_Selected;
     uint16_t HardDiskMenu_Selected;
@@ -749,57 +712,6 @@ typedef struct __attribute__((packed)) {
 } WorkRamInit_Image2_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint16_t index;
-    uint16_t tag;
-} Root_NamingSymbolToggleView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint16_t index;
-    uint16_t tag;
-} Root_NamingLowerCaseToggleView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint16_t index;
-    uint16_t tag;
-} Root_NamingUpperCaseToggleView_t;
-
-typedef struct __attribute__((packed)) {
     uint32_t PanelSimulator_Window;
     uint16_t CheckTitle_AcTitleMenu_Selected;
     uint16_t DebugWindow_AcWindowMenu_Selected;
@@ -1147,27 +1059,6 @@ typedef struct __attribute__((packed)) {
 } Murai_SoundMenuWorkCells_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint16_t style;
-    uint32_t func;
-    uint32_t str;
-    uint32_t onoff;
-} East_SendSwitchView_t;
-
-typedef struct __attribute__((packed)) {
     uint16_t ExcRcvPmemBox_ValueHi;
     uint16_t ExcRcvSmemBox_Selected;
     uint32_t ExcRcvSmemBox_Value;
@@ -1423,122 +1314,6 @@ typedef struct __attribute__((packed)) {
 } SqedtFunc_CursorState_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t title;
-    uint32_t icon;
-} Kubo_DiskLoadMenuView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t title;
-    uint32_t icon;
-} Kubo_MixerMenuView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t title;
-    uint32_t icon;
-} Kubo_FadeInOutMenuView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t title;
-    uint32_t icon;
-} Kubo_VocWorkMenuView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t str;
-    uint32_t font;
-    uint16_t fontcolor;
-} CycRec_ClearLabelView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint16_t style;
-    uint32_t func;
-} CycRec_ClearSwitchView_t;
-
-typedef struct __attribute__((packed)) {
     uint32_t Reverb_TtlScreen_Window;
     uint32_t DspEffect_TtlScreen_Window;
     uint32_t Equalizer_TtlScreen_Window;
@@ -1775,44 +1550,6 @@ typedef struct __attribute__((packed)) {
 } Kubo_ViewWorkCells_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint16_t editsw2;
-    uint16_t style;
-} TrAs_PartSelectSwitchView_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint16_t style;
-    uint32_t str;
-} TrAs_OkSwitchView_t;
-
-typedef struct __attribute__((packed)) {
     uint32_t DpSmf_Window;
     uint16_t Lyrics_AcTitleMenu_Selected;
     uint16_t DpSmf_AcRamEditBox_Selected;
@@ -1992,22 +1729,6 @@ typedef struct __attribute__((packed)) {
 } FDTest_ResultCounters_t;
 
 typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint32_t exit;
-    uint32_t window;
-    uint32_t title;
-    uint32_t icon;
-} FDTest_ScreenView_t;
-
-typedef struct __attribute__((packed)) {
     /* NAKA_TYPE_CONTAINER */
     /* zero padding */
     /* zero padding */
@@ -2031,7 +1752,8 @@ typedef struct __attribute__((packed)) {
     /* zero padding */
     /* zero padding */
     /* TtlScreen view record "FDD_TEST" kept in work RAM */
-    FDTest_ScreenView_t FDTest_ScreenView;
+    /* element 0 of Viewable slot 0xFC: TtlScreen (class id 0x01600034) */
+    naka_cls_TtlScreen_t FDTest_ScreenView;
     /* FD save/load factory test: runs, passes, failures */
     FDTest_ResultCounters_t FDTest_ResultCounters;
     /* 1 = an XAPR extension ROM was detected */
@@ -2039,9 +1761,11 @@ typedef struct __attribute__((packed)) {
     /* InitializeYoko view work cells (SMF direct play, medley, track assign, song select, demo), power-on image */
     Yoko_ViewWorkCells_t Yoko_ViewWorkCells;
     /* VwEditSwBox view record "TrAsOkSw" kept in work RAM */
-    TrAs_OkSwitchView_t TrAs_OkSwitchView;
+    /* element 3 of Viewable slot 0x8B: VwEditSwBox (class id 0x0160003E) */
+    naka_cls_VwEditSwBox_t TrAs_OkSwitchView;
     /* AcIndexWideES view record "TrAsPartSelSw" kept in work RAM */
-    TrAs_PartSelectSwitchView_t TrAs_PartSelectSwitchView;
+    /* element 9 of Viewable slot 0x8B: AcIndexWideES (class id 0x01600022) */
+    naka_cls_AcIndexWideES_t TrAs_PartSelectSwitchView;
     /* per-language message pointers; all six point at the Sprintf buffer 0x20CB4 */
     uint32_t TrAsSureLang_MessagePtrTable[6];
     /* Kubo Function table, registered with 0 entries (one null word) */
@@ -2051,17 +1775,23 @@ typedef struct __attribute__((packed)) {
     /* InitializeKubo view work cells (reverb/DSP/EQ screens, sequencer menus, help windows), power-on image */
     Kubo_ViewWorkCells_t Kubo_ViewWorkCells;
     /* AcFuncEditSw view record "CycRecClrSw" kept in work RAM */
-    CycRec_ClearSwitchView_t CycRec_ClearSwitchView;
+    /* element 19 of Viewable slot 0x85: AcFuncEditSw (class id 0x01600020) */
+    naka_cls_AcFuncEditSw_t CycRec_ClearSwitchView;
     /* Label view record "CycRecClrStr" kept in work RAM */
-    CycRec_ClearLabelView_t CycRec_ClearLabelView;
+    /* element 20 of Viewable slot 0x85: Label (class id 0x0160002B) */
+    naka_cls_Label_t CycRec_ClearLabelView;
     /* AcTitleMenu view record "VocWorkSw" kept in work RAM */
-    Kubo_VocWorkMenuView_t Kubo_VocWorkMenuView;
+    /* element 3 of Viewable slot 0xD6: AcTitleMenu (class id 0x0160001D) */
+    naka_cls_AcTitleMenu_t Kubo_VocWorkMenuView;
     /* AcTitleMenu view record "FadeInOutSw" kept in work RAM */
-    Kubo_FadeInOutMenuView_t Kubo_FadeInOutMenuView;
+    /* element 4 of Viewable slot 0xD6: AcTitleMenu (class id 0x0160001D) */
+    naka_cls_AcTitleMenu_t Kubo_FadeInOutMenuView;
     /* AcTitleMenu view record "MixerSw" kept in work RAM */
-    Kubo_MixerMenuView_t Kubo_MixerMenuView;
+    /* element 5 of Viewable slot 0xD6: AcTitleMenu (class id 0x0160001D) */
+    naka_cls_AcTitleMenu_t Kubo_MixerMenuView;
     /* AcTitleMenu view record "DiskLoadSw" kept in work RAM */
-    Kubo_DiskLoadMenuView_t Kubo_DiskLoadMenuView;
+    /* element 6 of Viewable slot 0xD6: AcTitleMenu (class id 0x0160001D) */
+    naka_cls_AcTitleMenu_t Kubo_DiskLoadMenuView;
     /* sequencer edit value list: from-cursor, to-cursor, which one SqedtVal2 edits */
     SqedtFunc_CursorState_t SqedtFunc_CursorState;
     /* byte copied to +1 of every new open-file slot; 0 makes SeqChan_ValidateAndDispatch return 0 */
@@ -2103,7 +1833,8 @@ typedef struct __attribute__((packed)) {
     /* InitializeEast view work cells (exclusive receive, GM mode, PCG/panel-memory output, entertainer, split; starts inside a 32-bit cell), power-on image */
     East_MidiSetupWorkCells_t East_MidiSetupWorkCells;
     /* AcSendEditSw view record kept in work RAM */
-    East_SendSwitchView_t East_SendSwitchView;
+    /* element 4 of Viewable slot 0x59: AcSendEditSw (class id 0x01630003) */
+    naka_cls_AcSendEditSw_t East_SendSwitchView;
     /* InitializeMurai view work cells (sound menu, part settings, mixer, techni-chord, drawbar, accordion, messages), power-on image */
     Murai_SoundMenuWorkCells_t Murai_SoundMenuWorkCells;
     /* MixerPart_NamePtrTable: 32 pointers (cut from ptrs_1 by split_naka_pointer_arrays.py) */
@@ -2181,9 +1912,11 @@ typedef struct __attribute__((packed)) {
     /* InitializeCheap view work cells (disk menu, load/save, medley, disk tools, disk setup), power-on image */
     Cheap_DiskMenuWorkCells_t Cheap_DiskMenuWorkCells;
     /* AcTitleMenu view record "HardDiskMenu" kept in work RAM */
-    Cheap_HardDiskMenuView_t Cheap_HardDiskMenuView;
+    /* element 2 of Viewable slot 0x60: AcTitleMenu (class id 0x0160001D) */
+    naka_cls_AcTitleMenu_t Cheap_HardDiskMenuView;
     /* AcMonoIndexToggle view record "SingleBankToggle" kept in work RAM */
-    Cheap_SingleBankToggleView_t Cheap_SingleBankToggleView;
+    /* element 74 of Viewable slot 0x61: AcMonoIndexToggle (class id 0x01650005) */
+    naka_cls_AcMonoIndexToggle_t Cheap_SingleBankToggleView;
     /* non-zero: the event and draw tasks yield to the key-scan task between items */
     uint16_t KeyScan_EnabledFlag;
     /* data-dial routing: enable, SetDialUp/Down target/event/parameter, focused view */
@@ -2214,11 +1947,14 @@ typedef struct __attribute__((packed)) {
     /* InitializeRoot view work cells (panel simulator, debug window, naming, memo, track switch, check windows), power-on image */
     Root_DebugNamingWorkCells_t Root_DebugNamingWorkCells;
     /* AcIndexToggle view record "NamingABC" kept in work RAM */
-    Root_NamingUpperCaseToggleView_t Root_NamingUpperCaseToggleView;
+    /* element 23 of Viewable slot 0x0: AcIndexToggle (class id 0x0160004E) */
+    naka_cls_AcIndexToggle_t Root_NamingUpperCaseToggleView;
     /* AcIndexToggle view record "Namingabc" kept in work RAM */
-    Root_NamingLowerCaseToggleView_t Root_NamingLowerCaseToggleView;
+    /* element 24 of Viewable slot 0x0: AcIndexToggle (class id 0x0160004E) */
+    naka_cls_AcIndexToggle_t Root_NamingLowerCaseToggleView;
     /* AcIndexToggle view record "NamingSymbol" kept in work RAM */
-    Root_NamingSymbolToggleView_t Root_NamingSymbolToggleView;
+    /* element 25 of Viewable slot 0x0: AcIndexToggle (class id 0x0160004E) */
+    naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
     uint16_t field_1624;
@@ -2355,31 +2091,31 @@ typedef struct __attribute__((packed)) {
     uint16_t field_172a;
     uint8_t normal_AcLswBox_Value[2];
     uint16_t normal_IvWindowPageControl_Page;
-    uint16_t field_1730;
+    uint16_t NakaWidget_N1_Parent;
     uint16_t field_1732;
-    uint16_t field_1734;
+    uint16_t NakaWidget_N1_Child;
     uint16_t field_1736;
-    uint16_t field_1738;
+    uint16_t Toshi_NORMAL_Elem33_Parent;
     uint16_t field_173a;
-    uint16_t field_173c;
+    uint16_t Toshi_NORMAL_Elem33_Child;
     uint16_t field_173e;
-    uint16_t field_1740;
+    uint16_t Toshi_NORMAL_Elem39_Parent;
     uint16_t field_1742;
-    uint16_t field_1744;
+    uint16_t Toshi_NORMAL_Elem39_Child;
     uint16_t field_1746;
-    uint16_t field_1748;
+    uint16_t Toshi_NORMAL_Elem48_Parent;
     uint16_t field_174a;
-    uint16_t field_174c;
+    uint16_t Toshi_NORMAL_Elem48_Child;
     uint16_t field_174e;
-    uint16_t field_1750;
+    uint16_t Toshi_NORMAL_Elem57_Parent;
     uint16_t field_1752;
-    uint16_t field_1754;
+    uint16_t Toshi_NORMAL_Elem57_Child;
     uint16_t field_1756;
-    uint16_t field_1758;
+    uint16_t Toshi_NORMAL_Elem60_Parent;
     uint16_t field_175a;
-    uint16_t field_175c;
+    uint16_t Toshi_NORMAL_Elem60_Child;
     uint16_t field_175e;
-    uint16_t field_1760;
+    uint16_t ControlMenu_Window;
     uint16_t field_1762;
     uint8_t pad_277[14];  /* zero padding */
     uint16_t ControlIni_Window;
@@ -2603,15 +2339,15 @@ typedef struct __attribute__((packed)) {
     uint16_t PMVIEW_PsPageBox_Page;
     uint16_t PMNAME_Window;
     uint16_t field_1934;
-    uint16_t field_1936;
+    uint16_t NakaWidget_PMBKNAME_Window;
     uint16_t field_1938;
-    uint16_t field_193a;
+    uint16_t NakaWidget_SVARI_Window;
     uint16_t field_193c;
-    uint16_t field_193e;
+    uint16_t NakaWidget_SVARI_Page;
     uint8_t pad_297[2];  /* zero padding */
-    uint16_t field_1942;
+    uint16_t NakaWidget_SVARI_Varisu;
     uint8_t pad_298[4];  /* zero padding */
-    uint16_t field_1948;
+    uint16_t NakaWidget_SVARI_Oldvari;
     uint16_t RVARI_Window;
     uint16_t field_194c;
     uint16_t RVARI_Page;
@@ -2759,10 +2495,454 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_sequencer_channels_t) == 7936,
     "naka_sequencer_channels must be exactly 7936 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Root_ViewableTable_000, registry slot 0x0, 51 elements.
+ * InitializeRoot registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 51, Root_ViewableTable_000, 0x0`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_x). */
+#define Root_ViewableTable_000_SLOT 0x000u
+enum Root_ViewableTable_000_objects {
+    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
+      OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap, record in naka_widget_names_charmap.c */
+      OBJ_PanelSimulatorForHk_Label,                /*  2 Label, record in naka_debug_naming.c */
+      OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu, record in naka_debug_naming.c */
+      OBJ_NakaWidget_PanelSimulator_4_IvExitMode,   /*  4 IvExitMode, record in naka_debug_naming.c */
+      OBJ_DebugWindow_AcWindowMenu,                 /*  5 AcWindowMenu, record in naka_debug_naming.c */
+    OBJ_ClipBoard,                                  /*  6 Screen, record in naka_debug_naming.c */
+    OBJ_DebugWindow,                                /*  7 Window, record in naka_debug_naming.c */
+      OBJ_DebugTime_Label,                          /*  8 Label, record in naka_debug_naming.c */
+      OBJ_DebugWindow_DbDebugMenu,                  /*  9 DbDebugMenu, record in naka_debug_naming.c */
+    OBJ_NamingWindow,                               /* 10 AcNamingWindow, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw,               /* 11 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Del_Label,                              /* 12 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_2,             /* 13 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Ins_Label,                              /* 14 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_3,             /* 15 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Clr_Label,                              /* 16 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_4,             /* 17 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_NamingWindow_Label,                     /* 18 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_5,             /* 19 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_6,             /* 20 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_Position_Label,                           /* 21 Label, record in naka_debug_naming.c */
+      OBJ_NamingCursorBox,                          /* 22 PsCursorBox, record in naka_debug_naming.c */
+      OBJ_Root_NamingUpperCaseToggleView,           /* 23 AcIndexToggle */
+      OBJ_Root_NamingLowerCaseToggleView,           /* 24 AcIndexToggle */
+      OBJ_Root_NamingSymbolToggleView,              /* 25 AcIndexToggle */
+      OBJ_NamingWindow_AcIndexEditSw_7,             /* 26 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_8,             /* 27 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_9,             /* 28 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingLabel,                              /* 29 PsParaBox, record in naka_debug_naming.c */
+    OBJ_MemoWindow,                                 /* 30 Window, record in naka_debug_naming.c */
+      OBJ_MemoWindow_DbMemo,                        /* 31 DbMemo, record in naka_debug_naming.c */
+    OBJ_TrackSwitchWindow,                          /* 32 Window, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch,          /* 33 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_2,        /* 34 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_3,        /* 35 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_4,        /* 36 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_5,        /* 37 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_6,        /* 38 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_7,        /* 39 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_8,        /* 40 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_9,        /* 41 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_10,       /* 42 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_11,       /* 43 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_12,       /* 44 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_13,       /* 45 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_14,       /* 46 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_15,       /* 47 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_16,       /* 48 AcTrackSwitch, record in naka_debug_naming.c */
+    OBJ_MemDumpWindow,                              /* 49 Window, record in naka_debug_naming.c */
+      OBJ_MemDumpWindow_DbMemoryDump,               /* 50 DbMemoryDump, record in naka_debug_naming.c */
+};
+
+/* Viewable table East_ViewableTable_059, registry slot 0x59, 6 elements.
+ * InitializeEast registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 6, East_ViewableTable_059, 0x59`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(East_ViewableTable_059, OBJ_x). */
+#define East_ViewableTable_059_SLOT 0x059u
+enum East_ViewableTable_059_objects {
+    OBJ_MidiPcgOutput,                   /*  0 TtlScreen, record in naka_midi_reverb.c */
+      OBJ_PcgOutGridBox,                 /*  1 AcPcgOutGridBox, record in naka_midi_reverb.c */
+      OBJ_MidiPcgOutput_AcIndexWideES,   /*  2 AcIndexWideES, record in naka_midi_reverb.c */
+      OBJ_MidiPcgOutput_AcIndexWideES_2, /*  3 AcIndexWideES, record in naka_midi_reverb.c */
+      OBJ_East_SendSwitchView,           /*  4 AcSendEditSw */
+      OBJ_MidiPcgOutput_IvShowHide,      /*  5 IvShowHide, record in naka_midi_reverb.c */
+};
+
+/* Viewable table Cheap_ViewableTable_060, registry slot 0x60, 74 elements.
+ * InitializeCheap registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 74, Cheap_ViewableTable_060, 0x60`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Cheap_ViewableTable_060, OBJ_x). */
+#define Cheap_ViewableTable_060_SLOT 0x060u
+enum Cheap_ViewableTable_060_objects {
+    OBJ_DiskMenu,                               /*  0 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_StyleConvert_AcTitleMenu,             /*  1 AcTitleMenu, record in naka_disk_menu_file_io.c */
+      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu */
+      OBJ_Preferences_AcTitleMenu,              /*  3 AcTitleMenu, record in naka_disk_menu_file_io.c */
+      OBJ_Save_AcTitleMenu,                     /*  4 AcTitleMenu, record in naka_disk_menu_file_io.c */
+      OBJ_DiskTools_AcTtlJgBox,                 /*  5 AcTtlJgBox, record in naka_disk_menu_file_io.c */
+      OBJ_LOAD_AcTtlJgBox,                      /*  6 AcTtlJgBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskMenu_IvExitMode,                  /*  7 IvExitMode, record in naka_disk_menu_file_io.c */
+      OBJ_DirectPlay_AcTtlJgBox,                /*  8 AcTtlJgBox, record in naka_disk_menu_file_io.c */
+      OBJ_SongMedley_AcTtlJgBox,                /*  9 AcTtlJgBox, record in naka_disk_menu_file_io.c */
+    OBJ_IntSongMedley,                          /* 10 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_AcIndexWideES,          /* 11 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_AcIndexEditSw,          /* 12 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_AcIndexEditSw_2,        /* 13 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_PsFileNameBox,          /* 14 PsFileNameBox, record in naka_disk_menu_file_io.c */
+        OBJ_IntSongMedley_PsFileNameBox_2,      /* 15 PsFileNameBox, record in naka_disk_menu_file_io.c */
+        OBJ_IntSongMedley_Line,                 /* 16 Line, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_AcMonoIndexToggle,      /* 17 AcMonoIndexToggle, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_AcIndexEditSw_3,        /* 18 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Start_Label,                        /* 19 Label, record in naka_disk_menu_file_io.c */
+      OBJ_IntSongMedley_IvOneShotTimer,         /* 20 IvOneShotTimer, record in naka_disk_menu_file_io.c */
+      OBJ_All_Label,                            /* 21 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Add_Label,                            /* 22 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Loop_Label,                           /* 23 Label, record in naka_disk_menu_file_io.c */
+    OBJ_DiskSaveName,                           /* 24 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveName_AcFuncEditSw,            /* 25 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveName_IvNaming,                /* 26 IvNaming, record in naka_disk_menu_file_io.c */
+    OBJ_ComposerLoad,                           /* 27 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcIndexEditSw,           /* 28 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcIndexWideES,           /* 29 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcIndexEditSw_2,         /* 30 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_PsFileNameBox,           /* 31 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskName_Label,                       /* 32 Label, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcParaStrBox,            /* 33 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcParaStrBox_2,          /* 34 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_AcIndexEditSw_3,         /* 35 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label,                         /* 36 Label, record in naka_disk_menu_file_io.c */
+      OBJ_ComposerLoad_IvExitMode,              /* 37 IvExitMode, record in naka_disk_menu_file_io.c */
+    OBJ_DiskWaitWin,                            /* 38 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskWaitWin_AcRotStrBox,              /* 39 AcRotStrBox, record in naka_disk_menu_file_io.c */
+    OBJ_DiskSaveNameSMF,                        /* 40 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveNameSMF_AcFuncEditSw,         /* 41 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveNameSMF_IvNaming,             /* 42 IvNaming, record in naka_disk_menu_file_io.c */
+    OBJ_WallpaperLoad,                          /* 43 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcIndexEditSw,          /* 44 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Prev_Label,                         /* 45 Label, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcIndexWideES,          /* 46 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcIndexEditSw_2,        /* 47 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Next_Label,                         /* 48 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskName_Label_2,                     /* 49 Label, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcParaStrBox,           /* 50 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcParaStrBox_2,         /* 51 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_AcIndexEditSw_3,        /* 52 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label_2,                       /* 53 Label, record in naka_disk_menu_file_io.c */
+      OBJ_WallpaperLoad_PsFileNameBox,          /* 54 PsFileNameBox, record in naka_disk_menu_file_io.c */
+    OBJ_DiskSaveSureWin,                        /* 55 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveSureWin_VwBox,                /* 56 VwBox, record in naka_disk_menu_file_io.c */
+        OBJ_DiskSaveSureWin_AcLanguageText,     /* 57 AcLanguageText, record in naka_disk_menu_file_io.c */
+          OBJ_DiskSaveSureWin_Line,             /* 58 Line, record in naka_disk_menu_file_io.c */
+        OBJ_DiskSaveSureWin_AcLanguageText_2,   /* 59 AcLanguageText, record in naka_disk_menu_file_io.c */
+        OBJ_DiskSaveSureWin_AcLanguageText_3,   /* 60 AcLanguageText, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveSureWin_AcFuncEditSw,         /* 61 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveSureWin_AcFuncEditSw_2,       /* 62 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskSaveSureWin_AcFuncEditSw_3,       /* 63 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+    OBJ_PasswordWin,                            /* 64 Window, record in naka_disk_menu_file_io.c */
+      OBJ_PasswordWin_IvNaming,                 /* 65 IvNaming, record in naka_disk_menu_file_io.c */
+      OBJ_PasswordWin_AcFuncEditSw,             /* 66 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_PasswordWin_AcFuncEditSw_2,           /* 67 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_PasswordWin_AcLanguageText,           /* 68 AcLanguageText, record in naka_disk_menu_file_io.c */
+    OBJ_CheckPasswordWin,                       /* 69 Window, record in naka_disk_menu_file_io.c */
+      OBJ_CheckPasswordWin_IvNaming,            /* 70 IvNaming, record in naka_disk_menu_file_io.c */
+      OBJ_CheckPasswordWin_AcFuncEditSw,        /* 71 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_CheckPasswordWin_AcFuncEditSw_2,      /* 72 AcFuncEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_CheckPasswordWin_AcLanguageText,      /* 73 AcLanguageText, record in naka_disk_menu_file_io.c */
+};
+
+/* Viewable table Cheap_ViewableTable_061, registry slot 0x61, 128 elements.
+ * InitializeCheap registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 128, Cheap_ViewableTable_061, 0x61`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_x). */
+#define Cheap_ViewableTable_061_SLOT 0x061u
+enum Cheap_ViewableTable_061_objects {
+    OBJ_DiskLoad,                                  /*  0 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadPage,                            /*  1 AcWindowPage, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoad_IvPageControl,                  /*  2 IvPageControl, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoad_IvPageControl_2,                /*  3 IvPageControl, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoad_IvPageControl_3,                /*  4 IvPageControl, record in naka_disk_menu_file_io.c */
+      OBJ_NakaWidget_DiskLoad_5_IvExit,            /*  5 IvExit, record outside the C sources (NakaWidget_DiskLoad_5_IvExit) */
+      OBJ_NakaWidget_DiskLoad_6_IvMainEditSw,      /*  6 IvMainEditSw, record outside the C sources (NakaWidget_DiskLoad_6_IvMainEditSw) */
+    OBJ_DiskLoadP1,                                /*  7 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_PsFileNameBox,                /*  8 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcIndexEditSw,                /*  9 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label_3,                          /* 10 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcFileSfxBox,                 /* 11 AcFileSfxBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskName_Label_3,                        /* 12 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Smf_AcTitleMenu,                         /* 13 AcTitleMenu, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcIndexEditSw_2,              /* 14 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcIndexEditSw_3,              /* 15 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcIndexWideES,                /* 16 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcParaStrBox,                 /* 17 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_AcParaStrBox_2,               /* 18 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP1_VwScreenTitle,                /* 19 VwScreenTitle, record in naka_disk_menu_file_io.c */
+    OBJ_DiskLoadP2,                                /* 20 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw,                /* 21 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_2,              /* 22 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_3,              /* 23 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_4,              /* 24 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_5,              /* 25 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_6,              /* 26 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_7,              /* 27 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_8,              /* 28 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_Pnl_Label,                               /* 29 Label, record in naka_disk_menu_file_io.c */
+      OBJ_PMem_Label,                              /* 30 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Seq_Label,                               /* 31 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Comp_Label,                              /* 32 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Sound_Label,                             /* 33 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Msp_Label,                               /* 34 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Custom_Label,                            /* 35 Label, record in naka_disk_menu_file_io.c */
+      OBJ_Midi_Label,                              /* 36 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcParaStrBox,                 /* 37 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_VwBox,                        /* 38 VwBox, record in naka_disk_menu_file_io.c */
+        OBJ_CurrentPanel_Label,                    /* 39 Label, record in naka_disk_menu_file_io.c */
+        OBJ_UserMidiSettings_Label,                /* 40 Label, record in naka_disk_menu_file_io.c */
+        OBJ_RhythmCustom_Label,                    /* 41 Label, record in naka_disk_menu_file_io.c */
+        OBJ_Msp_Label_2,                           /* 42 Label, record in naka_disk_menu_file_io.c */
+        OBJ_SoundMemory_Label,                     /* 43 Label, record in naka_disk_menu_file_io.c */
+        OBJ_Composer_Label,                        /* 44 Label, record in naka_disk_menu_file_io.c */
+        OBJ_Sequencer_Label,                       /* 45 Label, record in naka_disk_menu_file_io.c */
+        OBJ_PanelMemory_Label,                     /* 46 Label, record in naka_disk_menu_file_io.c */
+        OBJ_DiskLoadP2_PsFileNameBox,              /* 47 PsFileNameBox, record in naka_disk_menu_file_io.c */
+        OBJ_DiskLoadP2_Line,                       /* 48 Line, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_AcIndexEditSw_9,              /* 49 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP2_VwScreenTitle,                /* 50 VwScreenTitle, record in naka_disk_menu_file_io.c */
+      OBJ_Load_Label_4,                            /* 51 Label, record in naka_disk_menu_file_io.c */
+    OBJ_DiskLoadP3,                                /* 52 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_VwScreenTitle,                /* 53 VwScreenTitle, record in naka_disk_menu_file_io.c */
+        OBJ_SingleLoadSwCtl,                       /* 54 IvIndexSwCtrl, record in naka_disk_menu_file_io.c */
+        OBJ_DiskLoadP3_IvIndexSwDelay,             /* 55 IvIndexSwDelay, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexEditSw,                /* 56 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label_5,                          /* 57 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_Arrow,                        /* 58 Arrow, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexWideES,                /* 59 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexWideES_2,              /* 60 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexEditSw_2,              /* 61 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox,                /* 62 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexWideES_3,              /* 63 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcIndexWideES_4,              /* 64 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_AcParaStrBox,                 /* 65 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_To_Label,                                /* 66 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_2,              /* 67 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_Mode_Label,                              /* 68 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_3,              /* 69 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_4,              /* 70 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_5,              /* 71 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_6,              /* 72 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadP3_PsFileNameBox_7,              /* 73 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle */
+    OBJ_DiskLoadSMF,                               /* 75 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_Tech_AcTitleMenu,                        /* 76 AcTitleMenu, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_AcIndexWideES,               /* 77 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_AcIndexEditSw,               /* 78 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Prev_Label_2,                          /* 79 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_AcIndexEditSw_2,             /* 80 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Next_Label_2,                          /* 81 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_PsFileNameBox,               /* 82 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_Info_Label,                              /* 83 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_PsWindowToggle,              /* 84 PsWindowToggle, record in naka_disk_menu_file_io.c */
+      OBJ_LoadAs_Label,                            /* 85 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_AcIndexEditSw_3,             /* 86 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_DiskLoadSMF_PsFileNameBox_2,           /* 87 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_PsFileNameBox_3,             /* 88 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_AcIndexEditSw_4,             /* 89 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_DiskLoadSMF_PsFileNameBox_4,           /* 90 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskLoadSMF_IvMainEditSw,                /* 91 IvMainEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_NakaWidget_DiskLoad_92_IvExit,           /* 92 IvExit, record outside the C sources (NakaWidget_DiskLoad_92_IvExit) */
+      OBJ_NakaWidget_DiskLoad_93_IvIndexSwDelay,   /* 93 IvIndexSwDelay, record outside the C sources (NakaWidget_DiskLoad_93_IvIndexSwDelay) */
+      OBJ_NakaWidget_DiskLoad_94_AcIndexEditSw,    /* 94 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+    OBJ_SongNameSmfLdWin,                          /* 95 Window, record in naka_disk_menu_file_io.c */
+      OBJ_SongNameSmfLdWin_AcParaStrBox,           /* 96 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_SongNameSmfLdWin_AcIndexEditSw,          /* 97 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label_6,                          /* 98 Label, record in naka_disk_menu_file_io.c */
+    OBJ_DiskInfoSmfLdWin,                          /* 99 Window, record in naka_disk_menu_file_io.c */
+      OBJ_DiskName_Label_4,                        /* 100 Label, record in naka_disk_menu_file_io.c */
+      OBJ_DiskInfoSmfLdWin_AcParaStrBox,           /* 101 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskInfoSmfLdWin_AcParaStrBox_2,         /* 102 AcParaStrBox, record in naka_disk_menu_file_io.c */
+      OBJ_DiskInfoSmfLdWin_AcIndexEditSw,          /* 103 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_Load_Label_7,                            /* 104 Label, record in naka_disk_menu_file_io.c */
+    OBJ_CmpSingleLoad,                             /* 105 TtlScreen, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexWideES,             /* 106 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexWideES_2,           /* 107 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexWideES_3,           /* 108 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexWideES_4,           /* 109 AcIndexWideES, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox,             /* 110 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_2,           /* 111 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexEditSw,             /* 112 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+        OBJ_Load_Label_8,                          /* 113 Label, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_Arrow,                     /* 114 Arrow, record in naka_disk_menu_file_io.c */
+      OBJ_To_Label_2,                              /* 115 Label, record in naka_disk_menu_file_io.c */
+      OBJ_From_Label,                              /* 116 Label, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexEditSw_2,           /* 117 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcIndexEditSw_3,           /* 118 AcIndexEditSw, record in naka_disk_menu_file_io.c */
+      OBJ_File_Label,                              /* 119 Label, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_3,           /* 120 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_AcMonoIndexToggle,         /* 121 AcMonoIndexToggle, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_4,           /* 122 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_5,           /* 123 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_6,           /* 124 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_PsFileNameBox_7,           /* 125 PsFileNameBox, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoadSwCtl,                      /* 126 IvIndexSwCtrl, record in naka_disk_menu_file_io.c */
+      OBJ_CmpSingleLoad_IvIndexSwDelay,            /* 127 IvIndexSwDelay, record in naka_disk_menu_file_io.c */
+};
+
+/* Viewable table Kubo_ViewableTable_085, registry slot 0x85, 25 elements.
+ * InitializeKubo registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 25, Kubo_ViewableTable_085, 0x85`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Kubo_ViewableTable_085, OBJ_x). */
+#define Kubo_ViewableTable_085_SLOT 0x085u
+enum Kubo_ViewableTable_085_objects {
+    OBJ_RealtimeRecord_TtlScreen,          /*  0 TtlScreen, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_IvTrackSwitch,    /*  1 IvTrackSwitch, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_AcFuncEditSw,     /*  2 AcFuncEditSw, record in naka_effects_seq.c */
+        OBJ_RecStop_Label,                 /*  3 Label, record in naka_effects_seq.c */
+      OBJ_CycRecSw,                        /*  4 AcFuncToggle, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_Box,              /*  5 Box, record in naka_effects_seq.c */
+      OBJ_MetRecSw,                        /*  6 AcFuncToggle, record in naka_effects_seq.c */
+      OBJ_SqRealRecGamen,                  /*  7 SqplyVal, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_Box_2,            /*  8 Box, record in naka_effects_seq.c */
+      OBJ_Measure_Label_2,                 /*  9 Label, record in naka_effects_seq.c */
+      OBJ_TimeSig_Label_2,                 /* 10 Label, record in naka_effects_seq.c */
+      OBJ_Memory_Label,                    /* 11 Label, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_AcTempoBox,       /* 12 AcTempoBox, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_TrTransposeBox,   /* 13 TrTransposeBox, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_TrChordBox,       /* 14 TrChordBox, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_Label,            /* 15 Label, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_SngSel,           /* 16 SngSel, record in naka_effects_seq.c */
+      OBJ_RealtimeRecord_AcFuncEditSw_2,   /* 17 AcFuncEditSw, record in naka_effects_seq.c */
+      OBJ_Mixer_Label_2,                   /* 18 Label, record in naka_effects_seq.c */
+      OBJ_CycRec_ClearSwitchView,          /* 19 AcFuncEditSw */
+        OBJ_CycRec_ClearLabelView,         /* 20 Label */
+      OBJ_RealtimeRecord_IvRealRecExit,    /* 21 IvRealRecExit, record in naka_effects_seq.c */
+    OBJ_CycClrSw,                          /* 22 Window, record in naka_effects_seq.c */
+      OBJ_CycClrSw_AcFuncEditSw,           /* 23 AcFuncEditSw, record in naka_effects_seq.c */
+      OBJ_Clear_Label,                     /* 24 Label, record in naka_effects_seq.c */
+};
+
+/* Viewable table Yoko_ViewTable_08B, registry slot 0x8B, 22 elements.
+ * InitializeYoko registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 22, Yoko_ViewTable_08B, 0x8B`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Yoko_ViewTable_08B, OBJ_x). */
+#define Yoko_ViewTable_08B_SLOT 0x08Bu
+enum Yoko_ViewTable_08B_objects {
+    OBJ_SqTrAs,                          /*  0 TtlScreen, record in naka_direct_play.c */
+      OBJ_Preset_AcTitleMenu,            /*  1 AcTitleMenu, record in naka_direct_play.c */
+      OBJ_SqTrAs_AcCurrentSongBox,       /*  2 AcCurrentSongBox, record in naka_direct_play.c */
+      OBJ_TrAs_OkSwitchView,             /*  3 VwEditSwBox */
+      OBJ_TrAsGrid,                      /*  4 AcTrAsGridBox, record in naka_direct_play.c */
+        OBJ_TrAsGrid_TextBox,            /*  5 TextBox, record in naka_direct_play.c */
+        OBJ_TrAsGrid_TextBox_2,          /*  6 TextBox, record in naka_direct_play.c */
+        OBJ_TrAsGrid_TextBox_3,          /*  7 TextBox, record in naka_direct_play.c */
+        OBJ_TrAsGrid_AcIndexWideES,      /*  8 AcIndexWideES, record in naka_direct_play.c */
+        OBJ_TrAs_PartSelectSwitchView,   /*  9 AcIndexWideES */
+        OBJ_TrAsGrid_AcIndexEditSw,      /* 10 AcIndexEditSw, record in naka_direct_play.c */
+        OBJ_TrAsGrid_AcIndexEditSw_2,    /* 11 AcIndexEditSw, record in naka_direct_play.c */
+      OBJ_SqTrAs_IvMainEditSw,           /* 12 IvMainEditSw, record in naka_direct_play.c */
+    OBJ_SqTrAsSure,                      /* 13 TtlScreen, record in naka_direct_play.c */
+      OBJ_SqTrAsSure_Box,                /* 14 Box, record in naka_direct_play.c */
+        OBJ_SqTrAsSure_AcLanguageText,   /* 15 AcLanguageText, record in naka_direct_play.c */
+        OBJ_SqTrAsSure_AcLanguageText_2, /* 16 AcLanguageText, record in naka_direct_play.c */
+        OBJ_SqTrAsSure_AcLanguageText_3, /* 17 AcLanguageText, record in naka_direct_play.c */
+      OBJ_SqTrAsSure_IvMainEditSw,       /* 18 IvMainEditSw, record in naka_direct_play.c */
+      OBJ_SqTrAsSure_VwEditSwBox,        /* 19 VwEditSwBox, record in naka_direct_play.c */
+      OBJ_SqTrAsSure_VwEditSwBox_2,      /* 20 VwEditSwBox, record in naka_direct_play.c */
+      OBJ_SqTrAsSure_IvExitScreen,       /* 21 IvExitScreen, record in naka_direct_play.c */
+};
+
+/* Viewable table Kubo_ViewableTable_0D6, registry slot 0xD6, 15 elements.
+ * InitializeKubo registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 15, Kubo_ViewableTable_0D6, 0xD6`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Kubo_ViewableTable_0D6, OBJ_x). */
+#define Kubo_ViewableTable_0D6_SLOT 0x0D6u
+enum Kubo_ViewableTable_0D6_objects {
+    OBJ_EnterTainerScr,                          /*  0 TtlScreen, record in naka_effects_seq.c */
+      OBJ_EnterTainerScr_AcEntertainerGridBox,   /*  1 AcEntertainerGridBox, record in naka_effects_seq.c */
+        OBJ_VocalReverb_Label,                   /*  2 Label, record in naka_effects_seq.c */
+      OBJ_Kubo_VocWorkMenuView,                  /*  3 AcTitleMenu */
+      OBJ_Kubo_FadeInOutMenuView,                /*  4 AcTitleMenu */
+      OBJ_Kubo_MixerMenuView,                    /*  5 AcTitleMenu */
+      OBJ_Kubo_DiskLoadMenuView,                 /*  6 AcTitleMenu */
+      OBJ_EnterTainerScr_AcIndexWideES,          /*  7 AcIndexWideES, record in naka_effects_seq.c */
+      OBJ_EnterTainerScr_AcIndexWideES_2,        /*  8 AcIndexWideES, record in naka_effects_seq.c */
+      OBJ_Item_Label,                            /*  9 Label, record in naka_effects_seq.c */
+      OBJ_Value_Label_15,                        /* 10 Label, record in naka_effects_seq.c */
+      OBJ_EnterTainerScr_IvExitMode,             /* 11 IvExitMode, record in naka_effects_seq.c */
+      OBJ_EnterTainerScr_AcFuncToggle,           /* 12 AcFuncToggle, record in naka_effects_seq.c */
+      OBJ_EnterTainerScr_AcPanicEditSw,          /* 13 AcPanicEditSw, record in naka_effects_seq.c */
+      OBJ_Panic_Label,                           /* 14 Label, record in naka_effects_seq.c */
+};
+
+/* Viewable table ViewTable_0FC, registry slot 0xFC, 26 elements.
+ * InitializeHama registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 26, ViewTable_0FC, 0xFC`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(ViewTable_0FC, OBJ_x). */
+#define ViewTable_0FC_SLOT 0x0FCu
+enum ViewTable_0FC_objects {
+    OBJ_FDTest_ScreenView,               /*  0 TtlScreen */
+      OBJ_FDTest_DiagList_Total,         /*  1 PsNumEditBox, record outside the C sources (FDTest_DiagList_Total) */
+      OBJ_FDTest_DiagList_NG,            /*  2 PsNumEditBox, record outside the C sources (FDTest_DiagList_NG) */
+      OBJ_FDTest_DiagList_OK,            /*  3 PsNumEditBox, record outside the C sources (FDTest_DiagList_OK) */
+      OBJ_FDTest_Separator1,             /*  4 IvMainEditSw, record outside the C sources (FDTest_Separator1) */
+      OBJ_FDTest_Panel_Param,            /*  5 PsEditSwBox, record outside the C sources (FDTest_Panel_Param) */
+        OBJ_FDTest_Label_Tilde80,        /*  6 Label, record outside the C sources (FDTest_Label_Tilde80) */
+      OBJ_FDTest_Panel_SubElements,      /*  7 PsEditSwBox, record outside the C sources (FDTest_Panel_SubElements) */
+        OBJ_FDTest_Group_OnOff,          /*  8 Box, record outside the C sources (FDTest_Group_OnOff) */
+      OBJ_FDTest_Label_RunningTest,      /*  9 Label, record outside the C sources (FDTest_Label_RunningTest) */
+    OBJ_FDTest_Container_DebugHDAE1,     /* 10 TtlScreen, record outside the C sources (FDTest_Container_DebugHDAE1) */
+      OBJ_FDTest_MenuItem_Load1,         /* 11 VwEditSwBox, record outside the C sources (FDTest_MenuItem_Load1) */
+      OBJ_FDTest_MenuItem_Go1,           /* 12 VwEditSwBox, record outside the C sources (FDTest_MenuItem_Go1) */
+      OBJ_FDTest_NavWidget1,             /* 13 IvCatchEvent, record outside the C sources (FDTest_NavWidget1) */
+        OBJ_FDTest_Divider1,             /* 14 IvExitScreen, record outside the C sources (FDTest_Divider1) */
+      OBJ_FDTest_ConsoleArea1,           /* 15 AcScreenMenu, record outside the C sources (FDTest_ConsoleArea1) */
+        OBJ_FDTest_Label_MemoryDump,     /* 16 Label, record outside the C sources (FDTest_Label_MemoryDump) */
+      OBJ_FDTest_StatusBar1,             /* 17 DbMemoryDump, record outside the C sources (FDTest_StatusBar1) */
+    OBJ_FDTest_Container_DebugHDAE2,     /* 18 TtlScreen, record outside the C sources (FDTest_Container_DebugHDAE2) */
+      OBJ_FDTest_MenuItem_Load2,         /* 19 VwEditSwBox, record outside the C sources (FDTest_MenuItem_Load2) */
+      OBJ_FDTest_MenuItem_Go2,           /* 20 VwEditSwBox, record outside the C sources (FDTest_MenuItem_Go2) */
+      OBJ_FDTest_NavWidget2,             /* 21 IvCatchEvent, record outside the C sources (FDTest_NavWidget2) */
+        OBJ_FDTest_Divider2,             /* 22 IvExitScreen, record outside the C sources (FDTest_Divider2) */
+      OBJ_FDTest_ConsoleArea2,           /* 23 AcScreenMenu, record outside the C sources (FDTest_ConsoleArea2) */
+      OBJ_FDTest_StatusBar_Memory,       /* 24 DbMemo, record outside the C sources (FDTest_StatusBar_Memory) */
+      OBJ_FDTest_Label_Console2,         /* 25 Label, record outside the C sources (FDTest_Label_Console2) */
+};
+
 const naka_sequencer_channels_t naka_sequencer_channels_data
     __attribute__((section(".text"), used)) = {
 
-    .FDTest_ScreenView = { 0x01600034, 0xFFFF, 0x0001, 0xFFFF, 0xFFFF, 0x0002, { 0, 0, 319, 239 }, 0x00FF, 0x0000, 0x01A00060, 0x0003DCBA, (NAKA_ADDR(HamaStr_HamaListProc) + 14), 0x00000073 },
+    /* ==== SCREEN TITLE_HDDEXT -- "TT_HDDEXT", title id 0x7F, function NAKA_MAINFUNC_TestTitleFunc ====
+     * What: the hard-disk / extension title. The main CPU registers it in InitializeHama, and the
+     *       HD-AE5000 re-registers it with its ...
+     * Path: MENU DISK button (mode MD_DISK) > (unlabelled entry)
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKMENU
+    /* ==== SCREEN 0x01A000FC -- "TT_EXTAPR", title id 0xFC, function NAKA_MAINFUNC_TestTitleFunc ====
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_DKMENU */
+    .FDTest_ScreenView = {
+        .class_ = NAKA_CLASS(TtlScreen),
+        .super = NAKA_NONE,
+        .sub = OBJ_FDTest_DiagList_Total,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Fixed,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_DKMENU,
+        .window = RAM_FDTest_ScreenView_Window,
+        .title = (NAKA_ADDR(HamaStr_HamaListProc) + 14),
+        .icon = idICON_i113,
+    },
 
     .FDTest_ResultCounters = { 0x0000, 0x0000, 0x0000 },
 
@@ -2770,9 +2950,43 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .Yoko_ViewWorkCells = { 0xFFFFFFFF, 0x0000, 0x0001, 0x00000000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000001, 0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x00000000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0003, 0x0000, 0x0001, 0x0004, 0x0000, 0x0000, 0x0005, 0x0000, 0x0001, 0x0006, 0x0000, 0x0000, 0x0007, 0x0000, 0x0000, 0x0008, 0x0000, 0x0001, 0x0009, 0x0000, 0x0000, 0x000A, 0x0000, 0x0001, 0x000B, 0x0000, 0x0000, 0x000C, 0x0000, 0x0001, 0x000D, 0x0000, 0x0000, 0x000E, 0x0000, 0x0001, 0x000F, 0x0000, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0009, 0x0001, 0x00CD3768, 0x00CD3778, 0x00CD3794, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x00000000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0009, 0x0009, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001 },
 
-    .TrAs_OkSwitchView = { 0x0160003E, 0x0000, 0xFFFF, 0x0004, 0x0002, 0x0000, { 281, 160, 311, 177 }, 0x0007, 0x00C1, 0xFFFF, 0x00000000, 0x0000, 0x0000, 0x000B, 0x0006, (NAKA_ADDR(NakaWidget_TrAsFileList) + 36) },
+    .TrAs_OkSwitchView = {
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_SqTrAs,
+        .sub = NAKA_NONE,
+        .next = OBJ_TrAsGrid,
+        .prev = OBJ_SqTrAs_AcCurrentSongBox,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(281, 160, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Right4,
+        .style = SS_OK,
+        .str = (NAKA_ADDR(NakaWidget_TrAsFileList) + 36),
+    },
 
-    .TrAs_PartSelectSwitchView = { 0x01600022, 0x0004, 0xFFFF, 0x000A, 0x0008, 0x0001, { 86, 216, 157, 238 }, 0x0007, 0x00C9, 0x0001, 0x00000000, 0x0000, 0x0000, 0x0002, 0x0003, 0x0003 },
+    .TrAs_PartSelectSwitchView = {
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_TrAsGrid,
+        .sub = NAKA_NONE,
+        .next = OBJ_TrAsGrid_AcIndexEditSw,
+        .prev = OBJ_TrAsGrid_AcIndexWideES,
+        .flag = VF_Invisible,
+        .rect = NAKA_XYWH(86, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
+        .index = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom3,
+        .editsw2 = ES_Bottom4,
+        .style = SS_UpDown,
+    },
 
     .TrAsSureLang_MessagePtrTable = {
         0x00020CB4, 0x00020CB4, 0x00020CB4, 0x00020CB4,
@@ -2789,17 +3003,121 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .Kubo_ViewWorkCells = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0002, 0x0001, 0x0000, 0x0001, 0x0001, 0x0000, 0x000E, 0x0001, 0x0000, 0x000F, 0x0001, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0001, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0008, 0x0001, 0x00D237B4, 0x00D237C4, 0x00D237DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF },
 
-    .CycRec_ClearSwitchView = { 0x01600020, 0x0000, 0x0014, 0x0015, 0x0012, 0x0000, { 8, 76, 57, 93 }, 0x0007, 0x00C1, 0xFFFF, 0x00000000, 0x0000, 0x0000, 0x0089, 0x0000, 0x0128001D },
+    .CycRec_ClearSwitchView = {
+        .class_ = NAKA_CLASS(AcFuncEditSw),
+        .super = OBJ_RealtimeRecord_TtlScreen,
+        .sub = OBJ_CycRec_ClearLabelView,
+        .next = OBJ_RealtimeRecord_IvRealRecExit,
+        .prev = OBJ_Mixer_Label_2,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(8, 76, 50, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left2,
+        .style = SS_Special,
+        .func = NAKA_APFUNC_MainExeFunc,
+    },
 
-    .CycRec_ClearLabelView = { 0x0160002B, 0x0013, 0xFFFF, 0xFFFF, 0xFFFF, 0x0000, { 10, 77, 53, 95 }, (NAKA_ADDR(NakaWidget_KuboView085_18_Label) + 38), 0x00000000, 0x0000 },
+    .CycRec_ClearLabelView = {
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_CycRec_ClearSwitchView,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(10, 77, 44, 19),
+        .str = (NAKA_ADDR(NakaWidget_KuboView085_18_Label) + 38),
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+    },
 
-    .Kubo_VocWorkMenuView = { 0x0160001D, 0x0000, 0xFFFF, 0x0004, 0x0001, 0x0000, { 8, 30, 156, 55 }, 0x00F7, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x0088, 0x0003E12E, (NAKA_ADDR(NakaWidget_EnterTainerScr_2_Label) + 46), 0x01A000D7, 0x00000000 },
+    .Kubo_VocWorkMenuView = {
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_EnterTainerScr,
+        .sub = NAKA_NONE,
+        .next = OBJ_Kubo_FadeInOutMenuView,
+        .prev = OBJ_EnterTainerScr_AcEntertainerGridBox,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(8, 30, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .selected = RAM_VocWorkSw_Selected,
+        .str = (NAKA_ADDR(NakaWidget_EnterTainerScr_2_Label) + 46),
+        .title = TITLE_ETVOCAL,
+        .icon = idICON_None,
+    },
 
-    .Kubo_FadeInOutMenuView = { 0x0160001D, 0x0000, 0xFFFF, 0x0005, 0x0003, 0x0000, { 8, 72, 156, 97 }, 0x00F7, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x0089, 0x0003E130, NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING), 0x01A000D8, 0x00000000 },
+    .Kubo_FadeInOutMenuView = {
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_EnterTainerScr,
+        .sub = NAKA_NONE,
+        .next = OBJ_Kubo_MixerMenuView,
+        .prev = OBJ_Kubo_VocWorkMenuView,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(8, 72, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left2,
+        .selected = RAM_FadeInOutSw_Selected,
+        .str = NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING),
+        .title = TITLE_ETFADEIN,
+        .icon = idICON_None,
+    },
 
-    .Kubo_MixerMenuView = { 0x0160001D, 0x0000, 0xFFFF, 0x0006, 0x0004, 0x0000, { 8, 114, 156, 139 }, 0x00F7, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x008A, 0x0003E132, (NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING) + 20), 0x01A00008, 0x00000000 },
+    .Kubo_MixerMenuView = {
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_EnterTainerScr,
+        .sub = NAKA_NONE,
+        .next = OBJ_Kubo_DiskLoadMenuView,
+        .prev = OBJ_Kubo_FadeInOutMenuView,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left3,
+        .selected = RAM_MixerSw_Selected,
+        .str = (NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING) + 20),
+        .title = TITLE_SDMIXER,
+        .icon = idICON_None,
+    },
 
-    .Kubo_DiskLoadMenuView = { 0x0160001D, 0x0000, 0xFFFF, 0x0007, 0x0005, 0x0000, { 8, 156, 156, 181 }, 0x00F7, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x008B, 0x0003E134, (NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING) + 26), 0x01A00061, 0x00000000 },
+    .Kubo_DiskLoadMenuView = {
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_EnterTainerScr,
+        .sub = NAKA_NONE,
+        .next = OBJ_EnterTainerScr_AcIndexWideES,
+        .prev = OBJ_Kubo_MixerMenuView,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left4,
+        .selected = RAM_DiskLoadSw_Selected,
+        .str = (NAKA_ADDR(NakaInst_FADE_IN_OUT_SETTING) + 26),
+        .title = TITLE_DKLD,
+        .icon = idICON_None,
+    },
 
     .SqedtFunc_CursorState = { 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF },
 
@@ -2846,7 +3164,26 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .East_MidiSetupWorkCells = { 0x0000, 0x0000, 0x00000000, 0x0000, 0x00000000, 0x0000, 0x00000000, 0x0000, 0x00000000, 0x00000000, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0001, 0x00D137E4, 0x00D137F4, 0x00D13804, 0x00C1, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0x0000, 0x0001, 0x00D137E4, 0x00D137F4, 0x00D13804, 0xFFFF, 0xFFFD, 0x00D13814, 0x00D13824, 0x00D13834, 0xFFFFFFFF, 0x0002, 0x0001, 0x00D137F8, 0x00D13808, 0x00D13820, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0002, 0x0001, 0x00D1383C, 0x00D1384C, 0x00D1386C, 0xFFFFFFFF, 0x0001, 0x0001, 0x00D14264, 0x00D14274, 0x00D14288, 0xFFFFFFFF, 0x0000 },
 
-    .East_SendSwitchView = { 0x01630003, 0x0000, 0xFFFF, 0x0005, 0x0003, 0x0000, { 270, 160, 308, 177 }, 0x0007, 0x00C1, 0xFFFF, 0x00000000, 0x00F9, 0x0000, 0x000B, 0x0000, 0x0123000D, (NAKA_ADDR(NakaWidget_MidiPcgOutput_3_AcIndexWideES) + 42), 0x0003E5A6 },
+    .East_SendSwitchView = {
+        .class_ = NAKA_CLASS(AcSendEditSw),
+        .super = OBJ_MidiPcgOutput,
+        .sub = NAKA_NONE,
+        .next = OBJ_MidiPcgOutput_IvShowHide,
+        .prev = OBJ_MidiPcgOutput_AcIndexWideES_2,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(270, 160, 39, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_Red,
+        .align = AL_Center,
+        .editsw = ES_Right4,
+        .style = SS_Special,
+        .func = NAKA_APFUNC_PcgOutSendFunc,
+        .str = (NAKA_ADDR(NakaWidget_MidiPcgOutput_3_AcIndexWideES) + 42),
+        .onoff = RAM_Send_AcSendEditSw_OnOff,
+    },
 
     .Murai_SoundMenuWorkCells = { 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000043, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000 },
 
@@ -3099,9 +3436,42 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .Cheap_DiskMenuWorkCells = { 0xFFFFFFFF, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFF, 0x0000, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFF, 0x0000, 0x0001, 0x0000, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFF, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFF, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0x0001, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0xFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x00000000, 0x0000, 0x0000 },
 
-    .Cheap_HardDiskMenuView = { 0x0160001D, 0x0000, 0xFFFF, 0x0003, 0x0001, 0x0000, { 163, 198, 311, 223 }, 0x00F5, 0x0000, 0x0000, 0x00000000, 0x00FF, 0x0000, 0x000C, 0x0003EC56, (NAKA_ADDR(NakaWidget_DiskMenu_1_AcTitleMenu) + 68), 0x01A0007F, 0x00000083 },
+    .Cheap_HardDiskMenuView = {
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_DiskMenu,
+        .sub = NAKA_NONE,
+        .next = OBJ_Preferences_AcTitleMenu,
+        .prev = OBJ_StyleConvert_AcTitleMenu,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(163, 198, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Right5,
+        .selected = RAM_HardDiskMenu_Selected,
+        .str = (NAKA_ADDR(NakaWidget_DiskMenu_1_AcTitleMenu) + 68),
+        .title = TITLE_HDDEXT,
+        .icon = idICON_i129,
+    },
 
-    .Cheap_SingleBankToggleView = { 0x01650005, 0x0034, 0xFFFF, 0xFFFF, 0x0049, 0x0000, { 259, 76, 311, 93 }, 0x00000000, NAKA_ADDR(NakaStr_Bank), NAKA_ADDR(NakaStr_Single), 0x0003ED1C, 0x0009, 0x0003 },
+    .Cheap_SingleBankToggleView = {
+        .class_ = NAKA_CLASS(AcMonoIndexToggle),
+        .super = OBJ_DiskLoadP3,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_DiskLoadP3_PsFileNameBox_7,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(259, 76, 53, 18),
+        .font = idCHARA1,
+        .stron = NAKA_ADDR(NakaStr_Bank),
+        .stroff = NAKA_ADDR(NakaStr_Single),
+        .onoff = RAM_SingleBankToggle_OnOff,
+        .editsw = ES_Right2,
+        .index = 0x0003,
+    },
 
     .KeyScan_EnabledFlag = 0x0000,
 
@@ -3137,11 +3507,56 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .Root_DebugNamingWorkCells = { 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0002, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000, 0x0001, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0003, 0x0000, 0x0001, 0x0004, 0x0000, 0x0000, 0x0005, 0x0000, 0x0001, 0x0006, 0x0000, 0x0000, 0x0007, 0x0000, 0x0000, 0x0008, 0x0000, 0x0001, 0x0009, 0x0000, 0x0000, 0x000A, 0x0000, 0x0001, 0x000B, 0x0000, 0x0000, 0x000C, 0x0000, 0x0001, 0x000D, 0x0000, 0x0000, 0x000E, 0x0000, 0x0001, 0x000F, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF, 0x0000F980, 0xFFFFFFFF, 0x0000, 0x0000, 0xFFFFFFFF, 0xFFFFFFFF },
 
-    .Root_NamingUpperCaseToggleView = { 0x0160004E, 0x000A, 0xFFFF, 0x0018, 0x0016, 0x0000, { 84, 216, 115, 238 }, 0x00000000, (NAKA_ADDR(NakaWidget_NamingCursorBox) + 44), (NAKA_ADDR(NakaWidget_NamingCursorBox) + 40), 0x0003F0CE, 0x0002, 0x0000, 0x0000 },
+    .Root_NamingUpperCaseToggleView = {
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_NamingWindow,
+        .sub = NAKA_NONE,
+        .next = OBJ_Root_NamingLowerCaseToggleView,
+        .prev = OBJ_NamingCursorBox,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(84, 216, 32, 23),
+        .font = idCHARA1,
+        .stron = (NAKA_ADDR(NakaWidget_NamingCursorBox) + 44),
+        .stroff = (NAKA_ADDR(NakaWidget_NamingCursorBox) + 40),
+        .onoff = RAM_NamingABC_OnOff,
+        .editsw = ES_Bottom3,
+        .index = 0x0000,
+        .tag = 0x0000,
+    },
 
-    .Root_NamingLowerCaseToggleView = { 0x0160004E, 0x000A, 0xFFFF, 0x0019, 0x0017, 0x0000, { 124, 216, 155, 238 }, 0x00000000, NAKA_ADDR(NakaDbg_LowerCaseChars2), NAKA_ADDR(NakaDbg_LowerCaseChars), 0x0003F0D0, 0x0003, 0x0000, 0x0001 },
+    .Root_NamingLowerCaseToggleView = {
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_NamingWindow,
+        .sub = NAKA_NONE,
+        .next = OBJ_Root_NamingSymbolToggleView,
+        .prev = OBJ_Root_NamingUpperCaseToggleView,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(124, 216, 32, 23),
+        .font = idCHARA1,
+        .stron = NAKA_ADDR(NakaDbg_LowerCaseChars2),
+        .stroff = NAKA_ADDR(NakaDbg_LowerCaseChars),
+        .onoff = RAM_Namingabc_OnOff,
+        .editsw = ES_Bottom4,
+        .index = 0x0000,
+        .tag = 0x0001,
+    },
 
-    .Root_NamingSymbolToggleView = { 0x0160004E, 0x000A, 0xFFFF, 0x001A, 0x0018, 0x0000, { 164, 216, 195, 238 }, 0x00000000, (NAKA_ADDR(NakaDbg_LowerCaseChars2) + 8), (NAKA_ADDR(NakaDbg_LowerCaseChars2) + 4), 0x0003F0D2, 0x0004, 0x0000, 0x0002 },
+    .Root_NamingSymbolToggleView = {
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_NamingWindow,
+        .sub = NAKA_NONE,
+        .next = OBJ_NamingWindow_AcIndexEditSw_7,
+        .prev = OBJ_Root_NamingLowerCaseToggleView,
+        .flag = VF_None,
+        .rect = NAKA_XYWH(164, 216, 32, 23),
+        .font = idCHARA1,
+        .stron = (NAKA_ADDR(NakaDbg_LowerCaseChars2) + 8),
+        .stroff = (NAKA_ADDR(NakaDbg_LowerCaseChars2) + 4),
+        .onoff = RAM_NamingSymbol_OnOff,
+        .editsw = ES_Bottom5,
+        .index = 0x0000,
+        .tag = 0x0002,
+    },
 
     .Naka_DrawbarReg_Table = {
         NAKA_ADDR(NakaColor_Palette2),
@@ -3483,55 +3898,55 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .normal_IvWindowPageControl_Page = 0x0001,
 
-    .field_1730 = NAKA_NONE,
+    .NakaWidget_N1_Parent = NAKA_NONE,
 
     .field_1732 = NAKA_NONE,
 
-    .field_1734 = NAKA_NONE,
+    .NakaWidget_N1_Child = NAKA_NONE,
 
     .field_1736 = NAKA_NONE,
 
-    .field_1738 = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Parent = NAKA_NONE,
 
     .field_173a = NAKA_NONE,
 
-    .field_173c = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Child = NAKA_NONE,
 
     .field_173e = NAKA_NONE,
 
-    .field_1740 = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Parent = NAKA_NONE,
 
     .field_1742 = NAKA_NONE,
 
-    .field_1744 = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Child = NAKA_NONE,
 
     .field_1746 = NAKA_NONE,
 
-    .field_1748 = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Parent = NAKA_NONE,
 
     .field_174a = NAKA_NONE,
 
-    .field_174c = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Child = NAKA_NONE,
 
     .field_174e = NAKA_NONE,
 
-    .field_1750 = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Parent = NAKA_NONE,
 
     .field_1752 = NAKA_NONE,
 
-    .field_1754 = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Child = NAKA_NONE,
 
     .field_1756 = NAKA_NONE,
 
-    .field_1758 = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Parent = NAKA_NONE,
 
     .field_175a = NAKA_NONE,
 
-    .field_175c = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Child = NAKA_NONE,
 
     .field_175e = NAKA_NONE,
 
-    .field_1760 = NAKA_NONE,
+    .ControlMenu_Window = NAKA_NONE,
 
     .field_1762 = NAKA_NONE,
 
@@ -3979,23 +4394,23 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .field_1934 = NAKA_NONE,
 
-    .field_1936 = NAKA_NONE,
+    .NakaWidget_PMBKNAME_Window = NAKA_NONE,
 
     .field_1938 = NAKA_NONE,
 
-    .field_193a = NAKA_NONE,
+    .NakaWidget_SVARI_Window = NAKA_NONE,
 
     .field_193c = NAKA_NONE,
 
-    .field_193e = 0x0001,
+    .NakaWidget_SVARI_Page = 0x0001,
 
     .pad_297 = { 0 },
 
-    .field_1942 = 0x000D,
+    .NakaWidget_SVARI_Varisu = 0x000D,
 
     .pad_298 = { 0 },
 
-    .field_1948 = 0x0003,
+    .NakaWidget_SVARI_Oldvari = 0x0003,
 
     .RVARI_Window = NAKA_NONE,
 

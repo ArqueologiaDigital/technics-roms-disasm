@@ -1177,8 +1177,8 @@ AccPlay_InitializeStart:
 	push xiy
 	push xiz
 	xor wa, wa
-	ld a, 0x10:opc
-	call UI_PostPartChangeEvent
+	ld a, MD_MSP_REC:opc
+	call UI_ChangeModeByIndex
 	pop xiz
 	pop xiy
 	pop xix
@@ -1237,8 +1237,8 @@ AccPlay_MainUpdateLoop:
 
 AccPlay_PostEvent9E_Enable:
 	xor wa, wa
-	ld a, 0x1:opc
-	call UI_PostPartChangeEvent
+	ld a, MD_NORMAL:opc
+	call UI_ChangeModeByIndex
 	bit 2, (0x7f15:16)
 	jr z, AccPlay_PostEvent9E_Disable
 	call AccSeq_PostEvent9E_Disable

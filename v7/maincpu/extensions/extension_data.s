@@ -2311,158 +2311,79 @@ NakaInstTable8_NullTerm:	aligned_string ""
 	.short 245, 0, 0
 	.long 0x0003f404, 0x0003f408
 Toshi_NORMAL_Elem25:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 26, NAKA_INDEX_NONE
-	.short 8, 277, 128, 315, 235
-	.short 7, 193, 0xffff, 0, 7
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem26, prev=NAKA_INDEX_NONE, flag=VF_Const, x=277, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part1, editsw=ES_Bottom8
 Toshi_NORMAL_Elem26:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 27, 25
-	.short 8, 238, 128, 276, 235
-	.short 7, 193, 0xffff, 1, 6
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem27, prev=IDX_Toshi_NORMAL_Elem25, flag=VF_Const, x=238, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part2, editsw=ES_Bottom7
 Toshi_NORMAL_Elem27:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 28, 26
-	.short 8, 199, 128, 237, 235
-	.short 7, 193, 0xffff, 2, 5
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem28, prev=IDX_Toshi_NORMAL_Elem26, flag=VF_Const, x=199, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part3, editsw=ES_Bottom6
 Toshi_NORMAL_Elem28:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 29, 27
-	.short 8, 160, 128, 198, 235
-	.short 7, 193, 0xffff, 19, 4
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem29, prev=IDX_Toshi_NORMAL_Elem27, flag=VF_Const, x=160, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Bass, editsw=ES_Bottom5
 Toshi_NORMAL_Elem29:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 30, 28
-	.short 8, 121, 128, 159, 235
-	.short 7, 193, 0xffff, 16, 3
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem30, prev=IDX_Toshi_NORMAL_Elem28, flag=VF_Const, x=121, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Accomp1, editsw=ES_Bottom4
 Toshi_NORMAL_Elem30:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 31, 29
-	.short 8, 82, 128, 120, 235
-	.short 7, 193, 0xffff, 17, 2
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem31, prev=IDX_Toshi_NORMAL_Elem29, flag=VF_Const, x=82, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Accomp2, editsw=ES_Bottom3
 Toshi_NORMAL_Elem31:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, 32, 30
-	.short 8, 43, 128, 81, 235
-	.short 7, 193, 0xffff, 18, 1
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem32, prev=IDX_Toshi_NORMAL_Elem30, flag=VF_Const, x=43, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Accomp3, editsw=ES_Bottom2
 Toshi_NORMAL_Elem32:
-	naka_node 0x3c, 24, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 31
-	.short 8, 4, 128, 42, 235
-	.short 7, 193, 0xffff, 20, 0
+	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem31, flag=VF_Const, x=4, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Drum, editsw=ES_Bottom1
 Toshi_NORMAL_Elem33:
-	naka_node 0x35, NAKA_INDEX_NONE, 34, NAKA_INDEX_NONE, NAKA_INDEX_NONE
-	.short 8, 0, 127, 319, 239
-	.short 245, 0, 0
-	.long 0x0003f40c, 0x0003f410
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem34, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=0, y=127, w=320, h=113, color=CL_WallPattern, border=BD_None, modal=0x0, parent=0x3f40c, child=0x3f410
 Toshi_NORMAL_Elem34:
-	naka_node 0x3c, 33, NAKA_INDEX_NONE, 35, NAKA_INDEX_NONE
-	.short 8, 160, 128, 198, 235
-	.short 7, 193, 0xffff, 21, 4
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem33, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem35, prev=NAKA_INDEX_NONE, flag=VF_Const, x=160, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Chord, editsw=ES_Bottom5
 Toshi_NORMAL_Elem35:
-	naka_node 0x3c, 33, NAKA_INDEX_NONE, 36, 34
-	.short 8, 121, 128, 159, 235
-	.short 7, 193, 0xffff, 22, 3
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem33, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem36, prev=IDX_Toshi_NORMAL_Elem34, flag=VF_Const, x=121, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_RootBass, editsw=ES_Bottom4
 Toshi_NORMAL_Elem36:
-	naka_node 0x3c, 33, NAKA_INDEX_NONE, 37, 35
-	.short 8, 82, 128, 120, 235
-	.short 7, 193, 0xffff, 23, 2
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem33, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem37, prev=IDX_Toshi_NORMAL_Elem35, flag=VF_Const, x=82, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Msp1, editsw=ES_Bottom3
 Toshi_NORMAL_Elem37:
-	naka_node 0x3c, 33, NAKA_INDEX_NONE, 38, 36
-	.short 8, 43, 128, 81, 235
-	.short 7, 193, 0xffff, 26, 1
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem33, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem38, prev=IDX_Toshi_NORMAL_Elem36, flag=VF_Const, x=43, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Metronome, editsw=ES_Bottom2
 Toshi_NORMAL_Elem38:
-	naka_node 0x3c, 33, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 37
-	.short 8, 4, 128, 42, 235
-	.short 7, 193, 0xffff, 27, 0
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem33, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem37, flag=VF_Const, x=4, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Microphone, editsw=ES_Bottom1
 Toshi_NORMAL_Elem39:
-	naka_node 0x35, NAKA_INDEX_NONE, 40, NAKA_INDEX_NONE, NAKA_INDEX_NONE
-	.short 8, 0, 127, 319, 239
-	.short 245, 0, 0
-	.long 0x0003f414, 0x0003f418
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem40, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=0, y=127, w=320, h=113, color=CL_WallPattern, border=BD_None, modal=0x0, parent=0x3f414, child=0x3f418
 Toshi_NORMAL_Elem40:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 41, NAKA_INDEX_NONE
-	.short 8, 4, 128, 42, 235
-	.short 7, 193, 0xffff, 0, 0
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem41, prev=NAKA_INDEX_NONE, flag=VF_Const, x=4, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part1, editsw=ES_Bottom1
 Toshi_NORMAL_Elem41:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 42, 40
-	.short 8, 43, 128, 81, 235
-	.short 7, 193, 0xffff, 1, 1
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem42, prev=IDX_Toshi_NORMAL_Elem40, flag=VF_Const, x=43, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part2, editsw=ES_Bottom2
 Toshi_NORMAL_Elem42:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 43, 41
-	.short 8, 82, 128, 120, 235
-	.short 7, 193, 0xffff, 2, 2
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem43, prev=IDX_Toshi_NORMAL_Elem41, flag=VF_Const, x=82, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part3, editsw=ES_Bottom3
 Toshi_NORMAL_Elem43:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 44, 42
-	.short 8, 121, 128, 159, 235
-	.short 7, 193, 0xffff, 3, 3
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem44, prev=IDX_Toshi_NORMAL_Elem42, flag=VF_Const, x=121, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part4, editsw=ES_Bottom4
 Toshi_NORMAL_Elem44:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 45, 43
-	.short 8, 160, 128, 198, 235
-	.short 7, 193, 0xffff, 4, 4
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem45, prev=IDX_Toshi_NORMAL_Elem43, flag=VF_Const, x=160, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part5, editsw=ES_Bottom5
 Toshi_NORMAL_Elem45:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 46, 44
-	.short 8, 199, 128, 237, 235
-	.short 7, 193, 0xffff, 5, 5
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem46, prev=IDX_Toshi_NORMAL_Elem44, flag=VF_Const, x=199, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part6, editsw=ES_Bottom6
 Toshi_NORMAL_Elem46:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, 47, 45
-	.short 8, 238, 128, 276, 235
-	.short 7, 193, 0xffff, 6, 6
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem47, prev=IDX_Toshi_NORMAL_Elem45, flag=VF_Const, x=238, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part7, editsw=ES_Bottom7
 Toshi_NORMAL_Elem47:
-	naka_node 0x3c, 39, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 46
-	.short 8, 277, 128, 315, 235
-	.short 7, 193, 0xffff, 7, 7
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem39, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem46, flag=VF_Const, x=277, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part8, editsw=ES_Bottom8
 Toshi_NORMAL_Elem48:
-	naka_node 0x35, NAKA_INDEX_NONE, 49, NAKA_INDEX_NONE, NAKA_INDEX_NONE
-	.short 8, 0, 127, 319, 239
-	.short 245, 0, 0
-	.long 0x0003f41c, 0x0003f420
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem49, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=0, y=127, w=320, h=113, color=CL_WallPattern, border=BD_None, modal=0x0, parent=0x3f41c, child=0x3f420
 Toshi_NORMAL_Elem49:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 50, NAKA_INDEX_NONE
-	.short 8, 4, 128, 42, 235
-	.short 7, 193, 0xffff, 8, 0
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem50, prev=NAKA_INDEX_NONE, flag=VF_Const, x=4, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part9, editsw=ES_Bottom1
 Toshi_NORMAL_Elem50:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 51, 49
-	.short 8, 43, 128, 81, 235
-	.short 7, 193, 0xffff, 9, 1
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem51, prev=IDX_Toshi_NORMAL_Elem49, flag=VF_Const, x=43, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part10, editsw=ES_Bottom2
 Toshi_NORMAL_Elem51:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 52, 50
-	.short 8, 82, 128, 120, 235
-	.short 7, 193, 0xffff, 10, 2
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem52, prev=IDX_Toshi_NORMAL_Elem50, flag=VF_Const, x=82, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part11, editsw=ES_Bottom3
 Toshi_NORMAL_Elem52:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 53, 51
-	.short 8, 121, 128, 159, 235
-	.short 7, 193, 0xffff, 11, 3
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem53, prev=IDX_Toshi_NORMAL_Elem51, flag=VF_Const, x=121, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part12, editsw=ES_Bottom4
 Toshi_NORMAL_Elem53:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 54, 52
-	.short 8, 160, 128, 198, 235
-	.short 7, 193, 0xffff, 12, 4
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem54, prev=IDX_Toshi_NORMAL_Elem52, flag=VF_Const, x=160, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part13, editsw=ES_Bottom5
 Toshi_NORMAL_Elem54:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 55, 53
-	.short 8, 199, 128, 237, 235
-	.short 7, 193, 0xffff, 13, 5
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem55, prev=IDX_Toshi_NORMAL_Elem53, flag=VF_Const, x=199, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part14, editsw=ES_Bottom6
 Toshi_NORMAL_Elem55:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, 56, 54
-	.short 8, 238, 128, 276, 235
-	.short 7, 193, 0xffff, 14, 6
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem56, prev=IDX_Toshi_NORMAL_Elem54, flag=VF_Const, x=238, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part15, editsw=ES_Bottom7
 Toshi_NORMAL_Elem56:
-	naka_node 0x3c, 48, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 55
-	.short 8, 277, 128, 315, 235
-	.short 7, 193, 0xffff, 15, 7
+	NAKA_REC_AcMixerVol super=IDX_Toshi_NORMAL_Elem48, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem55, flag=VF_Const, x=277, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part16, editsw=ES_Bottom8
 Toshi_NORMAL_Elem57:
-	naka_node 0x35, NAKA_INDEX_NONE, 58, NAKA_INDEX_NONE, NAKA_INDEX_NONE
-	.short 8, 4, 190, 315, 236
-	.short 7, 193, 0
-	.long 0x0003f424, 0x0003f428
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem58, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=4, y=190, w=312, h=47, color=CL_Silver, border=BD_3D_UP2, modal=0x0, parent=0x3f424, child=0x3f428
 Toshi_NORMAL_Elem58:
-	naka_node 0x69, 57, NAKA_INDEX_NONE, 59, NAKA_INDEX_NONE
-	.short 8, 152, 200, 263, 224
-	.short 22, 290
+	NAKA_REC_VwUserBitmap super=IDX_Toshi_NORMAL_Elem57, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem59, prev=NAKA_INDEX_NONE, flag=VF_Const, x=152, y=200, w=112, h=25, func=NAKA_APFUNC_BitmapFinpic
 Toshi_NORMAL_Elem59:
-	naka_node 0x69, 57, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 58
-	.short 8, 56, 204, 135, 221
-	.short 23, 290
+	NAKA_REC_VwUserBitmap super=IDX_Toshi_NORMAL_Elem57, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem58, flag=VF_Const, x=56, y=204, w=80, h=18, func=NAKA_APFUNC_BitmapFinst
 Toshi_NORMAL_Elem60:
-	naka_node 0x35, NAKA_INDEX_NONE, 61, NAKA_INDEX_NONE, NAKA_INDEX_NONE
-	.short 8, 4, 190, 315, 236
-	.short 7, 193, 0
-	.long 0x0003f42c, 0x0003f430
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem61, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=4, y=190, w=312, h=47, color=CL_Silver, border=BD_3D_UP2, modal=0x0, parent=0x3f42c, child=0x3f430
 Toshi_NORMAL_Elem61:
-	naka_node 0x69, 60, NAKA_INDEX_NONE, 62, NAKA_INDEX_NONE
-	.short 8, 40, 204, 147, 223
-	.short 25, 290
+	NAKA_REC_VwUserBitmap super=IDX_Toshi_NORMAL_Elem60, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem62, prev=NAKA_INDEX_NONE, flag=VF_Const, x=40, y=204, w=108, h=20, func=NAKA_APFUNC_BitmapFoutst
 Toshi_NORMAL_Elem62:
 	naka_node 0x69, 60, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 61
 	.short 8, 160, 200, 272, 224
@@ -2499,10 +2420,7 @@ Str_ErrorDialog_Caution:	.asciz "CAUTION!!"	; English text
 ; 7, index 10"; 7 is the PARENT element and 0x0a the NEXT sibling (element 10).
 ; ---------------------------------------------------------------------------
 ErrorDialog_CPUTransmissionError:
-	naka_node 0x2b, 7, NAKA_INDEX_NONE, 10, 8
-	.short 8, 14, 150, 305, 168
-	.long Str_ErrorDialog_CPUTransmission
-	.short 0, 0, 2
+	NAKA_REC_Label super=IDX_NakaWidget_TEST1CP, sub=NAKA_INDEX_NONE, next=IDX_ErrorDialog_RecoveryLine1, prev=IDX_ErrorDialog_CautionHeader, flag=VF_Const, x=14, y=150, w=292, h=19, str=Str_ErrorDialog_CPUTransmission, font=idCHARA1, fontcolor=CL_Green
 Str_ErrorDialog_CPUTransmission:	aligned_string "** ERROR in CPU data transmission **"
 
 
@@ -2512,10 +2430,7 @@ Str_ErrorDialog_CPUTransmission:	aligned_string "** ERROR in CPU data transmissi
 ; (was "Widget 11 (0x0b)" / "Screen group 7, index 11": parent 7, next 11)
 ; ---------------------------------------------------------------------------
 ErrorDialog_RecoveryLine1:
-	naka_node 0x2b, 7, NAKA_INDEX_NONE, 11, 9
-	.short 8, 46, 174, 265, 184
-	.long Str_ErrorDialog_TryTurningOff
-	.short 3, 0, 0
+	NAKA_REC_Label super=IDX_NakaWidget_TEST1CP, sub=NAKA_INDEX_NONE, next=IDX_ErrorDialog_RecoveryLine2, prev=IDX_ErrorDialog_CPUTransmissionError, flag=VF_Const, x=46, y=174, w=220, h=11, str=Str_ErrorDialog_TryTurningOff, font=idCHARA4, fontcolor=CL_Black
 Str_ErrorDialog_TryTurningOff:	aligned_string "Please try turning off and on again."
 
 
@@ -2528,10 +2443,7 @@ Str_ErrorDialog_TryTurningOff:	aligned_string "Please try turning off and on aga
 ; 0x00E500BE = {190, 229})
 ; ---------------------------------------------------------------------------
 ErrorDialog_RecoveryLine2:
-	naka_node 0x2b, 7, NAKA_INDEX_NONE, 12, 10
-	.short 8, 46, 190, 229, 200
-	.long Str_ErrorDialog_AppearsAgain
-	.short 3, 0, 0
+	NAKA_REC_Label super=IDX_NakaWidget_TEST1CP, sub=NAKA_INDEX_NONE, next=IDX_ErrorDialog_RecoveryLine3, prev=IDX_ErrorDialog_RecoveryLine1, flag=VF_Const, x=46, y=190, w=184, h=11, str=Str_ErrorDialog_AppearsAgain, font=idCHARA4, fontcolor=CL_Black
 Str_ErrorDialog_AppearsAgain:	aligned_string "If this message appears again,"
 
 
@@ -2542,10 +2454,7 @@ Str_ErrorDialog_AppearsAgain:	aligned_string "If this message appears again,"
 ; 0xffff is "no next sibling", i.e. the LAST child of element 7)
 ; ---------------------------------------------------------------------------
 ErrorDialog_RecoveryLine3:
-	naka_node 0x2b, 7, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 11
-	.short 8, 46, 206, 205, 216
-	.long Str_ErrorDialog_NeedsRepairing
-	.short 3, 0, 0
+	NAKA_REC_Label super=IDX_NakaWidget_TEST1CP, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_ErrorDialog_RecoveryLine2, flag=VF_Const, x=46, y=206, w=160, h=11, str=Str_ErrorDialog_NeedsRepairing, font=idCHARA4, fontcolor=CL_Black
 Str_ErrorDialog_NeedsRepairing:	aligned_string "this unit needs repairing."
 .include "ui_widgets/extension_device_screens.s"
 ; ---------------------------------------------------------------------------

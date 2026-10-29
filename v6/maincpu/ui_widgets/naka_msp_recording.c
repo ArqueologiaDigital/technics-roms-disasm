@@ -191,537 +191,6 @@ extern const char NakaWidget_SunaView0B6_0_IvDirmdScreen;
 
 #define BASE  0x00E1AB58u
 
-/* NAKA class TtlScreen -- class id 0x01600034 (Class table slot 0x160, entry 52),
- * parent Screen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_TtlScreen_t;
-
-/* NAKA class VwBox -- class id 0x01600011 (Class table slot 0x160, entry 17),
- * parent Viewable; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-} naka_cls_VwBox_t;
-
-/* NAKA class Label -- class id 0x0160002B (Class table slot 0x160, entry 43),
- * parent Viewable; allsize 32.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t str;               /* +22 X */
-    uint32_t font;              /* +26 c */
-    uint16_t fontcolor;         /* +30 ^ */
-} naka_cls_Label_t;
-
-/* NAKA class PsMspRecPadBox -- class id 0x0164001B (Class table slot 0x164, entry 27),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsMspRecPadBox_t;
-
-/* NAKA class PsMspRecBnkBox -- class id 0x0164001C (Class table slot 0x164, entry 28),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsMspRecBnkBox_t;
-
-/* NAKA class AcCmpTempoBox -- class id 0x01640011 (Class table slot 0x164, entry 17),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcCmpTempoBox_t;
-
-/* NAKA class PsMspMeasBox -- class id 0x01640019 (Class table slot 0x164, entry 25),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsMspMeasBox_t;
-
-/* NAKA class PsMspMemBox -- class id 0x0164001A (Class table slot 0x164, entry 26),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsMspMemBox_t;
-
-/* NAKA class AcRamEditBox -- class id 0x0160001B (Class table slot 0x160, entry 27),
- * parent PsEditBox; allsize 58.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint32_t func;              /* +50 j */
-    uint32_t data;              /* +54 r */
-} naka_cls_AcRamEditBox_t;
-
-/* NAKA class AcIndexWideES -- class id 0x01600022 (Class table slot 0x160, entry 34),
- * parent PsWideESBox; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t editsw2;           /* +38 e */
-    uint16_t style;             /* +40 f */
-} naka_cls_AcIndexWideES_t;
-
-/* NAKA class IvExitMode -- class id 0x01600048 (Class table slot 0x160, entry 72),
- * parent IvExit; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t mode;              /* +22 ` */
-} naka_cls_IvExitMode_t;
-
-/* NAKA class AcTitleMenu -- class id 0x0160001D (Class table slot 0x160, entry 29),
- * parent PsMenuBox; allsize 54.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint32_t selected;          /* +38 m */
-    uint32_t str;               /* +42 X */
-    uint32_t title;             /* +46 a */
-    uint32_t icon;              /* +50 b */
-} naka_cls_AcTitleMenu_t;
-
-/* NAKA class AcFuncEditSw -- class id 0x01600020 (Class table slot 0x160, entry 32),
- * parent PsEditSwBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t style;             /* +38 f */
-    uint32_t func;              /* +40 j */
-} naka_cls_AcFuncEditSw_t;
-
-/* NAKA class IvNaming -- class id 0x0160004D (Class table slot 0x160, entry 77),
- * parent PsInvisibleBox; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t func;              /* +22 j */
-} naka_cls_IvNaming_t;
-
-/* NAKA class PsMspNameBnk -- class id 0x0164001D (Class table slot 0x164, entry 29),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsMspNameBnk_t;
-
-/* NAKA class StringBox -- class id 0x01600037 (Class table slot 0x160, entry 55),
- * parent Box; allsize 38.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t str;               /* +26 X */
-    uint32_t font;              /* +30 c */
-    uint16_t fontcolor;         /* +34 ^ */
-    uint16_t alignment;         /* +36 d */
-} naka_cls_StringBox_t;
-
-/* NAKA class AcGridBox -- class id 0x01600056 (Class table slot 0x160, entry 86),
- * parent PsGridBox; allsize 74.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t row;               /* +36 B */
-    uint16_t col;               /* +38 B */
-    uint16_t vertline;          /* +40 G */
-    uint32_t selrow;            /* +42 n */
-    uint32_t selcol;            /* +46 n */
-    uint32_t pcol;              /* +50 s */
-    uint32_t prow;              /* +54 s */
-    uint32_t crow;              /* +58 s */
-    uint32_t fixedcol;          /* +62 X */
-    uint32_t fixedrow;          /* +66 X */
-    uint32_t func;              /* +70 j */
-} naka_cls_AcGridBox_t;
-
-/* NAKA class AcIndexEditSw -- class id 0x0160001F (Class table slot 0x160, entry 31),
- * parent PsEditSwBox; allsize 40.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t style;             /* +38 f */
-} naka_cls_AcIndexEditSw_t;
-
-/* NAKA class PsRgpSetBnkBox -- class id 0x01640017 (Class table slot 0x164, entry 23),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsRgpSetBnkBox_t;
-
-/* NAKA class IvShowHide -- class id 0x01600064 (Class table slot 0x160, entry 100),
- * parent PsInvisibleBox; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t func;              /* +22 j */
-} naka_cls_IvShowHide_t;
-
-/* NAKA class PsCmpCpFVariBox -- class id 0x01640013 (Class table slot 0x164, entry 19),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsCmpCpFVariBox_t;
-
-/* NAKA class AcSndArgGridBox -- class id 0x01640020 (Class table slot 0x164, entry 32),
- * parent PsGridBox; allsize 74.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t row;               /* +36 B */
-    uint16_t col;               /* +38 B */
-    uint16_t vertline;          /* +40 G */
-    uint32_t selrow;            /* +42 n */
-    uint32_t selcol;            /* +46 n */
-    uint32_t pcol;              /* +50 s */
-    uint32_t prow;              /* +54 s */
-    uint32_t crow;              /* +58 s */
-    uint32_t fixedcol;          /* +62 X */
-    uint32_t fixedrow;          /* +66 X */
-    uint32_t func;              /* +70 j */
-} naka_cls_AcSndArgGridBox_t;
-
-/* NAKA class AcLanguageText -- class id 0x01600066 (Class table slot 0x160, entry 102),
- * parent PsTextBox; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t alignment;         /* +34 d */
-    uint16_t lines;             /* +36 B */
-    uint32_t func;              /* +38 j */
-} naka_cls_AcLanguageText_t;
-
-/* NAKA class AcApcMdBox -- class id 0x0164000E (Class table slot 0x164, entry 14),
- * parent PsEditBox; allsize 52.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint8_t apcdata;           /* +50 C */
-    uint8_t _pad_51[1];
-} naka_cls_AcApcMdBox_t;
-
-/* NAKA class AcApcToggle -- class id 0x0164001F (Class table slot 0x164, entry 31),
- * parent PsToggleBox; allsize 48.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t font;              /* +22 c */
-    uint32_t stron;             /* +26 X */
-    uint32_t stroff;            /* +30 X */
-    uint32_t onoff;             /* +34 m */
-    uint16_t editsw;            /* +38 e */
-    uint32_t func;              /* +40 j */
-    uint32_t pman_ad;           /* +44 F */
-} naka_cls_AcApcToggle_t;
-
 typedef struct __attribute__((packed)) {
     /* element 0 of Viewable slot 0xC9 "MspRecScreen": TtlScreen (class id 0x01600034) */
     naka_cls_TtlScreen_t MspRecScreen;
@@ -893,526 +362,647 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_msp_recording_t) == 3222,
     "naka_msp_recording must be exactly 3222 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Suna_ViewableTable_C9, registry slot 0xC9, 16 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 16, Suna_ViewableTable_C9, 0xC9`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Suna_ViewableTable_C9, OBJ_x). */
+#define Suna_ViewableTable_C9_SLOT 0x0C9u
+enum Suna_ViewableTable_C9_objects {
+    OBJ_MspRecScreen,                     /*  0 TtlScreen "MspRecScreen" */
+      OBJ_MspRecBox1,                     /*  1 VwBox "MspRecBox1" */
+        OBJ_RecordingPhrase_Label,        /*  2 Label */
+        OBJ_MspBnkLbl,                    /*  3 Label "MspBnkLbl" */
+        OBJ_RecPadNo,                     /*  4 PsMspRecPadBox "RecPadNo" */
+        OBJ_RecBankName,                  /*  5 PsMspRecBnkBox "RecBankName" */
+      OBJ_MspRecBox2,                     /*  6 VwBox "MspRecBox2" */
+        OBJ_Tempo_Label,                  /*  7 Label */
+        OBJ_MspTempo,                     /*  8 AcCmpTempoBox "MspTempo" */
+        OBJ_MspMeas,                      /*  9 PsMspMeasBox "MspMeas" */
+        OBJ_MspMem,                       /* 10 PsMspMemBox "MspMem" */
+          OBJ_MspMem_Label,               /* 11 Label */
+      OBJ_MspPadLbl,                      /* 12 Label "MspPadLbl" */
+      OBJ_MspRecScreen_AcRamEditBox,      /* 13 AcRamEditBox */
+      OBJ_MspRecScreen_AcIndexWideES,     /* 14 AcIndexWideES */
+      OBJ_MspRecScreen_IvExitMode,        /* 15 IvExitMode */
+};
+
+/* Viewable table Naka_Accomp9_Screens, registry slot 0xCA, 6 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 6, Naka_Accomp9_Screens, 0xCA`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp9_Screens, OBJ_x). */
+#define Naka_Accomp9_Screens_SLOT 0x0CAu
+enum Naka_Accomp9_Screens_objects {
+    OBJ_MspMenuScreen,                      /*  0 TtlScreen "MspMenuScreen" */
+      OBJ_CompileSet_AcTitleMenu,           /*  1 AcTitleMenu */
+      OBJ_NamingForUserCompile_AcTitleMenu, /*  2 AcTitleMenu */
+      OBJ_MspMenuScreen_IvExitMode,         /*  3 IvExitMode */
+      OBJ_MspMenuScreen_AcRamEditBox,       /*  4 AcRamEditBox */
+      OBJ_MspMenuScreen_AcIndexWideES,      /*  5 AcIndexWideES */
+};
+
+/* Viewable table Naka_Accomp10_Screens, registry slot 0xCB, 4 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 4, Naka_Accomp10_Screens, 0xCB`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp10_Screens, OBJ_x). */
+#define Naka_Accomp10_Screens_SLOT 0x0CBu
+enum Naka_Accomp10_Screens_objects {
+    OBJ_MspNamingScreen,                /*  0 TtlScreen "MspNamingScreen" */
+      OBJ_MspNamingScreen_AcFuncEditSw, /*  1 AcFuncEditSw */
+      OBJ_MspNamingScreen_IvNaming,     /*  2 IvNaming */
+      OBJ_MspNamingScreen_PsMspNameBnk, /*  3 PsMspNameBnk */
+};
+
+/* Viewable table Naka_Accomp11_Screens, registry slot 0xCC, 9 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 9, Naka_Accomp11_Screens, 0xCC`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp11_Screens, OBJ_x). */
+#define Naka_Accomp11_Screens_SLOT 0x0CCu
+enum Naka_Accomp11_Screens_objects {
+    OBJ_MspReGrpScreen,                     /*  0 TtlScreen "MspReGrpScreen" */
+      OBJ_RGrpBnkSw,                        /*  1 AcFuncEditSw "RGrpBnkSw" */
+        OBJ_BANK_StringBox,                 /*  2 StringBox */
+      OBJ_MspRGrpGrid,                      /*  3 AcGridBox "MspRGrpGrid" */
+      OBJ_MspReGrpScreen_AcIndexEditSw,     /*  4 AcIndexEditSw */
+      OBJ_MspReGrpScreen_AcIndexWideES,     /*  5 AcIndexWideES */
+      OBJ_MspReGrpScreen_AcIndexWideES_2,   /*  6 AcIndexWideES */
+      OBJ_RgpSetBnk,                        /*  7 PsRgpSetBnkBox "RgpSetBnk" */
+      OBJ_MspReGrpScreen_IvShowHide,        /*  8 IvShowHide */
+};
+
+/* Viewable table Naka_Accomp12_Screens, registry slot 0xDC, 8 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 8, Naka_Accomp12_Screens, 0xDC`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp12_Screens, OBJ_x). */
+#define Naka_Accomp12_Screens_SLOT 0x0DCu
+enum Naka_Accomp12_Screens_objects {
+    OBJ_SndArgrScreen,                    /*  0 TtlScreen "SndArgrScreen" */
+      OBJ_Pattern_StringBox,              /*  1 StringBox */
+        OBJ_SndArgRhyName,                /*  2 PsCmpCpFVariBox "SndArgRhyName" */
+      OBJ_SndArgrScreen_IvExitMode,       /*  3 IvExitMode */
+      OBJ_SndArgrScreen_IvShowHide,       /*  4 IvShowHide */
+      OBJ_SndArgrGrid,                    /*  5 AcSndArgGridBox "SndArgrGrid" */
+      OBJ_SndArgrScreen_AcIndexWideES,    /*  6 AcIndexWideES */
+      OBJ_SndArgrScreen_AcLanguageText,   /*  7 AcLanguageText */
+};
+
+/* Viewable table Naka_Accomp13_Screens, registry slot 0xED, 6 elements.
+ * InitializeSuna registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 6, Naka_Accomp13_Screens, 0xED`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Naka_Accomp13_Screens, OBJ_x). */
+#define Naka_Accomp13_Screens_SLOT 0x0EDu
+enum Naka_Accomp13_Screens_objects {
+    OBJ_ApcSelScreen,                /*  0 TtlScreen "ApcSelScreen" */
+      OBJ_ApcSelScreen_AcApcMdBox,   /*  1 AcApcMdBox */
+      OBJ_ApcSelScreen_AcApcMdBox_2, /*  2 AcApcMdBox */
+      OBJ_ApcSelScreen_AcApcMdBox_3, /*  3 AcApcMdBox */
+      OBJ_ApcMem,                    /*  4 AcApcToggle "ApcMem" */
+      OBJ_ApcOnBass,                 /*  5 AcApcToggle "ApcOnBass" */
+};
+
 const naka_msp_recording_t naka_msp_recording_data
     __attribute__((section(".text"), used)) = {
 
+    /* ==== SCREEN TITLE_MSPREC "MSP PHRASE RECORDING" -- "TT_MSPREC", title id 0xC9, function NAKA_MAINFUNC_MspRecTtlFunc ====
+     * Path: mode MD_MSP_REC
+     * EXIT -> TITLE_NORMAL */
     .MspRecScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_MspRecBox1,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0000,
-        .exit = 0x01A00001,
-        .window = 0x0003D762,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_None,
+        .exit = TITLE_NORMAL,
+        .window = RAM_MspRecScreen_Window,
         .title = SELF(MspPhraseRecording_text),
-        .icon = 0x000000A8,
+        .icon = idICON_i166,
     },
 
     .MspPhraseRecording_text = ALIGNED_STRING("MSP PHRASE RECORDING"),
 
     .MspRecBox1 = {
-        .class_ = 0x01600011,
-        .super = 0,
-        .sub = 2,
-        .next = 6,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_MspRecScreen,
+        .sub = OBJ_RecordingPhrase_Label,
+        .next = OBJ_MspRecBox2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 21, 38, 290, 103 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(21, 38, 270, 66),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .RecordingPhrase_Label = {
-        .class_ = 0x0160002B,
-        .super = 1,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_MspRecBox1,
         .sub = NAKA_NONE,
-        .next = 3,
+        .next = OBJ_MspBnkLbl,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 34, 42, 165, 60 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(34, 42, 132, 19),
         .str = SELF(RecordingPhrase_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00F1,
+        .font = idCHARA1,
+        .fontcolor = CL_Text,
     },
 
     .RecordingPhrase_text = ALIGNED_STRING("Recording Phrase"),
 
     .MspBnkLbl = {
-        .class_ = 0x0160002B,
-        .super = 1,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_MspRecBox1,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 66, 62, 117, 80 },
+        .next = OBJ_RecPadNo,
+        .prev = OBJ_RecordingPhrase_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(66, 62, 52, 19),
         .str = SELF(Bank_text),
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
     },
 
     .Bank_text = ALIGNED_STRING("BANK :"),
 
     .RecPadNo = {
-        .class_ = 0x0164001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(PsMspRecPadBox),
+        .super = OBJ_MspRecBox1,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 120, 82, 139, 97 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_RecBankName,
+        .prev = OBJ_MspBnkLbl,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(120, 82, 20, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .RecBankName = {
-        .class_ = 0x0164001C,
-        .super = 1,
+        .class_ = NAKA_CLASS(PsMspRecBnkBox),
+        .super = OBJ_MspRecBox1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 116, 60, 250, 77 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_RecPadNo,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(116, 60, 135, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .MspRecBox2 = {
-        .class_ = 0x01600011,
-        .super = 0,
-        .sub = 7,
-        .next = 12,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 21, 108, 290, 173 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_MspRecScreen,
+        .sub = OBJ_Tempo_Label,
+        .next = OBJ_MspPadLbl,
+        .prev = OBJ_MspRecBox1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(21, 108, 270, 66),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Tempo_Label = {
-        .class_ = 0x0160002B,
-        .super = 6,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_MspRecBox2,
         .sub = NAKA_NONE,
-        .next = 8,
+        .next = OBJ_MspTempo,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 34, 124, 109, 142 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(34, 124, 76, 19),
         .str = SELF(Tempo_text),
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
     },
 
     .Tempo_text = "TEMPO   =",
 
     .MspTempo = {
-        .class_ = 0x01640011,
-        .super = 6,
+        .class_ = NAKA_CLASS(AcCmpTempoBox),
+        .super = OBJ_MspRecBox2,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 116, 124, 155, 137 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_MspMeas,
+        .prev = OBJ_Tempo_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(116, 124, 40, 14),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .MspMeas = {
-        .class_ = 0x01640019,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsMspMeasBox),
+        .super = OBJ_MspRecBox2,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 32, 150, 156, 163 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_MspMem,
+        .prev = OBJ_MspTempo,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(32, 150, 125, 14),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
     },
 
     .MspMem = {
-        .class_ = 0x0164001A,
-        .super = 6,
-        .sub = 11,
+        .class_ = NAKA_CLASS(PsMspMemBox),
+        .super = OBJ_MspRecBox2,
+        .sub = OBJ_MspMem_Label,
         .next = NAKA_NONE,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 170, 150, 289, 163 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_MspMeas,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(170, 150, 120, 14),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
     },
 
     .MspMem_Label = {
-        .class_ = 0x0160002B,
-        .super = 10,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_MspMem,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 262, 150, 273, 168 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(262, 150, 12, 19),
         .str = SELF(w6_text),
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
     },
 
     .w6_text = "%",
 
     .MspPadLbl = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_MspRecScreen,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 66, 83, 117, 101 },
+        .next = OBJ_MspRecScreen_AcRamEditBox,
+        .prev = OBJ_MspRecBox2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(66, 83, 52, 19),
         .str = SELF(Pad_text),
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
     },
 
     .Pad_text = ALIGNED_STRING("PAD  :"),
 
     .MspRecScreen_AcRamEditBox = {
-        .class_ = 0x0160001B,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcRamEditBox),
+        .super = OBJ_MspRecScreen,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 20, 178, 291, 209 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_MspRecScreen_AcIndexWideES,
+        .prev = OBJ_MspPadLbl,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(20, 178, 272, 32),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(vC9_e13_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0014,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D766,
-        .func = 0x0124000D,
-        .data = 0x0003D768,
+        .selected = RAM_MspRecScreen_AcRamEditBox_Selected,
+        .func = NAKA_APFUNC_MspPlayModeFunc,
+        .data = RAM_MspRecScreen_AcRamEditBox_Data,
     },
 
     .vC9_e13_caption = "play mode :",
 
     .MspRecScreen_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_MspRecScreen,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_MspRecScreen_IvExitMode,
+        .prev = OBJ_MspRecScreen_AcRamEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .MspRecScreen_IvExitMode = {
-        .class_ = 0x01600048,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvExitMode),
+        .super = OBJ_MspRecScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 14,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .mode = 0x01800001,
+        .prev = OBJ_MspRecScreen_AcIndexWideES,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .mode = NAKA_MODE_MD_NORMAL,
     },
 
+    /* ==== SCREEN TITLE_MSPMENU "MSP MENU" -- "TT_MSPMENU", title id 0xCA, function NAKA_MAINFUNC_MspMenuTtlFunc ====
+     * Path: MSP MENU button (mode MD_MSP)
+     * Menu: "COMPILE SET" -> TITLE_MSPGROUP
+     * Menu: "Naming for User&COMPILE Banks" -> TITLE_MSPNAME
+     * EXIT -> TITLE_NORMAL */
     .MspMenuScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_CompileSet_AcTitleMenu,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0002,
-        .exit = 0x01A00001,
-        .window = 0x0003D76C,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_Single2,
+        .exit = TITLE_NORMAL,
+        .window = RAM_MspMenuScreen_Window,
         .title = SELF(MspMenu_text),
-        .icon = 0x000000A6,
+        .icon = idICON_i164,
     },
 
     .MspMenu_text = ALIGNED_STRING("MSP MENU"),
 
     .CompileSet_AcTitleMenu = {
-        .class_ = 0x0160001D,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_MspMenuScreen,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_NamingForUserCompile_AcTitleMenu,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 72, 156, 97 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0089,
-        .selected = 0x0003D770,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left2,
+        .selected = RAM_CompileSet_AcTitleMenu_Selected,
         .str = SELF(CompileSet_text),
-        .title = 0x01A000CC,
-        .icon = 0x000000A7,
+        .title = TITLE_MSPGROUP,
+        .icon = idICON_i165,
     },
 
     .CompileSet_text = "COMPILE SET",
 
     .NamingForUserCompile_AcTitleMenu = {
-        .class_ = 0x0160001D,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_MspMenuScreen,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 8, 114, 192, 139 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .next = OBJ_MspMenuScreen_IvExitMode,
+        .prev = OBJ_CompileSet_AcTitleMenu,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 185, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x008A,
-        .selected = 0x0003D772,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left3,
+        .selected = RAM_NamingForUserCompile_AcTitleMenu_Selected,
         .str = SELF(NamingForUserCompile_text),
-        .title = 0x01A000CB,
-        .icon = 0x00000099,
+        .title = TITLE_MSPNAME,
+        .icon = idICON_i151,
     },
 
     .NamingForUserCompile_text = "Naming for User&COMPILE Banks",
 
     .MspMenuScreen_IvExitMode = {
-        .class_ = 0x01600048,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvExitMode),
+        .super = OBJ_MspMenuScreen,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .mode = 0x01800001,
+        .next = OBJ_MspMenuScreen_AcRamEditBox,
+        .prev = OBJ_NamingForUserCompile_AcTitleMenu,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .mode = NAKA_MODE_MD_NORMAL,
     },
 
     .MspMenuScreen_AcRamEditBox = {
-        .class_ = 0x0160001B,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcRamEditBox),
+        .super = OBJ_MspMenuScreen,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 71, 169, 295, 200 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_MspMenuScreen_AcIndexWideES,
+        .prev = OBJ_MspMenuScreen_IvExitMode,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(71, 169, 225, 32),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(vCA_e4_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0008,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D774,
-        .func = 0x0124000C,
-        .data = 0x0003D776,
+        .selected = RAM_MspMenuScreen_AcRamEditBox_Selected,
+        .func = NAKA_APFUNC_MspNameBnkFunc,
+        .data = RAM_MspMenuScreen_AcRamEditBox_Data,
     },
 
     .vCA_e4_caption = "Naming Bank :",
 
     .MspMenuScreen_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_MspMenuScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .prev = OBJ_MspMenuScreen_AcRamEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_MSPNAME "NAMING" -- "TT_MSPNAME", title id 0xCB, function NAKA_MAINFUNC_MspNameTtlFunc ====
+     * Path: MSP MENU button (mode MD_MSP) > "Naming for User&COMPILE Banks"
+     * EXIT -> TITLE_MSPMENU
+     * Opened from: TITLE_MSPMENU ("Naming for User&COMPILE Banks") */
     .MspNamingScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_MspNamingScreen_AcFuncEditSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0000,
-        .exit = 0x01A000CA,
-        .window = 0x0003D77A,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_None,
+        .exit = TITLE_MSPMENU,
+        .window = RAM_MspNamingScreen_Window,
         .title = SELF(Naming_text),
-        .icon = 0x00000099,
+        .icon = idICON_i151,
     },
 
     .Naming_text = ALIGNED_STRING("NAMING"),
 
     .MspNamingScreen_AcFuncEditSw = {
-        .class_ = 0x01600020,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcFuncEditSw),
+        .super = OBJ_MspNamingScreen,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_MspNamingScreen_IvNaming,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 281, 160, 311, 177 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(281, 160, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x000B,
-        .style = 0x0006,
-        .func = 0x01240004,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Right4,
+        .style = SS_OK,
+        .func = NAKA_APFUNC_MspNameOkFunc,
     },
 
     .MspNamingScreen_IvNaming = {
-        .class_ = 0x0160004D,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvNaming),
+        .super = OBJ_MspNamingScreen,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .func = 0x01240003,
+        .next = OBJ_MspNamingScreen_PsMspNameBnk,
+        .prev = OBJ_MspNamingScreen_AcFuncEditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_APFUNC_MspNamingCheck,
     },
 
     .MspNamingScreen_PsMspNameBnk = {
-        .class_ = 0x0164001D,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsMspNameBnk),
+        .super = OBJ_MspNamingScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 53, 50, 202, 65 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_MspNamingScreen_IvNaming,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(53, 50, 150, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
     },
 
+    /* ==== SCREEN TITLE_MSPGROUP "MSP COMPILE SETTING" -- "TT_MSPGROUP", title id 0xCC, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MSP MENU button (mode MD_MSP) > "COMPILE SET"
+     * EXIT -> TITLE_MSPMENU
+     * Opened from: TITLE_MSPMENU ("COMPILE SET") */
     .MspReGrpScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_RGrpBnkSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0000,
-        .exit = 0x01A000CA,
-        .window = 0x0003D77E,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_None,
+        .exit = TITLE_MSPMENU,
+        .window = RAM_MspReGrpScreen_Window,
         .title = SELF(MspCompileSetting_text),
-        .icon = 0x000000A7,
+        .icon = idICON_i165,
     },
 
     .MspCompileSetting_text = "MSP COMPILE SETTING",
 
     .RGrpBnkSw = {
-        .class_ = 0x01600020,
-        .super = 0,
-        .sub = 2,
-        .next = 3,
+        .class_ = NAKA_CLASS(AcFuncEditSw),
+        .super = OBJ_MspReGrpScreen,
+        .sub = OBJ_BANK_StringBox,
+        .next = OBJ_MspRGrpGrid,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 34, 38, 51 },
-        .color = 0x00F7,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 34, 31, 18),
+        .color = CL_Transparent,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0088,
-        .style = 0x0000,
-        .func = 0x0124000B,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .style = SS_Special,
+        .func = NAKA_APFUNC_MspRGrpSetBnkFunc,
     },
 
     .BANK_StringBox = {
-        .class_ = 0x01600037,
-        .super = 1,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_RGrpBnkSw,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 34, 47, 51 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 34, 40, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .str = SELF(BANK_str),
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .alignment = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .alignment = AL_Center,
     },
 
     .BANK_str = ALIGNED_STRING("BANK"),
 
     .MspRGrpGrid = {
-        .class_ = 0x01600056,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcGridBox),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 36, 65, 315, 238 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_MspReGrpScreen_AcIndexEditSw,
+        .prev = OBJ_RGrpBnkSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 65, 280, 174),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .row = 0x0009,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D782,
-        .selcol = 0x0003D784,
-        .pcol = 0x0003D786,
-        .prow = 0x0003D78A,
-        .crow = 0x0003D78E,
+        .selrow = RAM_MspRGrpGrid_Selrow,
+        .selcol = RAM_MspRGrpGrid_Selcol,
+        .pcol = RAM_MspRGrpGrid_Pcol,
+        .prow = RAM_MspRGrpGrid_Prow,
+        .crow = RAM_MspRGrpGrid_Crow,
         .fixedcol = SELF(MspRGrpGrid_fixedcol),
         .fixedrow = SELF(MspRGrpGrid_fixedrow),
-        .func = 0x0124000A,
+        .func = NAKA_APFUNC_MspRGrpSetGridCheck,
     },
 
     .MspRGrpGrid_fixedrow = ALIGNED_STRING("|-|PAD1|PAD2|PAD3|PAD4|PAD5|PAD6"),
@@ -1420,187 +1010,191 @@ const naka_msp_recording_t naka_msp_recording_data
     .MspRGrpGrid_fixedcol = ALIGNED_STRING("PADS|     BANK     |PHRASE"),
 
     .MspReGrpScreen_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 44, 216, 75, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_MspReGrpScreen_AcIndexWideES,
+        .prev = OBJ_MspRGrpGrid,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0001,
-        .style = 0x000E,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom2,
+        .style = SS_UpDown2,
     },
 
     .MspReGrpScreen_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 124, 216, 195, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_MspReGrpScreen_AcIndexWideES_2,
+        .prev = OBJ_MspReGrpScreen_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0001,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .editsw2 = 0x0004,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .editsw2 = ES_Bottom5,
+        .style = SS_UpDown,
     },
 
     .MspReGrpScreen_AcIndexWideES_2 = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
-        .next = 7,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 244, 216, 313, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_RgpSetBnk,
+        .prev = OBJ_MspReGrpScreen_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 70, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0002,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .RgpSetBnk = {
-        .class_ = 0x01640017,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsRgpSetBnkBox),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 52, 34, 171, 49 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_MspReGrpScreen_IvShowHide,
+        .prev = OBJ_MspReGrpScreen_AcIndexWideES_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(52, 34, 120, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .MspReGrpScreen_IvShowHide = {
-        .class_ = 0x01600064,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvShowHide),
+        .super = OBJ_MspReGrpScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 7,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .func = 0x01240018,
+        .prev = OBJ_RgpSetBnk,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_APFUNC_MspRgpShowHideFunc,
     },
 
+    /* ==== SCREEN TITLE_SNDARG "SOUND ARRANGER" -- "TT_SNDARG", title id 0xDC, function NAKA_MAINFUNC_SndArgTtlFunc ====
+     * What: the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
+     * Path: SOUND ARRANGER SET button (mode MD_SND_ARG)
+     * EXIT -> TITLE_NORMAL */
     .SndArgrScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Pattern_StringBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F9,
-        .border = 0x0000,
-        .exit = 0x01A00001,
-        .window = 0x0003D792,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Red,
+        .border = BD_None,
+        .exit = TITLE_NORMAL,
+        .window = RAM_SndArgrScreen_Window,
         .title = SELF(SoundArranger_text),
-        .icon = 0x00000058,
+        .icon = idICON_i86,
     },
 
     .SoundArranger_text = ALIGNED_STRING("SOUND ARRANGER"),
 
     .Pattern_StringBox = {
-        .class_ = 0x01600037,
-        .super = 0,
-        .sub = 2,
-        .next = 3,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_SndArgrScreen,
+        .sub = OBJ_SndArgRhyName,
+        .next = OBJ_SndArgrScreen_IvExitMode,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 45, 36, 274, 62 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(45, 36, 230, 27),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .str = SELF(Pattern_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .alignment = AL_LeftJustify,
     },
 
     .Pattern_str = ALIGNED_STRING(" PATTERN :"),
 
     .SndArgRhyName = {
-        .class_ = 0x01640013,
-        .super = 1,
+        .class_ = NAKA_CLASS(PsCmpCpFVariBox),
+        .super = OBJ_Pattern_StringBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 135, 40, 269, 58 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(135, 40, 135, 19),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .SndArgrScreen_IvExitMode = {
-        .class_ = 0x01600048,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvExitMode),
+        .super = OBJ_SndArgrScreen,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .mode = 0x01800001,
+        .next = OBJ_SndArgrScreen_IvShowHide,
+        .prev = OBJ_Pattern_StringBox,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .mode = NAKA_MODE_MD_NORMAL,
     },
 
     .SndArgrScreen_IvShowHide = {
-        .class_ = 0x01600064,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvShowHide),
+        .super = OBJ_SndArgrScreen,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .func = 0x01240011,
+        .next = OBJ_SndArgrGrid,
+        .prev = OBJ_SndArgrScreen_IvExitMode,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_APFUNC_SndArgTtlCheck,
     },
 
     .SndArgrGrid = {
-        .class_ = 0x01640020,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcSndArgGridBox),
+        .super = OBJ_SndArgrScreen,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 4, 94, 313, 239 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_SndArgrScreen_AcIndexWideES,
+        .prev = OBJ_SndArgrScreen_IvShowHide,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 94, 310, 146),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .row = 0x0008,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D796,
-        .selcol = 0x0003D798,
-        .pcol = 0x0003D79A,
-        .prow = 0x0003D79E,
-        .crow = 0x0003D7A2,
+        .selrow = RAM_SndArgrGrid_Selrow,
+        .selcol = RAM_SndArgrGrid_Selcol,
+        .pcol = RAM_SndArgrGrid_Pcol,
+        .prow = RAM_SndArgrGrid_Prow,
+        .crow = RAM_SndArgrGrid_Crow,
         .fixedcol = SELF(SndArgrGrid_fixedcol),
         .fixedrow = SELF(SndArgrGrid_fixedrow),
-        .func = 0x01240012,
+        .func = NAKA_APFUNC_SndArgGridCheck,
     },
 
     .SndArgrGrid_fixedrow = "|-|DRUMS|BASS|ACCOMP1|ACCOMP2|ACCOMP3",
@@ -1608,79 +1202,82 @@ const naka_msp_recording_t naka_msp_recording_data
     .SndArgrGrid_fixedcol = ALIGNED_STRING("   PART  |       SOUND       |D.EFFECT"),
 
     .SndArgrScreen_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_SndArgrScreen,
         .sub = NAKA_NONE,
-        .next = 7,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 8, 216, 79, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SndArgrScreen_AcLanguageText,
+        .prev = OBJ_SndArgrGrid,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0000,
-        .editsw2 = 0x0001,
-        .style = 0x000E,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom1,
+        .editsw2 = ES_Bottom2,
+        .style = SS_UpDown2,
     },
 
     .SndArgrScreen_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_SndArgrScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 20, 68, 299, 91 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SndArgrScreen_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(20, 68, 280, 24),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000007,
-        .fontcolor = 0x00F1,
-        .alignment = 0x0001,
+        .font = idCHARA1W,
+        .fontcolor = CL_Text,
+        .alignment = AL_LeftJustify,
         .lines = 0x0001,
-        .func = 0x01240047,
+        .func = NAKA_APFUNC_SndArrLangCheck,
     },
 
+    /* ==== SCREEN TITLE_APCSEL "AUTO PLAY CHORD" -- "TT_APCSEL", title id 0xED, function NAKA_APFUNC_DefaultFunction ====
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
     .ApcSelScreen = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_ApcSelScreen_AcApcMdBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003D7A6,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_ApcSelScreen_Window,
         .title = SELF(AutoPlayChord_text),
-        .icon = 0x00000071,
+        .icon = idICON_i111,
     },
 
     .AutoPlayChord_text = "AUTO PLAY CHORD",
 
     .ApcSelScreen_AcApcMdBox = {
-        .class_ = 0x0164000E,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcApcMdBox),
+        .super = OBJ_ApcSelScreen,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_ApcSelScreen_AcApcMdBox_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 72, 156, 97 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(vED_e1_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0000,
-        .editsw = 0x0089,
+        .editsw = ES_Left2,
         .dial = 0x0001,
-        .selected = 0x0003D7AA,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_Selected,
         .apcdata = 0x01,
         ._pad_51 = { 0x00 },
     },
@@ -1688,24 +1285,24 @@ const naka_msp_recording_t naka_msp_recording_data
     .vED_e1_caption = ALIGNED_STRING("ONE FINGER"),
 
     .ApcSelScreen_AcApcMdBox_2 = {
-        .class_ = 0x0164000E,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcApcMdBox),
+        .super = OBJ_ApcSelScreen,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ApcSelScreen_AcApcMdBox_3,
+        .prev = OBJ_ApcSelScreen_AcApcMdBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(vED_e2_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0000,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003D7AC,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_2_Selected,
         .apcdata = 0x02,
         ._pad_51 = { 0x00 },
     },
@@ -1713,24 +1310,24 @@ const naka_msp_recording_t naka_msp_recording_data
     .vED_e2_caption = ALIGNED_STRING("FINGERED"),
 
     .ApcSelScreen_AcApcMdBox_3 = {
-        .class_ = 0x0164000E,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcApcMdBox),
+        .super = OBJ_ApcSelScreen,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ApcMem,
+        .prev = OBJ_ApcSelScreen_AcApcMdBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(vED_e3_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0000,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003D7AE,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_3_Selected,
         .apcdata = 0x03,
         ._pad_51 = { 0x00 },
     },
@@ -1738,19 +1335,19 @@ const naka_msp_recording_t naka_msp_recording_data
     .vED_e3_caption = "PIANIST",
 
     .ApcMem = {
-        .class_ = 0x0164001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcApcToggle),
+        .super = OBJ_ApcSelScreen,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 196, 76, 311, 93 },
-        .font = 0x00000000,
+        .next = OBJ_ApcOnBass,
+        .prev = OBJ_ApcSelScreen_AcApcMdBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(196, 76, 116, 18),
+        .font = idCHARA1,
         .stron = SELF(ApcMem_stron),
         .stroff = SELF(ApcMem_stroff),
-        .onoff = 0x0003D7B0,
-        .editsw = 0x0009,
-        .func = 0x0124000F,
+        .onoff = RAM_ApcMem_Onoff,
+        .editsw = ES_Right2,
+        .func = NAKA_APFUNC_ApcOnOffFunc,
         .pman_ad = 0x00000000,
     },
 
@@ -1759,19 +1356,19 @@ const naka_msp_recording_t naka_msp_recording_data
     .ApcMem_stron = ALIGNED_STRING(" MEMORY : ON"),
 
     .ApcOnBass = {
-        .class_ = 0x0164001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcApcToggle),
+        .super = OBJ_ApcSelScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 196, 118, 311, 135 },
-        .font = 0x00000000,
+        .prev = OBJ_ApcMem,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(196, 118, 116, 18),
+        .font = idCHARA1,
         .stron = SELF(ApcOnBass_stron),
         .stroff = SELF(ApcOnBass_stroff),
-        .onoff = 0x0003D7B2,
-        .editsw = 0x000A,
-        .func = 0x01240010,
+        .onoff = RAM_ApcOnBass_Onoff,
+        .editsw = ES_Right3,
+        .func = NAKA_APFUNC_ApcOnBasFunc,
         .pman_ad = 0x00000001,
     },
 

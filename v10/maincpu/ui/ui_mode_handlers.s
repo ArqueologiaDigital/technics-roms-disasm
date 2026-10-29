@@ -111,7 +111,7 @@ PanelTagA8_ToggleOtpMode_Skip:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
+	ld	wa, MD_NORMAL:i3
 	jr	EffectMode_ByteData_Block2_Code_Join
 PanelTagA8_ToggleOtpMode_Skip2:
 	cp	(0x8d4e:16), 0
@@ -120,8 +120,8 @@ PanelTagA8_ToggleOtpMode_Skip2:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
-	jp	UI_PostPartChangeEvent
+	ld	wa, MD_NORMAL:i3
+	jp	UI_ChangeModeByIndex
 PanelTagA8_ToggleOtpMode_Skip3:
 	cp	(0x8d4e:16), 0
 	jr	z, EffectMode_ByteData_Block2_Code_Skip
@@ -129,17 +129,17 @@ PanelTagA8_ToggleOtpMode_Skip3:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
+	ld	wa, MD_NORMAL:i3
 EffectMode_ByteData_Block2_Code_Join:
-	call	UI_PostPartChangeEvent
+	call	UI_ChangeModeByIndex
 	jr	EffectMode_ByteData_Block2_Code_Join2
 EffectMode_ByteData_Block2_Code_Skip:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 18
-	call	UI_PostPartChangeEvent
+	ldw	wa, MD_OTP
+	call	UI_ChangeModeByIndex
 	ld	(0x8d4e:16), 0xf
 	ret
 PanelTagA8_ToggleOtpMode_Skip4:
@@ -149,8 +149,8 @@ PanelTagA8_ToggleOtpMode_Skip4:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 193
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_MUSICSTYL
+	call	UI_ChangeTitleByIndex
 EffectMode_ByteData_Block2_Code_Join2:
 	ld	(0x8d4e:16), 0
 	ret
@@ -261,8 +261,8 @@ EffectMode_ApplyTranspose:
 	ld xbc, EVT_SET_HOLD
 	ld xde, 0:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 
 EffectMode_ApplyTranspose_StoreTimer:
 	ld (0x8d4e:16), 0
@@ -1545,8 +1545,8 @@ SelfTest_FirmwareVersionCheck:
 	call Get_Firmware_Version
 	cp l, 0x77
 	jr nz, SelfTest_InterCPU_Send
-	ldw wa, 0xfb
-	call UI_PostModeChangeEvent
+	ldw wa, TT_EXT
+	call UI_ChangeTitleByIndex
 	call SubCPU_PayloadErrorStore
 	ld (0x8d82:16), 2
 	jrl EffectMode_PopRetFA
@@ -1604,7 +1604,7 @@ SelfTest_CheckBit2:
 	jr z, SelfTest_CheckBit4
 	bit	6, (xwa)
 	jr z, SelfTest_CheckBit4
-	ldw wa, 0xf5
+	ldw wa, TT_TEST2
 	jr EffectMode_UIPostModeChangeEvent
 
 SelfTest_CheckBit4:
@@ -1613,8 +1613,8 @@ SelfTest_CheckBit4:
 	jr z, SelfTest_CheckBit5
 	bit	0, (xde)
 	jr z, SelfTest_CheckBit5
-	ldw wa, 0xf6
-	call UI_PostModeChangeEvent
+	ldw wa, TT_TEST3
+	call UI_ChangeTitleByIndex
 	call SubCPU_PayloadErrorStore
 	jrl EffectMode_PopRetFA
 
@@ -1623,7 +1623,7 @@ SelfTest_CheckBit5:
 	jr z, SelfTest_CheckBit7
 	bit	1, (xde)
 	jr z, SelfTest_CheckBit7
-	ldw wa, 0xf7
+	ldw wa, TT_TEST4
 	jr EffectMode_UIPostModeChangeEvent
 
 SelfTest_CheckBit7:
@@ -1631,7 +1631,7 @@ SelfTest_CheckBit7:
 	jr z, SelfTest_CheckBitA1
 	bit	3, (xde)
 	jr z, SelfTest_CheckBitA1
-	ldw wa, 0xf8
+	ldw wa, TT_TEST5
 	jr EffectMode_UIPostModeChangeEvent
 
 SelfTest_CheckBitA1:
@@ -1640,7 +1640,7 @@ SelfTest_CheckBitA1:
 	jr z, SelfTest_CheckBitA3
 	bit	5, (xde)
 	jr z, SelfTest_CheckBitA3
-	ldw wa, 0xf9
+	ldw wa, TT_TEST6
 	jr EffectMode_UIPostModeChangeEvent
 
 SelfTest_CheckBitA3:
@@ -1651,7 +1651,7 @@ SelfTest_CheckBitA3:
 	ldw wa, 0xfc
 
 EffectMode_UIPostModeChangeEvent:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 SelfTest_Diagnostic_Skip:
 	jrl EffectMode_PopRetFA

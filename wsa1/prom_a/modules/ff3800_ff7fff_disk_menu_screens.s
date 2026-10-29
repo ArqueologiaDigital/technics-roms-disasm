@@ -123,38 +123,40 @@
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3800:
-	.long DispatchMatrix_NoAction                                 ; FF3800  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3804  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3808  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF380C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3810  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3814  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3818  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF381C  [  7]
-	.long LcdKeyRow1_DiskMenu                        ; FF3820  [  8]
-	.long LcdKeyRow2_DiskMenu                        ; FF3824  [  9]
-	.long LcdKeyRow3_DiskMenu                        ; FF3828  [ 10]
-	.long LcdKeyRow4_DiskMenu                        ; FF382C  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3830  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3834  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3838  [ 14]
-	.long ExitKey_DiskMenu                           ; FF383C  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3840  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF3844  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF3848  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF384C  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF3850  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF3854  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3858  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF385C  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3860  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3864  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3868  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF386C  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3870  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3874  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3878  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF387C  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskMenu
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskMenu
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskMenu
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskMenu
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskMenu
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3880 -- 32 handler pointers.  Read by 0xFF4596, whose bound is the
 ; same `cp H,0x20 / jr NC` at 0xFF459E.  As Dispatch_FF3800 in every other way.
@@ -192,38 +194,40 @@ Dispatch_FF3800:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3880:
-	.long DispatchMatrix_NoAction                                 ; FF3880  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3884  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3888  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF388C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3890  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3894  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3898  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF389C  [  7]
-	.long LcdKeyRow1_MidiFileDirectPlay              ; FF38A0  [  8]
-	.long LcdKeyRow2_MidiFileDirectPlay              ; FF38A4  [  9]
-	.long LcdKeyRow3_MidiFileDirectPlay              ; FF38A8  [ 10]
-	.long LcdKeyRow4_MidiFileDirectPlay              ; FF38AC  [ 11]
-	.long LcdKeyRow5_MidiFileDirectPlay              ; FF38B0  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF38B4  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF38B8  [ 14]
-	.long ExitKey_MidiFileDirectPlay                 ; FF38BC  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF38C0  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF38C4  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF38C8  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF38CC  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF38D0  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF38D4  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF38D8  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF38DC  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF38E0  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF38E4  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF38E8  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF38EC  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF38F0  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF38F4  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF38F8  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF38FC  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileDirectPlay
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileDirectPlay
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileDirectPlay
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileDirectPlay
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileDirectPlay
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileDirectPlay
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3900 -- 32 handler pointers.  Read by 0xFF4995 (`cp H,0x20` at
 ; 0xFF499D).
@@ -261,38 +265,40 @@ Dispatch_FF3880:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3900:
-	.long DispatchMatrix_NoAction                                 ; FF3900  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3904  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3908  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF390C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3910  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3914  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3918  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF391C  [  7]
-	.long LcdKeyRow1_DiskL0adFile                    ; FF3920  [  8]
-	.long LcdKeyRow2_DiskL0adFile                    ; FF3924  [  9]
-	.long LcdKeyRow3_DiskL0adFile                    ; FF3928  [ 10]
-	.long LcdKeyRow4_DiskL0adFile                    ; FF392C  [ 11]
-	.long LcdKeyRow5_DiskL0adFile                    ; FF3930  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3934  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3938  [ 14]
-	.long ExitKey_DiskL0adFile                       ; FF393C  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3940  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF3944  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF3948  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF394C  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF3950  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF3954  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3958  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF395C  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3960  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3964  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3968  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF396C  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3970  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3974  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3978  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF397C  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskL0adFile
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskL0adFile
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskL0adFile
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskL0adFile
+	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskL0adFile
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskL0adFile
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3980 -- 32 handler pointers.  Read by 0xFF522F (`cp H,0x20` at
 ; 0xFF5237).
@@ -330,38 +336,40 @@ Dispatch_FF3900:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3980:
-	.long DispatchMatrix_NoAction                                 ; FF3980  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3984  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3988  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF398C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3990  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3994  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3998  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF399C  [  7]
-	.long LcdKeyRow1_MidiFileL0ad                    ; FF39A0  [  8]
-	.long LcdKeyRow2_MidiFileL0ad                    ; FF39A4  [  9]
-	.long LcdKeyRow3_MidiFileL0ad                    ; FF39A8  [ 10]
-	.long LcdKeyRow4_MidiFileL0ad                    ; FF39AC  [ 11]
-	.long LcdKeyRow5_MidiFileL0ad                    ; FF39B0  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF39B4  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF39B8  [ 14]
-	.long ExitKey_MidiFileL0ad                       ; FF39BC  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF39C0  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF39C4  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF39C8  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF39CC  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF39D0  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF39D4  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF39D8  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF39DC  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF39E0  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF39E4  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF39E8  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF39EC  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF39F0  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF39F4  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF39F8  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF39FC  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileL0ad
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileL0ad
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileL0ad
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileL0ad
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileL0ad
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileL0ad
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; ScreenEnterPages_DiskSaveFile -- SIX handler pointers, indexed by the page byte (0x2229)
 ;
@@ -444,198 +452,216 @@ Text_FF3A18:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3A29:
-	.long SoftKeyCol1_DiskSaveFile_Page0                                 ; FF3A29  [  0]
-	.long SoftKeyCol2_DiskSaveFile_Page0                                 ; FF3A2D  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3A31  [  2]
-	.long SoftKeyCol4_DiskSaveFile_Page0                                 ; FF3A35  [  3]
-	.long SoftKeyCol5_DiskSaveFile_Page0                                 ; FF3A39  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3A3D  [  5]
-	.long SoftKeyCol7_DiskSaveFile_Page0                                 ; FF3A41  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF3A45  [  7]
-	.long LcdKeyRow1_DiskSaveFile_Page0              ; FF3A49  [  8]
-	.long DispatchMatrix_NoAction                                 ; FF3A4D  [  9]
-	.long DispatchMatrix_NoAction                                 ; FF3A51  [ 10]
-	.long LcdKeyRow4_DiskSaveFile_Page0              ; FF3A55  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3A59  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3A5D  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3A61  [ 14]
-	.long ExitKey_DiskSaveFile_Page0                 ; FF3A65  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3A69  [ 16]
-	.long SoftKeyCol1_DiskSaveFile_Page0                                 ; FF3A6D  [ 17]
-	.long SoftKeyCol2_DiskSaveFile_Page0                                 ; FF3A71  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF3A75  [ 19]
-	.long SoftKeyCol4_DiskSaveFile_Page0                                 ; FF3A79  [ 20]
-	.long SoftKeyCol5_DiskSaveFile_Page0                                 ; FF3A7D  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3A81  [ 22]
-	.long SoftKeyCol7_DiskSaveFile_Page0                                 ; FF3A85  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3A89  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3A8D  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3A91  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF3A95  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3A99  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3A9D  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3AA1  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF3AA5  [ 31]
-	.long DispatchMatrix_NoAction                                 ; FF3AA9  [ 32]
-	.long DispatchMatrix_NoAction                                 ; FF3AAD  [ 33]
-	.long DispatchMatrix_NoAction                                 ; FF3AB1  [ 34]
-	.long SoftKeyCol4_DiskSaveFile_Page1                                 ; FF3AB5  [ 35]
-	.long DispatchMatrix_NoAction                                 ; FF3AB9  [ 36]
-	.long DispatchMatrix_NoAction                                 ; FF3ABD  [ 37]
-	.long DispatchMatrix_NoAction                                 ; FF3AC1  [ 38]
-	.long DispatchMatrix_NoAction                                 ; FF3AC5  [ 39]
-	.long LcdKeyRow1_DiskSaveFile_Page1              ; FF3AC9  [ 40]
-	.long LcdKeyRow2_DiskSaveFile_Page1              ; FF3ACD  [ 41]
-	.long LcdKeyRow3_DiskSaveFile_Page1              ; FF3AD1  [ 42]
-	.long LcdKeyRow4_DiskSaveFile_Page1              ; FF3AD5  [ 43]
-	.long LcdKeyRow5_DiskSaveFile_Page1              ; FF3AD9  [ 44]
-	.long DispatchMatrix_NoAction                                 ; FF3ADD  [ 45]
-	.long DispatchMatrix_NoAction                                 ; FF3AE1  [ 46]
-	.long ExitKey_DiskSaveFile_Page1                 ; FF3AE5  [ 47]
-	.long DispatchMatrix_NoAction                                 ; FF3AE9  [ 48]
-	.long DispatchMatrix_NoAction                                 ; FF3AED  [ 49]
-	.long DispatchMatrix_NoAction                                 ; FF3AF1  [ 50]
-	.long DispatchMatrix_NoAction                                 ; FF3AF5  [ 51]
-	.long SoftKeyCol4_DiskSaveFile_Page1                                 ; FF3AF9  [ 52]
-	.long DispatchMatrix_NoAction                                 ; FF3AFD  [ 53]
-	.long DispatchMatrix_NoAction                                 ; FF3B01  [ 54]
-	.long DispatchMatrix_NoAction                                 ; FF3B05  [ 55]
-	.long DispatchMatrix_NoAction                                 ; FF3B09  [ 56]
-	.long DispatchMatrix_NoAction                                 ; FF3B0D  [ 57]
-	.long DispatchMatrix_NoAction                                 ; FF3B11  [ 58]
-	.long DispatchMatrix_NoAction                                 ; FF3B15  [ 59]
-	.long DispatchMatrix_NoAction                                 ; FF3B19  [ 60]
-	.long DispatchMatrix_NoAction                                 ; FF3B1D  [ 61]
-	.long DispatchMatrix_NoAction                                 ; FF3B21  [ 62]
-	.long DispatchMatrix_NoAction                                 ; FF3B25  [ 63]
-	.long DispatchMatrix_NoAction                                 ; FF3B29  [ 64]
-	.long DispatchMatrix_NoAction                                 ; FF3B2D  [ 65]
-	.long DispatchMatrix_NoAction                                 ; FF3B31  [ 66]
-	.long DispatchMatrix_NoAction                                 ; FF3B35  [ 67]
-	.long DispatchMatrix_NoAction                                 ; FF3B39  [ 68]
-	.long DispatchMatrix_NoAction                                 ; FF3B3D  [ 69]
-	.long DispatchMatrix_NoAction                                 ; FF3B41  [ 70]
-	.long DispatchMatrix_NoAction                                 ; FF3B45  [ 71]
-	.long DispatchMatrix_NoAction                                 ; FF3B49  [ 72]
-	.long DispatchMatrix_NoAction                                 ; FF3B4D  [ 73]
-	.long LcdKeyRow3_DiskSaveFile_Page2              ; FF3B51  [ 74]
-	.long LcdKeyRow4_DiskSaveFile_Page2              ; FF3B55  [ 75]
-	.long DispatchMatrix_NoAction                                 ; FF3B59  [ 76]
-	.long DispatchMatrix_NoAction                                 ; FF3B5D  [ 77]
-	.long DispatchMatrix_NoAction                                 ; FF3B61  [ 78]
-	.long ExitKey_DiskSaveFile_Page2                 ; FF3B65  [ 79]
-	.long DispatchMatrix_NoAction                                 ; FF3B69  [ 80]
-	.long DispatchMatrix_NoAction                                 ; FF3B6D  [ 81]
-	.long DispatchMatrix_NoAction                                 ; FF3B71  [ 82]
-	.long DispatchMatrix_NoAction                                 ; FF3B75  [ 83]
-	.long DispatchMatrix_NoAction                                 ; FF3B79  [ 84]
-	.long DispatchMatrix_NoAction                                 ; FF3B7D  [ 85]
-	.long DispatchMatrix_NoAction                                 ; FF3B81  [ 86]
-	.long DispatchMatrix_NoAction                                 ; FF3B85  [ 87]
-	.long DispatchMatrix_NoAction                                 ; FF3B89  [ 88]
-	.long DispatchMatrix_NoAction                                 ; FF3B8D  [ 89]
-	.long DispatchMatrix_NoAction                                 ; FF3B91  [ 90]
-	.long DispatchMatrix_NoAction                                 ; FF3B95  [ 91]
-	.long DispatchMatrix_NoAction                                 ; FF3B99  [ 92]
-	.long DispatchMatrix_NoAction                                 ; FF3B9D  [ 93]
-	.long DispatchMatrix_NoAction                                 ; FF3BA1  [ 94]
-	.long DispatchMatrix_NoAction                                 ; FF3BA5  [ 95]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3BA9  [ 96]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3BAD  [ 97]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3BB1  [ 98]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3BB5  [ 99]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3BB9  [100]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3BBD  [101]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3BC1  [102]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3BC5  [103]
-	.long LcdKeyRow1_DiskSaveFile_Page3              ; FF3BC9  [104]
-	.long DispatchMatrix_NoAction                                 ; FF3BCD  [105]
-	.long DispatchMatrix_NoAction                                 ; FF3BD1  [106]
-	.long DispatchMatrix_NoAction                                 ; FF3BD5  [107]
-	.long DispatchMatrix_NoAction                                 ; FF3BD9  [108]
-	.long DispatchMatrix_NoAction                                 ; FF3BDD  [109]
-	.long DispatchMatrix_NoAction                                 ; FF3BE1  [110]
-	.long ExitKey_DiskSaveFile_Pages3_4              ; FF3BE5  [111]
-	.long DispatchMatrix_NoAction                                 ; FF3BE9  [112]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3BED  [113]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3BF1  [114]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3BF5  [115]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3BF9  [116]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3BFD  [117]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C01  [118]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C05  [119]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C09  [120]
-	.long DispatchMatrix_NoAction                                 ; FF3C0D  [121]
-	.long DispatchMatrix_NoAction                                 ; FF3C11  [122]
-	.long DispatchMatrix_NoAction                                 ; FF3C15  [123]
-	.long DispatchMatrix_NoAction                                 ; FF3C19  [124]
-	.long DispatchMatrix_NoAction                                 ; FF3C1D  [125]
-	.long DispatchMatrix_NoAction                                 ; FF3C21  [126]
-	.long DispatchMatrix_NoAction                                 ; FF3C25  [127]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3C29  [128]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3C2D  [129]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3C31  [130]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3C35  [131]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3C39  [132]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C3D  [133]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C41  [134]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C45  [135]
-	.long LcdKeyRow1_DiskSaveFile_Page4              ; FF3C49  [136]
-	.long DispatchMatrix_NoAction                                 ; FF3C4D  [137]
-	.long DispatchMatrix_NoAction                                 ; FF3C51  [138]
-	.long DispatchMatrix_NoAction                                 ; FF3C55  [139]
-	.long DispatchMatrix_NoAction                                 ; FF3C59  [140]
-	.long DispatchMatrix_NoAction                                 ; FF3C5D  [141]
-	.long DispatchMatrix_NoAction                                 ; FF3C61  [142]
-	.long ExitKey_DiskSaveFile_Pages3_4              ; FF3C65  [143]
-	.long DispatchMatrix_NoAction                                 ; FF3C69  [144]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3C6D  [145]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3C71  [146]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3C75  [147]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3C79  [148]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3C7D  [149]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C81  [150]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C85  [151]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C89  [152]
-	.long DispatchMatrix_NoAction                                 ; FF3C8D  [153]
-	.long DispatchMatrix_NoAction                                 ; FF3C91  [154]
-	.long DispatchMatrix_NoAction                                 ; FF3C95  [155]
-	.long DispatchMatrix_NoAction                                 ; FF3C99  [156]
-	.long DispatchMatrix_NoAction                                 ; FF3C9D  [157]
-	.long DispatchMatrix_NoAction                                 ; FF3CA1  [158]
-	.long DispatchMatrix_NoAction                                 ; FF3CA5  [159]
-	.long DispatchMatrix_NoAction                                 ; FF3CA9  [160]
-	.long DispatchMatrix_NoAction                                 ; FF3CAD  [161]
-	.long DispatchMatrix_NoAction                                 ; FF3CB1  [162]
-	.long DispatchMatrix_NoAction                                 ; FF3CB5  [163]
-	.long DispatchMatrix_NoAction                                 ; FF3CB9  [164]
-	.long DispatchMatrix_NoAction                                 ; FF3CBD  [165]
-	.long DispatchMatrix_NoAction                                 ; FF3CC1  [166]
-	.long DispatchMatrix_NoAction                                 ; FF3CC5  [167]
-	.long DispatchMatrix_NoAction                                 ; FF3CC9  [168]
-	.long DispatchMatrix_NoAction                                 ; FF3CCD  [169]
-	.long LcdKeyRow3_DiskSaveFile_Page5              ; FF3CD1  [170]
-	.long LcdKeyRow4_DiskSaveFile_Page5              ; FF3CD5  [171]
-	.long DispatchMatrix_NoAction                                 ; FF3CD9  [172]
-	.long DispatchMatrix_NoAction                                 ; FF3CDD  [173]
-	.long DispatchMatrix_NoAction                                 ; FF3CE1  [174]
-	.long ExitKey_DiskSaveFile_Page5                 ; FF3CE5  [175]
-	.long DispatchMatrix_NoAction                                 ; FF3CE9  [176]
-	.long DispatchMatrix_NoAction                                 ; FF3CED  [177]
-	.long DispatchMatrix_NoAction                                 ; FF3CF1  [178]
-	.long DispatchMatrix_NoAction                                 ; FF3CF5  [179]
-	.long DispatchMatrix_NoAction                                 ; FF3CF9  [180]
-	.long DispatchMatrix_NoAction                                 ; FF3CFD  [181]
-	.long DispatchMatrix_NoAction                                 ; FF3D01  [182]
-	.long DispatchMatrix_NoAction                                 ; FF3D05  [183]
-	.long DispatchMatrix_NoAction                                 ; FF3D09  [184]
-	.long DispatchMatrix_NoAction                                 ; FF3D0D  [185]
-	.long DispatchMatrix_NoAction                                 ; FF3D11  [186]
-	.long DispatchMatrix_NoAction                                 ; FF3D15  [187]
-	.long DispatchMatrix_NoAction                                 ; FF3D19  [188]
-	.long DispatchMatrix_NoAction                                 ; FF3D1D  [189]
-	.long DispatchMatrix_NoAction                                 ; FF3D21  [190]
-	.long DispatchMatrix_NoAction                                 ; FF3D25  [191]
+; row 0 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page0
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page0
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page0
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 1 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DiskSaveFile_Page1
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskSaveFile_Page1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskSaveFile_Page1
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page1
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_DiskSaveFile_Page1
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 2 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page2
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page2
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 3 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page3
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 4 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page4
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 5 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page5
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page5
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page5
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; ScreenEnterPages_MidiFileSave -- FOUR handler pointers, indexed by the page byte (0x2229)
 ;
@@ -699,198 +725,216 @@ ScreenEnterPages_MidiFileSave:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3D39:
-	.long SoftKeyCol1_MidiFileSave_Page0                                 ; FF3D39  [  0]
-	.long SoftKeyCol2_MidiFileSave_Page0                                 ; FF3D3D  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3D41  [  2]
-	.long SoftKeyCol4_MidiFileSave_Page0                                 ; FF3D45  [  3]
-	.long SoftKeyCol5_MidiFileSave_Page0                                 ; FF3D49  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3D4D  [  5]
-	.long SoftKeyCol7_MidiFileSave_Page0                                 ; FF3D51  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF3D55  [  7]
-	.long LcdKeyRow1_MidiFileSave_Page0              ; FF3D59  [  8]
-	.long DispatchMatrix_NoAction                                 ; FF3D5D  [  9]
-	.long DispatchMatrix_NoAction                                 ; FF3D61  [ 10]
-	.long LcdKeyRow4_MidiFileSave_Page0              ; FF3D65  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3D69  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3D6D  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3D71  [ 14]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3D75  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3D79  [ 16]
-	.long SoftKeyCol1_MidiFileSave_Page0                                 ; FF3D7D  [ 17]
-	.long SoftKeyCol2_MidiFileSave_Page0                                 ; FF3D81  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF3D85  [ 19]
-	.long SoftKeyCol4_MidiFileSave_Page0                                 ; FF3D89  [ 20]
-	.long SoftKeyCol5_MidiFileSave_Page0                                 ; FF3D8D  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3D91  [ 22]
-	.long SoftKeyCol7_MidiFileSave_Page0                                 ; FF3D95  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3D99  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3D9D  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3DA1  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF3DA5  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3DA9  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3DAD  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3DB1  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF3DB5  [ 31]
-	.long DispatchMatrix_NoAction                                 ; FF3DB9  [ 32]
-	.long DispatchMatrix_NoAction                                 ; FF3DBD  [ 33]
-	.long DispatchMatrix_NoAction                                 ; FF3DC1  [ 34]
-	.long DispatchMatrix_NoAction                                 ; FF3DC5  [ 35]
-	.long DispatchMatrix_NoAction                                 ; FF3DC9  [ 36]
-	.long DispatchMatrix_NoAction                                 ; FF3DCD  [ 37]
-	.long DispatchMatrix_NoAction                                 ; FF3DD1  [ 38]
-	.long DispatchMatrix_NoAction                                 ; FF3DD5  [ 39]
-	.long LcdKeyRow1_MidiFileSave_Page1              ; FF3DD9  [ 40]
-	.long LcdKeyRow2_MidiFileSave_Page1              ; FF3DDD  [ 41]
-	.long LcdKeyRow3_MidiFileSave_Page1              ; FF3DE1  [ 42]
-	.long LcdKeyRow4_MidiFileSave_Page1              ; FF3DE5  [ 43]
-	.long LcdKeyRow5_MidiFileSave_Page1              ; FF3DE9  [ 44]
-	.long DispatchMatrix_NoAction                                 ; FF3DED  [ 45]
-	.long DispatchMatrix_NoAction                                 ; FF3DF1  [ 46]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3DF5  [ 47]
-	.long DispatchMatrix_NoAction                                 ; FF3DF9  [ 48]
-	.long DispatchMatrix_NoAction                                 ; FF3DFD  [ 49]
-	.long DispatchMatrix_NoAction                                 ; FF3E01  [ 50]
-	.long DispatchMatrix_NoAction                                 ; FF3E05  [ 51]
-	.long DispatchMatrix_NoAction                                 ; FF3E09  [ 52]
-	.long DispatchMatrix_NoAction                                 ; FF3E0D  [ 53]
-	.long DispatchMatrix_NoAction                                 ; FF3E11  [ 54]
-	.long DispatchMatrix_NoAction                                 ; FF3E15  [ 55]
-	.long DispatchMatrix_NoAction                                 ; FF3E19  [ 56]
-	.long DispatchMatrix_NoAction                                 ; FF3E1D  [ 57]
-	.long DispatchMatrix_NoAction                                 ; FF3E21  [ 58]
-	.long DispatchMatrix_NoAction                                 ; FF3E25  [ 59]
-	.long DispatchMatrix_NoAction                                 ; FF3E29  [ 60]
-	.long DispatchMatrix_NoAction                                 ; FF3E2D  [ 61]
-	.long DispatchMatrix_NoAction                                 ; FF3E31  [ 62]
-	.long DispatchMatrix_NoAction                                 ; FF3E35  [ 63]
-	.long DispatchMatrix_NoAction                                 ; FF3E39  [ 64]
-	.long DispatchMatrix_NoAction                                 ; FF3E3D  [ 65]
-	.long DispatchMatrix_NoAction                                 ; FF3E41  [ 66]
-	.long DispatchMatrix_NoAction                                 ; FF3E45  [ 67]
-	.long DispatchMatrix_NoAction                                 ; FF3E49  [ 68]
-	.long DispatchMatrix_NoAction                                 ; FF3E4D  [ 69]
-	.long DispatchMatrix_NoAction                                 ; FF3E51  [ 70]
-	.long DispatchMatrix_NoAction                                 ; FF3E55  [ 71]
-	.long DispatchMatrix_NoAction                                 ; FF3E59  [ 72]
-	.long DispatchMatrix_NoAction                                 ; FF3E5D  [ 73]
-	.long LcdKeyRow3_MidiFileSave_Page2              ; FF3E61  [ 74]
-	.long LcdKeyRow4_MidiFileSave_Page2              ; FF3E65  [ 75]
-	.long DispatchMatrix_NoAction                                 ; FF3E69  [ 76]
-	.long DispatchMatrix_NoAction                                 ; FF3E6D  [ 77]
-	.long DispatchMatrix_NoAction                                 ; FF3E71  [ 78]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3E75  [ 79]
-	.long DispatchMatrix_NoAction                                 ; FF3E79  [ 80]
-	.long DispatchMatrix_NoAction                                 ; FF3E7D  [ 81]
-	.long DispatchMatrix_NoAction                                 ; FF3E81  [ 82]
-	.long DispatchMatrix_NoAction                                 ; FF3E85  [ 83]
-	.long DispatchMatrix_NoAction                                 ; FF3E89  [ 84]
-	.long DispatchMatrix_NoAction                                 ; FF3E8D  [ 85]
-	.long DispatchMatrix_NoAction                                 ; FF3E91  [ 86]
-	.long DispatchMatrix_NoAction                                 ; FF3E95  [ 87]
-	.long DispatchMatrix_NoAction                                 ; FF3E99  [ 88]
-	.long DispatchMatrix_NoAction                                 ; FF3E9D  [ 89]
-	.long DispatchMatrix_NoAction                                 ; FF3EA1  [ 90]
-	.long DispatchMatrix_NoAction                                 ; FF3EA5  [ 91]
-	.long DispatchMatrix_NoAction                                 ; FF3EA9  [ 92]
-	.long DispatchMatrix_NoAction                                 ; FF3EAD  [ 93]
-	.long DispatchMatrix_NoAction                                 ; FF3EB1  [ 94]
-	.long DispatchMatrix_NoAction                                 ; FF3EB5  [ 95]
-	.long DispatchMatrix_NoAction                                 ; FF3EB9  [ 96]
-	.long DispatchMatrix_NoAction                                 ; FF3EBD  [ 97]
-	.long DispatchMatrix_NoAction                                 ; FF3EC1  [ 98]
-	.long DispatchMatrix_NoAction                                 ; FF3EC5  [ 99]
-	.long DispatchMatrix_NoAction                                 ; FF3EC9  [100]
-	.long DispatchMatrix_NoAction                                 ; FF3ECD  [101]
-	.long DispatchMatrix_NoAction                                 ; FF3ED1  [102]
-	.long DispatchMatrix_NoAction                                 ; FF3ED5  [103]
-	.long DispatchMatrix_NoAction                                 ; FF3ED9  [104]
-	.long DispatchMatrix_NoAction                                 ; FF3EDD  [105]
-	.long LcdKeyRow3_MidiFileSave_Page3              ; FF3EE1  [106]
-	.long LcdKeyRow4_MidiFileSave_Page3              ; FF3EE5  [107]
-	.long DispatchMatrix_NoAction                                 ; FF3EE9  [108]
-	.long DispatchMatrix_NoAction                                 ; FF3EED  [109]
-	.long DispatchMatrix_NoAction                                 ; FF3EF1  [110]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3EF5  [111]
-	.long DispatchMatrix_NoAction                                 ; FF3EF9  [112]
-	.long DispatchMatrix_NoAction                                 ; FF3EFD  [113]
-	.long DispatchMatrix_NoAction                                 ; FF3F01  [114]
-	.long DispatchMatrix_NoAction                                 ; FF3F05  [115]
-	.long DispatchMatrix_NoAction                                 ; FF3F09  [116]
-	.long DispatchMatrix_NoAction                                 ; FF3F0D  [117]
-	.long DispatchMatrix_NoAction                                 ; FF3F11  [118]
-	.long DispatchMatrix_NoAction                                 ; FF3F15  [119]
-	.long DispatchMatrix_NoAction                                 ; FF3F19  [120]
-	.long DispatchMatrix_NoAction                                 ; FF3F1D  [121]
-	.long DispatchMatrix_NoAction                                 ; FF3F21  [122]
-	.long DispatchMatrix_NoAction                                 ; FF3F25  [123]
-	.long DispatchMatrix_NoAction                                 ; FF3F29  [124]
-	.long DispatchMatrix_NoAction                                 ; FF3F2D  [125]
-	.long DispatchMatrix_NoAction                                 ; FF3F31  [126]
-	.long DispatchMatrix_NoAction                                 ; FF3F35  [127]
-	.long DispatchMatrix_NoAction                                 ; FF3F39  [128]
-	.long DispatchMatrix_NoAction                                 ; FF3F3D  [129]
-	.long DispatchMatrix_NoAction                                 ; FF3F41  [130]
-	.long sub_FF657B                                 ; FF3F45  [131]
-	.long DispatchMatrix_NoAction                                 ; FF3F49  [132]
-	.long DispatchMatrix_NoAction                                 ; FF3F4D  [133]
-	.long DispatchMatrix_NoAction                                 ; FF3F51  [134]
-	.long DispatchMatrix_NoAction                                 ; FF3F55  [135]
-	.long DispatchMatrix_NoAction                                 ; FF3F59  [136]
-	.long DispatchMatrix_NoAction                                 ; FF3F5D  [137]
-	.long LcdKeyRow3_MidiFileSave_Page4              ; FF3F61  [138]
-	.long LcdKeyRow4_MidiFileSave_Page4              ; FF3F65  [139]
-	.long DispatchMatrix_NoAction                                 ; FF3F69  [140]
-	.long DispatchMatrix_NoAction                                 ; FF3F6D  [141]
-	.long DispatchMatrix_NoAction                                 ; FF3F71  [142]
-	.long ExitKey_MidiFileSave_Page4                 ; FF3F75  [143]
-	.long DispatchMatrix_NoAction                                 ; FF3F79  [144]
-	.long DispatchMatrix_NoAction                                 ; FF3F7D  [145]
-	.long DispatchMatrix_NoAction                                 ; FF3F81  [146]
-	.long DispatchMatrix_NoAction                                 ; FF3F85  [147]
-	.long DispatchMatrix_NoAction                                 ; FF3F89  [148]
-	.long sub_FF657B                                 ; FF3F8D  [149]
-	.long DispatchMatrix_NoAction                                 ; FF3F91  [150]
-	.long DispatchMatrix_NoAction                                 ; FF3F95  [151]
-	.long DispatchMatrix_NoAction                                 ; FF3F99  [152]
-	.long DispatchMatrix_NoAction                                 ; FF3F9D  [153]
-	.long DispatchMatrix_NoAction                                 ; FF3FA1  [154]
-	.long DispatchMatrix_NoAction                                 ; FF3FA5  [155]
-	.long DispatchMatrix_NoAction                                 ; FF3FA9  [156]
-	.long DispatchMatrix_NoAction                                 ; FF3FAD  [157]
-	.long DispatchMatrix_NoAction                                 ; FF3FB1  [158]
-	.long DispatchMatrix_NoAction                                 ; FF3FB5  [159]
-	.long DispatchMatrix_NoAction                                 ; FF3FB9  [160]
-	.long DispatchMatrix_NoAction                                 ; FF3FBD  [161]
-	.long DispatchMatrix_NoAction                                 ; FF3FC1  [162]
-	.long DispatchMatrix_NoAction                                 ; FF3FC5  [163]
-	.long DispatchMatrix_NoAction                                 ; FF3FC9  [164]
-	.long DispatchMatrix_NoAction                                 ; FF3FCD  [165]
-	.long DispatchMatrix_NoAction                                 ; FF3FD1  [166]
-	.long DispatchMatrix_NoAction                                 ; FF3FD5  [167]
-	.long DispatchMatrix_NoAction                                 ; FF3FD9  [168]
-	.long DispatchMatrix_NoAction                                 ; FF3FDD  [169]
-	.long LcdKeyRow3_MidiFileSave_Page5              ; FF3FE1  [170]
-	.long LcdKeyRow4_MidiFileSave_Page5              ; FF3FE5  [171]
-	.long DispatchMatrix_NoAction                                 ; FF3FE9  [172]
-	.long DispatchMatrix_NoAction                                 ; FF3FED  [173]
-	.long DispatchMatrix_NoAction                                 ; FF3FF1  [174]
-	.long ExitKey_MidiFileSave_Page5                 ; FF3FF5  [175]
-	.long DispatchMatrix_NoAction                                 ; FF3FF9  [176]
-	.long DispatchMatrix_NoAction                                 ; FF3FFD  [177]
-	.long DispatchMatrix_NoAction                                 ; FF4001  [178]
-	.long DispatchMatrix_NoAction                                 ; FF4005  [179]
-	.long DispatchMatrix_NoAction                                 ; FF4009  [180]
-	.long DispatchMatrix_NoAction                                 ; FF400D  [181]
-	.long DispatchMatrix_NoAction                                 ; FF4011  [182]
-	.long DispatchMatrix_NoAction                                 ; FF4015  [183]
-	.long DispatchMatrix_NoAction                                 ; FF4019  [184]
-	.long DispatchMatrix_NoAction                                 ; FF401D  [185]
-	.long DispatchMatrix_NoAction                                 ; FF4021  [186]
-	.long DispatchMatrix_NoAction                                 ; FF4025  [187]
-	.long DispatchMatrix_NoAction                                 ; FF4029  [188]
-	.long DispatchMatrix_NoAction                                 ; FF402D  [189]
-	.long DispatchMatrix_NoAction                                 ; FF4031  [190]
-	.long DispatchMatrix_NoAction                                 ; FF4035  [191]
+; row 0 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileSave_Page0
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page0
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 1 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileSave_Page1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileSave_Page1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileSave_Page1
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 2 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page2
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 3 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page3
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page3
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 4 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	sub_FF657B
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page4
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page4
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	sub_FF657B
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 5 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page5
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page5
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page5
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
+	on_key	KEY_PageAlt,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Table_FF4039 -- FOUR 16-bit values: 0x0008, 0x0009, 0x0028, 0x0029
 ;
@@ -1641,9 +1685,9 @@ Paint_MidiFileDirectPlay:
 .LFF444B:
 	set	6, (0x2094:16)                               ; FF444B  f1 94 20 be
 	ld (Disk_SelectedEntry:16), 0x00                                 ; FF444F  f1 24 27 00 00
-	ld (0x272d:16), 0x00                                 ; FF4454  f1 2d 27 00 00
+	ld (MidiFile_ListCursorRow:16), 0x00                                 ; FF4454  f1 2d 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF4459  f1 2e 27 00 00
-	ld (0x2730:16), 0x00                                 ; FF445E  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF445E  f1 30 27 00 00
 .LFF4463:
 	pushw 0x0b                                           ; FF4463  0b 0b 00
 	pushw 0x0c                                           ; FF4466  0b 0c 00
@@ -1702,7 +1746,7 @@ Paint_MidiFileDirectPlay:
 	push XBC                                             ; FF44F4  39
 	call DLB_Array8_SaveRegs                                      ; FF44F5  1d 3f 76 ff
 	add XSP,0x0000003e                                   ; FF44F9  ef c8 3e 00 00 00
-	cp	(0x2730:16), 0x00                            ; FF44FF  c1 30 27 3f 00
+	cp	(DiskScreen_RowOption:16), 0x00                            ; FF44FF  c1 30 27 3f 00
 	jr nz, .LFF4512                                      ; FF4504  6e 0c
 	lda xbc, (DL_F59522:24)                              ; FF4506  f2 22 95 f5 31
 	push XBC                                             ; FF450B  39
@@ -1909,7 +1953,7 @@ LcdKeyRow2_MidiFileDirectPlay:
 	lda xbc, (DL_F59522:24)                              ; FF4603  f2 22 95 f5 31
 	push XBC                                             ; FF4608  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF4609  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF460D  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF460D  f1 30 27 00 00
 	pop XIY                                              ; FF4612  5d
 .LFF4613:
 	unlk XIZ                                             ; FF4613  ee 0d
@@ -1946,7 +1990,7 @@ LcdKeyRow3_MidiFileDirectPlay:
 	lda xbc, (DL_F59522:24)                              ; FF4623  f2 22 95 f5 31
 	push XBC                                             ; FF4628  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF4629  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF462D  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF462D  f1 30 27 00 00
 	pop XIY                                              ; FF4632  5d
 	jr .LFF463F                                          ; FF4633  68 0a
 .LFF4635:
@@ -1988,7 +2032,7 @@ LcdKeyRow4_MidiFileDirectPlay:
 	ld BC,(XIZ+0x08)                                     ; FF4655  9e 08 21
 	and BC,0x0080                                        ; FF4658  d9 cc 80 00
 	jr nz, .LFF46B6                                      ; FF465C  6e 58
-	ld bc, (0x2730:16)                                 ; FF465E  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF465E  d1 30 27 21
 	extz BC                                              ; FF4662  d9 12
 	cp bc, 0x00:i3                                         ; FF4664  d9 d8
 	jr z, .LFF466E                                       ; FF4666  66 06
@@ -2061,7 +2105,7 @@ LcdKeyRow5_MidiFileDirectPlay:
 	ld BC,(XIZ+0x08)                                     ; FF46D3  9e 08 21
 	and BC,0x0080                                        ; FF46D6  d9 cc 80 00
 	jr nz, .LFF472E                                      ; FF46DA  6e 52
-	ld bc, (0x2730:16)                                 ; FF46DC  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF46DC  d1 30 27 21
 	extz BC                                              ; FF46E0  d9 12
 	cp bc, 0x00:i3                                         ; FF46E2  d9 d8
 	jr z, .LFF46EC                                       ; FF46E4  66 06
@@ -2093,7 +2137,7 @@ LcdKeyRow5_MidiFileDirectPlay:
 	inc 2,XSP                                            ; FF472A  ef 62
 	jr .LFF473E                                          ; FF472C  68 10
 .LFF472E:
-	ld (0x2730:16), 0x01                                 ; FF472E  f1 30 27 00 01
+	ld (DiskScreen_RowOption:16), 0x01                                 ; FF472E  f1 30 27 00 01
 	lda xbc, (DL_F59517:24)                              ; FF4733  f2 17 95 f5 31
 	push XBC                                             ; FF4738  39
 .LFF4739:
@@ -2252,7 +2296,7 @@ Paint_DiskL0adFile:
 	calr DiskLoad_SetContentTypeFromSelectedEntry                                      ; FF482E  1e bf 00
 	ld c, (Disk_SeqBank:16)                                   ; FF4831  c1 2b 27 23
 	inc 1,C                                              ; FF4835  cb 61
-	ld (0x2733:16), c                                   ; FF4837  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4837  f1 33 27 43
 	lda xbc, (DL_F5840A:24)                              ; FF483B  f2 0a 84 f5 31
 	push XBC                                             ; FF4840  39
 	lda xwa, (DL_F583E5:24)                              ; FF4841  f2 e5 83 f5 30
@@ -2822,7 +2866,7 @@ LcdKeyRow4_DiskL0adFile:
 .LFF4BB1:
 	ld c, (Disk_SeqBank:16)                                   ; FF4BB1  c1 2b 27 23
 	inc 1,C                                              ; FF4BB5  cb 61
-	ld (0x2733:16), c                                   ; FF4BB7  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4BB7  f1 33 27 43
 	lda xbc, (0xf58415:24)                               ; FF4BBB  f2 15 84 f5 31
 	push XBC                                             ; FF4BC0  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF4BC1  1d 68 76 ff
@@ -2864,7 +2908,7 @@ LcdKeyRow4_DiskL0adFile:
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4C1A  1d d3 75 ff
 	ld c, (Disk_SeqBank:16)                                   ; FF4C1E  c1 2b 27 23
 	inc 1,C                                              ; FF4C22  cb 61
-	ld (0x2733:16), c                                   ; FF4C24  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4C24  f1 33 27 43
 	add XSP,0x00000014                                   ; FF4C28  ef c8 14 00 00 00
 	jr .LFF4C70                                          ; FF4C2E  68 40
 .LFF4C30:
@@ -3152,7 +3196,7 @@ LcdKeyRow5_DiskL0adFile:
 .LFF4E44:
 	ld c, (Disk_SeqBank:16)                                   ; FF4E44  c1 2b 27 23
 	inc 1,C                                              ; FF4E48  cb 61
-	ld (0x2733:16), c                                   ; FF4E4A  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4E4A  f1 33 27 43
 	lda xbc, (0xf58415:24)                               ; FF4E4E  f2 15 84 f5 31
 	push XBC                                             ; FF4E53  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF4E54  1d 68 76 ff
@@ -3199,7 +3243,7 @@ LcdKeyRow5_DiskL0adFile:
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4EB6  1d d3 75 ff
 	ld c, (Disk_SeqBank:16)                                   ; FF4EBA  c1 2b 27 23
 	inc 1,C                                              ; FF4EBE  cb 61
-	ld (0x2733:16), c                                   ; FF4EC0  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4EC0  f1 33 27 43
 	add XSP,0x00000014                                   ; FF4EC4  ef c8 14 00 00 00
 	jr .LFF4F0C                                          ; FF4ECA  68 40
 .LFF4ECC:
@@ -3279,7 +3323,7 @@ LcdKeyRow5_DiskL0adFile:
 .LFF4F83:
 	ld c, (Disk_SeqBank:16)                                   ; FF4F83  c1 2b 27 23
 	inc 1,C                                              ; FF4F87  cb 61
-	ld (0x2733:16), c                                   ; FF4F89  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF4F89  f1 33 27 43
 	lda xbc, (DL_F5840A:24)                              ; FF4F8D  f2 0a 84 f5 31
 	push XBC                                             ; FF4F92  39
 	lda xwa, (DL_F583F0:24)                              ; FF4F93  f2 f0 83 f5 30
@@ -3389,12 +3433,12 @@ Paint_MidiFileL0ad:
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF501C  1d 94 25 f4
 	ld (XIX),0x00                                        ; FF5020  b4 00 00
 	call T_Disk_MountAndScanMidiFilesResetRings                                        ; FF5023  1d 14 26 f4
-	ld (0x2730:16), 0x00                                 ; FF5027  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF5027  f1 30 27 00 00
 	calr UI_StatusCode_Is0or2or4                                      ; FF502C  1e 6d 25
 	cp wa, 0x00:i3                                         ; FF502F  d8 d8
 	jr nz, .LFF504C                                      ; FF5031  6e 19
 	set	6, (0x2094:16)                               ; FF5033  f1 94 20 be
-	ld (0x272d:16), 0x00                                 ; FF5037  f1 2d 27 00 00
+	ld (MidiFile_ListCursorRow:16), 0x00                                 ; FF5037  f1 2d 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF503C  f1 2e 27 00 00
 	jr .LFF5059                                          ; FF5041  68 16
 .LFF5043:
@@ -3432,7 +3476,7 @@ Paint_MidiFileL0ad:
 	call DLB_Array8_SaveRegs                                      ; FF509E  1d 3f 76 ff
 	ld c, (Disk_SeqBank:16)                                   ; FF50A2  c1 2b 27 23
 	inc 1,C                                              ; FF50A6  cb 61
-	ld (0x2733:16), c                                   ; FF50A8  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF50A8  f1 33 27 43
 	lda xbc, (DL_F59948:24)                              ; FF50AC  f2 48 99 f5 31
 	push XBC                                             ; FF50B1  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF50B2  1d 68 76 ff
@@ -3610,7 +3654,7 @@ ScreenLeave_MidiFileL0ad:
 	call DiskFileScreen_LeaveCommon                                      ; FF5216  1d 8c 79 ff
 	ld (0x272f:16), 0x00                                 ; FF521A  f1 2f 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF521F  f1 2e 27 00 00
-	ld (0x272d:16), 0x00                                 ; FF5224  f1 2d 27 00 00
+	ld (MidiFile_ListCursorRow:16), 0x00                                 ; FF5224  f1 2d 27 00 00
 	ld (Disk_SelectedEntry:16), 0x00                                 ; FF5229  f1 24 27 00 00
 .LFF522E:
 	ret                                                  ; FF522E  0e
@@ -3692,7 +3736,7 @@ LcdKeyRow1_MidiFileL0ad:
 	lda xbc, (DL_F593FE:24)                              ; FF526D  f2 fe 93 f5 31
 	push XBC                                             ; FF5272  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF5273  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF5277  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF5277  f1 30 27 00 00
 	pop XIY                                              ; FF527C  5d
 	jr .LFF52DD                                          ; FF527D  68 5e
 .LFF527F:
@@ -3769,7 +3813,7 @@ LcdKeyRow2_MidiFileL0ad:
 	lda xbc, (DL_F593FE:24)                              ; FF52EF  f2 fe 93 f5 31
 	push XBC                                             ; FF52F4  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF52F5  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF52F9  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF52F9  f1 30 27 00 00
 	pop XIY                                              ; FF52FE  5d
 .LFF52FF:
 	unlk XIZ                                             ; FF52FF  ee 0d
@@ -3835,7 +3879,7 @@ LcdKeyRow4_MidiFileL0ad:
 	ld BC,(XIZ+0x08)                                     ; FF531D  9e 08 21
 	and BC,0x0080                                        ; FF5320  d9 cc 80 00
 	jrl nz, .LFF53A7                                     ; FF5324  7e 80 00
-	ld bc, (0x2730:16)                                 ; FF5327  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF5327  d1 30 27 21
 	extz BC                                              ; FF532B  d9 12
 	cp bc, 0x00:i3                                         ; FF532D  d9 d8
 	jr z, .LFF533C                                       ; FF532F  66 0b
@@ -3867,7 +3911,7 @@ LcdKeyRow4_MidiFileL0ad:
 .LFF536E:
 	ld C,(XIX)                                           ; FF536E  84 23
 	inc 1,C                                              ; FF5370  cb 61
-	ld (0x2733:16), c                                   ; FF5372  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF5372  f1 33 27 43
 	lda xbc, (DL_F59948:24)                              ; FF5376  f2 48 99 f5 31
 	push XBC                                             ; FF537B  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF537C  1d 68 76 ff
@@ -3889,7 +3933,7 @@ LcdKeyRow4_MidiFileL0ad:
 	lda xbc, (DL_F593FE:24)                              ; FF53A7  f2 fe 93 f5 31
 	push XBC                                             ; FF53AC  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF53AD  1d 23 76 ff
-	ld (0x2730:16), 0x01                                 ; FF53B1  f1 30 27 00 01
+	ld (DiskScreen_RowOption:16), 0x01                                 ; FF53B1  f1 30 27 00 01
 	pop XIY                                              ; FF53B6  5d
 	lda xbc, (DL_F593F3:24)                              ; FF53B7  f2 f3 93 f5 31
 	push XBC                                             ; FF53BC  39
@@ -3932,7 +3976,7 @@ LcdKeyRow5_MidiFileL0ad:
 	ld BC,(XIZ+0x08)                                     ; FF53D3  9e 08 21
 	and BC,0x0080                                        ; FF53D6  d9 cc 80 00
 	jrl nz, .LFF5450                                     ; FF53DA  7e 73 00
-	ld bc, (0x2730:16)                                 ; FF53DD  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF53DD  d1 30 27 21
 	extz BC                                              ; FF53E1  d9 12
 	cp bc, 0x00:i3                                         ; FF53E3  d9 d8
 	jr z, .LFF53F2                                       ; FF53E5  66 0b
@@ -3960,7 +4004,7 @@ LcdKeyRow5_MidiFileL0ad:
 .LFF5417:
 	ld C,(XIX)                                           ; FF5417  84 23
 	inc 1,C                                              ; FF5419  cb 61
-	ld (0x2733:16), c                                   ; FF541B  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF541B  f1 33 27 43
 	lda xbc, (DL_F59948:24)                              ; FF541F  f2 48 99 f5 31
 	push XBC                                             ; FF5424  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF5425  1d 68 76 ff
@@ -3982,7 +4026,7 @@ LcdKeyRow5_MidiFileL0ad:
 	lda xbc, (DL_F593FE:24)                              ; FF5450  f2 fe 93 f5 31
 	push XBC                                             ; FF5455  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF5456  1d 23 76 ff
-	ld (0x2730:16), 0x02                                 ; FF545A  f1 30 27 00 02
+	ld (DiskScreen_RowOption:16), 0x02                                 ; FF545A  f1 30 27 00 02
 	pop XIY                                              ; FF545F  5d
 	lda xbc, (DL_F593F3:24)                              ; FF5460  f2 f3 93 f5 31
 	push XBC                                             ; FF5465  39
@@ -4084,7 +4128,7 @@ ScreenEnter_DiskSaveFile_Page0:   ; entry: named by 1 `.long` operand, first at 
 	jr lt, .LFF54C8                                      ; FF54E2  61 e4
 .LFF54E4:
 	ld (NameEdit_CursorPos:16), 0x03                                 ; FF54E4  f1 2d 22 00 03
-	ld (0x2721:16), 0x02                                 ; FF54E9  f1 21 27 00 02
+	ld (UI_CursorBox:16), 0x02                                 ; FF54E9  f1 21 27 00 02
 	call T_NameEdit_SyncCharIndex_Call                                        ; FF54EE  1d f8 25 f4
 	cp	(Disk_SelectedEntry:16), 0x13                            ; FF54F2  c1 24 27 3f 13
 	jr ule, .LFF54FE                                     ; FF54F7  63 05
@@ -4094,7 +4138,7 @@ ScreenEnter_DiskSaveFile_Page0:   ; entry: named by 1 `.long` operand, first at 
 	pushw 0x04                                           ; FF5501  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF5504  1e 23 1c
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5507  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF550B  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF550B  f1 29 27 43
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF550F  1d 04 76 ff
 	pushw 0x00                                           ; FF5513  0b 00 00
 	lda xbc, (DL_F58786:24)                              ; FF5516  f2 86 87 f5 31
@@ -4398,7 +4442,7 @@ SoftKeyCol1_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	calr PanelDial_SetButtonPair                                      ; FF576E  1e b9 19
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF5771  f1 40 25 00 01
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5776  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF577A  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF577A  f1 29 27 43
 	lda xbc, (CharPalette_F587B2:24)                     ; FF577E  f2 b2 87 f5 31
 	push XBC                                             ; FF5783  39
 	lda xwa, (DL_F5879C:24)                              ; FF5784  f2 9c 87 f5 30
@@ -4408,9 +4452,9 @@ SoftKeyCol1_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	call T_NameEdit_MoveCursor_Call                                        ; FF5793  1d d4 25 f4
 	ld c, (NameEdit_CursorPos:16)                                   ; FF5797  c1 2d 22 23
 	dec 1,C                                              ; FF579B  cb 69
-	ld (0x2721:16), c                                   ; FF579D  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; FF579D  f1 21 27 43
 	ld a, (NameEdit_CharIndex:16)                                   ; FF57A1  c1 f9 21 21
-	ld (0x2729:16), a                                   ; FF57A5  f1 29 27 41
+	ld (NameEdit_CharBox:16), a                                   ; FF57A5  f1 29 27 41
 	lda xbc, (DL_F5879C:24)                              ; FF57A9  f2 9c 87 f5 31
 	push XBC                                             ; FF57AE  39
 	lda xwa, (DL_F58786:24)                              ; FF57AF  f2 86 87 f5 30
@@ -4426,7 +4470,7 @@ SoftKeyCol2_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	calr PanelDial_SetButtonPair                                      ; FF57C6  1e 61 19
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF57C9  f1 40 25 00 01
 	ld c, (NameEdit_CharIndex:16)                                   ; FF57CE  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF57D2  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF57D2  f1 29 27 43
 	lda xbc, (CharPalette_F587B2:24)                     ; FF57D6  f2 b2 87 f5 31
 	push XBC                                             ; FF57DB  39
 	lda xwa, (DL_F5879C:24)                              ; FF57DC  f2 9c 87 f5 30
@@ -4436,9 +4480,9 @@ SoftKeyCol2_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	call T_NameEdit_MoveCursor_Call                                        ; FF57EB  1d d4 25 f4
 	ld c, (NameEdit_CursorPos:16)                                   ; FF57EF  c1 2d 22 23
 	dec 1,C                                              ; FF57F3  cb 69
-	ld (0x2721:16), c                                   ; FF57F5  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; FF57F5  f1 21 27 43
 	ld a, (NameEdit_CharIndex:16)                                   ; FF57F9  c1 f9 21 21
-	ld (0x2729:16), a                                   ; FF57FD  f1 29 27 41
+	ld (NameEdit_CharBox:16), a                                   ; FF57FD  f1 29 27 41
 	lda xbc, (DL_F5879C:24)                              ; FF5801  f2 9c 87 f5 31
 	push XBC                                             ; FF5806  39
 	lda xwa, (DL_F58786:24)                              ; FF5807  f2 86 87 f5 30
@@ -4453,7 +4497,7 @@ SoftKeyCol4_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	pushw 0x04                                           ; FF581B  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF581E  1e 09 19
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5821  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5825  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5825  f1 29 27 43
 	lda xbc, (0xf587a7:24)                               ; FF5829  f2 a7 87 f5 31
 	push XBC                                             ; FF582E  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF582F  1d 23 76 ff
@@ -4462,7 +4506,7 @@ SoftKeyCol4_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF583C  f1 40 25 00 00
 	call LCD_DrawDiskFileName6_SaveRegs                                      ; FF5841  1d 0f 77 ff
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5845  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5849  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5849  f1 29 27 43
 	lda xbc, (0xf58791:24)                               ; FF584D  f2 91 87 f5 31
 	push XBC                                             ; FF5852  39
 	call DLB_Array8_SaveRegs                                      ; FF5853  1d 3f 76 ff
@@ -4476,7 +4520,7 @@ SoftKeyCol5_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	pushw 0x04                                           ; FF585F  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF5862  1e c5 18
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5865  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5869  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5869  f1 29 27 43
 	lda xbc, (0xf587a7:24)                               ; FF586D  f2 a7 87 f5 31
 	push XBC                                             ; FF5872  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF5873  1d 23 76 ff
@@ -4485,7 +4529,7 @@ SoftKeyCol5_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF5880  f1 40 25 00 00
 	call LCD_DrawDiskFileName6_SaveRegs                                      ; FF5885  1d 0f 77 ff
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5889  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF588D  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF588D  f1 29 27 43
 	lda xbc, (0xf58791:24)                               ; FF5891  f2 91 87 f5 31
 	push XBC                                             ; FF5896  39
 	call DLB_Array8_SaveRegs                                      ; FF5897  1d 3f 76 ff
@@ -4499,7 +4543,7 @@ SoftKeyCol7_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	pushw de                                             ; FF58A1  2a
 	push XIX                                             ; FF58A2  3c
 	ld c, (NameEdit_CharIndex:16)                                   ; FF58A3  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF58A7  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF58A7  f1 29 27 43
 	pushw 0x03                                           ; FF58AB  0b 03 00
 	pushw 0x04                                           ; FF58AE  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF58B1  1e 76 18
@@ -4525,9 +4569,9 @@ SoftKeyCol7_DiskSaveFile_Page0:   ; entry: named by 2 `.long` operands, first at
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF58E6  f1 40 25 00 00
 	ld (NameEdit_CursorPos:16), 0x03                                 ; FF58EB  f1 2d 22 00 03
 	ld (NameEdit_CharIndex:16), 0x00                                 ; FF58F0  f1 f9 21 00 00
-	ld (0x2729:16), 0x00                                 ; FF58F5  f1 29 27 00 00
+	ld (NameEdit_CharBox:16), 0x00                                 ; FF58F5  f1 29 27 00 00
 	call LCD_DrawDiskFileName6_SaveRegs                                      ; FF58FA  1d 0f 77 ff
-	ld (0x2721:16), 0x02                                 ; FF58FE  f1 21 27 00 02
+	ld (UI_CursorBox:16), 0x02                                 ; FF58FE  f1 21 27 00 02
 	lda xbc, (DL_F5879C:24)                              ; FF5903  f2 9c 87 f5 31
 	push XBC                                             ; FF5908  39
 	lda xwa, (DL_F58786:24)                              ; FF5909  f2 86 87 f5 30
@@ -5342,7 +5386,7 @@ ScreenEnter_MidiFileSave_Page0:   ; entry: named by 1 `.long` operand, first at 
 	cp	c, (UI_ScreenLatch_Previous:16)                               ; FF5C6C  c1 7b 20 f3
 	jr z, .LFF5CBE                                       ; FF5C70  66 4c
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF5C72  1d 94 25 f4
-	ld (0x2730:16), 0x00                                 ; FF5C76  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF5C76  f1 30 27 00 00
 	set	6, (0x2094:16)                               ; FF5C7B  f1 94 20 be
 	and	(0x133e:16), 0xfc                            ; FF5C7F  c1 3e 13 3c fc
 	ld h, (Disk_FileName:16)                                   ; FF5C84  c1 c8 21 26
@@ -5365,10 +5409,10 @@ ScreenEnter_MidiFileSave_Page0:   ; entry: named by 1 `.long` operand, first at 
 .LFF5CAF:
 	ld (0x272e:16), 0x00                                 ; FF5CAF  f1 2e 27 00 00
 	ld (Disk_SelectedEntry:16), 0x00                                 ; FF5CB4  f1 24 27 00 00
-	ld (0x272d:16), 0x00                                 ; FF5CB9  f1 2d 27 00 00
+	ld (MidiFile_ListCursorRow:16), 0x00                                 ; FF5CB9  f1 2d 27 00 00
 .LFF5CBE:
 	ld (NameEdit_CursorPos:16), 0x01                                 ; FF5CBE  f1 2d 22 00 01
-	ld (0x2721:16), 0x01                                 ; FF5CC3  f1 21 27 00 01
+	ld (UI_CursorBox:16), 0x01                                 ; FF5CC3  f1 21 27 00 01
 	call T_NameEdit_SyncCharIndex_Call                                        ; FF5CC8  1d f8 25 f4
 	pushw 0x03                                           ; FF5CCC  0b 03 00
 	pushw 0x04                                           ; FF5CCF  0b 04 00
@@ -5388,7 +5432,7 @@ ScreenEnter_MidiFileSave_Page0:   ; entry: named by 1 `.long` operand, first at 
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF5CFB  1d d3 75 ff
 	call LCD_DrawDiskFileName8_SaveRegs                                      ; FF5CFF  1d 29 77 ff
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5D03  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5D07  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5D07  f1 29 27 43
 	lda xbc, (DL_F5879C:24)                              ; FF5D0B  f2 9c 87 f5 31
 	push XBC                                             ; FF5D10  39
 	lda xwa, (DL_F58786:24)                              ; FF5D11  f2 86 87 f5 30
@@ -5454,12 +5498,12 @@ ScreenEnter_MidiFileSave_Page1:   ; entry: named by 1 `.long` operand, first at 
 	call DLB_Array8_SaveRegs                                      ; FF5DAC  1d 3f 76 ff
 	ld c, (Disk_SeqBank:16)                                   ; FF5DB0  c1 2b 27 23
 	inc 1,C                                              ; FF5DB4  cb 61
-	ld (0x2733:16), c                                   ; FF5DB6  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF5DB6  f1 33 27 43
 	lda xbc, (DL_F5993E:24)                              ; FF5DBA  f2 3e 99 f5 31
 	push XBC                                             ; FF5DBF  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF5DC0  1d 68 76 ff
 	ld c, (0x133e:16)                                   ; FF5DC4  c1 3e 13 23
-	ld (0x2731:16), c                                   ; FF5DC8  f1 31 27 43
+	ld (MidiFileSave_Options:16), c                                   ; FF5DC8  f1 31 27 43
 	lda xbc, (DL_F5993E:24)                              ; FF5DCC  f2 3e 99 f5 31
 	push XBC                                             ; FF5DD1  39
 	lda xwa, (ScreenEnter_MidiFileSave_Page1_DL3:24)                              ; FF5DD2  f2 15 99 f5 30
@@ -5570,7 +5614,7 @@ ScreenLeave_MidiFileSave:
 	call DiskFileScreen_LeaveCommon                                      ; FF5EB8  1d 8c 79 ff
 	ld (0x272f:16), 0x00                                 ; FF5EBC  f1 2f 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF5EC1  f1 2e 27 00 00
-	ld (0x272d:16), 0x00                                 ; FF5EC6  f1 2d 27 00 00
+	ld (MidiFile_ListCursorRow:16), 0x00                                 ; FF5EC6  f1 2d 27 00 00
 	ld (Disk_SelectedEntry:16), 0x00                                 ; FF5ECB  f1 24 27 00 00
 .LFF5ED0:
 	ret                                                  ; FF5ED0  0e
@@ -5645,7 +5689,7 @@ MidiFileSave_MoveNameCursor:
 	push XIX                                             ; FF5F1F  3c
 	lda xix, (NameEdit_CursorPos:16)                                ; FF5F20  f1 2d 22 34
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5F24  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5F28  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5F28  f1 29 27 43
 	pushw 0x03                                           ; FF5F2C  0b 03 00
 	pushw 0x04                                           ; FF5F2F  0b 04 00
 ; (sub_FF5F32 removed 2026-10-04: no code names it and the line above falls through into it -- part of MidiFileSave_MoveNameCursor;
@@ -5673,10 +5717,10 @@ MidiFileSave_MoveNameCursor:
 	incm8 0x01, (xix)                                    ; FF5F66  84 61
 .LFF5F68:
 	ld C,(XIX)                                           ; FF5F68  84 23
-	ld (0x2721:16), c                                   ; FF5F6A  f1 21 27 43
+	ld (UI_CursorBox:16), c                                   ; FF5F6A  f1 21 27 43
 	call T_NameEdit_SyncCharIndex_Call                                        ; FF5F6E  1d f8 25 f4
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5F72  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5F76  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5F76  f1 29 27 43
 	lda xbc, (DL_F5879C:24)                              ; FF5F7A  f2 9c 87 f5 31
 	push XBC                                             ; FF5F7F  39
 	lda xwa, (DL_F58786:24)                              ; FF5F80  f2 86 87 f5 30
@@ -5709,7 +5753,7 @@ SoftKeyCol5_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at
 MidiFileSave_StepNameChar:
 	link XIZ,0x0000                                      ; FF5FA0  ee 0c 00 00
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5FA4  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5FA8  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5FA8  f1 29 27 43
 	pushw 0x03                                           ; FF5FAC  0b 03 00
 	pushw 0x04                                           ; FF5FAF  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF5FB2  1e 75 11
@@ -5725,7 +5769,7 @@ MidiFileSave_StepNameChar:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF5FD5  f1 40 25 00 00
 	call LCD_DrawDiskFileName8_SaveRegs                                      ; FF5FDA  1d 29 77 ff
 	ld c, (NameEdit_CharIndex:16)                                   ; FF5FDE  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF5FE2  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF5FE2  f1 29 27 43
 	lda xbc, (DL_F5879C:24)                              ; FF5FE6  f2 9c 87 f5 31
 	push XBC                                             ; FF5FEB  39
 	lda xwa, (DL_F58786:24)                              ; FF5FEC  f2 86 87 f5 30
@@ -5742,7 +5786,7 @@ SoftKeyCol7_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at
 	pushw 0x04                                           ; FF6003  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF6006  1e 21 11
 	ld c, (NameEdit_CharIndex:16)                                   ; FF6009  c1 f9 21 23
-	ld (0x2729:16), c                                   ; FF600D  f1 29 27 43
+	ld (NameEdit_CharBox:16), c                                   ; FF600D  f1 29 27 43
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF6011  f1 40 25 00 01
 	lda xbc, (CharPalette_F587B2:24)                     ; FF6016  f2 b2 87 f5 31
 	push XBC                                             ; FF601B  39
@@ -5758,10 +5802,10 @@ SoftKeyCol7_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at
 	inc 1,HL                                             ; FF6035  db 61
 	cp HL,0x0008                                         ; FF6037  db cf 08 00
 	jr lt, .LFF602D                                      ; FF603B  61 f0
-	ld (0x2721:16), 0x01                                 ; FF603D  f1 21 27 00 01
+	ld (UI_CursorBox:16), 0x01                                 ; FF603D  f1 21 27 00 01
 	ld (NameEdit_CursorPos:16), 0x01                                 ; FF6042  f1 2d 22 00 01
 	ld (NameEdit_CharIndex:16), 0x00                                 ; FF6047  f1 f9 21 00 00
-	ld (0x2729:16), 0x00                                 ; FF604C  f1 29 27 00 00
+	ld (NameEdit_CharBox:16), 0x00                                 ; FF604C  f1 29 27 00 00
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF6051  f1 40 25 00 00
 	call LCD_DrawDiskFileName8_SaveRegs                                      ; FF6056  1d 29 77 ff
 	lda xbc, (DL_F5879C:24)                              ; FF605A  f2 9c 87 f5 31
@@ -5961,7 +6005,7 @@ LcdKeyRow1_MidiFileSave_Page1:
 	lda xbc, (DL_F59409:24)                              ; FF6163  f2 09 94 f5 31
 	push XBC                                             ; FF6168  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF6169  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF616D  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF616D  f1 30 27 00 00
 	lda xbc, (0xf59933:24)                               ; FF6172  f2 33 99 f5 31
 	push XBC                                             ; FF6177  39
 	call DLB_Array8_SaveRegs                                      ; FF6178  1d 3f 76 ff
@@ -6003,7 +6047,7 @@ LcdKeyRow2_MidiFileSave_Page1:
 	lda xbc, (DL_F59409:24)                              ; FF618F  f2 09 94 f5 31
 	push XBC                                             ; FF6194  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF6195  1d 23 76 ff
-	ld (0x2730:16), 0x00                                 ; FF6199  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF6199  f1 30 27 00 00
 	lda xbc, (0xf59933:24)                               ; FF619E  f2 33 99 f5 31
 	push XBC                                             ; FF61A3  39
 	call DLB_Array8_SaveRegs                                      ; FF61A4  1d 3f 76 ff
@@ -6044,7 +6088,7 @@ LcdKeyRow3_MidiFileSave_Page1:
 	lda xbc, (DL_F59409:24)                              ; FF61BA  f2 09 94 f5 31
 	push XBC                                             ; FF61BF  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF61C0  1d 23 76 ff
-	ld (0x2730:16), 0x01                                 ; FF61C4  f1 30 27 00 01
+	ld (DiskScreen_RowOption:16), 0x01                                 ; FF61C4  f1 30 27 00 01
 	lda xbc, (0xf59933:24)                               ; FF61C9  f2 33 99 f5 31
 	push XBC                                             ; FF61CE  39
 	call DLB_Array8_SaveRegs                                      ; FF61CF  1d 3f 76 ff
@@ -6088,7 +6132,7 @@ LcdKeyRow4_MidiFileSave_Page1:
 	and BC,0x0080                                        ; FF61ED  d9 cc 80 00
 	pop XIY                                              ; FF61F1  5d
 	jrl nz, .LFF6291                                     ; FF61F2  7e 9c 00
-	ld bc, (0x2730:16)                                 ; FF61F5  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF61F5  d1 30 27 21
 	extz BC                                              ; FF61F9  d9 12
 	cp bc, 0x00:i3                                         ; FF61FB  d9 d8
 	jr z, .LFF620E                                       ; FF61FD  66 0f
@@ -6121,7 +6165,7 @@ LcdKeyRow4_MidiFileSave_Page1:
 .LFF6243:
 	ld c, (Disk_SeqBank:16)                                   ; FF6243  c1 2b 27 23
 	inc 1,C                                              ; FF6247  cb 61
-	ld (0x2733:16), c                                   ; FF6249  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF6249  f1 33 27 43
 	lda xbc, (DL_F5993E:24)                              ; FF624D  f2 3e 99 f5 31
 	push XBC                                             ; FF6252  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF6253  1d 68 76 ff
@@ -6154,7 +6198,7 @@ LcdKeyRow4_MidiFileSave_Page1:
 	lda xbc, (DL_F59409:24)                              ; FF6291  f2 09 94 f5 31
 	push XBC                                             ; FF6296  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF6297  1d 23 76 ff
-	ld (0x2730:16), 0x02                                 ; FF629B  f1 30 27 00 02
+	ld (DiskScreen_RowOption:16), 0x02                                 ; FF629B  f1 30 27 00 02
 	pop XIY                                              ; FF62A0  5d
 	lda xbc, (0xf59933:24)                               ; FF62A1  f2 33 99 f5 31
 	push XBC                                             ; FF62A6  39
@@ -6202,7 +6246,7 @@ LcdKeyRow5_MidiFileSave_Page1:
 	and BC,0x0080                                        ; FF62C5  d9 cc 80 00
 	pop XIY                                              ; FF62C9  5d
 	jrl nz, .LFF6369                                     ; FF62CA  7e 9c 00
-	ld bc, (0x2730:16)                                 ; FF62CD  d1 30 27 21
+	ld bc, (DiskScreen_RowOption:16)                                 ; FF62CD  d1 30 27 21
 	extz BC                                              ; FF62D1  d9 12
 	cp bc, 0x00:i3                                         ; FF62D3  d9 d8
 	jr z, .LFF62E6                                       ; FF62D5  66 0f
@@ -6235,7 +6279,7 @@ LcdKeyRow5_MidiFileSave_Page1:
 .LFF631B:
 	ld c, (Disk_SeqBank:16)                                   ; FF631B  c1 2b 27 23
 	inc 1,C                                              ; FF631F  cb 61
-	ld (0x2733:16), c                                   ; FF6321  f1 33 27 43
+	ld (DiskLoad_SongNumber:16), c                                   ; FF6321  f1 33 27 43
 	lda xbc, (DL_F5993E:24)                              ; FF6325  f2 3e 99 f5 31
 	push XBC                                             ; FF632A  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF632B  1d 68 76 ff
@@ -6268,7 +6312,7 @@ LcdKeyRow5_MidiFileSave_Page1:
 	lda xbc, (DL_F59409:24)                              ; FF6369  f2 09 94 f5 31
 	push XBC                                             ; FF636E  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF636F  1d 23 76 ff
-	ld (0x2730:16), 0x03                                 ; FF6373  f1 30 27 00 03
+	ld (DiskScreen_RowOption:16), 0x03                                 ; FF6373  f1 30 27 00 03
 	pop XIY                                              ; FF6378  5d
 	lda xbc, (0xf59933:24)                               ; FF6379  f2 33 99 f5 31
 	push XBC                                             ; FF637E  39
@@ -6289,7 +6333,7 @@ MidiFile_LcdKeyRow4:
 	pushw 0x0c                                           ; FF6394  0b 0c 00
 	calr PanelDial_SetButtonPair                                      ; FF6397  1e 90 0d
 	pop XIY                                              ; FF639A  5d
-	cp	(0x272d:16), 0x00                            ; FF639B  c1 2d 27 3f 00
+	cp	(MidiFile_ListCursorRow:16), 0x00                            ; FF639B  c1 2d 27 3f 00
 	jr nz, .LFF63B6                                      ; FF63A0  6e 14
 	ld C,(XIX)                                           ; FF63A2  84 23
 	cp c, 0x00:i3                                          ; FF63A4  cb d8
@@ -6301,10 +6345,10 @@ MidiFile_LcdKeyRow4:
 	pop XIY                                              ; FF63B3  5d
 	jr .LFF63BA                                          ; FF63B4  68 04
 .LFF63B6:
-	dec 0x01, (0x272d:16)                                ; FF63B6  c1 2d 27 69
+	dec 0x01, (MidiFile_ListCursorRow:16)                                ; FF63B6  c1 2d 27 69
 .LFF63BA:
 	ld C,(XIX)                                           ; FF63BA  84 23
-	add c, (0x272d:16)                                   ; FF63BC  c1 2d 27 83
+	add c, (MidiFile_ListCursorRow:16)                                   ; FF63BC  c1 2d 27 83
 	ld (Disk_SelectedEntry:16), c                                   ; FF63C0  f1 24 27 43
 	pop XIX                                              ; FF63C4  5c
 	unlk XIZ                                             ; FF63C5  ee 0d
@@ -6315,7 +6359,7 @@ MidiFile_LcdKeyRow5:
 	pushw hl                                             ; FF63CC  2b
 	pushw de                                             ; FF63CD  2a
 	push XIX                                             ; FF63CE  3c
-	lda xix, (0x272d:16)                                ; FF63CF  f1 2d 27 34
+	lda xix, (MidiFile_ListCursorRow:16)                                ; FF63CF  f1 2d 27 34
 	ld DE,(XIZ+0x08)                                     ; FF63D3  9e 08 22
 	ld l, (UI_ScreenItem:16)                                   ; FF63D6  c1 20 27 27
 	cp	(UI_ScreenLatch:16), 0x4e                            ; FF63DA  c1 7a 20 3f 4e
@@ -6582,7 +6626,7 @@ T_F423CC_Nop:
 ;          is blind to this name, --verify reads it back.
 ; ---------------------------------------------------------------------
 Paint_FloppyDiskFormatSelectType:
-	ld (0x2730:16), 0x00                                 ; FF6512  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF6512  f1 30 27 00 00
 	calr CallbackQueue_ResetAndRestartTask2_Call                                      ; FF6517  1e 98 dd
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF651A  1d 04 76 ff
 	pushw 0x00                                           ; FF651E  0b 00 00
@@ -6671,7 +6715,7 @@ PanelButtonDispatch_FloppyDiskFormatSelectType:
 sub_FF657B:   ; entry: named by 2 `.long` operands, first at 0xFF3F45
 	link XIZ,0x0000                                      ; FF657B  ee 0c 00 00
 	push XIX                                             ; FF657F  3c
-	lda xix, (0x2730:16)                                ; FF6580  f1 30 27 34
+	lda xix, (DiskScreen_RowOption:16)                                ; FF6580  f1 30 27 34
 	ld c, (0x21e8:16)                                   ; FF6584  c1 e8 21 23
 	and C,0x04                                           ; FF6588  cb cc 04
 	jr z, .LFF65AE                                       ; FF658B  66 21
@@ -6718,7 +6762,7 @@ sub_FF657B:   ; entry: named by 2 `.long` operands, first at 0xFF3F45
 ; ---------------------------------------------------------------------
 LcdKeyRow3_MidiFileSave_Page4:
 	link XIZ,0x0000                                      ; FF65B2  ee 0c 00 00
-	ld (0x2730:16), 0x00                                 ; FF65B6  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF65B6  f1 30 27 00 00
 	ld BC,(XIZ+0x08)                                     ; FF65BB  9e 08 21
 	and BC,0x0080                                        ; FF65BE  d9 cc 80 00
 	jr z, .LFF65D2                                       ; FF65C2  66 0e
@@ -6755,7 +6799,7 @@ LcdKeyRow3_MidiFileSave_Page4:
 ; ---------------------------------------------------------------------
 LcdKeyRow4_MidiFileSave_Page4:
 	link XIZ,0x0000                                      ; FF65D5  ee 0c 00 00
-	ld (0x2730:16), 0x00                                 ; FF65D9  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF65D9  f1 30 27 00 00
 	ld BC,(XIZ+0x08)                                     ; FF65DE  9e 08 21
 	and BC,0x0080                                        ; FF65E1  d9 cc 80 00
 	jr z, .LFF65F5                                       ; FF65E5  66 0e
@@ -6840,7 +6884,7 @@ T_F423DC_Nop:
 Paint_FloppyDiskFormatAreYouSure:
 	push XIX                                             ; FF6613  3c
 	lda xix, (DisplayList_RunOnLayer_SaveRegs:24)                             ; FF6614  f2 d3 75 ff 34
-	ld (0x2730:16), 0x00                                 ; FF6619  f1 30 27 00 00
+	ld (DiskScreen_RowOption:16), 0x00                                 ; FF6619  f1 30 27 00 00
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF661E  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6622  1d 04 76 ff
 	pushw 0x00                                           ; FF6626  0b 00 00
@@ -7124,7 +7168,7 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6781  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6785  1d 04 76 ff
 	ld c, 0x02:opc                                          ; FF6789  23 02
-	mul	bc, (0x2736:16)                              ; FF678B  c1 36 27 43
+	mul	bc, (LoadSingle_BankB:16)                              ; FF678B  c1 36 27 43
 	extz XBC                                             ; FF678F  e9 12
 	add XBC,Table_FF4039                                 ; FF6791  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6797  91 21
@@ -7134,9 +7178,9 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	call T_SoundGroup_MaxMemberIndex_ByStack                                        ; FF67A0  1d 08 34 f4
 	ld H,A                                               ; FF67A4  c9 8e
 	pop XIY                                              ; FF67A6  5d
-	cp	a, (0x2738:16)                               ; FF67A7  c1 38 27 f1
+	cp	a, (LoadSingle_SelectedItem:16)                               ; FF67A7  c1 38 27 f1
 	jr nc, .LFF67B1                                      ; FF67AB  6f 04
-	ld (0x2738:16), a                                   ; FF67AD  f1 38 27 41
+	ld (LoadSingle_SelectedItem:16), a                                   ; FF67AD  f1 38 27 41
 .LFF67B1:
 	pushw 0x00                                           ; FF67B1  0b 00 00
 	lda xbc, (ScreenEnter_L0adSingleS0und_Page0_DL:24)                              ; FF67B4  f2 f0 8d f5 31
@@ -7225,7 +7269,7 @@ ScreenEnter_L0adSingleS0und_Page1:   ; entry: named by 1 `.long` operand, first 
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6891  1d 76 77 ff
 	ld c, (0x2727:16)                                   ; FF6895  c1 27 27 23
 	inc 1,C                                              ; FF6899  cb 61
-	ld (0x2730:16), c                                   ; FF689B  f1 30 27 43
+	ld (DiskScreen_RowOption:16), c                                   ; FF689B  f1 30 27 43
 	lda xbc, (DLText_F59128:24)                          ; FF689F  f2 28 91 f5 31
 	push XBC                                             ; FF68A4  39
 	lda xwa, (DL_F590F1:24)                              ; FF68A5  f2 f1 90 f5 30
@@ -7321,7 +7365,7 @@ SoftKeyCol1_L0adSingle_AllPages:   ; entry: named by 8 `.long` operands, first a
 SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first at 0xFF40CD
 	link XIZ,0x0000                                      ; FF6924  ee 0c 00 00
 	push XIX                                             ; FF6928  3c
-	lda xix, (0x2728:16)                                ; FF6929  f1 28 27 34
+	lda xix, (LoadSingle_BankA:16)                                ; FF6929  f1 28 27 34
 	pushw 0x81                                           ; FF692D  0b 81 00
 	pushw 0x01                                           ; FF6930  0b 01 00
 	calr PanelDial_SetButtonPair                                      ; FF6933  1e f4 07
@@ -7358,10 +7402,10 @@ SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first
 	push XBC                                             ; FF697F  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF6980  1d 23 76 ff
 	ld (0x273a:16), 0x00                                 ; FF6984  f1 3a 27 00 00
-	ld (0x2739:16), 0x00                                 ; FF6989  f1 39 27 00 00
+	ld (LoadSingle_ListCursorRow:16), 0x00                                 ; FF6989  f1 39 27 00 00
 	ld (0x2737:16), 0x00                                 ; FF698E  f1 37 27 00 00
 	ld (0x2727:16), 0x00                                 ; FF6993  f1 27 27 00 00
-	ld (0x2730:16), 0x01                                 ; FF6998  f1 30 27 00 01
+	ld (DiskScreen_RowOption:16), 0x01                                 ; FF6998  f1 30 27 00 01
 	lda xbc, (0xf5911e:24)                               ; FF699D  f2 1e 91 f5 31
 	push XBC                                             ; FF69A2  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF69A3  1d 68 76 ff
@@ -7413,7 +7457,7 @@ SoftKeyCols3_4_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 .LFF69FE:
 	ld C,(XIX)                                           ; FF69FE  84 23
 	inc 1,C                                              ; FF6A00  cb 61
-	ld (0x2730:16), c                                   ; FF6A02  f1 30 27 43
+	ld (DiskScreen_RowOption:16), c                                   ; FF6A02  f1 30 27 43
 	lda xbc, (0xf5911e:24)                               ; FF6A06  f2 1e 91 f5 31
 	push XBC                                             ; FF6A0B  39
 	call DLB_Handler_Decimal_Veneer                                      ; FF6A0C  1d 68 76 ff
@@ -7428,7 +7472,7 @@ SoftKeyCols3_4_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 SoftKeyCols5_6_L0adSingleS0und_Page1:   ; entry: named by 4 `.long` operands, first at 0xFF40D9
 	link XIZ,0x0000                                      ; FF6A17  ee 0c 00 00
 	push XIX                                             ; FF6A1B  3c
-	lda xix, (0x2736:16)                                ; FF6A1C  f1 36 27 34
+	lda xix, (LoadSingle_BankB:16)                                ; FF6A1C  f1 36 27 34
 	pushw 0x84                                           ; FF6A20  0b 84 00
 	pushw 0x04                                           ; FF6A23  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF6A26  1e 01 07
@@ -7482,7 +7526,7 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 	and BC,0x0080                                        ; FF6A93  d9 cc 80 00
 	inc 8,XSP                                            ; FF6A97  ef 60
 	jr nz, .LFF6AB9                                      ; FF6A99  6e 1e
-	cp	(0x2739:16), 0x00                            ; FF6A9B  c1 39 27 3f 00
+	cp	(LoadSingle_ListCursorRow:16), 0x00                            ; FF6A9B  c1 39 27 3f 00
 	jr nz, .LFF6AB3                                      ; FF6AA0  6e 11
 	ld C,(XIX)                                           ; FF6AA2  84 23
 	cp c, 0x00:i3                                          ; FF6AA4  cb d8
@@ -7492,10 +7536,10 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 	jr nz, .LFF6AD8                                      ; FF6AAF  6e 27
 	jr .LFF6AD0                                          ; FF6AB1  68 1d
 .LFF6AB3:
-	dec 0x01, (0x2739:16)                                ; FF6AB3  c1 39 27 69
+	dec 0x01, (LoadSingle_ListCursorRow:16)                                ; FF6AB3  c1 39 27 69
 	jr .LFF6AE5                                          ; FF6AB7  68 2c
 .LFF6AB9:
-	cp	(0x2739:16), 0x07                            ; FF6AB9  c1 39 27 3f 07
+	cp	(LoadSingle_ListCursorRow:16), 0x07                            ; FF6AB9  c1 39 27 3f 07
 	jr nz, .LFF6AE1                                      ; FF6ABE  6e 21
 	ld C,(XIX)                                           ; FF6AC0  84 23
 	cp C,0x08                                            ; FF6AC2  cb cf 08
@@ -7516,10 +7560,10 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 	popw bc                                              ; FF6ADE  49
 	jr .LFF6AE5                                          ; FF6ADF  68 04
 .LFF6AE1:
-	inc 0x01, (0x2739:16)                                ; FF6AE1  c1 39 27 61
+	inc 0x01, (LoadSingle_ListCursorRow:16)                                ; FF6AE1  c1 39 27 61
 .LFF6AE5:
 	ld C,(XIX)                                           ; FF6AE5  84 23
-	add c, (0x2739:16)                                   ; FF6AE7  c1 39 27 83
+	add c, (LoadSingle_ListCursorRow:16)                                   ; FF6AE7  c1 39 27 83
 	ld (0x2737:16), c                                   ; FF6AEB  f1 37 27 43
 	lda xbc, (DL_F59150:24)                              ; FF6AEF  f2 50 91 f5 31
 	push XBC                                             ; FF6AF4  39
@@ -7582,7 +7626,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	link XIZ,0x0000                                      ; FF6B35  ee 0c 00 00
 	pushw hl                                             ; FF6B39  2b
 	push XIX                                             ; FF6B3A  3c
-	lda xix, (0x2728:16)                                ; FF6B3B  f1 28 27 34
+	lda xix, (LoadSingle_BankA:16)                                ; FF6B3B  f1 28 27 34
 	ld h, 0x00:opc                                          ; FF6B3F  26 00
 	pushw 0x81                                           ; FF6B41  0b 81 00
 	pushw 0x01                                           ; FF6B44  0b 01 00
@@ -7599,7 +7643,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	ld C,(XIX)                                           ; FF6B5C  84 23
 	cp c, 0x01:i3                                          ; FF6B5E  cb d9
 	jr nz, .LFF6B7E                                      ; FF6B60  6e 1c
-	ld (0x2736:16), 0x01                                 ; FF6B62  f1 36 27 00 01
+	ld (LoadSingle_BankB:16), 0x01                                 ; FF6B62  f1 36 27 00 01
 	jr .LFF6B7C                                          ; FF6B67  68 13
 .LFF6B69:
 	ld C,(XIX)                                           ; FF6B69  84 23
@@ -7610,7 +7654,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	ld C,(XIX)                                           ; FF6B71  84 23
 	cp c, 0x02:i3                                          ; FF6B73  cb da
 	jr nz, .LFF6B7E                                      ; FF6B75  6e 07
-	ld (0x2736:16), 0x02                                 ; FF6B77  f1 36 27 00 02
+	ld (LoadSingle_BankB:16), 0x02                                 ; FF6B77  f1 36 27 00 02
 .LFF6B7C:
 	ld h, 0x01:opc                                          ; FF6B7C  26 01
 .LFF6B7E:
@@ -7624,7 +7668,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	push XBC                                             ; FF6B92  39
 	call DLB_Array8_2_OnLayer1_SaveRegs                                      ; FF6B93  1d 23 76 ff
 	ld (0x2737:16), 0x00                                 ; FF6B97  f1 37 27 00 00
-	ld (0x2738:16), 0x00                                 ; FF6B9C  f1 38 27 00 00
+	ld (LoadSingle_SelectedItem:16), 0x00                                 ; FF6B9C  f1 38 27 00 00
 	ld (0x2735:16), 0x00                                 ; FF6BA1  f1 35 27 00 00
 	lda xbc, (DL_F591A6:24)                              ; FF6BA6  f2 a6 91 f5 31
 	push XBC                                             ; FF6BAB  39
@@ -7696,7 +7740,7 @@ SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	link XIZ,0x0000                                      ; FF6C24  ee 0c 00 00
 	pushw hl                                             ; FF6C28  2b
 	push XIX                                             ; FF6C29  3c
-	lda xix, (0x2736:16)                                ; FF6C2A  f1 36 27 34
+	lda xix, (LoadSingle_BankB:16)                                ; FF6C2A  f1 36 27 34
 	pushw 0x84                                           ; FF6C2E  0b 84 00
 	pushw 0x04                                           ; FF6C31  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF6C34  1e f3 04
@@ -7736,9 +7780,9 @@ SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	call T_SoundGroup_MaxMemberIndex_ByStack                                        ; FF6C84  1d 08 34 f4
 	ld H,A                                               ; FF6C88  c9 8e
 	inc 8,XSP                                            ; FF6C8A  ef 60
-	cp	a, (0x2738:16)                               ; FF6C8C  c1 38 27 f1
+	cp	a, (LoadSingle_SelectedItem:16)                               ; FF6C8C  c1 38 27 f1
 	jr nc, .LFF6C96                                      ; FF6C90  6f 04
-	ld (0x2738:16), a                                   ; FF6C92  f1 38 27 41
+	ld (LoadSingle_SelectedItem:16), a                                   ; FF6C92  f1 38 27 41
 .LFF6C96:
 	calr L0adSingleS0und_DrawGroupSounds                                      ; FF6C96  1e fd 05
 	pop XIX                                              ; FF6C99  5c
@@ -7792,9 +7836,9 @@ SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 	link XIZ,0x0000                                      ; FF6CF0  ee 0c 00 00
 	pushw hl                                             ; FF6CF4  2b
 	push XIX                                             ; FF6CF5  3c
-	lda xix, (0x2738:16)                                ; FF6CF6  f1 38 27 34
+	lda xix, (LoadSingle_SelectedItem:16)                                ; FF6CF6  f1 38 27 34
 	ld c, 0x02:opc                                          ; FF6CFA  23 02
-	mul	bc, (0x2736:16)                              ; FF6CFC  c1 36 27 43
+	mul	bc, (LoadSingle_BankB:16)                              ; FF6CFC  c1 36 27 43
 	extz XBC                                             ; FF6D00  e9 12
 	add XBC,Table_FF4039                                 ; FF6D02  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6D08  91 21
@@ -8022,8 +8066,8 @@ ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, 
 ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF414D
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6E95  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6E99  1d 04 76 ff
-	ld (0x2736:16), 0x00                                 ; FF6E9D  f1 36 27 00 00
-	ld (0x2728:16), 0x00                                 ; FF6EA2  f1 28 27 00 00
+	ld (LoadSingle_BankB:16), 0x00                                 ; FF6E9D  f1 36 27 00 00
+	ld (LoadSingle_BankA:16), 0x00                                 ; FF6EA2  f1 28 27 00 00
 	pushw 0x00                                           ; FF6EA7  0b 00 00
 	lda xbc, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi:24) ; FF6EAA  f2 55 8f f5 31
 	push XBC                                             ; FF6EAF  39
@@ -8043,7 +8087,7 @@ ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, 
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6EDB  1d 76 77 ff
 	ld c, (0x2727:16)                                   ; FF6EDF  c1 27 27 23
 	inc 1,C                                              ; FF6EE3  cb 61
-	ld (0x2730:16), c                                   ; FF6EE5  f1 30 27 43
+	ld (DiskScreen_RowOption:16), c                                   ; FF6EE5  f1 30 27 43
 	lda xbc, (DLText_F59128:24)                          ; FF6EE9  f2 28 91 f5 31
 	push XBC                                             ; FF6EEE  39
 	lda xwa, (DL_F5910F:24)                              ; FF6EEF  f2 0f 91 f5 30
@@ -8203,9 +8247,9 @@ SoftKeyCols7_8_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operan
 	link XIZ,0x0000                                      ; FF6FC0  ee 0c 00 00
 	pushw hl                                             ; FF6FC4  2b
 	push XIX                                             ; FF6FC5  3c
-	lda xix, (0x2738:16)                                ; FF6FC6  f1 38 27 34
+	lda xix, (LoadSingle_SelectedItem:16)                                ; FF6FC6  f1 38 27 34
 	ld c, 0x02:opc                                          ; FF6FCA  23 02
-	mul	bc, (0x2736:16)                              ; FF6FCC  c1 36 27 43
+	mul	bc, (LoadSingle_BankB:16)                              ; FF6FCC  c1 36 27 43
 	extz XBC                                             ; FF6FD0  e9 12
 	add XBC,Table_FF4039                                 ; FF6FD2  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6FD8  91 21
@@ -8471,10 +8515,10 @@ L0adSingleS0und_DrawGroupList:
 	calr Var2728_Is2or3                                      ; FF715A  1e c8 03
 	cp wa, 0x00:i3                                         ; FF715D  d8 d8
 	jr z, .LFF71C5                                       ; FF715F  66 64
-	lda xbc, (0x2940:16)                                ; FF7161  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7161  f1 40 29 31
 	push XBC                                             ; FF7165  39
 	ld a, 0x02:opc                                          ; FF7166  21 02
-	mul	wa, (0x2736:16)                              ; FF7168  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF7168  c1 36 27 41
 	extz XWA                                             ; FF716C  e8 12
 	add XWA,Table_FF4039                                 ; FF716E  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7174  90 20
@@ -8484,7 +8528,7 @@ L0adSingleS0und_DrawGroupList:
 	pushw 0x06                                           ; FF717E  0b 06 00
 	pushw 0x10                                           ; FF7181  0b 10 00
 	pushw 0x0d36                                         ; FF7184  0b 36 0d
-	lda xbc, (0x2940:16)                                ; FF7187  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7187  f1 40 29 31
 	push XBC                                             ; FF718B  39
 	call LCD_SwiTextCall_SaveRegs                                      ; FF718C  1d 95 78 ff
 	ldw hl, 0x0230                                       ; FF7190  33 30 02
@@ -8511,10 +8555,10 @@ L0adSingleS0und_DrawGroupList:
 	ldw hl, 0x00                                         ; FF71C8  33 00 00
 	ldw ix, 0x0d36                                       ; FF71CB  34 36 0d
 .LFF71CE:
-	lda xbc, (0x2940:16)                                ; FF71CE  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF71CE  f1 40 29 31
 	push XBC                                             ; FF71D2  39
 	ld a, 0x02:opc                                          ; FF71D3  21 02
-	mul	wa, (0x2736:16)                              ; FF71D5  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF71D5  c1 36 27 41
 	extz XWA                                             ; FF71D9  e8 12
 	add XWA,Table_FF4039                                 ; FF71DB  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF71E1  90 20
@@ -8528,7 +8572,7 @@ L0adSingleS0und_DrawGroupList:
 	pushw 0x10                                           ; FF71F3  0b 10 00
 	ld (xiz-2), ix                                       ; FF71F6  be fe 54
 	pushw	(xiz-2)                                      ; FF71F9  9e fe 04
-	lda xbc, (0x2940:16)                                ; FF71FC  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF71FC  f1 40 29 31
 	push XBC                                             ; FF7200  39
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7201  1d 95 78 ff
 	add HL,0x0230                                        ; FF7205  db c8 30 02
@@ -8546,10 +8590,10 @@ L0adSingleS0und_DrawGroupList:
 	ret                                                  ; FF7223  0e
 ; L0adSingleS0und_DrawGroupName: T_SoundGroupName_CopyToBuffer(bank Table_FF4039[(0x2736)], group (0x2737)) into 0x2940, drawn at 0x0C1E.
 L0adSingleS0und_DrawGroupName:
-	lda xbc, (0x2940:16)                                ; FF7224  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7224  f1 40 29 31
 	push XBC                                             ; FF7228  39
 	ld a, 0x02:opc                                          ; FF7229  21 02
-	mul	wa, (0x2736:16)                              ; FF722B  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF722B  c1 36 27 41
 	extz XWA                                             ; FF722F  e8 12
 	add XWA,Table_FF4039                                 ; FF7231  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7237  90 20
@@ -8560,17 +8604,17 @@ L0adSingleS0und_DrawGroupName:
 	pushw 0x06                                           ; FF7244  0b 06 00
 	pushw 0x10                                           ; FF7247  0b 10 00
 	pushw 0x0c1e                                         ; FF724A  0b 1e 0c
-	lda xbc, (0x2940:16)                                ; FF724D  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF724D  f1 40 29 31
 	push XBC                                             ; FF7251  39
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7252  1d 95 78 ff
 	add XSP,0x00000012                                   ; FF7256  ef c8 12 00 00 00
 	ret                                                  ; FF725C  0e
 ; L0adSingleC0mbination_DrawGroupName: the same with T_CombiGroupName_CopyToBuffer.
 L0adSingleC0mbination_DrawGroupName:
-	lda xbc, (0x2940:16)                                ; FF725D  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF725D  f1 40 29 31
 	push XBC                                             ; FF7261  39
 	ld a, 0x02:opc                                          ; FF7262  21 02
-	mul	wa, (0x2736:16)                              ; FF7264  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF7264  c1 36 27 41
 	extz XWA                                             ; FF7268  e8 12
 	add XWA,Table_FF4039                                 ; FF726A  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7270  90 20
@@ -8581,7 +8625,7 @@ L0adSingleC0mbination_DrawGroupName:
 	pushw 0x06                                           ; FF727D  0b 06 00
 	pushw 0x10                                           ; FF7280  0b 10 00
 	pushw 0x0c1e                                         ; FF7283  0b 1e 0c
-	lda xbc, (0x2940:16)                                ; FF7286  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7286  f1 40 29 31
 	push XBC                                             ; FF728A  39
 	call LCD_SwiTextCall_SaveRegs                                      ; FF728B  1d 95 78 ff
 	add XSP,0x00000012                                   ; FF728F  ef c8 12 00 00 00
@@ -8614,7 +8658,7 @@ L0adSingleS0und_DrawGroupSounds:
 	pushw de                                             ; FF729B  2a
 	pushw ix                                             ; FF729C  2c
 	ld c, 0x02:opc                                          ; FF729D  23 02
-	mul	bc, (0x2736:16)                              ; FF729F  c1 36 27 43
+	mul	bc, (LoadSingle_BankB:16)                              ; FF729F  c1 36 27 43
 	extz XBC                                             ; FF72A3  e9 12
 	add XBC,Table_FF4039                                 ; FF72A5  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF72AB  91 21
@@ -8640,10 +8684,10 @@ L0adSingleS0und_DrawGroupSounds:
 	push XBC                                             ; FF72DE  39
 	jr .LFF7315                                          ; FF72DF  68 34
 .LFF72E1:
-	lda xbc, (0x2940:16)                                ; FF72E1  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF72E1  f1 40 29 31
 	push XBC                                             ; FF72E5  39
 	ld a, 0x02:opc                                          ; FF72E6  21 02
-	mul	wa, (0x2736:16)                              ; FF72E8  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF72E8  c1 36 27 41
 	extz XWA                                             ; FF72EC  e8 12
 	add XWA,Table_FF4039                                 ; FF72EE  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF72F4  90 20
@@ -8658,7 +8702,7 @@ L0adSingleS0und_DrawGroupSounds:
 	pushw 0x06                                           ; FF7309  0b 06 00
 	pushw 0x10                                           ; FF730C  0b 10 00
 	pushw hl                                             ; FF730F  2b
-	lda xbc, (0x2940:16)                                ; FF7310  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7310  f1 40 29 31
 	push XBC                                             ; FF7314  39
 .LFF7315:
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7315  1d 95 78 ff
@@ -8689,10 +8733,10 @@ L0adSingleC0mbination_DrawGroupList:
 	ldw hl, 0x00                                         ; FF733D  33 00 00
 	ldw de, 0x0d36                                       ; FF7340  32 36 0d
 .LFF7343:
-	lda xbc, (0x2940:16)                                ; FF7343  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7343  f1 40 29 31
 	push XBC                                             ; FF7347  39
 	ld a, 0x02:opc                                          ; FF7348  21 02
-	mul	wa, (0x2736:16)                              ; FF734A  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF734A  c1 36 27 41
 	extz XWA                                             ; FF734E  e8 12
 	add XWA,Table_FF4039                                 ; FF7350  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7356  90 20
@@ -8706,7 +8750,7 @@ L0adSingleC0mbination_DrawGroupList:
 	pushw 0x10                                           ; FF7368  0b 10 00
 	ld (xiz-2), de                                       ; FF736B  be fe 52
 	pushw	(xiz-2)                                      ; FF736E  9e fe 04
-	lda xbc, (0x2940:16)                                ; FF7371  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7371  f1 40 29 31
 	push XBC                                             ; FF7375  39
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7376  1d 95 78 ff
 	add HL,0x0230                                        ; FF737A  db c8 30 02
@@ -8745,7 +8789,7 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	pushw de                                             ; FF739E  2a
 	pushw ix                                             ; FF739F  2c
 	ld c, 0x02:opc                                          ; FF73A0  23 02
-	mul	bc, (0x2736:16)                              ; FF73A2  c1 36 27 43
+	mul	bc, (LoadSingle_BankB:16)                              ; FF73A2  c1 36 27 43
 	extz XBC                                             ; FF73A6  e9 12
 	add XBC,Table_FF4039                                 ; FF73A8  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF73AE  91 21
@@ -8771,10 +8815,10 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	push XBC                                             ; FF73E1  39
 	jr .LFF7418                                          ; FF73E2  68 34
 .LFF73E4:
-	lda xbc, (0x2940:16)                                ; FF73E4  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF73E4  f1 40 29 31
 	push XBC                                             ; FF73E8  39
 	ld a, 0x02:opc                                          ; FF73E9  21 02
-	mul	wa, (0x2736:16)                              ; FF73EB  c1 36 27 41
+	mul	wa, (LoadSingle_BankB:16)                              ; FF73EB  c1 36 27 41
 	extz XWA                                             ; FF73EF  e8 12
 	add XWA,Table_FF4039                                 ; FF73F1  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF73F7  90 20
@@ -8789,7 +8833,7 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	pushw 0x06                                           ; FF740C  0b 06 00
 	pushw 0x10                                           ; FF740F  0b 10 00
 	pushw hl                                             ; FF7412  2b
-	lda xbc, (0x2940:16)                                ; FF7413  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; FF7413  f1 40 29 31
 	push XBC                                             ; FF7417  39
 .LFF7418:
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7418  1d 95 78 ff
@@ -8837,7 +8881,7 @@ L0adSingle_DrawBankAndNumber:
 	ld L,(XIZ+0x08)                                      ; FF7440  8e 08 27
 	pushw 0x04                                           ; FF7443  0b 04 00
 	ld c, 0x04:opc                                          ; FF7446  23 04
-	mul	bc, (0x2728:16)                              ; FF7448  c1 28 27 43
+	mul	bc, (LoadSingle_BankA:16)                              ; FF7448  c1 28 27 43
 	extz XBC                                             ; FF744C  e9 12
 	add XBC,Text_UserBankAbbrevs                                  ; FF744E  e9 c8 a1 42 ff 00
 	push XBC                                             ; FF7454  39
@@ -8930,9 +8974,9 @@ L0adSingle_DrawBankAndNumber:
 	ret                                                  ; FF7524  0e
 ; Var2728_Is2or3: WA = 1 when (0x2728) is 2 or 3, else 0.
 Var2728_Is2or3:
-	cp	(0x2728:16), 0x02                            ; FF7525  c1 28 27 3f 02
+	cp	(LoadSingle_BankA:16), 0x02                            ; FF7525  c1 28 27 3f 02
 	jr z, .LFF7533                                       ; FF752A  66 07
-	cp	(0x2728:16), 0x03                            ; FF752C  c1 28 27 3f 03
+	cp	(LoadSingle_BankA:16), 0x03                            ; FF752C  c1 28 27 3f 03
 	jr nz, .LFF7538                                      ; FF7531  6e 05
 .LFF7533:
 	ldw wa, 0x01                                         ; FF7533  30 01 00

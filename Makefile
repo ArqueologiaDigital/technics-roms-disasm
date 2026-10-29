@@ -35,13 +35,14 @@ CLANG=$(LLVM_BIN)/clang
 .PHONY: verify-v8-reference verify-hdae5000-v201-reference verify-subprogram-update-images
 .PHONY: kn7000 kn7000-clean gate-kn7000
 .PHONY: kn2400 kn6000 kn6500 hdsx3 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
+.PHONY: floppy gate-floppy
 .PHONY: mn10300-siblings-clean
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score doc-quality
 .SECONDARY:
 
 .PHONY: decompress-demo-presets rebuild-demo-presets verify-demo-presets demo-midi demo-sidecars
 .PHONY: style-events style-midi verify-style-midi
-.PHONY: decompress-help-databases rebuild-help-databases verify-help-databases
+.PHONY: decompress-help-databases rebuild-help-databases verify-help-databases verify-help-db-text
 .PHONY: verify-stale-help-duplicate verify-ftbmp
 .PHONY: audit-icons-blob
 .PHONY: dsp dsp-verify dsp-flowcharts
@@ -77,10 +78,11 @@ wsa1-clean:
 #                      seven Style Convert Disk converters (src/cnv/*.s; semantic_score.py
 #                      reads their sizes)
 #   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), table
-#                      build 80 (src/b80/table.s), the IC18 boot ROM (src/ic18/boot.s)
-#                      program builds 935 and 893 (src/b935/, src/b893/, ported from 941)
-#                      and the four wave ROMs (src/wave/, verify-wave), and that the GUI
-#                      menu map (kn7000/notes/gui-data-region/menu-map.md) is current
+#                      build 80 (src/b80/table.s), the IC18 boot ROM (src/ic18/boot.s), all of
+#                      IC18 with its rhythm data (src/ic18/ic18.s), program builds 935 and 893
+#                      (src/b935/, src/b893/, ported from 941), the four wave ROMs (src/wave/),
+#                      the nine factory custom-style banks (src/customdata/*.s), and that the
+#                      GUI menu map (kn7000/notes/gui-data-region/menu-map.md) is current
 kn7000:
 	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom build-cnv
 
@@ -88,7 +90,7 @@ kn7000-clean:
 	$(MAKE) -C kn7000 clean
 
 gate-kn7000:
-	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-935 verify-893 verify-wave verify-gui-map
+	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave verify-customdata verify-gui-map
 
 # ------------------------------------------- the other MN10300 "MILK" firmwares
 # Added 2026-10-24, one folder each, made like kn7000/ and using its tools by
@@ -113,7 +115,7 @@ hdsx3:
 gate-kn2400:
 	$(MAKE) -C kn2400 verify verify-kn2600
 gate-kn6000:
-	$(MAKE) -C kn6000 verify
+	$(MAKE) -C kn6000 verify verify-customdata
 gate-kn6500:
 	$(MAKE) -C kn6500 verify
 gate-hdsx3:
@@ -125,7 +127,13 @@ mn10300-siblings-clean:
 	$(MAKE) -C kn6500 clean
 	$(MAKE) -C hdsx3 clean
 
-everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3
+# floppy/: FAT12 diskette images rebuilt from typed source (floppy/README.md).
+floppy:
+	$(MAKE) -C floppy all
+gate-floppy:
+	$(MAKE) -C floppy gate
+
+everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3 floppy
 
 # ⚠ assert_images_assemble.py runs FIRST and asks the assembler directly, from
 # each root source.  The byte gate reads `make`'s answer and therefore inherits
@@ -157,21 +165,50 @@ gate: all
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
 	python3 scripts/analysis/hdae5000_obj_constants_check.py
+	python3 scripts/analysis/hdae5000_menu_map.py --check
 	python3 scripts/analysis/l2_symbol_reference.py --check
+	$(MAKE) --no-print-directory gui-check
+
+# The NAKA GUI sources (notes/data-semantics-2026-10-29/gui-kn5000/): the generated class and id
+# headers of every tree, the object enums against the records' links, and the menu map.
+# menu-map rewrites docs/gui/kn5000-menu-map.md; gui-check fails when anything is stale.
+.PHONY: menu-map gui-check gui-census
+menu-map: rebuilt_ROMs/kn5000_v10_program.llvm.elf
+	python3 scripts/generators/gen_naka_menu_map.py
+gui-check: rebuilt_ROMs/kn5000_v10_program.llvm.elf
+	python3 scripts/generators/gen_naka_gui_headers.py --check
+	python3 scripts/generators/gen_title_mode_index_equs.py --check
+	for t in v10 v9 v7 v6 v5; do python3 scripts/converters/naka_asm_records.py --tree $$t --gen --check || exit 1; done
+	python3 scripts/analysis/naka_gui_model.py --check
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v10
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v9
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v7
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v6
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v5
+	python3 scripts/generators/gen_naka_menu_map.py --check
+gui-census:
+	python3 scripts/analysis/naka_gui_census.py
 
 # The v1.41 and v1.40 Sub-CPU update images (File Type 007) are also rebuilt from
 # v141/subcpu and v140/subcpu above; this independently proves each tracked update image
 # decompresses to exactly its tracked plain payload ROM (under 1 s).
 # --selftest (about 4 s) shows the check catches one flipped byte, and that the
 # other two LZSS scripts agree with the build's decoder.
+# The HD-AE5000 GUI menu maps (notes/data-gui-hdae5000-2026-10-29/menu-map-*.md), generated from
+# <tree>/hdae5000_ui_tree.s; `make gate` checks they are up to date.
+.PHONY: hdae5000-menu-map
+hdae5000-menu-map:
+	python3 scripts/analysis/hdae5000_menu_map.py
+
 verify-subprogram-update-images:
 	python3 scripts/build/verify_subprogram_update_images.py
 	python3 scripts/build/verify_subprogram_update_images.py --selftest
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
+	cd wsa1 && python3 scripts/analysis/gui_menu_map.py --check	# docs/gui-menu-map.md is generated from the sources
 
-gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
+gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3 gate-floppy
 	@# A stale object compares green forever: assert the assembler is a
 	@# prerequisite of every image before believing either byte gate.
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
@@ -218,7 +255,7 @@ SE_LINK_LD = v10/maincpu/audio/sound_editor_screens/se_screens_link.ld
 ACCOMP_LINK_LD = v10/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 
 NAKA_LINK_LD = v10/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-NAKA_TYPES_H = v10/maincpu/ui_widgets/naka_types.h
+NAKA_TYPES_H = v10/maincpu/ui_widgets/naka_types.h v10/maincpu/ui_widgets/naka_classes.h v10/maincpu/ui_widgets/naka_ids.h v10/maincpu/ui_widgets/naka_ram_cells.h
 NAKA_BINS = v10/maincpu/includes/generated/naka_control_menu_header.bin v10/maincpu/includes/generated/naka_ctrl_menu_body.bin v10/maincpu/includes/generated/naka_perf_style.bin v10/maincpu/includes/generated/naka_msp_recording.bin v10/maincpu/includes/generated/naka_effects_seq.bin v10/maincpu/includes/generated/naka_midi_reverb.bin v10/maincpu/includes/generated/naka_composer_style.bin v10/maincpu/includes/generated/naka_direct_play.bin v10/maincpu/includes/generated/naka_technichord_part.bin v10/maincpu/includes/generated/naka_disk_menu_file_io.bin v10/maincpu/includes/generated/naka_debug_naming.bin v10/maincpu/includes/generated/naka_disk_warning.bin v10/maincpu/includes/generated/naka_extension_device.bin v10/maincpu/includes/generated/naka_normal_mode.bin v10/maincpu/includes/generated/naka_widget_tables_1.bin v10/maincpu/includes/generated/naka_master_style.bin v10/maincpu/includes/generated/naka_sound_menu_drawbar.bin v10/maincpu/includes/generated/naka_sequencer_exit.bin v10/maincpu/includes/generated/naka_sequencer_channels.bin v10/maincpu/includes/generated/naka_block_007.bin v10/maincpu/includes/generated/naka_block_012.bin v10/maincpu/includes/generated/naka_widget_names_charmap.bin v10/maincpu/includes/generated/naka_technichord_strings.bin v10/maincpu/includes/generated/naka_widget_tables_2.bin v10/maincpu/includes/generated/naka_style_bitmaps.bin v10/maincpu/includes/generated/naka_widget_descriptors.bin v10/maincpu/includes/generated/naka_accomp7_widgets.bin
 
 VOICE_BINS = v10/maincpu/includes/generated/voice_factory_presets.bin
@@ -245,7 +282,7 @@ V9_SE_BINS = $(patsubst %,v9/maincpu/includes/generated/%.bin,$(SE_NAMES))
 V9_SE_LINK_LD = v9/maincpu/audio/sound_editor_screens/se_screens_link.ld
 V9_ACCOMP_LINK_LD = v9/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 V9_NAKA_LINK_LD = v9/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-V9_NAKA_TYPES_H = v9/maincpu/ui_widgets/naka_types.h
+V9_NAKA_TYPES_H = v9/maincpu/ui_widgets/naka_types.h v9/maincpu/ui_widgets/naka_classes.h v9/maincpu/ui_widgets/naka_ids.h v9/maincpu/ui_widgets/naka_ram_cells.h
 V9_NAKA_BINS = $(patsubst v10/%,v9/%,$(NAKA_BINS))
 V9_VOICE_BINS = v9/maincpu/includes/generated/voice_factory_presets.bin
 V9_AUDIO_BINS = v9/maincpu/includes/generated/tonegen_param_table.bin
@@ -265,7 +302,7 @@ V7_SE_BINS = $(patsubst %,v7/maincpu/includes/generated/%.bin,$(SE_NAMES))
 V7_SE_LINK_LD = v7/maincpu/audio/sound_editor_screens/se_screens_link.ld
 V7_ACCOMP_LINK_LD = v7/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 V7_NAKA_LINK_LD = v7/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-V7_NAKA_TYPES_H = v7/maincpu/ui_widgets/naka_types.h
+V7_NAKA_TYPES_H = v7/maincpu/ui_widgets/naka_types.h v7/maincpu/ui_widgets/naka_classes.h v7/maincpu/ui_widgets/naka_ids.h v7/maincpu/ui_widgets/naka_ram_cells.h
 V7_NAKA_BINS = $(patsubst v10/%,v7/%,$(NAKA_BINS))
 V7_VOICE_BINS = v7/maincpu/includes/generated/voice_factory_presets.bin
 V7_AUDIO_BINS = v7/maincpu/includes/generated/tonegen_param_table.bin
@@ -938,14 +975,14 @@ $$($(2)_GEN)/accomp_%.bin: $(1)/maincpu/sequencer/accomp_screens/accomp_%.c $(1)
 	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
 	@rm -f $$@.o $$@.elf
 
-$$($(2)_GEN)/naka_%.bin: $(1)/maincpu/ui_widgets/naka_%.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_%_link.ld
+$$($(2)_GEN)/naka_%.bin: $(1)/maincpu/ui_widgets/naka_%.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_classes.h $(1)/maincpu/ui_widgets/naka_ids.h $(1)/maincpu/ui_widgets/naka_ram_cells.h $(1)/maincpu/ui_widgets/naka_%_link.ld
 	@mkdir -p $$($(2)_GEN)
 	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
 	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_$$*_link.ld -o $$@.elf $$@.o
 	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
 	@rm -f $$@.o $$@.elf
 
-$$($(2)_GEN)/naka_control_menu_header.bin: $(1)/maincpu/ui_widgets/control_menu_header.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld
+$$($(2)_GEN)/naka_control_menu_header.bin: $(1)/maincpu/ui_widgets/control_menu_header.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_classes.h $(1)/maincpu/ui_widgets/naka_ids.h $(1)/maincpu/ui_widgets/naka_ram_cells.h $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld
 	@mkdir -p $$($(2)_GEN)
 	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
 	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld -o $$@.elf $$@.o
@@ -1023,7 +1060,7 @@ $(1)-c-bins-raw: $$($(2)_C_DATA_BINS)
 $(1)-c-bins: $(1)-c-bins-raw
 	python3 scripts/build/apply_c_divergence.py $(1)
 
-rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins $$(LLVM_MC)
+rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins indexed-images $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I $(1)/maincpu -o $$@ $(1)/maincpu/kn5000_$(1)_program.s
 
@@ -1545,6 +1582,17 @@ demo-sidecars: decompress-demo-presets
 # The original payload slices live in original_ROMs/help_db_*_compressed.
 # original.bin (sliced once from icons_to_strings.bin at the offsets above,
 # header excluded, pad byte included).
+
+# The five live decompressed databases are themselves build products since 2026-10-29: their
+# source is the text listing help_db_<lang>.txt (scripts/build/help_db_text.py, whose `verify`
+# rebuilds each one equal to what the factory stream decompresses to).  german_stale stays a
+# committed .bin: a truncated remnant, not a ROM input.
+HELP_DB_PLAIN = $(foreach l,$(HELP_DB_LANGS),$(HELP_DB_DIR)/help_db_$(l).bin)
+$(HELP_DB_PLAIN) &: $(HELP_DB_PLAIN:.bin=.txt) scripts/build/help_db_text.py
+	python3 scripts/build/help_db_text.py build
+
+verify-help-db-text:
+	python3 scripts/build/help_db_text.py verify
 
 $(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin original_ROMs/help_db_%_compressed.original.bin
 	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_$*_compressed.original.bin

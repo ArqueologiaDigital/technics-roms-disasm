@@ -1035,8 +1035,8 @@ ToneParam_Evt0F_BytecodeHandler:
 	jrl	nz, ToneParam_Evt0F_BytecodeHandler_Return
 	and	(0x2650:16), 254
 	xor	wa, wa
-	ld	a, 137:opc
-	call	UI_PostModeChangeEvent
+	ld	a, TT_SQTRSEL:opc
+	call	UI_ChangeTitleByIndex
 	jp	ToneParam_Evt0F_BytecodeHandler_Return
 ToneParam_Evt0F_BytecodeHandler_Return:
 	ret
@@ -1698,8 +1698,8 @@ PerfMode_VolumeParam_Process:
 	jp	PerfMode_VolumeParam_Process_Return
 PerfMode_VolumeParam_Process_Skip:
 	xor	wa, wa
-	ld	a, 169:opc
-	call	SoundCtrl_SendCommand
+	ld	a, TT_SQSTEPBAL:opc
+	call	UI_InterruptTitleByIndex
 PerfMode_VolumeParam_Process_Return:
 	ret
 ; PerfMode_ShowVolumeLine: Rebuilds the LCD text line of the part-volume pop-up: blanks 27 characters at 0x0ECD,
@@ -2920,8 +2920,8 @@ DefaultHandler_Ret_Helper:
 	and	(0xe2f8:16), 0x6f
 	ld (GLOBAL_ERROR_CODE:16), 0x23
 	xor WA,WA
-	ld A, 0xee:opc
-	call SoundCtrl_SendCommand
+	ld A, TT_MESAGE:opc
+	call UI_InterruptTitleByIndex
 	or	(0x8cc8:16), 0x01
 	ret
 DefaultHandler_Ret_Helper2:
@@ -3930,8 +3930,8 @@ ToneParam_HandlerTable_BC_Join2:
 	and	(0xe2f8:16), 0x6f
 	ld (GLOBAL_ERROR_CODE:16), 0x19
 	xor WA,WA
-	ld A, 0xee:opc
-	call SoundCtrl_SendCommand
+	ld A, TT_MESAGE:opc
+	call UI_InterruptTitleByIndex
 	jp ToneParam_HandlerTable_BC_Join2
 ToneParam_HandlerTable_BC_Return:
 	ret
@@ -3987,8 +3987,8 @@ VoiceCtrl_ParamSetupBytecode_Helper_Skip5:
 	and	(0xe2f8:16), 111
 	ld	(GLOBAL_ERROR_CODE:16), 25
 	xor	wa, wa
-	ld	a, 238:opc
-	call	SoundCtrl_SendCommand
+	ld	a, TT_MESAGE:opc
+	call	UI_InterruptTitleByIndex
 	jp	ToneParam_HandlerTable_BC_Join4
 ToneParam_HandlerTable_BC_Join4:
 	ld	w, 1:opc
@@ -4020,8 +4020,8 @@ VoiceCtrl_ParamSetupBytecode_Helper_Skip8:
 	and	(0xe2f8:16), 111
 	ld	(GLOBAL_ERROR_CODE:16), 25
 	xor	wa, wa
-	ld	a, 238:opc
-	call	SoundCtrl_SendCommand
+	ld	a, TT_MESAGE:opc
+	call	UI_InterruptTitleByIndex
 	ld	w, 1:opc
 ToneParam_HandlerTable_BC_Return3:
 	ret
@@ -7796,8 +7796,8 @@ SysEx_PeriodicDispatch:
 	popw wa
 	ld (GLOBAL_ERROR_CODE:16), 0x0f
 	xor WA,WA
-	ld A, 0xee:opc
-	call SoundCtrl_SendCommand
+	ld A, TT_MESAGE:opc
+	call UI_InterruptTitleByIndex
 	jp SysEx_DecrementAndCheck
 SysEx_CountdownCheck:
 	cp (xiy), 0x0
@@ -9100,8 +9100,8 @@ SysInit_SendAllNotesAndReset:
 	ld	(13936:16), 0
 	call	DisplayStr_StyleSectionInit
 	xor	wa, wa
-	ld	a, 10:opc
-	call	UI_PostPartChangeEvent
+	ld	a, MD_SEQ_PLAY:opc
+	call	UI_ChangeModeByIndex
 	ret
 	; Pointer table, 24 B.  Read by SysInit_SendAllNotesAndReset (0xEFB79F): `ld XDE,SystemInit_Handler_Table`
 	; indexed with stride 1 (`sla WA, 0x02`)
@@ -9840,8 +9840,8 @@ DisplayMode_Handler_3_Helper16_Loop:
 	and	(0xe2f8:16), 111
 	ld	(GLOBAL_ERROR_CODE:16), 15
 	xor	wa, wa
-	ld	a, 238:opc
-	call	SoundCtrl_SendCommand
+	ld	a, TT_MESAGE:opc
+	call	UI_InterruptTitleByIndex
 	popw	bc
 	jp	SysInit_BytecodeBlock_Return7
 DisplayMode_Handler_3_Helper16_Skip3:

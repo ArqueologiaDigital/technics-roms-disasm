@@ -727,15 +727,15 @@ PlayMode_SwitchToModeAndNotify:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	ldw	wa, 139
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_SQTRAS
+	call	UI_ChangeTitleByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 DispatchHandler_ConditionalJump:
 	jr	t, DispatchHandler_SubJumpTable_Join
 

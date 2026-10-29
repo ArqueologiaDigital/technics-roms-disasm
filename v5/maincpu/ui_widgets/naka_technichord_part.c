@@ -64,1169 +64,6 @@ extern const char NakaWidget_Sdtecd;
 
 #define BASE  0x00E81CCEu
 
-/* NAKA class TtlScreen -- class id 0x01600034 (Class table slot 0x160, entry 52),
- * parent Screen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_TtlScreen_t;
-
-/* NAKA class AcIndexEditSw -- class id 0x0160001F (Class table slot 0x160, entry 31),
- * parent PsEditSwBox; allsize 40.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t style;             /* +38 f */
-} naka_cls_AcIndexEditSw_t;
-
-/* NAKA class Line -- class id 0x0160002E (Class table slot 0x160, entry 46),
- * parent Viewable; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t linemode;          /* +24 g */
-} naka_cls_Line_t;
-
-/* NAKA class Label -- class id 0x0160002B (Class table slot 0x160, entry 43),
- * parent Viewable; allsize 32.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t str;               /* +22 X */
-    uint32_t font;              /* +26 c */
-    uint16_t fontcolor;         /* +30 ^ */
-} naka_cls_Label_t;
-
-/* NAKA class PsParaBox -- class id 0x01600012 (Class table slot 0x160, entry 18),
- * parent VwBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_PsParaBox_t;
-
-/* NAKA class AcStrRadioBox -- class id 0x01600051 (Class table slot 0x160, entry 81),
- * parent PsRadioBox; allsize 48.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint32_t selected;          /* +38 m */
-    uint16_t tag;               /* +42 A */
-    uint32_t str;               /* +44 X */
-} naka_cls_AcStrRadioBox_t;
-
-/* NAKA class VwEditSwBox -- class id 0x0160003E (Class table slot 0x160, entry 62),
- * parent PsEditSwBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t style;             /* +38 f */
-    uint32_t str;               /* +40 X */
-} naka_cls_VwEditSwBox_t;
-
-/* NAKA class IvSdpart -- class id 0x01610000 (Class table slot 0x161, entry 0),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvSdpart_t;
-
-/* NAKA class Window -- class id 0x01600035 (Class table slot 0x160, entry 53),
- * parent GroupBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t modal;             /* +26 G */
-    uint32_t parent;            /* +28 r */
-    uint32_t child;             /* +32 r */
-} naka_cls_Window_t;
-
-/* NAKA class AcLswPartEditBox -- class id 0x01610001 (Class table slot 0x161, entry 1),
- * parent PsEditBox; allsize 58.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint32_t func;              /* +50 j */
-    uint32_t data;              /* +54 n */
-} naka_cls_AcLswPartEditBox_t;
-
-/* NAKA class VwBox -- class id 0x01600011 (Class table slot 0x160, entry 17),
- * parent Viewable; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-} naka_cls_VwBox_t;
-
-/* NAKA class AcVolPartEditBox -- class id 0x01610002 (Class table slot 0x161, entry 2),
- * parent PsEditBox; allsize 62.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint32_t fvol;              /* +50 j */
-    uint32_t fmute;             /* +54 j */
-    uint32_t data;              /* +58 n */
-} naka_cls_AcVolPartEditBox_t;
-
-/* NAKA class AcLswPartPan -- class id 0x0161001C (Class table slot 0x161, entry 28),
- * parent VwBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t func;              /* +28 j */
-    uint32_t data;              /* +32 n */
-} naka_cls_AcLswPartPan_t;
-
-/* NAKA class AcLswEditBox -- class id 0x0160001A (Class table slot 0x160, entry 26),
- * parent PsEditBox; allsize 58.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint32_t func;              /* +50 j */
-    uint32_t data;              /* +54 n */
-} naka_cls_AcLswEditBox_t;
-
-/* NAKA class AcIndexWideES -- class id 0x01600022 (Class table slot 0x160, entry 34),
- * parent PsWideESBox; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint16_t editsw2;           /* +38 e */
-    uint16_t style;             /* +40 f */
-} naka_cls_AcIndexWideES_t;
-
-/* NAKA class AcWindowPage -- class id 0x01600025 (Class table slot 0x160, entry 37),
- * parent PsPageBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t page;              /* +28 n */
-    uint16_t pagemin;           /* +32 A */
-    uint16_t pagemax;           /* +34 A */
-} naka_cls_AcWindowPage_t;
-
-/* NAKA class IvPageControl -- class id 0x01600028 (Class table slot 0x160, entry 40),
- * parent PsInvisibleBox; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t page;              /* +22 A */
-    uint32_t window;            /* +24 t */
-} naka_cls_IvPageControl_t;
-
-/* NAKA class IvShowHide -- class id 0x01600064 (Class table slot 0x160, entry 100),
- * parent PsInvisibleBox; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t func;              /* +22 j */
-} naka_cls_IvShowHide_t;
-
-/* NAKA class AcLswBox -- class id 0x01600013 (Class table slot 0x160, entry 19),
- * parent PsParaBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint32_t func;              /* +36 j */
-    uint32_t data;              /* +40 n */
-} naka_cls_AcLswBox_t;
-
-/* NAKA class Icon -- class id 0x0160002D (Class table slot 0x160, entry 45),
- * parent Viewable; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t icon;              /* +22 b */
-} naka_cls_Icon_t;
-
-/* NAKA class IvSdscltyp2 -- class id 0x0161000A (Class table slot 0x161, entry 10),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvSdscltyp2_t;
-
-/* NAKA class AcResetPage -- class id 0x01610016 (Class table slot 0x161, entry 22),
- * parent AcWindowPage; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t page;              /* +28 n */
-    uint16_t pagemin;           /* +32 A */
-    uint16_t pagemax;           /* +34 A */
-} naka_cls_AcResetPage_t;
-
-/* NAKA class AcPartMixer -- class id 0x0161000D (Class table slot 0x161, entry 13),
- * parent PsMixerControl; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcPartMixer_t;
-
-/* NAKA class IvSdtecd -- class id 0x01610008 (Class table slot 0x161, entry 8),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvSdtecd_t;
-
-/* NAKA class IvIntEasySet -- class id 0x01600063 (Class table slot 0x160, entry 99),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntEasySet_t;
-
-/* NAKA class PsLabelBox -- class id 0x01610007 (Class table slot 0x161, entry 7),
- * parent VwBox; allsize 48.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t str;               /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint32_t selected;          /* +40 m */
-    uint32_t dialfocus;         /* +44 m */
-} naka_cls_PsLabelBox_t;
-
-/* NAKA class IvSdtecd1 -- class id 0x01610009 (Class table slot 0x161, entry 9),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvSdtecd1_t;
-
-/* NAKA class AcTrackMixer -- class id 0x0161000E (Class table slot 0x161, entry 14),
- * parent PsMixerControl; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcTrackMixer_t;
-
-/* NAKA class AcPresentationBox -- class id 0x0161001D (Class table slot 0x161, entry 29),
- * parent PsParaBox; allsize 48.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint32_t str;               /* +36 X */
-    uint16_t editsw;            /* +40 e */
-    uint32_t selected;          /* +42 m */
-    uint16_t song;              /* +46 A */
-} naka_cls_AcPresentationBox_t;
-
-/* NAKA class IvDemofeature1 -- class id 0x01610019 (Class table slot 0x161, entry 25),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDemofeature1_t;
-
-/* NAKA class AcLanguageText -- class id 0x01600066 (Class table slot 0x160, entry 102),
- * parent PsTextBox; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t alignment;         /* +34 d */
-    uint16_t lines;             /* +36 B */
-    uint32_t func;              /* +38 j */
-} naka_cls_AcLanguageText_t;
-
-/* NAKA class IvDemofeature2 -- class id 0x0161001A (Class table slot 0x161, entry 26),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDemofeature2_t;
-
-/* NAKA class Screen -- class id 0x01600033 (Class table slot 0x160, entry 51),
- * parent GroupBox; allsize 34.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-} naka_cls_Screen_t;
-
-/* NAKA class AcPresentationControl -- class id 0x01610018 (Class table slot 0x161, entry 24),
- * parent Window; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t modal;             /* +26 G */
-    uint32_t parent;            /* +28 r */
-    uint32_t child;             /* +32 r */
-} naka_cls_AcPresentationControl_t;
-
-/* NAKA class IvIntVari -- class id 0x01600062 (Class table slot 0x160, entry 98),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntVari_t;
-
-/* NAKA class AcIndexToggle -- class id 0x0160004E (Class table slot 0x160, entry 78),
- * parent PsToggleBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t font;              /* +22 c */
-    uint32_t stron;             /* +26 X */
-    uint32_t stroff;            /* +30 X */
-    uint32_t onoff;             /* +34 m */
-    uint16_t editsw;            /* +38 e */
-    uint16_t index;             /* +40 A */
-    uint16_t tag;               /* +42 A */
-} naka_cls_AcIndexToggle_t;
-
-/* NAKA class IvPageOverWrite -- class id 0x01610010 (Class table slot 0x161, entry 16),
- * parent PsInvisibleBox; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t page;              /* +22 A */
-    uint32_t window;            /* +24 t */
-} naka_cls_IvPageOverWrite_t;
-
-/* NAKA class IvDrawbar -- class id 0x01610011 (Class table slot 0x161, entry 17),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDrawbar_t;
-
-/* NAKA class AcDrawSetting -- class id 0x01610022 (Class table slot 0x161, entry 34),
- * parent PsToggleBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t font;              /* +22 c */
-    uint32_t stron;             /* +26 X */
-    uint32_t stroff;            /* +30 X */
-    uint32_t onoff;             /* +34 m */
-    uint16_t editsw;            /* +38 e */
-    uint16_t index;             /* +40 A */
-    uint16_t tag;               /* +42 A */
-} naka_cls_AcDrawSetting_t;
-
-/* NAKA class StringBox -- class id 0x01600037 (Class table slot 0x160, entry 55),
- * parent Box; allsize 38.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t str;               /* +26 X */
-    uint32_t font;              /* +30 c */
-    uint16_t fontcolor;         /* +34 ^ */
-    uint16_t alignment;         /* +36 d */
-} naka_cls_StringBox_t;
-
-/* NAKA class IvDrawbar1 -- class id 0x01610012 (Class table slot 0x161, entry 18),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDrawbar1_t;
-
-/* NAKA class VwUserBitmapSp -- class id 0x0161001E (Class table slot 0x161, entry 30),
- * parent VwUserBitmap; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t func;              /* +22 j */
-} naka_cls_VwUserBitmapSp_t;
-
-/* NAKA class AcDrawEditBox -- class id 0x0161001B (Class table slot 0x161, entry 27),
- * parent AcLswPartEditBox; allsize 58.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-    uint32_t func;              /* +50 j */
-    uint32_t data;              /* +54 n */
-} naka_cls_AcDrawEditBox_t;
-
-/* NAKA class IvDrawbar2 -- class id 0x01610013 (Class table slot 0x161, entry 19),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDrawbar2_t;
-
-/* NAKA class AcDrawbarName -- class id 0x01610023 (Class table slot 0x161, entry 35),
- * parent PsParaBox; allsize 40.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t part;              /* +36 u */
-    uint16_t editsw;            /* +38 e */
-} naka_cls_AcDrawbarName_t;
-
-/* NAKA class IvDrawbarNorm -- class id 0x01610014 (Class table slot 0x161, entry 20),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDrawbarNorm_t;
-
-/* NAKA class IvDrawbarSndE -- class id 0x01610015 (Class table slot 0x161, entry 21),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvDrawbarSndE_t;
-
-/* NAKA class AcTitleMenu -- class id 0x0160001D (Class table slot 0x160, entry 29),
- * parent PsMenuBox; allsize 54.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t editsw;            /* +36 e */
-    uint32_t selected;          /* +38 m */
-    uint32_t str;               /* +42 X */
-    uint32_t title;             /* +46 a */
-    uint32_t icon;              /* +50 b */
-} naka_cls_AcTitleMenu_t;
-
-/* NAKA class IvAccordion -- class id 0x01610004 (Class table slot 0x161, entry 4),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvAccordion_t;
-
-/* NAKA class AcAccordionTab -- class id 0x01610006 (Class table slot 0x161, entry 6),
- * parent AcIndexToggle; allsize 52.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t font;              /* +22 c */
-    uint32_t stron;             /* +26 X */
-    uint32_t stroff;            /* +30 X */
-    uint32_t onoff;             /* +34 m */
-    uint16_t editsw;            /* +38 e */
-    uint16_t index;             /* +40 A */
-    uint16_t tag;               /* +42 A */
-    uint32_t str1;              /* +44 X */
-    uint32_t str3;              /* +48 X */
-} naka_cls_AcAccordionTab_t;
-
-/* NAKA class IvAccordionX -- class id 0x01610005 (Class table slot 0x161, entry 5),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvAccordionX_t;
-
-/* NAKA class IvScreen -- class id 0x0160006A (Class table slot 0x160, entry 106),
- * parent Screen; allsize 34.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-} naka_cls_IvScreen_t;
-
-/* NAKA class IvMesage -- class id 0x01610003 (Class table slot 0x161, entry 3),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvMesage_t;
-
-/* NAKA class IvIntComplete -- class id 0x01600061 (Class table slot 0x160, entry 97),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntComplete_t;
-
-/* NAKA class IvIntReminder -- class id 0x0160005F (Class table slot 0x160, entry 95),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntReminder_t;
-
-/* NAKA class IvIntError -- class id 0x01600060 (Class table slot 0x160, entry 96),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntError_t;
-
-/* NAKA class AcRamBox -- class id 0x0160004F (Class table slot 0x160, entry 79),
- * parent PsParaBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint32_t func;              /* +36 j */
-    uint32_t data;              /* +40 r */
-} naka_cls_AcRamBox_t;
-
-/* NAKA class AcPleaseWait -- class id 0x01610021 (Class table slot 0x161, entry 33),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcPleaseWait_t;
-
-/* NAKA class AcWelcomScreen -- class id 0x0161000B (Class table slot 0x161, entry 11),
- * parent Screen; allsize 34.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-} naka_cls_AcWelcomScreen_t;
-
-/* NAKA class IvIntWelcome -- class id 0x0160006B (Class table slot 0x160, entry 107),
- * parent IvInterrupt; allsize 24.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t time;              /* +22 w */
-} naka_cls_IvIntWelcome_t;
-
-/* NAKA class IvMPver -- class id 0x01610024 (Class table slot 0x161, entry 36),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvMPver_t;
-
-/* NAKA class PsEditBox -- class id 0x01600015 (Class table slot 0x160, entry 21),
- * parent VwBox; allsize 50.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t caption;           /* +28 X */
-    uint32_t font;              /* +32 c */
-    uint16_t fontcolor;         /* +36 ^ */
-    uint16_t align;             /* +38 d */
-    uint16_t length;            /* +40 B */
-    uint16_t editsw;            /* +42 e */
-    uint16_t dial;              /* +44 G */
-    uint32_t selected;          /* +46 m */
-} naka_cls_PsEditBox_t;
-
-/* NAKA class IvSoftver -- class id 0x0161000F (Class table slot 0x161, entry 15),
- * parent PsInvisibleBox; allsize 22.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-} naka_cls_IvSoftver_t;
-
 typedef struct __attribute__((packed)) {
     char TechniChord_str[14];
     /* element 0 of Viewable slot 0x3 "Sdpart": TtlScreen (class id 0x01600034) */
@@ -2325,200 +1162,642 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_technichord_part_t) == 17024,
     "naka_technichord_part must be exactly 17024 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Murai_ViewableTable_003, registry slot 0x3, 84 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 84, Murai_ViewableTable_003, 0x3`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_003, OBJ_x). */
+#define Murai_ViewableTable_003_SLOT 0x003u
+enum Murai_ViewableTable_003_objects {
+    OBJ_Sdpart,                             /*  0 TtlScreen "Sdpart" */
+      OBJ_Sdpart_AcIndexEditSw,             /*  1 AcIndexEditSw */
+      OBJ_Sdpart_AcIndexEditSw_2,           /*  2 AcIndexEditSw */
+      OBJ_Sdpart_Line,                      /*  3 Line */
+      OBJ_Sdpart_Line_2,                    /*  4 Line */
+      OBJ_Sdpart_Line_3,                    /*  5 Line */
+      OBJ_Sdpart_Line_4,                    /*  6 Line */
+      OBJ_Sdpart_Line_5,                    /*  7 Line */
+      OBJ_Sdpart_Line_6,                    /*  8 Line */
+      OBJ_PartSelect_Label,                 /*  9 Label */
+      OBJ_SdpartSound,                      /* 10 PsParaBox "SdpartSound" */
+      OBJ_SdpartPart,                       /* 11 PsParaBox "SdpartPart" */
+      OBJ_VOL_AcStrRadioBox,                /* 12 AcStrRadioBox */
+      OBJ_PAN_AcStrRadioBox,                /* 13 AcStrRadioBox */
+      OBJ_Sdpart_AcStrRadioBox,             /* 14 AcStrRadioBox */
+      OBJ_SUS_AcStrRadioBox,                /* 15 AcStrRadioBox */
+      OBJ_KEY_AcStrRadioBox,                /* 16 AcStrRadioBox */
+      OBJ_TUN_AcStrRadioBox,                /* 17 AcStrRadioBox */
+      OBJ_BND_AcStrRadioBox,                /* 18 AcStrRadioBox */
+      OBJ_OTH_AcStrRadioBox,                /* 19 AcStrRadioBox */
+      OBJ_Sdpart_VwEditSwBox,               /* 20 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_2,             /* 21 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_3,             /* 22 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_4,             /* 23 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_5,             /* 24 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_6,             /* 25 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_7,             /* 26 VwEditSwBox */
+      OBJ_Sdpart_VwEditSwBox_8,             /* 27 VwEditSwBox */
+      OBJ_Sdpart_IvSdpart,                  /* 28 IvSdpart */
+    OBJ_SdpartMain,                         /* 29 Window "SdpartMain" */
+      OBJ_SdpartMain_AcLswPartEditBox,      /* 30 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_2,    /* 31 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_3,    /* 32 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_4,    /* 33 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_5,    /* 34 AcLswPartEditBox */
+      OBJ_SdpartMain_VwBox,                 /* 35 VwBox */
+      OBJ_SdpartMain_AcLswPartEditBox_6,    /* 36 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_7,    /* 37 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_8,    /* 38 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_9,    /* 39 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_10,   /* 40 AcLswPartEditBox */
+      OBJ_SdpartMain_AcLswPartEditBox_11,   /* 41 AcLswPartEditBox */
+      OBJ_SdpartMain_AcVolPartEditBox,      /* 42 AcVolPartEditBox */
+    OBJ_SdpartVol,                          /* 43 Window "SdpartVol" */
+      OBJ_SdpartVol_AcIndexEditSw,          /* 44 AcIndexEditSw */
+      OBJ_SdpartVol_VwBox,                  /* 45 VwBox */
+      OBJ_SdpartVol_AcVolPartEditBox,       /* 46 AcVolPartEditBox */
+    OBJ_SdpartPan,                          /* 47 Window "SdpartPan" */
+      OBJ_SdpartPan_VwBox,                  /* 48 VwBox */
+        OBJ_SdpartPan_AcLswPartEditBox,     /* 49 AcLswPartEditBox */
+        OBJ_LeftCenterRight_Label,          /* 50 Label */
+        OBJ_SdpartPan_AcLswPartPan,         /* 51 AcLswPartPan */
+      OBJ_SdpartPan_AcIndexEditSw,          /* 52 AcIndexEditSw */
+      OBJ_SdpartPan_VwBox_2,                /* 53 VwBox */
+    OBJ_SdpartEff,                          /* 54 Window "SdpartEff" */
+      OBJ_SdpartEff_AcLswPartEditBox,       /* 55 AcLswPartEditBox */
+      OBJ_SdpartEff_AcLswPartEditBox_2,     /* 56 AcLswPartEditBox */
+      OBJ_SdpartEff_AcLswPartEditBox_3,     /* 57 AcLswPartEditBox */
+      OBJ_SdpartEff_AcIndexEditSw,          /* 58 AcIndexEditSw */
+      OBJ_SdpartEff_VwBox,                  /* 59 VwBox */
+    OBJ_SdpartSus,                          /* 60 Window "SdpartSus" */
+      OBJ_SdpartSus_AcIndexEditSw,          /* 61 AcIndexEditSw */
+      OBJ_SdpartSus_AcLswPartEditBox,       /* 62 AcLswPartEditBox */
+      OBJ_SdpartSus_AcLswPartEditBox_2,     /* 63 AcLswPartEditBox */
+      OBJ_SdpartSus_VwBox,                  /* 64 VwBox */
+    OBJ_SdpartKey,                          /* 65 Window "SdpartKey" */
+      OBJ_SdpartKey_AcLswPartEditBox,       /* 66 AcLswPartEditBox */
+      OBJ_SdpartKey_AcIndexEditSw,          /* 67 AcIndexEditSw */
+      OBJ_SdpartKey_VwBox,                  /* 68 VwBox */
+    OBJ_SdpartTun,                          /* 69 Window "SdpartTun" */
+      OBJ_SdpartTun_AcLswPartEditBox,       /* 70 AcLswPartEditBox */
+      OBJ_SdpartTun_AcIndexEditSw,          /* 71 AcIndexEditSw */
+      OBJ_SdpartTun_VwBox,                  /* 72 VwBox */
+    OBJ_SdpartBnd,                          /* 73 Window "SdpartBnd" */
+      OBJ_SdpartBnd_AcLswPartEditBox,       /* 74 AcLswPartEditBox */
+      OBJ_SdpartBnd_AcIndexEditSw,          /* 75 AcIndexEditSw */
+      OBJ_SdpartBnd_VwBox,                  /* 76 VwBox */
+    OBJ_SdpartOth,                          /* 77 Window "SdpartOth" */
+      OBJ_SdpartOth_AcLswPartEditBox,       /* 78 AcLswPartEditBox */
+      OBJ_SdpartOth_AcLswPartEditBox_2,     /* 79 AcLswPartEditBox */
+      OBJ_SdpartOth_AcLswPartEditBox_3,     /* 80 AcLswPartEditBox */
+      OBJ_SdpartOth_AcIndexEditSw,          /* 81 AcIndexEditSw */
+      OBJ_SdpartOth_AcLswPartEditBox_4,     /* 82 AcLswPartEditBox */
+      OBJ_SdpartOth_AcLswPartEditBox_5,     /* 83 AcLswPartEditBox */
+};
+
+/* Viewable table Murai_ViewableTable_004, registry slot 0x4, 4 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 4, Murai_ViewableTable_004, 0x4`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_004, OBJ_x). */
+#define Murai_ViewableTable_004_SLOT 0x004u
+enum Murai_ViewableTable_004_objects {
+    OBJ_Sdmtune,                   /*  0 TtlScreen "Sdmtune" */
+      OBJ_Sdmtune_AcLswEditBox,    /*  1 AcLswEditBox */
+        OBJ_Hz_Label,              /*  2 Label */
+      OBJ_Sdmtune_AcIndexWideES,   /*  3 AcIndexWideES */
+};
+
+/* Viewable table Murai_ViewableTable_005, registry slot 0x5, 54 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 54, Murai_ViewableTable_005, 0x5`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_005, OBJ_x). */
+#define Murai_ViewableTable_005_SLOT 0x005u
+enum Murai_ViewableTable_005_objects {
+    OBJ_Sdscltyp,                        /*  0 TtlScreen "Sdscltyp" */
+      OBJ_SdscltypPage,                  /*  1 AcWindowPage "SdscltypPage" */
+      OBJ_Sdscltyp_IvPageControl,        /*  2 IvPageControl */
+      OBJ_Sdscltyp_IvPageControl_2,      /*  3 IvPageControl */
+      OBJ_Sdscltyp_IvShowHide,           /*  4 IvShowHide */
+    OBJ_Sdscltyp1,                       /*  5 Window "Sdscltyp1" */
+      OBJ_Sdscltyp1_AcIndexWideES,       /*  6 AcIndexWideES */
+      OBJ_ScalingType,                   /*  7 AcLswEditBox "ScalingType" */
+      OBJ_Sdscltyp1_AcLswEditBox,        /*  8 AcLswEditBox */
+        OBJ_Sdscltyp1_AcLswBox,          /*  9 AcLswBox */
+      OBJ_Sdscltyp1_AcLswEditBox_2,      /* 10 AcLswEditBox */
+    OBJ_Sdscltyp2,                       /* 11 Window "Sdscltyp2" */
+      OBJ_UserKeyScaling_Label,          /* 12 Label */
+      OBJ_Sdscltyp2_Icon,                /* 13 Icon */
+      OBJ_Sdscltyp2_AcIndexWideES,       /* 14 AcIndexWideES */
+      OBJ_Sdscltyp2_AcIndexWideES_2,     /* 15 AcIndexWideES */
+      OBJ_Sdscltyp2_AcIndexWideES_3,     /* 16 AcIndexWideES */
+      OBJ_ScalingKey1,                   /* 17 AcLswEditBox "ScalingKey1" */
+      OBJ_ScalingKey2,                   /* 18 AcLswEditBox "ScalingKey2" */
+      OBJ_ScalingKey3,                   /* 19 AcLswEditBox "ScalingKey3" */
+      OBJ_ScalingKey4,                   /* 20 AcLswEditBox "ScalingKey4" */
+      OBJ_ScalingKey5,                   /* 21 AcLswEditBox "ScalingKey5" */
+      OBJ_ScalingKey6,                   /* 22 AcLswEditBox "ScalingKey6" */
+      OBJ_ScalingKey7,                   /* 23 AcLswEditBox "ScalingKey7" */
+      OBJ_ScalingKey8,                   /* 24 AcLswEditBox "ScalingKey8" */
+      OBJ_ScalingKey9,                   /* 25 AcLswEditBox "ScalingKey9" */
+      OBJ_ScalingKey10,                  /* 26 AcLswEditBox "ScalingKey10" */
+      OBJ_ScalingKey11,                  /* 27 AcLswEditBox "ScalingKey11" */
+      OBJ_ScalingKey12,                  /* 28 AcLswEditBox "ScalingKey12" */
+      OBJ_Sdscltyp2_VwBox,               /* 29 VwBox */
+        OBJ_Sdscltyp2_VwBox_2,           /* 30 VwBox */
+          OBJ_Sdscltyp2_VwBox_3,         /* 31 VwBox */
+      OBJ_Sdscltyp2_VwBox_4,             /* 32 VwBox */
+      OBJ_Sdscltyp2_VwBox_5,             /* 33 VwBox */
+        OBJ_Sdscltyp2_VwBox_6,           /* 34 VwBox */
+      OBJ_Sdscltyp2_VwBox_7,             /* 35 VwBox */
+        OBJ_Sdscltyp2_VwBox_8,           /* 36 VwBox */
+      OBJ_Sdscltyp2_VwBox_9,             /* 37 VwBox */
+        OBJ_Sdscltyp2_VwBox_10,          /* 38 VwBox */
+      OBJ_Sdscltyp2_VwBox_11,            /* 39 VwBox */
+        OBJ_Sdscltyp2_VwBox_12,          /* 40 VwBox */
+      OBJ_Sdscltyp2_Line,                /* 41 Line */
+      OBJ_Sdscltyp2_Line_2,              /* 42 Line */
+      OBJ_Sdscltyp2_Line_3,              /* 43 Line */
+      OBJ_Sdscltyp2_Line_4,              /* 44 Line */
+      OBJ_Sdscltyp2_Line_5,              /* 45 Line */
+      OBJ_Sdscltyp2_Line_6,              /* 46 Line */
+      OBJ_Sdscltyp2_Line_7,              /* 47 Line */
+      OBJ_Sdscltyp2_Line_8,              /* 48 Line */
+      OBJ_Sdscltyp2_Line_9,              /* 49 Line */
+      OBJ_Sdscltyp2_Line_10,             /* 50 Line */
+      OBJ_Sdscltyp2_Line_11,             /* 51 Line */
+        OBJ_Sdscltyp2_Line_12,           /* 52 Line */
+      OBJ_Sdscltyp2_IvSdscltyp2,         /* 53 IvSdscltyp2 */
+};
+
+/* Viewable table Murai_ViewableTable_007, registry slot 0x7, 3 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 3, Murai_ViewableTable_007, 0x7`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_007, OBJ_x). */
+#define Murai_ViewableTable_007_SLOT 0x007u
+enum Murai_ViewableTable_007_objects {
+    OBJ_Sdlfthld,                 /*  0 TtlScreen "Sdlfthld" */
+      OBJ_Sdlfthld_AcIndexWideES, /*  1 AcIndexWideES */
+      OBJ_Sdlfthld_AcLswEditBox,  /*  2 AcLswEditBox */
+};
+
+/* Viewable table Murai_ViewableTable_008, registry slot 0x8, 4 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 4, Murai_ViewableTable_008, 0x8`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_008, OBJ_x). */
+#define Murai_ViewableTable_008_SLOT 0x008u
+enum Murai_ViewableTable_008_objects {
+    OBJ_Sdmixer,                       /*  0 TtlScreen "Sdmixer" */
+      OBJ_Sdmixer_AcResetPage,         /*  1 AcResetPage */
+      OBJ_Sdmixer_AcPartMixer,         /*  2 AcPartMixer */
+      OBJ_NakaWidget_Sdmixer_3_IvExit, /*  3 IvExit, record outside the C sources (NakaWidget_Sdmixer_3_IvExit) */
+};
+
+/* Viewable table Murai_ViewableTable_00D, registry slot 0xD, 29 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 29, Murai_ViewableTable_00D, 0xD`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_x). */
+#define Murai_ViewableTable_00D_SLOT 0x00Du
+enum Murai_ViewableTable_00D_objects {
+    OBJ_NakaWidget_Sdtecd,                   /*  0 TtlScreen, record outside the C sources (NakaWidget_Sdtecd) */
+      OBJ_SdtecdPage,                        /*  1 AcWindowPage "SdtecdPage" */
+      OBJ_NakaWidget_Sdtecd_2_IvPageControl, /*  2 IvPageControl */
+      OBJ_NakaWidget_Sdtecd_3_IvPageControl, /*  3 IvPageControl */
+      OBJ_NakaWidget_Sdtecd_4_IvSdtecd,      /*  4 IvSdtecd */
+      OBJ_NakaWidget_Sdtecd_5_IvIntEasySet,  /*  5 IvIntEasySet */
+    OBJ_Sdtecd1,                             /*  6 Window "Sdtecd1" */
+      OBJ_Sdtecd1_AcIndexWideES,             /*  7 AcIndexWideES */
+      OBJ_Sdtecd1_AcIndexEditSw,             /*  8 AcIndexEditSw */
+      OBJ_Sdtecd1_AcIndexEditSw_2,           /*  9 AcIndexEditSw */
+      OBJ_TcClose,                           /* 10 PsLabelBox "TcClose" */
+      OBJ_TcOpen1,                           /* 11 PsLabelBox "TcOpen1" */
+      OBJ_TcOpen2,                           /* 12 PsLabelBox "TcOpen2" */
+      OBJ_TcDuet1,                           /* 13 PsLabelBox "TcDuet1" */
+      OBJ_TcDuet2,                           /* 14 PsLabelBox "TcDuet2" */
+      OBJ_TcCountry,                         /* 15 PsLabelBox "TcCountry" */
+      OBJ_TcTheatre,                         /* 16 PsLabelBox "TcTheatre" */
+      OBJ_TcHymn,                            /* 17 PsLabelBox "TcHymn" */
+      OBJ_TcBigBandBrass,                    /* 18 PsLabelBox "TcBigBandBrass" */
+      OBJ_TcBigBandReeds,                    /* 19 PsLabelBox "TcBigBandReeds" */
+      OBJ_TcOctave,                          /* 20 PsLabelBox "TcOctave" */
+      OBJ_TcBlock,                           /* 21 PsLabelBox "TcBlock" */
+      OBJ_TcHardRock,                        /* 22 PsLabelBox "TcHardRock" */
+      OBJ_TcFanfare,                         /* 23 PsLabelBox "TcFanfare" */
+      OBJ_Sdtecd1_IvSdtecd1,                 /* 24 IvSdtecd1 */
+    OBJ_Sdtecd2,                             /* 25 Window "Sdtecd2" */
+      OBJ_Sdtecd2_AcIndexWideES,             /* 26 AcIndexWideES */
+      OBJ_Sdtecd2_AcLswEditBox,              /* 27 AcLswEditBox */
+      OBJ_Value_Label,                       /* 28 Label */
+};
+
+/* Viewable table Murai_ViewableTable_0A5, registry slot 0xA5, 4 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 4, Murai_ViewableTable_0A5, 0xA5`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0A5, OBJ_x). */
+#define Murai_ViewableTable_0A5_SLOT 0x0A5u
+enum Murai_ViewableTable_0A5_objects {
+    OBJ_Sqmixer,                       /*  0 TtlScreen "Sqmixer" */
+      OBJ_Sqmixer_AcResetPage,         /*  1 AcResetPage */
+      OBJ_Sqmixer_AcTrackMixer,        /*  2 AcTrackMixer */
+      OBJ_NakaWidget_Sqmixer_3_IvExit, /*  3 IvExit, record outside the C sources (NakaWidget_Sqmixer_3_IvExit) */
+};
+
+/* Viewable table Murai_ViewableTable_0E4, registry slot 0xE4, 15 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 15, Murai_ViewableTable_0E4, 0xE4`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0E4, OBJ_x). */
+#define Murai_ViewableTable_0E4_SLOT 0x0E4u
+enum Murai_ViewableTable_0E4_objects {
+    OBJ_NakaWidget_Demofeature,                   /*  0 AcFdemoScreen, record outside the C sources (NakaWidget_Demofeature) */
+      OBJ_StartTheInternalDemo_AcPresentationBox, /*  1 AcPresentationBox */
+    OBJ_Demofeature1,                             /*  2 Window "Demofeature1" */
+      OBJ_Demofeature1_IvDemofeature1,            /*  3 IvDemofeature1 */
+      OBJ_Demofeature1_AcLanguageText,            /*  4 AcLanguageText */
+    OBJ_Demofeature2,                             /*  5 Window "Demofeature2" */
+      OBJ_Demofeature2_IvDemofeature2,            /*  6 IvDemofeature2 */
+      OBJ_StartTheLoadedDemo_AcPresentationBox,   /*  7 AcPresentationBox */
+      OBJ_FDemoTitleBox,                          /*  8 PsParaBox "FDemoTitleBox" */
+    OBJ_PlainScreen,                              /*  9 Screen "PlainScreen" */
+    OBJ_PresentationControl,                      /* 10 AcPresentationControl "PresentationControl" */
+      OBJ_PresentationMode_Label,                 /* 11 Label */
+    OBJ_LoadingPresentation,                      /* 12 Screen "LoadingPresentation" */
+      OBJ_LoadingNow_Label,                       /* 13 Label */
+      OBJ_PresentationTitle,                      /* 14 PsParaBox "PresentationTitle" */
+};
+
+/* Viewable table Murai_ViewableTable_0EA, registry slot 0xEA, 44 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 44, Murai_ViewableTable_0EA, 0xEA`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0EA, OBJ_x). */
+#define Murai_ViewableTable_0EA_SLOT 0x0EAu
+enum Murai_ViewableTable_0EA_objects {
+    OBJ_Drawbar,                                  /*  0 TtlScreen "Drawbar" */
+      OBJ_Drawbar_IvIntVari,                      /*  1 IvIntVari */
+      OBJ_DrawPerc4,                              /*  2 AcIndexToggle "DrawPerc4" */
+      OBJ_DrawPerc223,                            /*  3 AcIndexToggle "DrawPerc223" */
+        OBJ_White23,                              /*  4 Label "White23" */
+        OBJ_Black23,                              /*  5 Label "Black23" */
+      OBJ_Percussive_Label,                       /*  6 Label */
+        OBJ_NakaWidget_Drawbar_7_IvExit,          /*  7 IvExit, record outside the C sources (NakaWidget_Drawbar_7_IvExit) */
+      OBJ_NakaWidget_Drawbar_8_Label,             /*  8 Label, record outside the C sources (NakaWidget_Drawbar_8_Label) */
+      OBJ_NakaWidget_Drawbar_9_IvPageOverWrite,   /*  9 IvPageOverWrite */
+      OBJ_Drawbar_IvPageOverWrite,                /* 10 IvPageOverWrite */
+      OBJ_Drawbar_IvDrawbar,                      /* 11 IvDrawbar */
+      OBJ_DrawSetting,                            /* 12 AcDrawSetting "DrawSetting" */
+    OBJ_Drawbar1,                                 /* 13 Window "Drawbar1" */
+      OBJ_Drawbar1_VwBox,                         /* 14 VwBox */
+      OBJ_Drawbar1_StringBox,                     /* 15 StringBox */
+        OBJ_Drawbar1_Label,                       /* 16 Label */
+        OBJ_Drawbar1_Label_2,                     /* 17 Label */
+        OBJ_Drawbar1_Label_3,                     /* 18 Label */
+        OBJ_Drawbar1_Label_4,                     /* 19 Label */
+      OBJ_Drawbar1_IvDrawbar1,                    /* 20 IvDrawbar1 */
+      OBJ_Drawbar1_VwUserBitmapSp,                /* 21 VwUserBitmapSp */
+    OBJ_Drawbar2,                                 /* 22 Window "Drawbar2" */
+      OBJ_Drawbar2_AcDrawEditBox,                 /* 23 AcDrawEditBox */
+      OBJ_Drawbar2_AcDrawEditBox_2,               /* 24 AcDrawEditBox */
+      OBJ_Drawbar2_AcDrawEditBox_3,               /* 25 AcDrawEditBox */
+      OBJ_Drawbar2_AcDrawEditBox_4,               /* 26 AcDrawEditBox */
+      OBJ_Drawbar2_AcIndexWideES,                 /* 27 AcIndexWideES */
+      OBJ_Drawbar2_IvDrawbar2,                    /* 28 IvDrawbar2 */
+      OBJ_Drawbar2_AcDrawbarName,                 /* 29 AcDrawbarName */
+    OBJ_DrawbarNorm,                              /* 30 Window "DrawbarNorm" */
+      OBJ_DrawbarPart,                            /* 31 PsParaBox "DrawbarPart" */
+      OBJ_DrawTremolo,                            /* 32 AcIndexToggle "DrawTremolo" */
+      OBJ_Tremolo_Label,                          /* 33 Label */
+      OBJ_DrawbarNorm_IvDrawbarNorm,              /* 34 IvDrawbarNorm */
+      OBJ_DrawbarNorm_VwBox,                      /* 35 VwBox */
+        OBJ_DrawbarNorm_Icon,                     /* 36 Icon */
+        OBJ_Drawbar_Label,                        /* 37 Label */
+    OBJ_DrawbarSndE,                              /* 38 Window "DrawbarSndE" */
+      OBJ_DrawbarSndE_IvDrawbarSndE,              /* 39 IvDrawbarSndE */
+      OBJ_Write_AcTitleMenu,                      /* 40 AcTitleMenu */
+      OBJ_DrawbarSndE_VwBox,                      /* 41 VwBox */
+        OBJ_DrawbarSndE_Icon,                     /* 42 Icon */
+        OBJ_DrawbarEdit_Label,                    /* 43 Label */
+};
+
+/* Viewable table Murai_ViewableTable_0EB, registry slot 0xEB, 37 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 37, Murai_ViewableTable_0EB, 0xEB`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0EB, OBJ_x). */
+#define Murai_ViewableTable_0EB_SLOT 0x0EBu
+enum Murai_ViewableTable_0EB_objects {
+    OBJ_Accordion,                       /*  0 Screen "Accordion" */
+      OBJ_Accordion_Icon,                /*  1 Icon */
+        OBJ_Accordion_IvIntVari,         /*  2 IvIntVari */
+      OBJ_AccordionRegister_Label,       /*  3 Label */
+      OBJ_Accordion_AcIndexEditSw,       /*  4 AcIndexEditSw */
+      OBJ_Accordion_AcIndexEditSw_2,     /*  5 AcIndexEditSw */
+      OBJ_Type_Label,                    /*  6 Label */
+      OBJ_AccordionPart,                 /*  7 PsParaBox "AccordionPart" */
+        OBJ_AccordionPart_IvAccordion,   /*  8 IvAccordion */
+    OBJ_Accordion1,                      /*  9 Window "Accordion1" */
+      OBJ_TypeGerman_Label,              /* 10 Label */
+      OBJ_Accordion1_VwUserBitmapSp,     /* 11 VwUserBitmapSp */
+      OBJ_Accordion1_AcIndexToggle,      /* 12 AcIndexToggle */
+      OBJ_Accordion1_AcIndexToggle_2,    /* 13 AcIndexToggle */
+      OBJ_Accordion1_AcAccordionTab,     /* 14 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_2,   /* 15 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_3,   /* 16 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_4,   /* 17 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_5,   /* 18 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_6,   /* 19 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_7,   /* 20 AcAccordionTab */
+      OBJ_Accordion1_AcAccordionTab_8,   /* 21 AcAccordionTab */
+      OBJ_Accordion1_IvAccordionX,       /* 22 IvAccordionX */
+    OBJ_Accordion2,                      /* 23 Window "Accordion2" */
+      OBJ_TypeItalian_Label,             /* 24 Label */
+      OBJ_Accordion2_VwUserBitmapSp,     /* 25 VwUserBitmapSp */
+      OBJ_Accordion2_AcIndexToggle,      /* 26 AcIndexToggle */
+      OBJ_Accordion2_AcIndexToggle_2,    /* 27 AcIndexToggle */
+      OBJ_Accordion2_AcAccordionTab,     /* 28 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_2,   /* 29 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_3,   /* 30 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_4,   /* 31 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_5,   /* 32 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_6,   /* 33 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_7,   /* 34 AcAccordionTab */
+      OBJ_Accordion2_AcAccordionTab_8,   /* 35 AcAccordionTab */
+      OBJ_Accordion2_IvAccordionX,       /* 36 IvAccordionX */
+};
+
+/* Viewable table Murai_ViewableTable_0EE, registry slot 0xEE, 24 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 24, Murai_ViewableTable_0EE, 0xEE`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0EE, OBJ_x). */
+#define Murai_ViewableTable_0EE_SLOT 0x0EEu
+enum Murai_ViewableTable_0EE_objects {
+    OBJ_Mesage,                        /*  0 IvScreen "Mesage" */
+      OBJ_Mesage_IvMesage,             /*  1 IvMesage */
+    OBJ_Completed,                     /*  2 Window "Completed" */
+      OBJ_Completed_AcLanguageText,    /*  3 AcLanguageText */
+      OBJ_Completed_IvIntComplete,     /*  4 IvIntComplete */
+    OBJ_Reminder,                      /*  5 Window "Reminder" */
+      OBJ_Reminder_AcLanguageText,     /*  6 AcLanguageText */
+      OBJ_Reminder_AcLanguageText_2,   /*  7 AcLanguageText */
+      OBJ_Reminder_IvIntReminder,      /*  8 IvIntReminder */
+    OBJ_Error,                         /*  9 Window "Error" */
+      OBJ_Error_IvIntError,            /* 10 IvIntError */
+      OBJ_Error_AcLanguageText,        /* 11 AcLanguageText */
+      OBJ_Error_AcLanguageText_2,      /* 12 AcLanguageText */
+    OBJ_Other,                         /* 13 Window "Other" */
+      OBJ_Other_AcLanguageText,        /* 14 AcLanguageText */
+    OBJ_CheckMessage,                  /* 15 Window "CheckMessage" */
+      OBJ_NakaWidget_Mesage_16_EditSw, /* 16 EditSw, record outside the C sources (NakaWidget_Mesage_16_EditSw) */
+      OBJ_CheckMessage_AcRamBox,       /* 17 AcRamBox */
+      OBJ_CheckMessage_AcRamBox_2,     /* 18 AcRamBox */
+      OBJ_NakaWidget_Mesage_19_EditSw, /* 19 EditSw, record outside the C sources (NakaWidget_Mesage_19_EditSw) */
+    OBJ_NoMessage,                     /* 20 Window "NoMessage" */
+      OBJ_NoMessage_AcRamBox,          /* 21 AcRamBox */
+    OBJ_PleaseWait,                    /* 22 Window "PleaseWait" */
+      OBJ_PleaseWait_AcPleaseWait,     /* 23 AcPleaseWait */
+};
+
+/* Viewable table Murai_ViewableTable_0EF, registry slot 0xEF, 11 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 11, Murai_ViewableTable_0EF, 0xEF`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0EF, OBJ_x). */
+#define Murai_ViewableTable_0EF_SLOT 0x0EFu
+enum Murai_ViewableTable_0EF_objects {
+    OBJ_Welcom,                    /*  0 AcWelcomScreen "Welcom" */
+      OBJ_Welcom_IvIntWelcome,     /*  1 IvIntWelcome */
+      OBJ_Welcom_VwUserBitmapSp,   /*  2 VwUserBitmapSp */
+      OBJ_Welcom_VwUserBitmapSp_2, /*  3 VwUserBitmapSp */
+    OBJ_AllInitial,                /*  4 Screen "AllInitial" */
+      OBJ_AllInitialSetting_Label, /*  5 Label */
+      OBJ_AllInitial_IvIntWelcome, /*  6 IvIntWelcome */
+    OBJ_MPVersion,                 /*  7 Screen "MPVersion" */
+      OBJ_MPVersion_IvMPver,       /*  8 IvMPver */
+      OBJ_MPVersion_IvIntWelcome,  /*  9 IvIntWelcome */
+      OBJ_MPver,                   /* 10 PsParaBox "MPver" */
+};
+
+/* Viewable table Murai_ViewableTable_0F0, registry slot 0xF0, 6 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 6, Murai_ViewableTable_0F0, 0xF0`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0F0, OBJ_x). */
+#define Murai_ViewableTable_0F0_SLOT 0x0F0u
+enum Murai_ViewableTable_0F0_objects {
+    OBJ_Softver,             /*  0 TtlScreen "Softver" */
+      OBJ_MainProgram,       /*  1 PsEditBox "MainProgram" */
+      OBJ_MainTable,         /*  2 PsEditBox "MainTable" */
+      OBJ_SubProgram,        /*  3 PsEditBox "SubProgram" */
+      OBJ_SoundTable,        /*  4 PsEditBox "SoundTable" */
+      OBJ_Softver_IvSoftver, /*  5 IvSoftver */
+};
+
 const naka_technichord_part_t naka_technichord_part_data
     __attribute__((section(".text"), used)) = {
 
     .TechniChord_str = ALIGNED_STRING("TECHNI-CHORD"),
 
+    /* ==== SCREEN TITLE_SDPART "SOUND PART SETTING" -- "TT_SDPART", title id 0x3, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "PART SETTING"
+     * EXIT -> TITLE_PS
+     * Opened from: TITLE_SDMENU ("PART SETTING") */
     .Sdpart = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Sdpart_AcIndexEditSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003E68E,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_Sdpart_Window,
         .title = SELF(SoundPartSetting_text),
-        .icon = 0x00000002,
+        .icon = idICON_i0,
     },
 
     .SoundPartSetting_text = ALIGNED_STRING("SOUND PART SETTING"),
 
     .Sdpart_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Sdpart_AcIndexEditSw_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 34, 38, 51 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 34, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0009,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0088,
-        .style = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .style = SS_Up,
     },
 
     .Sdpart_AcIndexEditSw_2 = {
-        .class_ = 0x0160001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 8, 76, 38, 93 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Sdpart_Line,
+        .prev = OBJ_Sdpart_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 76, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0009,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0089,
-        .style = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left2,
+        .style = SS_Down,
     },
 
     .Sdpart_Line = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 64, 52, 263, 52 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdpart_Line_2,
+        .prev = OBJ_Sdpart_AcIndexEditSw_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 52, 200, 1),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdpart_Line_2 = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 64, 54, 263, 54 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdpart_Line_3,
+        .prev = OBJ_Sdpart_Line,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 54, 200, 1),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdpart_Line_3 = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 48, 44, 48, 84 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdpart_Line_4,
+        .prev = OBJ_Sdpart_Line_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(48, 44, 1, 41),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdpart_Line_4 = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 7,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 40, 44, 47, 44 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdpart_Line_5,
+        .prev = OBJ_Sdpart_Line_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(40, 44, 8, 1),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdpart_Line_5 = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 40, 84, 47, 84 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdpart_Line_6,
+        .prev = OBJ_Sdpart_Line_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(40, 84, 8, 1),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdpart_Line_6 = {
-        .class_ = 0x0160002E,
-        .super = 0,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 48, 72, 55, 72 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_PartSelect_Label,
+        .prev = OBJ_Sdpart_Line_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(48, 72, 8, 1),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .PartSelect_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 58, 64, 165, 82 },
+        .next = OBJ_SdpartSound,
+        .prev = OBJ_Sdpart_Line_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(58, 64, 108, 19),
         .str = SELF(PartSelect_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .PartSelect_text = "PART SELECT :",
 
     .SdpartSound = {
-        .class_ = 0x01600012,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 11,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 64, 30, 263, 51 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartPart,
+        .prev = OBJ_PartSelect_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 30, 200, 22),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .SdpartPart = {
-        .class_ = 0x01600012,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 168, 60, 287, 81 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_VOL_AcStrRadioBox,
+        .prev = OBJ_SdpartSound,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(168, 60, 120, 22),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .VOL_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 4, 199, 36, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_PAN_AcStrRadioBox,
+        .prev = OBJ_SdpartPart,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0000,
-        .selected = 0x0003E692,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom1,
+        .selected = RAM_VOL_AcStrRadioBox_Selected,
         .tag = 0x0000,
         .str = SELF(VOL_str),
     },
@@ -2526,21 +1805,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .VOL_str = "VOL",
 
     .PAN_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 44, 199, 76, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Sdpart_AcStrRadioBox,
+        .prev = OBJ_VOL_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0001,
-        .selected = 0x0003E694,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom2,
+        .selected = RAM_PAN_AcStrRadioBox_Selected,
         .tag = 0x0001,
         .str = SELF(PAN_str),
     },
@@ -2548,21 +1827,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .PAN_str = "PAN",
 
     .Sdpart_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 84, 199, 116, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SUS_AcStrRadioBox,
+        .prev = OBJ_PAN_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0002,
-        .selected = 0x0003E696,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom3,
+        .selected = RAM_Sdpart_AcStrRadioBox_Selected,
         .tag = 0x0002,
         .str = SELF(EFF_str),
     },
@@ -2570,21 +1849,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .EFF_str = "EFF",
 
     .SUS_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 124, 199, 156, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_KEY_AcStrRadioBox,
+        .prev = OBJ_Sdpart_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .selected = 0x0003E698,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .selected = RAM_SUS_AcStrRadioBox_Selected,
         .tag = 0x0003,
         .str = SELF(SUS_str),
     },
@@ -2592,21 +1871,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .SUS_str = "SUS",
 
     .KEY_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 17,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 164, 199, 196, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TUN_AcStrRadioBox,
+        .prev = OBJ_SUS_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0004,
-        .selected = 0x0003E69A,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom5,
+        .selected = RAM_KEY_AcStrRadioBox_Selected,
         .tag = 0x0004,
         .str = SELF(KEY_str),
     },
@@ -2614,21 +1893,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .KEY_str = "KEY",
 
     .TUN_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 204, 199, 236, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_BND_AcStrRadioBox,
+        .prev = OBJ_KEY_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0005,
-        .selected = 0x0003E69C,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom6,
+        .selected = RAM_TUN_AcStrRadioBox_Selected,
         .tag = 0x0005,
         .str = SELF(TUN_str),
     },
@@ -2636,21 +1915,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .TUN_str = "TUN",
 
     .BND_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 244, 199, 276, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_OTH_AcStrRadioBox,
+        .prev = OBJ_TUN_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .selected = 0x0003E69E,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .selected = RAM_BND_AcStrRadioBox_Selected,
         .tag = 0x0006,
         .str = SELF(BND_str),
     },
@@ -2658,21 +1937,21 @@ const naka_technichord_part_t naka_technichord_part_data
     .BND_str = "BND",
 
     .OTH_AcStrRadioBox = {
-        .class_ = 0x01600051,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcStrRadioBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 284, 199, 316, 214 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Sdpart_VwEditSwBox,
+        .prev = OBJ_BND_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(284, 199, 33, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0008,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0007,
-        .selected = 0x0003E6A0,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Bottom8,
+        .selected = RAM_OTH_AcStrRadioBox_Selected,
         .tag = 0x0007,
         .str = SELF(OTH_str),
     },
@@ -2680,2377 +1959,2415 @@ const naka_technichord_part_t naka_technichord_part_data
     .OTH_str = "OTH",
 
     .Sdpart_VwEditSwBox = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 284, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_2,
+        .prev = OBJ_OTH_AcStrRadioBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(284, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom8,
+        .style = SS_UpDown,
         .str = SELF(str_57),
     },
 
     .str_57 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_2 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 244, 216, 275, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_3,
+        .prev = OBJ_Sdpart_VwEditSwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .style = SS_UpDown,
         .str = SELF(str_58),
     },
 
     .str_58 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_3 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 23,
-        .prev = 21,
-        .flag = 0x0008,
-        .rect = { 204, 216, 235, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_4,
+        .prev = OBJ_Sdpart_VwEditSwBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0005,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom6,
+        .style = SS_UpDown,
         .str = SELF(str_59),
     },
 
     .str_59 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_4 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 24,
-        .prev = 22,
-        .flag = 0x0008,
-        .rect = { 164, 216, 195, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_5,
+        .prev = OBJ_Sdpart_VwEditSwBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0004,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom5,
+        .style = SS_UpDown,
         .str = SELF(str_60),
     },
 
     .str_60 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_5 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 25,
-        .prev = 23,
-        .flag = 0x0008,
-        .rect = { 124, 216, 155, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_6,
+        .prev = OBJ_Sdpart_VwEditSwBox_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .style = SS_UpDown,
         .str = SELF(str_61),
     },
 
     .str_61 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_6 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 84, 216, 115, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_7,
+        .prev = OBJ_Sdpart_VwEditSwBox_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0002,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom3,
+        .style = SS_UpDown,
         .str = SELF(str_62),
     },
 
     .str_62 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_7 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 27,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 44, 216, 75, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_VwEditSwBox_8,
+        .prev = OBJ_Sdpart_VwEditSwBox_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0001,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom2,
+        .style = SS_UpDown,
         .str = SELF(str_63),
     },
 
     .str_63 = ALIGNED_STRING(""),
 
     .Sdpart_VwEditSwBox_8 = {
-        .class_ = 0x0160003E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwEditSwBox),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
-        .next = 28,
-        .prev = 26,
-        .flag = 0x0008,
-        .rect = { 4, 216, 35, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdpart_IvSdpart,
+        .prev = OBJ_Sdpart_VwEditSwBox_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0000,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom1,
+        .style = SS_UpDown,
         .str = SELF(str_64),
     },
 
     .str_64 = ALIGNED_STRING(""),
 
     .Sdpart_IvSdpart = {
-        .class_ = 0x01610000,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvSdpart),
+        .super = OBJ_Sdpart,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 27,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_Sdpart_VwEditSwBox_8,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_SdpartMain: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartMain = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 30,
+        .sub = OBJ_SdpartMain_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 1, 106, 318, 193 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(1, 106, 318, 88),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003E6A2,
-        .child = 0x0003E6A6,
+        .parent = RAM_SdpartMain_Parent,
+        .child = RAM_SdpartMain_Child,
     },
 
     .SdpartMain_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 31,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 4, 123, 156, 134 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 123, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e30_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6AA,
-        .func = 0x01210003,
-        .data = 0x0003E6AC,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswPan,
+        .data = RAM_SdpartMain_AcLswPartEditBox_Value,
     },
 
     .v3_e30_caption = ALIGNED_STRING("PAN        :"),
 
     .SdpartMain_AcLswPartEditBox_2 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 32,
-        .prev = 30,
-        .flag = 0x0008,
-        .rect = { 4, 137, 156, 148 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_3,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 137, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e31_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6AE,
-        .func = 0x01210004,
-        .data = 0x0003E6B0,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswReverb,
+        .data = RAM_SdpartMain_AcLswPartEditBox_2_Value,
     },
 
     .v3_e31_caption = ALIGNED_STRING("REV. DEPTH :"),
 
     .SdpartMain_AcLswPartEditBox_3 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 33,
-        .prev = 31,
-        .flag = 0x0008,
-        .rect = { 4, 151, 156, 162 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_4,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 151, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e32_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6B2,
-        .func = 0x01210005,
-        .data = 0x0003E6B4,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_3_Selected,
+        .func = NAKA_APFUNC_LswDSPEffect,
+        .data = RAM_SdpartMain_AcLswPartEditBox_3_Value,
     },
 
     .v3_e32_caption = ALIGNED_STRING("DSP EFFECT :"),
 
     .SdpartMain_AcLswPartEditBox_4 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 34,
-        .prev = 32,
-        .flag = 0x0008,
-        .rect = { 4, 165, 156, 176 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_5,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 165, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e33_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6B6,
-        .func = 0x01210006,
-        .data = 0x0003E6B8,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_4_Selected,
+        .func = NAKA_APFUNC_LswDigitalEffect,
+        .data = RAM_SdpartMain_AcLswPartEditBox_4_Value,
     },
 
     .v3_e33_caption = ALIGNED_STRING("DIG.EFFECT :"),
 
     .SdpartMain_AcLswPartEditBox_5 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 35,
-        .prev = 33,
-        .flag = 0x0008,
-        .rect = { 4, 179, 156, 190 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_VwBox,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 179, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e34_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6BA,
-        .func = 0x01210007,
-        .data = 0x0003E6BC,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_5_Selected,
+        .func = NAKA_APFUNC_LswSustain,
+        .data = RAM_SdpartMain_AcLswPartEditBox_5_Value,
     },
 
     .v3_e34_caption = ALIGNED_STRING("SUSTAIN    :"),
 
     .SdpartMain_VwBox = {
-        .class_ = 0x01600011,
-        .super = 29,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 36,
-        .prev = 34,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_6,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
     .SdpartMain_AcLswPartEditBox_6 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 37,
-        .prev = 35,
-        .flag = 0x0008,
-        .rect = { 164, 109, 316, 120 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_7,
+        .prev = OBJ_SdpartMain_VwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 109, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e36_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6BE,
-        .func = 0x01210008,
-        .data = 0x0003E6C0,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_6_Selected,
+        .func = NAKA_APFUNC_LswSustainLength,
+        .data = RAM_SdpartMain_AcLswPartEditBox_6_Value,
     },
 
     .v3_e36_caption = ALIGNED_STRING("SUS LENGTH :"),
 
     .SdpartMain_AcLswPartEditBox_7 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 38,
-        .prev = 36,
-        .flag = 0x0008,
-        .rect = { 164, 123, 316, 134 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_8,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 123, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e37_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6C2,
-        .func = 0x01210009,
-        .data = 0x0003E6C4,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_7_Selected,
+        .func = NAKA_APFUNC_LswKeyShift,
+        .data = RAM_SdpartMain_AcLswPartEditBox_7_Value,
     },
 
     .v3_e37_caption = ALIGNED_STRING("KEY SHIFT  :"),
 
     .SdpartMain_AcLswPartEditBox_8 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 39,
-        .prev = 37,
-        .flag = 0x0008,
-        .rect = { 164, 137, 316, 148 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_9,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 137, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e38_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6C6,
-        .func = 0x0121000A,
-        .data = 0x0003E6C8,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_8_Selected,
+        .func = NAKA_APFUNC_LswTuning,
+        .data = RAM_SdpartMain_AcLswPartEditBox_8_Value,
     },
 
     .v3_e38_caption = ALIGNED_STRING("TUNING     :"),
 
     .SdpartMain_AcLswPartEditBox_9 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 40,
-        .prev = 38,
-        .flag = 0x0008,
-        .rect = { 164, 151, 316, 162 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_10,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_8,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 151, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e39_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6CA,
-        .func = 0x0121000B,
-        .data = 0x0003E6CC,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_9_Selected,
+        .func = NAKA_APFUNC_LswBendRange,
+        .data = RAM_SdpartMain_AcLswPartEditBox_9_Value,
     },
 
     .v3_e39_caption = ALIGNED_STRING("BEND RANGE :"),
 
     .SdpartMain_AcLswPartEditBox_10 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 41,
-        .prev = 39,
-        .flag = 0x0008,
-        .rect = { 164, 165, 316, 176 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcLswPartEditBox_11,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 165, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e40_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6CE,
-        .func = 0x0121000C,
-        .data = 0x0003E6D0,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_10_Selected,
+        .func = NAKA_APFUNC_LswGlidePedal,
+        .data = RAM_SdpartMain_AcLswPartEditBox_10_Value,
     },
 
     .v3_e40_caption = ALIGNED_STRING("GLIDE PEDAL:"),
 
     .SdpartMain_AcLswPartEditBox_11 = {
-        .class_ = 0x01610001,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
-        .next = 42,
-        .prev = 40,
-        .flag = 0x0008,
-        .rect = { 164, 179, 316, 190 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartMain_AcVolPartEditBox,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_10,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 179, 153, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e41_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0000,
-        .selected = 0x0003E6D2,
-        .func = 0x0121000D,
-        .data = 0x0003E6D4,
+        .selected = RAM_SdpartMain_AcLswPartEditBox_11_Selected,
+        .func = NAKA_APFUNC_LswSustainPedal,
+        .data = RAM_SdpartMain_AcLswPartEditBox_11_Value,
     },
 
     .v3_e41_caption = ALIGNED_STRING("SUST.PEDAL :"),
 
     .SdpartMain_AcVolPartEditBox = {
-        .class_ = 0x01610002,
-        .super = 29,
+        .class_ = NAKA_CLASS(AcVolPartEditBox),
+        .super = OBJ_SdpartMain,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 41,
-        .flag = 0x0008,
-        .rect = { 4, 108, 156, 121 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartMain_AcLswPartEditBox_11,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 108, 153, 14),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
         .caption = SELF(v3_e42_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_RightJustify,
         .length = 0x0005,
-        .editsw = 0x0088,
+        .editsw = ES_Left1,
         .dial = 0x0000,
-        .selected = 0x0003E6D6,
-        .fvol = 0x01210002,
-        .fmute = 0x01210011,
-        .data = 0x0003E6D8,
+        .selected = RAM_SdpartMain_AcVolPartEditBox_Selected,
+        .fvol = NAKA_APFUNC_LswVolume,
+        .fmute = NAKA_APFUNC_LswMute,
+        .data = RAM_SdpartMain_AcVolPartEditBox_Value,
     },
 
     .v3_e42_caption = ALIGNED_STRING("VOLUME     :"),
 
+    /* ==== VIEW OBJ_SdpartVol: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartVol = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 44,
+        .sub = OBJ_SdpartVol_AcIndexEditSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E6DA,
-        .child = 0x0003E6DE,
+        .parent = RAM_SdpartVol_Parent,
+        .child = RAM_SdpartVol_Child,
     },
 
     .SdpartVol_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 43,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartVol,
         .sub = NAKA_NONE,
-        .next = 45,
+        .next = OBJ_SdpartVol_VwBox,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 4, 216, 35, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0000,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom1,
+        .style = SS_UpDown,
     },
 
     .SdpartVol_VwBox = {
-        .class_ = 0x01600011,
-        .super = 43,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartVol,
         .sub = NAKA_NONE,
-        .next = 46,
-        .prev = 44,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartVol_AcVolPartEditBox,
+        .prev = OBJ_SdpartVol_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
     .SdpartVol_AcVolPartEditBox = {
-        .class_ = 0x01610002,
-        .super = 43,
+        .class_ = NAKA_CLASS(AcVolPartEditBox),
+        .super = OBJ_SdpartVol,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 45,
-        .flag = 0x0008,
-        .rect = { 44, 111, 275, 182 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .prev = OBJ_SdpartVol_VwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 111, 232, 72),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(v3_e46_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0006,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E6E2,
-        .fvol = 0x01210002,
-        .fmute = 0x01210011,
-        .data = 0x0003E6E4,
+        .selected = RAM_SdpartVol_AcVolPartEditBox_Selected,
+        .fvol = NAKA_APFUNC_LswVolume,
+        .fmute = NAKA_APFUNC_LswMute,
+        .data = RAM_SdpartVol_AcVolPartEditBox_Value,
     },
 
     .v3_e46_caption = ALIGNED_STRING("VOLUME       :"),
 
+    /* ==== VIEW OBJ_SdpartPan: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartPan = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 48,
+        .sub = OBJ_SdpartPan_VwBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E6E6,
-        .child = 0x0003E6EA,
+        .parent = RAM_SdpartPan_Parent,
+        .child = RAM_SdpartPan_Child,
     },
 
     .SdpartPan_VwBox = {
-        .class_ = 0x01600011,
-        .super = 47,
-        .sub = 49,
-        .next = 52,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartPan,
+        .sub = OBJ_SdpartPan_AcLswPartEditBox,
+        .next = OBJ_SdpartPan_AcIndexEditSw,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 111, 275, 182 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 111, 232, 72),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .SdpartPan_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 48,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartPan_VwBox,
         .sub = NAKA_NONE,
-        .next = 50,
+        .next = OBJ_LeftCenterRight_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 116, 117, 204, 128 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(116, 117, 89, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(v3_e49_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E6EE,
-        .func = 0x01210003,
-        .data = 0x0003E6F0,
+        .selected = RAM_SdpartPan_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswPan,
+        .data = RAM_SdpartPan_AcLswPartEditBox_Value,
     },
 
     .v3_e49_caption = "PAN =",
 
     .LeftCenterRight_Label = {
-        .class_ = 0x0160002B,
-        .super = 48,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_SdpartPan_VwBox,
         .sub = NAKA_NONE,
-        .next = 51,
-        .prev = 49,
-        .flag = 0x0008,
-        .rect = { 50, 128, 269, 146 },
+        .next = OBJ_SdpartPan_AcLswPartPan,
+        .prev = OBJ_SdpartPan_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(50, 128, 220, 19),
         .str = SELF(LeftCenterRight_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .LeftCenterRight_text = "LEFT      CENTER      RIGHT",
 
     .SdpartPan_AcLswPartPan = {
-        .class_ = 0x0161001C,
-        .super = 48,
+        .class_ = NAKA_CLASS(AcLswPartPan),
+        .super = OBJ_SdpartPan_VwBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 50,
-        .flag = 0x0008,
-        .rect = { 52, 144, 268, 175 },
-        .color = 0x0007,
-        .border = 0x00C2,
+        .prev = OBJ_LeftCenterRight_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(52, 144, 217, 32),
+        .color = CL_Silver,
+        .border = BD_3D_DOWN1,
         .index = 0xFFFF,
-        .func = 0x01210003,
-        .data = 0x0003E6F2,
+        .func = NAKA_APFUNC_LswPan,
+        .data = RAM_SdpartPan_AcLswPartPan_Value,
     },
 
     .SdpartPan_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 47,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartPan,
         .sub = NAKA_NONE,
-        .next = 53,
-        .prev = 48,
-        .flag = 0x0008,
-        .rect = { 44, 216, 75, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartPan_VwBox_2,
+        .prev = OBJ_SdpartPan_VwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0001,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0001,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom2,
+        .style = SS_UpDown,
     },
 
     .SdpartPan_VwBox_2 = {
-        .class_ = 0x01600011,
-        .super = 47,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartPan,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 52,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartPan_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartEff: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartEff = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 55,
+        .sub = OBJ_SdpartEff_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E6F4,
-        .child = 0x0003E6F8,
+        .parent = RAM_SdpartEff_Parent,
+        .child = RAM_SdpartEff_Child,
     },
 
     .SdpartEff_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 54,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartEff,
         .sub = NAKA_NONE,
-        .next = 56,
+        .next = OBJ_SdpartEff_AcLswPartEditBox_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .caption = SELF(v3_e55_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003E6FC,
-        .func = 0x01210004,
-        .data = 0x0003E6FE,
+        .selected = RAM_SdpartEff_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswReverb,
+        .data = RAM_SdpartEff_AcLswPartEditBox_Value,
     },
 
     .v3_e55_caption = "REVERB DEPTH:",
 
     .SdpartEff_AcLswPartEditBox_2 = {
-        .class_ = 0x01610001,
-        .super = 54,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartEff,
         .sub = NAKA_NONE,
-        .next = 57,
-        .prev = 55,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartEff_AcLswPartEditBox_3,
+        .prev = OBJ_SdpartEff_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .caption = SELF(v3_e56_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003E700,
-        .func = 0x01210005,
-        .data = 0x0003E702,
+        .selected = RAM_SdpartEff_AcLswPartEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswDSPEffect,
+        .data = RAM_SdpartEff_AcLswPartEditBox_2_Value,
     },
 
     .v3_e56_caption = "DSP EFFECT  :",
 
     .SdpartEff_AcLswPartEditBox_3 = {
-        .class_ = 0x01610001,
-        .super = 54,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartEff,
         .sub = NAKA_NONE,
-        .next = 58,
-        .prev = 56,
-        .flag = 0x0008,
-        .rect = { 163, 114, 311, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartEff_AcIndexEditSw,
+        .prev = OBJ_SdpartEff_AcLswPartEditBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .caption = SELF(v3_e57_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x000A,
+        .editsw = ES_Right3,
         .dial = 0x0001,
-        .selected = 0x0003E704,
-        .func = 0x01210006,
-        .data = 0x0003E706,
+        .selected = RAM_SdpartEff_AcLswPartEditBox_3_Selected,
+        .func = NAKA_APFUNC_LswDigitalEffect,
+        .data = RAM_SdpartEff_AcLswPartEditBox_3_Value,
     },
 
     .v3_e57_caption = "DIGITAL EFF.:",
 
     .SdpartEff_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 54,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartEff,
         .sub = NAKA_NONE,
-        .next = 59,
-        .prev = 57,
-        .flag = 0x0008,
-        .rect = { 84, 216, 115, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartEff_VwBox,
+        .prev = OBJ_SdpartEff_AcLswPartEditBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0002,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0002,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom3,
+        .style = SS_UpDown,
     },
 
     .SdpartEff_VwBox = {
-        .class_ = 0x01600011,
-        .super = 54,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartEff,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 58,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartEff_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartSus: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartSus = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 61,
+        .sub = OBJ_SdpartSus_AcIndexEditSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E708,
-        .child = 0x0003E70C,
+        .parent = RAM_SdpartSus_Parent,
+        .child = RAM_SdpartSus_Child,
     },
 
     .SdpartSus_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 60,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartSus,
         .sub = NAKA_NONE,
-        .next = 62,
+        .next = OBJ_SdpartSus_AcLswPartEditBox,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 124, 216, 155, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0003,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .style = SS_UpDown,
     },
 
     .SdpartSus_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 60,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartSus,
         .sub = NAKA_NONE,
-        .next = 63,
-        .prev = 61,
-        .flag = 0x0008,
-        .rect = { 8, 114, 220, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartSus_AcLswPartEditBox_2,
+        .prev = OBJ_SdpartSus_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 213, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0003,
         .caption = SELF(v3_e62_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003E710,
-        .func = 0x01210007,
-        .data = 0x0003E712,
+        .selected = RAM_SdpartSus_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswSustain,
+        .data = RAM_SdpartSus_AcLswPartEditBox_Value,
     },
 
     .v3_e62_caption = ALIGNED_STRING("SUSTAIN ON/OFF   :"),
 
     .SdpartSus_AcLswPartEditBox_2 = {
-        .class_ = 0x01610001,
-        .super = 60,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartSus,
         .sub = NAKA_NONE,
-        .next = 64,
-        .prev = 62,
-        .flag = 0x0008,
-        .rect = { 8, 156, 220, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartSus_VwBox,
+        .prev = OBJ_SdpartSus_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 213, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0003,
         .caption = SELF(v3_e63_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003E714,
-        .func = 0x01210008,
-        .data = 0x0003E716,
+        .selected = RAM_SdpartSus_AcLswPartEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswSustainLength,
+        .data = RAM_SdpartSus_AcLswPartEditBox_2_Value,
     },
 
     .v3_e63_caption = ALIGNED_STRING("SUSTAIN LENGTH   :"),
 
     .SdpartSus_VwBox = {
-        .class_ = 0x01600011,
-        .super = 60,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartSus,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 63,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartSus_AcLswPartEditBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartKey: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartKey = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 66,
+        .sub = OBJ_SdpartKey_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E718,
-        .child = 0x0003E71C,
+        .parent = RAM_SdpartKey_Parent,
+        .child = RAM_SdpartKey_Child,
     },
 
     .SdpartKey_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 65,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartKey,
         .sub = NAKA_NONE,
-        .next = 67,
+        .next = OBJ_SdpartKey_AcIndexEditSw,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 111, 276, 182 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 111, 233, 72),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0004,
         .caption = SELF(v3_e66_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0006,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E720,
-        .func = 0x01210009,
-        .data = 0x0003E722,
+        .selected = RAM_SdpartKey_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswKeyShift,
+        .data = RAM_SdpartKey_AcLswPartEditBox_Value,
     },
 
     .v3_e66_caption = ALIGNED_STRING("KEY SHIFT    :"),
 
     .SdpartKey_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 65,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartKey,
         .sub = NAKA_NONE,
-        .next = 68,
-        .prev = 66,
-        .flag = 0x0008,
-        .rect = { 164, 216, 195, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartKey_VwBox,
+        .prev = OBJ_SdpartKey_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0004,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0004,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom5,
+        .style = SS_UpDown,
     },
 
     .SdpartKey_VwBox = {
-        .class_ = 0x01600011,
-        .super = 65,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartKey,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 67,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartKey_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartTun: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartTun = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 70,
+        .sub = OBJ_SdpartTun_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E724,
-        .child = 0x0003E728,
+        .parent = RAM_SdpartTun_Parent,
+        .child = RAM_SdpartTun_Child,
     },
 
     .SdpartTun_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 69,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartTun,
         .sub = NAKA_NONE,
-        .next = 71,
+        .next = OBJ_SdpartTun_AcIndexEditSw,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 111, 276, 182 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 111, 233, 72),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0005,
         .caption = SELF(v3_e70_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0006,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E72C,
-        .func = 0x0121000A,
-        .data = 0x0003E72E,
+        .selected = RAM_SdpartTun_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswTuning,
+        .data = RAM_SdpartTun_AcLswPartEditBox_Value,
     },
 
     .v3_e70_caption = ALIGNED_STRING("TUNING       :"),
 
     .SdpartTun_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 69,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartTun,
         .sub = NAKA_NONE,
-        .next = 72,
-        .prev = 70,
-        .flag = 0x0008,
-        .rect = { 204, 216, 235, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartTun_VwBox,
+        .prev = OBJ_SdpartTun_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0005,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0005,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom6,
+        .style = SS_UpDown,
     },
 
     .SdpartTun_VwBox = {
-        .class_ = 0x01600011,
-        .super = 69,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartTun,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 71,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartTun_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartBnd: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartBnd = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 74,
+        .sub = OBJ_SdpartBnd_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E730,
-        .child = 0x0003E734,
+        .parent = RAM_SdpartBnd_Parent,
+        .child = RAM_SdpartBnd_Child,
     },
 
     .SdpartBnd_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 73,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartBnd,
         .sub = NAKA_NONE,
-        .next = 75,
+        .next = OBJ_SdpartBnd_AcIndexEditSw,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 111, 276, 182 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 111, 233, 72),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0006,
         .caption = SELF(v3_e74_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0006,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E738,
-        .func = 0x0121000B,
-        .data = 0x0003E73A,
+        .selected = RAM_SdpartBnd_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswBendRange,
+        .data = RAM_SdpartBnd_AcLswPartEditBox_Value,
     },
 
     .v3_e74_caption = ALIGNED_STRING("PITCH BEND RANGE :"),
 
     .SdpartBnd_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 73,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartBnd,
         .sub = NAKA_NONE,
-        .next = 76,
-        .prev = 74,
-        .flag = 0x0008,
-        .rect = { 244, 216, 275, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartBnd_VwBox,
+        .prev = OBJ_SdpartBnd_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0006,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .style = SS_UpDown,
     },
 
     .SdpartBnd_VwBox = {
-        .class_ = 0x01600011,
-        .super = 73,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_SdpartBnd,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 75,
-        .flag = 0x0008,
-        .rect = { 156, 79, 319, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartBnd_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 79, 164, 27),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartOth: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartOth = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 78,
+        .sub = OBJ_SdpartOth_AcLswPartEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 92),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E73C,
-        .child = 0x0003E740,
+        .parent = RAM_SdpartOth_Parent,
+        .child = RAM_SdpartOth_Child,
     },
 
     .SdpartOth_AcLswPartEditBox = {
-        .class_ = 0x01610001,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
-        .next = 79,
+        .next = OBJ_SdpartOth_AcLswPartEditBox_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0007,
         .caption = SELF(v3_e78_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003E744,
-        .func = 0x0121000C,
-        .data = 0x0003E746,
+        .selected = RAM_SdpartOth_AcLswPartEditBox_Selected,
+        .func = NAKA_APFUNC_LswGlidePedal,
+        .data = RAM_SdpartOth_AcLswPartEditBox_Value,
     },
 
     .v3_e78_caption = "GLIDE PEDAL :",
 
     .SdpartOth_AcLswPartEditBox_2 = {
-        .class_ = 0x01610001,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
-        .next = 80,
-        .prev = 78,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartOth_AcLswPartEditBox_3,
+        .prev = OBJ_SdpartOth_AcLswPartEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0007,
         .caption = SELF(v3_e79_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003E748,
-        .func = 0x0121000D,
-        .data = 0x0003E74A,
+        .selected = RAM_SdpartOth_AcLswPartEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswSustainPedal,
+        .data = RAM_SdpartOth_AcLswPartEditBox_2_Value,
     },
 
     .v3_e79_caption = "SUSTAIN PDL :",
 
     .SdpartOth_AcLswPartEditBox_3 = {
-        .class_ = 0x01610001,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
-        .next = 81,
-        .prev = 79,
-        .flag = 0x0008,
-        .rect = { 163, 114, 311, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartOth_AcIndexEditSw,
+        .prev = OBJ_SdpartOth_AcLswPartEditBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0007,
         .caption = SELF(v3_e80_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x000A,
+        .editsw = ES_Right3,
         .dial = 0x0001,
-        .selected = 0x0003E74C,
-        .func = 0x0121000F,
-        .data = 0x0003E74E,
+        .selected = RAM_SdpartOth_AcLswPartEditBox_3_Selected,
+        .func = NAKA_APFUNC_LswAfterTouch,
+        .data = RAM_SdpartOth_AcLswPartEditBox_3_Value,
     },
 
     .v3_e80_caption = "AFTER TOUCH :",
 
     .SdpartOth_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
-        .next = 82,
-        .prev = 80,
-        .flag = 0x0008,
-        .rect = { 284, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_SdpartOth_AcLswPartEditBox_4,
+        .prev = OBJ_SdpartOth_AcLswPartEditBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(284, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0007,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .SdpartOth_AcLswPartEditBox_4 = {
-        .class_ = 0x01610001,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
-        .next = 83,
-        .prev = 81,
-        .flag = 0x0008,
-        .rect = { 163, 156, 311, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_SdpartOth_AcLswPartEditBox_5,
+        .prev = OBJ_SdpartOth_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 156, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0007,
         .caption = SELF(v3_e82_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x000B,
+        .editsw = ES_Right4,
         .dial = 0x0001,
-        .selected = 0x0003E750,
-        .func = 0x0121000E,
-        .data = 0x0003E752,
+        .selected = RAM_SdpartOth_AcLswPartEditBox_4_Selected,
+        .func = NAKA_APFUNC_LswKeyScaling,
+        .data = RAM_SdpartOth_AcLswPartEditBox_4_Value,
     },
 
     .v3_e82_caption = "KEY SCALING :",
 
     .SdpartOth_AcLswPartEditBox_5 = {
-        .class_ = 0x01610001,
-        .super = 77,
+        .class_ = NAKA_CLASS(AcLswPartEditBox),
+        .super = OBJ_SdpartOth,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 82,
-        .flag = 0x0008,
-        .rect = { 163, 80, 311, 105 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_SdpartOth_AcLswPartEditBox_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(163, 80, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0007,
         .caption = SELF(v3_e83_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x0009,
+        .editsw = ES_Right2,
         .dial = 0x0001,
-        .selected = 0x0003E754,
-        .func = 0x01210010,
-        .data = 0x0003E756,
+        .selected = RAM_SdpartOth_AcLswPartEditBox_5_Selected,
+        .func = NAKA_APFUNC_LswPartExp,
+        .data = RAM_SdpartOth_AcLswPartEditBox_5_Value,
     },
 
     .v3_e83_caption = "PART EXP PDL:",
 
+    /* ==== SCREEN TITLE_SDMTUNE "MASTER TUNING" -- "TT_SDMTUNE", title id 0x4, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "MASTER TUNING"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_SDMENU ("MASTER TUNING") */
     .Sdmtune = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Sdmtune_AcLswEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00002,
-        .window = 0x0003E758,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_SDMENU,
+        .window = RAM_Sdmtune_Window,
         .title = SELF(MasterTuning_text),
-        .icon = 0x00000009,
+        .icon = idICON_i7,
     },
 
     .MasterTuning_text = "MASTER TUNING",
 
     .Sdmtune_AcLswEditBox = {
-        .class_ = 0x0160001A,
-        .super = 0,
-        .sub = 2,
-        .next = 3,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdmtune,
+        .sub = OBJ_Hz_Label,
+        .next = OBJ_Sdmtune_AcIndexWideES,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 36, 91, 280, 138 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 91, 245, 48),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(v4_e1_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x000A,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E75C,
-        .func = 0x01210017,
-        .data = 0x0003E75E,
+        .selected = RAM_Sdmtune_AcLswEditBox_Selected,
+        .func = NAKA_APFUNC_LswMasterTuning,
+        .data = RAM_Sdmtune_AcLswEditBox_Value,
     },
 
     .v4_e1_caption = ALIGNED_STRING("MASTER TUNING  :"),
 
     .Hz_Label = {
-        .class_ = 0x0160002B,
-        .super = 1,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Sdmtune_AcLswEditBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 254, 107, 273, 125 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(254, 107, 20, 19),
         .str = SELF(Hz_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Hz_text = ALIGNED_STRING("Hz"),
 
     .Sdmtune_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdmtune,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .prev = OBJ_Sdmtune_AcLswEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_SDSCLTYP "KEY SCALING" -- "TT_SDSCLTYP", title id 0x5, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "KEY SCALING"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_SDMENU ("KEY SCALING") */
     .Sdscltyp = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_SdscltypPage,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00002,
-        .window = 0x0003E760,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_SDMENU,
+        .window = RAM_Sdscltyp_Window,
         .title = SELF(KeyScaling_text),
-        .icon = 0x00000084,
+        .icon = idICON_i130,
     },
 
     .KeyScaling_text = "KEY SCALING",
 
     .SdscltypPage = {
-        .class_ = 0x01600025,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcWindowPage),
+        .super = OBJ_Sdscltyp,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Sdscltyp_IvPageControl,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 245, 6, 315, 23 },
-        .color = 0x00F3,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(245, 6, 71, 18),
+        .color = CL_PageBack,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .page = 0x0003E764,
+        .page = RAM_SdscltypPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0002,
     },
 
     .Sdscltyp_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_Sdscltyp,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_Sdscltyp_IvPageControl_2,
+        .prev = OBJ_SdscltypPage,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00050005,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_005, OBJ_Sdscltyp1),
     },
 
     .Sdscltyp_IvPageControl_2 = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_Sdscltyp,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 32, 0, 63, 31 },
+        .next = OBJ_Sdscltyp_IvShowHide,
+        .prev = OBJ_Sdscltyp_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x0005000B,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_005, OBJ_Sdscltyp2),
     },
 
     .Sdscltyp_IvShowHide = {
-        .class_ = 0x01600064,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvShowHide),
+        .super = OBJ_Sdscltyp,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 64, 0, 95, 31 },
-        .func = 0x0121001D,
+        .prev = OBJ_Sdscltyp_IvPageControl_2,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(64, 0, 32, 32),
+        .func = NAKA_APFUNC_TtSdscltyp,
     },
 
+    /* ==== VIEW OBJ_Sdscltyp1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdscltyp1 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 6,
+        .sub = OBJ_Sdscltyp1_AcIndexWideES,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 23, 23 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 24, 24),
+        .color = CL_Transparent,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E766,
-        .child = 0x0003E76A,
+        .parent = RAM_Sdscltyp1_Parent,
+        .child = RAM_Sdscltyp1_Child,
     },
 
     .Sdscltyp1_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdscltyp1,
         .sub = NAKA_NONE,
-        .next = 7,
+        .next = OBJ_ScalingType,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .ScalingType = {
-        .class_ = 0x0160001A,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp1,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 8, 72, 260, 97 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Sdscltyp1_AcLswEditBox,
+        .prev = OBJ_Sdscltyp1_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 253, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(ScalingType_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x000C,
-        .editsw = 0x0089,
+        .editsw = ES_Left2,
         .dial = 0x0001,
-        .selected = 0x0003E76E,
-        .func = 0x01210018,
-        .data = 0x0003E770,
+        .selected = RAM_ScalingType_Selected,
+        .func = NAKA_APFUNC_LswScalingType,
+        .data = RAM_ScalingType_Value,
     },
 
     .ScalingType_caption = "SCALING TYPE  :",
 
     .Sdscltyp1_AcLswEditBox = {
-        .class_ = 0x0160001A,
-        .super = 5,
-        .sub = 9,
-        .next = 10,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 8, 114, 260, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp1,
+        .sub = OBJ_Sdscltyp1_AcLswBox,
+        .next = OBJ_Sdscltyp1_AcLswEditBox_2,
+        .prev = OBJ_ScalingType,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 253, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(v5_e8_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x000C,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003E772,
-        .func = 0x01210019,
-        .data = 0x0003E774,
+        .selected = RAM_Sdscltyp1_AcLswEditBox_Selected,
+        .func = NAKA_APFUNC_LswScalingShift,
+        .data = RAM_Sdscltyp1_AcLswEditBox_Value,
     },
 
     .v5_e8_caption = "SCALING SHIFT :",
 
     .Sdscltyp1_AcLswBox = {
-        .class_ = 0x01600013,
-        .super = 8,
+        .class_ = NAKA_CLASS(AcLswBox),
+        .super = OBJ_Sdscltyp1_AcLswEditBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 184, 119, 251, 134 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(184, 119, 68, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .func = 0x0121001B,
-        .data = 0x0003E776,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .func = NAKA_APFUNC_LswScalingShift2,
+        .data = RAM_Sdscltyp1_AcLswBox_Value,
     },
 
     .Sdscltyp1_AcLswEditBox_2 = {
-        .class_ = 0x0160001A,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 8, 156, 260, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_Sdscltyp1_AcLswEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 253, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(v5_e10_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0007,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003E778,
-        .func = 0x0121001A,
-        .data = 0x0003E77A,
+        .selected = RAM_Sdscltyp1_AcLswEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswScalingMode,
+        .data = RAM_Sdscltyp1_AcLswEditBox_2_Value,
     },
 
     .v5_e10_caption = "SCALING MODE  :",
 
+    /* ==== VIEW OBJ_Sdscltyp2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdscltyp2 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 12,
+        .sub = OBJ_UserKeyScaling_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 239, 31 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 240, 32),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E77C,
-        .child = 0x0003E780,
+        .parent = RAM_Sdscltyp2_Parent,
+        .child = RAM_Sdscltyp2_Child,
     },
 
     .UserKeyScaling_Label = {
-        .class_ = 0x0160002B,
-        .super = 11,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 13,
+        .next = OBJ_Sdscltyp2_Icon,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 58, 6, 237, 24 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(58, 6, 180, 19),
         .str = SELF(UserKeyScaling_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .UserKeyScaling_text = ALIGNED_STRING("USER KEY SCALING"),
 
     .Sdscltyp2_Icon = {
-        .class_ = 0x0160002D,
-        .super = 11,
+        .class_ = NAKA_CLASS(Icon),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 28, 1, 55, 28 },
-        .icon = 0x00000084,
+        .next = OBJ_Sdscltyp2_AcIndexWideES,
+        .prev = OBJ_UserKeyScaling_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(28, 1, 28, 28),
+        .icon = idICON_i130,
     },
 
     .Sdscltyp2_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdscltyp2_AcIndexWideES_2,
+        .prev = OBJ_Sdscltyp2_Icon,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0001,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .Sdscltyp2_AcIndexWideES_2 = {
-        .class_ = 0x01600022,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 44, 216, 115, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdscltyp2_AcIndexWideES_3,
+        .prev = OBJ_Sdscltyp2_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0001,
-        .editsw2 = 0x0002,
-        .style = 0x000F,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom2,
+        .editsw2 = ES_Bottom3,
+        .style = SS_Left2,
     },
 
     .Sdscltyp2_AcIndexWideES_3 = {
-        .class_ = 0x01600022,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 17,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 124, 216, 195, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_ScalingKey1,
+        .prev = OBJ_Sdscltyp2_AcIndexWideES_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .editsw2 = 0x0004,
-        .style = 0x0010,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .editsw2 = ES_Bottom5,
+        .style = SS_Right2,
     },
 
     .ScalingKey1 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 4, 178, 48, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey2,
+        .prev = OBJ_Sdscltyp2_AcIndexWideES_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey1_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E784,
-        .func = 0x0121001C,
-        .data = 0x0003E786,
+        .selected = RAM_ScalingKey1_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey1_Value,
     },
 
     .ScalingKey1_caption = ALIGNED_STRING(""),
 
     .ScalingKey2 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 48, 38, 92, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey3,
+        .prev = OBJ_ScalingKey1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(48, 38, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey2_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0003,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E788,
-        .func = 0x0121001C,
-        .data = 0x0003E78A,
+        .selected = RAM_ScalingKey2_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey2_Value,
     },
 
     .ScalingKey2_caption = ALIGNED_STRING(""),
 
     .ScalingKey3 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 48, 178, 92, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey4,
+        .prev = OBJ_ScalingKey2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(48, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey3_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E78C,
-        .func = 0x0121001C,
-        .data = 0x0003E78E,
+        .selected = RAM_ScalingKey3_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey3_Value,
     },
 
     .ScalingKey3_caption = ALIGNED_STRING(""),
 
     .ScalingKey4 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 92, 38, 136, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey5,
+        .prev = OBJ_ScalingKey3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(92, 38, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey4_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E790,
-        .func = 0x0121001C,
-        .data = 0x0003E792,
+        .selected = RAM_ScalingKey4_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey4_Value,
     },
 
     .ScalingKey4_caption = ALIGNED_STRING(""),
 
     .ScalingKey5 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 92, 178, 136, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey6,
+        .prev = OBJ_ScalingKey4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(92, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey5_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E794,
-        .func = 0x0121001C,
-        .data = 0x0003E796,
+        .selected = RAM_ScalingKey5_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey5_Value,
     },
 
     .ScalingKey5_caption = ALIGNED_STRING(""),
 
     .ScalingKey6 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 23,
-        .prev = 21,
-        .flag = 0x0008,
-        .rect = { 136, 178, 180, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey7,
+        .prev = OBJ_ScalingKey5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(136, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey6_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E798,
-        .func = 0x0121001C,
-        .data = 0x0003E79A,
+        .selected = RAM_ScalingKey6_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey6_Value,
     },
 
     .ScalingKey6_caption = ALIGNED_STRING(""),
 
     .ScalingKey7 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 24,
-        .prev = 22,
-        .flag = 0x0008,
-        .rect = { 136, 38, 180, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey8,
+        .prev = OBJ_ScalingKey6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(136, 38, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey7_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E79C,
-        .func = 0x0121001C,
-        .data = 0x0003E79E,
+        .selected = RAM_ScalingKey7_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey7_Value,
     },
 
     .ScalingKey7_caption = ALIGNED_STRING(""),
 
     .ScalingKey8 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 25,
-        .prev = 23,
-        .flag = 0x0008,
-        .rect = { 180, 178, 224, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey9,
+        .prev = OBJ_ScalingKey7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(180, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey8_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7A0,
-        .func = 0x0121001C,
-        .data = 0x0003E7A2,
+        .selected = RAM_ScalingKey8_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey8_Value,
     },
 
     .ScalingKey8_caption = ALIGNED_STRING(""),
 
     .ScalingKey9 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 180, 38, 224, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey10,
+        .prev = OBJ_ScalingKey8,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(180, 38, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey9_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7A4,
-        .func = 0x0121001C,
-        .data = 0x0003E7A6,
+        .selected = RAM_ScalingKey9_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey9_Value,
     },
 
     .ScalingKey9_caption = ALIGNED_STRING(""),
 
     .ScalingKey10 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 27,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 224, 178, 268, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey11,
+        .prev = OBJ_ScalingKey9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(224, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey10_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7A8,
-        .func = 0x0121001C,
-        .data = 0x0003E7AA,
+        .selected = RAM_ScalingKey10_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey10_Value,
     },
 
     .ScalingKey10_caption = ALIGNED_STRING(""),
 
     .ScalingKey11 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 28,
-        .prev = 26,
-        .flag = 0x0008,
-        .rect = { 224, 38, 268, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_ScalingKey12,
+        .prev = OBJ_ScalingKey10,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(224, 38, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey11_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7AC,
-        .func = 0x0121001C,
-        .data = 0x0003E7AE,
+        .selected = RAM_ScalingKey11_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey11_Value,
     },
 
     .ScalingKey11_caption = ALIGNED_STRING(""),
 
     .ScalingKey12 = {
-        .class_ = 0x0160001A,
-        .super = 11,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 29,
-        .prev = 27,
-        .flag = 0x0008,
-        .rect = { 267, 178, 311, 195 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Sdscltyp2_VwBox,
+        .prev = OBJ_ScalingKey11,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(267, 178, 45, 18),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0001,
         .caption = SELF(ScalingKey12_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7B0,
-        .func = 0x0121001C,
-        .data = 0x0003E7B2,
+        .selected = RAM_ScalingKey12_Selected,
+        .func = NAKA_APFUNC_LswScalingKeyX,
+        .data = RAM_ScalingKey12_Value,
     },
 
     .ScalingKey12_caption = ALIGNED_STRING(""),
 
     .Sdscltyp2_VwBox = {
-        .class_ = 0x01600011,
-        .super = 11,
-        .sub = 30,
-        .next = 32,
-        .prev = 28,
-        .flag = 0x0008,
-        .rect = { 100, 68, 123, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_VwBox_2,
+        .next = OBJ_Sdscltyp2_VwBox_4,
+        .prev = OBJ_ScalingKey12,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(100, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_2 = {
-        .class_ = 0x01600011,
-        .super = 29,
-        .sub = 31,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox,
+        .sub = OBJ_Sdscltyp2_VwBox_3,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 124, 68, 147, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_3 = {
-        .class_ = 0x01600011,
-        .super = 30,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox_2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 116, 68, 135, 131 },
-        .color = 0x0000,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(116, 68, 20, 64),
+        .color = CL_Black,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_4 = {
-        .class_ = 0x01600011,
-        .super = 11,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 33,
-        .prev = 29,
-        .flag = 0x0008,
-        .rect = { 172, 68, 195, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .next = OBJ_Sdscltyp2_VwBox_5,
+        .prev = OBJ_Sdscltyp2_VwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(172, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_5 = {
-        .class_ = 0x01600011,
-        .super = 11,
-        .sub = 34,
-        .next = 35,
-        .prev = 32,
-        .flag = 0x0008,
-        .rect = { 196, 68, 219, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_VwBox_6,
+        .next = OBJ_Sdscltyp2_VwBox_7,
+        .prev = OBJ_Sdscltyp2_VwBox_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(196, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_6 = {
-        .class_ = 0x01600011,
-        .super = 33,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox_5,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 184, 68, 203, 131 },
-        .color = 0x0000,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(184, 68, 20, 64),
+        .color = CL_Black,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_7 = {
-        .class_ = 0x01600011,
-        .super = 11,
-        .sub = 36,
-        .next = 37,
-        .prev = 33,
-        .flag = 0x0008,
-        .rect = { 220, 68, 243, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_VwBox_8,
+        .next = OBJ_Sdscltyp2_VwBox_9,
+        .prev = OBJ_Sdscltyp2_VwBox_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(220, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_8 = {
-        .class_ = 0x01600011,
-        .super = 35,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox_7,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 212, 68, 231, 131 },
-        .color = 0x0000,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(212, 68, 20, 64),
+        .color = CL_Black,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_9 = {
-        .class_ = 0x01600011,
-        .super = 11,
-        .sub = 38,
-        .next = 39,
-        .prev = 35,
-        .flag = 0x0008,
-        .rect = { 76, 68, 99, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_VwBox_10,
+        .next = OBJ_Sdscltyp2_VwBox_11,
+        .prev = OBJ_Sdscltyp2_VwBox_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(76, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_10 = {
-        .class_ = 0x01600011,
-        .super = 37,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox_9,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 84, 68, 103, 131 },
-        .color = 0x0000,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 68, 20, 64),
+        .color = CL_Black,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_11 = {
-        .class_ = 0x01600011,
-        .super = 11,
-        .sub = 40,
-        .next = 41,
-        .prev = 37,
-        .flag = 0x0008,
-        .rect = { 148, 68, 171, 163 },
-        .color = 0x00FF,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_VwBox_12,
+        .next = OBJ_Sdscltyp2_Line,
+        .prev = OBJ_Sdscltyp2_VwBox_9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 68, 24, 96),
+        .color = CL_White,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_VwBox_12 = {
-        .class_ = 0x01600011,
-        .super = 39,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Sdscltyp2_VwBox_11,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 156, 68, 175, 131 },
-        .color = 0x0000,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(156, 68, 20, 64),
+        .color = CL_Black,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
     },
 
     .Sdscltyp2_Line = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 42,
-        .prev = 39,
-        .flag = 0x0008,
-        .rect = { 80, 56, 95, 67 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdscltyp2_Line_2,
+        .prev = OBJ_Sdscltyp2_VwBox_11,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(80, 56, 16, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_2 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 43,
-        .prev = 41,
-        .flag = 0x0008,
-        .rect = { 124, 56, 130, 67 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdscltyp2_Line_3,
+        .prev = OBJ_Sdscltyp2_Line,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 56, 7, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_3 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 44,
-        .prev = 42,
-        .flag = 0x0008,
-        .rect = { 168, 56, 168, 67 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdscltyp2_Line_4,
+        .prev = OBJ_Sdscltyp2_Line_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(168, 56, 1, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_4 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 45,
-        .prev = 43,
-        .flag = 0x0008,
-        .rect = { 196, 56, 211, 67 },
-        .color = 0x00FF,
-        .linemode = 0x0000,
+        .next = OBJ_Sdscltyp2_Line_5,
+        .prev = OBJ_Sdscltyp2_Line_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(196, 56, 16, 12),
+        .color = CL_White,
+        .linemode = LM_RightUp,
     },
 
     .Sdscltyp2_Line_5 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 46,
-        .prev = 44,
-        .flag = 0x0008,
-        .rect = { 220, 56, 255, 67 },
-        .color = 0x00FF,
-        .linemode = 0x0000,
+        .next = OBJ_Sdscltyp2_Line_6,
+        .prev = OBJ_Sdscltyp2_Line_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(220, 56, 36, 12),
+        .color = CL_White,
+        .linemode = LM_RightUp,
     },
 
     .Sdscltyp2_Line_6 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 47,
-        .prev = 45,
-        .flag = 0x0008,
-        .rect = { 36, 164, 87, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0000,
+        .next = OBJ_Sdscltyp2_Line_7,
+        .prev = OBJ_Sdscltyp2_Line_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 164, 52, 12),
+        .color = CL_White,
+        .linemode = LM_RightUp,
     },
 
     .Sdscltyp2_Line_7 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 48,
-        .prev = 46,
-        .flag = 0x0008,
-        .rect = { 80, 164, 111, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0000,
+        .next = OBJ_Sdscltyp2_Line_8,
+        .prev = OBJ_Sdscltyp2_Line_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(80, 164, 32, 12),
+        .color = CL_White,
+        .linemode = LM_RightUp,
     },
 
     .Sdscltyp2_Line_8 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 49,
-        .prev = 47,
-        .flag = 0x0008,
-        .rect = { 124, 164, 135, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0000,
+        .next = OBJ_Sdscltyp2_Line_9,
+        .prev = OBJ_Sdscltyp2_Line_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 164, 12, 12),
+        .color = CL_White,
+        .linemode = LM_RightUp,
     },
 
     .Sdscltyp2_Line_9 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 50,
-        .prev = 48,
-        .flag = 0x0008,
-        .rect = { 160, 164, 166, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdscltyp2_Line_10,
+        .prev = OBJ_Sdscltyp2_Line_8,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(160, 164, 7, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_10 = {
-        .class_ = 0x0160002E,
-        .super = 11,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
-        .next = 51,
-        .prev = 49,
-        .flag = 0x0008,
-        .rect = { 184, 164, 210, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .next = OBJ_Sdscltyp2_Line_11,
+        .prev = OBJ_Sdscltyp2_Line_9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(184, 164, 27, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_11 = {
-        .class_ = 0x0160002E,
-        .super = 11,
-        .sub = 52,
-        .next = 53,
-        .prev = 50,
-        .flag = 0x0008,
-        .rect = { 208, 164, 254, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2,
+        .sub = OBJ_Sdscltyp2_Line_12,
+        .next = OBJ_Sdscltyp2_IvSdscltyp2,
+        .prev = OBJ_Sdscltyp2_Line_10,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(208, 164, 47, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_Line_12 = {
-        .class_ = 0x0160002E,
-        .super = 51,
+        .class_ = NAKA_CLASS(Line),
+        .super = OBJ_Sdscltyp2_Line_11,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 232, 164, 298, 175 },
-        .color = 0x00FF,
-        .linemode = 0x0001,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(232, 164, 67, 12),
+        .color = CL_White,
+        .linemode = LM_RightDown,
     },
 
     .Sdscltyp2_IvSdscltyp2 = {
-        .class_ = 0x0161000A,
-        .super = 11,
+        .class_ = NAKA_CLASS(IvSdscltyp2),
+        .super = OBJ_Sdscltyp2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 51,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_Sdscltyp2_Line_11,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_SDLFTHLD "LEFT HOLD SETTING" -- "TT_SDLFTHLD", title id 0x7, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "LEFT HOLD"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_SDMENU ("LEFT HOLD") */
     .Sdlfthld = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Sdlfthld_AcIndexWideES,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00002,
-        .window = 0x0003E7B4,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_SDMENU,
+        .window = RAM_Sdlfthld_Window,
         .title = SELF(LeftHoldSetting_text),
-        .icon = 0x00000016,
+        .icon = idICON_i20,
     },
 
     .LeftHoldSetting_text = "LEFT HOLD SETTING",
 
     .Sdlfthld_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdlfthld,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Sdlfthld_AcLswEditBox,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x000B,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_OnOff,
     },
 
     .Sdlfthld_AcLswEditBox = {
-        .class_ = 0x0160001A,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdlfthld,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 36, 91, 280, 138 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .prev = OBJ_Sdlfthld_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 91, 245, 48),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(v7_e2_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0005,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E7B8,
-        .func = 0x01210001,
-        .data = 0x0003E7BA,
+        .selected = RAM_Sdlfthld_AcLswEditBox_Selected,
+        .func = NAKA_APFUNC_LswLeftHold,
+        .data = RAM_Sdlfthld_AcLswEditBox_Value,
     },
 
     .v7_e2_caption = ALIGNED_STRING("LEFT HOLD      :"),
 
+    /* ==== SCREEN TITLE_SDMIXER "MIXER" -- "TT_SDMIXER", title id 0x8, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "MIXER"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_ETMENU, TITLE_SDMENU ("MIXER") */
     .Sdmixer = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Sdmixer_AcResetPage,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00002,
-        .window = 0x0003E7BC,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_SDMENU,
+        .window = RAM_Sdmixer_Window,
         .title = SELF(Mixer_text),
-        .icon = 0x00000007,
+        .icon = idICON_i5,
     },
 
     .Mixer_text = "MIXER",
 
     .Sdmixer_AcResetPage = {
-        .class_ = 0x01610016,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcResetPage),
+        .super = OBJ_Sdmixer,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Sdmixer_AcPartMixer,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 245, 6, 315, 23 },
-        .color = 0x00F3,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(245, 6, 71, 18),
+        .color = CL_PageBack,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .page = 0x0003E7C0,
+        .page = RAM_Sdmixer_AcResetPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0003,
     },
 
     .Sdmixer_AcPartMixer = {
-        .class_ = 0x0161000D,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcPartMixer),
+        .super = OBJ_Sdmixer,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 108, 31, 311, 43 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_NakaWidget_Sdmixer_3_IvExit,
+        .prev = OBJ_Sdmixer_AcResetPage,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(108, 31, 204, 13),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
     },
 
     .w47 = {
@@ -5100,562 +4417,573 @@ const naka_technichord_part_t naka_technichord_part_data
     .TechniChord_str_2 = ALIGNED_STRING("TECHNI-CHORD"),
 
     .SdtecdPage = {
-        .class_ = 0x01600025,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcWindowPage),
+        .super = OBJ_NakaWidget_Sdtecd,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_NakaWidget_Sdtecd_2_IvPageControl,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 245, 6, 315, 23 },
-        .color = 0x00F3,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(245, 6, 71, 18),
+        .color = CL_PageBack,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .page = 0x0003E7C6,
+        .page = RAM_SdtecdPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0002,
     },
 
     .NakaWidget_Sdtecd_2_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_NakaWidget_Sdtecd,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_NakaWidget_Sdtecd_3_IvPageControl,
+        .prev = OBJ_SdtecdPage,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x000D0006,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_Sdtecd1),
     },
 
     .NakaWidget_Sdtecd_3_IvPageControl = {
-        .class_ = 0x01600028,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageControl),
+        .super = OBJ_NakaWidget_Sdtecd,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0018,
-        .rect = { 32, 0, 63, 31 },
+        .next = OBJ_NakaWidget_Sdtecd_4_IvSdtecd,
+        .prev = OBJ_NakaWidget_Sdtecd_2_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x000D0019,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_Sdtecd2),
     },
 
     .NakaWidget_Sdtecd_4_IvSdtecd = {
-        .class_ = 0x01610008,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvSdtecd),
+        .super = OBJ_NakaWidget_Sdtecd,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 64, 0, 95, 31 },
+        .next = OBJ_NakaWidget_Sdtecd_5_IvIntEasySet,
+        .prev = OBJ_NakaWidget_Sdtecd_3_IvPageControl,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(64, 0, 32, 32),
     },
 
     .NakaWidget_Sdtecd_5_IvIntEasySet = {
-        .class_ = 0x01600063,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvIntEasySet),
+        .super = OBJ_NakaWidget_Sdtecd,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0018,
-        .rect = { 0, 32, 31, 63 },
-        .time = 0x0001,
+        .prev = OBJ_NakaWidget_Sdtecd_4_IvSdtecd,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 32, 32, 32),
+        .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_Sdtecd1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdtecd1 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 7,
+        .sub = OBJ_Sdtecd1_AcIndexWideES,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 40, 44, 279, 239 },
-        .color = 0x00F7,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(40, 44, 240, 196),
+        .color = CL_Transparent,
+        .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003E7C8,
-        .child = 0x0003E7CC,
+        .parent = RAM_Sdtecd1_Parent,
+        .child = RAM_Sdtecd1_Child,
     },
 
     .Sdtecd1_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 6,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 8,
+        .next = OBJ_Sdtecd1_AcIndexEditSw,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 124, 216, 195, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0001,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0003,
-        .editsw2 = 0x0004,
-        .style = 0x000E,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom4,
+        .editsw2 = ES_Bottom5,
+        .style = SS_UpDown2,
     },
 
     .Sdtecd1_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 6,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 84, 216, 115, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Sdtecd1_AcIndexEditSw_2,
+        .prev = OBJ_Sdtecd1_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0002,
-        .style = 0x000F,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom3,
+        .style = SS_Left2,
     },
 
     .Sdtecd1_AcIndexEditSw_2 = {
-        .class_ = 0x0160001F,
-        .super = 6,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 204, 216, 235, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_TcClose,
+        .prev = OBJ_Sdtecd1_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 216, 32, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0005,
-        .style = 0x0010,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom6,
+        .style = SS_Right2,
     },
 
     .TcClose = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 11,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 60, 56, 111, 71 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcOpen1,
+        .prev = OBJ_Sdtecd1_AcIndexEditSw_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 56, 52, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(CLOSE_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7D0,
-        .dialfocus = 0x0003E7D2,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcClose_Selected,
+        .dialfocus = RAM_TcClose_DialFocus,
     },
 
     .CLOSE_str = "CLOSE",
 
     .TcOpen1 = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 60, 76, 119, 91 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcOpen2,
+        .prev = OBJ_TcClose,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 76, 60, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(Open_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7D4,
-        .dialfocus = 0x0003E7D6,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcOpen1_Selected,
+        .dialfocus = RAM_TcOpen1_DialFocus,
     },
 
     .Open_str = ALIGNED_STRING("OPEN 1"),
 
     .TcOpen2 = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 60, 96, 119, 111 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcDuet1,
+        .prev = OBJ_TcOpen1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 96, 60, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(Open_str_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7D8,
-        .dialfocus = 0x0003E7DA,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcOpen2_Selected,
+        .dialfocus = RAM_TcOpen2_DialFocus,
     },
 
     .Open_str_2 = ALIGNED_STRING("OPEN 2"),
 
     .TcDuet1 = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 60, 116, 119, 131 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcDuet2,
+        .prev = OBJ_TcOpen2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 116, 60, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(Duet_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7DC,
-        .dialfocus = 0x0003E7DE,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcDuet1_Selected,
+        .dialfocus = RAM_TcDuet1_DialFocus,
     },
 
     .Duet_str = ALIGNED_STRING("DUET 1"),
 
     .TcDuet2 = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 60, 136, 119, 151 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcCountry,
+        .prev = OBJ_TcDuet1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 136, 60, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(Duet_str_2),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7E0,
-        .dialfocus = 0x0003E7E2,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcDuet2_Selected,
+        .dialfocus = RAM_TcDuet2_DialFocus,
     },
 
     .Duet_str_2 = ALIGNED_STRING("DUET 2"),
 
     .TcCountry = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 60, 156, 127, 171 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcTheatre,
+        .prev = OBJ_TcDuet2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 156, 68, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(COUNTRY_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7E4,
-        .dialfocus = 0x0003E7E6,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcCountry_Selected,
+        .dialfocus = RAM_TcCountry_DialFocus,
     },
 
     .COUNTRY_str = "COUNTRY",
 
     .TcTheatre = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 17,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 60, 176, 127, 191 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcHymn,
+        .prev = OBJ_TcCountry,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 176, 68, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(THEATRE_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7E8,
-        .dialfocus = 0x0003E7EA,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcTheatre_Selected,
+        .dialfocus = RAM_TcTheatre_DialFocus,
     },
 
     .THEATRE_str = "THEATRE",
 
     .TcHymn = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 148, 56, 191, 71 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcBigBandBrass,
+        .prev = OBJ_TcTheatre,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 56, 44, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(HYMN_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7EC,
-        .dialfocus = 0x0003E7EE,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcHymn_Selected,
+        .dialfocus = RAM_TcHymn_DialFocus,
     },
 
     .HYMN_str = ALIGNED_STRING("HYMN"),
 
     .TcBigBandBrass = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 148, 96, 271, 111 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcBigBandReeds,
+        .prev = OBJ_TcHymn,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 96, 124, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(BigBandBrass_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7F0,
-        .dialfocus = 0x0003E7F2,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcBigBandBrass_Selected,
+        .dialfocus = RAM_TcBigBandBrass_DialFocus,
     },
 
     .BigBandBrass_str = ALIGNED_STRING("BIG BAND BRASS"),
 
     .TcBigBandReeds = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 148, 116, 271, 131 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcOctave,
+        .prev = OBJ_TcBigBandBrass,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 116, 124, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(BigBandReeds_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7F4,
-        .dialfocus = 0x0003E7F6,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcBigBandReeds_Selected,
+        .dialfocus = RAM_TcBigBandReeds_DialFocus,
     },
 
     .BigBandReeds_str = ALIGNED_STRING("BIG BAND REEDS"),
 
     .TcOctave = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 148, 136, 207, 151 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcBlock,
+        .prev = OBJ_TcBigBandReeds,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 136, 60, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(OCTAVE_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7F8,
-        .dialfocus = 0x0003E7FA,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcOctave_Selected,
+        .dialfocus = RAM_TcOctave_DialFocus,
     },
 
     .OCTAVE_str = ALIGNED_STRING("OCTAVE"),
 
     .TcBlock = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 148, 76, 199, 91 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcHardRock,
+        .prev = OBJ_TcOctave,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 76, 52, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(BLOCK_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E7FC,
-        .dialfocus = 0x0003E7FE,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcBlock_Selected,
+        .dialfocus = RAM_TcBlock_DialFocus,
     },
 
     .BLOCK_str = "BLOCK",
 
     .TcHardRock = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 23,
-        .prev = 21,
-        .flag = 0x0008,
-        .rect = { 148, 156, 231, 171 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_TcFanfare,
+        .prev = OBJ_TcBlock,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 156, 84, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(HardRock_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E800,
-        .dialfocus = 0x0003E802,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcHardRock_Selected,
+        .dialfocus = RAM_TcHardRock_DialFocus,
     },
 
     .HardRock_str = "HARD ROCK",
 
     .TcFanfare = {
-        .class_ = 0x01610007,
-        .super = 6,
+        .class_ = NAKA_CLASS(PsLabelBox),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
-        .next = 24,
-        .prev = 22,
-        .flag = 0x0008,
-        .rect = { 148, 176, 215, 191 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Sdtecd1_IvSdtecd1,
+        .prev = OBJ_TcHardRock,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(148, 176, 68, 16),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0002,
         .str = SELF(FANFARE_str),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0001,
-        .selected = 0x0003E804,
-        .dialfocus = 0x0003E806,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_LeftJustify,
+        .selected = RAM_TcFanfare_Selected,
+        .dialfocus = RAM_TcFanfare_DialFocus,
     },
 
     .FANFARE_str = "FANFARE",
 
     .Sdtecd1_IvSdtecd1 = {
-        .class_ = 0x01610009,
-        .super = 6,
+        .class_ = NAKA_CLASS(IvSdtecd1),
+        .super = OBJ_Sdtecd1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 23,
-        .flag = 0x0018,
-        .rect = { 96, 0, 127, 31 },
+        .prev = OBJ_TcFanfare,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(96, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Sdtecd2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdtecd2 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 26,
+        .sub = OBJ_Sdtecd2_AcIndexWideES,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 64, 0, 95, 31 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 0, 32, 32),
+        .color = CL_Transparent,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E808,
-        .child = 0x0003E80C,
+        .parent = RAM_Sdtecd2_Parent,
+        .child = RAM_Sdtecd2_Child,
     },
 
     .Sdtecd2_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 25,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Sdtecd2,
         .sub = NAKA_NONE,
-        .next = 27,
+        .next = OBJ_Sdtecd2_AcLswEditBox,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .Sdtecd2_AcLswEditBox = {
-        .class_ = 0x0160001A,
-        .super = 25,
+        .class_ = NAKA_CLASS(AcLswEditBox),
+        .super = OBJ_Sdtecd2,
         .sub = NAKA_NONE,
-        .next = 28,
-        .prev = 26,
-        .flag = 0x0008,
-        .rect = { 36, 91, 280, 138 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_Value_Label,
+        .prev = OBJ_Sdtecd2_AcIndexWideES,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 91, 245, 48),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0x0000,
         .caption = SELF(vD_e27_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0009,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E810,
-        .func = 0x01210016,
-        .data = 0x0003E812,
+        .selected = RAM_Sdtecd2_AcLswEditBox_Selected,
+        .func = NAKA_APFUNC_LswOrchestrator,
+        .data = RAM_Sdtecd2_AcLswEditBox_Value,
     },
 
     .vD_e27_caption = "ORCHESTRATOR  :",
 
     .Value_Label = {
-        .class_ = 0x0160002B,
-        .super = 25,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Sdtecd2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 27,
-        .flag = 0x0008,
-        .rect = { 258, 201, 301, 219 },
+        .prev = OBJ_Sdtecd2_AcLswEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(258, 201, 44, 19),
         .str = SELF(Value_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Value_text = "VALUE",
 
+    /* ==== SCREEN TITLE_SQMIXER "TRACK MIXER" -- "TT_SQMIXER", title id 0xA5, function NAKA_APFUNC_DefaultFunction ====
+     * What: the sequencer track-mixer page.
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc) > (by DpDocTtlFunc)
+     * EXIT -> TITLE_PS
+     * Opened from: an untitled view ("LYRICS"), an untitled view ("MIC"), an untitled view
+     *       ("MIXER") */
     .Sqmixer = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Sqmixer_AcResetPage,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003E814,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_Sqmixer_Window,
         .title = SELF(TrackMixer_text),
-        .icon = 0x00000007,
+        .icon = idICON_i5,
     },
 
     .TrackMixer_text = "TRACK MIXER",
 
     .Sqmixer_AcResetPage = {
-        .class_ = 0x01610016,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcResetPage),
+        .super = OBJ_Sqmixer,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Sqmixer_AcTrackMixer,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 245, 6, 315, 23 },
-        .color = 0x00F3,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(245, 6, 71, 18),
+        .color = CL_PageBack,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .page = 0x0003E818,
+        .page = RAM_Sqmixer_AcResetPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0003,
     },
 
     .Sqmixer_AcTrackMixer = {
-        .class_ = 0x0161000E,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcTrackMixer),
+        .super = OBJ_Sqmixer,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 108, 31, 311, 43 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_NakaWidget_Sqmixer_3_IvExit,
+        .prev = OBJ_Sqmixer_AcResetPage,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(108, 31, 204, 13),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
     },
 
     .w53 = {
@@ -5705,264 +5033,276 @@ const naka_technichord_part_t naka_technichord_part_data
     .FeaturePresentation_str = ALIGNED_STRING("FEATURE PRESENTATION"),
 
     .StartTheInternalDemo_AcPresentationBox = {
-        .class_ = 0x0161001D,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcPresentationBox),
+        .super = OBJ_NakaWidget_Demofeature,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 72, 204, 97 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 72, 197, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .str = SELF(StartTheInternalDemo_str),
-        .editsw = 0x0089,
-        .selected = 0x0003E81E,
+        .editsw = ES_Left2,
+        .selected = RAM_StartTheInternalDemo_AcPresentationBox_Selected,
         .song = 0x0012,
     },
 
     .StartTheInternalDemo_str = "Start the internal DEMO",
 
+    /* ==== VIEW OBJ_Demofeature1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Demofeature1 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 3,
+        .sub = OBJ_Demofeature1_IvDemofeature1,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 136),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E820,
-        .child = 0x0003E824,
+        .parent = RAM_Demofeature1_Parent,
+        .child = RAM_Demofeature1_Child,
     },
 
     .Demofeature1_IvDemofeature1 = {
-        .class_ = 0x01610019,
-        .super = 2,
+        .class_ = NAKA_CLASS(IvDemofeature1),
+        .super = OBJ_Demofeature1,
         .sub = NAKA_NONE,
-        .next = 4,
+        .next = OBJ_Demofeature1_AcLanguageText,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
     .Demofeature1_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 2,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Demofeature1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 12, 120, 307, 235 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .prev = OBJ_Demofeature1_IvDemofeature1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(12, 120, 296, 116),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000005,
-        .fontcolor = 0x00F1,
-        .alignment = 0x0001,
+        .font = idCHARA1P,
+        .fontcolor = CL_Text,
+        .alignment = AL_LeftJustify,
         .lines = 0x0005,
-        .func = 0x0121002B,
+        .func = NAKA_APFUNC_FDemoText,
     },
 
+    /* ==== VIEW OBJ_Demofeature2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Demofeature2 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 6,
+        .sub = OBJ_Demofeature2_IvDemofeature2,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 104, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 104, 320, 136),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E828,
-        .child = 0x0003E82C,
+        .parent = RAM_Demofeature2_Parent,
+        .child = RAM_Demofeature2_Child,
     },
 
     .Demofeature2_IvDemofeature2 = {
-        .class_ = 0x0161001A,
-        .super = 5,
+        .class_ = NAKA_CLASS(IvDemofeature2),
+        .super = OBJ_Demofeature2,
         .sub = NAKA_NONE,
-        .next = 7,
+        .next = OBJ_StartTheLoadedDemo_AcPresentationBox,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
     .StartTheLoadedDemo_AcPresentationBox = {
-        .class_ = 0x0161001D,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcPresentationBox),
+        .super = OBJ_Demofeature2,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 8, 156, 188, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_FDemoTitleBox,
+        .prev = OBJ_Demofeature2_IvDemofeature2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 181, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .str = SELF(StartTheLoadedDemo_str),
-        .editsw = 0x008B,
-        .selected = 0x0003E830,
+        .editsw = ES_Left4,
+        .selected = RAM_StartTheLoadedDemo_AcPresentationBox_Selected,
         .song = 0x0013,
     },
 
     .StartTheLoadedDemo_str = "Start the loaded DEMO",
 
     .FDemoTitleBox = {
-        .class_ = 0x01600012,
-        .super = 5,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_Demofeature2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 7,
-        .flag = 0x0008,
-        .rect = { 48, 188, 267, 219 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .prev = OBJ_StartTheLoadedDemo_AcPresentationBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(48, 188, 220, 32),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .PlainScreen = {
-        .class_ = 0x01600033,
+        .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0003,
-        .exit = 0x01A00000,
-        .window = 0x0003E832,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Double1,
+        .exit = TITLE_PS,
+        .window = RAM_PlainScreen_Window,
     },
 
+    /* ==== VIEW OBJ_PresentationControl: AcPresentationControl, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PresentationControl = {
-        .class_ = 0x01610018,
+        .class_ = NAKA_CLASS(AcPresentationControl),
         .super = NAKA_NONE,
-        .sub = 11,
+        .sub = OBJ_PresentationMode_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 172, 220, 319, 239 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(172, 220, 148, 20),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003E836,
-        .child = 0x0003E83A,
+        .parent = RAM_PresentationControl_Parent,
+        .child = RAM_PresentationControl_Child,
     },
 
     .PresentationMode_Label = {
-        .class_ = 0x0160002B,
-        .super = 10,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_PresentationControl,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 176, 222, 312, 240 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(176, 222, 137, 19),
         .str = SELF(PresentationMode_text),
-        .font = 0x00000005,
-        .fontcolor = 0x0000,
+        .font = idCHARA1P,
+        .fontcolor = CL_Black,
     },
 
     .PresentationMode_text = "Presentation Mode",
 
+    /* ==== VIEW OBJ_LoadingPresentation: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .LoadingPresentation = {
-        .class_ = 0x01600033,
+        .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
-        .sub = 13,
+        .sub = OBJ_LoadingNow_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003E83E,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_LoadingPresentation_Window,
     },
 
     .LoadingNow_Label = {
-        .class_ = 0x0160002B,
-        .super = 12,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_LoadingPresentation,
         .sub = NAKA_NONE,
-        .next = 14,
+        .next = OBJ_PresentationTitle,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 14, 86, 124, 104 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(14, 86, 111, 19),
         .str = SELF(LoadingNow_text),
-        .font = 0x00000005,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1P,
+        .fontcolor = CL_White,
     },
 
     .LoadingNow_text = "Loading Now....",
 
     .PresentationTitle = {
-        .class_ = 0x01600012,
-        .super = 12,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_LoadingPresentation,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 16, 104, 303, 131 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .prev = OBJ_LoadingNow_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(16, 104, 288, 28),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_DRAWBAR -- "TT_DRAWBAR", title id 0xEA, function NAKA_APFUNC_DefaultFunction ====
+     * What: the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
     .Drawbar = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Drawbar_IvIntVari,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0001,
-        .exit = 0x01A00000,
-        .window = 0x0003E842,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = RAM_Drawbar_Window,
         .title = SELF(w60_text),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .w60_text = ALIGNED_STRING(""),
 
     .Drawbar_IvIntVari = {
-        .class_ = 0x01600062,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvIntVari),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_DrawPerc4,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 92, 32, 123, 63 },
-        .time = 0x0001,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(92, 32, 32, 32),
+        .time = IT_Default,
     },
 
     .DrawPerc4 = {
-        .class_ = 0x0160004E,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 268, 76, 311, 93 },
-        .font = 0x00000000,
+        .next = OBJ_DrawPerc223,
+        .prev = OBJ_Drawbar_IvIntVari,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(268, 76, 44, 18),
+        .font = idCHARA1,
         .stron = SELF(DrawPerc4_stron),
         .stroff = SELF(DrawPerc4_stroff),
-        .onoff = 0x0003E846,
-        .editsw = 0x0009,
+        .onoff = RAM_DrawPerc4_OnOff,
+        .editsw = ES_Right2,
         .index = 0x0003,
         .tag = 0x0001,
     },
@@ -5972,18 +5312,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .DrawPerc4_stron = " 4'",
 
     .DrawPerc223 = {
-        .class_ = 0x0160004E,
-        .super = 0,
-        .sub = 4,
-        .next = 6,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 268, 34, 311, 51 },
-        .font = 0x00000000,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Drawbar,
+        .sub = OBJ_White23,
+        .next = OBJ_Percussive_Label,
+        .prev = OBJ_DrawPerc4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(268, 34, 44, 18),
+        .font = idCHARA1,
         .stron = SELF(DrawPerc223_stron),
         .stroff = SELF(DrawPerc223_stroff),
-        .onoff = 0x0003E848,
-        .editsw = 0x0008,
+        .onoff = RAM_DrawPerc223_OnOff,
+        .editsw = ES_Right1,
         .index = 0x0002,
         .tag = 0x0001,
     },
@@ -5993,46 +5333,46 @@ const naka_technichord_part_t naka_technichord_part_data
     .DrawPerc223_stron = ALIGNED_STRING("2  '"),
 
     .White23 = {
-        .class_ = 0x0160002B,
-        .super = 3,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_DrawPerc223,
         .sub = NAKA_NONE,
-        .next = 5,
+        .next = OBJ_Black23,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 280, 40, 301, 50 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(280, 40, 22, 11),
         .str = SELF(w63_text),
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
     },
 
     .w63_text = "2/3",
 
     .Black23 = {
-        .class_ = 0x0160002B,
-        .super = 3,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_DrawPerc223,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 280, 40, 301, 50 },
+        .prev = OBJ_White23,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(280, 40, 22, 11),
         .str = SELF(w64_text),
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
     },
 
     .w64_text = "2/3",
 
     .Percussive_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
-        .sub = 7,
-        .next = 8,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 174, 50, 257, 68 },
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar,
+        .sub = OBJ_NakaWidget_Drawbar_7_IvExit,
+        .next = OBJ_NakaWidget_Drawbar_8_Label,
+        .prev = OBJ_DrawPerc223,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(174, 50, 84, 19),
         .str = SELF(Percussive_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Percussive_text = ALIGNED_STRING("PERCUSSIVE"),
@@ -6074,52 +5414,52 @@ const naka_technichord_part_t naka_technichord_part_data
     .TONE_str = ALIGNED_STRING("TONE"),
 
     .NakaWidget_Drawbar_9_IvPageOverWrite = {
-        .class_ = 0x01610010,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageOverWrite),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0018,
-        .rect = { 124, 32, 155, 63 },
+        .next = OBJ_Drawbar_IvPageOverWrite,
+        .prev = OBJ_NakaWidget_Drawbar_8_Label,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(124, 32, 32, 32),
         .page = 0x0001,
-        .window = 0x00EA000D,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_0EA, OBJ_Drawbar1),
     },
 
     .Drawbar_IvPageOverWrite = {
-        .class_ = 0x01610010,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvPageOverWrite),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
-        .next = 11,
-        .prev = 9,
-        .flag = 0x0018,
-        .rect = { 156, 32, 187, 63 },
+        .next = OBJ_Drawbar_IvDrawbar,
+        .prev = OBJ_NakaWidget_Drawbar_9_IvPageOverWrite,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(156, 32, 32, 32),
         .page = 0x0002,
-        .window = 0x00EA0016,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_0EA, OBJ_Drawbar2),
     },
 
     .Drawbar_IvDrawbar = {
-        .class_ = 0x01610011,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvDrawbar),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0018,
-        .rect = { 188, 32, 219, 63 },
+        .next = OBJ_DrawSetting,
+        .prev = OBJ_Drawbar_IvPageOverWrite,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(188, 32, 32, 32),
     },
 
     .DrawSetting = {
-        .class_ = 0x01610022,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcDrawSetting),
+        .super = OBJ_Drawbar,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 8, 76, 138, 93 },
-        .font = 0x00000000,
+        .prev = OBJ_Drawbar_IvDrawbar,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 76, 131, 18),
+        .font = idCHARA1,
         .stron = SELF(DrawSetting_stron),
         .stroff = SELF(DrawSetting_stroff),
-        .onoff = 0x0003E84A,
-        .editsw = 0x0089,
+        .onoff = RAM_DrawSetting_OnOff,
+        .editsw = ES_Left2,
         .index = 0x0001,
         .tag = 0x0001,
     },
@@ -6128,339 +5468,345 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .DrawSetting_stron = "DRAWBAR SETTING",
 
+    /* ==== VIEW OBJ_Drawbar1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Drawbar1 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 14,
+        .sub = OBJ_Drawbar1_VwBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 96, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 96, 320, 144),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E84C,
-        .child = 0x0003E850,
+        .parent = RAM_Drawbar1_Parent,
+        .child = RAM_Drawbar1_Child,
     },
 
     .Drawbar1_VwBox = {
-        .class_ = 0x01600011,
-        .super = 13,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_Drawbar1,
         .sub = NAKA_NONE,
-        .next = 15,
+        .next = OBJ_Drawbar1_StringBox,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 8, 112, 311, 233 },
-        .color = 0x0007,
-        .border = 0x00C3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 112, 304, 122),
+        .color = CL_Silver,
+        .border = BD_3D_DOWN2,
         .index = 0xFFFF,
     },
 
     .Drawbar1_StringBox = {
-        .class_ = 0x01600037,
-        .super = 13,
-        .sub = 16,
-        .next = 20,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 8, 98, 311, 113 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_Drawbar1,
+        .sub = OBJ_Drawbar1_Label,
+        .next = OBJ_Drawbar1_IvDrawbar1,
+        .prev = OBJ_Drawbar1_VwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 98, 304, 16),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .str = SELF(str_443),
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .alignment = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .alignment = AL_Center,
     },
 
     .str_443 = "16' 5  ' 8'  4' 2  ' 2' 1  '1  ' 1'",
 
     .Drawbar1_Label = {
-        .class_ = 0x0160002B,
-        .super = 15,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar1_StringBox,
         .sub = NAKA_NONE,
-        .next = 17,
+        .next = OBJ_Drawbar1_Label_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 58, 103, 79, 113 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(58, 103, 22, 11),
         .str = SELF(w68_text),
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
     },
 
     .w68_text = "1/3",
 
     .Drawbar1_Label_2 = {
-        .class_ = 0x0160002B,
-        .super = 15,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar1_StringBox,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 154, 103, 175, 113 },
+        .next = OBJ_Drawbar1_Label_3,
+        .prev = OBJ_Drawbar1_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(154, 103, 22, 11),
         .str = SELF(w69_text),
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
     },
 
     .w69_text = "2/3",
 
     .Drawbar1_Label_3 = {
-        .class_ = 0x0160002B,
-        .super = 15,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar1_StringBox,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 217, 103, 238, 113 },
+        .next = OBJ_Drawbar1_Label_4,
+        .prev = OBJ_Drawbar1_Label_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(217, 103, 22, 11),
         .str = SELF(w70_text),
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
     },
 
     .w70_text = "3/5",
 
     .Drawbar1_Label_4 = {
-        .class_ = 0x0160002B,
-        .super = 15,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar1_StringBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 249, 103, 270, 113 },
+        .prev = OBJ_Drawbar1_Label_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(249, 103, 22, 11),
         .str = SELF(w71_text),
-        .font = 0x00000003,
-        .fontcolor = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_Black,
     },
 
     .w71_text = "1/3",
 
     .Drawbar1_IvDrawbar1 = {
-        .class_ = 0x01610012,
-        .super = 13,
+        .class_ = NAKA_CLASS(IvDrawbar1),
+        .super = OBJ_Drawbar1,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 15,
-        .flag = 0x0018,
-        .rect = { 136, 32, 167, 63 },
+        .next = OBJ_Drawbar1_VwUserBitmapSp,
+        .prev = OBJ_Drawbar1_StringBox,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(136, 32, 32, 32),
     },
 
     .Drawbar1_VwUserBitmapSp = {
-        .class_ = 0x0161001E,
-        .super = 13,
+        .class_ = NAKA_CLASS(VwUserBitmapSp),
+        .super = OBJ_Drawbar1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 22, 234, 315, 239 },
-        .func = 0x01210026,
+        .prev = OBJ_Drawbar1_IvDrawbar1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(22, 234, 294, 6),
+        .func = NAKA_APFUNC_BitmapDrawsw,
     },
 
+    /* ==== VIEW OBJ_Drawbar2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Drawbar2 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 23,
+        .sub = OBJ_Drawbar2_AcDrawEditBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 96, 319, 239 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 96, 320, 144),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E854,
-        .child = 0x0003E858,
+        .parent = RAM_Drawbar2_Parent,
+        .child = RAM_Drawbar2_Child,
     },
 
     .Drawbar2_AcDrawEditBox = {
-        .class_ = 0x0161001B,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcDrawEditBox),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 24,
+        .next = OBJ_Drawbar2_AcDrawEditBox_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 211, 114, 311, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(211, 114, 101, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(vEA_e23_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0003,
-        .editsw = 0x000A,
+        .editsw = ES_Right3,
         .dial = 0x0001,
-        .selected = 0x0003E85C,
-        .func = 0x01210022,
-        .data = 0x0003E85E,
+        .selected = RAM_Drawbar2_AcDrawEditBox_Selected,
+        .func = NAKA_APFUNC_LswPercDecay,
+        .data = RAM_Drawbar2_AcDrawEditBox_Value,
     },
 
     .vEA_e23_caption = "DECAY :",
 
     .Drawbar2_AcDrawEditBox_2 = {
-        .class_ = 0x0161001B,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcDrawEditBox),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 25,
-        .prev = 23,
-        .flag = 0x0008,
-        .rect = { 211, 156, 311, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Drawbar2_AcDrawEditBox_3,
+        .prev = OBJ_Drawbar2_AcDrawEditBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(211, 156, 101, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(vEA_e24_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0003,
-        .editsw = 0x000B,
+        .editsw = ES_Right4,
         .dial = 0x0001,
-        .selected = 0x0003E860,
-        .func = 0x01210023,
-        .data = 0x0003E862,
+        .selected = RAM_Drawbar2_AcDrawEditBox_2_Selected,
+        .func = NAKA_APFUNC_LswPercLevel,
+        .data = RAM_Drawbar2_AcDrawEditBox_2_Value,
     },
 
     .vEA_e24_caption = "LEVEL :",
 
     .Drawbar2_AcDrawEditBox_3 = {
-        .class_ = 0x0161001B,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcDrawEditBox),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 8, 114, 156, 139 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Drawbar2_AcDrawEditBox_4,
+        .prev = OBJ_Drawbar2_AcDrawEditBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(vEA_e25_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0003,
-        .editsw = 0x008A,
+        .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003E864,
-        .func = 0x01210024,
-        .data = 0x0003E866,
+        .selected = RAM_Drawbar2_AcDrawEditBox_3_Selected,
+        .func = NAKA_APFUNC_LswDrawAttack,
+        .data = RAM_Drawbar2_AcDrawEditBox_3_Value,
     },
 
     .vEA_e25_caption = ALIGNED_STRING("ATTACK TIME  :"),
 
     .Drawbar2_AcDrawEditBox_4 = {
-        .class_ = 0x0161001B,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcDrawEditBox),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 27,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 8, 156, 156, 181 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_Drawbar2_AcIndexWideES,
+        .prev = OBJ_Drawbar2_AcDrawEditBox_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 156, 149, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0x0000,
         .caption = SELF(vEA_e26_caption),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0003,
-        .editsw = 0x008B,
+        .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003E868,
-        .func = 0x01210025,
-        .data = 0x0003E86A,
+        .selected = RAM_Drawbar2_AcDrawEditBox_4_Selected,
+        .func = NAKA_APFUNC_LswDrawRelease,
+        .data = RAM_Drawbar2_AcDrawEditBox_4_Value,
     },
 
     .vEA_e26_caption = ALIGNED_STRING("RELEASE TIME :"),
 
     .Drawbar2_AcIndexWideES = {
-        .class_ = 0x01600022,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcIndexWideES),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 28,
-        .prev = 26,
-        .flag = 0x0008,
-        .rect = { 244, 216, 315, 238 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .next = OBJ_Drawbar2_IvDrawbar2,
+        .prev = OBJ_Drawbar2_AcDrawEditBox_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 72, 23),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0006,
-        .editsw2 = 0x0007,
-        .style = 0x0003,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Bottom7,
+        .editsw2 = ES_Bottom8,
+        .style = SS_UpDown,
     },
 
     .Drawbar2_IvDrawbar2 = {
-        .class_ = 0x01610013,
-        .super = 22,
+        .class_ = NAKA_CLASS(IvDrawbar2),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
-        .next = 29,
-        .prev = 27,
-        .flag = 0x0018,
-        .rect = { 136, 32, 167, 63 },
+        .next = OBJ_Drawbar2_AcDrawbarName,
+        .prev = OBJ_Drawbar2_AcIndexWideES,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(136, 32, 32, 32),
     },
 
     .Drawbar2_AcDrawbarName = {
-        .class_ = 0x01610023,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcDrawbarName),
+        .super = OBJ_Drawbar2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 28,
-        .flag = 0x0008,
-        .rect = { 8, 196, 199, 227 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .prev = OBJ_Drawbar2_IvDrawbar2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 196, 192, 32),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0001,
-        .font = 0x00000004,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .part = 0x00FF,
-        .editsw = 0x008C,
+        .font = idCHARA5,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .part = PT_PartSelect,
+        .editsw = ES_Left5,
     },
 
+    /* ==== VIEW OBJ_DrawbarNorm: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DrawbarNorm = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 31,
+        .sub = OBJ_DrawbarPart,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 123, 59 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 124, 60),
+        .color = CL_Transparent,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E86C,
-        .child = 0x0003E870,
+        .parent = RAM_DrawbarNorm_Parent,
+        .child = RAM_DrawbarNorm_Child,
     },
 
     .DrawbarPart = {
-        .class_ = 0x01600012,
-        .super = 30,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_DrawbarNorm,
         .sub = NAKA_NONE,
-        .next = 32,
+        .next = OBJ_DrawTremolo,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 6, 75, 17 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 6, 76, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .DrawTremolo = {
-        .class_ = 0x0160004E,
-        .super = 30,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_DrawbarNorm,
         .sub = NAKA_NONE,
-        .next = 33,
-        .prev = 31,
-        .flag = 0x0008,
-        .rect = { 8, 34, 51, 51 },
-        .font = 0x00000000,
+        .next = OBJ_Tremolo_Label,
+        .prev = OBJ_DrawbarPart,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 34, 44, 18),
+        .font = idCHARA1,
         .stron = SELF(DrawTremolo_stron),
         .stroff = SELF(DrawTremolo_stroff),
-        .onoff = 0x0003E874,
-        .editsw = 0x0088,
+        .onoff = RAM_DrawTremolo_OnOff,
+        .editsw = ES_Left1,
         .index = 0x0000,
         .tag = 0x0001,
     },
@@ -6470,338 +5816,346 @@ const naka_technichord_part_t naka_technichord_part_data
     .DrawTremolo_stron = ALIGNED_STRING("FAST"),
 
     .Tremolo_Label = {
-        .class_ = 0x0160002B,
-        .super = 30,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_DrawbarNorm,
         .sub = NAKA_NONE,
-        .next = 34,
-        .prev = 32,
-        .flag = 0x0008,
-        .rect = { 54, 35, 113, 53 },
+        .next = OBJ_DrawbarNorm_IvDrawbarNorm,
+        .prev = OBJ_DrawTremolo,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(54, 35, 60, 19),
         .str = SELF(Tremolo_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Tremolo_text = "TREMOLO",
 
     .DrawbarNorm_IvDrawbarNorm = {
-        .class_ = 0x01610014,
-        .super = 30,
+        .class_ = NAKA_CLASS(IvDrawbarNorm),
+        .super = OBJ_DrawbarNorm,
         .sub = NAKA_NONE,
-        .next = 35,
-        .prev = 33,
-        .flag = 0x0018,
-        .rect = { 136, 32, 167, 63 },
+        .next = OBJ_DrawbarNorm_VwBox,
+        .prev = OBJ_Tremolo_Label,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(136, 32, 32, 32),
     },
 
     .DrawbarNorm_VwBox = {
-        .class_ = 0x01600011,
-        .super = 30,
-        .sub = 36,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_DrawbarNorm,
+        .sub = OBJ_DrawbarNorm_Icon,
         .next = NAKA_NONE,
-        .prev = 34,
-        .flag = 0x0008,
-        .rect = { 70, 0, 263, 31 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_DrawbarNorm_IvDrawbarNorm,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(70, 0, 194, 32),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
     .DrawbarNorm_Icon = {
-        .class_ = 0x0160002D,
-        .super = 35,
+        .class_ = NAKA_CLASS(Icon),
+        .super = OBJ_DrawbarNorm_VwBox,
         .sub = NAKA_NONE,
-        .next = 37,
+        .next = OBJ_Drawbar_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 100, 1, 127, 28 },
-        .icon = 0x0000006F,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(100, 1, 28, 28),
+        .icon = idICON_i109,
     },
 
     .Drawbar_Label = {
-        .class_ = 0x0160002B,
-        .super = 35,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_DrawbarNorm_VwBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 36,
-        .flag = 0x0008,
-        .rect = { 130, 6, 210, 24 },
+        .prev = OBJ_DrawbarNorm_Icon,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(130, 6, 81, 19),
         .str = SELF(Drawbar_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .Drawbar_text = "DRAWBAR",
 
+    /* ==== VIEW OBJ_DrawbarSndE: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DrawbarSndE = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 39,
+        .sub = OBJ_DrawbarSndE_IvDrawbarSndE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 0, 123, 59 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 124, 60),
+        .color = CL_Transparent,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E876,
-        .child = 0x0003E87A,
+        .parent = RAM_DrawbarSndE_Parent,
+        .child = RAM_DrawbarSndE_Child,
     },
 
     .DrawbarSndE_IvDrawbarSndE = {
-        .class_ = 0x01610015,
-        .super = 38,
+        .class_ = NAKA_CLASS(IvDrawbarSndE),
+        .super = OBJ_DrawbarSndE,
         .sub = NAKA_NONE,
-        .next = 40,
+        .next = OBJ_Write_AcTitleMenu,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 136, 32, 167, 63 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(136, 32, 32, 32),
     },
 
     .Write_AcTitleMenu = {
-        .class_ = 0x0160001D,
-        .super = 38,
+        .class_ = NAKA_CLASS(AcTitleMenu),
+        .super = OBJ_DrawbarSndE,
         .sub = NAKA_NONE,
-        .next = 41,
-        .prev = 39,
-        .flag = 0x0008,
-        .rect = { 8, 30, 156, 55 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .next = OBJ_DrawbarSndE_VwBox,
+        .prev = OBJ_DrawbarSndE_IvDrawbarSndE,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 30, 149, 26),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .editsw = 0x0088,
-        .selected = 0x0003E87E,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .selected = RAM_Write_AcTitleMenu_Selected,
         .str = SELF(Write_text),
-        .title = 0x01A0003E,
-        .icon = 0x00000000,
+        .title = TITLE_SEWRTMEM,
+        .icon = idICON_None,
     },
 
     .Write_text = "WRITE",
 
     .DrawbarSndE_VwBox = {
-        .class_ = 0x01600011,
-        .super = 38,
-        .sub = 42,
+        .class_ = NAKA_CLASS(VwBox),
+        .super = OBJ_DrawbarSndE,
+        .sub = OBJ_DrawbarSndE_Icon,
         .next = NAKA_NONE,
-        .prev = 40,
-        .flag = 0x0008,
-        .rect = { 52, 0, 291, 31 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_Write_AcTitleMenu,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(52, 0, 240, 32),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
     },
 
     .DrawbarSndE_Icon = {
-        .class_ = 0x0160002D,
-        .super = 41,
+        .class_ = NAKA_CLASS(Icon),
+        .super = OBJ_DrawbarSndE_VwBox,
         .sub = NAKA_NONE,
-        .next = 43,
+        .next = OBJ_DrawbarEdit_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 72, 1, 99, 28 },
-        .icon = 0x0000006F,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(72, 1, 28, 28),
+        .icon = idICON_i109,
     },
 
     .DrawbarEdit_Label = {
-        .class_ = 0x0160002B,
-        .super = 41,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_DrawbarSndE_VwBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 42,
-        .flag = 0x0008,
-        .rect = { 102, 6, 237, 24 },
+        .prev = OBJ_DrawbarSndE_Icon,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(102, 6, 136, 19),
         .str = SELF(DrawbarEdit_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .DrawbarEdit_text = ALIGNED_STRING("DRAWBAR EDIT"),
 
+    /* ==== SCREEN TITLE_ACCORDION -- "TT_ACCORDION", title id 0xEB, function NAKA_APFUNC_DefaultFunction ====
+     * What: the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
     .Accordion = {
-        .class_ = 0x01600033,
+        .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Accordion_Icon,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0001,
-        .exit = 0x01A00000,
-        .window = 0x0003E880,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = RAM_Accordion_Window,
     },
 
     .Accordion_Icon = {
-        .class_ = 0x0160002D,
-        .super = 0,
-        .sub = 2,
-        .next = 3,
+        .class_ = NAKA_CLASS(Icon),
+        .super = OBJ_Accordion,
+        .sub = OBJ_Accordion_IvIntVari,
+        .next = OBJ_AccordionRegister_Label,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 76, 1, 103, 28 },
-        .icon = 0x0000008D,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(76, 1, 28, 28),
+        .icon = idICON_i139,
     },
 
     .Accordion_IvIntVari = {
-        .class_ = 0x01600062,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvIntVari),
+        .super = OBJ_Accordion_Icon,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 116, 0, 147, 31 },
-        .time = 0x0001,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(116, 0, 32, 32),
+        .time = IT_Default,
     },
 
     .AccordionRegister_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Accordion,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 106, 6, 307, 24 },
+        .next = OBJ_Accordion_AcIndexEditSw,
+        .prev = OBJ_Accordion_Icon,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(106, 6, 202, 19),
         .str = SELF(AccordionRegister_text),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
     },
 
     .AccordionRegister_text = ALIGNED_STRING("ACCORDION REGISTER"),
 
     .Accordion_AcIndexEditSw = {
-        .class_ = 0x0160001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Accordion,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 8, 34, 38, 51 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Accordion_AcIndexEditSw_2,
+        .prev = OBJ_AccordionRegister_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 34, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0088,
-        .style = 0x0001,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .style = SS_Up,
     },
 
     .Accordion_AcIndexEditSw_2 = {
-        .class_ = 0x0160001F,
-        .super = 0,
+        .class_ = NAKA_CLASS(AcIndexEditSw),
+        .super = OBJ_Accordion,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 8, 76, 38, 93 },
-        .color = 0x0007,
-        .border = 0x00C1,
+        .next = OBJ_Type_Label,
+        .prev = OBJ_Accordion_AcIndexEditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 76, 31, 18),
+        .color = CL_Silver,
+        .border = BD_3D_UP2,
         .index = 0x0000,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .editsw = 0x0089,
-        .style = 0x0002,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .editsw = ES_Left2,
+        .style = SS_Down,
     },
 
     .Type_Label = {
-        .class_ = 0x0160002B,
-        .super = 0,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Accordion,
         .sub = NAKA_NONE,
-        .next = 7,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 2, 56, 37, 74 },
+        .next = OBJ_AccordionPart,
+        .prev = OBJ_Accordion_AcIndexEditSw_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(2, 56, 36, 19),
         .str = SELF(Type_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .Type_text = ALIGNED_STRING("TYPE"),
 
     .AccordionPart = {
-        .class_ = 0x01600012,
-        .super = 0,
-        .sub = 8,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_Accordion,
+        .sub = OBJ_AccordionPart_IvAccordion,
         .next = NAKA_NONE,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 0, 6, 75, 17 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .prev = OBJ_Type_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 6, 76, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .AccordionPart_IvAccordion = {
-        .class_ = 0x01610004,
-        .super = 7,
+        .class_ = NAKA_CLASS(IvAccordion),
+        .super = OBJ_AccordionPart,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Accordion1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Accordion1 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 10,
+        .sub = OBJ_TypeGerman_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 80, 36, 239, 59 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(80, 36, 160, 24),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003E884,
-        .child = 0x0003E888,
+        .parent = RAM_Accordion1_Parent,
+        .child = RAM_Accordion1_Child,
     },
 
     .TypeGerman_Label = {
-        .class_ = 0x0160002B,
-        .super = 9,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 11,
+        .next = OBJ_Accordion1_VwUserBitmapSp,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 102, 40, 209, 58 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(102, 40, 108, 19),
         .str = SELF(TypeGerman_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .TypeGerman_text = "TYPE : GERMAN",
 
     .Accordion1_VwUserBitmapSp = {
-        .class_ = 0x0161001E,
-        .super = 9,
+        .class_ = NAKA_CLASS(VwUserBitmapSp),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 101, 68, 220, 162 },
-        .func = 0x01210020,
+        .next = OBJ_Accordion1_AcIndexToggle,
+        .prev = OBJ_TypeGerman_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(101, 68, 120, 95),
+        .func = NAKA_APFUNC_BitmapAccger16,
     },
 
     .Accordion1_AcIndexToggle = {
-        .class_ = 0x0160004E,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 261, 30, 311, 55 },
-        .font = 0x00000000,
+        .next = OBJ_Accordion1_AcIndexToggle_2,
+        .prev = OBJ_Accordion1_VwUserBitmapSp,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(261, 30, 51, 26),
+        .font = idCHARA1,
         .stron = SELF(vEB_e12_stron),
         .stroff = SELF(vEB_e12_stroff),
-        .onoff = 0x0003E88C,
-        .editsw = 0x0008,
+        .onoff = RAM_Accordion1_AcIndexToggle_OnOff,
+        .editsw = ES_Right1,
         .index = 0x0001,
         .tag = 0x0008,
     },
@@ -6811,18 +6165,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e12_stron = "BASS1",
 
     .Accordion1_AcIndexToggle_2 = {
-        .class_ = 0x0160004E,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 14,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 261, 72, 311, 97 },
-        .font = 0x00000000,
+        .next = OBJ_Accordion1_AcAccordionTab,
+        .prev = OBJ_Accordion1_AcIndexToggle,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(261, 72, 51, 26),
+        .font = idCHARA1,
         .stron = SELF(vEB_e13_stron),
         .stroff = SELF(vEB_e13_stroff),
-        .onoff = 0x0003E88E,
-        .editsw = 0x0009,
+        .onoff = RAM_Accordion1_AcIndexToggle_2_OnOff,
+        .editsw = ES_Right2,
         .index = 0x0001,
         .tag = 0x0009,
     },
@@ -6832,18 +6186,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e13_stron = "BASS2",
 
     .Accordion1_AcAccordionTab = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 15,
-        .prev = 13,
-        .flag = 0x0008,
-        .rect = { 44, 184, 75, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_2,
+        .prev = OBJ_Accordion1_AcIndexToggle_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e14_stron),
         .stroff = SELF(vEB_e14_stroff),
-        .onoff = 0x0003E890,
-        .editsw = 0x0001,
+        .onoff = RAM_Accordion1_AcAccordionTab_OnOff,
+        .editsw = ES_Bottom2,
         .index = 0x0001,
         .tag = 0x0001,
         .str1 = SELF(vEB_e14_str1),
@@ -6859,18 +6213,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e14_stron = "~95",
 
     .Accordion1_AcAccordionTab_2 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 14,
-        .flag = 0x0008,
-        .rect = { 4, 184, 35, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_3,
+        .prev = OBJ_Accordion1_AcAccordionTab,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e15_stron),
         .stroff = SELF(vEB_e15_stroff),
-        .onoff = 0x0003E892,
-        .editsw = 0x0000,
+        .onoff = RAM_Accordion1_AcAccordionTab_2_OnOff,
+        .editsw = ES_Bottom1,
         .index = 0x0001,
         .tag = 0x0000,
         .str1 = SELF(vEB_e15_str1),
@@ -6886,18 +6240,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e15_stron = "~95",
 
     .Accordion1_AcAccordionTab_3 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 17,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 84, 184, 115, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_4,
+        .prev = OBJ_Accordion1_AcAccordionTab_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e16_stron),
         .stroff = SELF(vEB_e16_stroff),
-        .onoff = 0x0003E894,
-        .editsw = 0x0002,
+        .onoff = RAM_Accordion1_AcAccordionTab_3_OnOff,
+        .editsw = ES_Bottom3,
         .index = 0x0001,
         .tag = 0x0002,
         .str1 = SELF(vEB_e16_str1),
@@ -6913,18 +6267,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e16_stron = ALIGNED_STRING(""),
 
     .Accordion1_AcAccordionTab_4 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 124, 184, 155, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_5,
+        .prev = OBJ_Accordion1_AcAccordionTab_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e17_stron),
         .stroff = SELF(vEB_e17_stroff),
-        .onoff = 0x0003E896,
-        .editsw = 0x0003,
+        .onoff = RAM_Accordion1_AcAccordionTab_4_OnOff,
+        .editsw = ES_Bottom4,
         .index = 0x0001,
         .tag = 0x0003,
         .str1 = SELF(vEB_e17_str1),
@@ -6940,18 +6294,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e17_stron = "~95~95~95",
 
     .Accordion1_AcAccordionTab_5 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 164, 184, 195, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_6,
+        .prev = OBJ_Accordion1_AcAccordionTab_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e18_stron),
         .stroff = SELF(vEB_e18_stroff),
-        .onoff = 0x0003E898,
-        .editsw = 0x0004,
+        .onoff = RAM_Accordion1_AcAccordionTab_5_OnOff,
+        .editsw = ES_Bottom5,
         .index = 0x0001,
         .tag = 0x0004,
         .str1 = SELF(vEB_e18_str1),
@@ -6967,18 +6321,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e18_stron = "~95 ~95",
 
     .Accordion1_AcAccordionTab_6 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0008,
-        .rect = { 204, 184, 235, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_7,
+        .prev = OBJ_Accordion1_AcAccordionTab_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e19_stron),
         .stroff = SELF(vEB_e19_stroff),
-        .onoff = 0x0003E89A,
-        .editsw = 0x0005,
+        .onoff = RAM_Accordion1_AcAccordionTab_6_OnOff,
+        .editsw = ES_Bottom6,
         .index = 0x0001,
         .tag = 0x0005,
         .str1 = SELF(vEB_e19_str1),
@@ -6994,18 +6348,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e19_stron = "~95~95~95",
 
     .Accordion1_AcAccordionTab_7 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0008,
-        .rect = { 244, 184, 275, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_AcAccordionTab_8,
+        .prev = OBJ_Accordion1_AcAccordionTab_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e20_stron),
         .stroff = SELF(vEB_e20_stroff),
-        .onoff = 0x0003E89C,
-        .editsw = 0x0006,
+        .onoff = RAM_Accordion1_AcAccordionTab_7_OnOff,
+        .editsw = ES_Bottom7,
         .index = 0x0001,
         .tag = 0x0006,
         .str1 = SELF(vEB_e20_str1),
@@ -7021,18 +6375,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e20_stron = "~95",
 
     .Accordion1_AcAccordionTab_8 = {
-        .class_ = 0x01610006,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0008,
-        .rect = { 284, 184, 315, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion1_IvAccordionX,
+        .prev = OBJ_Accordion1_AcAccordionTab_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(284, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e21_stron),
         .stroff = SELF(vEB_e21_stroff),
-        .onoff = 0x0003E89E,
-        .editsw = 0x0007,
+        .onoff = RAM_Accordion1_AcAccordionTab_8_OnOff,
+        .editsw = ES_Bottom8,
         .index = 0x0001,
         .tag = 0x0007,
         .str1 = SELF(vEB_e21_str1),
@@ -7048,69 +6402,71 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e21_stron = "~95",
 
     .Accordion1_IvAccordionX = {
-        .class_ = 0x01610005,
-        .super = 9,
+        .class_ = NAKA_CLASS(IvAccordionX),
+        .super = OBJ_Accordion1,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 21,
-        .flag = 0x0018,
-        .rect = { 8, 112, 39, 143 },
+        .prev = OBJ_Accordion1_AcAccordionTab_8,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(8, 112, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Accordion2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Accordion2 = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 24,
+        .sub = OBJ_TypeItalian_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 80, 36, 239, 59 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(80, 36, 160, 24),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003E8A0,
-        .child = 0x0003E8A4,
+        .parent = RAM_Accordion2_Parent,
+        .child = RAM_Accordion2_Child,
     },
 
     .TypeItalian_Label = {
-        .class_ = 0x0160002B,
-        .super = 23,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 25,
+        .next = OBJ_Accordion2_VwUserBitmapSp,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 102, 40, 217, 58 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(102, 40, 116, 19),
         .str = SELF(TypeItalian_text),
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
     },
 
     .TypeItalian_text = ALIGNED_STRING("TYPE : ITALIAN"),
 
     .Accordion2_VwUserBitmapSp = {
-        .class_ = 0x0161001E,
-        .super = 23,
+        .class_ = NAKA_CLASS(VwUserBitmapSp),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 26,
-        .prev = 24,
-        .flag = 0x0008,
-        .rect = { 101, 68, 220, 162 },
-        .func = 0x01210021,
+        .next = OBJ_Accordion2_AcIndexToggle,
+        .prev = OBJ_TypeItalian_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(101, 68, 120, 95),
+        .func = NAKA_APFUNC_BitmapAccita16,
     },
 
     .Accordion2_AcIndexToggle = {
-        .class_ = 0x0160004E,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 27,
-        .prev = 25,
-        .flag = 0x0008,
-        .rect = { 261, 30, 311, 55 },
-        .font = 0x00000000,
+        .next = OBJ_Accordion2_AcIndexToggle_2,
+        .prev = OBJ_Accordion2_VwUserBitmapSp,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(261, 30, 51, 26),
+        .font = idCHARA1,
         .stron = SELF(vEB_e26_stron),
         .stroff = SELF(vEB_e26_stroff),
-        .onoff = 0x0003E8A8,
-        .editsw = 0x0008,
+        .onoff = RAM_Accordion2_AcIndexToggle_OnOff,
+        .editsw = ES_Right1,
         .index = 0x0001,
         .tag = 0x0012,
     },
@@ -7120,18 +6476,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e26_stron = "BASS1",
 
     .Accordion2_AcIndexToggle_2 = {
-        .class_ = 0x0160004E,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcIndexToggle),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 28,
-        .prev = 26,
-        .flag = 0x0008,
-        .rect = { 261, 72, 311, 97 },
-        .font = 0x00000000,
+        .next = OBJ_Accordion2_AcAccordionTab,
+        .prev = OBJ_Accordion2_AcIndexToggle,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(261, 72, 51, 26),
+        .font = idCHARA1,
         .stron = SELF(vEB_e27_stron),
         .stroff = SELF(vEB_e27_stroff),
-        .onoff = 0x0003E8AA,
-        .editsw = 0x0009,
+        .onoff = RAM_Accordion2_AcIndexToggle_2_OnOff,
+        .editsw = ES_Right2,
         .index = 0x0001,
         .tag = 0x0013,
     },
@@ -7141,18 +6497,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e27_stron = "BASS2",
 
     .Accordion2_AcAccordionTab = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 29,
-        .prev = 27,
-        .flag = 0x0008,
-        .rect = { 44, 184, 75, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_2,
+        .prev = OBJ_Accordion2_AcIndexToggle_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e28_stron),
         .stroff = SELF(vEB_e28_stroff),
-        .onoff = 0x0003E8AC,
-        .editsw = 0x0001,
+        .onoff = RAM_Accordion2_AcAccordionTab_OnOff,
+        .editsw = ES_Bottom2,
         .index = 0x0001,
         .tag = 0x000B,
         .str1 = SELF(vEB_e28_str1),
@@ -7168,18 +6524,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e28_stron = "~95",
 
     .Accordion2_AcAccordionTab_2 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 30,
-        .prev = 28,
-        .flag = 0x0008,
-        .rect = { 4, 184, 35, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_3,
+        .prev = OBJ_Accordion2_AcAccordionTab,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e29_stron),
         .stroff = SELF(vEB_e29_stroff),
-        .onoff = 0x0003E8AE,
-        .editsw = 0x0000,
+        .onoff = RAM_Accordion2_AcAccordionTab_2_OnOff,
+        .editsw = ES_Bottom1,
         .index = 0x0001,
         .tag = 0x000A,
         .str1 = SELF(vEB_e29_str1),
@@ -7195,18 +6551,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e29_stron = ALIGNED_STRING(""),
 
     .Accordion2_AcAccordionTab_3 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 31,
-        .prev = 29,
-        .flag = 0x0008,
-        .rect = { 84, 184, 115, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_4,
+        .prev = OBJ_Accordion2_AcAccordionTab_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(84, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e30_stron),
         .stroff = SELF(vEB_e30_stroff),
-        .onoff = 0x0003E8B0,
-        .editsw = 0x0002,
+        .onoff = RAM_Accordion2_AcAccordionTab_3_OnOff,
+        .editsw = ES_Bottom3,
         .index = 0x0001,
         .tag = 0x000C,
         .str1 = SELF(vEB_e30_str1),
@@ -7222,18 +6578,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e30_stron = ALIGNED_STRING(""),
 
     .Accordion2_AcAccordionTab_4 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 32,
-        .prev = 30,
-        .flag = 0x0008,
-        .rect = { 124, 184, 155, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_5,
+        .prev = OBJ_Accordion2_AcAccordionTab_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(124, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e31_stron),
         .stroff = SELF(vEB_e31_stroff),
-        .onoff = 0x0003E8B2,
-        .editsw = 0x0003,
+        .onoff = RAM_Accordion2_AcAccordionTab_4_OnOff,
+        .editsw = ES_Bottom4,
         .index = 0x0001,
         .tag = 0x000D,
         .str1 = SELF(vEB_e31_str1),
@@ -7249,18 +6605,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e31_stron = "~95 ~95",
 
     .Accordion2_AcAccordionTab_5 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 33,
-        .prev = 31,
-        .flag = 0x0008,
-        .rect = { 164, 184, 195, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_6,
+        .prev = OBJ_Accordion2_AcAccordionTab_4,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(164, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e32_stron),
         .stroff = SELF(vEB_e32_stroff),
-        .onoff = 0x0003E8B4,
-        .editsw = 0x0004,
+        .onoff = RAM_Accordion2_AcAccordionTab_5_OnOff,
+        .editsw = ES_Bottom5,
         .index = 0x0001,
         .tag = 0x000E,
         .str1 = SELF(vEB_e32_str1),
@@ -7276,18 +6632,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e32_stron = "~95 ~95",
 
     .Accordion2_AcAccordionTab_6 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 34,
-        .prev = 32,
-        .flag = 0x0008,
-        .rect = { 204, 184, 235, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_7,
+        .prev = OBJ_Accordion2_AcAccordionTab_5,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(204, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e33_stron),
         .stroff = SELF(vEB_e33_stroff),
-        .onoff = 0x0003E8B6,
-        .editsw = 0x0005,
+        .onoff = RAM_Accordion2_AcAccordionTab_6_OnOff,
+        .editsw = ES_Bottom6,
         .index = 0x0001,
         .tag = 0x000F,
         .str1 = SELF(vEB_e33_str1),
@@ -7303,18 +6659,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e33_stron = "~95 ~95",
 
     .Accordion2_AcAccordionTab_7 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 35,
-        .prev = 33,
-        .flag = 0x0008,
-        .rect = { 244, 184, 275, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_AcAccordionTab_8,
+        .prev = OBJ_Accordion2_AcAccordionTab_6,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e34_stron),
         .stroff = SELF(vEB_e34_stroff),
-        .onoff = 0x0003E8B8,
-        .editsw = 0x0006,
+        .onoff = RAM_Accordion2_AcAccordionTab_7_OnOff,
+        .editsw = ES_Bottom7,
         .index = 0x0001,
         .tag = 0x0010,
         .str1 = SELF(vEB_e34_str1),
@@ -7330,18 +6686,18 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e34_stron = "~95",
 
     .Accordion2_AcAccordionTab_8 = {
-        .class_ = 0x01610006,
-        .super = 23,
+        .class_ = NAKA_CLASS(AcAccordionTab),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
-        .next = 36,
-        .prev = 34,
-        .flag = 0x0008,
-        .rect = { 284, 184, 315, 238 },
-        .font = 0x00000007,
+        .next = OBJ_Accordion2_IvAccordionX,
+        .prev = OBJ_Accordion2_AcAccordionTab_7,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(284, 184, 32, 55),
+        .font = idCHARA1W,
         .stron = SELF(vEB_e35_stron),
         .stroff = SELF(vEB_e35_stroff),
-        .onoff = 0x0003E8BA,
-        .editsw = 0x0007,
+        .onoff = RAM_Accordion2_AcAccordionTab_8_OnOff,
+        .editsw = ES_Bottom8,
         .index = 0x0001,
         .tag = 0x0011,
         .str1 = SELF(vEB_e35_str1),
@@ -7357,253 +6713,268 @@ const naka_technichord_part_t naka_technichord_part_data
     .vEB_e35_stron = "~95",
 
     .Accordion2_IvAccordionX = {
-        .class_ = 0x01610005,
-        .super = 23,
+        .class_ = NAKA_CLASS(IvAccordionX),
+        .super = OBJ_Accordion2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 35,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_Accordion2_AcAccordionTab_8,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_MESAGE -- "TT_MESAGE", title id 0xEE, function NAKA_APFUNC_DefaultFunction ====
+     * What: Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message /
+     *       confirmation-box title. About 30 call sites show it with title request ...
+     * Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+     * EXIT -> TITLE_PS */
     .Mesage = {
-        .class_ = 0x0160006A,
+        .class_ = NAKA_CLASS(IvScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Mesage_IvMesage,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003E8BC,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_Mesage_Window,
     },
 
     .Mesage_IvMesage = {
-        .class_ = 0x01610003,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvMesage),
+        .super = OBJ_Mesage,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Completed: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Completed = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 3,
+        .sub = OBJ_Completed_AcLanguageText,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 52, 84, 267, 127 },
-        .color = 0x000A,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(52, 84, 216, 44),
+        .color = CL_FireRed,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8C0,
-        .child = 0x0003E8C4,
+        .parent = RAM_Completed_Parent,
+        .child = RAM_Completed_Child,
     },
 
     .Completed_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 2,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Completed,
         .sub = NAKA_NONE,
-        .next = 4,
+        .next = OBJ_Completed_IvIntComplete,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 64, 92, 255, 119 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 92, 192, 28),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000009,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA5W,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
         .lines = 0x0001,
-        .func = 0x01210015,
+        .func = NAKA_APFUNC_MessageText,
     },
 
     .Completed_IvIntComplete = {
-        .class_ = 0x01600061,
-        .super = 2,
+        .class_ = NAKA_CLASS(IvIntComplete),
+        .super = OBJ_Completed,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 3,
-        .flag = 0x0018,
-        .rect = { 280, 0, 311, 31 },
-        .time = 0x0004,
+        .prev = OBJ_Completed_AcLanguageText,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(280, 0, 32, 32),
+        .time = IT_2Sec,
     },
 
+    /* ==== VIEW OBJ_Reminder: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Reminder = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 6,
+        .sub = OBJ_Reminder_AcLanguageText,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 32, 32, 287, 207 },
-        .color = 0x000A,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(32, 32, 256, 176),
+        .color = CL_FireRed,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8C8,
-        .child = 0x0003E8CC,
+        .parent = RAM_Reminder_Parent,
+        .child = RAM_Reminder_Child,
     },
 
     .Reminder_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Reminder,
         .sub = NAKA_NONE,
-        .next = 7,
+        .next = OBJ_Reminder_AcLanguageText_2,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 60, 36, 259, 59 },
-        .color = 0x000A,
-        .border = 0x00C2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 36, 200, 24),
+        .color = CL_FireRed,
+        .border = BD_3D_DOWN1,
         .index = 0xFFFF,
-        .font = 0x00000009,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA5W,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
         .lines = 0x0001,
-        .func = 0x01210014,
+        .func = NAKA_APFUNC_MessageHeader,
     },
 
     .Reminder_AcLanguageText_2 = {
-        .class_ = 0x01600066,
-        .super = 5,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Reminder,
         .sub = NAKA_NONE,
-        .next = 8,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 36, 64, 283, 207 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .next = OBJ_Reminder_IvIntReminder,
+        .prev = OBJ_Reminder_AcLanguageText,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(36, 64, 248, 144),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000005,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0001,
+        .font = idCHARA1P,
+        .fontcolor = CL_White,
+        .alignment = AL_LeftJustify,
         .lines = 0x0008,
-        .func = 0x01210015,
+        .func = NAKA_APFUNC_MessageText,
     },
 
     .Reminder_IvIntReminder = {
-        .class_ = 0x0160005F,
-        .super = 5,
+        .class_ = NAKA_CLASS(IvIntReminder),
+        .super = OBJ_Reminder,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 7,
-        .flag = 0x0018,
-        .rect = { 288, 8, 319, 39 },
-        .time = 0x0001,
+        .prev = OBJ_Reminder_AcLanguageText_2,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(288, 8, 32, 32),
+        .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_Error: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Error = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 10,
+        .sub = OBJ_Error_IvIntError,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 60, 4, 259, 31 },
-        .color = 0x000A,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 4, 200, 28),
+        .color = CL_FireRed,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8D0,
-        .child = 0x0003E8D4,
+        .parent = RAM_Error_Parent,
+        .child = RAM_Error_Child,
     },
 
     .Error_IvIntError = {
-        .class_ = 0x01600060,
-        .super = 9,
+        .class_ = NAKA_CLASS(IvIntError),
+        .super = OBJ_Error,
         .sub = NAKA_NONE,
-        .next = 11,
+        .next = OBJ_Error_AcLanguageText,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 288, 0, 319, 31 },
-        .time = 0x0001,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(288, 0, 32, 32),
+        .time = IT_Default,
     },
 
     .Error_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Error,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 64, 4, 255, 31 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .next = OBJ_Error_AcLanguageText_2,
+        .prev = OBJ_Error_IvIntError,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 4, 192, 28),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000009,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA5W,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
         .lines = 0x0001,
-        .func = 0x01210014,
+        .func = NAKA_APFUNC_MessageHeader,
     },
 
     .Error_AcLanguageText_2 = {
-        .class_ = 0x01600066,
-        .super = 9,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Error,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 8, 44, 311, 231 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .prev = OBJ_Error_AcLanguageText,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 44, 304, 188),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000005,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0001,
+        .font = idCHARA1P,
+        .fontcolor = CL_White,
+        .alignment = AL_LeftJustify,
         .lines = 0x000B,
-        .func = 0x01210015,
+        .func = NAKA_APFUNC_MessageText,
     },
 
+    /* ==== VIEW OBJ_Other: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Other = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 14,
+        .sub = OBJ_Other_AcLanguageText,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 60, 92, 259, 119 },
-        .color = 0x000A,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 92, 200, 28),
+        .color = CL_FireRed,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8D8,
-        .child = 0x0003E8DC,
+        .parent = RAM_Other_Parent,
+        .child = RAM_Other_Child,
     },
 
     .Other_AcLanguageText = {
-        .class_ = 0x01600066,
-        .super = 13,
+        .class_ = NAKA_CLASS(AcLanguageText),
+        .super = OBJ_Other,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 64, 92, 255, 119 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 92, 192, 28),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000009,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA5W,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
         .lines = 0x0001,
-        .func = 0x01210015,
+        .func = NAKA_APFUNC_MessageText,
     },
 
+    /* ==== VIEW OBJ_CheckMessage: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CheckMessage = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 16,
+        .sub = OBJ_NakaWidget_Mesage_16_EditSw,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 88, 220, 319, 239 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(88, 220, 232, 20),
+        .color = CL_Transparent,
+        .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003E8E0,
-        .child = 0x0003E8E4,
+        .parent = RAM_CheckMessage_Parent,
+        .child = RAM_CheckMessage_Child,
     },
 
     .w91 = {
@@ -7630,39 +7001,39 @@ const naka_technichord_part_t naka_technichord_part_data
     },
 
     .CheckMessage_AcRamBox = {
-        .class_ = 0x0160004F,
-        .super = 15,
+        .class_ = NAKA_CLASS(AcRamBox),
+        .super = OBJ_CheckMessage,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0008,
-        .rect = { 234, 222, 317, 233 },
-        .color = 0x00F5,
-        .border = 0x00C2,
+        .next = OBJ_CheckMessage_AcRamBox_2,
+        .prev = OBJ_NakaWidget_Mesage_16_EditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(234, 222, 84, 12),
+        .color = CL_WallPattern,
+        .border = BD_3D_DOWN1,
         .index = 0xFFFF,
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .func = 0x01210012,
-        .data = 0x0003E8E8,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .func = NAKA_APFUNC_CheckLanguage,
+        .data = RAM_CheckMessage_AcRamBox_Value,
     },
 
     .CheckMessage_AcRamBox_2 = {
-        .class_ = 0x0160004F,
-        .super = 15,
+        .class_ = NAKA_CLASS(AcRamBox),
+        .super = OBJ_CheckMessage,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0008,
-        .rect = { 136, 222, 231, 233 },
-        .color = 0x00F5,
-        .border = 0x00C2,
+        .next = OBJ_NakaWidget_Mesage_19_EditSw,
+        .prev = OBJ_CheckMessage_AcRamBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(136, 222, 96, 12),
+        .color = CL_WallPattern,
+        .border = BD_3D_DOWN1,
         .index = 0xFFFF,
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .func = 0x01210013,
-        .data = 0x0003E8EC,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .func = NAKA_APFUNC_CheckMessage,
+        .data = RAM_CheckMessage_AcRamBox_2_Value,
     },
 
     .w92 = {
@@ -7688,326 +7059,342 @@ const naka_technichord_part_t naka_technichord_part_data
         .field_2a       = 0x0031,
     },
 
+    /* ==== VIEW OBJ_NoMessage: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .NoMessage = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 21,
+        .sub = OBJ_NoMessage_AcRamBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 60, 92, 259, 119 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 92, 200, 28),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8F0,
-        .child = 0x0003E8F4,
+        .parent = RAM_NoMessage_Parent,
+        .child = RAM_NoMessage_Child,
     },
 
     .NoMessage_AcRamBox = {
-        .class_ = 0x0160004F,
-        .super = 20,
+        .class_ = NAKA_CLASS(AcRamBox),
+        .super = OBJ_NoMessage,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 64, 92, 255, 119 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(64, 92, 192, 28),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000007,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .func = 0x01210013,
-        .data = 0x0003E8F8,
+        .font = idCHARA1W,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .func = NAKA_APFUNC_CheckMessage,
+        .data = RAM_NoMessage_AcRamBox_Value,
     },
 
+    /* ==== VIEW OBJ_PleaseWait: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PleaseWait = {
-        .class_ = 0x01600035,
+        .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
-        .sub = 23,
+        .sub = OBJ_PleaseWait_AcPleaseWait,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 52, 92, 275, 119 },
-        .color = 0x0007,
-        .border = 0x00C9,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(52, 92, 224, 28),
+        .color = CL_Silver,
+        .border = BD_EditSwitch,
         .modal = 0x0000,
-        .parent = 0x0003E8FC,
-        .child = 0x0003E900,
+        .parent = RAM_PleaseWait_Parent,
+        .child = RAM_PleaseWait_Child,
     },
 
     .PleaseWait_AcPleaseWait = {
-        .class_ = 0x01610021,
-        .super = 22,
+        .class_ = NAKA_CLASS(AcPleaseWait),
+        .super = OBJ_PleaseWait,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 56, 94, 271, 117 },
-        .color = 0x0007,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(56, 94, 216, 24),
+        .color = CL_Silver,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000009,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
+        .font = idCHARA5W,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_WELCOM -- "TT_WELCOM", title id 0xEF, function NAKA_APFUNC_DefaultFunction ====
+     * What: the welcome (boot) screen. It is requested once at boot.
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
     .Welcom = {
-        .class_ = 0x0161000B,
+        .class_ = NAKA_CLASS(AcWelcomScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_Welcom_IvIntWelcome,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0005,
-        .exit = 0x01A00000,
-        .window = 0x0003E904,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Shadow2,
+        .exit = TITLE_PS,
+        .window = RAM_Welcom_Window,
     },
 
     .Welcom_IvIntWelcome = {
-        .class_ = 0x0160006B,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvIntWelcome),
+        .super = OBJ_Welcom,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_Welcom_VwUserBitmapSp,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .time = 0x0001,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .time = IT_Default,
     },
 
     .Welcom_VwUserBitmapSp = {
-        .class_ = 0x0161001E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwUserBitmapSp),
+        .super = OBJ_Welcom,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 4, 36, 311, 80 },
-        .func = 0x01210029,
+        .next = OBJ_Welcom_VwUserBitmapSp_2,
+        .prev = OBJ_Welcom_IvIntWelcome,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 36, 308, 45),
+        .func = NAKA_APFUNC_BitmapTechnics,
     },
 
     .Welcom_VwUserBitmapSp_2 = {
-        .class_ = 0x0161001E,
-        .super = 0,
+        .class_ = NAKA_CLASS(VwUserBitmapSp),
+        .super = OBJ_Welcom,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 60, 100, 258, 135 },
-        .func = 0x0121002A,
+        .prev = OBJ_Welcom_VwUserBitmapSp,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(60, 100, 199, 36),
+        .func = NAKA_APFUNC_BitmapKn5000,
     },
 
+    /* ==== VIEW OBJ_AllInitial: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .AllInitial = {
-        .class_ = 0x01600033,
+        .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
-        .sub = 5,
+        .sub = OBJ_AllInitialSetting_Label,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0001,
-        .exit = 0x01A00000,
-        .window = 0x0003E908,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = RAM_AllInitial_Window,
     },
 
     .AllInitialSetting_Label = {
-        .class_ = 0x0160002B,
-        .super = 4,
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_AllInitial,
         .sub = NAKA_NONE,
-        .next = 6,
+        .next = OBJ_AllInitial_IvIntWelcome,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 102, 323, 120 },
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 102, 324, 19),
         .str = SELF(AllInitialSetting_text),
-        .font = 0x00000002,
-        .fontcolor = 0x00FF,
+        .font = idCHARA3,
+        .fontcolor = CL_White,
     },
 
     .AllInitialSetting_text = ALIGNED_STRING("ALL INITIAL SETTING!"),
 
     .AllInitial_IvIntWelcome = {
-        .class_ = 0x0160006B,
-        .super = 4,
+        .class_ = NAKA_CLASS(IvIntWelcome),
+        .super = OBJ_AllInitial,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 5,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .time = 0x0001,
+        .prev = OBJ_AllInitialSetting_Label,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_MPVersion: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MPVersion = {
-        .class_ = 0x01600033,
+        .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
-        .sub = 8,
+        .sub = OBJ_MPVersion_IvMPver,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003E90C,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_MPVersion_Window,
     },
 
     .MPVersion_IvMPver = {
-        .class_ = 0x01610024,
-        .super = 7,
+        .class_ = NAKA_CLASS(IvMPver),
+        .super = OBJ_MPVersion,
         .sub = NAKA_NONE,
-        .next = 9,
+        .next = OBJ_MPVersion_IvIntWelcome,
         .prev = NAKA_NONE,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
     .MPVersion_IvIntWelcome = {
-        .class_ = 0x0160006B,
-        .super = 7,
+        .class_ = NAKA_CLASS(IvIntWelcome),
+        .super = OBJ_MPVersion,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0018,
-        .rect = { 32, 0, 63, 31 },
-        .time = 0x0001,
+        .next = OBJ_MPver,
+        .prev = OBJ_MPVersion_IvMPver,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(32, 0, 32, 32),
+        .time = IT_Default,
     },
 
     .MPver = {
-        .class_ = 0x01600012,
-        .super = 7,
+        .class_ = NAKA_CLASS(PsParaBox),
+        .super = OBJ_MPVersion,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 268, 220, 319, 239 },
-        .color = 0x00F7,
-        .border = 0x0000,
+        .prev = OBJ_MPVersion_IvIntWelcome,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(268, 220, 52, 20),
+        .color = CL_Transparent,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_SOFTVER "SOFT VERSION" -- "TT_SOFTVER", title id 0xF0, function NAKA_APFUNC_DefaultFunction ====
+     * What: the software-version screen, requested by a control-panel switch chord.
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
     .Softver = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_MainProgram,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FC,
-        .border = 0x0001,
-        .exit = 0x01A00000,
-        .window = 0x0003E910,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Blue,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = RAM_Softver_Window,
         .title = SELF(SoftVersion_text),
-        .icon = 0x00000001,
+        .icon = idICON_Default,
     },
 
     .SoftVersion_text = ALIGNED_STRING("SOFT VERSION"),
 
     .MainProgram = {
-        .class_ = 0x01600015,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsEditBox),
+        .super = OBJ_Softver,
         .sub = NAKA_NONE,
-        .next = 2,
+        .next = OBJ_MainTable,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 44, 88, 275, 113 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 88, 232, 26),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
         .caption = SELF(MainProgram_caption),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E914,
+        .selected = RAM_MainProgram_Selected,
     },
 
     .MainProgram_caption = ALIGNED_STRING("MAIN PROGRAM :"),
 
     .MainTable = {
-        .class_ = 0x01600015,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsEditBox),
+        .super = OBJ_Softver,
         .sub = NAKA_NONE,
-        .next = 3,
-        .prev = 1,
-        .flag = 0x0008,
-        .rect = { 44, 114, 275, 139 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_SubProgram,
+        .prev = OBJ_MainProgram,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 114, 232, 26),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
         .caption = SELF(MainTable_caption),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E916,
+        .selected = RAM_MainTable_Selected,
     },
 
     .MainTable_caption = ALIGNED_STRING("MAIN TABLE   :"),
 
     .SubProgram = {
-        .class_ = 0x01600015,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsEditBox),
+        .super = OBJ_Softver,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 44, 140, 275, 165 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_SoundTable,
+        .prev = OBJ_MainTable,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 140, 232, 26),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
         .caption = SELF(SubProgram_caption),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E918,
+        .selected = RAM_SubProgram_Selected,
     },
 
     .SubProgram_caption = ALIGNED_STRING("SUB  PROGRAM :"),
 
     .SoundTable = {
-        .class_ = 0x01600015,
-        .super = 0,
+        .class_ = NAKA_CLASS(PsEditBox),
+        .super = OBJ_Softver,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 44, 166, 275, 191 },
-        .color = 0x00F5,
-        .border = 0x00C1,
+        .next = OBJ_Softver_IvSoftver,
+        .prev = OBJ_SubProgram,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(44, 166, 232, 26),
+        .color = CL_WallPattern,
+        .border = BD_3D_UP2,
         .index = 0xFFFF,
         .caption = SELF(SoundTable_caption),
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
         .length = 0x0004,
-        .editsw = 0x00FF,
+        .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003E91A,
+        .selected = RAM_SoundTable_Selected,
     },
 
     .SoundTable_caption = ALIGNED_STRING("SOUND TABLE  :"),
 
     .Softver_IvSoftver = {
-        .class_ = 0x0161000F,
-        .super = 0,
+        .class_ = NAKA_CLASS(IvSoftver),
+        .super = OBJ_Softver,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = 4,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .prev = OBJ_SoundTable,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
     .Murai_ViewableTable_002 = {

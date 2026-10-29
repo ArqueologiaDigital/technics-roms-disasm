@@ -141,7 +141,7 @@ SeqName_LoadAndPlay:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SeqName_ShowAndExit
 SeqName_HandleAction32:
 	cp	xde, 50
@@ -167,9 +167,9 @@ SeqName_HandleAction32:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 SeqName_ShowAndExit:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 
 SeqName_GetCurrentIndex:
 	ld	de, (33312:16)
@@ -426,8 +426,8 @@ IntMed_HandleError:
 	cp	l, 0:i3
 	jrl	z, IntMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 14
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	jrl	IntMed_Exit
 IntMed_HandleStop:
 	cp (CURRENT_TITLE:16), 0x7a
@@ -698,8 +698,8 @@ IntMed_StartPlayLoop:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 122
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_SQMDLYPLY
+	call	UI_ChangeTitleByIndex
 	jr	IntMed_Exit
 IntMed_NextPlaySlot:
 	inc 1, iz
@@ -717,8 +717,8 @@ IntMed_CheckContinue:
 	ld XBC,EVT_SET_HOLD
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw WA, 0x007a
-	call UI_PostModeChangeEvent
+	ldw WA, TT_SQMDLYPLY
+	call UI_ChangeTitleByIndex
 IntMed_Exit:
 	ld xhl, 0:i3
 	popw iz
@@ -1046,7 +1046,7 @@ DiskSel_CheckPlaying:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 120
+	ldw	wa, TT_DKMDLYPLY
 	jrl	DiskSel_CallPauseMode
 DiskSel_CheckFinished:
 	cp	l, 2:i3
@@ -1134,13 +1134,13 @@ DiskSel_SendFileInfo:
 	cp	qiz, 0
 	jr	ge, DiskSel_PlayNext
 	ld	(MEDLEY_PLAY_FLAG:16), 0
-	ldw	wa, 96
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DKMENU
+	call	UI_ChangeTitleByIndex
 	ld	wa, qiz
 	ld	bc, 1:i3
 	calr	FileIO_ValidateSignedValue
 	ld	(GLOBAL_ERROR_CODE:16), l
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	DiskSel_ShowErrorAndExit
 DiskSel_PlayNext:
 	inc	1, (34948:16)
@@ -1154,8 +1154,8 @@ DiskSel_PlayNext:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 120
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DKMDLYPLY
+	call	UI_ChangeTitleByIndex
 	jr	DiskSel_ClearPlaying
 DiskSel_NextSongLoop:
 	inc 1, iz
@@ -1241,13 +1241,13 @@ DiskSel_RepeatSendInfo:
 	cp	qiz, 0
 	jr	ge, DiskSel_RepeatPlayNext
 	ld	(MEDLEY_PLAY_FLAG:16), 0
-	ldw	wa, 96
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DKMENU
+	call	UI_ChangeTitleByIndex
 	ld	wa, qiz
 	ld	bc, 1:i3
 	calr	FileIO_ValidateSignedValue
 	ld	(GLOBAL_ERROR_CODE:16), l
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	DiskSel_ShowErrorAndExit
 DiskSel_RepeatPlayNext:
 	inc	1, (34948:16)
@@ -1261,9 +1261,9 @@ DiskSel_RepeatPlayNext:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 120
+	ldw	wa, TT_DKMDLYPLY
 DiskSel_CallPauseMode:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jrl DiskSel_Exit
 
 DiskSel_RepeatNext:
@@ -1292,7 +1292,7 @@ DiskSel_ShowError:
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 14
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	DiskSel_ShowErrorAndExit
 DiskSel_HandleStopEvent:
 	cp (CURRENT_TITLE:16), 0x78
@@ -1602,15 +1602,15 @@ DiskSel_PlayFindLoop:
 	cp QIZ,0
 	jr ge, DiskSel_PlayNextSong
 	ld (MEDLEY_PLAY_FLAG:16), 0x00
-	ldw WA, 0x0060
-	call UI_PostModeChangeEvent
+	ldw WA, TT_DKMENU
+	call UI_ChangeTitleByIndex
 	ld WA,QIZ
 	ld bc, 1:i3
 	calr FileIO_ValidateSignedValue
 	ld (GLOBAL_ERROR_CODE:16), l
-	ldw WA, 0x00ee
+	ldw WA, TT_MESAGE
 DiskSel_ShowErrorAndExit:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl DiskSel_Exit
 
 DiskSel_PlayNextSong:
@@ -1626,8 +1626,8 @@ DiskSel_PlayNextSong:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 0x78
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DKMDLYPLY
+	call	UI_ChangeTitleByIndex
 	jr	DiskSel_GetCurrentIndex
 DiskSel_PlayNextLoop:
 	inc 1, iz
@@ -1921,17 +1921,17 @@ SmfMed_CheckNotPlaying:
 	cp	l, 2:i3
 	jrl	nz, SmfMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SmfMed_ShowError
 SmfMed_Error31:
 	ld	(GLOBAL_ERROR_CODE:16), 49
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SmfMed_ShowError
 SmfMed_Error3F:
 	ld	(GLOBAL_ERROR_CODE:16), 63
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 SmfMed_ShowError:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl SmfMed_Exit
 
 SmfMed_CheckPlayMode:
@@ -1952,17 +1952,17 @@ SmfMed_CheckPlaying:
 	cp	l, 2:i3
 	jr	nz, SmfMed_SetPlaying
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SmfMed_ShowPlayError
 SmfMed_PlayError31:
 	ld	(GLOBAL_ERROR_CODE:16), 49
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SmfMed_ShowPlayError
 SmfMed_PlayError3F:
 	ld	(GLOBAL_ERROR_CODE:16), 63
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 SmfMed_ShowPlayError:
-	call	SoundCtrl_SendCommand
+	call	UI_InterruptTitleByIndex
 	inc	1, (33668:16)
 SmfMed_SetPlaying:
 	ld	(MEDLEY_PLAY_FLAG:16), 1
@@ -2292,8 +2292,8 @@ SmfMed_PlayFindLoop:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 115
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DPMDLYSMF
+	call	UI_ChangeTitleByIndex
 	jr	SmfMed_CheckAutoPlay
 SmfMed_PlayNextLoop:
 	inc 1, iz
@@ -2314,7 +2314,7 @@ SmfMed_CheckAutoPlay:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 111
+	ldw	wa, TT_DPSMF
 	jr	SmfMed_CallPauseMode
 SmfMed_StoreDelayFlag:
 	ld	(33660:16), xwa
@@ -2329,7 +2329,7 @@ SmfMed_CheckContinue:
 	ld	a, (0x8382:16)
 	extz WA
 SmfMed_CallPauseMode:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 SmfMed_Exit:
 	ld xhl, 0:i3
@@ -2700,7 +2700,7 @@ FmmPdMedleyFunc:
 	cp	l, 2:i3
 	jrl	c, PdMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	PdMed_ShowError
 PdMed_CheckPlayMode:
 	cp	a, 117
@@ -2791,9 +2791,9 @@ PdMed_HandleError:
 	cp	l, 0:i3
 	jrl	z, PdMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 PdMed_ShowError:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl PdMed_Exit
 
 PdMed_InitFromDisk:
@@ -3016,8 +3016,8 @@ PdMed_PlayFindLoop:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 117
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DPMDLYPD
+	call	UI_ChangeTitleByIndex
 	jr	PdMed_CheckAutoPlay
 PdMed_PlayNextLoop:
 	inc 1, hl
@@ -3031,7 +3031,7 @@ PdMed_CheckAutoPlay:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 113
+	ldw	wa, TT_DPPD
 	jr	PdMed_CallPauseMode
 PdMed_StoreDelayFlag:
 	ld	(33760:16), xwa
@@ -3043,9 +3043,9 @@ PdMed_CheckContinue:
 	ld XBC,EVT_SET_HOLD
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw WA, 0x0075
+	ldw WA, TT_DPMDLYPD
 PdMed_CallPauseMode:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 PdMed_Exit:
 	ld xhl, 0:i3
@@ -3466,7 +3466,7 @@ FmmDocMedleyFunc:
 	cp	l, 2:i3
 	jrl	c, DocMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	DocMed_ShowError
 DocMed_CheckPlayMode:
 	cp	a, 116
@@ -3557,9 +3557,9 @@ DocMed_HandleError:
 	cp	l, 0:i3
 	jrl	z, DocMed_Exit
 	ld	(GLOBAL_ERROR_CODE:16), 1
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 DocMed_ShowError:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl DocMed_Exit
 
 DocMed_CheckInit:
@@ -3786,8 +3786,8 @@ DocMed_PlayFindLoop:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 116
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_DPMDLYDOC
+	call	UI_ChangeTitleByIndex
 	jr	DocMed_CheckAutoPlay
 DocMed_PlayNextLoop:
 	inc 1, hl
@@ -3805,7 +3805,7 @@ DocMed_CheckAutoPlay:
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 112
+	ldw	wa, TT_DPDOC
 	jr	DocMed_CallPauseMode
 DocMed_StoreDelayFlag:
 	ld	(33856:16), xwa
@@ -3817,9 +3817,9 @@ DocMed_CheckContinue:
 	ld XBC,EVT_SET_HOLD
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw WA, 0x0074
+	ldw WA, TT_DPMDLYDOC
 DocMed_CallPauseMode:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 DocMed_Exit:
 	ld xhl, 0:i3

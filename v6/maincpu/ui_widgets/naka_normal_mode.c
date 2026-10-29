@@ -15,10 +15,6 @@ extern const char Naka_PresentationRootState;
 
 #define BASE  0x00ED333Cu
 
-/* NAKA class TtlScreen -- class id 0x01600034 (Class table slot 0x160, entry 52),
- * parent Screen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
 /* NakaWidget_N1's element (scripts/converters/nakarest_reviewed_slices.py). */
 typedef struct __attribute__((packed)) {
     uint32_t class_;
@@ -29,256 +25,6 @@ typedef struct __attribute__((packed)) {
     uint16_t flag;
     int16_t rect[4];
 } NakaWidget_N1_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_TtlScreen_t;
-
-/* NAKA class NormScreen -- class id 0x01620000 (Class table slot 0x162, entry 0),
- * parent TtlScreen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_NormScreen_t;
-
-/* NAKA class AcTempoBox -- class id 0x01600014 (Class table slot 0x160, entry 20),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcTempoBox_t;
-
-/* NAKA class AcPmemName -- class id 0x0160003B (Class table slot 0x160, entry 59),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcPmemName_t;
-
-/* NAKA class AcRhythmName -- class id 0x0160003A (Class table slot 0x160, entry 58),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_AcRhythmName_t;
-
-/* NAKA class AcSoundName -- class id 0x0160002A (Class table slot 0x160, entry 42),
- * parent PsParaBox; allsize 38.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint16_t part;              /* +36 u */
-} naka_cls_AcSoundName_t;
-
-/* NAKA class StringBox -- class id 0x01600037 (Class table slot 0x160, entry 55),
- * parent Box; allsize 38.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t str;               /* +26 X */
-    uint32_t font;              /* +30 c */
-    uint16_t fontcolor;         /* +34 ^ */
-    uint16_t alignment;         /* +36 d */
-} naka_cls_StringBox_t;
-
-/* NAKA class TransposeBox -- class id 0x01620003 (Class table slot 0x162, entry 3),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_TransposeBox_t;
-
-/* NAKA class ChordBox -- class id 0x01620004 (Class table slot 0x162, entry 4),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_ChordBox_t;
-
-/* NAKA class AcLswBox -- class id 0x01600013 (Class table slot 0x160, entry 19),
- * parent PsParaBox; allsize 44.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-    uint32_t func;              /* +36 j */
-    uint32_t data;              /* +40 n */
-} naka_cls_AcLswBox_t;
-
-/* NAKA class IvWindowPageControl -- class id 0x0162000C (Class table slot 0x162, entry 12),
- * parent PsInvisibleBox; allsize 26.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint32_t page;              /* +22 n */
-} naka_cls_IvWindowPageControl_t;
-
-/* NAKA class FreeSplitBox -- class id 0x01620005 (Class table slot 0x162, entry 5),
- * parent PsParaBox; allsize 36.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint16_t index;             /* +26 A */
-    uint32_t font;              /* +28 c */
-    uint16_t fontcolor;         /* +32 ^ */
-    uint16_t align;             /* +34 d */
-} naka_cls_FreeSplitBox_t;
-
-/* NAKA class IvPageOverWr -- class id 0x0162001B (Class table slot 0x162, entry 27),
- * parent PsInvisibleBox; allsize 28.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t page;              /* +22 A */
-    uint32_t window;            /* +24 t */
-} naka_cls_IvPageOverWr_t;
 
 typedef struct __attribute__((packed)) {
     char TEST6FUNC_str[10];
@@ -354,7 +100,8 @@ typedef struct __attribute__((packed)) {
     naka_cls_IvPageOverWr_t normal_IvPageOverWr_5;
     /* element 22 of Viewable slot 0x1: IvPageOverWr (class id 0x0162001B) */
     naka_cls_IvPageOverWr_t normal_IvPageOverWr_6;
-    uint8_t bytes_0464[22];  /* 0x47 */
+    /* element 23 of Viewable slot 0x1: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_Normal_23_IvExit;
     /* zero padding */
     /* Window view record "N1", first 22 bytes (the Viewable part); color..child continue in extensions/extension_data.s */
     NakaWidget_N1_t NakaWidget_N1;
@@ -365,6 +112,80 @@ typedef struct __attribute__((packed)) {
 
 _Static_assert(sizeof(naka_normal_mode_t) == 1168,
     "naka_normal_mode must be exactly 1168 bytes");
+
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Toshi_Viewable_NORMAL, registry slot 0x1, 63 elements.
+ * InitializeToshi registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 63, Toshi_Viewable_NORMAL, 0x1`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_x). */
+#define Toshi_Viewable_NORMAL_SLOT 0x001u
+enum Toshi_Viewable_NORMAL_objects {
+    OBJ_Normal,                          /*  0 TtlScreen "Normal" */
+    OBJ_normal,                          /*  1 NormScreen "normal" */
+      OBJ_normal_AcTempoBox,             /*  2 AcTempoBox */
+      OBJ_normal_AcPmemName,             /*  3 AcPmemName */
+      OBJ_normal_AcRhythmName,           /*  4 AcRhythmName */
+      OBJ_normal_AcSoundName,            /*  5 AcSoundName */
+      OBJ_normal_AcSoundName_2,          /*  6 AcSoundName */
+        OBJ_RIGHT2_StringBox,            /*  7 StringBox */
+      OBJ_normal_AcSoundName_3,          /*  8 AcSoundName */
+      OBJ_RIGHT1_StringBox,              /*  9 StringBox */
+      OBJ_LEFT_StringBox,                /* 10 StringBox */
+      OBJ_RHYTHM_StringBox,              /* 11 StringBox */
+      OBJ_normal_TransposeBox,           /* 12 TransposeBox */
+      OBJ_normal_ChordBox,               /* 13 ChordBox */
+        OBJ_normal_AcLswBox,             /* 14 AcLswBox */
+      OBJ_normal_IvWindowPageControl,    /* 15 IvWindowPageControl */
+      OBJ_normal_FreeSplitBox,           /* 16 FreeSplitBox */
+      OBJ_normal_IvPageOverWr,           /* 17 IvPageOverWr */
+      OBJ_normal_IvPageOverWr_2,         /* 18 IvPageOverWr */
+      OBJ_normal_IvPageOverWr_3,         /* 19 IvPageOverWr */
+      OBJ_normal_IvPageOverWr_4,         /* 20 IvPageOverWr */
+      OBJ_normal_IvPageOverWr_5,         /* 21 IvPageOverWr */
+      OBJ_normal_IvPageOverWr_6,         /* 22 IvPageOverWr */
+      OBJ_NakaWidget_Normal_23_IvExit,   /* 23 IvExit */
+    OBJ_NakaWidget_N1,                   /* 24 Window, record outside the C sources (NakaWidget_N1) */
+      OBJ_Toshi_NORMAL_Elem25,           /* 25 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem25) */
+      OBJ_Toshi_NORMAL_Elem26,           /* 26 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem26) */
+      OBJ_Toshi_NORMAL_Elem27,           /* 27 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem27) */
+      OBJ_Toshi_NORMAL_Elem28,           /* 28 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem28) */
+      OBJ_Toshi_NORMAL_Elem29,           /* 29 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem29) */
+      OBJ_Toshi_NORMAL_Elem30,           /* 30 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem30) */
+      OBJ_Toshi_NORMAL_Elem31,           /* 31 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem31) */
+      OBJ_Toshi_NORMAL_Elem32,           /* 32 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem32) */
+    OBJ_Toshi_NORMAL_Elem33,             /* 33 Window, record outside the C sources (Toshi_NORMAL_Elem33) */
+      OBJ_Toshi_NORMAL_Elem34,           /* 34 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem34) */
+      OBJ_Toshi_NORMAL_Elem35,           /* 35 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem35) */
+      OBJ_Toshi_NORMAL_Elem36,           /* 36 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem36) */
+      OBJ_Toshi_NORMAL_Elem37,           /* 37 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem37) */
+      OBJ_Toshi_NORMAL_Elem38,           /* 38 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem38) */
+    OBJ_Toshi_NORMAL_Elem39,             /* 39 Window, record outside the C sources (Toshi_NORMAL_Elem39) */
+      OBJ_Toshi_NORMAL_Elem40,           /* 40 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem40) */
+      OBJ_Toshi_NORMAL_Elem41,           /* 41 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem41) */
+      OBJ_Toshi_NORMAL_Elem42,           /* 42 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem42) */
+      OBJ_Toshi_NORMAL_Elem43,           /* 43 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem43) */
+      OBJ_Toshi_NORMAL_Elem44,           /* 44 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem44) */
+      OBJ_Toshi_NORMAL_Elem45,           /* 45 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem45) */
+      OBJ_Toshi_NORMAL_Elem46,           /* 46 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem46) */
+      OBJ_Toshi_NORMAL_Elem47,           /* 47 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem47) */
+    OBJ_Toshi_NORMAL_Elem48,             /* 48 Window, record outside the C sources (Toshi_NORMAL_Elem48) */
+      OBJ_Toshi_NORMAL_Elem49,           /* 49 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem49) */
+      OBJ_Toshi_NORMAL_Elem50,           /* 50 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem50) */
+      OBJ_Toshi_NORMAL_Elem51,           /* 51 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem51) */
+      OBJ_Toshi_NORMAL_Elem52,           /* 52 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem52) */
+      OBJ_Toshi_NORMAL_Elem53,           /* 53 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem53) */
+      OBJ_Toshi_NORMAL_Elem54,           /* 54 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem54) */
+      OBJ_Toshi_NORMAL_Elem55,           /* 55 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem55) */
+      OBJ_Toshi_NORMAL_Elem56,           /* 56 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem56) */
+    OBJ_Toshi_NORMAL_Elem57,             /* 57 Window, record outside the C sources (Toshi_NORMAL_Elem57) */
+      OBJ_Toshi_NORMAL_Elem58,           /* 58 VwUserBitmap, record outside the C sources (Toshi_NORMAL_Elem58) */
+      OBJ_Toshi_NORMAL_Elem59,           /* 59 VwUserBitmap, record outside the C sources (Toshi_NORMAL_Elem59) */
+    OBJ_Toshi_NORMAL_Elem60,             /* 60 Window, record outside the C sources (Toshi_NORMAL_Elem60) */
+      OBJ_Toshi_NORMAL_Elem61,           /* 61 VwUserBitmap, record outside the C sources (Toshi_NORMAL_Elem61) */
+      OBJ_Toshi_NORMAL_Elem62,           /* 62 VwUserBitmap, record outside the C sources (Toshi_NORMAL_Elem62) */
+};
 
 const naka_normal_mode_t naka_normal_mode_data
     __attribute__((section(".text"), used)) = {
@@ -410,37 +231,41 @@ const naka_normal_mode_t naka_normal_mode_data
     .MainVariSet_str = "MainVariSet",
 
     .Normal = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0000,
-        .exit = 0x01A00000,
-        .window = 0x0003F3F8,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = RAM_Normal_Window,
         .title = SELF(Normal_text),
-        .icon = 0x00000001,
+        .icon = idICON_Default,
     },
 
     .Normal_text = ALIGNED_STRING("NORMAL"),
 
+    /* ==== SCREEN TITLE_NORMAL "NORMAL" -- "TT_NORMAL", title id 0x1, function NAKA_APFUNC_DefaultFunction ====
+     * What: the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
+     * Path: mode MD_NORMAL
+     * EXIT -> TITLE_PS */
     .normal = {
-        .class_ = 0x01620000,
+        .class_ = NAKA_CLASS(NormScreen),
         .super = NAKA_NONE,
-        .sub = 2,
+        .sub = OBJ_normal_AcTempoBox,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00FF,
-        .border = 0x0001,
-        .exit = 0x01A00000,
-        .window = 0x0003F3FC,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = RAM_normal_Window,
         .title = SELF(field_0174),
-        .icon = 0x00000000,
+        .icon = idICON_None,
     },
 
     .field_0174 = 0x00,
@@ -448,328 +273,336 @@ const naka_normal_mode_t naka_normal_mode_data
     .field_0175 = 0xFF,
 
     .normal_AcTempoBox = {
-        .class_ = 0x01600014,
-        .super = 1,
+        .class_ = NAKA_CLASS(AcTempoBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 3,
+        .next = OBJ_normal_AcPmemName,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 0, 67, 79, 86 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 67, 80, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_AcPmemName = {
-        .class_ = 0x0160003B,
-        .super = 1,
+        .class_ = NAKA_CLASS(AcPmemName),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 4,
-        .prev = 2,
-        .flag = 0x0008,
-        .rect = { 8, 3, 312, 22 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_normal_AcRhythmName,
+        .prev = OBJ_normal_AcTempoBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 3, 305, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_AcRhythmName = {
-        .class_ = 0x0160003A,
-        .super = 1,
+        .class_ = NAKA_CLASS(AcRhythmName),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 5,
-        .prev = 3,
-        .flag = 0x0008,
-        .rect = { 4, 40, 123, 59 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_normal_AcSoundName,
+        .prev = OBJ_normal_AcPmemName,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(4, 40, 120, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_AcSoundName = {
-        .class_ = 0x0160002A,
-        .super = 1,
+        .class_ = NAKA_CLASS(AcSoundName),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 6,
-        .prev = 4,
-        .flag = 0x0008,
-        .rect = { 172, 36, 311, 55 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_normal_AcSoundName_2,
+        .prev = OBJ_normal_AcRhythmName,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(172, 36, 140, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .part = 0x0000,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .part = PT_Part1,
     },
 
     .normal_AcSoundName_2 = {
-        .class_ = 0x0160002A,
-        .super = 1,
-        .sub = 7,
-        .next = 8,
-        .prev = 5,
-        .flag = 0x0008,
-        .rect = { 172, 68, 311, 87 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .class_ = NAKA_CLASS(AcSoundName),
+        .super = OBJ_normal,
+        .sub = OBJ_RIGHT2_StringBox,
+        .next = OBJ_normal_AcSoundName_3,
+        .prev = OBJ_normal_AcSoundName,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(172, 68, 140, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .part = 0x0001,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .part = PT_Part2,
     },
 
     .RIGHT2_StringBox = {
-        .class_ = 0x01600037,
-        .super = 6,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_normal_AcSoundName_2,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 176, 60, 220, 70 },
-        .color = 0x0002,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(176, 60, 45, 11),
+        .color = CL_Green,
+        .border = BD_None,
         .str = SELF(RIGHT2_str),
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
     },
 
     .RIGHT2_str = ALIGNED_STRING("RIGHT2"),
 
     .normal_AcSoundName_3 = {
-        .class_ = 0x0160002A,
-        .super = 1,
+        .class_ = NAKA_CLASS(AcSoundName),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 9,
-        .prev = 6,
-        .flag = 0x0008,
-        .rect = { 172, 100, 311, 119 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_RIGHT1_StringBox,
+        .prev = OBJ_normal_AcSoundName_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(172, 100, 140, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000001,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
-        .part = 0x0002,
+        .font = idCHARA2,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .part = PT_Part3,
     },
 
     .RIGHT1_StringBox = {
-        .class_ = 0x01600037,
-        .super = 1,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 10,
-        .prev = 8,
-        .flag = 0x0008,
-        .rect = { 176, 28, 220, 38 },
-        .color = 0x0002,
-        .border = 0x0000,
+        .next = OBJ_LEFT_StringBox,
+        .prev = OBJ_normal_AcSoundName_3,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(176, 28, 45, 11),
+        .color = CL_Green,
+        .border = BD_None,
         .str = SELF(RIGHT1_str),
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
     },
 
     .RIGHT1_str = ALIGNED_STRING("RIGHT1"),
 
     .LEFT_StringBox = {
-        .class_ = 0x01600037,
-        .super = 1,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 11,
-        .prev = 9,
-        .flag = 0x0008,
-        .rect = { 176, 92, 220, 102 },
-        .color = 0x0002,
-        .border = 0x0000,
+        .next = OBJ_RHYTHM_StringBox,
+        .prev = OBJ_RIGHT1_StringBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(176, 92, 45, 11),
+        .color = CL_Green,
+        .border = BD_None,
         .str = SELF(LEFT_str),
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
     },
 
     .LEFT_str = ALIGNED_STRING("LEFT"),
 
     .RHYTHM_StringBox = {
-        .class_ = 0x01600037,
-        .super = 1,
+        .class_ = NAKA_CLASS(StringBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 12,
-        .prev = 10,
-        .flag = 0x0008,
-        .rect = { 12, 28, 51, 38 },
-        .color = 0x000C,
-        .border = 0x0000,
+        .next = OBJ_normal_TransposeBox,
+        .prev = OBJ_LEFT_StringBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(12, 28, 40, 11),
+        .color = CL_DarkYellow,
+        .border = BD_None,
         .str = SELF(RHYTHM_str),
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .alignment = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .alignment = AL_Center,
     },
 
     .RHYTHM_str = ALIGNED_STRING("RHYTHM"),
 
     .normal_TransposeBox = {
-        .class_ = 0x01620003,
-        .super = 1,
+        .class_ = NAKA_CLASS(TransposeBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 13,
-        .prev = 11,
-        .flag = 0x0008,
-        .rect = { 87, 67, 131, 86 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_normal_ChordBox,
+        .prev = OBJ_RHYTHM_StringBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(87, 67, 45, 20),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_ChordBox = {
-        .class_ = 0x01620004,
-        .super = 1,
-        .sub = 14,
-        .next = 15,
-        .prev = 12,
-        .flag = 0x0008,
-        .rect = { 3, 87, 139, 115 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .class_ = NAKA_CLASS(ChordBox),
+        .super = OBJ_normal,
+        .sub = OBJ_normal_AcLswBox,
+        .next = OBJ_normal_IvWindowPageControl,
+        .prev = OBJ_normal_TransposeBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(3, 87, 137, 29),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000004,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_AcLswBox = {
-        .class_ = 0x01600013,
-        .super = 13,
+        .class_ = NAKA_CLASS(AcLswBox),
+        .super = OBJ_normal_ChordBox,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x0008,
-        .rect = { 6, 90, 37, 121 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(6, 90, 32, 32),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000000,
-        .fontcolor = 0x0000,
-        .align = 0x0000,
-        .func = 0x0122001A,
-        .data = 0x0003F400,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .align = AL_Center,
+        .func = NAKA_APFUNC_GmOnOffFunc,
+        .data = RAM_normal_AcLswBox_Value,
     },
 
     .normal_IvWindowPageControl = {
-        .class_ = 0x0162000C,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvWindowPageControl),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 16,
-        .prev = 13,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
-        .page = 0x0003F402,
+        .next = OBJ_normal_FreeSplitBox,
+        .prev = OBJ_normal_ChordBox,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .page = RAM_normal_IvWindowPageControl_Page,
     },
 
     .normal_FreeSplitBox = {
-        .class_ = 0x01620005,
-        .super = 1,
+        .class_ = NAKA_CLASS(FreeSplitBox),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 17,
-        .prev = 15,
-        .flag = 0x0008,
-        .rect = { 34, 116, 113, 127 },
-        .color = 0x00F5,
-        .border = 0x0000,
+        .next = OBJ_normal_IvPageOverWr,
+        .prev = OBJ_normal_IvWindowPageControl,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(34, 116, 80, 12),
+        .color = CL_WallPattern,
+        .border = BD_None,
         .index = 0xFFFF,
-        .font = 0x00000003,
-        .fontcolor = 0x00FF,
-        .align = 0x0000,
+        .font = idCHARA4,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .normal_IvPageOverWr = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 18,
-        .prev = 16,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_normal_IvPageOverWr_2,
+        .prev = OBJ_normal_FreeSplitBox,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00010018,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_NakaWidget_N1),
     },
 
     .normal_IvPageOverWr_2 = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 19,
-        .prev = 17,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_normal_IvPageOverWr_3,
+        .prev = OBJ_normal_IvPageOverWr,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00010021,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem33),
     },
 
     .normal_IvPageOverWr_3 = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 20,
-        .prev = 18,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_normal_IvPageOverWr_4,
+        .prev = OBJ_normal_IvPageOverWr_2,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00010027,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem39),
     },
 
     .normal_IvPageOverWr_4 = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 21,
-        .prev = 19,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_normal_IvPageOverWr_5,
+        .prev = OBJ_normal_IvPageOverWr_3,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00010030,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem48),
     },
 
     .normal_IvPageOverWr_5 = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 22,
-        .prev = 20,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_normal_IvPageOverWr_6,
+        .prev = OBJ_normal_IvPageOverWr_4,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0005,
-        .window = 0x00010039,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem57),
     },
 
     .normal_IvPageOverWr_6 = {
-        .class_ = 0x0162001B,
-        .super = 1,
+        .class_ = NAKA_CLASS(IvPageOverWr),
+        .super = OBJ_normal,
         .sub = NAKA_NONE,
-        .next = 23,
-        .prev = 21,
-        .flag = 0x0018,
-        .rect = { 0, 0, 31, 31 },
+        .next = OBJ_NakaWidget_Normal_23_IvExit,
+        .prev = OBJ_normal_IvPageOverWr_5,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0006,
-        .window = 0x0001003C,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem60),
     },
 
-    .bytes_0464 = { 0x47, 0x00, 0x60, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x16, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },
+    .NakaWidget_Normal_23_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_normal,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_normal_IvPageOverWr_6,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+    },
 
-    .NakaWidget_N1 = { 0x01600035, 0xFFFF, 0x0019, 0xFFFF, 0xFFFF, 0x0008, { 0, 127, 319, 236 } },
+    .NakaWidget_N1 = { NAKA_CLASS(Window), 0xFFFF, 0x0019, 0xFFFF, 0xFFFF, 0x0008, { 0, 127, 319, 236 } },
 
 };
 

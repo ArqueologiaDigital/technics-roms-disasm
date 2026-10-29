@@ -33170,7 +33170,7 @@ StyleRec_999:	; Latin / World / Jamaican Swing: "Caribbean Synth" tempo 90
 ; original discovery.
 ; -----------------------------------------------------------------------------
 StyleRecords_Residue:
-	.incbin	"includes/help_databases/stale_style_records_residue.bin"
+	.incbin	"includes/help_databases/stale_style_records_residue.bin"	; census: generated -- scripts/generators/gen_stale_help_duplicate.py, from the live English+German SLIDE8K build products
 
 ; -----------------------------------------------------------------------------
 ; The tail of the same copied English help database.  The regular structure --

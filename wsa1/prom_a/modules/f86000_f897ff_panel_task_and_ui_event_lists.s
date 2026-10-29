@@ -2420,6 +2420,14 @@ PanelMode_ToScreenIdMap:
 ;          0xF8650F) and `ld BC,0x0004` only from the two PREVIOUS-id ones
 ;          (0xF86493, 0xF864BD).  Check V6.
 ; ---------------------------------------------------------------------
+; Three entries (13, 85, 86) point into the 0x0E `ret` filler of prom_b's routine directory
+; (0xF406B8-0xF406FF holds no slot), so every method of those objects is a lone `ret`: three more
+; do-nothing objects, built from filler instead of PanelScreen_NullVtable.  prom_b is linked
+; separately, so they are named here, by the address they hold (python3 -c "print(open(
+; 'original_ROMs/wsa1_prom_b.ic13','rb').read()[0x406B8:0x40700].hex())" prints only 0e).
+	.set PanelScreen_FillerVtable_F406C4,	0x00f406c4
+	.set PanelScreen_FillerVtable_F406CC,	0x00f406cc
+	.set PanelScreen_FillerVtable_F406DC,	0x00f406dc
 PanelScreen_VtableTable:
 	.long PanelScreen_NullVtable                ; F86EC1  [0]   -> PanelScreen_NullVtable
 	.long T_ModeEnter_Sound                      ; F86EC5  [1]   -> 0xF41500
@@ -2434,7 +2442,7 @@ PanelScreen_VtableTable:
 	.long T_PanelMode_System_Enter                              ; F86EE9  [10]   -> 0xF41910
 	.long PanelScreen_NullVtable                ; F86EED  [11]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F86EF1  [12]   -> PanelScreen_NullVtable
-	.long 0x00F406C4                            ; F86EF5  [13]   -> 0xF406C4
+	.long PanelScreen_FillerVtable_F406C4       ; F86EF5  [13]   -> 0xF406C4
 	.long PanelScreen_NullVtable                ; F86EF9  [14]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F86EFD  [15]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F86F01  [16]   -> PanelScreen_NullVtable
@@ -2553,8 +2561,8 @@ PanelScreen_VtableTable_ViewB:
 	.long PanelScreen_NullVtable                ; F87089  [82]   -> PanelScreen_NullVtable
 	.long T_PageDispatch_L0adSingleC0mbination                              ; F8708D  [83]   -> 0xF4241C
 	.long T_PageDispatch_L0adSingleS0und                              ; F87091  [84]   -> 0xF423E0
-	.long 0x00F406CC                            ; F87095  [85]   -> 0xF406CC
-	.long 0x00F406DC                            ; F87099  [86]   -> 0xF406DC
+	.long PanelScreen_FillerVtable_F406CC       ; F87095  [85]   -> 0xF406CC
+	.long PanelScreen_FillerVtable_F406DC       ; F87099  [86]   -> 0xF406DC
 	.long PanelScreen_NullVtable                ; F8709D  [87]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F870A1  [88]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F870A5  [89]   -> PanelScreen_NullVtable

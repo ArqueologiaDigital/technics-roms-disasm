@@ -14,8 +14,9 @@ WHAT IT READS
 SIZE
   `.incbin "f", skip, count`  -> count;   `.incbin "f", skip` -> size(f) - skip;   `.incbin "f"` -> size(f);
   `.incbin_range "f", a, b`   -> b - a.
-  A file is looked up next to the including file, then in each ancestor directory up to the repo root, and in
-  `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
+  A file is looked up next to the including file, then in each ancestor directory up to the repo root; in an
+  ancestor's `build/`, also under the including file's path relative to that ancestor (floppy/build/kn6000/
+  ca6000s/ for floppy/kn6000/ca6000s/files/X.s); and in `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
   count is reported as `unsized`; run the tree's build first for exact byte figures.
 
 CLASSES (first match wins)
@@ -68,7 +69,8 @@ TREES = {
     "kn5000-waveform":   ["waveform"],
     "kn5000-rhythm":     ["rhythm_data"],
     "kn5000-floppy":     ["floppy/kn5000"],
-    "wsa1":              ["wsa1/src", "wsa1/include"],
+    "wsa1":              ["wsa1/prom_a", "wsa1/prom_b", "wsa1/prom_c", "wsa1/prom_d", "wsa1/kernel", "wsa1/dsp",
+                          "wsa1/maincpu", "wsa1/include"],
     "wsa1-floppy":       ["floppy/wsa1"],
     "kn7000-program":    ["kn7000/src/program", "kn7000/src/program.s"],
     "kn7000-table":      ["kn7000/src/table", "kn7000/src/table.s"],
@@ -112,12 +114,20 @@ def num(tok):
 
 def locate(path, src, tree_dirs):
     cands = []
+    chain = []
     d = (ROOT / src).parent
     while True:
-        cands.append(d / path)
+        chain.append(d)
         if d == ROOT:
             break
         d = d.parent
+    for i, d in enumerate(chain):
+        cands.append(d / path)
+        if (d / "build").is_dir():
+            # a build tree mirroring the sources below it: floppy/build/kn6000/ca6000s/ for
+            # floppy/kn6000/ca6000s/files/X.s
+            for sub in chain[:i + 1]:
+                cands.append(d / "build" / sub.relative_to(d) / path)
     for td in tree_dirs:
         base = ROOT / td
         if base.is_file():

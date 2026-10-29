@@ -31,8 +31,8 @@ FmmPasswordFunc:
 	jr	z, Password_ClearAndSetSlot
 Password_ShowError:
 	ld	(GLOBAL_ERROR_CODE:16), 10
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	jrl	Password_Return
 Password_ClearAndSetSlot:
 	ld	wa, iz
@@ -89,7 +89,7 @@ Password_ForwardToFileName:
 
 Password_ShowErrorStatus:
 	ld	(GLOBAL_ERROR_CODE:16), 11
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	Password_CallStatusDisplay
 Password_HandleSaveEvent:
 	cp (XDE),0x03
@@ -139,7 +139,7 @@ Password_ForwardToSaveFilter:
 
 Password_SaveErrorStatus:
 	ld	(GLOBAL_ERROR_CODE:16), 11
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	Password_CallStatusDisplay
 Password_HandleLoadEvent:
 	call CheckSlotIsSelected
@@ -153,9 +153,9 @@ Password_HandleLoadEvent:
 	jr t, Password_Return
 Password_LoadErrorStatus:
 	ld	(GLOBAL_ERROR_CODE:16), 11
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 Password_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 
 Password_Return:
 	ld xhl, 0:i3
@@ -391,19 +391,19 @@ FileName_OpSave:
 	cp	l, 0:i3
 	jr	z, FileName_OpSave_ShowCode1
 FileName_OpSave_ShowCodeA:
-	ldw wa, 0xa
+	ldw wa, MD_SEQ_PLAY
 	jr FileName_OpSave_CallHandler
 
 FileName_OpSave_ShowCode1:
-	ld wa, 1:i3
+	ld wa, MD_NORMAL:i3
 
 FileName_OpSave_CallHandler:
-	call UI_PostPartChangeEvent
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jrl FileName_CallStatusDisplay
 
 FileName_OpLoad:
@@ -460,13 +460,13 @@ FileName_OpLoad_Execute:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
-	call	UI_PostPartChangeEvent
+	ld	wa, MD_NORMAL:i3
+	call	UI_ChangeModeByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	FileName_CallStatusDisplay
 FileName_OpFormat:
 	cp	xiz, 50
@@ -495,13 +495,13 @@ FileName_OpFormat:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
-	call	UI_PostPartChangeEvent
+	ld	wa, MD_NORMAL:i3
+	call	UI_ChangeModeByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	FileName_CallStatusDisplay
 FileName_OpDelete:
 	cp xiz, 0x5
@@ -544,7 +544,7 @@ FileName_OpDelete_Execute:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	FileName_CallStatusDisplay
 FileName_OpFormatVariant:
 	cp	xiz, 51
@@ -569,7 +569,7 @@ FileName_OpFormatVariant:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	FileName_CallStatusDisplay
 FileName_OpNavigate:
 	cp	xiz, 6
@@ -618,9 +618,9 @@ FileName_Navigate_CheckChanged:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 FileName_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 
 FileName_GetSelection:
 	ld	wa, (32450:16)

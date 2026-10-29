@@ -1,0 +1,408 @@
+# KN5000 HELP database, French (table_data/help_databases.s, HelpDB_French).
+# SOURCE of help_db_french.bin: scripts/build/help_db_text.py build; that script's docstring
+# gives the format and the evidence.  "@ topic T page P" starts an entry (the title after it is
+# a comment); the line break after each "~0d" (the renderer's newline) is not part of the
+# text; a blank line ends the entry; a page with no entry is empty.
+
+@ topic 0 page 1  DEMO
+Le KN5000 dispose de deux menus de démonstration, présentant ses performances et ses caractéristiques.~0d
+Le menu de performances possède 18 morceaux de démonstration, qui illustrent les sonorités et les styles du KN5000. Ils sont répartis en 3 sous-menus: Style, Sound et Rhythm. Choisissez l'un des 3 sous-menus à l'aide des boutons situés sous l'écran, puis sélectionnez un morceau de démonstration avec les boutons situés à droite et à gauche de l'écran.~0d
+
+@ topic 0 page 2  DEMO
+ La reproduction commence automatiquement.~0d
+Vous pouvez obtenir une reproduction enchaînée de toutes les séquences en maintenant pressé le bouton DEMO pendant quelques secondes. Pressez le bouton STOP pour interrompre la reproduction de ces démonstrations.~0d
+
+@ topic 0 page 3  DEMO
+La démonstration «Feature Presentation » consiste en un show destiné à vous présenter les caractéristiques principales du KN-5000. Sélectionnez simplement sur l'écran « Feature Presentation »puis « Start The Demo» , et appréciez le spectacle !~0d
+
+@ topic 1 page 1  AUTO PLAY CHORD
+AUTO PLAY CHORD fournit un arrangement d'accompagnement professionnel correspondant à chacun des 200 styles de rythme du KN5000. Le motif d'accompagnement évolue suivant les accords joués.~0d
+En pressant le bouton Auto Play Chord, vous obtiendrez l'affichage des options suivantes :~0d
+
+@ topic 1 page 2  AUTO PLAY CHORD
+ONE FINGER: Reconnaissance de quatre types d'accord en utilisant le système Technics "One Finger Chord".~0d
+FINGERED: Reconnaissance de l'accord joué complètement sur la partie gauche du clavier partagé "Split".~0d
+PIANIST: Reconnaissance sur la totalité du clavier de l'accord joué. Vous pouvez ainsi utiliser une seule sonorité (ex : piano) pour jouer sur votre instrument avec les deux mains.~0d
+
+@ topic 1 page 3  AUTO PLAY CHORD
+MEMORY: Maintient l'accord joué après que vous ayez relâché les touches. L'accompagnement continuera dans la même tonalité jusqu'à ce qu'un autre accord soit joué.~0d
+ON BASS: Lorsque vous utilisez l'un des modes "Fingered" ou "Pianist", la fonction "On Bass" reconnaît les renversements d'accord et la partie de basse de l'accompagnement est effectuée autour de la première note du renversement joué.~0d
+
+@ topic 2 page 1  SOUND ARRANGER ON/OFF
+Le "Sound Arranger" permet de choisir les instruments utilisés par l'accompagnement automatique. Certains changements de présélections sont disponibles en pressant simplement le bouton "Sound Arranger".~0d
+Vous pouvez effectuer vos propres modifications en pressant le bouton "Sound Arranger Set".~0d
+
+@ topic 3 page 1  SOUND ARRANGER SET
+Le "Sound Arranger" permet de choisir les instruments utilisés par l'accompagnement automatique.~0d
+Suivez cette procédure pour créer votre propre variation d'un accompagnement automatique :~0d
+(1) Sélectionnez un rythme.~0d
+(2) Pressez le bouton "Sound Arranger SET".~0d
+(3) Sélectionnez une partie de l'APC sur l'écran LCD.~0d
+
+@ topic 3 page 2  SOUND ARRANGER SET
+(4) A l'aide des boutons " Sound Select" sélectionnez une autre sonorité. (avec un effet numérique si vous le désirez)~0d
+(5) Si vous le désirez, répétez ces manipulations pour les autres parties.~0d
+(6) Pour terminer cette procédure, pressez à nouveau le bouton SET.~0d
+
+@ topic 4 page 1  RHYTHM GROUP
+Pour sélectionner l'un des 200 rythmes présélectionnés ou l'un des 20 rythmes programmables du KN5000, utilisez les boutons "Rhythm Group". Ils sont regroupés en 15 catégories. Chacune est accessible en pressant le bouton "Rhythm Group" correspondant.~0d
+Dix motifs ou plus sont disponibles pour chaque groupe. Après avoir sélectionné un "Rhythm Group", pressez l'un des boutons situés à gauche ou à droite pour choisir un rythme.~0d
+
+@ topic 4 page 2  RHYTHM GROUP
+L'écran peut afficher 10 rythmes sur une seule page. Si plus de dix rythmes sont disponibles, l'indication PAGE 1 / 2 apparaît en haut à droite de l'écran. Pour obtenir la page suivante, pressez les boutons "Page Up/Down".~0d
+
+@ topic 4 page 3  RHYTHM GROUP
+Le "Custom Rhythm Group" est un groupe spécial dans lequel vous pouvez enregistrer vos accompagnements "Composer" favoris. Ces motifs peuvent être des styles présélectionnés modifiés, entièrement nouveaux, chargés à partir de l'une des disquettes issues de la collection Technics Music Disk Collection ou autre.
+
+@ topic 4 page 4  RHYTHM GROUP
+ Une fois que vous avez chargé un style dans le "Custom Rhythm Group" il reste en mémoire jusqu'à ce qu'il soit remplacé par un autre. La ré-initialisation du KN5000 n'efface pas les "Custom Rhythms".~0d
+
+@ topic 5 page 1  COMPOSER MEMORY
+Le "Composer" permet de créer des styles d'accompagnement ou d'en charger de nouveaux à partir d'une disquette.~0d
+Le bouton "Composer Memory" permet de sélectionner le motif de "Composer" que vous désirez utiliser. Sur la gauche de l'écran, trois banques de "Composer" (A, B et C) sont accessibles.~0d
+
+@ topic 5 page 2  COMPOSER MEMORY
+ Quatre mémoires sont disponibles pour chacune d'entre-elles à droite de l'affichage. Vous pouvez également utiliser les boutons "Rhythm Variation" pour sélectionner l'une des quatre mémoires de "Composer" de chaque banque.~0d
+
+@ topic 6 page 1  COMPOSER MENU
+Le "Composer" permet de créer des styles d'accompagnement ou d'en charger de nouveaux à partir d'une disquette. Le menu "Composer Menu" dispose de toutes les fonctions vous permettant de créer vos propres styles "Composer", ou de copier et d'éditer les styles présélectionnés.~0d
+
+@ topic 6 page 2  COMPOSER MENU
+Le menu "Composer" comprend également une fonction "Easy Composer" qui permet de créer de nouveaux styles "Composer" en associant des motifs présélectionnés, et la fonction de copie de vos propres styles "Composer" dans le "Custom Rhythm Group". Cette fonction est particulièrement utile si vous désirez désirez enregistrer de manière définitive dans le "Custom Rhythm Group" de nouveaux styles issus d'une disquette.~0d
+
+@ topic 6 page 3  COMPOSER MENU
+Si vous pressez et maintenez le bouton "Composer Menu" alors qu'une disquette est insérée dans le lecteur, l'affichage "Disk Load" apparaît automatiquement et vous invite au chargement d'un "Composer" de cette disquette.~0d
+
+@ topic 7 page 1  TRANSPOSE
+A l'aide des boutons "Transpose" vous pouvez transposer le KN5000 dans n'importe quelle tonalité.~0d
+Pressez le bouton de droite pour augmenter par intervalle d'un demi-ton la hauteur de la tonalité de Do (C) à Fa # (F#) et le bouton de gauche pour l' abaisser de Do (C) à Sol (G).~0d
+Si vous transposez en jouant, la transposition s'effectuera à partir de la note suivante.~0d
+
+@ topic 7 page 2  TRANSPOSE
+La transposition est toujours relative à Do Majeur. Ainsi, si vous jouez en Fa et que vous désirez passer en Fa#, il vous suffit de transposer d'un demi-ton au dessus (l'affichage indiquera Ré bémol-Db).~0d
+Pressez simultanément les deux boutons pour annuler la transposition.~0d
+
+@ topic 8 page 1  TEMPO/PROGRAM
+La molette "Tempo/Program" sert principalement à modifier la vitesse du tempo de reproduction du rythme. Une rotation vers la gauche ralentit le tempo, une rotation vers la droite l'augmente.~0d
+Lorsque vous utilisez l'un des modes de réglage (par exemple SOUND EDIT ou COMPOSER), si l'indicateur situé en haut à droite de la molette est allumé, la molette "Tempo/Program" peut être utilisée pour modifier la valeur ou la fonction sélectionnée sur l'écran.~0d
+
+@ topic 9 page 1  MANUAL SEQ PAD
+La fonction "Manual Sequence Pads" permet la reproduction d'une grande variété de phrases musicales et d'effets que vous pouvez additionner à votre interprétation. Chacun des six boutons "Pads" correspond à une phrase différente. En pressant simplement l'un des pads, la phrase ou l'effet est reproduit.~0d
+
+@ topic 9 page 2  MANUAL SEQ PAD
+Certaines phrases comme des arpèges sont reproduites en boucle jusqu'à ce que le bouton "Stop/Record"soit pressé.~0d
+Pressez les boutons « Bank, Menu » et « Stop/Record » pour plus d'informations.~0d
+
+@ topic 10 page 1  MSP BANK
+Vous disposez de 15 "Banks"de phrases et d'effets "Manual Sequence Pads". Le changement de banque sélectionne automatiquement les différentes phrases reproduites par les six pads. Les banques correspondent à des catégories comme Jazz, Rock et Comical. Pour changer de banque MSP, pressez simplement le bouton "Bank" et effectuez votre sélection sur l'affichage.~0d
+Trois banques spéciales "MSP Bank" sont aussi disponibles : User, Compile et Control.~0d
+
+@ topic 10 page 2  MSP BANK
+La banque "Compile" vous permet de combiner vos phrases MSP favorites des différentes banques dans une seule banque. Pressez le bouton "MSP Menu" pour obtenir plus d' informations.~0d
+La banque "User Banks" vous permet d'enregistrer vos propres phrases MSP. Pressez le bouton "Stop/Record" pour obtenir plus d'informations.~0d
+
+@ topic 10 page 3  MSP BANK
+La banque "Control Bank" dispose de fonctions de contrôle très utiles comme "Tremolo Slow/Fast" et "Glide". Pour plus de détails, reportez-vous au mode d'emploi.~0d
+
+@ topic 11 page 1  MSP STOP/RECORD
+Si vous désirez stopper la reproduction d'une phrase "Manual Sequence Pad", pressez le bouton "Stop/Record". Certaines phrases comme des arpèges en boucle sont reproduites en continu jusqu'à ce que le bouton"Stop/Record"soit pressé.~0d
+Pour enregistrer votre propre phrase MSP, suivez la procédure suivante :~0d
+(1)  Sélectionnez l'une des banques "User Banks"~0d
+(2)  Tout en maintenant le bouton "Stop/Record", pressez l'un des pads.~0d
+
+@ topic 11 page 2  MSP STOP/RECORD
+(3)  Sélectionnez un instrument~0d
+(4)  Pressez le bouton "Rhythm Start/Stop"~0d
+(5)  Après un décompte de deux mesures, jouez votre phrase~0d
+(6)  Pressez le bouton "Stop/Record" pour terminer la procédure d'enregistrement~0d
+Pressez le pad pour écouter votre phrase!~0d
+
+@ topic 12 page 1  MSP MENU
+Le menu "MSP Menu" dispose des fonctions pour constituer vos "Compile Banks", dans lesquelles vous pouvez regrouper vos phrases MSP favorites des différentes banques.~0d
+Vos pouvez compiler ces phrases dans ces banques et leur donner un nom afin de mieux vous remémorer ce qu'elles contiennent.~0d
+Le menu "MSP Menu" dispose également d'une fonction pemettant de nommer les banques "User Banks".~0d
+
+@ topic 13 page 1  SPLIT POINT
+Le clavier du KN5000 peut être partagé en deux parties gauche et droite assignées à des sonorité différentes, en n'importe quel point. Le partage "Split" du clavier est également actif lorsque l' "Auto Play Chord" est utilisé dans les modes "One Finger" et "Fingered".~0d
+
+@ topic 13 page 2  SPLIT POINT
+Pressez le bouton " Split Point" plusieurs fois pour passer de l'un à l'autre des trois points de partage présélectionnés (G2, C3 & G3). Pour définir votre propre point de partage "Split", pressez et maintenez simplement le bouton "Split Point" quelques secondes jusqu'à ce que l'écran indique l'affichage de réglage du point de partage. Puis, pressez la touche sur laquelle vous désirez définir votre point de partage.~0d
+
+@ topic 14 page 1  OTP / MUSIC STYLIST
+Les fonctions "One Touch Play" et "Music Stylist" programment le KN5000 pour vous. Vous disposez ainsi d'une programmation professionnelle instantanément.~0d
+Le "One Touch Play" programme le KN5000 avec une registration et un tempo adaptés à chacun des 200 ryhtmes présélectionnés. Cette programmation complète s'effectue en pressant un simple bouton.~0d
+
+@ topic 14 page 2  OTP / MUSIC STYLIST
+Pour utiliser le "One Touch Play", sélectionnez le ryhtme que vous désirez puis pressez et maintenez le bouton "One Touch Play (Music Stylist)" quelques secondes. Le nom de la registration "One Touch Play" apparaît brièvement sur l'écran. A vous de jouer!~0d
+Le "Music Stylist" est votre guide parmi les 1000 styles musicaux proposés par le KN5000. Pressez et relâchez le bouton "Music Stylist" et le menu principal du "Music Stylist" s'inscrit sur l'affichage.~0d
+
+@ topic 14 page 3  OTP / MUSIC STYLIST
+Vous disposez de deux méthodes pour trouver le style de musique que vous désirez jouer : utiliser le "Style Explorer" ou effectuer votre choix dans la liste "Alphabetical Style List".~0d
+Le "Style Explorer" regroupe les différents genres musicaux par catégories. Chaque catégorie vous présente des sous-catégories. Chaque sous-catégorie dispose de quatre styles différents, chacun porte un nom évocateur de son contenu.~0d
+
+@ topic 14 page 4  OTP / MUSIC STYLIST
+La liste alphabétique des styles vous indique tous les styles disponibles avec la fonction « Music Stylist ». Lorsque vos styles préférés vous seront devenus familiers, il sera facile de les retrouver avec cette fonction.~0d
+
+@ topic 15 page 1  MUSIC STYLE ARRANGER
+Le "MUSIC STYLE ARRANGER" vous aide à effectuer des changements d'orchestration professionnels. Il vous fournit quatre orchestrations présélectionnées pour chaque style. Activez le "MSA" et une orchestration complète, correspondant au style déterminé, sera automatiquement sélectionnée.~0d
+
+@ topic 15 page 2  MUSIC STYLE ARRANGER
+Le passage de l'une à l'autre des quatre "Rhythm Variations" modifie l'orchestration, en correspondance avec le type de variation. En passant des variations MSA 1 à MSA 4, les orchestrations deviennent plus brillantes et plus étoffées. Les boutons "Fill-In" permettent de passer d'une variation MSA à une autre automatiquement. Le Fill In 1 permet de revenir à la précédente et Fill In 2 de passer à la suivante.~0d
+
+@ topic 15 page 3  MUSIC STYLE ARRANGER
+Pour personnaliser le "MSA", pressez et maintenez le bouton "MSA" jusqu'à l'obtention de l'affichage de réglage de mode. Vous disposez de trois modes :~0d
+Rhythm: changement de la variation uniquement.~0d
+Sound & Rhythm: changements à la fois des sonorités et de la variation.~0d
+Panel Memory: Le "Music Style Arranger" appelle automatiquement les quatre premiers "Panel Memories" de la "Bank 1".~0d
+
+@ topic 16 page 1  VARIATION & MSA
+Ces boutons servent à deux fonctions :~0d
+(1)  Pour sélectionner la variation du style~0d
+(2)  Pour l'utilisation du "Music Style Arranger" (suivant l'activation ou non du MSA).~0d
+Chacun des 200 rythmes/styles du KN5000 dispose de quatre variations. Ainsi, vous pouvez utiliser ces boutons tout en jouant pour faire varier l'accompagnement automatique tout en restant dans le même style musical.~0d
+
+@ topic 16 page 2  VARIATION & MSA
+Lorsque vous utilisez le "Music Style Arranger" les boutons de variation modifient l'accompagnement et l'orchestration. A présent, pressez le bouton "Music Style Arranger" pour obtenir plus d'informations.~0d
+
+@ topic 17 page 1  FILL IN 1, 2
+Souvent, au cours d'un concert le batteur ou l'un des instrumentistes du groupe (ou de l'orchestre) effectue un solo. Le KN5000 vous aide à obtenir le même effet en fournissant 2 variations ou "Fill-Ins" pour chaque variation du style. Lorsque l'un des deux "Fill-Ins" 1 or 2 est pressé au cours de la reproduction d'un style, un "fill-in" est reproduit pendant une mesure, puis le style reprend.~0d
+
+@ topic 17 page 2  FILL IN 1, 2
+Si l'un des boutons "Fill In" est pressé sur le dernier temps d'une mesure, le "Fill In" sera reproduit pendant toute la durée de la mesure suivante. S'il est pressé sur un autre temps de la mesure, il sera reproduit pendant la durée restante de celle-ci.~0d
+
+@ topic 17 page 3  FILL IN 1, 2
+Si vous pressez le bouton "Fill-In 2" avant le début de la reproduction du style, un décompte de mesure sera reproduit. Lors de l'utilisation du "Sequencer", le bouton "Fill-In 1" possède également une autre fonction. Si vous arrêtez le séquenceur et désirez revenir au début de la séquence, il vous suffit de presser le bouton "Fill-In 1".~0d
+
+@ topic 18 page 1  INTRO & ENDING 1, 2
+Les boutons "Intro & Ending" agrémentent vos interprétations d'introductions et de finals professionnels. Chaque style dispose de deux introductions et de deux finals.~0d
+Effectuez la programmation de votre clavier (ou laissez le "One Touch Play" le faire pour vous) et pressez l'un des boutons "Intro & Ending" avant de jouer. Puis jouez simplement un accord avec votre main gauche et écoutez l'introduction musicale.~0d
+
+@ topic 18 page 2  INTRO & ENDING 1, 2
+Lorsque votre interprétation est terminée, pressez l'un des boutons" Intro & Ending" à nouveau et le KN5000 reproduit un final correpondant au style choisi. Lorsque le final est terminé, le rythme s'arrête automatiquement.~0d
+
+@ topic 19 page 1  SYNCHRO & BREAK
+Ce bouton possède deux fonctions suivant l'utilisation du KN5000.~0d
+Si vous jouez sans utiliser l' "Auto Play Chord", la fonction "Synchro & Break" fera débuter la reproduction du rythme automatiquement dès que vous jouerez un accord à gauche du point de partage " Split".~0d
+
+@ topic 19 page 2  SYNCHRO & BREAK
+Si vous utilisez l' "Auto Play Chord", sa fonction est différente si l' "Auto Play Chord Memory" est activé ou non :~0d
+Si vous utilisez l' "Auto Play Chord" avec "Memory",la fonction "Synchro & Break" déclenchera automatiquement la reproduction du rythme et de l'accompagnement lorsque vous jouerez un accord à gauche du point de partage " Split".
+
+@ topic 19 page 3  SYNCHRO & BREAK
+ La reproduction continuera jusqu'à ce que vous pressiez à nouveau "Synchro & Break", le bouton "Start/Stop" ou l'un des boutons "Ending".~0d
+Si vous utilisez l' "Auto Play Chord" sans "Memory", la fonction "Synchro & Break" déclenchera la reproduction du rythme et de l'accompagnement lorsque vous jouerez et maintiendrez un accord à gauche du point de partage " Split".
+
+@ topic 19 page 4  SYNCHRO & BREAK
+ Lorsque vous relâchez les touches, le rythme et l'accompagnement s'arrêtent, jusqu'à ce que les touches soient à nouveau enfoncées.~0d
+
+@ topic 20 page 1  START/STOP
+Le bouton "Start/Stop" sert à diverses fonctions, mais son utilisation première est le déclenchement et l'arrêt du rythme automatique.~0d
+Si vous utilisez la fonction "Sequencer", le bouton "Start/Stop" permet de déclencher et d'arrêter la reproduction de la séquence. Il déclenche également l'enregistrement pour la fonction "Manual Sequence Pads", et pour le "Sequencer" lorsque le métronome est activé.~0d
+
+@ topic 21 page 1  TAP TEMPO
+Le "Tap Tempo" permet de régler la vitesse du tempo de votre interprétation en le tapant simplement sur le bouton correspondant. L'intervalle entre les deux dernières pressions sur le bouton sert à définir la vitesse du tempo. Vous devez donc taper sur ce bouton au moins deux fois !~0d
+
+@ topic 22 page 1  TECHNI-CHORD
+Le "Techni-Chord" ajoute des harmoniques aux notes de votre mélodie créant ainsi des enchaînement d'accords. Les harmoniques engendrées par le "Techni-Chord" sont définies par les accords joués à la main gauche.~0d
+Vous pouvez sélectionner l'un des 14 différents types d'harmonisation suivants :~0d
+Close, Open 1, Open 2, Duet 1, and Duet 2, Country, Theatre, Hymn, Block, Big Band Brass, Big Band Reeds, Octave, Hard Rock et Fanfare.~0d
+
+@ topic 22 page 2  TECHNI-CHORD
+Pour changer de type de "Techni-Chord", pressez et maintenez simplement le bouton "Techni-Chord" quelques secondes, jusqu'à ce que l'affichage de réglage apparaisse.~0d
+Le "Techni-Chord Orchestrator" permet d'assigner le "Techni-Chord" à une autre partie du KN5000. Ainsi, les harmoniques peuvent être reproduites avec une sonorité différente de celle assigée à la mélodie et vous pouvez contrôler leur volume.~0d
+
+@ topic 23 page 1  PANEL MEMORY
+La fonction "Panel Memory" enregistre vos programmations et les rappelle instantanément. Vous disposez de 10 banques de 8 "Panel Memories", soit un total de 80 programmes disponibles. Pour plus de facilité, chaque banque et chaque "Panel Memory" peut être nommé.~0d
+La fonction "Panel Memory" possède 2 modes, "Normal" et "Expand".~0d
+
+@ topic 23 page 2  PANEL MEMORY
+ Le mode "Normal" rappelle les réglages de base : sonorités, effets et balances. Le mode "Expand" peut rappeler pratiquement tous les réglages du clavier, et dispose d'un filtre vous permettant de neutraliser certains réglages du "Panel Memory".~0d
+A présent, pressez le bouton "Panel Memory Set" pour obtenir plus d'informations sur le réglage du "Panel Memory" et la sélection des modes "Normal" ou "Expand".~0d
+
+@ topic 24 page 1  SET
+Le bouton "Panel Memory Set" sert principalement à l'enregistrement des réglages dans le "Panel Memory".~0d
+Suivez la procédure suivante:~0d
+(1). Effectuez vos réglages~0d
+(2). Utilisez le bouton "Next Bank" pour sélectionner une banque du "Panel Memory".~0d
+(3). Tout en maintenant le bouton "Set", pressez le "Panel Memory" dans lequel vous souhaitez enregistrer le réglage de l'instrument ~0d
+
+@ topic 24 page 2  SET
+Le réglage est à présent enregistré dans le "Panel Memory" choisi.~0d
+Pour changer de mode de "Panel Memory", pressez et maintenez simplement le bouton "Panel Memory Set" quelques secondes jusqu'à ce que l'affichage "Panel Memory Mode" apparaisse. Sélectionnez "Normal" ou "Expand"sur l'affichage.~0d
+
+@ topic 24 page 3  SET
+Les pages 2 et 3 de cette fonction contiennent les réglages du filtre "Expand Mode Filter". Vous pouvez déterminer de manière précise quels types de réglages doivent être rappelés par le "Panel Memory".~0d
+
+@ topic 25 page 1  NEXT BANK
+Le bouton "Next Bank" permet de passer à la banque suivante de "Panel Memory" en pressant un seul bouton. Le réglage de l'instrument ne changera pas jusqu'à ce que l'un des boutons "Panel Memory" soit pressé. Ainsi, vous pouvez effectuer une recherche parmi les différentes banques pour trouver le "Panel Memory"désiré.~0d
+
+@ topic 26 page 1  BANK VIEW
+Le bouton "Bank View" permet l'affichage des noms des 10 banques "Panel Memory" sur la première page.~0d
+Vous pouvez sélectionner l'une des différentes banques avec les boutons situés de chaque côté de l'écran.~0d
+La page 2 "Bank View" indique les noms de tous les "Panel Memories" de la banque sélectionnée. A partir de cet affichage, vous pouvez aussi nommer les banques et les "Panel Memories".~0d
+
+@ topic 27 page 1  SEQUENCER PLAY
+Le bouton "Sequencer Play" active l'affichage "Sequencer Play". Celui-ci présente les 16 pistes du séquenceur et le statut de chacune d'entre-elles. Si vous chargez une séquence à partir d'une disquette, le bouton Sequencer Play est activé automatiquement. Pressez simplement le bouton "Start/Stop"et la séquence est aussitôt reproduite.~0d
+
+@ topic 27 page 2  SEQUENCER PLAY
+Vous pouvez aussi sélectionner l'une des 10 séquences internes dont vous désirez la reproduction , et également obtenir la reproduction enchaînée "Medley" de toutes les séquences.~0d
+Le "Mixer" est accessible à partir de la page "Sequencer Play". Lorsque l'on y accède à partir du "Sequencer", le "Mixer" fonctionne pour chaque piste, plutôt que pour des parties spécifiques. Ainsi, vous n'avez pas besoin de connaître quelle partie est assignée à quelle piste pour effectuer ces réglages.~0d
+
+@ topic 27 page 3  SEQUENCER PLAY
+Si vous pressez le bouton "Exit", le bouton "Sequencer Play" reste en fonction. Vous pouvez ainsi utiliser d'autres fonctions pendant la reproduction de la séquence (ex : sélectionner d'autres sonorités). Pour désactiver "Sequencer Play" pressez à nouveau le bouton "Sequencer Play".~0d
+
+@ topic 28 page 1  EASY REC
+L' "EASY RECORD" est une fonction permettant l'enregistrement simple et direct de votre interprétation par le KN5000. Si vous désirez enregistrer votre interprétation entièrement , en incluant la mélodie et les accords (avec l' "Auto Play Chord"), effectuez les réglages du KN5000, pressez "Easy Record" puis OK sur l'affichage.~0d
+Cette fonction permet de passer outre tous les réglages complets du séquenceur et d'effectuer rapidement et facilement un enregistrement.~0d
+Vous pouvez sélectionner sur l'affichage "Easy Record", l'une des 10 mémoires de séquences internes pour effectuer votre enregistrement.~0d
+
+@ topic 29 page 1  SEQUENCER MENU
+Le menu "Sequencer" donne accès à des fonctions sophistiquées similaires à celles d'un programme séquenceur pour ordinateur. La page principale du menu "Sequencer Menu" possède 2 options, "Create" et "Edit".~0d
+Le menu "Create" dispose de fonctions permettant de créer une séquence, telles que "Realtime", "Step" et "Punch Record", et d'autres pour le réglage du séquenceur, comme "Track Assign" et le réglage de l' "After Touch".~0d
+
+@ topic 29 page 2  SEQUENCER MENU
+"Create" comprend également une fonction très pratique appelée "Panel Write". Si vous désirez modifier les sonorités et les réglages sélectionnés au début d'une séquence, il suffit d'effectuer les changements et de presser "Panel Write". Les nouveaux réglages seront enregistrés au début de la séquence.~0d
+
+@ topic 29 page 3  SEQUENCER MENU
+Le menu "Edit" dispose de fonctions destinées à modifier / éditer une séquence telles que "Note Edit", "Drum Edit", "Quantize", "Transpose" et "Velocity Change". Pour construire plus votre séquence, vous disposez aussi des fonctions "Copy" et "Repeat" des parties de celle-ci, et également des fonctions "Insert", "Delete" et "Erase" des mesures.~0d
+
+@ topic 30 page 1  MIDI
+MIDI signifie "Musical Instrument Digital Interface". Cette interface permet la compatibilité des instruments de musique électroniques entre eux pour divers types de transmissions. Par exemple : combiner les sonorités de deux instruments ou la connexion à un ordinateur.~0d
+
+@ topic 30 page 2  MIDI
+Le "MIDI" a plusieurs utilisations, et beaucoup de paramètres sont pris en compte! Le menu "MIDI" possède toutes les fonctions permettant le réglage du KN5000 pour vos besoins spécifiques. La manière la plus simple d 'effectuer le réglage MIDI du KN5000 est d'utiliser les présélections "MIDI Presets" incluses dans ce menu. Les "MIDI Presets" sont prédéfinis pour la plupart des applications musicales. Il vous suffit de déterminer celle convient à votre utilisation et de presser OK.
+
+@ topic 30 page 3  MIDI
+ Les réglages sont alors effectués automatiquement. Vous pouvez également enregistrer vos propres réglages"User MIDI Settings". Ils seront enregistrés de manière permanente dans le KN5000 (jusqu'à ce qu'ils soient remplacés).~0d
+
+@ topic 30 page 4  MIDI
+Le KN5000 est un instrument "General MIDI". Cela signifie qu'il est compatible avec le software au format "General MIDI".Par exemple : le software "Standard MIDI File".~0d
+Le KN5000 dispose également d'un port "Computer" permettant la connexion directe au port série d'un ordinateur.~0d
+
+@ topic 31 page 1  CONTROL
+La principale fonction du menu"Control" est "Initial Setting", elle permet le rappel des réglages d'usine du KN5000.~0d
+Vous pouvez sélectionner l'initialisation complète de l'instrument (incluant toutes les fonctions programmables) ou uniquement celle de parties spécifiques. Les mémoires "Rhythm Custom" et "User MIDI Settings" ne sont pas affectées par cette procédure.~0d
+
+@ topic 31 page 2  CONTROL
+Le menu "Control" contient des fonctions particulières destinées au contrôle général du KN5000, comme le réglage "Touch Sensitivity", et les assignations "Foot Controller".~0d
+Vous pouvez également déterminer la durée de l'affichage de divers messages sur l'écran, et sélectionner l'activation automatique de "Display Hold" pour certains écrans. Ceci est très pratique pour les affichages "Sound Group" et "Rhythm Group".~0d
+
+@ topic 31 page 3  CONTROL
+Le menu "Control" contient également des réglages pour les fonctions "Music Style Arranger" et "Panel Memory".~0d
+
+@ topic 32 page 1  SOUND
+Le menu "Sound" propose diverses fonctions pour modifier la reproduction sonore du KN5000. Pour chaque partie, vous disposez de réglages de volume, de panoramique et de niveau d'effets.~0d
+Un égaliseur général "Equalizer" vous permet un réglage personnalisé de l'instrument. Un grand nombre de réglages d'égalisation et de réverbération vous permet de disposer de différents reliefs sonores présélectionnés.~0d
+
+@ topic 32 page 2  SOUND
+La fonction "Sound Edit" propose un ensemble complet de paramètres d'éditions sonores similaires à celles d'un synthétiseur professionnel permettant ainsi l'édition des sonorités présélectionnées et leur enregistrement dans les mémoires "Sound Group Memories". La fonction "Easy Edit" propose une édition simplifiée des principaux paramètres sur une seule page.~0d
+
+@ topic 32 page 3  SOUND
+La fonction "Left Hold" permet le maintien de la sonorité assignée à la partie "Left Conductor" lors de l'utilisation de l' "Auto Play Chord".~0d
+L'accord général "Master Tuning", le réglage de tempérament "Key Scaling" sont accessibles par le menu "Sound". Les réglages des autres fonctions incluent la "Reverb", l' "Acoustic Illusion", le "DSP Effect" et le "Techni-Chord".
+
+@ topic 32 page 4  SOUND
+ A présent, pressez les boutons du panneau correspondants à ces fonctions pour obtenir plus d'informations.~0d
+
+@ topic 33 page 1  DISK
+Le menu "Disk" fournit tout ce dont vous avez besoin pour effectuer des chargements ou des sauvegardes sur disquette. En insérant simplement une disquette dans le lecteur, le KN5000 sélectionne automatiquement le menu "Disk".~0d
+Le KN5000 peut utiliser une grande variété de software issus de la "Technics Music Disk Collection" et de diverses origines telles que les "Standard MIDI File", "Disk Orchestra" ou "PianoDisc".
+
+@ topic 33 page 2  DISK
+ Les "Standard MIDI Files" peuvent être chargés dans la mémoire du séquenceur ou reproduits en lecture directe sur la disquette. Les"Disk Orchestra"sont reproduits en lecture directe sur la disquette.~0d
+Vous pouvez obtenir une reproduction enchaînée des séquences et si une séquence "Standard MIDI File" comporte des paroles ou "lyrics", celles-ci défileront sur l'écran du KN5000 pendant la reproduction de la séquence.~0d
+
+@ topic 33 page 3  DISK
+Le KN5000 peut utiliser le software de "styles" de plusieurs autres constructeurs grâce à son programme de conversion "Style Convert". Reportez-vous au mode d'emploi pour plus de détails à ce sujet.~0d
+
+@ topic 34 page 1  DIGITAL EFFECT
+La fonction "Digital Effect" transforme les sonorités du KN5000 en leur ajoutant des effets tels que "Chorus", "Celeste" et "Organ Tremolo"... Chaque sonorité du KN5000 dispose d'un effet numérique présélectionné; pour l'obtenir, pressez simplement le bouton "Digital Effect".~0d
+
+@ topic 34 page 2  DIGITAL EFFECT
+Dans le cas où l'effet "Digital Effect" est indispensable pour la sonorité, le bouton "Digital Effect" est automatiquement activé lorsque vous sélectionnez la sonorité, par exemple "Organ Tremolo" avec la sonorité "Jazz Organ".~0d
+
+@ topic 35 page 1  DSP EFFECT
+La fonction "DSP EFFECT" fonctionne comme un processeur d'effet professionnel et fournit des effets tels que "Chorus", "Phaser", "Delay" et "Distortion". Si le DSP est assigné simultanément à plus d'une partie, le même effet sera assigné à toutes ces parties.~0d
+Pour modifier les réglages du "DSP Effect", il suffit de maintenir enfoncé le bouton "DSP Effect" quelques secondes et l'affichage de réglage du "DSP Effect" apparaît sur l'écran.~0d
+
+@ topic 36 page 1  SUSTAIN
+Le "Sustain" permet la disparition progressive du son après que les touches aient été relâchées. Le réglage initial de l'interrupteur au pied "Footswitch 1" est sur le "sustain", de cette manière vous pouvez utiliser cet interrupteur (en option) comme la pédale Forte d'un piano acoustique.~0d
+
+@ topic 37 page 1  DIGITAL REVERB
+La réverbération numérique "Digital Reverb" apporte une résonance naturelle à la reproduction sonore du KN5000. Elle propose différentes ambiances acoustiques telles que "Room", "Concert Hall" ou "Cathedral".~0d
+Pour changer de réglage de "Digital Reverb" il suffit de maintenir enfoncé le bouton "Digital Reverb" quelques secondes et l'affichage de réglage de "Digital Reverb" apparaît sur l'écran~0d
+
+@ topic 38 page 1  SOUND GROUP
+Utilisez les boutons "Sound Group" pour sélectionner l'une des 200 sonorités présélectionnées du KN5000, et pour sélectionner également l'une des 40 mémoires "Sound Memories". Les sonorités sont regroupées en 18 catégories, chacune dispose d'un bouton "Sound Group".~0d
+Lorsque vous pressez l'un des boutons "Sound Group", les sonorités de ce groupe apparaissent sur l'affichage.
+
+@ topic 38 page 2  SOUND GROUP
+ Pressez l'un des boutons situés à gauche et à droite de l'écran pour sélectionner la sonorité désirée.~0d
+L'affichage de l'écran présente 10 sonorités par page. Utilisez les boutons "Page Up/Down" pour sélectionner la page suivante.~0d
+Parmi les 18 "Sound Groups" deux constituent des catégories spéciales:~0d
+
+@ topic 38 page 3  SOUND GROUP
+Accordion Register: représente un rang de registres similaires à ceux d'un véritable accordéon et propose une sélection de sonorités d'accordéons allemands ou italiens. Utilisez les boutons de balance situés sous l'écran pour régler la registration.~0d
+Digital Drawbar: propose des sonorités d'orgues à roues phoniques réglables grâce aux neuf tirettes harmoniques affichées sur l'écran.
+
+@ topic 38 page 4  SOUND GROUP
+ Utilisez les boutons de balance et de "Page up/down" pour ajuster les tirettes.~0d
+Le "Sound Group" comprend deux "Memory Groups" dans lesquels vous pouvez enregistrer 40 sonorités éditées.~0d
+
+@ topic 39 page 1  PART SELECT
+Utilisez ces boutons pour sélectionner les parties (RIGHT 1, RIGHT 2 or LEFT) sont concernées par les boutons "Sound Select" et "Effects" du panneau. Lorsqu'une partie est sélectionnée, les voyants du panneau s'allument pour indiquer les réglages en cours. Cette caractéristique est pratique si vous désirez changer la sonorité de la partie "Right 2" tout en jouant la partie "Right 1", ou changer celle de la partie "Left".~0d
+
+@ topic 40 page 1  CONDUCTOR
+Le "CONDUCTOR" est une fonction propre aux claviers Technics, qui permet facilement d'assigner les sonorités au clavier.~0d
+Vous pouvez disposer de deux sonorités sur la totalité du clavier si vous désirez utiliser "Right 1" et "Right 2" simultanément. Ou vous pouvez disposer de sonorités différentes sur la droite et la gauche du clavier partagé (Split). Dans ce cas, vous pouvez jouer les parties "Right 1 et "Left" simultanément.~0d
+
+@ topic 41 page 1  DISPLAY HOLD
+La fonction "Display Hold" maintient l'affichage jusqu'à sa désactivation, ou une pression sur le bouton EXIT. "Display Hold" est très utile pour la visualisation de certaines pages ou de messages dont l'affichage est très court, par exemple, les groupes "Rhythm" ou "Sound " et les messages d'erreur.~0d
+
+@ topic 41 page 2  DISPLAY HOLD
+Dans le menu "Control", la fonction "Display Time Out" permet de déterminer la durée de l'affichage de certaines pages et l'activation automatique de "Display Hold".~0d
+
+@ topic 44 page 1  R1/R2 OCTAVE
+Les boutons "R1/R2 Octave" permettent de transposer de +/- 2 octaves uniquement les parties "Right 1" et "Right 2" du "Conductor". Pour annuler cette tranposition, il suffit de presser simultanément les deux boutons.~0d
+
+@ topic 46 page 1  OTHER PARTS/TR
+Le bouton "Other Parts / Tracks" a deux fonctions. Dans la page d'accueil ou dans le "Mixer" il sert à accéder au contrôle de balance des autres parties du KN5000, comme les parties 4 à 16.~0d
+
+@ topic 46 page 2  OTHER PARTS/TR
+Lorsque vous utilisez le "Sequencer", le "Mixer" fonctionne pour chaque piste, plutôt que pour que des parties spécifiques, ainsi vous n'avez pas besoin de savoir quelle partie est assignée à une piste pour effectuer son réglage. Le "Mixer" peut indiquer à la fois les réglages de 8 pistes. Le bouton "Other Parts / Tracks" sert à sélectionner les pistes 9 à 16.~0d
+
+@ topic 47 page 1  ACOUSTIC ILLUSION
+L' "Acoustic Illusion" est effet spécial qui littéralement créée l'illusion de différents environnements acoustiques, bien plus impressionnant qu'une simple "Digital Reverb". Activez simplement l' "Acoustic Illusion" et vous constaterez immédiatement la différence.~0d
+Quatre types d' "Acoustic Illusion" sont disponibles:~0d
+Type 1: stéréo élargie~0d
+Type 2: stéréo élargie pour les sonorités avec une attaque forte, comme "Pianos" ou "Drums".~0d
+
+@ topic 47 page 2  ACOUSTIC ILLUSION
+Type 3: les harmoniques aigües sont reproduites à droite et les harmoniques graves à gauche.~0d
+Type 4: profondeur maximale de l' "Acoustic Illusion".~0d
+Pour changer de type d' "Acoustic Illusion", il suffit de presser le bouton "Acoustic Illusion" quelques secondes et l'affichage de réglage apparaît.~0d
+
+@ topic 48 page 1  FADE IN/OUT
+L'effet "Fade In/Out" ajoute une touche professionnelle à vos interprétations en les commençant par une progression graduelle du volume, ou en les terminant par une diminution graduelle. Ceci est particulièrement pratique lors de l'utilisation de l' "Auto Play Chord".~0d
+Pressez "Fade In" avant de jouer, et le volume général du KN5000 montera progressivement. Lorsque vous avez terminé votre interprétation, laissez l'accompagnement automatique continuer et pressez "Fade Out".
+
+@ topic 48 page 2  FADE IN/OUT
+ Le volume de l'accompagnement diminuera progressivement comme une interprétation professionnelle.~0d
+Si vous pressez "Fade Out" par erreur au cours d'une interprétation, il suffit de presser le même bouton pour annuler cet effet, ou de presser "Fade In" et le volume remontera jusqu'à un niveau normal.~0d
+
+@ topic 48 page 3  FADE IN/OUT
+Vous pouvez régler la durée en nombre de mesures de l'effet "Fade In" et "Fade Out", et également l'arrêt automatique du rythme et du séquenceur après le "Fade Out". Ces réglages sont effectués sur la page "Entertainer".~0d
+
+@ topic 49 page 1  ENTERTAINER
+Le bouton "Entertainer" donne accès sur une seule page à plusieurs fonctions très pratiques si vous utilisez le KN5000 en public:~0d
+(1) Vous pouvez régler le niveau d'entrée du microphone et effectuer les réglages de la réverbération (la réverbération du microphone est indépendante de la réverbération générale).~0d
+(2) Vous pouvez accéder au menu "Disk Load", aux réglages "Fade In/Out" et au "Mixer".~0d
+
+@ topic 49 page 2  ENTERTAINER
+(3) Vous pouvez piloter un module « Vocalist Workstation » directement à partir du KN-5000.~0d
+(4) Vous trouverez un bouton "Panic" qui stoppe "reset" le KN5000 et envoie un message de commande d'arrêt aux éléments MIDI externes.~0d
+(5) La fonction « Mute Keys » dissocie le clavier et ses différents contrôleurs, ainsi que les transmissions MIDI du générateur sonore du KN-5000.~0d
+ Vous n'obtenez alors que la reproduction des données enregistrées dans le « Sequencer ».~0d
+
+@ topic 49 page 3  ENTERTAINER
+ Vous n'obtenez alors que la reproduction des données enregistrées dans le « Sequencer ».~0d

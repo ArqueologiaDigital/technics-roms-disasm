@@ -93,6 +93,9 @@ class AsmError(Exception):
 
 def strip_comment(raw):
     """`raw` up to the first `#` or `;` that is not inside a double-quoted string."""
+    if '"' not in raw:                       # the common case, without a per-character loop
+        cut = [i for i in (raw.find("#"), raw.find(";")) if i >= 0]
+        return raw[:min(cut)] if cut else raw
     in_str = esc = False
     for i, ch in enumerate(raw):
         if esc:
@@ -111,10 +114,17 @@ class Assembler:
         self.base_dir = base_dir
         self.known = {}    # symbol -> value, as found by the previous pass
         self.parsed = {}   # path -> its lines, parsed once for every pass
-        self.macros = {}   # name -> ([(parameter, default or None)], body source lines)
-        self.expanded = {}   # (name, argument text) -> the body lines, expanded once
-        self.expanded_parsed = {}   # (name, argument text) -> those lines, parsed
-        self.n_expansions = 0    # \@
+        self.macros = {}   # name -> (parameter names, body source lines)
+        self.macro_defaults = {}   # name -> {parameter: its default} (only those that have one)
+        self.n_expansions = 0      # \@
+        # Caches that outlive a pass. A macro invocation whose expansion is only
+        # data directives with constant operands (numbers, operators and .equ
+        # names) emits the same bytes in every pass: (name, operands) -> bytes.
+        # Any other invocation keeps its parsed expansion: (name, operands) -> lines.
+        self.macro_cache = {}
+        self.equ_names = set()
+        self.const_values = {}   # constant expression text -> its value
+        self.compiled = {}       # macro name -> its data-only body, compiled (or None)
         self.enc_cache = {}  # (mnemonic, resolved operands, pc) -> bytes, this pass
         self.file_cache = {}  # path -> its bytes, read once for every pass (an open() on the
                               # virtiofs share costs ~3 ms, and a source may hold thousands of
@@ -363,7 +373,10 @@ class Assembler:
                 for i, raw in enumerate(f, 1):
                     if macro is not None:
                         if strip_comment(raw).strip() == ".endm":
-                            self.macros[macro[0]] = (macro[1], macro[2])
+                            names = [h.partition("=")[0] for h in macro[1]]
+                            self.macros[macro[0]] = (names, macro[2])
+                            self.macro_defaults[macro[0]] = {
+                                n: d for n, eq, d in (h.partition("=") for h in macro[1]) if eq}
                             macro = None
                         else:
                             macro[2].append(raw)
@@ -375,9 +388,7 @@ class Assembler:
                         head = [a.strip() for a in p[2].replace(",", " ").split()]
                         if not head:
                             raise AsmError(f"{path}:{i}: .macro needs a name")
-                        params = [(n, d if eq else None)
-                                  for n, eq, d in (h.partition("=") for h in head[1:])]
-                        macro = (head[0], params, [])
+                        macro = (head[0], head[1:], [])
                         continue
                     out.append((i,) + p)
             if macro is not None:
@@ -385,33 +396,39 @@ class Assembler:
             self.parsed[path] = out
         return self.parsed[path]
 
-    def expand_macro(self, name, rest):
-        """The body lines of macro `name` with its parameters replaced (cached:
-        an invocation expands the same way in every pass, \\@ included)."""
-        key = (name, rest)
-        got = self.expanded.get(key)
-        if got is not None:
-            return got
-        params, body = self.macros[name]
-        names = [n for n, _d in params]
+    def bind_args(self, name, rest):
+        """The argument text of each parameter of macro `name`, in order:
+        positional arguments first, then `param=value` keywords in any order;
+        a parameter left out takes its default (an error if it has none)."""
+        params, _body = self.macros[name]
+        defaults = self.macro_defaults.get(name, {})
         values, pos = {}, 0
         for arg in self.split_args(rest):
-            m = re.match(r"([A-Za-z_]\w*)\s*=(?!=)\s*(.*)$", arg, re.S)
-            if m and m.group(1) in names:
+            m = re.match(r"([A-Za-z_]\w*)\s*=(?!=)\s*(.*)$", arg, re.S) if "=" in arg else None
+            if m and m.group(1) in params:
                 values[m.group(1)] = m.group(2).strip()
-                pos = len(names)           # no positional argument after a keyword
+                pos = len(params)          # no positional argument after a keyword
             else:
-                if pos >= len(names):
+                if pos >= len(params):
                     raise AsmError(f"macro {name} takes {len(params)} arguments, got more")
-                values[names[pos]] = arg
+                values[params[pos]] = arg
                 pos += 1
-        for n, d in params:
-            if n not in values:
-                if d is None:
-                    raise AsmError(f"macro {name}: argument {n} missing (it has no default)")
-                values[n] = d
+        out = []
+        for p in params:
+            if p in values:
+                out.append(values[p])
+            elif p in defaults:
+                out.append(defaults[p])
+            else:
+                raise AsmError(f"macro {name}: argument {p} missing (it has no default)")
+        return out
+
+    def expand_macro(self, name, rest):
+        """The body lines of macro `name` with its parameters replaced."""
+        params, body = self.macros[name]
+        values = dict(zip(params, self.bind_args(name, rest)))
+        by_len = sorted(params, key=len, reverse=True)
         self.n_expansions += 1
-        by_len = sorted(names, key=len, reverse=True)
 
         def repl(m):
             word = m.group(1)
@@ -423,9 +440,7 @@ class Assembler:
                 if word.startswith(p):
                     return values[p] + word[len(p):]
             raise AsmError(f"macro {name}: unknown parameter \\{word}")
-        got = [re.sub(r"\\(\(\)|@|\w+)", repl, raw) for raw in body]
-        self.expanded[key] = got
-        return got
+        return [re.sub(r"\\(\(\)|@|\w+)", repl, raw) for raw in body]
 
     def assemble_file(self, path):
         prev_file, prev_line = self.cur_file, self.cur_line
@@ -445,15 +460,24 @@ class Assembler:
             if depth > 16:
                 raise AsmError(f"macro {op}: nested too deeply")
             key = (op, rest)
-            lines = self.expanded_parsed.get(key)
-            if lines is None:
-                lines = [p for p in map(self.parse_line, self.expand_macro(op, rest)) if p is not None]
-                self.expanded_parsed[key] = lines
-            for p in lines:
+            body = self.macro_cache.get(key)
+            if body is None:
+                body = self.compiled_data(op, rest)
+                if body is None:
+                    body = [p for p in map(self.parse_line, self.expand_macro(op, rest)) if p is not None]
+                    const = self.constant_data(body)
+                    body = const if const is not None else body
+                self.macro_cache[key] = body
+            if isinstance(body, bytes):
+                self.out += body
+                return
+            for p in body:
                 self.do_line(*p, depth=depth + 1)
         elif op == ".equ":
             name, expr = args[0], ",".join(args[1:])
             self.symbols[name] = self.evaluate(expr)
+            if self.is_constant(expr):
+                self.equ_names.add(name)
         elif op == ".org":
             self.do_org(args)
         elif op == ".byte":
@@ -504,6 +528,113 @@ class Assembler:
                 self.out += enc
         else:
             raise AsmError(f"unknown directive {op!r}")
+
+    _DATA_WIDTH = {".byte": (1, "little"), ".word": (2, "little"), ".long": (4, "little"),
+                   ".be16": (2, "big"), ".be24": (3, "big"), ".be32": (4, "big")}
+    _TOKEN = re.compile(r"\s*(?:(0x[0-9A-Fa-f]+|\d+)|([A-Za-z_.][\w.]*)|(<<|>>|[()+\-*/%|&^~]))")
+
+    def compile_macro(self, name):
+        """A macro whose body is only data directives, compiled once: per line its
+        width, byte order and argument templates split at the parameters. None for
+        any other macro (labels, instructions, other directives)."""
+        params, body = self.macros[name]
+        by_len = sorted(params, key=len, reverse=True)
+        out = []
+        for raw in body:
+            line = strip_comment(raw).strip()
+            if not line:
+                continue
+            parts = line.split(None, 1)
+            if parts[0] not in self._DATA_WIDTH or ":" in line or '"' in line:
+                return None
+            width, order = self._DATA_WIDTH[parts[0]]
+            tmpls = []
+            for a in self.split_args(parts[1] if len(parts) > 1 else ""):
+                pieces = []          # literal text and parameter indexes, alternating
+                pos = 0
+                for m in re.finditer(r"\\(\(\)|\w+)", a):
+                    pieces.append(a[pos:m.start()])
+                    word = m.group(1)
+                    if word == "()":
+                        pieces.append("")
+                    else:
+                        p = next((p for p in by_len if word.startswith(p)), None)
+                        if p is None or word != p:
+                            return None
+                        pieces.append(params.index(p))
+                    pos = m.end()
+                pieces.append(a[pos:])
+                if len(pieces) == 3 and pieces[0] == pieces[2] == "":
+                    pieces = pieces[1]          # the argument itself
+                tmpls.append(pieces)
+            out.append((width, order, tmpls))
+        return (len(params), out)
+
+    def compiled_data(self, name, rest):
+        """The bytes of a data-only macro invocation whose operands are constant, else None."""
+        if name not in self.compiled:
+            self.compiled[name] = self.compile_macro(name)
+        c = self.compiled[name]
+        if c is None or '"' in rest:
+            return None
+        nparams, lines = c
+        if "=" in rest or name in self.macro_defaults and self.macro_defaults[name]:
+            try:
+                args = self.bind_args(name, rest)      # keywords / defaults
+            except AsmError:
+                return None
+        else:
+            args = [a.strip() for a in rest.split(",")] if rest.strip() else []
+        if len(args) != nparams:
+            return None
+        out = bytearray()
+        for width, order, tmpls in lines:
+            for pieces in tmpls:
+                if pieces.__class__ is int:
+                    text = args[pieces]
+                else:
+                    text = "".join(x if x.__class__ is str else args[x] for x in pieces)
+                v = self.const_value(text)
+                if v is None:
+                    return None
+                out += (v & ((1 << (8 * width)) - 1)).to_bytes(width, order)
+        return bytes(out)
+
+    def const_value(self, expr):
+        """The value of a constant expression (cached), else None."""
+        v = self.const_values.get(expr)
+        if v is None:
+            if not self.is_constant(expr):
+                return None
+            v = self.const_values[expr] = self.evaluate(expr)
+        return v
+
+    def is_constant(self, expr):
+        """True when `expr` holds only numbers, operators and names of .equ's that
+        are themselves constant: its value is then the same in every pass."""
+        pos, expr = 0, expr.rstrip()
+        while pos < len(expr):
+            m = self._TOKEN.match(expr, pos)
+            if not m or m.end() == pos:
+                return False
+            if m.group(2) is not None and m.group(2) not in self.equ_names:
+                return False
+            pos = m.end()
+        return True
+
+    def constant_data(self, lines):
+        """The bytes of an expansion that is only constant data directives, else None."""
+        out = bytearray()
+        for label, op, rest, args in lines:
+            if label is not None or op not in self._DATA_WIDTH:
+                return None
+            width, order = self._DATA_WIDTH[op]
+            for a in args:
+                v = self.const_value(a)
+                if v is None:
+                    return None
+                out += (v & ((1 << (8 * width)) - 1)).to_bytes(width, order)
+        return bytes(out)
 
     def define_label(self, name):
         """A label is the CPU address of the current output offset. If the name

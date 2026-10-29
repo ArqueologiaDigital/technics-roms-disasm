@@ -4477,7 +4477,7 @@ DemoSong_EntryCol:	.incbin "includes/generated/naka_technichord_strings.bin", 0x
 ; DemoSong_TitleCol -- 1 x uint8_t: 0xE1 (TITLE_DEMOSTYLE), the title byte of demo song 0 and the base of the
 ; title column of the 23 x {u8 entry, u8 title} demo song order that starts 1 byte earlier at
 ; DemoSong_EntryCol. Demo_SelectEntry_DrawSecondary reads [2*DEMO_CURRENT_SONG] here
-; and passes it to UI_PostModeChangeEvent (EVT_CHANGE_TITLE to TITLE_PS + byte).
+; and passes it to UI_ChangeTitleByIndex (EVT_CHANGE_TITLE to TITLE_PS + byte).
 DemoSong_TitleCol:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A15F, 0x1
 ; DemoSong_OrderFromSong1 -- 22 x {u8 entry, u8 title}: demo songs 1-22 of the auto-demo order
 ; Demo_SelectEntry_LoadPattern loads DEMO_ACTIVE_ENTRY from byte [2*song] of the order, DrawSecondary the title

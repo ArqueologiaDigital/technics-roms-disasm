@@ -366,18 +366,6 @@ extern const char uwordProc;
 
 #define BASE  0x00EAD470u
 
-/* NakaDbg_PanelSimBitmap's element (scripts/converters/nakarest_reviewed_slices.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t bmp;
-} NakaDbg_PanelSimBitmap_t;
-
 typedef struct __attribute__((packed)) {
     char w0_code[2];
     char VwUserBitmap_name[14];
@@ -1712,7 +1700,8 @@ typedef struct __attribute__((packed)) {
     /* zero padding */
     /* zero padding */
     /* Bitmap record, element 1 of Viewable slot 0x0 (PanelSimulator): draws bitmap 1 at (6, 34) */
-    NakaDbg_PanelSimBitmap_t NakaDbg_PanelSimBitmap;
+    /* element 1 of Viewable slot 0x0: Bitmap (class id 0x0160002C) */
+    naka_cls_Bitmap_t NakaDbg_PanelSimBitmap;
 } naka_widget_names_charmap_t;
 
 #define SELF(field) \
@@ -1720,6 +1709,68 @@ typedef struct __attribute__((packed)) {
 
 _Static_assert(sizeof(naka_widget_names_charmap_t) == 22158,
     "naka_widget_names_charmap must be exactly 22158 bytes");
+
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Root_ViewableTable_000, registry slot 0x0, 51 elements.
+ * InitializeRoot registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 51, Root_ViewableTable_000, 0x0`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_x). */
+#define Root_ViewableTable_000_SLOT 0x000u
+enum Root_ViewableTable_000_objects {
+    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
+      OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap */
+      OBJ_PanelSimulatorForHk_Label,                /*  2 Label, record in naka_debug_naming.c */
+      OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu, record in naka_debug_naming.c */
+      OBJ_NakaWidget_PanelSimulator_4_IvExitMode,   /*  4 IvExitMode, record in naka_debug_naming.c */
+      OBJ_DebugWindow_AcWindowMenu,                 /*  5 AcWindowMenu, record in naka_debug_naming.c */
+    OBJ_ClipBoard,                                  /*  6 Screen, record in naka_debug_naming.c */
+    OBJ_DebugWindow,                                /*  7 Window, record in naka_debug_naming.c */
+      OBJ_DebugTime_Label,                          /*  8 Label, record in naka_debug_naming.c */
+      OBJ_DebugWindow_DbDebugMenu,                  /*  9 DbDebugMenu, record in naka_debug_naming.c */
+    OBJ_NamingWindow,                               /* 10 AcNamingWindow, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw,               /* 11 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Del_Label,                              /* 12 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_2,             /* 13 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Ins_Label,                              /* 14 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_3,             /* 15 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_Clr_Label,                              /* 16 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_4,             /* 17 AcIndexEditSw, record in naka_debug_naming.c */
+        OBJ_NamingWindow_Label,                     /* 18 Label, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_5,             /* 19 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_6,             /* 20 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_Position_Label,                           /* 21 Label, record in naka_debug_naming.c */
+      OBJ_NamingCursorBox,                          /* 22 PsCursorBox, record in naka_debug_naming.c */
+      OBJ_Root_NamingUpperCaseToggleView,           /* 23 AcIndexToggle, record in naka_sequencer_channels.c */
+      OBJ_Root_NamingLowerCaseToggleView,           /* 24 AcIndexToggle, record in naka_sequencer_channels.c */
+      OBJ_Root_NamingSymbolToggleView,              /* 25 AcIndexToggle, record in naka_sequencer_channels.c */
+      OBJ_NamingWindow_AcIndexEditSw_7,             /* 26 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_8,             /* 27 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingWindow_AcIndexEditSw_9,             /* 28 AcIndexEditSw, record in naka_debug_naming.c */
+      OBJ_NamingLabel,                              /* 29 PsParaBox, record in naka_debug_naming.c */
+    OBJ_MemoWindow,                                 /* 30 Window, record in naka_debug_naming.c */
+      OBJ_MemoWindow_DbMemo,                        /* 31 DbMemo, record in naka_debug_naming.c */
+    OBJ_TrackSwitchWindow,                          /* 32 Window, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch,          /* 33 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_2,        /* 34 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_3,        /* 35 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_4,        /* 36 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_5,        /* 37 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_6,        /* 38 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_7,        /* 39 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_8,        /* 40 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_9,        /* 41 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_10,       /* 42 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_11,       /* 43 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_12,       /* 44 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_13,       /* 45 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_14,       /* 46 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_15,       /* 47 AcTrackSwitch, record in naka_debug_naming.c */
+      OBJ_TrackSwitchWindow_AcTrackSwitch_16,       /* 48 AcTrackSwitch, record in naka_debug_naming.c */
+    OBJ_MemDumpWindow,                              /* 49 Window, record in naka_debug_naming.c */
+      OBJ_MemDumpWindow_DbMemoryDump,               /* 50 DbMemoryDump, record in naka_debug_naming.c */
+};
 
 const naka_widget_names_charmap_t naka_widget_names_charmap_data
     __attribute__((section(".text"), used)) = {
@@ -6361,7 +6412,16 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
 
     .field_5672 = 0x0003,
 
-    .NakaDbg_PanelSimBitmap = { 0x0160002C, 0x0000, 0xFFFF, 0x0002, 0xFFFF, 0x0008, { 6, 34, 312, 78 }, 0x00000001 },
+    .NakaDbg_PanelSimBitmap = {
+        .class_ = NAKA_CLASS(Bitmap),
+        .super = OBJ_NakaWidget_PanelSimulator,
+        .sub = NAKA_NONE,
+        .next = OBJ_PanelSimulatorForHk_Label,
+        .prev = NAKA_NONE,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(6, 34, 307, 45),
+        .bmp = idGoldTechnics,
+    },
 
 };
 

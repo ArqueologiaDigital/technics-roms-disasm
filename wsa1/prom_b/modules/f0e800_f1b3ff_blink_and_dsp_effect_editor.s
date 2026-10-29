@@ -13045,190 +13045,51 @@ Data_F13D48:		; the 2 x 12 bitmap the record at 0xF1454A draws
 ; `op < bound`.  Regenerate: python3 notes/gen_prom_b_untouched_pool_module.py
 ; --splice
 ; ------------------------------------------------------------------
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0079
-	.short 0x0005
-	.ascii "DSP EFFECT"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "SOUND EDIT"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0044
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0A
-	.short 0x0034
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0079
-	.short 0x0005
-	.ascii "DSP EFFECT"
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "SYSTEM"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x002C
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0A
-	.short 0x0034
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0079
-	.short 0x0005
-	.ascii "DSP EFFECT"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "COMBI.EDIT"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0044
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0A
-	.short 0x0034
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0079
-	.short 0x0005
-	.ascii "DSP EFFECT"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "SOUND MODE"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0044
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0A
-	.short 0x0034
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0079
-	.short 0x0005
-	.ascii "DSP EFFECT"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "PART"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0020
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0A
-	.short 0x0034
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B17
-	.byte 0x11	; character codes below 0x20
-	.byte 0x20, 0x08	; op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x0B3A
-	.ascii "EFF1"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1157
-	.byte 0x11	; character codes below 0x20
-	.byte 0x20, 0x08	; op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x117A
-	.ascii "EFF2"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1797
-	.byte 0x11	; character codes below 0x20
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x17BB
-	.ascii "REV"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x010B
-	.short 0x0042
-	.short 0x0135
-	.short 0x0055
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x010D
-	.short 0x0044
-	.short 0x0133
-	.short 0x0053
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x010B
-	.short 0x006A
-	.short 0x0135
-	.short 0x007D
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x010D
-	.short 0x006C
-	.short 0x0133
-	.short 0x007B
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0113
-	.short 0x0092
-	.short 0x0135
-	.short 0x00A5
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0115
-	.short 0x0094
-	.short 0x0133
-	.short 0x00A3
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x010B
-	.short 0x006A
-	.short 0x013F
-	.short 0x007D
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B40
-	.byte 0x10	; character codes below 0x20
-	.byte 0x20, 0x06	; op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x0B6A
-	.ascii "EQ"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x0044
-	.short 0x0026
-	.short 0x0057
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x0046
-	.short 0x0024
-	.short 0x0055
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x000E
-	.short 0x0047
-	.short 0x0023
-	.short 0x0054
-	.byte 0x17, 0x0D	; op 17, 13 bytes -> handler 0xF31A52
-	.short 0x0009
-	.short 0x00B4
-	.ascii "DYN.CNT"
-	.byte 0x17, 0x0D	; op 17, 13 bytes -> handler 0xF31A52
-	.short 0x0009
-	.short 0x00BE
-	.ascii "TO PARA"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000
-	.short 0x00BF
-	.byte 0x10	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0007
-	.short 0x00B1
-	.short 0x0035
-	.short 0x00C7
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A
-	.short 0x0026
-	.byte 0x11	; character codes below 0x20
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0112
-	.short 0x002B
-	.ascii "BYPASS"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0110
-	.short 0x001E
-	.short 0x0138
-	.short 0x0034
+	dl_text16x16_packed	x=121, y=5, text="DSP EFFECT"
+	dl_text8x8_packed	x=6, y=7, text="SOUND EDIT"
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_value_glyph	glyph=10, x=96, y=1
+	dl_text16x16_packed	x=121, y=5, text="DSP EFFECT"
+	dl_text8x8_packed	x=6, y=7, text="SYSTEM"
+	dl_box	x0=4, y0=4, x1=44, y1=16
+	dl_value_glyph	glyph=10, x=96, y=1
+	dl_text16x16_packed	x=121, y=5, text="DSP EFFECT"
+	dl_text8x8_packed	x=6, y=7, text="COMBI.EDIT"
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_value_glyph	glyph=10, x=96, y=1
+	dl_text16x16_packed	x=121, y=5, text="DSP EFFECT"
+	dl_text8x8_packed	x=6, y=7, text="SOUND MODE"
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_value_glyph	glyph=10, x=96, y=1
+	dl_text16x16_packed	x=121, y=5, text="DSP EFFECT"
+	dl_text8x8_packed	x=6, y=7, text="PART"
+	dl_box	x0=4, y0=4, x1=32, y1=16
+	dl_value_glyph	glyph=10, x=96, y=1
+	dl_text8x16	x=312, y=70, text="\021"
+	dl_text8x10	x=272, y=71, text="EFF1"
+	dl_text8x16	x=312, y=110, text="\021"
+	dl_text8x10	x=272, y=111, text="EFF2"
+	dl_text8x16	x=312, y=150, text="\021"
+	dl_text8x10	x=280, y=151, text="REV"
+	dl_box	x0=267, y0=66, x1=309, y1=85
+	dl_box	x0=269, y0=68, x1=307, y1=83
+	dl_box	x0=267, y0=106, x1=309, y1=125
+	dl_box	x0=269, y0=108, x1=307, y1=123
+	dl_box	x0=275, y0=146, x1=309, y1=165
+	dl_box	x0=277, y0=148, x1=307, y1=163
+	dl_erase_rect	x0=267, y0=106, x1=319, y1=125
+	dl_text8x16	x=0, y=72, text="\020"
+	dl_text8x10	x=16, y=73, text="EQ"
+	dl_box	x0=11, y0=68, x1=38, y1=87
+	dl_box	x0=13, y0=70, x1=36, y1=85
+	dl_fill_rect	x0=14, y0=71, x1=35, y1=84
+	dl_text8x8_packed	x=9, y=180, text="DYN.CNT"
+	dl_text8x8_packed	x=9, y=190, text="TO PARA"
+	dl_text8x8_packed	x=0, y=191, text="\020"
+	dl_box	x0=7, y0=177, x1=53, y1=199
+	dl_text8x8_packed	x=314, y=38, text="\021"
+	dl_text8x8_packed	x=274, y=43, text="BYPASS"
+	dl_box	x0=272, y0=30, x1=312, y1=52
 
 ; ------------------------------------------------------------------
 ; 0xF13F1E-0xF13F31 -- 2 display-list records, 20 bytes -- interpreter A/B
@@ -13239,14 +13100,8 @@ Data_F13D48:		; the 2 x 12 bitmap the record at 0xF1454A draws
 ; --splice
 ; ------------------------------------------------------------------
 DL_F13F1E:
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0038
-	.short 0x0045
-	.short 0x0108
-	.short 0x00C6
-	.byte 0x20, 0x0A	; op 20, 10 bytes -> handler 0xF31A3A
-	.short 0x1321
-	.ascii "BYPASS"
+	dl_erase_rect	x0=56, y0=69, x1=264, y1=198
+	dl_text8x10	x=136, y=122, text="BYPASS"
 
 ; --- 0xF13F32-0xF140B1: not converted ---
 
@@ -13262,228 +13117,82 @@ DL_F13F1E:
 ; Regenerate: python3 notes/gen_prom_b_dl_closure_gaps_module.py --splice
 ; ------------------------------------------------------------------
 DL_F13F32:
-	.byte 0x20, 0x0A	; op 20, 10 bytes -> handler 0xF31A3A
-	.short 0x10C7
-	.ascii "BYPASS"
+	dl_text8x10	x=120, y=107, text="BYPASS"
 EffectEditor_PaintJob0_DL1:
 ; ; drawn (start operand) by EffectEditor_PaintJob0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0500
-	.byte 0x10	; character codes below 0x20
+	dl_text8x16	x=0, y=32, text="\020"
 DL_F13F41:
-	.byte 0x20, 0x0F	; op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x0502
-	.ascii "ALGORITHM :"
+	dl_text8x10	x=16, y=32, text="ALGORITHM :"
 DL_F13F50:
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_Knob_16x12
-	.short 0x0E4B
-	.short 0x0002
-	.short 0x000C
+	dl_bitmap	bitmap=Bitmap_Knob_16x12, x=152, y=91, w=16, h=12
 DL_F13F5C:
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_Knob_16x12
-	.short 0x1439
-	.short 0x0002
-	.short 0x000C
+	dl_bitmap	bitmap=Bitmap_Knob_16x12, x=136, y=129, w=16, h=12
 DL_F13F68:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0053
-	.short 0x0043
-	.short 0x009C
-	.short 0x0058
+	dl_box	x0=83, y0=67, x1=156, y1=88
 DL_F13F72:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0055
-	.short 0x0045
-	.short 0x007A
-	.short 0x0056
+	dl_box	x0=85, y0=69, x1=122, y1=86
 DL_F13F7C:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x007D
-	.short 0x0045
-	.short 0x009A
-	.short 0x0056
+	dl_box	x0=125, y0=69, x1=154, y1=86
 DL_F13F86:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x003D
-	.short 0x006A
-	.short 0x0064
-	.short 0x007B
+	dl_box	x0=61, y0=106, x1=100, y1=123
 DL_F13F90:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00A3
-	.short 0x0091
-	.short 0x00E5
-	.short 0x00A6
+	dl_box	x0=163, y0=145, x1=229, y1=166
 DL_F13F9A:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00A5
-	.short 0x0093
-	.short 0x00C2
-	.short 0x00A4
+	dl_box	x0=165, y0=147, x1=194, y1=164
 DL_F13FA4:
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00C5
-	.short 0x0093
-	.short 0x00E3
-	.short 0x00A4
+	dl_box	x0=197, y0=147, x1=227, y1=164
 DL_F13FAE:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0019
-	.short 0x004E
-	.short 0x0055
-	.short 0x004E
+	dl_hline	x0=25, y0=78, x1=85, y1=78
 DL_F13FB8:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x007A
-	.short 0x004E
-	.short 0x007D
-	.short 0x004E
+	dl_hline	x0=122, y0=78, x1=125, y1=78
 DL_F13FC2:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x009A
-	.short 0x004E
-	.short 0x00E0
-	.short 0x004E
+	dl_hline	x0=154, y0=78, x1=224, y1=78
 DL_F13FCC:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0019
-	.short 0x0073
-	.short 0x003D
-	.short 0x0073
+	dl_hline	x0=25, y0=115, x1=61, y1=115
 DL_F13FD6:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0064
-	.short 0x0073
-	.short 0x008E
-	.short 0x0073
+	dl_hline	x0=100, y0=115, x1=142, y1=115
 DL_F13FE0:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008C
-	.short 0x0098
-	.short 0x0090
-	.short 0x0098
+	dl_hline	x0=140, y0=152, x1=144, y1=152
 DL_F13FEA:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008D
-	.short 0x0099
-	.short 0x008F
-	.short 0x0099
+	dl_hline	x0=141, y0=153, x1=143, y1=153
 DL_F13FF4:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x009C
-	.short 0x0098
-	.short 0x00A0
-	.short 0x0098
+	dl_hline	x0=156, y0=152, x1=160, y1=152
 DL_F13FFE:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x009D
-	.short 0x0099
-	.short 0x009F
-	.short 0x0099
+	dl_hline	x0=157, y0=153, x1=159, y1=153
 DL_F14008:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0019
-	.short 0x009B
-	.short 0x00A5
-	.short 0x009B
+	dl_hline	x0=25, y0=155, x1=165, y1=155
 DL_F14012:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00C2
-	.short 0x009B
-	.short 0x00C5
-	.short 0x009B
+	dl_hline	x0=194, y0=155, x1=197, y1=155
 DL_F1401C:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00E3
-	.short 0x009B
-	.short 0x00FB
-	.short 0x009B
+	dl_hline	x0=227, y0=155, x1=251, y1=155
 DL_F14026:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0050
-	.short 0x004C
-	.short 0x0050
-	.short 0x0050
+	dl_vline	x0=80, y0=76, x1=80, y1=80
 DL_F14030:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0051
-	.short 0x004D
-	.short 0x0051
-	.short 0x004F
+	dl_vline	x0=81, y0=77, x1=81, y1=79
 DL_F1403A:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x008E
-	.short 0x0073
-	.short 0x008E
-	.short 0x0080
+	dl_vline	x0=142, y0=115, x1=142, y1=128
 DL_F14044:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x008E
-	.short 0x008D
-	.short 0x008E
-	.short 0x009B
+	dl_vline	x0=142, y0=141, x1=142, y1=155
 DL_F1404E:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x009E
-	.short 0x004E
-	.short 0x009E
-	.short 0x005A
+	dl_vline	x0=158, y0=78, x1=158, y1=90
 DL_F14058:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x009E
-	.short 0x0067
-	.short 0x009E
-	.short 0x009B
+	dl_vline	x0=158, y0=103, x1=158, y1=155
 DL_F14062:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DE
-	.short 0x004C
-	.short 0x00DE
-	.short 0x0050
+	dl_vline	x0=222, y0=76, x1=222, y1=80
 DL_F1406C:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DF
-	.short 0x004D
-	.short 0x00DF
-	.short 0x004F
+	dl_vline	x0=223, y0=77, x1=223, y1=79
 DL_F14076:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00F9
-	.short 0x0099
-	.short 0x00F9
-	.short 0x009D
+	dl_vline	x0=249, y0=153, x1=249, y1=157
 DL_F14080:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00FA
-	.short 0x009A
-	.short 0x00FA
-	.short 0x009C
+	dl_vline	x0=250, y0=154, x1=250, y1=156
 DL_F1408A:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008D
-	.short 0x0073
-	.short 0x00E0
-	.short 0x0073
+	dl_hline	x0=141, y0=115, x1=224, y1=115
 DL_F14094:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DE
-	.short 0x0071
-	.short 0x00DE
-	.short 0x0075
+	dl_vline	x0=222, y0=113, x1=222, y1=117
 DL_F1409E:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DF
-	.short 0x0072
-	.short 0x00DF
-	.short 0x0074
+	dl_vline	x0=223, y0=114, x1=223, y1=116
 DL_F140A8:
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0074
-	.short 0x0059
-	.short 0x0078
-	.short 0x0072
+	dl_erase_rect	x0=116, y0=89, x1=120, y1=114
 
 ; ------------------------------------------------------------------
 ; 0xF140B2-0xF14167 -- 19 display-list records, 182 bytes -- interpreter A/B
@@ -13495,92 +13204,26 @@ DL_F140A8:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob2_DL3:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0074
-	.short 0x005B
-	.short 0x0078
-	.short 0x005B
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0075
-	.short 0x005A
-	.short 0x0077
-	.short 0x005A
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0076
-	.short 0x0059
-	.short 0x0076
-	.short 0x0072
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x008F
-	.short 0x0071
-	.short 0x009D
-	.short 0x0075
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x009F
-	.short 0x0071
-	.short 0x00E0
-	.short 0x0075
+	dl_hline	x0=116, y0=91, x1=120, y1=91
+	dl_hline	x0=117, y0=90, x1=119, y1=90
+	dl_vline	x0=118, y0=89, x1=118, y1=114
+	dl_erase_rect	x0=143, y0=113, x1=157, y1=117
+	dl_erase_rect	x0=159, y0=113, x1=224, y1=117
 DL_F140E4:
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0082
-	.short 0x00D1
-	.ascii " TYPE"
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x00C6
-	.short 0x00D1
-	.ascii "TO REV"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x00F4
-	.short 0x00D1
-	.ascii "OUT SELECT"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x244C
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x245B
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2461
-	.byte 0x12	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0030
-	.short 0x00CD
-	.short 0x0133
-	.short 0x00E9
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x00CE
-	.short 0x0049
-	.short 0x00E8
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00A7
-	.short 0x00CE
-	.short 0x00A7
-	.short 0x00E8
-	.byte 0x0E, 0x08	; op 0E, 8 bytes -> handler 0xF31A9F
-	.short 0x24C9
-	.short 0x0001
-	.short 0x0005
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0030
-	.short 0x00DA
-	.short 0x0133
-	.short 0x00DA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C1
-	.short 0x00CD
-	.short 0x00C1
-	.short 0x00E9
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00F0
-	.short 0x00CD
-	.short 0x00F0
-	.short 0x00E9
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0031
-	.short 0x00DB
-	.short 0x0132
-	.short 0x00E8
+	dl_text8x8_packed	x=130, y=209, text=" TYPE"
+	dl_text8x8_packed	x=198, y=209, text="TO REV"
+	dl_text8x8_packed	x=244, y=209, text="OUT SELECT"
+	dl_text8x16	x=96, y=232, text="\022"
+	dl_text8x16	x=216, y=232, text="\022"
+	dl_text8x16	x=264, y=232, text="\022"
+	dl_box	x0=48, y0=205, x1=307, y1=233
+	dl_erase_rect	x0=73, y0=206, x1=73, y1=232
+	dl_erase_rect	x0=167, y0=206, x1=167, y1=232
+	dl_clear_area	x=136, y=235, w=8, h=5
+	dl_hline	x0=48, y0=218, x1=307, y1=218
+	dl_vline	x0=193, y0=205, x1=193, y1=233
+	dl_vline	x0=240, y0=205, x1=240, y1=233
+	dl_fill_rect	x0=49, y0=219, x1=306, y1=232
 
 ; --- 0xF14168-0xF141D2: not converted ---
 
@@ -13596,71 +13239,33 @@ DL_F140E4:
 ; Regenerate: python3 notes/gen_prom_b_dl_closure_gaps_module.py --splice
 ; ------------------------------------------------------------------
 DL_F14168:
-	.byte 0x20, 0x0A	; op 20, 10 bytes -> handler 0xF31A3A
-	.short 0x0699
-	.ascii "TYPE :"
+	dl_text8x10	x=72, y=42, text="TYPE :"
 DL_F14172:
-	.byte 0x0A, 0x0A	; op 0A, 10 bytes -> handler 0xF31A75
-	.short 0x0037
-	.short 0x001E
-	.short 0x0107
-	.short 0x003E
+	dl_box_shadow2	x0=55, y0=30, x1=263, y1=62
 EffectEditor_PaintJob5_Common_DL1:
 ; ; drawn (start operand) by EffectEditor_PaintJob5_Common -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0037
-	.short 0x0044
-	.short 0x0109
-	.short 0x00C7
+	dl_box	x0=55, y0=68, x1=265, y1=199
 EffectEditor_PaintJob5_Common_DL2:
 ; ; drawn (start operand) by EffectEditor_PaintJob5_Common -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x20, 0x08	; op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x200F
-	.ascii "ITEM"
+	dl_text8x10	x=56, y=205, text="ITEM"
 DL_F1418E:
-	.byte 0x20, 0x09	; op 20, 9 bytes -> handler 0xF31A3A
-	.short 0x2024
-	.ascii "VALUE"
+	dl_text8x10	x=224, y=205, text="VALUE"
 DL_F14197:
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x21C9
-	.byte 0x8D	; character codes below 0x20
+	dl_text8x16	x=72, y=216, text="\215"
 DL_F1419C:
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x21DE
-	.byte 0x8D	; character codes below 0x20
+	dl_text8x16	x=240, y=216, text="\215"
 DL_F141A1:
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2359
-	.byte 0x8E	; character codes below 0x20
+	dl_text8x16	x=72, y=226, text="\216"
 DL_F141A6:
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x236E
-	.byte 0x8E	; character codes below 0x20
+	dl_text8x16	x=240, y=226, text="\216"
 DL_F141AB:
-	.byte 0x0A, 0x0A	; op 0A, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x00DA
-	.short 0x0091
-	.short 0x00EC
+	dl_box_shadow2	x0=5, y0=218, x1=145, y1=236
 DL_F141B5:
-	.byte 0x0A, 0x0A	; op 0A, 10 bytes -> handler 0xF31A75
-	.short 0x00AF
-	.short 0x00DA
-	.short 0x0138
-	.short 0x00EC
+	dl_box_shadow2	x0=175, y0=218, x1=312, y1=236
 DL_F141BF:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x00E3
-	.short 0x0091
-	.short 0x00E3
+	dl_hline	x0=5, y0=227, x1=145, y1=227
 DL_F141C9:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00AF
-	.short 0x00E3
-	.short 0x0138
-	.short 0x00E3
+	dl_hline	x0=175, y0=227, x1=312, y1=227
 
 ; ------------------------------------------------------------------
 ; 0xF141D3-0xF1428C -- 22 display-list records, 186 bytes -- interpreter A/B
@@ -13671,93 +13276,28 @@ DL_F141C9:
 ; --splice
 ; ------------------------------------------------------------------
 DL_F141D3:
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x005F
-	.short 0x0046
-	.ascii "LOW"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00A6
-	.short 0x0047
-	.ascii "HIGH"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0086
-	.short 0x008F
-	.ascii "FREQ"
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x1E08
-	.ascii "LOW"
-	.byte 0x20, 0x08	; op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x1E17
-	.ascii "HIGH"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0027
-	.short 0x00D0
-	.ascii "FREQ"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0057
-	.short 0x00D0
-	.ascii "GAIN"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00A7
-	.short 0x00D0
-	.ascii "FREQ"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00D7
-	.short 0x00D0
-	.ascii "GAIN"
-	.byte 0x20, 0x06	; op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x226E
-	.ascii "dB"
-	.byte 0x20, 0x06	; op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x227E
-	.ascii "dB"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x241E
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2424
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x242E
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2434
-	.byte 0x12	; character codes below 0x20
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x003E
-	.short 0x0054
-	.short 0x00E5
-	.short 0x008B
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0012
-	.short 0x00CC
-	.short 0x0085
-	.short 0x00E8
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0092
-	.short 0x00CC
-	.short 0x0105
-	.short 0x00E8
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0012
-	.short 0x00DA
-	.short 0x0085
-	.short 0x00DA
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0092
-	.short 0x00DA
-	.short 0x0105
-	.short 0x00DA
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0013
-	.short 0x00DB
-	.short 0x0084
-	.short 0x00E7
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0093
-	.short 0x00DB
-	.short 0x0104
-	.short 0x00E7
+	dl_text8x8_packed	x=95, y=70, text="LOW"
+	dl_text8x8_packed	x=166, y=71, text="HIGH"
+	dl_text8x8_packed	x=134, y=143, text="FREQ"
+	dl_text8x10	x=64, y=192, text="LOW"
+	dl_text8x10	x=184, y=192, text="HIGH"
+	dl_text8x8_packed	x=39, y=208, text="FREQ"
+	dl_text8x8_packed	x=87, y=208, text="GAIN"
+	dl_text8x8_packed	x=167, y=208, text="FREQ"
+	dl_text8x8_packed	x=215, y=208, text="GAIN"
+	dl_text8x10	x=112, y=220, text="dB"
+	dl_text8x10	x=240, y=220, text="dB"
+	dl_text8x16	x=48, y=231, text="\022"
+	dl_text8x16	x=96, y=231, text="\022"
+	dl_text8x16	x=176, y=231, text="\022"
+	dl_text8x16	x=224, y=231, text="\022"
+	dl_box_shadow1	x0=62, y0=84, x1=229, y1=139
+	dl_box	x0=18, y0=204, x1=133, y1=232
+	dl_box	x0=146, y0=204, x1=261, y1=232
+	dl_hline	x0=18, y0=218, x1=133, y1=218
+	dl_hline	x0=146, y0=218, x1=261, y1=218
+	dl_fill_rect	x0=19, y0=219, x1=132, y1=231
+	dl_fill_rect	x0=147, y0=219, x1=260, y1=231
 
 ; --- 0xF1428D-0xF14328: not converted ---
 
@@ -13773,97 +13313,38 @@ DL_F141D3:
 ; Regenerate: python3 notes/gen_prom_b_dl_closure_gaps_module.py --splice
 ; ------------------------------------------------------------------
 DL_F1428D:
-	.byte 0x11, 0x0A	; op 11, 10 bytes -> handler 0xF31A75
-	.short 0x003F
-	.short 0x006F
-	.short 0x00E4
-	.short 0x006F
+	dl_hline_dither	x0=63, y0=111, x1=228, y1=111
 EqGraph_Draw_DL:
 ; ; drawn (start operand) by EqGraph_Draw -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x003F
-	.short 0x0055
-	.short 0x00E4
-	.short 0x008A
+	dl_erase_rect	x0=63, y0=85, x1=228, y1=138
 EffectEditor_PaintJob0_DL3:
 ; ; drawn (start operand) by EffectEditor_PaintJob0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x0032
-	.short 0x0105
-	.short 0x00B9
+	dl_box_shadow1	x0=13, y0=50, x1=261, y1=185
 EffectEditor_PaintJob0_DL2:
 ; ; drawn (start operand) by EffectEditor_PaintJob0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x002C
-	.short 0x00B2
-	.ascii "DIRECT"
+	dl_text8x8_packed	x=44, y=178, text="DIRECT"
 DL_F142B7:
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0009
-	.short 0x0032
-	.short 0x0105
-	.short 0x00C5
+	dl_box_shadow1	x0=9, y0=50, x1=261, y1=197
 DL_F142C1:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A3
-	.short 0x00AF
-	.short 0x00E0
-	.short 0x00AF
+	dl_hline	x0=163, y0=175, x1=224, y1=175
 DL_F142CB:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000F
-	.short 0x00BB
-	.short 0x00E0
-	.short 0x00BB
+	dl_hline	x0=15, y0=187, x1=224, y1=187
 DL_F142D5:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0019
-	.short 0x004E
-	.short 0x0019
-	.short 0x00BB
+	dl_vline	x0=25, y0=78, x1=25, y1=187
 DL_F142DF:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00A3
-	.short 0x00AF
-	.short 0x00A3
-	.short 0x00BB
+	dl_vline	x0=163, y0=175, x1=163, y1=187
 DL_F142E9:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DE
-	.short 0x00AD
-	.short 0x00DE
-	.short 0x00B1
+	dl_vline	x0=222, y0=173, x1=222, y1=177
 DL_F142F3:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DF
-	.short 0x00AE
-	.short 0x00DF
-	.short 0x00B0
+	dl_vline	x0=223, y0=174, x1=223, y1=176
 DL_F142FD:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DE
-	.short 0x00B9
-	.short 0x00DE
-	.short 0x00BD
+	dl_vline	x0=222, y0=185, x1=222, y1=189
 DL_F14307:
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00DF
-	.short 0x00BA
-	.short 0x00DF
-	.short 0x00BC
+	dl_vline	x0=223, y0=186, x1=223, y1=188
 DL_F14311:
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_KnobWithLine_16x12
-	.short 0x0B6C
-	.short 0x0002
-	.short 0x000C
+	dl_bitmap	bitmap=Bitmap_KnobWithLine_16x12, x=32, y=73, w=16, h=12
 DL_F1431D:
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_KnobWithLine_16x12
-	.short 0x1774
-	.short 0x0002
-	.short 0x000C
+	dl_bitmap	bitmap=Bitmap_KnobWithLine_16x12, x=32, y=150, w=16, h=12
 
 ; ------------------------------------------------------------------
 ; 0xF14329-0xF143BF -- 18 display-list records, 151 bytes -- interpreter A/B
@@ -13874,84 +13355,27 @@ DL_F1431D:
 ; --splice
 ; ------------------------------------------------------------------
 DL_F14329:
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1D38
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0011
-	.short 0x00D1
-	.ascii "SEND"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2442
-	.byte 0x12	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0008
-	.short 0x00CD
-	.short 0x0030
-	.short 0x00E9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0008
-	.short 0x00DA
-	.short 0x0030
-	.short 0x00DA
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0009
-	.short 0x00DB
-	.short 0x0132
-	.short 0x00E8
+	dl_text8x16	x=0, y=187, text="\250"
+	dl_text8x8_packed	x=17, y=209, text="SEND"
+	dl_text8x16	x=16, y=232, text="\022"
+	dl_box	x0=8, y0=205, x1=48, y1=233
+	dl_hline	x0=8, y0=218, x1=48, y1=218
+	dl_fill_rect	x0=9, y0=219, x1=306, y1=232
 EffectEditor_PaintJob1_DL3:
 ; ; drawn (start operand) by EffectEditor_PaintJob1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0E, 0x08	; op 0E, 8 bytes -> handler 0xF31A9F
-	.short 0x2008
-	.short 0x0028
-	.short 0x0023
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B40
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1180
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x17C0
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1D38
-	.byte 0x10	; character codes below 0x20
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0059
-	.short 0x00D1
-	.ascii "MAIN   SUB"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x244C
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2451
-	.byte 0x12	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x00CD
-	.short 0x00A7
-	.short 0x00E9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x00DA
-	.short 0x00A7
-	.short 0x00DA
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x00DB
-	.short 0x00A6
-	.short 0x00E8
+	dl_clear_area	x=0, y=205, w=320, h=35
+	dl_text8x16	x=0, y=72, text="\250"
+	dl_text8x16	x=0, y=112, text="\250"
+	dl_text8x16	x=0, y=152, text="\250"
+	dl_text8x16	x=0, y=187, text="\020"
+	dl_text8x8_packed	x=89, y=209, text="MAIN   SUB"
+	dl_text8x16	x=96, y=232, text="\022"
+	dl_text8x16	x=136, y=232, text="\022"
+	dl_box	x0=73, y0=205, x1=167, y1=233
+	dl_hline	x0=73, y0=218, x1=167, y1=218
+	dl_fill_rect	x0=74, y0=219, x1=166, y1=232
 DL_F143AF:
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintBypassIndicator_DL + 0x14	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x0112	; +0x0D -> (0x2530)
-	.short 0x0021	; +0x0F -> (0x2532)
+	dlb_string_xy	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintBypassIndicator_DL + 0x14, width=4, x=274, y=33
 
 ; --- 0xF143C0-0xF143DF: not converted ---
 ; 0xF143C0-0xF143D3: 2 interpreter-A records (op 0x05, 0x1B), the op/len
@@ -13959,16 +13383,8 @@ DL_F143AF:
 ; in its own +0x07 field.
 EffectEditor_PaintBypassIndicator_DL:
 ; drawn (start operand) by EffectEditor_PaintBypassIndicator -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0111
-	.short 0x001F
-	.short 0x0137
-	.short 0x0033
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0111
-	.short 0x001F
-	.short 0x0137
-	.short 0x0033
+	dl_fill_rect	x0=273, y0=31, x1=311, y1=51
+	dl_erase_rect	x0=273, y0=31, x1=311, y1=51
 ; 0xF143D4-0xF143DF: 4-byte-stride table, 3 entries -- the string/array
 ; table a nearby already-spliced record names in its own +0x07 (and,
 ; for the string-table ops, +0x0B `BC`) field.
@@ -13986,98 +13402,25 @@ EffectEditor_PaintBypassIndicator_DL:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob2_DL2:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x7E	; +0x07 -> XIY: string table
-	.short 0x0008	; +0x0B -> BC: bytes per entry
-	.short 0x050E	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL11 + 0x7E, width=8, x=112, y=32
 EffectEditor_PaintJob1_DL4:
 ; ; drawn (start operand) by EffectEditor_PaintJob1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x07	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x90	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x0B40	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x07	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x8F	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x1180	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x07	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x8E	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x17C0	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=EffectEditor_PaintJob2_DL11 + 0x90, width=1, x=0, y=72
+	dlb_string	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=EffectEditor_PaintJob2_DL11 + 0x8F, width=1, x=0, y=112
+	dlb_string	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=EffectEditor_PaintJob2_DL11 + 0x8E, width=1, x=0, y=152
 EffectEditor_PaintJob1_DL2:
 ; ; drawn (start operand) by EffectEditor_PaintJob1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x93	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_FillRect, table=EffectEditor_PaintJob2_DL11 + 0x93
 EffectEditor_PaintJob1_DL1:
 ; ; drawn (start operand) by EffectEditor_PaintJob1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0B	; B op 08, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1B	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL11 + 0x93	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry_op08	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=EffectEditor_PaintJob2_DL11 + 0x93
 EffectEditor_PaintJob2_DL1:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x7659	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL1 + 0x4B	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x0B73	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x7679	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL1 + 0x53	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x1138	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x7699	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL1 + 0x5B	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x17B1	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x7659	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL1 + 0x61	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x0B78	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x7699	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL1 + 0x67	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x17AD	; +0x0D -> IX
+	dlb_string	var=Combination_Effect1On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x4B, width=4, x=88, y=73
+	dlb_string	var=Combination_Effect2On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x53, width=4, x=64, y=110
+	dlb_string	var=Combination_ReverbOn, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x5B, width=3, x=200, y=151
+	dlb_string	var=Combination_Effect1On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x61, width=3, x=128, y=73
+	dlb_string	var=Combination_ReverbOn, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x67, width=3, x=168, y=151
 
 ; --- 0xF1447D-0xF1449E: not converted ---
 ; 0xF1447D-0xF14484: 4-byte-stride table, 2 entries -- the string/array
@@ -14116,76 +13459,14 @@ EffectEditor_PaintJob2_DL1:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob2_DL11:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectNames_F147AC	; +0x07 -> XIY: string table
-	.short 0x0010	; +0x0B -> BC: bytes per entry
-	.short 0x0047	; +0x0D -> (0x2530)
-	.short 0x003A	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectNames_F147AC	; +0x07 -> XIY: string table
-	.short 0x0010	; +0x0B -> BC: bytes per entry
-	.short 0x0020	; +0x0D -> (0x2530)
-	.short 0x007E	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectNames_F147AC	; +0x07 -> XIY: string table
-	.short 0x0010	; +0x0B -> BC: bytes per entry
-	.short 0x00A2	; +0x0D -> (0x2530)
-	.short 0x0088	; +0x0F -> (0x2532)
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short UI_DrawScratch+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00A5	; +0x07 -> (0x2530)
-	.short 0x0063	; +0x09 -> (0x2532)
-	.byte 0x02	; +0x0B digit count
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short UI_DrawScratch+4	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x0074	; +0x07 -> (0x2530)
-	.short 0x0089	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+5	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x00E6	; +0x0D -> (0x2530)
-	.short 0x004B	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+6	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x00E6	; +0x0D -> (0x2530)
-	.short 0x0070	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+7	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x00EC	; +0x0D -> (0x2530)
-	.short 0x0091	; +0x0F -> (0x2532)
+	dlb_string_xy	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectNames_F147AC, width=16, x=71, y=58
+	dlb_string_xy	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectNames_F147AC, width=16, x=32, y=126
+	dlb_string_xy	var=UI_DrawScratch+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectNames_F147AC, width=16, x=162, y=136
+	dlb_number_xy	var=UI_DrawScratch+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=165, y=99, digits=2
+	dlb_number_xy	var=UI_DrawScratch+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=116, y=137, digits=3
+	dlb_string_xy	var=UI_DrawScratch+5, mask=0x07, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=230, y=75
+	dlb_string_xy	var=UI_DrawScratch+6, mask=0x07, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=230, y=112
+	dlb_string_xy	var=UI_DrawScratch+7, mask=0x07, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=236, y=145
 
 ; --- 0xF1451D-0xF14561: not converted ---
 ; 0xF1451D-0xF1452C: 8-byte-stride table, 2 entries -- the string/array
@@ -14228,77 +13509,20 @@ EffectEditor_PaintJob2_DL11:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob2_DL12:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x001E	; +0x07 -> (0x2530)
-	.short 0x0040	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short UI_DrawScratch+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x001E	; +0x07 -> (0x2530)
-	.short 0x008D	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+2	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x00E6	; +0x0D -> (0x2530)
-	.short 0x00AC	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+3	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x00E6	; +0x0D -> (0x2530)
-	.short 0x00B8	; +0x0F -> (0x2532)
+	dlb_number_xy	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=30, y=64, digits=3
+	dlb_number_xy	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=30, y=141, digits=3
+	dlb_string_xy	var=UI_DrawScratch+2, mask=0x07, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=230, y=172
+	dlb_string_xy	var=UI_DrawScratch+3, mask=0x07, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=230, y=184
 EffectEditor_PaintJob2_DL5:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x228A	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=16, y=221, digits=3
 EffectEditor_PaintJob2_DL7:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL10 + 0x1E	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x228A	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL10 + 0x1E, width=3, x=16, y=221
 EffectEditor_PaintJob2_DL10:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL10 + 0x1E	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x2293	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch+1	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x2298	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL10 + 0x1E, width=3, x=88, y=221
+	dlb_string	var=UI_DrawScratch+1, mask=0x07, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=128, y=221
 
 ; --- 0xF145D3-0xF145D8: not converted ---
 ; 0xF145D3-0xF145D8: 3-byte-stride table, 2 entries -- the string/array
@@ -14317,54 +13541,19 @@ EffectEditor_PaintJob2_DL10:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob1_DL5:
 ; ; drawn (start operand) by EffectEditor_PaintJob1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0xA	; +0x07 -> XIY: string table
-	.short 0x0008	; +0x0B -> BC: bytes per entry
-	.short 0x004E	; +0x0D -> (0x2530)
-	.short 0x00D1	; +0x0F -> (0x2532)
+	dlb_string_xy	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=EffectEditor_PaintJob2_DL6 + 0xA, width=8, x=78, y=209
 EffectEditor_PaintJob2_DL4:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectNames_F147AC	; +0x07 -> XIY: string table
-	.short 0x0010	; +0x0B -> BC: bytes per entry
-	.short 0x228F	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=EffectNames_F147AC, width=16, x=56, y=221
 EffectEditor_PaintJob2_DL9:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x28	; +0x07 -> XIY: string table
-	.short 0x0004	; +0x0B -> BC: bytes per entry
-	.short 0x22A8	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL6 + 0x28, width=4, x=256, y=221
 EffectEditor_PaintJob2_DL8:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long EffectEditor_PaintJob2_DL6 + 0x22	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x22A2	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL6 + 0x22, width=3, x=208, y=221
 EffectEditor_PaintJob2_DL6:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x22A2	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=208, y=221, digits=3
 
 ; --- 0xF14621-0xF1465E: not converted ---
 ; 0xF14621-0xF14638: 8-byte-stride table, 3 entries -- the string/array
@@ -14399,45 +13588,12 @@ EffectEditor_PaintJob2_DL6:
 ; --splice
 ; ------------------------------------------------------------------
 DL_F1465F:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLBTable_1k125k16k2k25k315k4k	; +0x07 -> XIY: string table
-	.short 0x0005	; +0x0B -> BC: bytes per entry
-	.short 0x2263	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLBTable_1k125k16k2k25k315k4k	; +0x07 -> XIY: string table
-	.short 0x0005	; +0x0B -> BC: bytes per entry
-	.short 0x2273	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLBTable_F15C93	; +0x07 -> XIY: string table
-	.short 0x0005	; +0x0B -> BC: bytes per entry
-	.short 0x2269	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLBTable_F15C93	; +0x07 -> XIY: string table
-	.short 0x0005	; +0x0B -> BC: bytes per entry
-	.short 0x2279	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=DLBTable_1k125k16k2k25k315k4k, width=5, x=24, y=220
+	dlb_string	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=DLBTable_1k125k16k2k25k315k4k, width=5, x=152, y=220
+	dlb_string	var=UI_DrawScratch+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=DLBTable_F15C93, width=5, x=72, y=220
+	dlb_string	var=UI_DrawScratch+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=DLBTable_F15C93, width=5, x=200, y=220
 DL_F1469B:
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DL_F146A6 + 0xB	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=DL_F146A6 + 0xB
 
 ; --- 0xF146A6-0xF146E0: not converted ---
 ; 0xF146A6-0xF146B0: one self-framing interpreter-B record (op 0x08,
@@ -14446,12 +13602,7 @@ DL_F1469B:
 ; length byte and its own +0x07 field (naming the table right after
 ; it) are both self-checking.
 DL_F146A6:
-	.byte 0x08, 0x0B	; B op 08, 11 bytes -> handler 0xF31B57 -- four words of entry[value]
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1B	; +0x06 swi 7 function
-	.long DL_F146A6 + 0xB	; +0x07 -> XIX: array, indexed by the value
+	dlb_rect_entry_op08	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=DL_F146A6 + 0xB
 ; 0xF146B1-0xF146E0: 8-byte-stride table, 6 entries -- the string/array
 ; table a nearby already-spliced record names in its own +0x07 (and,
 ; for the string-table ops, +0x0B `BC`) field.
@@ -14472,47 +13623,14 @@ DL_F146A6:
 ; ------------------------------------------------------------------
 EffectEditor_PaintJob6_DL:
 ; ; drawn (start operand) by EffectEditor_PaintJob6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x07	; +0x06 swi 7 function
-	.long EffectNames_F147AC	; +0x07 -> XIY: string table
-	.short 0x0010	; +0x0B -> BC: bytes per entry
-	.short 0x0650	; +0x0D -> IX
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x16, table=EffectNames_F147AC, width=16, x=128, y=40
 DL_F146F0:
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+2	; +0x02 source variable, 16-bit address
-	.byte 0x01	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long DspEffect_RepaintParamPage_DL + 0x16	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x003A	; +0x0D -> (0x2530)
-	.short 0x004A	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short UI_DrawScratch+2	; +0x02 source variable, 16-bit address
-	.byte 0x02	; +0x04 AND mask
-	.byte 0x01	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long DspEffect_RepaintParamPage_DL + 0x18	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x003A	; +0x0D -> (0x2530)
-	.short 0x00BD	; +0x0F -> (0x2532)
+	dlb_string_xy	var=UI_DrawScratch+2, mask=0x01, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DspEffect_RepaintParamPage_DL + 0x16, width=1, x=58, y=74
+	dlb_string_xy	var=UI_DrawScratch+2, mask=0x02, shift=1, svc=LCDSVC_DrawText8x8Packed, table=DspEffect_RepaintParamPage_DL + 0x18, width=1, x=58, y=189
 DspEffect_RepaintParamPage_DL:
 ; drawn (start operand) by DspEffect_RepaintParamPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0B	; B op 08, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch+1	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1B	; +0x06 swi 7 function
-	.long DspEffect_RepaintParamPage_DL + 0x1A	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DspEffect_RepaintParamPage_DL + 0x1A	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry_op08	var=UI_DrawScratch+1, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DspEffect_RepaintParamPage_DL + 0x1A
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DspEffect_RepaintParamPage_DL + 0x1A
 
 ; --- 0xF14728-0xF147AB: not converted ---
 ; 0xF14728-0xF14728: 1-byte-stride table, 1 entries -- the string/array
@@ -14739,70 +13857,14 @@ EffectNames_F147AC:
 ;   write-up in notes/FINDINGS-prom_b-dsp-effect-parameters.md.
 ; --------------------------------------------------------------------------
 DL_EffectParamPage:
-	.byte 0x02, 0x0F	; F14FAC  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch	; +0x02 source variable -- byte 0 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x0B99	; +0x0D -> IX: x=72, y=74
-	.byte 0x02, 0x0F	; F14FBB  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+1	; +0x02 source variable -- byte 1 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x0E19	; +0x0D -> IX: x=72, y=90
-	.byte 0x02, 0x0F	; F14FCA  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+2	; +0x02 source variable -- byte 2 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1099	; +0x0D -> IX: x=72, y=106
-	.byte 0x02, 0x0F	; F14FD9  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+3	; +0x02 source variable -- byte 3 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1319	; +0x0D -> IX: x=72, y=122
-	.byte 0x02, 0x0F	; F14FE8  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+4	; +0x02 source variable -- byte 4 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1599	; +0x0D -> IX: x=72, y=138
-	.byte 0x02, 0x0F	; F14FF7  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+5	; +0x02 source variable -- byte 5 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1819	; +0x0D -> IX: x=72, y=154
-	.byte 0x02, 0x0F	; F15006  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+6	; +0x02 source variable -- byte 6 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1A99	; +0x0D -> IX: x=72, y=170
-	.byte 0x02, 0x0F	; F15015  B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout
-	.short UI_DrawScratch+7	; +0x02 source variable -- byte 7 of the eight
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function -- LCD_Svc_20_DrawText8x10
-	.long EffectParamNames_F15024	; +0x07 -> XIY: EffectParamNames_F15024
-	.short 0x0011	; +0x0B -> BC: bytes per entry
-	.short 0x1D19	; +0x0D -> IX: x=72, y=186
+	dlb_string	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=74	; var: byte 0 of the eight
+	dlb_string	var=UI_DrawScratch+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=90	; var: byte 1 of the eight
+	dlb_string	var=UI_DrawScratch+2, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=106	; var: byte 2 of the eight
+	dlb_string	var=UI_DrawScratch+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=122	; var: byte 3 of the eight
+	dlb_string	var=UI_DrawScratch+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=138	; var: byte 4 of the eight
+	dlb_string	var=UI_DrawScratch+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=154	; var: byte 5 of the eight
+	dlb_string	var=UI_DrawScratch+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=170	; var: byte 6 of the eight
+	dlb_string	var=UI_DrawScratch+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=EffectParamNames_F15024, width=17, x=72, y=186	; var: byte 7 of the eight
 ; --------------------------------------------------------------------------
 ; EffectParamNames_F15024 -- 100 rows of 17 bytes, 0xF15024-0xF156C7:
 ;   the effect parameter labels (`WET`, `DRIVE`, `EMPHASIS Fc`,
@@ -18286,16 +17348,10 @@ StringTable_F17559:
 ; Evidence: 4 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_MainOutEqualizer_F1774D:
-	.byte 0x1c, 0x18	; F1774D  op 1C, 24 bytes -> handler 0xF31A52
-	.short 0x005C, 0x0005	; +2  the two words
-	.ascii "MAIN OUT EQUALIZER"	; +6
-	.byte 0x17, 0x0c	; F17765  op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "SYSTEM"	; +6
-	.byte 0x09, 0x0a	; F17771  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x2c, 0x00, 0x10, 0x00	; +2  '....,...'
-	.byte 0x23, 0x05	; F1777B  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x69, 0x30, 0x00	; +2  'i0.'
+	dl_text16x16_packed	x=92, y=5, text="MAIN OUT EQUALIZER"	; +6
+	dl_text8x8_packed	x=6, y=7, text="SYSTEM"	; +6
+	dl_box	x0=4, y0=4, x1=44, y1=16
+	dl_value_glyph	glyph=105, x=64, y=1
 
 ; --------------------------------------------------------------------------
 ; Unknown_F17780 -- unknown, 0xF17780-0xF17782 (3 bytes)
@@ -18416,16 +17472,10 @@ StringTable_F17783:
 ; Evidence: 4 records; byte-identical copy of the list at 0xF1774D
 ; --------------------------------------------------------------------------
 DL_MainOutEqualizer_F17959:
-	.byte 0x1c, 0x18	; F17959  op 1C, 24 bytes -> handler 0xF31A52
-	.short 0x005C, 0x0005	; +2  the two words
-	.ascii "MAIN OUT EQUALIZER"	; +6
-	.byte 0x17, 0x0c	; F17971  op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "SYSTEM"	; +6
-	.byte 0x09, 0x0a	; F1797D  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x2c, 0x00, 0x10, 0x00	; +2  '....,...'
-	.byte 0x23, 0x05	; F17987  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x69, 0x30, 0x00	; +2  'i0.'
+	dl_text16x16_packed	x=92, y=5, text="MAIN OUT EQUALIZER"	; +6
+	dl_text8x8_packed	x=6, y=7, text="SYSTEM"	; +6
+	dl_box	x0=4, y0=4, x1=44, y1=16
+	dl_value_glyph	glyph=105, x=64, y=1
 
 ; --------------------------------------------------------------------------
 ; Unknown_F1798C -- unknown, 0xF1798C-0xF179A4 (25 bytes)
@@ -18480,16 +17530,10 @@ StringTable_F179A5:
 ; Evidence: 4 records; byte-identical copy of the list at 0xF1774D
 ; --------------------------------------------------------------------------
 DL_MainOutEqualizer_F17A2C:
-	.byte 0x1c, 0x18	; F17A2C  op 1C, 24 bytes -> handler 0xF31A52
-	.short 0x005C, 0x0005	; +2  the two words
-	.ascii "MAIN OUT EQUALIZER"	; +6
-	.byte 0x17, 0x0c	; F17A44  op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "SYSTEM"	; +6
-	.byte 0x09, 0x0a	; F17A50  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x2c, 0x00, 0x10, 0x00	; +2  '....,...'
-	.byte 0x23, 0x05	; F17A5A  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x69, 0x30, 0x00	; +2  'i0.'
+	dl_text16x16_packed	x=92, y=5, text="MAIN OUT EQUALIZER"	; +6
+	dl_text8x8_packed	x=6, y=7, text="SYSTEM"	; +6
+	dl_box	x0=4, y0=4, x1=44, y1=16
+	dl_value_glyph	glyph=105, x=64, y=1
 
 ; --------------------------------------------------------------------------
 ; OldBuild2_ValueGlyph_QuantiserTail -- bit table, 0xF17A5F-0xF17A6B (13 bytes)
@@ -18597,8 +17641,7 @@ OldBuild2_ValueGlyph_Bitmaps:
 ;                  THIS copy.
 ; --------------------------------------------------------------------------
 DL_F17C00:
-	.byte 0x0e, 0x08	; F17C00  op 0E, 8 bytes -> handler 0xF31A9F
-	.byte 0xb0, 0x0e, 0x28, 0x00, 0x64, 0x00	; +2  '..(.d.'
+	dl_clear_area	x=0, y=94, w=320, h=100
 
 ; --------------------------------------------------------------------------
 ; DL_OtherParts -- display list, 0xF17C08-0xF17C29 (34 bytes)
@@ -18609,14 +17652,9 @@ DL_F17C00:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_OtherParts:
-	.byte 0x17, 0x11	; F17C08  op 17, 17 bytes -> handler 0xF31A52
-	.short 0x00F3, 0x009B	; +2  the two words
-	.ascii "OTHER PARTS"	; +6
-	.byte 0x17, 0x07	; F17C19  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0099	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x09, 0x0a	; F17C20  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xf0, 0x00, 0x99, 0x00, 0x39, 0x01, 0xa3, 0x00	; +2  '....9...'
+	dl_text8x8_packed	x=243, y=155, text="OTHER PARTS"	; +6
+	dl_text8x8_packed	x=314, y=153, text="\021"
+	dl_box	x0=240, y0=153, x1=313, y1=163
 
 ; --------------------------------------------------------------------------
 ; DL_Solo_F17C2A -- display list, 0xF17C2A-0xF17C44 (27 bytes)
@@ -18627,14 +17665,9 @@ DL_OtherParts:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Solo_F17C2A:
-	.byte 0x17, 0x0a	; F17C2A  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0120, 0x001F	; +2  the two words
-	.ascii "SOLO"	; +6
-	.byte 0x17, 0x07	; F17C34  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0021	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x09, 0x0a	; F17C3B  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x1f, 0x01, 0x1d, 0x00, 0x39, 0x01, 0x27, 0x00	; +2  "....9.'."
+	dl_text8x8_packed	x=288, y=31, text="SOLO"	; +6
+	dl_text8x8_packed	x=314, y=33, text="\021"
+	dl_box	x0=287, y0=29, x1=313, y1=39
 
 ; --------------------------------------------------------------------------
 ; DL_F17C45 -- display list, 0xF17C45-0xF17C4E (10 bytes)
@@ -18643,8 +17676,7 @@ DL_Solo_F17C2A:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F17C45:
-	.byte 0x1b, 0x0a	; F17C45  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x20, 0x01, 0x1e, 0x00, 0x38, 0x01, 0x26, 0x00	; +2  ' ...8.&.'
+	dl_erase_rect	x0=288, y0=30, x1=312, y1=38
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_DrawPartBoxRow_DL4 -- display list, 0xF17C4F-0xF17C58 (10 bytes)
@@ -18654,8 +17686,7 @@ DL_F17C45:
 ; --------------------------------------------------------------------------
 CombiEditMixer_DrawPartBoxRow_DL4:
 ; ; drawn (start operand) by CombiEditMixer_DrawPartBoxRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0a	; F17C4F  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x20, 0x01, 0x1e, 0x00, 0x38, 0x01, 0x26, 0x00	; +2  ' ...8.&.'
+	dl_fill_rect	x0=288, y0=30, x1=312, y1=38
 
 ; --------------------------------------------------------------------------
 ; Bitmap_F17C59_24x17 -- bitmap, 0xF17C59-0xF17C8B (51 bytes)
@@ -18698,92 +17729,48 @@ Bitmap_F17C59_24x17:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Mixer:
-	.byte 0x23, 0x05	; F17C8C  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x05, 0x00, 0x00	; +2  '...'
-	.byte 0x1c, 0x0b	; F17C91  op 1C, 11 bytes -> handler 0xF31A52
-	.short 0x001B, 0x0004	; +2  the two words
-	.ascii "MIXER"	; +6
-	.byte 0x17, 0x0c	; F17C9C  op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0077, 0x001B	; +2  the two words
-	.ascii "SOUND:"	; +6
-	.byte 0x09, 0x0a	; F17CA8  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x46, 0x00, 0x18, 0x00, 0x02, 0x01, 0x24, 0x00	; +2  'F.....$.'
-	.byte 0x01, 0x0a	; F17CB2  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x46, 0x00, 0x19, 0x00, 0x02, 0x01, 0x19, 0x00	; +2  'F.......'
-	.byte 0x01, 0x0a	; F17CBC  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x46, 0x00, 0x23, 0x00, 0x02, 0x01, 0x23, 0x00	; +2  'F.#...#.'
-	.byte 0x01, 0x0a	; F17CC6  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x05, 0x00, 0xe1, 0x00, 0x21, 0x00, 0xe1, 0x00	; +2  '....!...'
-	.byte 0x01, 0x0a	; F17CD0  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xe1, 0x00, 0x49, 0x00, 0xe1, 0x00	; +2  '-...I...'
-	.byte 0x01, 0x0a	; F17CDA  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x55, 0x00, 0xe1, 0x00, 0x71, 0x00, 0xe1, 0x00	; +2  'U...q...'
-	.byte 0x01, 0x0a	; F17CE4  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x7d, 0x00, 0xe1, 0x00, 0x99, 0x00, 0xe1, 0x00	; +2  '}.......'
-	.byte 0x01, 0x0a	; F17CEE  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xe1, 0x00, 0xc1, 0x00, 0xe1, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17CF8  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xe1, 0x00, 0xe9, 0x00, 0xe1, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17D02  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xf5, 0x00, 0xe1, 0x00, 0x11, 0x01, 0xe1, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17D0C  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x1d, 0x01, 0xe1, 0x00, 0x39, 0x01, 0xe1, 0x00	; +2  '....9...'
-	.byte 0x01, 0x0a	; F17D16  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x05, 0x00, 0xed, 0x00, 0x21, 0x00, 0xed, 0x00	; +2  '....!...'
-	.byte 0x01, 0x0a	; F17D20  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xed, 0x00, 0x49, 0x00, 0xed, 0x00	; +2  '-...I...'
-	.byte 0x01, 0x0a	; F17D2A  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x55, 0x00, 0xed, 0x00, 0x71, 0x00, 0xed, 0x00	; +2  'U...q...'
-	.byte 0x01, 0x0a	; F17D34  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x7d, 0x00, 0xed, 0x00, 0x99, 0x00, 0xed, 0x00	; +2  '}.......'
-	.byte 0x01, 0x0a	; F17D3E  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xed, 0x00, 0xc1, 0x00, 0xed, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17D48  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xed, 0x00, 0xe9, 0x00, 0xed, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17D52  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xf5, 0x00, 0xed, 0x00, 0x11, 0x01, 0xed, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F17D5C  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x1d, 0x01, 0xed, 0x00, 0x39, 0x01, 0xed, 0x00	; +2  '....9...'
-	.byte 0x02, 0x0a	; F17D66  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0xe2, 0x00, 0x04, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17D70  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x22, 0x00, 0xe2, 0x00, 0x22, 0x00, 0xec, 0x00	; +2  '"..."...'
-	.byte 0x02, 0x0a	; F17D7A  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x2c, 0x00, 0xe2, 0x00, 0x2c, 0x00, 0xec, 0x00	; +2  ',...,...'
-	.byte 0x02, 0x0a	; F17D84  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x42, 0x00, 0x1b, 0x00, 0x42, 0x00, 0x22, 0x00	; +2  'B...B.".'
-	.byte 0x02, 0x0a	; F17D8E  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x44, 0x00, 0x1a, 0x00, 0x44, 0x00, 0x23, 0x00	; +2  'D...D.#.'
-	.byte 0x02, 0x0a	; F17D98  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x4a, 0x00, 0xe2, 0x00, 0x4a, 0x00, 0xec, 0x00	; +2  'J...J...'
-	.byte 0x02, 0x0a	; F17DA2  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x54, 0x00, 0xe2, 0x00, 0x54, 0x00, 0xec, 0x00	; +2  'T...T...'
-	.byte 0x02, 0x0a	; F17DAC  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x72, 0x00, 0xe2, 0x00, 0x72, 0x00, 0xec, 0x00	; +2  'r...r...'
-	.byte 0x02, 0x0a	; F17DB6  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x7c, 0x00, 0xe2, 0x00, 0x7c, 0x00, 0xec, 0x00	; +2  '|...|...'
-	.byte 0x02, 0x0a	; F17DC0  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x9a, 0x00, 0xe2, 0x00, 0x9a, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DCA  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xa4, 0x00, 0xe2, 0x00, 0xa4, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DD4  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xc2, 0x00, 0xe2, 0x00, 0xc2, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DDE  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xcc, 0x00, 0xe2, 0x00, 0xcc, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DE8  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xea, 0x00, 0xe2, 0x00, 0xea, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DF2  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xf4, 0x00, 0xe2, 0x00, 0xf4, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17DFC  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x01, 0x1a, 0x00, 0x04, 0x01, 0x23, 0x00	; +2  '......#.'
-	.byte 0x02, 0x0a	; F17E06  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x01, 0x1b, 0x00, 0x06, 0x01, 0x22, 0x00	; +2  '......".'
-	.byte 0x02, 0x0a	; F17E10  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x12, 0x01, 0xe2, 0x00, 0x12, 0x01, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17E1A  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x1c, 0x01, 0xe2, 0x00, 0x1c, 0x01, 0xec, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F17E24  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x3a, 0x01, 0xe2, 0x00, 0x3a, 0x01, 0xec, 0x00	; +2  ':...:...'
+	dl_value_glyph	glyph=5, x=0, y=0
+	dl_text16x16_packed	x=27, y=4, text="MIXER"	; +6
+	dl_text8x8_packed	x=119, y=27, text="SOUND:"	; +6
+	dl_box	x0=70, y0=24, x1=258, y1=36
+	dl_hline	x0=70, y0=25, x1=258, y1=25
+	dl_hline	x0=70, y0=35, x1=258, y1=35
+	dl_hline	x0=5, y0=225, x1=33, y1=225
+	dl_hline	x0=45, y0=225, x1=73, y1=225
+	dl_hline	x0=85, y0=225, x1=113, y1=225
+	dl_hline	x0=125, y0=225, x1=153, y1=225
+	dl_hline	x0=165, y0=225, x1=193, y1=225
+	dl_hline	x0=205, y0=225, x1=233, y1=225
+	dl_hline	x0=245, y0=225, x1=273, y1=225
+	dl_hline	x0=285, y0=225, x1=313, y1=225
+	dl_hline	x0=5, y0=237, x1=33, y1=237
+	dl_hline	x0=45, y0=237, x1=73, y1=237
+	dl_hline	x0=85, y0=237, x1=113, y1=237
+	dl_hline	x0=125, y0=237, x1=153, y1=237
+	dl_hline	x0=165, y0=237, x1=193, y1=237
+	dl_hline	x0=205, y0=237, x1=233, y1=237
+	dl_hline	x0=245, y0=237, x1=273, y1=237
+	dl_hline	x0=285, y0=237, x1=313, y1=237
+	dl_vline	x0=4, y0=226, x1=4, y1=236
+	dl_vline	x0=34, y0=226, x1=34, y1=236
+	dl_vline	x0=44, y0=226, x1=44, y1=236
+	dl_vline	x0=66, y0=27, x1=66, y1=34
+	dl_vline	x0=68, y0=26, x1=68, y1=35
+	dl_vline	x0=74, y0=226, x1=74, y1=236
+	dl_vline	x0=84, y0=226, x1=84, y1=236
+	dl_vline	x0=114, y0=226, x1=114, y1=236
+	dl_vline	x0=124, y0=226, x1=124, y1=236
+	dl_vline	x0=154, y0=226, x1=154, y1=236
+	dl_vline	x0=164, y0=226, x1=164, y1=236
+	dl_vline	x0=194, y0=226, x1=194, y1=236
+	dl_vline	x0=204, y0=226, x1=204, y1=236
+	dl_vline	x0=234, y0=226, x1=234, y1=236
+	dl_vline	x0=244, y0=226, x1=244, y1=236
+	dl_vline	x0=260, y0=26, x1=260, y1=35
+	dl_vline	x0=262, y0=27, x1=262, y1=34
+	dl_vline	x0=274, y0=226, x1=274, y1=236
+	dl_vline	x0=284, y0=226, x1=284, y1=236
+	dl_vline	x0=314, y0=226, x1=314, y1=236
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_ShowOtherParts_DL1 -- display list, 0xF17E2E-0xF17E41 (20 bytes)
@@ -18794,10 +17781,8 @@ DL_Mixer:
 ; --------------------------------------------------------------------------
 CombiEditMixer_ShowOtherParts_DL1:
 ; ; drawn (start operand) by CombiEditMixer_ShowOtherParts -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x09, 0x0a	; F17E2E  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x29, 0x00, 0x3a, 0x01, 0x6a, 0x00	; +2  '..).:.j.'
-	.byte 0x02, 0x0a	; F17E38  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xa0, 0x00, 0x29, 0x00, 0xa0, 0x00, 0x6a, 0x00	; +2  '..)...j.'
+	dl_box	x0=6, y0=41, x1=314, y1=106
+	dl_vline	x0=160, y0=41, x1=160, y1=106
 
 ; --------------------------------------------------------------------------
 ; DL_Sound -- display list, 0xF17E42-0xF17E9C (91 bytes)
@@ -18808,33 +17793,16 @@ CombiEditMixer_ShowOtherParts_DL1:
 ;           0xF17E2E-0xF17E9D
 ; --------------------------------------------------------------------------
 DL_Sound:
-	.byte 0x20, 0x0b	; F17E42  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE1/3"	; +4
-	.byte 0x17, 0x0b	; F17E4D  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0007, 0x001F	; +2  the two words
-	.ascii "SOUND"	; +6
-	.byte 0x17, 0x07	; F17E58  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0021	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x09	; F17E5F  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000D, 0x0070	; +2  the two words
-	.ascii "PAN"	; +6
-	.byte 0x17, 0x07	; F17E68  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0072	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F17E6F  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0099	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x09	; F17E76  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000D, 0x009B	; +2  the two words
-	.ascii "VOL"	; +6
-	.byte 0x09, 0x0a	; F17E7F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x1d, 0x00, 0x26, 0x00, 0x27, 0x00	; +2  "....&.'."
-	.byte 0x09, 0x0a	; F17E89  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x6e, 0x00, 0x26, 0x00, 0x78, 0x00	; +2  '..n.&.x.'
-	.byte 0x09, 0x0a	; F17E93  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x99, 0x00, 0x26, 0x00, 0xa3, 0x00	; +2  '....&...'
+	dl_text8x10	x=256, y=6, text="PAGE1/3"	; +4
+	dl_text8x8_packed	x=7, y=31, text="SOUND"	; +6
+	dl_text8x8_packed	x=0, y=33, text="\020"
+	dl_text8x8_packed	x=13, y=112, text="PAN"	; +6
+	dl_text8x8_packed	x=0, y=114, text="\020"
+	dl_text8x8_packed	x=0, y=153, text="\020"
+	dl_text8x8_packed	x=13, y=155, text="VOL"	; +6
+	dl_box	x0=6, y0=29, x1=38, y1=39
+	dl_box	x0=6, y0=110, x1=38, y1=120
+	dl_box	x0=6, y0=153, x1=38, y1=163
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_ShowOtherParts_DL2 -- display list, 0xF17E9D-0xF17F06 (106 bytes)
@@ -18846,30 +17814,17 @@ DL_Sound:
 ; --------------------------------------------------------------------------
 CombiEditMixer_ShowOtherParts_DL2:
 ; ; drawn (start operand) by CombiEditMixer_ShowOtherParts -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x17, 0x09	; F17E9D  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000D, 0x0049	; +2  the two words
-	.ascii "INT"	; +6
-	.byte 0x09, 0x0a	; F17EA6  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x47, 0x00, 0x26, 0x00, 0x51, 0x00	; +2  '..G.&.Q.'
-	.byte 0x17, 0x07	; F17EB0  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x004B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x11, 0x0a	; F17EB7  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x38, 0x00, 0x22, 0x00, 0x38, 0x00	; +2  '..8.".8.'
-	.byte 0x11, 0x0a	; F17EC1  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0x2c, 0x00, 0x38, 0x00, 0x4a, 0x00, 0x38, 0x00	; +2  ',.8.J.8.'
-	.byte 0x11, 0x0a	; F17ECB  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0x54, 0x00, 0x38, 0x00, 0x72, 0x00, 0x38, 0x00	; +2  'T.8.r.8.'
-	.byte 0x11, 0x0a	; F17ED5  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0x7c, 0x00, 0x38, 0x00, 0x9a, 0x00, 0x38, 0x00	; +2  '|.8...8.'
-	.byte 0x11, 0x0a	; F17EDF  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0xa4, 0x00, 0x38, 0x00, 0xc2, 0x00, 0x38, 0x00	; +2  '..8...8.'
-	.byte 0x11, 0x0a	; F17EE9  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0xcc, 0x00, 0x38, 0x00, 0xea, 0x00, 0x38, 0x00	; +2  '..8...8.'
-	.byte 0x11, 0x0a	; F17EF3  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0xf4, 0x00, 0x38, 0x00, 0x12, 0x01, 0x38, 0x00	; +2  '..8...8.'
-	.byte 0x11, 0x0a	; F17EFD  op 11, 10 bytes -> handler 0xF31A75
-	.byte 0x1c, 0x01, 0x38, 0x00, 0x3a, 0x01, 0x38, 0x00	; +2  '..8.:.8.'
+	dl_text8x8_packed	x=13, y=73, text="INT"	; +6
+	dl_box	x0=6, y0=71, x1=38, y1=81
+	dl_text8x8_packed	x=0, y=75, text="\020"
+	dl_hline_dither	x0=4, y0=56, x1=34, y1=56
+	dl_hline_dither	x0=44, y0=56, x1=74, y1=56
+	dl_hline_dither	x0=84, y0=56, x1=114, y1=56
+	dl_hline_dither	x0=124, y0=56, x1=154, y1=56
+	dl_hline_dither	x0=164, y0=56, x1=194, y1=56
+	dl_hline_dither	x0=204, y0=56, x1=234, y1=56
+	dl_hline_dither	x0=244, y0=56, x1=274, y1=56
+	dl_hline_dither	x0=284, y0=56, x1=314, y1=56
 
 ; --------------------------------------------------------------------------
 ; DL_KeyShift -- display list, 0xF17F07-0xF17FA3 (157 bytes)
@@ -18880,52 +17835,23 @@ CombiEditMixer_ShowOtherParts_DL2:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_KeyShift:
-	.byte 0x17, 0x07	; F17F07  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0109, 0x0002	; +2  the two words
-	.byte 0x91	; +6  '.'
-	.byte 0x20, 0x0b	; F17F0E  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE2/3"	; +4
-	.byte 0x17, 0x09	; F17F19  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000C, 0x001F	; +2  the two words
-	.ascii "REV"	; +6
-	.byte 0x17, 0x07	; F17F22  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0021	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x0a	; F17F29  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0009, 0x0049	; +2  the two words
-	.ascii "EFF1"	; +6
-	.byte 0x17, 0x07	; F17F33  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x004B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x0a	; F17F3A  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0009, 0x0070	; +2  the two words
-	.ascii "EFF2"	; +6
-	.byte 0x17, 0x07	; F17F44  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0072	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F17F4B  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0099	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x0a	; F17F52  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0009, 0x009B	; +2  the two words
-	.ascii "MAIN"	; +6
-	.byte 0x17, 0x0f	; F17F5C  op 17, 15 bytes -> handler 0xF31A52
-	.short 0x0009, 0x00C0	; +2  the two words
-	.ascii "KEY SHIFT"	; +6
-	.byte 0x17, 0x07	; F17F6B  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x00C2	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x09, 0x0a	; F17F72  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x1d, 0x00, 0x26, 0x00, 0x27, 0x00	; +2  "....&.'."
-	.byte 0x09, 0x0a	; F17F7C  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x47, 0x00, 0x26, 0x00, 0x51, 0x00	; +2  '..G.&.Q.'
-	.byte 0x09, 0x0a	; F17F86  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x6e, 0x00, 0x26, 0x00, 0x78, 0x00	; +2  '..n.&.x.'
-	.byte 0x09, 0x0a	; F17F90  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x99, 0x00, 0x26, 0x00, 0xa3, 0x00	; +2  '....&...'
-	.byte 0x09, 0x0a	; F17F9A  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0xbe, 0x00, 0x44, 0x00, 0xc8, 0x00	; +2  '....D...'
+	dl_text8x8_packed	x=265, y=2, text="\221"
+	dl_text8x10	x=256, y=6, text="PAGE2/3"	; +4
+	dl_text8x8_packed	x=12, y=31, text="REV"	; +6
+	dl_text8x8_packed	x=0, y=33, text="\020"
+	dl_text8x8_packed	x=9, y=73, text="EFF1"	; +6
+	dl_text8x8_packed	x=0, y=75, text="\020"
+	dl_text8x8_packed	x=9, y=112, text="EFF2"	; +6
+	dl_text8x8_packed	x=0, y=114, text="\020"
+	dl_text8x8_packed	x=0, y=153, text="\020"
+	dl_text8x8_packed	x=9, y=155, text="MAIN"	; +6
+	dl_text8x8_packed	x=9, y=192, text="KEY SHIFT"	; +6
+	dl_text8x8_packed	x=0, y=194, text="\020"
+	dl_box	x0=6, y0=29, x1=38, y1=39
+	dl_box	x0=6, y0=71, x1=38, y1=81
+	dl_box	x0=6, y0=110, x1=38, y1=120
+	dl_box	x0=6, y0=153, x1=38, y1=163
+	dl_box	x0=6, y0=190, x1=68, y1=200
 
 ; --------------------------------------------------------------------------
 ; DL_Midiout -- display list, 0xF17FA4-0xF18029 (134 bytes)
@@ -18936,44 +17862,20 @@ DL_KeyShift:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Midiout:
-	.byte 0x17, 0x07	; F17FA4  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0109, 0x0002	; +2  the two words
-	.byte 0x91	; +6  '.'
-	.byte 0x20, 0x0b	; F17FAB  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE3/3"	; +4
-	.byte 0x17, 0x0d	; F17FB6  op 17, 13 bytes -> handler 0xF31A52
-	.short 0x0009, 0x0049	; +2  the two words
-	.ascii "MIDIOUT"	; +6
-	.byte 0x17, 0x07	; F17FC3  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x004B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x0d	; F17FCA  op 17, 13 bytes -> handler 0xF31A52
-	.short 0x0009, 0x0070	; +2  the two words
-	.ascii "MIDI IN"	; +6
-	.byte 0x17, 0x07	; F17FD7  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0072	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F17FDE  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0099	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x0d	; F17FE5  op 17, 13 bytes -> handler 0xF31A52
-	.short 0x0009, 0x009B	; +2  the two words
-	.ascii "MIDI CH"	; +6
-	.byte 0x17, 0x09	; F17FF2  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000C, 0x00C0	; +2  the two words
-	.ascii "SUB"	; +6
-	.byte 0x17, 0x07	; F17FFB  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x00C2	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x09, 0x0a	; F18002  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x47, 0x00, 0x36, 0x00, 0x51, 0x00	; +2  '..G.6.Q.'
-	.byte 0x09, 0x0a	; F1800C  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x6e, 0x00, 0x36, 0x00, 0x78, 0x00	; +2  '..n.6.x.'
-	.byte 0x09, 0x0a	; F18016  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x99, 0x00, 0x36, 0x00, 0xa3, 0x00	; +2  '....6...'
-	.byte 0x09, 0x0a	; F18020  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0xbe, 0x00, 0x26, 0x00, 0xc8, 0x00	; +2  '....&...'
+	dl_text8x8_packed	x=265, y=2, text="\221"
+	dl_text8x10	x=256, y=6, text="PAGE3/3"	; +4
+	dl_text8x8_packed	x=9, y=73, text="MIDIOUT"	; +6
+	dl_text8x8_packed	x=0, y=75, text="\020"
+	dl_text8x8_packed	x=9, y=112, text="MIDI IN"	; +6
+	dl_text8x8_packed	x=0, y=114, text="\020"
+	dl_text8x8_packed	x=0, y=153, text="\020"
+	dl_text8x8_packed	x=9, y=155, text="MIDI CH"	; +6
+	dl_text8x8_packed	x=12, y=192, text="SUB"	; +6
+	dl_text8x8_packed	x=0, y=194, text="\020"
+	dl_box	x0=6, y0=71, x1=54, y1=81
+	dl_box	x0=6, y0=110, x1=54, y1=120
+	dl_box	x0=6, y0=153, x1=54, y1=163
+	dl_box	x0=6, y0=190, x1=38, y1=200
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_ShowOtherParts_DL3 -- display list, 0xF1802A-0xF18043 (26 bytes)
@@ -18985,14 +17887,9 @@ DL_Midiout:
 ; --------------------------------------------------------------------------
 CombiEditMixer_ShowOtherParts_DL3:
 ; ; drawn (start operand) by CombiEditMixer_ShowOtherParts -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x17, 0x09	; F1802A  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x000D, 0x001F	; +2  the two words
-	.ascii "INT"	; +6
-	.byte 0x17, 0x07	; F18033  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0021	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x09, 0x0a	; F1803A  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x06, 0x00, 0x1d, 0x00, 0x26, 0x00, 0x27, 0x00	; +2  "....&.'."
+	dl_text8x8_packed	x=13, y=31, text="INT"	; +6
+	dl_text8x8_packed	x=0, y=33, text="\020"
+	dl_box	x0=6, y0=29, x1=38, y1=39
 
 ; --------------------------------------------------------------------------
 ; DL_F18044 -- display list, 0xF18044-0xF18065 (34 bytes)
@@ -19001,16 +17898,8 @@ CombiEditMixer_ShowOtherParts_DL3:
 ; Evidence: 2 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F18044:
-	.byte 0x07, 0x11	; F18044  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2765		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1828A	; +7  -> StringTable_F1828A
-	.byte 0x06, 0x00, 0x4d, 0x00, 0x1b, 0x00	; +11  '..M...'
-	.byte 0x07, 0x11	; F18055  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x17	; +4  mask, shift, swi 7 function
-	.long 0x00002640	; +7  -> 0x002640
-	.byte 0x10, 0x00, 0x9b, 0x00, 0x1b, 0x00	; +11  '......'
+	dlb_string_xy	var=CombiEdit_Part, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1828A, width=6, x=77, y=27
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=UI_DrawScratch, width=16, x=155, y=27
 
 ; --------------------------------------------------------------------------
 ; RecordArray_F18066 -- record array, 0xF18066-0xF180ED (136 bytes)
@@ -19071,46 +17960,14 @@ RecordArray_F180EE:
 ;           puts on the screen -- one of them at a time.  Generated by
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_Pt1Pt9Pt2Pt3Pt4Pt5Pt6Pt7:
-	.byte 0x07, 0x11	; F1814E  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt9P17P25	; +7  -> StringTable_Pt1Pt9P17P25
-	.byte 0x03, 0x00, 0x0a, 0x00, 0xe4, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F1815F  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt2P10P18P26	; +7  -> StringTable_Pt2P10P18P26
-	.byte 0x03, 0x00, 0x32, 0x00, 0xe4, 0x00	; +11  '..2...'
-	.byte 0x07, 0x11	; F18170  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt3P11P19P27	; +7  -> StringTable_Pt3P11P19P27
-	.byte 0x03, 0x00, 0x5a, 0x00, 0xe4, 0x00	; +11  '..Z...'
-	.byte 0x07, 0x11	; F18181  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt4P12P20P28	; +7  -> StringTable_Pt4P12P20P28
-	.byte 0x03, 0x00, 0x82, 0x00, 0xe4, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F18192  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt5P13P21P29	; +7  -> StringTable_Pt5P13P21P29
-	.byte 0x03, 0x00, 0xaa, 0x00, 0xe4, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F181A3  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt6P14P22P30	; +7  -> StringTable_Pt6P14P22P30
-	.byte 0x03, 0x00, 0xd2, 0x00, 0xe4, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F181B4  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt7P15P23P31	; +7  -> StringTable_Pt7P15P23P31
-	.byte 0x03, 0x00, 0xfa, 0x00, 0xe4, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F181C5  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt8P16P24P32	; +7  -> StringTable_Pt8P16P24P32
-	.byte 0x03, 0x00, 0x22, 0x01, 0xe4, 0x00	; +11  '.."...'
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt1Pt9P17P25, width=3, x=10, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt2P10P18P26, width=3, x=50, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt3P11P19P27, width=3, x=90, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt4P12P20P28, width=3, x=130, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt5P13P21P29, width=3, x=170, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt6P14P22P30, width=3, x=210, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt7P15P23P31, width=3, x=250, y=228
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Pt8P16P24P32, width=3, x=290, y=228
 
 ; --------------------------------------------------------------------------
 ; DL_Part1Part9Part17Part25Part2 -- display list, 0xF181D6-0xF1825D (136 bytes)
@@ -19140,46 +17997,14 @@ DL_Pt1Pt9Pt2Pt3Pt4Pt5Pt6Pt7:
 ;           puts on the screen -- one of them at a time.  Generated by
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_Part1Part9Part17Part25Part2:
-	.byte 0x07, 0x11	; F181D6  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part1Part9Part17Part25	; +7  -> StringTable_Part1Part9Part17Part25
-	.byte 0x07, 0x00, 0x0e, 0x00, 0x2f, 0x00	; +11  '..../.'
-	.byte 0x07, 0x11	; F181E7  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part2Part10Part18Part26	; +7  -> StringTable_Part2Part10Part18Part26
-	.byte 0x07, 0x00, 0x0e, 0x00, 0x3f, 0x00	; +11  '....?.'
-	.byte 0x07, 0x11	; F181F8  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part3Part11Part19Part27	; +7  -> StringTable_Part3Part11Part19Part27
-	.byte 0x07, 0x00, 0x0e, 0x00, 0x4f, 0x00	; +11  '....O.'
-	.byte 0x07, 0x11	; F18209  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part4Part12Part20Part28	; +7  -> StringTable_Part4Part12Part20Part28
-	.byte 0x07, 0x00, 0x0e, 0x00, 0x5f, 0x00	; +11  '...._.'
-	.byte 0x07, 0x11	; F1821A  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part5Part13Part21Part29	; +7  -> StringTable_Part5Part13Part21Part29
-	.byte 0x07, 0x00, 0xa8, 0x00, 0x2f, 0x00	; +11  '..../.'
-	.byte 0x07, 0x11	; F1822B  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part6Part14Part22Part30	; +7  -> StringTable_Part6Part14Part22Part30
-	.byte 0x07, 0x00, 0xa8, 0x00, 0x3f, 0x00	; +11  '....?.'
-	.byte 0x07, 0x11	; F1823C  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part7Part15Part23Part31	; +7  -> StringTable_Part7Part15Part23Part31
-	.byte 0x07, 0x00, 0xa8, 0x00, 0x4f, 0x00	; +11  '....O.'
-	.byte 0x07, 0x11	; F1824D  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x18, 0x03, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_Part8Part16Part24Part32	; +7  -> StringTable_Part8Part16Part24Part32
-	.byte 0x07, 0x00, 0xa8, 0x00, 0x5f, 0x00	; +11  '...._.'
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part1Part9Part17Part25, width=7, x=14, y=47
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part2Part10Part18Part26, width=7, x=14, y=63
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part3Part11Part19Part27, width=7, x=14, y=79
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part4Part12Part20Part28, width=7, x=14, y=95
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part5Part13Part21Part29, width=7, x=168, y=47
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part6Part14Part22Part30, width=7, x=168, y=63
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part7Part15Part23Part31, width=7, x=168, y=79
+	dlb_string_xy	var=UI_DrawScratch, mask=0x18, shift=3, svc=LCDSVC_DrawText8x8Packed, table=StringTable_Part8Part16Part24Part32, width=7, x=168, y=95
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_DrawPartBoxRow_DL1 -- display list, 0xF1825E-0xF18268 (11 bytes)
@@ -19189,10 +18014,7 @@ DL_Part1Part9Part17Part25Part2:
 ; --------------------------------------------------------------------------
 CombiEditMixer_DrawPartBoxRow_DL1:
 ; ; drawn (start operand) by CombiEditMixer_DrawPartBoxRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F1825E  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2641		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1854D	; +7  -> IndexMap_F1854D
+	dlb_rect_entry_op08	var=UI_DrawScratch+1, mask=0x1f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1854D
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_DrawPartBoxRow_DL3 -- display list, 0xF18269-0xF18273 (11 bytes)
@@ -19202,10 +18024,7 @@ CombiEditMixer_DrawPartBoxRow_DL1:
 ; --------------------------------------------------------------------------
 CombiEditMixer_DrawPartBoxRow_DL3:
 ; ; drawn (start operand) by CombiEditMixer_DrawPartBoxRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0b	; F18269  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1854D	; +7  -> IndexMap_F1854D
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1854D
 
 ; --------------------------------------------------------------------------
 ; CombiEditMixer_DrawPartBoxRow_DL2 -- display list, 0xF18274-0xF18289 (22 bytes)
@@ -19216,14 +18035,8 @@ CombiEditMixer_DrawPartBoxRow_DL3:
 ; --------------------------------------------------------------------------
 CombiEditMixer_DrawPartBoxRow_DL2:
 ; ; drawn (start operand) by CombiEditMixer_DrawPartBoxRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F18274  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2641		; +2  RAM variable
-	.byte 0x07, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F185BD	; +7  -> IndexMap_F185BD
-	.byte 0x03, 0x0b	; F1827F  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x07, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F185BD	; +7  -> IndexMap_F185BD
+	dlb_rect_entry_op08	var=UI_DrawScratch+1, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F185BD
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F185BD
 
 ; --------------------------------------------------------------------------
 ; StringTable_F1828A -- ascii, 0xF1828A-0xF18349 (192 bytes)
@@ -20003,54 +18816,24 @@ StringTable_L64L63L62L61L60L59L58:
 ; Evidence: 18 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_InternalSound_F18A1D:
-	.byte 0x1c, 0x0a	; F18A1D  op 1C, 10 bytes -> handler 0xF31A52
-	.short 0x0096, 0x0005	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x06, 0x12	; F18A27  op 06, 18 bytes -> handler 0xF31A3A
-	.short 0x11D5		; +2  IX (screen position)
-	.ascii "INTERNAL SOUND"	; +4
-	.byte 0x06, 0x0d	; F18A39  op 06, 13 bytes -> handler 0xF31A3A
-	.short 0x11E8		; +2  IX (screen position)
-	.ascii "CONFIGURE"	; +4
-	.byte 0x17, 0x07	; F18A46  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0074	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F18A4D  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0074	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x06, 0x0f	; F18A54  op 06, 15 bytes -> handler 0xF31A3A
-	.short 0x16FD		; +2  IX (screen position)
-	.ascii "MIDI OUTPUT"	; +4
-	.byte 0x06, 0x0a	; F18A63  op 06, 10 bytes -> handler 0xF31A3A
-	.short 0x192D		; +2  IX (screen position)
-	.ascii "FILTER"	; +4
-	.byte 0x06, 0x09	; F18A6D  op 06, 9 bytes -> handler 0xF31A3A
-	.short 0x1800		; +2  IX (screen position)
-	.ascii "MIXER"	; +4
-	.byte 0x17, 0x07	; F18A76  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x009B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F18A7D  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x009B	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x20, 0x0e	; F18A84  op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x1E18		; +2  IX (screen position)
-	.ascii "DSP EFFECT"	; +4
-	.byte 0x17, 0x07	; F18A92  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x00C2	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x23, 0x05	; F18A99  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x00, 0x37, 0x00	; +2  '.7.'
-	.byte 0x23, 0x05	; F18A9E  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x01, 0xe1, 0x10	; +2  '...'
-	.byte 0x23, 0x05	; F18AA3  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0xf9, 0x16	; +2  'n..'
-	.byte 0x23, 0x05	; F18AA8  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x04, 0x04, 0x11	; +2  '...'
-	.byte 0x23, 0x05	; F18AAD  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x05, 0x1c, 0x17	; +2  '...'
-	.byte 0x23, 0x05	; F18AB2  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0a, 0x34, 0x1d	; +2  '.4.'
+	dl_text16x16_packed	x=150, y=5, text="PART"	; +6
+	dl_text8x14	x=40, y=114, text="INTERNAL SOUND"	; +4
+	dl_text8x14	x=192, y=114, text="CONFIGURE"	; +4
+	dl_text8x8_packed	x=0, y=116, text="\020"
+	dl_text8x8_packed	x=314, y=116, text="\021"
+	dl_text8x14	x=40, y=147, text="MIDI OUTPUT"	; +4
+	dl_text8x14	x=40, y=161, text="FILTER"	; +4
+	dl_text8x14	x=192, y=153, text="MIXER"	; +4
+	dl_text8x8_packed	x=0, y=155, text="\020"
+	dl_text8x8_packed	x=314, y=155, text="\021"
+	dl_text8x10	x=192, y=192, text="DSP EFFECT"	; +4
+	dl_text8x8_packed	x=314, y=194, text="\021"
+	dl_value_glyph	glyph=0, x=120, y=1
+	dl_value_glyph	glyph=1, x=8, y=108
+	dl_value_glyph	glyph=110, x=8, y=147
+	dl_value_glyph	glyph=4, x=288, y=108
+	dl_value_glyph	glyph=5, x=288, y=147
+	dl_value_glyph	glyph=10, x=288, y=186
 
 ; --------------------------------------------------------------------------
 ; DL_CopyFromSoundPlay -- display list, 0xF18AB7-0xF18BB9 (259 bytes)
@@ -20063,78 +18846,34 @@ DL_InternalSound_F18A1D:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_CopyFromSoundPlay:
-	.byte 0x1c, 0x16	; F18AB7  op 1C, 22 bytes -> handler 0xF31A52
-	.short 0x005C, 0x0005	; +2  the two words
-	.ascii "C0MBINATI0N EDIT"	; +6
-	.byte 0x06, 0x0c	; F18ACD  op 06, 12 bytes -> handler 0xF31A3A
-	.short 0x11D5		; +2  IX (screen position)
-	.ascii "INTERNAL"	; +4
-	.byte 0x06, 0x0d	; F18AD9  op 06, 13 bytes -> handler 0xF31A3A
-	.short 0x11E8		; +2  IX (screen position)
-	.ascii "CONFIGURE"	; +4
-	.byte 0x17, 0x07	; F18AE6  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0074	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F18AED  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0074	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x06, 0x08	; F18AF4  op 06, 8 bytes -> handler 0xF31A3A
-	.short 0x17ED		; +2  IX (screen position)
-	.ascii "MIDI"	; +4
-	.byte 0x06, 0x09	; F18AFC  op 06, 9 bytes -> handler 0xF31A3A
-	.short 0x1800		; +2  IX (screen position)
-	.ascii "MIXER"	; +4
-	.byte 0x17, 0x07	; F18B05  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x009B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F18B0C  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x009B	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x20, 0x0e	; F18B13  op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x1E18		; +2  IX (screen position)
-	.ascii "DSP EFFECT"	; +4
-	.byte 0x17, 0x07	; F18B21  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x00C2	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x20, 0x09	; F18B28  op 20, 9 bytes -> handler 0xF31A3A
-	.short 0x1526		; +2  IX (screen position)
-	.ascii "SOUND"	; +4
-	.byte 0x20, 0x09	; F18B31  op 20, 9 bytes -> handler 0xF31A3A
-	.short 0x1E2A		; +2  IX (screen position)
-	.ascii "WRITE"	; +4
-	.byte 0x17, 0x07	; F18B3A  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x00C2	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x1a	; F18B41  op 17, 26 bytes -> handler 0xF31A52
-	.short 0x0005, 0x00DE	; +2  the two words
-	.ascii "COPY FROM SOUND PLAY"	; +6
-	.byte 0x07, 0x05	; F18B5B  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2419		; +2  IX (screen position)
-	.byte 0x12	; +4  '.'
-	.byte 0x09, 0x0a	; F18B60  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0b, 0x00, 0xbb, 0x00, 0x3d, 0x00, 0xd0, 0x00	; +2  '....=...'
-	.byte 0x09, 0x0a	; F18B6A  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0d, 0x00, 0xbd, 0x00, 0x3b, 0x00, 0xce, 0x00	; +2  '....;...'
-	.byte 0x09, 0x0a	; F18B74  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x02, 0x00, 0xda, 0x00, 0x80, 0x00, 0xe8, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F18B7E  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x6a, 0x00, 0x78, 0x00, 0x6d, 0x00, 0x78, 0x00	; +2  'j.x.m.x.'
-	.byte 0x01, 0x0a	; F18B88  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x6a, 0x00, 0xa0, 0x00, 0x6d, 0x00, 0xa0, 0x00	; +2  'j...m...'
-	.byte 0x02, 0x0a	; F18B92  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x6d, 0x00, 0x78, 0x00, 0x6d, 0x00, 0xa0, 0x00	; +2  'm.x.m...'
-	.byte 0x23, 0x05	; F18B9C  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x10, 0x30, 0x00	; +2  '.0.'
-	.byte 0x23, 0x05	; F18BA1  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x01, 0xe1, 0x10	; +2  '...'
-	.byte 0x23, 0x05	; F18BA6  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0xf9, 0x16	; +2  'n..'
-	.byte 0x23, 0x05	; F18BAB  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x04, 0x04, 0x11	; +2  '...'
-	.byte 0x23, 0x05	; F18BB0  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x05, 0x1c, 0x17	; +2  '...'
-	.byte 0x23, 0x05	; F18BB5  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x0a, 0x34, 0x1d	; +2  '.4.'
+	dl_text16x16_packed	x=92, y=5, text="C0MBINATI0N EDIT"	; +6
+	dl_text8x14	x=40, y=114, text="INTERNAL"	; +4
+	dl_text8x14	x=192, y=114, text="CONFIGURE"	; +4
+	dl_text8x8_packed	x=0, y=116, text="\020"
+	dl_text8x8_packed	x=314, y=116, text="\021"
+	dl_text8x14	x=40, y=153, text="MIDI"	; +4
+	dl_text8x14	x=192, y=153, text="MIXER"	; +4
+	dl_text8x8_packed	x=0, y=155, text="\020"
+	dl_text8x8_packed	x=314, y=155, text="\021"
+	dl_text8x10	x=192, y=192, text="DSP EFFECT"	; +4
+	dl_text8x8_packed	x=314, y=194, text="\021"
+	dl_text8x10	x=112, y=135, text="SOUND"	; +4
+	dl_text8x10	x=16, y=193, text="WRITE"	; +4
+	dl_text8x8_packed	x=0, y=194, text="\020"
+	dl_text8x8_packed	x=5, y=222, text="COPY FROM SOUND PLAY"	; +6
+	dl_text8x16	x=8, y=231, text="\022"
+	dl_box	x0=11, y0=187, x1=61, y1=208
+	dl_box	x0=13, y0=189, x1=59, y1=206
+	dl_box	x0=2, y0=218, x1=128, y1=232
+	dl_hline	x0=106, y0=120, x1=109, y1=120
+	dl_hline	x0=106, y0=160, x1=109, y1=160
+	dl_vline	x0=109, y0=120, x1=109, y1=160
+	dl_value_glyph	glyph=16, x=64, y=1
+	dl_value_glyph	glyph=1, x=8, y=108
+	dl_value_glyph	glyph=110, x=8, y=147
+	dl_value_glyph	glyph=4, x=288, y=108
+	dl_value_glyph	glyph=5, x=288, y=147
+	dl_value_glyph	glyph=10, x=288, y=186
 
 ; --------------------------------------------------------------------------
 ; DL_Part_F18BBA -- display list, 0xF18BBA-0xF18BCD (20 bytes)
@@ -20145,11 +18884,8 @@ DL_CopyFromSoundPlay:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Part_F18BBA:
-	.byte 0x17, 0x0a	; F18BBA  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0007, 0x0008	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x09, 0x0a	; F18BC4  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x22, 0x00, 0x12, 0x00	; +2  '...."...'
+	dl_text8x8_packed	x=7, y=8, text="PART"	; +6
+	dl_box	x0=4, y0=4, x1=34, y1=18
 
 ; --------------------------------------------------------------------------
 ; DL_CombiEdit -- display list, 0xF18BCE-0xF18BE7 (26 bytes)
@@ -20160,11 +18896,8 @@ DL_Part_F18BBA:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_CombiEdit:
-	.byte 0x17, 0x10	; F18BCE  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0007, 0x0008	; +2  the two words
-	.ascii "COMBI.EDIT"	; +6
-	.byte 0x09, 0x0a	; F18BDE  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x46, 0x00, 0x12, 0x00	; +2  '....F...'
+	dl_text8x8_packed	x=7, y=8, text="COMBI.EDIT"	; +6
+	dl_box	x0=4, y0=4, x1=70, y1=18
 
 ; --------------------------------------------------------------------------
 ; DL_Solo_F18BE8 -- display list, 0xF18BE8-0xF18C07 (32 bytes)
@@ -20175,13 +18908,9 @@ DL_CombiEdit:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Solo_F18BE8:
-	.byte 0x17, 0x0c	; F18BE8  op 17, 12 bytes -> handler 0xF31A52
-	.short 0x011C, 0x004D	; +2  the two words
-	.byte 0x53, 0x4f, 0x4c, 0x4f, 0x20, 0x11	; +6  'SOLO .'
-	.byte 0x09, 0x0a	; F18BF4  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x18, 0x01, 0x48, 0x00, 0x38, 0x01, 0x58, 0x00	; +2  '..H.8.X.'
-	.byte 0x09, 0x0a	; F18BFE  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x1a, 0x01, 0x4a, 0x00, 0x36, 0x01, 0x56, 0x00	; +2  '..J.6.V.'
+	dl_text8x8_packed	x=284, y=77, text="SOLO \021"
+	dl_box	x0=280, y0=72, x1=312, y1=88
+	dl_box	x0=282, y0=74, x1=310, y1=86
 
 ; --------------------------------------------------------------------------
 ; DL_F18C08 -- display list, 0xF18C08-0xF18C11 (10 bytes)
@@ -20190,8 +18919,7 @@ DL_Solo_F18BE8:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F18C08:
-	.byte 0x1b, 0x0a	; F18C08  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x1b, 0x01, 0x4b, 0x00, 0x35, 0x01, 0x55, 0x00	; +2  '..K.5.U.'
+	dl_erase_rect	x0=283, y0=75, x1=309, y1=85
 
 ; --------------------------------------------------------------------------
 ; DL_F18C12 -- display list, 0xF18C12-0xF18C1B (10 bytes)
@@ -20200,8 +18928,7 @@ DL_F18C08:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F18C12:
-	.byte 0x05, 0x0a	; F18C12  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x1b, 0x01, 0x4b, 0x00, 0x35, 0x01, 0x55, 0x00	; +2  '..K.5.U.'
+	dl_fill_rect	x0=283, y0=75, x1=309, y1=85
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PageIndex_DL -- display list, 0xF18C1C-0xF18C68 (77 bytes)
@@ -20213,32 +18940,16 @@ DL_F18C12:
 ; --------------------------------------------------------------------------
 CombiEditSound_PageIndex_DL:
 ; ; drawn (start operand) by CombiEditSound_PageIndex -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x20, 0x08	; F18C1C  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x200F		; +2  IX (screen position)
-	.ascii "ITEM"	; +4
-	.byte 0x20, 0x09	; F18C24  op 20, 9 bytes -> handler 0xF31A3A
-	.short 0x2024		; +2  IX (screen position)
-	.ascii "VALUE"	; +4
-	.byte 0x07, 0x05	; F18C2D  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x21C9		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x07, 0x05	; F18C32  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x21DE		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x07, 0x05	; F18C37  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2359		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x07, 0x05	; F18C3C  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x236E		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F18C41  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x05, 0x00, 0xda, 0x00, 0x91, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x0a, 0x0a	; F18C4B  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xaf, 0x00, 0xda, 0x00, 0x38, 0x01, 0xec, 0x00	; +2  '....8...'
-	.byte 0x01, 0x0a	; F18C55  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x05, 0x00, 0xe3, 0x00, 0x91, 0x00, 0xe3, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F18C5F  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xaf, 0x00, 0xe3, 0x00, 0x38, 0x01, 0xe3, 0x00	; +2  '....8...'
+	dl_text8x10	x=56, y=205, text="ITEM"	; +4
+	dl_text8x10	x=224, y=205, text="VALUE"	; +4
+	dl_text8x16	x=72, y=216, text="\215"
+	dl_text8x16	x=240, y=216, text="\215"
+	dl_text8x16	x=72, y=226, text="\216"
+	dl_text8x16	x=240, y=226, text="\216"
+	dl_box_shadow2	x0=5, y0=218, x1=145, y1=236
+	dl_box_shadow2	x0=175, y0=218, x1=312, y1=236
+	dl_hline	x0=5, y0=227, x1=145, y1=227
+	dl_hline	x0=175, y0=227, x1=312, y1=227
 
 ; --------------------------------------------------------------------------
 ; DL_Part_F18C69 -- display list, 0xF18C69-0xF18CD4 (108 bytes)
@@ -20249,43 +18960,20 @@ CombiEditSound_PageIndex_DL:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_Part_F18C69:
-	.byte 0x07, 0x05	; F18C69  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0552		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x07, 0x05	; F18C6E  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x058B		; +2  IX (screen position)
-	.ascii "_"	; +4
-	.byte 0x17, 0x07	; F18C73  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0026	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x20, 0x05	; F18C7A  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0677		; +2  IX (screen position)
-	.ascii ":"	; +4
-	.byte 0x17, 0x07	; F18C7F  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0044, 0x0037	; +2  the two words
-	.ascii "("	; +6
-	.byte 0x17, 0x07	; F18C86  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x006E, 0x0037	; +2  the two words
-	.ascii ")"	; +6
-	.byte 0x17, 0x0a	; F18C8D  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0008, 0x0039	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x07, 0x05	; F18C97  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B92		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x17, 0x07	; F18C9C  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x004D	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x0a, 0x0a	; F18CA3  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x30, 0x00, 0x20, 0x00, 0x21, 0x01, 0x40, 0x00	; +2  '0. .!.@.'
-	.byte 0x09, 0x0a	; F18CAD  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0x20, 0x00, 0x1f, 0x00, 0x31, 0x00	; +2  '.. ...1.'
-	.byte 0x09, 0x0a	; F18CB7  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0x22, 0x00, 0x1d, 0x00, 0x2f, 0x00	; +2  '..".../.'
-	.byte 0x09, 0x0a	; F18CC1  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0x47, 0x00, 0x1f, 0x00, 0x58, 0x00	; +2  '..G...X.'
-	.byte 0x09, 0x0a	; F18CCB  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0x49, 0x00, 0x1d, 0x00, 0x56, 0x00	; +2  '..I...V.'
+	dl_text8x16	x=16, y=34, text="\215"
+	dl_text8x16	x=152, y=35, text="_"	; +4
+	dl_text8x8_packed	x=0, y=38, text="\020"
+	dl_text8x10	x=120, y=41, text=":"	; +4
+	dl_text8x8_packed	x=68, y=55, text="("	; +6
+	dl_text8x8_packed	x=110, y=55, text=")"	; +6
+	dl_text8x8_packed	x=8, y=57, text="PART"	; +6
+	dl_text8x16	x=16, y=74, text="\216"
+	dl_text8x8_packed	x=0, y=77, text="\020"
+	dl_box_shadow2	x0=48, y0=32, x1=289, y1=64
+	dl_box	x0=8, y0=32, x1=31, y1=49
+	dl_box	x0=10, y0=34, x1=29, y1=47
+	dl_box	x0=8, y0=71, x1=31, y1=88
+	dl_box	x0=10, y0=73, x1=29, y1=86
 
 ; --------------------------------------------------------------------------
 ; DL_F18CD5 -- display list, 0xF18CD5-0xF18CDC (8 bytes)
@@ -20294,8 +18982,7 @@ DL_Part_F18C69:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F18CD5:
-	.byte 0x0e, 0x08	; F18CD5  op 0E, 8 bytes -> handler 0xF31A9F
-	.byte 0xb0, 0x0e, 0x28, 0x00, 0x64, 0x00	; +2  '..(.d.'
+	dl_clear_area	x=0, y=94, w=320, h=100
 
 ; --------------------------------------------------------------------------
 ; DL_InternalSound_F18CDD -- display list, 0xF18CDD-0xF18DBC (224 bytes)
@@ -20309,56 +18996,23 @@ DL_F18CD5:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_InternalSound_F18CDD:
-	.byte 0x20, 0x0b	; F18CDD  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE1/3"	; +4
-	.byte 0x07, 0x12	; F18CE8  op 07, 18 bytes -> handler 0xF31A3A
-	.short 0x00FE		; +2  IX (screen position)
-	.ascii "INTERNAL SOUND"	; +4
-	.byte 0x07, 0x05	; F18CFA  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0F63		; +2  IX (screen position)
-	.ascii "-"	; +4
-	.byte 0x20, 0x0f	; F18CFF  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x0FA2		; +2  IX (screen position)
-	.ascii "S0UND     :"	; +4
-	.byte 0x20, 0x05	; F18D0E  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0FB0		; +2  IX (screen position)
-	.ascii "_"	; +4
-	.byte 0x07, 0x05	; F18D13  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0F64		; +2  IX (screen position)
-	.ascii "."	; +4
-	.byte 0x20, 0x0f	; F18D18  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x1222		; +2  IX (screen position)
-	.ascii "V0LUME    :"	; +4
-	.byte 0x20, 0x11	; F18D27  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1235		; +2  IX (screen position)
-	.ascii "EFFECT1 SEND:"	; +4
-	.byte 0x20, 0x0f	; F18D38  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x14A2		; +2  IX (screen position)
-	.ascii "PAN       :"	; +4
-	.byte 0x20, 0x11	; F18D47  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x14B5		; +2  IX (screen position)
-	.ascii "EFFECT2     :"	; +4
-	.byte 0x20, 0x0f	; F18D58  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x1722		; +2  IX (screen position)
-	.ascii "KEY SHIFT :"	; +4
-	.byte 0x20, 0x11	; F18D67  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1735		; +2  IX (screen position)
-	.ascii "REVERB  SEND:"	; +4
-	.byte 0x20, 0x0f	; F18D78  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x19A2		; +2  IX (screen position)
-	.ascii "FINE TUNE :"	; +4
-	.byte 0x20, 0x11	; F18D87  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x19B5		; +2  IX (screen position)
-	.ascii "MAIN OUT    :"	; +4
-	.byte 0x20, 0x0f	; F18D98  op 20, 15 bytes -> handler 0xF31A3A
-	.short 0x1C22		; +2  IX (screen position)
-	.ascii "BEND RANGE:"	; +4
-	.byte 0x20, 0x11	; F18DA7  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1C35		; +2  IX (screen position)
-	.ascii "SUB OUT     :"	; +4
-	.byte 0x23, 0x05	; F18DB8  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x01, 0x0a, 0x00	; +2  '...'
+	dl_text8x10	x=256, y=6, text="PAGE1/3"	; +4
+	dl_text8x16	x=112, y=6, text="INTERNAL SOUND"	; +4
+	dl_text8x16	x=152, y=98, text="-"	; +4
+	dl_text8x10	x=16, y=100, text="S0UND     :"	; +4
+	dl_text8x10	x=128, y=100, text="_"	; +4
+	dl_text8x16	x=160, y=98, text="."	; +4
+	dl_text8x10	x=16, y=116, text="V0LUME    :"	; +4
+	dl_text8x10	x=168, y=116, text="EFFECT1 SEND:"	; +4
+	dl_text8x10	x=16, y=132, text="PAN       :"	; +4
+	dl_text8x10	x=168, y=132, text="EFFECT2     :"	; +4
+	dl_text8x10	x=16, y=148, text="KEY SHIFT :"	; +4
+	dl_text8x10	x=168, y=148, text="REVERB  SEND:"	; +4
+	dl_text8x10	x=16, y=164, text="FINE TUNE :"	; +4
+	dl_text8x10	x=168, y=164, text="MAIN OUT    :"	; +4
+	dl_text8x10	x=16, y=180, text="BEND RANGE:"	; +4
+	dl_text8x10	x=168, y=180, text="SUB OUT     :"	; +4
+	dl_value_glyph	glyph=1, x=80, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_InternalSound_F18DBD -- display list, 0xF18DBD-0xF18E83 (199 bytes)
@@ -20372,44 +19026,19 @@ DL_InternalSound_F18CDD:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_InternalSound_F18DBD:
-	.byte 0x20, 0x0b	; F18DBD  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE2/3"	; +4
-	.byte 0x07, 0x12	; F18DC8  op 07, 18 bytes -> handler 0xF31A3A
-	.short 0x00FE		; +2  IX (screen position)
-	.ascii "INTERNAL SOUND"	; +4
-	.byte 0x20, 0x10	; F18DDA  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1222		; +2  IX (screen position)
-	.ascii "PITCH BEND :"	; +4
-	.byte 0x20, 0x10	; F18DEA  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x14A2		; +2  IX (screen position)
-	.ascii "MODULATION1:"	; +4
-	.byte 0x20, 0x10	; F18DFA  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1722		; +2  IX (screen position)
-	.ascii "MODULATION2:"	; +4
-	.byte 0x20, 0x10	; F18E0A  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x19A2		; +2  IX (screen position)
-	.ascii "R.T.CREAT.X:"	; +4
-	.byte 0x20, 0x10	; F18E1A  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1C22		; +2  IX (screen position)
-	.ascii "R.T.CREAT.Y:"	; +4
-	.byte 0x20, 0x11	; F18E2A  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1235		; +2  IX (screen position)
-	.ascii " R.T.CTRL. X:"	; +4
-	.byte 0x20, 0x11	; F18E3B  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x14B5		; +2  IX (screen position)
-	.ascii " R.T.CTRL. Y:"	; +4
-	.byte 0x20, 0x11	; F18E4C  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1735		; +2  IX (screen position)
-	.ascii " HOLD       :"	; +4
-	.byte 0x20, 0x11	; F18E5D  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x19B5		; +2  IX (screen position)
-	.ascii " CTRL.PEDAL :"	; +4
-	.byte 0x20, 0x11	; F18E6E  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1C35		; +2  IX (screen position)
-	.ascii " AFTER TOUCH:"	; +4
-	.byte 0x23, 0x05	; F18E7F  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x01, 0x0a, 0x00	; +2  '...'
+	dl_text8x10	x=256, y=6, text="PAGE2/3"	; +4
+	dl_text8x16	x=112, y=6, text="INTERNAL SOUND"	; +4
+	dl_text8x10	x=16, y=116, text="PITCH BEND :"	; +4
+	dl_text8x10	x=16, y=132, text="MODULATION1:"	; +4
+	dl_text8x10	x=16, y=148, text="MODULATION2:"	; +4
+	dl_text8x10	x=16, y=164, text="R.T.CREAT.X:"	; +4
+	dl_text8x10	x=16, y=180, text="R.T.CREAT.Y:"	; +4
+	dl_text8x10	x=168, y=116, text=" R.T.CTRL. X:"	; +4
+	dl_text8x10	x=168, y=132, text=" R.T.CTRL. Y:"	; +4
+	dl_text8x10	x=168, y=148, text=" HOLD       :"	; +4
+	dl_text8x10	x=168, y=164, text=" CTRL.PEDAL :"	; +4
+	dl_text8x10	x=168, y=180, text=" AFTER TOUCH:"	; +4
+	dl_value_glyph	glyph=1, x=80, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_BankSelectMidiIn -- display list, 0xF18E84-0xF18F35 (178 bytes)
@@ -20422,32 +19051,15 @@ DL_InternalSound_F18DBD:
 ;           walk lands on the end address
 ; --------------------------------------------------------------------------
 DL_BankSelectMidiIn:
-	.byte 0x20, 0x0b	; F18E84  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE3/3"	; +4
-	.byte 0x07, 0x12	; F18E8F  op 07, 18 bytes -> handler 0xF31A3A
-	.short 0x00FE		; +2  IX (screen position)
-	.ascii "INTERNAL SOUND"	; +4
-	.byte 0x20, 0x18	; F18EA1  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x0FA7		; +2  IX (screen position)
-	.ascii "MONOPHONIC         :"	; +4
-	.byte 0x20, 0x18	; F18EB9  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x1227		; +2  IX (screen position)
-	.ascii "KEY SCALING        :"	; +4
-	.byte 0x20, 0x18	; F18ED1  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x14A7		; +2  IX (screen position)
-	.ascii "VELOCITY OFFSET    :"	; +4
-	.byte 0x20, 0x18	; F18EE9  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x1727		; +2  IX (screen position)
-	.ascii "PR0GRAM CNG MIDI IN:"	; +4
-	.byte 0x20, 0x18	; F18F01  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x19A7		; +2  IX (screen position)
-	.ascii "BANK SELECT MIDI IN:"	; +4
-	.byte 0x20, 0x18	; F18F19  op 20, 24 bytes -> handler 0xF31A3A
-	.short 0x1C27		; +2  IX (screen position)
-	.ascii "V0LUME      MIDI IN:"	; +4
-	.byte 0x23, 0x05	; F18F31  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x01, 0x0a, 0x00	; +2  '...'
+	dl_text8x10	x=256, y=6, text="PAGE3/3"	; +4
+	dl_text8x16	x=112, y=6, text="INTERNAL SOUND"	; +4
+	dl_text8x10	x=56, y=100, text="MONOPHONIC         :"	; +4
+	dl_text8x10	x=56, y=116, text="KEY SCALING        :"	; +4
+	dl_text8x10	x=56, y=132, text="VELOCITY OFFSET    :"	; +4
+	dl_text8x10	x=56, y=148, text="PR0GRAM CNG MIDI IN:"	; +4
+	dl_text8x10	x=56, y=164, text="BANK SELECT MIDI IN:"	; +4
+	dl_text8x10	x=56, y=180, text="V0LUME      MIDI IN:"	; +4
+	dl_value_glyph	glyph=1, x=80, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_MidiOutFilter_F18F36 -- display list, 0xF18F36-0xF18F58 (35 bytes)
@@ -20458,14 +19070,9 @@ DL_BankSelectMidiIn:
 ;           0xF18F36-0xF18FC8
 ; --------------------------------------------------------------------------
 DL_MidiOutFilter_F18F36:
-	.byte 0x07, 0x13	; F18F36  op 07, 19 bytes -> handler 0xF31A3A
-	.short 0x00FD		; +2  IX (screen position)
-	.ascii "MIDI OUT FILTER"	; +4
-	.byte 0x20, 0x0b	; F18F49  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE1/2"	; +4
-	.byte 0x23, 0x05	; F18F54  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0x09, 0x00	; +2  'n..'
+	dl_text8x16	x=104, y=6, text="MIDI OUT FILTER"	; +4
+	dl_text8x10	x=256, y=6, text="PAGE1/2"	; +4
+	dl_value_glyph	glyph=110, x=72, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_EffectDepth -- display list, 0xF18F59-0xF18FC7 (111 bytes)
@@ -20477,24 +19084,12 @@ DL_MidiOutFilter_F18F36:
 ;           0xF18F36-0xF18FC8
 ; --------------------------------------------------------------------------
 DL_EffectDepth:
-	.byte 0x20, 0x10	; F18F59  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x14A2		; +2  IX (screen position)
-	.ascii "BANK SELECT:"	; +4
-	.byte 0x20, 0x10	; F18F69  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1222		; +2  IX (screen position)
-	.ascii "PR0G CHANGE:"	; +4
-	.byte 0x20, 0x11	; F18F79  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1235		; +2  IX (screen position)
-	.ascii "V0LUME      :"	; +4
-	.byte 0x20, 0x11	; F18F8A  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x14B5		; +2  IX (screen position)
-	.ascii "PAN         :"	; +4
-	.byte 0x20, 0x11	; F18F9B  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1735		; +2  IX (screen position)
-	.ascii "EFFECT DEPTH:"	; +4
-	.byte 0x20, 0x1c	; F18FAC  op 20, 28 bytes -> handler 0xF31A3A
-	.short 0x1A92		; +2  IX (screen position)
-	.ascii "MIDI 0UT KEY TRANSP0SE :"	; +4
+	dl_text8x10	x=16, y=132, text="BANK SELECT:"	; +4
+	dl_text8x10	x=16, y=116, text="PR0G CHANGE:"	; +4
+	dl_text8x10	x=168, y=116, text="V0LUME      :"	; +4
+	dl_text8x10	x=168, y=132, text="PAN         :"	; +4
+	dl_text8x10	x=168, y=148, text="EFFECT DEPTH:"	; +4
+	dl_text8x10	x=16, y=170, text="MIDI 0UT KEY TRANSP0SE :"	; +4
 
 ; --------------------------------------------------------------------------
 ; DL_MidiOutFilter_F18FC8 -- display list, 0xF18FC8-0xF1900E (71 bytes)
@@ -20505,21 +19100,12 @@ DL_EffectDepth:
 ;           0xF18F59-0xF1900F
 ; --------------------------------------------------------------------------
 DL_MidiOutFilter_F18FC8:
-	.byte 0x07, 0x0e	; F18FC8  op 07, 14 bytes -> handler 0xF31A3A
-	.short 0x0101		; +2  IX (screen position)
-	.ascii "MIDI SOUND"	; +4
-	.byte 0x20, 0x0b	; F18FD6  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE2/3"	; +4
-	.byte 0x23, 0x05	; F18FE1  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0x0d, 0x00	; +2  'n..'
-	.byte 0x01, 0x0a	; F18FE6  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x64, 0x00, 0x2b, 0x01, 0x64, 0x00	; +2  '..d.+.d.'
-	.byte 0x01, 0x0a	; F18FF0  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x68, 0x00, 0x2b, 0x01, 0x68, 0x00	; +2  '..h.+.h.'
-	.byte 0x20, 0x15	; F18FFA  op 20, 21 bytes -> handler 0xF31A3A
-	.short 0x0F33		; +2  IX (screen position)
-	.ascii " MIDI OUT FILTER "	; +4
+	dl_text8x16	x=136, y=6, text="MIDI SOUND"	; +4
+	dl_text8x10	x=256, y=6, text="PAGE2/3"	; +4
+	dl_value_glyph	glyph=110, x=104, y=0
+	dl_hline	x0=20, y0=100, x1=299, y1=100
+	dl_hline	x0=20, y0=104, x1=299, y1=104
+	dl_text8x10	x=88, y=97, text=" MIDI OUT FILTER "	; +4
 
 ; --------------------------------------------------------------------------
 ; DL_ReverbDepth -- display list, 0xF1900F-0xF190E8 (218 bytes)
@@ -20532,45 +19118,20 @@ DL_MidiOutFilter_F18FC8:
 ; Evidence: 14 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_ReverbDepth:
-	.byte 0x07, 0x0e	; F1900F  op 07, 14 bytes -> handler 0xF31A3A
-	.short 0x0101		; +2  IX (screen position)
-	.ascii "MIDI SOUND"	; +4
-	.byte 0x20, 0x0b	; F1901D  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE1/3"	; +4
-	.byte 0x20, 0x10	; F19028  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1222		; +2  IX (screen position)
-	.ascii "PR0G CHANGE:"	; +4
-	.byte 0x20, 0x11	; F19038  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1235		; +2  IX (screen position)
-	.ascii "V0LUME      :"	; +4
-	.byte 0x20, 0x11	; F19049  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x14B5		; +2  IX (screen position)
-	.ascii "PAN         :"	; +4
-	.byte 0x20, 0x11	; F1905A  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1735		; +2  IX (screen position)
-	.ascii "REVERB DEPTH:"	; +4
-	.byte 0x20, 0x11	; F1906B  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x19B5		; +2  IX (screen position)
-	.ascii "CH0RUS DEPTH:"	; +4
-	.byte 0x23, 0x05	; F1907C  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0x0d, 0x00	; +2  'n..'
-	.byte 0x20, 0x10	; F19081  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x14A2		; +2  IX (screen position)
-	.ascii "BANK MSB   :"	; +4
-	.byte 0x20, 0x10	; F19091  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1722		; +2  IX (screen position)
-	.ascii "BANK LSB   :"	; +4
-	.byte 0x20, 0x16	; F190A1  op 20, 22 bytes -> handler 0xF31A3A
-	.short 0x19A2		; +2  IX (screen position)
-	.ascii "(BANK SEL.#=     )"	; +4
-	.byte 0x01, 0x0a	; F190B7  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x64, 0x00, 0x2b, 0x01, 0x64, 0x00	; +2  '..d.+.d.'
-	.byte 0x01, 0x0a	; F190C1  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x68, 0x00, 0x2b, 0x01, 0x68, 0x00	; +2  '..h.+.h.'
-	.byte 0x20, 0x1e	; F190CB  op 20, 30 bytes -> handler 0xF31A3A
-	.short 0x0F2F		; +2  IX (screen position)
-	.ascii " MULTIPLE MESSAGES OUTPUT "	; +4
+	dl_text8x16	x=136, y=6, text="MIDI SOUND"	; +4
+	dl_text8x10	x=256, y=6, text="PAGE1/3"	; +4
+	dl_text8x10	x=16, y=116, text="PR0G CHANGE:"	; +4
+	dl_text8x10	x=168, y=116, text="V0LUME      :"	; +4
+	dl_text8x10	x=168, y=132, text="PAN         :"	; +4
+	dl_text8x10	x=168, y=148, text="REVERB DEPTH:"	; +4
+	dl_text8x10	x=168, y=164, text="CH0RUS DEPTH:"	; +4
+	dl_value_glyph	glyph=110, x=104, y=0
+	dl_text8x10	x=16, y=132, text="BANK MSB   :"	; +4
+	dl_text8x10	x=16, y=148, text="BANK LSB   :"	; +4
+	dl_text8x10	x=16, y=164, text="(BANK SEL.#=     )"	; +4
+	dl_hline	x0=20, y0=100, x1=299, y1=100
+	dl_hline	x0=20, y0=104, x1=299, y1=104
+	dl_text8x10	x=56, y=97, text=" MULTIPLE MESSAGES OUTPUT "	; +4
 
 ; --------------------------------------------------------------------------
 ; DL_MidiOutFilter_F190E9 -- display list, 0xF190E9-0xF1910B (35 bytes)
@@ -20581,14 +19142,9 @@ DL_ReverbDepth:
 ;           0xF190E9-0xF191B1
 ; --------------------------------------------------------------------------
 DL_MidiOutFilter_F190E9:
-	.byte 0x07, 0x13	; F190E9  op 07, 19 bytes -> handler 0xF31A3A
-	.short 0x00FD		; +2  IX (screen position)
-	.ascii "MIDI OUT FILTER"	; +4
-	.byte 0x20, 0x0b	; F190FC  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE2/2"	; +4
-	.byte 0x23, 0x05	; F19107  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0x09, 0x00	; +2  'n..'
+	dl_text8x16	x=104, y=6, text="MIDI OUT FILTER"	; +4
+	dl_text8x10	x=256, y=6, text="PAGE2/2"	; +4
+	dl_value_glyph	glyph=110, x=72, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_Modulation1 -- display list, 0xF1910C-0xF191B0 (165 bytes)
@@ -20601,36 +19157,16 @@ DL_MidiOutFilter_F190E9:
 ;           0xF190E9-0xF191B1
 ; --------------------------------------------------------------------------
 DL_Modulation1:
-	.byte 0x20, 0x10	; F1910C  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1222		; +2  IX (screen position)
-	.ascii "PITCH BEND :"	; +4
-	.byte 0x20, 0x10	; F1911C  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x14A2		; +2  IX (screen position)
-	.ascii "MODULATION1:"	; +4
-	.byte 0x20, 0x10	; F1912C  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1722		; +2  IX (screen position)
-	.ascii "MODULATION2:"	; +4
-	.byte 0x20, 0x10	; F1913C  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x19A2		; +2  IX (screen position)
-	.ascii "R.T.CREAT.X:"	; +4
-	.byte 0x20, 0x10	; F1914C  op 20, 16 bytes -> handler 0xF31A3A
-	.short 0x1C22		; +2  IX (screen position)
-	.ascii "R.T.CREAT.Y:"	; +4
-	.byte 0x20, 0x11	; F1915C  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1235		; +2  IX (screen position)
-	.ascii " R.T.CTRL. X:"	; +4
-	.byte 0x20, 0x11	; F1916D  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x14B5		; +2  IX (screen position)
-	.ascii " R.T.CTRL. Y:"	; +4
-	.byte 0x20, 0x11	; F1917E  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1735		; +2  IX (screen position)
-	.ascii " HOLD       :"	; +4
-	.byte 0x20, 0x11	; F1918F  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x19B5		; +2  IX (screen position)
-	.ascii " CTRL.PEDAL :"	; +4
-	.byte 0x20, 0x11	; F191A0  op 20, 17 bytes -> handler 0xF31A3A
-	.short 0x1C35		; +2  IX (screen position)
-	.ascii " AFTER TOUCH:"	; +4
+	dl_text8x10	x=16, y=116, text="PITCH BEND :"	; +4
+	dl_text8x10	x=16, y=132, text="MODULATION1:"	; +4
+	dl_text8x10	x=16, y=148, text="MODULATION2:"	; +4
+	dl_text8x10	x=16, y=164, text="R.T.CREAT.X:"	; +4
+	dl_text8x10	x=16, y=180, text="R.T.CREAT.Y:"	; +4
+	dl_text8x10	x=168, y=116, text=" R.T.CTRL. X:"	; +4
+	dl_text8x10	x=168, y=132, text=" R.T.CTRL. Y:"	; +4
+	dl_text8x10	x=168, y=148, text=" HOLD       :"	; +4
+	dl_text8x10	x=168, y=164, text=" CTRL.PEDAL :"	; +4
+	dl_text8x10	x=168, y=180, text=" AFTER TOUCH:"	; +4
 
 ; --------------------------------------------------------------------------
 ; DL_MidiOutFilter_F191B1 -- display list, 0xF191B1-0xF191F7 (71 bytes)
@@ -20641,21 +19177,12 @@ DL_Modulation1:
 ;           0xF1910C-0xF191F8
 ; --------------------------------------------------------------------------
 DL_MidiOutFilter_F191B1:
-	.byte 0x07, 0x0e	; F191B1  op 07, 14 bytes -> handler 0xF31A3A
-	.short 0x0101		; +2  IX (screen position)
-	.ascii "MIDI SOUND"	; +4
-	.byte 0x20, 0x0b	; F191BF  op 20, 11 bytes -> handler 0xF31A3A
-	.short 0x0110		; +2  IX (screen position)
-	.ascii "PAGE3/3"	; +4
-	.byte 0x23, 0x05	; F191CA  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6e, 0x0d, 0x00	; +2  'n..'
-	.byte 0x01, 0x0a	; F191CF  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x64, 0x00, 0x2b, 0x01, 0x64, 0x00	; +2  '..d.+.d.'
-	.byte 0x01, 0x0a	; F191D9  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x00, 0x68, 0x00, 0x2b, 0x01, 0x68, 0x00	; +2  '..h.+.h.'
-	.byte 0x20, 0x15	; F191E3  op 20, 21 bytes -> handler 0xF31A3A
-	.short 0x0F33		; +2  IX (screen position)
-	.ascii " MIDI OUT FILTER "	; +4
+	dl_text8x16	x=136, y=6, text="MIDI SOUND"	; +4
+	dl_text8x10	x=256, y=6, text="PAGE3/3"	; +4
+	dl_value_glyph	glyph=110, x=104, y=0
+	dl_hline	x0=20, y0=100, x1=299, y1=100
+	dl_hline	x0=20, y0=104, x1=299, y1=104
+	dl_text8x10	x=88, y=97, text=" MIDI OUT FILTER "	; +4
 
 ; --------------------------------------------------------------------------
 ; DL_F191F8 -- display list, 0xF191F8-0xF19206 (15 bytes)
@@ -20664,11 +19191,7 @@ DL_MidiOutFilter_F191B1:
 ; Evidence: 1 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F191F8:
-	.byte 0x02, 0x0f	; F191F8  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x07	; +4  mask, shift, swi 7 function
-	.long 0x00002640	; +7  -> 0x002640
-	.byte 0x10, 0x00, 0x54, 0x06	; +11  '..T.'
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=160, y=40
 
 ; --------------------------------------------------------------------------
 ; DL_F19207 -- display list, 0xF19207-0xF19237 (49 bytes)
@@ -20677,21 +19200,9 @@ DL_F191F8:
 ; Evidence: 3 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F19207:
-	.byte 0x07, 0x11	; F19207  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2765		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x1c	; +4  mask, shift, swi 7 function
-	.long StringTable_F19238	; +7  -> StringTable_F19238
-	.byte 0x06, 0x00, 0x34, 0x00, 0x25, 0x00	; +11  '..4.%.'
-	.byte 0x02, 0x0f	; F19218  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F193BE	; +7  -> StringTable_F193BE
-	.byte 0x03, 0x00, 0x78, 0x06	; +11  '..x.'
-	.byte 0x07, 0x11	; F19227  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2641		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_1Ch11Ch21Ch31Ch41Ch5	; +7  -> StringTable_1Ch11Ch21Ch31Ch41Ch5
-	.byte 0x06, 0x00, 0x4a, 0x00, 0x37, 0x00	; +11  '..J.7.'
+	dlb_string_xy	var=CombiEdit_Part, mask=0x1f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=StringTable_F19238, width=6, x=52, y=37
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F193BE, width=3, x=128, y=41
+	dlb_string_xy	var=UI_DrawScratch+1, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=StringTable_1Ch11Ch21Ch31Ch41Ch5, width=6, x=74, y=55
 
 ; --------------------------------------------------------------------------
 ; StringTable_F19238 -- ascii, 0xF19238-0xF192F7 (192 bytes)
@@ -20869,14 +19380,8 @@ StringTable_F193BE:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveLevelsPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveLevelsPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F19481  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19497	; +7  -> IndexMap_F19497
-	.byte 0x03, 0x0b	; F1948C  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19497	; +7  -> IndexMap_F19497
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19497
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19497
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F19497 -- index map, 0xF19497-0xF19516 (128 bytes)
@@ -20911,14 +19416,8 @@ IndexMap_F19497:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveControllerFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveControllerFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F19517  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1952D	; +7  -> IndexMap_F1952D
-	.byte 0x03, 0x0b	; F19522  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1952D	; +7  -> IndexMap_F1952D
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1952D
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1952D
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F1952D -- index map, 0xF1952D-0xF195AC (128 bytes)
@@ -20953,14 +19452,8 @@ IndexMap_F1952D:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveAssignAndInputFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveAssignAndInputFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F195AD  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x07, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F195C3	; +7  -> IndexMap_F195C3
-	.byte 0x03, 0x0b	; F195B8  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x07, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F195C3	; +7  -> IndexMap_F195C3
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F195C3
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F195C3
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F195C3 -- index map, 0xF195C3-0xF19602 (64 bytes)
@@ -20986,14 +19479,8 @@ IndexMap_F195C3:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMidiOutPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMidiOutPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F19603  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x07, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19619	; +7  -> IndexMap_F19619
-	.byte 0x03, 0x0b	; F1960E  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x07, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19619	; +7  -> IndexMap_F19619
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19619
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19619
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F19619 -- index map, 0xF19619-0xF19658 (64 bytes)
@@ -21019,14 +19506,8 @@ IndexMap_F19619:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMidiOutFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMidiOutFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F19659  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1966F	; +7  -> IndexMap_F1966F
-	.byte 0x03, 0x0b	; F19664  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1966F	; +7  -> IndexMap_F1966F
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1966F
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1966F
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F1966F -- index map, 0xF1966F-0xF196EE (128 bytes)
@@ -21060,14 +19541,8 @@ IndexMap_F1966F:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMultipleMessagesPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMultipleMessagesPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F196EF  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x276A		; +2  RAM variable
-	.byte 0x07, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19705	; +7  -> IndexMap_F19705
-	.byte 0x03, 0x0b	; F196FA  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2769		; +2  RAM variable
-	.byte 0x07, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F19705	; +7  -> IndexMap_F19705
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19705
+	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19705
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F19705 -- index map, 0xF19705-0xF19744 (64 bytes)
@@ -21093,11 +19568,7 @@ IndexMap_F19705:
 ; --------------------------------------------------------------------------
 CombiEdit_TakePartIndex_DL:
 ; drawn (start operand) by CombiEdit_TakePartIndex -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19745  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long 0x00002640	; +7  -> 0x002640
-	.byte 0x10, 0x00, 0xb5, 0x0f	; +11  '....'
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=16, x=168, y=100
 
 ; --------------------------------------------------------------------------
 ; DL_Rd1Rd2Ud1Ud2Ed1 -- display list, 0xF19754-0xF19771 (30 bytes)
@@ -21114,16 +19585,8 @@ CombiEdit_TakePartIndex_DL:
 ;           puts on the screen -- one of them at a time.  Generated by
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_Rd1Rd2Ud1Ud2Ed1:
-	.byte 0x02, 0x0f	; F19754  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F193BE	; +7  -> StringTable_F193BE
-	.byte 0x03, 0x00, 0xad, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F19763  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x00002661	; +7  -> 0x002661
-	.byte 0x03, 0x00, 0xb1, 0x0f	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F193BE, width=3, x=104, y=100
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=Value_AsciiDigits, width=3, x=136, y=100
 
 ; --------------------------------------------------------------------------
 ; DL_F19772 -- display list, 0xF19772-0xF19780 (15 bytes)
@@ -21132,11 +19595,7 @@ DL_Rd1Rd2Ud1Ud2Ed1:
 ; Evidence: 1 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F19772:
-	.byte 0x02, 0x0f	; F19772  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_L64L63L62L61L60L59L58	; +7  -> StringTable_L64L63L62L61L60L59L58
-	.byte 0x03, 0x00, 0xae, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_L64L63L62L61L60L59L58, width=3, x=112, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL3 -- display list, 0xF19781-0xF1978F (15 bytes)
@@ -21146,11 +19605,7 @@ DL_F19772:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL3:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19781  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL8 -- display list, 0xF19790-0xF1979E (15 bytes)
@@ -21160,11 +19615,7 @@ CombiEditSound_PaintLevelsPage_DL3:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL8:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19790  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x03, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x19	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=164
 
 ; --------------------------------------------------------------------------
 ; DL_OffMainSub1Sub2Sub3Eff2 -- display list, 0xF1979F-0xF197AD (15 bytes)
@@ -21183,11 +19634,7 @@ CombiEditSound_PaintLevelsPage_DL8:
 ;           puts on the screen -- one of them at a time.  Generated by
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_OffMainSub1Sub2Sub3Eff2:
-	.byte 0x02, 0x0f	; F1979F  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x07, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffMainSub1Sub2Sub3Eff2	; +7  -> StringTable_OffMainSub1Sub2Sub3Eff2
-	.byte 0x04, 0x00, 0x42, 0x1c	; +11  '..B.'
+	dlb_string	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffMainSub1Sub2Sub3Eff2, width=4, x=272, y=180
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL1 -- display list, 0xF197AE-0xF197B7 (10 bytes)
@@ -21197,10 +19644,7 @@ DL_OffMainSub1Sub2Sub3Eff2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL1:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F197AE  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x2e, 0x12, 0x03	; +7  '...'
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=112, y=116, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL2 -- display list, 0xF197B8-0xF197C1 (10 bytes)
@@ -21210,10 +19654,7 @@ CombiEditSound_PaintLevelsPage_DL1:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL2:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F197B8  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x43, 0x12, 0x03	; +7  'C..'
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=280, y=116, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL4 -- display list, 0xF197C2-0xF197CB (10 bytes)
@@ -21223,10 +19664,7 @@ CombiEditSound_PaintLevelsPage_DL2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL4:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F197C2  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x43, 0x17, 0x03	; +7  'C..'
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=280, y=148, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL5 -- display list, 0xF197CC-0xF197D6 (11 bytes)
@@ -21236,10 +19674,7 @@ CombiEditSound_PaintLevelsPage_DL4:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL5:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0b	; F197CC  op 05, 11 bytes -> handler 0xF31BD7
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x4002172E	; +7  -> 0x4002172E
+	dlb_number_signed	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=112, y=148, digits=2, signflag=0x40
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL6 -- display list, 0xF197D7-0xF197E1 (11 bytes)
@@ -21249,10 +19684,7 @@ CombiEditSound_PaintLevelsPage_DL5:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL6:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0b	; F197D7  op 05, 11 bytes -> handler 0xF31BD7
-	.short 0x2640		; +2  RAM variable
-	.byte 0xff, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x800319AD	; +7  -> 0x800319AD
+	dlb_number_signed	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=104, y=164, digits=3, signflag=0x80
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintLevelsPage_DL7 -- display list, 0xF197E2-0xF197EB (10 bytes)
@@ -21262,10 +19694,7 @@ CombiEditSound_PaintLevelsPage_DL6:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintLevelsPage_DL7:
 ; ; drawn (start operand) by CombiEditSound_PaintLevelsPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F197E2  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x2f, 0x1c, 0x02	; +7  '/..'
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=180, digits=2
 
 ; --------------------------------------------------------------------------
 ; StringTable_OffOn -- ascii, 0xF197EC-0xF197F7 (12 bytes)
@@ -21323,56 +19752,16 @@ StringTable_OffMainSub1Sub2Sub3Eff2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintControllerFilterPage_DL:
 ; ; drawn (start operand) by CombiEditSound_PaintControllerFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19818  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x12	; +11  '../.'
-	.byte 0x02, 0x0f	; F19827  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x02, 0x01, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xaf, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F19836  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x10, 0x04, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x17	; +11  '../.'
-	.byte 0x02, 0x0f	; F19845  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xaf, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F19854  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x02, 0x01, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x1c	; +11  '../.'
-	.byte 0x02, 0x0f	; F19863  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x04, 0x02, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x12	; +11  '..C.'
-	.byte 0x02, 0x0f	; F19872  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x08, 0x03, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F19881  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x17	; +11  '..C.'
-	.byte 0x02, 0x0f	; F19890  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1989F  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x1c	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=116
+	dlb_string	var=UI_DrawScratch+1, mask=0x02, shift=1, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=132
+	dlb_string	var=UI_DrawScratch+3, mask=0x10, shift=4, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=148
+	dlb_string	var=UI_DrawScratch+3, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=164
+	dlb_string	var=UI_DrawScratch+3, mask=0x02, shift=1, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=180
+	dlb_string	var=UI_DrawScratch+3, mask=0x04, shift=2, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=116
+	dlb_string	var=UI_DrawScratch+3, mask=0x08, shift=3, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=132
+	dlb_string	var=UI_DrawScratch+1, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=148
+	dlb_string	var=UI_DrawScratch+3, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=164
+	dlb_string	var=UI_DrawScratch, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=180
 
 ; --------------------------------------------------------------------------
 ; DL_F198AE -- display list, 0xF198AE-0xF198BC (15 bytes)
@@ -21381,11 +19770,7 @@ CombiEditSound_PaintControllerFilterPage_DL:
 ; Evidence: 1 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F198AE:
-	.byte 0x02, 0x0f	; F198AE  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xbc, 0x0f	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=224, y=100
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintAssignAndInputFilterPage_DL1 -- display list, 0xF198BD-0xF198CB (15 bytes)
@@ -21395,11 +19780,7 @@ DL_F198AE:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintAssignAndInputFilterPage_DL1:
 ; ; drawn (start operand) by CombiEditSound_PaintAssignAndInputFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F198BD  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x08, 0x03, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x3c, 0x12	; +11  '..<.'
+	dlb_string	var=UI_DrawScratch, mask=0x08, shift=3, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=224, y=116
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintAssignAndInputFilterPage_DL2 -- display list, 0xF198CC-0xF198D6 (11 bytes)
@@ -21409,10 +19790,7 @@ CombiEditSound_PaintAssignAndInputFilterPage_DL1:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintAssignAndInputFilterPage_DL2:
 ; ; drawn (start operand) by CombiEditSound_PaintAssignAndInputFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0b	; F198CC  op 05, 11 bytes -> handler 0xF31BD7
-	.short 0x2640		; +2  RAM variable
-	.byte 0xff, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x180214BC	; +7  -> 0x180214BC
+	dlb_number_signed	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=132, digits=2, signflag=0x18
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintAssignAndInputFilterPage_DL3 -- display list, 0xF198D7-0xF198E5 (15 bytes)
@@ -21422,11 +19800,7 @@ CombiEditSound_PaintAssignAndInputFilterPage_DL2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintAssignAndInputFilterPage_DL3:
 ; ; drawn (start operand) by CombiEditSound_PaintAssignAndInputFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F198D7  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x10, 0x04, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x3c, 0x17	; +11  '..<.'
+	dlb_string	var=UI_DrawScratch, mask=0x10, shift=4, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=224, y=148
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintAssignAndInputFilterPage_DL4 -- display list, 0xF198E6-0xF198F4 (15 bytes)
@@ -21436,11 +19810,7 @@ CombiEditSound_PaintAssignAndInputFilterPage_DL3:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintAssignAndInputFilterPage_DL4:
 ; ; drawn (start operand) by CombiEditSound_PaintAssignAndInputFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F198E6  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xbc, 0x19	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=224, y=164
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintAssignAndInputFilterPage_DL5 -- display list, 0xF198F5-0xF19903 (15 bytes)
@@ -21450,11 +19820,7 @@ CombiEditSound_PaintAssignAndInputFilterPage_DL4:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintAssignAndInputFilterPage_DL5:
 ; ; drawn (start operand) by CombiEditSound_PaintAssignAndInputFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F198F5  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x04, 0x02, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x3c, 0x1c	; +11  '..<.'
+	dlb_string	var=UI_DrawScratch, mask=0x04, shift=2, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=224, y=180
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL1 -- display list, 0xF19904-0xF19912 (15 bytes)
@@ -21464,11 +19830,7 @@ CombiEditSound_PaintAssignAndInputFilterPage_DL5:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL1:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19904  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x10, 0x04, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x12	; +11  '../.'
+	dlb_string	var=UI_DrawScratch, mask=0x10, shift=4, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=116
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL3 -- display list, 0xF19913-0xF19921 (15 bytes)
@@ -21478,11 +19840,7 @@ CombiEditSound_PaintMidiOutPage_DL1:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL3:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19913  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xaf, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL5 -- display list, 0xF19922-0xF19930 (15 bytes)
@@ -21492,11 +19850,7 @@ CombiEditSound_PaintMidiOutPage_DL3:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL5:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19922  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x04, 0x02, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x12	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch, mask=0x04, shift=2, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=116
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL2 -- display list, 0xF19931-0xF1993F (15 bytes)
@@ -21506,11 +19860,7 @@ CombiEditSound_PaintMidiOutPage_DL5:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL2:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19931  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x10, 0x04, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x10, shift=4, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL4 -- display list, 0xF19940-0xF1994E (15 bytes)
@@ -21520,11 +19870,7 @@ CombiEditSound_PaintMidiOutPage_DL2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL4:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19940  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x17	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=148
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutPage_DL6 -- display list, 0xF1994F-0xF19959 (11 bytes)
@@ -21534,10 +19880,7 @@ CombiEditSound_PaintMidiOutPage_DL4:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutPage_DL6:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0b	; F1994F  op 05, 11 bytes -> handler 0xF31BD7
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x40021AAB	; +7  -> 0x40021AAB
+	dlb_number_signed	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=170, digits=2, signflag=0x40
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMidiOutFilterPage_DL -- display list, 0xF1995A-0xF199EF (150 bytes)
@@ -21547,56 +19890,16 @@ CombiEditSound_PaintMidiOutPage_DL6:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMidiOutFilterPage_DL:
 ; ; drawn (start operand) by CombiEditSound_PaintMidiOutFilterPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F1995A  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x12	; +11  '../.'
-	.byte 0x02, 0x0f	; F19969  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x02, 0x01, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xaf, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F19978  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x10, 0x04, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x17	; +11  '../.'
-	.byte 0x02, 0x0f	; F19987  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xaf, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F19996  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x02, 0x01, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x2f, 0x1c	; +11  '../.'
-	.byte 0x02, 0x0f	; F199A5  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x04, 0x02, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x12	; +11  '..C.'
-	.byte 0x02, 0x0f	; F199B4  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x08, 0x03, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F199C3  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x17	; +11  '..C.'
-	.byte 0x02, 0x0f	; F199D2  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0xc3, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F199E1  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_OffOn	; +7  -> StringTable_OffOn
-	.byte 0x03, 0x00, 0x43, 0x1c	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=116
+	dlb_string	var=UI_DrawScratch+1, mask=0x02, shift=1, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=132
+	dlb_string	var=UI_DrawScratch+3, mask=0x10, shift=4, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=148
+	dlb_string	var=UI_DrawScratch+3, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=164
+	dlb_string	var=UI_DrawScratch+3, mask=0x02, shift=1, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=120, y=180
+	dlb_string	var=UI_DrawScratch+3, mask=0x04, shift=2, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=116
+	dlb_string	var=UI_DrawScratch+3, mask=0x08, shift=3, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=132
+	dlb_string	var=UI_DrawScratch+1, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=148
+	dlb_string	var=UI_DrawScratch+3, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=164
+	dlb_string	var=UI_DrawScratch, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_OffOn, width=3, x=280, y=180
 
 ; --------------------------------------------------------------------------
 ; DL_F199F0 -- display list, 0xF199F0-0xF199FE (15 bytes)
@@ -21605,11 +19908,7 @@ CombiEditSound_PaintMidiOutFilterPage_DL:
 ; Evidence: 1 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F199F0:
-	.byte 0x02, 0x0f	; F199F0  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0x2f, 0x12	; +11  '../.'
+	dlb_string	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=120, y=116
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL1 -- display list, 0xF199FF-0xF19A08 (10 bytes)
@@ -21619,10 +19918,7 @@ DL_F199F0:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL1:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F199FF  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0xff, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x2f, 0x12, 0x03	; +7  '/..'
+	dlb_number	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=116, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL5 -- display list, 0xF19A09-0xF19A17 (15 bytes)
@@ -21632,11 +19928,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL1:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL5:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A09  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x03, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0xaf, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch+2, mask=0x03, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=120, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL4 -- display list, 0xF19A18-0xF19A21 (10 bytes)
@@ -21646,10 +19938,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL5:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL4:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F19A18  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2642		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xaf, 0x14, 0x03	; +7  '...'
+	dlb_number	var=UI_DrawScratch+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=132, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL3 -- display list, 0xF19A22-0xF19A30 (15 bytes)
@@ -21659,11 +19948,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL4:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL3:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A22  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0x2f, 0x17	; +11  '../.'
+	dlb_string	var=UI_DrawScratch+1, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=120, y=148
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL2 -- display list, 0xF19A31-0xF19A3A (10 bytes)
@@ -21673,10 +19958,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL3:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL2:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F19A31  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2641		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x2f, 0x17, 0x03	; +7  '/..'
+	dlb_number	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=148, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL6 -- display list, 0xF19A3B-0xF19A49 (15 bytes)
@@ -21686,11 +19968,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL6:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A3B  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x00, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long 0x00002650	; +7  -> 0x002650
-	.byte 0x05, 0x00, 0xae, 0x19	; +11  '....'
+	dlb_string	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=UI_DrawScratch+16, width=5, x=112, y=164
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL8 -- display list, 0xF19A4A-0xF19A58 (15 bytes)
@@ -21700,11 +19978,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL6:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL8:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A4A  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0x43, 0x12	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch+3, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=280, y=116
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL7 -- display list, 0xF19A59-0xF19A62 (10 bytes)
@@ -21714,10 +19988,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL8:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL7:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F19A59  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2643		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x43, 0x12, 0x03	; +7  'C..'
+	dlb_number	var=UI_DrawScratch+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=280, y=116, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL9 -- display list, 0xF19A63-0xF19A71 (15 bytes)
@@ -21727,11 +19998,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL7:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL9:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A63  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch+4, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=280, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL10 -- display list, 0xF19A72-0xF19A80 (15 bytes)
@@ -21741,11 +20008,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL9:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL10:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A72  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_L64L63L62L61L60L59L58	; +7  -> StringTable_L64L63L62L61L60L59L58
-	.byte 0x03, 0x00, 0xc3, 0x14	; +11  '....'
+	dlb_string	var=UI_DrawScratch+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_L64L63L62L61L60L59L58, width=3, x=280, y=132
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL12 -- display list, 0xF19A81-0xF19A8F (15 bytes)
@@ -21755,11 +20018,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL10:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL12:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A81  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0x43, 0x17	; +11  '..C.'
+	dlb_string	var=UI_DrawScratch+6, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=280, y=148
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL11 -- display list, 0xF19A90-0xF19A99 (10 bytes)
@@ -21769,10 +20028,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL12:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL11:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F19A90  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2646		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x43, 0x17, 0x03	; +7  'C..'
+	dlb_number	var=UI_DrawScratch+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=280, y=148, digits=3
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL14 -- display list, 0xF19A9A-0xF19AA8 (15 bytes)
@@ -21782,11 +20038,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL11:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL14:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F19A9A  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x01, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_IntOff	; +7  -> StringTable_IntOff
-	.byte 0x03, 0x00, 0xc3, 0x19	; +11  '....'
+	dlb_string	var=UI_DrawScratch+5, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_IntOff, width=3, x=280, y=164
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL13 -- display list, 0xF19AA9-0xF19AB2 (10 bytes)
@@ -21796,10 +20048,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL14:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL13:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F19AA9  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2645		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xc3, 0x19, 0x03	; +7  '...'
+	dlb_number	var=UI_DrawScratch+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=280, y=164, digits=3
 
 ; --------------------------------------------------------------------------
 ; StringTable_IntOff -- ascii, 0xF19AB3-0xF19ABE (12 bytes)
@@ -21831,72 +20080,32 @@ StringTable_IntOff:
 ; Evidence: 26 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_CombinationNaming_F19ABF:
-	.byte 0x1c, 0x12	; F19ABF  op 1C, 18 bytes -> handler 0xF31A52
-	.short 0x0063, 0x0005	; +2  the two words
-	.ascii "MEM0RY WRITE"	; +6
-	.byte 0x17, 0x10	; F19AD1  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "COMBI.EDIT"	; +6
-	.byte 0x07, 0x05	; F19AE1  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0550		; +2  IX (screen position)
-	.byte 0x10	; +4  '.'
-	.byte 0x20, 0x06	; F19AE6  op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x057A		; +2  IX (screen position)
-	.ascii "0K"	; +4
-	.byte 0x07, 0x09	; F19AEC  op 07, 9 bytes -> handler 0xF31A3A
-	.short 0x0B6F		; +2  IX (screen position)
-	.ascii "NAME:"	; +4
-	.byte 0x17, 0x07	; F19AF5  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0136, 0x006D	; +2  the two words
-	.byte 0x91	; +6  '.'
-	.byte 0x07, 0x05	; F19AFC  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x117C		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x07, 0x05	; F19B01  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x11CF		; +2  IX (screen position)
-	.byte 0xa9	; +4  '.'
-	.byte 0x07, 0x13	; F19B06  op 07, 19 bytes -> handler 0xF31A3A
-	.short 0x1367		; +2  IX (screen position)
-	.ascii "MEMORY BANK:U1-"	; +4
-	.byte 0x17, 0x07	; F19B19  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0136, 0x0094	; +2  the two words
-	.byte 0x91	; +6  '.'
-	.byte 0x07, 0x05	; F19B20  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x17BC		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x07, 0x05	; F19B25  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x17E7		; +2  IX (screen position)
-	.byte 0xa9	; +4  '.'
-	.byte 0x07, 0x05	; F19B2A  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1DD7		; +2  IX (screen position)
-	.byte 0x11	; +4  '.'
-	.byte 0x07, 0x16	; F19B2F  op 07, 22 bytes -> handler 0xF31A3A
-	.short 0x1DEA		; +2  IX (screen position)
-	.ascii "COMBINATION NAMING"	; +4
-	.byte 0x09, 0x0a	; F19B45  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x44, 0x00, 0x10, 0x00	; +2  '....D...'
-	.byte 0x09, 0x0a	; F19B4F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0b, 0x00, 0x1e, 0x00, 0x25, 0x00, 0x31, 0x00	; +2  '....%.1.'
-	.byte 0x09, 0x0a	; F19B59  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0d, 0x00, 0x20, 0x00, 0x23, 0x00, 0x2f, 0x00	; +2  '.. .#./.'
-	.byte 0x22, 0x0a	; F19B63  op 22, 10 bytes -> handler 0xF31A75
-	.byte 0x29, 0x00, 0x3c, 0x00, 0xee, 0x00, 0xac, 0x00	; +2  ').<.....'
-	.byte 0x09, 0x0a	; F19B6D  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x12, 0x01, 0x6c, 0x00, 0x35, 0x01, 0x7f, 0x00	; +2  '..l.5...'
-	.byte 0x09, 0x0a	; F19B77  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x01, 0x6e, 0x00, 0x33, 0x01, 0x7d, 0x00	; +2  '..n.3.}.'
-	.byte 0x09, 0x0a	; F19B81  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x12, 0x01, 0x93, 0x00, 0x35, 0x01, 0xa6, 0x00	; +2  '....5...'
-	.byte 0x09, 0x0a	; F19B8B  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x01, 0x95, 0x00, 0x33, 0x01, 0xa4, 0x00	; +2  '....3...'
-	.byte 0x22, 0x0a	; F19B95  op 22, 10 bytes -> handler 0xF31A75
-	.byte 0x81, 0x00, 0xb3, 0x00, 0x30, 0x01, 0xd6, 0x00	; +2  '....0...'
-	.byte 0x09, 0x0a	; F19B9F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xf7, 0x00, 0x89, 0x00, 0x0a, 0x01, 0x8a, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F19BA9  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x01, 0x75, 0x00, 0x0b, 0x01, 0x9e, 0x00	; +2  '..u.....'
-	.byte 0x01, 0x0a	; F19BB3  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x29, 0x00, 0x72, 0x00, 0xee, 0x00, 0x72, 0x00	; +2  ').r...r.'
+	dl_text16x16_packed	x=99, y=5, text="MEM0RY WRITE"	; +6
+	dl_text8x8_packed	x=6, y=7, text="COMBI.EDIT"	; +6
+	dl_text8x16	x=0, y=34, text="\020"
+	dl_text8x10	x=16, y=35, text="0K"	; +4
+	dl_text8x16	x=56, y=73, text="NAME:"	; +4
+	dl_text8x8_packed	x=310, y=109, text="\221"
+	dl_text8x16	x=288, y=111, text="\215"
+	dl_text8x16	x=312, y=113, text="\251"
+	dl_text8x16	x=56, y=124, text="MEMORY BANK:U1-"	; +4
+	dl_text8x8_packed	x=310, y=148, text="\221"
+	dl_text8x16	x=288, y=151, text="\216"
+	dl_text8x16	x=312, y=152, text="\251"
+	dl_text8x16	x=312, y=190, text="\021"
+	dl_text8x16	x=144, y=191, text="COMBINATION NAMING"	; +4
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_box	x0=11, y0=30, x1=37, y1=49
+	dl_box	x0=13, y0=32, x1=35, y1=47
+	dl_box_shadow1	x0=41, y0=60, x1=238, y1=172
+	dl_box	x0=274, y0=108, x1=309, y1=127
+	dl_box	x0=276, y0=110, x1=307, y1=125
+	dl_box	x0=274, y0=147, x1=309, y1=166
+	dl_box	x0=276, y0=149, x1=307, y1=164
+	dl_box_shadow1	x0=129, y0=179, x1=304, y1=214
+	dl_box	x0=247, y0=137, x1=266, y1=138
+	dl_box	x0=266, y0=117, x1=267, y1=158
+	dl_hline	x0=41, y0=114, x1=238, y1=114
 
 ; --------------------------------------------------------------------------
 ; DL_F19BBD -- display list, 0xF19BBD-0xF19BE4 (40 bytes)
@@ -21905,20 +20114,9 @@ DL_CombinationNaming_F19ABF:
 ; Evidence: 3 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F19BBD:
-	.byte 0x02, 0x0f	; F19BBD  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x07	; +4  mask, shift, swi 7 function
-	.long 0x00007622	; +7  -> 0x007622
-	.byte 0x10, 0x00, 0x69, 0x0e	; +11  '..i.'
-	.byte 0x00, 0x0a	; F19BCC  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2650		; +2  RAM variable
-	.byte 0xff, 0x00, 0x07	; +4  mask, shift, swi 7 function
-	.byte 0x76, 0x13, 0x03	; +7  'v..'
-	.byte 0x02, 0x0f	; F19BD6  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x0000		; +2  RAM variable
-	.byte 0x00, 0x00, 0x07	; +4  mask, shift, swi 7 function
-	.long 0x00002640	; +7  -> 0x002640
-	.byte 0x10, 0x00, 0x61, 0x16	; +11  '..a.'
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Combination_Current+2, width=16, x=72, y=92
+	dlb_number	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, x=176, y=124, digits=3
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=72, y=143
 
 ; --------------------------------------------------------------------------
 ; DL_CombinationNaming_F19BE5 -- display list, 0xF19BE5-0xF19C38 (84 bytes)
@@ -21928,24 +20126,13 @@ DL_F19BBD:
 ; Evidence: 7 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_CombinationNaming_F19BE5:
-	.byte 0x17, 0x10	; F19BE5  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "COMBI.EDIT"	; +6
-	.byte 0x1c, 0x18	; F19BF5  op 1C, 24 bytes -> handler 0xF31A52
-	.short 0x0050, 0x0005	; +2  the two words
-	.ascii "COMBINATION NAMING"	; +6
-	.byte 0x07, 0x05	; F19C0D  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0550		; +2  IX (screen position)
-	.byte 0x10	; +4  '.'
-	.byte 0x06, 0x09	; F19C12  op 06, 9 bytes -> handler 0xF31A3A
-	.short 0x057A		; +2  IX (screen position)
-	.ascii "WRITE"	; +4
-	.byte 0x09, 0x0a	; F19C1B  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x44, 0x00, 0x10, 0x00	; +2  '....D...'
-	.byte 0x09, 0x0a	; F19C25  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0c, 0x00, 0x1e, 0x00, 0x3c, 0x00, 0x31, 0x00	; +2  '....<.1.'
-	.byte 0x09, 0x0a	; F19C2F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0e, 0x00, 0x20, 0x00, 0x3a, 0x00, 0x2f, 0x00	; +2  '.. .:./.'
+	dl_text8x8_packed	x=6, y=7, text="COMBI.EDIT"	; +6
+	dl_text16x16_packed	x=80, y=5, text="COMBINATION NAMING"	; +6
+	dl_text8x16	x=0, y=34, text="\020"
+	dl_text8x14	x=16, y=35, text="WRITE"	; +4
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_box	x0=12, y0=30, x1=60, y1=49
+	dl_box	x0=14, y0=32, x1=58, y1=47
 
 ; --------------------------------------------------------------------------
 ; DL_Configure_F19C39 -- display list, 0xF19C39-0xF19D5B (291 bytes)
@@ -21956,84 +20143,37 @@ DL_CombinationNaming_F19BE5:
 ; Evidence: 31 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_Configure_F19C39:
-	.byte 0x07, 0x0d	; F19C39  op 07, 13 bytes -> handler 0xF31A3A
-	.short 0x0100		; +2  IX (screen position)
-	.ascii "CONFIGURE"	; +4
-	.byte 0x17, 0x10	; F19C46  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0007, 0x0008	; +2  the two words
-	.ascii "COMBI.EDIT"	; +6
-	.byte 0x17, 0x0a	; F19C56  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x011C, 0x0024	; +2  the two words
-	.ascii "SOLO"	; +6
-	.byte 0x17, 0x07	; F19C60  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0024	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x17, 0x0a	; F19C67  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0038, 0x002C	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x17, 0x0b	; F19C71  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0115, 0x004C	; +2  the two words
-	.ascii "ASIGN"	; +6
-	.byte 0x17, 0x07	; F19C7C  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x004C	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x17, 0x09	; F19C83  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0115, 0x006F	; +2  the two words
-	.ascii "KEY"	; +6
-	.byte 0x17, 0x07	; F19C8C  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0074	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x17, 0x0b	; F19C93  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0115, 0x0079	; +2  the two words
-	.ascii "LAYER"	; +6
-	.byte 0x17, 0x09	; F19C9E  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0115, 0x0097	; +2  the two words
-	.ascii "VEL"	; +6
-	.byte 0x17, 0x07	; F19CA7  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x009C	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x17, 0x0b	; F19CAE  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0115, 0x00A1	; +2  the two words
-	.ascii "LAYER"	; +6
-	.byte 0x20, 0x08	; F19CB9  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x1F1E		; +2  IX (screen position)
-	.ascii "PART"	; +4
-	.byte 0x06, 0x05	; F19CC1  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x20FF		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19CC6  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x232F		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F19CCB  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xd4, 0x00, 0x4a, 0x00, 0xec, 0x00	; +2  '-...J...'
-	.byte 0x09, 0x0a	; F19CD5  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x46, 0x00, 0x12, 0x00	; +2  '....F...'
-	.byte 0x09, 0x0a	; F19CDF  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x02, 0x00, 0x1e, 0x00, 0x08, 0x01, 0xc2, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F19CE9  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x18, 0x01, 0x1f, 0x00, 0x38, 0x01, 0x2f, 0x00	; +2  '....8./.'
-	.byte 0x09, 0x0a	; F19CF3  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x1a, 0x01, 0x21, 0x00, 0x36, 0x01, 0x2d, 0x00	; +2  '..!.6.-.'
-	.byte 0x09, 0x0a	; F19CFD  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0f, 0x01, 0x40, 0x00, 0x39, 0x01, 0x5e, 0x00	; +2  '..@.9.^.'
-	.byte 0x09, 0x0a	; F19D07  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x11, 0x01, 0x42, 0x00, 0x37, 0x01, 0x5c, 0x00	; +2  '..B.7.\\.'
-	.byte 0x09, 0x0a	; F19D11  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0f, 0x01, 0x68, 0x00, 0x39, 0x01, 0x86, 0x00	; +2  '..h.9...'
-	.byte 0x09, 0x0a	; F19D1B  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x11, 0x01, 0x6a, 0x00, 0x37, 0x01, 0x84, 0x00	; +2  '..j.7...'
-	.byte 0x09, 0x0a	; F19D25  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0f, 0x01, 0x90, 0x00, 0x39, 0x01, 0xae, 0x00	; +2  '....9...'
-	.byte 0x09, 0x0a	; F19D2F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x11, 0x01, 0x92, 0x00, 0x37, 0x01, 0xac, 0x00	; +2  '....7...'
-	.byte 0x01, 0x0a	; F19D39  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x02, 0x00, 0x3f, 0x00, 0x8a, 0x00, 0x3f, 0x00	; +2  '..?...?.'
-	.byte 0x01, 0x0a	; F19D43  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xe0, 0x00, 0x4c, 0x00, 0xe0, 0x00	; +2  '-...L...'
-	.byte 0x02, 0x0a	; F19D4D  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x8a, 0x00, 0x1e, 0x00, 0x8a, 0x00, 0xc2, 0x00	; +2  '........'
-	.byte 0x23, 0x05	; F19D57  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x04, 0x34, 0x00	; +2  '.4.'
+	dl_text8x16	x=128, y=6, text="CONFIGURE"	; +4
+	dl_text8x8_packed	x=7, y=8, text="COMBI.EDIT"	; +6
+	dl_text8x8_packed	x=284, y=36, text="SOLO"	; +6
+	dl_text8x8_packed	x=314, y=36, text="\021"
+	dl_text8x8_packed	x=56, y=44, text="PART"	; +6
+	dl_text8x8_packed	x=277, y=76, text="ASIGN"	; +6
+	dl_text8x8_packed	x=314, y=76, text="\021"
+	dl_text8x8_packed	x=277, y=111, text="KEY"	; +6
+	dl_text8x8_packed	x=314, y=116, text="\021"
+	dl_text8x8_packed	x=277, y=121, text="LAYER"	; +6
+	dl_text8x8_packed	x=277, y=151, text="VEL"	; +6
+	dl_text8x8_packed	x=314, y=156, text="\021"
+	dl_text8x8_packed	x=277, y=161, text="LAYER"	; +6
+	dl_text8x10	x=48, y=199, text="PART"	; +4
+	dl_text8x14	x=56, y=211, text="\215"
+	dl_text8x14	x=56, y=225, text="\216"
+	dl_box_shadow2	x0=45, y0=212, x1=74, y1=236
+	dl_box	x0=4, y0=4, x1=70, y1=18
+	dl_box	x0=2, y0=30, x1=264, y1=194
+	dl_box	x0=280, y0=31, x1=312, y1=47
+	dl_box	x0=282, y0=33, x1=310, y1=45
+	dl_box	x0=271, y0=64, x1=313, y1=94
+	dl_box	x0=273, y0=66, x1=311, y1=92
+	dl_box	x0=271, y0=104, x1=313, y1=134
+	dl_box	x0=273, y0=106, x1=311, y1=132
+	dl_box	x0=271, y0=144, x1=313, y1=174
+	dl_box	x0=273, y0=146, x1=311, y1=172
+	dl_hline	x0=2, y0=63, x1=138, y1=63
+	dl_hline	x0=45, y0=224, x1=76, y1=224
+	dl_vline	x0=138, y0=30, x1=138, y1=194
+	dl_value_glyph	glyph=4, x=96, y=1
 
 ; --------------------------------------------------------------------------
 ; DL_Configure_F19D5C -- display list, 0xF19D5C-0xF19DCF (116 bytes)
@@ -22043,38 +20183,19 @@ DL_Configure_F19C39:
 ; Evidence: 13 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_Configure_F19D5C:
-	.byte 0x07, 0x0d	; F19D5C  op 07, 13 bytes -> handler 0xF31A3A
-	.short 0x0100		; +2  IX (screen position)
-	.ascii "CONFIGURE"	; +4
-	.byte 0x17, 0x0a	; F19D69  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0007, 0x0008	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x17, 0x0a	; F19D73  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0038, 0x002C	; +2  the two words
-	.ascii "PART"	; +6
-	.byte 0x20, 0x08	; F19D7D  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x1F1E		; +2  IX (screen position)
-	.ascii "PART"	; +4
-	.byte 0x06, 0x05	; F19D85  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x20FF		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19D8A  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x232F		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F19D8F  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xd4, 0x00, 0x4a, 0x00, 0xec, 0x00	; +2  '-...J...'
-	.byte 0x09, 0x0a	; F19D99  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x22, 0x00, 0x12, 0x00	; +2  '...."...'
-	.byte 0x09, 0x0a	; F19DA3  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x02, 0x00, 0x1e, 0x00, 0x08, 0x01, 0xc2, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F19DAD  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x02, 0x00, 0x3f, 0x00, 0x8a, 0x00, 0x3f, 0x00	; +2  '..?...?.'
-	.byte 0x01, 0x0a	; F19DB7  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x2d, 0x00, 0xe0, 0x00, 0x4c, 0x00, 0xe0, 0x00	; +2  '-...L...'
-	.byte 0x02, 0x0a	; F19DC1  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x8a, 0x00, 0x1e, 0x00, 0x8a, 0x00, 0xc2, 0x00	; +2  '........'
-	.byte 0x23, 0x05	; F19DCB  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x04, 0x34, 0x00	; +2  '.4.'
+	dl_text8x16	x=128, y=6, text="CONFIGURE"	; +4
+	dl_text8x8_packed	x=7, y=8, text="PART"	; +6
+	dl_text8x8_packed	x=56, y=44, text="PART"	; +6
+	dl_text8x10	x=48, y=199, text="PART"	; +4
+	dl_text8x14	x=56, y=211, text="\215"
+	dl_text8x14	x=56, y=225, text="\216"
+	dl_box_shadow2	x0=45, y0=212, x1=74, y1=236
+	dl_box	x0=4, y0=4, x1=34, y1=18
+	dl_box	x0=2, y0=30, x1=264, y1=194
+	dl_hline	x0=2, y0=63, x1=138, y1=63
+	dl_hline	x0=45, y0=224, x1=76, y1=224
+	dl_vline	x0=138, y0=30, x1=138, y1=194
+	dl_value_glyph	glyph=4, x=96, y=1
 
 ; --------------------------------------------------------------------------
 ; DL_Midi -- display list, 0xF19DD0-0xF19DD9 (10 bytes)
@@ -22084,9 +20205,7 @@ DL_Configure_F19D5C:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_Midi:
-	.byte 0x17, 0x0a	; F19DD0  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0007, 0x0008	; +2  the two words
-	.ascii "MIDI"	; +6
+	dl_text8x8_packed	x=7, y=8, text="MIDI"	; +6
 
 ; --------------------------------------------------------------------------
 ; DL_Inter -- display list, 0xF19DDA-0xF19ED5 (252 bytes)
@@ -22097,92 +20216,43 @@ DL_Midi:
 ; Evidence: 31 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_Inter:
-	.byte 0x17, 0x0b	; F19DDA  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x008D, 0x0023	; +2  the two words
-	.ascii "INTER"	; +6
-	.byte 0x17, 0x0a	; F19DE5  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00D0, 0x0023	; +2  the two words
-	.ascii "MIDI"	; +6
-	.byte 0x17, 0x0a	; F19DEF  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x008D, 0x0033	; +2  the two words
-	.ascii "-NAL"	; +6
-	.byte 0x17, 0x09	; F19DF9  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00B3, 0x0034	; +2  the two words
-	.ascii "OUT"	; +6
-	.byte 0x17, 0x08	; F19E02  op 17, 8 bytes -> handler 0xF31A52
-	.short 0x00CD, 0x0034	; +2  the two words
-	.ascii "IN"	; +6
-	.byte 0x17, 0x08	; F19E0A  op 17, 8 bytes -> handler 0xF31A52
-	.short 0x00ED, 0x0034	; +2  the two words
-	.ascii "CH"	; +6
-	.byte 0x20, 0x07	; F19E12  op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x1F28		; +2  IX (screen position)
-	.ascii "INT"	; +4
-	.byte 0x20, 0x07	; F19E19  op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x1F2D		; +2  IX (screen position)
-	.ascii "OUT"	; +4
-	.byte 0x20, 0x06	; F19E20  op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x1F32		; +2  IX (screen position)
-	.ascii "IN"	; +4
-	.byte 0x20, 0x06	; F19E26  op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x1F37		; +2  IX (screen position)
-	.ascii "CH"	; +4
-	.byte 0x06, 0x05	; F19E2C  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2109		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19E31  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x210E		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19E36  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2113		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19E3B  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2118		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19E40  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2339		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x06, 0x05	; F19E45  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x233E		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x06, 0x05	; F19E4A  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2343		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
+	dl_text8x8_packed	x=141, y=35, text="INTER"	; +6
+	dl_text8x8_packed	x=208, y=35, text="MIDI"	; +6
+	dl_text8x8_packed	x=141, y=51, text="-NAL"	; +6
+	dl_text8x8_packed	x=179, y=52, text="OUT"	; +6
+	dl_text8x8_packed	x=205, y=52, text="IN"	; +6
+	dl_text8x8_packed	x=237, y=52, text="CH"	; +6
+	dl_text8x10	x=128, y=199, text="INT"	; +4
+	dl_text8x10	x=168, y=199, text="OUT"	; +4
+	dl_text8x10	x=208, y=199, text="IN"	; +4
+	dl_text8x10	x=248, y=199, text="CH"	; +4
+	dl_text8x14	x=136, y=211, text="\215"
+	dl_text8x14	x=176, y=211, text="\215"
+	dl_text8x14	x=216, y=211, text="\215"
+	dl_text8x14	x=256, y=211, text="\215"
+	dl_text8x14	x=136, y=225, text="\216"
+	dl_text8x14	x=176, y=225, text="\216"
+	dl_text8x14	x=216, y=225, text="\216"
 ; Evidence: directory slot T_F42FE8 names this address, but it is not code:
 ;           it is record 17 of the display list DL_Inter (0xF19DDA-0xF19ED5), op 0x06, 5 bytes.  An INTERNAL point of a named object.  [round7-entrypoints]
 DL_Inter__F19E4F:
-	.byte 0x06, 0x05	; F19E4F  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2348		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F19E54  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x7d, 0x00, 0xd4, 0x00, 0x9a, 0x00, 0xec, 0x00	; +2  '}.......'
-	.byte 0x0a, 0x0a	; F19E5E  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xd4, 0x00, 0xc2, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x0a, 0x0a	; F19E68  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xd4, 0x00, 0xea, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x0a, 0x0a	; F19E72  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xf5, 0x00, 0xd4, 0x00, 0x12, 0x01, 0xec, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F19E7C  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xb0, 0x00, 0x2f, 0x00, 0x07, 0x01, 0x2f, 0x00	; +2  '../.../.'
-	.byte 0x01, 0x0a	; F19E86  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x3f, 0x00, 0x07, 0x01, 0x3f, 0x00	; +2  '..?...?.'
-	.byte 0x01, 0x0a	; F19E90  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x7d, 0x00, 0xe0, 0x00, 0x9c, 0x00, 0xe0, 0x00	; +2  '}.......'
-	.byte 0x01, 0x0a	; F19E9A  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xe0, 0x00, 0xc4, 0x00, 0xe0, 0x00	; +2  '........'
+	dl_text8x14	x=256, y=225, text="\216"
+	dl_box_shadow2	x0=125, y0=212, x1=154, y1=236
+	dl_box_shadow2	x0=165, y0=212, x1=194, y1=236
+	dl_box_shadow2	x0=205, y0=212, x1=234, y1=236
+	dl_box_shadow2	x0=245, y0=212, x1=274, y1=236
+	dl_hline	x0=176, y0=47, x1=263, y1=47
+	dl_hline	x0=139, y0=63, x1=263, y1=63
+	dl_hline	x0=125, y0=224, x1=156, y1=224
+	dl_hline	x0=165, y0=224, x1=196, y1=224
 ; Evidence: directory slot T_F42FEC names this address, but it is not code:
 ;           it is record 26 of the display list DL_Inter (0xF19DDA-0xF19ED5), op 0x01, 10 bytes.  An INTERNAL point of a named object.  [round7-entrypoints]
 DL_Inter__F19EA4:
-	.byte 0x01, 0x0a	; F19EA4  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xe0, 0x00, 0xec, 0x00, 0xe0, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F19EAE  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xf5, 0x00, 0xe0, 0x00, 0x14, 0x01, 0xe0, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F19EB8  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xb0, 0x00, 0x1f, 0x00, 0xb0, 0x00, 0xc1, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F19EC2  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xc8, 0x00, 0x2f, 0x00, 0xc8, 0x00, 0xc1, 0x00	; +2  '../.....'
-	.byte 0x02, 0x0a	; F19ECC  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xe0, 0x00, 0x2f, 0x00, 0xe0, 0x00, 0xc1, 0x00	; +2  '../.....'
+	dl_hline	x0=205, y0=224, x1=236, y1=224
+	dl_hline	x0=245, y0=224, x1=276, y1=224
+	dl_vline	x0=176, y0=31, x1=176, y1=193
+	dl_vline	x0=200, y0=47, x1=200, y1=193
+	dl_vline	x0=224, y0=47, x1=224, y1=193
 
 ; --------------------------------------------------------------------------
 ; DL_KeyLayer -- display list, 0xF19ED6-0xF19F88 (179 bytes)
@@ -22192,55 +20262,26 @@ DL_Inter__F19EA4:
 ; Evidence: 20 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_KeyLayer:
-	.byte 0x17, 0x0f	; F19ED6  op 17, 15 bytes -> handler 0xF31A52
-	.short 0x00AF, 0x0023	; +2  the two words
-	.ascii "KEY LAYER"	; +6
-	.byte 0x17, 0x09	; F19EE5  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0094, 0x0034	; +2  the two words
-	.ascii "LOW"	; +6
-	.byte 0x17, 0x0a	; F19EEE  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00B8, 0x0034	; +2  the two words
-	.ascii "HIGH"	; +6
-	.byte 0x20, 0x07	; F19EF8  op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x1F2D		; +2  IX (screen position)
-	.ascii "LOW"	; +4
-	.byte 0x20, 0x08	; F19EFF  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x1F31		; +2  IX (screen position)
-	.ascii "HIGH"	; +4
-	.byte 0x06, 0x05	; F19F07  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x210E		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19F0C  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2113		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19F11  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x233E		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x06, 0x05	; F19F16  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2343		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F19F1B  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xd4, 0x00, 0xc2, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x0a, 0x0a	; F19F25  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xd4, 0x00, 0xea, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F19F2F  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xdc, 0x00, 0x37, 0x00, 0x05, 0x01, 0x38, 0x00	; +2  '..7...8.'
-	.byte 0x01, 0x0a	; F19F39  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x2f, 0x00, 0x07, 0x01, 0x2f, 0x00	; +2  '../.../.'
-	.byte 0x01, 0x0a	; F19F43  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x3f, 0x00, 0x07, 0x01, 0x3f, 0x00	; +2  '..?...?.'
-	.byte 0x01, 0x0a	; F19F4D  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xe0, 0x00, 0xc4, 0x00, 0xe0, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F19F57  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xe0, 0x00, 0xec, 0x00, 0xe0, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F19F61  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xb0, 0x00, 0x2f, 0x00, 0xb0, 0x00, 0xc1, 0x00	; +2  '../.....'
-	.byte 0x02, 0x0a	; F19F6B  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xd8, 0x00, 0x2f, 0x00, 0xd8, 0x00, 0xc1, 0x00	; +2  '../.....'
-	.byte 0x02, 0x0a	; F19F75  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xdc, 0x00, 0x35, 0x00, 0xdc, 0x00, 0x3a, 0x00	; +2  '..5...:.'
-	.byte 0x02, 0x0a	; F19F7F  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x05, 0x01, 0x35, 0x00, 0x05, 0x01, 0x3a, 0x00	; +2  '..5...:.'
+	dl_text8x8_packed	x=175, y=35, text="KEY LAYER"	; +6
+	dl_text8x8_packed	x=148, y=52, text="LOW"	; +6
+	dl_text8x8_packed	x=184, y=52, text="HIGH"	; +6
+	dl_text8x10	x=168, y=199, text="LOW"	; +4
+	dl_text8x10	x=200, y=199, text="HIGH"	; +4
+	dl_text8x14	x=176, y=211, text="\215"
+	dl_text8x14	x=216, y=211, text="\215"
+	dl_text8x14	x=176, y=225, text="\216"
+	dl_text8x14	x=216, y=225, text="\216"
+	dl_box_shadow2	x0=165, y0=212, x1=194, y1=236
+	dl_box_shadow2	x0=205, y0=212, x1=234, y1=236
+	dl_box	x0=220, y0=55, x1=261, y1=56
+	dl_hline	x0=139, y0=47, x1=263, y1=47
+	dl_hline	x0=139, y0=63, x1=263, y1=63
+	dl_hline	x0=165, y0=224, x1=196, y1=224
+	dl_hline	x0=205, y0=224, x1=236, y1=224
+	dl_vline	x0=176, y0=47, x1=176, y1=193
+	dl_vline	x0=216, y0=47, x1=216, y1=193
+	dl_vline	x0=220, y0=53, x1=220, y1=58
+	dl_vline	x0=261, y0=53, x1=261, y1=58
 
 ; --------------------------------------------------------------------------
 ; DL_VelocityLayer -- display list, 0xF19F89-0xF1A018 (144 bytes)
@@ -22250,47 +20291,22 @@ DL_KeyLayer:
 ; Evidence: 16 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_VelocityLayer:
-	.byte 0x17, 0x14	; F19F89  op 17, 20 bytes -> handler 0xF31A52
-	.short 0x009E, 0x0023	; +2  the two words
-	.ascii "VELOCITY LAYER"	; +6
-	.byte 0x17, 0x09	; F19F9D  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x009E, 0x0034	; +2  the two words
-	.ascii "LOW"	; +6
-	.byte 0x17, 0x0a	; F19FA6  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00DA, 0x0034	; +2  the two words
-	.ascii "HIGH"	; +6
-	.byte 0x20, 0x07	; F19FB0  op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x1F2D		; +2  IX (screen position)
-	.ascii "LOW"	; +4
-	.byte 0x20, 0x08	; F19FB7  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x1F31		; +2  IX (screen position)
-	.ascii "HIGH"	; +4
-	.byte 0x06, 0x05	; F19FBF  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x210E		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19FC4  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2113		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x06, 0x05	; F19FC9  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x233E		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x06, 0x05	; F19FCE  op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2343		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x0a, 0x0a	; F19FD3  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xd4, 0x00, 0xc2, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x0a, 0x0a	; F19FDD  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xd4, 0x00, 0xea, 0x00, 0xec, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F19FE7  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x2f, 0x00, 0x07, 0x01, 0x2f, 0x00	; +2  '../.../.'
-	.byte 0x01, 0x0a	; F19FF1  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x3f, 0x00, 0x07, 0x01, 0x3f, 0x00	; +2  '..?...?.'
-	.byte 0x01, 0x0a	; F19FFB  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa5, 0x00, 0xe0, 0x00, 0xc4, 0x00, 0xe0, 0x00	; +2  '........'
-	.byte 0x01, 0x0a	; F1A005  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xcd, 0x00, 0xe0, 0x00, 0xec, 0x00, 0xe0, 0x00	; +2  '........'
-	.byte 0x02, 0x0a	; F1A00F  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xc7, 0x00, 0x2f, 0x00, 0xc7, 0x00, 0xc1, 0x00	; +2  '../.....'
+	dl_text8x8_packed	x=158, y=35, text="VELOCITY LAYER"	; +6
+	dl_text8x8_packed	x=158, y=52, text="LOW"	; +6
+	dl_text8x8_packed	x=218, y=52, text="HIGH"	; +6
+	dl_text8x10	x=168, y=199, text="LOW"	; +4
+	dl_text8x10	x=200, y=199, text="HIGH"	; +4
+	dl_text8x14	x=176, y=211, text="\215"
+	dl_text8x14	x=216, y=211, text="\215"
+	dl_text8x14	x=176, y=225, text="\216"
+	dl_text8x14	x=216, y=225, text="\216"
+	dl_box_shadow2	x0=165, y0=212, x1=194, y1=236
+	dl_box_shadow2	x0=205, y0=212, x1=234, y1=236
+	dl_hline	x0=139, y0=47, x1=263, y1=47
+	dl_hline	x0=139, y0=63, x1=263, y1=63
+	dl_hline	x0=165, y0=224, x1=196, y1=224
+	dl_hline	x0=205, y0=224, x1=236, y1=224
+	dl_vline	x0=199, y0=47, x1=199, y1=193
 
 ; --------------------------------------------------------------------------
 ; ExitKey_CombiEditConfigure_DL2 -- display list, 0xF1A019-0xF1A02C (20 bytes)
@@ -22300,10 +20316,8 @@ DL_VelocityLayer:
 ; --------------------------------------------------------------------------
 ExitKey_CombiEditConfigure_DL2:
 ; ; drawn (start operand) by ExitKey_CombiEditConfigure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1b, 0x0a	; F1A019  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x8b, 0x00, 0x1f, 0x00, 0x07, 0x01, 0xc1, 0x00	; +2  '........'
-	.byte 0x1b, 0x0a	; F1A023  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x7d, 0x00, 0xc7, 0x00, 0x14, 0x01, 0xee, 0x00	; +2  '}.......'
+	dl_erase_rect	x0=139, y0=31, x1=263, y1=193
+	dl_erase_rect	x0=125, y0=199, x1=276, y1=238
 
 ; --------------------------------------------------------------------------
 ; ExitKey_CombiEditConfigure_DL1 -- display list, 0xF1A02D-0xF1A036 (10 bytes)
@@ -22313,8 +20327,7 @@ ExitKey_CombiEditConfigure_DL2:
 ; --------------------------------------------------------------------------
 ExitKey_CombiEditConfigure_DL1:
 ; ; drawn (start operand) by ExitKey_CombiEditConfigure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1b, 0x0a	; F1A02D  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x12, 0x01, 0x43, 0x00, 0x36, 0x01, 0xab, 0x00	; +2  '..C.6...'
+	dl_erase_rect	x0=274, y0=67, x1=310, y1=171
 
 ; --------------------------------------------------------------------------
 ; RecordArray_F1A037 -- record array, 0xF1A037-0xF1A0BE (136 bytes)
@@ -22359,46 +20372,14 @@ RecordArray_F1A037:
 ;           puts on the screen -- one of them at a time.  Generated by
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_Pt1Pt2Pt3Pt4Pt5Pt6Pt7Pt8:
-	.byte 0x02, 0x0f	; F1A0BF  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7	; +7  -> StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7
-	.byte 0x04, 0x00, 0xa1, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A0CE  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x4	; +7  -> 0xF1A231
-	.byte 0x04, 0x00, 0x21, 0x0d	; +11  '..!.'
-	.byte 0x02, 0x0f	; F1A0DD  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x8	; +7  -> 0xF1A235
-	.byte 0x04, 0x00, 0xa1, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A0EC  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0xC	; +7  -> 0xF1A239
-	.byte 0x04, 0x00, 0x21, 0x12	; +11  '..!.'
-	.byte 0x02, 0x0f	; F1A0FB  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x10	; +7  -> 0xF1A23D
-	.byte 0x04, 0x00, 0xa1, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A10A  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x14	; +7  -> 0xF1A241
-	.byte 0x04, 0x00, 0x21, 0x17	; +11  '..!.'
-	.byte 0x02, 0x0f	; F1A119  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x18	; +7  -> 0xF1A245
-	.byte 0x04, 0x00, 0xa1, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A128  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x1f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x1C	; +7  -> 0xF1A249
-	.byte 0x04, 0x00, 0x21, 0x1c	; +11  '..!.'
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7, width=4, x=8, y=68
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x4, width=4, x=8, y=84
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x8, width=4, x=8, y=100
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0xC, width=4, x=8, y=116
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x10, width=4, x=8, y=132
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x14, width=4, x=8, y=148
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x18, width=4, x=8, y=164
+	dlb_string	var=UI_DrawScratch, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7 + 0x1C, width=4, x=8, y=180
 
 ; --------------------------------------------------------------------------
 ; CombiEditConfigure_RepaintMarkedSounds_DL4 -- display list, 0xF1A137-0xF1A14C (22 bytes)
@@ -22408,14 +20389,8 @@ DL_Pt1Pt2Pt3Pt4Pt5Pt6Pt7Pt8:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL4:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F1A137  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2643		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A18D	; +7  -> IndexMap_F1A18D
-	.byte 0x03, 0x0b	; F1A142  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2642		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A18D	; +7  -> IndexMap_F1A18D
+	dlb_rect_entry_op08	var=UI_DrawScratch+3, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1A18D
+	dlb_rect_entry	var=UI_DrawScratch+2, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1A18D
 
 ; --------------------------------------------------------------------------
 ; CombiEditConfigure_RepaintMarkedSounds_DL3 -- display list, 0xF1A14D-0xF1A157 (11 bytes)
@@ -22441,10 +20416,7 @@ CombiEditConfigure_RepaintMarkedSounds_DL4:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL3:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F1A14D  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2768		; +2  RAM variable
-	.byte 0x03, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A1D5	; +7  -> IndexMap_F1A1D5
+	dlb_rect_entry_op08	var=CombiEdit_DrawnPage, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1A1D5
 
 ; --------------------------------------------------------------------------
 ; ExitKey_CombiEditConfigure_DL3 -- display list, 0xF1A158-0xF1A162 (11 bytes)
@@ -22454,10 +20426,7 @@ CombiEditConfigure_RepaintMarkedSounds_DL3:
 ; --------------------------------------------------------------------------
 ExitKey_CombiEditConfigure_DL3:
 ; ; drawn (start operand) by ExitKey_CombiEditConfigure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0b	; F1A158  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2767		; +2  RAM variable
-	.byte 0x03, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A1D5	; +7  -> IndexMap_F1A1D5
+	dlb_rect_entry	var=CombiEdit_Page, mask=0x03, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1A1D5
 
 ; --------------------------------------------------------------------------
 ; CombiEditConfigure_RepaintMarkedSounds_DL2 -- display list, 0xF1A163-0xF1A178 (22 bytes)
@@ -22467,14 +20436,8 @@ ExitKey_CombiEditConfigure_DL3:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL2:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F1A163  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2641		; +2  RAM variable
-	.byte 0x07, 0x00, 0x1b	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A1ED	; +7  -> IndexMap_F1A1ED
-	.byte 0x03, 0x0b	; F1A16E  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x07, 0x00, 0x05	; +4  mask, shift, swi 7 function
-	.long IndexMap_F1A1ED	; +7  -> IndexMap_F1A1ED
+	dlb_rect_entry_op08	var=UI_DrawScratch+1, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1A1ED
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1A1ED
 
 ; --------------------------------------------------------------------------
 ; CombiEditConfigure_RepaintMarkedSounds_DL1 -- display list, 0xF1A179-0xF1A182 (10 bytes)
@@ -22484,8 +20447,7 @@ CombiEditConfigure_RepaintMarkedSounds_DL2:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL1:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1b, 0x0a	; F1A179  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x1b, 0x01, 0x22, 0x00, 0x35, 0x01, 0x2c, 0x00	; +2  '..".5.,.'
+	dl_erase_rect	x0=283, y0=34, x1=309, y1=44
 
 ; --------------------------------------------------------------------------
 ; CombiEditConfigure_RepaintMarkedSounds_DL5 -- display list, 0xF1A183-0xF1A18C (10 bytes)
@@ -22495,8 +20457,7 @@ CombiEditConfigure_RepaintMarkedSounds_DL1:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL5:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0a	; F1A183  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x1b, 0x01, 0x22, 0x00, 0x35, 0x01, 0x2c, 0x00	; +2  '..".5.,.'
+	dl_fill_rect	x0=283, y0=34, x1=309, y1=44
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F1A18D -- index map, 0xF1A18D-0xF1A1D4 (72 bytes)
@@ -22601,206 +20562,46 @@ StringTable_Pt1Pt2Pt3Pt4Pt5Pt6Pt7:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_DrawMidiSettings_DL:
 ; ; drawn (start operand) by CombiEditConfigure_DrawMidiSettings -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F1A2AD  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb3, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A2BC  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x33, 0x0d	; +11  '..3.'
-	.byte 0x02, 0x0f	; F1A2CB  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb3, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A2DA  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x33, 0x12	; +11  '..3.'
-	.byte 0x02, 0x0f	; F1A2E9  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb3, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A2F8  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x33, 0x17	; +11  '..3.'
-	.byte 0x02, 0x0f	; F1A307  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb3, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A316  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2647		; +2  RAM variable
-	.byte 0x20, 0x05, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x33, 0x1c	; +11  '..3.'
-	.byte 0x02, 0x0f	; F1A325  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb7, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A334  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x37, 0x0d	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A343  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb7, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A352  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x37, 0x12	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A361  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb7, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A370  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x37, 0x17	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A37F  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xb7, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A38E  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2647		; +2  RAM variable
-	.byte 0x40, 0x06, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x37, 0x1c	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A39D  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xba, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A3AC  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x3a, 0x0d	; +11  '..:.'
-	.byte 0x02, 0x0f	; F1A3BB  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xba, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A3CA  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x3a, 0x12	; +11  '..:.'
-	.byte 0x02, 0x0f	; F1A3D9  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xba, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A3E8  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x3a, 0x17	; +11  '..:.'
-	.byte 0x02, 0x0f	; F1A3F7  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0xba, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A406  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2647		; +2  RAM variable
-	.byte 0x80, 0x07, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A515	; +7  -> StringTable_O
-	.byte 0x01, 0x00, 0x3a, 0x1c	; +11  '..:.'
-	.byte 0x07, 0x11	; F1A415  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2640		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x46, 0x00	; +11  '....F.'
-	.byte 0x07, 0x11	; F1A426  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2641		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x56, 0x00	; +11  '....V.'
-	.byte 0x07, 0x11	; F1A437  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2642		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x66, 0x00	; +11  '....f.'
-	.byte 0x07, 0x11	; F1A448  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2643		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x76, 0x00	; +11  '....v.'
-	.byte 0x07, 0x11	; F1A459  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2644		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x86, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F1A46A  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2645		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0x96, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F1A47B  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2646		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0xa6, 0x00	; +11  '......'
-	.byte 0x07, 0x11	; F1A48C  op 07, 17 bytes -> handler 0xF31B39
-	.short 0x2647		; +2  RAM variable
-	.byte 0x10, 0x04, 0x17	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A517	; +7  -> StringTable_F1A517
-	.byte 0x02, 0x00, 0xe3, 0x00, 0xb6, 0x00	; +11  '......'
-	.byte 0x02, 0x0f	; F1A49D  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0xbe, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A4AC  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0x3e, 0x0d	; +11  '..>.'
-	.byte 0x02, 0x0f	; F1A4BB  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0xbe, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A4CA  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0x3e, 0x12	; +11  '..>.'
-	.byte 0x02, 0x0f	; F1A4D9  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0xbe, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A4E8  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0x3e, 0x17	; +11  '..>.'
-	.byte 0x02, 0x0f	; F1A4F7  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0xbe, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A506  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2647		; +2  RAM variable
-	.byte 0x0f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.long StringTable_F1A51F	; +7  -> StringTable_F1A51F
-	.byte 0x02, 0x00, 0x3e, 0x1c	; +11  '..>.'
+	dlb_string	var=UI_DrawScratch, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=68
+	dlb_string	var=UI_DrawScratch+1, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=84
+	dlb_string	var=UI_DrawScratch+2, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=100
+	dlb_string	var=UI_DrawScratch+3, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=116
+	dlb_string	var=UI_DrawScratch+4, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=132
+	dlb_string	var=UI_DrawScratch+5, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=148
+	dlb_string	var=UI_DrawScratch+6, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=164
+	dlb_string	var=UI_DrawScratch+7, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=152, y=180
+	dlb_string	var=UI_DrawScratch, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=68
+	dlb_string	var=UI_DrawScratch+1, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=84
+	dlb_string	var=UI_DrawScratch+2, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=100
+	dlb_string	var=UI_DrawScratch+3, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=116
+	dlb_string	var=UI_DrawScratch+4, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=132
+	dlb_string	var=UI_DrawScratch+5, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=148
+	dlb_string	var=UI_DrawScratch+6, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=164
+	dlb_string	var=UI_DrawScratch+7, mask=0x40, shift=6, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=184, y=180
+	dlb_string	var=UI_DrawScratch, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=68
+	dlb_string	var=UI_DrawScratch+1, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=84
+	dlb_string	var=UI_DrawScratch+2, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=100
+	dlb_string	var=UI_DrawScratch+3, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=116
+	dlb_string	var=UI_DrawScratch+4, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=132
+	dlb_string	var=UI_DrawScratch+5, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=148
+	dlb_string	var=UI_DrawScratch+6, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=164
+	dlb_string	var=UI_DrawScratch+7, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=StringTable_F1A515, width=1, x=208, y=180
+	dlb_string_xy	var=UI_DrawScratch, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=70
+	dlb_string_xy	var=UI_DrawScratch+1, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=86
+	dlb_string_xy	var=UI_DrawScratch+2, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=102
+	dlb_string_xy	var=UI_DrawScratch+3, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=118
+	dlb_string_xy	var=UI_DrawScratch+4, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=134
+	dlb_string_xy	var=UI_DrawScratch+5, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=150
+	dlb_string_xy	var=UI_DrawScratch+6, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=166
+	dlb_string_xy	var=UI_DrawScratch+7, mask=0x10, shift=4, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1A517, width=2, x=227, y=182
+	dlb_string	var=UI_DrawScratch, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=68
+	dlb_string	var=UI_DrawScratch+1, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=84
+	dlb_string	var=UI_DrawScratch+2, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=100
+	dlb_string	var=UI_DrawScratch+3, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=116
+	dlb_string	var=UI_DrawScratch+4, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=132
+	dlb_string	var=UI_DrawScratch+5, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=148
+	dlb_string	var=UI_DrawScratch+6, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=164
+	dlb_string	var=UI_DrawScratch+7, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F1A51F, width=2, x=240, y=180
 
 ; --------------------------------------------------------------------------
 ; StringTable_F1A515 -- ascii, 0xF1A515-0xF1A516 (2 bytes)
@@ -22859,86 +20660,22 @@ StringTable_F1A51F:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_DrawKeyLayers_DL:
 ; ; drawn (start operand) by CombiEditConfigure_DrawKeyLayers -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0f	; F1A53F  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb2, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A54E  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x32, 0x0d	; +11  '..2.'
-	.byte 0x02, 0x0f	; F1A55D  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2642		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb2, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A56C  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2643		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x32, 0x12	; +11  '..2.'
-	.byte 0x02, 0x0f	; F1A57B  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2644		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb2, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A58A  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2645		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x32, 0x17	; +11  '..2.'
-	.byte 0x02, 0x0f	; F1A599  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2646		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb2, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A5A8  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2647		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x32, 0x1c	; +11  '..2.'
-	.byte 0x02, 0x0f	; F1A5B7  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2648		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb7, 0x0a	; +11  '....'
-	.byte 0x02, 0x0f	; F1A5C6  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2649		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x37, 0x0d	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A5D5  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264A		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb7, 0x0f	; +11  '....'
-	.byte 0x02, 0x0f	; F1A5E4  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264B		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x37, 0x12	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A5F3  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264C		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb7, 0x14	; +11  '....'
-	.byte 0x02, 0x0f	; F1A602  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264D		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x37, 0x17	; +11  '..7.'
-	.byte 0x02, 0x0f	; F1A611  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264E		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0xb7, 0x19	; +11  '....'
-	.byte 0x02, 0x0f	; F1A620  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x264F		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x06	; +4  mask, shift, swi 7 function
-	.long MidiNoteNames	; +7  -> MidiNoteNames
-	.byte 0x03, 0x00, 0x37, 0x1c	; +11  '..7.'
+	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=68
+	dlb_string	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=84
+	dlb_string	var=UI_DrawScratch+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=100
+	dlb_string	var=UI_DrawScratch+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=116
+	dlb_string	var=UI_DrawScratch+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=132
+	dlb_string	var=UI_DrawScratch+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=148
+	dlb_string	var=UI_DrawScratch+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=164
+	dlb_string	var=UI_DrawScratch+7, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=144, y=180
+	dlb_string	var=UI_DrawScratch+8, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=68
+	dlb_string	var=UI_DrawScratch+9, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=84
+	dlb_string	var=UI_DrawScratch+10, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=100
+	dlb_string	var=UI_DrawScratch+11, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=116
+	dlb_string	var=UI_DrawScratch+12, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=132
+	dlb_string	var=UI_DrawScratch+13, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=148
+	dlb_string	var=UI_DrawScratch+14, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=164
+	dlb_string	var=UI_DrawScratch+15, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=MidiNoteNames, width=3, x=184, y=180
 
 ; --------------------------------------------------------------------------
 ; MidiNoteNames -- notenames, 0xF1A62F-0xF1A7AE (384 bytes)
@@ -23094,70 +20831,22 @@ MidiNoteNames:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_DrawVelocityLayers_DL:
 ; ; drawn (start operand) by CombiEditConfigure_DrawVelocityLayers -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0a	; F1A7AF  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2640		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xb3, 0x0a, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A7B9  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2641		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x33, 0x0d, 0x03	; +7  '3..'
-	.byte 0x00, 0x0a	; F1A7C3  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2642		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xb3, 0x0f, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A7CD  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2643		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x33, 0x12, 0x03	; +7  '3..'
-	.byte 0x00, 0x0a	; F1A7D7  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2644		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xb3, 0x14, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A7E1  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2645		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x33, 0x17, 0x03	; +7  '3..'
-	.byte 0x00, 0x0a	; F1A7EB  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2646		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xb3, 0x19, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A7F5  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2647		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x33, 0x1c, 0x03	; +7  '3..'
-	.byte 0x00, 0x0a	; F1A7FF  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2648		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xbb, 0x0a, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A809  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x2649		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x3b, 0x0d, 0x03	; +7  ';..'
-	.byte 0x00, 0x0a	; F1A813  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264A		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xbb, 0x0f, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A81D  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264B		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x3b, 0x12, 0x03	; +7  ';..'
-	.byte 0x00, 0x0a	; F1A827  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264C		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xbb, 0x14, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A831  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264D		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x3b, 0x17, 0x03	; +7  ';..'
-	.byte 0x00, 0x0a	; F1A83B  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264E		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0xbb, 0x19, 0x03	; +7  '...'
-	.byte 0x00, 0x0a	; F1A845  op 00, 10 bytes -> handler 0xF31BA1
-	.short 0x264F		; +2  RAM variable
-	.byte 0x7f, 0x00, 0x20	; +4  mask, shift, swi 7 function
-	.byte 0x3b, 0x1c, 0x03	; +7  ';..'
+	dlb_number	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=68, digits=3
+	dlb_number	var=UI_DrawScratch+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=84, digits=3
+	dlb_number	var=UI_DrawScratch+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=100, digits=3
+	dlb_number	var=UI_DrawScratch+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=116, digits=3
+	dlb_number	var=UI_DrawScratch+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=132, digits=3
+	dlb_number	var=UI_DrawScratch+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=148, digits=3
+	dlb_number	var=UI_DrawScratch+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=164, digits=3
+	dlb_number	var=UI_DrawScratch+7, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=180, digits=3
+	dlb_number	var=UI_DrawScratch+8, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=68, digits=3
+	dlb_number	var=UI_DrawScratch+9, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=84, digits=3
+	dlb_number	var=UI_DrawScratch+10, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=100, digits=3
+	dlb_number	var=UI_DrawScratch+11, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=116, digits=3
+	dlb_number	var=UI_DrawScratch+12, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=132, digits=3
+	dlb_number	var=UI_DrawScratch+13, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=148, digits=3
+	dlb_number	var=UI_DrawScratch+14, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=164, digits=3
+	dlb_number	var=UI_DrawScratch+15, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=216, y=180, digits=3
 
 ; --------------------------------------------------------------------------
 ; DL_F1A84F -- display list, 0xF1A84F-0xF1A858 (10 bytes)
@@ -23166,8 +20855,7 @@ CombiEditConfigure_DrawVelocityLayers_DL:
 ; Evidence: 1 records, interpreter A, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F1A84F:
-	.byte 0x1b, 0x0a	; F1A84F  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x00, 0x00, 0x7c, 0x00, 0x3f, 0x01, 0xc6, 0x00	; +2  '..|.?...'
+	dl_erase_rect	x0=0, y0=124, x1=319, y1=198
 
 ; --------------------------------------------------------------------------
 ; DL_F1A859 -- display list, 0xF1A859-0xF1A8EE (150 bytes)
@@ -23180,23 +20868,12 @@ DL_F1A84F:
 ;           0xF1A84F-0xF1A8EF
 ; --------------------------------------------------------------------------
 DL_F1A859:
-	.byte 0x06, 0x24	; F1A859  op 06, 36 bytes -> handler 0xF31A3A
-	.short 0x13DC		; +2  IX (screen position)
-	.ascii "It is impossible to use both the"	; +4
-	.byte 0x06, 0x23	; F1A87D  op 06, 35 bytes -> handler 0xF31A3A
-	.short 0x160C		; +2  IX (screen position)
-	.ascii "Main and Sub outputs if Effect2"	; +4
-	.byte 0x06, 0x11	; F1A8A0  op 06, 17 bytes -> handler 0xF31A3A
-	.short 0x183C		; +2  IX (screen position)
-	.ascii "is turned on."	; +4
-	.byte 0x06, 0x24	; F1A8B1  op 06, 36 bytes -> handler 0xF31A3A
-	.short 0x1A6C		; +2  IX (screen position)
-	.ascii "Please select either the Main or"	; +4
-	.byte 0x06, 0x10	; F1A8D5  op 06, 16 bytes -> handler 0xF31A3A
-	.short 0x1C9C		; +2  IX (screen position)
-	.ascii "Sub outputs."	; +4
-	.byte 0x0a, 0x0a	; F1A8E5  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x17, 0x00, 0x7c, 0x00, 0x28, 0x01, 0xc6, 0x00	; +2  '..|.(...'
+	dl_text8x14	x=32, y=127, text="It is impossible to use both the"	; +4
+	dl_text8x14	x=32, y=141, text="Main and Sub outputs if Effect2"	; +4
+	dl_text8x14	x=32, y=155, text="is turned on."	; +4
+	dl_text8x14	x=32, y=169, text="Please select either the Main or"	; +4
+	dl_text8x14	x=32, y=183, text="Sub outputs."	; +4
+	dl_box_shadow2	x0=23, y0=124, x1=296, y1=198
 
 ; --------------------------------------------------------------------------
 ; ExitKey_Effect2OutputConflict_DL -- display list, 0xF1A8EF-0xF1A8F8 (10 bytes)
@@ -23206,8 +20883,7 @@ DL_F1A859:
 ; --------------------------------------------------------------------------
 ExitKey_Effect2OutputConflict_DL:
 ; ; drawn (start operand) by ExitKey_Effect2OutputConflict -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1b, 0x0a	; F1A8EF  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0x15, 0x00, 0x7a, 0x00, 0x2c, 0x01, 0xca, 0x00	; +2  '..z.,...'
+	dl_erase_rect	x0=21, y0=122, x1=300, y1=202
 
 ; --------------------------------------------------------------------------
 ; DL_F1A8F9 -- display list, 0xF1A8F9-0xF1A998 (160 bytes)
@@ -23220,25 +20896,13 @@ ExitKey_Effect2OutputConflict_DL:
 ;           0xF1A8EF-0xF1A999
 ; --------------------------------------------------------------------------
 DL_F1A8F9:
-	.byte 0x06, 0x24	; F1A8F9  op 06, 36 bytes -> handler 0xF31A3A
-	.short 0x13DC		; +2  IX (screen position)
-	.ascii "It is impossible to use both the"	; +4
-	.byte 0x06, 0x23	; F1A91D  op 06, 35 bytes -> handler 0xF31A3A
-	.short 0x160C		; +2  IX (screen position)
-	.ascii "Main and Sub outputs if Effect2"	; +4
-	.byte 0x06, 0x11	; F1A940  op 06, 17 bytes -> handler 0xF31A3A
-	.short 0x183C		; +2  IX (screen position)
-	.ascii "is turned on."	; +4
-	.byte 0x06, 0x24	; F1A951  op 06, 36 bytes -> handler 0xF31A3A
-	.short 0x1A6C		; +2  IX (screen position)
-	.ascii "Please select either the Main or"	; +4
-	.byte 0x06, 0x10	; F1A975  op 06, 16 bytes -> handler 0xF31A3A
-	.short 0x1C9C		; +2  IX (screen position)
-	.ascii "Sub outputs."	; +4
-	.byte 0x0a, 0x0a	; F1A985  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x17, 0x00, 0x7c, 0x00, 0x28, 0x01, 0xc6, 0x00	; +2  '..|.(...'
-	.byte 0x05, 0x0a	; F1A98F  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x19, 0x00, 0x7e, 0x00, 0x26, 0x01, 0xc4, 0x00	; +2  '..~.&...'
+	dl_text8x14	x=32, y=127, text="It is impossible to use both the"	; +4
+	dl_text8x14	x=32, y=141, text="Main and Sub outputs if Effect2"	; +4
+	dl_text8x14	x=32, y=155, text="is turned on."	; +4
+	dl_text8x14	x=32, y=169, text="Please select either the Main or"	; +4
+	dl_text8x14	x=32, y=183, text="Sub outputs."	; +4
+	dl_box_shadow2	x0=23, y0=124, x1=296, y1=198
+	dl_fill_rect	x0=25, y0=126, x1=294, y1=196
 
 ; --------------------------------------------------------------------------
 ; DL_Err0rTheS0undOrC0mbinati0n -- display list, 0xF1A999-0xF1AA7B (227 bytes)
@@ -23261,47 +20925,22 @@ DL_F1A8F9:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_Err0rTheS0undOrC0mbinati0n:
-	.byte 0x08, 0x0a	; F1A999  op 08, 10 bytes -> handler 0xF31A3A
-	.short 0x0265		; +2  IX (screen position)
-	.ascii "ERR0R!"	; +4
-	.byte 0x07, 0x1c	; F1A9A3  op 07, 28 bytes -> handler 0xF31A3A
-	.short 0x0B6B		; +2  IX (screen position)
-	.ascii "The S0UND or C0MBINATI0N"	; +4
-	.byte 0x07, 0x21	; F1A9BF  op 07, 33 bytes -> handler 0xF31A3A
-	.short 0x1043		; +2  IX (screen position)
-	.ascii "memories are write protected."	; +4
-	.byte 0x07, 0x05	; F1A9E0  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1157		; +2  IX (screen position)
-	.byte 0x11	; +4  '.'
-	.byte 0x20, 0x07	; F1A9E5  op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x117B		; +2  IX (screen position)
-	.ascii "YES"	; +4
-	.byte 0x07, 0x1d	; F1A9EC  op 07, 29 bytes -> handler 0xF31A3A
-	.short 0x151B		; +2  IX (screen position)
-	.ascii "To proceed select YES and"	; +4
-	.byte 0x07, 0x22	; F1AA09  op 07, 34 bytes -> handler 0xF31A3A
-	.short 0x19F3		; +2  IX (screen position)
-	.ascii "turn off the write protection."	; +4
-	.byte 0x07, 0x05	; F1AA2B  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1797		; +2  IX (screen position)
-	.byte 0x11	; +4  '.'
-	.byte 0x20, 0x06	; F1AA30  op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x17BB		; +2  IX (screen position)
-	.ascii "NO"	; +4
-	.byte 0x0a, 0x0a	; F1AA36  op 0A, 10 bytes -> handler 0xF31A75
-	.byte 0x07, 0x00, 0x2f, 0x00, 0x0b, 0x01, 0xcc, 0x00	; +2  '../.....'
-	.byte 0x09, 0x0a	; F1AA40  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x01, 0x6a, 0x00, 0x34, 0x01, 0x7d, 0x00	; +2  '..j.4.}.'
-	.byte 0x09, 0x0a	; F1AA4A  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x16, 0x01, 0x6c, 0x00, 0x32, 0x01, 0x7b, 0x00	; +2  '..l.2.{.'
-	.byte 0x09, 0x0a	; F1AA54  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xa4, 0x00, 0x83, 0x00, 0xc4, 0x00, 0x96, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F1AA5E  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xa6, 0x00, 0x85, 0x00, 0xc2, 0x00, 0x94, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F1AA68  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x14, 0x01, 0x92, 0x00, 0x34, 0x01, 0xa5, 0x00	; +2  '....4...'
-	.byte 0x09, 0x0a	; F1AA72  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x16, 0x01, 0x94, 0x00, 0x32, 0x01, 0xa3, 0x00	; +2  '....2...'
+	dl_text16x16	x=104, y=15, text="ERR0R!"	; +4
+	dl_text8x16	x=24, y=73, text="The S0UND or C0MBINATI0N"	; +4
+	dl_text8x16	x=24, y=104, text="memories are write protected."	; +4
+	dl_text8x16	x=312, y=110, text="\021"
+	dl_text8x10	x=280, y=111, text="YES"	; +4
+	dl_text8x16	x=24, y=135, text="To proceed select YES and"	; +4
+	dl_text8x16	x=24, y=166, text="turn off the write protection."	; +4
+	dl_text8x16	x=312, y=150, text="\021"
+	dl_text8x10	x=280, y=151, text="NO"	; +4
+	dl_box_shadow2	x0=7, y0=47, x1=267, y1=204
+	dl_box	x0=276, y0=106, x1=308, y1=125
+	dl_box	x0=278, y0=108, x1=306, y1=123
+	dl_box	x0=164, y0=131, x1=196, y1=150
+	dl_box	x0=166, y0=133, x1=194, y1=148
+	dl_box	x0=276, y0=146, x1=308, y1=165
+	dl_box	x0=278, y0=148, x1=306, y1=163
 
 ; --------------------------------------------------------------------------
 ; PartParamField_KeyLayerLow -- record, 0xF1AA7C-0xF1AA84 (9 bytes)
@@ -24588,38 +22227,40 @@ Record_F1B1A7:
 ; --------------------------------------------------------------------------
 ; ScreenButtons_CombinationNamingWrite: screen 0x36's 32-slot button table, indexed by the raw button code in ScreenButtonBody_CombinationNaming.
 ScreenButtons_CombinationNamingWrite:
-	.long T_SoundEditNaming_SoftKeyCol1                       ; F1B1B0  [0]   -> prom_b 0xF42F84
-	.long T_SoundEditNaming_SoftKeyCol2                       ; F1B1B4  [1]   -> prom_b 0xF42F88
-	.long T_SoundEditNaming_SoftKeyCol3                       ; F1B1B8  [2]   -> prom_b 0xF42F8C
-	.long T_SoundEditNaming_SoftKeyCol4                       ; F1B1BC  [3]   -> prom_b 0xF42F90
-	.long T_SoundEditNaming_SoftKeyCol5                       ; F1B1C0  [4]   -> prom_b 0xF42F94
-	.long T_SoundEditNaming_SoftKeyCol6                       ; F1B1C4  [5]   -> prom_b 0xF42F98
-	.long T_SoundEditNaming_SoftKeyCol7                       ; F1B1C8  [6]   -> prom_b 0xF42F9C
-	.long T_SoundEditNaming_SoftKeyCol8                       ; F1B1CC  [7]   -> prom_b 0xF42FA0
-	.long LcdKeyRow1_CombinationNamingWrite                       ; F1B1D0  [8]   -> prom_a 0xFBF274
-	.long LcdKeyRow2_CombinationNamingWrite                       ; F1B1D4  [9]   -> prom_a 0xFBF295
-	.long CombinationNamingWrite_NoAction                       ; F1B1D8  [10]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1DC  [11]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E0  [12]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E4  [13]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E8  [14]   -> prom_a 0xFBF235
-	.long ExitKey_CombinationNamingWrite                       ; F1B1EC  [15]   -> prom_a 0xFBF2AB
-	.long CombinationNamingWrite_NoAction                       ; F1B1F0  [16]   -> prom_a 0xFBF235
-	.long T_SoundEditNaming_SoftKeyCol1                       ; F1B1F4  [17]   -> prom_b 0xF42F84
-	.long T_SoundEditNaming_SoftKeyCol2                       ; F1B1F8  [18]   -> prom_b 0xF42F88
-	.long T_SoundEditNaming_SoftKeyCol3                       ; F1B1FC  [19]   -> prom_b 0xF42F8C
-	.long T_SoundEditNaming_SoftKeyCol4                       ; F1B200  [20]   -> prom_b 0xF42F90
-	.long T_SoundEditNaming_SoftKeyCol5                       ; F1B204  [21]   -> prom_b 0xF42F94
-	.long T_SoundEditNaming_SoftKeyCol6                       ; F1B208  [22]   -> prom_b 0xF42F98
-	.long T_SoundEditNaming_SoftKeyCol7                       ; F1B20C  [23]   -> prom_b 0xF42F9C
-	.long T_SoundEditNaming_SoftKeyCol8                       ; F1B210  [24]   -> prom_b 0xF42FA0
-	.long CombinationNamingWrite_NoAction                       ; F1B214  [25]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B218  [26]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B21C  [27]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B220  [28]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B224  [29]   -> prom_a 0xFBF235
-	.long CompareKey_CombiEdit                       ; F1B228  [30]   -> prom_a 0xFBEDBE
-	.long CombinationNamingWrite_NoAction                       ; F1B22C  [31]   -> prom_a 0xFBF235
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CombinationNamingWrite	; -> prom_a 0xFBF274
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CombinationNamingWrite	; -> prom_a 0xFBF295
+	on_key	KEY_LcdRow3,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_LcdRow4,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_LcdRow5,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_MinusPlus,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code0E,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Exit,		ExitKey_CombinationNamingWrite	; -> prom_a 0xFBF2AB
+	on_key	KEY_Page,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_SoftKeyCol1Alt,	T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
+	on_key	KEY_SoftKeyCol2Alt,	T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
+	on_key	KEY_SoftKeyCol3Alt,	T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
+	on_key	KEY_SoftKeyCol4Alt,	T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
+	on_key	KEY_SoftKeyCol5Alt,	T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
+	on_key	KEY_SoftKeyCol6Alt,	T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
+	on_key	KEY_SoftKeyCol7Alt,	T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
+	on_key	KEY_SoftKeyCol8Alt,	T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
+	on_key	KEY_PageAlt,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1A,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_NumberPad,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1C,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1D,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Compare,		CompareKey_CombiEdit	; -> prom_a 0xFBEDBE
+	on_key	KEY_Code1F,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	keymap_end
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F1B230 -- index map, 0xF1B230-0xF1B238 (9 bytes)

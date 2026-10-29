@@ -118,7 +118,18 @@ verify-gui-map:
 # serve the SP7001 table, whose copies are identical; the rest comes from baserom/.
 TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 
-build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table.rom
+# The raw pictures (GUI bitmaps, frame pieces, icons, fonts, TCD and USER HP menu
+# pictures) are indexed PNGs in src/table/<subdir>/; tools/table_png.py turns them back
+# into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
+TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
+# The style data's include files (tools/gen_table_styles.py) and their macros.
+TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s src/table/voices/*.s)
+build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
+	@mkdir -p build/table_png
+	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)
+	@touch $@
+
+build/kn7000_table.rom: src/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
 
@@ -126,7 +137,7 @@ build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000
 # offsets to labelled segments, names and comments from tools/table_segments.py. The
 # committed files are the result; the build does not need this.
 .PHONY: table-src
-table-src: tools/gen_table_s.py tools/table_segments.py baserom/kn7000_table.rom
+table-src: tools/gen_table_s.py tools/table_segments.py tools/table_png.py tools/gen_table_styles.py baserom/kn7000_table.rom
 	$(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table.rom --out src/table.s \
 	    --jpg-dir src/table --title 'KN7000 "Table" flash image (build 84) - byte-exact.'
 
@@ -267,7 +278,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
@@ -402,7 +413,7 @@ xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
 		kn7000_sp7001_exports.sym kn7000_sp7001_new.sym \
 		baserom/sp7001_baseext.xap baserom/kn7000_program_sp7001.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_xap_s.py --xap baserom/sp7001_baseext.xap \
-	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E \
+	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E --typed-gaps \
 	    --title 'SP7001 BASEEXT.XAP (Key Soft Service base extension) - byte-exact.' \
 	    --sym kn7000_sp7001_baseext.sym \
 	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
@@ -542,6 +553,40 @@ ic18-src: tools/gen_ic18_s.py tools/gen_xap_s.py kn7000_ic18.sym baserom/kn7000_
 	    --out src/ic18/boot.s --names kn7000_ic18.sym \
 	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
 	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
+
+# ---- All of IC18: the boot ROM and the rhythm data -----------------------------
+# src/ic18/ic18.s is boot.s (above) followed by rhythm.s, the "Technics Rhythms"
+# style resource from 0x10000 to the end of the chip, typed record by record and
+# event by event (tools/gen_ic18_rhythm_s.py; one file per style under
+# src/ic18/styles/, the leftovers in src/ic18/old_build.s). It carries every byte,
+# so it builds without the reference; the whole chip image is copied here, its
+# SHA-1 checked, only to compare. See notes/ic18-rhythm-rom.md.
+IC18_SRC := $(shell find src/ic18 -name '*.s')
+.PHONY: verify-ic18-full ic18-rhythm-src
+baserom/kn7000_ic18.rom:
+	@mkdir -p baserom
+	echo "$(IC18_SHA1)  $(IC18_ROM)" | sha1sum --quiet -c
+	cp "$(IC18_ROM)" $@.tmp
+	echo "$(IC18_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/kn7000_ic18.bin: $(IC18_SRC) tools/kn7asm.py tools/mn10300_asm.py
+	@mkdir -p build
+	$(ASM) src/ic18/ic18.s -I . -o $@ --labels build/kn7000_ic18.labels
+
+verify-ic18-full: build/kn7000_ic18.bin baserom/kn7000_ic18.rom
+	@if [ "$$(sha1sum < $< | cut -d' ' -f1)" = "$(IC18_SHA1)" ] && cmp -s $< baserom/kn7000_ic18.rom; then \
+	    echo "OK    kn7000_ic18.bin is 100% byte-identical to all of IC18 (SHA-1 $(IC18_SHA1))"; \
+	 else echo "FAIL  kn7000_ic18.bin differs from IC18:"; \
+	    cmp $< baserom/kn7000_ic18.rom || true; exit 1; fi
+
+# Regenerate src/ic18/rhythm.s (needs program 941 and table 84 for the rhythm
+# groups and the table-ROM style names). The committed file is the result.
+ic18-rhythm-src: tools/gen_ic18_rhythm_s.py baserom/kn7000_ic18.rom baserom/kn7000_program.rom \
+		baserom/kn7000_table.rom
+	$(PYTHON) tools/gen_ic18_rhythm_s.py --rom baserom/kn7000_ic18.rom \
+	    --program baserom/kn7000_program.rom --table baserom/kn7000_table.rom \
+	    --out src/ic18/rhythm.s
 
 # ---- Table build 80 (pairs with program 893, v1.3) -------------------------
 # The reference is the read of Felipe's own instrument: the two EPROM halves in
@@ -742,3 +787,90 @@ verify-wave: build/wave/main.done build/wave/sub.done
 wave-src: tools/gen_wave_s.py baserom/kn7000_wave_main.bin baserom/kn7000_wave_sub.bin
 	$(PYTHON) tools/gen_wave_s.py main baserom/kn7000_wave_main.bin src/wave/main.s
 	$(PYTHON) tools/gen_wave_s.py sub  baserom/kn7000_wave_sub.bin  src/wave/sub.s
+# ---- the factory CUSTOM STYLE memory: IC21's bank at 0x96820000 -------------
+# Nine factory sets, one .AST file each on the softlist floppies idd7000 (Initial
+# Data Disk, 01CTMINI = the shipped set), custom1 and custom2 (eight more). The
+# .AST is the 0x1E0000-byte bank, deflated (tools/ast_file.py); the reference
+# images in baserom/customdata/ are inflated from the floppies and checked against
+# the SHA-1 recorded here (= the images in the private romset). src/customdata/*.s
+# are generated by tools/gen_customdata_s.py (make customdata-src); the bulk items
+# in them are .incbin_range of these references. See notes/custom-data-ic21.md.
+CUSTOMDATA      := 01ctmini 01custm1 02custm2 03custm3 04custm4 01custm5 02custm6 03custm7 04custm8
+CD_DISK_01ctmini := idd7000
+CD_DISK_01custm1 := custom1
+CD_DISK_02custm2 := custom1
+CD_DISK_03custm3 := custom1
+CD_DISK_04custm4 := custom1
+CD_DISK_01custm5 := custom2
+CD_DISK_02custm6 := custom2
+CD_DISK_03custm7 := custom2
+CD_DISK_04custm8 := custom2
+CD_SHA1_01ctmini := 67b2a0fe8154c4d15557399a86bf0d0b49813ced
+CD_SHA1_01custm1 := 4cd5fe37871984a4b470b1a12b835c9bc41f37f5
+CD_SHA1_02custm2 := 6c85b616a9acc3a7ecc1b49a70f138c0d9442086
+CD_SHA1_03custm3 := d5722a1129134383bf643d20b4e0866c3089fc36
+CD_SHA1_04custm4 := 25822a3ad726df49882cdd0066424600fb70ea14
+CD_SHA1_01custm5 := 11d32c3d293a23a511a76297647758046cd8ccc9
+CD_SHA1_02custm6 := 54f2bac0551a8d43dc1a87fe24a13c545169a326
+CD_SHA1_03custm7 := e1bdfbbbe78353003af5ed01866be87d799523bb
+CD_SHA1_04custm8 := f4722d93ff3f31c6d8c25f757968d796e4eb57ca
+CD_REFS    := $(CUSTOMDATA:%=baserom/customdata/%.ic21)
+CD_TARGETS := $(CUSTOMDATA:%=build/customdata/%.ic21)
+.SECONDARY: $(CUSTOMDATA:%=baserom/customdata/%.ast)
+
+.PHONY: verify-customdata customdata-src verify-customdata-ast
+baserom/idd7000.img baserom/custom1.img baserom/custom2.img: baserom/%.img:
+	@mkdir -p baserom
+	unzip -p "$(SOFTLIST_DIR)/kn7000_flop/$*.zip" $*.img > $@.tmp
+	mv $@.tmp $@
+
+define CD_AST_RULE
+baserom/customdata/$(1).ast: baserom/$(CD_DISK_$(1)).img tools/fat12_extract.py
+	@mkdir -p baserom/customdata
+	$$(PYTHON) tools/fat12_extract.py $$< $(shell echo $(1) | tr a-z A-Z).AST $$@
+endef
+$(foreach n,$(CUSTOMDATA),$(eval $(call CD_AST_RULE,$(n))))
+
+baserom/customdata/%.ic21: baserom/customdata/%.ast tools/ast_file.py
+	$(PYTHON) tools/ast_file.py inflate $< $@.tmp
+	echo "$(CD_SHA1_$*)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+define CD_BUILD_RULE
+build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc src/include/panel_memory.inc src/include/voice_record.inc \
+		tools/kn7asm.py baserom/customdata/$(1).ic21
+	@mkdir -p build/customdata
+	$$(ASM) $$< -I . -o $$@
+endef
+$(foreach n,$(CUSTOMDATA),$(eval $(call CD_BUILD_RULE,$(n))))
+
+verify-customdata: $(CD_TARGETS) $(CD_REFS)
+	@ok=1; \
+	for n in $(CUSTOMDATA); do \
+	  if cmp -s build/customdata/$$n.ic21 baserom/customdata/$$n.ic21; then \
+	    echo "OK    src/customdata/$$n.s rebuilds $$n.ic21 byte-for-byte"; \
+	  else echo "FAIL  build/customdata/$$n.ic21 differs:"; \
+	    cmp build/customdata/$$n.ic21 baserom/customdata/$$n.ic21 || true; ok=0; fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "Custom-data byte-match FAILED"; exit 1; }
+	@echo; echo "All 9 factory custom-style banks reproduced byte-for-byte."
+
+# Rebuild each .AST file from its image with tools/zlib10_deflate.py, the port of the
+# programs' zlib 1.0.4 (header tag and the 8 stack bytes taken from the floppy's file),
+# and compare with the floppy's file. About 6 s an image; not part of the gate.
+verify-customdata-ast: $(CD_REFS) tools/ast_file.py tools/zlib10_deflate.py
+	@mkdir -p build/customdata
+	@for n in $(CUSTOMDATA); do \
+	  $(PYTHON) tools/ast_file.py deflate baserom/customdata/$$n.ic21 build/customdata/$$n.ast \
+	    --like baserom/customdata/$$n.ast || exit 1; \
+	done
+
+# Regenerate src/customdata/*.s from the references. The committed files are the result.
+customdata-src: tools/gen_customdata_s.py $(CD_REFS)
+	$(foreach n,$(CUSTOMDATA),$(PYTHON) tools/gen_customdata_s.py --rom baserom/customdata/$(n).ic21 \
+	    --corpus $(foreach m,$(CUSTOMDATA),$(m)=baserom/customdata/$(m).ic21) \
+	    --ref baserom/customdata/$(n).ic21 --out src/customdata/$(n).s --model kn7000 \
+	    --include src/customdata/customdata.inc \
+	    --title 'Technics SX-KN7000 factory CUSTOM STYLE memory "$(n)" (IC21, bank 0x96820000) - byte-exact.' \
+	    --title 'Reference: $(n).ic21, the 0x1E0000-byte bank inflated from $(shell echo $(n) | tr a-z A-Z).AST' \
+	    --title 'of the MAME softlist kn7000_flop floppy $(CD_DISK_$(n)) (tools/ast_file.py).' && ) true

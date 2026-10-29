@@ -246,484 +246,505 @@ IndexMap_FCF1E9:
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditAmpLevel1 at 0xFD277E.
 PanelOpTable_FCF21B:
-	.long PanelOp_Nop                             ; FCF21B  [ 0]
-	.long SoftKeyCol2_SoundEditAmpLevel1                              ; FCF21F  [ 1]
-	.long SoftKeyCol3_SoundEditAmpLevel1                              ; FCF223  [ 2]
-	.long SoftKeyCol4_SoundEditAmpLevel1                              ; FCF227  [ 3]
-	.long SoftKeyCol5_SoundEditAmpLevel1                              ; FCF22B  [ 4]
-	.long PanelOp_Nop                             ; FCF22F  [ 5]
-	.long SoftKeyCol7_SoundEditAmpLevel1                              ; FCF233  [ 6]
-	.long SoftKeyCol8_SoundEditAmpLevel1                              ; FCF237  [ 7]
-	.long LcdKeyRow1_SoundEditAmpLevel1                              ; FCF23B  [ 8]
-	.long LcdKeyRow2_SoundEditAmpLevel1                              ; FCF23F  [ 9]
-	.long LcdKeyRow3_SoundEditAmpLevel1                              ; FCF243  [10]
-	.long LcdKeyRow4_SoundEditAmpLevel1                              ; FCF247  [11]
-	.long LcdKeyRow5_SoundEditAmpLevel1                              ; FCF24B  [12]
-	.long PanelOp_Nop                             ; FCF24F  [13]
-	.long PanelOp_Nop                             ; FCF253  [14]
-	.long ExitKey_SoundEditAmpLevel1                              ; FCF257  [15]
-	.long PageKey_SoundEditAmpLevel1                              ; FCF25B  [16]
-	.long 0x00000000                              ; FCF25F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditAmpLevel1
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditAmpLevel1
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditAmpLevel1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditAmpLevel1
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditAmpLevel1
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditAmpLevel1
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditAmpLevel1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditAmpLevel1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditAmpLevel1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditAmpLevel1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditAmpLevel1
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditAmpLevel1
+	on_key	KEY_Page,		PageKey_SoundEditAmpLevel1
+	fieldops_end
 
 ; PanelOpTable_FCF263 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditAmpLevel2 at 0xFD27D6.
 PanelOpTable_FCF263:
-	.long PanelOp_Nop                             ; FCF263  [ 0]
-	.long PanelOp_Nop                             ; FCF267  [ 1]
-	.long SoftKeyCol3_SoundEditAmpLevel2                              ; FCF26B  [ 2]
-	.long SoftKeyCol4_SoundEditAmpLevel2                              ; FCF26F  [ 3]
-	.long SoftKeyCol5_SoundEditAmpLevel2                              ; FCF273  [ 4]
-	.long SoftKeyCol6_SoundEditAmpLevel2                              ; FCF277  [ 5]
-	.long PanelOp_Nop                             ; FCF27B  [ 6]
-	.long PanelOp_Nop                             ; FCF27F  [ 7]
-	.long LcdKeyRow1_SoundEditAmpLevel2                              ; FCF283  [ 8]
-	.long LcdKeyRow2_SoundEditAmpLevel2                              ; FCF287  [ 9]
-	.long LcdKeyRow3_SoundEditAmpLevel2                              ; FCF28B  [10]
-	.long LcdKeyRow4_SoundEditAmpLevel2                              ; FCF28F  [11]
-	.long LcdKeyRow5_SoundEditAmpLevel2                              ; FCF293  [12]
-	.long PanelOp_Nop                             ; FCF297  [13]
-	.long PanelOp_Nop                             ; FCF29B  [14]
-	.long ExitKey_SoundEditAmpLevel2                              ; FCF29F  [15]
-	.long PageKey_SoundEditAmpLevel2                              ; FCF2A3  [16]
-	.long 0x00000000                              ; FCF2A7  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditAmpLevel2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditAmpLevel2
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditAmpLevel2
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditAmpLevel2
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditAmpLevel2
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditAmpLevel2
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditAmpLevel2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditAmpLevel2
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditAmpLevel2
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditAmpLevel2
+	on_key	KEY_Page,		PageKey_SoundEditAmpLevel2
+	fieldops_end
 
 ; PanelOpTable_FCF2AB -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditAmpEnvelope1 at 0xFD2826.
 PanelOpTable_FCF2AB:
-	.long SoftKeyCol1_SoundEditAmpEnvelope1                              ; FCF2AB  [ 0]
-	.long SoftKeyCol2_SoundEditAmpEnvelope1                              ; FCF2AF  [ 1]
-	.long SoftKeyCol3_SoundEditAmpEnvelope1                              ; FCF2B3  [ 2]
-	.long SoftKeyCol4_SoundEditAmpEnvelope1                              ; FCF2B7  [ 3]
-	.long SoftKeyCol5_SoundEditAmpEnvelope1                              ; FCF2BB  [ 4]
-	.long SoftKeyCol6_SoundEditAmpEnvelope1                              ; FCF2BF  [ 5]
-	.long SoftKeyCol7_SoundEditAmpEnvelope1                              ; FCF2C3  [ 6]
-	.long SoftKeyCol8_SoundEditAmpEnvelope1                              ; FCF2C7  [ 7]
-	.long LcdKeyRow1_SoundEditAmpEnvelope1                              ; FCF2CB  [ 8]
-	.long LcdKeyRow2_SoundEditAmpEnvelope1                              ; FCF2CF  [ 9]
-	.long LcdKeyRow3_SoundEditAmpEnvelope1                              ; FCF2D3  [10]
-	.long LcdKeyRow4_SoundEditAmpEnvelope1                              ; FCF2D7  [11]
-	.long LcdKeyRow5_SoundEditAmpEnvelope1                              ; FCF2DB  [12]
-	.long PanelOp_Nop                             ; FCF2DF  [13]
-	.long PanelOp_Nop                             ; FCF2E3  [14]
-	.long ExitKey_SoundEditAmpEnvelope1                              ; FCF2E7  [15]
-	.long PageKey_SoundEditAmpEnvelope1                              ; FCF2EB  [16]
-	.long 0x00000000                              ; FCF2EF  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditAmpEnvelope1
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditAmpEnvelope1
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditAmpEnvelope1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditAmpEnvelope1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditAmpEnvelope1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditAmpEnvelope1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditAmpEnvelope1
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditAmpEnvelope1
+	on_key	KEY_Page,		PageKey_SoundEditAmpEnvelope1
+	fieldops_end
 
 ; PanelOpTable_FCF2F3 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditAmpEnvelope2 at 0xFD2886.
 PanelOpTable_FCF2F3:
-	.long SoftKeyCol1_SoundEditAmpEnvelope2                              ; FCF2F3  [ 0]
-	.long SoftKeyCol2_SoundEditAmpEnvelope2                              ; FCF2F7  [ 1]
-	.long SoftKeyCol3_SoundEditAmpEnvelope2                              ; FCF2FB  [ 2]
-	.long SoftKeyCol4_SoundEditAmpEnvelope2                              ; FCF2FF  [ 3]
-	.long SoftKeyCol5_SoundEditAmpEnvelope2                              ; FCF303  [ 4]
-	.long SoftKeyCol6_SoundEditAmpEnvelope2                              ; FCF307  [ 5]
-	.long SoftKeyCol7_SoundEditAmpEnvelope2                              ; FCF30B  [ 6]
-	.long SoftKeyCol8_SoundEditAmpEnvelope2                              ; FCF30F  [ 7]
-	.long LcdKeyRow1_SoundEditAmpEnvelope2                              ; FCF313  [ 8]
-	.long LcdKeyRow2_SoundEditAmpEnvelope2                              ; FCF317  [ 9]
-	.long LcdKeyRow3_SoundEditAmpEnvelope2                              ; FCF31B  [10]
-	.long LcdKeyRow4_SoundEditAmpEnvelope2                              ; FCF31F  [11]
-	.long LcdKeyRow5_SoundEditAmpEnvelope2                              ; FCF323  [12]
-	.long PanelOp_Nop                             ; FCF327  [13]
-	.long PanelOp_Nop                             ; FCF32B  [14]
-	.long ExitKey_SoundEditAmpEnvelope2                              ; FCF32F  [15]
-	.long PageKey_SoundEditAmpEnvelope2                              ; FCF333  [16]
-	.long 0x00000000                              ; FCF337  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditAmpEnvelope2
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditAmpEnvelope2
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditAmpEnvelope2
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditAmpEnvelope2
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditAmpEnvelope2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditAmpEnvelope2
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditAmpEnvelope2
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditAmpEnvelope2
+	on_key	KEY_Page,		PageKey_SoundEditAmpEnvelope2
+	fieldops_end
 
 ; PanelOpTable_FCF33B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditAmpLfo at 0xFD28DF.
 PanelOpTable_FCF33B:
-	.long PanelOp_Nop                             ; FCF33B  [ 0]
-	.long SoftKeyCol2_SoundEditAmpLfo                              ; FCF33F  [ 1]
-	.long SoftKeyCol3_SoundEditAmpLfo                              ; FCF343  [ 2]
-	.long SoftKeyCol4_SoundEditAmpLfo                              ; FCF347  [ 3]
-	.long SoftKeyCol5_SoundEditAmpLfo                              ; FCF34B  [ 4]
-	.long SoftKeyCol6_SoundEditAmpLfo                              ; FCF34F  [ 5]
-	.long SoftKeyCol7_SoundEditAmpLfo                              ; FCF353  [ 6]
-	.long SoftKeyCol8_SoundEditAmpLfo                              ; FCF357  [ 7]
-	.long LcdKeyRow1_SoundEditAmpLfo                              ; FCF35B  [ 8]
-	.long LcdKeyRow2_SoundEditAmpLfo                              ; FCF35F  [ 9]
-	.long LcdKeyRow3_SoundEditAmpLfo                              ; FCF363  [10]
-	.long LcdKeyRow4_SoundEditAmpLfo                              ; FCF367  [11]
-	.long LcdKeyRow5_SoundEditAmpLfo                              ; FCF36B  [12]
-	.long PanelOp_Nop                             ; FCF36F  [13]
-	.long PanelOp_Nop                             ; FCF373  [14]
-	.long ExitKey_SoundEditAmpLfo                              ; FCF377  [15]
-	.long PanelOp_Nop                             ; FCF37B  [16]
-	.long 0x00000000                              ; FCF37F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditAmpLfo
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditAmpLfo
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditAmpLfo
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditAmpLfo
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditAmpLfo
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditAmpLfo
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditAmpLfo
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditAmpLfo
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF383 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditPitchTune (prom_b) at 0xF0A02D.
 PanelOpTable_FCF383:
-	.long PanelOp_Nop                             ; FCF383  [ 0]
-	.long SoftKeyCol2_SoundEditPitchTune                              ; FCF387  [ 1] prom_b SoftKeyCol2_SoundEditPitchTune
-	.long SoftKeyCol3_SoundEditPitchTune                              ; FCF38B  [ 2] prom_b SoftKeyCol3_SoundEditPitchTune
-	.long SoftKeyCol4_SoundEditPitchTune                              ; FCF38F  [ 3] prom_b SoftKeyCol4_SoundEditPitchTune
-	.long PanelOp_Nop                             ; FCF393  [ 4]
-	.long SoftKeyCol6_SoundEditPitchTune                              ; FCF397  [ 5] prom_b SoftKeyCol6_SoundEditPitchTune
-	.long PanelOp_Nop                             ; FCF39B  [ 6]
-	.long PanelOp_Nop                             ; FCF39F  [ 7]
-	.long LcdKeyRow1_SoundEditPitchTune                              ; FCF3A3  [ 8] prom_b LcdKeyRow1_SoundEditPitchTune
-	.long LcdKeyRow2_SoundEditPitchTune                              ; FCF3A7  [ 9] prom_b LcdKeyRow2_SoundEditPitchTune
-	.long LcdKeyRow3_SoundEditPitchTune                              ; FCF3AB  [10] prom_b LcdKeyRow3_SoundEditPitchTune
-	.long LcdKeyRow4_SoundEditPitchTune                              ; FCF3AF  [11] prom_b LcdKeyRow4_SoundEditPitchTune
-	.long LcdKeyRow5_SoundEditPitchTune                              ; FCF3B3  [12] prom_b LcdKeyRow5_SoundEditPitchTune
-	.long PanelOp_Nop                             ; FCF3B7  [13]
-	.long PanelOp_Nop                             ; FCF3BB  [14]
-	.long ExitKey_SoundEditPitchTune                              ; FCF3BF  [15] prom_b ExitKey_SoundEditPitchTune
-	.long PanelOp_Nop                             ; FCF3C3  [16]
-	.long 0x00000000                              ; FCF3C7  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditPitchTune	; prom_b SoftKeyCol2_SoundEditPitchTune
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditPitchTune	; prom_b SoftKeyCol3_SoundEditPitchTune
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditPitchTune	; prom_b SoftKeyCol4_SoundEditPitchTune
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditPitchTune	; prom_b SoftKeyCol6_SoundEditPitchTune
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditPitchTune	; prom_b LcdKeyRow1_SoundEditPitchTune
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditPitchTune	; prom_b LcdKeyRow2_SoundEditPitchTune
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditPitchTune	; prom_b LcdKeyRow3_SoundEditPitchTune
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditPitchTune	; prom_b LcdKeyRow4_SoundEditPitchTune
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditPitchTune	; prom_b LcdKeyRow5_SoundEditPitchTune
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditPitchTune	; prom_b ExitKey_SoundEditPitchTune
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF3CB -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditPitchEnvelope1 (prom_b) at 0xF0A085.
 PanelOpTable_FCF3CB:
-	.long SoftKeyCol1_SoundEditPitchEnvelope1                              ; FCF3CB  [ 0] prom_b SoftKeyCol1_SoundEditPitchEnvelope1
-	.long SoftKeyCol2_SoundEditPitchEnvelope1                              ; FCF3CF  [ 1] prom_b SoftKeyCol2_SoundEditPitchEnvelope1
-	.long SoftKeyCol3_SoundEditPitchEnvelope1                              ; FCF3D3  [ 2] prom_b SoftKeyCol3_SoundEditPitchEnvelope1
-	.long SoftKeyCol4_SoundEditPitchEnvelope1                              ; FCF3D7  [ 3] prom_b SoftKeyCol4_SoundEditPitchEnvelope1
-	.long SoftKeyCol5_SoundEditPitchEnvelope1                              ; FCF3DB  [ 4] prom_b SoftKeyCol5_SoundEditPitchEnvelope1
-	.long SoftKeyCol6_SoundEditPitchEnvelope1                              ; FCF3DF  [ 5] prom_b SoftKeyCol6_SoundEditPitchEnvelope1
-	.long SoftKeyCol7_SoundEditPitchEnvelope1                              ; FCF3E3  [ 6] prom_b SoftKeyCol7_SoundEditPitchEnvelope1
-	.long PanelOp_Nop                             ; FCF3E7  [ 7]
-	.long LcdKeyRow1_SoundEditPitchEnvelope1                              ; FCF3EB  [ 8] prom_b LcdKeyRow1_SoundEditPitchEnvelope1
-	.long LcdKeyRow2_SoundEditPitchEnvelope1                              ; FCF3EF  [ 9] prom_b LcdKeyRow2_SoundEditPitchEnvelope1
-	.long LcdKeyRow3_SoundEditPitchEnvelope1                              ; FCF3F3  [10] prom_b LcdKeyRow3_SoundEditPitchEnvelope1
-	.long LcdKeyRow4_SoundEditPitchEnvelope1                              ; FCF3F7  [11] prom_b LcdKeyRow4_SoundEditPitchEnvelope1
-	.long LcdKeyRow5_SoundEditPitchEnvelope1                              ; FCF3FB  [12] prom_b LcdKeyRow5_SoundEditPitchEnvelope1
-	.long PanelOp_Nop                             ; FCF3FF  [13]
-	.long PanelOp_Nop                             ; FCF403  [14]
-	.long ExitKey_SoundEditPitchEnvelope1                              ; FCF407  [15] prom_b ExitKey_SoundEditPitchEnvelope1
-	.long PageKey_SoundEditPitchEnvelope1                              ; FCF40B  [16] prom_b PageKey_SoundEditPitchEnvelope1
-	.long 0x00000000                              ; FCF40F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditPitchEnvelope1	; prom_b SoftKeyCol1_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditPitchEnvelope1	; prom_b SoftKeyCol2_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditPitchEnvelope1	; prom_b SoftKeyCol3_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditPitchEnvelope1	; prom_b SoftKeyCol4_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditPitchEnvelope1	; prom_b SoftKeyCol5_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditPitchEnvelope1	; prom_b SoftKeyCol6_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditPitchEnvelope1	; prom_b SoftKeyCol7_SoundEditPitchEnvelope1
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditPitchEnvelope1	; prom_b LcdKeyRow1_SoundEditPitchEnvelope1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditPitchEnvelope1	; prom_b LcdKeyRow2_SoundEditPitchEnvelope1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditPitchEnvelope1	; prom_b LcdKeyRow3_SoundEditPitchEnvelope1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditPitchEnvelope1	; prom_b LcdKeyRow4_SoundEditPitchEnvelope1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditPitchEnvelope1	; prom_b LcdKeyRow5_SoundEditPitchEnvelope1
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditPitchEnvelope1	; prom_b ExitKey_SoundEditPitchEnvelope1
+	on_key	KEY_Page,		PageKey_SoundEditPitchEnvelope1	; prom_b PageKey_SoundEditPitchEnvelope1
+	fieldops_end
 
 ; PanelOpTable_FCF413 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditPitchEnvelope2 (prom_b) at 0xF0A0E5.
 PanelOpTable_FCF413:
-	.long PanelOp_Nop                             ; FCF413  [ 0]
-	.long SoftKeyCol2_SoundEditPitchEnvelope2                              ; FCF417  [ 1] prom_b SoftKeyCol2_SoundEditPitchEnvelope2
-	.long SoftKeyCol3_SoundEditPitchEnvelope2                              ; FCF41B  [ 2] prom_b SoftKeyCol3_SoundEditPitchEnvelope2
-	.long SoftKeyCol4_SoundEditPitchEnvelope2                              ; FCF41F  [ 3] prom_b SoftKeyCol4_SoundEditPitchEnvelope2
-	.long SoftKeyCol5_SoundEditPitchEnvelope2                              ; FCF423  [ 4] prom_b SoftKeyCol5_SoundEditPitchEnvelope2
-	.long PanelOp_Nop                             ; FCF427  [ 5]
-	.long SoftKeyCol7_SoundEditPitchEnvelope2                              ; FCF42B  [ 6] prom_b SoftKeyCol7_SoundEditPitchEnvelope2
-	.long SoftKeyCol8_SoundEditPitchEnvelope2                              ; FCF42F  [ 7] prom_b SoftKeyCol8_SoundEditPitchEnvelope2
-	.long LcdKeyRow1_SoundEditPitchEnvelope2                              ; FCF433  [ 8] prom_b LcdKeyRow1_SoundEditPitchEnvelope2
-	.long LcdKeyRow2_SoundEditPitchEnvelope2                              ; FCF437  [ 9] prom_b LcdKeyRow2_SoundEditPitchEnvelope2
-	.long LcdKeyRow3_SoundEditPitchEnvelope2                              ; FCF43B  [10] prom_b LcdKeyRow3_SoundEditPitchEnvelope2
-	.long LcdKeyRow4_SoundEditPitchEnvelope2                              ; FCF43F  [11] prom_b LcdKeyRow4_SoundEditPitchEnvelope2
-	.long LcdKeyRow5_SoundEditPitchEnvelope2                              ; FCF443  [12] prom_b LcdKeyRow5_SoundEditPitchEnvelope2
-	.long PanelOp_Nop                             ; FCF447  [13]
-	.long PanelOp_Nop                             ; FCF44B  [14]
-	.long ExitKey_SoundEditPitchEnvelope2                              ; FCF44F  [15] prom_b ExitKey_SoundEditPitchEnvelope2
-	.long PageKey_SoundEditPitchEnvelope2                              ; FCF453  [16] prom_b PageKey_SoundEditPitchEnvelope2
-	.long 0x00000000                              ; FCF457  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditPitchEnvelope2	; prom_b SoftKeyCol2_SoundEditPitchEnvelope2
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditPitchEnvelope2	; prom_b SoftKeyCol3_SoundEditPitchEnvelope2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditPitchEnvelope2	; prom_b SoftKeyCol4_SoundEditPitchEnvelope2
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditPitchEnvelope2	; prom_b SoftKeyCol5_SoundEditPitchEnvelope2
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditPitchEnvelope2	; prom_b SoftKeyCol7_SoundEditPitchEnvelope2
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditPitchEnvelope2	; prom_b SoftKeyCol8_SoundEditPitchEnvelope2
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditPitchEnvelope2	; prom_b LcdKeyRow1_SoundEditPitchEnvelope2
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditPitchEnvelope2	; prom_b LcdKeyRow2_SoundEditPitchEnvelope2
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditPitchEnvelope2	; prom_b LcdKeyRow3_SoundEditPitchEnvelope2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditPitchEnvelope2	; prom_b LcdKeyRow4_SoundEditPitchEnvelope2
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditPitchEnvelope2	; prom_b LcdKeyRow5_SoundEditPitchEnvelope2
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditPitchEnvelope2	; prom_b ExitKey_SoundEditPitchEnvelope2
+	on_key	KEY_Page,		PageKey_SoundEditPitchEnvelope2	; prom_b PageKey_SoundEditPitchEnvelope2
+	fieldops_end
 
 ; PanelOpTable_FCF45B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditPitchLfo (prom_b) at 0xF0A13E.
 PanelOpTable_FCF45B:
-	.long PanelOp_Nop                             ; FCF45B  [ 0]
-	.long SoftKeyCol2_SoundEditPitchLfo                              ; FCF45F  [ 1] prom_b SoftKeyCol2_SoundEditPitchLfo
-	.long SoftKeyCol3_SoundEditPitchLfo                              ; FCF463  [ 2] prom_b SoftKeyCol3_SoundEditPitchLfo
-	.long SoftKeyCol4_SoundEditPitchLfo                              ; FCF467  [ 3] prom_b SoftKeyCol4_SoundEditPitchLfo
-	.long SoftKeyCol5_SoundEditPitchLfo                              ; FCF46B  [ 4] prom_b SoftKeyCol5_SoundEditPitchLfo
-	.long SoftKeyCol6_SoundEditPitchLfo                              ; FCF46F  [ 5] prom_b SoftKeyCol6_SoundEditPitchLfo
-	.long SoftKeyCol7_SoundEditPitchLfo                              ; FCF473  [ 6] prom_b SoftKeyCol7_SoundEditPitchLfo
-	.long SoftKeyCol8_SoundEditPitchLfo                              ; FCF477  [ 7] prom_b SoftKeyCol8_SoundEditPitchLfo
-	.long LcdKeyRow1_SoundEditPitchLfo                              ; FCF47B  [ 8] prom_b LcdKeyRow1_SoundEditPitchLfo
-	.long LcdKeyRow2_SoundEditPitchLfo                              ; FCF47F  [ 9] prom_b LcdKeyRow2_SoundEditPitchLfo
-	.long LcdKeyRow3_SoundEditPitchLfo                              ; FCF483  [10] prom_b LcdKeyRow3_SoundEditPitchLfo
-	.long LcdKeyRow4_SoundEditPitchLfo                              ; FCF487  [11] prom_b LcdKeyRow4_SoundEditPitchLfo
-	.long LcdKeyRow5_SoundEditPitchLfo                              ; FCF48B  [12] prom_b LcdKeyRow5_SoundEditPitchLfo
-	.long PanelOp_Nop                             ; FCF48F  [13]
-	.long PanelOp_Nop                             ; FCF493  [14]
-	.long ExitKey_SoundEditPitchLfo                              ; FCF497  [15] prom_b ExitKey_SoundEditPitchLfo
-	.long PanelOp_Nop                             ; FCF49B  [16]
-	.long 0x00000000                              ; FCF49F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditPitchLfo	; prom_b SoftKeyCol2_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditPitchLfo	; prom_b SoftKeyCol3_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditPitchLfo	; prom_b SoftKeyCol4_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditPitchLfo	; prom_b SoftKeyCol5_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditPitchLfo	; prom_b SoftKeyCol6_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditPitchLfo	; prom_b SoftKeyCol7_SoundEditPitchLfo
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditPitchLfo	; prom_b SoftKeyCol8_SoundEditPitchLfo
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditPitchLfo	; prom_b LcdKeyRow1_SoundEditPitchLfo
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditPitchLfo	; prom_b LcdKeyRow2_SoundEditPitchLfo
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditPitchLfo	; prom_b LcdKeyRow3_SoundEditPitchLfo
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditPitchLfo	; prom_b LcdKeyRow4_SoundEditPitchLfo
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditPitchLfo	; prom_b LcdKeyRow5_SoundEditPitchLfo
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditPitchLfo	; prom_b ExitKey_SoundEditPitchLfo
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF4A3 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterLpf12 at 0xFDE3F2.
 PanelOpTable_FCF4A3:
-	.long SoftKeyCol1_SoundEditFilterLpf12                              ; FCF4A3  [ 0]
-	.long SoftKeyCol2_SoundEditFilterLpf12                              ; FCF4A7  [ 1]
-	.long SoftKeyCol3_SoundEditFilterLpf12                              ; FCF4AB  [ 2]
-	.long SoftKeyCol4_SoundEditFilterLpf12                              ; FCF4AF  [ 3]
-	.long PanelOp_Nop                             ; FCF4B3  [ 4]
-	.long SoftKeyCol6_SoundEditFilterLpf12                              ; FCF4B7  [ 5]
-	.long SoftKeyCol7_SoundEditFilterLpf12                              ; FCF4BB  [ 6]
-	.long SoftKeyCol8_SoundEditFilterLpf12                              ; FCF4BF  [ 7]
-	.long LcdKeyRow1_SoundEditFilterLpf12                              ; FCF4C3  [ 8]
-	.long LcdKeyRow2_SoundEditFilterLpf12                              ; FCF4C7  [ 9]
-	.long LcdKeyRow3_SoundEditFilterLpf12                              ; FCF4CB  [10]
-	.long LcdKeyRow4_SoundEditFilterLpf12                              ; FCF4CF  [11]
-	.long LcdKeyRow5_SoundEditFilterLpf12                              ; FCF4D3  [12]
-	.long PanelOp_Nop                             ; FCF4D7  [13]
-	.long PanelOp_Nop                             ; FCF4DB  [14]
-	.long ExitKey_SoundEditFilterLpf12                              ; FCF4DF  [15]
-	.long PageKey_SoundEditFilterLpf12                              ; FCF4E3  [16]
-	.long 0x00000000                              ; FCF4E7  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterLpf12
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditFilterLpf12
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterLpf12
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterLpf12
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterLpf12
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterLpf12
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterLpf12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterLpf12
+	on_key	KEY_Page,		PageKey_SoundEditFilterLpf12
+	fieldops_end
 
 ; PanelOpTable_FCF4EB -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterHpf12 at 0xFDE452.
 PanelOpTable_FCF4EB:
-	.long SoftKeyCol1_SoundEditFilterHpf12                              ; FCF4EB  [ 0]
-	.long SoftKeyCol2_SoundEditFilterHpf12                              ; FCF4EF  [ 1]
-	.long SoftKeyCol3_SoundEditFilterHpf12                              ; FCF4F3  [ 2]
-	.long SoftKeyCol4_SoundEditFilterHpf12                              ; FCF4F7  [ 3]
-	.long PanelOp_Nop                             ; FCF4FB  [ 4]
-	.long SoftKeyCol6_SoundEditFilterHpf12                              ; FCF4FF  [ 5]
-	.long SoftKeyCol7_SoundEditFilterHpf12                              ; FCF503  [ 6]
-	.long SoftKeyCol8_SoundEditFilterHpf12                              ; FCF507  [ 7]
-	.long LcdKeyRow1_SoundEditFilterHpf12                              ; FCF50B  [ 8]
-	.long LcdKeyRow2_SoundEditFilterHpf12                              ; FCF50F  [ 9]
-	.long LcdKeyRow3_SoundEditFilterHpf12                              ; FCF513  [10]
-	.long LcdKeyRow4_SoundEditFilterHpf12                              ; FCF517  [11]
-	.long LcdKeyRow5_SoundEditFilterHpf12                              ; FCF51B  [12]
-	.long PanelOp_Nop                             ; FCF51F  [13]
-	.long PanelOp_Nop                             ; FCF523  [14]
-	.long ExitKey_SoundEditFilterHpf12                              ; FCF527  [15]
-	.long PageKey_SoundEditFilterHpf12                              ; FCF52B  [16]
-	.long 0x00000000                              ; FCF52F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterHpf12
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditFilterHpf12
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterHpf12
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterHpf12
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterHpf12
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterHpf12
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterHpf12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterHpf12
+	on_key	KEY_Page,		PageKey_SoundEditFilterHpf12
+	fieldops_end
 
 ; PanelOpTable_FCF533 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterLpf24 at 0xFDE4B2.
 PanelOpTable_FCF533:
-	.long PanelOp_Nop                             ; FCF533  [ 0]
-	.long PanelOp_Nop                             ; FCF537  [ 1]
-	.long SoftKeyCol3_SoundEditFilterLpf24                              ; FCF53B  [ 2]
-	.long SoftKeyCol4_SoundEditFilterLpf24                              ; FCF53F  [ 3]
-	.long SoftKeyCol5_SoundEditFilterLpf24                              ; FCF543  [ 4]
-	.long SoftKeyCol6_SoundEditFilterLpf24                              ; FCF547  [ 5]
-	.long PanelOp_Nop                             ; FCF54B  [ 6]
-	.long PanelOp_Nop                             ; FCF54F  [ 7]
-	.long LcdKeyRow1_SoundEditFilterLpf24                              ; FCF553  [ 8]
-	.long LcdKeyRow2_SoundEditFilterLpf24                              ; FCF557  [ 9]
-	.long LcdKeyRow3_SoundEditFilterLpf24                              ; FCF55B  [10]
-	.long LcdKeyRow4_SoundEditFilterLpf24                              ; FCF55F  [11]
-	.long LcdKeyRow5_SoundEditFilterLpf24                              ; FCF563  [12]
-	.long PanelOp_Nop                             ; FCF567  [13]
-	.long PanelOp_Nop                             ; FCF56B  [14]
-	.long ExitKey_SoundEditFilterLpf24                              ; FCF56F  [15]
-	.long PageKey_SoundEditFilterLpf24                              ; FCF573  [16]
-	.long 0x00000000                              ; FCF577  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterLpf24
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterLpf24
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterLpf24
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterLpf24
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterLpf24
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterLpf24
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterLpf24
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterLpf24
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterLpf24
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterLpf24
+	on_key	KEY_Page,		PageKey_SoundEditFilterLpf24
+	fieldops_end
 
 ; PanelOpTable_FCF57B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterHpf24 at 0xFDE512.
 PanelOpTable_FCF57B:
-	.long PanelOp_Nop                             ; FCF57B  [ 0]
-	.long PanelOp_Nop                             ; FCF57F  [ 1]
-	.long SoftKeyCol3_SoundEditFilterHpf24                              ; FCF583  [ 2]
-	.long SoftKeyCol4_SoundEditFilterHpf24                              ; FCF587  [ 3]
-	.long SoftKeyCol5_SoundEditFilterHpf24                              ; FCF58B  [ 4]
-	.long SoftKeyCol6_SoundEditFilterHpf24                              ; FCF58F  [ 5]
-	.long PanelOp_Nop                             ; FCF593  [ 6]
-	.long PanelOp_Nop                             ; FCF597  [ 7]
-	.long LcdKeyRow1_SoundEditFilterHpf24                              ; FCF59B  [ 8]
-	.long LcdKeyRow2_SoundEditFilterHpf24                              ; FCF59F  [ 9]
-	.long LcdKeyRow3_SoundEditFilterHpf24                              ; FCF5A3  [10]
-	.long LcdKeyRow4_SoundEditFilterHpf24                              ; FCF5A7  [11]
-	.long LcdKeyRow5_SoundEditFilterHpf24                              ; FCF5AB  [12]
-	.long PanelOp_Nop                             ; FCF5AF  [13]
-	.long PanelOp_Nop                             ; FCF5B3  [14]
-	.long ExitKey_SoundEditFilterHpf24                              ; FCF5B7  [15]
-	.long PageKey_SoundEditFilterHpf24                              ; FCF5BB  [16]
-	.long 0x00000000                              ; FCF5BF  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterHpf24
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterHpf24
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterHpf24
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterHpf24
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterHpf24
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterHpf24
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterHpf24
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterHpf24
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterHpf24
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterHpf24
+	on_key	KEY_Page,		PageKey_SoundEditFilterHpf24
+	fieldops_end
 
 ; PanelOpTable_FCF5C3 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterBpf at 0xFDE572.
 PanelOpTable_FCF5C3:
-	.long PanelOp_Nop                             ; FCF5C3  [ 0]
-	.long SoftKeyCol2_SoundEditFilterBpf                              ; FCF5C7  [ 1]
-	.long SoftKeyCol3_SoundEditFilterBpf                              ; FCF5CB  [ 2]
-	.long SoftKeyCol4_SoundEditFilterBpf                              ; FCF5CF  [ 3]
-	.long SoftKeyCol5_SoundEditFilterBpf                              ; FCF5D3  [ 4]
-	.long SoftKeyCol6_SoundEditFilterBpf                              ; FCF5D7  [ 5]
-	.long SoftKeyCol7_SoundEditFilterBpf                              ; FCF5DB  [ 6]
-	.long PanelOp_Nop                             ; FCF5DF  [ 7]
-	.long LcdKeyRow1_SoundEditFilterBpf                              ; FCF5E3  [ 8]
-	.long LcdKeyRow2_SoundEditFilterBpf                              ; FCF5E7  [ 9]
-	.long LcdKeyRow3_SoundEditFilterBpf                              ; FCF5EB  [10]
-	.long LcdKeyRow4_SoundEditFilterBpf                              ; FCF5EF  [11]
-	.long LcdKeyRow5_SoundEditFilterBpf                              ; FCF5F3  [12]
-	.long PanelOp_Nop                             ; FCF5F7  [13]
-	.long PanelOp_Nop                             ; FCF5FB  [14]
-	.long ExitKey_SoundEditFilterBpf                              ; FCF5FF  [15]
-	.long PageKey_SoundEditFilterBpf                              ; FCF603  [16]
-	.long 0x00000000                              ; FCF607  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterBpf
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterBpf
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterBpf
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterBpf
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterBpf
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterBpf
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterBpf
+	on_key	KEY_Page,		PageKey_SoundEditFilterBpf
+	fieldops_end
 
 ; PanelOpTable_FCF60B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterThrough at 0xFDE5CB.
 PanelOpTable_FCF60B:
-	.long PanelOp_Nop                             ; FCF60B  [ 0]
-	.long PanelOp_Nop                             ; FCF60F  [ 1]
-	.long PanelOp_Nop                             ; FCF613  [ 2]
-	.long PanelOp_Nop                             ; FCF617  [ 3]
-	.long PanelOp_Nop                             ; FCF61B  [ 4]
-	.long PanelOp_Nop                             ; FCF61F  [ 5]
-	.long PanelOp_Nop                             ; FCF623  [ 6]
-	.long PanelOp_Nop                             ; FCF627  [ 7]
-	.long LcdKeyRow1_SoundEditFilterThrough                              ; FCF62B  [ 8]
-	.long LcdKeyRow2_SoundEditFilterThrough                              ; FCF62F  [ 9]
-	.long LcdKeyRow3_SoundEditFilterThrough                              ; FCF633  [10]
-	.long LcdKeyRow4_SoundEditFilterThrough                              ; FCF637  [11]
-	.long LcdKeyRow5_SoundEditFilterThrough                              ; FCF63B  [12]
-	.long PanelOp_Nop                             ; FCF63F  [13]
-	.long PanelOp_Nop                             ; FCF643  [14]
-	.long ExitKey_SoundEditFilterThrough                              ; FCF647  [15]
-	.long PageKey_SoundEditFilterThrough                              ; FCF64B  [16]
-	.long 0x00000000                              ; FCF64F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterThrough
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterThrough
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterThrough
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterThrough
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterThrough
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterThrough
+	on_key	KEY_Page,		PageKey_SoundEditFilterThrough
+	fieldops_end
 
 ; PanelOpTable_FCF653 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterKeyFollow at 0xFDE623.
 PanelOpTable_FCF653:
-	.long PanelOp_Nop                             ; FCF653  [ 0]
-	.long PanelOp_Nop                             ; FCF657  [ 1]
-	.long SoftKeyCol3_SoundEditFilterKeyFollow                              ; FCF65B  [ 2]
-	.long SoftKeyCol4_SoundEditFilterKeyFollow                              ; FCF65F  [ 3]
-	.long SoftKeyCol5_SoundEditFilterKeyFollow                              ; FCF663  [ 4]
-	.long SoftKeyCol6_SoundEditFilterKeyFollow                              ; FCF667  [ 5]
-	.long PanelOp_Nop                             ; FCF66B  [ 6]
-	.long PanelOp_Nop                             ; FCF66F  [ 7]
-	.long LcdKeyRow1_SoundEditFilterKeyFollow                              ; FCF673  [ 8]
-	.long LcdKeyRow2_SoundEditFilterKeyFollow                              ; FCF677  [ 9]
-	.long LcdKeyRow3_SoundEditFilterKeyFollow                              ; FCF67B  [10]
-	.long LcdKeyRow4_SoundEditFilterKeyFollow                              ; FCF67F  [11]
-	.long LcdKeyRow5_SoundEditFilterKeyFollow                              ; FCF683  [12]
-	.long PanelOp_Nop                             ; FCF687  [13]
-	.long PanelOp_Nop                             ; FCF68B  [14]
-	.long ExitKey_SoundEditFilterKeyFollow                              ; FCF68F  [15]
-	.long PageKey_SoundEditFilterKeyFollow                              ; FCF693  [16]
-	.long 0x00000000                              ; FCF697  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterKeyFollow
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterKeyFollow
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterKeyFollow
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterKeyFollow
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterKeyFollow
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterKeyFollow
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterKeyFollow
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterKeyFollow
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterKeyFollow
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterKeyFollow
+	on_key	KEY_Page,		PageKey_SoundEditFilterKeyFollow
+	fieldops_end
 
 ; PanelOpTable_FCF69B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterEnvelope1 at 0xFDE683.
 PanelOpTable_FCF69B:
-	.long SoftKeyCol1_SoundEditFilterEnvelope1                              ; FCF69B  [ 0]
-	.long SoftKeyCol2_SoundEditFilterEnvelope1                              ; FCF69F  [ 1]
-	.long SoftKeyCol3_SoundEditFilterEnvelope1                              ; FCF6A3  [ 2]
-	.long SoftKeyCol4_SoundEditFilterEnvelope1                              ; FCF6A7  [ 3]
-	.long SoftKeyCol5_SoundEditFilterEnvelope1                              ; FCF6AB  [ 4]
-	.long SoftKeyCol6_SoundEditFilterEnvelope1                              ; FCF6AF  [ 5]
-	.long SoftKeyCol7_SoundEditFilterEnvelope1                              ; FCF6B3  [ 6]
-	.long PanelOp_Nop                             ; FCF6B7  [ 7]
-	.long LcdKeyRow1_SoundEditFilterEnvelope1                              ; FCF6BB  [ 8]
-	.long LcdKeyRow2_SoundEditFilterEnvelope1                              ; FCF6BF  [ 9]
-	.long LcdKeyRow3_SoundEditFilterEnvelope1                              ; FCF6C3  [10]
-	.long LcdKeyRow4_SoundEditFilterEnvelope1                              ; FCF6C7  [11]
-	.long LcdKeyRow5_SoundEditFilterEnvelope1                              ; FCF6CB  [12]
-	.long PanelOp_Nop                             ; FCF6CF  [13]
-	.long PanelOp_Nop                             ; FCF6D3  [14]
-	.long ExitKey_SoundEditFilterEnvelope1                              ; FCF6D7  [15]
-	.long PageKey_SoundEditFilterEnvelope1                              ; FCF6DB  [16]
-	.long 0x00000000                              ; FCF6DF  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterEnvelope1
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterEnvelope1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterEnvelope1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterEnvelope1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterEnvelope1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterEnvelope1
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterEnvelope1
+	on_key	KEY_Page,		PageKey_SoundEditFilterEnvelope1
+	fieldops_end
 
 ; PanelOpTable_FCF6E3 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterEnvelope2 at 0xFDE6E3.
 PanelOpTable_FCF6E3:
-	.long PanelOp_Nop                             ; FCF6E3  [ 0]
-	.long SoftKeyCol2_SoundEditFilterEnvelope2                              ; FCF6E7  [ 1]
-	.long SoftKeyCol3_SoundEditFilterEnvelope2                              ; FCF6EB  [ 2]
-	.long SoftKeyCol4_SoundEditFilterEnvelope2                              ; FCF6EF  [ 3]
-	.long SoftKeyCol5_SoundEditFilterEnvelope2                              ; FCF6F3  [ 4]
-	.long PanelOp_Nop                             ; FCF6F7  [ 5]
-	.long SoftKeyCol7_SoundEditFilterEnvelope2                              ; FCF6FB  [ 6]
-	.long SoftKeyCol8_SoundEditFilterEnvelope2                              ; FCF6FF  [ 7]
-	.long LcdKeyRow1_SoundEditFilterEnvelope2                              ; FCF703  [ 8]
-	.long LcdKeyRow2_SoundEditFilterEnvelope2                              ; FCF707  [ 9]
-	.long LcdKeyRow3_SoundEditFilterEnvelope2                              ; FCF70B  [10]
-	.long LcdKeyRow4_SoundEditFilterEnvelope2                              ; FCF70F  [11]
-	.long LcdKeyRow5_SoundEditFilterEnvelope2                              ; FCF713  [12]
-	.long PanelOp_Nop                             ; FCF717  [13]
-	.long PanelOp_Nop                             ; FCF71B  [14]
-	.long ExitKey_SoundEditFilterEnvelope2                              ; FCF71F  [15]
-	.long PageKey_SoundEditFilterEnvelope2                              ; FCF723  [16]
-	.long 0x00000000                              ; FCF727  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterEnvelope2
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterEnvelope2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterEnvelope2
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterEnvelope2
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterEnvelope2
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditFilterEnvelope2
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterEnvelope2
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterEnvelope2
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterEnvelope2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterEnvelope2
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterEnvelope2
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterEnvelope2
+	on_key	KEY_Page,		PageKey_SoundEditFilterEnvelope2
+	fieldops_end
 
 ; PanelOpTable_FCF72B -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditFilterLfo at 0xFDE73C.
 PanelOpTable_FCF72B:
-	.long PanelOp_Nop                             ; FCF72B  [ 0]
-	.long SoftKeyCol2_SoundEditFilterLfo                              ; FCF72F  [ 1]
-	.long SoftKeyCol3_SoundEditFilterLfo                              ; FCF733  [ 2]
-	.long SoftKeyCol4_SoundEditFilterLfo                              ; FCF737  [ 3]
-	.long SoftKeyCol5_SoundEditFilterLfo                              ; FCF73B  [ 4]
-	.long SoftKeyCol6_SoundEditFilterLfo                              ; FCF73F  [ 5]
-	.long SoftKeyCol7_SoundEditFilterLfo                              ; FCF743  [ 6]
-	.long SoftKeyCol8_SoundEditFilterLfo                              ; FCF747  [ 7]
-	.long LcdKeyRow1_SoundEditFilterLfo                              ; FCF74B  [ 8]
-	.long LcdKeyRow2_SoundEditFilterLfo                              ; FCF74F  [ 9]
-	.long LcdKeyRow3_SoundEditFilterLfo                              ; FCF753  [10]
-	.long LcdKeyRow4_SoundEditFilterLfo                              ; FCF757  [11]
-	.long LcdKeyRow5_SoundEditFilterLfo                              ; FCF75B  [12]
-	.long PanelOp_Nop                             ; FCF75F  [13]
-	.long PanelOp_Nop                             ; FCF763  [14]
-	.long ExitKey_SoundEditFilterLfo                              ; FCF767  [15]
-	.long PanelOp_Nop                             ; FCF76B  [16]
-	.long 0x00000000                              ; FCF76F  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditFilterLfo
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditFilterLfo
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditFilterLfo
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditFilterLfo
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditFilterLfo
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditFilterLfo
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditFilterLfo
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditFilterLfo
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF773 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditControllerPage1 at 0xFD056A.
 PanelOpTable_FCF773:
-	.long PanelOp_Nop                             ; FCF773  [ 0]
-	.long SoftKeyCol2_SoundEditControllerPage1                              ; FCF777  [ 1]
-	.long PanelOp_Nop                             ; FCF77B  [ 2]
-	.long SoftKeyCol4_SoundEditControllerPage1                              ; FCF77F  [ 3]
-	.long SoftKeyCol5_SoundEditControllerPage1                              ; FCF783  [ 4]
-	.long SoftKeyCol6_SoundEditControllerPage1                              ; FCF787  [ 5]
-	.long SoftKeyCol7_SoundEditControllerPage1                              ; FCF78B  [ 6]
-	.long SoftKeyCol8_SoundEditControllerPage1                              ; FCF78F  [ 7]
-	.long PanelOp_Nop                             ; FCF793  [ 8]
-	.long LcdKeyRow2_SoundEditControllerPage1                              ; FCF797  [ 9]
-	.long LcdKeyRow3_SoundEditControllerPage1                              ; FCF79B  [10]
-	.long LcdKeyRow4_SoundEditControllerPage1                              ; FCF79F  [11]
-	.long PanelOp_Nop                             ; FCF7A3  [12]
-	.long PanelOp_Nop                             ; FCF7A7  [13]
-	.long PanelOp_Nop                             ; FCF7AB  [14]
-	.long ExitKey_SoundEditControllerPage1                              ; FCF7AF  [15]
-	.long PageKey_SoundEditControllerPage1                              ; FCF7B3  [16]
-	.long 0x00000000                              ; FCF7B7  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditControllerPage1
+	on_key	KEY_SoftKeyCol3,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditControllerPage1
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditControllerPage1
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditControllerPage1
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditControllerPage1
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditControllerPage1
+	on_key	KEY_LcdRow1,		PanelOp_Nop
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditControllerPage1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditControllerPage1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditControllerPage1
+	on_key	KEY_LcdRow5,		PanelOp_Nop
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditControllerPage1
+	on_key	KEY_Page,		PageKey_SoundEditControllerPage1
+	fieldops_end
 
 ; PanelOpTable_FCF7BB -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditControllerPage2 at 0xFD05DE.
 PanelOpTable_FCF7BB:
-	.long PanelOp_Nop                             ; FCF7BB  [ 0]
-	.long SoftKeyCol2_SoundEditControllerPage2                              ; FCF7BF  [ 1]
-	.long PanelOp_Nop                             ; FCF7C3  [ 2]
-	.long SoftKeyCol4_SoundEditControllerPage2                              ; FCF7C7  [ 3]
-	.long SoftKeyCol5_SoundEditControllerPage2                              ; FCF7CB  [ 4]
-	.long SoftKeyCol6_SoundEditControllerPage2                              ; FCF7CF  [ 5]
-	.long SoftKeyCol7_SoundEditControllerPage2                              ; FCF7D3  [ 6]
-	.long SoftKeyCol8_SoundEditControllerPage2                              ; FCF7D7  [ 7]
-	.long LcdKeyRow1_SoundEditControllerPage2                              ; FCF7DB  [ 8]
-	.long LcdKeyRow2_SoundEditControllerPage2                              ; FCF7DF  [ 9]
-	.long LcdKeyRow3_SoundEditControllerPage2                              ; FCF7E3  [10]
-	.long LcdKeyRow4_SoundEditControllerPage2                              ; FCF7E7  [11]
-	.long LcdKeyRow5_SoundEditControllerPage2                              ; FCF7EB  [12]
-	.long PanelOp_Nop                             ; FCF7EF  [13]
-	.long PanelOp_Nop                             ; FCF7F3  [14]
-	.long ExitKey_SoundEditControllerPage2                              ; FCF7F7  [15]
-	.long PageKey_SoundEditControllerPage2                              ; FCF7FB  [16]
-	.long 0x00000000                              ; FCF7FF  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditControllerPage2
+	on_key	KEY_SoftKeyCol3,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditControllerPage2
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditControllerPage2
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditControllerPage2
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditControllerPage2
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditControllerPage2
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditControllerPage2
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditControllerPage2
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditControllerPage2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditControllerPage2
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditControllerPage2
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditControllerPage2
+	on_key	KEY_Page,		PageKey_SoundEditControllerPage2
+	fieldops_end
 
 ; BitMask_Bit0to7 -- 9 bytes: 1<<0 .. 1<<7, then 0x00.
 ; Read by: LcdKeyRow4_SoundEditControllerPage1 at 0xFD07E5: `ld C,H / add XBC,0x00FCF803 / ld A,(XBC)` with
@@ -737,392 +758,409 @@ BitMask_Bit0to7:
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditModelingToneTemplate at 0xFD0AD2.
 PanelOpTable_FCF80C:
-	.long PanelOp_Nop                             ; FCF80C  [ 0]
-	.long SoftKeyCol2_SoundEditModelingToneTemplate                              ; FCF810  [ 1]
-	.long SoftKeyCol3_SoundEditModelingToneTemplate                              ; FCF814  [ 2]
-	.long PanelOp_Nop                             ; FCF818  [ 3]
-	.long SoftKeyCol5_SoundEditModelingToneTemplate                              ; FCF81C  [ 4]
-	.long SoftKeyCol6_SoundEditModelingToneTemplate                              ; FCF820  [ 5]
-	.long SoftKeyCol7_SoundEditModelingToneTemplate                              ; FCF824  [ 6]
-	.long PanelOp_Nop                             ; FCF828  [ 7]
-	.long LcdKeyRow1_SoundEditModelingToneTemplate                              ; FCF82C  [ 8]
-	.long LcdKeyRow2_SoundEditModelingToneTemplate                              ; FCF830  [ 9]
-	.long LcdKeyRow3_SoundEditModelingToneTemplate                              ; FCF834  [10]
-	.long LcdKeyRow4_SoundEditModelingToneTemplate                              ; FCF838  [11]
-	.long LcdKeyRow5_SoundEditModelingToneTemplate                              ; FCF83C  [12]
-	.long PanelOp_Nop                             ; FCF840  [13]
-	.long PanelOp_Nop                             ; FCF844  [14]
-	.long ExitKey_SoundEditModelingToneTemplate                              ; FCF848  [15]
-	.long PanelOp_Nop                             ; FCF84C  [16]
-	.long 0x00000000                              ; FCF850  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditModelingToneTemplate
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditModelingToneTemplate
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditModelingToneTemplate
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditModelingToneTemplate
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditModelingToneTemplate
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditModelingToneTemplate
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditModelingToneTemplate
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditModelingToneTemplate
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditModelingToneTemplate
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditModelingToneTemplate
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditModelingToneTemplate
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF854 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditToneLayerPanning at 0xFD0B23.
 PanelOpTable_FCF854:
-	.long PanelOp_Nop                             ; FCF854  [ 0]
-	.long SoftKeyCol2_SoundEditToneLayerPanning                              ; FCF858  [ 1]
-	.long SoftKeyCol3_SoundEditToneLayerPanning                              ; FCF85C  [ 2]
-	.long SoftKeyCol4_SoundEditToneLayerPanning                              ; FCF860  [ 3]
-	.long PanelOp_Nop                             ; FCF864  [ 4]
-	.long PanelOp_Nop                             ; FCF868  [ 5]
-	.long PanelOp_Nop                             ; FCF86C  [ 6]
-	.long PanelOp_Nop                             ; FCF870  [ 7]
-	.long LcdKeyRow1_SoundEditToneLayerPanning                              ; FCF874  [ 8]
-	.long LcdKeyRow2_SoundEditToneLayerPanning                              ; FCF878  [ 9]
-	.long LcdKeyRow3_SoundEditToneLayerPanning                              ; FCF87C  [10]
-	.long LcdKeyRow4_SoundEditToneLayerPanning                              ; FCF880  [11]
-	.long LcdKeyRow5_SoundEditToneLayerPanning                              ; FCF884  [12]
-	.long PanelOp_Nop                             ; FCF888  [13]
-	.long PanelOp_Nop                             ; FCF88C  [14]
-	.long ExitKey_SoundEditToneLayerPanning                              ; FCF890  [15]
-	.long PanelOp_Nop                             ; FCF894  [16]
-	.long 0x00000000                              ; FCF898  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditToneLayerPanning
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditToneLayerPanning
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditToneLayerPanning
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditToneLayerPanning
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditToneLayerPanning
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditToneLayerPanning
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditToneLayerPanning
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditToneLayerPanning
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditToneLayerPanning
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF89C -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditToneLayerKeyLayer at 0xFD0B7B.
 PanelOpTable_FCF89C:
-	.long PanelOp_Nop                             ; FCF89C  [ 0]
-	.long PanelOp_Nop                             ; FCF8A0  [ 1]
-	.long SoftKeyCol3_SoundEditToneLayerKeyLayer                              ; FCF8A4  [ 2]
-	.long SoftKeyCol4_SoundEditToneLayerKeyLayer                              ; FCF8A8  [ 3]
-	.long SoftKeyCol5_SoundEditToneLayerKeyLayer                              ; FCF8AC  [ 4]
-	.long SoftKeyCol6_SoundEditToneLayerKeyLayer                              ; FCF8B0  [ 5]
-	.long PanelOp_Nop                             ; FCF8B4  [ 6]
-	.long PanelOp_Nop                             ; FCF8B8  [ 7]
-	.long LcdKeyRow1_SoundEditToneLayerKeyLayer                              ; FCF8BC  [ 8]
-	.long LcdKeyRow2_SoundEditToneLayerKeyLayer                              ; FCF8C0  [ 9]
-	.long LcdKeyRow3_SoundEditToneLayerKeyLayer                              ; FCF8C4  [10]
-	.long LcdKeyRow4_SoundEditToneLayerKeyLayer                              ; FCF8C8  [11]
-	.long LcdKeyRow5_SoundEditToneLayerKeyLayer                              ; FCF8CC  [12]
-	.long PanelOp_Nop                             ; FCF8D0  [13]
-	.long PanelOp_Nop                             ; FCF8D4  [14]
-	.long ExitKey_SoundEditToneLayerKeyLayer                              ; FCF8D8  [15]
-	.long PanelOp_Nop                             ; FCF8DC  [16]
-	.long 0x00000000                              ; FCF8E0  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditToneLayerKeyLayer
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditToneLayerKeyLayer
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditToneLayerKeyLayer
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditToneLayerKeyLayer
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditToneLayerKeyLayer
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditToneLayerKeyLayer
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditToneLayerKeyLayer
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditToneLayerKeyLayer
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditToneLayerKeyLayer
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditToneLayerKeyLayer
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF8E4 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditToneLayerVelocityLayer at 0xFD0BDB.
 PanelOpTable_FCF8E4:
-	.long PanelOp_Nop                             ; FCF8E4  [ 0]
-	.long PanelOp_Nop                             ; FCF8E8  [ 1]
-	.long SoftKeyCol3_SoundEditToneLayerVelocityLayer                              ; FCF8EC  [ 2]
-	.long SoftKeyCol4_SoundEditToneLayerVelocityLayer                              ; FCF8F0  [ 3]
-	.long SoftKeyCol5_SoundEditToneLayerVelocityLayer                              ; FCF8F4  [ 4]
-	.long SoftKeyCol6_SoundEditToneLayerVelocityLayer                              ; FCF8F8  [ 5]
-	.long PanelOp_Nop                             ; FCF8FC  [ 6]
-	.long PanelOp_Nop                             ; FCF900  [ 7]
-	.long LcdKeyRow1_SoundEditToneLayerVelocityLayer                              ; FCF904  [ 8]
-	.long LcdKeyRow2_SoundEditToneLayerVelocityLayer                              ; FCF908  [ 9]
-	.long LcdKeyRow3_SoundEditToneLayerVelocityLayer                              ; FCF90C  [10]
-	.long LcdKeyRow4_SoundEditToneLayerVelocityLayer                              ; FCF910  [11]
-	.long LcdKeyRow5_SoundEditToneLayerVelocityLayer                              ; FCF914  [12]
-	.long PanelOp_Nop                             ; FCF918  [13]
-	.long PanelOp_Nop                             ; FCF91C  [14]
-	.long ExitKey_SoundEditToneLayerVelocityLayer                              ; FCF920  [15]
-	.long PanelOp_Nop                             ; FCF924  [16]
-	.long 0x00000000                              ; FCF928  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditToneLayerVelocityLayer
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditToneLayerVelocityLayer
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditToneLayerVelocityLayer
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditToneLayerVelocityLayer
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditToneLayerVelocityLayer
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditToneLayerVelocityLayer
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditToneLayerVelocityLayer
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditToneLayerVelocityLayer
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditToneLayerVelocityLayer
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditToneLayerVelocityLayer
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCF92C -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditModelingDriverWaveform at 0xFD0C34.
 PanelOpTable_FCF92C:
-	.long PanelOp_Nop                             ; FCF92C  [ 0]
-	.long SoftKeyCol2_SoundEditModelingDriverWaveform                              ; FCF930  [ 1]
-	.long SoftKeyCol3_SoundEditModelingDriverWaveform                              ; FCF934  [ 2]
-	.long PanelOp_Nop                             ; FCF938  [ 3]
-	.long PanelOp_Nop                             ; FCF93C  [ 4]
-	.long SoftKeyCol6_SoundEditModelingDriverWaveform                              ; FCF940  [ 5]
-	.long PanelOp_Nop                             ; FCF944  [ 6]
-	.long SoftKeyCol8_SoundEditModelingDriverWaveform                              ; FCF948  [ 7]
-	.long LcdKeyRow1_SoundEditModelingDriverWaveform                              ; FCF94C  [ 8]
-	.long LcdKeyRow2_SoundEditModelingDriverWaveform                              ; FCF950  [ 9]
-	.long LcdKeyRow3_SoundEditModelingDriverWaveform                              ; FCF954  [10]
-	.long LcdKeyRow4_SoundEditModelingDriverWaveform                              ; FCF958  [11]
-	.long LcdKeyRow5_SoundEditModelingDriverWaveform                              ; FCF95C  [12]
-	.long PanelOp_Nop                             ; FCF960  [13]
-	.long PanelOp_Nop                             ; FCF964  [14]
-	.long ExitKey_SoundEditModelingDriverWaveform                              ; FCF968  [15]
-	.long PanelOp_Nop                             ; FCF96C  [16]
-	.long 0x00000000                              ; FCF970  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditModelingDriverWaveform
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditModelingDriverWaveform
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditModelingDriverWaveform
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditModelingDriverWaveform
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditModelingDriverWaveform
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditModelingDriverWaveform
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditModelingDriverWaveform
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditModelingDriverWaveform
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditModelingDriverWaveform
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditModelingDriverWaveform
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; ToneEditPage_A0_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A0_KeyDispatch at 0xFD3DD4.
 ToneEditPage_A0_OpTable:
-	.long ToneEditPage_A0_Op0                              ; FCF974  [ 0]
-	.long ToneEditPage_A0_Op1                              ; FCF978  [ 1]
-	.long ToneEditPage_A0_Op2                              ; FCF97C  [ 2]
-	.long PanelOp_Nop                             ; FCF980  [ 3]
-	.long PanelOp_Nop                             ; FCF984  [ 4]
-	.long ToneEditField_A0_ResonatorType          ; FCF988  [ 5]
-	.long ToneEditField_A0_Group                  ; FCF98C  [ 6]
-	.long PanelOp_Nop                             ; FCF990  [ 7]
-	.long ToneEditPage_A0_Op8                              ; FCF994  [ 8]
-	.long ToneEditPage_A0_Op9                              ; FCF998  [ 9]
-	.long ToneEditPage_A0_Op10                              ; FCF99C  [10]
-	.long ToneEditPage_A0_Op11                              ; FCF9A0  [11]
-	.long ToneEditPage_A0_Op12                              ; FCF9A4  [12]
-	.long PanelOp_Nop                             ; FCF9A8  [13]
-	.long PanelOp_Nop                             ; FCF9AC  [14]
-	.long ToneEditPage_A0_Op15                              ; FCF9B0  [15]
-	.long PanelOp_Nop                             ; FCF9B4  [16]
-	.long 0x00000000                              ; FCF9B8  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	ToneEditPage_A0_Op0
+	on_key	KEY_SoftKeyCol2,	ToneEditPage_A0_Op1
+	on_key	KEY_SoftKeyCol3,	ToneEditPage_A0_Op2
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A0_ResonatorType
+	on_key	KEY_SoftKeyCol7,	ToneEditField_A0_Group
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A0_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A0_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A0_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A0_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A0_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A0_Op15
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; ToneEditPage_A3_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A3_KeyDispatch at 0xFD3E27.
 ToneEditPage_A3_OpTable:
-	.long PanelOp_Nop                             ; FCF9BC  [ 0]
-	.long ToneEditField_A3_Position               ; FCF9C0  [ 1]
-	.long ToneEditField_A3_Depth                  ; FCF9C4  [ 2]
-	.long ToneEditField_A3_Formant                ; FCF9C8  [ 3]
-	.long PanelOp_Nop                             ; FCF9CC  [ 4]
-	.long ToneEditField_A3_InteractionGain        ; FCF9D0  [ 5]
-	.long PanelOp_Nop                             ; FCF9D4  [ 6]
-	.long PanelOp_Nop                             ; FCF9D8  [ 7]
-	.long ToneEditPage_A3_Op8                              ; FCF9DC  [ 8]
-	.long ToneEditPage_A3_Op9                              ; FCF9E0  [ 9]
-	.long ToneEditPage_A3_Op10                              ; FCF9E4  [10]
-	.long ToneEditPage_A3_Op11                              ; FCF9E8  [11]
-	.long ToneEditPage_A3_Op12                              ; FCF9EC  [12]
-	.long PanelOp_Nop                             ; FCF9F0  [13]
-	.long PanelOp_Nop                             ; FCF9F4  [14]
-	.long ToneEditPage_A3_Op15                              ; FCF9F8  [15]
-	.long ToneEditPage_A3_Op16                              ; FCF9FC  [16]
-	.long 0x00000000                              ; FCFA00  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditField_A3_Position
+	on_key	KEY_SoftKeyCol3,	ToneEditField_A3_Depth
+	on_key	KEY_SoftKeyCol4,	ToneEditField_A3_Formant
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A3_InteractionGain
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A3_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A3_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A3_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A3_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A3_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A3_Op15
+	on_key	KEY_Page,		ToneEditPage_A3_Op16
+	fieldops_end
 
 ; ToneEditPage_A4_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A4_KeyDispatch at 0xFD3E78.
 ToneEditPage_A4_OpTable:
-	.long PanelOp_Nop                             ; FCFA04  [ 0]
-	.long ToneEditField_A4_Width                  ; FCFA08  [ 1]
-	.long ToneEditField_A4_Speed                  ; FCFA0C  [ 2]
-	.long ToneEditField_A4_SampleHold             ; FCFA10  [ 3]
-	.long PanelOp_Nop                             ; FCFA14  [ 4]
-	.long ToneEditField_A4_Touch                  ; FCFA18  [ 5]
-	.long PanelOp_Nop                             ; FCFA1C  [ 6]
-	.long PanelOp_Nop                             ; FCFA20  [ 7]
-	.long ToneEditPage_A4_Op8                              ; FCFA24  [ 8]
-	.long ToneEditPage_A4_Op9                              ; FCFA28  [ 9]
-	.long ToneEditPage_A4_Op10                              ; FCFA2C  [10]
-	.long ToneEditPage_A4_Op11                              ; FCFA30  [11]
-	.long ToneEditPage_A4_Op12                              ; FCFA34  [12]
-	.long PanelOp_Nop                             ; FCFA38  [13]
-	.long PanelOp_Nop                             ; FCFA3C  [14]
-	.long ToneEditPage_A4_Op15                              ; FCFA40  [15]
-	.long ToneEditPage_A4_Op16                              ; FCFA44  [16]
-	.long 0x00000000                              ; FCFA48  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditField_A4_Width
+	on_key	KEY_SoftKeyCol3,	ToneEditField_A4_Speed
+	on_key	KEY_SoftKeyCol4,	ToneEditField_A4_SampleHold
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A4_Touch
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A4_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A4_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A4_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A4_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A4_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A4_Op15
+	on_key	KEY_Page,		ToneEditPage_A4_Op16
+	fieldops_end
 
 ; ToneEditPage_A5_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A5_KeyDispatch at 0xFD3EC9.
 ToneEditPage_A5_OpTable:
-	.long PanelOp_Nop                             ; FCFA4C  [ 0]
-	.long ToneEditField_A5_Fitting                ; FCFA50  [ 1]
-	.long ToneEditField_A5_Muting                 ; FCFA54  [ 2]
-	.long ToneEditField_A5_KeyShift               ; FCFA58  [ 3]
-	.long ToneEditField_A5_Detune                 ; FCFA5C  [ 4]
-	.long ToneEditField_A5_ResoScale              ; FCFA60  [ 5]
-	.long ToneEditPage_ToggleRowFocus_Call                              ; FCFA64  [ 6]
-	.long PanelOp_Nop                             ; FCFA68  [ 7]
-	.long ToneEditPage_A5_Op8                              ; FCFA6C  [ 8]
-	.long ToneEditPage_A5_Op9                              ; FCFA70  [ 9]
-	.long ToneEditPage_A5_Op10                              ; FCFA74  [10]
-	.long ToneEditPage_A5_Op11                              ; FCFA78  [11]
-	.long ToneEditPage_A5_Op12                              ; FCFA7C  [12]
-	.long PanelOp_Nop                             ; FCFA80  [13]
-	.long PanelOp_Nop                             ; FCFA84  [14]
-	.long ToneEditPage_A5_Op15                              ; FCFA88  [15]
-	.long ToneEditPage_A5_Op16                              ; FCFA8C  [16]
-	.long 0x00000000                              ; FCFA90  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditField_A5_Fitting
+	on_key	KEY_SoftKeyCol3,	ToneEditField_A5_Muting
+	on_key	KEY_SoftKeyCol4,	ToneEditField_A5_KeyShift
+	on_key	KEY_SoftKeyCol5,	ToneEditField_A5_Detune
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A5_ResoScale
+	on_key	KEY_SoftKeyCol7,	ToneEditPage_ToggleRowFocus_Call
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A5_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A5_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A5_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A5_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A5_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A5_Op15
+	on_key	KEY_Page,		ToneEditPage_A5_Op16
+	fieldops_end
 
 ; ToneEditPage_A6_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A6_KeyDispatch at 0xFD3F1A.
 ToneEditPage_A6_OpTable:
-	.long PanelOp_Nop                             ; FCFA94  [ 0]
-	.long ToneEditField_A6_FittingTouchDepth      ; FCFA98  [ 1]
-	.long ToneEditField_A6_MutingTouchDepth       ; FCFA9C  [ 2]
-	.long PanelOp_Nop                             ; FCFAA0  [ 3]
-	.long ToneEditField_A6_SubGainTouchDepth      ; FCFAA4  [ 4]
-	.long ToneEditField_A6_SubGain                ; FCFAA8  [ 5]
-	.long ToneEditPage_ToggleRowFocus_Call_2                              ; FCFAAC  [ 6]
-	.long PanelOp_Nop                             ; FCFAB0  [ 7]
-	.long ToneEditPage_A6_Op8                              ; FCFAB4  [ 8]
-	.long ToneEditPage_A6_Op9                              ; FCFAB8  [ 9]
-	.long ToneEditPage_A6_Op10                              ; FCFABC  [10]
-	.long ToneEditPage_A6_Op11                              ; FCFAC0  [11]
-	.long ToneEditPage_A6_Op12                              ; FCFAC4  [12]
-	.long PanelOp_Nop                             ; FCFAC8  [13]
-	.long PanelOp_Nop                             ; FCFACC  [14]
-	.long ToneEditPage_A6_Op15                              ; FCFAD0  [15]
-	.long ToneEditPage_A6_Op16                              ; FCFAD4  [16]
-	.long 0x00000000                              ; FCFAD8  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditField_A6_FittingTouchDepth
+	on_key	KEY_SoftKeyCol3,	ToneEditField_A6_MutingTouchDepth
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	ToneEditField_A6_SubGainTouchDepth
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A6_SubGain
+	on_key	KEY_SoftKeyCol7,	ToneEditPage_ToggleRowFocus_Call_2
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A6_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A6_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A6_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A6_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A6_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A6_Op15
+	on_key	KEY_Page,		ToneEditPage_A6_Op16
+	fieldops_end
 
 ; ToneEditPage_A7_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A7_KeyDispatch at 0xFD3F6B.
 ToneEditPage_A7_OpTable:
-	.long PanelOp_Nop                             ; FCFADC  [ 0]
-	.long ToneEditField_A7_ResoMode               ; FCFAE0  [ 1]
-	.long ToneEditField_A7_MutingSlope            ; FCFAE4  [ 2]
-	.long ToneEditField_A7_KeyFollowLow           ; FCFAE8  [ 3]
-	.long ToneEditField_A7_KeyFollowBreak         ; FCFAEC  [ 4]
-	.long ToneEditField_A7_KeyFollowHigh          ; FCFAF0  [ 5]
-	.long ToneEditPage_ToggleRowFocus_Call_3                              ; FCFAF4  [ 6]
-	.long PanelOp_Nop                             ; FCFAF8  [ 7]
-	.long ToneEditPage_A7_Op8                              ; FCFAFC  [ 8]
-	.long ToneEditPage_A7_Op9                              ; FCFB00  [ 9]
-	.long ToneEditPage_A7_Op10                              ; FCFB04  [10]
-	.long ToneEditPage_A7_Op11                              ; FCFB08  [11]
-	.long ToneEditPage_A7_Op12                              ; FCFB0C  [12]
-	.long PanelOp_Nop                             ; FCFB10  [13]
-	.long PanelOp_Nop                             ; FCFB14  [14]
-	.long ToneEditPage_A7_Op15                              ; FCFB18  [15]
-	.long ToneEditPage_A7_Op16                              ; FCFB1C  [16]
-	.long 0x00000000                              ; FCFB20  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditField_A7_ResoMode
+	on_key	KEY_SoftKeyCol3,	ToneEditField_A7_MutingSlope
+	on_key	KEY_SoftKeyCol4,	ToneEditField_A7_KeyFollowLow
+	on_key	KEY_SoftKeyCol5,	ToneEditField_A7_KeyFollowBreak
+	on_key	KEY_SoftKeyCol6,	ToneEditField_A7_KeyFollowHigh
+	on_key	KEY_SoftKeyCol7,	ToneEditPage_ToggleRowFocus_Call_3
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		ToneEditPage_A7_Op8
+	on_key	KEY_LcdRow2,		ToneEditPage_A7_Op9
+	on_key	KEY_LcdRow3,		ToneEditPage_A7_Op10
+	on_key	KEY_LcdRow4,		ToneEditPage_A7_Op11
+	on_key	KEY_LcdRow5,		ToneEditPage_A7_Op12
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A7_Op15
+	on_key	KEY_Page,		ToneEditPage_A7_Op16
+	fieldops_end
 
 ; ToneEditPage_A8_OpTable -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ToneEditPage_A8_KeyDispatch at 0xFD3FBC.
 ToneEditPage_A8_OpTable:
-	.long PanelOp_Nop                             ; FCFB24  [ 0]
-	.long ToneEditPage_A8_Op1                              ; FCFB28  [ 1]
-	.long ToneEditPage_A8_Op2                              ; FCFB2C  [ 2]
-	.long ToneEditPage_A8_Op3                              ; FCFB30  [ 3]
-	.long ToneEditPage_A8_Op4                              ; FCFB34  [ 4]
-	.long ToneEditPage_A8_Op5                              ; FCFB38  [ 5]
-	.long ToneEditPage_A8_Op6                              ; FCFB3C  [ 6]
-	.long ToneEditPage_A8_Op7                              ; FCFB40  [ 7]
-	.long PanelOp_Nop                             ; FCFB44  [ 8]
-	.long PanelOp_Nop                             ; FCFB48  [ 9]
-	.long PanelOp_Nop                             ; FCFB4C  [10]
-	.long PanelOp_Nop                             ; FCFB50  [11]
-	.long PanelOp_Nop                             ; FCFB54  [12]
-	.long PanelOp_Nop                             ; FCFB58  [13]
-	.long PanelOp_Nop                             ; FCFB5C  [14]
-	.long ToneEditPage_A8_Op15                              ; FCFB60  [15]
-	.long PanelOp_Nop                             ; FCFB64  [16]
-	.long 0x00000000                              ; FCFB68  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	ToneEditPage_A8_Op1
+	on_key	KEY_SoftKeyCol3,	ToneEditPage_A8_Op2
+	on_key	KEY_SoftKeyCol4,	ToneEditPage_A8_Op3
+	on_key	KEY_SoftKeyCol5,	ToneEditPage_A8_Op4
+	on_key	KEY_SoftKeyCol6,	ToneEditPage_A8_Op5
+	on_key	KEY_SoftKeyCol7,	ToneEditPage_A8_Op6
+	on_key	KEY_SoftKeyCol8,	ToneEditPage_A8_Op7
+	on_key	KEY_LcdRow1,		PanelOp_Nop
+	on_key	KEY_LcdRow2,		PanelOp_Nop
+	on_key	KEY_LcdRow3,		PanelOp_Nop
+	on_key	KEY_LcdRow4,		PanelOp_Nop
+	on_key	KEY_LcdRow5,		PanelOp_Nop
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ToneEditPage_A8_Op15
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCFB6C -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditMemoryWrite (prom_b) at 0xF0A993.
 PanelOpTable_FCFB6C:
-	.long PanelOp_Nop                             ; FCFB6C  [ 0]
-	.long PanelOp_Nop                             ; FCFB70  [ 1]
-	.long PanelOp_Nop                             ; FCFB74  [ 2]
-	.long PanelOp_Nop                             ; FCFB78  [ 3]
-	.long PanelOp_Nop                             ; FCFB7C  [ 4]
-	.long PanelOp_Nop                             ; FCFB80  [ 5]
-	.long PanelOp_Nop                             ; FCFB84  [ 6]
-	.long PanelOp_Nop                             ; FCFB88  [ 7]
-	.long LcdKeyRow1_SoundEditMemoryWrite                              ; FCFB8C  [ 8] prom_b LcdKeyRow1_SoundEditMemoryWrite
-	.long PanelOp_Nop                             ; FCFB90  [ 9]
-	.long LcdKeyRow3_SoundEditMemoryWrite                              ; FCFB94  [10] prom_b LcdKeyRow3_SoundEditMemoryWrite
-	.long LcdKeyRow4_SoundEditMemoryWrite                              ; FCFB98  [11] prom_b LcdKeyRow4_SoundEditMemoryWrite
-	.long LcdKeyRow5_SoundEditMemoryWrite                              ; FCFB9C  [12] prom_b LcdKeyRow5_SoundEditMemoryWrite
-	.long PanelOp_Nop                             ; FCFBA0  [13]
-	.long PanelOp_Nop                             ; FCFBA4  [14]
-	.long ExitKey_SoundEditMemoryWrite                              ; FCFBA8  [15] prom_b ExitKey_SoundEditMemoryWrite
-	.long PanelOp_Nop                             ; FCFBAC  [16]
-	.long 0x00000000                              ; FCFBB0  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol3,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditMemoryWrite	; prom_b LcdKeyRow1_SoundEditMemoryWrite
+	on_key	KEY_LcdRow2,		PanelOp_Nop
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditMemoryWrite	; prom_b LcdKeyRow3_SoundEditMemoryWrite
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditMemoryWrite	; prom_b LcdKeyRow4_SoundEditMemoryWrite
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditMemoryWrite	; prom_b LcdKeyRow5_SoundEditMemoryWrite
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditMemoryWrite	; prom_b ExitKey_SoundEditMemoryWrite
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCFBB4 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditNaming (prom_b) at 0xF0A9EC.
 PanelOpTable_FCFBB4:
-	.long SoftKeyCol1_SoundEditNaming                              ; FCFBB4  [ 0] prom_b SoftKeyCol1_SoundEditNaming
-	.long SoftKeyCol2_SoundEditNaming                              ; FCFBB8  [ 1] prom_b SoftKeyCol2_SoundEditNaming
-	.long SoftKeyCol3_SoundEditNaming                              ; FCFBBC  [ 2] prom_b SoftKeyCol3_SoundEditNaming
-	.long SoftKeyCol4_SoundEditNaming                              ; FCFBC0  [ 3] prom_b SoftKeyCol4_SoundEditNaming
-	.long SoftKeyCol5_SoundEditNaming                              ; FCFBC4  [ 4] prom_b SoftKeyCol5_SoundEditNaming
-	.long SoftKeyCol6_SoundEditNaming                              ; FCFBC8  [ 5] prom_b SoftKeyCol6_SoundEditNaming
-	.long SoftKeyCol7_SoundEditNaming                              ; FCFBCC  [ 6] prom_b SoftKeyCol7_SoundEditNaming
-	.long SoftKeyCol8_SoundEditNaming                              ; FCFBD0  [ 7] prom_b SoftKeyCol8_SoundEditNaming
-	.long LcdKeyRow1_SoundEditNaming                              ; FCFBD4  [ 8] prom_b LcdKeyRow1_SoundEditNaming
-	.long LcdKeyRow2_SoundEditNaming                              ; FCFBD8  [ 9] prom_b LcdKeyRow2_SoundEditNaming
-	.long PanelOp_Nop                             ; FCFBDC  [10]
-	.long PanelOp_Nop                             ; FCFBE0  [11]
-	.long PanelOp_Nop                             ; FCFBE4  [12]
-	.long PanelOp_Nop                             ; FCFBE8  [13]
-	.long PanelOp_Nop                             ; FCFBEC  [14]
-	.long ExitKey_SoundEditNaming                              ; FCFBF0  [15] prom_b ExitKey_SoundEditNaming
-	.long PanelOp_Nop                             ; FCFBF4  [16]
-	.long 0x00000000                              ; FCFBF8  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditNaming	; prom_b SoftKeyCol1_SoundEditNaming
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditNaming	; prom_b SoftKeyCol2_SoundEditNaming
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditNaming	; prom_b SoftKeyCol3_SoundEditNaming
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditNaming	; prom_b SoftKeyCol4_SoundEditNaming
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditNaming	; prom_b SoftKeyCol5_SoundEditNaming
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditNaming	; prom_b SoftKeyCol6_SoundEditNaming
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditNaming	; prom_b SoftKeyCol7_SoundEditNaming
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditNaming	; prom_b SoftKeyCol8_SoundEditNaming
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditNaming	; prom_b LcdKeyRow1_SoundEditNaming
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditNaming	; prom_b LcdKeyRow2_SoundEditNaming
+	on_key	KEY_LcdRow3,		PanelOp_Nop
+	on_key	KEY_LcdRow4,		PanelOp_Nop
+	on_key	KEY_LcdRow5,		PanelOp_Nop
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditNaming	; prom_b ExitKey_SoundEditNaming
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCFBFC -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditDigitalEffect (prom_b) at 0xF0AA3D; ScreenButton_SoundEditDigitalEffectFromMenu (prom_b) at 0xF0AA8E.
 PanelOpTable_FCFBFC:
-	.long SoftKeyCol1_SoundEditDigitalEffect                              ; FCFBFC  [ 0] prom_b SoftKeyCol1_SoundEditDigitalEffect
-	.long SoftKeyCol2_SoundEditDigitalEffect                              ; FCFC00  [ 1] prom_b SoftKeyCol2_SoundEditDigitalEffect
-	.long SoftKeyCol3_SoundEditDigitalEffect                              ; FCFC04  [ 2] prom_b SoftKeyCol3_SoundEditDigitalEffect
-	.long SoftKeyCol4_SoundEditDigitalEffect                              ; FCFC08  [ 3] prom_b SoftKeyCol4_SoundEditDigitalEffect
-	.long SoftKeyCol5_SoundEditDigitalEffect                              ; FCFC0C  [ 4] prom_b SoftKeyCol5_SoundEditDigitalEffect
-	.long SoftKeyCol6_SoundEditDigitalEffect                              ; FCFC10  [ 5] prom_b SoftKeyCol6_SoundEditDigitalEffect
-	.long SoftKeyCol7_SoundEditDigitalEffect                              ; FCFC14  [ 6] prom_b SoftKeyCol7_SoundEditDigitalEffect
-	.long SoftKeyCol8_SoundEditDigitalEffect                              ; FCFC18  [ 7] prom_b SoftKeyCol8_SoundEditDigitalEffect
-	.long PanelOp_Nop                             ; FCFC1C  [ 8]
-	.long LcdKeyRow2_SoundEditDigitalEffect                              ; FCFC20  [ 9] prom_b LcdKeyRow2_SoundEditDigitalEffect
-	.long LcdKeyRow3_SoundEditDigitalEffect                              ; FCFC24  [10] prom_b LcdKeyRow3_SoundEditDigitalEffect
-	.long PanelOp_Nop                             ; FCFC28  [11]
-	.long PanelOp_Nop                             ; FCFC2C  [12]
-	.long PanelOp_Nop                             ; FCFC30  [13]
-	.long PanelOp_Nop                             ; FCFC34  [14]
-	.long ExitKey_SoundEditDigitalEffect                              ; FCFC38  [15] prom_b ExitKey_SoundEditDigitalEffect
-	.long PanelOp_Nop                             ; FCFC3C  [16]
-	.long 0x00000000                              ; FCFC40  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditDigitalEffect	; prom_b SoftKeyCol1_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditDigitalEffect	; prom_b SoftKeyCol2_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditDigitalEffect	; prom_b SoftKeyCol3_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditDigitalEffect	; prom_b SoftKeyCol4_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SoundEditDigitalEffect	; prom_b SoftKeyCol5_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditDigitalEffect	; prom_b SoftKeyCol6_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SoundEditDigitalEffect	; prom_b SoftKeyCol7_SoundEditDigitalEffect
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SoundEditDigitalEffect	; prom_b SoftKeyCol8_SoundEditDigitalEffect
+	on_key	KEY_LcdRow1,		PanelOp_Nop
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditDigitalEffect	; prom_b LcdKeyRow2_SoundEditDigitalEffect
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditDigitalEffect	; prom_b LcdKeyRow3_SoundEditDigitalEffect
+	on_key	KEY_LcdRow4,		PanelOp_Nop
+	on_key	KEY_LcdRow5,		PanelOp_Nop
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditDigitalEffect	; prom_b ExitKey_SoundEditDigitalEffect
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCFC44 -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditCopy (prom_b) at 0xF0A93B.
 PanelOpTable_FCFC44:
-	.long SoftKeyCol1_SoundEditCopy                              ; FCFC44  [ 0] prom_b SoftKeyCol1_SoundEditCopy
-	.long SoftKeyCol2_SoundEditCopy                              ; FCFC48  [ 1] prom_b SoftKeyCol2_SoundEditCopy
-	.long SoftKeyCol3_SoundEditCopy                              ; FCFC4C  [ 2] prom_b SoftKeyCol3_SoundEditCopy
-	.long SoftKeyCol4_SoundEditCopy                              ; FCFC50  [ 3] prom_b SoftKeyCol4_SoundEditCopy
-	.long PanelOp_Nop                             ; FCFC54  [ 4]
-	.long SoftKeyCol6_SoundEditCopy                              ; FCFC58  [ 5] prom_b SoftKeyCol6_SoundEditCopy
-	.long PanelOp_Nop                             ; FCFC5C  [ 6]
-	.long PanelOp_Nop                             ; FCFC60  [ 7]
-	.long PanelOp_Nop                             ; FCFC64  [ 8]
-	.long PanelOp_Nop                             ; FCFC68  [ 9]
-	.long PanelOp_Nop                             ; FCFC6C  [10]
-	.long LcdKeyRow4_SoundEditCopy                              ; FCFC70  [11] prom_b LcdKeyRow4_SoundEditCopy
-	.long PanelOp_Nop                             ; FCFC74  [12]
-	.long PanelOp_Nop                             ; FCFC78  [13]
-	.long PanelOp_Nop                             ; FCFC7C  [14]
-	.long ExitKey_SoundEditCopy                              ; FCFC80  [15] prom_b ExitKey_SoundEditCopy
-	.long PanelOp_Nop                             ; FCFC84  [16]
-	.long 0x00000000                              ; FCFC88  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SoundEditCopy	; prom_b SoftKeyCol1_SoundEditCopy
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditCopy	; prom_b SoftKeyCol2_SoundEditCopy
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditCopy	; prom_b SoftKeyCol3_SoundEditCopy
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditCopy	; prom_b SoftKeyCol4_SoundEditCopy
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SoundEditCopy	; prom_b SoftKeyCol6_SoundEditCopy
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		PanelOp_Nop
+	on_key	KEY_LcdRow2,		PanelOp_Nop
+	on_key	KEY_LcdRow3,		PanelOp_Nop
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditCopy	; prom_b LcdKeyRow4_SoundEditCopy
+	on_key	KEY_LcdRow5,		PanelOp_Nop
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditCopy	; prom_b ExitKey_SoundEditCopy
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; PanelOpTable_FCFC8C -- 17 handler addresses + the zero word (72 bytes), one per
 ; panel operation 0..16; see the block header for the reader shape.
 ; Read by: ScreenButton_SoundEditDrumMenu (prom_b) at 0xF0AB26.
 PanelOpTable_FCFC8C:
-	.long PanelOp_Nop                             ; FCFC8C  [ 0]
-	.long SoftKeyCol2_SoundEditDrumMenu                              ; FCFC90  [ 1] prom_b SoftKeyCol2_SoundEditDrumMenu
-	.long SoftKeyCol3_SoundEditDrumMenu                              ; FCFC94  [ 2] prom_b SoftKeyCol3_SoundEditDrumMenu
-	.long SoftKeyCol4_SoundEditDrumMenu                              ; FCFC98  [ 3] prom_b SoftKeyCol4_SoundEditDrumMenu
-	.long PanelOp_Nop                             ; FCFC9C  [ 4]
-	.long PanelOp_Nop                             ; FCFCA0  [ 5]
-	.long PanelOp_Nop                             ; FCFCA4  [ 6]
-	.long PanelOp_Nop                             ; FCFCA8  [ 7]
-	.long LcdKeyRow1_SoundEditDrumMenu                              ; FCFCAC  [ 8] prom_b LcdKeyRow1_SoundEditDrumMenu
-	.long LcdKeyRow2_SoundEditDrumMenu                              ; FCFCB0  [ 9] prom_b LcdKeyRow2_SoundEditDrumMenu
-	.long LcdKeyRow3_SoundEditDrumMenu                              ; FCFCB4  [10] prom_b LcdKeyRow3_SoundEditDrumMenu
-	.long LcdKeyRow4_SoundEditDrumMenu                              ; FCFCB8  [11] prom_b LcdKeyRow4_SoundEditDrumMenu
-	.long LcdKeyRow5_SoundEditDrumMenu                              ; FCFCBC  [12] prom_b LcdKeyRow5_SoundEditDrumMenu
-	.long PanelOp_Nop                             ; FCFCC0  [13]
-	.long PanelOp_Nop                             ; FCFCC4  [14]
-	.long ExitKey_SoundEditDrumMenu                              ; FCFCC8  [15] prom_b ExitKey_SoundEditDrumMenu
-	.long PanelOp_Nop                             ; FCFCCC  [16]
-	.long 0x00000000                              ; FCFCD0  [17] zero
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SoundEditDrumMenu	; prom_b SoftKeyCol2_SoundEditDrumMenu
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SoundEditDrumMenu	; prom_b SoftKeyCol3_SoundEditDrumMenu
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SoundEditDrumMenu	; prom_b SoftKeyCol4_SoundEditDrumMenu
+	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol6,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol7,	PanelOp_Nop
+	on_key	KEY_SoftKeyCol8,	PanelOp_Nop
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundEditDrumMenu	; prom_b LcdKeyRow1_SoundEditDrumMenu
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SoundEditDrumMenu	; prom_b LcdKeyRow2_SoundEditDrumMenu
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SoundEditDrumMenu	; prom_b LcdKeyRow3_SoundEditDrumMenu
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundEditDrumMenu	; prom_b LcdKeyRow4_SoundEditDrumMenu
+	on_key	KEY_LcdRow5,		LcdKeyRow5_SoundEditDrumMenu	; prom_b LcdKeyRow5_SoundEditDrumMenu
+	on_key	KEY_MinusPlus,		PanelOp_Nop
+	on_key	KEY_Code0E,		PanelOp_Nop
+	on_key	KEY_Exit,		ExitKey_SoundEditDrumMenu	; prom_b ExitKey_SoundEditDrumMenu
+	on_key	KEY_Page,		PanelOp_Nop
+	fieldops_end
 
 ; IndexMap_FCFCD4 -- 4 bytes, a byte-to-byte map (values 0x00..0x09).
 ; Read by: SoundEditCopy_ResolveSelectedSound (prom_b) at 0xF0C2AF: SoundEditCopy_ResolveSelectedSound (prom_b): A = this[v], v from call 0xFD6C7B(3, &v).
@@ -14691,10 +14729,10 @@ Var27A3_SetSlot:
 	jr c, .LFD6B44                                       ; FD6B38  67 0a
 	cp h, 0x04:i3                                          ; FD6B3A  ce dc
 	jr ugt, .LFD6B44                                     ; FD6B3C  6b 06
-	ld (0x27a3:16), h                                   ; FD6B3E  f1 a3 27 46
+	ld (ToneEdit_TouchCurveSlot:16), h                                   ; FD6B3E  f1 a3 27 46
 	jr .LFD6B49                                          ; FD6B42  68 05
 .LFD6B44:
-	ld (0x27a3:16), 0x01                                 ; FD6B44  f1 a3 27 00 01
+	ld (ToneEdit_TouchCurveSlot:16), 0x01                                 ; FD6B44  f1 a3 27 00 01
 .LFD6B49:
 	popw hl                                              ; FD6B49  4b
 	unlk XIZ                                             ; FD6B4A  ee 0d
@@ -14706,16 +14744,16 @@ Var27A3_GetValidSlot:
 	pushw hl                                             ; FD6B51  2b
 	push XIX                                             ; FD6B52  3c
 	ld XIX,(XIZ+0x08)                                    ; FD6B53  ae 08 24
-	cp	(0x27a3:16), 0x01                            ; FD6B56  c1 a3 27 3f 01
+	cp	(ToneEdit_TouchCurveSlot:16), 0x01                            ; FD6B56  c1 a3 27 3f 01
 	jr c, .LFD6B6C                                       ; FD6B5B  67 0f
-	cp	(0x27a3:16), 0x04                            ; FD6B5D  c1 a3 27 3f 04
+	cp	(ToneEdit_TouchCurveSlot:16), 0x04                            ; FD6B5D  c1 a3 27 3f 04
 	jr ugt, .LFD6B6C                                     ; FD6B62  6b 08
-	ld c, (0x27a3:16)                                   ; FD6B64  c1 a3 27 23
+	ld c, (ToneEdit_TouchCurveSlot:16)                                   ; FD6B64  c1 a3 27 23
 	ld (XIX),C                                           ; FD6B68  b4 43
 	jr .LFD6B74                                          ; FD6B6A  68 08
 .LFD6B6C:
 	ld (XIX),0x01                                        ; FD6B6C  b4 00 01
-	ld (0x27a3:16), 0x01                                 ; FD6B6F  f1 a3 27 00 01
+	ld (ToneEdit_TouchCurveSlot:16), 0x01                                 ; FD6B6F  f1 a3 27 00 01
 .LFD6B74:
 	ld C,(XIX)                                           ; FD6B74  84 23
 	extz BC                                              ; FD6B76  d9 12
@@ -14742,7 +14780,7 @@ Var27A3_GetValidSlot:
 	ld (XIX),0x01                                        ; FD6B9A  b4 00 01
 .LFD6B9D:
 	ld C,(XIX)                                           ; FD6B9D  84 23
-	ld (0x27a3:16), c                                   ; FD6B9F  f1 a3 27 43
+	ld (ToneEdit_TouchCurveSlot:16), c                                   ; FD6B9F  f1 a3 27 43
 .LFD6BA3:
 	pop XIX                                              ; FD6BA3  5c
 	popw hl                                              ; FD6BA4  4b
@@ -16512,7 +16550,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD77FB  ce 8b
 	extz BC                                              ; FD77FD  d9 12
 	extz XBC                                             ; FD77FF  e9 12
-	ld (XBC+0x2300),D                                    ; FD7801  f3 e5 00 23 44
+	ld (XBC+SoundEditText_Slot2),D                                    ; FD7801  f3 e5 00 23 44
 	inc 1,H                                              ; FD7806  ce 61
 .LFD7808:
 	cp H,L                                               ; FD7808  cf f6
@@ -16532,7 +16570,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD7820  ce 8b
 	extz BC                                              ; FD7822  d9 12
 	extz XBC                                             ; FD7824  e9 12
-	ld (XBC+0x2310),D                                    ; FD7826  f3 e5 10 23 44
+	ld (XBC+SoundEditText_Slot3),D                                    ; FD7826  f3 e5 10 23 44
 	inc 1,H                                              ; FD782B  ce 61
 .LFD782D:
 	cp H,L                                               ; FD782D  cf f6
@@ -16552,7 +16590,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD7845  ce 8b
 	extz BC                                              ; FD7847  d9 12
 	extz XBC                                             ; FD7849  e9 12
-	ld (XBC+0x2320),D                                    ; FD784B  f3 e5 20 23 44
+	ld (XBC+SoundEditText_Slot4),D                                    ; FD784B  f3 e5 20 23 44
 	inc 1,H                                              ; FD7850  ce 61
 .LFD7852:
 	cp H,L                                               ; FD7852  cf f6
@@ -16603,7 +16641,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD789A  ce 8b
 	extz BC                                              ; FD789C  d9 12
 	extz XBC                                             ; FD789E  e9 12
-	ld D,(XBC+0x2300)                                    ; FD78A0  c3 e5 00 23 24
+	ld D,(XBC+SoundEditText_Slot2)                                    ; FD78A0  c3 e5 00 23 24
 	ld C,H                                               ; FD78A5  ce 8b
 	extz BC                                              ; FD78A7  d9 12
 	extz XBC                                             ; FD78A9  e9 12
@@ -16623,7 +16661,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD78BF  ce 8b
 	extz BC                                              ; FD78C1  d9 12
 	extz XBC                                             ; FD78C3  e9 12
-	ld D,(XBC+0x2310)                                    ; FD78C5  c3 e5 10 23 24
+	ld D,(XBC+SoundEditText_Slot3)                                    ; FD78C5  c3 e5 10 23 24
 	ld C,H                                               ; FD78CA  ce 8b
 	extz BC                                              ; FD78CC  d9 12
 	extz XBC                                             ; FD78CE  e9 12
@@ -16643,7 +16681,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD78E4  ce 8b
 	extz BC                                              ; FD78E6  d9 12
 	extz XBC                                             ; FD78E8  e9 12
-	ld D,(XBC+0x2320)                                    ; FD78EA  c3 e5 20 23 24
+	ld D,(XBC+SoundEditText_Slot4)                                    ; FD78EA  c3 e5 20 23 24
 	ld C,H                                               ; FD78EF  ce 8b
 	extz BC                                              ; FD78F1  d9 12
 	extz XBC                                             ; FD78F3  e9 12
@@ -22614,7 +22652,7 @@ Arr2808_Set1:
 	dec 1,BC                                             ; FDA867  d9 69
 	extz XBC                                             ; FDA869  e9 12
 	ld A,(XIZ+0x0a)                                      ; FDA86B  8e 0a 21
-	ld (XBC+0x2808),A                                    ; FDA86E  f3 e5 08 28 41
+	ld (XBC+ToneEdit_LayerResonator),A                                    ; FDA86E  f3 e5 08 28 41
 	unlk XIZ                                             ; FDA873  ee 0d
 	ret                                                  ; FDA875  0e
 ; ---------------------------------------------------------------------
@@ -22636,7 +22674,7 @@ Arr2808_Get1:
 	extz BC                                              ; FDA87D  d9 12
 	dec 1,BC                                             ; FDA87F  d9 69
 	extz XBC                                             ; FDA881  e9 12
-	ld A,(XBC+0x2808)                                    ; FDA883  c3 e5 08 28 21
+	ld A,(XBC+ToneEdit_LayerResonator)                                    ; FDA883  c3 e5 08 28 21
 	ld XBC,(XIZ+0x0a)                                    ; FDA888  ae 0a 21
 	ld (XBC),A                                           ; FDA88B  b1 41
 	unlk XIZ                                             ; FDA88D  ee 0d

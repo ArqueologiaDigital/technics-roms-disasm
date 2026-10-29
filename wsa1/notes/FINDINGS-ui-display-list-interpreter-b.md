@@ -313,3 +313,20 @@ immediate in converted code, a framed neighbour's own `(pointer, width, mask)`
 declaration, or an already-framed list start the tiling has to close onto.
 `--selftest` asserts all 64 of those facts against the ROM. prom_b's verbatim
 residue goes 481 B / 16 spans → 375 B / 11 spans.
+
+## UPDATE 2026-10-29: 118 records commented as interpreter A are interpreter B's (lane gui-wsa1)
+
+The record listings in prom_b no longer carry `.byte <op>, <len> ; op NN ... -> handler 0x...` headers. Every
+record is now one macro of `include/wsa1_gui.inc` (`dl_*` for interpreter A, `dlb_*` for B), and the macro
+names the interpreter. To choose the macro, `scripts/tools/gui_display_list_macros.py` had to decide each
+record's interpreter, and it found 118 records whose emitter's comment said A and whose bytes are B's. The rules:
+
+- **audit, 12 records**: this note's own length audit, walking from the call sites;
+- **length, 70**: the A reading is impossible and the length is B's single length for that opcode;
+- **adjacent, 26**: a neighbour is B;
+- **geometry, 10**: the A reading lies off the panel.
+
+So the "-- interpreter A" line in the header comment of 19 lists is superseded by the macros under it. Those
+lists are listed in `notes/gui-data-2026-10-29-probes/reattributed-to-interpreter-B.txt`, and the rules are in
+`notes/gui-data-2026-10-29/README.md`, section 2. The findings above are unchanged: they are about the records
+the audit reaches, and the audit agreed with the comments on every record except those 12.

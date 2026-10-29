@@ -246,7 +246,7 @@ MidiIn_SystemSubTable:
 MidiIn_SongPosition:   ; entry: MidiIn_SystemSubTable[2]
 	ld wa, (MidiIn_MsgData1:16)                          ; FA61A4  d1 41 19 20   ld WA,(0x1941)
 	ld	(MidiIn_SongPositionLo:8), a                               ; FA61A8  f0 a4 41   ld (0xa4),A
-	bit	2, (0x7f34:16)                        ; FA61AB  f1 34 7f ca   bit 2,(0x7f34)
+	bit	2, (MidiFilter_Realtime:16)                        ; FA61AB  f1 34 7f ca   bit 2,(0x7f34)
 	jr z, .LFA61B4                                ; FA61AF  66 03
 	set 0x07,W                                    ; FA61B1  c8 31 07
 .LFA61B4:
@@ -2303,7 +2303,7 @@ MidiOut_Param_Ignore:   ; entry: MidiOut_ParamNumberTable[64-111,113-128,130-151
 MidiOut_ParamGate_Part0:   ; entry: MidiOut_ParamNumberTable[0]
 	bit	7, (0x60f007:24)                      ; FA712A  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7137                               ; FA712F  6e 06   jr NZ,0xfa7137
-	bit	6, (0x76af:16)                        ; FA7131  f1 af 76 ce   bit 6,(0x76af)
+	bit	6, (CombiPart_Flags:16)                        ; FA7131  f1 af 76 ce   bit 6,(0x76af)
 	jr nz, .LFA7141                               ; FA7135  6e 0a   jr NZ,0xfa7141
 .LFA7137:
 	ld XIY,MidiOut_ParamClassTable                ; FA7137  45 80 71 fa 00
@@ -2314,7 +2314,7 @@ MidiOut_ParamGate_Part0:   ; entry: MidiOut_ParamNumberTable[0]
 MidiOut_ParamGate_Part1:   ; entry: MidiOut_ParamNumberTable[1]
 	bit	7, (0x60f007:24)                      ; FA7142  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA714F                               ; FA7147  6e 06   jr NZ,0xfa714f
-	bit	6, (0x76ef:16)                        ; FA7149  f1 ef 76 ce   bit 6,(0x76ef)
+	bit	6, (CombiPart_Flags+1*0x40:16)                        ; FA7149  f1 ef 76 ce   bit 6,(0x76ef)
 	jr nz, .LFA7159                               ; FA714D  6e 0a   jr NZ,0xfa7159
 .LFA714F:
 	ld XIY,MidiOut_ParamClassTable                ; FA714F  45 80 71 fa 00
@@ -2325,7 +2325,7 @@ MidiOut_ParamGate_Part1:   ; entry: MidiOut_ParamNumberTable[1]
 MidiOut_ParamGate_Part2:   ; entry: MidiOut_ParamNumberTable[2]
 	bit	7, (0x60f007:24)                      ; FA715A  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7167                               ; FA715F  6e 06   jr NZ,0xfa7167
-	bit	6, (0x772f:16)                        ; FA7161  f1 2f 77 ce   bit 6,(0x772f)
+	bit	6, (CombiPart_Flags+2*0x40:16)                        ; FA7161  f1 2f 77 ce   bit 6,(0x772f)
 	jr nz, .LFA7171                               ; FA7165  6e 0a   jr NZ,0xfa7171
 .LFA7167:
 	ld XIY,MidiOut_ParamClassTable                ; FA7167  45 80 71 fa 00

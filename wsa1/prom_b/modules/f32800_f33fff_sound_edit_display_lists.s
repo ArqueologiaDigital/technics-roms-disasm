@@ -10,18 +10,10 @@
 ; `op < bound`.  Regenerate: python3 notes/gen_prom_b_untouched_pool_module.py
 ; --splice
 ; ------------------------------------------------------------------
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x0A06
-	.ascii "1st"
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x0EDE
-	.ascii "2nd"
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x13B6
-	.ascii "3rd"
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x18B6
-	.ascii "4th"
+	dl_text8x10	x=48, y=64, text="1st"
+	dl_text8x10	x=48, y=95, text="2nd"
+	dl_text8x10	x=48, y=126, text="3rd"
+	dl_text8x10	x=48, y=158, text="4th"
 
 ; --------------------------------------------------------------------------
 ; 0xF3281C-0xF3282B -- 24 bytes, EMITTED AS DATA (not promoted to code).
@@ -70,26 +62,10 @@ DLRecordPtrs_F3281C:
 ; `op < bound`.  Regenerate: python3 notes/gen_prom_b_untouched_pool_module.py
 ; --splice
 ; ------------------------------------------------------------------
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE, recovered from DLRecordPtrs_F3281C's oversized declaration
-	.long Data_F0191A
-	.short 0x0A06
-	.short 0x0003
-	.short 0x000A
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Data_F0191A + 0x1E
-	.short 0x0EDE
-	.short 0x0003
-	.short 0x000A
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Data_F0191A + 0x3C
-	.short 0x13B6
-	.short 0x0003
-	.short 0x000A
-	.byte 0x03, 0x0C	; op 03, 12 bytes -> handler 0xF31ABE
-	.long Data_F0191A + 0x5A
-	.short 0x18B6
-	.short 0x0003
-	.short 0x000A
+	dl_bitmap	bitmap=Data_F0191A, x=48, y=64, w=24, h=10
+	dl_bitmap	bitmap=Data_F0191A + 0x1E, x=48, y=95, w=24, h=10
+	dl_bitmap	bitmap=Data_F0191A + 0x3C, x=48, y=126, w=24, h=10
+	dl_bitmap	bitmap=Data_F0191A + 0x5A, x=48, y=158, w=24, h=10
 
 ; --------------------------------------------------------------------------
 ; Data_F32864 -- 120 bytes, EMITTED AS DATA (not promoted to code).
@@ -121,113 +97,23 @@ Data_F32864:
 ;   ends used:  0xF32918, 0xF3294B, 0xF32987, 0xF32992
 ; ------------------------------------------------------------------
 DL_F328DC:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_KeyOnKeyOffLegato	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x0D4F	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x0C	; +0x04 AND mask
-	.byte 0x02	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_KeyOnKeyOffLegato	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x1277	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x30	; +0x04 AND mask
-	.byte 0x04	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_KeyOnKeyOffLegato	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x174F	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0xC0	; +0x04 AND mask
-	.byte 0x06	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_KeyOnKeyOffLegato	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x1C4F	; +0x0D -> IX
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x0D59	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x1281	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x1759	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x1C59	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DLBoxes_F32A87	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_string	var=ModelingPage_Fields+1, mask=0x03, shift=0, svc=LCDSVC_DrawText8x10, table=DLText_KeyOnKeyOffLegato, width=7, x=56, y=85
+	dlb_string	var=ModelingPage_Fields+1, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x10, table=DLText_KeyOnKeyOffLegato, width=7, x=56, y=118
+	dlb_string	var=ModelingPage_Fields+1, mask=0x30, shift=4, svc=LCDSVC_DrawText8x10, table=DLText_KeyOnKeyOffLegato, width=7, x=56, y=149
+	dlb_string	var=ModelingPage_Fields+1, mask=0xc0, shift=6, svc=LCDSVC_DrawText8x10, table=DLText_KeyOnKeyOffLegato, width=7, x=56, y=181
+	dlb_number	var=ModelingPage_Fields+2, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=85, digits=2
+	dlb_number	var=ModelingPage_Fields+3, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=118, digits=2
+	dlb_number	var=ModelingPage_Fields+4, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=149, digits=2
+	dlb_number	var=ModelingPage_Fields+5, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=181, digits=2
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32A87
 DL_F3294B:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_CtrLRRdm	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x0D52	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0x0C	; +0x04 AND mask
-	.byte 0x02	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_CtrLRRdm	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x127A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0x30	; +0x04 AND mask
-	.byte 0x04	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_CtrLRRdm	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x1752	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0xC0	; +0x04 AND mask
-	.byte 0x06	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_CtrLRRdm	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x1C52	; +0x0D -> IX
+	dlb_string	var=ModelingPage_Fields+11, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=85
+	dlb_string	var=ModelingPage_Fields+11, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=118
+	dlb_string	var=ModelingPage_Fields+11, mask=0x30, shift=4, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=149
+	dlb_string	var=ModelingPage_Fields+11, mask=0xc0, shift=6, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=181
 SoundEditToneLayerPanning_RepaintField_DL2:
 ; ; drawn (start operand) by SoundEditToneLayerPanning_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DLBoxes_F32AAF	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32AAF
 
 ; === COVER-R1 0xF32992-0xF32A7D ===
 ; 0xF32992-0xF32A7C, coverage round 1: 158 of this span's 235 bytes are
@@ -280,14 +166,7 @@ Data_F32992:
 ; on 0xF32A09.  Verify: python3 notes/gen_prom_b_res3xx_spans.py --selftest
 ; ------------------------------------------------------------------
 DL_F329FA:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x80	; +0x04 AND mask
-	.byte 0x07	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_NonLegChord	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x0D4F	; +0x0D -> IX
+	dlb_string	var=ModelingPage_Fields+2, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_NonLegChord, width=7, x=56, y=85
 
 
 ; ------------------------------------------------------------------
@@ -301,30 +180,9 @@ DL_F329FA:
 ; `op < bound`.  Regenerate: python3 notes/gen_prom_b_untouched_pool_module.py
 ; --splice
 ; ------------------------------------------------------------------
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x80	; +0x04 AND mask
-	.byte 0x07	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_NonLegChord	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x1277	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x80	; +0x04 AND mask
-	.byte 0x07	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_NonLegChord	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x174F	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0x80	; +0x04 AND mask
-	.byte 0x07	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_NonLegChord	; +0x07 -> XIY: string table
-	.short 0x0007	; +0x0B -> BC: bytes per entry
-	.short 0x1C4F	; +0x0D -> IX
+	dlb_string	var=ModelingPage_Fields+3, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_NonLegChord, width=7, x=56, y=118
+	dlb_string	var=ModelingPage_Fields+4, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_NonLegChord, width=7, x=56, y=149
+	dlb_string	var=ModelingPage_Fields+5, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_NonLegChord, width=7, x=56, y=181
 
 ; --------------------------------------------------------------------------
 ; Data_F32A36 -- 1 bytes, EMITTED AS DATA (not promoted to code).
@@ -418,11 +276,7 @@ DLText_NonLegChord:
 ; ------------------------------------------------------------------
 SoundEditToneLayerPanning_RepaintField_DL1:
 ; ; drawn (start operand) by SoundEditToneLayerPanning_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x004C
-	.short 0x00AC
-	.short 0x00C8
+	dl_erase_rect	x0=13, y0=76, x1=172, y1=200
 
 ; === COVER-R1 0xF32A87-0xF32AD7 ===
 ; 0xF32A87-0xF32AD6, coverage round 1: 80 of this span's 80 bytes are
@@ -487,44 +341,11 @@ DLBoxes_F32AAF:
 ; ------------------------------------------------------------------
 SoundEditToneLayerKeyLayer_Paint_DL2:
 ; ; drawn (start operand) by SoundEditToneLayerKeyLayer_Paint -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x2292	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x2298	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x229D	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x22A2	; +0x0D -> IX
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F32B3C	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_string	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=80, y=221
+	dlb_string	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=128, y=221
+	dlb_string	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=168, y=221
+	dlb_string	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=208, y=221
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
 
 ; === COVER-R1 0xF32B1E-0xF32B32 ===
 ; 0xF32B1E-0xF32B31, coverage round 1: 9 of this span's 20 bytes are reachable
@@ -565,11 +386,7 @@ Data_F32B1E:
 ;   ends used:  0xF32B3C
 ; ------------------------------------------------------------------
 DL_F32B32:
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0008
-	.short 0x0049
-	.short 0x00FA
-	.short 0x00C5
+	dl_erase_rect	x0=8, y0=73, x1=250, y1=197
 
 ; === COVER-R1 0xF32B3C-0xF32B64 ===
 ; 0xF32B3C-0xF32B63, coverage round 1: 5 of this span's 40 bytes are reachable
@@ -613,40 +430,11 @@ Data_F32B3C:
 ; ------------------------------------------------------------------
 SoundEditToneLayerVelocityLayer_Paint_DL2:
 ; ; drawn (start operand) by SoundEditToneLayerVelocityLayer_Paint -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2291	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2297	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x229D	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x22A2	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F32B3C	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=72, y=221, digits=3
+	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=221, digits=3
+	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=168, y=221, digits=3
+	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=208, y=221, digits=3
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
 
 ; === COVER-R1 0xF32B97-0xF32BAB ===
 ; 0xF32B97-0xF32BAA, coverage round 1: 20 of this span's 20 bytes are
@@ -696,63 +484,13 @@ DLRecordPtrs_F32B97:
 ; ------------------------------------------------------------------
 Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL2:
 ; ; drawn (start operand) by Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x22A6	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x22AC	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x229D	; +0x0D -> IX
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x228D	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2292	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2297	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short ModelingPage_Fields+9	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.long DLText_AttackDecayRelease	; +0x07 -> XIY: string table
-	.short 0x0008	; +0x0B -> BC: bytes per entry
-	.short 0x009D	; +0x0D -> (0x2530)
-	.short 0x003E	; +0x0F -> (0x2532)
+	dlb_number_signed	var=ModelingPage_Fields, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=240, y=221, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=288, y=221, digits=2, signflag=0x00
+	dlb_string	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=168, y=221
+	dlb_number_signed	var=ModelingPage_Fields+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=40, y=221, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=80, y=221, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=221, digits=2, signflag=0x00
+	dlb_string_xy	var=ModelingPage_Fields+9, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_AttackDecayRelease, width=8, x=157, y=62
 
 ; === COVER-R1 0xF32C02-0xF32C2A ===
 ; 0xF32C02-0xF32C29, coverage round 1: 18 of this span's 40 bytes are
@@ -821,102 +559,32 @@ Data_F32C25:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_C0ntr0llerSoundEditDepth:
-	.byte 0x1C, 0x10	; op 1C, 16 bytes -> handler 0xF31A52
-	.short 0x0072
-	.short 0x0005
-	.ascii "C0NTR0LLER"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "SOUND EDIT"
-	.byte 0x06, 0x09	; op 06, 9 bytes -> handler 0xF31A3A
-	.short 0x2067
-	.ascii "DEPTH"
-	.byte 0x06, 0x0C	; op 06, 12 bytes -> handler 0xF31A3A
-	.short 0x214B
-	.ascii "FUNCTION"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x241E
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2451
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2457
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x245C
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B68
-	.byte 0x10	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B8F
-	.byte 0x11	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1108
-	.byte 0x10	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x112F
-	.byte 0x11	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x16D0
-	.byte 0x10	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x16F7
-	.byte 0x11	; character codes below 0x20
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0013
-	.short 0x00CC
-	.short 0x005D
-	.short 0x00E7
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0075
-	.short 0x00CC
-	.short 0x00A4
-	.short 0x00E9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0075
-	.short 0x00DB
-	.short 0x00A4
-	.short 0x00DB
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0076
-	.short 0x00DC
-	.short 0x00A3
-	.short 0x00E8
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0044
-	.short 0x0010
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x24
-	.short 0x000B
-	.byte 0x06, 0x13	; op 06, 19 bytes -> handler 0xF31A3A
-	.short 0x206F
-	.ascii "1st 2nd 3rd 4th"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2461
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2466
-	.byte 0x12	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00B5
-	.short 0x00CC
-	.short 0x0133
-	.short 0x00E9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00B5
-	.short 0x00DB
-	.short 0x0133
-	.short 0x00DB
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x00B6
-	.short 0x00DC
-	.short 0x0132
-	.short 0x00E8
+	dl_text16x16_packed	x=114, y=5, text="C0NTR0LLER"
+	dl_text8x8_packed	x=6, y=7, text="SOUND EDIT"
+	dl_text8x14	x=120, y=207, text="DEPTH"
+	dl_text8x14	x=24, y=213, text="FUNCTION"
+	dl_text8x16	x=48, y=231, text="\022"
+	dl_text8x16	x=136, y=232, text="\022"
+	dl_text8x16	x=184, y=232, text="\022"
+	dl_text8x16	x=224, y=232, text="\022"
+	dl_text8x16	x=0, y=73, text="\020"
+	dl_text8x16	x=312, y=73, text="\021"
+	dl_text8x16	x=0, y=109, text="\020"
+	dl_text8x16	x=312, y=109, text="\021"
+	dl_text8x16	x=0, y=146, text="\020"
+	dl_text8x16	x=312, y=146, text="\021"
+	dl_box_shadow1	x0=19, y0=204, x1=93, y1=231
+	dl_box	x0=117, y0=204, x1=164, y1=233
+	dl_hline	x0=117, y0=219, x1=164, y1=219
+	dl_fill_rect	x0=118, y0=220, x1=163, y1=232
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_value_glyph	glyph=36, x=88, y=0
+	dl_text8x14	x=184, y=207, text="1st 2nd 3rd 4th"
+	dl_text8x16	x=264, y=232, text="\022"
+	dl_text8x16	x=304, y=232, text="\022"
+	dl_box	x0=181, y0=204, x1=307, y1=233
+	dl_hline	x0=181, y0=219, x1=307, y1=219
+	dl_fill_rect	x0=182, y0=220, x1=306, y1=232
 ; DL_1st2nd -- the display list at 0xF32D03.  Its own text records read: "1st
 ;              2nd".
 ; Evidence: the `.ascii` literals printed below this label, which the display-
@@ -925,193 +593,49 @@ DL_C0ntr0llerSoundEditDepth:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_1st2nd:
-	.byte 0x06, 0x0B	; op 06, 11 bytes -> handler 0xF31A3A
-	.short 0x206F
-	.ascii "1st 2nd"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00B5
-	.short 0x00CC
-	.short 0x00F4
-	.short 0x00E9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00B5
-	.short 0x00DB
-	.short 0x00F4
-	.short 0x00DB
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x00B6
-	.short 0x00DC
-	.short 0x00F3
-	.short 0x00E8
+	dl_text8x14	x=184, y=207, text="1st 2nd"
+	dl_box	x0=181, y0=204, x1=244, y1=233
+	dl_hline	x0=181, y0=219, x1=244, y1=219
+	dl_fill_rect	x0=182, y0=220, x1=243, y1=232
 SoundEditController_PaintPage1_DL:
 ; ; drawn (start operand) by SoundEditController_PaintPage1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0B	; op 06, 11 bytes -> handler 0xF31A3A
-	.short 0x0110
-	.ascii "PAGE1/2"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0017
-	.short 0x0099
-	.ascii "1"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0027
-	.short 0x0099
-	.ascii "2"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0037
-	.short 0x0099
-	.ascii "3"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0047
-	.short 0x0099
-	.ascii "4"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0057
-	.short 0x0099
-	.ascii "5"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0067
-	.short 0x0099
-	.ascii "6"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00D1
-	.short 0x0099
-	.ascii "1"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00E1
-	.short 0x0099
-	.ascii "2"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00F1
-	.short 0x0099
-	.ascii "3"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0101
-	.short 0x0099
-	.ascii "4"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0111
-	.short 0x0099
-	.ascii "5"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0121
-	.short 0x0099
-	.ascii "6"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000A
-	.short 0x0043
-	.short 0x007B
-	.short 0x005C
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00C5
-	.short 0x0043
-	.short 0x0136
-	.short 0x005C
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000A
-	.short 0x0067
-	.short 0x007B
-	.short 0x0080
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00C5
-	.short 0x0067
-	.short 0x0136
-	.short 0x0080
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0013
-	.short 0x0095
-	.short 0x0021
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0023
-	.short 0x0095
-	.short 0x0031
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0033
-	.short 0x0095
-	.short 0x0041
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0043
-	.short 0x0095
-	.short 0x0051
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0053
-	.short 0x0095
-	.short 0x0061
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0063
-	.short 0x0095
-	.short 0x0071
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00CD
-	.short 0x0095
-	.short 0x00DB
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00DD
-	.short 0x0095
-	.short 0x00EB
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00ED
-	.short 0x0095
-	.short 0x00FB
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00FD
-	.short 0x0095
-	.short 0x010B
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x010D
-	.short 0x0095
-	.short 0x011B
-	.short 0x00A2
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x011D
-	.short 0x0095
-	.short 0x012B
-	.short 0x00A2
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x49
-	.short 0x1079
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x24
-	.short 0x107D
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x007B
-	.short 0x004F
-	.short 0x0094
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00B3
-	.short 0x004F
-	.short 0x00C5
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x007B
-	.short 0x0073
-	.short 0x0087
-	.short 0x0073
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00BF
-	.short 0x0073
-	.short 0x00C5
-	.short 0x0073
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0094
-	.short 0x004F
-	.short 0x0094
-	.short 0x0068
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00B3
-	.short 0x004F
-	.short 0x00B3
-	.short 0x0068
+	dl_text8x14	x=256, y=6, text="PAGE1/2"
+	dl_text8x8_packed	x=23, y=153, text="1"
+	dl_text8x8_packed	x=39, y=153, text="2"
+	dl_text8x8_packed	x=55, y=153, text="3"
+	dl_text8x8_packed	x=71, y=153, text="4"
+	dl_text8x8_packed	x=87, y=153, text="5"
+	dl_text8x8_packed	x=103, y=153, text="6"
+	dl_text8x8_packed	x=209, y=153, text="1"
+	dl_text8x8_packed	x=225, y=153, text="2"
+	dl_text8x8_packed	x=241, y=153, text="3"
+	dl_text8x8_packed	x=257, y=153, text="4"
+	dl_text8x8_packed	x=273, y=153, text="5"
+	dl_text8x8_packed	x=289, y=153, text="6"
+	dl_box	x0=10, y0=67, x1=123, y1=92
+	dl_box	x0=197, y0=67, x1=310, y1=92
+	dl_box	x0=10, y0=103, x1=123, y1=128
+	dl_box	x0=197, y0=103, x1=310, y1=128
+	dl_box_shadow1	x0=19, y0=149, x1=33, y1=162
+	dl_box_shadow1	x0=35, y0=149, x1=49, y1=162
+	dl_box_shadow1	x0=51, y0=149, x1=65, y1=162
+	dl_box_shadow1	x0=67, y0=149, x1=81, y1=162
+	dl_box_shadow1	x0=83, y0=149, x1=97, y1=162
+	dl_box_shadow1	x0=99, y0=149, x1=113, y1=162
+	dl_box_shadow1	x0=205, y0=149, x1=219, y1=162
+	dl_box_shadow1	x0=221, y0=149, x1=235, y1=162
+	dl_box_shadow1	x0=237, y0=149, x1=251, y1=162
+	dl_box_shadow1	x0=253, y0=149, x1=267, y1=162
+	dl_box_shadow1	x0=269, y0=149, x1=283, y1=162
+	dl_box_shadow1	x0=285, y0=149, x1=299, y1=162
+	dl_value_glyph	glyph=73, x=136, y=105
+	dl_value_glyph	glyph=36, x=168, y=105
+	dl_hline	x0=123, y0=79, x1=148, y1=79
+	dl_hline	x0=179, y0=79, x1=197, y1=79
+	dl_hline	x0=123, y0=115, x1=135, y1=115
+	dl_hline	x0=191, y0=115, x1=197, y1=115
+	dl_vline	x0=148, y0=79, x1=148, y1=104
+	dl_vline	x0=179, y0=79, x1=179, y1=104
 ; DL_Page22AfterTouchCtrlPedal -- the display list at 0xF32E71.  Its own text
 ;                                 records read: "PAGE2/2"; "AFTER TOUCH";
 ;                                 "CTRL PEDAL".
@@ -1121,196 +645,46 @@ SoundEditController_PaintPage1_DL:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_Page22AfterTouchCtrlPedal:
-	.byte 0x06, 0x0B	; op 06, 11 bytes -> handler 0xF31A3A
-	.short 0x0110
-	.ascii "PAGE2/2"
-	.byte 0x07, 0x06	; op 07, 6 bytes -> handler 0xF31A3A
-	.short 0x0557
-	.ascii "__"
-	.byte 0x1C, 0x07	; op 1C, 7 bytes -> handler 0xF31A52
-	.short 0x0001
-	.short 0x0024
-	.byte 0x10	; character codes below 0x20
-	.byte 0x07, 0x06	; op 07, 6 bytes -> handler 0xF31A3A
-	.short 0x0A57
-	.ascii "__"
-	.byte 0x07, 0x06	; op 07, 6 bytes -> handler 0xF31A3A
-	.short 0x0FA7
-	.ascii "__"
-	.byte 0x07, 0x06	; op 07, 6 bytes -> handler 0xF31A3A
-	.short 0x14A7
-	.ascii "__"
-	.byte 0x17, 0x11	; op 17, 17 bytes -> handler 0xF31A52
-	.short 0x000A
-	.short 0x009D
-	.ascii "AFTER TOUCH"
-	.byte 0x07, 0x06	; op 07, 6 bytes -> handler 0xF31A3A
-	.short 0x1A1F
-	.ascii "__"
-	.byte 0x1C, 0x07	; op 1C, 7 bytes -> handler 0xF31A52
-	.short 0x0001
-	.short 0x00B4
-	.byte 0x10	; character codes below 0x20
-	.byte 0x1C, 0x07	; op 1C, 7 bytes -> handler 0xF31A52
-	.short 0x0135
-	.short 0x00B4
-	.byte 0x11	; character codes below 0x20
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x000B
-	.short 0x00C1
-	.ascii "CTRL PEDAL"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x004B
-	.short 0x0023
-	.short 0x00BC
-	.short 0x0036
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x004B
-	.short 0x0043
-	.short 0x012C
-	.short 0x0056
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x004B
-	.short 0x0065
-	.short 0x012C
-	.short 0x0078
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x004B
-	.short 0x0085
-	.short 0x012C
-	.short 0x0098
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x004B
-	.short 0x00A8
-	.short 0x012C
-	.short 0x00BB
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00BC
-	.short 0x0043
-	.short 0x00BC
-	.short 0x0056
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00BC
-	.short 0x0065
-	.short 0x00BC
-	.short 0x0078
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00BC
-	.short 0x0085
-	.short 0x00BC
-	.short 0x0098
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00BC
-	.short 0x00A8
-	.short 0x00BC
-	.short 0x00BB
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x5B
-	.short 0x0553
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x5C
-	.short 0x0A53
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x5D
-	.short 0x0FA3
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x39
-	.short 0x14A3
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x2D
-	.short 0x19F3
+	dl_text8x14	x=256, y=6, text="PAGE2/2"
+	dl_text8x16	x=56, y=34, text="__"
+	dl_text16x16_packed	x=1, y=36, text="\020"
+	dl_text8x16	x=56, y=66, text="__"
+	dl_text8x16	x=56, y=100, text="__"
+	dl_text8x16	x=56, y=132, text="__"
+	dl_text8x8_packed	x=10, y=157, text="AFTER TOUCH"
+	dl_text8x16	x=56, y=167, text="__"
+	dl_text16x16_packed	x=1, y=180, text="\020"
+	dl_text16x16_packed	x=309, y=180, text="\021"
+	dl_text8x8_packed	x=11, y=193, text="CTRL PEDAL"
+	dl_box	x0=75, y0=35, x1=188, y1=54
+	dl_box	x0=75, y0=67, x1=300, y1=86
+	dl_box	x0=75, y0=101, x1=300, y1=120
+	dl_box	x0=75, y0=133, x1=300, y1=152
+	dl_box	x0=75, y0=168, x1=300, y1=187
+	dl_vline	x0=188, y0=67, x1=188, y1=86
+	dl_vline	x0=188, y0=101, x1=188, y1=120
+	dl_vline	x0=188, y0=133, x1=188, y1=152
+	dl_vline	x0=188, y0=168, x1=188, y1=187
+	dl_value_glyph	glyph=91, x=24, y=34
+	dl_value_glyph	glyph=92, x=24, y=66
+	dl_value_glyph	glyph=93, x=24, y=100
+	dl_value_glyph	glyph=57, x=24, y=132
+	dl_value_glyph	glyph=45, x=24, y=166
 DL_F32F43:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0BBA	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x115A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0BD1	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1171	; +0x0D -> IX
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F33394	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short ModelingPage_Fields+14	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F33394 + 0x28	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short ModelingPage_Fields+15	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F33394 + 0x58	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_string	var=ModelingPage_Fields+1, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=16, y=75
+	dlb_string	var=ModelingPage_Fields+2, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=16, y=111
+	dlb_string	var=ModelingPage_Fields+3, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=200, y=75
+	dlb_string	var=ModelingPage_Fields+4, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=200, y=111
+	dlb_rect_entry	var=ModelingPage_Fields, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=Data_F33394
+	dlb_rect_entry	var=ModelingPage_Fields+14, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=Data_F33394 + 0x28
+	dlb_rect_entry	var=ModelingPage_Fields+15, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=Data_F33394 + 0x58
 DL_F32FA0:
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2298	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+12	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerSwitchStateText	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x229F	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+12	; +0x02 source variable, 16-bit address
-	.byte 0x0C	; +0x04 AND mask
-	.byte 0x02	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerSwitchStateText	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x22A3	; +0x0D -> IX
+	dlb_number	var=ModelingPage_Fields+11, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=128, y=221, digits=3
+	dlb_string	var=ModelingPage_Fields+12, mask=0x03, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerSwitchStateText, width=3, x=184, y=221
+	dlb_string	var=ModelingPage_Fields+12, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x10, table=ControllerSwitchStateText, width=3, x=216, y=221
 DL_F32FC8:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+12	; +0x02 source variable, 16-bit address
-	.byte 0x30	; +0x04 AND mask
-	.byte 0x04	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerSwitchStateText	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x22A7	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+12	; +0x02 source variable, 16-bit address
-	.byte 0xC0	; +0x04 AND mask
-	.byte 0x06	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerSwitchStateText	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x22AB	; +0x0D -> IX
+	dlb_string	var=ModelingPage_Fields+12, mask=0x30, shift=4, svc=LCDSVC_DrawText8x10, table=ControllerSwitchStateText, width=3, x=248, y=221
+	dlb_string	var=ModelingPage_Fields+12, mask=0xc0, shift=6, svc=LCDSVC_DrawText8x10, table=ControllerSwitchStateText, width=3, x=280, y=221
 
 ; === COVER-R1 0xF32FE6-0xF33362 ===
 ; 0xF32FE6-0xF33361, coverage round 1: 892 of this span's 892 bytes are
@@ -1442,33 +816,13 @@ ControllerDestinationNames:
 ; ------------------------------------------------------------------
 SoundEditController_RepaintFieldPage1_DL1:
 ; ; drawn (start operand) by SoundEditController_RepaintFieldPage1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x0044
-	.short 0x0079
-	.short 0x005A
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C6
-	.short 0x0044
-	.short 0x0134
-	.short 0x005A
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x0068
-	.short 0x0079
-	.short 0x007E
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C7
-	.short 0x0069
-	.short 0x0134
-	.short 0x007E
+	dl_erase_rect	x0=11, y0=68, x1=121, y1=90
+	dl_erase_rect	x0=198, y0=68, x1=308, y1=90
+	dl_erase_rect	x0=11, y0=104, x1=121, y1=126
+	dl_erase_rect	x0=199, y0=105, x1=308, y1=126
 SoundEditController_RepaintFieldPage1_DL2:
 ; ; drawn (start operand) by SoundEditController_RepaintFieldPage1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0015
-	.short 0x0097
-	.short 0x0129
-	.short 0x00A0
+	dl_erase_rect	x0=21, y0=151, x1=297, y1=160
 
 ; === COVER-R1 0xF33394-0xF3341C ===
 ; 0xF33394-0xF3341B, coverage round 1: 109 of this span's 136 bytes are
@@ -1516,84 +870,16 @@ Data_F33394:
 ;   ends used:  0xF334AE
 ; ------------------------------------------------------------------
 DL_F3341C:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x064A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0B4A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0B58	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x109A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x10A8	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+6	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1B12	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+7	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1B20	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+8	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x159A	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+9	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long ControllerDestinationNames	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x15A8	; +0x0D -> IX
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DLBoxes_F334AE	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_string	var=ModelingPage_Fields+1, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=80, y=40
+	dlb_string	var=ModelingPage_Fields+2, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=80, y=72
+	dlb_string	var=ModelingPage_Fields+3, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=192, y=72
+	dlb_string	var=ModelingPage_Fields+4, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=80, y=106
+	dlb_string	var=ModelingPage_Fields+5, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=192, y=106
+	dlb_string	var=ModelingPage_Fields+6, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=80, y=173
+	dlb_string	var=ModelingPage_Fields+7, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=192, y=173
+	dlb_string	var=ModelingPage_Fields+8, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=80, y=138
+	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=ControllerDestinationNames, width=13, x=192, y=138
+	dlb_rect_entry	var=ModelingPage_Fields, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F334AE
 
 ; === COVER-R1 0xF334AE-0xF334FE ===
 ; 0xF334AE-0xF334FD, coverage round 1: 80 of this span's 80 bytes are
@@ -1650,11 +936,7 @@ DLBoxes_F334AE:
 ; ------------------------------------------------------------------
 SoundEditController_RepaintFieldPage2_DL:
 ; ; drawn (start operand) by SoundEditController_RepaintFieldPage2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x004C
-	.short 0x0024
-	.short 0x012B
-	.short 0x00BA
+	dl_erase_rect	x0=76, y0=36, x1=299, y1=186
 
 ; === COVER-R1 0xF33508-0xF33538 ===
 ; 0xF33508-0xF33537, coverage round 1: 48 of this span's 48 bytes are
@@ -1711,33 +993,9 @@ DLRecordPtrs_F33508:
 ;   ends used:  0xF3356B
 ; ------------------------------------------------------------------
 DL_F33538:
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1C	; +0x06 swi 7 function
-	.long DLText_NoteNamesCm2ToG8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x0020	; +0x0D -> (0x2530)
-	.short 0x00D6	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1C	; +0x06 swi 7 function
-	.long DLTable_ABCDEFGHIJKLMNOPQRSU	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x0058	; +0x0D -> (0x2530)
-	.short 0x00D6	; +0x0F -> (0x2532)
-	.byte 0x07, 0x11	; B op 07, 17 bytes -> handler 0xF31B39 -- string-table readout with two extra words
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x1C	; +0x06 swi 7 function
-	.long 0x000022F0	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0070	; +0x0D -> (0x2530)
-	.short 0x00D6	; +0x0F -> (0x2532)
+	dlb_string_xy	var=ModelingPage_Fields, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DLText_NoteNamesCm2ToG8, width=3, x=32, y=214
+	dlb_string_xy	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=88, y=214
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DiskSave_PasswordEntry, width=13, x=112, y=214
 
 ; === COVER-R1 0xF3356B-0xF33573 ===
 ; 0xF3356B-0xF33572, coverage round 1: 8 of this span's 8 bytes are reachable
@@ -1780,166 +1038,45 @@ Data_F3356B:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_DelayLevelTouchCurveGroupDump:
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0031
-	.short 0x003E
-	.ascii "DELAY"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0059
-	.short 0x003E
-	.ascii "LEVEL"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0083
-	.short 0x003E
-	.ascii "TOUCH"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x00AB
-	.short 0x003E
-	.ascii "CURVE"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x0C30
-	.byte 0x10	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x11F8
-	.byte 0x10	; character codes below 0x20
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x00F7
-	.short 0x00C2
-	.ascii "GROUP DUMP"
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x00F0
-	.short 0x00CF
-	.ascii "ON/OFF"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x011B
-	.short 0x00CF
-	.ascii "GROUP"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x002C
-	.short 0x00D1
-	.ascii "DELAY"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0056
-	.short 0x00D1
-	.ascii "LEVEL"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x007C
-	.short 0x00D1
-	.ascii "TOUCH"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x00A5
-	.short 0x00D1
-	.ascii "CURVE"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21EF
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21F4
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21F9
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21FE
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x237F
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2384
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2389
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x238E
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2438
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x243D
-	.byte 0x12	; character codes below 0x20
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x0038
-	.short 0x00D4
-	.short 0x008A
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00EC
-	.short 0x00CB
-	.short 0x013C
-	.short 0x00E8
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0031
-	.short 0x00DA
-	.short 0x0046
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0059
-	.short 0x00DA
-	.short 0x006E
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0081
-	.short 0x00DA
-	.short 0x0096
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00A9
-	.short 0x00DA
-	.short 0x00BE
-	.short 0x00EE
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x004A
-	.short 0x00D4
-	.short 0x004A
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x006A
-	.short 0x00D4
-	.short 0x006A
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00EC
-	.short 0x00D9
-	.short 0x013C
-	.short 0x00D9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0031
-	.short 0x00E4
-	.short 0x0046
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0059
-	.short 0x00E4
-	.short 0x006E
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0081
-	.short 0x00E4
-	.short 0x0096
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A9
-	.short 0x00E4
-	.short 0x00BE
-	.short 0x00E4
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x002C
-	.short 0x0038
-	.short 0x002C
-	.short 0x008A
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0116
-	.short 0x0043
-	.short 0x0132
-	.short 0x005C
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x00ED
-	.short 0x00DA
-	.short 0x013B
-	.short 0x00E7
+	dl_text8x8_packed	x=49, y=62, text="DELAY"
+	dl_text8x8_packed	x=89, y=62, text="LEVEL"
+	dl_text8x8_packed	x=131, y=62, text="TOUCH"
+	dl_text8x8_packed	x=171, y=62, text="CURVE"
+	dl_text8x14	x=0, y=78, text="\020"
+	dl_text8x14	x=0, y=115, text="\020"
+	dl_text8x8_packed	x=247, y=194, text="GROUP DUMP"
+	dl_text8x8_packed	x=240, y=207, text="ON/OFF"
+	dl_text8x8_packed	x=283, y=207, text="GROUP"
+	dl_text8x8_packed	x=44, y=209, text="DELAY"
+	dl_text8x8_packed	x=86, y=209, text="LEVEL"
+	dl_text8x8_packed	x=124, y=209, text="TOUCH"
+	dl_text8x8_packed	x=165, y=209, text="CURVE"
+	dl_text8x14	x=56, y=217, text="\215"
+	dl_text8x14	x=96, y=217, text="\215"
+	dl_text8x14	x=136, y=217, text="\215"
+	dl_text8x14	x=176, y=217, text="\215"
+	dl_text8x14	x=56, y=227, text="\216"
+	dl_text8x14	x=96, y=227, text="\216"
+	dl_text8x14	x=136, y=227, text="\216"
+	dl_text8x14	x=176, y=227, text="\216"
+	dl_text8x16	x=256, y=231, text="\022"
+	dl_text8x16	x=296, y=231, text="\022"
+	dl_box_shadow1	x0=11, y0=56, x1=212, y1=138
+	dl_box	x0=236, y0=203, x1=316, y1=232
+	dl_box_shadow1	x0=49, y0=218, x1=70, y1=238
+	dl_box_shadow1	x0=89, y0=218, x1=110, y1=238
+	dl_box_shadow1	x0=129, y0=218, x1=150, y1=238
+	dl_box_shadow1	x0=169, y0=218, x1=190, y1=238
+	dl_hline	x0=11, y0=74, x1=212, y1=74
+	dl_hline	x0=11, y0=106, x1=212, y1=106
+	dl_hline	x0=236, y0=217, x1=316, y1=217
+	dl_hline	x0=49, y0=228, x1=70, y1=228
+	dl_hline	x0=89, y0=228, x1=110, y1=228
+	dl_hline	x0=129, y0=228, x1=150, y1=228
+	dl_hline	x0=169, y0=228, x1=190, y1=228
+	dl_vline	x0=44, y0=56, x1=44, y1=138
+	dl_fill_rect	x0=278, y0=67, x1=306, y1=92
+	dl_fill_rect	x0=237, y0=218, x1=315, y1=231
 ; DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2 -- the display list at 0xF336CE.
 ;                                                Its own text records read:
 ;                                                "KEY OFF MODE :"; "TOUCH";
@@ -1951,163 +1088,37 @@ DL_DelayLevelTouchCurveGroupDump:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2:
-	.byte 0x06, 0x13	; op 06, 19 bytes -> handler 0xF31A3A
-	.short 0x1D60
-	.byte 0x10	; character codes below 0x20
-	.ascii "KEY OFF MODE :"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x010B
-	.short 0x00C2
-	.ascii "TOUCH"
-	.byte 0x17, 0x2C	; op 17, 44 bytes -> handler 0xF31A52
-	.short 0x0009
-	.short 0x00CF
-	.ascii "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x00FE
-	.short 0x00CF
-	.ascii "ATK  DECAY"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x241A
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x241F
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2424
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2429
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x242E
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2433
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x2439
-	.byte 0x12	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x243E
-	.byte 0x12	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0003
-	.short 0x00CB
-	.short 0x00F1
-	.short 0x00E8
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00FA
-	.short 0x00CB
-	.short 0x013E
-	.short 0x00E8
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0003
-	.short 0x00D9
-	.short 0x00F1
-	.short 0x00D9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00FA
-	.short 0x00D9
-	.short 0x013E
-	.short 0x00D9
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x00DA
-	.short 0x00F0
-	.short 0x00E7
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x00FB
-	.short 0x00DA
-	.short 0x013D
-	.short 0x00E7
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x0116
-	.short 0x0027
-	.short 0x0132
-	.short 0x0034
+	dl_text8x14	x=0, y=188, text="\020KEY OFF MODE :"
+	dl_text8x8_packed	x=267, y=194, text="TOUCH"
+	dl_text8x8_packed	x=9, y=207, text="ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"
+	dl_text8x8_packed	x=254, y=207, text="ATK  DECAY"
+	dl_text8x16	x=16, y=231, text="\022"
+	dl_text8x16	x=56, y=231, text="\022"
+	dl_text8x16	x=96, y=231, text="\022"
+	dl_text8x16	x=136, y=231, text="\022"
+	dl_text8x16	x=176, y=231, text="\022"
+	dl_text8x16	x=216, y=231, text="\022"
+	dl_text8x16	x=264, y=231, text="\022"
+	dl_text8x16	x=304, y=231, text="\022"
+	dl_box	x0=3, y0=203, x1=241, y1=232
+	dl_box	x0=250, y0=203, x1=318, y1=232
+	dl_hline	x0=3, y0=217, x1=241, y1=217
+	dl_hline	x0=250, y0=217, x1=318, y1=217
+	dl_fill_rect	x0=4, y0=218, x1=240, y1=231
+	dl_fill_rect	x0=251, y0=218, x1=317, y1=231
+	dl_fill_rect	x0=278, y0=39, x1=306, y1=52
 DL_F33796:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x80	; +0x04 AND mask
-	.byte 0x07	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_OffOn_F034D8	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x227F	; +0x0D -> IX
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2284	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x0D59	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x1259	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+6	; +0x02 source variable, 16-bit address
-	.byte 0xE0	; +0x04 AND mask
-	.byte 0x05	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x0D5F	; +0x07 -> IX
-	.byte 0x01	; +0x09 digit count
-	.byte 0x03	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+7	; +0x02 source variable, 16-bit address
-	.byte 0xE0	; +0x04 AND mask
-	.byte 0x05	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x125F	; +0x07 -> IX
-	.byte 0x01	; +0x09 digit count
-	.byte 0x03	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+8	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x0D4F	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+9	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x124F	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x0D53	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x1253	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DLBoxes_F33840	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_string	var=ModelingPage_Fields+1, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_OffOn_F034D8, width=3, x=248, y=220
+	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=288, y=220, digits=3
+	dlb_number_signed	var=ModelingPage_Fields+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=85, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=117, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+6, mask=0xe0, shift=5, svc=LCDSVC_DrawText8x10, x=184, y=85, digits=1, signflag=0x03
+	dlb_number_signed	var=ModelingPage_Fields+7, mask=0xe0, shift=5, svc=LCDSVC_DrawText8x10, x=184, y=117, digits=1, signflag=0x03
+	dlb_number	var=ModelingPage_Fields+8, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=85, digits=2
+	dlb_number	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=117, digits=2
+	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=88, y=85, digits=3
+	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=88, y=117, digits=3
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F33840
 
 ; === COVER-R1 0xF3380E-0xF33836 ===
 ; 0xF3380E-0xF33835, coverage round 1: 40 of this span's 40 bytes are
@@ -2162,11 +1173,7 @@ DLRecordPtrs_F3380E:
 ; ------------------------------------------------------------------
 SoundEditAmpLevel1_RepaintField_DL:
 ; ; drawn (start operand) by SoundEditAmpLevel1_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x004C
-	.short 0x00D2
-	.short 0x0088
+	dl_erase_rect	x0=13, y0=76, x1=210, y1=136
 
 ; === COVER-R1 0xF33840-0xF33858 ===
 ; 0xF33840-0xF33857, coverage round 1: 24 of this span's 24 bytes are
@@ -2214,58 +1221,13 @@ DLBoxes_F33840:
 ; ------------------------------------------------------------------
 SoundEditAmpEnvelope1_Paint_DL2:
 ; ; drawn (start operand) by SoundEditAmpEnvelope1_Paint -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0x20	; +0x04 AND mask
-	.byte 0x05	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLText_OffOn	; +0x07 -> XIY: string table
-	.short 0x0003	; +0x0B -> BC: bytes per entry
-	.short 0x1D70	; +0x0D -> IX
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2261	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2265	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x226A	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x226F	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+7	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2280	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
-	.byte 0x05, 0x0B	; B op 05, 11 bytes -> handler 0xF31BD7 -- decimal readout, signed (0xF8BCC9 via T_Value_ToSignedAsciiDigits3_RightJustified), buffer 0x2660
-	.short ModelingPage_Fields+8	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2284	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count
-	.byte 0x00	; +0x0A bit 7 set = unsigned, clear = signed
+	dlb_string	var=ModelingPage_Fields, mask=0x20, shift=5, svc=LCDSVC_DrawText8x10, table=DLText_OffOn, width=3, x=128, y=188
+	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=8, y=220, digits=3
+	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=40, y=220, digits=3
+	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=80, y=220, digits=3
+	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=220, digits=3
+	dlb_number_signed	var=ModelingPage_Fields+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=256, y=220, digits=2, signflag=0x00
+	dlb_number_signed	var=ModelingPage_Fields+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=288, y=220, digits=2, signflag=0x00
 
 ; === COVER-R1 0xF338A5-0xF338C9 ===
 ; 0xF338A5-0xF338C8, coverage round 1: 25 of this span's 36 bytes are
@@ -2308,134 +1270,40 @@ Data_F338A5:
 ; ------------------------------------------------------------------
 Draw_Keyoff_DL1:
 ; ; drawn (start operand) by Draw_Keyoff -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x2274	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+6	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x227A	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
+	dlb_number	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=160, y=220, digits=3
+	dlb_number	var=ModelingPage_Fields+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=208, y=220, digits=3
 Draw_Keyoff_DL2:
 ; ; drawn (start operand) by Draw_Keyoff -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x2274
-	.ascii " --"
-	.byte 0x20, 0x07	; op 20, 7 bytes -> handler 0xF31A3A
-	.short 0x227A
-	.ascii " --"
+	dl_text8x10	x=160, y=220, text=" --"
+	dl_text8x10	x=208, y=220, text=" --"
 DL_F338EB:
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short ModelingPage_Fields	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long Data_F33A49	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry	var=ModelingPage_Fields, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F33A49
 SoundEditModelingDriverWaveform_PaintRows_DL2:
 ; drawn (start operand) by SoundEditModelingDriverWaveform_PaintRows -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+8	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLTable_F0574D	; +0x07 -> XIY: string table
-	.short 0x0002	; +0x0B -> BC: bytes per entry
-	.short 0x12A0	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x000022F0	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x12A2	; +0x0D -> IX
-	.byte 0x00, 0x0A	; B op 00, 10 bytes -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short ModelingPage_Fields+1	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.short 0x12B4	; +0x07 -> IX
-	.byte 0x03	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
+	dlb_string	var=ModelingPage_Fields+8, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=119
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=80, y=119
+	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=119, digits=3
 
 
 ; ------------------------------------------------------------------
-; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter A
+; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: 6 records' A readings are impossible (B op-02 length 15) and 6 lie off the panel (rules 'length', 'geometry').
 ; Formerly Data_F3391E -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round2_module.py
 ; ------------------------------------------------------------------
 DL_F3391E:
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x27AF
-	.short 0x003F
-	.short 0x4D20
-	.short 0xF057
-	.byte 0x00, 0x02, 0x00, 0x20, 0x15	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x0000
-	.short 0x0000
-	.short 0x0020
-	.short 0x0023
-	.byte 0x00, 0x0D, 0x00, 0x22, 0x15	; operand bytes the handler does not read
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27AA
-	.short 0x007F
-	.short 0x3020
-	.short 0x0315
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27A8
-	.short 0x007F
-	.short 0x3420
-	.short 0x0315
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x27B0
-	.short 0x003F
-	.short 0x4D20
-	.short 0xF057
-	.byte 0x00, 0x02, 0x00, 0xA0, 0x17	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x0000
-	.short 0x0000
-	.short 0x1020
-	.short 0x0023
-	.byte 0x00, 0x0D, 0x00, 0xA2, 0x17	; operand bytes the handler does not read
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27AB
-	.short 0x007F
-	.short 0xB020
-	.short 0x0317
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27A9
-	.short 0x007F
-	.short 0xB420
-	.short 0x0317
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x27B1
-	.short 0x003F
-	.short 0x4D20
-	.short 0xF057
-	.byte 0x00, 0x02, 0x00, 0x20, 0x1A	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x0000
-	.short 0x0000
-	.short 0x2020
-	.short 0x0023
-	.byte 0x00, 0x0D, 0x00, 0x22, 0x1A	; operand bytes the handler does not read
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27AC
-	.short 0x007F
-	.short 0x3020
-	.short 0x031A
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x27AD
-	.short 0x007F
-	.short 0x3420
-	.short 0x031A
+	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=135
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot2, width=13, x=80, y=135
+	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=135, digits=3
+	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=135, digits=3
+	dlb_string	var=ModelingPage_Fields+10, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=151
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot3, width=13, x=80, y=151
+	dlb_number	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=151, digits=3
+	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=151, digits=3
+	dlb_string	var=ModelingPage_Fields+11, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=167
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot4, width=13, x=80, y=167
+	dlb_number	var=ModelingPage_Fields+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=167, digits=3
+	dlb_number	var=ModelingPage_Fields+7, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=167, digits=3
 
 ; ------------------------------------------------------------------
 ; 0xF339B4-0xF339BB -- 1 display-list records, 8 bytes -- interpreter A
@@ -2444,9 +1312,7 @@ DL_F3391E:
 ; ------------------------------------------------------------------
 SoundEditModelingDriverWaveform_PaintRows_DL1:
 ; drawn (start operand) by SoundEditModelingDriverWaveform_PaintRows -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x08	; op 06, 8 bytes -> handler 0xF31A3A
-	.short 0x12B0
-	.ascii "  0-"
+	dl_text8x14	x=192, y=119, text="  0-"
 
 ; === COVER-R1 0xF339BC-0xF33A3F ===
 ; 0xF339BC-0xF33A3E, coverage round 1: 55 of this span's 131 bytes are
@@ -2463,55 +1329,17 @@ SoundEditModelingDriverWaveform_PaintRows_DL1:
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round4_module.py
 ; ------------------------------------------------------------------
 DL_F339BC:
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1533
-	.ascii "-"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x17B3
-	.ascii "-"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1A33
-	.ascii "-"
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0030
-	.short 0x0077
-	.short 0x00A8
-	.short 0x0084
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C0
-	.short 0x0077
-	.short 0x00F8
-	.short 0x0084
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0040
-	.short 0x0087
-	.short 0x00B8
-	.short 0x0094
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C0
-	.short 0x0087
-	.short 0x00F8
-	.short 0x0094
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0040
-	.short 0x0097
-	.short 0x00B8
-	.short 0x00A4
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C0
-	.short 0x0097
-	.short 0x00F8
-	.short 0x00A4
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x0040
-	.short 0x00A7
-	.short 0x00B8
-	.short 0x00B4
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x00C0
-	.short 0x00A7
-	.short 0x00F8
-	.short 0x00B4
+	dl_text8x14	x=216, y=135, text="-"
+	dl_text8x14	x=216, y=151, text="-"
+	dl_text8x14	x=216, y=167, text="-"
+	dl_erase_rect	x0=48, y0=119, x1=168, y1=132
+	dl_erase_rect	x0=192, y0=119, x1=248, y1=132
+	dl_erase_rect	x0=64, y0=135, x1=184, y1=148
+	dl_erase_rect	x0=192, y0=135, x1=248, y1=148
+	dl_erase_rect	x0=64, y0=151, x1=184, y1=164
+	dl_erase_rect	x0=192, y0=151, x1=248, y1=164
+	dl_erase_rect	x0=64, y0=167, x1=184, y1=180
+	dl_erase_rect	x0=192, y0=167, x1=248, y1=180
 
 ; --------------------------------------------------------------------------
 ; Data_F33A1B -- 36 bytes, EMITTED AS DATA (not promoted to code).
@@ -2540,11 +1368,7 @@ Data_F33A1B:
 ; ------------------------------------------------------------------
 SoundEditModelingDriverWaveform_RepaintField_DL:
 ; ; drawn (start operand) by SoundEditModelingDriverWaveform_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A	; op 1B, 10 bytes -> handler 0xF31A75
-	.short 0x003D
-	.short 0x0076
-	.short 0x00FC
-	.short 0x00B4
+	dl_erase_rect	x0=61, y0=118, x1=252, y1=180
 
 ; === COVER-R1 0xF33A49-0xF33A71 ===
 ; 0xF33A49-0xF33A70, coverage round 1: 21 of this span's 40 bytes are
@@ -2587,184 +1411,31 @@ Data_F33A49:
 ; ------------------------------------------------------------------
 Draw_ToneTemplateLevelKeyTune_DL3:
 ; ; drawn (start operand) by Draw_ToneTemplateLevelKeyTune -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short ModelingPage_Fields+2	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00B4	; +0x07 -> (0x2530)
-	.short 0x0057	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+3	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00D2	; +0x07 -> (0x2530)
-	.short 0x0057	; +0x09 -> (0x2532)
-	.byte 0x02	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+4	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00EA	; +0x07 -> (0x2530)
-	.short 0x0057	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short ModelingPage_Fields+5	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00B4	; +0x07 -> (0x2530)
-	.short 0x0077	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+6	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00D2	; +0x07 -> (0x2530)
-	.short 0x0077	; +0x09 -> (0x2532)
-	.byte 0x02	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+7	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00EA	; +0x07 -> (0x2530)
-	.short 0x0077	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short ModelingPage_Fields+8	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00B4	; +0x07 -> (0x2530)
-	.short 0x0097	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+9	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00D2	; +0x07 -> (0x2530)
-	.short 0x0097	; +0x09 -> (0x2532)
-	.byte 0x02	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+10	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00EA	; +0x07 -> (0x2530)
-	.short 0x0097	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x09, 0x0C	; B op 09, 12 bytes -> handler 0xF31C14 -- decimal readout, unsigned, two extra words
-	.short ModelingPage_Fields+11	; +0x02 source variable, 16-bit address
-	.byte 0x7F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00B4	; +0x07 -> (0x2530)
-	.short 0x00B7	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+12	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00D2	; +0x07 -> (0x2530)
-	.short 0x00B7	; +0x09 -> (0x2532)
-	.byte 0x02	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
-	.byte 0x0B, 0x0D	; B op 0B, 13 bytes -> handler 0xF31C56 -- decimal readout, signed, two extra words
-	.short ModelingPage_Fields+13	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x17	; +0x06 swi 7 function
-	.short 0x00EA	; +0x07 -> (0x2530)
-	.short 0x00B7	; +0x09 -> (0x2532)
-	.byte 0x03	; +0x0B digit count
-	.byte 0x00	; +0x0C bit 7 set = unsigned, clear = signed
+	dlb_number_xy	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=180, y=87, digits=3
+	dlb_number_signed_xy	var=ModelingPage_Fields+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=87, digits=2, signflag=0x00
+	dlb_number_signed_xy	var=ModelingPage_Fields+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=234, y=87, digits=3, signflag=0x00
+	dlb_number_xy	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=180, y=119, digits=3
+	dlb_number_signed_xy	var=ModelingPage_Fields+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=119, digits=2, signflag=0x00
+	dlb_number_signed_xy	var=ModelingPage_Fields+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=234, y=119, digits=3, signflag=0x00
+	dlb_number_xy	var=ModelingPage_Fields+8, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=180, y=151, digits=3
+	dlb_number_signed_xy	var=ModelingPage_Fields+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=151, digits=2, signflag=0x00
+	dlb_number_signed_xy	var=ModelingPage_Fields+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=234, y=151, digits=3, signflag=0x00
+	dlb_number_xy	var=ModelingPage_Fields+11, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=180, y=183, digits=3
+	dlb_number_signed_xy	var=ModelingPage_Fields+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=183, digits=2, signflag=0x00
+	dlb_number_signed_xy	var=ModelingPage_Fields+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=234, y=183, digits=3, signflag=0x00
 Draw_ToneTemplateLevelKeyTune_DL4:
 ; ; drawn (start operand) by Draw_ToneTemplateLevelKeyTune -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+14	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLTable_ABCDEFGHIJKLMNOPQRSU	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x0D4E	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x000022F0	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x0D50	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+15	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLTable_ABCDEFGHIJKLMNOPQRSU	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x124E	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x00002300	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1250	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+16	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLTable_ABCDEFGHIJKLMNOPQRSU	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x174E	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x00002310	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1750	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short ModelingPage_Fields+17	; +0x02 source variable, 16-bit address
-	.byte 0x3F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long DLTable_ABCDEFGHIJKLMNOPQRSU	; +0x07 -> XIY: string table
-	.short 0x0001	; +0x0B -> BC: bytes per entry
-	.short 0x1C4E	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x00002320	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x1C50	; +0x0D -> IX
+	dlb_string	var=ModelingPage_Fields+14, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=85
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=64, y=85
+	dlb_string	var=ModelingPage_Fields+15, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=117
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot2, width=13, x=64, y=117
+	dlb_string	var=ModelingPage_Fields+16, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=149
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot3, width=13, x=64, y=149
+	dlb_string	var=ModelingPage_Fields+17, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=181
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot4, width=13, x=64, y=181
 Draw_ToneTemplateLevelKeyTune_DL5:
 ; ; drawn (start operand) by Draw_ToneTemplateLevelKeyTune -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short 0x27A3	; +0x02 source variable, 16-bit address
-	.byte 0x0F	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long DLTable_F04CE8	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTable_F04CE8
 
 ; === COVER-R1 0xF33B8C-0xF33BD8 ===
 ; 0xF33B8C-0xF33BD7, coverage round 1: 41 of this span's 76 bytes are
@@ -2824,397 +1495,102 @@ Data_F33B8C:
 ;           nothing more.  Generated by notes/gen_prom_b_f067a6_module.py
 ;           --dl-names.
 DL_UserKitSoundEditSoundToneSelect:
-	.byte 0x1C, 0x0E	; op 1C, 14 bytes -> handler 0xF31A52
-	.short 0x0070
-	.short 0x0009
-	.ascii "User Kit"
-	.byte 0x17, 0x10	; op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006
-	.short 0x0007
-	.ascii "SOUND EDIT"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0136
-	.short 0x001F
-	.byte 0x91	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x054C
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x059F
-	.byte 0xA9	; character codes below 0x20
-	.byte 0x1C, 0x07	; op 1C, 7 bytes -> handler 0xF31A52
-	.short 0x005E
-	.short 0x0035
-	.ascii ":"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x0115
-	.short 0x0038
-	.ascii "SOUND"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0136
-	.short 0x0046
-	.byte 0x91	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B8C
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0BB7
-	.byte 0xA9	; character codes below 0x20
-	.byte 0x17, 0x11	; op 17, 17 bytes -> handler 0xF31A52
-	.short 0x0047
-	.short 0x0064
-	.ascii "TONE SELECT"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x00A2
-	.short 0x0064
-	.ascii "LEVEL"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00C7
-	.short 0x0064
-	.ascii "KEY"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00E1
-	.short 0x0064
-	.ascii "TUNE"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0102
-	.short 0x0064
-	.ascii "PAN"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x011D
-	.short 0x0064
-	.ascii "REV"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x11D0
-	.byte 0x10	; character codes below 0x20
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0044
-	.short 0x0076
-	.ascii "."
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0043
-	.short 0x007B
-	.byte 0x91	; character codes below 0x20
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0044
-	.short 0x0094
-	.ascii "."
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x17E8
-	.byte 0x10	; character codes below 0x20
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0043
-	.short 0x0099
-	.byte 0x91	; character codes below 0x20
-	.byte 0x06, 0x0F	; op 06, 15 bytes -> handler 0xF31A3A
-	.short 0x1D53
-	.ascii "DETAIL EDIT"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1DB0
-	.byte 0x10	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1DD7
-	.byte 0x11	; character codes below 0x20
-	.byte 0x17, 0x0C	; op 17, 12 bytes -> handler 0xF31A52
-	.short 0x0000
-	.short 0x00D1
-	.ascii "ON/OFF"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x002B
-	.short 0x00D1
-	.ascii "GROUP"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0050
-	.short 0x00D1
-	.ascii "TONE"
-	.byte 0x17, 0x0B	; op 17, 11 bytes -> handler 0xF31A52
-	.short 0x007D
-	.short 0x00D1
-	.ascii "LEVEL"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00AA
-	.short 0x00D1
-	.ascii "KEY"
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x00CF
-	.short 0x00D1
-	.ascii "TUNE"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0102
-	.short 0x00D1
-	.ascii "PAN"
-	.byte 0x17, 0x09	; op 17, 9 bytes -> handler 0xF31A52
-	.short 0x012B
-	.short 0x00D1
-	.ascii "REV"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21E9
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21EF
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21F3
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21F9
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x21FE
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2203
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2209
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x220E
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2379
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x237F
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2383
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2389
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x238E
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2393
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x2399
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x239E
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0004
-	.short 0x0004
-	.short 0x0044
-	.short 0x0010
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0112
-	.short 0x001E
-	.short 0x0135
-	.short 0x0031
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0114
-	.short 0x0020
-	.short 0x0133
-	.short 0x002F
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0037
-	.short 0x002E
-	.short 0x00FD
-	.short 0x0049
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0039
-	.short 0x0030
-	.short 0x00FB
-	.short 0x0047
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0112
-	.short 0x0045
-	.short 0x0135
-	.short 0x0058
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0114
-	.short 0x0047
-	.short 0x0133
-	.short 0x0056
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x005E
-	.short 0x0135
-	.short 0x00AA
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00D2
-	.short 0x00B5
-	.short 0x0135
-	.short 0x00CA
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00D4
-	.short 0x00B7
-	.short 0x0133
-	.short 0x00C8
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0001
-	.short 0x00DA
-	.short 0x0016
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0031
-	.short 0x00DA
-	.short 0x0046
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0051
-	.short 0x00DA
-	.short 0x0066
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0081
-	.short 0x00DA
-	.short 0x0096
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00A9
-	.short 0x00DA
-	.short 0x00BE
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00D1
-	.short 0x00DA
-	.short 0x00E6
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0101
-	.short 0x00DA
-	.short 0x0116
-	.short 0x00EE
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x0129
-	.short 0x00DA
-	.short 0x013E
-	.short 0x00EE
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x006F
-	.short 0x0135
-	.short 0x006F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x008C
-	.short 0x0119
-	.short 0x008C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0001
-	.short 0x00E4
-	.short 0x0016
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0031
-	.short 0x00E4
-	.short 0x0046
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0051
-	.short 0x00E4
-	.short 0x0066
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0081
-	.short 0x00E4
-	.short 0x0096
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A9
-	.short 0x00E4
-	.short 0x00BE
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00D1
-	.short 0x00E4
-	.short 0x00E6
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0101
-	.short 0x00E4
-	.short 0x0116
-	.short 0x00E4
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0129
-	.short 0x00E4
-	.short 0x013E
-	.short 0x00E4
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0038
-	.short 0x005E
-	.short 0x0038
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x009D
-	.short 0x005E
-	.short 0x009D
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0119
-	.short 0x005E
-	.short 0x0119
-	.short 0x00AA
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0003
-	.short 0x001F
-	.byte 0x91	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x052B
-	.byte 0x8D	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0578
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x17, 0x0A	; op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0010
-	.short 0x0038
-	.ascii "NOTE"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0003
-	.short 0x0046
-	.byte 0x91	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B6B
-	.byte 0x8E	; character codes below 0x20
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0B90
-	.byte 0xA8	; character codes below 0x20
-	.byte 0x06, 0x09	; op 06, 9 bytes -> handler 0xF31A3A
-	.short 0x1D3A
-	.ascii "WRITE"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1DB0
-	.byte 0x10	; character codes below 0x20
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x001E
-	.short 0x002E
-	.short 0x0031
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x0020
-	.short 0x002C
-	.short 0x002F
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x0045
-	.short 0x002E
-	.short 0x0058
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x0047
-	.short 0x002C
-	.short 0x0056
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000B
-	.short 0x00B5
-	.short 0x003D
-	.short 0x00CA
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x000D
-	.short 0x00B7
-	.short 0x003B
-	.short 0x00C8
-	.byte 0x05, 0x0A	; op 05, 10 bytes -> handler 0xF31A75
-	.short 0x011B
-	.short 0x0071
-	.short 0x0133
-	.short 0x00A8
+	dl_text16x16_packed	x=112, y=9, text="User Kit"
+	dl_text8x8_packed	x=6, y=7, text="SOUND EDIT"
+	dl_text8x8_packed	x=310, y=31, text="\221"
+	dl_text8x16	x=288, y=33, text="\215"
+	dl_text8x16	x=312, y=35, text="\251"
+	dl_text16x16_packed	x=94, y=53, text=":"
+	dl_text8x8_packed	x=277, y=56, text="SOUND"
+	dl_text8x8_packed	x=310, y=70, text="\221"
+	dl_text8x16	x=288, y=73, text="\216"
+	dl_text8x16	x=312, y=74, text="\251"
+	dl_text8x8_packed	x=71, y=100, text="TONE SELECT"
+	dl_text8x8_packed	x=162, y=100, text="LEVEL"
+	dl_text8x8_packed	x=199, y=100, text="KEY"
+	dl_text8x8_packed	x=225, y=100, text="TUNE"
+	dl_text8x8_packed	x=258, y=100, text="PAN"
+	dl_text8x8_packed	x=285, y=100, text="REV"
+	dl_text8x14	x=0, y=114, text="\020"
+	dl_text8x8_packed	x=68, y=118, text="."
+	dl_text8x8_packed	x=67, y=123, text="\221"
+	dl_text8x8_packed	x=68, y=148, text="."
+	dl_text8x14	x=0, y=153, text="\020"
+	dl_text8x8_packed	x=67, y=153, text="\221"
+	dl_text8x14	x=216, y=187, text="DETAIL EDIT"
+	dl_text8x14	x=0, y=190, text="\020"
+	dl_text8x14	x=312, y=190, text="\021"
+	dl_text8x8_packed	x=0, y=209, text="ON/OFF"
+	dl_text8x8_packed	x=43, y=209, text="GROUP"
+	dl_text8x8_packed	x=80, y=209, text="TONE"
+	dl_text8x8_packed	x=125, y=209, text="LEVEL"
+	dl_text8x8_packed	x=170, y=209, text="KEY"
+	dl_text8x8_packed	x=207, y=209, text="TUNE"
+	dl_text8x8_packed	x=258, y=209, text="PAN"
+	dl_text8x8_packed	x=299, y=209, text="REV"
+	dl_text8x14	x=8, y=217, text="\215"
+	dl_text8x14	x=56, y=217, text="\215"
+	dl_text8x14	x=88, y=217, text="\215"
+	dl_text8x14	x=136, y=217, text="\215"
+	dl_text8x14	x=176, y=217, text="\215"
+	dl_text8x14	x=216, y=217, text="\215"
+	dl_text8x14	x=264, y=217, text="\215"
+	dl_text8x14	x=304, y=217, text="\215"
+	dl_text8x14	x=8, y=227, text="\216"
+	dl_text8x14	x=56, y=227, text="\216"
+	dl_text8x14	x=88, y=227, text="\216"
+	dl_text8x14	x=136, y=227, text="\216"
+	dl_text8x14	x=176, y=227, text="\216"
+	dl_text8x14	x=216, y=227, text="\216"
+	dl_text8x14	x=264, y=227, text="\216"
+	dl_text8x14	x=304, y=227, text="\216"
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_box	x0=274, y0=30, x1=309, y1=49
+	dl_box	x0=276, y0=32, x1=307, y1=47
+	dl_box	x0=55, y0=46, x1=253, y1=73
+	dl_box	x0=57, y0=48, x1=251, y1=71
+	dl_box	x0=274, y0=69, x1=309, y1=88
+	dl_box	x0=276, y0=71, x1=307, y1=86
+	dl_box_shadow1	x0=11, y0=94, x1=309, y1=170
+	dl_box	x0=210, y0=181, x1=309, y1=202
+	dl_box	x0=212, y0=183, x1=307, y1=200
+	dl_box_shadow1	x0=1, y0=218, x1=22, y1=238
+	dl_box_shadow1	x0=49, y0=218, x1=70, y1=238
+	dl_box_shadow1	x0=81, y0=218, x1=102, y1=238
+	dl_box_shadow1	x0=129, y0=218, x1=150, y1=238
+	dl_box_shadow1	x0=169, y0=218, x1=190, y1=238
+	dl_box_shadow1	x0=209, y0=218, x1=230, y1=238
+	dl_box_shadow1	x0=257, y0=218, x1=278, y1=238
+	dl_box_shadow1	x0=297, y0=218, x1=318, y1=238
+	dl_hline	x0=11, y0=111, x1=309, y1=111
+	dl_hline	x0=11, y0=140, x1=281, y1=140
+	dl_hline	x0=1, y0=228, x1=22, y1=228
+	dl_hline	x0=49, y0=228, x1=70, y1=228
+	dl_hline	x0=81, y0=228, x1=102, y1=228
+	dl_hline	x0=129, y0=228, x1=150, y1=228
+	dl_hline	x0=169, y0=228, x1=190, y1=228
+	dl_hline	x0=209, y0=228, x1=230, y1=228
+	dl_hline	x0=257, y0=228, x1=278, y1=228
+	dl_hline	x0=297, y0=228, x1=318, y1=228
+	dl_vline	x0=56, y0=94, x1=56, y1=170
+	dl_vline	x0=157, y0=94, x1=157, y1=170
+	dl_vline	x0=281, y0=94, x1=281, y1=170
+	dl_text8x8_packed	x=3, y=31, text="\221"
+	dl_text8x16	x=24, y=33, text="\215"
+	dl_text8x16	x=0, y=35, text="\250"
+	dl_text8x8_packed	x=16, y=56, text="NOTE"
+	dl_text8x8_packed	x=3, y=70, text="\221"
+	dl_text8x16	x=24, y=73, text="\216"
+	dl_text8x16	x=0, y=74, text="\250"
+	dl_text8x14	x=16, y=187, text="WRITE"
+	dl_text8x14	x=0, y=190, text="\020"
+	dl_box	x0=11, y0=30, x1=46, y1=49
+	dl_box	x0=13, y0=32, x1=44, y1=47
+	dl_box	x0=11, y0=69, x1=46, y1=88
+	dl_box	x0=13, y0=71, x1=44, y1=86
+	dl_box	x0=11, y0=181, x1=61, y1=202
+	dl_box	x0=13, y0=183, x1=59, y1=200
+	dl_fill_rect	x0=283, y0=113, x1=307, y1=168
 
 ; --- 0xF33F01-0xF33FFF: 255 bytes of 0x0E fill (ret padding), not a
 ; display list -- a naive op/len walk from here decodes as 44 bogus

@@ -1974,7 +1974,7 @@ sub_F44C51_Join2:
 MidiOut_SendSongPosition:
 	bit	0, (0x0922:16)	; F44CA7  bit 0,(0x0922)
 	jr	nz, MidiOut_SendSongPosition_Return	; F44CAB  jr NZ,0xf44ce9
-	bit	2, (0x7f34:16)	; F44CAD  bit 2,(0x7f34)
+	bit	2, (MidiFilter_Realtime:16)	; F44CAD  bit 2,(0x7f34)
 	jr	z, MidiOut_SendSongPosition_Return	; F44CB1  jr Z,0xf44ce9
 	ld	de, (TransportB_Beat:8)	; F44CB3  ld DE,(0x91)
 	sla	de, 2	; F44CB6  sla 0x02,DE

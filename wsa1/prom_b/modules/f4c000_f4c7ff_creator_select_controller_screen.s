@@ -21,32 +21,13 @@
 ;   T_DisplayList_Run_Stack` at 0xF4C5F3.
 ; --------------------------------------------------------------------------
 DL_CreatorSelectController:
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x24
-	.short 0x002F
-	.byte 0x1C, 0x14	; op 1C, 20 bytes -> handler 0xF31A52
-	.short 0x0055
-	.short 0x0005
-	.ascii "CREATOR SELECT"
-	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0C07
-	.byte 0x11	; character codes below 0x20
-	.byte 0x20, 0x0E	; op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x0C4C
-	.ascii "CONTROLLER"
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x24
-	.short 0x14A3
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00DB
-	.short 0x0048
-	.short 0x0135
-	.short 0x005D
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x00DE
-	.short 0x004B
-	.short 0x0132
-	.short 0x005A
+	dl_value_glyph	glyph=36, x=56, y=1
+	dl_text16x16_packed	x=85, y=5, text="CREATOR SELECT"
+	dl_text8x16	x=312, y=76, text="\021"
+	dl_text8x10	x=224, y=78, text="CONTROLLER"
+	dl_value_glyph	glyph=36, x=24, y=132
+	dl_box	x0=219, y0=72, x1=309, y1=93
+	dl_box	x0=222, y0=75, x1=306, y1=90
 ; --------------------------------------------------------------------------
 ; DL_CreatorSelectController_Alt -- 0xF4C045-0xF4C070, interpreter A: the
 ;   same title drawn when (0x2870) != 0 -- the same run call as the first
@@ -55,19 +36,10 @@ DL_CreatorSelectController:
 ;   T_DisplayList_Run_Stack` at 0xF4C5F3.
 ; --------------------------------------------------------------------------
 DL_CreatorSelectController_Alt:
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x24
-	.short 0x002F
-	.byte 0x1C, 0x14	; op 1C, 20 bytes -> handler 0xF31A52
-	.short 0x0055
-	.short 0x0005
-	.ascii "CREATOR SELECT"
-	.byte 0x20, 0x0E	; op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x0E63
-	.ascii "CONTROLLER"
-	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x49
-	.short 0x14A3
+	dl_value_glyph	glyph=36, x=56, y=1
+	dl_text16x16_packed	x=85, y=5, text="CREATOR SELECT"
+	dl_text8x10	x=24, y=92, text="CONTROLLER"
+	dl_value_glyph	glyph=73, x=24, y=132
 ; --------------------------------------------------------------------------
 ; DL_CreatorSelectController_Grid -- 0xF4C071-0xF4C2B6, interpreter A:
 ;   always drawn after the title: two rows of the digits 1-6 and the frames
@@ -76,303 +48,69 @@ DL_CreatorSelectController_Alt:
 ;   0xF4C603.
 ; --------------------------------------------------------------------------
 DL_CreatorSelectController_Grid:
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00C7
-	.short 0x0087
-	.ascii "1"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00D5
-	.short 0x0087
-	.ascii "2"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00E3
-	.short 0x0087
-	.ascii "3"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00F1
-	.short 0x0087
-	.ascii "4"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x00FF
-	.short 0x0087
-	.ascii "5"
-	.byte 0x17, 0x07	; op 17, 7 bytes -> handler 0xF31A52
-	.short 0x010D
-	.short 0x0087
-	.ascii "6"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x2266
-	.ascii "1"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x226B
-	.ascii "2"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x2270
-	.ascii "3"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x2276
-	.ascii "4"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x227B
-	.ascii "5"
-	.byte 0x20, 0x05	; op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x2280
-	.ascii "6"
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0010
-	.short 0x0068
-	.short 0x012B
-	.short 0x00B2
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0035
-	.short 0x0075
-	.short 0x00A3
-	.short 0x0082
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00C4
-	.short 0x0084
-	.short 0x00D0
-	.short 0x0090
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00D2
-	.short 0x0084
-	.short 0x00DE
-	.short 0x0090
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00E0
-	.short 0x0084
-	.short 0x00EC
-	.short 0x0090
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00EE
-	.short 0x0084
-	.short 0x00FA
-	.short 0x0090
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x00FC
-	.short 0x0084
-	.short 0x0108
-	.short 0x0090
-	.byte 0x22, 0x0A	; op 22, 10 bytes -> handler 0xF31A75
-	.short 0x010A
-	.short 0x0084
-	.short 0x0116
-	.short 0x0090
-	.byte 0x09, 0x0A	; op 09, 10 bytes -> handler 0xF31A75
-	.short 0x0035
-	.short 0x0089
-	.short 0x00A3
-	.short 0x0096
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0023
-	.short 0x007B
-	.short 0x0035
-	.short 0x007B
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0023
-	.short 0x007C
-	.short 0x0035
-	.short 0x007C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0030
-	.short 0x008F
-	.short 0x0035
-	.short 0x008F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0030
-	.short 0x0090
-	.short 0x0035
-	.short 0x0090
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0027
-	.short 0x00D6
-	.short 0x0041
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004F
-	.short 0x00D6
-	.short 0x0069
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0077
-	.short 0x00D6
-	.short 0x0091
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A7
-	.short 0x00D6
-	.short 0x00C1
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CF
-	.short 0x00D6
-	.short 0x00E9
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00F7
-	.short 0x00D6
-	.short 0x0111
-	.short 0x00D6
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0026
-	.short 0x00EC
-	.short 0x0043
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004E
-	.short 0x00EC
-	.short 0x006B
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0076
-	.short 0x00EC
-	.short 0x0093
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A6
-	.short 0x00EC
-	.short 0x00C3
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CE
-	.short 0x00EC
-	.short 0x00EB
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00F6
-	.short 0x00EC
-	.short 0x0113
-	.short 0x00EC
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0027
-	.short 0x00ED
-	.short 0x0042
-	.short 0x00ED
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004F
-	.short 0x00ED
-	.short 0x006A
-	.short 0x00ED
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0077
-	.short 0x00ED
-	.short 0x0092
-	.short 0x00ED
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00A7
-	.short 0x00ED
-	.short 0x00C2
-	.short 0x00ED
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CF
-	.short 0x00ED
-	.short 0x00EA
-	.short 0x00ED
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00F7
-	.short 0x00ED
-	.short 0x0112
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0023
-	.short 0x007B
-	.short 0x0023
-	.short 0x0082
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0024
-	.short 0x007B
-	.short 0x0024
-	.short 0x0082
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0026
-	.short 0x00D7
-	.short 0x0026
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0042
-	.short 0x00D7
-	.short 0x0042
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0043
-	.short 0x00D8
-	.short 0x0043
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x004E
-	.short 0x00D7
-	.short 0x004E
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x006A
-	.short 0x00D7
-	.short 0x006A
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x006B
-	.short 0x00D8
-	.short 0x006B
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0076
-	.short 0x00D7
-	.short 0x0076
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0092
-	.short 0x00D7
-	.short 0x0092
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0093
-	.short 0x00D8
-	.short 0x0093
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00A6
-	.short 0x00D7
-	.short 0x00A6
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C2
-	.short 0x00D7
-	.short 0x00C2
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C3
-	.short 0x00D8
-	.short 0x00C3
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00CE
-	.short 0x00D7
-	.short 0x00CE
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00EA
-	.short 0x00D7
-	.short 0x00EA
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00EB
-	.short 0x00D8
-	.short 0x00EB
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00F6
-	.short 0x00D7
-	.short 0x00F6
-	.short 0x00EC
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0112
-	.short 0x00D7
-	.short 0x0112
-	.short 0x00ED
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0113
-	.short 0x00D8
-	.short 0x0113
-	.short 0x00EC
+	dl_text8x8_packed	x=199, y=135, text="1"
+	dl_text8x8_packed	x=213, y=135, text="2"
+	dl_text8x8_packed	x=227, y=135, text="3"
+	dl_text8x8_packed	x=241, y=135, text="4"
+	dl_text8x8_packed	x=255, y=135, text="5"
+	dl_text8x8_packed	x=269, y=135, text="6"
+	dl_text8x10	x=48, y=220, text="1"
+	dl_text8x10	x=88, y=220, text="2"
+	dl_text8x10	x=128, y=220, text="3"
+	dl_text8x10	x=176, y=220, text="4"
+	dl_text8x10	x=216, y=220, text="5"
+	dl_text8x10	x=256, y=220, text="6"
+	dl_box	x0=16, y0=104, x1=299, y1=178
+	dl_box	x0=53, y0=117, x1=163, y1=130
+	dl_box_shadow1	x0=196, y0=132, x1=208, y1=144
+	dl_box_shadow1	x0=210, y0=132, x1=222, y1=144
+	dl_box_shadow1	x0=224, y0=132, x1=236, y1=144
+	dl_box_shadow1	x0=238, y0=132, x1=250, y1=144
+	dl_box_shadow1	x0=252, y0=132, x1=264, y1=144
+	dl_box_shadow1	x0=266, y0=132, x1=278, y1=144
+	dl_box	x0=53, y0=137, x1=163, y1=150
+	dl_hline	x0=35, y0=123, x1=53, y1=123
+	dl_hline	x0=35, y0=124, x1=53, y1=124
+	dl_hline	x0=48, y0=143, x1=53, y1=143
+	dl_hline	x0=48, y0=144, x1=53, y1=144
+	dl_hline	x0=39, y0=214, x1=65, y1=214
+	dl_hline	x0=79, y0=214, x1=105, y1=214
+	dl_hline	x0=119, y0=214, x1=145, y1=214
+	dl_hline	x0=167, y0=214, x1=193, y1=214
+	dl_hline	x0=207, y0=214, x1=233, y1=214
+	dl_hline	x0=247, y0=214, x1=273, y1=214
+	dl_hline	x0=38, y0=236, x1=67, y1=236
+	dl_hline	x0=78, y0=236, x1=107, y1=236
+	dl_hline	x0=118, y0=236, x1=147, y1=236
+	dl_hline	x0=166, y0=236, x1=195, y1=236
+	dl_hline	x0=206, y0=236, x1=235, y1=236
+	dl_hline	x0=246, y0=236, x1=275, y1=236
+	dl_hline	x0=39, y0=237, x1=66, y1=237
+	dl_hline	x0=79, y0=237, x1=106, y1=237
+	dl_hline	x0=119, y0=237, x1=146, y1=237
+	dl_hline	x0=167, y0=237, x1=194, y1=237
+	dl_hline	x0=207, y0=237, x1=234, y1=237
+	dl_hline	x0=247, y0=237, x1=274, y1=237
+	dl_vline	x0=35, y0=123, x1=35, y1=130
+	dl_vline	x0=36, y0=123, x1=36, y1=130
+	dl_vline	x0=38, y0=215, x1=38, y1=236
+	dl_vline	x0=66, y0=215, x1=66, y1=237
+	dl_vline	x0=67, y0=216, x1=67, y1=236
+	dl_vline	x0=78, y0=215, x1=78, y1=236
+	dl_vline	x0=106, y0=215, x1=106, y1=237
+	dl_vline	x0=107, y0=216, x1=107, y1=236
+	dl_vline	x0=118, y0=215, x1=118, y1=236
+	dl_vline	x0=146, y0=215, x1=146, y1=237
+	dl_vline	x0=147, y0=216, x1=147, y1=236
+	dl_vline	x0=166, y0=215, x1=166, y1=236
+	dl_vline	x0=194, y0=215, x1=194, y1=237
+	dl_vline	x0=195, y0=216, x1=195, y1=236
+	dl_vline	x0=206, y0=215, x1=206, y1=236
+	dl_vline	x0=234, y0=215, x1=234, y1=237
+	dl_vline	x0=235, y0=216, x1=235, y1=236
+	dl_vline	x0=246, y0=215, x1=246, y1=236
+	dl_vline	x0=274, y0=215, x1=274, y1=237
+	dl_vline	x0=275, y0=216, x1=275, y1=236
 ; --------------------------------------------------------------------------
 ; DLB_CreatorSelectController_Cursor -- 0xF4C2B7-0xF4C2E2, interpreter B:
 ;   four interpreter-B records on (0x2640): two op-0x04 records (swi 7 fn
@@ -385,30 +123,10 @@ DL_CreatorSelectController_Grid:
 ;   end) / `lda XWA,0xF4C2B7` / `call T_DisplayListB_Run_Stack` at 0xF4C677.
 ; --------------------------------------------------------------------------
 DLB_CreatorSelectController_Cursor:
-	.byte 0x04, 0x0B	; B op 04, 11 bytes -> handler 0xF31B86 -- entry[value] -> IY, BC, HL
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x0E	; +0x06 swi 7 function
-	.long CreatorSelectController_ClearArea	; +0x07 -> XIX: array of 6-byte entries, indexed by the value
-	.byte 0x04, 0x0B	; B op 04, 11 bytes -> handler 0xF31B86 -- entry[value] -> IY, BC, HL
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x0E	; +0x06 swi 7 function
-	.long CreatorSelectController_ClearArea2	; +0x07 -> XIX: array of 6-byte entries, indexed by the value
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long CreatorSelectController_Boxes	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
-	.byte 0x03, 0x0B	; B op 03, 11 bytes -> handler 0xF31B57 -- four words of entry[value] -> (0x2530..0x2536)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0x07	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x05	; +0x06 swi 7 function
-	.long CreatorSelectController_Boxes2	; +0x07 -> XIX: array of 8-byte entries, indexed by the value
+	dlb_area_entry	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_ClearColumns, table=CreatorSelectController_ClearArea
+	dlb_area_entry	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_ClearColumns, table=CreatorSelectController_ClearArea2
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=CreatorSelectController_Boxes
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=CreatorSelectController_Boxes2
 ; The four entry arrays DLB_CreatorSelectController_Cursor's records point
 ;   at (+0x07): an op-0x04 entry is IY, BC, HL for swi 7 fn 0x0E; an op-0x03
 ;   entry is four words for (0x2530)..(0x2536), fn 5.
@@ -442,22 +160,8 @@ CreatorSelectController_Boxes2:		; 8 entries of 8 bytes, index (0x2640) & 0x07
 ;   XWA,0xF4C36F` / `call T_DisplayListB_Run_Stack` at 0xF4C61F.
 ; --------------------------------------------------------------------------
 DLB_CreatorSelectController_Names:
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x00002950	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x129F	; +0x0D -> IX
-	.byte 0x02, 0x0F	; B op 02, 15 bytes -> handler 0xF31B21 -- string-table readout: HL = extracted value = entry index
-	.short 0x0000	; +0x02 source variable, 16-bit address
-	.byte 0x00	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x20	; +0x06 swi 7 function
-	.long 0x00002940	; +0x07 -> XIY: string table
-	.short 0x000D	; +0x0B -> BC: bytes per entry
-	.short 0x15BF	; +0x0D -> IX
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=NameList_SourceMembers, width=13, x=56, y=119
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=NameList_SourceGroup, width=13, x=56, y=139
 
 
 ; --------------------------------------------------------------------------
@@ -1094,14 +798,14 @@ CreatorSelectController_CopyNameLabels:
 	push	xiy	; F4C704  push XIY
 	call	T_UiText_CopyLabel13_To_22F0	; F4C705  call 0xf43330
 	ld	xiy, DiskSave_PasswordEntry	; F4C709  ld XIY,0x000022f0
-	ld	xix, 10560	; F4C70E  ld XIX,0x00002940
+	ld	xix, NameList_SourceGroup	; F4C70E  ld XIX,0x00002940
 	ldw	bc, 7	; F4C713  ld BC,0x0007
 	ldirw	; F4C716  ldirw
 	pop	xiy	; F4C718  pop XIY
 	ld	a, (xiy+1)	; F4C719  ld A,(XIY+0x01)
 	call	T_UiText_CopyLabel13_To_22F0	; F4C71C  call 0xf43330
 	ld	xiy, DiskSave_PasswordEntry	; F4C720  ld XIY,0x000022f0
-	ld	xix, 10576	; F4C725  ld XIX,0x00002950
+	ld	xix, NameList_SourceMembers	; F4C725  ld XIX,0x00002950
 	ldw	bc, 7	; F4C72A  ld BC,0x0007
 	ldirw	; F4C72D  ldirw
 	pop	xiz	; F4C72F  pop XIZ

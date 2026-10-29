@@ -687,14 +687,14 @@ BmDrEdit_CheckNoteType_NotDrum:
 BmDrEdit_SaveSequencerState:
 	bit 0, (0x2742:16)
 	jr z, BmDrEdit_SaveSeqState_SetMode95
-	ldw wa, 0x98
+	ldw wa, TT_SQDRMEDT
 	jr BmDrEdit_SaveSeqState_Apply
 
 BmDrEdit_SaveSeqState_SetMode95:
-	ldw wa, 0x95
+	ldw wa, TT_SQNOTEEDT
 
 BmDrEdit_SaveSeqState_Apply:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ldmm16 0x2963, 3407
 	call SeqVoice_FindSingleActive
 	ldmm8 7512, PART_SELECT
@@ -1846,8 +1846,8 @@ BmDrEdit_InitCommon_CheckSongActive:
 	jr z, BmDrEdit_InitCommon_SetupDisplay
 	bit 4, (DEMO_CONTROL_FLAGS:16)
 	jr z, BmDrEdit_InitCommon_SetupDisplay
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	res 4, (DEMO_CONTROL_FLAGS:16)
 	res 0, (9834:16)
 	jrl BmDrEdit_PopIzAndReturn
@@ -2980,8 +2980,8 @@ BmDrEdit_PostModeChange96:
 	ret nz
 	bit 7, (0x295c:16)
 	ret nz
-	ldw wa, 0x96
-	jp UI_PostModeChangeEvent
+	ldw wa, TT_SQNOTECYCP
+	jp UI_ChangeTitleByIndex
 
 BmDrEdit_DrumVoiceUp_Check:
 	bit 7, (0x295c:16)
@@ -3068,8 +3068,8 @@ BmDrEdit_PostModeChange99:
 	ret nz
 	bit 7, (0x295c:16)
 	ret nz
-	ldw wa, 0x99
-	jp UI_PostModeChangeEvent
+	ldw wa, TT_SQDRMCYCP
+	jp UI_ChangeTitleByIndex
 
 BmDrEdit_DelayAction_WalkAndUpdateAlt:
 	calr BmDrEdit_SetupAndWalkToNote

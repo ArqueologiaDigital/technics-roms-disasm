@@ -16,8 +16,8 @@
 LoadTtlJgFunc:
 	cp xbc, EVT_SW_IN
 	jr nz, LoadTtl_Return
-	ldw wa, 0x61
-	ldw bc, 0x64
+	ldw wa, TT_DKLD
+	ldw bc, TT_DKLDSMF
 	calr FileIO_DiskEventDispatch
 
 LoadTtl_Return:
@@ -27,7 +27,7 @@ LoadTtl_Return:
 SaveTtlJgFunc:
 	cp xbc, EVT_SW_IN
 	jr nz, SaveTtl_Return
-	ldw wa, 0x67
+	ldw wa, TT_DKSV
 	calr FileIO_GetDiskCapacity
 
 SaveTtl_Return:
@@ -37,7 +37,7 @@ SaveTtl_Return:
 SaveSmfTtlJgFunc:
 	cp xbc, EVT_SW_IN
 	jr nz, SaveSmfTtl_Return
-	ldw wa, 0x6b
+	ldw wa, TT_DKSVSMF
 	calr FileIO_GetDiskCapacity
 
 SaveSmfTtl_Return:
@@ -53,7 +53,7 @@ DirectPlayTtlJgFunc:
 SongMedleyTtlJgFunc:
 	cp xbc, EVT_SW_IN
 	jr nz, SongMedleyTtl_Return
-	ldw wa, 0x77
+	ldw wa, TT_DKMDLY
 	calr FileIO_GetDiskCapacity
 
 SongMedleyTtl_Return:
@@ -66,13 +66,13 @@ SetupFlashFunc:
 	cp xbc, EVT_CHEAP_FLASH_WRITE
 	jr nz, SetupFlash_Return
 	ld (GLOBAL_ERROR_CODE:16), 37
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	ld wa, 6:i3
 	call CtrlPanel_IndicatorJumpTable
 	ld (GLOBAL_ERROR_CODE:16), 35
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	jr SetupFlash_Return
 
 SetupFlash_HandleLoadEvent:
@@ -139,7 +139,7 @@ FmmUtility_CheckCapacity:
 	ld xbc, EVT_OFF_WINDOW
 	ld xde, 0:i3
 	call ApDeliveryEvent
-	ldw wa, 0x7c
+	ldw wa, TT_DKUTSMF
 	jr FmmUtility_CallHandler
 
 FmmUtility_HandleCancel:
@@ -153,13 +153,13 @@ FmmUtility_HandleCancel:
 	call ApPostEvent
 	ld a, (0x7f5c:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 0
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr FmmUtility_ShowStatus
 
 FmmUtility_HandleError:
@@ -167,10 +167,10 @@ FmmUtility_HandleError:
 	ld xbc, EVT_OFF_WINDOW
 	ld xde, 0:i3
 	call ApDeliveryEvent
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 
 FmmUtility_CallHandler:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr FmmUtility_Return
 
 FmmUtility_HandleSuccess:
@@ -185,16 +185,16 @@ FmmUtility_HandleSuccess:
 	call ApPostEvent
 	ld a, (0x7f5c:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 2
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 FmmUtility_ShowStatus:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr FmmUtility_Return
 
 FmmUtility_ContinueWait:
@@ -271,7 +271,7 @@ FmmSmfUtility_CheckCapacity:
 	ld xbc, EVT_OFF_WINDOW
 	ld xde, 0:i3
 	call ApDeliveryEvent
-	ldw wa, 0x7b
+	ldw wa, TT_DKUT
 	jr FmmSmfUtility_CallHandler
 
 FmmSmfUtility_HandleCancel:
@@ -285,13 +285,13 @@ FmmSmfUtility_HandleCancel:
 	call ApPostEvent
 	ld a, (0x7f5e:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 0
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr FmmSmfUtility_ShowStatus
 
 FmmSmfUtility_HandleError:
@@ -299,10 +299,10 @@ FmmSmfUtility_HandleError:
 	ld xbc, EVT_OFF_WINDOW
 	ld xde, 0:i3
 	call ApDeliveryEvent
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 
 FmmSmfUtility_CallHandler:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr FmmSmfUtility_Return
 
 FmmSmfUtility_HandleSuccess:
@@ -317,16 +317,16 @@ FmmSmfUtility_HandleSuccess:
 	call ApPostEvent
 	ld a, (0x7f5e:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 2
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 FmmSmfUtility_ShowStatus:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr FmmSmfUtility_Return
 
 FmmSmfUtility_ContinueWait:

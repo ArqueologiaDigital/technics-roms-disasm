@@ -77,14 +77,14 @@ WPLoad_HandleCancel:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ldw wa, 0x48
-	call UI_PostModeChangeEvent
+	ldw wa, TT_CTWALLSET
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 0
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr WPLoad_CallStatusDisplay
 
 WPLoad_HandleError:
@@ -92,8 +92,8 @@ WPLoad_HandleError:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x7d
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKUTFRMT
+	call UI_ChangeTitleByIndex
 	jrl WPLoad_Return
 
 WPLoad_HandleSuccess:
@@ -106,17 +106,17 @@ WPLoad_HandleSuccess:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ldw wa, 0x48
-	call UI_PostModeChangeEvent
+	ldw wa, TT_CTWALLSET
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 2
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 WPLoad_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl WPLoad_Return
 
 WPLoad_HandleAbort:
@@ -244,14 +244,14 @@ WPLoad_OpLoad:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ldw wa, 0x48
-	call UI_PostModeChangeEvent
+	ldw wa, TT_CTWALLSET
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 WPLoad_GetSelection:
 	ld bc, (0x81b4:16)

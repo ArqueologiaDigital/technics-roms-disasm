@@ -5189,8 +5189,8 @@ MainSysControl:
 	cp	xbc, EVT_SYS_INI
 	jr	nz, MainSysControl_PostDispatchFinalize
 	ld	(GLOBAL_ERROR_CODE:16), 40
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	ld	xwa, (xsp+2)
 	ldfr_berp	a, 251
 	push	xde
@@ -5276,8 +5276,8 @@ MainSysCtrl_DelayInner:
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	ld	xhl, 0:i3
 	pop	qiz
 	inc	4, xsp

@@ -40,4 +40,3 @@ WidgetName_PtrBlock_G = 0x00EAFF70;
 WidgetName_PtrBlock_I1 = 0x00EAFF90;
 NakaInst_iduRoot = 0x00EB70D6;
 NakaWidget_PanelSimulator = 0x00EB29C6;
-SendPartDataBlock_Data2 = 0x00FEF728;

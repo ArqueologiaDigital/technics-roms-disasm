@@ -10,6 +10,7 @@
 	.include "shared/sfr_tmp94c241.s"
 	.include "shared/vga_constants.s"
 	.include "shared/event_codes.s"
+	.include "shared/naka_gui.s"
 	.include "fdc_constants.s"
 	.include "gui_constants.s"
 	.include "cpanel_constants.s"
@@ -1592,8 +1593,8 @@ Boot_HandleComboDisplay_Check3:
 	cp a, 3:i3
 	ret nz
 	; --- Combo 3: Software version screen ---
-	ldw wa, 0xf0
-	call SoundCtrl_SendCommand		; Display SOFT VERSION screen
+	ldw wa, TT_SOFTVER
+	call UI_InterruptTitleByIndex		; Display SOFT VERSION screen
 	ret
 
 Boot_ParseTableDataTimestamp:

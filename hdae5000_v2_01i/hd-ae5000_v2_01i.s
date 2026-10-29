@@ -449,18 +449,20 @@ HDAE5000_ENTRY_4:
 ;   (XSP+0x0A): table pointer
 ;
 ; Handler Registration Table:
-;   index  class id    proc              count  table
-;   0x016A 0x01600004  ClassProc         13     0x29C0AA   classes (13 records)
-;   0x01CA 0x0160000C  ResEventProc      var    0x2397EA
-;   0x01EA 0x0160000D  ResMethodProc     var    0x239824
-;   0x012A 0x01600002  ApFunctionProc    0x45   0x23952A   ApFunction table
-;   0x042A 0x01600002  ApFunctionProc    0x45   0x239642   ... its names
-;   0x010A 0x01600001  FunctionProc      0x0D   0x239872   Function table
-;   0x040A 0x01600001  FunctionProc      0x0D   0x2398AA   ... its names
-;   0x014A 0x01600003  MainFunctionProc  0x0E   0x239FD2   MainFunction table
-;   0x044A 0x01600003  MainFunctionProc  0x0E   0x23A00E   ... its names
-;   0x007F 0x01600010  ViewableProc      0x315  0x2A5D2C   UI object descriptor table
-;   0x037F 0x0160000F  ResNameProc       0x315  0x2A6984   UI object name table
+;   index  class id                proc              count                        table
+;   0x016A NAKA_CLASS_Class        ClassProc         HDAE5000_RECORD_COUNT        HDAE5000_RECORD_TABLE (13 classes)
+;   0x01CA NAKA_CLASS_ResEvent     ResEventProc      HDAE5000_RAM_EventName_Count HDAE5000_RAM_EventName_Table (EV_* names)
+;   0x01EA NAKA_CLASS_ResMethod    ResMethodProc     HDAE5000_RAM_MessageName_Count HDAE5000_RAM_MessageName_Table (MT_* names)
+;   0x012A NAKA_CLASS_ApFunction   ApFunctionProc    0x45                         HDAE5000_RAM_ObjHandler_Table (ApFunction table)
+;   0x042A NAKA_CLASS_ApFunction   ApFunctionProc    0x45                         HDAE5000_RAM_ObjName_Table (... its names)
+;   0x010A NAKA_CLASS_Function     FunctionProc      0x0D                         HDAE5000_RAM_ClassProc_Table (Function table: the class procs)
+;   0x040A NAKA_CLASS_Function     FunctionProc      0x0D                         HDAE5000_RAM_ClassName_Table (... their names)
+;   0x014A NAKA_CLASS_MainFunction MainFunctionProc  0x0E                         HDAE5000_RAM_ScreenProc_Table (MainFunction table)
+;   0x044A NAKA_CLASS_MainFunction MainFunctionProc  0x0E                         HDAE5000_RAM_ScreenName_Table (... its names)
+;   0x007F NAKA_CLASS_Viewable     ViewableProc      HDAE5000_UI_OBJECT_COUNT     HDAE5000_UiObject_PtrTable (UI objects, hdae5000_ui_tree.s)
+;   0x037F NAKA_CLASS_ResName      ResNameProc       HDAE5000_UI_OBJECT_COUNT     HDAE5000_UiObjectName_PtrTable (their names)
+;   The HDAE5000_RAM_* tables are the RAM copies of the hdae5000_init_data.s labels of the
+;   same name (defined at its end); the .data image is copied there at boot.
 ;   (0x7F / 0x37F replace the empty tables InitializeHama registers there.)
 ;          (for these two the "Size" word is an ENTRY COUNT: 0x315 = 789
 ;           objects; both tables hold 790 .long entries, the last a
@@ -507,9 +509,9 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResEventProc)             ; Handler function via table offset 0x013C
 	ld (xsp + 4), xwa
-	ld wa, (0x2397b6:24)
+	ld wa, (HDAE5000_RAM_EventName_Count:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; data size (variable)
-	lda xwa, (0x23977e:24)
+	lda xwa, (HDAE5000_RAM_EventName_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -526,9 +528,9 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResMethodProc)             ; Handler function via table offset 0x0140
 	ld (xsp + 4), xwa
-	ld wa, (0x239804:24)
+	ld wa, (HDAE5000_RAM_MessageName_Count:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; data size (variable)
-	lda xwa, (0x2397b8:24)
+	lda xwa, (HDAE5000_RAM_MessageName_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -546,7 +548,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x43	; entry count = 67 (v2.06i: 0x45 = 69)
-	lda xwa, (0x2394ce:24)
+	lda xwa, (HDAE5000_RAM_ObjHandler_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -564,7 +566,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x43	; entry count = 67 (v2.06i: 0x45 = 69)
-	lda xwa, (0x2395de:24)
+	lda xwa, (HDAE5000_RAM_ObjName_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -582,7 +584,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xD	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
-	lda xwa, (0x239806:24)
+	lda xwa, (HDAE5000_RAM_ClassProc_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -600,7 +602,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xD	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
-	lda xwa, (0x23983e:24)
+	lda xwa, (HDAE5000_RAM_ClassName_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -618,7 +620,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
-	lda xwa, (0x239f5a:24)
+	lda xwa, (HDAE5000_RAM_ScreenProc_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -636,7 +638,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
 	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
-	lda xwa, (0x239f96:24)
+	lda xwa, (HDAE5000_RAM_ScreenName_Table:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
 	ld xbc, xwa
@@ -653,7 +655,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ViewableProc)             ; Handler function via table offset 0x0280
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x312	; entry count = 786 objects (v2.06i: 0x315 = 789)
+	ldw (xsp + 8), HDAE5000_UI_OBJECT_COUNT	; entry count: the objects of hdae5000_ui_tree.s (786)
 	lda xwa, (HDAE5000_UiObject_PtrTable:24)	; = HDAE5000_UiObject_PtrTable
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -671,7 +673,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResNameProc)             ; Handler function via table offset 0x0148
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x312	; entry count = 786 objects (v2.06i: 0x315 = 789)
+	ldw (xsp + 8), HDAE5000_UI_OBJECT_COUNT	; entry count: the objects of hdae5000_ui_tree.s (786)
 	lda xwa, (HDAE5000_UiObjectName_PtrTable:24)	; = HDAE5000_UiObjectName_PtrTable
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)

@@ -174,38 +174,40 @@ ScreenButton_Sequencer:
 ; ---------------------------------------------------------------------
 
 Sequencer_ButtonTable:
-	.long ScreenLeave_Sequencer                      ; FE8077  [  0]
-	.long ScreenLeave_Sequencer                      ; FE807B  [  1]
-	.long ScreenLeave_Sequencer                      ; FE807F  [  2]
-	.long ScreenLeave_Sequencer                      ; FE8083  [  3]
-	.long ScreenLeave_Sequencer                      ; FE8087  [  4]
-	.long ScreenLeave_Sequencer                      ; FE808B  [  5]
-	.long ScreenLeave_Sequencer                      ; FE808F  [  6]
-	.long ScreenLeave_Sequencer                      ; FE8093  [  7]
-	.long LcdKeyRow1_Sequencer                                 ; FE8097  [  8]
-	.long LcdKeyRow2_Sequencer                                 ; FE809B  [  9]
-	.long LcdKeyRow3_Sequencer                                 ; FE809F  [ 10]
-	.long LcdKeyRow4_Sequencer                                 ; FE80A3  [ 11]
-	.long LcdKeyRow5_Sequencer                                 ; FE80A7  [ 12]
-	.long Sequencer_ButtonTable_Nop13                                 ; FE80AB  [ 13]
-	.long Sequencer_ButtonTable_Nop13                                 ; FE80AF  [ 14]
-	.long ExitKey_Sequencer                                 ; FE80B3  [ 15]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80B7  [ 16]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80BB  [ 17]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80BF  [ 18]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80C3  [ 19]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80C7  [ 20]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80CB  [ 21]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80CF  [ 22]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80D3  [ 23]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80D7  [ 24]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80DB  [ 25]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80DF  [ 26]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80E3  [ 27]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80E7  [ 28]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80EB  [ 29]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80EF  [ 30]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80F3  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol2,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol3,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol4,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol5,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol6,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol7,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol8,	ScreenLeave_Sequencer
+	on_key	KEY_LcdRow1,		LcdKeyRow1_Sequencer
+	on_key	KEY_LcdRow2,		LcdKeyRow2_Sequencer
+	on_key	KEY_LcdRow3,		LcdKeyRow3_Sequencer
+	on_key	KEY_LcdRow4,		LcdKeyRow4_Sequencer
+	on_key	KEY_LcdRow5,		LcdKeyRow5_Sequencer
+	on_key	KEY_MinusPlus,		Sequencer_ButtonTable_Nop13
+	on_key	KEY_Code0E,		Sequencer_ButtonTable_Nop13
+	on_key	KEY_Exit,		ExitKey_Sequencer
+	on_key	KEY_Page,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	Sequencer_ButtonTable_Nop16
+	on_key	KEY_PageAlt,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1A,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_NumberPad,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1C,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1D,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Compare,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1F,		Sequencer_ButtonTable_Nop16
+	keymap_end
 ; ---------------------------------------------------------------------
 ; LCD_ScreenRedraw_Begin_Copy -- a second, byte-identical copy of LCD_ScreenRedraw_Begin
 ;
@@ -680,86 +682,73 @@ DrumEditPartSelect_DrawTitleIcon:
 ; The length bytes walk from 0xFE829B and land exactly on 0xFE82A0.
 Sequencer_DrawTitleIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawTitleIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE829B  op 23, 5 bytes, handler 0xF31ACE
-	.ascii "14"                                 ; FE829D
-	.byte 0x00                         ; FE829F
+	dl_value_glyph	glyph=49, x=96, y=1
 
 ; Sequencer_DrawRealtimeIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82A0 and land exactly on 0xFE82A5.
 Sequencer_DrawRealtimeIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawRealtimeIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82A0  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x32, 0x11, 0x04             ; FE82A2
+	dl_value_glyph	glyph=50, x=8, y=26
 
 ; Sequencer_DrawMasterRecordIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82A5 and land exactly on 0xFE82AA.
 Sequencer_DrawMasterRecordIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawMasterRecordIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82A5  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x3A, 0xF1, 0x0A             ; FE82A7
+	dl_value_glyph	glyph=58, x=8, y=70
 
 ; Sequencer_DrawStepIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82AA and land exactly on 0xFE82AF.
 Sequencer_DrawStepIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawStepIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82AA  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x34, 0xB9, 0x10             ; FE82AC
+	dl_value_glyph	glyph=52, x=8, y=107
 
 ; Sequencer_DrawSongSelectIcon_DL1 -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82AF and land exactly on 0xFE82B4.
 Sequencer_DrawSongSelectIcon_DL1:
 ; ; drawn (start operand) by Sequencer_DrawSongSelectIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82AF  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x35, 0xD1, 0x16             ; FE82B1
+	dl_value_glyph	glyph=53, x=8, y=146
 
 ; Sequencer_DrawSongSelectIcon_DL2 -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82B4 and land exactly on 0xFE82B9.
 Sequencer_DrawSongSelectIcon_DL2:
 ; ; drawn (start operand) by Sequencer_DrawSongSelectIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82B4  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x36, 0x11, 0x1D             ; FE82B6
+	dl_value_glyph	glyph=54, x=8, y=186
 
 ; Sequencer_DrawEditIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82B9 and land exactly on 0xFE82BE.
 Sequencer_DrawEditIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawEditIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82B9  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x10, 0x34, 0x04             ; FE82BB
+	dl_value_glyph	glyph=16, x=288, y=26
 
 ; Sequencer_DrawTrackAssignIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82BE and land exactly on 0xFE82C3.
 Sequencer_DrawTrackAssignIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawTrackAssignIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82BE  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x37, 0x14, 0x0B             ; FE82C0
+	dl_value_glyph	glyph=55, x=288, y=70
 
 ; Sequencer_DrawMedleyIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82C3 and land exactly on 0xFE82C8.
 Sequencer_DrawMedleyIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawMedleyIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82C3  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x38, 0xDC, 0x10             ; FE82C5
+	dl_value_glyph	glyph=56, x=288, y=107
 
 ; Sequencer_DrawAfterTouchSetIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82C8 and land exactly on 0xFE82CD.
 Sequencer_DrawAfterTouchSetIcon_DL:
 ; ; drawn (start operand) by Sequencer_DrawAfterTouchSetIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82C8  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x39, 0xF4, 0x16             ; FE82CA
+	dl_value_glyph	glyph=57, x=288, y=146
 
 ; NoteEditPartSelect_DrawTitleIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82CD and land exactly on 0xFE82D2.
 NoteEditPartSelect_DrawTitleIcon_DL:
 ; ; drawn (start operand) by NoteEditPartSelect_DrawTitleIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82CD  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x02, 0x7E, 0x00             ; FE82CF
+	dl_value_glyph	glyph=2, x=48, y=3
 
 ; DrumEditPartSelect_DrawTitleIcon_DL -- 1 record(s), 5 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE82D2 and land exactly on 0xFE82D7.
 DrumEditPartSelect_DrawTitleIcon_DL:
 ; ; drawn (start operand) by DrumEditPartSelect_DrawTitleIcon -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x23, 0x05                               ; FE82D2  op 23, 5 bytes, handler 0xF31ACE
-	.byte 0x0F, 0x7E, 0x00             ; FE82D4
+	dl_value_glyph	glyph=15, x=48, y=3
 ; EditScreen_Tick: T_EditScreen_Tick: NoteEdit_TakeKeyboardInput, then the two countdown timers (EditScreen_CountDownAction,
 ;   _RunDueAction, _CountDownAction2, _RunDueAction2), then T_SeqCycle_TickDeferredAction.
 EditScreen_Tick:
@@ -986,38 +975,22 @@ EditPartSelect_DrawPartLabels:
 ; The length bytes walk from 0xFE8405 and land exactly on 0xFE84F5.
 EditPartSelect_DrawPartLabels_DL:
 ; ; drawn (start operand) by EditPartSelect_DrawPartLabels -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FE8405  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xF6, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x59, 0x1B  ; FE8407
-	.byte 0x02, 0x0F                               ; FE8414  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xF7, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x5E, 0x1B  ; FE8416
-	.byte 0x02, 0x0F                               ; FE8423  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xF8, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x63, 0x1B  ; FE8425
-	.byte 0x02, 0x0F                               ; FE8432  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xF9, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x68, 0x1B  ; FE8434
-	.byte 0x02, 0x0F                               ; FE8441  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFA, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x6D, 0x1B  ; FE8443
-	.byte 0x02, 0x0F                               ; FE8450  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFB, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x72, 0x1B  ; FE8452
-	.byte 0x02, 0x0F                               ; FE845F  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFC, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x77, 0x1B  ; FE8461
-	.byte 0x02, 0x0F                               ; FE846E  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFD, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0x7C, 0x1B  ; FE8470
-	.byte 0x02, 0x0F                               ; FE847D  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFE, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xB1, 0x22  ; FE847F
-	.byte 0x02, 0x0F                               ; FE848C  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xFF, 0x12, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xB6, 0x22  ; FE848E
-	.byte 0x02, 0x0F                               ; FE849B  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x00, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xBB, 0x22  ; FE849D
-	.byte 0x02, 0x0F                               ; FE84AA  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x01, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xC0, 0x22  ; FE84AC
-	.byte 0x02, 0x0F                               ; FE84B9  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x02, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xC5, 0x22  ; FE84BB
-	.byte 0x02, 0x0F                               ; FE84C8  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x03, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xCA, 0x22  ; FE84CA
-	.byte 0x02, 0x0F                               ; FE84D7  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x04, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xCF, 0x22  ; FE84D9
-	.byte 0x02, 0x0F                               ; FE84E6  op 02, 15 bytes, handler 0xF31B21
-	.byte 0x05, 0x13, 0xFF, 0x00, 0x20, 0xF5, 0x84, 0xFE, 0x00, 0x03, 0x00, 0xD4, 0x22  ; FE84E8
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=8, y=175
+	dlb_string	var=DisplayListB_Stage+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=48, y=175
+	dlb_string	var=DisplayListB_Stage+2, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=88, y=175
+	dlb_string	var=DisplayListB_Stage+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=128, y=175
+	dlb_string	var=DisplayListB_Stage+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=168, y=175
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=208, y=175
+	dlb_string	var=DisplayListB_Stage+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=248, y=175
+	dlb_string	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=288, y=175
+	dlb_string	var=DisplayListB_Stage+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=8, y=222
+	dlb_string	var=DisplayListB_Stage+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=48, y=222
+	dlb_string	var=DisplayListB_Stage+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=88, y=222
+	dlb_string	var=DisplayListB_Stage+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=128, y=222
+	dlb_string	var=DisplayListB_Stage+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=168, y=222
+	dlb_string	var=DisplayListB_Stage+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=208, y=222
+	dlb_string	var=DisplayListB_Stage+14, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=248, y=222
+	dlb_string	var=DisplayListB_Stage+15, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=PartLabels_FE84F5, width=3, x=288, y=222
 ; ---------------------------------------------------------------------
 ; PartLabels_FE84F5 -- 37 three-character labels, "P 1" .. "P32"
 ; Read by: the display list at 0xFE8405, whose 16 records all carry this
@@ -1089,38 +1062,40 @@ ScreenButton_EditPartSelect:
 ; ---------------------------------------------------------------------
 
 EditPartSelect_ButtonTable:
-	.long SoftKeyCol1_EditPartSelect                                 ; FE857C  [  0]
-	.long SoftKeyCol2_EditPartSelect                                 ; FE8580  [  1]
-	.long SoftKeyCol3_EditPartSelect                                 ; FE8584  [  2]
-	.long SoftKeyCol4_EditPartSelect                                 ; FE8588  [  3]
-	.long SoftKeyCol5_EditPartSelect                                 ; FE858C  [  4]
-	.long SoftKeyCol6_EditPartSelect                                 ; FE8590  [  5]
-	.long SoftKeyCol7_EditPartSelect                                 ; FE8594  [  6]
-	.long SoftKeyCol8_EditPartSelect                                 ; FE8598  [  7]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE859C  [  8]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A0  [  9]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A4  [ 10]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A8  [ 11]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85AC  [ 12]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85B0  [ 13]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85B4  [ 14]
-	.long ExitKey_EditPartSelect                                 ; FE85B8  [ 15]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85BC  [ 16]
-	.long SoftKeyCol1_EditPartSelect                                 ; FE85C0  [ 17]
-	.long SoftKeyCol2_EditPartSelect                                 ; FE85C4  [ 18]
-	.long SoftKeyCol3_EditPartSelect                                 ; FE85C8  [ 19]
-	.long SoftKeyCol4_EditPartSelect                                 ; FE85CC  [ 20]
-	.long SoftKeyCol5_EditPartSelect                                 ; FE85D0  [ 21]
-	.long SoftKeyCol6_EditPartSelect                                 ; FE85D4  [ 22]
-	.long SoftKeyCol7_EditPartSelect                                 ; FE85D8  [ 23]
-	.long SoftKeyCol8_EditPartSelect                                 ; FE85DC  [ 24]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E0  [ 25]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E4  [ 26]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E8  [ 27]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85EC  [ 28]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F0  [ 29]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F4  [ 30]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F8  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_EditPartSelect
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_EditPartSelect
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_EditPartSelect
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_EditPartSelect
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_EditPartSelect
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_EditPartSelect
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_EditPartSelect
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_EditPartSelect
+	on_key	KEY_LcdRow1,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow2,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow3,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow4,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow5,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_MinusPlus,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_Code0E,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_Exit,		ExitKey_EditPartSelect
+	on_key	KEY_Page,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_EditPartSelect
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_EditPartSelect
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_EditPartSelect
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_EditPartSelect
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_EditPartSelect
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_EditPartSelect
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_EditPartSelect
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_EditPartSelect
+	on_key	KEY_PageAlt,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1A,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_NumberPad,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1C,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1D,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Compare,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1F,		ExitKey_EditPartSelect_Nop25
+	keymap_end
 ; EditPartSelect_PartRefused_Always0(part): `xor A,A / ret` -- every SoftKeyCol<n>_EditPartSelect asks it before EditPartSelect_OpenEditor and
 ;   opens the editor only on A == 0, so in this build no part is ever refused.
 EditPartSelect_PartRefused_Always0:
@@ -1995,81 +1970,61 @@ KeyboardRuler_DrawStrip9:   ; entry: named by 3 `.long` operands, first at 0xFE8
 ; The length bytes walk from 0xFE8E31 and land exactly on 0xFE8E3D.
 KeyboardRuler_DrawStrip0_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E31  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip0                   ; FE8E33  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E37  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip0, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip1_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E3D and land exactly on 0xFE8E49.
 KeyboardRuler_DrawStrip1_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E3D  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip1                   ; FE8E3F  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E43  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip1, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip2_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E49 and land exactly on 0xFE8E55.
 KeyboardRuler_DrawStrip2_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E49  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip2                   ; FE8E4B  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E4F  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip2, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip3_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E55 and land exactly on 0xFE8E61.
 KeyboardRuler_DrawStrip3_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E55  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip3                   ; FE8E57  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E5B  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip3, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip4_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E61 and land exactly on 0xFE8E6D.
 KeyboardRuler_DrawStrip4_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E61  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip4                   ; FE8E63  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E67  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip4, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip5_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E6D and land exactly on 0xFE8E79.
 KeyboardRuler_DrawStrip5_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E6D  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip5                   ; FE8E6F  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E73  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip5, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip6_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E79 and land exactly on 0xFE8E85.
 KeyboardRuler_DrawStrip6_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E79  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip6                   ; FE8E7B  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E7F  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip6, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip7_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E85 and land exactly on 0xFE8E91.
 KeyboardRuler_DrawStrip7_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E85  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip7                   ; FE8E87  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E8B  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip7, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip8_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E91 and land exactly on 0xFE8E9D.
 KeyboardRuler_DrawStrip8_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E91  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip8                   ; FE8E93  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8E97  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip8, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 
 ; KeyboardRuler_DrawStrip9_DL -- 1 record(s), 12 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFE8E9D and land exactly on 0xFE8EA9.
 KeyboardRuler_DrawStrip9_DL:
 ; ; drawn (start operand) by KeyboardRuler_DrawStrip9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0C                               ; FE8E9D  op 03, 12 bytes, handler 0xF31ABE
-	.long KeyboardRuler_Strip9                   ; FE8E9F  bitmap (16x129, 258 bytes)
-	.short 0x0668, 2, 129                         ; FE8EA3  IX VRAM byte offset, BC columns, HL rows
+	dl_bitmap	bitmap=KeyboardRuler_Strip9, x=0, y=41, w=16, h=129	; bitmap (16x129, 258 bytes); IX VRAM byte offset, BC columns, HL rows
 ; EditScreen_OpenCursorMeasure: EditScreen_SeekCursorMeasure; when it found the measure: EditMeasure_StartBeat = IX, EditMeasure_StartTick = 0,
 ;   and the mark (0x601F12) = BStore_CursorBlock, (0x601F14) = IY -- what BStore_CursorSlot_RestoreMark returns to.
 EditScreen_OpenCursorMeasure:
@@ -3272,38 +3227,40 @@ ScreenButton_NoteEdit:
 ; ---------------------------------------------------------------------
 
 NoteEdit_ButtonTable:
-	.long SoftKeyCol1_NoteEdit                                 ; FE9A4A  [  0]
-	.long SoftKeyCol2_NoteEdit                                 ; FE9A4E  [  1]
-	.long SoftKeyCol3_NoteEdit                                 ; FE9A52  [  2]
-	.long SoftKeyCol4_NoteEdit                                 ; FE9A56  [  3]
-	.long SoftKeyCol5_NoteEdit                                 ; FE9A5A  [  4]
-	.long SoftKeyCol6_NoteEdit                                 ; FE9A5E  [  5]
-	.long SoftKeyCol7_NoteEdit                                 ; FE9A62  [  6]
-	.long SoftKeyCol8_NoteEdit                                 ; FE9A66  [  7]
-	.long LcdKeyRow1_NoteEdit                                 ; FE9A6A  [  8]
-	.long LcdKeyRow2_NoteEdit                                 ; FE9A6E  [  9]
-	.long LcdKeyRow3_NoteEdit                                 ; FE9A72  [ 10]
-	.long LcdKeyRow4_NoteEdit                                 ; FE9A76  [ 11]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A7A  [ 12]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A7E  [ 13]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A82  [ 14]
-	.long ExitKey_NoteEdit                                 ; FE9A86  [ 15]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A8A  [ 16]
-	.long NoteEdit_Button17                                 ; FE9A8E  [ 17]
-	.long NoteEdit_Button18                                 ; FE9A92  [ 18]
-	.long NoteEdit_Button19                                 ; FE9A96  [ 19]
-	.long NoteEdit_Button20                                 ; FE9A9A  [ 20]
-	.long NoteEdit_Button21                                 ; FE9A9E  [ 21]
-	.long NoteEdit_Button22                                 ; FE9AA2  [ 22]
-	.long NoteEdit_Button23                                 ; FE9AA6  [ 23]
-	.long NoteEdit_Button24                                 ; FE9AAA  [ 24]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AAE  [ 25]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AB2  [ 26]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AB6  [ 27]
-	.long NoteEdit_Button24_Nop25                                 ; FE9ABA  [ 28]
-	.long NoteEdit_Button24_Nop25                                 ; FE9ABE  [ 29]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AC2  [ 30]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AC6  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_NoteEdit
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_NoteEdit
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_NoteEdit
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_NoteEdit
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_NoteEdit
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_NoteEdit
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_NoteEdit
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_NoteEdit
+	on_key	KEY_LcdRow1,		LcdKeyRow1_NoteEdit
+	on_key	KEY_LcdRow2,		LcdKeyRow2_NoteEdit
+	on_key	KEY_LcdRow3,		LcdKeyRow3_NoteEdit
+	on_key	KEY_LcdRow4,		LcdKeyRow4_NoteEdit
+	on_key	KEY_LcdRow5,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_MinusPlus,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_Code0E,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_Exit,		ExitKey_NoteEdit
+	on_key	KEY_Page,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_SoftKeyCol1Alt,	NoteEdit_Button17
+	on_key	KEY_SoftKeyCol2Alt,	NoteEdit_Button18
+	on_key	KEY_SoftKeyCol3Alt,	NoteEdit_Button19
+	on_key	KEY_SoftKeyCol4Alt,	NoteEdit_Button20
+	on_key	KEY_SoftKeyCol5Alt,	NoteEdit_Button21
+	on_key	KEY_SoftKeyCol6Alt,	NoteEdit_Button22
+	on_key	KEY_SoftKeyCol7Alt,	NoteEdit_Button23
+	on_key	KEY_SoftKeyCol8Alt,	NoteEdit_Button24
+	on_key	KEY_PageAlt,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1A,		NoteEdit_Button24_Nop25
+	on_key	KEY_NumberPad,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1C,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1D,		NoteEdit_Button24_Nop25
+	on_key	KEY_Compare,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1F,		NoteEdit_Button24_Nop25
+	keymap_end
 ; SoftKeyCol1_NoteEdit: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; NoteEdit_ButtonTable slot 0x00.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol1_NoteEdit:   ; entry: named by 1 `.long` operand, first at 0xFE9A4A
 	ld (PanelDial_UpButton:16), 0x00                                 ; FE9ACA  f1 9c 20 00 00
@@ -3447,38 +3404,40 @@ ScreenButton_DrumEdit:
 ; ---------------------------------------------------------------------
 
 DrumEdit_ButtonTable:
-	.long SoftKeyCol1_DrumEdit                                 ; FE9BA4  [  0]
-	.long SoftKeyCol2_DrumEdit                                 ; FE9BA8  [  1]
-	.long SoftKeyCol3_DrumEdit                                 ; FE9BAC  [  2]
-	.long SoftKeyCol4_DrumEdit                                 ; FE9BB0  [  3]
-	.long SoftKeyCol5_DrumEdit                                 ; FE9BB4  [  4]
-	.long SoftKeyCol6_DrumEdit                                 ; FE9BB8  [  5]
-	.long SoftKeyCol7_DrumEdit                                 ; FE9BBC  [  6]
-	.long SoftKeyCol8_DrumEdit                                 ; FE9BC0  [  7]
-	.long LcdKeyRow1_DrumEdit                                 ; FE9BC4  [  8]
-	.long LcdKeyRow2_DrumEdit                                 ; FE9BC8  [  9]
-	.long LcdKeyRow3_DrumEdit                                 ; FE9BCC  [ 10]
-	.long LcdKeyRow4_DrumEdit                                 ; FE9BD0  [ 11]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BD4  [ 12]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BD8  [ 13]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BDC  [ 14]
-	.long ExitKey_DrumEdit                                 ; FE9BE0  [ 15]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BE4  [ 16]
-	.long DrumEdit_Button17                                 ; FE9BE8  [ 17]
-	.long DrumEdit_Button18                                 ; FE9BEC  [ 18]
-	.long DrumEdit_Button19                                 ; FE9BF0  [ 19]
-	.long DrumEdit_Button20                                 ; FE9BF4  [ 20]
-	.long DrumEdit_Button21                                 ; FE9BF8  [ 21]
-	.long DrumEdit_Button22                                 ; FE9BFC  [ 22]
-	.long DrumEdit_Button23                                 ; FE9C00  [ 23]
-	.long DrumEdit_Button23_Nop24                                 ; FE9C04  [ 24]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C08  [ 25]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C0C  [ 26]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C10  [ 27]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C14  [ 28]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C18  [ 29]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C1C  [ 30]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C20  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_DrumEdit
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_DrumEdit
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_DrumEdit
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DrumEdit
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_DrumEdit
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_DrumEdit
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_DrumEdit
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_DrumEdit
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DrumEdit
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DrumEdit
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DrumEdit
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DrumEdit
+	on_key	KEY_LcdRow5,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_MinusPlus,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_Code0E,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_Exit,		ExitKey_DrumEdit
+	on_key	KEY_Page,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_SoftKeyCol1Alt,	DrumEdit_Button17
+	on_key	KEY_SoftKeyCol2Alt,	DrumEdit_Button18
+	on_key	KEY_SoftKeyCol3Alt,	DrumEdit_Button19
+	on_key	KEY_SoftKeyCol4Alt,	DrumEdit_Button20
+	on_key	KEY_SoftKeyCol5Alt,	DrumEdit_Button21
+	on_key	KEY_SoftKeyCol6Alt,	DrumEdit_Button22
+	on_key	KEY_SoftKeyCol7Alt,	DrumEdit_Button23
+	on_key	KEY_SoftKeyCol8Alt,	DrumEdit_Button23_Nop24
+	on_key	KEY_PageAlt,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1A,		DrumEdit_Button23_Nop25
+	on_key	KEY_NumberPad,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1C,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1D,		DrumEdit_Button23_Nop25
+	on_key	KEY_Compare,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1F,		DrumEdit_Button23_Nop25
+	keymap_end
 ; SoftKeyCol1_DrumEdit: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; DrumEdit_ButtonTable slot 0x00.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol1_DrumEdit:   ; entry: named by 1 `.long` operand, first at 0xFE9BA4
 	ld (PanelDial_UpButton:16), 0x00                                 ; FE9C24  f1 9c 20 00 00
@@ -5698,7 +5657,7 @@ DrumEdit_DrawRowNotes:
 ;   handler 0xF31C14) -- row 0's note number.
 DrumEdit_DrawRowNote0:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0A4  d2 71 1f 60 20
-	ld (0x26b0:16), wa                                  ; FEB0A9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0A9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote0_DL                            ; FEB0AD  45 bc b0 fe 00
 	ld XIX,DrumEdit_DrawRowNote1                                    ; FEB0B2  44 c8 b0 fe 00
 	call T_DisplayListB_Run                              ; FEB0B7  1d f4 17 f4
@@ -5708,8 +5667,7 @@ DrumEdit_DrawRowNote0:
 ; The length bytes walk from 0xFEB0BC and land exactly on 0xFEB0C8.
 DrumEdit_DrawRowNote0_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB0BC  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x2B, 0x00, 0x03  ; FEB0BE
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=43, digits=3
 ; DrumEdit_DrawRowNote1 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5731,7 +5689,7 @@ DrumEdit_DrawRowNote0_DL:
 DrumEdit_DrawRowNote1:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0C8  d2 71 1f 60 20
 	add WA,0x0001                                        ; FEB0CD  d8 c8 01 00
-	ld (0x26b0:16), wa                                  ; FEB0D1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0D1  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote1_DL                            ; FEB0D5  45 e4 b0 fe 00
 	ld XIX,DrumEdit_DrawRowNote2                                    ; FEB0DA  44 f0 b0 fe 00
 	call T_DisplayListB_Run                              ; FEB0DF  1d f4 17 f4
@@ -5741,8 +5699,7 @@ DrumEdit_DrawRowNote1:
 ; The length bytes walk from 0xFEB0E4 and land exactly on 0xFEB0F0.
 DrumEdit_DrawRowNote1_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB0E4  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x35, 0x00, 0x03  ; FEB0E6
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=53, digits=3
 ; DrumEdit_DrawRowNote2 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5764,7 +5721,7 @@ DrumEdit_DrawRowNote1_DL:
 DrumEdit_DrawRowNote2:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0F0  d2 71 1f 60 20
 	add WA,0x0002                                        ; FEB0F5  d8 c8 02 00
-	ld (0x26b0:16), wa                                  ; FEB0F9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0F9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote2_DL                            ; FEB0FD  45 0c b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote3                                    ; FEB102  44 18 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB107  1d f4 17 f4
@@ -5774,8 +5731,7 @@ DrumEdit_DrawRowNote2:
 ; The length bytes walk from 0xFEB10C and land exactly on 0xFEB118.
 DrumEdit_DrawRowNote2_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB10C  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x3F, 0x00, 0x03  ; FEB10E
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=63, digits=3
 ; DrumEdit_DrawRowNote3 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5797,7 +5753,7 @@ DrumEdit_DrawRowNote2_DL:
 DrumEdit_DrawRowNote3:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB118  d2 71 1f 60 20
 	add WA,0x0003                                        ; FEB11D  d8 c8 03 00
-	ld (0x26b0:16), wa                                  ; FEB121  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB121  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote3_DL                            ; FEB125  45 34 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote4                                    ; FEB12A  44 40 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB12F  1d f4 17 f4
@@ -5807,8 +5763,7 @@ DrumEdit_DrawRowNote3:
 ; The length bytes walk from 0xFEB134 and land exactly on 0xFEB140.
 DrumEdit_DrawRowNote3_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB134  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x49, 0x00, 0x03  ; FEB136
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=73, digits=3
 ; DrumEdit_DrawRowNote4 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5830,7 +5785,7 @@ DrumEdit_DrawRowNote3_DL:
 DrumEdit_DrawRowNote4:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB140  d2 71 1f 60 20
 	add WA,0x0004                                        ; FEB145  d8 c8 04 00
-	ld (0x26b0:16), wa                                  ; FEB149  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB149  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote4_DL                            ; FEB14D  45 5c b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote5                                    ; FEB152  44 68 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB157  1d f4 17 f4
@@ -5840,8 +5795,7 @@ DrumEdit_DrawRowNote4:
 ; The length bytes walk from 0xFEB15C and land exactly on 0xFEB168.
 DrumEdit_DrawRowNote4_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB15C  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x53, 0x00, 0x03  ; FEB15E
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=83, digits=3
 ; DrumEdit_DrawRowNote5 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5863,7 +5817,7 @@ DrumEdit_DrawRowNote4_DL:
 DrumEdit_DrawRowNote5:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB168  d2 71 1f 60 20
 	add WA,0x0005                                        ; FEB16D  d8 c8 05 00
-	ld (0x26b0:16), wa                                  ; FEB171  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB171  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote5_DL                            ; FEB175  45 84 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote6                                    ; FEB17A  44 90 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB17F  1d f4 17 f4
@@ -5873,8 +5827,7 @@ DrumEdit_DrawRowNote5:
 ; The length bytes walk from 0xFEB184 and land exactly on 0xFEB190.
 DrumEdit_DrawRowNote5_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB184  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x5D, 0x00, 0x03  ; FEB186
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=93, digits=3
 ; DrumEdit_DrawRowNote6 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5896,7 +5849,7 @@ DrumEdit_DrawRowNote5_DL:
 DrumEdit_DrawRowNote6:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB190  d2 71 1f 60 20
 	add WA,0x0006                                        ; FEB195  d8 c8 06 00
-	ld (0x26b0:16), wa                                  ; FEB199  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB199  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote6_DL                            ; FEB19D  45 ac b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote7                                    ; FEB1A2  44 b8 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB1A7  1d f4 17 f4
@@ -5906,8 +5859,7 @@ DrumEdit_DrawRowNote6:
 ; The length bytes walk from 0xFEB1AC and land exactly on 0xFEB1B8.
 DrumEdit_DrawRowNote6_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB1AC  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x67, 0x00, 0x03  ; FEB1AE
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=103, digits=3
 ; DrumEdit_DrawRowNote7 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5929,7 +5881,7 @@ DrumEdit_DrawRowNote6_DL:
 DrumEdit_DrawRowNote7:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB1B8  d2 71 1f 60 20
 	add WA,0x0007                                        ; FEB1BD  d8 c8 07 00
-	ld (0x26b0:16), wa                                  ; FEB1C1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB1C1  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote7_DL                            ; FEB1C5  45 d4 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote8                                    ; FEB1CA  44 e0 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB1CF  1d f4 17 f4
@@ -5939,8 +5891,7 @@ DrumEdit_DrawRowNote7:
 ; The length bytes walk from 0xFEB1D4 and land exactly on 0xFEB1E0.
 DrumEdit_DrawRowNote7_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB1D4  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x71, 0x00, 0x03  ; FEB1D6
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=113, digits=3
 ; DrumEdit_DrawRowNote8 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5962,7 +5913,7 @@ DrumEdit_DrawRowNote7_DL:
 DrumEdit_DrawRowNote8:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB1E0  d2 71 1f 60 20
 	add WA,0x0008                                        ; FEB1E5  d8 c8 08 00
-	ld (0x26b0:16), wa                                  ; FEB1E9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB1E9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote8_DL                            ; FEB1ED  45 fc b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote9                                    ; FEB1F2  44 08 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB1F7  1d f4 17 f4
@@ -5972,8 +5923,7 @@ DrumEdit_DrawRowNote8:
 ; The length bytes walk from 0xFEB1FC and land exactly on 0xFEB208.
 DrumEdit_DrawRowNote8_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB1FC  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x7B, 0x00, 0x03  ; FEB1FE
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=123, digits=3
 ; DrumEdit_DrawRowNote9 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5995,7 +5945,7 @@ DrumEdit_DrawRowNote8_DL:
 DrumEdit_DrawRowNote9:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB208  d2 71 1f 60 20
 	add WA,0x0009                                        ; FEB20D  d8 c8 09 00
-	ld (0x26b0:16), wa                                  ; FEB211  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB211  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote9_DL                            ; FEB215  45 24 b2 fe 00
 	ld XIX,DrumEdit_DrawRowNote10                                    ; FEB21A  44 30 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB21F  1d f4 17 f4
@@ -6005,8 +5955,7 @@ DrumEdit_DrawRowNote9:
 ; The length bytes walk from 0xFEB224 and land exactly on 0xFEB230.
 DrumEdit_DrawRowNote9_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB224  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x85, 0x00, 0x03  ; FEB226
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=133, digits=3
 ; DrumEdit_DrawRowNote10 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -6028,7 +5977,7 @@ DrumEdit_DrawRowNote9_DL:
 DrumEdit_DrawRowNote10:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB230  d2 71 1f 60 20
 	add WA,0x000a                                        ; FEB235  d8 c8 0a 00
-	ld (0x26b0:16), wa                                  ; FEB239  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB239  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote10_DL                            ; FEB23D  45 4c b2 fe 00
 	ld XIX,DrumEdit_DrawRowNote11                                    ; FEB242  44 58 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB247  1d f4 17 f4
@@ -6038,8 +5987,7 @@ DrumEdit_DrawRowNote10:
 ; The length bytes walk from 0xFEB24C and land exactly on 0xFEB258.
 DrumEdit_DrawRowNote10_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB24C  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x8F, 0x00, 0x03  ; FEB24E
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=143, digits=3
 ; DrumEdit_DrawRowNote11 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -6061,7 +6009,7 @@ DrumEdit_DrawRowNote10_DL:
 DrumEdit_DrawRowNote11:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB258  d2 71 1f 60 20
 	add WA,0x000b                                        ; FEB25D  d8 c8 0b 00
-	ld (0x26b0:16), wa                                  ; FEB261  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB261  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote11_DL                            ; FEB265  45 74 b2 fe 00
 	ld XIX,DrumEdit_DrawRowNames                                    ; FEB26A  44 80 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB26F  1d f4 17 f4
@@ -6071,8 +6019,7 @@ DrumEdit_DrawRowNote11:
 ; The length bytes walk from 0xFEB274 and land exactly on 0xFEB280.
 DrumEdit_DrawRowNote11_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0A, 0x0C                               ; FEB274  op 0A, 12 bytes, handler 0xF31C14
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x17, 0x02, 0x00, 0x99, 0x00, 0x03  ; FEB276
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=153, digits=3
 ; DrumEdit_DrawRowNames: DrumEdit_DrawRowName for rows 0..11.
 DrumEdit_DrawRowNames:
 	xor DE,DE                                            ; FEB280  da d2
@@ -8372,8 +8319,7 @@ EditScreen_ClearCurrentLayer:
 ; The length bytes walk from 0xFEF770 and land exactly on 0xFEF778.
 EditScreen_ClearCurrentLayer_DL:
 ; ; drawn (start operand) by EditScreen_ClearCurrentLayer -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x0E, 0x08                               ; FEF770  op 0E, 8 bytes, handler 0xF31A9F
-	.byte 0x00, 0x00, 0x28, 0x00, 0xF0, 0x00  ; FEF772
+	dl_clear_area	x=0, y=0, w=320, h=240
 ; EditScreen_EraseFieldRow -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 5
@@ -8402,8 +8348,7 @@ EditScreen_EraseFieldRow:
 ; The length bytes walk from 0xFEF78C and land exactly on 0xFEF796.
 EditScreen_EraseFieldRow_DL:
 ; ; drawn (start operand) by EditScreen_EraseFieldRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF78C  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x08, 0x00, 0xB2, 0x00, 0xE8, 0x00, 0xC0, 0x00  ; FEF78E
+	dl_erase_rect	x0=8, y0=178, x1=232, y1=192
 ; EditScreen_EraseMarkerStrip -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 5
@@ -8433,8 +8378,7 @@ EditScreen_EraseMarkerStrip:
 ; The length bytes walk from 0xFEF7AA and land exactly on 0xFEF7B4.
 EditScreen_EraseMarkerStrip_DL:
 ; ; drawn (start operand) by EditScreen_EraseMarkerStrip -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF7AA  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x21, 0x00, 0x08, 0x01, 0x27, 0x00  ; FEF7AC
+	dl_erase_rect	x0=0, y0=33, x1=264, y1=39
 ; EditScreen_EraseHeaderRow -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 5
@@ -8463,8 +8407,7 @@ EditScreen_EraseHeaderRow:
 ; The length bytes walk from 0xFEF7C8 and land exactly on 0xFEF7D2.
 EditScreen_EraseHeaderRow_DL:
 ; ; drawn (start operand) by EditScreen_EraseHeaderRow -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF7C8  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x14, 0x00, 0x08, 0x01, 0x1F, 0x00  ; FEF7CA
+	dl_erase_rect	x0=0, y0=20, x1=264, y1=31
 ; EditScreen_EraseEditArea_Layer0: EditScreen_Mode bit 0 (DRUM EDIT) -> DrumEdit_EraseEditArea_Layer0, else NoteEdit_EraseEditArea_Layer0.  22 call sites.
 EditScreen_EraseEditArea_Layer0:
 	bit	0, (EditScreen_Mode:24)                             ; FEF7D2  f2 70 1f 60 c8
@@ -8504,8 +8447,7 @@ NoteEdit_EraseEditArea:
 ; The length bytes walk from 0xFEF7F5 and land exactly on 0xFEF7FF.
 NoteEdit_EraseEditArea_DL:
 ; ; drawn (start operand) by NoteEdit_EraseEditArea -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF7F5  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x10, 0x00, 0x29, 0x00, 0x02, 0x01, 0xAE, 0x00  ; FEF7F7
+	dl_erase_rect	x0=16, y0=41, x1=258, y1=174
 ; DrumEdit_EraseEditArea_Layer0: LCD_CurrentLayer = 0, then falls into DrumEdit_EraseEditArea.
 DrumEdit_EraseEditArea_Layer0:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FEF7FF  f1 40 25 00 00
@@ -8537,8 +8479,7 @@ DrumEdit_EraseEditArea:
 ; The length bytes walk from 0xFEF813 and land exactly on 0xFEF81D.
 DrumEdit_EraseEditArea_DL:
 ; ; drawn (start operand) by DrumEdit_EraseEditArea -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF813  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x58, 0x00, 0x29, 0x00, 0x02, 0x01, 0xAE, 0x00  ; FEF815
+	dl_erase_rect	x0=88, y0=41, x1=258, y1=174
 ; EditScreen_EraseVelocityCell -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 5
@@ -8570,8 +8511,7 @@ EditScreen_EraseVelocityCell:
 ; The length bytes walk from 0xFEF831 and land exactly on 0xFEF83B.
 EditScreen_EraseVelocityCell_DL:
 ; drawn (start operand) by EditScreen_EraseVelocityCell -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF831  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x78, 0x00, 0xB2, 0x00, 0x80, 0x00, 0xC0, 0x00  ; FEF833
+	dl_erase_rect	x0=120, y0=178, x1=128, y1=192
 ; EditScreen_EraseLengthCell -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 5
@@ -8601,8 +8541,7 @@ EditScreen_EraseLengthCell:
 ; The length bytes walk from 0xFEF84F and land exactly on 0xFEF859.
 EditScreen_EraseLengthCell_DL:
 ; ; drawn (start operand) by EditScreen_EraseLengthCell -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF84F  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0xA0, 0x00, 0xB2, 0x00, 0xC8, 0x00, 0xC0, 0x00  ; FEF851
+	dl_erase_rect	x0=160, y0=178, x1=200, y1=192
 ; EditScreen_EraseEditArea_Layer1: LCD_CurrentLayer = 1, then by EditScreen_Mode bit 0 DrumEdit_ or NoteEdit_EraseEditArea.
 EditScreen_EraseEditArea_Layer1:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FEF859  f1 40 25 00 01
@@ -8642,8 +8581,7 @@ EditScreen_EraseLeftColumn_Layer1:
 ; The length bytes walk from 0xFEF881 and land exactly on 0xFEF88B.
 EditScreen_EraseLeftColumn_Layer1_DL:
 ; ; drawn (start operand) by EditScreen_EraseLeftColumn_Layer1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF881  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x2A, 0x00, 0x16, 0x00, 0xA3, 0x00  ; FEF883
+	dl_erase_rect	x0=0, y0=42, x1=22, y1=163
 ; EditScreen_EraseRowLabelArea: layer 0, EditScreen_EraseRowLabelArea_DL: EraseRect (0, 0x29)-(0x58, 0xA3), the left area DrumEdit_RedrawRowList redraws.
 EditScreen_EraseRowLabelArea:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FEF88B  f1 40 25 00 00
@@ -8673,8 +8611,7 @@ DisplayList_Run_Call:
 ; The length bytes walk from 0xFEF89F and land exactly on 0xFEF8A9.
 EditScreen_EraseRowLabelArea_DL:
 ; ; drawn (start operand) by EditScreen_EraseRowLabelArea -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1B, 0x0A                               ; FEF89F  op 1B, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x29, 0x00, 0x58, 0x00, 0xA3, 0x00  ; FEF8A1
+	dl_erase_rect	x0=0, y0=41, x1=88, y1=163
 sub_FEF8A9:   ; entry: named by 1 `ld` operand, first at 0xFEF895
 	calr sub_FEF746                                          ; FEF8A9  1e 9a fe
 ; EditScreen_PaintLayer0: layer 0: EditScreen_DrawFields, EditScreen_DrawVisibleNotes, EditScreen_DrawHeaderAndGrid.  Called by
@@ -8828,7 +8765,7 @@ EditScreen_DrawMeasureNumbers:
 	sll xwa, 0x02                                        ; FEF9D2  e8 ee 02
 	add XIY,XWA                                          ; FEF9D5  e8 85
 	ld XIY,(XIY)                                         ; FEF9D7  a5 25
-	ld (0x26b0:16), bc                                  ; FEF9D9  f1 b0 26 51
+	ld (EditScreen_DrawNumber:16), bc                                  ; FEF9D9  f1 b0 26 51
 	pushw bc                                             ; FEF9DD  29
 	pushw de                                             ; FEF9DE  2a
 	push XIX                                             ; FEF9DF  3c
@@ -8892,9 +8829,9 @@ ScreenDrawPtrs_FEFA2A:
 ; EditScreen_MeasureNumberAt0: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 0 of 12 in address order; NOTE EDIT slot 0, NOTE EDIT slot 11, DRUM EDIT slot 8 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt0:   ; entry: named by 3 `.long` operands, first at 0xFEF9FA
-	cpw	(0x26b0:16), 0x03e7                          ; FEFA4E  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFA4E  d1 b0 26 3f e7 03
 	jr ule, .LFEFA6B                                     ; FEFA54  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFA56  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFA56  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt0_DL1                            ; FEFA5C  45 7a fa fe 00
 	ld XIX,EditScreen_MeasureNumberAt0_DL2                            ; FEFA61  44 89 fa fe 00
 	call T_DisplayListB_Run                              ; FEFA66  1d f4 17 f4
@@ -8909,23 +8846,19 @@ EditScreen_MeasureNumberAt0:   ; entry: named by 3 `.long` operands, first at 0x
 ; The length bytes walk from 0xFEFA7A and land exactly on 0xFEFA89.
 EditScreen_MeasureNumberAt0_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFA7A  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x03, 0x00, 0x20, 0x03  ; FEFA7C
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=0, y=20
 
 ; EditScreen_MeasureNumberAt0_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFA89 and land exactly on 0xFEFA93.
 EditScreen_MeasureNumberAt0_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFA89  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFA8B
-	.ascii "  "                                 ; FEFA8F
-	.byte 0x03, 0x03                   ; FEFA91
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=0, y=20, digits=3
 ; EditScreen_MeasureNumberAt1: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 1 of 12 in address order; NOTE EDIT slot 1 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt1:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEF9FE
-	cpw	(0x26b0:16), 0x03e7                          ; FEFA93  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFA93  d1 b0 26 3f e7 03
 	jr ule, .LFEFAB0                                     ; FEFA99  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFA9B  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFA9B  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt1_DL1                            ; FEFAA1  45 bf fa fe 00
 	ld XIX,EditScreen_MeasureNumberAt1_DL2                            ; FEFAA6  44 ce fa fe 00
 	call T_DisplayListB_Run                              ; FEFAAB  1d f4 17 f4
@@ -8940,23 +8873,19 @@ EditScreen_MeasureNumberAt1:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFABF and land exactly on 0xFEFACE.
 EditScreen_MeasureNumberAt1_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFABF  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x24, 0x03  ; FEFAC1
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=32, y=20
 
 ; EditScreen_MeasureNumberAt1_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFACE and land exactly on 0xFEFAD8.
 EditScreen_MeasureNumberAt1_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFACE  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFAD0
-	.ascii " $"                                 ; FEFAD4
-	.byte 0x03, 0x02                   ; FEFAD6
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=32, y=20, digits=2
 ; EditScreen_MeasureNumberAt2: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 2 of 12 in address order; NOTE EDIT slot 2 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt2:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA02
-	cpw	(0x26b0:16), 0x03e7                          ; FEFAD8  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFAD8  d1 b0 26 3f e7 03
 	jr ule, .LFEFAF5                                     ; FEFADE  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFAE0  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFAE0  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt2_DL1                            ; FEFAE6  45 04 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt2_DL2                            ; FEFAEB  44 13 fb fe 00
 	call T_DisplayListB_Run                              ; FEFAF0  1d f4 17 f4
@@ -8971,23 +8900,19 @@ EditScreen_MeasureNumberAt2:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB04 and land exactly on 0xFEFB13.
 EditScreen_MeasureNumberAt2_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFB04  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x27, 0x03  ; FEFB06
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=56, y=20
 
 ; EditScreen_MeasureNumberAt2_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB13 and land exactly on 0xFEFB1D.
 EditScreen_MeasureNumberAt2_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFB13  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFB15
-	.ascii " '"                                 ; FEFB19
-	.byte 0x03, 0x02                   ; FEFB1B
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=20, digits=2
 ; EditScreen_MeasureNumberAt3: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 3 of 12 in address order; NOTE EDIT slot 3 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt3:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA06
-	cpw	(0x26b0:16), 0x03e7                          ; FEFB1D  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFB1D  d1 b0 26 3f e7 03
 	jr ule, .LFEFB3A                                     ; FEFB23  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFB25  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFB25  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt3_DL1                            ; FEFB2B  45 49 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt3_DL2                            ; FEFB30  44 58 fb fe 00
 	call T_DisplayListB_Run                              ; FEFB35  1d f4 17 f4
@@ -9002,23 +8927,19 @@ EditScreen_MeasureNumberAt3:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB49 and land exactly on 0xFEFB58.
 EditScreen_MeasureNumberAt3_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFB49  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x2A, 0x03  ; FEFB4B
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=80, y=20
 
 ; EditScreen_MeasureNumberAt3_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB58 and land exactly on 0xFEFB62.
 EditScreen_MeasureNumberAt3_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFB58  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFB5A
-	.ascii " *"                                 ; FEFB5E
-	.byte 0x03, 0x02                   ; FEFB60
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=80, y=20, digits=2
 ; EditScreen_MeasureNumberAt4: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 4 of 12 in address order; DRUM EDIT slot 0 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt4:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA2A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFB62  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFB62  d1 b0 26 3f e7 03
 	jr ule, .LFEFB7F                                     ; FEFB68  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFB6A  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFB6A  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt4_DL1                            ; FEFB70  45 8e fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt4_DL2                            ; FEFB75  44 9d fb fe 00
 	call T_DisplayListB_Run                              ; FEFB7A  1d f4 17 f4
@@ -9033,23 +8954,19 @@ EditScreen_MeasureNumberAt4:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB8E and land exactly on 0xFEFB9D.
 EditScreen_MeasureNumberAt4_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFB8E  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x03, 0x00, 0x29, 0x03  ; FEFB90
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=72, y=20
 
 ; EditScreen_MeasureNumberAt4_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB9D and land exactly on 0xFEFBA7.
 EditScreen_MeasureNumberAt4_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFB9D  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFB9F
-	.ascii " )"                                 ; FEFBA3
-	.byte 0x03, 0x03                   ; FEFBA5
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=72, y=20, digits=3
 ; EditScreen_MeasureNumberAt5: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 5 of 12 in address order; NOTE EDIT slot 4, DRUM EDIT slot 1 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt5:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA0A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFBA7  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFBA7  d1 b0 26 3f e7 03
 	jr ule, .LFEFBC4                                     ; FEFBAD  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFBAF  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFBAF  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt5_DL1                            ; FEFBB5  45 d3 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt5_DL2                            ; FEFBBA  44 e2 fb fe 00
 	call T_DisplayListB_Run                              ; FEFBBF  1d f4 17 f4
@@ -9064,23 +8981,19 @@ EditScreen_MeasureNumberAt5:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFBD3 and land exactly on 0xFEFBE2.
 EditScreen_MeasureNumberAt5_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFBD3  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x2D, 0x03  ; FEFBD5
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=104, y=20
 
 ; EditScreen_MeasureNumberAt5_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFBE2 and land exactly on 0xFEFBEC.
 EditScreen_MeasureNumberAt5_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFBE2  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFBE4
-	.ascii " -"                                 ; FEFBE8
-	.byte 0x03, 0x02                   ; FEFBEA
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=104, y=20, digits=2
 ; EditScreen_MeasureNumberAt6: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 6 of 12 in address order; NOTE EDIT slot 5, DRUM EDIT slot 2 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt6:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA0E
-	cpw	(0x26b0:16), 0x03e7                          ; FEFBEC  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFBEC  d1 b0 26 3f e7 03
 	jr ule, .LFEFC09                                     ; FEFBF2  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFBF4  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFBF4  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt6_DL1                            ; FEFBFA  45 18 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt6_DL2                            ; FEFBFF  44 27 fc fe 00
 	call T_DisplayListB_Run                              ; FEFC04  1d f4 17 f4
@@ -9095,23 +9008,19 @@ EditScreen_MeasureNumberAt6:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFC18 and land exactly on 0xFEFC27.
 EditScreen_MeasureNumberAt6_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFC18  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x30, 0x03  ; FEFC1A
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=128, y=20
 
 ; EditScreen_MeasureNumberAt6_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFC27 and land exactly on 0xFEFC31.
 EditScreen_MeasureNumberAt6_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFC27  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFC29
-	.ascii " 0"                                 ; FEFC2D
-	.byte 0x03, 0x02                   ; FEFC2F
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=128, y=20, digits=2
 ; EditScreen_MeasureNumberAt7: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 7 of 12 in address order; NOTE EDIT slot 6, DRUM EDIT slot 3 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt7:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA12
-	cpw	(0x26b0:16), 0x03e7                          ; FEFC31  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFC31  d1 b0 26 3f e7 03
 	jr ule, .LFEFC4E                                     ; FEFC37  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFC39  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFC39  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt7_DL1                            ; FEFC3F  45 5d fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt7_DL2                            ; FEFC44  44 6c fc fe 00
 	call T_DisplayListB_Run                              ; FEFC49  1d f4 17 f4
@@ -9126,23 +9035,19 @@ EditScreen_MeasureNumberAt7:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFC5D and land exactly on 0xFEFC6C.
 EditScreen_MeasureNumberAt7_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFC5D  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x33, 0x03  ; FEFC5F
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=152, y=20
 
 ; EditScreen_MeasureNumberAt7_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFC6C and land exactly on 0xFEFC76.
 EditScreen_MeasureNumberAt7_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFC6C  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFC6E
-	.ascii " 3"                                 ; FEFC72
-	.byte 0x03, 0x02                   ; FEFC74
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=20, digits=2
 ; EditScreen_MeasureNumberAt8: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 8 of 12 in address order; NOTE EDIT slot 7, DRUM EDIT slot 4 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt8:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA16
-	cpw	(0x26b0:16), 0x03e7                          ; FEFC76  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFC76  d1 b0 26 3f e7 03
 	jr ule, .LFEFC93                                     ; FEFC7C  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFC7E  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFC7E  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt8_DL1                            ; FEFC84  45 a2 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt8_DL2                            ; FEFC89  44 b1 fc fe 00
 	call T_DisplayListB_Run                              ; FEFC8E  1d f4 17 f4
@@ -9157,23 +9062,19 @@ EditScreen_MeasureNumberAt8:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFCA2 and land exactly on 0xFEFCB1.
 EditScreen_MeasureNumberAt8_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFCA2  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x36, 0x03  ; FEFCA4
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=176, y=20
 
 ; EditScreen_MeasureNumberAt8_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFCB1 and land exactly on 0xFEFCBB.
 EditScreen_MeasureNumberAt8_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFCB1  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFCB3
-	.ascii " 6"                                 ; FEFCB7
-	.byte 0x03, 0x02                   ; FEFCB9
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=176, y=20, digits=2
 ; EditScreen_MeasureNumberAt9: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 9 of 12 in address order; NOTE EDIT slot 8, DRUM EDIT slot 5 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt9:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA1A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFCBB  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFCBB  d1 b0 26 3f e7 03
 	jr ule, .LFEFCD8                                     ; FEFCC1  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFCC3  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFCC3  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt9_DL1                            ; FEFCC9  45 e7 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt9_DL2                            ; FEFCCE  44 f6 fc fe 00
 	call T_DisplayListB_Run                              ; FEFCD3  1d f4 17 f4
@@ -9188,23 +9089,19 @@ EditScreen_MeasureNumberAt9:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFCE7 and land exactly on 0xFEFCF6.
 EditScreen_MeasureNumberAt9_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFCE7  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x39, 0x03  ; FEFCE9
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=200, y=20
 
 ; EditScreen_MeasureNumberAt9_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFCF6 and land exactly on 0xFEFD00.
 EditScreen_MeasureNumberAt9_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFCF6  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFCF8
-	.ascii " 9"                                 ; FEFCFC
-	.byte 0x03, 0x02                   ; FEFCFE
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=200, y=20, digits=2
 ; EditScreen_MeasureNumberAt10: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 10 of 12 in address order; NOTE EDIT slot 9, DRUM EDIT slot 6 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt10:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA1E
-	cpw	(0x26b0:16), 0x03e7                          ; FEFD00  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFD00  d1 b0 26 3f e7 03
 	jr ule, .LFEFD1D                                     ; FEFD06  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFD08  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFD08  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt10_DL1                            ; FEFD0E  45 2c fd fe 00
 	ld XIX,EditScreen_MeasureNumberAt10_DL2                            ; FEFD13  44 3b fd fe 00
 	call T_DisplayListB_Run                              ; FEFD18  1d f4 17 f4
@@ -9219,23 +9116,19 @@ EditScreen_MeasureNumberAt10:   ; entry: named by 3 `.long`/`ld` operands, first
 ; The length bytes walk from 0xFEFD2C and land exactly on 0xFEFD3B.
 EditScreen_MeasureNumberAt10_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFD2C  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x3C, 0x03  ; FEFD2E
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=224, y=20
 
 ; EditScreen_MeasureNumberAt10_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFD3B and land exactly on 0xFEFD45.
 EditScreen_MeasureNumberAt10_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFD3B  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFD3D
-	.ascii " <"                                 ; FEFD41
-	.byte 0x03, 0x02                   ; FEFD43
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=20, digits=2
 ; EditScreen_MeasureNumberAt11: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 11 of 12 in address order; NOTE EDIT slot 10, DRUM EDIT slot 7 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt11:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA22
-	cpw	(0x26b0:16), 0x03e7                          ; FEFD45  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFD45  d1 b0 26 3f e7 03
 	jr ule, .LFEFD62                                     ; FEFD4B  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFD4D  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFD4D  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt11_DL1                            ; FEFD53  45 71 fd fe 00
 	ld XIX,EditScreen_MeasureNumberAt11_DL2                            ; FEFD58  44 80 fd fe 00
 	call T_DisplayListB_Run                              ; FEFD5D  1d f4 17 f4
@@ -9250,17 +9143,13 @@ EditScreen_MeasureNumberAt11:   ; entry: named by 3 `.long`/`ld` operands, first
 ; The length bytes walk from 0xFEFD71 and land exactly on 0xFEFD80.
 EditScreen_MeasureNumberAt11_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FEFD71  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x02, 0x00, 0x3F, 0x03  ; FEFD73
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=248, y=20
 
 ; EditScreen_MeasureNumberAt11_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFD80 and land exactly on 0xFEFD8A.
 EditScreen_MeasureNumberAt11_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FEFD80  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00       ; FEFD82
-	.ascii " ?"                                 ; FEFD86
-	.byte 0x03, 0x02                   ; FEFD88
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=248, y=20, digits=2
 ; EditScreen_RedrawCursorLayer: while the cursor is inside the measure: layer 1 erased, EditScreen_DrawSelectedEventBar,
 ;   EditScreen_DrawCursorTickMarker, the left rule, EditScreen_DrawDataEndMarker.
 EditScreen_RedrawCursorLayer:
@@ -9985,7 +9874,7 @@ EditScreen_DrawTrackNumber:
 	xor WA,WA                                            ; FF0363  d8 d0
 	ld a, (EditScreen_Part:24)                                 ; FF0365  c2 00 1f 60 21
 	inc 1,A                                              ; FF036A  c9 61
-	ld (0x26b0:16), wa                                  ; FF036C  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF036C  f1 b0 26 50
 	ld XIY,EditScreen_DrawTrackNumber_DL                            ; FF0370  45 7f 03 ff 00
 	ld XIX,EditScreen_DrawSongNumber                                    ; FF0375  44 89 03 ff 00
 	call T_DisplayListB_Run                              ; FF037A  1d f4 17 f4
@@ -9995,8 +9884,7 @@ EditScreen_DrawTrackNumber:
 ; The length bytes walk from 0xFF037F and land exactly on 0xFF0389.
 EditScreen_DrawTrackNumber_DL:
 ; ; drawn (start operand) by EditScreen_DrawTrackNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF037F  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x8B, 0x00, 0x02  ; FF0381
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=152, y=3, digits=2
 ; EditScreen_DrawSongNumber -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 9
@@ -10019,7 +9907,7 @@ EditScreen_DrawSongNumber:
 	xor WA,WA                                            ; FF038E  d8 d0
 	ld a, (BStore_CurrentBank:16)                                   ; FF0390  c1 0a 36 21
 	inc 1,A                                              ; FF0394  c9 61
-	ld (0x26b0:16), wa                                  ; FF0396  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0396  f1 b0 26 50
 	ld XIY,EditScreen_DrawSongNumber_DL                            ; FF039A  45 a9 03 ff 00
 	ld XIX,EditScreen_DrawRulersAndLegend                                    ; FF039F  44 b3 03 ff 00
 	call T_DisplayListB_Run                              ; FF03A4  1d f4 17 f4
@@ -10029,8 +9917,7 @@ EditScreen_DrawSongNumber:
 ; The length bytes walk from 0xFF03A9 and land exactly on 0xFF03B3.
 EditScreen_DrawSongNumber_DL:
 ; ; drawn (start operand) by EditScreen_DrawSongNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF03A9  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x9C, 0x00, 0x02  ; FF03AB
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=288, y=3, digits=2
 ; EditScreen_DrawRulersAndLegend: layer 2: EditScreen_DrawMeasureStartLines, NoteEdit_DrawKeyboardRuler, Screen_DrawKitCategoryLegend.
 EditScreen_DrawRulersAndLegend:
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FF03B3  f1 40 25 00 02
@@ -10638,18 +10525,18 @@ EditScreen_DrawMeasure:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0989  f1 40 25 00 00
 	cpw	(EditCursor_Measure:24), 0x03e8                        ; FF098E  d2 3f 1f 60 3f e8 03
 	jr c, .LFF09AC                                       ; FF0995  67 15
-	ldw (0x26b0:16), 0x00                                ; FF0997  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0997  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawMeasure_DL1                            ; FF099D  45 d8 09 ff 00
 	ld XIX,Str_EditMeasureOverflow                                    ; FF09A2  44 e7 09 ff 00
 	call T_DisplayListB_Run                              ; FF09A7  1d f4 17 f4
 	ret                                                  ; FF09AB  0e
 .LFF09AC:
 	ld wa, (EditCursor_Measure:24)                                ; FF09AC  d2 3f 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF09B1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF09B1  f1 b0 26 50
 	ld XIY,EditScreen_DrawMeasure_DL2                            ; FF09B5  45 eb 09 ff 00
 	ld XIX,EditScreen_DrawMeasure_DL3                            ; FF09BA  44 f5 09 ff 00
 	call T_DisplayListB_Run                              ; FF09BF  1d f4 17 f4
-	ldw (0x26b0:16), 0x00                                ; FF09C3  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF09C3  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawMeasure_DL3                            ; FF09C9  45 f5 09 ff 00
 	ld XIX,EditScreen_DrawBeat                                    ; FF09CE  44 04 0a ff 00
 	call T_DisplayListB_Run                              ; FF09D3  1d f4 17 f4
@@ -10659,8 +10546,7 @@ EditScreen_DrawMeasure:
 ; The length bytes walk from 0xFF09D8 and land exactly on 0xFF09E7.
 EditScreen_DrawMeasure_DL1:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF09D8  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xE7, 0x09, 0xFF, 0x00, 0x04, 0x00, 0xF9, 0x1B  ; FF09DA
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=4, x=8, y=179
 ; The 4-character string EditScreen_DrawMeasure_DL1's op-02 record draws (string table, 4 bytes per entry, entry 0):
 ; EditScreen_DrawMeasure shows it instead of the measure number when EditCursor_Measure >= 1000.  It was decoded as
 ; `pushw de` x3 / `pushw iz`; it is also that list's end bound (XIX).  (2026-10-04)
@@ -10671,15 +10557,13 @@ Str_EditMeasureOverflow:
 ; The length bytes walk from 0xFF09EB and land exactly on 0xFF09F5.
 EditScreen_DrawMeasure_DL2:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF09EB  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xF9, 0x1B, 0x03  ; FF09ED
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=179, digits=3
 
 ; EditScreen_DrawMeasure_DL3 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF09F5 and land exactly on 0xFF0A04.
 EditScreen_DrawMeasure_DL3:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF09F5  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xEA, 0x09, 0xFF, 0x00, 0x01, 0x00, 0xFC, 0x1B  ; FF09F7
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=32, y=179
 ; EditScreen_DrawBeat -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 2 time(s) in the 13
@@ -10703,11 +10587,11 @@ EditScreen_DrawBeat:
 	xor WA,WA                                            ; FF0A09  d8 d0
 	ld wa, (EditCursor_Beat:24)                                ; FF0A0B  d2 41 1f 60 20
 	inc 1,WA                                             ; FF0A10  d8 61
-	ld (0x26b0:16), wa                                  ; FF0A12  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A12  f1 b0 26 50
 	ld XIY,EditScreen_DrawBeat_DL1                            ; FF0A16  45 39 0a ff 00
 	ld XIX,EditScreen_DrawBeat_DL2                            ; FF0A1B  44 43 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A20  1d f4 17 f4
-	ldw (0x26b0:16), 0x00                                ; FF0A24  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0A24  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawBeat_DL2                            ; FF0A2A  45 43 0a ff 00
 	ld XIX,EditScreen_DrawTick                                    ; FF0A2F  44 52 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A34  1d f4 17 f4
@@ -10717,15 +10601,13 @@ EditScreen_DrawBeat:
 ; The length bytes walk from 0xFF0A39 and land exactly on 0xFF0A43.
 EditScreen_DrawBeat_DL1:
 ; ; drawn (start operand) by EditScreen_DrawBeat -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF0A39  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xFD, 0x1B, 0x01  ; FF0A3B
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=179, digits=1
 
 ; EditScreen_DrawBeat_DL2 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0A43 and land exactly on 0xFF0A52.
 EditScreen_DrawBeat_DL2:
 ; ; drawn (start operand) by EditScreen_DrawBeat -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0A43  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xEA, 0x09, 0xFF, 0x00, 0x01, 0x00, 0xFE, 0x1B  ; FF0A45
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=48, y=179
 ; EditScreen_DrawTick -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 8
@@ -10747,7 +10629,7 @@ EditScreen_DrawTick:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0A52  f1 40 25 00 00
 	xor WA,WA                                            ; FF0A57  d8 d0
 	ld a, (EditCursor_Tick:24)                                 ; FF0A59  c2 43 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0A5E  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A5E  f1 b0 26 50
 	ld XIY,EditScreen_DrawTick_DL                            ; FF0A62  45 71 0a ff 00
 	ld XIX,EditScreen_DrawCursorNote                                    ; FF0A67  44 7b 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A6C  1d f4 17 f4
@@ -10757,8 +10639,7 @@ EditScreen_DrawTick:
 ; The length bytes walk from 0xFF0A71 and land exactly on 0xFF0A7B.
 EditScreen_DrawTick_DL:
 ; ; drawn (start operand) by EditScreen_DrawTick -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF0A71  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xFF, 0x1B, 0x02  ; FF0A73
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=56, y=179, digits=2
 ; EditScreen_DrawCursorNote: layer 0: DrumEdit_DrawCursorNoteNumber in DRUM EDIT, NoteEdit_DrawCursorNoteName in NOTE EDIT.
 EditScreen_DrawCursorNote:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0A7B  f1 40 25 00 00
@@ -10789,7 +10670,7 @@ EditScreen_DrawCursorNote:
 DrumEdit_DrawCursorNoteNumber:
 	xor WA,WA                                            ; FF0A8F  d8 d0
 	ld a, (EditCursor_Note:24)                                 ; FF0A91  c2 44 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0A96  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A96  f1 b0 26 50
 	ld XIY,DrumEdit_DrawCursorNoteNumber_DL                            ; FF0A9A  45 a9 0a ff 00
 	ld XIX,NoteEdit_DrawCursorNoteName                                    ; FF0A9F  44 b3 0a ff 00
 	call T_DisplayListB_Run                              ; FF0AA4  1d f4 17 f4
@@ -10799,8 +10680,7 @@ DrumEdit_DrawCursorNoteNumber:
 ; The length bytes walk from 0xFF0AA9 and land exactly on 0xFF0AB3.
 DrumEdit_DrawCursorNoteNumber_DL:
 ; ; drawn (start operand) by DrumEdit_DrawCursorNoteNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0A                               ; FF0AA9  op 00, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x04, 0x1C, 0x02  ; FF0AAB
+	dlb_number	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=96, y=179, digits=2
 ; NoteEdit_DrawCursorNoteName -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 2 time(s) in the 17
@@ -10826,13 +10706,13 @@ NoteEdit_DrawCursorNoteName:
 	pushw wa                                             ; FF0ABD  28
 	ld A,W                                               ; FF0ABE  c8 89
 	xor W,W                                              ; FF0AC0  c8 d0
-	ld (0x26b0:16), wa                                  ; FF0AC2  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0AC2  f1 b0 26 50
 	ld XIY,NoteEdit_DrawCursorNoteName_DL1                            ; FF0AC6  45 ea 0a ff 00
 	ld XIX,NoteEdit_DrawCursorNoteName_DL2                            ; FF0ACB  44 f9 0a ff 00
 	call T_DisplayListB_Run                              ; FF0AD0  1d f4 17 f4
 	popw wa                                              ; FF0AD4  48
 	xor W,W                                              ; FF0AD5  c8 d0
-	ld (0x26b0:16), wa                                  ; FF0AD7  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0AD7  f1 b0 26 50
 	ld XIY,NoteEdit_DrawCursorNoteName_DL2                            ; FF0ADB  45 f9 0a ff 00
 	ld XIX,NoteNames                                     ; FF0AE0  44 08 0b ff 00
 	call T_DisplayListB_Run                              ; FF0AE5  1d f4 17 f4
@@ -10842,15 +10722,13 @@ NoteEdit_DrawCursorNoteName:
 ; The length bytes walk from 0xFF0AEA and land exactly on 0xFF0AF9.
 NoteEdit_DrawCursorNoteName_DL1:
 ; ; drawn (start operand) by NoteEdit_DrawCursorNoteName -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0AEA  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x08, 0x0B, 0xFF, 0x00, 0x02, 0x00, 0x03, 0x1C  ; FF0AEC
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNames, width=2, x=88, y=179
 
 ; NoteEdit_DrawCursorNoteName_DL2 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0AF9 and land exactly on 0xFF0B08.
 NoteEdit_DrawCursorNoteName_DL2:
 ; ; drawn (start operand) by NoteEdit_DrawCursorNoteName -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0AF9  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x22, 0x0B, 0xFF, 0x00, 0x02, 0x00, 0x05, 0x1C  ; FF0AFB
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=OctaveNames, width=2, x=104, y=179
 ; ---------------------------------------------------------------------
 ; NoteNames -- 13 two-character chromatic note names
 ; " C" "D<88>" " D" "E<88>" " E" " F" "F<8C>" " G" "A<88>" " A"
@@ -10914,25 +10792,25 @@ EditScreen_DrawEventVelocity:
 	ld a, (0x601f19:24)                                 ; FF0B58  c2 19 1f 60 21
 	cp A,0x64                                            ; FF0B5D  c9 cf 64
 	jr nc, .LFF0B90                                      ; FF0B60  6f 2e
-	ldw (0x26b0:16), 0x00                                ; FF0B62  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0B62  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawEventVelocity_DL1                            ; FF0B68  45 d2 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL3                            ; FF0B6D  44 e1 0b ff 00
 	call T_DisplayListB_Run                              ; FF0B72  1d f4 17 f4
 	xor WA,WA                                            ; FF0B76  d8 d0
 	ld a, (0x601f19:24)                                 ; FF0B78  c2 19 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0B7D  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0B7D  f1 b0 26 50
 	ld XIY,EditScreen_DrawEventVelocity_DL2                            ; FF0B81  45 be 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL4                            ; FF0B86  44 c8 0b ff 00
 	call T_DisplayListB_Run                              ; FF0B8B  1d f4 17 f4
 	ret                                                  ; FF0B8F  0e
 .LFF0B90:
-	ldw (0x26b0:16), 0x00                                ; FF0B90  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0B90  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawEventVelocity_DL3                            ; FF0B96  45 e1 0b ff 00
 	ld XIX,Str_v                                                          ; FF0B9B  44 f0 0b ff 00
 	call T_DisplayListB_Run                              ; FF0BA0  1d f4 17 f4
 	xor WA,WA                                            ; FF0BA4  d8 d0
 	ld a, (0x601f19:24)                                 ; FF0BA6  c2 19 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0BAB  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0BAB  f1 b0 26 50
 	ld XIY,EditScreen_DrawEventVelocity_DL4                            ; FF0BAF  45 c8 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL1                            ; FF0BB4  44 d2 0b ff 00
 	call T_DisplayListB_Run                              ; FF0BB9  1d f4 17 f4
@@ -10942,29 +10820,25 @@ EditScreen_DrawEventVelocity:
 ; The length bytes walk from 0xFF0BBE and land exactly on 0xFF0BC8.
 EditScreen_DrawEventVelocity_DL2:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF0BBE  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x09, 0x1C, 0x02  ; FF0BC0
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=136, y=179, digits=2
 
 ; EditScreen_DrawEventVelocity_DL4 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BC8 and land exactly on 0xFF0BD2.
 EditScreen_DrawEventVelocity_DL4:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x06, 0x0A                               ; FF0BC8  op 06, 10 bytes, handler 0xF31BA1
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x08, 0x1C, 0x03  ; FF0BCA
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=128, y=179, digits=3
 
 ; EditScreen_DrawEventVelocity_DL1 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BD2 and land exactly on 0xFF0BE1.
 EditScreen_DrawEventVelocity_DL1:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0BD2  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xF0, 0x0B, 0xFF, 0x00, 0x01, 0x00, 0x08, 0x1C  ; FF0BD4
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=128, y=179
 
 ; EditScreen_DrawEventVelocity_DL3 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BE1 and land exactly on 0xFF0BF0.
 EditScreen_DrawEventVelocity_DL3:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0BE1  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0xF0, 0x0B, 0xFF, 0x00, 0x01, 0x00, 0x07, 0x1C  ; FF0BE3
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=120, y=179
 ; Str_v -- a one-entry string table.  Both op-02 records above point at it (+7, entry width 1), and EditScreen_DrawEventVelocity
 ;          zeroes their index (0x26B0) before each run, so they draw "v" before the value's digits.  It is also
 ;          where EditScreen_DrawEventVelocity_DL3 ends (EditScreen_DrawEventVelocity's XIX).  Was decoded as `jrl z` with the routine below.
@@ -10974,8 +10848,8 @@ EditScreen_DrawEventLength:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0BF1  f1 40 25 00 00
 	calr EditScreen_EraseLengthCell                                          ; FF0BF6  1e 42 ec
 	ld wa, (EditField_Length:24)                                ; FF0BF9  d2 47 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0BFE  f1 b0 26 50
-	cpw	(0x26b0:16), 0x2710                          ; FF0C02  d1 b0 26 3f 10 27
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0BFE  f1 b0 26 50
+	cpw	(EditScreen_DrawNumber:16), 0x2710                          ; FF0C02  d1 b0 26 3f 10 27
 	jr nc, .LFF0C0E                                      ; FF0C08  6f 04
 	calr EditScreen_DrawLengthBelow10000                                      ; FF0C0A  1e 26 00
 	ret                                                  ; FF0C0D  0e
@@ -10987,8 +10861,8 @@ EditScreen_DrawNewNoteLength:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0C12  f1 40 25 00 00
 	calr EditScreen_EraseLengthCell                                          ; FF0C17  1e 21 ec
 	ld wa, (EditField_NewNoteLength:24)                                ; FF0C1A  d2 49 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0C1F  f1 b0 26 50
-	cpw	(0x26b0:16), 0x2710                          ; FF0C23  d1 b0 26 3f 10 27
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0C1F  f1 b0 26 50
+	cpw	(EditScreen_DrawNumber:16), 0x2710                          ; FF0C23  d1 b0 26 3f 10 27
 	jr nc, .LFF0C2F                                      ; FF0C29  6f 04
 	calr EditScreen_DrawLengthBelow10000                                      ; FF0C2B  1e 05 00
 	ret                                                  ; FF0C2E  0e
@@ -10997,10 +10871,10 @@ EditScreen_DrawNewNoteLength:
 	ret                                                  ; FF0C32  0e
 ; EditScreen_DrawLengthBelow10000: (0x26B0) as 1 + 3 digits (thousands at text cell 0x1C0C, the rest at 0x1C0D), or 3 digits below 1000.
 EditScreen_DrawLengthBelow10000:
-	cpw	(0x26b0:16), 0x03e7                          ; FF0C33  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FF0C33  d1 b0 26 3f e7 03
 	jr ule, .LFF0C81                                     ; FF0C39  63 46
 	xor XWA,XWA                                          ; FF0C3B  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0C3D  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C3D  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0C41  d8 0a e8 03
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0C45  1d f0 1a f4
 	ld XIY,Value_AsciiDigits+2                                    ; FF0C49  45 63 26 00 00
@@ -11009,9 +10883,9 @@ EditScreen_DrawLengthBelow10000:
 	ldw ix, 0x1c0c                                       ; FF0C54  34 0c 1c
 	ld a, 0x06:opc                                          ; FF0C57  21 06
 	swi 7                                                ; FF0C59  ff
-	ld wa, (0x26b0:16)                                 ; FF0C5A  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C5A  d1 b0 26 20
 	xor XWA,XWA                                          ; FF0C5E  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0C60  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C60  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0C64  d8 0a e8 03
 	ld WA,QWA                                            ; FF0C68  d7 e2 88
 	call T_Value_ToAsciiDigits3                          ; FF0C6B  1d 00 1b f4
@@ -11023,7 +10897,7 @@ EditScreen_DrawLengthBelow10000:
 	swi 7                                                ; FF0C7F  ff
 	ret                                                  ; FF0C80  0e
 .LFF0C81:
-	ld wa, (0x26b0:16)                                 ; FF0C81  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C81  d1 b0 26 20
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0C85  1d f0 1a f4
 	ld XIY,Value_AsciiDigits                                    ; FF0C89  45 61 26 00 00
 	ldw hl, 0x00                                         ; FF0C8E  33 00 00
@@ -11034,10 +10908,10 @@ EditScreen_DrawLengthBelow10000:
 	ret                                                  ; FF0C9A  0e
 ; EditScreen_DrawLengthFrom10000: (0x26B0) as 2 + 3 digits (cells 0x1C0C / 0x1C0E).
 EditScreen_DrawLengthFrom10000:
-	cpw	(0x26b0:16), 0x03e7                          ; FF0C9B  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FF0C9B  d1 b0 26 3f e7 03
 	jr ule, .LFF0CE9                                     ; FF0CA1  63 46
 	xor XWA,XWA                                          ; FF0CA3  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0CA5  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CA5  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0CA9  d8 0a e8 03
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0CAD  1d f0 1a f4
 	ld XIY,Value_AsciiDigits+1                                    ; FF0CB1  45 62 26 00 00
@@ -11046,9 +10920,9 @@ EditScreen_DrawLengthFrom10000:
 	ldw ix, 0x1c0c                                       ; FF0CBC  34 0c 1c
 	ld a, 0x06:opc                                          ; FF0CBF  21 06
 	swi 7                                                ; FF0CC1  ff
-	ld wa, (0x26b0:16)                                 ; FF0CC2  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CC2  d1 b0 26 20
 	xor XWA,XWA                                          ; FF0CC6  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0CC8  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CC8  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0CCC  d8 0a e8 03
 	ld WA,QWA                                            ; FF0CD0  d7 e2 88
 	call T_Value_ToAsciiDigits3                          ; FF0CD3  1d 00 1b f4
@@ -11060,7 +10934,7 @@ EditScreen_DrawLengthFrom10000:
 	swi 7                                                ; FF0CE7  ff
 	ret                                                  ; FF0CE8  0e
 .LFF0CE9:
-	ld wa, (0x26b0:16)                                 ; FF0CE9  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CE9  d1 b0 26 20
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0CED  1d f0 1a f4
 	ld XIY,Value_AsciiDigits                                    ; FF0CF1  45 61 26 00 00
 	ldw hl, 0x00                                         ; FF0CF6  33 00 00
@@ -11098,7 +10972,7 @@ EditScreen_DrawInc:
 ; NoteEdit_DrawIncNumber: EditField_Inc through NoteEdit_DrawIncNumber_DL (a number).
 NoteEdit_DrawIncNumber:
 	ld wa, (EditField_Inc:24)                                ; FF0D17  d2 4d 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0D1C  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0D1C  f1 b0 26 50
 	ld XIY,NoteEdit_DrawIncNumber_DL                            ; FF0D20  45 2f 0d ff 00
 	ld XIX,DrumEdit_DrawIncLabel                                    ; FF0D25  44 3e 0d ff 00
 	call T_DisplayListB_Run                              ; FF0D2A  1d f4 17 f4
@@ -11108,8 +10982,7 @@ NoteEdit_DrawIncNumber:
 ; The length bytes walk from 0xFF0D2F and land exactly on 0xFF0D3E.
 NoteEdit_DrawIncNumber_DL:
 ; ; drawn (start operand) by NoteEdit_DrawIncNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0D2F  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x65, 0x0D, 0xFF, 0x00, 0x02, 0x00, 0x13, 0x1C  ; FF0D31
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=216, y=179
 ; DrumEdit_DrawIncLabel -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 6
@@ -11129,7 +11002,7 @@ NoteEdit_DrawIncNumber_DL:
 ; DrumEdit_DrawIncLabel: EditField_Inc through DrumEdit_DrawIncLabel_DL and TickLabels (a label).
 DrumEdit_DrawIncLabel:
 	ld wa, (EditField_Inc:24)                                ; FF0D3E  d2 4d 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0D43  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0D43  f1 b0 26 50
 	ld XIY,DrumEdit_DrawIncLabel_DL                            ; FF0D47  45 56 0d ff 00
 	ld XIX,TickLabels                                    ; FF0D4C  44 65 0d ff 00
 	call T_DisplayListB_Run                              ; FF0D51  1d f4 17 f4
@@ -11139,8 +11012,7 @@ DrumEdit_DrawIncLabel:
 ; The length bytes walk from 0xFF0D56 and land exactly on 0xFF0D65.
 DrumEdit_DrawIncLabel_DL:
 ; ; drawn (start operand) by DrumEdit_DrawIncLabel -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x02, 0x0F                               ; FF0D56  op 02, 15 bytes, handler 0xF31B21
-	.byte 0xB0, 0x26, 0xFF, 0x00, 0x06, 0x65, 0x0D, 0xFF, 0x00, 0x02, 0x00, 0x0E, 0x1C  ; FF0D58
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=176, y=179
 ; ---------------------------------------------------------------------
 ; TickLabels -- 99 two-character cells; 0..96 are labelled, 97 and 98 are blank
 ;
@@ -11198,73 +11070,32 @@ TickLabels:
 ;          for prom_b's 249 named lists.
 ; ---------------------------------------------------------------------
 DisplayList_SequencerRealtimeEdit:
-	.byte 0x1C, 0x0F                               ; FF0E2B  op 1C, 15 bytes, handler 0xF31A52
-	.byte 0x7A, 0x00, 0x05, 0x00       ; FF0E2D
-	.ascii "SEQUENCER"                          ; FF0E31
-	.byte 0x06, 0x0C                               ; FF0E3A  op 06, 12 bytes, handler 0xF31A3A
-	.byte 0xA5, 0x05                   ; FF0E3C
-	.ascii "REALTIME"                           ; FF0E3E
-	.byte 0x06, 0x08                               ; FF0E46  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0xB7, 0x05                   ; FF0E48
-	.ascii "EDIT"                               ; FF0E4A
-	.byte 0x17, 0x07                               ; FF0E4E  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x00, 0x00, 0x26, 0x00, 0x10  ; FF0E50
-	.byte 0x17, 0x07                               ; FF0E55  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x3A, 0x01, 0x26, 0x00, 0x11  ; FF0E57
-	.byte 0x06, 0x0A                               ; FF0E5C  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0xE5, 0x0B                   ; FF0E5E
-	.ascii "MASTER"                             ; FF0E60
-	.byte 0x06, 0x0A                               ; FF0E66  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0xEE, 0x0B                   ; FF0E68
-	.ascii "REC0RD"                             ; FF0E6A
-	.byte 0x06, 0x09                               ; FF0E70  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0xF7, 0x0B                   ; FF0E72
-	.ascii "TRACK"                              ; FF0E74
-	.byte 0x06, 0x0A                               ; FF0E79  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0xFD, 0x0B                   ; FF0E7B
-	.ascii "ASSIGN"                             ; FF0E7D
-	.byte 0x17, 0x07                               ; FF0E83  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x00, 0x00, 0x4D, 0x00, 0x10  ; FF0E85
-	.byte 0x17, 0x07                               ; FF0E8A  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x3A, 0x01, 0x4D, 0x00, 0x11  ; FF0E8C
-	.byte 0x06, 0x08                               ; FF0E91  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0xD5, 0x11                   ; FF0E93
-	.ascii "STEP"                               ; FF0E95
-	.byte 0x06, 0x0A                               ; FF0E99  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0xE7, 0x11                   ; FF0E9B
-	.ascii "MEDLEY"                             ; FF0E9D
-	.byte 0x17, 0x07                               ; FF0EA3  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x00, 0x00, 0x74, 0x00, 0x10  ; FF0EA5
-	.byte 0x17, 0x07                               ; FF0EAA  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x3A, 0x01, 0x74, 0x00, 0x11  ; FF0EAC
-	.byte 0x06, 0x08                               ; FF0EB1  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0xD5, 0x16                   ; FF0EB3
-	.ascii "S0NG"                               ; FF0EB5
-	.byte 0x06, 0x0A                               ; FF0EB9  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0xDA, 0x16                   ; FF0EBB
-	.ascii "SELECT"                             ; FF0EBD
-	.byte 0x06, 0x09                               ; FF0EC3  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0xE7, 0x16                   ; FF0EC5
-	.ascii "AFTER"                              ; FF0EC7
-	.byte 0x17, 0x07                               ; FF0ECC  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x00, 0x00, 0x9B, 0x00, 0x10  ; FF0ECE
-	.byte 0x17, 0x07                               ; FF0ED3  op 17, 7 bytes, handler 0xF31A52
-	.byte 0x3A, 0x01, 0x9B, 0x00, 0x11  ; FF0ED5
-	.byte 0x06, 0x09                               ; FF0EDA  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0x09, 0x19                   ; FF0EDC
-	.ascii "/NAME"                              ; FF0EDE
-	.byte 0x06, 0x09                               ; FF0EE3  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0x17, 0x19                   ; FF0EE5
-	.ascii "T0UCH"                              ; FF0EE7
-	.byte 0x06, 0x07                               ; FF0EEC  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x1D, 0x19                   ; FF0EEE
-	.ascii "SET"                                ; FF0EF0
-	.byte 0x01, 0x0A                               ; FF0EF3  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x69, 0x00, 0x29, 0x00, 0x6C, 0x00, 0x29, 0x00  ; FF0EF5
-	.byte 0x01, 0x0A                               ; FF0EFD  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x69, 0x00, 0x78, 0x00, 0x6C, 0x00, 0x78, 0x00  ; FF0EFF
-	.byte 0x02, 0x0A                               ; FF0F07  op 02, 10 bytes, handler 0xF31A75
-	.byte 0x6C, 0x00, 0x29, 0x00, 0x6C, 0x00, 0x78, 0x00  ; FF0F09
+	dl_text16x16_packed	x=122, y=5, text="SEQUENCER"
+	dl_text8x14	x=40, y=36, text="REALTIME"
+	dl_text8x14	x=184, y=36, text="EDIT"
+	dl_text8x8_packed	x=0, y=38, text="\020"
+	dl_text8x8_packed	x=314, y=38, text="\021"
+	dl_text8x14	x=40, y=76, text="MASTER"
+	dl_text8x14	x=112, y=76, text="REC0RD"
+	dl_text8x14	x=184, y=76, text="TRACK"
+	dl_text8x14	x=232, y=76, text="ASSIGN"
+	dl_text8x8_packed	x=0, y=77, text="\020"
+	dl_text8x8_packed	x=314, y=77, text="\021"
+	dl_text8x14	x=40, y=114, text="STEP"
+	dl_text8x14	x=184, y=114, text="MEDLEY"
+	dl_text8x8_packed	x=0, y=116, text="\020"
+	dl_text8x8_packed	x=314, y=116, text="\021"
+	dl_text8x14	x=40, y=146, text="S0NG"
+	dl_text8x14	x=80, y=146, text="SELECT"
+	dl_text8x14	x=184, y=146, text="AFTER"
+	dl_text8x8_packed	x=0, y=155, text="\020"
+	dl_text8x8_packed	x=314, y=155, text="\021"
+	dl_text8x14	x=72, y=160, text="/NAME"
+	dl_text8x14	x=184, y=160, text="T0UCH"
+	dl_text8x14	x=232, y=160, text="SET"
+	dl_hline	x0=105, y0=41, x1=108, y1=41
+	dl_hline	x0=105, y0=120, x1=108, y1=120
+	dl_vline	x0=108, y0=41, x1=108, y1=120
 
 ; DisplayList_NoteEditTrackSong -- 59 record(s), 463 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFF0F11 and land exactly on 0xFF10E0.
@@ -11278,146 +11109,65 @@ DisplayList_SequencerRealtimeEdit:
 ;          for prom_b's 249 named lists.
 ; ---------------------------------------------------------------------
 DisplayList_NoteEditTrackSong:
-	.byte 0x07, 0x0D                               ; FF0F11  op 07, 13 bytes, handler 0xF31A3A
-	.byte 0x51, 0x00                   ; FF0F13
-	.ascii "NOTE EDIT"                          ; FF0F15
-	.byte 0x06, 0x09                               ; FF0F1E  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0x86, 0x00                   ; FF0F20
-	.ascii "TRACK"                              ; FF0F22
-	.byte 0x06, 0x08                               ; FF0F27  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0x98, 0x00                   ; FF0F29
-	.ascii "SONG"                               ; FF0F2B
-	.byte 0x07, 0x05                               ; FF0F2F  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xC7, 0x05, 0x11             ; FF0F31
-	.byte 0x06, 0x08                               ; FF0F34  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0xEA, 0x05                   ; FF0F36
-	.ascii "PLAY"                               ; FF0F38
-	.byte 0x07, 0x05                               ; FF0F3C  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x64, 0x0B, 0x8D             ; FF0F3E
-	.byte 0x07, 0x05                               ; FF0F41  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x67, 0x0B, 0x11             ; FF0F43
-	.byte 0x06, 0x09                               ; FF0F46  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0xD2, 0x0E                   ; FF0F48
-	.ascii "GRAPH"                              ; FF0F4A
-	.byte 0x07, 0x05                               ; FF0F4F  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xCF, 0x11, 0x11             ; FF0F51
-	.byte 0x07, 0x05                               ; FF0F54  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xF4, 0x11, 0x8E             ; FF0F56
-	.byte 0x07, 0x05                               ; FF0F59  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xBF, 0x17, 0x11             ; FF0F5B
-	.byte 0x06, 0x07                               ; FF0F5E  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0xE3, 0x17                   ; FF0F60
-	.ascii "ERS"                                ; FF0F62
-	.byte 0x06, 0x08                               ; FF0F65  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0x19, 0x1F                   ; FF0F67
-	.ascii "MEAS"                               ; FF0F69
-	.byte 0x06, 0x07                               ; FF0F6D  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x1E, 0x1F                   ; FF0F6F
-	.ascii "POS"                                ; FF0F71
-	.byte 0x06, 0x08                               ; FF0F74  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0x23, 0x1F                   ; FF0F76
-	.ascii "NOTE"                               ; FF0F78
-	.byte 0x06, 0x07                               ; FF0F7C  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x28, 0x1F                   ; FF0F7E
-	.ascii "VEL"                                ; FF0F80
-	.byte 0x06, 0x07                               ; FF0F83  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x2D, 0x1F                   ; FF0F85
-	.ascii "LEN"                                ; FF0F87
-	.byte 0x06, 0x07                               ; FF0F8A  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x32, 0x1F                   ; FF0F8C
-	.ascii "INC"                                ; FF0F8E
-	.byte 0x06, 0x05                               ; FF0F91  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x36, 0x1F, 0x2D             ; FF0F93
-	.byte 0x06, 0x0A                               ; FF0F96  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0x38, 0x1F                   ; FF0F98
-	.ascii "CURSOR"                             ; FF0F9A
-	.byte 0x07, 0x05                               ; FF0FA0  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xFA, 0x20, 0x8D             ; FF0FA2
-	.byte 0x07, 0x05                               ; FF0FA5  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xFF, 0x20, 0x8D             ; FF0FA7
-	.byte 0x07, 0x05                               ; FF0FAA  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x04, 0x21, 0x8D             ; FF0FAC
-	.byte 0x07, 0x05                               ; FF0FAF  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x09, 0x21, 0x8D             ; FF0FB1
-	.byte 0x07, 0x05                               ; FF0FB4  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x0E, 0x21, 0x8D             ; FF0FB6
-	.byte 0x07, 0x05                               ; FF0FB9  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x13, 0x21, 0x8D             ; FF0FBB
-	.byte 0x06, 0x05                               ; FF0FBE  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x80                         ; FF0FC0
-	.ascii "\"<"                                 ; FF0FC1
-	.byte 0x06, 0x05                               ; FF0FC3  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x85                         ; FF0FC5
-	.ascii "\">"                                 ; FF0FC6
-	.byte 0x07, 0x05                               ; FF0FC8  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "*#"                                 ; FF0FCA
-	.byte 0x8E                         ; FF0FCC
-	.byte 0x07, 0x05                               ; FF0FCD  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "/#"                                 ; FF0FCF
-	.byte 0x8E                         ; FF0FD1
-	.byte 0x07, 0x05                               ; FF0FD2  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "4#"                                 ; FF0FD4
-	.byte 0x8E                         ; FF0FD6
-	.byte 0x07, 0x05                               ; FF0FD7  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "9#"                                 ; FF0FD9
-	.byte 0x8E                         ; FF0FDB
-	.byte 0x07, 0x05                               ; FF0FDC  op 07, 5 bytes, handler 0xF31A3A
-	.ascii ">#"                                 ; FF0FDE
-	.byte 0x8E                         ; FF0FE0
-	.byte 0x07, 0x05                               ; FF0FE1  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "C#"                                 ; FF0FE3
-	.byte 0x8E                         ; FF0FE5
-	.byte 0x0A, 0x0A                               ; FF0FE6  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x03, 0x00, 0xAD, 0x00, 0xF1, 0x00, 0xC1, 0x00  ; FF0FE8
-	.byte 0x0A, 0x0A                               ; FF0FF0  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xD4, 0x00, 0x22, 0x00, 0xEC, 0x00  ; FF0FF2
-	.byte 0x0A, 0x0A                               ; FF0FFA  op 0A, 10 bytes, handler 0xF31A75
-	.byte	0x2D, 0x00, 0xD4  ; FF0FFC
-	.byte	0x00, 0x4A, 0x00, 0xEC, 0x00
-	.byte 0x0A, 0x0A                               ; FF1004  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xD4, 0x00, 0x72, 0x00, 0xEC, 0x00  ; FF1006
-	.byte 0x0A, 0x0A                               ; FF100E  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xD4, 0x00, 0x9A, 0x00, 0xEC, 0x00  ; FF1010
-	.byte 0x0A, 0x0A                               ; FF1018  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xD4, 0x00, 0xC2, 0x00, 0xEC, 0x00  ; FF101A
-	.byte 0x0A, 0x0A                               ; FF1022  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xD4, 0x00, 0xEA, 0x00, 0xEC, 0x00  ; FF1024
-	.byte 0x0A, 0x0A                               ; FF102C  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xD4, 0x00, 0x12, 0x01, 0xEC, 0x00  ; FF102E
-	.byte 0x0A, 0x0A                               ; FF1036  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xD4, 0x00, 0x3A, 0x01, 0xEC, 0x00  ; FF1038
-	.byte 0x09, 0x0A                               ; FF1040  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x09, 0x01, 0x1F, 0x00, 0x35, 0x01, 0x33, 0x00  ; FF1042
-	.byte 0x09, 0x0A                               ; FF104A  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x0B, 0x01, 0x21, 0x00, 0x33, 0x01, 0x31, 0x00  ; FF104C
-	.byte 0x09, 0x0A                               ; FF1054  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x46, 0x00, 0x33, 0x01, 0x56, 0x00  ; FF1056
-	.byte 0x09, 0x0A                               ; FF105E  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x6F, 0x00, 0x33, 0x01, 0x7F, 0x00  ; FF1060
-	.byte 0x09, 0x0A                               ; FF1068  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x13, 0x01, 0x93, 0x00, 0x35, 0x01, 0xA6, 0x00  ; FF106A
-	.byte 0x09, 0x0A                               ; FF1072  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x95, 0x00, 0x33, 0x01, 0xA4, 0x00  ; FF1074
-	.byte 0x01, 0x0A                               ; FF107C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x20, 0x00, 0x00, 0x01, 0x20, 0x00  ; FF107E
-	.byte 0x01, 0x0A                               ; FF1086  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x27, 0x00, 0xFF, 0x00, 0x27, 0x00  ; FF1088
-	.byte 0x01, 0x0A                               ; FF1090  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x10, 0x00, 0xA9, 0x00, 0xFF, 0x00, 0xA9, 0x00  ; FF1092
-	.byte 0x01, 0x0A                               ; FF109A  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xE0, 0x00, 0x24, 0x00, 0xE0, 0x00  ; FF109C
-	.byte 0x01, 0x0A                               ; FF10A4  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xE0, 0x00, 0x4C, 0x00, 0xE0, 0x00  ; FF10A6
-	.byte 0x01, 0x0A                               ; FF10AE  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xE0, 0x00, 0x74, 0x00, 0xE0, 0x00  ; FF10B0
-	.byte 0x01, 0x0A                               ; FF10B8  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xE0, 0x00, 0x9C, 0x00, 0xE0, 0x00  ; FF10BA
-	.byte 0x01, 0x0A                               ; FF10C2  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xE0, 0x00, 0xC4, 0x00, 0xE0, 0x00  ; FF10C4
-	.byte 0x01, 0x0A                               ; FF10CC  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xE0, 0x00, 0xEC, 0x00, 0xE0, 0x00  ; FF10CE
-	.byte 0x02, 0x0A                               ; FF10D6  op 02, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x01, 0x27, 0x00, 0x00, 0x01, 0xA9, 0x00  ; FF10D8
+	dl_text8x16	x=8, y=2, text="NOTE EDIT"
+	dl_text8x14	x=112, y=3, text="TRACK"
+	dl_text8x14	x=256, y=3, text="SONG"
+	dl_text8x16	x=312, y=36, text="\021"
+	dl_text8x14	x=272, y=37, text="PLAY"
+	dl_text8x16	x=288, y=72, text="\215"
+	dl_text8x16	x=312, y=72, text="\021"
+	dl_text8x14	x=272, y=94, text="GRAPH"
+	dl_text8x16	x=312, y=113, text="\021"
+	dl_text8x16	x=288, y=114, text="\216"
+	dl_text8x16	x=312, y=151, text="\021"
+	dl_text8x14	x=280, y=152, text="ERS"
+	dl_text8x14	x=8, y=199, text="MEAS"
+	dl_text8x14	x=48, y=199, text="POS"
+	dl_text8x14	x=88, y=199, text="NOTE"
+	dl_text8x14	x=128, y=199, text="VEL"
+	dl_text8x14	x=168, y=199, text="LEN"
+	dl_text8x14	x=208, y=199, text="INC"
+	dl_text8x14	x=240, y=199, text="-"
+	dl_text8x14	x=256, y=199, text="CURSOR"
+	dl_text8x16	x=16, y=211, text="\215"
+	dl_text8x16	x=56, y=211, text="\215"
+	dl_text8x16	x=96, y=211, text="\215"
+	dl_text8x16	x=136, y=211, text="\215"
+	dl_text8x16	x=176, y=211, text="\215"
+	dl_text8x16	x=216, y=211, text="\215"
+	dl_text8x14	x=256, y=220, text="<"
+	dl_text8x14	x=296, y=220, text=">"
+	dl_text8x16	x=16, y=225, text="\216"
+	dl_text8x16	x=56, y=225, text="\216"
+	dl_text8x16	x=96, y=225, text="\216"
+	dl_text8x16	x=136, y=225, text="\216"
+	dl_text8x16	x=176, y=225, text="\216"
+	dl_text8x16	x=216, y=225, text="\216"
+	dl_box_shadow2	x0=3, y0=173, x1=241, y1=193
+	dl_box_shadow2	x0=5, y0=212, x1=34, y1=236
+	dl_box_shadow2	x0=45, y0=212, x1=74, y1=236
+	dl_box_shadow2	x0=85, y0=212, x1=114, y1=236
+	dl_box_shadow2	x0=125, y0=212, x1=154, y1=236
+	dl_box_shadow2	x0=165, y0=212, x1=194, y1=236
+	dl_box_shadow2	x0=205, y0=212, x1=234, y1=236
+	dl_box_shadow2	x0=245, y0=212, x1=274, y1=236
+	dl_box_shadow2	x0=285, y0=212, x1=314, y1=236
+	dl_box	x0=265, y0=31, x1=309, y1=51
+	dl_box	x0=267, y0=33, x1=307, y1=49
+	dl_box	x0=277, y0=70, x1=307, y1=86
+	dl_box	x0=277, y0=111, x1=307, y1=127
+	dl_box	x0=275, y0=147, x1=309, y1=166
+	dl_box	x0=277, y0=149, x1=307, y1=164
+	dl_hline	x0=0, y0=32, x1=256, y1=32
+	dl_hline	x0=0, y0=39, x1=255, y1=39
+	dl_hline	x0=16, y0=169, x1=255, y1=169
+	dl_hline	x0=5, y0=224, x1=36, y1=224
+	dl_hline	x0=45, y0=224, x1=76, y1=224
+	dl_hline	x0=85, y0=224, x1=116, y1=224
+	dl_hline	x0=125, y0=224, x1=156, y1=224
+	dl_hline	x0=165, y0=224, x1=196, y1=224
+	dl_hline	x0=205, y0=224, x1=236, y1=224
+	dl_vline	x0=256, y0=39, x1=256, y1=169
 
 ; DisplayList_DrumEditTrackSong -- 71 record(s), 594 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFF10E0 and land exactly on 0xFF1332.
@@ -11431,168 +11181,77 @@ DisplayList_NoteEditTrackSong:
 ;          for prom_b's 249 named lists.
 ; ---------------------------------------------------------------------
 DisplayList_DrumEditTrackSong:
-	.byte 0x07, 0x0D                               ; FF10E0  op 07, 13 bytes, handler 0xF31A3A
-	.byte 0x51, 0x00                   ; FF10E2
-	.ascii "DRUM EDIT"                          ; FF10E4
-	.byte 0x06, 0x09                               ; FF10ED  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0x86, 0x00                   ; FF10EF
-	.ascii "TRACK"                              ; FF10F1
-	.byte 0x06, 0x08                               ; FF10F6  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0x98, 0x00                   ; FF10F8
-	.ascii "SONG"                               ; FF10FA
-	.byte 0x07, 0x05                               ; FF10FE  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xC7, 0x05, 0x11             ; FF1100
-	.byte 0x06, 0x08                               ; FF1103  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0xEA, 0x05                   ; FF1105
-	.ascii "PLAY"                               ; FF1107
-	.byte 0x07, 0x05                               ; FF110B  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x64, 0x0B, 0x8D             ; FF110D
-	.byte 0x07, 0x05                               ; FF1110  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x67, 0x0B, 0x11             ; FF1112
-	.byte 0x06, 0x09                               ; FF1115  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0xD2, 0x0E                   ; FF1117
-	.ascii "SOUND"                              ; FF1119
-	.byte 0x07, 0x05                               ; FF111E  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xCF, 0x11, 0x11             ; FF1120
-	.byte 0x07, 0x05                               ; FF1123  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xF4, 0x11, 0x8E             ; FF1125
-	.byte 0x07, 0x05                               ; FF1128  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xBF, 0x17, 0x11             ; FF112A
-	.byte 0x06, 0x07                               ; FF112D  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0xE3, 0x17                   ; FF112F
-	.ascii "ERS"                                ; FF1131
-	.byte 0x06, 0x08                               ; FF1134  op 06, 8 bytes, handler 0xF31A3A
-	.byte 0x19, 0x1F                   ; FF1136
-	.ascii "MEAS"                               ; FF1138
-	.byte 0x06, 0x07                               ; FF113C  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x1E, 0x1F                   ; FF113E
-	.ascii "POS"                                ; FF1140
-	.byte 0x06, 0x07                               ; FF1143  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x23, 0x1F                   ; FF1145
-	.ascii "SND"                                ; FF1147
-	.byte 0x06, 0x07                               ; FF114A  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x28, 0x1F                   ; FF114C
-	.ascii "VEL"                                ; FF114E
-	.byte 0x06, 0x07                               ; FF1151  op 06, 7 bytes, handler 0xF31A3A
-	.byte 0x2D, 0x1F                   ; FF1153
-	.ascii "INC"                                ; FF1155
-	.byte 0x06, 0x0A                               ; FF1158  op 06, 10 bytes, handler 0xF31A3A
-	.byte 0x33, 0x1F                   ; FF115A
-	.ascii "CURSOR"                             ; FF115C
-	.byte 0x06, 0x09                               ; FF1162  op 06, 9 bytes, handler 0xF31A3A
-	.byte 0x3B, 0x1F                   ; FF1164
-	.ascii "ENTER"                              ; FF1166
-	.byte 0x06, 0x05                               ; FF116B  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x31, 0x1F, 0x2D             ; FF116D
-	.byte 0x17, 0x0A                               ; FF1170  op 17, 10 bytes, handler 0xF31A52
-	.byte 0xBD, 0x00, 0x06, 0x00       ; FF1172
-	.ascii "KIT:"                               ; FF1176
-	.byte 0x07, 0x05                               ; FF117A  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xFA, 0x20, 0x8D             ; FF117C
-	.byte 0x07, 0x05                               ; FF117F  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0xFF, 0x20, 0x8D             ; FF1181
-	.byte 0x07, 0x05                               ; FF1184  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x04, 0x21, 0x8D             ; FF1186
-	.byte 0x07, 0x05                               ; FF1189  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x09, 0x21, 0x8D             ; FF118B
-	.byte 0x07, 0x05                               ; FF118E  op 07, 5 bytes, handler 0xF31A3A
-	.byte 0x0E, 0x21, 0x8D             ; FF1190
-	.byte 0x06, 0x05                               ; FF1193  op 06, 5 bytes, handler 0xF31A3A
-	.ascii "{\"<"                                ; FF1195
-	.byte 0x06, 0x05                               ; FF1198  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x80                         ; FF119A
-	.ascii "\">"                                 ; FF119B
-	.byte 0x07, 0x05                               ; FF119D  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "*#"                                 ; FF119F
-	.byte 0x8E                         ; FF11A1
-	.byte 0x07, 0x05                               ; FF11A2  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "/#"                                 ; FF11A4
-	.byte 0x8E                         ; FF11A6
-	.byte 0x07, 0x05                               ; FF11A7  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "4#"                                 ; FF11A9
-	.byte 0x8E                         ; FF11AB
-	.byte 0x07, 0x05                               ; FF11AC  op 07, 5 bytes, handler 0xF31A3A
-	.ascii "9#"                                 ; FF11AE
-	.byte 0x8E                         ; FF11B0
-	.byte 0x07, 0x05                               ; FF11B1  op 07, 5 bytes, handler 0xF31A3A
-	.ascii ">#"                                 ; FF11B3
-	.byte 0x8E                         ; FF11B5
-	.byte 0x0A, 0x0A                               ; FF11B6  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x03, 0x00, 0xAD, 0x00, 0xC8, 0x00, 0xC1, 0x00  ; FF11B8
-	.byte 0x0A, 0x0A                               ; FF11C0  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xD4, 0x00, 0x22, 0x00, 0xEC, 0x00  ; FF11C2
-	.byte 0x0A, 0x0A                               ; FF11CA  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xD4, 0x00, 0x4A, 0x00, 0xEC, 0x00  ; FF11CC
-	.byte 0x0A, 0x0A                               ; FF11D4  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xD4, 0x00, 0x72, 0x00, 0xEC, 0x00  ; FF11D6
-	.byte 0x0A, 0x0A                               ; FF11DE  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xD4, 0x00, 0x9A, 0x00, 0xEC, 0x00  ; FF11E0
-	.byte 0x0A, 0x0A                               ; FF11E8  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xD4, 0x00, 0xC2, 0x00, 0xEC, 0x00  ; FF11EA
-	.byte 0x0A, 0x0A                               ; FF11F2  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xD4, 0x00, 0xEA, 0x00, 0xEC, 0x00  ; FF11F4
-	.byte 0x0A, 0x0A                               ; FF11FC  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xD4, 0x00, 0x12, 0x01, 0xEC, 0x00  ; FF11FE
-	.byte 0x0A, 0x0A                               ; FF1206  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xD4, 0x00, 0x3A, 0x01, 0xEC, 0x00  ; FF1208
-	.byte 0x09, 0x0A                               ; FF1210  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x09, 0x01, 0x1F, 0x00, 0x35, 0x01, 0x33, 0x00  ; FF1212
-	.byte 0x09, 0x0A                               ; FF121A  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x0B, 0x01, 0x21, 0x00, 0x33, 0x01, 0x31, 0x00  ; FF121C
-	.byte 0x09, 0x0A                               ; FF1224  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x46, 0x00, 0x33, 0x01, 0x56, 0x00  ; FF1226
-	.byte 0x09, 0x0A                               ; FF122E  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x6F, 0x00, 0x33, 0x01, 0x7F, 0x00  ; FF1230
-	.byte 0x09, 0x0A                               ; FF1238  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x13, 0x01, 0x93, 0x00, 0x35, 0x01, 0xA6, 0x00  ; FF123A
-	.byte 0x09, 0x0A                               ; FF1242  op 09, 10 bytes, handler 0xF31A75
-	.byte 0x15, 0x01, 0x95, 0x00, 0x33, 0x01, 0xA4, 0x00  ; FF1244
-	.byte 0x01, 0x0A                               ; FF124C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x20, 0x00, 0x01, 0x01, 0x20, 0x00  ; FF124E
-	.byte 0x01, 0x0A                               ; FF1256  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x27, 0x00, 0x01, 0x01, 0x27, 0x00  ; FF1258
-	.byte 0x01, 0x0A                               ; FF1260  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0xA2, 0x00, 0x01, 0x01, 0xA2, 0x00  ; FF1262
-	.byte 0x01, 0x0A                               ; FF126A  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xE0, 0x00, 0x24, 0x00, 0xE0, 0x00  ; FF126C
-	.byte 0x01, 0x0A                               ; FF1274  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xE0, 0x00, 0x4C, 0x00, 0xE0, 0x00  ; FF1276
-	.byte 0x01, 0x0A                               ; FF127E  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xE0, 0x00, 0x74, 0x00, 0xE0, 0x00  ; FF1280
-	.byte 0x01, 0x0A                               ; FF1288  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xE0, 0x00, 0x9C, 0x00, 0xE0, 0x00  ; FF128A
-	.byte 0x01, 0x0A                               ; FF1292  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xE0, 0x00, 0xC4, 0x00, 0xE0, 0x00  ; FF1294
-	.byte 0x02, 0x0A                               ; FF129C  op 02, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0xA1, 0x00  ; FF129E
-	.byte 0x02, 0x0A                               ; FF12A6  op 02, 10 bytes, handler 0xF31A75
-	.byte 0x58, 0x00, 0x28, 0x00, 0x58, 0x00, 0xA1, 0x00  ; FF12A8
-	.byte 0x02, 0x0A                               ; FF12B0  op 02, 10 bytes, handler 0xF31A75
-	.byte 0x01, 0x01, 0x28, 0x00, 0x01, 0x01, 0xA1, 0x00  ; FF12B2
-	.byte 0x01, 0x0A                               ; FF12BA  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x29, 0x00, 0x58, 0x00, 0x29, 0x00  ; FF12BC
-	.byte 0x01, 0x0A                               ; FF12C4  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x33, 0x00, 0x58, 0x00, 0x33, 0x00  ; FF12C6
-	.byte 0x01, 0x0A                               ; FF12CE  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x3D, 0x00, 0x58, 0x00, 0x3D, 0x00  ; FF12D0
-	.byte 0x01, 0x0A                               ; FF12D8  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x47, 0x00, 0x58, 0x00, 0x47, 0x00  ; FF12DA
-	.byte 0x01, 0x0A                               ; FF12E2  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x51, 0x00, 0x58, 0x00, 0x51, 0x00  ; FF12E4
-	.byte 0x01, 0x0A                               ; FF12EC  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x5B, 0x00, 0x58, 0x00, 0x5B, 0x00  ; FF12EE
-	.byte 0x01, 0x0A                               ; FF12F6  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x65, 0x00, 0x58, 0x00, 0x65, 0x00  ; FF12F8
-	.byte 0x01, 0x0A                               ; FF1300  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x6F, 0x00, 0x58, 0x00, 0x6F, 0x00  ; FF1302
-	.byte 0x01, 0x0A                               ; FF130A  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x79, 0x00, 0x58, 0x00, 0x79, 0x00  ; FF130C
-	.byte 0x01, 0x0A                               ; FF1314  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x83, 0x00, 0x58, 0x00, 0x83, 0x00  ; FF1316
-	.byte 0x01, 0x0A                               ; FF131E  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x8D, 0x00, 0x58, 0x00, 0x8D, 0x00  ; FF1320
-	.byte 0x01, 0x0A                               ; FF1328  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x00, 0x00, 0x97, 0x00, 0x58, 0x00, 0x97, 0x00  ; FF132A
+	dl_text8x16	x=8, y=2, text="DRUM EDIT"
+	dl_text8x14	x=112, y=3, text="TRACK"
+	dl_text8x14	x=256, y=3, text="SONG"
+	dl_text8x16	x=312, y=36, text="\021"
+	dl_text8x14	x=272, y=37, text="PLAY"
+	dl_text8x16	x=288, y=72, text="\215"
+	dl_text8x16	x=312, y=72, text="\021"
+	dl_text8x14	x=272, y=94, text="SOUND"
+	dl_text8x16	x=312, y=113, text="\021"
+	dl_text8x16	x=288, y=114, text="\216"
+	dl_text8x16	x=312, y=151, text="\021"
+	dl_text8x14	x=280, y=152, text="ERS"
+	dl_text8x14	x=8, y=199, text="MEAS"
+	dl_text8x14	x=48, y=199, text="POS"
+	dl_text8x14	x=88, y=199, text="SND"
+	dl_text8x14	x=128, y=199, text="VEL"
+	dl_text8x14	x=168, y=199, text="INC"
+	dl_text8x14	x=216, y=199, text="CURSOR"
+	dl_text8x14	x=280, y=199, text="ENTER"
+	dl_text8x14	x=200, y=199, text="-"
+	dl_text8x8_packed	x=189, y=6, text="KIT:"
+	dl_text8x16	x=16, y=211, text="\215"
+	dl_text8x16	x=56, y=211, text="\215"
+	dl_text8x16	x=96, y=211, text="\215"
+	dl_text8x16	x=136, y=211, text="\215"
+	dl_text8x16	x=176, y=211, text="\215"
+	dl_text8x14	x=216, y=220, text="<"
+	dl_text8x14	x=256, y=220, text=">"
+	dl_text8x16	x=16, y=225, text="\216"
+	dl_text8x16	x=56, y=225, text="\216"
+	dl_text8x16	x=96, y=225, text="\216"
+	dl_text8x16	x=136, y=225, text="\216"
+	dl_text8x16	x=176, y=225, text="\216"
+	dl_box_shadow2	x0=3, y0=173, x1=200, y1=193
+	dl_box_shadow2	x0=5, y0=212, x1=34, y1=236
+	dl_box_shadow2	x0=45, y0=212, x1=74, y1=236
+	dl_box_shadow2	x0=85, y0=212, x1=114, y1=236
+	dl_box_shadow2	x0=125, y0=212, x1=154, y1=236
+	dl_box_shadow2	x0=165, y0=212, x1=194, y1=236
+	dl_box_shadow2	x0=205, y0=212, x1=234, y1=236
+	dl_box_shadow2	x0=245, y0=212, x1=274, y1=236
+	dl_box_shadow2	x0=285, y0=212, x1=314, y1=236
+	dl_box	x0=265, y0=31, x1=309, y1=51
+	dl_box	x0=267, y0=33, x1=307, y1=49
+	dl_box	x0=277, y0=70, x1=307, y1=86
+	dl_box	x0=277, y0=111, x1=307, y1=127
+	dl_box	x0=275, y0=147, x1=309, y1=166
+	dl_box	x0=277, y0=149, x1=307, y1=164
+	dl_hline	x0=0, y0=32, x1=257, y1=32
+	dl_hline	x0=0, y0=39, x1=257, y1=39
+	dl_hline	x0=0, y0=162, x1=257, y1=162
+	dl_hline	x0=5, y0=224, x1=36, y1=224
+	dl_hline	x0=45, y0=224, x1=76, y1=224
+	dl_hline	x0=85, y0=224, x1=116, y1=224
+	dl_hline	x0=125, y0=224, x1=156, y1=224
+	dl_hline	x0=165, y0=224, x1=196, y1=224
+	dl_vline	x0=0, y0=40, x1=0, y1=161
+	dl_vline	x0=88, y0=40, x1=88, y1=161
+	dl_vline	x0=257, y0=40, x1=257, y1=161
+	dl_hline	x0=0, y0=41, x1=88, y1=41
+	dl_hline	x0=0, y0=51, x1=88, y1=51
+	dl_hline	x0=0, y0=61, x1=88, y1=61
+	dl_hline	x0=0, y0=71, x1=88, y1=71
+	dl_hline	x0=0, y0=81, x1=88, y1=81
+	dl_hline	x0=0, y0=91, x1=88, y1=91
+	dl_hline	x0=0, y0=101, x1=88, y1=101
+	dl_hline	x0=0, y0=111, x1=88, y1=111
+	dl_hline	x0=0, y0=121, x1=88, y1=121
+	dl_hline	x0=0, y0=131, x1=88, y1=131
+	dl_hline	x0=0, y0=141, x1=88, y1=141
+	dl_hline	x0=0, y0=151, x1=88, y1=151
 
 ; DisplayList_NoteEditPartSelect -- 70 record(s), 600 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFF1332 and land exactly on 0xFF158A.
@@ -11606,174 +11265,76 @@ DisplayList_DrumEditTrackSong:
 ;          for prom_b's 249 named lists.
 ; ---------------------------------------------------------------------
 DisplayList_NoteEditPartSelect:
-	.byte 0x1C, 0x0A                               ; FF1332  op 1C, 10 bytes, handler 0xF31A52
-	.byte 0x50, 0x00, 0x06, 0x00       ; FF1334
-	.ascii "NOTE"                               ; FF1338
-	.byte 0x1C, 0x0A                               ; FF133C  op 1C, 10 bytes, handler 0xF31A52
-	.byte 0x87, 0x00, 0x06, 0x00       ; FF133E
-	.ascii "EDIT"                               ; FF1342
-	.byte 0x06, 0x05                               ; FF1346  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x08, 0x01, 0x3A             ; FF1348
-	.byte 0x07, 0x08                               ; FF134B  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0x09, 0x01                   ; FF134D
-	.ascii "PART"                               ; FF134F
-	.byte 0x07, 0x0A                               ; FF1353  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0x0E, 0x01                   ; FF1355
-	.ascii "SELECT"                             ; FF1357
-	.byte 0x07, 0x09                               ; FF135D  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x5B, 0x07                   ; FF135F
-	.ascii "Press"                              ; FF1361
-	.byte 0x07, 0x07                               ; FF1366  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0x61, 0x07                   ; FF1368
-	.ascii "the"                                ; FF136A
-	.byte 0x07, 0x0B                               ; FF136D  op 07, 11 bytes, handler 0xF31A3A
-	.byte 0x65, 0x07                   ; FF136F
-	.ascii "up/down"                            ; FF1371
-	.byte 0x07, 0x0A                               ; FF1378  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0x6D, 0x07                   ; FF137A
-	.ascii "button"                             ; FF137C
-	.byte 0x07, 0x09                               ; FF1382  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x74, 0x07                   ; FF1384
-	.ascii "under"                              ; FF1386
-	.byte 0x07, 0x07                               ; FF138B  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xA3, 0x0A                   ; FF138D
-	.ascii "the"                                ; FF138F
-	.byte 0x07, 0x0A                               ; FF1392  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0xA7, 0x0A                   ; FF1394
-	.ascii "screen"                             ; FF1396
-	.byte 0x07, 0x11                               ; FF139C  op 07, 17 bytes, handler 0xF31A3A
-	.byte 0xAE, 0x0A                   ; FF139E
-	.ascii "corresponding"                      ; FF13A0
-	.byte 0x07, 0x06                               ; FF13AD  op 07, 6 bytes, handler 0xF31A3A
-	.byte 0xBC, 0x0A                   ; FF13AF
-	.ascii "to"                                 ; FF13B1
-	.byte 0x07, 0x07                               ; FF13B3  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xBF, 0x0A                   ; FF13B5
-	.ascii "the"                                ; FF13B7
-	.byte 0x07, 0x09                               ; FF13BA  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0xEB, 0x0D                   ; FF13BC
-	.ascii "track"                              ; FF13BE
-	.byte 0x07, 0x08                               ; FF13C3  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0xF1, 0x0D                   ; FF13C5
-	.ascii "that"                               ; FF13C7
-	.byte 0x07, 0x07                               ; FF13CB  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xF6, 0x0D                   ; FF13CD
-	.ascii "you"                                ; FF13CF
-	.byte 0x07, 0x08                               ; FF13D2  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0xFA, 0x0D                   ; FF13D4
-	.ascii "want"                               ; FF13D6
-	.byte 0x07, 0x06                               ; FF13DA  op 07, 6 bytes, handler 0xF31A3A
-	.byte 0xFF, 0x0D                   ; FF13DC
-	.ascii "to"                                 ; FF13DE
-	.byte 0x07, 0x09                               ; FF13E0  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x02, 0x0E                   ; FF13E2
-	.ascii "edit."                              ; FF13E4
-	.byte 0x06, 0x05                               ; FF13E9  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x52, 0x19, 0x31             ; FF13EB
-	.byte 0x06, 0x05                               ; FF13EE  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x57, 0x19, 0x32             ; FF13F0
-	.byte 0x06, 0x05                               ; FF13F3  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x5C, 0x19, 0x33             ; FF13F5
-	.byte 0x06, 0x05                               ; FF13F8  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x61, 0x19, 0x34             ; FF13FA
-	.byte 0x06, 0x05                               ; FF13FD  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x66, 0x19, 0x35             ; FF13FF
-	.byte 0x06, 0x05                               ; FF1402  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x6B, 0x19, 0x36             ; FF1404
-	.byte 0x06, 0x05                               ; FF1407  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x70, 0x19, 0x37             ; FF1409
-	.byte 0x06, 0x05                               ; FF140C  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x75, 0x19, 0x38             ; FF140E
-	.byte 0x06, 0x05                               ; FF1411  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0xAA                         ; FF1413
-	.ascii " 9"                                 ; FF1414
-	.byte 0x06, 0x06                               ; FF1416  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xAF                         ; FF1418
-	.ascii " 10"                                ; FF1419
-	.byte 0x06, 0x06                               ; FF141C  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xB4                         ; FF141E
-	.ascii " 11"                                ; FF141F
-	.byte 0x06, 0x06                               ; FF1422  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xB9                         ; FF1424
-	.ascii " 12"                                ; FF1425
-	.byte 0x06, 0x06                               ; FF1428  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xBE                         ; FF142A
-	.ascii " 13"                                ; FF142B
-	.byte 0x06, 0x06                               ; FF142E  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xC3                         ; FF1430
-	.ascii " 14"                                ; FF1431
-	.byte 0x06, 0x06                               ; FF1434  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xC8                         ; FF1436
-	.ascii " 15"                                ; FF1437
-	.byte 0x06, 0x06                               ; FF143A  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xCD                         ; FF143C
-	.ascii " 16"                                ; FF143D
-	.byte 0x0A, 0x0A                               ; FF1440  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x10, 0x00, 0x27, 0x00, 0x1F, 0x01, 0x76, 0x00  ; FF1442
-	.byte 0x0A, 0x0A                               ; FF144A  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xA0, 0x00, 0x22, 0x00, 0xBA, 0x00  ; FF144C
-	.byte 0x0A, 0x0A                               ; FF1454  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xA0, 0x00, 0x4A, 0x00, 0xBA, 0x00  ; FF1456
-	.byte 0x0A, 0x0A                               ; FF145E  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xA0, 0x00, 0x72, 0x00, 0xBA, 0x00  ; FF1460
-	.byte 0x0A, 0x0A                               ; FF1468  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xA0, 0x00, 0x9A, 0x00, 0xBA, 0x00  ; FF146A
-	.byte 0x0A, 0x0A                               ; FF1472  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xA0, 0x00, 0xC2, 0x00, 0xBA, 0x00  ; FF1474
-	.byte 0x0A, 0x0A                               ; FF147C  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xA0, 0x00, 0xEA, 0x00, 0xBA, 0x00  ; FF147E
-	.byte 0x0A, 0x0A                               ; FF1486  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xA0, 0x00, 0x12, 0x01, 0xBA, 0x00  ; FF1488
-	.byte 0x0A, 0x0A                               ; FF1490  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xA0, 0x00, 0x3A, 0x01, 0xBA, 0x00  ; FF1492
-	.byte 0x0A, 0x0A                               ; FF149A  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xCF, 0x00, 0x22, 0x00, 0xE9, 0x00  ; FF149C
-	.byte 0x0A, 0x0A                               ; FF14A4  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xCF, 0x00, 0x4A, 0x00, 0xE9, 0x00  ; FF14A6
-	.byte 0x0A, 0x0A                               ; FF14AE  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xCF, 0x00, 0x72, 0x00, 0xE9, 0x00  ; FF14B0
-	.byte 0x0A, 0x0A                               ; FF14B8  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xCF, 0x00, 0x9A, 0x00, 0xE9, 0x00  ; FF14BA
-	.byte 0x0A, 0x0A                               ; FF14C2  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xCF, 0x00, 0xC2, 0x00, 0xE9, 0x00  ; FF14C4
-	.byte 0x0A, 0x0A                               ; FF14CC  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xCF, 0x00, 0xEA, 0x00, 0xE9, 0x00  ; FF14CE
-	.byte 0x0A, 0x0A                               ; FF14D6  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xCF, 0x00, 0x12, 0x01, 0xE9, 0x00  ; FF14D8
-	.byte 0x0A, 0x0A                               ; FF14E0  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xCF, 0x00, 0x3A, 0x01, 0xE9, 0x00  ; FF14E2
-	.byte 0x01, 0x0A                               ; FF14EA  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xAD, 0x00, 0x24, 0x00, 0xAD, 0x00  ; FF14EC
-	.byte 0x01, 0x0A                               ; FF14F4  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xAD, 0x00, 0x4C, 0x00, 0xAD, 0x00  ; FF14F6
-	.byte 0x01, 0x0A                               ; FF14FE  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xAD, 0x00, 0x74, 0x00, 0xAD, 0x00  ; FF1500
-	.byte 0x01, 0x0A                               ; FF1508  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xAD, 0x00, 0x9C, 0x00, 0xAD, 0x00  ; FF150A
-	.byte 0x01, 0x0A                               ; FF1512  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xAD, 0x00, 0xC4, 0x00, 0xAD, 0x00  ; FF1514
-	.byte 0x01, 0x0A                               ; FF151C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xAD, 0x00, 0xEC, 0x00, 0xAD, 0x00  ; FF151E
-	.byte 0x01, 0x0A                               ; FF1526  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xAD, 0x00, 0x14, 0x01, 0xAD, 0x00  ; FF1528
-	.byte 0x01, 0x0A                               ; FF1530  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xAD, 0x00, 0x3C, 0x01, 0xAD, 0x00  ; FF1532
-	.byte 0x01, 0x0A                               ; FF153A  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xDC, 0x00, 0x24, 0x00, 0xDC, 0x00  ; FF153C
-	.byte 0x01, 0x0A                               ; FF1544  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xDC, 0x00, 0x4C, 0x00, 0xDC, 0x00  ; FF1546
-	.byte 0x01, 0x0A                               ; FF154E  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xDC, 0x00, 0x74, 0x00, 0xDC, 0x00  ; FF1550
-	.byte 0x01, 0x0A                               ; FF1558  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xDC, 0x00, 0x9C, 0x00, 0xDC, 0x00  ; FF155A
-	.byte 0x01, 0x0A                               ; FF1562  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xDC, 0x00, 0xC4, 0x00, 0xDC, 0x00  ; FF1564
-	.byte 0x01, 0x0A                               ; FF156C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xDC, 0x00, 0xEC, 0x00, 0xDC, 0x00  ; FF156E
-	.byte 0x01, 0x0A                               ; FF1576  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xDC, 0x00, 0x14, 0x01, 0xDC, 0x00  ; FF1578
-	.byte 0x01, 0x0A                               ; FF1580  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xDC, 0x00, 0x3C, 0x01, 0xDC, 0x00  ; FF1582
+	dl_text16x16_packed	x=80, y=6, text="NOTE"
+	dl_text16x16_packed	x=135, y=6, text="EDIT"
+	dl_text8x14	x=192, y=6, text=":"
+	dl_text8x16	x=200, y=6, text="PART"
+	dl_text8x16	x=240, y=6, text="SELECT"
+	dl_text8x16	x=24, y=47, text="Press"
+	dl_text8x16	x=72, y=47, text="the"
+	dl_text8x16	x=104, y=47, text="up/down"
+	dl_text8x16	x=168, y=47, text="button"
+	dl_text8x16	x=224, y=47, text="under"
+	dl_text8x16	x=24, y=68, text="the"
+	dl_text8x16	x=56, y=68, text="screen"
+	dl_text8x16	x=112, y=68, text="corresponding"
+	dl_text8x16	x=224, y=68, text="to"
+	dl_text8x16	x=248, y=68, text="the"
+	dl_text8x16	x=24, y=89, text="track"
+	dl_text8x16	x=72, y=89, text="that"
+	dl_text8x16	x=112, y=89, text="you"
+	dl_text8x16	x=144, y=89, text="want"
+	dl_text8x16	x=184, y=89, text="to"
+	dl_text8x16	x=208, y=89, text="edit."
+	dl_text8x14	x=16, y=162, text="1"
+	dl_text8x14	x=56, y=162, text="2"
+	dl_text8x14	x=96, y=162, text="3"
+	dl_text8x14	x=136, y=162, text="4"
+	dl_text8x14	x=176, y=162, text="5"
+	dl_text8x14	x=216, y=162, text="6"
+	dl_text8x14	x=256, y=162, text="7"
+	dl_text8x14	x=296, y=162, text="8"
+	dl_text8x14	x=16, y=209, text="9"
+	dl_text8x14	x=56, y=209, text="10"
+	dl_text8x14	x=96, y=209, text="11"
+	dl_text8x14	x=136, y=209, text="12"
+	dl_text8x14	x=176, y=209, text="13"
+	dl_text8x14	x=216, y=209, text="14"
+	dl_text8x14	x=256, y=209, text="15"
+	dl_text8x14	x=296, y=209, text="16"
+	dl_box_shadow2	x0=16, y0=39, x1=287, y1=118
+	dl_box_shadow2	x0=5, y0=160, x1=34, y1=186
+	dl_box_shadow2	x0=45, y0=160, x1=74, y1=186
+	dl_box_shadow2	x0=85, y0=160, x1=114, y1=186
+	dl_box_shadow2	x0=125, y0=160, x1=154, y1=186
+	dl_box_shadow2	x0=165, y0=160, x1=194, y1=186
+	dl_box_shadow2	x0=205, y0=160, x1=234, y1=186
+	dl_box_shadow2	x0=245, y0=160, x1=274, y1=186
+	dl_box_shadow2	x0=285, y0=160, x1=314, y1=186
+	dl_box_shadow2	x0=5, y0=207, x1=34, y1=233
+	dl_box_shadow2	x0=45, y0=207, x1=74, y1=233
+	dl_box_shadow2	x0=85, y0=207, x1=114, y1=233
+	dl_box_shadow2	x0=125, y0=207, x1=154, y1=233
+	dl_box_shadow2	x0=165, y0=207, x1=194, y1=233
+	dl_box_shadow2	x0=205, y0=207, x1=234, y1=233
+	dl_box_shadow2	x0=245, y0=207, x1=274, y1=233
+	dl_box_shadow2	x0=285, y0=207, x1=314, y1=233
+	dl_hline	x0=5, y0=173, x1=36, y1=173
+	dl_hline	x0=45, y0=173, x1=76, y1=173
+	dl_hline	x0=85, y0=173, x1=116, y1=173
+	dl_hline	x0=125, y0=173, x1=156, y1=173
+	dl_hline	x0=165, y0=173, x1=196, y1=173
+	dl_hline	x0=205, y0=173, x1=236, y1=173
+	dl_hline	x0=245, y0=173, x1=276, y1=173
+	dl_hline	x0=285, y0=173, x1=316, y1=173
+	dl_hline	x0=5, y0=220, x1=36, y1=220
+	dl_hline	x0=45, y0=220, x1=76, y1=220
+	dl_hline	x0=85, y0=220, x1=116, y1=220
+	dl_hline	x0=125, y0=220, x1=156, y1=220
+	dl_hline	x0=165, y0=220, x1=196, y1=220
+	dl_hline	x0=205, y0=220, x1=236, y1=220
+	dl_hline	x0=245, y0=220, x1=276, y1=220
+	dl_hline	x0=285, y0=220, x1=316, y1=220
 
 ; DisplayList_DrumEditPartSelect -- 70 record(s), 600 bytes.  Run by interpreter A (0xF31A09)
 ; The length bytes walk from 0xFF158A and land exactly on 0xFF17E2.
@@ -11787,174 +11348,76 @@ DisplayList_NoteEditPartSelect:
 ;          for prom_b's 249 named lists.
 ; ---------------------------------------------------------------------
 DisplayList_DrumEditPartSelect:
-	.byte 0x1C, 0x0A                               ; FF158A  op 1C, 10 bytes, handler 0xF31A52
-	.byte 0x50, 0x00, 0x06, 0x00       ; FF158C
-	.ascii "DRUM"                               ; FF1590
-	.byte 0x1C, 0x0A                               ; FF1594  op 1C, 10 bytes, handler 0xF31A52
-	.byte 0x87, 0x00, 0x06, 0x00       ; FF1596
-	.ascii "EDIT"                               ; FF159A
-	.byte 0x06, 0x05                               ; FF159E  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x08, 0x01, 0x3A             ; FF15A0
-	.byte 0x07, 0x08                               ; FF15A3  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0x09, 0x01                   ; FF15A5
-	.ascii "PART"                               ; FF15A7
-	.byte 0x07, 0x0A                               ; FF15AB  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0x0E, 0x01                   ; FF15AD
-	.ascii "SELECT"                             ; FF15AF
-	.byte 0x07, 0x09                               ; FF15B5  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x5B, 0x07                   ; FF15B7
-	.ascii "Press"                              ; FF15B9
-	.byte 0x07, 0x07                               ; FF15BE  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0x61, 0x07                   ; FF15C0
-	.ascii "the"                                ; FF15C2
-	.byte 0x07, 0x0B                               ; FF15C5  op 07, 11 bytes, handler 0xF31A3A
-	.byte 0x65, 0x07                   ; FF15C7
-	.ascii "up/down"                            ; FF15C9
-	.byte 0x07, 0x0A                               ; FF15D0  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0x6D, 0x07                   ; FF15D2
-	.ascii "button"                             ; FF15D4
-	.byte 0x07, 0x09                               ; FF15DA  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x74, 0x07                   ; FF15DC
-	.ascii "under"                              ; FF15DE
-	.byte 0x07, 0x07                               ; FF15E3  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xA3, 0x0A                   ; FF15E5
-	.ascii "the"                                ; FF15E7
-	.byte 0x07, 0x0A                               ; FF15EA  op 07, 10 bytes, handler 0xF31A3A
-	.byte 0xA7, 0x0A                   ; FF15EC
-	.ascii "screen"                             ; FF15EE
-	.byte 0x07, 0x11                               ; FF15F4  op 07, 17 bytes, handler 0xF31A3A
-	.byte 0xAE, 0x0A                   ; FF15F6
-	.ascii "corresponding"                      ; FF15F8
-	.byte 0x07, 0x06                               ; FF1605  op 07, 6 bytes, handler 0xF31A3A
-	.byte 0xBC, 0x0A                   ; FF1607
-	.ascii "to"                                 ; FF1609
-	.byte 0x07, 0x07                               ; FF160B  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xBF, 0x0A                   ; FF160D
-	.ascii "the"                                ; FF160F
-	.byte 0x07, 0x09                               ; FF1612  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0xEB, 0x0D                   ; FF1614
-	.ascii "track"                              ; FF1616
-	.byte 0x07, 0x08                               ; FF161B  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0xF1, 0x0D                   ; FF161D
-	.ascii "that"                               ; FF161F
-	.byte 0x07, 0x07                               ; FF1623  op 07, 7 bytes, handler 0xF31A3A
-	.byte 0xF6, 0x0D                   ; FF1625
-	.ascii "you"                                ; FF1627
-	.byte 0x07, 0x08                               ; FF162A  op 07, 8 bytes, handler 0xF31A3A
-	.byte 0xFA, 0x0D                   ; FF162C
-	.ascii "want"                               ; FF162E
-	.byte 0x07, 0x06                               ; FF1632  op 07, 6 bytes, handler 0xF31A3A
-	.byte 0xFF, 0x0D                   ; FF1634
-	.ascii "to"                                 ; FF1636
-	.byte 0x07, 0x09                               ; FF1638  op 07, 9 bytes, handler 0xF31A3A
-	.byte 0x02, 0x0E                   ; FF163A
-	.ascii "edit."                              ; FF163C
-	.byte 0x06, 0x05                               ; FF1641  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x52, 0x19, 0x31             ; FF1643
-	.byte 0x06, 0x05                               ; FF1646  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x57, 0x19, 0x32             ; FF1648
-	.byte 0x06, 0x05                               ; FF164B  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x5C, 0x19, 0x33             ; FF164D
-	.byte 0x06, 0x05                               ; FF1650  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x61, 0x19, 0x34             ; FF1652
-	.byte 0x06, 0x05                               ; FF1655  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x66, 0x19, 0x35             ; FF1657
-	.byte 0x06, 0x05                               ; FF165A  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x6B, 0x19, 0x36             ; FF165C
-	.byte 0x06, 0x05                               ; FF165F  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x70, 0x19, 0x37             ; FF1661
-	.byte 0x06, 0x05                               ; FF1664  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0x75, 0x19, 0x38             ; FF1666
-	.byte 0x06, 0x05                               ; FF1669  op 06, 5 bytes, handler 0xF31A3A
-	.byte 0xAA                         ; FF166B
-	.ascii " 9"                                 ; FF166C
-	.byte 0x06, 0x06                               ; FF166E  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xAF                         ; FF1670
-	.ascii " 10"                                ; FF1671
-	.byte 0x06, 0x06                               ; FF1674  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xB4                         ; FF1676
-	.ascii " 11"                                ; FF1677
-	.byte 0x06, 0x06                               ; FF167A  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xB9                         ; FF167C
-	.ascii " 12"                                ; FF167D
-	.byte 0x06, 0x06                               ; FF1680  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xBE                         ; FF1682
-	.ascii " 13"                                ; FF1683
-	.byte 0x06, 0x06                               ; FF1686  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xC3                         ; FF1688
-	.ascii " 14"                                ; FF1689
-	.byte 0x06, 0x06                               ; FF168C  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xC8                         ; FF168E
-	.ascii " 15"                                ; FF168F
-	.byte 0x06, 0x06                               ; FF1692  op 06, 6 bytes, handler 0xF31A3A
-	.byte 0xCD                         ; FF1694
-	.ascii " 16"                                ; FF1695
-	.byte 0x0A, 0x0A                               ; FF1698  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x10, 0x00, 0x27, 0x00, 0x1F, 0x01, 0x76, 0x00  ; FF169A
-	.byte 0x0A, 0x0A                               ; FF16A2  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xA0, 0x00, 0x22, 0x00, 0xBA, 0x00  ; FF16A4
-	.byte 0x0A, 0x0A                               ; FF16AC  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xA0, 0x00, 0x4A, 0x00, 0xBA, 0x00  ; FF16AE
-	.byte 0x0A, 0x0A                               ; FF16B6  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xA0, 0x00, 0x72, 0x00, 0xBA, 0x00  ; FF16B8
-	.byte 0x0A, 0x0A                               ; FF16C0  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xA0, 0x00, 0x9A, 0x00, 0xBA, 0x00  ; FF16C2
-	.byte 0x0A, 0x0A                               ; FF16CA  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xA0, 0x00, 0xC2, 0x00, 0xBA, 0x00  ; FF16CC
-	.byte 0x0A, 0x0A                               ; FF16D4  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xA0, 0x00, 0xEA, 0x00, 0xBA, 0x00  ; FF16D6
-	.byte 0x0A, 0x0A                               ; FF16DE  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xA0, 0x00, 0x12, 0x01, 0xBA, 0x00  ; FF16E0
-	.byte 0x0A, 0x0A                               ; FF16E8  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xA0, 0x00, 0x3A, 0x01, 0xBA, 0x00  ; FF16EA
-	.byte 0x0A, 0x0A                               ; FF16F2  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xCF, 0x00, 0x22, 0x00, 0xE9, 0x00  ; FF16F4
-	.byte 0x0A, 0x0A                               ; FF16FC  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xCF, 0x00, 0x4A, 0x00, 0xE9, 0x00  ; FF16FE
-	.byte 0x0A, 0x0A                               ; FF1706  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xCF, 0x00, 0x72, 0x00, 0xE9, 0x00  ; FF1708
-	.byte 0x0A, 0x0A                               ; FF1710  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xCF, 0x00, 0x9A, 0x00, 0xE9, 0x00  ; FF1712
-	.byte 0x0A, 0x0A                               ; FF171A  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xCF, 0x00, 0xC2, 0x00, 0xE9, 0x00  ; FF171C
-	.byte 0x0A, 0x0A                               ; FF1724  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xCF, 0x00, 0xEA, 0x00, 0xE9, 0x00  ; FF1726
-	.byte 0x0A, 0x0A                               ; FF172E  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xCF, 0x00, 0x12, 0x01, 0xE9, 0x00  ; FF1730
-	.byte 0x0A, 0x0A                               ; FF1738  op 0A, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xCF, 0x00, 0x3A, 0x01, 0xE9, 0x00  ; FF173A
-	.byte 0x01, 0x0A                               ; FF1742  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xAD, 0x00, 0x24, 0x00, 0xAD, 0x00  ; FF1744
-	.byte 0x01, 0x0A                               ; FF174C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xAD, 0x00, 0x4C, 0x00, 0xAD, 0x00  ; FF174E
-	.byte 0x01, 0x0A                               ; FF1756  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xAD, 0x00, 0x74, 0x00, 0xAD, 0x00  ; FF1758
-	.byte 0x01, 0x0A                               ; FF1760  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xAD, 0x00, 0x9C, 0x00, 0xAD, 0x00  ; FF1762
-	.byte 0x01, 0x0A                               ; FF176A  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xAD, 0x00, 0xC4, 0x00, 0xAD, 0x00  ; FF176C
-	.byte 0x01, 0x0A                               ; FF1774  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xAD, 0x00, 0xEC, 0x00, 0xAD, 0x00  ; FF1776
-	.byte 0x01, 0x0A                               ; FF177E  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xAD, 0x00, 0x14, 0x01, 0xAD, 0x00  ; FF1780
-	.byte 0x01, 0x0A                               ; FF1788  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xAD, 0x00, 0x3C, 0x01, 0xAD, 0x00  ; FF178A
-	.byte 0x01, 0x0A                               ; FF1792  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x05, 0x00, 0xDC, 0x00, 0x24, 0x00, 0xDC, 0x00  ; FF1794
-	.byte 0x01, 0x0A                               ; FF179C  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x2D, 0x00, 0xDC, 0x00, 0x4C, 0x00, 0xDC, 0x00  ; FF179E
-	.byte 0x01, 0x0A                               ; FF17A6  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x55, 0x00, 0xDC, 0x00, 0x74, 0x00, 0xDC, 0x00  ; FF17A8
-	.byte 0x01, 0x0A                               ; FF17B0  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x7D, 0x00, 0xDC, 0x00, 0x9C, 0x00, 0xDC, 0x00  ; FF17B2
-	.byte 0x01, 0x0A                               ; FF17BA  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xA5, 0x00, 0xDC, 0x00, 0xC4, 0x00, 0xDC, 0x00  ; FF17BC
-	.byte 0x01, 0x0A                               ; FF17C4  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xCD, 0x00, 0xDC, 0x00, 0xEC, 0x00, 0xDC, 0x00  ; FF17C6
-	.byte 0x01, 0x0A                               ; FF17CE  op 01, 10 bytes, handler 0xF31A75
-	.byte 0xF5, 0x00, 0xDC, 0x00, 0x14, 0x01, 0xDC, 0x00  ; FF17D0
-	.byte 0x01, 0x0A                               ; FF17D8  op 01, 10 bytes, handler 0xF31A75
-	.byte 0x1D, 0x01, 0xDC, 0x00, 0x3C, 0x01, 0xDC, 0x00  ; FF17DA
+	dl_text16x16_packed	x=80, y=6, text="DRUM"
+	dl_text16x16_packed	x=135, y=6, text="EDIT"
+	dl_text8x14	x=192, y=6, text=":"
+	dl_text8x16	x=200, y=6, text="PART"
+	dl_text8x16	x=240, y=6, text="SELECT"
+	dl_text8x16	x=24, y=47, text="Press"
+	dl_text8x16	x=72, y=47, text="the"
+	dl_text8x16	x=104, y=47, text="up/down"
+	dl_text8x16	x=168, y=47, text="button"
+	dl_text8x16	x=224, y=47, text="under"
+	dl_text8x16	x=24, y=68, text="the"
+	dl_text8x16	x=56, y=68, text="screen"
+	dl_text8x16	x=112, y=68, text="corresponding"
+	dl_text8x16	x=224, y=68, text="to"
+	dl_text8x16	x=248, y=68, text="the"
+	dl_text8x16	x=24, y=89, text="track"
+	dl_text8x16	x=72, y=89, text="that"
+	dl_text8x16	x=112, y=89, text="you"
+	dl_text8x16	x=144, y=89, text="want"
+	dl_text8x16	x=184, y=89, text="to"
+	dl_text8x16	x=208, y=89, text="edit."
+	dl_text8x14	x=16, y=162, text="1"
+	dl_text8x14	x=56, y=162, text="2"
+	dl_text8x14	x=96, y=162, text="3"
+	dl_text8x14	x=136, y=162, text="4"
+	dl_text8x14	x=176, y=162, text="5"
+	dl_text8x14	x=216, y=162, text="6"
+	dl_text8x14	x=256, y=162, text="7"
+	dl_text8x14	x=296, y=162, text="8"
+	dl_text8x14	x=16, y=209, text="9"
+	dl_text8x14	x=56, y=209, text="10"
+	dl_text8x14	x=96, y=209, text="11"
+	dl_text8x14	x=136, y=209, text="12"
+	dl_text8x14	x=176, y=209, text="13"
+	dl_text8x14	x=216, y=209, text="14"
+	dl_text8x14	x=256, y=209, text="15"
+	dl_text8x14	x=296, y=209, text="16"
+	dl_box_shadow2	x0=16, y0=39, x1=287, y1=118
+	dl_box_shadow2	x0=5, y0=160, x1=34, y1=186
+	dl_box_shadow2	x0=45, y0=160, x1=74, y1=186
+	dl_box_shadow2	x0=85, y0=160, x1=114, y1=186
+	dl_box_shadow2	x0=125, y0=160, x1=154, y1=186
+	dl_box_shadow2	x0=165, y0=160, x1=194, y1=186
+	dl_box_shadow2	x0=205, y0=160, x1=234, y1=186
+	dl_box_shadow2	x0=245, y0=160, x1=274, y1=186
+	dl_box_shadow2	x0=285, y0=160, x1=314, y1=186
+	dl_box_shadow2	x0=5, y0=207, x1=34, y1=233
+	dl_box_shadow2	x0=45, y0=207, x1=74, y1=233
+	dl_box_shadow2	x0=85, y0=207, x1=114, y1=233
+	dl_box_shadow2	x0=125, y0=207, x1=154, y1=233
+	dl_box_shadow2	x0=165, y0=207, x1=194, y1=233
+	dl_box_shadow2	x0=205, y0=207, x1=234, y1=233
+	dl_box_shadow2	x0=245, y0=207, x1=274, y1=233
+	dl_box_shadow2	x0=285, y0=207, x1=314, y1=233
+	dl_hline	x0=5, y0=173, x1=36, y1=173
+	dl_hline	x0=45, y0=173, x1=76, y1=173
+	dl_hline	x0=85, y0=173, x1=116, y1=173
+	dl_hline	x0=125, y0=173, x1=156, y1=173
+	dl_hline	x0=165, y0=173, x1=196, y1=173
+	dl_hline	x0=205, y0=173, x1=236, y1=173
+	dl_hline	x0=245, y0=173, x1=276, y1=173
+	dl_hline	x0=285, y0=173, x1=316, y1=173
+	dl_hline	x0=5, y0=220, x1=36, y1=220
+	dl_hline	x0=45, y0=220, x1=76, y1=220
+	dl_hline	x0=85, y0=220, x1=116, y1=220
+	dl_hline	x0=125, y0=220, x1=156, y1=220
+	dl_hline	x0=165, y0=220, x1=196, y1=220
+	dl_hline	x0=205, y0=220, x1=236, y1=220
+	dl_hline	x0=245, y0=220, x1=276, y1=220
+	dl_hline	x0=285, y0=220, x1=316, y1=220
 ; ---------------------------------------------------------------------
 ; KeyboardRuler_Strip0..9 -- TEN 16x129 1-bpp BITMAPS, 0xFF17E2-0xFF21F5
 ; (2,580 bytes = 10 x 258).  Drawn, they are a vertical piano-keyboard ruler
