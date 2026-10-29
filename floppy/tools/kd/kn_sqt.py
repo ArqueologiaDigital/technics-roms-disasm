@@ -2,7 +2,10 @@
 
 QUESTION IT ANSWERS
   "Which bytes of a saved song are its events, and does every track's chain parse?"
-  Part 1 is 1 or 10 song records (0x870 bytes on the KN6000, 0x8E0 on the KN7000), "ZZZZ" first.
+  Part 1 is 1 or 10 song records (0x870 bytes on the KN6000, 0x8E0 on the KN7000), "ZZZZ" first.  The KN7000
+  keeps them at 0x501A5800 + n*0x8E0 (Rec8E0TablePtr 0x48456E49, 11 entries) and the cells in its song
+  memory, 0x4D8 pages of 0x100 bytes at 0x501AB9A0 (SongPageStorePtr 0x48456E8B; nine song-file sites pass it
+  with length 0x4D800), kn7000_manual.sym.
   Each record's +0xD0 is a directory of 16 tracks, {flags (bit 7 = in use), u16le first cell}
   (the KN5000 layout: notes/feature-presentation-cues-2026-10-18.md, Q4).  Part 2 is the event memory:
   256-byte cells, +0 flags, +1 u16le previous cell, +3 u16le next cell (one-based; 0 / 0xFFFF = none),
@@ -51,7 +54,10 @@ def tokens(s):
             if st & 0xF0 in TICKED and st < 0xF0 and st not in (0x81, 0x82, 0x85, 0x86):
                 n = TICKED[st & 0xF0]
                 d = s[i + 2:i + 2 + n]
-                if len(d) < n or any(b & 0x80 for b in d):
+                # a note's last byte and a bend's second byte can have bit 7 set (5 events on the disks, each the
+                # track's last before 0x82; what that bit means is not traced); no other data byte ever does
+                free = {0x90: 3, 0xE0: 1}.get(st & 0xF0)
+                if len(d) < n or any(b & 0x80 for k, b in enumerate(d) if k != free):
                     return out, 'status 0x%02x at +%d: a data byte >= 0x80' % (st, i + 1)
                 out.append((i, 2 + n, '\t%s\t%d, %d%s' % (MAC[st & 0xF0], x, st & 15, ''.join(', %d' % b for b in d))))
                 i += 2 + n
@@ -69,24 +75,36 @@ def tokens(s):
     return out, 'the chain ends before 0x82'
 
 
+def rows(b, w=16):
+    return ['\t.byte\t' + ', '.join(str(x) for x in b[k:k + w]) for k in range(0, len(b), w)]
+
+
 def typer1(ctx, part, p, ref, lab):
-    """Part 1: the song records."""
+    """Part 1: the song records.  +0x00 "ZZZZ", +0x04 the 10-song flag, +0x05 the model signature,
+    +0x09 the file stem (as the KN5000 slot's +0x09, floppy/kn5000 sqt_slot_header.json), +0xD0 the track
+    directory, +0x140 the song's panel memory (a full PANEL MEMORY record, 42 / 43 records; measured: all 605
+    records of the 27 disks), then 0x30 (KN6000) / 0x50 (KN7000) bytes.  The other bytes are not traced and
+    are spelled as bytes with their offsets."""
+    import kn_panel
     rl = {b'\x01\x0a': 0x870, b'\x01\x0d': 0x8E0}.get(p[5:7])
     if part != 1 or p[:4] != b'ZZZZ' or not rl or len(p) % rl:
         return None
-    L = ['\t.include\t"kn_song.inc"', '',
-         '; %d song record(s) of 0x%x bytes; +0xD0 is the track directory, the rest is not decoded.' % (len(p) // rl, rl),
-         lab + ':']
+    L = ['\t.include\t"kn_song.inc"', '\t.include\t"panel_memory.inc"', '',
+         '; %d song record(s) of 0x%x bytes.' % (len(p) // rl, rl), lab + ':']
     for s in range(len(p) // rl):
-        r = s * rl
+        r = p[s * rl:(s + 1) * rl]
+        recs, e = kn_panel.block(r, 0x140)
+        if recs is None:
+            return None
         L += ['', '%s_Song%d:' % (lab, s + 1),
               '\t.ascii\t"ZZZZ"', '\t.byte\t%d, 0x%02x, 0x%02x\t; +4: 1 = a 10-song file; +5: the model signature'
-              % (p[r + 4], p[r + 5], p[r + 6]),
-              '\t.incbin\t"%s", 0x%x, %d\t; record +0x07..+0xCF, fields not established' % (ref, r + 7, 0xD0 - 7)]
+              % (r[4], r[5], r[6]), '; +0x07..+0xCF, not traced'] + rows(r[7:0xD0])
         for t in range(16):
-            e = r + 0xD0 + 3 * t
-            L.append('\tsq_track\t0x%02x, %d\t; track %d' % (p[e], u16(p, e + 1), t + 1))
-        L.append('\t.incbin\t"%s", 0x%x, %d\t; record +0x100..+0x%X, fields not established' % (ref, r + 0x100, rl - 0x100, rl - 1))
+            e3 = 0xD0 + 3 * t
+            L.append('\tsq_track\t0x%02x, %d\t; track %d' % (r[e3], u16(r, e3 + 1), t + 1))
+        L += ['; +0x100..+0x13F, not traced'] + rows(r[0x100:0x140])
+        L += kn_panel.block_lines(r, recs, 'the song\'s panel memory (+0x140)')
+        L += ['; +0x%X..+0x%X, not traced' % (e, rl - 1)] + rows(r[e:])
     return L
 
 

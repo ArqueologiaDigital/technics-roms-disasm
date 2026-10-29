@@ -2,5 +2,946 @@
 
 ; 02DANCE_.TM -- 262144 bytes, clusters 968..1479.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_02DANCE__TM:	.incbin	"dance.img", 0x7da00, 262144
+; SOUND: CPU 2's sound flash 0xE80000-0xEBFFFF, four 64 KiB banks.  DiskLoad_Sound (prom_a 0xFE202F)
+; checks the tag (DiskLoad_CheckSoundRamTag) and streams 0x40000 bytes to 0xE80000; prom_c's
+; SoundRam_ClearFourBanks (0xFC386C) writes the layout typed here: per bank the tag, 64 tone records
+; from +0x90 (stride 0x2C9), the kit record at +0xB2D0 (0x198 bytes; its key map at +0x98, 128 x 2),
+; then [INFERENCE] 128 drum-instrument records of 150 and a zero tail.  Records: include/tm/.
+
+F_02DANCE__TM:
+
+F_02DANCE__TM_Bank0:
+	.ascii	"WSA SOUND RAM S0"	; SoundRam_BankName_S0, copied here by SoundRam_ClearFourBanks
+; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
+	.ascii	"A.SCHLESINGER 1 "
+	.ascii	"ANDREW 2        "
+	.ascii	"ANDREW 3        "
+	.ascii	"ANDREW 4        "
+	.ascii	"LEE GROVES 1    "
+	.ascii	"LEE 2           "
+	.ascii	"LEE 3           "
+	.ascii	"LEE 4           "
+	.include	"tm/tone_0f8a3fbf247a.s"	; tone 1: New Worlds
+	.include	"tm/tone_e7d33ace169b.s"	; tone 2: Saw Teeth
+	.include	"tm/tone_4e29f420f24a.s"	; tone 3: Grunged Guitar 2
+	.include	"tm/tone_bc4cd334e91c.s"	; tone 4: Digi-Gell
+	.include	"tm/tone_c066e38917bc.s"	; tone 5: Rezoid Touch
+	.include	"tm/tone_71ee84d14eda.s"	; tone 6: Sartalan
+	.include	"tm/tone_fe88942b056b.s"	; tone 7: Rise of the WSA
+	.include	"tm/tone_f2f8abef574d.s"	; tone 8: Eastern Tarnz
+	.include	"tm/tone_282ebbd52220.s"	; tone 9: Eh-Picflute
+	.include	"tm/tone_a49198209587.s"	; tone 10: Floot Toot
+	.include	"tm/tone_cc1c217738f5.s"	; tone 11: Barimvox
+	.include	"tm/tone_df51d80f5212.s"	; tone 12: Hip Saxes
+	.include	"tm/tone_e9d27487f90b.s"	; tone 13: Multi-Bass
+	.include	"tm/tone_bfb6e98e0219.s"	; tone 14: House Bass
+	.include	"tm/tone_900f73f03ad7.s"	; tone 15: Grittler
+	.include	"tm/tone_91fde2e990e3.s"	; tone 16: Big Pulsemod
+	.include	"tm/tone_005300416702.s"	; tone 17: Orchestral
+	.include	"tm/tone_2b83dbe69932.s"	; tone 18: Like Mini #1
+	.include	"tm/tone_bc286fc3d8d3.s"	; tone 19: Belsalar
+	.include	"tm/tone_7ed097862d66.s"	; tone 20: Nemetall
+	.include	"tm/tone_9de79fedacf0.s"	; tone 21: Lo Sine Bass
+	.include	"tm/tone_4e4687d99763.s"	; tone 22: Metal
+	.include	"tm/tone_780945e72d98.s"	; tone 23: JV Crunch
+	.include	"tm/tone_01f51c9cd04d.s"	; tone 24: Pulse Bird
+	.include	"tm/tone_3b4fdd2012e5.s"	; tone 25: Garlan Comp
+	.include	"tm/tone_da73d478c3d5.s"	; tone 26: Powering
+	.include	"tm/tone_af131fe8dde2.s"	; tone 27: Pan-Tab Lead
+	.include	"tm/tone_709b1416377e.s"	; tone 28: Digi Clav
+	.include	"tm/tone_8c907f07b91d.s"	; tone 29: Master Vox
+	.include	"tm/tone_bc33a5f7639e.s"	; tone 30: Darbu Flute
+	.include	"tm/tone_15c677c3b337.s"	; tone 31: Sharp Brass
+	.include	"tm/tone_f61a009e71c2.s"	; tone 32: Venecia
+	.include	"tm/tone_9631ec2cca9b.s"	; tone 33: Jammed Jarre
+	.include	"tm/tone_f2b5ab43bff7.s"	; tone 34: Area S-4
+	.include	"tm/tone_ca8b0667036f.s"	; tone 35: Jungle Bass
+	.include	"tm/tone_e53dc1e10da6.s"	; tone 36: Talking Bass
+	.include	"tm/tone_18181f4f7a43.s"	; tone 37: Metabrass
+	.include	"tm/tone_39d9053e4858.s"	; tone 38: Edible Synth
+	.include	"tm/tone_9cb4f1389bca.s"	; tone 39: Alien Sleeping
+	.include	"tm/tone_36186e59fe90.s"	; tone 40: Effect Hit
+	.include	"tm/tone_74d51ab8b401.s"	; tone 41: Big Strings
+	.include	"tm/tone_63e32c1bec37.s"	; tone 42: Pulse Sweep
+	.include	"tm/tone_fd3799412145.s"	; tone 43: Squeeze Box
+	.include	"tm/tone_2592763c17d8.s"	; tone 44: Deep Space Shot
+	.include	"tm/tone_f023fc2ea608.s"	; tone 45: Openness
+	.include	"tm/tone_79a0f976a290.s"	; tone 46: Qualitative
+	.include	"tm/tone_9bc0de9ed4cc.s"	; tone 47: Windy Moor
+	.include	"tm/tone_36fbf387e02f.s"	; tone 48: Yello Organ
+	.include	"tm/tone_7724d8343541.s"	; tone 49: Orgone Vocals
+	.include	"tm/tone_ea959674fc39.s"	; tone 50: Ethnic Logs
+	.include	"tm/tone_f413f4ba564e.s"	; tone 51: Dense Fog
+	.include	"tm/tone_a1570aa0af8c.s"	; tone 52: Mellotronica
+	.include	"tm/tone_ada028a51969.s"	; tone 53: Ambient Bellmove
+	.include	"tm/tone_5fbef944b20a.s"	; tone 54: Mod Wheel Ring
+	.include	"tm/tone_51fb9122dd9a.s"	; tone 55: Playable Chop
+	.include	"tm/tone_fdb900107da3.s"	; tone 56: Chooey
+	.include	"tm/tone_186410607b58.s"	; tone 57: Anasynth Score
+	.include	"tm/tone_7726c42b2ffe.s"	; tone 58: Expen$ive Bell
+	.include	"tm/tone_dd268ac6e163.s"	; tone 59: Feelin'Good
+	.include	"tm/tone_a539eca3acf7.s"	; tone 60: Push Brass
+	.include	"tm/tone_6ca534a05e95.s"	; tone 61: Club Saw Bass
+	.include	"tm/tone_c332a3d35c16.s"	; tone 62: WSA 303
+	.include	"tm/tone_a058aa75b1d4.s"	; tone 63: House Piano
+	.include	"tm/tone_420ca5cc1735.s"	; tone 64: The Big Hit
+F_02DANCE__TM_Bank0_Kit:
+	.ascii	"   Dance Kit    "	; kit name
+; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
+	.byte	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 131, 64, 85, 174, 64
+	.byte	4, 1, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 156
+	.byte	78, 85, 157, 92, 85, 163, 127, 85, 164, 74, 85, 163, 94, 85, 164, 38
+	.byte	85, 131, 102, 85, 174, 89, 85, 167, 107, 85, 176, 127, 85, 128, 64, 85
+	.byte	128, 64, 17, 0, 4, 99, 80, 2, 60, 0, 90, 0, 84, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 3, 36, 99, 14, 28, 49
+	.byte	19, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 3, 20, 31, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 228, 2, 152, 3, 0
+; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
+	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 17, 15, 17	; keys 8-15
+	.byte	16, 17, 17, 16, 45, 21, 47, 21, 48, 21, 21, 16, 22, 19, 38, 21	; keys 16-23
+	.byte	0, 16, 0, 16, 0, 16, 0, 16, 28, 16, 29, 16, 30, 16, 37, 16	; keys 24-31
+	.byte	32, 16, 33, 16, 34, 16, 36, 17, 36, 80, 37, 16, 38, 19, 39, 16	; keys 32-39
+	.byte	40, 16, 41, 16, 42, 17, 43, 16, 44, 16, 45, 16, 46, 17, 47, 16	; keys 40-47
+	.byte	48, 16, 49, 16, 50, 16, 59, 16, 52, 16, 53, 16, 54, 80, 55, 18	; keys 48-55
+	.byte	56, 16, 57, 16, 54, 80, 51, 16, 60, 16, 61, 16, 62, 16, 63, 16	; keys 56-63
+	.byte	64, 16, 36, 80, 66, 16, 40, 16, 68, 16, 69, 16, 70, 16, 71, 16	; keys 64-71
+	.byte	72, 16, 73, 16, 74, 16, 75, 16, 76, 16, 77, 16, 78, 16, 79, 16	; keys 72-79
+	.byte	80, 16, 81, 16, 82, 16, 83, 16, 84, 16, 85, 16, 86, 16, 87, 16	; keys 80-87
+	.byte	88, 16, 89, 16, 90, 16, 91, 16, 92, 16, 93, 16, 94, 16, 95, 16	; keys 88-95
+	.byte	96, 16, 97, 16, 98, 16, 99, 16, 100, 16, 101, 16, 102, 16, 103, 16	; keys 96-103
+	.byte	104, 16, 105, 16, 106, 16, 0, 16, 0, 16, 109, 16, 110, 16, 111, 16	; keys 104-111
+	.byte	112, 16, 113, 16, 114, 16, 115, 16, 116, 16, 117, 16, 118, 16, 39, 16	; keys 112-119
+	.byte	120, 16, 121, 16, 122, 16, 123, 16, 124, 16, 125, 16, 126, 16, 127, 16	; keys 120-127
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 0: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 1: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 2: Silent
+	.include	"tm/perc_6e5ca02b4e6c.s"	; drum instrument 3: El.Sound Zap
+	.include	"tm/perc_da53d0489906.s"	; drum instrument 4: El.Snd.Unizon
+	.include	"tm/perc_b71db5c8ac4d.s"	; drum instrument 5: El.Snd.Shot1
+	.include	"tm/perc_0ca0846272ff.s"	; drum instrument 6: El.Snd.Shot2
+	.include	"tm/perc_d2a9a3cbb551.s"	; drum instrument 7: El.Sound Rub
+	.include	"tm/perc_3d1d879b2802.s"	; drum instrument 8: Voice Uh
+	.include	"tm/perc_a5ef72492b18.s"	; drum instrument 9: Voice Ah
+	.include	"tm/perc_d6fd3108d2cf.s"	; drum instrument 10: Voice Yeh
+	.include	"tm/perc_c762733ef171.s"	; drum instrument 11: AmbientHammer
+	.include	"tm/perc_1a4eadcdee91.s"	; drum instrument 12: Brush Long
+	.include	"tm/perc_9f21cb4a93e4.s"	; drum instrument 13: Brush Short
+	.include	"tm/perc_e1e0767bd77d.s"	; drum instrument 14: HiHatAccent 5
+	.include	"tm/perc_6b77c13e6d39.s"	; drum instrument 15: HiHat HfOpen5
+	.include	"tm/perc_4bd545138ab6.s"	; drum instrument 16: HiHatClosed11
+	.include	"tm/perc_8d4e4b914efc.s"	; drum instrument 17: ReverseCymbl1
+	.include	"tm/perc_dacf21ef4380.s"	; drum instrument 18: ElectricTom 3
+	.include	"tm/perc_6f6c3752f270.s"	; drum instrument 19: ElectricTom 2
+	.include	"tm/perc_354cbe9a2d15.s"	; drum instrument 20: ElectricTom 1
+	.include	"tm/perc_a3a46acb37f6.s"	; drum instrument 21: ReverseSnare1
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 22: Silent
+	.include	"tm/perc_b520456e26d5.s"	; drum instrument 23: Elect.Snare 1
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 24: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 25: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 26: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 27: Silent
+	.include	"tm/perc_3e259aee78a1.s"	; drum instrument 28: Slap 1
+	.include	"tm/perc_f2f880769948.s"	; drum instrument 29: Scratch 3
+	.include	"tm/perc_d30d0bb12baa.s"	; drum instrument 30: Scratch 1
+	.include	"tm/perc_329d987a0226.s"	; drum instrument 31: Rock Rim
+	.include	"tm/perc_918f50abd2f9.s"	; drum instrument 32: Square Click
+	.include	"tm/perc_00f05722c747.s"	; drum instrument 33: MetronomeClik
+	.include	"tm/perc_9d40dc7e208a.s"	; drum instrument 34: MetronomeBell
+	.include	"tm/perc_f225b016445d.s"	; drum instrument 35: Room BassDrm1
+	.include	"tm/perc_caedf3bfe1f2.s"	; drum instrument 36: Power Techno
+	.include	"tm/perc_7180f0543a82.s"	; drum instrument 37: Housey Kick
+	.include	"tm/perc_2e8c028db509.s"	; drum instrument 38: Snare Slap
+	.include	"tm/perc_5bd04efc99e5.s"	; drum instrument 39: Electro Snare
+	.include	"tm/perc_99acc419df62.s"	; drum instrument 40: Houseman
+	.include	"tm/perc_66f93f00250e.s"	; drum instrument 41: Deep Floor
+	.include	"tm/perc_f33799b39774.s"	; drum instrument 42: New HiHat 1
+	.include	"tm/perc_7c44c698c4a4.s"	; drum instrument 43: Model Tom 4
+	.include	"tm/perc_c6cd0dccbf5f.s"	; drum instrument 44: New HiHat 2
+	.include	"tm/perc_2781286040ce.s"	; drum instrument 45: Model Tom 3
+	.include	"tm/perc_2ee09ce73191.s"	; drum instrument 46: New OpenHiHat
+	.include	"tm/perc_07b90c85f0fa.s"	; drum instrument 47: Model Tom 2
+	.include	"tm/perc_448b1419bc1e.s"	; drum instrument 48: Model Tom 1
+	.include	"tm/perc_152eb7958b3d.s"	; drum instrument 49: Stereo Crash
+	.include	"tm/perc_424374c74bcc.s"	; drum instrument 50: Pix Crash
+	.include	"tm/perc_8501934a1024.s"	; drum instrument 51: Cyber Ride 1
+	.include	"tm/perc_bc10b4722e9a.s"	; drum instrument 52: China Hit
+	.include	"tm/perc_9c4cef0e926b.s"	; drum instrument 53: Cyber Ride 2
+	.include	"tm/perc_db0ba5760350.s"	; drum instrument 54: Tambo L
+	.include	"tm/perc_2f3a5eb8a9f4.s"	; drum instrument 55: Hip Splash
+	.include	"tm/perc_d02093ce7a21.s"	; drum instrument 56: Pole 1
+	.include	"tm/perc_bb4cf50cb411.s"	; drum instrument 57: Venus Ting
+	.include	"tm/perc_3ed17fbbdbc9.s"	; drum instrument 58: Tambo R
+	.include	"tm/perc_4db78f7753bf.s"	; drum instrument 59: China Rain
+	.include	"tm/perc_64f4853851cd.s"	; drum instrument 60: SynTimb
+	.include	"tm/perc_0c6fb54fc39b.s"	; drum instrument 61: Pix Bell L
+	.include	"tm/perc_8321c3c0992c.s"	; drum instrument 62: Pock Pock
+	.include	"tm/perc_d39a16d23d28.s"	; drum instrument 63: Pix Bell R
+	.include	"tm/perc_5aa92f4d11ed.s"	; drum instrument 64: Tiny Hammer
+	.include	"tm/perc_2090d9cd6321.s"	; drum instrument 65: Power Techno
+	.include	"tm/perc_7665d6c2d1ca.s"	; drum instrument 66: Flat Snare
+	.include	"tm/perc_acf1842fe6d9.s"	; drum instrument 67: Houseman
+	.include	"tm/perc_31156c090549.s"	; drum instrument 68: Noise Snare
+	.include	"tm/perc_626d5302d3a8.s"	; drum instrument 69: Model Tom 6
+	.include	"tm/perc_5ab55b2ef115.s"	; drum instrument 70: Rap Slap
+	.include	"tm/perc_e0aa567b1bab.s"	; drum instrument 71: SynWood
+	.include	"tm/perc_7e2f41322ccb.s"	; drum instrument 72: Normal Zap
+	.include	"tm/perc_3b160e7930b8.s"	; drum instrument 73: Withney low
+	.include	"tm/perc_0701558fa81e.s"	; drum instrument 74: HPF Zap
+	.include	"tm/perc_4383e4898efb.s"	; drum instrument 75: Withney high
+	.include	"tm/perc_130f59076021.s"	; drum instrument 76: Heartbeat
+	.include	"tm/perc_af372585769c.s"	; drum instrument 77: Carbon Nail
+	.include	"tm/perc_af4840c2155f.s"	; drum instrument 78: Long HPF
+	.include	"tm/perc_bdb0d396b952.s"	; drum instrument 79: Fly Scream
+	.include	"tm/perc_36bf38ec34fa.s"	; drum instrument 80: Little Stone
+	.include	"tm/perc_b11cc69f976f.s"	; drum instrument 81: Lunch Gong
+	.include	"tm/perc_527c3fb6639d.s"	; drum instrument 82: Deep Shot
+	.include	"tm/perc_0a476a0825c6.s"	; drum instrument 83: Scratch 1
+	.include	"tm/perc_1fba2677b13a.s"	; drum instrument 84: Scratch 2
+	.include	"tm/perc_2dc76bf49148.s"	; drum instrument 85: High Tick
+	.include	"tm/perc_c27765cb6381.s"	; drum instrument 86: Deep Echo
+	.include	"tm/perc_5a920ed309fe.s"	; drum instrument 87: Rise Sack
+	.include	"tm/perc_c845010fff51.s"	; drum instrument 88: Lift
+	.include	"tm/perc_80a0513c56ea.s"	; drum instrument 89: Techno Snare
+	.include	"tm/perc_3a2e5551a3cf.s"	; drum instrument 90: Octave Slap
+	.include	"tm/perc_cdfa986c65cf.s"	; drum instrument 91: Grinder
+	.include	"tm/perc_c36f1ff7e0eb.s"	; drum instrument 92: Windstick
+	.include	"tm/perc_dd8581078d2e.s"	; drum instrument 93: Rattle
+	.include	"tm/perc_c93911e31a9a.s"	; drum instrument 94: Tinny Slap
+	.include	"tm/perc_41be4d3dbc14.s"	; drum instrument 95: le Filtre
+	.include	"tm/perc_6e18a67bb28c.s"	; drum instrument 96: Deep HouseTom
+	.include	"tm/perc_5ff2f2ae4063.s"	; drum instrument 97: Caxixi Off
+	.include	"tm/perc_f2272a27b12f.s"	; drum instrument 98: Darbuka Slap
+	.include	"tm/perc_9452acedea6b.s"	; drum instrument 99: Darbuka Open
+	.include	"tm/perc_6c517294a151.s"	; drum instrument 100: Finger Cymbal
+	.include	"tm/perc_210e9ffed09f.s"	; drum instrument 101: Samba Drum On
+	.include	"tm/perc_090d84bea9ab.s"	; drum instrument 102: SambaDrum Off
+	.include	"tm/perc_917a49d6775f.s"	; drum instrument 103: SambaWhistleH
+	.include	"tm/perc_510a2a6c4b5a.s"	; drum instrument 104: SambaWhistleL
+	.include	"tm/perc_632b118ded26.s"	; drum instrument 105: SmallConga Hi
+	.include	"tm/perc_9f048fa97b7d.s"	; drum instrument 106: SmallConga Lo
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 107: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 108: Silent
+	.include	"tm/perc_982046f87d84.s"	; drum instrument 109: Cowbell 1
+	.include	"tm/perc_1ba123becbbe.s"	; drum instrument 110: Cowbell 3
+	.include	"tm/perc_d66b1f752012.s"	; drum instrument 111: Cowbell 4
+	.include	"tm/perc_cd737b5b4b3d.s"	; drum instrument 112: TimbalesOpenH
+	.include	"tm/perc_8994e088cab4.s"	; drum instrument 113: TimbalesPaila
+	.include	"tm/perc_3a270ee0b6a9.s"	; drum instrument 114: TambourineBt1
+	.include	"tm/perc_05e7c250abcd.s"	; drum instrument 115: Shaker Off
+	.include	"tm/perc_200fddbf91dc.s"	; drum instrument 116: Maracas Off
+	.include	"tm/perc_6bb6c2afad0a.s"	; drum instrument 117: SurdoLeftHand
+	.include	"tm/perc_8ca59af691b5.s"	; drum instrument 118: Shekele Off
+	.include	"tm/perc_b7b9d4ccf539.s"	; drum instrument 119: Hand Claps
+	.include	"tm/perc_10314e99983c.s"	; drum instrument 120: Conga Mute On
+	.include	"tm/perc_ae202c1b8639.s"	; drum instrument 121: Conga MuteOff
+	.include	"tm/perc_20ce2c829c52.s"	; drum instrument 122: Conga Crash
+	.include	"tm/perc_ce098ed47c40.s"	; drum instrument 123: Bongo Mute 3
+	.include	"tm/perc_89b607348e91.s"	; drum instrument 124: Bongo Mute 2
+	.include	"tm/perc_6068981b524f.s"	; drum instrument 125: Bongo Mute 1
+	.include	"tm/perc_719d29c1a70b.s"	; drum instrument 126: OrchTambourin
+	.include	"tm/perc_a078dfbc1537.s"	; drum instrument 127: WoodBlock Hi
+	.fill	152, 1, 0x00	; bank tail +0xFF68..+0xFFFF
+
+F_02DANCE__TM_Bank1:
+	.ascii	"WSA SOUND RAM S1"	; SoundRam_BankName_S1, copied here by SoundRam_ClearFourBanks
+; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
+	.ascii	"LUTZ  DETERRA 1 "
+	.ascii	"LUTZ 2          "
+	.ascii	"LUTZ 3          "
+	.ascii	"LUTZ 4 & ANDREW "
+	.ascii	"JALL HUTTEMANN 1"
+	.ascii	"JALL 2          "
+	.ascii	"JALL 3          "
+	.ascii	"JALL 4          "
+	.include	"tm/tone_cfc8d0c856d3.s"	; tone 1: Modeling Mallet
+	.include	"tm/tone_14c0d1d4ecd0.s"	; tone 2: Ice Box
+	.include	"tm/tone_5ed2e03aff00.s"	; tone 3: Bad Town Stack
+	.include	"tm/tone_a951ae9efd24.s"	; tone 4: At The Door
+	.include	"tm/tone_4eaf9125a207.s"	; tone 5: Model Stax
+	.include	"tm/tone_1f920afadc2b.s"	; tone 6: Old Synth
+	.include	"tm/tone_037d281c4f91.s"	; tone 7: House Slap Bass
+	.include	"tm/tone_42eaca67e555.s"	; tone 8: Timbuctoo
+	.include	"tm/tone_73757977ca33.s"	; tone 9: Click House
+	.include	"tm/tone_6fa9b7aa01a0.s"	; tone 10: Moog Trance
+	.include	"tm/tone_5be047a669f6.s"	; tone 11: Toy Voices
+	.include	"tm/tone_808f7ce1cc9e.s"	; tone 12: Duke`s Solo
+	.include	"tm/tone_bdf8a321ab43.s"	; tone 13: Analog Fog
+	.include	"tm/tone_c7ae807b809e.s"	; tone 14: Solo Arp
+	.include	"tm/tone_304f903e97b7.s"	; tone 15: Bantam
+	.include	"tm/tone_015a49233498.s"	; tone 16: Screechie
+	.include	"tm/tone_dc4164a2056a.s"	; tone 17: In My Dreams
+	.include	"tm/tone_314a964c2887.s"	; tone 18: 80`s Soul Bass
+	.include	"tm/tone_362f6c735a73.s"	; tone 19: Funky Grand
+	.include	"tm/tone_0d31c183eb01.s"	; tone 20: Pop E.P.
+	.include	"tm/tone_41586a1962f7.s"	; tone 21: Big Synth Brass
+	.include	"tm/tone_e24f1fa0e839.s"	; tone 22: CymBells
+	.include	"tm/tone_8a02ee52be85.s"	; tone 23: Gramelan
+	.include	"tm/tone_84c57c6691ed.s"	; tone 24: Iron Funk Guit.
+	.include	"tm/tone_2f453f66f9a0.s"	; tone 25: Analog Jzz.Guit.
+	.include	"tm/tone_01f322510932.s"	; tone 26: 70`s TRI
+	.include	"tm/tone_8602cd58cfa5.s"	; tone 27: Orion 1
+	.include	"tm/tone_b80afe646b75.s"	; tone 28: Heavy Organ
+	.include	"tm/tone_2124f534b8be.s"	; tone 29: Pad Strat
+	.include	"tm/tone_b2b0ba82668f.s"	; tone 30: Phase Growl
+	.include	"tm/tone_ce26086447aa.s"	; tone 31: Reznik Bass
+	.include	"tm/tone_d46bfe1c1774.s"	; tone 32: Jungle Organ
+	.include	"tm/tone_0ad38597b02f.s"	; tone 33: WotEvent?
+	.include	"tm/tone_0c4c91958b8f.s"	; tone 34: H.U.M.E.T.A.L.
+	.include	"tm/tone_a877f04f74a4.s"	; tone 35: Marimage
+	.include	"tm/tone_19cc9d207a30.s"	; tone 36: UeblerVogel
+	.include	"tm/tone_42c894287c21.s"	; tone 37: OuterSpacePad
+	.include	"tm/tone_c4178705d899.s"	; tone 38: AnalogueTimes
+	.include	"tm/tone_912d6e0e7346.s"	; tone 39: MadPad
+	.include	"tm/tone_7e18a32dbe6a.s"	; tone 40: Majestics
+	.include	"tm/tone_97e16c99422b.s"	; tone 41: 4What
+	.include	"tm/tone_fbdef42af8a4.s"	; tone 42: ControlBlazer
+	.include	"tm/tone_188c2f2eec8c.s"	; tone 43: AmokCabassa
+	.include	"tm/tone_2dca337d45dd.s"	; tone 44: JawSockerOrgan
+	.include	"tm/tone_08acc7d666c7.s"	; tone 45: BigPad
+	.include	"tm/tone_d0f6c04b2177.s"	; tone 46: LowWaterPad
+	.include	"tm/tone_01211f7e5015.s"	; tone 47: MetalKick
+	.include	"tm/tone_32e0c2fb3165.s"	; tone 48: SyntheticPress
+	.include	"tm/tone_1a222e24c3f1.s"	; tone 49: OutOfThisWorld
+	.include	"tm/tone_ba3c2ee3eafe.s"	; tone 50: FlyingObjects
+	.include	"tm/tone_da7ec8926375.s"	; tone 51: TheAgeBehind
+	.include	"tm/tone_1e85eddfd39d.s"	; tone 52: DigeryTom
+	.include	"tm/tone_b15488cbd865.s"	; tone 53: Endless...
+	.include	"tm/tone_058308608040.s"	; tone 54: ModeledCrash
+	.include	"tm/tone_dc13794004a1.s"	; tone 55: UnderSeaPad
+	.include	"tm/tone_e6a77a911ec8.s"	; tone 56: Absodom
+	.include	"tm/tone_09e75a7dac47.s"	; tone 57: AlienDrums
+	.include	"tm/tone_6369910ac48a.s"	; tone 58: MutantDrums
+	.include	"tm/tone_11228bab1c9a.s"	; tone 59: EmerySweep
+	.include	"tm/tone_d280e7a47b83.s"	; tone 60: DarkSweeping
+	.include	"tm/tone_64677098c687.s"	; tone 61: TimeBendIt
+	.include	"tm/tone_b0b20e5d586c.s"	; tone 62: NoiseString
+	.include	"tm/tone_dd5bd905a218.s"	; tone 63: Rave Saw
+	.include	"tm/tone_06cc3c6cfd80.s"	; tone 64: Digilex
+F_02DANCE__TM_Bank1_Kit:
+	.ascii	"    Twin Kit    "	; kit name
+; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
+	.byte	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 131, 64, 85, 174, 64
+	.byte	1, 1, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 128
+	.byte	64, 85, 128, 64, 85, 128, 64, 85, 128, 64, 85, 128, 64, 85, 128, 64
+	.byte	85, 128, 64, 85, 128, 64, 85, 128, 64, 85, 128, 64, 85, 128, 64, 85
+	.byte	128, 64, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 216, 0, 88, 4, 0, 2, 64, 14, 235, 0, 44
+	.byte	1, 232, 232, 232, 40, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	46, 7, 20, 34, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 222, 0, 88, 4, 0
+; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
+	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 17, 15, 17	; keys 8-15
+	.byte	16, 17, 17, 16, 45, 21, 47, 21, 48, 21, 21, 16, 38, 19, 38, 21	; keys 16-23
+	.byte	0, 16, 0, 16, 0, 16, 0, 16, 28, 16, 29, 16, 30, 16, 37, 16	; keys 24-31
+	.byte	32, 16, 33, 16, 34, 16, 36, 17, 36, 80, 37, 16, 38, 19, 39, 16	; keys 32-39
+	.byte	40, 16, 41, 16, 42, 17, 43, 16, 44, 16, 45, 16, 46, 17, 47, 16	; keys 40-47
+	.byte	48, 16, 49, 16, 50, 16, 59, 16, 52, 16, 53, 16, 54, 80, 55, 18	; keys 48-55
+	.byte	56, 16, 57, 16, 54, 80, 51, 16, 72, 16, 35, 22, 38, 88, 38, 87	; keys 56-63
+	.byte	38, 22, 65, 16, 68, 16, 67, 16, 68, 16, 69, 16, 63, 16, 50, 16	; keys 64-71
+	.byte	70, 80, 73, 16, 74, 16, 68, 16, 76, 16, 77, 16, 78, 16, 79, 16	; keys 72-79
+	.byte	80, 16, 81, 16, 82, 16, 83, 16, 84, 16, 85, 16, 86, 16, 87, 16	; keys 80-87
+	.byte	88, 16, 89, 16, 90, 16, 91, 16, 92, 80, 93, 80, 94, 16, 95, 80	; keys 88-95
+	.byte	96, 16, 97, 16, 98, 16, 99, 16, 100, 16, 101, 16, 102, 16, 103, 16	; keys 96-103
+	.byte	104, 16, 105, 16, 106, 16, 0, 16, 0, 16, 109, 16, 110, 16, 111, 16	; keys 104-111
+	.byte	112, 16, 113, 16, 114, 16, 115, 16, 116, 16, 117, 16, 118, 16, 39, 16	; keys 112-119
+	.byte	120, 16, 121, 16, 122, 16, 123, 16, 124, 16, 125, 16, 126, 16, 127, 16	; keys 120-127
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 0: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 1: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 2: Silent
+	.include	"tm/perc_6e5ca02b4e6c.s"	; drum instrument 3: El.Sound Zap
+	.include	"tm/perc_da53d0489906.s"	; drum instrument 4: El.Snd.Unizon
+	.include	"tm/perc_b71db5c8ac4d.s"	; drum instrument 5: El.Snd.Shot1
+	.include	"tm/perc_0ca0846272ff.s"	; drum instrument 6: El.Snd.Shot2
+	.include	"tm/perc_d2a9a3cbb551.s"	; drum instrument 7: El.Sound Rub
+	.include	"tm/perc_3d1d879b2802.s"	; drum instrument 8: Voice Uh
+	.include	"tm/perc_a5ef72492b18.s"	; drum instrument 9: Voice Ah
+	.include	"tm/perc_d6fd3108d2cf.s"	; drum instrument 10: Voice Yeh
+	.include	"tm/perc_c762733ef171.s"	; drum instrument 11: AmbientHammer
+	.include	"tm/perc_1a4eadcdee91.s"	; drum instrument 12: Brush Long
+	.include	"tm/perc_9f21cb4a93e4.s"	; drum instrument 13: Brush Short
+	.include	"tm/perc_e1e0767bd77d.s"	; drum instrument 14: HiHatAccent 5
+	.include	"tm/perc_6b77c13e6d39.s"	; drum instrument 15: HiHat HfOpen5
+	.include	"tm/perc_4bd545138ab6.s"	; drum instrument 16: HiHatClosed11
+	.include	"tm/perc_8d4e4b914efc.s"	; drum instrument 17: ReverseCymbl1
+	.include	"tm/perc_dacf21ef4380.s"	; drum instrument 18: ElectricTom 3
+	.include	"tm/perc_6f6c3752f270.s"	; drum instrument 19: ElectricTom 2
+	.include	"tm/perc_354cbe9a2d15.s"	; drum instrument 20: ElectricTom 1
+	.include	"tm/perc_a3a46acb37f6.s"	; drum instrument 21: ReverseSnare1
+	.include	"tm/perc_7dbb3284c448.s"	; drum instrument 22: Funk Snare 2
+	.include	"tm/perc_b520456e26d5.s"	; drum instrument 23: Elect.Snare 1
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 24: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 25: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 26: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 27: Silent
+	.include	"tm/perc_3e259aee78a1.s"	; drum instrument 28: Slap 1
+	.include	"tm/perc_f2f880769948.s"	; drum instrument 29: Scratch 3
+	.include	"tm/perc_d30d0bb12baa.s"	; drum instrument 30: Scratch 1
+	.include	"tm/perc_329d987a0226.s"	; drum instrument 31: Rock Rim
+	.include	"tm/perc_918f50abd2f9.s"	; drum instrument 32: Square Click
+	.include	"tm/perc_00f05722c747.s"	; drum instrument 33: MetronomeClik
+	.include	"tm/perc_9d40dc7e208a.s"	; drum instrument 34: MetronomeBell
+	.include	"tm/perc_f090e2c6cfd3.s"	; drum instrument 35: Room BassDrm1
+	.include	"tm/perc_20ad3c41abd4.s"	; drum instrument 36: Fat Kick
+	.include	"tm/perc_667bdc3e3ae5.s"	; drum instrument 37: Housey Kick
+	.include	"tm/perc_d37a011d4c63.s"	; drum instrument 38: Funk Snare 1
+	.include	"tm/perc_6d5097524c8f.s"	; drum instrument 39: Echo Snare
+	.include	"tm/perc_5910108e0717.s"	; drum instrument 40: Piccolo Snare
+	.include	"tm/perc_3bfcc19179cd.s"	; drum instrument 41: Deep Floor
+	.include	"tm/perc_3669214ba2a1.s"	; drum instrument 42: New HiHat 1
+	.include	"tm/perc_78869e81c158.s"	; drum instrument 43: Model Tom 4
+	.include	"tm/perc_b1e9380ca279.s"	; drum instrument 44: New HiHat 2
+	.include	"tm/perc_81f896faa42e.s"	; drum instrument 45: Model Tom 3
+	.include	"tm/perc_08496e74e6c0.s"	; drum instrument 46: New OpenHiHat
+	.include	"tm/perc_2bb04e93b188.s"	; drum instrument 47: Model Tom 2
+	.include	"tm/perc_e8aa8a9fe022.s"	; drum instrument 48: Model Tom 1
+	.include	"tm/perc_152eb7958b3d.s"	; drum instrument 49: Stereo Crash
+	.include	"tm/perc_c1bfa5b2daa1.s"	; drum instrument 50: Pix Crash
+	.include	"tm/perc_c7fd9013f5fc.s"	; drum instrument 51: Ride Cymbal 8
+	.include	"tm/perc_274ee3ac477c.s"	; drum instrument 52: ChinaCymbal 1
+	.include	"tm/perc_a0ffde508916.s"	; drum instrument 53: Ride Bell 1
+	.include	"tm/perc_eb733d1090a3.s"	; drum instrument 54: Tambo L
+	.include	"tm/perc_4f2c99ae1956.s"	; drum instrument 55: SplashCymbal4
+	.include	"tm/perc_50e1fc153978.s"	; drum instrument 56: Cowbell 2
+	.include	"tm/perc_62318f3a8c2d.s"	; drum instrument 57: CrashCymbal 6
+	.include	"tm/perc_3ed17fbbdbc9.s"	; drum instrument 58: Tambo R
+	.include	"tm/perc_8a6a024e8206.s"	; drum instrument 59: Revers Cymbal
+	.include	"tm/perc_1d0c563cc9dc.s"	; drum instrument 60: HouseBassDrum
+	.include	"tm/perc_8c6b4a5c4c46.s"	; drum instrument 61: Soul BassDrm2
+	.include	"tm/perc_3a407cefc310.s"	; drum instrument 62: House Snare 1
+	.include	"tm/perc_768ff6aacabb.s"	; drum instrument 63: Dance Snare 1
+	.include	"tm/perc_d59cf765b328.s"	; drum instrument 64: Analog Snare
+	.include	"tm/perc_debe5929571b.s"	; drum instrument 65: Floor Tom
+	.include	"tm/perc_39d3c8a8b3f6.s"	; drum instrument 66: Hihat Closed
+	.include	"tm/perc_237b78539dde.s"	; drum instrument 67: Rock Tom 2
+	.include	"tm/perc_d6bc3372c49b.s"	; drum instrument 68: Hihat Closed
+	.include	"tm/perc_f4c8df81727d.s"	; drum instrument 69: Rock Tom 1
+	.include	"tm/perc_5053372fb00c.s"	; drum instrument 70: Hihat Open
+	.include	"tm/perc_4db404884216.s"	; drum instrument 71: Rock Tom High
+	.include	"tm/perc_6ad26fa3cd35.s"	; drum instrument 72: Maracas On
+	.include	"tm/perc_67175e7b393f.s"	; drum instrument 73: Guiro Short 1
+	.include	"tm/perc_2c3f3909c1ae.s"	; drum instrument 74: Guiro Long 1
+	.include	"tm/perc_4d5e0441fcc5.s"	; drum instrument 75: Agogo Low
+	.include	"tm/perc_d954856fbe3b.s"	; drum instrument 76: WoodBlock Mid
+	.include	"tm/perc_71bc6b6542ad.s"	; drum instrument 77: WoodBlock Low
+	.include	"tm/perc_9785f0f3a42b.s"	; drum instrument 78: Cuica High
+	.include	"tm/perc_779d3da36f0f.s"	; drum instrument 79: Cuica Low
+	.include	"tm/perc_9476886633f3.s"	; drum instrument 80: Triangle Mute
+	.include	"tm/perc_4dd9ee3e0e10.s"	; drum instrument 81: Triangle Open
+	.include	"tm/perc_da9d99ed183e.s"	; drum instrument 82: Shaker On
+	.include	"tm/perc_cba240f3f83b.s"	; drum instrument 83: Sleigh Bell
+	.include	"tm/perc_e27147742a96.s"	; drum instrument 84: Wind Chime
+	.include	"tm/perc_dfb4f653eb22.s"	; drum instrument 85: Castanets
+	.include	"tm/perc_4949d086082d.s"	; drum instrument 86: Surdo Mute
+	.include	"tm/perc_a8774bbc235c.s"	; drum instrument 87: Surdo Open
+	.include	"tm/perc_eb4f276e018e.s"	; drum instrument 88: Orch.BassDrm1
+	.include	"tm/perc_bff18f27a8fb.s"	; drum instrument 89: Orch.Snare 1
+	.include	"tm/perc_e249202bfbea.s"	; drum instrument 90: Orch.Cymbal 1
+	.include	"tm/perc_9afa1d39ba5d.s"	; drum instrument 91: Nutshell Tree
+	.include	"tm/perc_c8443f889ffb.s"	; drum instrument 92: Rain Stick
+	.include	"tm/perc_bfd7cb9f863b.s"	; drum instrument 93: Shekele On
+	.include	"tm/perc_eaaac8e2c0c1.s"	; drum instrument 94: BataDrum Slap
+	.include	"tm/perc_8ca50cc912ae.s"	; drum instrument 95: BataDrum Open
+	.include	"tm/perc_a92bd6fa8385.s"	; drum instrument 96: Caxixi On
+	.include	"tm/perc_5ff2f2ae4063.s"	; drum instrument 97: Caxixi Off
+	.include	"tm/perc_f2272a27b12f.s"	; drum instrument 98: Darbuka Slap
+	.include	"tm/perc_9452acedea6b.s"	; drum instrument 99: Darbuka Open
+	.include	"tm/perc_6c517294a151.s"	; drum instrument 100: Finger Cymbal
+	.include	"tm/perc_210e9ffed09f.s"	; drum instrument 101: Samba Drum On
+	.include	"tm/perc_090d84bea9ab.s"	; drum instrument 102: SambaDrum Off
+	.include	"tm/perc_917a49d6775f.s"	; drum instrument 103: SambaWhistleH
+	.include	"tm/perc_510a2a6c4b5a.s"	; drum instrument 104: SambaWhistleL
+	.include	"tm/perc_632b118ded26.s"	; drum instrument 105: SmallConga Hi
+	.include	"tm/perc_9f048fa97b7d.s"	; drum instrument 106: SmallConga Lo
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 107: Silent
+	.include	"tm/perc_b22b1aeb33ad.s"	; drum instrument 108: Silent
+	.include	"tm/perc_982046f87d84.s"	; drum instrument 109: Cowbell 1
+	.include	"tm/perc_1ba123becbbe.s"	; drum instrument 110: Cowbell 3
+	.include	"tm/perc_d66b1f752012.s"	; drum instrument 111: Cowbell 4
+	.include	"tm/perc_cd737b5b4b3d.s"	; drum instrument 112: TimbalesOpenH
+	.include	"tm/perc_8994e088cab4.s"	; drum instrument 113: TimbalesPaila
+	.include	"tm/perc_3a270ee0b6a9.s"	; drum instrument 114: TambourineBt1
+	.include	"tm/perc_05e7c250abcd.s"	; drum instrument 115: Shaker Off
+	.include	"tm/perc_200fddbf91dc.s"	; drum instrument 116: Maracas Off
+	.include	"tm/perc_6bb6c2afad0a.s"	; drum instrument 117: SurdoLeftHand
+	.include	"tm/perc_8ca59af691b5.s"	; drum instrument 118: Shekele Off
+	.include	"tm/perc_b7b9d4ccf539.s"	; drum instrument 119: Hand Claps
+	.include	"tm/perc_10314e99983c.s"	; drum instrument 120: Conga Mute On
+	.include	"tm/perc_ae202c1b8639.s"	; drum instrument 121: Conga MuteOff
+	.include	"tm/perc_20ce2c829c52.s"	; drum instrument 122: Conga Crash
+	.include	"tm/perc_ce098ed47c40.s"	; drum instrument 123: Bongo Mute 3
+	.include	"tm/perc_89b607348e91.s"	; drum instrument 124: Bongo Mute 2
+	.include	"tm/perc_6068981b524f.s"	; drum instrument 125: Bongo Mute 1
+	.include	"tm/perc_719d29c1a70b.s"	; drum instrument 126: OrchTambourin
+	.include	"tm/perc_a078dfbc1537.s"	; drum instrument 127: WoodBlock Hi
+	.fill	152, 1, 0x00	; bank tail +0xFF68..+0xFFFF
+
+F_02DANCE__TM_Bank2:
+	.ascii	"WSA SOUND RAM S2"	; SoundRam_BankName_S2, copied here by SoundRam_ClearFourBanks
+; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
+	.ascii	"EXTRA FOR DEMO 1"
+	.ascii	"EXTRA FOR DEMO 2"
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.include	"tm/tone_22b9c1770a6a.s"	; tone 1: Don't Croak It
+	.include	"tm/tone_07cf01ec0e77.s"	; tone 2: & Vinylly
+	.include	"tm/tone_6883a9cee6e1.s"	; tone 3: Don't Scratch It
+	.include	"tm/tone_fe7e15888497.s"	; tone 4: Saw Synth
+	.include	"tm/tone_816b322c0076.s"	; tone 5: Ana-Digi Bass
+	.include	"tm/tone_6e732434909b.s"	; tone 6: Mega HPF Synth 1
+	.include	"tm/tone_c73a65c56091.s"	; tone 7: Zap
+	.include	"tm/tone_0a4cd91f54d1.s"	; tone 8: Darb Down
+	.include	"tm/tone_066ab30ad620.s"	; tone 9: Wire Lead
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 10: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 11: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 12: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 13: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 14: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 15: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 16: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 17: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 18: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 19: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 20: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 21: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 22: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 23: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 24: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 25: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 26: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 27: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 28: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 29: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 30: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 31: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 32: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 33: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 34: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 35: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 36: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 37: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 38: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 39: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 40: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 41: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 42: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 43: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 44: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 45: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 46: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 47: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 48: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 49: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 50: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 51: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 52: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 53: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 54: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 55: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 56: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 57: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 58: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 59: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 60: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 61: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 62: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 63: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 64: Clear
+F_02DANCE__TM_Bank2_Kit:
+	.ascii	"   Mixup Kit    "	; kit name
+; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
+	.byte	128, 85, 129, 64, 85, 30, 64, 85, 42, 32, 85, 131, 64, 95, 174, 64
+	.byte	1, 8, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 156
+	.byte	64, 85, 157, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64
+	.byte	85, 172, 90, 85, 171, 64, 85, 167, 64, 85, 175, 64, 85, 168, 64, 85
+	.byte	175, 64, 17, 0, 56, 99, 50, 30, 84, 81, 90, 0, 90, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 216, 0, 88, 4, 0, 2, 52, 99, 2, 0, 99
+	.byte	99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 16, 19, 12, 18, 50, 94, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 220, 0, 88, 4, 0
+; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
+	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 24, 15, 24	; keys 8-15
+	.byte	16, 24, 17, 23, 45, 23, 47, 23, 48, 23, 21, 16, 22, 24, 38, 23	; keys 16-23
+	.byte	0, 16, 0, 16, 0, 16, 0, 16, 28, 25, 29, 16, 30, 16, 37, 16	; keys 24-31
+	.byte	32, 16, 33, 16, 34, 16, 35, 22, 36, 24, 37, 22, 40, 80, 119, 25	; keys 32-39
+	.byte	38, 22, 41, 24, 42, 87, 43, 24, 16, 87, 45, 24, 46, 87, 47, 88	; keys 40-47
+	.byte	48, 24, 49, 23, 50, 24, 51, 23, 52, 87, 53, 23, 54, 25, 55, 23	; keys 48-55
+	.byte	56, 25, 57, 23, 58, 25, 59, 23, 60, 16, 61, 16, 62, 16, 63, 25	; keys 56-63
+	.byte	64, 25, 65, 25, 66, 25, 67, 25, 68, 25, 69, 25, 70, 25, 71, 25	; keys 64-71
+	.byte	72, 25, 73, 25, 74, 25, 75, 25, 76, 80, 77, 80, 78, 16, 79, 16	; keys 72-79
+	.byte	80, 25, 81, 25, 82, 89, 83, 16, 84, 25, 85, 16, 86, 16, 87, 16	; keys 80-87
+	.byte	88, 80, 38, 87, 52, 95, 91, 16, 92, 16, 93, 16, 94, 16, 95, 16	; keys 88-95
+	.byte	96, 16, 97, 16, 98, 16, 99, 16, 100, 16, 101, 16, 102, 16, 103, 25	; keys 96-103
+	.byte	104, 25, 105, 16, 106, 16, 0, 16, 0, 16, 109, 25, 110, 25, 111, 25	; keys 104-111
+	.byte	112, 25, 113, 25, 114, 25, 115, 25, 116, 25, 117, 16, 118, 16, 119, 25	; keys 112-119
+	.byte	120, 16, 121, 16, 122, 16, 123, 16, 124, 16, 125, 16, 126, 16, 127, 16	; keys 120-127
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 0: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 1: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 2: Silent
+	.include	"tm/perc_d1d063d1d1c2.s"	; drum instrument 3: Electro Zap
+	.include	"tm/perc_b3e20c8fab35.s"	; drum instrument 4: ElectroUnizon
+	.include	"tm/perc_57e10a3a7cfc.s"	; drum instrument 5: Electro Shot1
+	.include	"tm/perc_32d1b7f2b213.s"	; drum instrument 6: Electro Shot2
+	.include	"tm/perc_fe162a9f5ac4.s"	; drum instrument 7: Electro Rub
+	.include	"tm/perc_6e064e98fa3e.s"	; drum instrument 8: Voice Uh
+	.include	"tm/perc_bbb0d377cc1b.s"	; drum instrument 9: Voice Ah
+	.include	"tm/perc_d6f503bfff7c.s"	; drum instrument 10: Voice Yeh
+	.include	"tm/perc_f82387455e44.s"	; drum instrument 11: AmbientHammer
+	.include	"tm/perc_a039b09b6e8b.s"	; drum instrument 12: Brush Long
+	.include	"tm/perc_a85c3cd83734.s"	; drum instrument 13: Brush Short
+	.include	"tm/perc_7b21b4d7b467.s"	; drum instrument 14: HiHatAccent 4
+	.include	"tm/perc_3f4c545de96e.s"	; drum instrument 15: HiHat HfOpen4
+	.include	"tm/perc_9b51a0abc8b3.s"	; drum instrument 16: HiHatClosed 9
+	.include	"tm/perc_9d569a46144a.s"	; drum instrument 17: ReverseCymbl4
+	.include	"tm/perc_ef1a026b01b5.s"	; drum instrument 18: Dance Tom 3
+	.include	"tm/perc_d06a1dcf68ff.s"	; drum instrument 19: Dance Tom 2
+	.include	"tm/perc_bc73d1a9e7b7.s"	; drum instrument 20: Dance Tom 1
+	.include	"tm/perc_5d1fd3827092.s"	; drum instrument 21: ReverseSnare1
+	.include	"tm/perc_56b07275cc00.s"	; drum instrument 22: House Snare 2
+	.include	"tm/perc_768ff6aacabb.s"	; drum instrument 23: Dance Snare 1
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 24: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 25: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 26: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 27: Silent
+	.include	"tm/perc_df9ee9e55bbf.s"	; drum instrument 28: Slap 2
+	.include	"tm/perc_6d0443f83990.s"	; drum instrument 29: Scratch 3
+	.include	"tm/perc_9b0799b398e4.s"	; drum instrument 30: Scratch 1
+	.include	"tm/perc_d3ddc5e5a181.s"	; drum instrument 31: Rock Rim
+	.include	"tm/perc_f1a40e1f498e.s"	; drum instrument 32: Square Click
+	.include	"tm/perc_db5312604b3f.s"	; drum instrument 33: MetronomeClik
+	.include	"tm/perc_a108afb6d20b.s"	; drum instrument 34: MetronomeBell
+	.include	"tm/perc_8c6b4a5c4c46.s"	; drum instrument 35: Soul BassDrm2
+	.include	"tm/perc_6f4ad05bccbb.s"	; drum instrument 36: House BassDrm
+	.include	"tm/perc_00a1f7c0f4c5.s"	; drum instrument 37: Soul Rim
+	.include	"tm/perc_ebe1ec512e91.s"	; drum instrument 38: Piccolo Snare
+	.include	"tm/perc_223ff5a199df.s"	; drum instrument 39: Syn.HandClaps
+	.include	"tm/perc_e3eaad1c876c.s"	; drum instrument 40: Analog Snare
+	.include	"tm/perc_1005fdf7d265.s"	; drum instrument 41: Wah BassTom L
+	.include	"tm/perc_136ad0f21292.s"	; drum instrument 42: DanceHHClose1
+	.include	"tm/perc_cfd84b8b0e39.s"	; drum instrument 43: Wah BassTom H
+	.include	"tm/perc_d64269395260.s"	; drum instrument 44: DanceHHClose2
+	.include	"tm/perc_8504aa0a60c2.s"	; drum instrument 45: Wah Tom 3
+	.include	"tm/perc_e8df39e84f04.s"	; drum instrument 46: Dance HH.Open
+	.include	"tm/perc_1c5fecff6a4a.s"	; drum instrument 47: Wah Tom 2
+	.include	"tm/perc_906a7954e42d.s"	; drum instrument 48: Wah Tom 1
+	.include	"tm/perc_959a48a9ff67.s"	; drum instrument 49: CrashCymbal 4
+	.include	"tm/perc_d1aa10f27041.s"	; drum instrument 50: Wah Tom High
+	.include	"tm/perc_e4b160570b5d.s"	; drum instrument 51: Ride Cymbal13
+	.include	"tm/perc_f4de3c7c2dfd.s"	; drum instrument 52: ModelChinaCym
+	.include	"tm/perc_146ce348c862.s"	; drum instrument 53: Ride Bell 6
+	.include	"tm/perc_fc346618d0cb.s"	; drum instrument 54: TambourinAcc2
+	.include	"tm/perc_a08bae3482bb.s"	; drum instrument 55: SplashCymbal5
+	.include	"tm/perc_77b806324b61.s"	; drum instrument 56: SynthCowbell2
+	.include	"tm/perc_410b9c2dcf8b.s"	; drum instrument 57: CrashCymbal 5
+	.include	"tm/perc_87f520ce2755.s"	; drum instrument 58: Syn.Vibraslap
+	.include	"tm/perc_4de6961e11d6.s"	; drum instrument 59: Ride Cymbal 6
+	.include	"tm/perc_074e84c36704.s"	; drum instrument 60: Bongo High
+	.include	"tm/perc_88d742d80a82.s"	; drum instrument 61: Bongo Low
+	.include	"tm/perc_ddaf16a44497.s"	; drum instrument 62: CongaMutCrash
+	.include	"tm/perc_c9ddcb9b9588.s"	; drum instrument 63: SynthConga Lo
+	.include	"tm/perc_2448fb985f19.s"	; drum instrument 64: SynthConga Hi
+	.include	"tm/perc_0d96cc52a442.s"	; drum instrument 65: SynTimbOpenRm
+	.include	"tm/perc_fc0af437839f.s"	; drum instrument 66: SynTimbOpenLo
+	.include	"tm/perc_3c17d5074b88.s"	; drum instrument 67: SynthAgogo Hi
+	.include	"tm/perc_566142fcea37.s"	; drum instrument 68: SynthAgogo Lo
+	.include	"tm/perc_e4e01fecfcf4.s"	; drum instrument 69: Cabasa 2
+	.include	"tm/perc_75cb94f023b6.s"	; drum instrument 70: Syn.MaracasOn
+	.include	"tm/perc_75929645e2f5.s"	; drum instrument 71: SynSmbWhShort
+	.include	"tm/perc_b5b33d91b5b7.s"	; drum instrument 72: SynSmbWh Long
+	.include	"tm/perc_da67aace53bb.s"	; drum instrument 73: Guiro Short 2
+	.include	"tm/perc_4700bd39d4e8.s"	; drum instrument 74: Guiro Long 2
+	.include	"tm/perc_1c42c64c254e.s"	; drum instrument 75: Synth Claves
+	.include	"tm/perc_9b592f2ee7de.s"	; drum instrument 76: WoodBlockHigh
+	.include	"tm/perc_19f11a08e7cb.s"	; drum instrument 77: WoodBlock Low
+	.include	"tm/perc_d9bb3910c476.s"	; drum instrument 78: Cuica High
+	.include	"tm/perc_a41d4791670c.s"	; drum instrument 79: Cuica Low
+	.include	"tm/perc_ff6f5b96bfed.s"	; drum instrument 80: SynTriangle M
+	.include	"tm/perc_037a5354d88e.s"	; drum instrument 81: SynTriangle O
+	.include	"tm/perc_2c2c2ded0644.s"	; drum instrument 82: Syn.Shaker On
+	.include	"tm/perc_fd7f85a67e2e.s"	; drum instrument 83: Sleigh Bell
+	.include	"tm/perc_54d4d7ecb4e8.s"	; drum instrument 84: Syn.WindChime
+	.include	"tm/perc_7d4e2f8c0f5c.s"	; drum instrument 85: Castanets
+	.include	"tm/perc_d58e3dab7e16.s"	; drum instrument 86: Surdo Mute
+	.include	"tm/perc_b2e855ccb52e.s"	; drum instrument 87: Surdo Open
+	.include	"tm/perc_c6dcd6d0fb59.s"	; drum instrument 88: Pipe Drum
+	.include	"tm/perc_0e1f9e7c3858.s"	; drum instrument 89: Ah Snare
+	.include	"tm/perc_622abd1dc315.s"	; drum instrument 90: ModelChinaCym
+	.include	"tm/perc_d474a2cd8ffe.s"	; drum instrument 91: Nutshell Tree
+	.include	"tm/perc_d83736b5e0d7.s"	; drum instrument 92: Rain Stick
+	.include	"tm/perc_d546a29e37b3.s"	; drum instrument 93: Shekele On
+	.include	"tm/perc_08127b157d08.s"	; drum instrument 94: BataDrum Slap
+	.include	"tm/perc_7bca9a87793e.s"	; drum instrument 95: BataDrum Open
+	.include	"tm/perc_7439b980802d.s"	; drum instrument 96: Caxixi On
+	.include	"tm/perc_741c0b4d0b53.s"	; drum instrument 97: Caxixi Off
+	.include	"tm/perc_ab6275556e44.s"	; drum instrument 98: Darbuka Slap
+	.include	"tm/perc_dfa75a811ea2.s"	; drum instrument 99: Darbuka Open
+	.include	"tm/perc_4be45dcbf5c3.s"	; drum instrument 100: Finger Cymbal
+	.include	"tm/perc_305f15e9758a.s"	; drum instrument 101: Samba Drum On
+	.include	"tm/perc_57a07e18aedc.s"	; drum instrument 102: SambaDrum Off
+	.include	"tm/perc_4d28fd7706cf.s"	; drum instrument 103: SynSambaWhi H
+	.include	"tm/perc_3fe9bb90f64b.s"	; drum instrument 104: SynSambaWhi L
+	.include	"tm/perc_47631f579037.s"	; drum instrument 105: SmallConga Hi
+	.include	"tm/perc_4389ec79ae89.s"	; drum instrument 106: SmallConga Lo
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 107: Silent
+	.include	"tm/perc_320f9be6cf12.s"	; drum instrument 108: Silent
+	.include	"tm/perc_b44d2f8bc582.s"	; drum instrument 109: SynthCowbell1
+	.include	"tm/perc_06a279da4b99.s"	; drum instrument 110: SynthCowbell3
+	.include	"tm/perc_f9b47dc94376.s"	; drum instrument 111: SynthCowbell4
+	.include	"tm/perc_3d4f7d58a940.s"	; drum instrument 112: SynTimbOpenHi
+	.include	"tm/perc_c54ba09416de.s"	; drum instrument 113: Syn.TimbPaila
+	.include	"tm/perc_e3f6ffc498af.s"	; drum instrument 114: TambourineBt2
+	.include	"tm/perc_a73332c5746f.s"	; drum instrument 115: Syn.ShakerOff
+	.include	"tm/perc_fdf6c676febc.s"	; drum instrument 116: SynMaracasOff
+	.include	"tm/perc_c0affbcd3804.s"	; drum instrument 117: SurdoLeftHand
+	.include	"tm/perc_d38038927254.s"	; drum instrument 118: Shekele Off
+	.include	"tm/perc_310ab437dc48.s"	; drum instrument 119: Syn.HandClaps
+	.include	"tm/perc_991f8476c7f5.s"	; drum instrument 120: Conga Mute On
+	.include	"tm/perc_542b56ed43f1.s"	; drum instrument 121: Conga MuteOff
+	.include	"tm/perc_162219d1d6f5.s"	; drum instrument 122: Conga Crash
+	.include	"tm/perc_5dc152179ce5.s"	; drum instrument 123: Bongo Mute 3
+	.include	"tm/perc_1f396674b1e6.s"	; drum instrument 124: Bongo Mute 2
+	.include	"tm/perc_b78d9fd7a7ce.s"	; drum instrument 125: Bongo Mute 1
+	.include	"tm/perc_0d60445e531e.s"	; drum instrument 126: OrchTambourin
+	.include	"tm/perc_c4043b210e0d.s"	; drum instrument 127: WoodBlock Hi2
+	.fill	152, 1, 0x00	; bank tail +0xFF68..+0xFFFF
+
+F_02DANCE__TM_Bank3:
+	.ascii	"WSA SOUND RAM S3"	; SoundRam_BankName_S3, copied here by SoundRam_ClearFourBanks
+; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.ascii	"CLEAR           "
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 1: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 2: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 3: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 4: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 5: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 6: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 7: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 8: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 9: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 10: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 11: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 12: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 13: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 14: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 15: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 16: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 17: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 18: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 19: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 20: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 21: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 22: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 23: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 24: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 25: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 26: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 27: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 28: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 29: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 30: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 31: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 32: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 33: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 34: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 35: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 36: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 37: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 38: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 39: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 40: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 41: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 42: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 43: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 44: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 45: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 46: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 47: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 48: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 49: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 50: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 51: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 52: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 53: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 54: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 55: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 56: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 57: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 58: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 59: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 60: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 61: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 62: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 63: Clear
+	.include	"tm/tone_f99c13e7ff1d.s"	; tone 64: Clear
+F_02DANCE__TM_Bank3_Kit:
+	.ascii	" Modeling Kit 2 "	; kit name
+; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
+	.byte	128, 85, 129, 64, 85, 43, 20, 85, 49, 90, 85, 131, 64, 95, 174, 64
+	.byte	1, 32, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157
+	.byte	64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64
+	.byte	85, 172, 64, 85, 171, 64, 85, 167, 64, 85, 168, 64, 85, 177, 64, 85
+	.byte	169, 64, 17, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 255, 0, 84, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 255, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 216, 2, 88, 4, 255
+; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
+	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 31, 15, 31	; keys 8-15
+	.byte	16, 31, 17, 16, 45, 21, 47, 21, 48, 21, 21, 16, 22, 31, 23, 31	; keys 16-23
+	.byte	0, 16, 0, 16, 0, 16, 0, 16, 28, 16, 29, 16, 30, 16, 37, 16	; keys 24-31
+	.byte	32, 16, 33, 16, 34, 16, 35, 31, 36, 85, 37, 80, 34, 93, 39, 95	; keys 32-39
+	.byte	34, 93, 45, 31, 42, 31, 45, 31, 44, 31, 45, 31, 46, 31, 45, 31	; keys 40-47
+	.byte	45, 31, 49, 31, 45, 31, 51, 31, 52, 95, 53, 95, 54, 95, 55, 95	; keys 48-55
+	.byte	56, 95, 57, 95, 58, 95, 59, 95, 60, 95, 60, 95, 62, 95, 63, 95	; keys 56-63
+	.byte	64, 95, 65, 95, 66, 95, 67, 95, 67, 95, 69, 95, 70, 95, 71, 95	; keys 64-71
+	.byte	72, 95, 73, 95, 74, 95, 75, 95, 76, 95, 77, 95, 78, 95, 79, 95	; keys 72-79
+	.byte	80, 95, 81, 95, 82, 95, 83, 95, 84, 95, 85, 95, 86, 80, 87, 80	; keys 80-87
+	.byte	88, 80, 89, 80, 90, 80, 91, 80, 92, 80, 93, 80, 94, 80, 95, 80	; keys 88-95
+	.byte	96, 80, 97, 16, 98, 16, 99, 16, 100, 16, 101, 16, 102, 16, 103, 31	; keys 96-103
+	.byte	104, 31, 105, 31, 106, 31, 0, 16, 0, 16, 56, 95, 56, 95, 56, 95	; keys 104-111
+	.byte	112, 31, 113, 16, 114, 16, 115, 31, 116, 31, 117, 16, 118, 16, 39, 16	; keys 112-119
+	.byte	120, 16, 121, 16, 122, 16, 123, 16, 124, 16, 125, 16, 126, 16, 127, 31	; keys 120-127
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 0: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 1: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 2: Silent
+	.include	"tm/perc_d977ac2185a4.s"	; drum instrument 3: Electro Zap
+	.include	"tm/perc_b3c7183a59be.s"	; drum instrument 4: ElectroUnizon
+	.include	"tm/perc_bdc5e5a3b533.s"	; drum instrument 5: Electro Shot1
+	.include	"tm/perc_1d47ef5046a6.s"	; drum instrument 6: Electro Shot2
+	.include	"tm/perc_49a36e8c5231.s"	; drum instrument 7: Electro Rub
+	.include	"tm/perc_99369ce3ad0c.s"	; drum instrument 8: Voice Uh
+	.include	"tm/perc_d73ab50021d2.s"	; drum instrument 9: Voice Ah
+	.include	"tm/perc_180926b7b016.s"	; drum instrument 10: Voice Yeh
+	.include	"tm/perc_2e93bb4082ec.s"	; drum instrument 11: AmbientHammer
+	.include	"tm/perc_e7da26d2f320.s"	; drum instrument 12: Brush Long
+	.include	"tm/perc_97e1565961c3.s"	; drum instrument 13: Brush Short
+	.include	"tm/perc_6435d0fa109f.s"	; drum instrument 14: ModelHHAccent
+	.include	"tm/perc_a0b5ca95a747.s"	; drum instrument 15: ModelHH.HfOpn
+	.include	"tm/perc_cd348544c725.s"	; drum instrument 16: ModelHHClose2
+	.include	"tm/perc_a9872fb454ca.s"	; drum instrument 17: ReverseCymbl1
+	.include	"tm/perc_47209027a4b7.s"	; drum instrument 18: ElectricTom 3
+	.include	"tm/perc_f3e88917cd7a.s"	; drum instrument 19: ElectricTom 2
+	.include	"tm/perc_632aea7c2f4c.s"	; drum instrument 20: ElectricTom 1
+	.include	"tm/perc_879ada4a33df.s"	; drum instrument 21: ReverseSnare1
+	.include	"tm/perc_1fc7e818a5e6.s"	; drum instrument 22: Model.Snare 2
+	.include	"tm/perc_944ae7aa603d.s"	; drum instrument 23: Model.Snare 3
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 24: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 25: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 26: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 27: Silent
+	.include	"tm/perc_a3739577ad56.s"	; drum instrument 28: Slap 1
+	.include	"tm/perc_9349d29709f4.s"	; drum instrument 29: Scratch 3
+	.include	"tm/perc_5de9c7a7acdc.s"	; drum instrument 30: Scratch 1
+	.include	"tm/perc_5984a8997860.s"	; drum instrument 31: Rock Rim
+	.include	"tm/perc_55776c21d0f0.s"	; drum instrument 32: Square Click
+	.include	"tm/perc_4ffa74fcfbdd.s"	; drum instrument 33: MetronomeClik
+	.include	"tm/perc_5e36c8daaa56.s"	; drum instrument 34: MetronomeBell
+	.include	"tm/perc_633012a3a105.s"	; drum instrument 35: ModelBassDrm2
+	.include	"tm/perc_a08054fd31a7.s"	; drum instrument 36: Position B.D
+	.include	"tm/perc_124b4394f775.s"	; drum instrument 37: Synth Rim
+	.include	"tm/perc_d158d58595a6.s"	; drum instrument 38: S.D
+	.include	"tm/perc_7cd884887a79.s"	; drum instrument 39: Mdl.HandClaps
+	.include	"tm/perc_ea10b133f78f.s"	; drum instrument 40: S.D
+	.include	"tm/perc_06d51a5627fe.s"	; drum instrument 41: Model.El.Tom6
+	.include	"tm/perc_c2f44799c63d.s"	; drum instrument 42: ModelHHClose1
+	.include	"tm/perc_6c0cfc5db44f.s"	; drum instrument 43: Model.El.Tom5
+	.include	"tm/perc_e7dc1b175525.s"	; drum instrument 44: ModelHH.Pedal
+	.include	"tm/perc_815dfee42815.s"	; drum instrument 45: Model.El.Tom4
+	.include	"tm/perc_203d34b8a5f0.s"	; drum instrument 46: Model.HH.Open
+	.include	"tm/perc_03a04fd96ae8.s"	; drum instrument 47: Model.El.Tom3
+	.include	"tm/perc_b6e13b579bf7.s"	; drum instrument 48: Model.El.Tom2
+	.include	"tm/perc_adc4eee4d8e5.s"	; drum instrument 49: Mdl.CrashCym1
+	.include	"tm/perc_f386040789a4.s"	; drum instrument 50: Model.El.Tom1
+	.include	"tm/perc_5e3fa3662bf7.s"	; drum instrument 51: ModelRideCym1
+	.include	"tm/perc_4415b8562efe.s"	; drum instrument 52: ModelChinaCym
+	.include	"tm/perc_3541af4fcc5f.s"	; drum instrument 53: ModelRideBell
+	.include	"tm/perc_577dc8b952f3.s"	; drum instrument 54: MdlTamburnAcc
+	.include	"tm/perc_d693f56e175e.s"	; drum instrument 55: Mdl.SplashCym
+	.include	"tm/perc_3e9a7817c262.s"	; drum instrument 56: Soft Cowbell2
+	.include	"tm/perc_ca7ccdfb83d2.s"	; drum instrument 57: Mdl.CrashCym2
+	.include	"tm/perc_b8d0b1fca231.s"	; drum instrument 58: Synth Rattle
+	.include	"tm/perc_9ee9e28bd01a.s"	; drum instrument 59: ModelRideCym2
+	.include	"tm/perc_859d98f2d834.s"	; drum instrument 60: SteelBongo H
+	.include	"tm/perc_0e415c206a78.s"	; drum instrument 61: SteelBongo H
+	.include	"tm/perc_aad714f6a233.s"	; drum instrument 62: MdlCngMtCrash
+	.include	"tm/perc_49444a0049e9.s"	; drum instrument 63: ModelConga Hi
+	.include	"tm/perc_92a3e5113197.s"	; drum instrument 64: ModelConga Lo
+	.include	"tm/perc_369124481dd7.s"	; drum instrument 65: MdlTimbOpenRm
+	.include	"tm/perc_b6d369947e12.s"	; drum instrument 66: ModelTimbOpnL
+	.include	"tm/perc_357d04695516.s"	; drum instrument 67: WoodAgogoHigh
+	.include	"tm/perc_98e016c452a6.s"	; drum instrument 68: WoodAgogo Low
+	.include	"tm/perc_9647e577d474.s"	; drum instrument 69: Model.Cabasa
+	.include	"tm/perc_738dbc3ec2a9.s"	; drum instrument 70: Mdl.MaracasOn
+	.include	"tm/perc_fd9ac10705dd.s"	; drum instrument 71: MdlSmbWhShort
+	.include	"tm/perc_8e3c6c693916.s"	; drum instrument 72: MdlSmbWh Long
+	.include	"tm/perc_0ab8f3702496.s"	; drum instrument 73: MdlGuiroShort
+	.include	"tm/perc_960e16ff6247.s"	; drum instrument 74: Mdl.GuiroLong
+	.include	"tm/perc_ea7bca1a2568.s"	; drum instrument 75: Model.Claves
+	.include	"tm/perc_2091e57fc6d5.s"	; drum instrument 76: MdlWdBlock Hi
+	.include	"tm/perc_c8799afcc76f.s"	; drum instrument 77: MdlWdBlockLow
+	.include	"tm/perc_c0320abeee43.s"	; drum instrument 78: Mdl.Cuica Hi
+	.include	"tm/perc_4502946593ce.s"	; drum instrument 79: Mdl.Cuica Low
+	.include	"tm/perc_e3e374f02d0f.s"	; drum instrument 80: MdlTriangle M
+	.include	"tm/perc_979073735b7b.s"	; drum instrument 81: MdlTriangle O
+	.include	"tm/perc_6b99bacf6362.s"	; drum instrument 82: Mdl.Shaker On
+	.include	"tm/perc_ab7cc1557e03.s"	; drum instrument 83: Mdl.SleighBel
+	.include	"tm/perc_eb42ad5a2aae.s"	; drum instrument 84: Mdl.WindChime
+	.include	"tm/perc_2ce8909d0178.s"	; drum instrument 85: ModelCastanet
+	.include	"tm/perc_c224f97ab813.s"	; drum instrument 86: Surdo Mute
+	.include	"tm/perc_0a8a948aba16.s"	; drum instrument 87: Surdo Open
+	.include	"tm/perc_0bc698acbf01.s"	; drum instrument 88: Orch.BassDrm1
+	.include	"tm/perc_e3909dd5c2b7.s"	; drum instrument 89: Orch.Snare 1
+	.include	"tm/perc_55803a32859d.s"	; drum instrument 90: Orch.Cymbal 1
+	.include	"tm/perc_dbb0a4d73688.s"	; drum instrument 91: Nutshell Tree
+	.include	"tm/perc_11f346692774.s"	; drum instrument 92: Rain Stick
+	.include	"tm/perc_bfd7cb9f863b.s"	; drum instrument 93: Shekele On
+	.include	"tm/perc_4a5a7f2174b0.s"	; drum instrument 94: BataDrum Slap
+	.include	"tm/perc_b9e0fca02924.s"	; drum instrument 95: BataDrum Open
+	.include	"tm/perc_f3d426ec34d2.s"	; drum instrument 96: Caxixi On
+	.include	"tm/perc_7d05c3dcef0f.s"	; drum instrument 97: Caxixi Off
+	.include	"tm/perc_1e117a1f9d28.s"	; drum instrument 98: Darbuka Slap
+	.include	"tm/perc_7af2a1de56f0.s"	; drum instrument 99: Darbuka Open
+	.include	"tm/perc_f35311099b71.s"	; drum instrument 100: Finger Cymbal
+	.include	"tm/perc_90b1cedf519d.s"	; drum instrument 101: Samba Drum On
+	.include	"tm/perc_06e7629c24f4.s"	; drum instrument 102: SambaDrum Off
+	.include	"tm/perc_60dfb6aa7006.s"	; drum instrument 103: MdlSambaWhi H
+	.include	"tm/perc_21266e7e4c18.s"	; drum instrument 104: MdlSambaWhi L
+	.include	"tm/perc_6c39cb1fdc4a.s"	; drum instrument 105: MdlsmallCngHi
+	.include	"tm/perc_6656c0062079.s"	; drum instrument 106: MdlsmallCngLo
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 107: Silent
+	.include	"tm/perc_cb042e77abc6.s"	; drum instrument 108: Silent
+	.include	"tm/perc_1399a5b3b9d0.s"	; drum instrument 109: Soft Cowbell1
+	.include	"tm/perc_b6f885205b32.s"	; drum instrument 110: Soft Cowbell3
+	.include	"tm/perc_3d2e1c6666fc.s"	; drum instrument 111: Soft Cowbell4
+	.include	"tm/perc_b4e9bf3b4ce7.s"	; drum instrument 112: ModelTimbOpnH
+	.include	"tm/perc_4ddeb0196a7f.s"	; drum instrument 113: TimbalesPaila
+	.include	"tm/perc_db1f0cf2421e.s"	; drum instrument 114: TambourineBt1
+	.include	"tm/perc_1492bab8e91e.s"	; drum instrument 115: Mdl.ShakerOff
+	.include	"tm/perc_6213c1eb274d.s"	; drum instrument 116: MdlMaracasOff
+	.include	"tm/perc_06bedd67b06a.s"	; drum instrument 117: SurdoLeftHand
+	.include	"tm/perc_a288aae83844.s"	; drum instrument 118: Shekele Off
+	.include	"tm/perc_fa22bc41f937.s"	; drum instrument 119: Hand Claps
+	.include	"tm/perc_a9ba3fa4cf0a.s"	; drum instrument 120: Conga Mute On
+	.include	"tm/perc_9940ddb36dd4.s"	; drum instrument 121: Conga MuteOff
+	.include	"tm/perc_24626342f235.s"	; drum instrument 122: Conga Crash
+	.include	"tm/perc_f2bbf345e775.s"	; drum instrument 123: Bongo Mute 3
+	.include	"tm/perc_80d76e2410d2.s"	; drum instrument 124: Bongo Mute 2
+	.include	"tm/perc_ac32b1f1e04d.s"	; drum instrument 125: Bongo Mute 1
+	.include	"tm/perc_3d18ca7defea.s"	; drum instrument 126: OrchTambourin
+	.include	"tm/perc_83d767ae07e6.s"	; drum instrument 127: MdlWdBlockHi2
+	.fill	152, 1, 0x00	; bank tail +0xFF68..+0xFFFF
