@@ -181,6 +181,61 @@ def describe_tm(ctx):
     return L
 
 
+def describe_cmb(ctx):
+    d = ctx.data
+    if len(d) != 0x16400 or d[:4] != b'ZZZZ' or d[6:10] != b'WSA1' or any(d[0x20:0x200]):
+        return None
+    hdr = d[:0x20]
+    L = ['; COMBINATION: the user combination bank (wsa1/include/wsa1_files.inc, cmb_*).  The header\'s 32 bytes are',
+         '; the factory bank\'s PresetBank_Header (prom_c/data_tables/preset_bank.s), DiskLoad_CheckCombiTag (prom_a',
+         '; 0xFE2E3D) checks "WSA1" at +6.', '', '\t.include\t"wsa1_files.inc"', ctx.label + ':',
+         '\t.ascii\t"ZZZZ"', '\t.short\t0', '\t.ascii\t"WSA1  "',
+         '\t.short\t' + ', '.join('0x%04x' % (hdr[k] | hdr[k + 1] << 8) for k in range(12, 32, 2)) + '\t; the directory (PresetBank_Header)',
+         '\t.fill\t0x1e0, 1, 0', '%s_BankNames:' % ctx.label]
+    L += ['\t.ascii\t%s\t; bank %d' % (s_esc(d[0x200 + 16 * k:0x210 + 16 * k]), k) for k in range(16)]
+    for k in range(128):
+        o = 0x300 + 0x2C0 * k
+        r = d[o:o + 0x2C0]
+        L.append('%s_C%03d:\t\t; bank %d memory %d' % (ctx.label, k, k // 8, k % 8))
+        q = 0
+        n = 0
+        while True:
+            t, ln = r[q], r[q + 1]
+            if t == 0xFF:
+                if r[q:q + 2] != b'\xff\xff' or q + 2 != 0x2C0:
+                    return None
+                L.append('\t.byte\t0xff, 0xff')
+                break
+            pay = r[q + 2:q + 2 + ln]
+            v = ', '.join(str(x) for x in pay)
+            if t == 0x78 and ln == 16:
+                L += ['\tcmb_name', '\t.ascii\t%s' % s_esc(pay)]
+            elif t == 0x60 and ln == 12:
+                L.append('\tcmb_effect_common\t' + v)
+            elif t in (0x61, 0x62, 0x63) and ln == 30:
+                L.append('\tcmb_effect\t0x%02x, %s' % (t, v))
+            elif t <= 0x07 and ln == 30:
+                L.append('\tcmb_part_a\t%d, %s' % (t, v))
+            elif 0x20 <= t <= 0x27 and ln == 30:
+                L.append('\tcmb_part_b\t0x%02x, %s' % (t, v))
+            elif t == 0x92 and ln == 14:
+                L.append('\tcmb_key_scaling\t' + v)
+            elif t == 0x79 and ln == 44:
+                L.append('\tcmb_common\t' + v)
+            else:
+                return None
+            q += 2 + ln
+            n += 1
+        if n != 23:
+            return None
+    L += ['; The rest of the file\'s last kilobyte.  [INFERENCE] the disk code moves the file in whole kilobytes',
+          '; (Disk_SetWindowLengthToKilobyte), and DiskLoad_Combination takes 0x16300 bytes of the 89 KB.  These 0x100',
+          '; bytes are what the staging buffer still held.',
+          '; census: opaque -- unknown-dump: stale staging-buffer bytes past the 0x16300-byte bank',
+          '\t.incbin\t"%s", 0x%x, %d' % (ctx.ref, ctx.offset + 0x16300, 0x100)]
+    return L
+
+
 def describe(ctx):
     ext = ctx.path.rsplit('.', 1)[-1].upper()
     if ext == 'MID':
@@ -189,4 +244,6 @@ def describe(ctx):
         return describe_seq(ctx)
     if ext == 'TM':
         return describe_tm(ctx)
+    if ext == 'CMB':
+        return describe_cmb(ctx)
     return None
