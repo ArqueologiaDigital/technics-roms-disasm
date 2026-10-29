@@ -3330,11 +3330,7 @@ DrawbarSettingPage_RowStepHandlers:
 ;               because a `jr` splits the pair.  No boundary moves.
 ; --------------------------------------------------------------------------
 DL_Flag2896b5_Set:
-	.byte 0x03, 0x0c	; F542E1  op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_F54790_48x20	; +2  source -> Bitmap_F54790_48x20
-	.short 0x04D1		; +6  IX  (screen position)
-	.short 0x0006		; +8  BC  (6 bytes per row)
-	.short 0x0014		; +10 HL  (20 rows)
+	dl_bitmap	bitmap=Bitmap_F54790_48x20, x=264, y=30, w=48, h=20
 
 ; --- 0xF542ED-0xF542F8  dl (12 bytes) ---
 
@@ -3347,11 +3343,7 @@ DL_Flag2896b5_Set:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_Flag2896b5_Clear:
-	.byte 0x03, 0x0c	; F542ED  op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_F54718_48x20	; +2  source -> Bitmap_F54718_48x20
-	.short 0x04D1		; +6  IX  (screen position)
-	.short 0x0006		; +8  BC  (6 bytes per row)
-	.short 0x0014		; +10 HL  (20 rows)
+	dl_bitmap	bitmap=Bitmap_F54718_48x20, x=264, y=30, w=48, h=20
 
 ; --- 0xF542F9-0xF54304  data (12 bytes) ---
 
@@ -3364,11 +3356,7 @@ DL_Flag2896b5_Clear:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_Flag2896b4_Set:
-	.byte 0x03, 0x0c	; F542F9  op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_F54790_48x20	; +2  source -> Bitmap_F54790_48x20
-	.short 0x0981		; +6  IX  (screen position)
-	.short 0x0006		; +8  BC  (6 bytes per row)
-	.short 0x0014		; +10 HL  (20 rows)
+	dl_bitmap	bitmap=Bitmap_F54790_48x20, x=264, y=60, w=48, h=20
 
 ; --- 0xF54305-0xF546A3  dl (927 bytes) ---
 
@@ -3381,11 +3369,7 @@ DL_Flag2896b4_Set:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_Flag2896b4_Clear:
-	.byte 0x03, 0x0c	; F54305  op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_F54718_48x20	; +2  source -> Bitmap_F54718_48x20
-	.short 0x0981		; +6  IX  (screen position)
-	.short 0x0006		; +8  BC  (6 bytes per row)
-	.short 0x0014		; +10 HL  (20 rows)
+	dl_bitmap	bitmap=Bitmap_F54718_48x20, x=264, y=60, w=48, h=20
 
 ; --------------------------------------------------------------------------
 ; DL_DrawbarScaleStrip -- a UI display list, 3 records, 0xF54311-0xF54330
@@ -3396,15 +3380,9 @@ DL_Flag2896b4_Clear:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_DrawbarScaleStrip:
-	.byte 0x02, 0x0a	; F54311  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x0d, 0x00, 0x59, 0x00, 0x0d, 0x00, 0x67, 0x00	; +2  '..Y...g.'
-	.byte 0x02, 0x0a	; F5431B  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x37, 0x01, 0x59, 0x00, 0x37, 0x01, 0x67, 0x00	; +2  '7.Y.7.g.'
-	.byte 0x03, 0x0c	; F54325  op 03, 12 bytes -> handler 0xF31ABE
-	.long Bitmap_F54D7E_304x6	; +2  source -> Bitmap_F54D7E_304x6
-	.short 0x2493		; +6  IX  (screen position)
-	.short 0x0026		; +8  BC  (38 bytes per row)
-	.short 0x0006		; +10 HL  (6 rows)
+	dl_vline	x0=13, y0=89, x1=13, y1=103
+	dl_vline	x0=311, y0=89, x1=311, y1=103
+	dl_bitmap	bitmap=Bitmap_F54D7E_304x6, x=24, y=234, w=304, h=6
 
 ; --------------------------------------------------------------------------
 ; DL_DrawbarFootageScale -- a UI display list, 22 records, 0xF54331-0xF543AF
@@ -3423,72 +3401,28 @@ DL_DrawbarScaleStrip:
 ;             its bar's own column (--selftest check F).
 ; --------------------------------------------------------------------------
 DL_DrawbarFootageScale:
-	.byte 0x07, 0x05	; F54331  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E3D		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x07, 0x05	; F54336  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E45		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x07, 0x05	; F5433B  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E49		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x07, 0x05	; F54340  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E51		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x07, 0x05	; F54345  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E5D		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x20, 0x05	; F5434A  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E5A		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x20, 0x06	; F5434F  op 20, 6 bytes -> handler 0xF31A3A
-	.short 0x0E3B		; +2  IX (screen position)
-	.ascii "16"	; +4
-	.byte 0x20, 0x05	; F54355  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E3F		; +2  IX (screen position)
-	.ascii "5"	; +4
-	.byte 0x07, 0x05	; F5435A  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E42		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x20, 0x05	; F5435F  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E44		; +2  IX (screen position)
-	.ascii "8"	; +4
-	.byte 0x20, 0x05	; F54364  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E48		; +2  IX (screen position)
-	.ascii "4"	; +4
-	.byte 0x20, 0x05	; F54369  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E4B		; +2  IX (screen position)
-	.ascii "2"	; +4
-	.byte 0x07, 0x05	; F5436E  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E4E		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x20, 0x05	; F54373  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E50		; +2  IX (screen position)
-	.ascii "2"	; +4
-	.byte 0x20, 0x05	; F54378  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E53		; +2  IX (screen position)
-	.ascii "1"	; +4
-	.byte 0x07, 0x05	; F5437D  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x0E56		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x20, 0x05	; F54382  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E57		; +2  IX (screen position)
-	.ascii "1"	; +4
-	.byte 0x20, 0x05	; F54387  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0E5C		; +2  IX (screen position)
-	.ascii "1"	; +4
-	.byte 0x17, 0x09	; F5438C  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0040, 0x005E	; +2  the two words
-	.ascii "1/3"	; +6
-	.byte 0x17, 0x09	; F54395  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00A0, 0x005E	; +2  the two words
-	.ascii "2/3"	; +6
-	.byte 0x17, 0x09	; F5439E  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00DF, 0x005E	; +2  the two words
-	.ascii "3/5"	; +6
-	.byte 0x17, 0x09	; F543A7  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x00FF, 0x005E	; +2  the two words
-	.ascii "1/3"	; +6
+	dl_text8x16	x=40, y=91, text="'"	; +4
+	dl_text8x16	x=104, y=91, text="'"	; +4
+	dl_text8x16	x=136, y=91, text="'"	; +4
+	dl_text8x16	x=200, y=91, text="'"	; +4
+	dl_text8x16	x=296, y=91, text="'"	; +4
+	dl_text8x10	x=272, y=91, text="'"	; +4
+	dl_text8x10	x=24, y=91, text="16"	; +4
+	dl_text8x10	x=56, y=91, text="5"	; +4
+	dl_text8x16	x=80, y=91, text="'"	; +4
+	dl_text8x10	x=96, y=91, text="8"	; +4
+	dl_text8x10	x=128, y=91, text="4"	; +4
+	dl_text8x10	x=152, y=91, text="2"	; +4
+	dl_text8x16	x=176, y=91, text="'"	; +4
+	dl_text8x10	x=192, y=91, text="2"	; +4
+	dl_text8x10	x=216, y=91, text="1"	; +4
+	dl_text8x16	x=240, y=91, text="'"	; +4
+	dl_text8x10	x=248, y=91, text="1"	; +4
+	dl_text8x10	x=288, y=91, text="1"	; +4
+	dl_text8x8_packed	x=64, y=94, text="1/3"	; +6
+	dl_text8x8_packed	x=160, y=94, text="2/3"	; +6
+	dl_text8x8_packed	x=223, y=94, text="3/5"	; +6
+	dl_text8x8_packed	x=255, y=94, text="1/3"	; +6
 
 ; --------------------------------------------------------------------------
 ; Paint_DrawbarScreenLayout_DL2 -- a UI display list, 2 records, 0xF543B0-0xF543C3
@@ -3500,10 +3434,8 @@ DL_DrawbarFootageScale:
 ; --------------------------------------------------------------------------
 Paint_DrawbarScreenLayout_DL2:
 ; ; drawn (start operand) by Paint_DrawbarScreenLayout -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x05, 0x0a	; F543B0  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x0e, 0x00, 0x58, 0x00, 0x36, 0x01, 0x67, 0x00	; +2  '..X.6.g.'
-	.byte 0x05, 0x0a	; F543BA  op 05, 10 bytes -> handler 0xF31A75
-	.byte 0x0d, 0x00, 0x6b, 0x00, 0x37, 0x01, 0xe8, 0x00	; +2  '..k.7...'
+	dl_fill_rect	x0=14, y0=88, x1=310, y1=103
+	dl_fill_rect	x0=13, y0=107, x1=311, y1=232
 
 ; --------------------------------------------------------------------------
 ; Paint_DrawbarScreenLayout_DL1 -- a UI display list, 2 records, 0xF543C4-0xF543D5
@@ -3517,10 +3449,8 @@ Paint_DrawbarScreenLayout_DL2:
 ; --------------------------------------------------------------------------
 Paint_DrawbarScreenLayout_DL1:
 ; ; drawn (start operand) by Paint_DrawbarScreenLayout -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x1b, 0x0a	; F543C4  op 1B, 10 bytes -> handler 0xF31A75
-	.byte 0xa7, 0x00, 0x1b, 0x00, 0x3f, 0x01, 0x53, 0x00	; +2  '....?.S.'
-	.byte 0x0e, 0x08	; F543CE  op 0E, 8 bytes -> handler 0xF31A9F
-	.byte 0xc0, 0x0d, 0x28, 0x00, 0x98, 0x00	; +2  '..(...'
+	dl_erase_rect	x0=167, y0=27, x1=319, y1=83
+	dl_clear_area	x=0, y=88, w=320, h=152
 
 ; --------------------------------------------------------------------------
 ; DL_DrawbarTitle -- a UI display list, 6 records, 0xF543D6-0xF54415
@@ -3532,21 +3462,12 @@ Paint_DrawbarScreenLayout_DL1:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_DrawbarTitle:
-	.byte 0x1c, 0x0d	; F543D6  op 1C, 13 bytes -> handler 0xF31A52
-	.short 0x007A, 0x0003	; +2  the two words
-	.ascii "DRAWBAR"	; +6
-	.byte 0x20, 0x13	; F543E3  op 20, 19 bytes -> handler 0xF31A3A
-	.short 0x0AF2		; +2  IX (screen position)
-	.ascii "DRAWBAR SETTING"	; +4
-	.byte 0x17, 0x07	; F543F6  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x004C	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x09, 0x0a	; F543FD  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0x42, 0x00, 0x90, 0x00, 0x53, 0x00	; +2  '..B...S.'
-	.byte 0x09, 0x0a	; F54407  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0x44, 0x00, 0x8e, 0x00, 0x51, 0x00	; +2  '..D...Q.'
-	.byte 0x23, 0x05	; F54411  op 23, 5 bytes -> handler 0xF31ACE
-	.byte 0x6d, 0x0c, 0x00	; +2  'm..'
+	dl_text16x16_packed	x=122, y=3, text="DRAWBAR"	; +6
+	dl_text8x10	x=16, y=70, text="DRAWBAR SETTING"	; +4
+	dl_text8x8_packed	x=0, y=76, text="\020"
+	dl_box	x0=8, y0=66, x1=144, y1=83
+	dl_box	x0=10, y0=68, x1=142, y1=81
+	dl_value_glyph	glyph=109, x=96, y=0
 
 ; --------------------------------------------------------------------------
 ; DL_PercussiveToneHeader -- a UI display list, 17 records, 0xF54416-0xF544AC
@@ -3558,50 +3479,23 @@ DL_DrawbarTitle:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_PercussiveToneHeader:
-	.byte 0x20, 0x05	; F54416  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x059A		; +2  IX (screen position)
-	.ascii "2"	; +4
-	.byte 0x07, 0x05	; F5441B  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x059D		; +2  IX (screen position)
-	.ascii "'"	; +4
-	.byte 0x17, 0x07	; F54420  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x0025	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x17, 0x09	; F54427  op 17, 9 bytes -> handler 0xF31A52
-	.short 0x0118, 0x0026	; +2  the two words
-	.ascii "2/3"	; +6
-	.byte 0x20, 0x0e	; F54430  op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x06CE		; +2  IX (screen position)
-	.ascii "PERCUSSIVE"	; +4
-	.byte 0x07, 0x05	; F5443E  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x08BC		; +2  IX (screen position)
-	.ascii ","	; +4
-	.byte 0x20, 0x08	; F54443  op 20, 8 bytes -> handler 0xF31A3A
-	.short 0x0905		; +2  IX (screen position)
-	.ascii "T0NE"	; +4
-	.byte 0x20, 0x05	; F5444B  op 20, 5 bytes -> handler 0xF31A3A
-	.short 0x0A4B		; +2  IX (screen position)
-	.ascii "4"	; +4
-	.byte 0x17, 0x07	; F54450  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x004C	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x01, 0x0a	; F54457  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa8, 0x00, 0x1b, 0x00, 0x36, 0x01, 0x1b, 0x00	; +2  '....6...'
-	.byte 0x01, 0x0a	; F54461  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa7, 0x00, 0x52, 0x00, 0x37, 0x01, 0x52, 0x00	; +2  '..R.7.R.'
-	.byte 0x01, 0x0a	; F5446B  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0xa8, 0x00, 0x53, 0x00, 0x36, 0x01, 0x53, 0x00	; +2  '..S.6.S.'
-	.byte 0x02, 0x0a	; F54475  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0xa7, 0x00, 0x1c, 0x00, 0xa7, 0x00, 0x52, 0x00	; +2  '......R.'
-	.byte 0x02, 0x0a	; F5447F  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x36, 0x01, 0x1b, 0x00, 0x36, 0x01, 0x53, 0x00	; +2  '6...6.S.'
-	.byte 0x02, 0x0a	; F54489  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x37, 0x01, 0x1c, 0x00, 0x37, 0x01, 0x52, 0x00	; +2  '7...7.R.'
-	.byte 0x17, 0x10	; F54493  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "SOUND MODE"	; +6
-	.byte 0x09, 0x0a	; F544A3  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x44, 0x00, 0x10, 0x00	; +2  '....D...'
+	dl_text8x10	x=272, y=35, text="2"	; +4
+	dl_text8x16	x=296, y=35, text="'"	; +4
+	dl_text8x8_packed	x=314, y=37, text="\021"
+	dl_text8x8_packed	x=280, y=38, text="2/3"	; +6
+	dl_text8x10	x=176, y=43, text="PERCUSSIVE"	; +4
+	dl_text8x16	x=288, y=55, text=","	; +4
+	dl_text8x10	x=232, y=57, text="T0NE"	; +4
+	dl_text8x10	x=280, y=65, text="4"	; +4
+	dl_text8x8_packed	x=314, y=76, text="\021"
+	dl_hline	x0=168, y0=27, x1=310, y1=27
+	dl_hline	x0=167, y0=82, x1=311, y1=82
+	dl_hline	x0=168, y0=83, x1=310, y1=83
+	dl_vline	x0=167, y0=28, x1=167, y1=82
+	dl_vline	x0=310, y0=27, x1=310, y1=83
+	dl_vline	x0=311, y0=28, x1=311, y1=82
+	dl_text8x8_packed	x=6, y=7, text="SOUND MODE"	; +6
+	dl_box	x0=4, y0=4, x1=68, y1=16
 
 ; --------------------------------------------------------------------------
 ; DL_SoundEditBar -- a UI display list, 6 records, 0xF544AD-0xF544EA
@@ -3613,21 +3507,12 @@ DL_PercussiveToneHeader:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_SoundEditBar:
-	.byte 0x17, 0x10	; F544AD  op 17, 16 bytes -> handler 0xF31A52
-	.short 0x0006, 0x0007	; +2  the two words
-	.ascii "SOUND EDIT"	; +6
-	.byte 0x20, 0x09	; F544BD  op 20, 9 bytes -> handler 0xF31A3A
-	.short 0x05A2		; +2  IX (screen position)
-	.ascii "WRITE"	; +4
-	.byte 0x17, 0x07	; F544C6  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x0025	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x09, 0x0a	; F544CD  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x04, 0x00, 0x04, 0x00, 0x44, 0x00, 0x10, 0x00	; +2  '....D...'
-	.byte 0x09, 0x0a	; F544D7  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0x20, 0x00, 0x40, 0x00, 0x31, 0x00	; +2  '.. .@.1.'
-	.byte 0x09, 0x0a	; F544E1  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0x22, 0x00, 0x3e, 0x00, 0x2f, 0x00	; +2  '..".>./.'
+	dl_text8x8_packed	x=6, y=7, text="SOUND EDIT"	; +6
+	dl_text8x10	x=16, y=36, text="WRITE"	; +4
+	dl_text8x8_packed	x=0, y=37, text="\020"
+	dl_box	x0=4, y0=4, x1=68, y1=16
+	dl_box	x0=8, y0=32, x1=64, y1=49
+	dl_box	x0=10, y0=34, x1=62, y1=47
 
 ; --------------------------------------------------------------------------
 ; DL_DrawbarSettingPage -- a UI display list, 33 records, 0xF544EB-0xF54667
@@ -3641,89 +3526,39 @@ DL_SoundEditBar:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_DrawbarSettingPage:
-	.byte 0x20, 0x0e	; F544EB  op 20, 14 bytes -> handler 0xF31A3A
-	.short 0x0B0C		; +2  IX (screen position)
-	.ascii "DSP EFFECT"	; +4
-	.byte 0x17, 0x07	; F544F9  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x004C	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x07, 0x13	; F54500  op 07, 19 bytes -> handler 0xF31A3A
-	.short 0x104C		; +2  IX (screen position)
-	.ascii "DRAWBAR SETTING"	; +4
-	.byte 0x07, 0x1c	; F54513  op 07, 28 bytes -> handler 0xF31A3A
-	.short 0x1456		; +2  IX (screen position)
-	.ascii "PERCUSSIVE T0NE DECAY  :"	; +4
-	.byte 0x07, 0x1c	; F5452F  op 07, 28 bytes -> handler 0xF31A3A
-	.short 0x179E		; +2  IX (screen position)
-	.ascii "PERCUSSIVE T0NE LEVEL  :"	; +4
-	.byte 0x07, 0x05	; F5454B  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x17C2		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x07, 0x05	; F54550  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x17E5		; +2  IX (screen position)
-	.byte 0x8d	; +4  '.'
-	.byte 0x17, 0x07	; F54555  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x009B	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F5455C  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x009B	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x07, 0x1c	; F54563  op 07, 28 bytes -> handler 0xF31A3A
-	.short 0x1AE6		; +2  IX (screen position)
-	.ascii "DRAWBAR ATTACK TIME    :"	; +4
-	.byte 0x17, 0x0a	; F5457F  op 17, 10 bytes -> handler 0xF31A52
-	.short 0x0007, 0x00AF	; +2  the two words
-	.ascii "ITEM"	; +6
-	.byte 0x17, 0x0b	; F54589  op 17, 11 bytes -> handler 0xF31A52
-	.short 0x011C, 0x00AF	; +2  the two words
-	.ascii "VALUE"	; +6
-	.byte 0x07, 0x05	; F54594  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1E02		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x07, 0x05	; F54599  op 07, 5 bytes -> handler 0xF31A3A
-	.short 0x1E25		; +2  IX (screen position)
-	.byte 0x8e	; +4  '.'
-	.byte 0x07, 0x1c	; F5459E  op 07, 28 bytes -> handler 0xF31A3A
-	.short 0x1E2E		; +2  IX (screen position)
-	.ascii "DRAWBAR RELEASE TIME   :"	; +4
-	.byte 0x17, 0x07	; F545BA  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x0000, 0x00C2	; +2  the two words
-	.byte 0x10	; +6  '.'
-	.byte 0x17, 0x07	; F545C1  op 17, 7 bytes -> handler 0xF31A52
-	.short 0x013A, 0x00C2	; +2  the two words
-	.byte 0x11	; +6  '.'
-	.byte 0x09, 0x0a	; F545C8  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xd8, 0x00, 0x42, 0x00, 0x38, 0x01, 0x53, 0x00	; +2  '..B.8.S.'
-	.byte 0x09, 0x0a	; F545D2  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0xda, 0x00, 0x44, 0x00, 0x36, 0x01, 0x51, 0x00	; +2  '..D.6.Q.'
-	.byte 0x09, 0x0a	; F545DC  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0x96, 0x00, 0x1f, 0x00, 0xa7, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F545E6  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x20, 0x01, 0x96, 0x00, 0x37, 0x01, 0xa7, 0x00	; +2  ' ...7...'
-	.byte 0x09, 0x0a	; F545F0  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0x98, 0x00, 0x1d, 0x00, 0xa5, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F545FA  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x22, 0x01, 0x98, 0x00, 0x35, 0x01, 0xa5, 0x00	; +2  '"...5...'
-	.byte 0x09, 0x0a	; F54604  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x08, 0x00, 0xbd, 0x00, 0x1f, 0x00, 0xce, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F5460E  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x20, 0x01, 0xbd, 0x00, 0x37, 0x01, 0xce, 0x00	; +2  ' ...7...'
-	.byte 0x09, 0x0a	; F54618  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x0a, 0x00, 0xbf, 0x00, 0x1d, 0x00, 0xcc, 0x00	; +2  '........'
-	.byte 0x09, 0x0a	; F54622  op 09, 10 bytes -> handler 0xF31A75
-	.byte 0x22, 0x01, 0xbf, 0x00, 0x35, 0x01, 0xcc, 0x00	; +2  '"...5...'
-	.byte 0x01, 0x0a	; F5462C  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x28, 0x00, 0x61, 0x00, 0x12, 0x01, 0x61, 0x00	; +2  '(.a...a.'
-	.byte 0x01, 0x0a	; F54636  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x27, 0x00, 0xd8, 0x00, 0x13, 0x01, 0xd8, 0x00	; +2  "'......."
-	.byte 0x01, 0x0a	; F54640  op 01, 10 bytes -> handler 0xF31A75
-	.byte 0x28, 0x00, 0xd9, 0x00, 0x12, 0x01, 0xd9, 0x00	; +2  '(.......'
-	.byte 0x02, 0x0a	; F5464A  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x27, 0x00, 0x62, 0x00, 0x27, 0x00, 0xd8, 0x00	; +2  "'.b.'..."
-	.byte 0x02, 0x0a	; F54654  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x12, 0x01, 0x61, 0x00, 0x12, 0x01, 0xd9, 0x00	; +2  '..a.....'
-	.byte 0x02, 0x0a	; F5465E  op 02, 10 bytes -> handler 0xF31A75
-	.byte 0x13, 0x01, 0x62, 0x00, 0x13, 0x01, 0xd8, 0x00	; +2  '..b.....'
+	dl_text8x10	x=224, y=70, text="DSP EFFECT"	; +4
+	dl_text8x8_packed	x=314, y=76, text="\021"
+	dl_text8x16	x=96, y=104, text="DRAWBAR SETTING"	; +4
+	dl_text8x16	x=48, y=130, text="PERCUSSIVE T0NE DECAY  :"	; +4
+	dl_text8x16	x=48, y=151, text="PERCUSSIVE T0NE LEVEL  :"	; +4
+	dl_text8x16	x=16, y=152, text="\215"
+	dl_text8x16	x=296, y=152, text="\215"
+	dl_text8x8_packed	x=0, y=155, text="\020"
+	dl_text8x8_packed	x=314, y=155, text="\021"
+	dl_text8x16	x=48, y=172, text="DRAWBAR ATTACK TIME    :"	; +4
+	dl_text8x8_packed	x=7, y=175, text="ITEM"	; +6
+	dl_text8x8_packed	x=284, y=175, text="VALUE"	; +6
+	dl_text8x16	x=16, y=192, text="\216"
+	dl_text8x16	x=296, y=192, text="\216"
+	dl_text8x16	x=48, y=193, text="DRAWBAR RELEASE TIME   :"	; +4
+	dl_text8x8_packed	x=0, y=194, text="\020"
+	dl_text8x8_packed	x=314, y=194, text="\021"
+	dl_box	x0=216, y0=66, x1=312, y1=83
+	dl_box	x0=218, y0=68, x1=310, y1=81
+	dl_box	x0=8, y0=150, x1=31, y1=167
+	dl_box	x0=288, y0=150, x1=311, y1=167
+	dl_box	x0=10, y0=152, x1=29, y1=165
+	dl_box	x0=290, y0=152, x1=309, y1=165
+	dl_box	x0=8, y0=189, x1=31, y1=206
+	dl_box	x0=288, y0=189, x1=311, y1=206
+	dl_box	x0=10, y0=191, x1=29, y1=204
+	dl_box	x0=290, y0=191, x1=309, y1=204
+	dl_hline	x0=40, y0=97, x1=274, y1=97
+	dl_hline	x0=39, y0=216, x1=275, y1=216
+	dl_hline	x0=40, y0=217, x1=274, y1=217
+	dl_vline	x0=39, y0=98, x1=39, y1=216
+	dl_vline	x0=274, y0=97, x1=274, y1=217
+	dl_vline	x0=275, y0=98, x1=275, y1=216
 
 ; --------------------------------------------------------------------------
 ; DL_DrawbarParamValues -- a UI display list, 4 records, 0xF54668-0xF546A3
@@ -3742,34 +3577,10 @@ DL_DrawbarSettingPage:
 ;                'DRAWBAR RELEASE TIME   :' <- (0x2641) & 0x0F >> 0.
 ; --------------------------------------------------------------------------
 DL_DrawbarParamValues:
-	.byte 0x02, 0x0f	; F54668  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0x0f, 0x00	; +4  mask, shift
-	.byte 0x07		; +6  swi 7 function
-	.long DLTableB_SignedNibble	; +7  -> DLTableB_SignedNibble
-	.byte 0x02, 0x00	; +11 entry width 2, +12
-	.short 0x146F		; +13 IX (screen position)
-	.byte 0x02, 0x0f	; F54677  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2640		; +2  RAM variable
-	.byte 0xf0, 0x04	; +4  mask, shift
-	.byte 0x07		; +6  swi 7 function
-	.long DLTableB_SignedNibble	; +7  -> DLTableB_SignedNibble
-	.byte 0x02, 0x00	; +11 entry width 2, +12
-	.short 0x17B7		; +13 IX (screen position)
-	.byte 0x02, 0x0f	; F54686  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0xf0, 0x04	; +4  mask, shift
-	.byte 0x07		; +6  swi 7 function
-	.long DLTableB_SignedNibble	; +7  -> DLTableB_SignedNibble
-	.byte 0x02, 0x00	; +11 entry width 2, +12
-	.short 0x1AFF		; +13 IX (screen position)
-	.byte 0x02, 0x0f	; F54695  op 02, 15 bytes -> handler 0xF31B21
-	.short 0x2641		; +2  RAM variable
-	.byte 0x0f, 0x00	; +4  mask, shift
-	.byte 0x07		; +6  swi 7 function
-	.long DLTableB_SignedNibble	; +7  -> DLTableB_SignedNibble
-	.byte 0x02, 0x00	; +11 entry width 2, +12
-	.short 0x1E47		; +13 IX (screen position)
+	dlb_string	var=UI_DrawScratch, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x16, table=DLTableB_SignedNibble, width=2, x=248, y=130
+	dlb_string	var=UI_DrawScratch, mask=0xf0, shift=4, svc=LCDSVC_DrawText8x16, table=DLTableB_SignedNibble, width=2, x=248, y=151
+	dlb_string	var=UI_DrawScratch+1, mask=0xf0, shift=4, svc=LCDSVC_DrawText8x16, table=DLTableB_SignedNibble, width=2, x=248, y=172
+	dlb_string	var=UI_DrawScratch+1, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x16, table=DLTableB_SignedNibble, width=2, x=248, y=193
 
 ; --- 0xF546A4-0xF546C3  ascii (32 bytes) ---
 
@@ -3802,16 +3613,8 @@ DLTableB_SignedNibble:
 ;           would end somewhere else.
 ; --------------------------------------------------------------------------
 DL_ParamCursorBar:
-	.byte 0x08, 0x0b	; F546C4  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2641		; +2  RAM variable
-	.byte 0x03, 0x00	; +4  mask, shift
-	.byte 0x1b		; +6  swi 7 function
-	.long ParamCursorRects	; +7  -> ParamCursorRects
-	.byte 0x03, 0x0b	; F546CF  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x03, 0x00	; +4  mask, shift
-	.byte 0x05		; +6  swi 7 function
-	.long ParamCursorRects	; +7  -> ParamCursorRects
+	dlb_rect_entry_op08	var=UI_DrawScratch+1, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=ParamCursorRects
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_FillRect, table=ParamCursorRects
 
 ; --- 0xF546DA-0xF54704  data (43 bytes) ---
 
@@ -3848,11 +3651,7 @@ ParamCursorRects:
 ; --------------------------------------------------------------------------
 Paint_DrawbarScreenLayout_Unchanged_DL2:
 ; ; drawn (start operand) by Paint_DrawbarScreenLayout_Unchanged -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x08, 0x0b	; F546FA  op 08, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x00, 0x00	; +4  mask, shift
-	.byte 0x1b		; +6  swi 7 function
-	.long ParamCursorRect_Single	; +7  -> ParamCursorRect_Single
+	dlb_rect_entry_op08	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_EraseRect, table=ParamCursorRect_Single
 
 ; --- 0xF54705-0xF5470F  dl (11 bytes) ---
 
@@ -3866,11 +3665,7 @@ Paint_DrawbarScreenLayout_Unchanged_DL2:
 ; --------------------------------------------------------------------------
 Paint_DrawbarScreenLayout_Unchanged_DL1:
 ; ; drawn (start operand) by Paint_DrawbarScreenLayout_Unchanged -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x03, 0x0b	; F54705  op 03, 11 bytes -> handler 0xF31B57
-	.short 0x2640		; +2  RAM variable
-	.byte 0x00, 0x00	; +4  mask, shift
-	.byte 0x05		; +6  swi 7 function
-	.long ParamCursorRect_Single	; +7  -> ParamCursorRect_Single
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_FillRect, table=ParamCursorRect_Single
 
 ; --- 0xF54710-0xF54FBE  data (2223 bytes) ---
 

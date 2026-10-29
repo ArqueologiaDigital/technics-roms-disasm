@@ -417,7 +417,7 @@ def detect_A(key):
     cur = None
     for i, r in enumerate(rows):
         lo, hi, rel, li, kind, detail, text, lab = r
-        isl = kind == "data" and detail in (".long", ".4byte", ".int")
+        isl = kind == "data" and detail in (".long", ".4byte", ".int", "macro:on_key")  # on_key: wsa1_gui.inc's key-map entry
         if key == "prom_b" and 0xF40000 <= lo < 0xF44018:
             isl = False                 # the routine directory is detector J's, as one table
         if isl and cur and rows[cur["last"]][1] == lo and rows[cur["last"]][2] == rel \
@@ -439,6 +439,8 @@ def detect_A(key):
         for i in t["rows"]:
             lo, hi, rel, li, kind, detail, text, lab = rows[i]
             ops = operands(text)
+            if detail == "macro:on_key":
+                ops = ops[1:]               # `on_key KEY_x, Handler`: the pointer is the second operand
             n = (hi - lo) // 4
             for k in range(n):
                 nwords += 1
@@ -735,7 +737,7 @@ def detect_U(key, shift=0, minrun=3, mindistinct=3, stride=4, skip=None, cslice=
     n = len(raw)
     elig = bytearray(n)
     for r in rows:
-        if (r[4] == "data" and r[5] in (".long", ".4byte", ".int")) or r[4] == "fill":
+        if (r[4] == "data" and r[5] in (".long", ".4byte", ".int", "macro:on_key")) or r[4] == "fill":
             continue
         a0, b0 = max(r[0], base), min(r[1], base + n)
         if b0 > a0:
