@@ -2476,7 +2476,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003E45A,
+        .selected = RAM_PartSetting_AcTitleMenu_Selected,
         .str = SELF(PartSetting_text),
         .title = TITLE_MDPART,
         .icon = idICON_i101,

@@ -338,10 +338,62 @@ def ram_cells_h():
            '#ifndef NAKA_RAM_CELLS_H',
            '#define NAKA_RAM_CELLS_H',
            '']
-    for n, a in ram_cells(src):
+    cells = ram_cells(src)
+    for n, a in cells:
+        out.append('#define RAM_%-48s 0x%08Xu' % (n, a))
+    out += ['',
+            '/* Cells of the image part the C does not spell (the asm\'s WorkRamInit_Image, RAM 0x3D524..0x3DCD3,',
+            ' * and the second image, ROM 0xEEFA66 -> RAM 0xE35E): named after the widget field that keeps its',
+            ' * live value there -- <record>_<Field>, the convention of the cells above',
+            ' * (scripts/converters/name_widget_value_cells.py).  The evidence is that field: its class\'s',
+            ' * propdata letter is a pointer type (m n o p q r s: pBool .. pUlong) and its value is the cell. */']
+    for n, a in head_cells(set(a for n, a in cells), set(n for n, a in cells)):
         out.append('#define RAM_%-48s 0x%08Xu' % (n, a))
     out += ['', '#endif /* NAKA_RAM_CELLS_H */']
     return '\n'.join(out) + '\n'
+
+
+def head_cells(known_addr, known_names):
+    """[(name, RAM address)] for the work-RAM cells outside naka_sequencer_channels.c that a widget
+    record's pointer field names, from the v10 ROM records and the C member names."""
+    import naka_gui_model as G
+    m = O.Map('v10')
+    members = {}
+    for p in G.tree_files('v10'):
+        f = G.CFile(p)
+        for r in f.records:
+            members[(r['slot'], r['elem'])] = r['member']
+    first = {}
+    for reg in m.regs:
+        if reg['cls'] != 0x1600010 or not m.inrom(reg['table']):
+            continue
+        for k, ea in enumerate(m.entries(reg)):
+            a = ea if m.inrom(ea) else G.rom_image_of(ea)
+            c = m.record_class(a) if a is not None else None
+            if not c:
+                continue
+            mem = members.get((reg['slot'], k))
+            if not mem:
+                lab = m.name_of(a)
+                mem = lab[1] if lab[0] == a else None
+            if not mem:
+                continue
+            for off, fname, ch in m.class_fields(c):
+                if ch not in 'mnopqrs':
+                    continue
+                v = m.u32(a + off)
+                if v in known_addr or G.rom_image_of(v) is None:
+                    continue
+                name = '%s_%s' % (mem, fname[:1].upper() + fname[1:])
+                first.setdefault(v, name)
+    out, used = [], set(known_names)
+    for v in sorted(first):
+        n = re.sub(r'[^A-Za-z0-9_]', '_', first[v])
+        while n in used:
+            n += '_'
+        used.add(n)
+        out.append((n, v))
+    return out
 
 
 def main():

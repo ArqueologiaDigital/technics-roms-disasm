@@ -5562,7 +5562,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003DF5A,
+        .selected = RAM_Naming_AcTitleMenu_Selected_,
         .str = SELF(Naming_text),
         .title = TITLE_SQEASYNAME,
         .icon = idICON_None,

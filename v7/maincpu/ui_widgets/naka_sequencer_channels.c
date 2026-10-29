@@ -2086,31 +2086,31 @@ typedef struct __attribute__((packed)) {
     uint16_t field_172a;
     uint8_t normal_AcLswBox_Value[2];
     uint16_t normal_IvWindowPageControl_Page;
-    uint16_t field_1730;
+    uint16_t NakaWidget_N1_Parent;
     uint16_t field_1732;
-    uint16_t field_1734;
+    uint16_t NakaWidget_N1_Child;
     uint16_t field_1736;
-    uint16_t field_1738;
+    uint16_t Toshi_NORMAL_Elem33_Parent;
     uint16_t field_173a;
-    uint16_t field_173c;
+    uint16_t Toshi_NORMAL_Elem33_Child;
     uint16_t field_173e;
-    uint16_t field_1740;
+    uint16_t Toshi_NORMAL_Elem39_Parent;
     uint16_t field_1742;
-    uint16_t field_1744;
+    uint16_t Toshi_NORMAL_Elem39_Child;
     uint16_t field_1746;
-    uint16_t field_1748;
+    uint16_t Toshi_NORMAL_Elem48_Parent;
     uint16_t field_174a;
-    uint16_t field_174c;
+    uint16_t Toshi_NORMAL_Elem48_Child;
     uint16_t field_174e;
-    uint16_t field_1750;
+    uint16_t Toshi_NORMAL_Elem57_Parent;
     uint16_t field_1752;
-    uint16_t field_1754;
+    uint16_t Toshi_NORMAL_Elem57_Child;
     uint16_t field_1756;
-    uint16_t field_1758;
+    uint16_t Toshi_NORMAL_Elem60_Parent;
     uint16_t field_175a;
-    uint16_t field_175c;
+    uint16_t Toshi_NORMAL_Elem60_Child;
     uint16_t field_175e;
-    uint16_t field_1760;
+    uint16_t ControlMenu_Window;
     uint16_t field_1762;
     uint8_t pad_277[14];  /* zero padding */
     uint16_t ControlIni_Window;
@@ -2334,15 +2334,15 @@ typedef struct __attribute__((packed)) {
     uint16_t PMVIEW_PsPageBox_Page;
     uint16_t PMNAME_Window;
     uint16_t field_1934;
-    uint16_t field_1936;
+    uint16_t NakaWidget_PMBKNAME_Window;
     uint16_t field_1938;
-    uint16_t field_193a;
+    uint16_t NakaWidget_SVARI_Window;
     uint16_t field_193c;
-    uint16_t field_193e;
+    uint16_t NakaWidget_SVARI_Page;
     uint8_t pad_297[2];  /* zero padding */
-    uint16_t field_1942;
+    uint16_t NakaWidget_SVARI_Varisu;
     uint8_t pad_298[4];  /* zero padding */
-    uint16_t field_1948;
+    uint16_t NakaWidget_SVARI_Oldvari;
     uint16_t RVARI_Window;
     uint16_t field_194c;
     uint16_t RVARI_Page;
@@ -2930,7 +2930,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003DCBA,
+        .window = RAM_FDTest_ScreenView_Window,
         .title = (NAKA_ADDR(HamaStr_HamaListProc) + 14),
         .icon = idICON_i113,
     },
@@ -3889,55 +3889,55 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .normal_IvWindowPageControl_Page = 0x0001,
 
-    .field_1730 = NAKA_NONE,
+    .NakaWidget_N1_Parent = NAKA_NONE,
 
     .field_1732 = NAKA_NONE,
 
-    .field_1734 = NAKA_NONE,
+    .NakaWidget_N1_Child = NAKA_NONE,
 
     .field_1736 = NAKA_NONE,
 
-    .field_1738 = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Parent = NAKA_NONE,
 
     .field_173a = NAKA_NONE,
 
-    .field_173c = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Child = NAKA_NONE,
 
     .field_173e = NAKA_NONE,
 
-    .field_1740 = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Parent = NAKA_NONE,
 
     .field_1742 = NAKA_NONE,
 
-    .field_1744 = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Child = NAKA_NONE,
 
     .field_1746 = NAKA_NONE,
 
-    .field_1748 = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Parent = NAKA_NONE,
 
     .field_174a = NAKA_NONE,
 
-    .field_174c = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Child = NAKA_NONE,
 
     .field_174e = NAKA_NONE,
 
-    .field_1750 = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Parent = NAKA_NONE,
 
     .field_1752 = NAKA_NONE,
 
-    .field_1754 = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Child = NAKA_NONE,
 
     .field_1756 = NAKA_NONE,
 
-    .field_1758 = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Parent = NAKA_NONE,
 
     .field_175a = NAKA_NONE,
 
-    .field_175c = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Child = NAKA_NONE,
 
     .field_175e = NAKA_NONE,
 
-    .field_1760 = NAKA_NONE,
+    .ControlMenu_Window = NAKA_NONE,
 
     .field_1762 = NAKA_NONE,
 
@@ -4385,23 +4385,23 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .field_1934 = NAKA_NONE,
 
-    .field_1936 = NAKA_NONE,
+    .NakaWidget_PMBKNAME_Window = NAKA_NONE,
 
     .field_1938 = NAKA_NONE,
 
-    .field_193a = NAKA_NONE,
+    .NakaWidget_SVARI_Window = NAKA_NONE,
 
     .field_193c = NAKA_NONE,
 
-    .field_193e = 0x0001,
+    .NakaWidget_SVARI_Page = 0x0001,
 
     .pad_297 = { 0 },
 
-    .field_1942 = 0x000D,
+    .NakaWidget_SVARI_Varisu = 0x000D,
 
     .pad_298 = { 0 },
 
-    .field_1948 = 0x0003,
+    .NakaWidget_SVARI_Oldvari = 0x0003,
 
     .RVARI_Window = NAKA_NONE,
 
