@@ -1,0 +1,263 @@
+# The custom-data flash: the CUSTOM STYLE memory (KN7000 IC21, KN6000 / KN6500 IC18)
+
+Written 2026-10-29, lane `customdata` of the data-semantics effort
+(`notes/data-semantics-2026-10-29/README.md`).
+
+The KN7000's IC21 is a 2 MB flash at `0x96800000`. Its upper 1,966,080 bytes (`0x1E0000`,
+60 blocks of 32 KB), the bank at `0x96820000`, hold the **CUSTOM** style source: 20 slots, each
+a custom style together with its four ONE TOUCH SETTING panel memories, its performance pads and
+the user sounds it needs. The owner's manual (p.120) describes CUSTOM as 20 styles copied in from
+COMPOSER MEMORY. The Initial Data Disk resets it to the factory set (p.137). The KN6000 and KN6500
+have the same bank at the same address on their IC18, written by the same firmware module.
+
+This lane gives byte-exact, typed sources for the ten factory banks that exist:
+
+| image (reference)               | floppy (MAME softlist)  | file           | SHA-1 of the bank                          |
+|---------------------------------|-------------------------|----------------|--------------------------------------------|
+| KN7000 `01ctmini.ic21`          | `kn7000_flop` `idd7000` | `01CTMINI.AST` | `67b2a0fe8154c4d15557399a86bf0d0b49813ced` |
+| KN7000 `01custm1.ic21`          | `kn7000_flop` `custom1` | `01CUSTM1.AST` | `4cd5fe37871984a4b470b1a12b835c9bc41f37f5` |
+| KN7000 `02custm2.ic21`          | `kn7000_flop` `custom1` | `02CUSTM2.AST` | `6c85b616a9acc3a7ecc1b49a70f138c0d9442086` |
+| KN7000 `03custm3.ic21`          | `kn7000_flop` `custom1` | `03CUSTM3.AST` | `d5722a1129134383bf643d20b4e0866c3089fc36` |
+| KN7000 `04custm4.ic21`          | `kn7000_flop` `custom1` | `04CUSTM4.AST` | `25822a3ad726df49882cdd0066424600fb70ea14` |
+| KN7000 `01custm5.ic21`          | `kn7000_flop` `custom2` | `01CUSTM5.AST` | `11d32c3d293a23a511a76297647758046cd8ccc9` |
+| KN7000 `02custm6.ic21`          | `kn7000_flop` `custom2` | `02CUSTM6.AST` | `54f2bac0551a8d43dc1a87fe24a13c545169a326` |
+| KN7000 `03custm7.ic21`          | `kn7000_flop` `custom2` | `03CUSTM7.AST` | `e1bdfbbbe78353003af5ed01866be87d799523bb` |
+| KN7000 `04custm8.ic21`          | `kn7000_flop` `custom2` | `04CUSTM8.AST` | `f4722d93ff3f31c6d8c25f757968d796e4eb57ca` |
+| KN6000 / KN6500 `01ctmini.ic18` | `kn6000_flop` `idd6000` | `01CTMINI.AST` | `8c6d62a8afab717a2b59e9242bbf897b01369416` |
+
+The SHA-1s are those of the images in the private romsets (`technics_romsets/kn7000/*.ic21`,
+`technics_roms/roms/kn6000/01ctmini.ic18`, which equals `kn6500/01ctmini.ic18`). The Makefiles
+make the references from the floppies, not from the romsets: `unzip` the disk, extract the
+`.AST` with `tools/fat12_extract.py`, inflate it with `tools/ast_file.py`, check the SHA-1. The
+floppy images are those of the 2026-10-18 rebuild (`SOFTLIST_DIR`).
+
+    make -C kn7000 verify-customdata       # 9 banks, in make gate-kn7000
+    make -C kn6000 verify-customdata       # 1 bank, in make gate-kn6000
+    make -C kn7000 verify-customdata-ast   # the 9 .AST files rebuilt from the banks (not in the gate)
+    make -C kn6000 verify-customdata-ast
+    make -C kn7000 customdata-src          # regenerate src/customdata/ (tools/gen_customdata_s.py)
+    make -C kn6000 customdata-src
+
+Felipe's own IC21 read (`real_dump_v1.3_b893`) is not used anywhere: it is personal data. Only
+the README of its analysis folder was read, for orientation (it found the custom area at chip
+`0x20000`, which is this bank).
+
+Addresses of routines are KN7000 program 941's (`kn7000/src/program/region1_04.s`, names from
+`kn7000_manual.sym`). `[INFERENCE]` marks a reading that no traced code fixes.
+
+## The sources
+
+| path                                            | what                                                                 |
+|-------------------------------------------------|----------------------------------------------------------------------|
+| `kn7000/src/customdata/customdata.inc`          | the record macros, one per record kind, every known field named      |
+| `kn7000/src/customdata/<image>.s`               | the bank: the directory, then per block an include, residue or fill  |
+| `kn7000/src/customdata/<image>/SlotNN.inc`      | slot NN's record, fully typed, events one per line                   |
+| `kn7000/src/customdata/<image>/StaleNN.inc`     | a complete older record in free block NN, typed the same way         |
+| `kn6000/src/customdata/01ctmini.s`, `01ctmini/` | the KN6000 bank, same macros (`--model kn6000`)                      |
+| `kn7000/tools/gen_customdata_s.py`              | the generator; it models every macro's bytes and stops on a mismatch |
+| `kn7000/tools/ast_file.py`                      | `.AST` inflate (references) and deflate (rebuild)                    |
+| `kn7000/tools/zlib10_deflate.py`                | the programs' zlib 1.0.4 deflate, ported to Python                   |
+
+## The directory (block 0)
+
+Module status `*(0x50001298)`: `func_48484499` runs at boot. When `FlashReadAutoselect` fails it
+sets -1 (no custom flash: every fetcher returns NULL). When the bank does not start with `"IK"`
+it builds an empty directory in the RAM shadow `0x5037A000` (0x6000 bytes of 0xFF, the
+signature, all slots `{0, 0}`, all blocks free, block 0 used) and programs it with
+`FlashProgram128Words`.
+
+| offset  | size   | field                                | read / written by                                                            |
+|---------|--------|--------------------------------------|------------------------------------------------------------------------------|
+| `+0x00` | 2      | `"IK"`                               | `func_48484499` (check), `func_48483F35` (write)                             |
+| `+0x02` | 20 x 2 | slot: first block (0 = empty), count | `func_48483F53` / `func_48483F82`; setters `func_48483F6D` / `func_48483F9C` |
+| `+0x2A` | 60     | block map, 1 = allocated             | `func_48483FB4`, set `func_48483FC6`, clear `func_48483FDA`                  |
+| `+0x66` |        | 0xFF to `0x6000`, erased to `0x8000` |                                                                              |
+
+A block `b` is at `0x96820000 + (b << 15)` (`func_48483FED`); a slot's record is at its first
+block (`func_48483FFC`). The allocator `func_484843A4` looks for free runs in the map; the
+saver `func_484857AF` writes the slot descriptor and marks the blocks. In all ten images every
+slot is used, its block count is `ceil(size / 0x8000)`, and the map is exactly block 0 plus the
+slots' blocks (`custom-data-ic21-probes/layout_check.py`).
+
+## The slot record
+
+Built by the MEMORY -> CUSTOM save `func_484854E3` in RAM (`0x5031C000` or `INSTALL_SCRATCH`
+`0x502B8000`), then programmed to its blocks. All little-endian.
+
+| offset           | field                                                      | evidence                                                                                             |
+|------------------|------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| `+0x00`          | u32 record size = `0x100` + the sections                   | `func_4848403C`; `func_4848512E` sums the sections                                                   |
+| `+0x04`          | 16-byte style name                                         | `func_48484049`; written by `func_4C021AF8`                                                          |
+| `+0x14..+0x44`   | four 16-byte ONE TOUCH SETTING names                       | `func_4848407B` / `B1` / `E7` / `1D`; written by `func_4C021B53`                                     |
+| `+0x54..+0x7C`   | five `{u32 offset, u32 count}`: 0x42-byte records          | `func_48484153`..`func_48484257`; counts from item bitmasks 0-9, 10-14, 15-34, 35-44, 45-54          |
+| `+0x7C`          | `{offset, count}` of 0x2C8-byte SOUND EDIT records         | `func_48484266` / `func_4848428E`; `CustomSoundEditRecFetch` 0x484845E1                              |
+| `+0x84`          | `{offset, count}` of the 0x48A7-byte custom-sound block    | `func_4848429E` / `func_484842C8`; `CustomVoiceRecFetch` 0x4844A42F                                  |
+| `+0x8C`          | `{offset, size}` of the 4 one-touch-setting panel memories | `func_484842D8`; record size from `func_4C02AD02` (0xA0)                                             |
+| `+0x94`          | `{offset, size}` of the "TCMP" style container             | `func_48484305`, `CustomStyleBlockFetch` 0x48484578                                                  |
+| `+0x9C`          | `{offset, size}` of the "TPAD" pad container               | `func_48484332`, `func_4848435C`                                                                     |
+| `+0xA4`, `+0xA5` | first block, block count (as in the directory)             | equal to the slot descriptor in all 200 live records                                                 |
+| `+0xA6..+0xFF`   | RAM residue of the build buffer                            | `[INFERENCE]`: debug strings ("TITLE : TT_RVARI", "MODE  : MD_NORMAL"); no accessor reads past +0xA4 |
+
+The sections follow the header in that order with no gap. In the factory sets only one record
+has a dependency section: a custom-sound block (`count 1` at `+0x88`). The custom-sound block is
+a 0x27-byte header, 128 `{program, bank LSB, bank MSB}` references at `+0x27` and 128 voice
+records of 0x8E bytes at `+0x1A7` (`CustomVoiceRecFetch`; 0x27 + 384 + 128 x 0x8E = 0x48A7).
+
+**One touch settings.** Four panel memories of 0xA0 bytes (KN6000: 0x90). Their format is the
+library's (`func_4C02A0C4` writes them in the save, `func_4C02AD02` returns the size). Only one
+field is traced: on loading a slot from disk, `func_484859D8` stamps `(slot | 0x200000) & 0xFF`
+into byte `+0x70` of each, the CUSTOM style-ID of its own slot (`func_4843E452`). In all 180 KN7000
+records byte `+0x70` is the slot number. The rest is an `.incbin_range` per record.
+
+## The "TCMP" style container (N = 1)
+
+The CUSTOM container is the MEMORY style area's layout with one style (`MemStyleExportToCustom`
+0x4843DEC7). It is described in `kn7000_manual.sym` (section `"TCMP" STYLE CONTAINER`) and
+`notes/tcmp-container-synthesis.md`; this lane confirms it on 200 records. Big-endian.
+
+| offset    | field                                                                                                      |
+|-----------|------------------------------------------------------------------------------------------------------------|
+| `+0x00`   | `"TCMP"`, `00 00`; the checksum descriptor `[0x06,0x10)` zero (the export clears it)                       |
+| `+0x10`   | u24BE container length; `+0x13` u24BE allocator top: both equal the size here                              |
+| `+0x16`   | u16BE style count 1; `+0x18` the ROM template's tail `00 60 0D 08 04 02 02 01 02 0F`; 64 spaces at `+0x30` |
+| `+0x70`   | style record, 0x80 bytes: name, four variation-name fields, indices 0..19, two u16BE at `+0x70`            |
+| `+0xF0`   | 20 variation records of 0xE0 bytes                                                                         |
+| `+0x1270` | the 20 event streams, contiguous, the last ending at the container's end                                   |
+
+A variation record: kind `+0x00`, two untraced bytes, pair flag `+0x03` (bit 4), eight per-part
+bytes `+0x04`, bars `+0x10` and meter `+0x11` (`MemStyleVarBarCount` 0x4843C445), the stream
+offset `+0x15`, two untraced bytes `+0x18` (0xFF 0xFF in most), then eight part set-ups of
+0x18 bytes at `+0x20`.
+
+**Part set-up (`PART_SETUP`).** `[INFERENCE]` The 0x18-byte block is the 24 fields of the
+part-field table 0x485B77D4, in its order: `B0 FF`, CC7, the program change's three bytes, CC94,
+CC91, CC93, CC10, CC96, CC82, CC83, CC80, CC81, CC92, CC64, CC1, CC11, channel pressure, pitch
+bend (two bytes), CC16, CC17, CC13. The table has exactly 24 entries. The first 15 fields are the
+built-in styles' 15-byte part set-up, whose reading the kn7000-ic18 lane traced
+(`notes/ic18-rhythm-rom.md`): mode, volume, program/bank, CC94 = 64 and CC96 = 12 hold here too.
+No reader of the 0x18-byte block itself was traced.
+
+**Event streams.** `[index][u24BE count][events]`: the index is the variation number
+(`MemStyleAreaStreamsVerify` 0x4843579E rejects any other), the count excludes the 4-byte
+header, the events run from a 0xF4 beat marker to 0xF5. Event lengths are `RhyEventLenByStatus`
+0x484403D5 / `RhySysexLen` 0x484403CD. All 5,200 streams of the live records (TCMP and TPAD, ten
+images) parse to their exact ends: 806,516 events, 2,979,536 bytes; no data byte >= 0x80, every
+position byte 0-95 (`custom-data-ic21-probes/stream_census.py`).
+
+| event           | macro       | count   |
+|-----------------|-------------|---------|
+| `9n` 5 bytes    | `ev_note`   | 398,918 |
+| `00-5F`         | `ev_at`     | 261,177 |
+| `F4`            | `ev_beat`   | 57,034  |
+| `En` 2 bytes    | `ev_bend`   | 49,467  |
+| `Bn` 2 bytes    | `ev_cc`     | 31,240  |
+| `F5`            | `ev_end`    | 5,200   |
+| `F0 04` 4 bytes | `ev_sysex4` | 3,290   |
+| `Cn` 3 bytes    | `ev_pc`     | 188     |
+| `Dn` 1 byte     | `ev_press`  | 2       |
+
+The macro names and parameters are those of `src/ic18/rhythm.s` (lane kn7000-ic18), whose reading
+of the note's last three bytes (gate, rule) is `[INFERENCE]` there too. Every SysEx in these sets
+is `F0 04 02 08 02 08` or another 4-byte one.
+
+## The "TPAD" performance-pad container (N = 1)
+
+The PERFORMANCE PAD user memory's layout (`MemPadAreaLoadFactory` 0x48432175; the MEMORY area at
+`0x501F91A0`, accessors `func_4843873A` / `func_48438752` / `func_48438791`) with one bank:
+
+| offset   | field                                                                                                                                         |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `+0x00`  | `"TPAD"`, `00 00` (`func_48438871`), descriptor zero, length / top u24BE, count 1, template tail `00 60 10 06 10 02 00 00 00 0F` (0x48729858) |
+| `+0x70`  | bank record 0x30: 16-byte name ("User Bank 1"), six `{bank, pad, 0x20}`                                                                       |
+| `+0xA0`  | six pad records of 0x60: name, 13 setting bytes, u24BE stream offset `+0x1D` (`func_484387A9`), two part set-ups at `+0x28`                   |
+| `+0x2E0` | six event streams, same format, index = pad                                                                                                   |
+
+`func_484388C6` checks each MEMORY pad stream (opens with 0xF4, ends with 0xF5, `stream[0]` the
+index) and `func_484385DD` sets bits 2/3 of `+0x1A` for pads 4 and 5.
+
+## Stale records and residue
+
+A record's blocks are programmed whole, from a RAM buffer that still held what was built there
+before. So:
+
+- **Past a record's end** its blocks hold the tail of an earlier, longer record. 166 records have
+  such residue; for 122 of them another record of the sets has the same bytes at the same offsets
+  (`slack_origin.py`). No accessor reads past `+0x00`'s size. These runs are declared
+  `census: opaque -- unknown-dump`: they start in the middle of a record whose header is gone, so
+  no field can be anchored.
+- **Free blocks** (map 0) are not erased in the nine KN7000 sets: they hold 41 complete older
+  records (no slot points at them; their `+0xA4` gives the block they were written for) and one
+  fragment. The complete ones are typed like live records (`StaleNN.inc`), e.g. "Revival Rock"
+  (in 7 sets) and "Soloist Sounds" (4). The fragment (01ctmini block 21) is opaque.
+- The 80 "Blank" slots of the eight custom1/custom2 sets are each 0x237F bytes.
+
+The KN6000 bank has no stale records and no residue except past record ends.
+
+## The .AST file
+
+`func_4852D0E5` (by its size, 0x1E0000, the whole-bank save) builds a 16-byte header on its stack: three bytes copied from
+0x48664308 (`"J K"`; the KN6000's files carry `"I K"`), `+0x03` = 1, `+0x04` u32 LE `0x1E0000`.
+It never writes `+0x08..+0x0F`, so those 8 bytes are whatever the stack held: `48582CD3 5006F220`
+(LE words) in custom1/custom2's eight files, `485A9C1D 5006ED88` in idd7000's, `0 50052930` in
+idd6000's. The payload follows: the bank deflated by the programs' zlib 1.0.4 (the banner at
+program file 0x3B8604; `func_48532C77` calls `deflateInit_` with level -1 = 6, and the library
+defaults windowBits 15 and memLevel 8), written without the 2-byte zlib header but with the
+Adler-32 trailer (big-endian). On load `AstHeaderIngest` 0x4848594D takes kind 0x17 as the
+whole-bank file, at most 0x1E0000 bytes, programmed from `0x96820000`.
+
+**Rebuilding them.** Python's zlib (1.3.1) does not reproduce the payload: it differs at byte 1.
+zlib 1.0.4 does: its C sources (zlib.net/fossils, compiled with
+`custom-data-ic21-probes/zlib104_drv.c`) give `01CUSTM1.AST`'s payload exactly. The difference
+is in `_tr_tally`: 1.0.4 may end a block every 4096 symbols when its estimate says the block
+compresses well; later versions compile that only with `TRUNCATE_BLOCK`. `tools/zlib10_deflate.py`
+is a Python port of 1.0.4's deflate (deflate_slow, the sliding window and the trees), and
+`ast_file.py deflate` rebuilds **all ten** `.AST` files byte for byte from the banks plus the
+tag and the 8 stack bytes (`make verify-customdata-ast` in both trees). The floppy lanes can use
+it to regenerate these files.
+
+## Census
+
+`scripts/analysis/data_incbin_census.py`, 2026-10-29 on this branch (count / bytes):
+
+| tree                | opaque          | generic n | generic bytes |
+|---------------------|-----------------|-----------|---------------|
+| `kn7000-customdata` | 183 / 2,592,308 | 1,896     | 158,732       |
+| `kn6000-customdata` | 0 / 0           | 80        | 11,520        |
+
+The generic entries are the one-touch-setting panel memories (four per record, two pieces each
+on the KN7000) and the 128 voice records of the one custom-sound block. Everything else is typed.
+
+## Open questions
+
+- The panel-memory format (0xA0 / 0x90 bytes, the library's `func_4C02A0C4`): not traced.
+- The 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND EDIT records: none in the
+  factory sets, so only their strides are known.
+- The voice record (0x8E) and the custom-sound block's 0x27-byte header.
+- TCMP variation bytes `+0x01`, `+0x02`, `+0x18`, `+0x19`; the style record's two u16BE at
+  `+0x70`; the pad record's 13 setting bytes beyond those named.
+- A reader of the 24-field part set-up: the field mapping is the table's order, unconfirmed.
+- Where the factory sets were made: the residue matches across sets, so one tool built them in
+  sequence, reusing its buffer.
+
+## Website page draft
+
+> ### Custom style memory (IC21)
+>
+> The KN7000 keeps its 20 CUSTOM styles in the upper 1,920 KB of IC21, the flash at
+> `0x96800000`, in a bank at `0x96820000` divided into 60 blocks of 32 KB. Block 0 is a
+> directory: the signature "IK", where each of the 20 slots starts and how many blocks it takes,
+> and a map of the used blocks. Each slot is one record holding a style and everything it needs:
+> its name and the names of its four One Touch Settings, the four panel memories, the style
+> itself (a "TCMP" container: 20 variations, each with eight part set-ups and an event stream),
+> its six performance pads (a "TPAD" container), and any user sounds or effect settings it uses.
+> The KN6000 and KN6500 use the same layout on their IC18.
+>
+> The factory contents come on floppies: the Initial Data Disk's `01CTMINI.AST` and the eight
+> sets of the Custom Style disks 1 and 2. An `.AST` file is the whole bank compressed with zlib
+> 1.0.4, the version in the firmware; a 16-byte header names the model ("J K" KN7000, "I K"
+> KN6000). The disassembly rebuilds all ten banks byte for byte from typed sources, every style
+> event on its own line, and rebuilds the `.AST` files from them with a port of zlib 1.0.4.
+>
+> The banks also show how they were made: flash blocks hold what the writer's buffer held
+> before, so past many styles lie the tails of earlier ones, and unused blocks of the KN7000 sets
+> still contain 41 complete styles that no slot lists ("Revival Rock" in seven of the sets).
