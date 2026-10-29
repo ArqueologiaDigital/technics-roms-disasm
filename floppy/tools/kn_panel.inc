@@ -26,3 +26,14 @@
 	.endm
 
 	.endif
+
+; .LSW part 2: per rhythm, eight {program, bank LSB, bank MSB} sound references ([INFERENCE]: the count,
+; 200 on the KN6000 and 220 on the KN7000, is each model's rhythm count, kn7000/notes/ic18-rhythm-rom.md;
+; eight parts as a style's eight part set-ups).  ls_refs writes one rhythm's 24 bytes.
+	.ifndef	KN_PANEL_LSW2
+	.set	KN_PANEL_LSW2, 1
+	.macro	ls_refs p0, b0, m0, p1, b1, m1, p2, b2, m2, p3, b3, m3, p4, b4, m4, p5, b5, m5, p6, b6, m6, p7, b7, m7
+	.byte	\p0, \b0, \m0, \p1, \b1, \m1, \p2, \b2, \m2, \p3, \b3, \m3
+	.byte	\p4, \b4, \m4, \p5, \b5, \m5, \p6, \b6, \m6, \p7, \b7, \m7
+	.endm
+	.endif

@@ -96,3 +96,20 @@ def lsw1(ctx, part, p, ref, lab):
     return (['\t.include\t"kn_panel.inc"', '\t.include\t"panel_memory.inc"', '', lab + ':', '\t.ascii\t"ZZ"', '\t.byte\t0, 0',
              '\t.ascii\t%s\t; the panel-memory signature' % s_esc(p[4:8]), '\t.fill\t24, 1, 0']
             + block_lines(p, r0, 'the current panel') + block_lines(p, r1, 'the second block'))
+
+
+def lsw2(ctx, part, p, ref, lab):
+    """.LSW part 2: 'ZZZ' + the model letter, 00 'K' 00, the u8 count (200 / 220), zeros to +0x10, then
+    count x 8 sound references of 3 bytes, then zeros."""
+    if part != 2 or p[:3] != b'ZZZ' or p[4:7] != b'\0K\0' or any(p[8:0x10]):
+        return None
+    n = p[7]
+    e = 0x10 + n * 24
+    if e > len(p) or any(p[e:]):
+        return None
+    L = ['\t.include\t"kn_panel.inc"', '', lab + ':', '\t.ascii\t%s' % s_esc(p[:4]),
+         '\t.byte\t0, 0x4b, 0, %d\t; +7: the rhythm count' % n, '\t.fill\t8, 1, 0']
+    for k in range(n):
+        L.append('\tls_refs\t%s\t; rhythm %d' % (', '.join(str(x) for x in p[0x10 + 24 * k:0x10 + 24 * (k + 1)]), k))
+    L.append('\t.fill\t%d, 1, 0' % (len(p) - e))
+    return L
