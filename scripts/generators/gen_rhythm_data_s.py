@@ -6,9 +6,9 @@ QUESTION IT ANSWERS
    streams -- that reassemble to the descrambled image byte for byte?"  It parses the image with the event
    grammar of the main CPU's accompaniment reader, refuses to write anything if a single byte is left
    unexplained, and writes rhythm_data/*.s.  After that first run the .s files are the authoritative source
-   (edit them, not this script); the script stays as the record of how they were derived, and as a checker:
-   --check regenerates into a scratch directory and reports whether the committed tree still matches it
-   (it will stop matching once someone improves the source by hand, which is allowed).
+   (edit them, not this script); the script stays as the record of how they were derived.  --check
+   regenerates into a scratch directory ($TMPDIR) and lists the files that differ from the committed tree;
+   they will start to differ once someone improves the source by hand, which is allowed.
 
 INPUT
   The DESCRAMBLED image (A19/A21 swap undone), SHA-1 fef7f1927935d8fdada2afbdbfac29aac56e1c3c, which
@@ -22,7 +22,7 @@ LAYOUT IT WRITES (every claim is cited in notes/rhythm-data-ic14-2026-10-29/READ
 
 USAGE
   python3 scripts/generators/gen_rhythm_data_s.py [--rom original_ROMs/kn5000_rhythm_data_rom.ic14]
-          [--out rhythm_data] [--stats]
+          [--out rhythm_data] [--stats | --check]
 """
 import argparse
 import collections
@@ -46,6 +46,7 @@ CC_NAME = {0xd1: "cc_mod", 0xd2: "cc_bend", 0xd3: "cc_damper", 0xd4: "cc_pan", 0
 
 LANES = ["Drum", "Drum2", "Bass", "Acc1", "Acc2", "Acc3"]
 SOUND_PARTS = ["DRUM", "BASS", "ACCOMP1", "ACCOMP2", "ACCOMP3"]
+TIMESIG = {6: "TIMESIG_3_4", 7: "TIMESIG_4_4", 9: "TIMESIG_6_4", 11: "TIMESIG_8_4"}
 N_SLOTS = 19
 
 
@@ -162,6 +163,9 @@ MACROS = """\
 ;   slots 16..18  AccVoice_SelectPartOffset (0x20, 0x22, 0x420: RAM 0x32ff bits 0/1),
 ;                 AccVoice_Reset_SelectMode (0x330a), AccVoice_ThirdLayer_SelectMode (0x24/0x424)
 ;   slots 8..11   no reader traced yet
+; Measured over all 404 halves x 6 parts (probes/slot_bars_probe.py): every track in slots
+; 0..15 and 17 is exactly one bar; slots 16 and 18 hold 1..8 bars.  [INFERENCE] 12..15 are the
+; fill-ins (AccPedal_DirectionA picks the pair member) and 16 / 18 intro / ending patterns.
 .macro	part_tracks bank, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18
 	.short	\\s0 - (RhythmData_Base + (\\bank << 16)), \\s1 - (RhythmData_Base + (\\bank << 16))
 	.short	\\s2 - (RhythmData_Base + (\\bank << 16)), \\s3 - (RhythmData_Base + (\\bank << 16))
@@ -194,6 +198,14 @@ MACROS = """\
 .macro	sound_block_end
 	.fill	14, 1, 0xff
 .endm
+
+; Time-signature codes (+0x3d0): the index of TimeSig_DisplayStrings, whose names they are;
+; AccTone_LookupByProgram_Table holds the beats per bar.  Measured: every track in slots
+; 0..15 and 17 of a half is exactly one bar of its half's code (probes/slot_bars_probe.py).
+.equ	TIMESIG_3_4, 6
+.equ	TIMESIG_4_4, 7
+.equ	TIMESIG_6_4, 9
+.equ	TIMESIG_8_4, 11
 
 ; +0x3d0: the half's tail.
 ;   +0x3d0 time_sig      AccStyle_ReadVoiceParam: beats per bar through AccTone_LookupByProgram_Table;
@@ -270,7 +282,25 @@ def main():
     ap.add_argument("--program", default=os.path.join(ROOT, "original_ROMs/kn5000_v10_program.rom"))
     ap.add_argument("--out", default=os.path.join(ROOT, "rhythm_data"))
     ap.add_argument("--stats", action="store_true")
+    ap.add_argument("--check", action="store_true",
+                    help="regenerate into a scratch directory and list the files that differ from --out")
     a = ap.parse_args()
+    if a.check:
+        import filecmp
+        import subprocess
+        import tempfile
+        with tempfile.TemporaryDirectory(prefix="gen_rhythm_") as td:
+            subprocess.run([sys.executable, __file__, "--rom", a.rom, "--program", a.program, "--out", td],
+                           check=True, stdout=subprocess.DEVNULL)
+            diff = []
+            for dp, _, fs in os.walk(td):
+                for f in fs:
+                    rel = os.path.relpath(os.path.join(dp, f), td)
+                    mine = os.path.join(a.out, rel)
+                    if not os.path.exists(mine) or not filecmp.cmp(os.path.join(dp, f), mine, shallow=False):
+                        diff.append(rel)
+            print("generator output == %s" % a.out if not diff else "differs from the generator: " + " ".join(sorted(diff)))
+            sys.exit(1 if diff else 0)
     d = open(a.rom, "rb").read()
     if hashlib.sha1(d).hexdigest() != SHA1:
         sys.exit("%s: SHA-1 is not %s (is it the raw read? descramble it first)" % (a.rom, SHA1))
@@ -408,8 +438,8 @@ def main():
             vel = ", ".join("%d" % v for v in t[2:10])
             if t[21] != 0:
                 sys.exit("+0x3E5 is not 0 at 0x%06X" % (r + h * HALF))
-            L.append("\tstyle_tail\t%d, %d, %s, %d, \"%s\", %d, %d, %d, 0x%04x, 0x%04x, 0x%04x, 0x%04x, %d, %d, %d, %d"
-                     % (t[0], t[1], vel, t[10], x[0x3db:0x3e3].decode("ascii"), t[19], t[20], t[22],
+            L.append("\tstyle_tail\t%s, 0x%02x, %s, %d, \"%s\", %d, %d, %d, 0x%04x, 0x%04x, 0x%04x, 0x%04x, %d, %d, %d, %d"
+                     % (TIMESIG[t[0]], t[1], vel, t[10], x[0x3db:0x3e3].decode("ascii"), t[19], t[20], t[22],
                         u16(t, 23), u16(t, 25), u16(t, 27), u16(t, 29), t[31], t[32], t[33], t[34]))
         L.append("")
     open(os.path.join(a.out, "style_records.s"), "w").write("\n".join(L) + "\n")

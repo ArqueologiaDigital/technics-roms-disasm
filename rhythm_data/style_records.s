@@ -77,7 +77,7 @@ Style_Unlocated_8br86d:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br86d1n", 4, 3, 4, 0x06ba, 0x0790, 0x0216, 0x03ae, 3, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br86d1n", 4, 3, 4, 0x06ba, 0x0790, 0x0216, 0x03ae, 3, 5, 5, 2
 Style_Unlocated_8br86d_V:
 	style_section_map
 	part_tracks	0x32, Trk_8br86d_V_Drum_S00, Trk_8br86d_V_Drum_S01, Trk_8br86d_V_Drum_S02, Trk_8br86d_V_Drum_S03, Trk_8br86d_V_Drum_S04, Trk_8br86d_V_Drum_S05, Trk_8br86d_V_Drum_S06, Trk_8br86d_V_Drum_S07, Trk_8br86d_V_Drum_S08, Trk_8br86d_V_Drum_S09, Trk_8br86d_V_Drum_S10, Trk_8br86d_V_Drum_S11, Trk_8br86d_V_Drum_S08, Trk_8br86d_V_Drum_S09, Trk_8br86d_V_Drum_S10, Trk_8br86d_V_Drum_S11, Trk_8br86d_V_Drum_S16, Trk_8br86d_N_Drum_S17, Trk_8br86d_V_Drum_S18	; Drum
@@ -143,7 +143,7 @@ Style_Unlocated_8br86d_V:
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br86d1v", 5, 4, 4, 0x075f, 0x08d0, 0x0378, 0x049d, 2, 4, 4, 2
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br86d1v", 5, 4, 4, 0x075f, 0x08d0, 0x0378, 0x049d, 2, 4, 4, 2
 
 ; 8br27k: locator [bank 3][program 90]
 Style_B3P090_8br27k:
@@ -211,7 +211,7 @@ Style_B3P090_8br27k:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br27k1n", 1, 2, 0, 0x06cc, 0x060a, 0x0142, 0x0498, 2, 4, 7, 0
+	style_tail	TIMESIG_4_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br27k1n", 1, 2, 0, 0x06cc, 0x060a, 0x0142, 0x0498, 2, 4, 7, 0
 Style_B3P090_8br27k_V:
 	style_section_map
 	part_tracks	0x37, Trk_8br27k_V_Drum_S00, Trk_8br27k_V_Drum_S01, Trk_8br27k_V_Drum_S02, Trk_8br27k_V_Drum_S03, Trk_8br27k_V_Drum_S04, Trk_8br27k_V_Drum_S05, Trk_8br27k_V_Drum_S06, Trk_8br27k_V_Drum_S07, Trk_8br27k_V_Drum_S08, Trk_8br27k_V_Drum_S09, Trk_8br27k_V_Drum_S10, Trk_8br27k_V_Drum_S11, Trk_8br27k_V_Drum_S08, Trk_8br27k_V_Drum_S09, Trk_8br27k_V_Drum_S10, Trk_8br27k_V_Drum_S11, Trk_8br27k_V_Drum_S16, Trk_8br27k_N_Drum_S17, Trk_8br27k_V_Drum_S18	; Drum
@@ -277,7 +277,7 @@ Style_B3P090_8br27k_V:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br27k1v", 2, 2, 2, 0x0920, 0x07b6, 0x02c2, 0x042c, 2, 4, 5, 0
+	style_tail	TIMESIG_4_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br27k1v", 2, 2, 2, 0x0920, 0x07b6, 0x02c2, 0x042c, 2, 4, 5, 0
 
 ; 8br37p: locator [bank 4][program 90]
 Style_B4P090_8br37p:
@@ -345,7 +345,7 @@ Style_B4P090_8br37p:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br37p1n", 4, 4, 5, 0x073a, 0x0915, 0x049e, 0x056e, 2, 4, 4, 5
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br37p1n", 4, 4, 5, 0x073a, 0x0915, 0x049e, 0x056e, 2, 4, 4, 5
 Style_B4P090_8br37p_V:
 	style_section_map
 	part_tracks	0x24, Trk_8br37p_V_Drum_S00, Trk_8br37p_V_Drum_S01, Trk_8br37p_V_Drum_S02, Trk_8br37p_V_Drum_S03, Trk_8br37p_V_Drum_S04, Trk_8br37p_V_Drum_S05, Trk_8br37p_V_Drum_S06, Trk_8br37p_V_Drum_S07, Trk_8br37p_V_Drum_S08, Trk_8br37p_V_Drum_S09, Trk_8br37p_V_Drum_S10, Trk_8br37p_V_Drum_S11, Trk_8br37p_V_Drum_S08, Trk_8br37p_V_Drum_S09, Trk_8br37p_V_Drum_S10, Trk_8br37p_V_Drum_S11, Trk_8br37p_V_Drum_S16, Trk_8br37p_N_Drum_S17, Trk_8br37p_V_Drum_S18	; Drum
@@ -411,7 +411,7 @@ Style_B4P090_8br37p_V:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br37p1v", 4, 4, 5, 0x083b, 0x0d7c, 0x0607, 0x0526, 1, 3, 5, 7
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br37p1v", 4, 4, 5, 0x083b, 0x0d7c, 0x0607, 0x0526, 1, 3, 5, 7
 
 ; 8br17r: locator [bank 2][program 90]
 Style_B2P090_8br17r:
@@ -479,7 +479,7 @@ Style_B2P090_8br17r:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br17r1n", 4, 4, 5, 0x0858, 0x0bb6, 0x04eb, 0x06f8, 1, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br17r1n", 4, 4, 5, 0x0858, 0x0bb6, 0x04eb, 0x06f8, 1, 4, 4, 4
 Style_B2P090_8br17r_V:
 	style_section_map
 	part_tracks	0x18, Trk_8br17r_V_Drum_S00, Trk_8br17r_V_Drum_S01, Trk_8br17r_V_Drum_S02, Trk_8br17r_V_Drum_S03, Trk_8br17r_V_Drum_S04, Trk_8br17r_V_Drum_S05, Trk_8br17r_V_Drum_S06, Trk_8br17r_V_Drum_S07, Trk_8br17r_V_Drum_S08, Trk_8br17r_V_Drum_S09, Trk_8br17r_V_Drum_S10, Trk_8br17r_V_Drum_S11, Trk_8br17r_V_Drum_S08, Trk_8br17r_V_Drum_S09, Trk_8br17r_V_Drum_S10, Trk_8br17r_V_Drum_S11, Trk_8br17r_V_Drum_S16, Trk_8br17r_N_Drum_S17, Trk_8br17r_V_Drum_S18	; Drum
@@ -545,7 +545,7 @@ Style_B2P090_8br17r_V:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br17r1v", 8, 8, 8, 0x0bca, 0x0b80, 0x0746, 0x059e, 2, 6, 4, 5
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br17r1v", 8, 8, 8, 0x0bca, 0x0b80, 0x0746, 0x059e, 2, 6, 4, 5
 
 ; 8br75d: locator [bank 7][program 90]
 Style_B7P090_8br75d:
@@ -613,7 +613,7 @@ Style_B7P090_8br75d:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br75d1n", 3, 2, 3, 0x045e, 0x0598, 0x010a, 0x03d8, 2, 5, 4, 5
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br75d1n", 3, 2, 3, 0x045e, 0x0598, 0x010a, 0x03d8, 2, 5, 4, 5
 Style_B7P090_8br75d_V:
 	style_section_map
 	part_tracks	0x36, Trk_8br75d_V_Drum_S00, Trk_8br75d_V_Drum_S01, Trk_8br75d_V_Drum_S02, Trk_8br75d_V_Drum_S03, Trk_8br75d_V_Drum_S04, Trk_8br75d_V_Drum_S05, Trk_8br75d_V_Drum_S06, Trk_8br75d_V_Drum_S07, Trk_8br75d_V_Drum_S08, Trk_8br75d_V_Drum_S09, Trk_8br75d_V_Drum_S10, Trk_8br75d_V_Drum_S11, Trk_8br75d_V_Drum_S08, Trk_8br75d_V_Drum_S09, Trk_8br75d_V_Drum_S10, Trk_8br75d_V_Drum_S11, Trk_8br75d_V_Drum_S16, Trk_8br75d_N_Drum_S17, Trk_8br75d_V_Drum_S18	; Drum
@@ -679,7 +679,7 @@ Style_B7P090_8br75d_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br75d1v", 4, 4, 4, 0x0690, 0x06c8, 0x04c1, 0x038e, 2, 5, 4, 5
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br75d1v", 4, 4, 4, 0x0690, 0x06c8, 0x04c1, 0x038e, 2, 5, 4, 5
 
 ; 16s26d: locator [bank 6][program 96]
 Style_B6P096_16s26d:
@@ -747,7 +747,7 @@ Style_B6P096_16s26d:
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s26d1n", 3, 4, 3, 0x0aff, 0x0bf2, 0x0474, 0x039b, 2, 5, 3, 5
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s26d1n", 3, 4, 3, 0x0aff, 0x0bf2, 0x0474, 0x039b, 2, 5, 3, 5
 Style_B6P096_16s26d_V:
 	style_section_map
 	part_tracks	0x23, Trk_16s26d_V_Drum_S00, Trk_16s26d_V_Drum_S01, Trk_16s26d_V_Drum_S02, Trk_16s26d_V_Drum_S03, Trk_16s26d_V_Drum_S04, Trk_16s26d_V_Drum_S05, Trk_16s26d_V_Drum_S06, Trk_16s26d_V_Drum_S07, Trk_16s26d_V_Drum_S08, Trk_16s26d_V_Drum_S09, Trk_16s26d_V_Drum_S10, Trk_16s26d_V_Drum_S11, Trk_16s26d_V_Drum_S08, Trk_16s26d_V_Drum_S09, Trk_16s26d_V_Drum_S10, Trk_16s26d_V_Drum_S11, Trk_16s26d_V_Drum_S16, Trk_16s26d_N_Drum_S17, Trk_16s26d_V_Drum_S18	; Drum
@@ -813,7 +813,7 @@ Style_B6P096_16s26d_V:
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	103, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s26d1v", 4, 4, 3, 0x0a10, 0x0a16, 0x0496, 0x04fe, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s26d1v", 4, 4, 3, 0x0a10, 0x0a16, 0x0496, 0x04fe, 2, 4, 4, 4
 
 ; 16s93d: locator [bank 4][program 96]
 Style_B4P096_16s93d:
@@ -881,7 +881,7 @@ Style_B4P096_16s93d:
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s93d1n", 2, 3, 3, 0x0b61, 0x0e1a, 0x0356, 0x046a, 2, 6, 4, 2
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s93d1n", 2, 3, 3, 0x0b61, 0x0e1a, 0x0356, 0x046a, 2, 6, 4, 2
 Style_B4P096_16s93d_V:
 	style_section_map
 	part_tracks	0x1f, Trk_16s93d_V_Drum_S00, Trk_16s93d_V_Drum_S01, Trk_16s93d_V_Drum_S02, Trk_16s93d_V_Drum_S03, Trk_16s93d_V_Drum_S04, Trk_16s93d_V_Drum_S05, Trk_16s93d_V_Drum_S06, Trk_16s93d_V_Drum_S07, Trk_16s93d_V_Drum_S08, Trk_16s93d_V_Drum_S09, Trk_16s93d_V_Drum_S10, Trk_16s93d_V_Drum_S11, Trk_16s93d_V_Drum_S08, Trk_16s93d_V_Drum_S09, Trk_16s93d_V_Drum_S10, Trk_16s93d_V_Drum_S11, Trk_16s93d_V_Drum_S16, Trk_16s93d_N_Drum_S17, Trk_16s93d_V_Drum_S18	; Drum
@@ -947,7 +947,7 @@ Style_B4P096_16s93d_V:
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s93d1v", 4, 4, 5, 0x0a36, 0x0bf0, 0x04ae, 0x051e, 2, 6, 3, 3
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s93d1v", 4, 4, 5, 0x0a36, 0x0bf0, 0x04ae, 0x051e, 2, 6, 3, 3
 
 ; 16s37k: locator [bank 7][program 96]
 Style_B7P096_16s37k:
@@ -1015,7 +1015,7 @@ Style_B7P096_16s37k:
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s37k1n", 1, 2, 1, 0x078e, 0x076a, 0x02a4, 0x030e, 2, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s37k1n", 1, 2, 1, 0x078e, 0x076a, 0x02a4, 0x030e, 2, 6, 4, 3
 Style_B7P096_16s37k_V:
 	style_section_map
 	part_tracks	0x33, Trk_16s37k_V_Drum_S00, Trk_16s37k_V_Drum_S01, Trk_16s37k_V_Drum_S02, Trk_16s37k_V_Drum_S03, Trk_16s37k_V_Drum_S04, Trk_16s37k_V_Drum_S05, Trk_16s37k_V_Drum_S06, Trk_16s37k_V_Drum_S07, Trk_16s37k_V_Drum_S08, Trk_16s37k_V_Drum_S09, Trk_16s37k_V_Drum_S10, Trk_16s37k_V_Drum_S11, Trk_16s37k_V_Drum_S08, Trk_16s37k_V_Drum_S09, Trk_16s37k_V_Drum_S10, Trk_16s37k_V_Drum_S11, Trk_16s37k_V_Drum_S16, Trk_16s37k_N_Drum_S17, Trk_16s37k_V_Drum_S18	; Drum
@@ -1081,7 +1081,7 @@ Style_B7P096_16s37k_V:
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s37k1v", 2, 3, 3, 0x0826, 0x0a78, 0x039e, 0x0594, 2, 2, 4, 4
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s37k1v", 2, 3, 3, 0x0826, 0x0a78, 0x039e, 0x0594, 2, 2, 4, 4
 
 ; slr77p: locator [bank 6][program 102]
 Style_B6P102_slr77p:
@@ -1149,7 +1149,7 @@ Style_B6P102_slr77p:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr77p1n", 4, 6, 8, 0x09c8, 0x0aae, 0x089e, 0x05fc, 2, 5, 2, 5
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr77p1n", 4, 6, 8, 0x09c8, 0x0aae, 0x089e, 0x05fc, 2, 5, 2, 5
 Style_B6P102_slr77p_V:
 	style_section_map
 	part_tracks	0x0c, Trk_slr77p_V_Drum_S00, Trk_slr77p_V_Drum_S01, Trk_slr77p_V_Drum_S02, Trk_slr77p_V_Drum_S03, Trk_slr77p_V_Drum_S04, Trk_slr77p_V_Drum_S05, Trk_slr77p_V_Drum_S06, Trk_slr77p_V_Drum_S07, Trk_slr77p_V_Drum_S08, Trk_slr77p_V_Drum_S09, Trk_slr77p_V_Drum_S10, Trk_slr77p_V_Drum_S11, Trk_slr77p_V_Drum_S08, Trk_slr77p_V_Drum_S09, Trk_slr77p_V_Drum_S10, Trk_slr77p_V_Drum_S11, Trk_slr77p_V_Drum_S16, Trk_slr77p_N_Drum_S17, Trk_slr77p_V_Drum_S18	; Drum
@@ -1215,7 +1215,7 @@ Style_B6P102_slr77p_V:
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	29, 3, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr77p1v", 6, 7, 9, 0x12b6, 0x1120, 0x0a4a, 0x0755, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr77p1v", 6, 7, 9, 0x12b6, 0x1120, 0x0a4a, 0x0755, 2, 5, 5, 4
 
 ; 8bh97k: locator [bank 4][program 92]
 Style_B4P092_8bh97k:
@@ -1283,7 +1283,7 @@ Style_B4P092_8bh97k:
 	part_sound	30, 0, 0x40, 1, 64, 2, 127	; ACCOMP2
 	part_sound	27, 1, 0x40, 1, 64, 2, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bh97k1n", 4, 7, 3, 0x061a, 0x075a, 0x04c8, 0x05e2, 2, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bh97k1n", 4, 7, 3, 0x061a, 0x075a, 0x04c8, 0x05e2, 2, 4, 3, 3
 Style_B4P092_8bh97k_V:
 	style_section_map
 	part_tracks	0x2a, Trk_8bh97k_V_Drum_S00, Trk_8bh97k_V_Drum_S01, Trk_8bh97k_V_Drum_S02, Trk_8bh97k_V_Drum_S03, Trk_8bh97k_V_Drum_S04, Trk_8bh97k_V_Drum_S05, Trk_8bh97k_V_Drum_S06, Trk_8bh97k_V_Drum_S07, Trk_8bh97k_V_Drum_S08, Trk_8bh97k_V_Drum_S09, Trk_8bh97k_V_Drum_S10, Trk_8bh97k_V_Drum_S11, Trk_8bh97k_V_Drum_S08, Trk_8bh97k_V_Drum_S09, Trk_8bh97k_V_Drum_S10, Trk_8bh97k_V_Drum_S11, Trk_8bh97k_V_Drum_S16, Trk_8bh97k_N_Drum_S17, Trk_8bh97k_V_Drum_S18	; Drum
@@ -1349,7 +1349,7 @@ Style_B4P092_8bh97k_V:
 	part_sound	30, 0, 0x40, 1, 64, 2, 127	; ACCOMP2
 	part_sound	27, 1, 0x40, 1, 64, 2, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bh97k1v", 4, 8, 5, 0x0822, 0x0ac2, 0x0870, 0x05fd, 2, 4, 4, 2
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bh97k1v", 4, 8, 5, 0x0822, 0x0ac2, 0x0870, 0x05fd, 2, 4, 4, 2
 
 ; 8bs17m: locator [bank 5][program 88]
 Style_B5P088_8bs17m:
@@ -1417,7 +1417,7 @@ Style_B5P088_8bs17m:
 	part_sound	20, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bs17m1n", 4, 5, 4, 0x05db, 0x07ee, 0x0364, 0x0541, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bs17m1n", 4, 5, 4, 0x05db, 0x07ee, 0x0364, 0x0541, 2, 6, 6, 5
 Style_B5P088_8bs17m_V:
 	style_section_map
 	part_tracks	0x31, Trk_8bs17m_V_Drum_S00, Trk_8bs17m_V_Drum_S01, Trk_8bs17m_V_Drum_S02, Trk_8bs17m_V_Drum_S03, Trk_8bs17m_V_Drum_S04, Trk_8bs17m_V_Drum_S05, Trk_8bs17m_V_Drum_S06, Trk_8bs17m_V_Drum_S07, Trk_8bs17m_V_Drum_S08, Trk_8bs17m_V_Drum_S09, Trk_8bs17m_V_Drum_S10, Trk_8bs17m_V_Drum_S11, Trk_8bs17m_V_Drum_S08, Trk_8bs17m_V_Drum_S09, Trk_8bs17m_V_Drum_S10, Trk_8bs17m_V_Drum_S11, Trk_8bs17m_V_Drum_S16, Trk_8bs17m_N_Drum_S17, Trk_8bs17m_V_Drum_S18	; Drum
@@ -1483,7 +1483,7 @@ Style_B5P088_8bs17m_V:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bs17m1v", 4, 5, 4, 0x08ce, 0x08f0, 0x0347, 0x06e7, 2, 7, 6, 5
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bs17m1v", 4, 5, 4, 0x08ce, 0x08f0, 0x0347, 0x06e7, 2, 7, 6, 5
 
 ; 8br97g: locator [bank 1][program 90]
 Style_B1P090_8br97g:
@@ -1551,7 +1551,7 @@ Style_B1P090_8br97g:
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br97g1n", 4, 4, 8, 0x075a, 0x0db2, 0x088a, 0x0674, 2, 3, 3, 6
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br97g1n", 4, 4, 8, 0x075a, 0x0db2, 0x088a, 0x0674, 2, 3, 3, 6
 Style_B1P090_8br97g_V:
 	style_section_map
 	part_tracks	0x0b, Trk_8br97g_V_Drum_S00, Trk_8br97g_V_Drum_S01, Trk_8br97g_V_Drum_S02, Trk_8br97g_V_Drum_S03, Trk_8br97g_V_Drum_S04, Trk_8br97g_V_Drum_S05, Trk_8br97g_V_Drum_S06, Trk_8br97g_V_Drum_S07, Trk_8br97g_V_Drum_S08, Trk_8br97g_V_Drum_S09, Trk_8br97g_V_Drum_S10, Trk_8br97g_V_Drum_S11, Trk_8br97g_V_Drum_S08, Trk_8br97g_V_Drum_S09, Trk_8br97g_V_Drum_S10, Trk_8br97g_V_Drum_S11, Trk_8br97g_V_Drum_S16, Trk_8br97g_N_Drum_S17, Trk_8br97g_V_Drum_S18	; Drum
@@ -1617,7 +1617,7 @@ Style_B1P090_8br97g_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br97g1v", 8, 8, 13, 0x0a69, 0x0fc4, 0x11ac, 0x0812, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8br97g1v", 8, 8, 13, 0x0a69, 0x0fc4, 0x11ac, 0x0812, 2, 4, 4, 4
 
 ; 8pr76d: locator [bank 6][program 84]
 Style_B6P084_8pr76d:
@@ -1685,7 +1685,7 @@ Style_B6P084_8pr76d:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	117, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr76d1n", 4, 4, 5, 0x0786, 0x0878, 0x0355, 0x0374, 2, 5, 3, 0
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr76d1n", 4, 4, 5, 0x0786, 0x0878, 0x0355, 0x0374, 2, 5, 3, 0
 Style_B6P084_8pr76d_V:
 	style_section_map
 	part_tracks	0x26, Trk_8pr76d_V_Drum_S00, Trk_8pr76d_V_Drum_S01, Trk_8pr76d_V_Drum_S02, Trk_8pr76d_V_Drum_S03, Trk_8pr76d_V_Drum_S04, Trk_8pr76d_V_Drum_S05, Trk_8pr76d_V_Drum_S06, Trk_8pr76d_V_Drum_S07, Trk_8pr76d_V_Drum_S08, Trk_8pr76d_V_Drum_S09, Trk_8pr76d_V_Drum_S10, Trk_8pr76d_V_Drum_S11, Trk_8pr76d_V_Drum_S08, Trk_8pr76d_V_Drum_S09, Trk_8pr76d_V_Drum_S10, Trk_8pr76d_V_Drum_S11, Trk_8pr76d_V_Drum_S16, Trk_8pr76d_N_Drum_S17, Trk_8pr76d_V_Drum_S18	; Drum
@@ -1751,7 +1751,7 @@ Style_B6P084_8pr76d_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr76d1v", 8, 4, 8, 0x08c6, 0x0bf8, 0x0440, 0x05e8, 2, 5, 4, 5
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr76d1v", 8, 4, 8, 0x08c6, 0x0bf8, 0x0440, 0x05e8, 2, 5, 4, 5
 
 ; shr47k: locator [bank 3][program 79]
 Style_B3P079_shr47k:
@@ -1819,7 +1819,7 @@ Style_B3P079_shr47k:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	27, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr47k1n", 3, 3, 3, 0x07c6, 0x09d4, 0x0366, 0x052a, 1, 3, 4, 4
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr47k1n", 3, 3, 3, 0x07c6, 0x09d4, 0x0366, 0x052a, 1, 3, 4, 4
 Style_B3P079_shr47k_V:
 	style_section_map
 	part_tracks	0x2b, Trk_shr47k_V_Drum_S00, Trk_shr47k_V_Drum_S01, Trk_shr47k_V_Drum_S02, Trk_shr47k_V_Drum_S03, Trk_shr47k_V_Drum_S04, Trk_shr47k_V_Drum_S05, Trk_shr47k_V_Drum_S06, Trk_shr47k_V_Drum_S07, Trk_shr47k_V_Drum_S08, Trk_shr47k_V_Drum_S09, Trk_shr47k_V_Drum_S10, Trk_shr47k_V_Drum_S11, Trk_shr47k_V_Drum_S08, Trk_shr47k_V_Drum_S09, Trk_shr47k_V_Drum_S10, Trk_shr47k_V_Drum_S11, Trk_shr47k_V_Drum_S16, Trk_shr47k_N_Drum_S17, Trk_shr47k_V_Drum_S18	; Drum
@@ -1885,7 +1885,7 @@ Style_B3P079_shr47k_V:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr47k1v", 4, 4, 3, 0x09f6, 0x0a3f, 0x062e, 0x0611, 2, 3, 4, 4
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr47k1v", 4, 4, 3, 0x09f6, 0x0a3f, 0x062e, 0x0611, 2, 3, 4, 4
 
 ; sgr76k: locator [bank 5][program 72]
 Style_B5P072_sgr76k:
@@ -1953,7 +1953,7 @@ Style_B5P072_sgr76k:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr76k1n", 2, 4, 2, 0x07f4, 0x070a, 0x043e, 0x066d, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr76k1n", 2, 4, 2, 0x07f4, 0x070a, 0x043e, 0x066d, 2, 4, 4, 0
 Style_B5P072_sgr76k_V:
 	style_section_map
 	part_tracks	0x2b, Trk_sgr76k_V_Drum_S00, Trk_sgr76k_V_Drum_S01, Trk_sgr76k_V_Drum_S02, Trk_sgr76k_V_Drum_S03, Trk_sgr76k_V_Drum_S04, Trk_sgr76k_V_Drum_S05, Trk_sgr76k_V_Drum_S06, Trk_sgr76k_V_Drum_S07, Trk_sgr76k_V_Drum_S08, Trk_sgr76k_V_Drum_S09, Trk_sgr76k_V_Drum_S10, Trk_sgr76k_V_Drum_S11, Trk_sgr76k_V_Drum_S08, Trk_sgr76k_V_Drum_S09, Trk_sgr76k_V_Drum_S10, Trk_sgr76k_V_Drum_S11, Trk_sgr76k_V_Drum_S16, Trk_shr47k_N_Drum_S17, Trk_sgr76k_V_Drum_S18	; Drum
@@ -2019,7 +2019,7 @@ Style_B5P072_sgr76k_V:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr76k1v", 2, 3, 3, 0x0c5d, 0x0c4a, 0x03c0, 0x063d, 2, 5, 8, 4
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr76k1v", 2, 3, 3, 0x0c5d, 0x0c4a, 0x03c0, 0x063d, 2, 5, 8, 4
 
 ; sgr65m: locator [bank 4][program 72]
 Style_B4P072_sgr65m:
@@ -2087,7 +2087,7 @@ Style_B4P072_sgr65m:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	105, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr65m1n", 4, 4, 5, 0x0618, 0x0895, 0x0435, 0x03ca, 2, 8, 5, 6
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr65m1n", 4, 4, 5, 0x0618, 0x0895, 0x0435, 0x03ca, 2, 8, 5, 6
 Style_B4P072_sgr65m_V:
 	style_section_map
 	part_tracks	0x1a, Trk_sgr65m_V_Drum_S00, Trk_sgr65m_V_Drum_S01, Trk_sgr65m_V_Drum_S02, Trk_sgr65m_V_Drum_S03, Trk_sgr65m_V_Drum_S04, Trk_sgr65m_V_Drum_S05, Trk_sgr65m_V_Drum_S06, Trk_sgr65m_V_Drum_S07, Trk_sgr65m_V_Drum_S08, Trk_sgr65m_V_Drum_S09, Trk_sgr65m_V_Drum_S10, Trk_sgr65m_V_Drum_S11, Trk_sgr65m_V_Drum_S08, Trk_sgr65m_V_Drum_S09, Trk_sgr65m_V_Drum_S10, Trk_sgr65m_V_Drum_S11, Trk_sgr65m_V_Drum_S16, Trk_sgr65m_N_Drum_S17, Trk_sgr65m_V_Drum_S18	; Drum
@@ -2153,7 +2153,7 @@ Style_B4P072_sgr65m_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr65m1v", 2, 3, 3, 0x09b0, 0x0a29, 0x0468, 0x04e0, 2, 9, 4, 6
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr65m1v", 2, 3, 3, 0x09b0, 0x0a29, 0x0468, 0x04e0, 2, 9, 4, 6
 
 ; 8rr75s: locator [bank 5][program 80]
 Style_B5P080_8rr75s:
@@ -2221,7 +2221,7 @@ Style_B5P080_8rr75s:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr75s1n", 2, 4, 2, 0x070e, 0x0796, 0x031e, 0x042f, 2, 3, 1, 1
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr75s1n", 2, 4, 2, 0x070e, 0x0796, 0x031e, 0x042f, 2, 3, 1, 1
 Style_B5P080_8rr75s_V:
 	style_section_map
 	part_tracks	0x34, Trk_8rr75s_V_Drum_S00, Trk_8rr75s_V_Drum_S01, Trk_8rr75s_V_Drum_S02, Trk_8rr75s_V_Drum_S03, Trk_8rr75s_V_Drum_S04, Trk_8rr75s_V_Drum_S05, Trk_8rr75s_V_Drum_S06, Trk_8rr75s_V_Drum_S07, Trk_8rr75s_V_Drum_S08, Trk_8rr75s_V_Drum_S09, Trk_8rr75s_V_Drum_S10, Trk_8rr75s_V_Drum_S11, Trk_8rr75s_V_Drum_S08, Trk_8rr75s_V_Drum_S09, Trk_8rr75s_V_Drum_S10, Trk_8rr75s_V_Drum_S11, Trk_8rr75s_V_Drum_S16, Trk_8rr75s_N_Drum_S17, Trk_8rr75s_V_Drum_S18	; Drum
@@ -2287,7 +2287,7 @@ Style_B5P080_8rr75s_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr75s1v", 4, 4, 2, 0x09ae, 0x0584, 0x036c, 0x04a8, 1, 4, 2, 2
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr75s1v", 4, 4, 2, 0x09ae, 0x0584, 0x036c, 0x04a8, 1, 4, 2, 2
 
 ; 8rr86h: locator [bank 6][program 80]
 Style_B6P080_8rr86h:
@@ -2355,7 +2355,7 @@ Style_B6P080_8rr86h:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr86h1n", 3, 3, 2, 0x0956, 0x0b86, 0x04b2, 0x072a, 2, 6, 2, 0
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr86h1n", 3, 3, 2, 0x0956, 0x0b86, 0x04b2, 0x072a, 2, 6, 2, 0
 Style_B6P080_8rr86h_V:
 	style_section_map
 	part_tracks	0x14, Trk_8rr86h_V_Drum_S00, Trk_8rr86h_V_Drum_S01, Trk_8rr86h_V_Drum_S02, Trk_8rr86h_V_Drum_S03, Trk_8rr86h_V_Drum_S04, Trk_8rr86h_V_Drum_S05, Trk_8rr86h_V_Drum_S06, Trk_8rr86h_V_Drum_S07, Trk_8rr86h_V_Drum_S08, Trk_8rr86h_V_Drum_S09, Trk_8rr86h_V_Drum_S10, Trk_8rr86h_V_Drum_S11, Trk_8rr86h_V_Drum_S08, Trk_8rr86h_V_Drum_S09, Trk_8rr86h_V_Drum_S10, Trk_8rr86h_V_Drum_S11, Trk_8rr86h_V_Drum_S16, Trk_8rr86h_N_Drum_S17, Trk_8rr86h_V_Drum_S18	; Drum
@@ -2421,7 +2421,7 @@ Style_B6P080_8rr86h_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr86h1v", 8, 7, 11, 0x0cb2, 0x0d82, 0x0c2e, 0x0630, 2, 10, 2, 4
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr86h1v", 8, 7, 11, 0x0cb2, 0x0d82, 0x0c2e, 0x0630, 2, 10, 2, 4
 
 ; cny17h: locator [bank 2][program 18]
 Style_B2P018_cny17h:
@@ -2489,7 +2489,7 @@ Style_B2P018_cny17h:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny17h1n", 2, 4, 3, 0x0998, 0x0a56, 0x05c2, 0x061b, 2, 5, 4, 3
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny17h1n", 2, 4, 3, 0x0998, 0x0a56, 0x05c2, 0x061b, 2, 5, 4, 3
 Style_B2P018_cny17h_V:
 	style_section_map
 	part_tracks	0x0c, Trk_cny17h_V_Drum_S00, Trk_cny17h_V_Drum_S01, Trk_cny17h_V_Drum_S02, Trk_cny17h_V_Drum_S03, Trk_cny17h_V_Drum_S04, Trk_cny17h_V_Drum_S05, Trk_cny17h_V_Drum_S06, Trk_cny17h_V_Drum_S07, Trk_cny17h_V_Drum_S08, Trk_cny17h_V_Drum_S09, Trk_cny17h_V_Drum_S10, Trk_cny17h_V_Drum_S11, Trk_cny17h_V_Drum_S08, Trk_cny17h_V_Drum_S09, Trk_cny17h_V_Drum_S10, Trk_cny17h_V_Drum_S11, Trk_cny17h_V_Drum_S16, Trk_slr77p_N_Drum_S17, Trk_cny17h_V_Drum_S18	; Drum
@@ -2555,7 +2555,7 @@ Style_B2P018_cny17h_V:
 	part_sound	27, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny17h1v", 4, 6, 6, 0x0d62, 0x0c5e, 0x0968, 0x054f, 2, 4, 6, 4
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny17h1v", 4, 6, 6, 0x0d62, 0x0c5e, 0x0968, 0x054f, 2, 4, 6, 4
 
 ; 8rr17d: locator [bank 0][program 80]
 Style_B0P080_8rr17d:
@@ -2623,7 +2623,7 @@ Style_B0P080_8rr17d:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr17d1n", 4, 4, 3, 0x0742, 0x08c4, 0x05b4, 0x048e, 1, 5, 4, 2
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr17d1n", 4, 4, 3, 0x0742, 0x08c4, 0x05b4, 0x048e, 1, 5, 4, 2
 Style_B0P080_8rr17d_V:
 	style_section_map
 	part_tracks	0x1c, Trk_8rr17d_V_Drum_S00, Trk_8rr17d_V_Drum_S01, Trk_8rr17d_V_Drum_S02, Trk_8rr17d_V_Drum_S03, Trk_8rr17d_V_Drum_S04, Trk_8rr17d_V_Drum_S05, Trk_8rr17d_V_Drum_S06, Trk_8rr17d_V_Drum_S07, Trk_8rr17d_V_Drum_S08, Trk_8rr17d_V_Drum_S09, Trk_8rr17d_V_Drum_S10, Trk_8rr17d_V_Drum_S11, Trk_8rr17d_V_Drum_S08, Trk_8rr17d_V_Drum_S09, Trk_8rr17d_V_Drum_S10, Trk_8rr17d_V_Drum_S11, Trk_8rr17d_V_Drum_S16, Trk_8rr17d_N_Drum_S17, Trk_8rr17d_V_Drum_S18	; Drum
@@ -2689,7 +2689,7 @@ Style_B0P080_8rr17d_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	27, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr17d1v", 8, 6, 8, 0x0c2a, 0x08e6, 0x0a40, 0x05e4, 2, 5, 4, 2
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr17d1v", 8, 6, 8, 0x0c2a, 0x08e6, 0x0a40, 0x05e4, 2, 5, 4, 2
 
 ; srr67d: locator [bank 4][program 76]
 Style_B4P076_srr67d:
@@ -2757,7 +2757,7 @@ Style_B4P076_srr67d:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr67d1n", 2, 5, 3, 0x067e, 0x0732, 0x04d6, 0x04c9, 2, 6, 4, 2
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr67d1n", 2, 5, 3, 0x067e, 0x0732, 0x04d6, 0x04c9, 2, 6, 4, 2
 Style_B4P076_srr67d_V:
 	style_section_map
 	part_tracks	0x2a, Trk_srr67d_V_Drum_S00, Trk_srr67d_V_Drum_S01, Trk_srr67d_V_Drum_S02, Trk_srr67d_V_Drum_S03, Trk_srr67d_V_Drum_S04, Trk_srr67d_V_Drum_S05, Trk_srr67d_V_Drum_S06, Trk_srr67d_V_Drum_S07, Trk_srr67d_V_Drum_S08, Trk_srr67d_V_Drum_S09, Trk_srr67d_V_Drum_S10, Trk_srr67d_V_Drum_S11, Trk_srr67d_V_Drum_S08, Trk_srr67d_V_Drum_S09, Trk_srr67d_V_Drum_S10, Trk_srr67d_V_Drum_S11, Trk_srr67d_V_Drum_S16, Trk_8bh97k_N_Drum_S17, Trk_srr67d_V_Drum_S18	; Drum
@@ -2823,7 +2823,7 @@ Style_B4P076_srr67d_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr67d1v", 4, 4, 5, 0x0a66, 0x0b07, 0x05ec, 0x0566, 2, 6, 5, 3
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr67d1v", 4, 4, 5, 0x0a66, 0x0b07, 0x05ec, 0x0566, 2, 6, 5, 3
 
 ; srr55d: locator [bank 1][program 76]
 Style_B1P076_srr55d:
@@ -2891,7 +2891,7 @@ Style_B1P076_srr55d:
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr55d1n", 2, 4, 3, 0x06ce, 0x083c, 0x0491, 0x055a, 2, 5, 5, 3
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr55d1n", 2, 4, 3, 0x06ce, 0x083c, 0x0491, 0x055a, 2, 5, 5, 3
 Style_B1P076_srr55d_V:
 	style_section_map
 	part_tracks	0x2d, Trk_srr55d_V_Drum_S00, Trk_srr55d_V_Drum_S01, Trk_srr55d_V_Drum_S02, Trk_srr55d_V_Drum_S03, Trk_srr55d_V_Drum_S04, Trk_srr55d_V_Drum_S05, Trk_srr55d_V_Drum_S06, Trk_srr55d_V_Drum_S07, Trk_srr55d_V_Drum_S08, Trk_srr55d_V_Drum_S09, Trk_srr55d_V_Drum_S10, Trk_srr55d_V_Drum_S11, Trk_srr55d_V_Drum_S08, Trk_srr55d_V_Drum_S09, Trk_srr55d_V_Drum_S10, Trk_srr55d_V_Drum_S11, Trk_srr55d_V_Drum_S16, Trk_srr55d_N_Drum_S17, Trk_srr55d_V_Drum_S18	; Drum
@@ -2957,7 +2957,7 @@ Style_B1P076_srr55d_V:
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr55d1v", 4, 6, 4, 0x08ae, 0x0aaa, 0x0564, 0x06c8, 2, 6, 6, 2
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "srr55d1v", 4, 6, 4, 0x08ae, 0x0aaa, 0x0564, 0x06c8, 2, 6, 6, 2
 
 ; shr36d: locator [bank 2][program 79]
 Style_B2P079_shr36d:
@@ -3025,7 +3025,7 @@ Style_B2P079_shr36d:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr36d1n", 4, 4, 4, 0x071d, 0x062c, 0x03cf, 0x04ff, 1, 3, 4, 0
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr36d1n", 4, 4, 4, 0x071d, 0x062c, 0x03cf, 0x04ff, 1, 3, 4, 0
 Style_B2P079_shr36d_V:
 	style_section_map
 	part_tracks	0x28, Trk_shr36d_V_Drum_S00, Trk_shr36d_V_Drum_S01, Trk_shr36d_V_Drum_S02, Trk_shr36d_V_Drum_S03, Trk_shr36d_V_Drum_S04, Trk_shr36d_V_Drum_S05, Trk_shr36d_V_Drum_S06, Trk_shr36d_V_Drum_S07, Trk_shr36d_V_Drum_S08, Trk_shr36d_V_Drum_S09, Trk_shr36d_V_Drum_S10, Trk_shr36d_V_Drum_S11, Trk_shr36d_V_Drum_S08, Trk_shr36d_V_Drum_S09, Trk_shr36d_V_Drum_S10, Trk_shr36d_V_Drum_S11, Trk_shr36d_V_Drum_S16, Trk_shr36d_N_Drum_S17, Trk_shr36d_V_Drum_S18	; Drum
@@ -3091,7 +3091,7 @@ Style_B2P079_shr36d_V:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr36d1v", 8, 4, 11, 0x099a, 0x05a0, 0x06ff, 0x0593, 2, 3, 3, 7
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shr36d1v", 8, 4, 11, 0x099a, 0x05a0, 0x06ff, 0x0593, 2, 3, 3, 7
 
 ; 8rr97e: locator [bank 7][program 80]
 Style_B7P080_8rr97e:
@@ -3159,7 +3159,7 @@ Style_B7P080_8rr97e:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr97e1n", 4, 4, 4, 0x0a02, 0x092e, 0x05ce, 0x06e6, 2, 8, 4, 5
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr97e1n", 4, 4, 4, 0x0a02, 0x092e, 0x05ce, 0x06e6, 2, 8, 4, 5
 Style_B7P080_8rr97e_V:
 	style_section_map
 	part_tracks	0x1a, Trk_8rr97e_V_Drum_S00, Trk_8rr97e_V_Drum_S01, Trk_8rr97e_V_Drum_S02, Trk_8rr97e_V_Drum_S03, Trk_8rr97e_V_Drum_S04, Trk_8rr97e_V_Drum_S05, Trk_8rr97e_V_Drum_S06, Trk_8rr97e_V_Drum_S07, Trk_8rr97e_V_Drum_S08, Trk_8rr97e_V_Drum_S09, Trk_8rr97e_V_Drum_S10, Trk_8rr97e_V_Drum_S11, Trk_8rr97e_V_Drum_S08, Trk_8rr97e_V_Drum_S09, Trk_8rr97e_V_Drum_S10, Trk_8rr97e_V_Drum_S11, Trk_8rr97e_V_Drum_S16, Trk_sgr65m_N_Drum_S17, Trk_8rr97e_V_Drum_S18	; Drum
@@ -3225,7 +3225,7 @@ Style_B7P080_8rr97e_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr97e1v", 5, 5, 7, 0x09fc, 0x0ced, 0x0763, 0x075c, 2, 7, 3, 6
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rr97e1v", 5, 5, 7, 0x09fc, 0x0ced, 0x0763, 0x075c, 2, 7, 3, 6
 
 ; rbs15s: locator [bank 5][program 123]
 Style_B5P123_rbs15s:
@@ -3293,7 +3293,7 @@ Style_B5P123_rbs15s:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	78, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbs15s1n", 2, 3, 2, 0x0781, 0x0982, 0x0220, 0x0460, 2, 5, 4, 2
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbs15s1n", 2, 3, 2, 0x0781, 0x0982, 0x0220, 0x0460, 2, 5, 4, 2
 Style_B5P123_rbs15s_V:
 	style_section_map
 	part_tracks	0x30, Trk_rbs15s_V_Drum_S00, Trk_rbs15s_V_Drum_S01, Trk_rbs15s_V_Drum_S02, Trk_rbs15s_V_Drum_S03, Trk_rbs15s_V_Drum_S04, Trk_rbs15s_V_Drum_S05, Trk_rbs15s_V_Drum_S06, Trk_rbs15s_V_Drum_S07, Trk_rbs15s_V_Drum_S08, Trk_rbs15s_V_Drum_S09, Trk_rbs15s_V_Drum_S10, Trk_rbs15s_V_Drum_S11, Trk_rbs15s_V_Drum_S08, Trk_rbs15s_V_Drum_S09, Trk_rbs15s_V_Drum_S10, Trk_rbs15s_V_Drum_S11, Trk_rbs15s_V_Drum_S16, Trk_rbs15s_N_Drum_S17, Trk_rbs15s_V_Drum_S18	; Drum
@@ -3359,7 +3359,7 @@ Style_B5P123_rbs15s_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	78, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbs15s1v", 4, 2, 4, 0x0a31, 0x0988, 0x0340, 0x0512, 2, 5, 3, 3
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbs15s1v", 4, 2, 4, 0x0a31, 0x0988, 0x0340, 0x0512, 2, 5, 3, 3
 
 ; sbg35n: locator [bank 0][program 76]
 Style_B0P076_sbg35n:
@@ -3427,7 +3427,7 @@ Style_B0P076_sbg35n:
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbg35n1n", 4, 4, 4, 0x0518, 0x079e, 0x058c, 0x0317, 2, 8, 2, 0
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbg35n1n", 4, 4, 4, 0x0518, 0x079e, 0x058c, 0x0317, 2, 8, 2, 0
 Style_B0P076_sbg35n_V:
 	style_section_map
 	part_tracks	0x2e, Trk_sbg35n_V_Drum_S00, Trk_sbg35n_V_Drum_S01, Trk_sbg35n_V_Drum_S02, Trk_sbg35n_V_Drum_S03, Trk_sbg35n_V_Drum_S04, Trk_sbg35n_V_Drum_S05, Trk_sbg35n_V_Drum_S06, Trk_sbg35n_V_Drum_S07, Trk_sbg35n_V_Drum_S08, Trk_sbg35n_V_Drum_S09, Trk_sbg35n_V_Drum_S10, Trk_sbg35n_V_Drum_S11, Trk_sbg35n_V_Drum_S08, Trk_sbg35n_V_Drum_S09, Trk_sbg35n_V_Drum_S10, Trk_sbg35n_V_Drum_S11, Trk_sbg35n_V_Drum_S16, Trk_sbg35n_N_Drum_S17, Trk_sbg35n_V_Drum_S18	; Drum
@@ -3493,7 +3493,7 @@ Style_B0P076_sbg35n_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbg35n1v", 4, 4, 4, 0x08a4, 0x09a0, 0x068c, 0x040e, 2, 7, 5, 2
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbg35n1v", 4, 4, 4, 0x08a4, 0x09a0, 0x068c, 0x040e, 2, 7, 5, 2
 
 ; tws27g: locator [bank 3][program 76]
 Style_B3P076_tws27g:
@@ -3561,7 +3561,7 @@ Style_B3P076_tws27g:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tws27g1n", 5, 3, 8, 0x08d4, 0x0bbe, 0x052a, 0x05cc, 2, 4, 2, 6
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tws27g1n", 5, 3, 8, 0x08d4, 0x0bbe, 0x052a, 0x05cc, 2, 4, 2, 6
 Style_B3P076_tws27g_V:
 	style_section_map
 	part_tracks	0x14, Trk_tws27g_V_Drum_S00, Trk_tws27g_V_Drum_S01, Trk_tws27g_V_Drum_S02, Trk_tws27g_V_Drum_S03, Trk_tws27g_V_Drum_S04, Trk_tws27g_V_Drum_S05, Trk_tws27g_V_Drum_S06, Trk_tws27g_V_Drum_S07, Trk_tws27g_V_Drum_S08, Trk_tws27g_V_Drum_S09, Trk_tws27g_V_Drum_S10, Trk_tws27g_V_Drum_S11, Trk_tws27g_V_Drum_S08, Trk_tws27g_V_Drum_S09, Trk_tws27g_V_Drum_S10, Trk_tws27g_V_Drum_S11, Trk_tws27g_V_Drum_S16, Trk_8rr86h_N_Drum_S17, Trk_tws27g_V_Drum_S18	; Drum
@@ -3627,7 +3627,7 @@ Style_B3P076_tws27g_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tws27g1v", 8, 5, 13, 0x09e8, 0x0b7c, 0x093a, 0x09a8, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tws27g1v", 8, 5, 13, 0x09e8, 0x0b7c, 0x093a, 0x09a8, 2, 3, 3, 4
 
 ; bgw16k: locator [bank 0][program 31]
 Style_B0P031_bgw16k:
@@ -3695,7 +3695,7 @@ Style_B0P031_bgw16k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgw16k1n", 2, 4, 1, 0x05b6, 0x08a2, 0x0312, 0x030c, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgw16k1n", 2, 4, 1, 0x05b6, 0x08a2, 0x0312, 0x030c, 2, 4, 4, 0
 Style_B0P031_bgw16k_V:
 	style_section_map
 	part_tracks	0x35, Trk_bgw16k_V_Drum_S00, Trk_bgw16k_V_Drum_S01, Trk_bgw16k_V_Drum_S02, Trk_bgw16k_V_Drum_S03, Trk_bgw16k_V_Drum_S04, Trk_bgw16k_V_Drum_S05, Trk_bgw16k_V_Drum_S06, Trk_bgw16k_V_Drum_S07, Trk_bgw16k_V_Drum_S08, Trk_bgw16k_V_Drum_S09, Trk_bgw16k_V_Drum_S10, Trk_bgw16k_V_Drum_S11, Trk_bgw16k_V_Drum_S08, Trk_bgw16k_V_Drum_S09, Trk_bgw16k_V_Drum_S10, Trk_bgw16k_V_Drum_S11, Trk_bgw16k_V_Drum_S16, Trk_bgw16k_N_Drum_S17, Trk_bgw16k_V_Drum_S18	; Drum
@@ -3761,7 +3761,7 @@ Style_B0P031_bgw16k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgw16k1v", 7, 4, 3, 0x0634, 0x07cc, 0x0388, 0x036c, 2, 7, 5, 0
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgw16k1v", 7, 4, 3, 0x0634, 0x07cc, 0x0388, 0x036c, 2, 7, 5, 0
 
 ; 8sf17p: locator [bank 4][program 86]
 Style_B4P086_8sf17p:
@@ -3829,7 +3829,7 @@ Style_B4P086_8sf17p:
 	part_sound	3, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sf17p1n", 8, 5, 9, 0x0af4, 0x0bde, 0x05db, 0x0542, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sf17p1n", 8, 5, 9, 0x0af4, 0x0bde, 0x05db, 0x0542, 2, 5, 5, 4
 Style_B4P086_8sf17p_V:
 	style_section_map
 	part_tracks	0x0f, Trk_8sf17p_V_Drum_S00, Trk_8sf17p_V_Drum_S01, Trk_8sf17p_V_Drum_S02, Trk_8sf17p_V_Drum_S03, Trk_8sf17p_V_Drum_S04, Trk_8sf17p_V_Drum_S05, Trk_8sf17p_V_Drum_S06, Trk_8sf17p_V_Drum_S07, Trk_8sf17p_V_Drum_S08, Trk_8sf17p_V_Drum_S09, Trk_8sf17p_V_Drum_S10, Trk_8sf17p_V_Drum_S11, Trk_8sf17p_V_Drum_S08, Trk_8sf17p_V_Drum_S09, Trk_8sf17p_V_Drum_S10, Trk_8sf17p_V_Drum_S11, Trk_8sf17p_V_Drum_S16, Trk_8sf17p_N_Drum_S17, Trk_8sf17p_V_Drum_S18	; Drum
@@ -3895,7 +3895,7 @@ Style_B4P086_8sf17p_V:
 	part_sound	3, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sf17p1v", 8, 4, 13, 0x0ddc, 0x0c07, 0x05ae, 0x0641, 1, 3, 6, 4
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sf17p1v", 8, 4, 13, 0x0ddc, 0x0c07, 0x05ae, 0x0641, 1, 3, 6, 4
 
 ; 8pr55d: locator [bank 4][program 84]
 Style_B4P084_8pr55d:
@@ -3963,7 +3963,7 @@ Style_B4P084_8pr55d:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr55d1n", 3, 2, 3, 0x09b9, 0x0a92, 0x0280, 0x0561, 2, 4, 3, 5
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr55d1n", 3, 2, 3, 0x09b9, 0x0a92, 0x0280, 0x0561, 2, 4, 3, 5
 Style_B4P084_8pr55d_V:
 	style_section_map
 	part_tracks	0x26, Trk_8pr55d_V_Drum_S00, Trk_8pr55d_V_Drum_S01, Trk_8pr55d_V_Drum_S02, Trk_8pr55d_V_Drum_S03, Trk_8pr55d_V_Drum_S04, Trk_8pr55d_V_Drum_S05, Trk_8pr55d_V_Drum_S06, Trk_8pr55d_V_Drum_S07, Trk_8pr55d_V_Drum_S08, Trk_8pr55d_V_Drum_S09, Trk_8pr55d_V_Drum_S10, Trk_8pr55d_V_Drum_S11, Trk_8pr55d_V_Drum_S08, Trk_8pr55d_V_Drum_S09, Trk_8pr55d_V_Drum_S10, Trk_8pr55d_V_Drum_S11, Trk_8pr55d_V_Drum_S16, Trk_8pr76d_N_Drum_S17, Trk_8pr55d_V_Drum_S18	; Drum
@@ -4029,7 +4029,7 @@ Style_B4P084_8pr55d_V:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	62, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr55d1v", 4, 4, 4, 0x0ad7, 0x0ae4, 0x05e8, 0x0471, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8pr55d1v", 4, 4, 4, 0x0ad7, 0x0ae4, 0x05e8, 0x0471, 2, 4, 3, 4
 
 ; 16s47p: locator [bank 3][program 97]
 Style_B3P097_16s47p:
@@ -4097,7 +4097,7 @@ Style_B3P097_16s47p:
 	part_sound	120, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s47p1n", 5, 6, 6, 0x07ea, 0x0b84, 0x0738, 0x055d, 2, 5, 4, 5
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s47p1n", 5, 6, 6, 0x07ea, 0x0b84, 0x0738, 0x055d, 2, 5, 4, 5
 Style_B3P097_16s47p_V:
 	style_section_map
 	part_tracks	0x11, Trk_16s47p_V_Drum_S00, Trk_16s47p_V_Drum_S01, Trk_16s47p_V_Drum_S02, Trk_16s47p_V_Drum_S03, Trk_16s47p_V_Drum_S04, Trk_16s47p_V_Drum_S05, Trk_16s47p_V_Drum_S06, Trk_16s47p_V_Drum_S07, Trk_16s47p_V_Drum_S08, Trk_16s47p_V_Drum_S09, Trk_16s47p_V_Drum_S10, Trk_16s47p_V_Drum_S11, Trk_16s47p_V_Drum_S08, Trk_16s47p_V_Drum_S09, Trk_16s47p_V_Drum_S10, Trk_16s47p_V_Drum_S11, Trk_16s47p_V_Drum_S16, Trk_16s47p_N_Drum_S17, Trk_16s47p_V_Drum_S18	; Drum
@@ -4163,7 +4163,7 @@ Style_B3P097_16s47p_V:
 	part_sound	120, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s47p1v", 8, 5, 12, 0x0dc2, 0x0f13, 0x07ae, 0x0679, 1, 5, 7, 5
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16s47p1v", 8, 5, 12, 0x0dc2, 0x0f13, 0x07ae, 0x0679, 1, 5, 7, 5
 
 ; rbd87p: locator [bank 1][program 74]
 Style_B1P074_rbd87p:
@@ -4231,7 +4231,7 @@ Style_B1P074_rbd87p:
 	part_sound	66, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	32, 0, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd87p1n", 6, 6, 5, 0x071f, 0x0971, 0x0498, 0x0595, 2, 8, 3, 5
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd87p1n", 6, 6, 5, 0x071f, 0x0971, 0x0498, 0x0595, 2, 8, 3, 5
 Style_B1P074_rbd87p_V:
 	style_section_map
 	part_tracks	0x21, Trk_rbd87p_V_Drum_S00, Trk_rbd87p_V_Drum_S01, Trk_rbd87p_V_Drum_S02, Trk_rbd87p_V_Drum_S03, Trk_rbd87p_V_Drum_S04, Trk_rbd87p_V_Drum_S05, Trk_rbd87p_V_Drum_S06, Trk_rbd87p_V_Drum_S07, Trk_rbd87p_V_Drum_S08, Trk_rbd87p_V_Drum_S09, Trk_rbd87p_V_Drum_S10, Trk_rbd87p_V_Drum_S11, Trk_rbd87p_V_Drum_S08, Trk_rbd87p_V_Drum_S09, Trk_rbd87p_V_Drum_S10, Trk_rbd87p_V_Drum_S11, Trk_rbd87p_V_Drum_S16, Trk_rbd87p_N_Drum_S17, Trk_rbd87p_V_Drum_S18	; Drum
@@ -4297,7 +4297,7 @@ Style_B1P074_rbd87p_V:
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd87p1v", 7, 6, 8, 0x0a26, 0x0c87, 0x0588, 0x0556, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd87p1v", 7, 6, 8, 0x0a26, 0x0c87, 0x0588, 0x0556, 2, 6, 6, 5
 
 ; 16b96d: locator [bank 0][program 99]
 Style_B0P099_16b96d:
@@ -4365,7 +4365,7 @@ Style_B0P099_16b96d:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b96d1n", 2, 2, 2, 0x05ee, 0x09fa, 0x0326, 0x047c, 2, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b96d1n", 2, 2, 2, 0x05ee, 0x09fa, 0x0326, 0x047c, 2, 5, 5, 2
 Style_B0P099_16b96d_V:
 	style_section_map
 	part_tracks	0x27, Trk_16b96d_V_Drum_S00, Trk_16b96d_V_Drum_S01, Trk_16b96d_V_Drum_S02, Trk_16b96d_V_Drum_S03, Trk_16b96d_V_Drum_S04, Trk_16b96d_V_Drum_S05, Trk_16b96d_V_Drum_S06, Trk_16b96d_V_Drum_S07, Trk_16b96d_V_Drum_S08, Trk_16b96d_V_Drum_S09, Trk_16b96d_V_Drum_S10, Trk_16b96d_V_Drum_S11, Trk_16b96d_V_Drum_S08, Trk_16b96d_V_Drum_S09, Trk_16b96d_V_Drum_S10, Trk_16b96d_V_Drum_S11, Trk_16b96d_V_Drum_S16, Trk_16b96d_N_Drum_S17, Trk_16b96d_V_Drum_S18	; Drum
@@ -4431,7 +4431,7 @@ Style_B0P099_16b96d_V:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b96d1v", 4, 3, 6, 0x0b24, 0x0e7c, 0x042a, 0x066e, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b96d1v", 4, 3, 6, 0x0b24, 0x0e7c, 0x042a, 0x066e, 2, 5, 4, 4
 
 ; 8bb45m: locator [bank 4][program 91]
 Style_B4P091_8bb45m:
@@ -4499,7 +4499,7 @@ Style_B4P091_8bb45m:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	5, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb45m1n", 4, 5, 3, 0x055d, 0x06c8, 0x027e, 0x0574, 2, 6, 7, 6
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb45m1n", 4, 5, 3, 0x055d, 0x06c8, 0x027e, 0x0574, 2, 6, 7, 6
 Style_B4P091_8bb45m_V:
 	style_section_map
 	part_tracks	0x35, Trk_8bb45m_V_Drum_S00, Trk_8bb45m_V_Drum_S01, Trk_8bb45m_V_Drum_S02, Trk_8bb45m_V_Drum_S03, Trk_8bb45m_V_Drum_S04, Trk_8bb45m_V_Drum_S05, Trk_8bb45m_V_Drum_S06, Trk_8bb45m_V_Drum_S07, Trk_8bb45m_V_Drum_S08, Trk_8bb45m_V_Drum_S09, Trk_8bb45m_V_Drum_S10, Trk_8bb45m_V_Drum_S11, Trk_8bb45m_V_Drum_S08, Trk_8bb45m_V_Drum_S09, Trk_8bb45m_V_Drum_S10, Trk_8bb45m_V_Drum_S11, Trk_8bb45m_V_Drum_S16, Trk_bgw16k_N_Drum_S17, Trk_8bb45m_V_Drum_S18	; Drum
@@ -4565,7 +4565,7 @@ Style_B4P091_8bb45m_V:
 	part_sound	102, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb45m1v", 4, 5, 4, 0x075f, 0x07a6, 0x0272, 0x067b, 2, 5, 6, 7
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb45m1v", 4, 5, 4, 0x075f, 0x07a6, 0x0272, 0x067b, 2, 5, 6, 7
 
 ; 8bb57m: locator [bank 5][program 91]
 Style_B5P091_8bb57m:
@@ -4633,7 +4633,7 @@ Style_B5P091_8bb57m:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	105, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb57m1n", 4, 4, 5, 0x06a4, 0x089c, 0x021c, 0x05d2, 2, 7, 4, 4
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb57m1n", 4, 4, 5, 0x06a4, 0x089c, 0x021c, 0x05d2, 2, 7, 4, 4
 Style_B5P091_8bb57m_V:
 	style_section_map
 	part_tracks	0x2c, Trk_8bb57m_V_Drum_S00, Trk_8bb57m_V_Drum_S01, Trk_8bb57m_V_Drum_S02, Trk_8bb57m_V_Drum_S03, Trk_8bb57m_V_Drum_S04, Trk_8bb57m_V_Drum_S05, Trk_8bb57m_V_Drum_S06, Trk_8bb57m_V_Drum_S07, Trk_8bb57m_V_Drum_S08, Trk_8bb57m_V_Drum_S09, Trk_8bb57m_V_Drum_S10, Trk_8bb57m_V_Drum_S11, Trk_8bb57m_V_Drum_S08, Trk_8bb57m_V_Drum_S09, Trk_8bb57m_V_Drum_S10, Trk_8bb57m_V_Drum_S11, Trk_8bb57m_V_Drum_S16, Trk_8bb57m_N_Drum_S17, Trk_8bb57m_V_Drum_S18	; Drum
@@ -4699,7 +4699,7 @@ Style_B5P091_8bb57m_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb57m1v", 4, 4, 4, 0x0b8f, 0x0a0d, 0x035e, 0x068a, 2, 8, 5, 9
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8bb57m1v", 4, 4, 4, 0x0b8f, 0x0a0d, 0x035e, 0x068a, 2, 8, 5, 9
 
 ; rbd23d: locator [bank 5][program 74]
 Style_B5P074_rbd23d:
@@ -4767,7 +4767,7 @@ Style_B5P074_rbd23d:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd23d1n", 2, 2, 3, 0x09bc, 0x08f8, 0x0433, 0x0469, 2, 7, 5, 6
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd23d1n", 2, 2, 3, 0x09bc, 0x08f8, 0x0433, 0x0469, 2, 7, 5, 6
 Style_B5P074_rbd23d_V:
 	style_section_map
 	part_tracks	0x27, Trk_rbd23d_V_Drum_S00, Trk_rbd23d_V_Drum_S01, Trk_rbd23d_V_Drum_S02, Trk_rbd23d_V_Drum_S03, Trk_rbd23d_V_Drum_S04, Trk_rbd23d_V_Drum_S05, Trk_rbd23d_V_Drum_S06, Trk_rbd23d_V_Drum_S07, Trk_rbd23d_V_Drum_S08, Trk_rbd23d_V_Drum_S09, Trk_rbd23d_V_Drum_S10, Trk_rbd23d_V_Drum_S11, Trk_rbd23d_V_Drum_S08, Trk_rbd23d_V_Drum_S09, Trk_rbd23d_V_Drum_S10, Trk_rbd23d_V_Drum_S11, Trk_rbd23d_V_Drum_S16, Trk_16b96d_N_Drum_S17, Trk_rbd23d_V_Drum_S18	; Drum
@@ -4833,7 +4833,7 @@ Style_B5P074_rbd23d_V:
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd23d1v", 4, 4, 4, 0x0d02, 0x0930, 0x048f, 0x0544, 2, 7, 5, 5
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd23d1v", 4, 4, 4, 0x0d02, 0x0930, 0x048f, 0x0544, 2, 7, 5, 5
 
 ; rbd77d: locator [bank 0][program 74]
 Style_B0P074_rbd77d:
@@ -4901,7 +4901,7 @@ Style_B0P074_rbd77d:
 	part_sound	116, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd77d1n", 2, 3, 4, 0x0602, 0x07fb, 0x0398, 0x058c, 2, 5, 6, 3
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd77d1n", 2, 3, 4, 0x0602, 0x07fb, 0x0398, 0x058c, 2, 5, 6, 3
 Style_B0P074_rbd77d_V:
 	style_section_map
 	part_tracks	0x29, Trk_rbd77d_V_Drum_S00, Trk_rbd77d_V_Drum_S01, Trk_rbd77d_V_Drum_S02, Trk_rbd77d_V_Drum_S03, Trk_rbd77d_V_Drum_S04, Trk_rbd77d_V_Drum_S05, Trk_rbd77d_V_Drum_S06, Trk_rbd77d_V_Drum_S07, Trk_rbd77d_V_Drum_S08, Trk_rbd77d_V_Drum_S09, Trk_rbd77d_V_Drum_S10, Trk_rbd77d_V_Drum_S11, Trk_rbd77d_V_Drum_S08, Trk_rbd77d_V_Drum_S09, Trk_rbd77d_V_Drum_S10, Trk_rbd77d_V_Drum_S11, Trk_rbd77d_V_Drum_S16, Trk_rbd77d_N_Drum_S17, Trk_rbd77d_V_Drum_S18	; Drum
@@ -4967,7 +4967,7 @@ Style_B0P074_rbd77d_V:
 	part_sound	116, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd77d1v", 2, 5, 3, 0x0a9a, 0x0bdc, 0x07e6, 0x0540, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd77d1v", 2, 5, 3, 0x0a9a, 0x0bdc, 0x07e6, 0x0540, 2, 5, 4, 4
 
 ; rbd17s: locator [bank 1][program 75]
 Style_B1P075_rbd17s:
@@ -5035,7 +5035,7 @@ Style_B1P075_rbd17s:
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd17s1n", 2, 2, 2, 0x045e, 0x07ca, 0x0356, 0x046e, 2, 5, 7, 2
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd17s1n", 2, 2, 2, 0x045e, 0x07ca, 0x0356, 0x046e, 2, 5, 7, 2
 Style_B1P075_rbd17s_V:
 	style_section_map
 	part_tracks	0x31, Trk_rbd17s_V_Drum_S00, Trk_rbd17s_V_Drum_S01, Trk_rbd17s_V_Drum_S02, Trk_rbd17s_V_Drum_S03, Trk_rbd17s_V_Drum_S04, Trk_rbd17s_V_Drum_S05, Trk_rbd17s_V_Drum_S06, Trk_rbd17s_V_Drum_S07, Trk_rbd17s_V_Drum_S08, Trk_rbd17s_V_Drum_S09, Trk_rbd17s_V_Drum_S10, Trk_rbd17s_V_Drum_S11, Trk_rbd17s_V_Drum_S08, Trk_rbd17s_V_Drum_S09, Trk_rbd17s_V_Drum_S10, Trk_rbd17s_V_Drum_S11, Trk_rbd17s_V_Drum_S16, Trk_8bs17m_N_Drum_S17, Trk_rbd17s_V_Drum_S18	; Drum
@@ -5101,7 +5101,7 @@ Style_B1P075_rbd17s_V:
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd17s1v", 4, 4, 5, 0x08fa, 0x0898, 0x0652, 0x05d6, 3, 9, 5, 2
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd17s1v", 4, 4, 5, 0x08fa, 0x0898, 0x0652, 0x05d6, 3, 9, 5, 2
 
 ; sgr77d: locator [bank 1][program 64]
 Style_B1P064_sgr77d:
@@ -5169,7 +5169,7 @@ Style_B1P064_sgr77d:
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	39, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr77d1n", 5, 4, 6, 0x062c, 0x0886, 0x05b2, 0x058c, 2, 4, 6, 2
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr77d1n", 5, 4, 6, 0x062c, 0x0886, 0x05b2, 0x058c, 2, 4, 6, 2
 Style_B1P064_sgr77d_V:
 	style_section_map
 	part_tracks	0x24, Trk_sgr77d_V_Drum_S00, Trk_sgr77d_V_Drum_S01, Trk_sgr77d_V_Drum_S02, Trk_sgr77d_V_Drum_S03, Trk_sgr77d_V_Drum_S04, Trk_sgr77d_V_Drum_S05, Trk_sgr77d_V_Drum_S06, Trk_sgr77d_V_Drum_S07, Trk_sgr77d_V_Drum_S08, Trk_sgr77d_V_Drum_S09, Trk_sgr77d_V_Drum_S10, Trk_sgr77d_V_Drum_S11, Trk_sgr77d_V_Drum_S08, Trk_sgr77d_V_Drum_S09, Trk_sgr77d_V_Drum_S10, Trk_sgr77d_V_Drum_S11, Trk_sgr77d_V_Drum_S16, Trk_8br37p_N_Drum_S17, Trk_sgr77d_V_Drum_S18	; Drum
@@ -5235,7 +5235,7 @@ Style_B1P064_sgr77d_V:
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr77d1v", 4, 4, 6, 0x093c, 0x0a54, 0x05e8, 0x06dc, 1, 4, 5, 3
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgr77d1v", 4, 4, 6, 0x093c, 0x0a54, 0x05e8, 0x06dc, 1, 4, 5, 3
 
 ; shb25d: locator [bank 2][program 78]
 Style_B2P078_shb25d:
@@ -5303,7 +5303,7 @@ Style_B2P078_shb25d:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shb25d1n", 3, 2, 4, 0x0538, 0x05ae, 0x03e2, 0x04d2, 2, 4, 5, 5
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shb25d1n", 3, 2, 4, 0x0538, 0x05ae, 0x03e2, 0x04d2, 2, 4, 5, 5
 Style_B2P078_shb25d_V:
 	style_section_map
 	part_tracks	0x2e, Trk_shb25d_V_Drum_S00, Trk_shb25d_V_Drum_S01, Trk_shb25d_V_Drum_S02, Trk_shb25d_V_Drum_S03, Trk_shb25d_V_Drum_S04, Trk_shb25d_V_Drum_S05, Trk_shb25d_V_Drum_S06, Trk_shb25d_V_Drum_S07, Trk_shb25d_V_Drum_S08, Trk_shb25d_V_Drum_S09, Trk_shb25d_V_Drum_S10, Trk_shb25d_V_Drum_S11, Trk_shb25d_V_Drum_S08, Trk_shb25d_V_Drum_S09, Trk_shb25d_V_Drum_S10, Trk_shb25d_V_Drum_S11, Trk_shb25d_V_Drum_S16, Trk_sbg35n_N_Drum_S17, Trk_shb25d_V_Drum_S18	; Drum
@@ -5369,7 +5369,7 @@ Style_B2P078_shb25d_V:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shb25d1v", 4, 4, 5, 0x0970, 0x0b7c, 0x05fc, 0x0611, 2, 3, 5, 6
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shb25d1v", 4, 4, 5, 0x0970, 0x0b7c, 0x05fc, 0x0611, 2, 3, 5, 6
 
 ; 8uk46k: locator [bank 3][program 86]
 Style_B3P086_8uk46k:
@@ -5437,7 +5437,7 @@ Style_B3P086_8uk46k:
 	part_sound	4, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8uk46k1n", 3, 4, 1, 0x0754, 0x09bc, 0x02f2, 0x0400, 1, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8uk46k1n", 3, 4, 1, 0x0754, 0x09bc, 0x02f2, 0x0400, 1, 4, 3, 3
 Style_B3P086_8uk46k_V:
 	style_section_map
 	part_tracks	0x29, Trk_8uk46k_V_Drum_S00, Trk_8uk46k_V_Drum_S01, Trk_8uk46k_V_Drum_S02, Trk_8uk46k_V_Drum_S03, Trk_8uk46k_V_Drum_S04, Trk_8uk46k_V_Drum_S05, Trk_8uk46k_V_Drum_S06, Trk_8uk46k_V_Drum_S07, Trk_8uk46k_V_Drum_S08, Trk_8uk46k_V_Drum_S09, Trk_8uk46k_V_Drum_S10, Trk_8uk46k_V_Drum_S11, Trk_8uk46k_V_Drum_S08, Trk_8uk46k_V_Drum_S09, Trk_8uk46k_V_Drum_S10, Trk_8uk46k_V_Drum_S11, Trk_8uk46k_V_Drum_S16, Trk_rbd77d_N_Drum_S17, Trk_8uk46k_V_Drum_S18	; Drum
@@ -5503,7 +5503,7 @@ Style_B3P086_8uk46k_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8uk46k1v", 4, 4, 7, 0x0b75, 0x0c1e, 0x031c, 0x05f7, 1, 4, 5, 3
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8uk46k1v", 4, 4, 7, 0x0b75, 0x0c1e, 0x031c, 0x05f7, 1, 4, 5, 3
 
 ; 16b16k: locator [bank 2][program 99]
 Style_B2P099_16b16k:
@@ -5571,7 +5571,7 @@ Style_B2P099_16b16k:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b16k1n", 2, 4, 1, 0x07bc, 0x0a42, 0x0248, 0x049f, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b16k1n", 2, 4, 1, 0x07bc, 0x0a42, 0x0248, 0x049f, 2, 5, 5, 4
 Style_B2P099_16b16k_V:
 	style_section_map
 	part_tracks	0x2f, Trk_16b16k_V_Drum_S00, Trk_16b16k_V_Drum_S01, Trk_16b16k_V_Drum_S02, Trk_16b16k_V_Drum_S03, Trk_16b16k_V_Drum_S04, Trk_16b16k_V_Drum_S05, Trk_16b16k_V_Drum_S06, Trk_16b16k_V_Drum_S07, Trk_16b16k_V_Drum_S08, Trk_16b16k_V_Drum_S09, Trk_16b16k_V_Drum_S10, Trk_16b16k_V_Drum_S11, Trk_16b16k_V_Drum_S08, Trk_16b16k_V_Drum_S09, Trk_16b16k_V_Drum_S10, Trk_16b16k_V_Drum_S11, Trk_16b16k_V_Drum_S16, Trk_16b16k_N_Drum_S17, Trk_16b16k_V_Drum_S18	; Drum
@@ -5637,7 +5637,7 @@ Style_B2P099_16b16k_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b16k1v", 4, 4, 4, 0x0a0e, 0x09c1, 0x04fd, 0x0452, 2, 5, 6, 3
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b16k1v", 4, 4, 4, 0x0a0e, 0x09c1, 0x04fd, 0x0452, 2, 5, 6, 3
 
 ; 16r35k: locator [bank 2][program 100]
 Style_B2P100_16r35k:
@@ -5705,7 +5705,7 @@ Style_B2P100_16r35k:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16r35k1n", 2, 3, 2, 0x0832, 0x0dfd, 0x022e, 0x0475, 2, 6, 3, 4
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16r35k1n", 2, 3, 2, 0x0832, 0x0dfd, 0x022e, 0x0475, 2, 6, 3, 4
 Style_B2P100_16r35k_V:
 	style_section_map
 	part_tracks	0x1f, Trk_16r35k_V_Drum_S00, Trk_16r35k_V_Drum_S01, Trk_16r35k_V_Drum_S02, Trk_16r35k_V_Drum_S03, Trk_16r35k_V_Drum_S04, Trk_16r35k_V_Drum_S05, Trk_16r35k_V_Drum_S06, Trk_16r35k_V_Drum_S07, Trk_16r35k_V_Drum_S08, Trk_16r35k_V_Drum_S09, Trk_16r35k_V_Drum_S10, Trk_16r35k_V_Drum_S11, Trk_16r35k_V_Drum_S08, Trk_16r35k_V_Drum_S09, Trk_16r35k_V_Drum_S10, Trk_16r35k_V_Drum_S11, Trk_16r35k_V_Drum_S16, Trk_16s93d_N_Drum_S17, Trk_16r35k_V_Drum_S18	; Drum
@@ -5771,7 +5771,7 @@ Style_B2P100_16r35k_V:
 	part_sound	30, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	27, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16r35k1v", 4, 5, 5, 0x0c1d, 0x0d0b, 0x0739, 0x067e, 3, 6, 5, 4
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16r35k1v", 4, 5, 5, 0x0c1d, 0x0d0b, 0x0739, 0x067e, 3, 6, 5, 4
 
 ; 16b95d: locator [bank 1][program 99]
 Style_B1P099_16b95d:
@@ -5839,7 +5839,7 @@ Style_B1P099_16b95d:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	76, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b95d1n", 2, 2, 3, 0x0509, 0x078c, 0x035e, 0x0307, 2, 6, 4, 1
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b95d1n", 2, 2, 3, 0x0509, 0x078c, 0x035e, 0x0307, 2, 6, 4, 1
 Style_B1P099_16b95d_V:
 	style_section_map
 	part_tracks	0x31, Trk_16b95d_V_Drum_S00, Trk_16b95d_V_Drum_S01, Trk_16b95d_V_Drum_S02, Trk_16b95d_V_Drum_S03, Trk_16b95d_V_Drum_S04, Trk_16b95d_V_Drum_S05, Trk_16b95d_V_Drum_S06, Trk_16b95d_V_Drum_S07, Trk_16b95d_V_Drum_S08, Trk_16b95d_V_Drum_S09, Trk_16b95d_V_Drum_S10, Trk_16b95d_V_Drum_S11, Trk_16b95d_V_Drum_S08, Trk_16b95d_V_Drum_S09, Trk_16b95d_V_Drum_S10, Trk_16b95d_V_Drum_S11, Trk_16b95d_V_Drum_S16, Trk_8bs17m_N_Drum_S17, Trk_16b95d_V_Drum_S18	; Drum
@@ -5905,7 +5905,7 @@ Style_B1P099_16b95d_V:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	76, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b95d1v", 4, 5, 6, 0x099e, 0x0718, 0x04cc, 0x03cd, 2, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b95d1v", 4, 5, 6, 0x099e, 0x0718, 0x04cc, 0x03cd, 2, 5, 5, 2
 
 ; 16b83m: locator [bank 7][program 99]
 Style_B7P099_16b83m:
@@ -5973,7 +5973,7 @@ Style_B7P099_16b83m:
 	part_sound	5, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	102, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b83m1n", 2, 4, 2, 0x0776, 0x090a, 0x033c, 0x045a, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b83m1n", 2, 4, 2, 0x0776, 0x090a, 0x033c, 0x045a, 2, 6, 6, 5
 Style_B7P099_16b83m_V:
 	style_section_map
 	part_tracks	0x2f, Trk_16b83m_V_Drum_S00, Trk_16b83m_V_Drum_S01, Trk_16b83m_V_Drum_S02, Trk_16b83m_V_Drum_S03, Trk_16b83m_V_Drum_S04, Trk_16b83m_V_Drum_S05, Trk_16b83m_V_Drum_S06, Trk_16b83m_V_Drum_S07, Trk_16b83m_V_Drum_S08, Trk_16b83m_V_Drum_S09, Trk_16b83m_V_Drum_S10, Trk_16b83m_V_Drum_S11, Trk_16b83m_V_Drum_S08, Trk_16b83m_V_Drum_S09, Trk_16b83m_V_Drum_S10, Trk_16b83m_V_Drum_S11, Trk_16b83m_V_Drum_S16, Trk_16b16k_N_Drum_S17, Trk_16b83m_V_Drum_S18	; Drum
@@ -6039,7 +6039,7 @@ Style_B7P099_16b83m_V:
 	part_sound	108, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b83m1v", 4, 4, 5, 0x0a2b, 0x082c, 0x0326, 0x0564, 2, 9, 9, 7
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "16b83m1v", 4, 4, 5, 0x0a2b, 0x082c, 0x0326, 0x0564, 2, 9, 9, 7
 
 ; 6pr65c: locator [bank 5][program 107]
 Style_B5P107_6pr65c:
@@ -6107,7 +6107,7 @@ Style_B5P107_6pr65c:
 	part_sound	108, 3, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6pr65c1n", 2, 3, 1, 0x077c, 0x093e, 0x0294, 0x0441, 2, 7, 4, 5
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6pr65c1n", 2, 3, 1, 0x077c, 0x093e, 0x0294, 0x0441, 2, 7, 4, 5
 Style_B5P107_6pr65c_V:
 	style_section_map
 	part_tracks	0x23, Trk_6pr65c_V_Drum_S00, Trk_6pr65c_V_Drum_S01, Trk_6pr65c_V_Drum_S02, Trk_6pr65c_V_Drum_S03, Trk_6pr65c_V_Drum_S04, Trk_6pr65c_V_Drum_S05, Trk_6pr65c_V_Drum_S06, Trk_6pr65c_V_Drum_S07, Trk_6pr65c_V_Drum_S08, Trk_6pr65c_V_Drum_S09, Trk_6pr65c_V_Drum_S10, Trk_6pr65c_V_Drum_S11, Trk_6pr65c_V_Drum_S08, Trk_6pr65c_V_Drum_S09, Trk_6pr65c_V_Drum_S10, Trk_6pr65c_V_Drum_S11, Trk_6pr65c_V_Drum_S16, Trk_16s26d_N_Drum_S17, Trk_6pr65c_V_Drum_S18	; Drum
@@ -6173,7 +6173,7 @@ Style_B5P107_6pr65c_V:
 	part_sound	108, 3, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6pr65c1v", 4, 5, 7, 0x0c26, 0x0df9, 0x06f8, 0x055e, 2, 6, 5, 4
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6pr65c1v", 4, 5, 7, 0x0c26, 0x0df9, 0x06f8, 0x055e, 2, 6, 5, 4
 
 ; fkr12c: locator [bank 3][program 110]
 Style_B3P110_fkr12c:
@@ -6241,7 +6241,7 @@ Style_B3P110_fkr12c:
 	part_sound	114, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr12c1n", 4, 4, 3, 0x0900, 0x0af4, 0x0947, 0x0456, 2, 4, 5, 6
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr12c1n", 4, 4, 3, 0x0900, 0x0af4, 0x0947, 0x0456, 2, 4, 5, 6
 Style_B3P110_fkr12c_V:
 	style_section_map
 	part_tracks	0x1e, Trk_fkr12c_V_Drum_S00, Trk_fkr12c_V_Drum_S01, Trk_fkr12c_V_Drum_S02, Trk_fkr12c_V_Drum_S03, Trk_fkr12c_V_Drum_S04, Trk_fkr12c_V_Drum_S05, Trk_fkr12c_V_Drum_S06, Trk_fkr12c_V_Drum_S07, Trk_fkr12c_V_Drum_S08, Trk_fkr12c_V_Drum_S09, Trk_fkr12c_V_Drum_S10, Trk_fkr12c_V_Drum_S11, Trk_fkr12c_V_Drum_S08, Trk_fkr12c_V_Drum_S09, Trk_fkr12c_V_Drum_S10, Trk_fkr12c_V_Drum_S11, Trk_fkr12c_V_Drum_S16, Trk_fkr12c_N_Drum_S17, Trk_fkr12c_V_Drum_S18	; Drum
@@ -6307,7 +6307,7 @@ Style_B3P110_fkr12c_V:
 	part_sound	115, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr12c1v", 4, 3, 4, 0x0b18, 0x0e65, 0x0248, 0x07c8, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr12c1v", 4, 3, 4, 0x0b18, 0x0e65, 0x0248, 0x07c8, 2, 4, 4, 4
 
 ; sgf57d: locator [bank 4][program 65]
 Style_B4P065_sgf57d:
@@ -6375,7 +6375,7 @@ Style_B4P065_sgf57d:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf57d1n", 4, 5, 5, 0x05c6, 0x086a, 0x05a4, 0x05f6, 2, 8, 5, 5
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf57d1n", 4, 5, 5, 0x05c6, 0x086a, 0x05a4, 0x05f6, 2, 8, 5, 5
 Style_B4P065_sgf57d_V:
 	style_section_map
 	part_tracks	0x22, Trk_sgf57d_V_Drum_S00, Trk_sgf57d_V_Drum_S01, Trk_sgf57d_V_Drum_S02, Trk_sgf57d_V_Drum_S03, Trk_sgf57d_V_Drum_S04, Trk_sgf57d_V_Drum_S05, Trk_sgf57d_V_Drum_S06, Trk_sgf57d_V_Drum_S07, Trk_sgf57d_V_Drum_S08, Trk_sgf57d_V_Drum_S09, Trk_sgf57d_V_Drum_S10, Trk_sgf57d_V_Drum_S11, Trk_sgf57d_V_Drum_S08, Trk_sgf57d_V_Drum_S09, Trk_sgf57d_V_Drum_S10, Trk_sgf57d_V_Drum_S11, Trk_sgf57d_V_Drum_S16, Trk_sgf57d_N_Drum_S17, Trk_sgf57d_V_Drum_S18	; Drum
@@ -6441,7 +6441,7 @@ Style_B4P065_sgf57d_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf57d1v", 5, 7, 7, 0x09ec, 0x0a05, 0x08b4, 0x05e8, 2, 8, 4, 4
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf57d1v", 5, 7, 7, 0x09ec, 0x0a05, 0x08b4, 0x05e8, 2, 8, 4, 4
 
 ; sgf35d: locator [bank 2][program 65]
 Style_B2P065_sgf35d:
@@ -6509,7 +6509,7 @@ Style_B2P065_sgf35d:
 	part_sound	5, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf35d1n", 2, 1, 2, 0x067c, 0x0648, 0x01ce, 0x0394, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf35d1n", 2, 1, 2, 0x067c, 0x0648, 0x01ce, 0x0394, 2, 4, 4, 0
 Style_B2P065_sgf35d_V:
 	style_section_map
 	part_tracks	0x32, Trk_sgf35d_V_Drum_S00, Trk_sgf35d_V_Drum_S01, Trk_sgf35d_V_Drum_S02, Trk_sgf35d_V_Drum_S03, Trk_sgf35d_V_Drum_S04, Trk_sgf35d_V_Drum_S05, Trk_sgf35d_V_Drum_S06, Trk_sgf35d_V_Drum_S07, Trk_sgf35d_V_Drum_S08, Trk_sgf35d_V_Drum_S09, Trk_sgf35d_V_Drum_S10, Trk_sgf35d_V_Drum_S11, Trk_sgf35d_V_Drum_S08, Trk_sgf35d_V_Drum_S09, Trk_sgf35d_V_Drum_S10, Trk_sgf35d_V_Drum_S11, Trk_sgf35d_V_Drum_S16, Trk_8br86d_N_Drum_S17, Trk_sgf35d_V_Drum_S18	; Drum
@@ -6575,7 +6575,7 @@ Style_B2P065_sgf35d_V:
 	part_sound	5, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf35d1v", 4, 2, 5, 0x0960, 0x0a7a, 0x0379, 0x05ee, 2, 7, 4, 3
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf35d1v", 4, 2, 5, 0x0960, 0x0a7a, 0x0379, 0x05ee, 2, 7, 4, 3
 
 ; sgf47m: locator [bank 3][program 65]
 Style_B3P065_sgf47m:
@@ -6643,7 +6643,7 @@ Style_B3P065_sgf47m:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	62, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf47m1n", 4, 4, 4, 0x06c5, 0x07a2, 0x03a2, 0x0557, 2, 7, 4, 4
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf47m1n", 4, 4, 4, 0x06c5, 0x07a2, 0x03a2, 0x0557, 2, 7, 4, 4
 Style_B3P065_sgf47m_V:
 	style_section_map
 	part_tracks	0x20, Trk_sgf47m_V_Drum_S00, Trk_sgf47m_V_Drum_S01, Trk_sgf47m_V_Drum_S02, Trk_sgf47m_V_Drum_S03, Trk_sgf47m_V_Drum_S04, Trk_sgf47m_V_Drum_S05, Trk_sgf47m_V_Drum_S06, Trk_sgf47m_V_Drum_S07, Trk_sgf47m_V_Drum_S08, Trk_sgf47m_V_Drum_S09, Trk_sgf47m_V_Drum_S10, Trk_sgf47m_V_Drum_S11, Trk_sgf47m_V_Drum_S08, Trk_sgf47m_V_Drum_S09, Trk_sgf47m_V_Drum_S10, Trk_sgf47m_V_Drum_S11, Trk_sgf47m_V_Drum_S16, Trk_sgf47m_N_Drum_S17, Trk_sgf47m_V_Drum_S18	; Drum
@@ -6709,7 +6709,7 @@ Style_B3P065_sgf47m_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf47m1v", 4, 3, 7, 0x0d2b, 0x0f56, 0x04d4, 0x05f0, 2, 8, 4, 6
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sgf47m1v", 4, 3, 7, 0x0d2b, 0x0f56, 0x04d4, 0x05f0, 2, 8, 4, 6
 
 ; jzr45m: locator [bank 6][program 113]
 Style_B6P113_jzr45m:
@@ -6777,7 +6777,7 @@ Style_B6P113_jzr45m:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr45m1n", 5, 4, 6, 0x06d4, 0x09c3, 0x05aa, 0x0470, 2, 7, 5, 6
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr45m1n", 5, 4, 6, 0x06d4, 0x09c3, 0x05aa, 0x0470, 2, 7, 5, 6
 Style_B6P113_jzr45m_V:
 	style_section_map
 	part_tracks	0x27, Trk_jzr45m_V_Drum_S00, Trk_jzr45m_V_Drum_S01, Trk_jzr45m_V_Drum_S02, Trk_jzr45m_V_Drum_S03, Trk_jzr45m_V_Drum_S04, Trk_jzr45m_V_Drum_S05, Trk_jzr45m_V_Drum_S06, Trk_jzr45m_V_Drum_S07, Trk_jzr45m_V_Drum_S08, Trk_jzr45m_V_Drum_S09, Trk_jzr45m_V_Drum_S10, Trk_jzr45m_V_Drum_S11, Trk_jzr45m_V_Drum_S08, Trk_jzr45m_V_Drum_S09, Trk_jzr45m_V_Drum_S10, Trk_jzr45m_V_Drum_S11, Trk_jzr45m_V_Drum_S16, Trk_16b96d_N_Drum_S17, Trk_jzr45m_V_Drum_S18	; Drum
@@ -6843,7 +6843,7 @@ Style_B6P113_jzr45m_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr45m1v", 2, 2, 3, 0x0af8, 0x0a48, 0x04ab, 0x030f, 2, 6, 4, 6
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr45m1v", 2, 2, 3, 0x0af8, 0x0a48, 0x04ab, 0x030f, 2, 6, 4, 6
 
 ; fkr47d: locator [bank 4][program 110]
 Style_B4P110_fkr47d:
@@ -6911,7 +6911,7 @@ Style_B4P110_fkr47d:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr47d1n", 5, 2, 9, 0x0666, 0x095a, 0x04c6, 0x0676, 3, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr47d1n", 5, 2, 9, 0x0666, 0x095a, 0x04c6, 0x0676, 3, 5, 4, 4
 Style_B4P110_fkr47d_V:
 	style_section_map
 	part_tracks	0x19, Trk_fkr47d_V_Drum_S00, Trk_fkr47d_V_Drum_S01, Trk_fkr47d_V_Drum_S02, Trk_fkr47d_V_Drum_S03, Trk_fkr47d_V_Drum_S04, Trk_fkr47d_V_Drum_S05, Trk_fkr47d_V_Drum_S06, Trk_fkr47d_V_Drum_S07, Trk_fkr47d_V_Drum_S08, Trk_fkr47d_V_Drum_S09, Trk_fkr47d_V_Drum_S10, Trk_fkr47d_V_Drum_S11, Trk_fkr47d_V_Drum_S08, Trk_fkr47d_V_Drum_S09, Trk_fkr47d_V_Drum_S10, Trk_fkr47d_V_Drum_S11, Trk_fkr47d_V_Drum_S16, Trk_fkr47d_N_Drum_S17, Trk_fkr47d_V_Drum_S18	; Drum
@@ -6977,7 +6977,7 @@ Style_B4P110_fkr47d_V:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr47d1v", 6, 4, 9, 0x0a97, 0x0a18, 0x09ae, 0x061d, 2, 6, 7, 4
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fkr47d1v", 6, 4, 9, 0x0a97, 0x0a18, 0x09ae, 0x061d, 2, 6, 7, 4
 
 ; jzr17k: locator [bank 3][program 114]
 Style_B3P114_jzr17k:
@@ -7045,7 +7045,7 @@ Style_B3P114_jzr17k:
 	part_sound	109, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr17k1n", 4, 8, 4, 0x0793, 0x072e, 0x16d1, 0x0673, 2, 5, 6, 2
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr17k1n", 4, 8, 4, 0x0793, 0x072e, 0x16d1, 0x0673, 2, 5, 6, 2
 Style_B3P114_jzr17k_V:
 	style_section_map
 	part_tracks	0x08, Trk_jzr17k_V_Drum_S00, Trk_jzr17k_V_Drum_S01, Trk_jzr17k_V_Drum_S02, Trk_jzr17k_V_Drum_S03, Trk_jzr17k_V_Drum_S04, Trk_jzr17k_V_Drum_S05, Trk_jzr17k_V_Drum_S06, Trk_jzr17k_V_Drum_S07, Trk_jzr17k_V_Drum_S08, Trk_jzr17k_V_Drum_S09, Trk_jzr17k_V_Drum_S10, Trk_jzr17k_V_Drum_S11, Trk_jzr17k_V_Drum_S08, Trk_jzr17k_V_Drum_S09, Trk_jzr17k_V_Drum_S10, Trk_jzr17k_V_Drum_S11, Trk_jzr17k_V_Drum_S16, Trk_jzr17k_N_Drum_S17, Trk_jzr17k_V_Drum_S18	; Drum
@@ -7111,7 +7111,7 @@ Style_B3P114_jzr17k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr17k1v", 8, 8, 10, 0x0d75, 0x0fb9, 0x1661, 0x0621, 2, 9, 7, 4
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jzr17k1v", 8, 8, 10, 0x0d75, 0x0fb9, 0x1661, 0x0621, 2, 9, 7, 4
 
 ; cbr33d: locator [bank 3][program 118]
 Style_B3P118_cbr33d:
@@ -7179,7 +7179,7 @@ Style_B3P118_cbr33d:
 	part_sound	15, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr33d1n", 4, 2, 5, 0x09a3, 0x0b78, 0x045a, 0x06e2, 2, 4, 2, 2
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr33d1n", 4, 2, 5, 0x09a3, 0x0b78, 0x045a, 0x06e2, 2, 4, 2, 2
 Style_B3P118_cbr33d_V:
 	style_section_map
 	part_tracks	0x18, Trk_cbr33d_V_Drum_S00, Trk_cbr33d_V_Drum_S01, Trk_cbr33d_V_Drum_S02, Trk_cbr33d_V_Drum_S03, Trk_cbr33d_V_Drum_S04, Trk_cbr33d_V_Drum_S05, Trk_cbr33d_V_Drum_S06, Trk_cbr33d_V_Drum_S07, Trk_cbr33d_V_Drum_S08, Trk_cbr33d_V_Drum_S09, Trk_cbr33d_V_Drum_S10, Trk_cbr33d_V_Drum_S11, Trk_cbr33d_V_Drum_S08, Trk_cbr33d_V_Drum_S09, Trk_cbr33d_V_Drum_S10, Trk_cbr33d_V_Drum_S11, Trk_cbr33d_V_Drum_S16, Trk_8br17r_N_Drum_S17, Trk_cbr33d_V_Drum_S18	; Drum
@@ -7245,7 +7245,7 @@ Style_B3P118_cbr33d_V:
 	part_sound	15, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr33d1v", 4, 2, 9, 0x0cf0, 0x0cd4, 0x02b0, 0x06ee, 2, 4, 2, 4
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr33d1v", 4, 2, 9, 0x0cf0, 0x0cd4, 0x02b0, 0x06ee, 2, 4, 2, 4
 
 ; sbr76g: locator [bank 3][program 116]
 Style_B3P116_sbr76g:
@@ -7313,7 +7313,7 @@ Style_B3P116_sbr76g:
 	part_sound	10, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr76g1n", 2, 2, 4, 0x0b50, 0x0c34, 0x0556, 0x070e, 2, 4, 2, 3
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr76g1n", 2, 2, 4, 0x0b50, 0x0c34, 0x0556, 0x070e, 2, 4, 2, 3
 Style_B3P116_sbr76g_V:
 	style_section_map
 	part_tracks	0x0d, Trk_sbr76g_V_Drum_S00, Trk_sbr76g_V_Drum_S01, Trk_sbr76g_V_Drum_S02, Trk_sbr76g_V_Drum_S03, Trk_sbr76g_V_Drum_S04, Trk_sbr76g_V_Drum_S05, Trk_sbr76g_V_Drum_S06, Trk_sbr76g_V_Drum_S07, Trk_sbr76g_V_Drum_S08, Trk_sbr76g_V_Drum_S09, Trk_sbr76g_V_Drum_S10, Trk_sbr76g_V_Drum_S11, Trk_sbr76g_V_Drum_S08, Trk_sbr76g_V_Drum_S09, Trk_sbr76g_V_Drum_S10, Trk_sbr76g_V_Drum_S11, Trk_sbr76g_V_Drum_S16, Trk_sbr76g_N_Drum_S17, Trk_sbr76g_V_Drum_S18	; Drum
@@ -7379,7 +7379,7 @@ Style_B3P116_sbr76g_V:
 	part_sound	10, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr76g1v", 4, 4, 10, 0x0ee4, 0x12f8, 0x0c9e, 0x0828, 1, 3, 3, 5
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr76g1v", 4, 4, 10, 0x0ee4, 0x12f8, 0x0c9e, 0x0828, 1, 3, 3, 5
 
 ; sbr63m: locator [bank 1][program 117]
 Style_B1P117_sbr63m:
@@ -7447,7 +7447,7 @@ Style_B1P117_sbr63m:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr63m1n", 4, 4, 8, 0x0729, 0x097a, 0x0684, 0x08ea, 2, 7, 3, 5
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr63m1n", 4, 4, 8, 0x0729, 0x097a, 0x0684, 0x08ea, 2, 7, 3, 5
 Style_B1P117_sbr63m_V:
 	style_section_map
 	part_tracks	0x1a, Trk_sbr63m_V_Drum_S00, Trk_sbr63m_V_Drum_S01, Trk_sbr63m_V_Drum_S02, Trk_sbr63m_V_Drum_S03, Trk_sbr63m_V_Drum_S04, Trk_sbr63m_V_Drum_S05, Trk_sbr63m_V_Drum_S06, Trk_sbr63m_V_Drum_S07, Trk_sbr63m_V_Drum_S08, Trk_sbr63m_V_Drum_S09, Trk_sbr63m_V_Drum_S10, Trk_sbr63m_V_Drum_S11, Trk_sbr63m_V_Drum_S08, Trk_sbr63m_V_Drum_S09, Trk_sbr63m_V_Drum_S10, Trk_sbr63m_V_Drum_S11, Trk_sbr63m_V_Drum_S16, Trk_sgr65m_N_Drum_S17, Trk_sbr63m_V_Drum_S18	; Drum
@@ -7513,7 +7513,7 @@ Style_B1P117_sbr63m_V:
 	part_sound	11, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr63m1v", 4, 3, 5, 0x0b8f, 0x0c60, 0x06ac, 0x0604, 2, 6, 3, 7
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sbr63m1v", 4, 3, 5, 0x0b8f, 0x0c60, 0x06ac, 0x0604, 2, 6, 3, 7
 
 ; 8rb26k: locator [bank 2][program 81]
 Style_B2P081_8rb26k:
@@ -7581,7 +7581,7 @@ Style_B2P081_8rb26k:
 	part_sound	79, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 6, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb26k1n", 1, 3, 0, 0x04f2, 0x05c8, 0x021c, 0x045c, 2, 3, 5, 4
+	style_tail	TIMESIG_4_4, 0x06, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb26k1n", 1, 3, 0, 0x04f2, 0x05c8, 0x021c, 0x045c, 2, 3, 5, 4
 Style_B2P081_8rb26k_V:
 	style_section_map
 	part_tracks	0x06, Trk_8rb26k_V_Drum_S00, Trk_8rb26k_V_Drum_S01, Trk_8rb26k_V_Drum_S02, Trk_8rb26k_V_Drum_S03, Trk_8rb26k_V_Drum_S04, Trk_8rb26k_V_Drum_S05, Trk_8rb26k_V_Drum_S06, Trk_8rb26k_V_Drum_S07, Trk_8rb26k_V_Drum_S08, Trk_8rb26k_V_Drum_S09, Trk_8rb26k_V_Drum_S10, Trk_8rb26k_V_Drum_S11, Trk_8rb26k_V_Drum_S08, Trk_8rb26k_V_Drum_S09, Trk_8rb26k_V_Drum_S10, Trk_8rb26k_V_Drum_S11, Trk_8rb26k_V_Drum_S16, Trk_8rb26k_N_Drum_S17, Trk_8rb26k_V_Drum_S18	; Drum
@@ -7647,7 +7647,7 @@ Style_B2P081_8rb26k_V:
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 6, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb26k1v", 2, 4, 2, 0x06c6, 0x07f0, 0x046c, 0x0514, 2, 5, 2, 5
+	style_tail	TIMESIG_4_4, 0x06, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb26k1v", 2, 4, 2, 0x06c6, 0x07f0, 0x046c, 0x0514, 2, 5, 2, 5
 
 ; shs26n: locator [bank 5][program 77]
 Style_B5P077_shs26n:
@@ -7715,7 +7715,7 @@ Style_B5P077_shs26n:
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shs26n1n", 4, 4, 5, 0x06bc, 0x07f4, 0x04d6, 0x0410, 2, 6, 5, 2
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shs26n1n", 4, 4, 5, 0x06bc, 0x07f4, 0x04d6, 0x0410, 2, 6, 5, 2
 Style_B5P077_shs26n_V:
 	style_section_map
 	part_tracks	0x30, Trk_shs26n_V_Drum_S00, Trk_shs26n_V_Drum_S01, Trk_shs26n_V_Drum_S02, Trk_shs26n_V_Drum_S03, Trk_shs26n_V_Drum_S04, Trk_shs26n_V_Drum_S05, Trk_shs26n_V_Drum_S06, Trk_shs26n_V_Drum_S07, Trk_shs26n_V_Drum_S08, Trk_shs26n_V_Drum_S09, Trk_shs26n_V_Drum_S10, Trk_shs26n_V_Drum_S11, Trk_shs26n_V_Drum_S08, Trk_shs26n_V_Drum_S09, Trk_shs26n_V_Drum_S10, Trk_shs26n_V_Drum_S11, Trk_shs26n_V_Drum_S16, Trk_rbs15s_N_Drum_S17, Trk_shs26n_V_Drum_S18	; Drum
@@ -7781,7 +7781,7 @@ Style_B5P077_shs26n_V:
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	79, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shs26n1v", 4, 4, 4, 0x06d2, 0x07cc, 0x04fc, 0x059a, 2, 5, 3, 1
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shs26n1v", 4, 4, 4, 0x06d2, 0x07cc, 0x04fc, 0x059a, 2, 5, 3, 1
 
 ; 8sl47d: locator [bank 3][program 87]
 Style_B3P087_8sl47d:
@@ -7849,7 +7849,7 @@ Style_B3P087_8sl47d:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sl47d1n", 5, 4, 6, 0x040e, 0x0682, 0x06ba, 0x0448, 1, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sl47d1n", 5, 4, 6, 0x040e, 0x0682, 0x06ba, 0x0448, 1, 4, 3, 3
 Style_B3P087_8sl47d_V:
 	style_section_map
 	part_tracks	0x1d, Trk_8sl47d_V_Drum_S00, Trk_8sl47d_V_Drum_S01, Trk_8sl47d_V_Drum_S02, Trk_8sl47d_V_Drum_S03, Trk_8sl47d_V_Drum_S04, Trk_8sl47d_V_Drum_S05, Trk_8sl47d_V_Drum_S06, Trk_8sl47d_V_Drum_S07, Trk_8sl47d_V_Drum_S08, Trk_8sl47d_V_Drum_S09, Trk_8sl47d_V_Drum_S10, Trk_8sl47d_V_Drum_S11, Trk_8sl47d_V_Drum_S08, Trk_8sl47d_V_Drum_S09, Trk_8sl47d_V_Drum_S10, Trk_8sl47d_V_Drum_S11, Trk_8sl47d_V_Drum_S16, Trk_8sl47d_N_Drum_S17, Trk_8sl47d_V_Drum_S18	; Drum
@@ -7915,7 +7915,7 @@ Style_B3P087_8sl47d_V:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sl47d1v", 8, 6, 12, 0x07f4, 0x0ac2, 0x0afb, 0x0506, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8sl47d1v", 8, 6, 12, 0x07f4, 0x0ac2, 0x0afb, 0x0506, 2, 5, 5, 4
 
 ; rbd46k: locator [bank 0][program 75]
 Style_B0P075_rbd46k:
@@ -7983,7 +7983,7 @@ Style_B0P075_rbd46k:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd46k1n", 2, 5, 1, 0x0598, 0x084c, 0x04d6, 0x0482, 2, 6, 6, 4
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd46k1n", 2, 5, 1, 0x0598, 0x084c, 0x04d6, 0x0482, 2, 6, 6, 4
 Style_B0P075_rbd46k_V:
 	style_section_map
 	part_tracks	0x2c, Trk_rbd46k_V_Drum_S00, Trk_rbd46k_V_Drum_S01, Trk_rbd46k_V_Drum_S02, Trk_rbd46k_V_Drum_S03, Trk_rbd46k_V_Drum_S04, Trk_rbd46k_V_Drum_S05, Trk_rbd46k_V_Drum_S06, Trk_rbd46k_V_Drum_S07, Trk_rbd46k_V_Drum_S08, Trk_rbd46k_V_Drum_S09, Trk_rbd46k_V_Drum_S10, Trk_rbd46k_V_Drum_S11, Trk_rbd46k_V_Drum_S08, Trk_rbd46k_V_Drum_S09, Trk_rbd46k_V_Drum_S10, Trk_rbd46k_V_Drum_S11, Trk_rbd46k_V_Drum_S16, Trk_8bb57m_N_Drum_S17, Trk_rbd46k_V_Drum_S18	; Drum
@@ -8049,7 +8049,7 @@ Style_B0P075_rbd46k_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd46k1v", 4, 4, 3, 0x07b2, 0x09e6, 0x036e, 0x04d8, 2, 6, 6, 3
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd46k1v", 4, 4, 3, 0x07b2, 0x09e6, 0x036e, 0x04d8, 2, 6, 6, 3
 
 ; mrn17d: locator [bank 3][program 127]
 Style_B3P127_mrn17d:
@@ -8117,7 +8117,7 @@ Style_B3P127_mrn17d:
 	part_sound	115, 6, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 4, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrn17d1n", 4, 5, 3, 0x0a84, 0x0e16, 0x0500, 0x08de, 1, 2, 2, 2
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrn17d1n", 4, 5, 3, 0x0a84, 0x0e16, 0x0500, 0x08de, 1, 2, 2, 2
 Style_B3P127_mrn17d_V:
 	style_section_map
 	part_tracks	0x19, Trk_mrn17d_V_Drum_S00, Trk_mrn17d_V_Drum_S01, Trk_mrn17d_V_Drum_S02, Trk_mrn17d_V_Drum_S03, Trk_mrn17d_V_Drum_S04, Trk_mrn17d_V_Drum_S05, Trk_mrn17d_V_Drum_S06, Trk_mrn17d_V_Drum_S07, Trk_mrn17d_V_Drum_S08, Trk_mrn17d_V_Drum_S09, Trk_mrn17d_V_Drum_S10, Trk_mrn17d_V_Drum_S11, Trk_mrn17d_V_Drum_S08, Trk_mrn17d_V_Drum_S09, Trk_mrn17d_V_Drum_S10, Trk_mrn17d_V_Drum_S11, Trk_mrn17d_V_Drum_S16, Trk_fkr47d_N_Drum_S17, Trk_mrn17d_V_Drum_S18	; Drum
@@ -8183,7 +8183,7 @@ Style_B3P127_mrn17d_V:
 	part_sound	115, 6, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 4, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrn17d1v", 8, 1, 7, 0x0bc6, 0x0d46, 0x0214, 0x0848, 1, 4, 2, 4
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrn17d1v", 8, 1, 7, 0x0bc6, 0x0d46, 0x0214, 0x0848, 1, 4, 2, 4
 
 ; dtp37r: locator [bank 4][program 126]
 Style_B4P126_dtp37r:
@@ -8251,7 +8251,7 @@ Style_B4P126_dtp37r:
 	part_sound	60, 5, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	127, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dtp37r1n", 5, 4, 8, 0x0988, 0x0c28, 0x089a, 0x069c, 2, 3, 4, 3
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dtp37r1n", 5, 4, 8, 0x0988, 0x0c28, 0x089a, 0x069c, 2, 3, 4, 3
 Style_B4P126_dtp37r_V:
 	style_section_map
 	part_tracks	0x0e, Trk_dtp37r_V_Drum_S00, Trk_dtp37r_V_Drum_S01, Trk_dtp37r_V_Drum_S02, Trk_dtp37r_V_Drum_S03, Trk_dtp37r_V_Drum_S04, Trk_dtp37r_V_Drum_S05, Trk_dtp37r_V_Drum_S06, Trk_dtp37r_V_Drum_S07, Trk_dtp37r_V_Drum_S08, Trk_dtp37r_V_Drum_S09, Trk_dtp37r_V_Drum_S10, Trk_dtp37r_V_Drum_S11, Trk_dtp37r_V_Drum_S08, Trk_dtp37r_V_Drum_S09, Trk_dtp37r_V_Drum_S10, Trk_dtp37r_V_Drum_S11, Trk_dtp37r_V_Drum_S16, Trk_dtp37r_N_Drum_S17, Trk_dtp37r_V_Drum_S18	; Drum
@@ -8317,7 +8317,7 @@ Style_B4P126_dtp37r_V:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	127, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dtp37r1v", 5, 6, 8, 0x0d36, 0x0fe4, 0x0ac2, 0x0728, 2, 5, 3, 2
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dtp37r1v", 5, 6, 8, 0x0d36, 0x0fe4, 0x0ac2, 0x0728, 2, 5, 3, 2
 
 ; reg17r: locator [bank 4][program 71]
 Style_B4P071_reg17r:
@@ -8385,7 +8385,7 @@ Style_B4P071_reg17r:
 	part_sound	64, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "reg17r1n", 2, 2, 1, 0x09a6, 0x0d74, 0x03bd, 0x0632, 1, 3, 3, 3
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "reg17r1n", 2, 2, 1, 0x09a6, 0x0d74, 0x03bd, 0x0632, 1, 3, 3, 3
 Style_B4P071_reg17r_V:
 	style_section_map
 	part_tracks	0x17, Trk_reg17r_V_Drum_S00, Trk_reg17r_V_Drum_S01, Trk_reg17r_V_Drum_S02, Trk_reg17r_V_Drum_S03, Trk_reg17r_V_Drum_S04, Trk_reg17r_V_Drum_S05, Trk_reg17r_V_Drum_S06, Trk_reg17r_V_Drum_S07, Trk_reg17r_V_Drum_S08, Trk_reg17r_V_Drum_S09, Trk_reg17r_V_Drum_S10, Trk_reg17r_V_Drum_S11, Trk_reg17r_V_Drum_S08, Trk_reg17r_V_Drum_S09, Trk_reg17r_V_Drum_S10, Trk_reg17r_V_Drum_S11, Trk_reg17r_V_Drum_S16, Trk_reg17r_N_Drum_S17, Trk_reg17r_V_Drum_S18	; Drum
@@ -8451,7 +8451,7 @@ Style_B4P071_reg17r_V:
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	64, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "reg17r1v", 4, 5, 5, 0x0fe2, 0x0e6e, 0x0ae0, 0x082d, 2, 5, 3, 3
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "reg17r1v", 4, 5, 5, 0x0fe2, 0x0e6e, 0x0ae0, 0x082d, 2, 5, 3, 3
 
 ; dcs17d: locator [bank 6][program 120]
 Style_B6P120_dcs17d:
@@ -8519,7 +8519,7 @@ Style_B6P120_dcs17d:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs17d1n", 5, 2, 9, 0x0871, 0x0a94, 0x04be, 0x0764, 2, 5, 2, 3
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs17d1n", 5, 2, 9, 0x0871, 0x0a94, 0x04be, 0x0764, 2, 5, 2, 3
 Style_B6P120_dcs17d_V:
 	style_section_map
 	part_tracks	0x12, Trk_dcs17d_V_Drum_S00, Trk_dcs17d_V_Drum_S01, Trk_dcs17d_V_Drum_S02, Trk_dcs17d_V_Drum_S03, Trk_dcs17d_V_Drum_S04, Trk_dcs17d_V_Drum_S05, Trk_dcs17d_V_Drum_S06, Trk_dcs17d_V_Drum_S07, Trk_dcs17d_V_Drum_S08, Trk_dcs17d_V_Drum_S09, Trk_dcs17d_V_Drum_S10, Trk_dcs17d_V_Drum_S11, Trk_dcs17d_V_Drum_S08, Trk_dcs17d_V_Drum_S09, Trk_dcs17d_V_Drum_S10, Trk_dcs17d_V_Drum_S11, Trk_dcs17d_V_Drum_S16, Trk_dcs17d_N_Drum_S17, Trk_dcs17d_V_Drum_S18	; Drum
@@ -8585,7 +8585,7 @@ Style_B6P120_dcs17d_V:
 	part_sound	60, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs17d1v", 5, 4, 10, 0x0d61, 0x0d26, 0x09b8, 0x0a66, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs17d1v", 5, 4, 10, 0x0d61, 0x0d26, 0x09b8, 0x0a66, 2, 5, 4, 4
 
 ; dsb16g: locator [bank 4][program 120]
 Style_B4P120_dsb16g:
@@ -8653,7 +8653,7 @@ Style_B4P120_dsb16g:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 7, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dsb16g1n", 4, 5, 8, 0x0af2, 0x0e94, 0x0a40, 0x08f2, 2, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x07, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dsb16g1n", 4, 5, 8, 0x0af2, 0x0e94, 0x0a40, 0x08f2, 2, 4, 4, 3
 Style_B4P120_dsb16g_V:
 	style_section_map
 	part_tracks	0x07, Trk_dsb16g_V_Drum_S00, Trk_dsb16g_V_Drum_S01, Trk_dsb16g_V_Drum_S02, Trk_dsb16g_V_Drum_S03, Trk_dsb16g_V_Drum_S04, Trk_dsb16g_V_Drum_S05, Trk_dsb16g_V_Drum_S06, Trk_dsb16g_V_Drum_S07, Trk_dsb16g_V_Drum_S08, Trk_dsb16g_V_Drum_S09, Trk_dsb16g_V_Drum_S10, Trk_dsb16g_V_Drum_S11, Trk_dsb16g_V_Drum_S08, Trk_dsb16g_V_Drum_S09, Trk_dsb16g_V_Drum_S10, Trk_dsb16g_V_Drum_S11, Trk_dsb16g_V_Drum_S16, Trk_dsb16g_N_Drum_S17, Trk_dsb16g_V_Drum_S18	; Drum
@@ -8719,7 +8719,7 @@ Style_B4P120_dsb16g_V:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 7, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dsb16g1v", 8, 8, 14, 0x10d6, 0x1480, 0x1b18, 0x0d72, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x07, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dsb16g1v", 8, 8, 14, 0x10d6, 0x1480, 0x1b18, 0x0d72, 2, 4, 4, 4
 
 ; tec27r: locator [bank 5][program 126]
 Style_B5P126_tec27r:
@@ -8787,7 +8787,7 @@ Style_B5P126_tec27r:
 	part_sound	119, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 4, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec27r1n", 4, 7, 7, 0x0b18, 0x0cf4, 0x07b9, 0x05b0, 2, 3, 2, 2
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec27r1n", 4, 7, 7, 0x0b18, 0x0cf4, 0x07b9, 0x05b0, 2, 3, 2, 2
 Style_B5P126_tec27r_V:
 	style_section_map
 	part_tracks	0x16, Trk_tec27r_V_Drum_S00, Trk_tec27r_V_Drum_S01, Trk_tec27r_V_Drum_S02, Trk_tec27r_V_Drum_S03, Trk_tec27r_V_Drum_S04, Trk_tec27r_V_Drum_S05, Trk_tec27r_V_Drum_S06, Trk_tec27r_V_Drum_S07, Trk_tec27r_V_Drum_S08, Trk_tec27r_V_Drum_S09, Trk_tec27r_V_Drum_S10, Trk_tec27r_V_Drum_S11, Trk_tec27r_V_Drum_S08, Trk_tec27r_V_Drum_S09, Trk_tec27r_V_Drum_S10, Trk_tec27r_V_Drum_S11, Trk_tec27r_V_Drum_S16, Trk_tec27r_N_Drum_S17, Trk_tec27r_V_Drum_S18	; Drum
@@ -8853,7 +8853,7 @@ Style_B5P126_tec27r_V:
 	part_sound	119, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	102, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec27r1v", 4, 5, 4, 0x0c18, 0x0d6a, 0x06b2, 0x07f2, 2, 2, 2, 3
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec27r1v", 4, 5, 4, 0x0c18, 0x0d6a, 0x06b2, 0x07f2, 2, 2, 2, 3
 
 ; slr52d: locator [bank 4][program 102]
 Style_B4P102_slr52d:
@@ -8921,7 +8921,7 @@ Style_B4P102_slr52d:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr52d1n", 2, 2, 3, 0x0753, 0x079e, 0x02c1, 0x040e, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr52d1n", 2, 2, 3, 0x0753, 0x079e, 0x02c1, 0x040e, 2, 5, 4, 4
 Style_B4P102_slr52d_V:
 	style_section_map
 	part_tracks	0x2d, Trk_slr52d_V_Drum_S00, Trk_slr52d_V_Drum_S01, Trk_slr52d_V_Drum_S02, Trk_slr52d_V_Drum_S03, Trk_slr52d_V_Drum_S04, Trk_slr52d_V_Drum_S05, Trk_slr52d_V_Drum_S06, Trk_slr52d_V_Drum_S07, Trk_slr52d_V_Drum_S08, Trk_slr52d_V_Drum_S09, Trk_slr52d_V_Drum_S10, Trk_slr52d_V_Drum_S11, Trk_slr52d_V_Drum_S08, Trk_slr52d_V_Drum_S09, Trk_slr52d_V_Drum_S10, Trk_slr52d_V_Drum_S11, Trk_slr52d_V_Drum_S16, Trk_srr55d_N_Drum_S17, Trk_slr52d_V_Drum_S18	; Drum
@@ -8987,7 +8987,7 @@ Style_B4P102_slr52d_V:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr52d1v", 4, 6, 4, 0x09de, 0x09fe, 0x07a0, 0x0438, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slr52d1v", 4, 6, 4, 0x09de, 0x09fe, 0x07a0, 0x0438, 2, 5, 4, 4
 
 ; slb33m: locator [bank 2][program 103]
 Style_B2P103_slb33m:
@@ -9055,7 +9055,7 @@ Style_B2P103_slb33m:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slb33m1n", 4, 4, 5, 0x09d3, 0x0ba6, 0x040c, 0x076e, 2, 8, 1, 5
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slb33m1n", 4, 4, 5, 0x09d3, 0x0ba6, 0x040c, 0x076e, 2, 8, 1, 5
 Style_B2P103_slb33m_V:
 	style_section_map
 	part_tracks	0x1a, Trk_slb33m_V_Drum_S00, Trk_slb33m_V_Drum_S01, Trk_slb33m_V_Drum_S02, Trk_slb33m_V_Drum_S03, Trk_slb33m_V_Drum_S04, Trk_slb33m_V_Drum_S05, Trk_slb33m_V_Drum_S06, Trk_slb33m_V_Drum_S07, Trk_slb33m_V_Drum_S08, Trk_slb33m_V_Drum_S09, Trk_slb33m_V_Drum_S10, Trk_slb33m_V_Drum_S11, Trk_slb33m_V_Drum_S08, Trk_slb33m_V_Drum_S09, Trk_slb33m_V_Drum_S10, Trk_slb33m_V_Drum_S11, Trk_slb33m_V_Drum_S16, Trk_sgr65m_N_Drum_S17, Trk_slb33m_V_Drum_S18	; Drum
@@ -9121,7 +9121,7 @@ Style_B2P103_slb33m_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slb33m1v", 4, 4, 6, 0x0d0d, 0x0c82, 0x04c0, 0x0530, 2, 9, 5, 6
+	style_tail	TIMESIG_4_4, 0x1a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "slb33m1v", 4, 4, 6, 0x0d0d, 0x0c82, 0x04c0, 0x0530, 2, 9, 5, 6
 
 ; rap47d: locator [bank 1][program 127]
 Style_B1P127_rap47d:
@@ -9189,7 +9189,7 @@ Style_B1P127_rap47d:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	116, 6, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rap47d1n", 4, 2, 3, 0x05f4, 0x0998, 0x037e, 0x0629, 2, 4, 2, 2
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rap47d1n", 4, 2, 3, 0x05f4, 0x0998, 0x037e, 0x0629, 2, 4, 2, 2
 Style_B1P127_rap47d_V:
 	style_section_map
 	part_tracks	0x31, Trk_rap47d_V_Drum_S00, Trk_rap47d_V_Drum_S01, Trk_rap47d_V_Drum_S02, Trk_rap47d_V_Drum_S03, Trk_rap47d_V_Drum_S04, Trk_rap47d_V_Drum_S05, Trk_rap47d_V_Drum_S06, Trk_rap47d_V_Drum_S07, Trk_rap47d_V_Drum_S08, Trk_rap47d_V_Drum_S09, Trk_rap47d_V_Drum_S10, Trk_rap47d_V_Drum_S11, Trk_rap47d_V_Drum_S08, Trk_rap47d_V_Drum_S09, Trk_rap47d_V_Drum_S10, Trk_rap47d_V_Drum_S11, Trk_rap47d_V_Drum_S16, Trk_8bs17m_N_Drum_S17, Trk_rap47d_V_Drum_S18	; Drum
@@ -9255,7 +9255,7 @@ Style_B1P127_rap47d_V:
 	part_sound	115, 6, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	60, 4, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rap47d1v", 4, 1, 4, 0x091c, 0x0959, 0x01de, 0x0778, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rap47d1v", 4, 1, 4, 0x091c, 0x0959, 0x01de, 0x0778, 2, 4, 3, 4
 
 ; hus35c: locator [bank 2][program 125]
 Style_B2P125_hus35c:
@@ -9323,7 +9323,7 @@ Style_B2P125_hus35c:
 	part_sound	102, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hus35c1n", 4, 2, 3, 0x06de, 0x0876, 0x02e6, 0x0438, 1, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hus35c1n", 4, 2, 3, 0x06de, 0x0876, 0x02e6, 0x0438, 1, 5, 5, 4
 Style_B2P125_hus35c_V:
 	style_section_map
 	part_tracks	0x32, Trk_hus35c_V_Drum_S00, Trk_hus35c_V_Drum_S01, Trk_hus35c_V_Drum_S02, Trk_hus35c_V_Drum_S03, Trk_hus35c_V_Drum_S04, Trk_hus35c_V_Drum_S05, Trk_hus35c_V_Drum_S06, Trk_hus35c_V_Drum_S07, Trk_hus35c_V_Drum_S08, Trk_hus35c_V_Drum_S09, Trk_hus35c_V_Drum_S10, Trk_hus35c_V_Drum_S11, Trk_hus35c_V_Drum_S08, Trk_hus35c_V_Drum_S09, Trk_hus35c_V_Drum_S10, Trk_hus35c_V_Drum_S11, Trk_hus35c_V_Drum_S16, Trk_8br86d_N_Drum_S17, Trk_hus35c_V_Drum_S18	; Drum
@@ -9389,7 +9389,7 @@ Style_B2P125_hus35c_V:
 	part_sound	102, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	127, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hus35c1v", 4, 5, 3, 0x0994, 0x0626, 0x0440, 0x0548, 2, 5, 3, 4
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hus35c1v", 4, 5, 3, 0x0994, 0x0626, 0x0440, 0x0548, 2, 5, 3, 4
 
 ; hhp15l: locator [bank 5][program 127]
 Style_B5P127_hhp15l:
@@ -9457,7 +9457,7 @@ Style_B5P127_hhp15l:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	119, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hhp15l1n", 4, 2, 9, 0x071d, 0x0ca6, 0x042a, 0x0750, 2, 4, 6, 2
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hhp15l1n", 4, 2, 9, 0x071d, 0x0ca6, 0x042a, 0x0750, 2, 4, 6, 2
 Style_B5P127_hhp15l_V:
 	style_section_map
 	part_tracks	0x11, Trk_hhp15l_V_Drum_S00, Trk_hhp15l_V_Drum_S01, Trk_hhp15l_V_Drum_S02, Trk_hhp15l_V_Drum_S03, Trk_hhp15l_V_Drum_S04, Trk_hhp15l_V_Drum_S05, Trk_hhp15l_V_Drum_S06, Trk_hhp15l_V_Drum_S07, Trk_hhp15l_V_Drum_S08, Trk_hhp15l_V_Drum_S09, Trk_hhp15l_V_Drum_S10, Trk_hhp15l_V_Drum_S11, Trk_hhp15l_V_Drum_S08, Trk_hhp15l_V_Drum_S09, Trk_hhp15l_V_Drum_S10, Trk_hhp15l_V_Drum_S11, Trk_hhp15l_V_Drum_S16, Trk_16s47p_N_Drum_S17, Trk_hhp15l_V_Drum_S18	; Drum
@@ -9523,7 +9523,7 @@ Style_B5P127_hhp15l_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	119, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hhp15l1v", 2, 8, 3, 0x0cf7, 0x0c73, 0x139c, 0x08b8, 2, 3, 4, 1
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hhp15l1v", 2, 8, 3, 0x0cf7, 0x0c73, 0x139c, 0x08b8, 2, 3, 4, 1
 
 ; dcs95m: locator [bank 6][program 124]
 Style_B6P124_dcs95m:
@@ -9591,7 +9591,7 @@ Style_B6P124_dcs95m:
 	part_sound	103, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs95m1n", 4, 3, 5, 0x0735, 0x09ef, 0x037e, 0x05bc, 2, 5, 3, 3
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs95m1n", 4, 3, 5, 0x0735, 0x09ef, 0x037e, 0x05bc, 2, 5, 3, 3
 Style_B6P124_dcs95m_V:
 	style_section_map
 	part_tracks	0x21, Trk_dcs95m_V_Drum_S00, Trk_dcs95m_V_Drum_S01, Trk_dcs95m_V_Drum_S02, Trk_dcs95m_V_Drum_S03, Trk_dcs95m_V_Drum_S04, Trk_dcs95m_V_Drum_S05, Trk_dcs95m_V_Drum_S06, Trk_dcs95m_V_Drum_S07, Trk_dcs95m_V_Drum_S08, Trk_dcs95m_V_Drum_S09, Trk_dcs95m_V_Drum_S10, Trk_dcs95m_V_Drum_S11, Trk_dcs95m_V_Drum_S08, Trk_dcs95m_V_Drum_S09, Trk_dcs95m_V_Drum_S10, Trk_dcs95m_V_Drum_S11, Trk_dcs95m_V_Drum_S16, Trk_rbd87p_N_Drum_S17, Trk_dcs95m_V_Drum_S18	; Drum
@@ -9657,7 +9657,7 @@ Style_B6P124_dcs95m_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs95m1v", 4, 3, 9, 0x0c14, 0x0964, 0x04e8, 0x06de, 2, 5, 4, 7
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs95m1v", 4, 3, 9, 0x0c14, 0x0964, 0x04e8, 0x06de, 2, 5, 4, 7
 
 ; dcs16d: locator [bank 7][program 124]
 Style_B7P124_dcs16d:
@@ -9725,7 +9725,7 @@ Style_B7P124_dcs16d:
 	part_sound	13, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	127, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs16d1n", 3, 4, 3, 0x073e, 0x089e, 0x0358, 0x05b0, 2, 4, 2, 2
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs16d1n", 3, 4, 3, 0x073e, 0x089e, 0x0358, 0x05b0, 2, 4, 2, 2
 Style_B7P124_dcs16d_V:
 	style_section_map
 	part_tracks	0x23, Trk_dcs16d_V_Drum_S00, Trk_dcs16d_V_Drum_S01, Trk_dcs16d_V_Drum_S02, Trk_dcs16d_V_Drum_S03, Trk_dcs16d_V_Drum_S04, Trk_dcs16d_V_Drum_S05, Trk_dcs16d_V_Drum_S06, Trk_dcs16d_V_Drum_S07, Trk_dcs16d_V_Drum_S08, Trk_dcs16d_V_Drum_S09, Trk_dcs16d_V_Drum_S10, Trk_dcs16d_V_Drum_S11, Trk_dcs16d_V_Drum_S08, Trk_dcs16d_V_Drum_S09, Trk_dcs16d_V_Drum_S10, Trk_dcs16d_V_Drum_S11, Trk_dcs16d_V_Drum_S16, Trk_16s26d_N_Drum_S17, Trk_dcs16d_V_Drum_S18	; Drum
@@ -9791,7 +9791,7 @@ Style_B7P124_dcs16d_V:
 	part_sound	104, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	40, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs16d1v", 4, 4, 7, 0x0c4e, 0x0b70, 0x0578, 0x0698, 2, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs16d1v", 4, 4, 7, 0x0c4e, 0x0b70, 0x0578, 0x0698, 2, 4, 4, 3
 
 ; dcs85d: locator [bank 5][program 124]
 Style_B5P124_dcs85d:
@@ -9859,7 +9859,7 @@ Style_B5P124_dcs85d:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs85d1n", 2, 2, 3, 0x073a, 0x0878, 0x03f2, 0x0688, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs85d1n", 2, 2, 3, 0x073a, 0x0878, 0x03f2, 0x0688, 2, 4, 3, 4
 Style_B5P124_dcs85d_V:
 	style_section_map
 	part_tracks	0x2b, Trk_dcs85d_V_Drum_S00, Trk_dcs85d_V_Drum_S01, Trk_dcs85d_V_Drum_S02, Trk_dcs85d_V_Drum_S03, Trk_dcs85d_V_Drum_S04, Trk_dcs85d_V_Drum_S05, Trk_dcs85d_V_Drum_S06, Trk_dcs85d_V_Drum_S07, Trk_dcs85d_V_Drum_S08, Trk_dcs85d_V_Drum_S09, Trk_dcs85d_V_Drum_S10, Trk_dcs85d_V_Drum_S11, Trk_dcs85d_V_Drum_S08, Trk_dcs85d_V_Drum_S09, Trk_dcs85d_V_Drum_S10, Trk_dcs85d_V_Drum_S11, Trk_dcs85d_V_Drum_S16, Trk_shr47k_N_Drum_S17, Trk_dcs85d_V_Drum_S18	; Drum
@@ -9925,7 +9925,7 @@ Style_B5P124_dcs85d_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs85d1v", 4, 2, 7, 0x0aa4, 0x0984, 0x037c, 0x064c, 2, 5, 4, 8
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dcs85d1v", 4, 2, 7, 0x0aa4, 0x0984, 0x037c, 0x064c, 2, 5, 4, 8
 
 ; d1642c: locator [bank 4][program 123]
 Style_B4P123_d1642c:
@@ -9993,7 +9993,7 @@ Style_B4P123_d1642c:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "d1642c1n", 2, 3, 2, 0x072f, 0x06d4, 0x029d, 0x05fc, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "d1642c1n", 2, 3, 2, 0x072f, 0x06d4, 0x029d, 0x05fc, 2, 4, 3, 4
 Style_B4P123_d1642c_V:
 	style_section_map
 	part_tracks	0x25, Trk_d1642c_V_Drum_S00, Trk_d1642c_V_Drum_S01, Trk_d1642c_V_Drum_S02, Trk_d1642c_V_Drum_S03, Trk_d1642c_V_Drum_S04, Trk_d1642c_V_Drum_S05, Trk_d1642c_V_Drum_S06, Trk_d1642c_V_Drum_S07, Trk_d1642c_V_Drum_S08, Trk_d1642c_V_Drum_S09, Trk_d1642c_V_Drum_S10, Trk_d1642c_V_Drum_S11, Trk_d1642c_V_Drum_S08, Trk_d1642c_V_Drum_S09, Trk_d1642c_V_Drum_S10, Trk_d1642c_V_Drum_S11, Trk_d1642c_V_Drum_S16, Trk_d1642c_N_Drum_S17, Trk_d1642c_V_Drum_S18	; Drum
@@ -10059,7 +10059,7 @@ Style_B4P123_d1642c_V:
 	part_sound	29, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "d1642c1v", 4, 4, 7, 0x0a59, 0x0fa4, 0x05e8, 0x0752, 2, 4, 5, 4
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "d1642c1v", 4, 4, 7, 0x0a59, 0x0fa4, 0x05e8, 0x0752, 2, 4, 5, 4
 
 ; bsw45k: locator [bank 4][program 36]
 Style_B4P036_bsw45k:
@@ -10127,7 +10127,7 @@ Style_B4P036_bsw45k:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw45k1n", 5, 7, 5, 0x07e4, 0x083e, 0x06d7, 0x062a, 2, 3, 4, 4
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw45k1n", 5, 7, 5, 0x07e4, 0x083e, 0x06d7, 0x062a, 2, 3, 4, 4
 Style_B4P036_bsw45k_V:
 	style_section_map
 	part_tracks	0x22, Trk_bsw45k_V_Drum_S00, Trk_bsw45k_V_Drum_S01, Trk_bsw45k_V_Drum_S02, Trk_bsw45k_V_Drum_S03, Trk_bsw45k_V_Drum_S04, Trk_bsw45k_V_Drum_S05, Trk_bsw45k_V_Drum_S06, Trk_bsw45k_V_Drum_S07, Trk_bsw45k_V_Drum_S08, Trk_bsw45k_V_Drum_S09, Trk_bsw45k_V_Drum_S10, Trk_bsw45k_V_Drum_S11, Trk_bsw45k_V_Drum_S08, Trk_bsw45k_V_Drum_S09, Trk_bsw45k_V_Drum_S10, Trk_bsw45k_V_Drum_S11, Trk_bsw45k_V_Drum_S16, Trk_sgf57d_N_Drum_S17, Trk_bsw45k_V_Drum_S18	; Drum
@@ -10193,7 +10193,7 @@ Style_B4P036_bsw45k_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw45k1v", 8, 8, 8, 0x07c5, 0x0878, 0x0830, 0x06fc, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw45k1v", 8, 8, 8, 0x07c5, 0x0878, 0x0830, 0x06fc, 2, 5, 4, 4
 
 ; bsw87m: locator [bank 0][program 38]
 Style_B0P038_bsw87m:
@@ -10261,7 +10261,7 @@ Style_B0P038_bsw87m:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw87m1n", 4, 7, 3, 0x078e, 0x0856, 0x056e, 0x0411, 2, 7, 7, 5
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw87m1n", 4, 7, 3, 0x078e, 0x0856, 0x056e, 0x0411, 2, 7, 7, 5
 Style_B0P038_bsw87m_V:
 	style_section_map
 	part_tracks	0x22, Trk_bsw87m_V_Drum_S00, Trk_bsw87m_V_Drum_S01, Trk_bsw87m_V_Drum_S02, Trk_bsw87m_V_Drum_S03, Trk_bsw87m_V_Drum_S04, Trk_bsw87m_V_Drum_S05, Trk_bsw87m_V_Drum_S06, Trk_bsw87m_V_Drum_S07, Trk_bsw87m_V_Drum_S08, Trk_bsw87m_V_Drum_S09, Trk_bsw87m_V_Drum_S10, Trk_bsw87m_V_Drum_S11, Trk_bsw87m_V_Drum_S08, Trk_bsw87m_V_Drum_S09, Trk_bsw87m_V_Drum_S10, Trk_bsw87m_V_Drum_S11, Trk_bsw87m_V_Drum_S16, Trk_sgf57d_N_Drum_S17, Trk_bsw87m_V_Drum_S18	; Drum
@@ -10327,7 +10327,7 @@ Style_B0P038_bsw87m_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw87m1v", 4, 5, 6, 0x0a35, 0x0dfc, 0x06d8, 0x045b, 2, 5, 10, 5
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw87m1v", 4, 5, 6, 0x0a35, 0x0dfc, 0x06d8, 0x045b, 2, 5, 10, 5
 
 ; bsw17p: locator [bank 2][program 38]
 Style_B2P038_bsw17p:
@@ -10395,7 +10395,7 @@ Style_B2P038_bsw17p:
 	part_sound	52, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw17p1n", 5, 4, 6, 0x08ae, 0x0afe, 0x035e, 0x055a, 2, 5, 7, 6
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw17p1n", 5, 4, 6, 0x08ae, 0x0afe, 0x035e, 0x055a, 2, 5, 7, 6
 Style_B2P038_bsw17p_V:
 	style_section_map
 	part_tracks	0x22, Trk_bsw17p_V_Drum_S00, Trk_bsw17p_V_Drum_S01, Trk_bsw17p_V_Drum_S02, Trk_bsw17p_V_Drum_S03, Trk_bsw17p_V_Drum_S04, Trk_bsw17p_V_Drum_S05, Trk_bsw17p_V_Drum_S06, Trk_bsw17p_V_Drum_S07, Trk_bsw17p_V_Drum_S08, Trk_bsw17p_V_Drum_S09, Trk_bsw17p_V_Drum_S10, Trk_bsw17p_V_Drum_S11, Trk_bsw17p_V_Drum_S08, Trk_bsw17p_V_Drum_S09, Trk_bsw17p_V_Drum_S10, Trk_bsw17p_V_Drum_S11, Trk_bsw17p_V_Drum_S16, Trk_sgf57d_N_Drum_S17, Trk_bsw17p_V_Drum_S18	; Drum
@@ -10461,7 +10461,7 @@ Style_B2P038_bsw17p_V:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw17p1v", 4, 4, 5, 0x0944, 0x0cae, 0x054b, 0x051c, 2, 5, 8, 6
+	style_tail	TIMESIG_4_4, 0x22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw17p1v", 4, 4, 5, 0x0944, 0x0cae, 0x054b, 0x051c, 2, 5, 8, 6
 
 ; bsw76k: locator [bank 7][program 38]
 Style_B7P038_bsw76k:
@@ -10529,7 +10529,7 @@ Style_B7P038_bsw76k:
 	part_sound	52, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw76k1n", 2, 4, 3, 0x094a, 0x0974, 0x0408, 0x054e, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw76k1n", 2, 4, 3, 0x094a, 0x0974, 0x0408, 0x054e, 2, 5, 5, 4
 Style_B7P038_bsw76k_V:
 	style_section_map
 	part_tracks	0x27, Trk_bsw76k_V_Drum_S00, Trk_bsw76k_V_Drum_S01, Trk_bsw76k_V_Drum_S02, Trk_bsw76k_V_Drum_S03, Trk_bsw76k_V_Drum_S04, Trk_bsw76k_V_Drum_S05, Trk_bsw76k_V_Drum_S06, Trk_bsw76k_V_Drum_S07, Trk_bsw76k_V_Drum_S08, Trk_bsw76k_V_Drum_S09, Trk_bsw76k_V_Drum_S10, Trk_bsw76k_V_Drum_S11, Trk_bsw76k_V_Drum_S08, Trk_bsw76k_V_Drum_S09, Trk_bsw76k_V_Drum_S10, Trk_bsw76k_V_Drum_S11, Trk_bsw76k_V_Drum_S16, Trk_16b96d_N_Drum_S17, Trk_bsw76k_V_Drum_S18	; Drum
@@ -10595,7 +10595,7 @@ Style_B7P038_bsw76k_V:
 	part_sound	52, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 39, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw76k1v", 4, 5, 5, 0x09f4, 0x0908, 0x0698, 0x053a, 2, 5, 5, 7
+	style_tail	TIMESIG_4_4, 0x27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw76k1v", 4, 5, 5, 0x09f4, 0x0908, 0x0698, 0x053a, 2, 5, 5, 7
 
 ; jcb97n: locator [bank 1][program 34]
 Style_B1P034_jcb97n:
@@ -10663,7 +10663,7 @@ Style_B1P034_jcb97n:
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb97n1n", 4, 5, 7, 0x098a, 0x0a76, 0x0842, 0x0688, 2, 7, 6, 11
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb97n1n", 4, 5, 7, 0x098a, 0x0a76, 0x0842, 0x0688, 2, 7, 6, 11
 Style_B1P034_jcb97n_V:
 	style_section_map
 	part_tracks	0x1c, Trk_jcb97n_V_Drum_S00, Trk_jcb97n_V_Drum_S01, Trk_jcb97n_V_Drum_S02, Trk_jcb97n_V_Drum_S03, Trk_jcb97n_V_Drum_S04, Trk_jcb97n_V_Drum_S05, Trk_jcb97n_V_Drum_S06, Trk_jcb97n_V_Drum_S07, Trk_jcb97n_V_Drum_S08, Trk_jcb97n_V_Drum_S09, Trk_jcb97n_V_Drum_S10, Trk_jcb97n_V_Drum_S11, Trk_jcb97n_V_Drum_S08, Trk_jcb97n_V_Drum_S09, Trk_jcb97n_V_Drum_S10, Trk_jcb97n_V_Drum_S11, Trk_jcb97n_V_Drum_S16, Trk_8rr17d_N_Drum_S17, Trk_jcb97n_V_Drum_S18	; Drum
@@ -10729,7 +10729,7 @@ Style_B1P034_jcb97n_V:
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb97n1v", 4, 4, 6, 0x0814, 0x093c, 0x0636, 0x049c, 2, 6, 4, 7
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb97n1v", 4, 4, 6, 0x0814, 0x093c, 0x0636, 0x049c, 2, 6, 4, 7
 
 ; swg35k: locator [bank 2][program 25]
 Style_B2P025_swg35k:
@@ -10797,7 +10797,7 @@ Style_B2P025_swg35k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "swg35k1n", 4, 5, 5, 0x05c6, 0x06cc, 0x04ec, 0x0480, 2, 5, 6, 4
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "swg35k1n", 4, 5, 5, 0x05c6, 0x06cc, 0x04ec, 0x0480, 2, 5, 6, 4
 Style_B2P025_swg35k_V:
 	style_section_map
 	part_tracks	0x2e, Trk_swg35k_V_Drum_S00, Trk_swg35k_V_Drum_S01, Trk_swg35k_V_Drum_S02, Trk_swg35k_V_Drum_S03, Trk_swg35k_V_Drum_S04, Trk_swg35k_V_Drum_S05, Trk_swg35k_V_Drum_S06, Trk_swg35k_V_Drum_S07, Trk_swg35k_V_Drum_S08, Trk_swg35k_V_Drum_S09, Trk_swg35k_V_Drum_S10, Trk_swg35k_V_Drum_S11, Trk_swg35k_V_Drum_S08, Trk_swg35k_V_Drum_S09, Trk_swg35k_V_Drum_S10, Trk_swg35k_V_Drum_S11, Trk_swg35k_V_Drum_S16, Trk_sbg35n_N_Drum_S17, Trk_swg35k_V_Drum_S18	; Drum
@@ -10863,7 +10863,7 @@ Style_B2P025_swg35k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "swg35k1v", 4, 8, 5, 0x07ce, 0x07fa, 0x0716, 0x0551, 2, 5, 7, 3
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "swg35k1v", 4, 8, 5, 0x07ce, 0x07fa, 0x0716, 0x0551, 2, 5, 7, 3
 
 ; osw37k: locator [bank 3][program 37]
 Style_B3P037_osw37k:
@@ -10931,7 +10931,7 @@ Style_B3P037_osw37k:
 	part_sound	52, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw37k1n", 4, 3, 6, 0x0c15, 0x0782, 0x02f0, 0x04ec, 2, 8, 7, 5
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw37k1n", 4, 3, 6, 0x0c15, 0x0782, 0x02f0, 0x04ec, 2, 8, 7, 5
 Style_B3P037_osw37k_V:
 	style_section_map
 	part_tracks	0x29, Trk_osw37k_V_Drum_S00, Trk_osw37k_V_Drum_S01, Trk_osw37k_V_Drum_S02, Trk_osw37k_V_Drum_S03, Trk_osw37k_V_Drum_S04, Trk_osw37k_V_Drum_S05, Trk_osw37k_V_Drum_S06, Trk_osw37k_V_Drum_S07, Trk_osw37k_V_Drum_S08, Trk_osw37k_V_Drum_S09, Trk_osw37k_V_Drum_S10, Trk_osw37k_V_Drum_S11, Trk_osw37k_V_Drum_S08, Trk_osw37k_V_Drum_S09, Trk_osw37k_V_Drum_S10, Trk_osw37k_V_Drum_S11, Trk_osw37k_V_Drum_S16, Trk_rbd77d_N_Drum_S17, Trk_osw37k_V_Drum_S18	; Drum
@@ -10997,7 +10997,7 @@ Style_B3P037_osw37k_V:
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	9, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw37k1v", 4, 7, 5, 0x08a4, 0x074f, 0x054a, 0x0720, 2, 6, 7, 4
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw37k1v", 4, 7, 5, 0x08a4, 0x074f, 0x054a, 0x0720, 2, 6, 7, 4
 
 ; osw47n: locator [bank 4][program 37]
 Style_B4P037_osw47n:
@@ -11065,7 +11065,7 @@ Style_B4P037_osw47n:
 	part_sound	48, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	101, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw47n1n", 4, 4, 6, 0x071a, 0x083e, 0x04ca, 0x04fa, 2, 6, 7, 7
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw47n1n", 4, 4, 6, 0x071a, 0x083e, 0x04ca, 0x04fa, 2, 6, 7, 7
 Style_B4P037_osw47n_V:
 	style_section_map
 	part_tracks	0x1d, Trk_osw47n_V_Drum_S00, Trk_osw47n_V_Drum_S01, Trk_osw47n_V_Drum_S02, Trk_osw47n_V_Drum_S03, Trk_osw47n_V_Drum_S04, Trk_osw47n_V_Drum_S05, Trk_osw47n_V_Drum_S06, Trk_osw47n_V_Drum_S07, Trk_osw47n_V_Drum_S08, Trk_osw47n_V_Drum_S09, Trk_osw47n_V_Drum_S10, Trk_osw47n_V_Drum_S11, Trk_osw47n_V_Drum_S08, Trk_osw47n_V_Drum_S09, Trk_osw47n_V_Drum_S10, Trk_osw47n_V_Drum_S11, Trk_osw47n_V_Drum_S16, Trk_8sl47d_N_Drum_S17, Trk_osw47n_V_Drum_S18	; Drum
@@ -11131,7 +11131,7 @@ Style_B4P037_osw47n_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	101, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw47n1v", 8, 4, 10, 0x0764, 0x0936, 0x0624, 0x0518, 2, 8, 8, 8
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "osw47n1v", 8, 4, 10, 0x0764, 0x0936, 0x0624, 0x0518, 2, 8, 8, 8
 
 ; fxt67s: locator [bank 5][program 29]
 Style_B5P029_fxt67s:
@@ -11199,7 +11199,7 @@ Style_B5P029_fxt67s:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt67s1n", 2, 4, 1, 0x056c, 0x0410, 0x03f8, 0x035a, 2, 3, 5, 4
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt67s1n", 2, 4, 1, 0x056c, 0x0410, 0x03f8, 0x035a, 2, 3, 5, 4
 Style_B5P029_fxt67s_V:
 	style_section_map
 	part_tracks	0x2a, Trk_fxt67s_V_Drum_S00, Trk_fxt67s_V_Drum_S01, Trk_fxt67s_V_Drum_S02, Trk_fxt67s_V_Drum_S03, Trk_fxt67s_V_Drum_S04, Trk_fxt67s_V_Drum_S05, Trk_fxt67s_V_Drum_S06, Trk_fxt67s_V_Drum_S07, Trk_fxt67s_V_Drum_S08, Trk_fxt67s_V_Drum_S09, Trk_fxt67s_V_Drum_S10, Trk_fxt67s_V_Drum_S11, Trk_fxt67s_V_Drum_S08, Trk_fxt67s_V_Drum_S09, Trk_fxt67s_V_Drum_S10, Trk_fxt67s_V_Drum_S11, Trk_fxt67s_V_Drum_S16, Trk_8bh97k_N_Drum_S17, Trk_fxt67s_V_Drum_S18	; Drum
@@ -11265,7 +11265,7 @@ Style_B5P029_fxt67s_V:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt67s1v", 4, 5, 3, 0x06ae, 0x07a2, 0x0236, 0x04f2, 2, 3, 4, 4
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt67s1v", 4, 5, 3, 0x06ae, 0x07a2, 0x0236, 0x04f2, 2, 3, 4, 4
 
 ; jwf77s: locator [bank 6][program 46]
 Style_B6P046_jwf77s:
@@ -11333,7 +11333,7 @@ Style_B6P046_jwf77s:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf77s1n", 4, 8, 3, 0x0474, 0x04c2, 0x043a, 0x043c, 2, 6, 4, 8
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf77s1n", 4, 8, 3, 0x0474, 0x04c2, 0x043a, 0x043c, 2, 6, 4, 8
 Style_B6P046_jwf77s_V:
 	style_section_map
 	part_tracks	0x36, Trk_jwf77s_V_Drum_S00, Trk_jwf77s_V_Drum_S01, Trk_jwf77s_V_Drum_S02, Trk_jwf77s_V_Drum_S03, Trk_jwf77s_V_Drum_S04, Trk_jwf77s_V_Drum_S05, Trk_jwf77s_V_Drum_S06, Trk_jwf77s_V_Drum_S07, Trk_jwf77s_V_Drum_S08, Trk_jwf77s_V_Drum_S09, Trk_jwf77s_V_Drum_S10, Trk_jwf77s_V_Drum_S11, Trk_jwf77s_V_Drum_S08, Trk_jwf77s_V_Drum_S09, Trk_jwf77s_V_Drum_S10, Trk_jwf77s_V_Drum_S11, Trk_jwf77s_V_Drum_S16, Trk_jwf77s_N_Drum_S17, Trk_jwf77s_V_Drum_S18	; Drum
@@ -11399,7 +11399,7 @@ Style_B6P046_jwf77s_V:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf77s1v", 8, 7, 6, 0x0556, 0x06d8, 0x0426, 0x0609, 2, 5, 5, 7
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf77s1v", 8, 7, 6, 0x0556, 0x06d8, 0x0426, 0x0609, 2, 5, 5, 7
 
 ; bsw66k: locator [bank 3][program 39]
 Style_B3P039_bsw66k:
@@ -11467,7 +11467,7 @@ Style_B3P039_bsw66k:
 	part_sound	53, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw66k1n", 4, 4, 5, 0x07fe, 0x07cc, 0x0584, 0x04bb, 1, 5, 7, 9
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw66k1n", 4, 4, 5, 0x07fe, 0x07cc, 0x0584, 0x04bb, 1, 5, 7, 9
 Style_B3P039_bsw66k_V:
 	style_section_map
 	part_tracks	0x26, Trk_bsw66k_V_Drum_S00, Trk_bsw66k_V_Drum_S01, Trk_bsw66k_V_Drum_S02, Trk_bsw66k_V_Drum_S03, Trk_bsw66k_V_Drum_S04, Trk_bsw66k_V_Drum_S05, Trk_bsw66k_V_Drum_S06, Trk_bsw66k_V_Drum_S07, Trk_bsw66k_V_Drum_S08, Trk_bsw66k_V_Drum_S09, Trk_bsw66k_V_Drum_S10, Trk_bsw66k_V_Drum_S11, Trk_bsw66k_V_Drum_S08, Trk_bsw66k_V_Drum_S09, Trk_bsw66k_V_Drum_S10, Trk_bsw66k_V_Drum_S11, Trk_bsw66k_V_Drum_S16, Trk_8pr76d_N_Drum_S17, Trk_bsw66k_V_Drum_S18	; Drum
@@ -11533,7 +11533,7 @@ Style_B3P039_bsw66k_V:
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw66k1v", 4, 5, 6, 0x092c, 0x0b58, 0x04a0, 0x0560, 2, 7, 9, 9
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw66k1v", 4, 5, 6, 0x092c, 0x0b58, 0x04a0, 0x0560, 2, 7, 9, 9
 
 ; jwf56k: locator [bank 4][program 46]
 Style_B4P046_jwf56k:
@@ -11601,7 +11601,7 @@ Style_B4P046_jwf56k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf56k1n", 4, 6, 1, 0x0376, 0x0322, 0x02e4, 0x04d6, 2, 6, 3, 0
+	style_tail	TIMESIG_3_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf56k1n", 4, 6, 1, 0x0376, 0x0322, 0x02e4, 0x04d6, 2, 6, 3, 0
 Style_B4P046_jwf56k_V:
 	style_section_map
 	part_tracks	0x16, Trk_jwf56k_V_Drum_S00, Trk_jwf56k_V_Drum_S01, Trk_jwf56k_V_Drum_S02, Trk_jwf56k_V_Drum_S03, Trk_jwf56k_V_Drum_S04, Trk_jwf56k_V_Drum_S05, Trk_jwf56k_V_Drum_S06, Trk_jwf56k_V_Drum_S07, Trk_jwf56k_V_Drum_S08, Trk_jwf56k_V_Drum_S09, Trk_jwf56k_V_Drum_S10, Trk_jwf56k_V_Drum_S11, Trk_jwf56k_V_Drum_S08, Trk_jwf56k_V_Drum_S09, Trk_jwf56k_V_Drum_S10, Trk_jwf56k_V_Drum_S11, Trk_jwf56k_V_Drum_S16, Trk_jwf56k_N_Drum_S17, Trk_jwf56k_V_Drum_S18	; Drum
@@ -11667,7 +11667,7 @@ Style_B4P046_jwf56k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf56k1v", 8, 8, 2, 0x04ec, 0x051c, 0x040f, 0x04a0, 2, 7, 4, 0
+	style_tail	TIMESIG_3_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf56k1v", 8, 8, 2, 0x04ec, 0x051c, 0x040f, 0x04a0, 2, 7, 4, 0
 
 ; jcb77k: locator [bank 7][program 34]
 Style_B7P034_jcb77k:
@@ -11735,7 +11735,7 @@ Style_B7P034_jcb77k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb77k1n", 1, 2, 1, 0x0539, 0x053e, 0x01f6, 0x03ab, 2, 5, 3, 0
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb77k1n", 1, 2, 1, 0x0539, 0x053e, 0x01f6, 0x03ab, 2, 5, 3, 0
 Style_B7P034_jcb77k_V:
 	style_section_map
 	part_tracks	0x29, Trk_jcb77k_V_Drum_S00, Trk_jcb77k_V_Drum_S01, Trk_jcb77k_V_Drum_S02, Trk_jcb77k_V_Drum_S03, Trk_jcb77k_V_Drum_S04, Trk_jcb77k_V_Drum_S05, Trk_jcb77k_V_Drum_S06, Trk_jcb77k_V_Drum_S07, Trk_jcb77k_V_Drum_S08, Trk_jcb77k_V_Drum_S09, Trk_jcb77k_V_Drum_S10, Trk_jcb77k_V_Drum_S11, Trk_jcb77k_V_Drum_S08, Trk_jcb77k_V_Drum_S09, Trk_jcb77k_V_Drum_S10, Trk_jcb77k_V_Drum_S11, Trk_jcb77k_V_Drum_S16, Trk_rbd77d_N_Drum_S17, Trk_jcb77k_V_Drum_S18	; Drum
@@ -11801,7 +11801,7 @@ Style_B7P034_jcb77k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb77k1v", 2, 3, 1, 0x06d0, 0x079a, 0x0256, 0x0470, 1, 5, 4, 0
+	style_tail	TIMESIG_4_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb77k1v", 2, 3, 1, 0x06d0, 0x079a, 0x0256, 0x0470, 1, 5, 4, 0
 
 ; jwf67k: locator [bank 5][program 46]
 Style_B5P046_jwf67k:
@@ -11869,7 +11869,7 @@ Style_B5P046_jwf67k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf67k1n", 1, 2, 1, 0x0421, 0x054e, 0x017c, 0x04a0, 2, 3, 3, 2
+	style_tail	TIMESIG_3_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf67k1n", 1, 2, 1, 0x0421, 0x054e, 0x017c, 0x04a0, 2, 3, 3, 2
 Style_B5P046_jwf67k_V:
 	style_section_map
 	part_tracks	0x37, Trk_jwf67k_V_Drum_S00, Trk_jwf67k_V_Drum_S01, Trk_jwf67k_V_Drum_S02, Trk_jwf67k_V_Drum_S03, Trk_jwf67k_V_Drum_S04, Trk_jwf67k_V_Drum_S05, Trk_jwf67k_V_Drum_S06, Trk_jwf67k_V_Drum_S07, Trk_jwf67k_V_Drum_S08, Trk_jwf67k_V_Drum_S09, Trk_jwf67k_V_Drum_S10, Trk_jwf67k_V_Drum_S11, Trk_jwf67k_V_Drum_S08, Trk_jwf67k_V_Drum_S09, Trk_jwf67k_V_Drum_S10, Trk_jwf67k_V_Drum_S11, Trk_jwf67k_V_Drum_S16, Trk_jwf67k_N_Drum_S17, Trk_jwf67k_V_Drum_S18	; Drum
@@ -11935,7 +11935,7 @@ Style_B5P046_jwf67k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf67k1v", 2, 3, 2, 0x057c, 0x08fc, 0x020e, 0x05ef, 2, 5, 9, 2
+	style_tail	TIMESIG_3_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jwf67k1v", 2, 3, 2, 0x057c, 0x08fc, 0x020e, 0x05ef, 2, 5, 9, 2
 
 ; jcb55s: locator [bank 5][program 34]
 Style_B5P034_jcb55s:
@@ -12003,7 +12003,7 @@ Style_B5P034_jcb55s:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb55s1n", 2, 2, 1, 0x0532, 0x0636, 0x012e, 0x04dc, 1, 3, 3, 1
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb55s1n", 2, 2, 1, 0x0532, 0x0636, 0x012e, 0x04dc, 1, 3, 3, 1
 Style_B5P034_jcb55s_V:
 	style_section_map
 	part_tracks	0x33, Trk_jcb55s_V_Drum_S00, Trk_jcb55s_V_Drum_S01, Trk_jcb55s_V_Drum_S02, Trk_jcb55s_V_Drum_S03, Trk_jcb55s_V_Drum_S04, Trk_jcb55s_V_Drum_S05, Trk_jcb55s_V_Drum_S06, Trk_jcb55s_V_Drum_S07, Trk_jcb55s_V_Drum_S08, Trk_jcb55s_V_Drum_S09, Trk_jcb55s_V_Drum_S10, Trk_jcb55s_V_Drum_S11, Trk_jcb55s_V_Drum_S08, Trk_jcb55s_V_Drum_S09, Trk_jcb55s_V_Drum_S10, Trk_jcb55s_V_Drum_S11, Trk_jcb55s_V_Drum_S16, Trk_16s37k_N_Drum_S17, Trk_jcb55s_V_Drum_S18	; Drum
@@ -12069,7 +12069,7 @@ Style_B5P034_jcb55s_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb55s1v", 4, 4, 3, 0x06ac, 0x068c, 0x023a, 0x0462, 1, 4, 3, 2
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb55s1v", 4, 4, 3, 0x06ac, 0x068c, 0x023a, 0x0462, 1, 4, 3, 2
 
 ; jcc17d: locator [bank 2][program 35]
 Style_B2P035_jcc17d:
@@ -12137,7 +12137,7 @@ Style_B2P035_jcc17d:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcc17d1n", 4, 4, 5, 0x061a, 0x08fb, 0x0621, 0x0407, 2, 7, 4, 2
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcc17d1n", 4, 4, 5, 0x061a, 0x08fb, 0x0621, 0x0407, 2, 7, 4, 2
 Style_B2P035_jcc17d_V:
 	style_section_map
 	part_tracks	0x19, Trk_jcc17d_V_Drum_S00, Trk_jcc17d_V_Drum_S01, Trk_jcc17d_V_Drum_S02, Trk_jcc17d_V_Drum_S03, Trk_jcc17d_V_Drum_S04, Trk_jcc17d_V_Drum_S05, Trk_jcc17d_V_Drum_S06, Trk_jcc17d_V_Drum_S07, Trk_jcc17d_V_Drum_S08, Trk_jcc17d_V_Drum_S09, Trk_jcc17d_V_Drum_S10, Trk_jcc17d_V_Drum_S11, Trk_jcc17d_V_Drum_S08, Trk_jcc17d_V_Drum_S09, Trk_jcc17d_V_Drum_S10, Trk_jcc17d_V_Drum_S11, Trk_jcc17d_V_Drum_S16, Trk_fkr47d_N_Drum_S17, Trk_jcc17d_V_Drum_S18	; Drum
@@ -12203,7 +12203,7 @@ Style_B2P035_jcc17d_V:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcc17d1v", 8, 8, 9, 0x08fa, 0x0a8e, 0x0d3e, 0x0560, 2, 6, 4, 4
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcc17d1v", 8, 8, 9, 0x08fa, 0x0a8e, 0x0d3e, 0x0560, 2, 6, 4, 4
 
 ; 8rb37k: locator [bank 3][program 81]
 Style_B3P081_8rb37k:
@@ -12271,7 +12271,7 @@ Style_B3P081_8rb37k:
 	part_sound	58, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb37k1n", 4, 3, 4, 0x061b, 0x0680, 0x02ce, 0x04e1, 2, 4, 5, 1
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb37k1n", 4, 3, 4, 0x061b, 0x0680, 0x02ce, 0x04e1, 2, 4, 5, 1
 Style_B3P081_8rb37k_V:
 	style_section_map
 	part_tracks	0x19, Trk_8rb37k_V_Drum_S00, Trk_8rb37k_V_Drum_S01, Trk_8rb37k_V_Drum_S02, Trk_8rb37k_V_Drum_S03, Trk_8rb37k_V_Drum_S04, Trk_8rb37k_V_Drum_S05, Trk_8rb37k_V_Drum_S06, Trk_8rb37k_V_Drum_S07, Trk_8rb37k_V_Drum_S08, Trk_8rb37k_V_Drum_S09, Trk_8rb37k_V_Drum_S10, Trk_8rb37k_V_Drum_S11, Trk_8rb37k_V_Drum_S08, Trk_8rb37k_V_Drum_S09, Trk_8rb37k_V_Drum_S10, Trk_8rb37k_V_Drum_S11, Trk_8rb37k_V_Drum_S16, Trk_fkr47d_N_Drum_S17, Trk_8rb37k_V_Drum_S18	; Drum
@@ -12337,7 +12337,7 @@ Style_B3P081_8rb37k_V:
 	part_sound	88, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb37k1v", 5, 7, 6, 0x061f, 0x07aa, 0x09ec, 0x0616, 2, 5, 5, 5
+	style_tail	TIMESIG_4_4, 0x19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8rb37k1v", 5, 7, 6, 0x061f, 0x07aa, 0x09ec, 0x0616, 2, 5, 5, 5
 
 ; jcb17n: locator [bank 2][program 34]
 Style_B2P034_jcb17n:
@@ -12405,7 +12405,7 @@ Style_B2P034_jcb17n:
 	part_sound	80, 6, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb17n1n", 4, 4, 4, 0x06b4, 0x0760, 0x0580, 0x0418, 2, 5, 7, 3
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb17n1n", 4, 4, 4, 0x06b4, 0x0760, 0x0580, 0x0418, 2, 5, 7, 3
 Style_B2P034_jcb17n_V:
 	style_section_map
 	part_tracks	0x2e, Trk_jcb17n_V_Drum_S00, Trk_jcb17n_V_Drum_S01, Trk_jcb17n_V_Drum_S02, Trk_jcb17n_V_Drum_S03, Trk_jcb17n_V_Drum_S04, Trk_jcb17n_V_Drum_S05, Trk_jcb17n_V_Drum_S06, Trk_jcb17n_V_Drum_S07, Trk_jcb17n_V_Drum_S08, Trk_jcb17n_V_Drum_S09, Trk_jcb17n_V_Drum_S10, Trk_jcb17n_V_Drum_S11, Trk_jcb17n_V_Drum_S08, Trk_jcb17n_V_Drum_S09, Trk_jcb17n_V_Drum_S10, Trk_jcb17n_V_Drum_S11, Trk_jcb17n_V_Drum_S16, Trk_sbg35n_N_Drum_S17, Trk_jcb17n_V_Drum_S18	; Drum
@@ -12471,7 +12471,7 @@ Style_B2P034_jcb17n_V:
 	part_sound	80, 5, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	88, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb17n1v", 4, 4, 5, 0x0722, 0x0884, 0x0556, 0x04c8, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb17n1v", 4, 4, 5, 0x0722, 0x0884, 0x0556, 0x04c8, 2, 6, 6, 5
 
 ; jcf77k: locator [bank 6][program 32]
 Style_B6P032_jcf77k:
@@ -12539,7 +12539,7 @@ Style_B6P032_jcf77k:
 	part_sound	20, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	96, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf77k1n", 4, 5, 1, 0x088f, 0x091a, 0x04f6, 0x03fc, 2, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf77k1n", 4, 5, 1, 0x088f, 0x091a, 0x04f6, 0x03fc, 2, 5, 5, 2
 Style_B6P032_jcf77k_V:
 	style_section_map
 	part_tracks	0x30, Trk_jcf77k_V_Drum_S00, Trk_jcf77k_V_Drum_S01, Trk_jcf77k_V_Drum_S02, Trk_jcf77k_V_Drum_S03, Trk_jcf77k_V_Drum_S04, Trk_jcf77k_V_Drum_S05, Trk_jcf77k_V_Drum_S06, Trk_jcf77k_V_Drum_S07, Trk_jcf77k_V_Drum_S08, Trk_jcf77k_V_Drum_S09, Trk_jcf77k_V_Drum_S10, Trk_jcf77k_V_Drum_S11, Trk_jcf77k_V_Drum_S08, Trk_jcf77k_V_Drum_S09, Trk_jcf77k_V_Drum_S10, Trk_jcf77k_V_Drum_S11, Trk_jcf77k_V_Drum_S16, Trk_rbs15s_N_Drum_S17, Trk_jcf77k_V_Drum_S18	; Drum
@@ -12605,7 +12605,7 @@ Style_B6P032_jcf77k_V:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	96, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf77k1v", 4, 4, 4, 0x06a4, 0x06f0, 0x05f2, 0x04c2, 2, 6, 0, 2
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf77k1v", 4, 4, 4, 0x06a4, 0x06f0, 0x05f2, 0x04c2, 2, 6, 0, 2
 
 ; jcb87k: locator [bank 0][program 34]
 Style_B0P034_jcb87k:
@@ -12673,7 +12673,7 @@ Style_B0P034_jcb87k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb87k1n", 4, 6, 5, 0x0642, 0x07d2, 0x0446, 0x032e, 2, 3, 7, 0
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb87k1n", 4, 6, 5, 0x0642, 0x07d2, 0x0446, 0x032e, 2, 3, 7, 0
 Style_B0P034_jcb87k_V:
 	style_section_map
 	part_tracks	0x2f, Trk_jcb87k_V_Drum_S00, Trk_jcb87k_V_Drum_S01, Trk_jcb87k_V_Drum_S02, Trk_jcb87k_V_Drum_S03, Trk_jcb87k_V_Drum_S04, Trk_jcb87k_V_Drum_S05, Trk_jcb87k_V_Drum_S06, Trk_jcb87k_V_Drum_S07, Trk_jcb87k_V_Drum_S08, Trk_jcb87k_V_Drum_S09, Trk_jcb87k_V_Drum_S10, Trk_jcb87k_V_Drum_S11, Trk_jcb87k_V_Drum_S08, Trk_jcb87k_V_Drum_S09, Trk_jcb87k_V_Drum_S10, Trk_jcb87k_V_Drum_S11, Trk_jcb87k_V_Drum_S16, Trk_16b16k_N_Drum_S17, Trk_jcb87k_V_Drum_S18	; Drum
@@ -12739,7 +12739,7 @@ Style_B0P034_jcb87k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb87k1v", 8, 6, 9, 0x0692, 0x0592, 0x04a2, 0x045e, 2, 4, 6, 0
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb87k1v", 8, 6, 9, 0x0692, 0x0592, 0x04a2, 0x045e, 2, 4, 6, 0
 
 ; jcf56k: locator [bank 5][program 32]
 Style_B5P032_jcf56k:
@@ -12807,7 +12807,7 @@ Style_B5P032_jcf56k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf56k1n", 4, 8, 1, 0x04c0, 0x0472, 0x04c6, 0x0464, 2, 5, 5, 0
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf56k1n", 4, 8, 1, 0x04c0, 0x0472, 0x04c6, 0x0464, 2, 5, 5, 0
 Style_B5P032_jcf56k_V:
 	style_section_map
 	part_tracks	0x36, Trk_jcf56k_V_Drum_S00, Trk_jcf56k_V_Drum_S01, Trk_jcf56k_V_Drum_S02, Trk_jcf56k_V_Drum_S03, Trk_jcf56k_V_Drum_S04, Trk_jcf56k_V_Drum_S05, Trk_jcf56k_V_Drum_S06, Trk_jcf56k_V_Drum_S07, Trk_jcf56k_V_Drum_S08, Trk_jcf56k_V_Drum_S09, Trk_jcf56k_V_Drum_S10, Trk_jcf56k_V_Drum_S11, Trk_jcf56k_V_Drum_S08, Trk_jcf56k_V_Drum_S09, Trk_jcf56k_V_Drum_S10, Trk_jcf56k_V_Drum_S11, Trk_jcf56k_V_Drum_S16, Trk_8br75d_N_Drum_S17, Trk_jcf56k_V_Drum_S18	; Drum
@@ -12873,7 +12873,7 @@ Style_B5P032_jcf56k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf56k1v", 8, 8, 4, 0x0598, 0x04cf, 0x06de, 0x044c, 2, 6, 2, 0
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcf56k1v", 8, 8, 4, 0x0598, 0x04cf, 0x06de, 0x044c, 2, 6, 2, 0
 
 ; jbd46d: locator [bank 2][program 44]
 Style_B2P044_jbd46d:
@@ -12941,7 +12941,7 @@ Style_B2P044_jbd46d:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd46d1n", 4, 6, 3, 0x06d9, 0x06a8, 0x05ce, 0x033c, 2, 9, 0, 0
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd46d1n", 4, 6, 3, 0x06d9, 0x06a8, 0x05ce, 0x033c, 2, 9, 0, 0
 Style_B2P044_jbd46d_V:
 	style_section_map
 	part_tracks	0x2c, Trk_jbd46d_V_Drum_S00, Trk_jbd46d_V_Drum_S01, Trk_jbd46d_V_Drum_S02, Trk_jbd46d_V_Drum_S03, Trk_jbd46d_V_Drum_S04, Trk_jbd46d_V_Drum_S05, Trk_jbd46d_V_Drum_S06, Trk_jbd46d_V_Drum_S07, Trk_jbd46d_V_Drum_S08, Trk_jbd46d_V_Drum_S09, Trk_jbd46d_V_Drum_S10, Trk_jbd46d_V_Drum_S11, Trk_jbd46d_V_Drum_S08, Trk_jbd46d_V_Drum_S09, Trk_jbd46d_V_Drum_S10, Trk_jbd46d_V_Drum_S11, Trk_jbd46d_V_Drum_S16, Trk_8bb57m_N_Drum_S17, Trk_jbd46d_V_Drum_S18	; Drum
@@ -13007,7 +13007,7 @@ Style_B2P044_jbd46d_V:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd46d1v", 4, 8, 5, 0x062e, 0x08e8, 0x0942, 0x03b0, 2, 7, 5, 0
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd46d1v", 4, 8, 5, 0x062e, 0x08e8, 0x0942, 0x03b0, 2, 7, 5, 0
 
 ; mjf57s: locator [bank 6][program 40]
 Style_B6P040_mjf57s:
@@ -13075,7 +13075,7 @@ Style_B6P040_mjf57s:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mjf57s1n", 4, 4, 4, 0x054b, 0x06f4, 0x0270, 0x0478, 2, 5, 4, 7
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mjf57s1n", 4, 4, 4, 0x054b, 0x06f4, 0x0270, 0x0478, 2, 5, 4, 7
 Style_B6P040_mjf57s_V:
 	style_section_map
 	part_tracks	0x33, Trk_mjf57s_V_Drum_S00, Trk_mjf57s_V_Drum_S01, Trk_mjf57s_V_Drum_S02, Trk_mjf57s_V_Drum_S03, Trk_mjf57s_V_Drum_S04, Trk_mjf57s_V_Drum_S05, Trk_mjf57s_V_Drum_S06, Trk_mjf57s_V_Drum_S07, Trk_mjf57s_V_Drum_S08, Trk_mjf57s_V_Drum_S09, Trk_mjf57s_V_Drum_S10, Trk_mjf57s_V_Drum_S11, Trk_mjf57s_V_Drum_S08, Trk_mjf57s_V_Drum_S09, Trk_mjf57s_V_Drum_S10, Trk_mjf57s_V_Drum_S11, Trk_mjf57s_V_Drum_S16, Trk_16s37k_N_Drum_S17, Trk_mjf57s_V_Drum_S18	; Drum
@@ -13141,7 +13141,7 @@ Style_B6P040_mjf57s_V:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mjf57s1v", 8, 5, 6, 0x06fa, 0x06fc, 0x03b2, 0x0584, 3, 6, 5, 7
+	style_tail	TIMESIG_4_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mjf57s1v", 8, 5, 6, 0x06fa, 0x06fc, 0x03b2, 0x0584, 3, 6, 5, 7
 
 ; jbd57s: locator [bank 1][program 45]
 Style_B1P045_jbd57s:
@@ -13209,7 +13209,7 @@ Style_B1P045_jbd57s:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd57s1n", 2, 5, 3, 0x07cc, 0x09fb, 0x0508, 0x0414, 2, 7, 4, 6
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd57s1n", 2, 5, 3, 0x07cc, 0x09fb, 0x0508, 0x0414, 2, 7, 4, 6
 Style_B1P045_jbd57s_V:
 	style_section_map
 	part_tracks	0x2b, Trk_jbd57s_V_Drum_S00, Trk_jbd57s_V_Drum_S01, Trk_jbd57s_V_Drum_S02, Trk_jbd57s_V_Drum_S03, Trk_jbd57s_V_Drum_S04, Trk_jbd57s_V_Drum_S05, Trk_jbd57s_V_Drum_S06, Trk_jbd57s_V_Drum_S07, Trk_jbd57s_V_Drum_S08, Trk_jbd57s_V_Drum_S09, Trk_jbd57s_V_Drum_S10, Trk_jbd57s_V_Drum_S11, Trk_jbd57s_V_Drum_S08, Trk_jbd57s_V_Drum_S09, Trk_jbd57s_V_Drum_S10, Trk_jbd57s_V_Drum_S11, Trk_jbd57s_V_Drum_S16, Trk_shr47k_N_Drum_S17, Trk_jbd57s_V_Drum_S18	; Drum
@@ -13275,7 +13275,7 @@ Style_B1P045_jbd57s_V:
 	part_sound	24, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd57s1v", 4, 4, 6, 0x081a, 0x0994, 0x044e, 0x0436, 3, 6, 4, 6
+	style_tail	TIMESIG_4_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd57s1v", 4, 4, 6, 0x081a, 0x0994, 0x044e, 0x0436, 3, 6, 4, 6
 
 ; jcb45n: locator [bank 4][program 34]
 Style_B4P034_jcb45n:
@@ -13343,7 +13343,7 @@ Style_B4P034_jcb45n:
 	part_sound	81, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 54, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb45n1n", 4, 4, 7, 0x055d, 0x0842, 0x05fc, 0x04cc, 2, 4, 7, 7
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb45n1n", 4, 4, 7, 0x055d, 0x0842, 0x05fc, 0x04cc, 2, 4, 7, 7
 Style_B4P034_jcb45n_V:
 	style_section_map
 	part_tracks	0x21, Trk_jcb45n_V_Drum_S00, Trk_jcb45n_V_Drum_S01, Trk_jcb45n_V_Drum_S02, Trk_jcb45n_V_Drum_S03, Trk_jcb45n_V_Drum_S04, Trk_jcb45n_V_Drum_S05, Trk_jcb45n_V_Drum_S06, Trk_jcb45n_V_Drum_S07, Trk_jcb45n_V_Drum_S08, Trk_jcb45n_V_Drum_S09, Trk_jcb45n_V_Drum_S10, Trk_jcb45n_V_Drum_S11, Trk_jcb45n_V_Drum_S08, Trk_jcb45n_V_Drum_S09, Trk_jcb45n_V_Drum_S10, Trk_jcb45n_V_Drum_S11, Trk_jcb45n_V_Drum_S16, Trk_rbd87p_N_Drum_S17, Trk_jcb45n_V_Drum_S18	; Drum
@@ -13409,7 +13409,7 @@ Style_B4P034_jcb45n_V:
 	part_sound	81, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	91, 0, 0x40, 1, 54, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb45n1v", 4, 4, 6, 0x09a6, 0x0b8e, 0x07b0, 0x0612, 2, 6, 5, 7
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb45n1v", 4, 4, 6, 0x09a6, 0x0b8e, 0x07b0, 0x0612, 2, 6, 5, 7
 
 ; jcb66p: locator [bank 6][program 34]
 Style_B6P034_jcb66p:
@@ -13477,7 +13477,7 @@ Style_B6P034_jcb66p:
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb66p1n", 4, 4, 6, 0x069c, 0x0756, 0x04b8, 0x05f8, 2, 3, 2, 6
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb66p1n", 4, 4, 6, 0x069c, 0x0756, 0x04b8, 0x05f8, 2, 3, 2, 6
 Style_B6P034_jcb66p_V:
 	style_section_map
 	part_tracks	0x2a, Trk_jcb66p_V_Drum_S00, Trk_jcb66p_V_Drum_S01, Trk_jcb66p_V_Drum_S02, Trk_jcb66p_V_Drum_S03, Trk_jcb66p_V_Drum_S04, Trk_jcb66p_V_Drum_S05, Trk_jcb66p_V_Drum_S06, Trk_jcb66p_V_Drum_S07, Trk_jcb66p_V_Drum_S08, Trk_jcb66p_V_Drum_S09, Trk_jcb66p_V_Drum_S10, Trk_jcb66p_V_Drum_S11, Trk_jcb66p_V_Drum_S08, Trk_jcb66p_V_Drum_S09, Trk_jcb66p_V_Drum_S10, Trk_jcb66p_V_Drum_S11, Trk_jcb66p_V_Drum_S16, Trk_8bh97k_N_Drum_S17, Trk_jcb66p_V_Drum_S18	; Drum
@@ -13543,7 +13543,7 @@ Style_B6P034_jcb66p_V:
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb66p1v", 4, 4, 5, 0x08d8, 0x0976, 0x048a, 0x06ac, 2, 5, 2, 6
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jcb66p1v", 4, 4, 5, 0x08d8, 0x0976, 0x048a, 0x06ac, 2, 5, 2, 6
 
 ; jbd33s: locator [bank 1][program 44]
 Style_B1P044_jbd33s:
@@ -13611,7 +13611,7 @@ Style_B1P044_jbd33s:
 	part_sound	25, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd33s1n", 2, 3, 2, 0x0738, 0x05ae, 0x0292, 0x05e4, 1, 5, 5, 3
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd33s1n", 2, 3, 2, 0x0738, 0x05ae, 0x0292, 0x05e4, 1, 5, 5, 3
 Style_B1P044_jbd33s_V:
 	style_section_map
 	part_tracks	0x18, Trk_jbd33s_V_Drum_S00, Trk_jbd33s_V_Drum_S01, Trk_jbd33s_V_Drum_S02, Trk_jbd33s_V_Drum_S03, Trk_jbd33s_V_Drum_S04, Trk_jbd33s_V_Drum_S05, Trk_jbd33s_V_Drum_S06, Trk_jbd33s_V_Drum_S07, Trk_jbd33s_V_Drum_S08, Trk_jbd33s_V_Drum_S09, Trk_jbd33s_V_Drum_S10, Trk_jbd33s_V_Drum_S11, Trk_jbd33s_V_Drum_S08, Trk_jbd33s_V_Drum_S09, Trk_jbd33s_V_Drum_S10, Trk_jbd33s_V_Drum_S11, Trk_jbd33s_V_Drum_S16, Trk_8br17r_N_Drum_S17, Trk_jbd33s_V_Drum_S18	; Drum
@@ -13677,7 +13677,7 @@ Style_B1P044_jbd33s_V:
 	part_sound	25, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd33s1v", 4, 4, 5, 0x0786, 0x07bb, 0x04a3, 0x05ed, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jbd33s1v", 4, 4, 5, 0x0786, 0x07bb, 0x04a3, 0x05ed, 2, 5, 5, 4
 
 ; dxi65k: locator [bank 6][program 24]
 Style_B6P024_dxi65k:
@@ -13745,7 +13745,7 @@ Style_B6P024_dxi65k:
 	part_sound	1, 3, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi65k1n", 4, 4, 6, 0x07c8, 0x078c, 0x047f, 0x04f8, 2, 4, 5, 2
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi65k1n", 4, 4, 6, 0x07c8, 0x078c, 0x047f, 0x04f8, 2, 4, 5, 2
 Style_B6P024_dxi65k_V:
 	style_section_map
 	part_tracks	0x1b, Trk_dxi65k_V_Drum_S00, Trk_dxi65k_V_Drum_S01, Trk_dxi65k_V_Drum_S02, Trk_dxi65k_V_Drum_S03, Trk_dxi65k_V_Drum_S04, Trk_dxi65k_V_Drum_S05, Trk_dxi65k_V_Drum_S06, Trk_dxi65k_V_Drum_S07, Trk_dxi65k_V_Drum_S08, Trk_dxi65k_V_Drum_S09, Trk_dxi65k_V_Drum_S10, Trk_dxi65k_V_Drum_S11, Trk_dxi65k_V_Drum_S08, Trk_dxi65k_V_Drum_S09, Trk_dxi65k_V_Drum_S10, Trk_dxi65k_V_Drum_S11, Trk_dxi65k_V_Drum_S16, Trk_dxi65k_N_Drum_S17, Trk_dxi65k_V_Drum_S18	; Drum
@@ -13811,7 +13811,7 @@ Style_B6P024_dxi65k_V:
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi65k1v", 4, 8, 8, 0x0771, 0x099b, 0x0e55, 0x04b0, 2, 5, 4, 2
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi65k1v", 4, 8, 8, 0x0771, 0x099b, 0x0e55, 0x04b0, 2, 5, 4, 2
 
 ; dxi86n: locator [bank 0][program 24]
 Style_B0P024_dxi86n:
@@ -13879,7 +13879,7 @@ Style_B0P024_dxi86n:
 	part_sound	1, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi86n1n", 4, 4, 3, 0x05a8, 0x05ee, 0x02d6, 0x03a2, 2, 4, 5, 0
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi86n1n", 4, 4, 3, 0x05a8, 0x05ee, 0x02d6, 0x03a2, 2, 4, 5, 0
 Style_B0P024_dxi86n_V:
 	style_section_map
 	part_tracks	0x36, Trk_dxi86n_V_Drum_S00, Trk_dxi86n_V_Drum_S01, Trk_dxi86n_V_Drum_S02, Trk_dxi86n_V_Drum_S03, Trk_dxi86n_V_Drum_S04, Trk_dxi86n_V_Drum_S05, Trk_dxi86n_V_Drum_S06, Trk_dxi86n_V_Drum_S07, Trk_dxi86n_V_Drum_S08, Trk_dxi86n_V_Drum_S09, Trk_dxi86n_V_Drum_S10, Trk_dxi86n_V_Drum_S11, Trk_dxi86n_V_Drum_S08, Trk_dxi86n_V_Drum_S09, Trk_dxi86n_V_Drum_S10, Trk_dxi86n_V_Drum_S11, Trk_dxi86n_V_Drum_S16, Trk_8br75d_N_Drum_S17, Trk_dxi86n_V_Drum_S18	; Drum
@@ -13945,7 +13945,7 @@ Style_B0P024_dxi86n_V:
 	part_sound	1, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi86n1v", 4, 4, 3, 0x06b6, 0x0650, 0x03b6, 0x041e, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi86n1v", 4, 4, 3, 0x06b6, 0x0650, 0x03b6, 0x041e, 2, 4, 4, 0
 
 ; rag16p: locator [bank 0][program 27]
 Style_B0P027_rag16p:
@@ -14013,7 +14013,7 @@ Style_B0P027_rag16p:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag16p1n", 5, 2, 3, 0x04de, 0x05fa, 0x0276, 0x0416, 1, 2, 5, 4
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag16p1n", 5, 2, 3, 0x04de, 0x05fa, 0x0276, 0x0416, 1, 2, 5, 4
 Style_B0P027_rag16p_V:
 	style_section_map
 	part_tracks	0x35, Trk_rag16p_V_Drum_S00, Trk_rag16p_V_Drum_S01, Trk_rag16p_V_Drum_S02, Trk_rag16p_V_Drum_S03, Trk_rag16p_V_Drum_S04, Trk_rag16p_V_Drum_S05, Trk_rag16p_V_Drum_S06, Trk_rag16p_V_Drum_S07, Trk_rag16p_V_Drum_S08, Trk_rag16p_V_Drum_S09, Trk_rag16p_V_Drum_S10, Trk_rag16p_V_Drum_S11, Trk_rag16p_V_Drum_S08, Trk_rag16p_V_Drum_S09, Trk_rag16p_V_Drum_S10, Trk_rag16p_V_Drum_S11, Trk_rag16p_V_Drum_S16, Trk_bgw16k_N_Drum_S17, Trk_rag16p_V_Drum_S18	; Drum
@@ -14079,7 +14079,7 @@ Style_B0P027_rag16p_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag16p1v", 5, 4, 4, 0x06c8, 0x08b6, 0x0330, 0x05e0, 1, 2, 5, 4
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag16p1v", 5, 4, 4, 0x06c8, 0x08b6, 0x0330, 0x05e0, 1, 2, 5, 4
 
 ; rag26k: locator [bank 1][program 27]
 Style_B1P027_rag26k:
@@ -14147,7 +14147,7 @@ Style_B1P027_rag26k:
 	part_sound	0, 0, 0x40, 0, 66, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag26k1n", 4, 4, 3, 0x0402, 0x042a, 0x028a, 0x03c2, 2, 3, 4, 0
+	style_tail	TIMESIG_4_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag26k1n", 4, 4, 3, 0x0402, 0x042a, 0x028a, 0x03c2, 2, 3, 4, 0
 Style_B1P027_rag26k_V:
 	style_section_map
 	part_tracks	0x37, Trk_rag26k_V_Drum_S00, Trk_rag26k_V_Drum_S01, Trk_rag26k_V_Drum_S02, Trk_rag26k_V_Drum_S03, Trk_rag26k_V_Drum_S04, Trk_rag26k_V_Drum_S05, Trk_rag26k_V_Drum_S06, Trk_rag26k_V_Drum_S07, Trk_rag26k_V_Drum_S08, Trk_rag26k_V_Drum_S09, Trk_rag26k_V_Drum_S10, Trk_rag26k_V_Drum_S11, Trk_rag26k_V_Drum_S08, Trk_rag26k_V_Drum_S09, Trk_rag26k_V_Drum_S10, Trk_rag26k_V_Drum_S11, Trk_rag26k_V_Drum_S16, Trk_8br27k_N_Drum_S17, Trk_rag26k_V_Drum_S18	; Drum
@@ -14213,7 +14213,7 @@ Style_B1P027_rag26k_V:
 	part_sound	0, 0, 0x40, 0, 66, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag26k1v", 4, 4, 3, 0x0528, 0x040a, 0x03e6, 0x03a8, 2, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rag26k1v", 4, 4, 3, 0x0528, 0x040a, 0x03e6, 0x03a8, 2, 4, 4, 3
 
 ; hwi22s: locator [bank 1][program 22]
 Style_B1P022_hwi22s:
@@ -14281,7 +14281,7 @@ Style_B1P022_hwi22s:
 	part_sound	31, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi22s1n", 2, 4, 2, 0x06dc, 0x0789, 0x0332, 0x05d1, 2, 5, 4, 3
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi22s1n", 2, 4, 2, 0x06dc, 0x0789, 0x0332, 0x05d1, 2, 5, 4, 3
 Style_B1P022_hwi22s_V:
 	style_section_map
 	part_tracks	0x34, Trk_hwi22s_V_Drum_S00, Trk_hwi22s_V_Drum_S01, Trk_hwi22s_V_Drum_S02, Trk_hwi22s_V_Drum_S03, Trk_hwi22s_V_Drum_S04, Trk_hwi22s_V_Drum_S05, Trk_hwi22s_V_Drum_S06, Trk_hwi22s_V_Drum_S07, Trk_hwi22s_V_Drum_S08, Trk_hwi22s_V_Drum_S09, Trk_hwi22s_V_Drum_S10, Trk_hwi22s_V_Drum_S11, Trk_hwi22s_V_Drum_S08, Trk_hwi22s_V_Drum_S09, Trk_hwi22s_V_Drum_S10, Trk_hwi22s_V_Drum_S11, Trk_hwi22s_V_Drum_S16, Trk_8rr75s_N_Drum_S17, Trk_hwi22s_V_Drum_S18	; Drum
@@ -14347,7 +14347,7 @@ Style_B1P022_hwi22s_V:
 	part_sound	31, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi22s1v", 4, 4, 4, 0x06c3, 0x06d5, 0x03df, 0x0597, 1, 5, 2, 3
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi22s1v", 4, 4, 4, 0x06c3, 0x06d5, 0x03df, 0x0597, 1, 5, 2, 3
 
 ; gsp57h: locator [bank 7][program 77]
 Style_B7P077_gsp57h:
@@ -14415,7 +14415,7 @@ Style_B7P077_gsp57h:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp57h1n", 2, 4, 3, 0x0785, 0x0ad4, 0x0666, 0x09d4, 2, 7, 7, 4
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp57h1n", 2, 4, 3, 0x0785, 0x0ad4, 0x0666, 0x09d4, 2, 7, 7, 4
 Style_B7P077_gsp57h_V:
 	style_section_map
 	part_tracks	0x14, Trk_gsp57h_V_Drum_S00, Trk_gsp57h_V_Drum_S01, Trk_gsp57h_V_Drum_S02, Trk_gsp57h_V_Drum_S03, Trk_gsp57h_V_Drum_S04, Trk_gsp57h_V_Drum_S05, Trk_gsp57h_V_Drum_S06, Trk_gsp57h_V_Drum_S07, Trk_gsp57h_V_Drum_S08, Trk_gsp57h_V_Drum_S09, Trk_gsp57h_V_Drum_S10, Trk_gsp57h_V_Drum_S11, Trk_gsp57h_V_Drum_S08, Trk_gsp57h_V_Drum_S09, Trk_gsp57h_V_Drum_S10, Trk_gsp57h_V_Drum_S11, Trk_gsp57h_V_Drum_S16, Trk_8rr86h_N_Drum_S17, Trk_gsp57h_V_Drum_S18	; Drum
@@ -14481,7 +14481,7 @@ Style_B7P077_gsp57h_V:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp57h1v", 8, 8, 9, 0x0bb0, 0x102e, 0x0d48, 0x066a, 2, 8, 8, 7
+	style_tail	TIMESIG_4_4, 0x14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp57h1v", 8, 8, 9, 0x0bb0, 0x102e, 0x0d48, 0x066a, 2, 8, 8, 7
 
 ; gsp47s: locator [bank 5][program 75]
 Style_B5P075_gsp47s:
@@ -14549,7 +14549,7 @@ Style_B5P075_gsp47s:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp47s1n", 2, 3, 4, 0x0802, 0x0904, 0x0486, 0x04c8, 2, 6, 5, 4
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp47s1n", 2, 3, 4, 0x0802, 0x0904, 0x0486, 0x04c8, 2, 6, 5, 4
 Style_B5P075_gsp47s_V:
 	style_section_map
 	part_tracks	0x25, Trk_gsp47s_V_Drum_S00, Trk_gsp47s_V_Drum_S01, Trk_gsp47s_V_Drum_S02, Trk_gsp47s_V_Drum_S03, Trk_gsp47s_V_Drum_S04, Trk_gsp47s_V_Drum_S05, Trk_gsp47s_V_Drum_S06, Trk_gsp47s_V_Drum_S07, Trk_gsp47s_V_Drum_S08, Trk_gsp47s_V_Drum_S09, Trk_gsp47s_V_Drum_S10, Trk_gsp47s_V_Drum_S11, Trk_gsp47s_V_Drum_S08, Trk_gsp47s_V_Drum_S09, Trk_gsp47s_V_Drum_S10, Trk_gsp47s_V_Drum_S11, Trk_gsp47s_V_Drum_S16, Trk_d1642c_N_Drum_S17, Trk_gsp47s_V_Drum_S18	; Drum
@@ -14615,7 +14615,7 @@ Style_B5P075_gsp47s_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp47s1v", 4, 4, 8, 0x0964, 0x09a4, 0x05c4, 0x0404, 2, 10, 10, 6
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp47s1v", 4, 4, 8, 0x0964, 0x09a4, 0x05c4, 0x0404, 2, 10, 10, 6
 
 ; gsp46h: locator [bank 6][program 77]
 Style_B6P077_gsp46h:
@@ -14683,7 +14683,7 @@ Style_B6P077_gsp46h:
 	part_sound	88, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	4, 5, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp46h1n", 2, 3, 2, 0x0940, 0x0b40, 0x03f4, 0x06e6, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp46h1n", 2, 3, 2, 0x0940, 0x0b40, 0x03f4, 0x06e6, 2, 6, 6, 5
 Style_B6P077_gsp46h_V:
 	style_section_map
 	part_tracks	0x10, Trk_gsp46h_V_Drum_S00, Trk_gsp46h_V_Drum_S01, Trk_gsp46h_V_Drum_S02, Trk_gsp46h_V_Drum_S03, Trk_gsp46h_V_Drum_S04, Trk_gsp46h_V_Drum_S05, Trk_gsp46h_V_Drum_S06, Trk_gsp46h_V_Drum_S07, Trk_gsp46h_V_Drum_S08, Trk_gsp46h_V_Drum_S09, Trk_gsp46h_V_Drum_S10, Trk_gsp46h_V_Drum_S11, Trk_gsp46h_V_Drum_S08, Trk_gsp46h_V_Drum_S09, Trk_gsp46h_V_Drum_S10, Trk_gsp46h_V_Drum_S11, Trk_gsp46h_V_Drum_S16, Trk_gsp46h_N_Drum_S17, Trk_gsp46h_V_Drum_S18	; Drum
@@ -14749,7 +14749,7 @@ Style_B6P077_gsp46h_V:
 	part_sound	88, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp46h1v", 8, 8, 15, 0x0e2c, 0x0e40, 0x0c7a, 0x068e, 2, 6, 7, 7
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp46h1v", 8, 8, 15, 0x0e2c, 0x0e40, 0x0c7a, 0x068e, 2, 6, 7, 7
 
 ; gsw16h: locator [bank 1][program 19]
 Style_B1P019_gsw16h:
@@ -14817,7 +14817,7 @@ Style_B1P019_gsw16h:
 	part_sound	4, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsw16h1n", 2, 4, 2, 0x064e, 0x0676, 0x03f0, 0x0526, 2, 7, 5, 4
+	style_tail	TIMESIG_3_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsw16h1n", 2, 4, 2, 0x064e, 0x0676, 0x03f0, 0x0526, 2, 7, 5, 4
 Style_B1P019_gsw16h_V:
 	style_section_map
 	part_tracks	0x29, Trk_gsw16h_V_Drum_S00, Trk_gsw16h_V_Drum_S01, Trk_gsw16h_V_Drum_S02, Trk_gsw16h_V_Drum_S03, Trk_gsw16h_V_Drum_S04, Trk_gsw16h_V_Drum_S05, Trk_gsw16h_V_Drum_S06, Trk_gsw16h_V_Drum_S07, Trk_gsw16h_V_Drum_S08, Trk_gsw16h_V_Drum_S09, Trk_gsw16h_V_Drum_S10, Trk_gsw16h_V_Drum_S11, Trk_gsw16h_V_Drum_S08, Trk_gsw16h_V_Drum_S09, Trk_gsw16h_V_Drum_S10, Trk_gsw16h_V_Drum_S11, Trk_gsw16h_V_Drum_S16, Trk_gsw16h_N_Drum_S17, Trk_gsw16h_V_Drum_S18	; Drum
@@ -14883,7 +14883,7 @@ Style_B1P019_gsw16h_V:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 41, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsw16h1v", 8, 8, 9, 0x0782, 0x0a94, 0x092c, 0x0594, 2, 8, 8, 5
+	style_tail	TIMESIG_3_4, 0x29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsw16h1v", 8, 8, 9, 0x0782, 0x0a94, 0x092c, 0x0594, 2, 8, 8, 5
 
 ; hwi37s: locator [bank 2][program 22]
 Style_B2P022_hwi37s:
@@ -14951,7 +14951,7 @@ Style_B2P022_hwi37s:
 	part_sound	31, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi37s1n", 4, 4, 5, 0x0697, 0x0870, 0x05ca, 0x0596, 2, 7, 4, 3
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi37s1n", 4, 4, 5, 0x0697, 0x0870, 0x05ca, 0x0596, 2, 7, 4, 3
 Style_B2P022_hwi37s_V:
 	style_section_map
 	part_tracks	0x28, Trk_hwi37s_V_Drum_S00, Trk_hwi37s_V_Drum_S01, Trk_hwi37s_V_Drum_S02, Trk_hwi37s_V_Drum_S03, Trk_hwi37s_V_Drum_S04, Trk_hwi37s_V_Drum_S05, Trk_hwi37s_V_Drum_S06, Trk_hwi37s_V_Drum_S07, Trk_hwi37s_V_Drum_S08, Trk_hwi37s_V_Drum_S09, Trk_hwi37s_V_Drum_S10, Trk_hwi37s_V_Drum_S11, Trk_hwi37s_V_Drum_S08, Trk_hwi37s_V_Drum_S09, Trk_hwi37s_V_Drum_S10, Trk_hwi37s_V_Drum_S11, Trk_hwi37s_V_Drum_S16, Trk_shr36d_N_Drum_S17, Trk_hwi37s_V_Drum_S18	; Drum
@@ -15017,7 +15017,7 @@ Style_B2P022_hwi37s_V:
 	part_sound	31, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi37s1v", 5, 4, 5, 0x08a8, 0x096a, 0x0650, 0x040d, 2, 7, 4, 4
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "hwi37s1v", 5, 4, 5, 0x08a8, 0x096a, 0x0650, 0x040d, 2, 7, 4, 4
 
 ; bsw33s: locator [bank 6][program 38]
 Style_B6P038_bsw33s:
@@ -15085,7 +15085,7 @@ Style_B6P038_bsw33s:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw33s1n", 4, 4, 3, 0x072a, 0x0500, 0x03d2, 0x059a, 3, 4, 3, 2
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw33s1n", 4, 4, 3, 0x072a, 0x0500, 0x03d2, 0x059a, 3, 4, 3, 2
 Style_B6P038_bsw33s_V:
 	style_section_map
 	part_tracks	0x35, Trk_bsw33s_V_Drum_S00, Trk_bsw33s_V_Drum_S01, Trk_bsw33s_V_Drum_S02, Trk_bsw33s_V_Drum_S03, Trk_bsw33s_V_Drum_S04, Trk_bsw33s_V_Drum_S05, Trk_bsw33s_V_Drum_S06, Trk_bsw33s_V_Drum_S07, Trk_bsw33s_V_Drum_S08, Trk_bsw33s_V_Drum_S09, Trk_bsw33s_V_Drum_S10, Trk_bsw33s_V_Drum_S11, Trk_bsw33s_V_Drum_S08, Trk_bsw33s_V_Drum_S09, Trk_bsw33s_V_Drum_S10, Trk_bsw33s_V_Drum_S11, Trk_bsw33s_V_Drum_S16, Trk_bgw16k_N_Drum_S17, Trk_bsw33s_V_Drum_S18	; Drum
@@ -15151,7 +15151,7 @@ Style_B6P038_bsw33s_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw33s1v", 4, 3, 3, 0x07b6, 0x06be, 0x03ba, 0x062a, 2, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw33s1v", 4, 3, 3, 0x07b6, 0x06be, 0x03ba, 0x062a, 2, 6, 4, 3
 
 ; bls16d: locator [bank 2][program 75]
 Style_B2P075_bls16d:
@@ -15219,7 +15219,7 @@ Style_B2P075_bls16d:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bls16d1n", 5, 4, 8, 0x0836, 0x0a82, 0x04bf, 0x0474, 2, 8, 4, 0
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bls16d1n", 5, 4, 8, 0x0836, 0x0a82, 0x04bf, 0x0474, 2, 8, 4, 0
 Style_B2P075_bls16d_V:
 	style_section_map
 	part_tracks	0x13, Trk_bls16d_V_Drum_S00, Trk_bls16d_V_Drum_S01, Trk_bls16d_V_Drum_S02, Trk_bls16d_V_Drum_S03, Trk_bls16d_V_Drum_S04, Trk_bls16d_V_Drum_S05, Trk_bls16d_V_Drum_S06, Trk_bls16d_V_Drum_S07, Trk_bls16d_V_Drum_S08, Trk_bls16d_V_Drum_S09, Trk_bls16d_V_Drum_S10, Trk_bls16d_V_Drum_S11, Trk_bls16d_V_Drum_S08, Trk_bls16d_V_Drum_S09, Trk_bls16d_V_Drum_S10, Trk_bls16d_V_Drum_S11, Trk_bls16d_V_Drum_S16, Trk_bls16d_N_Drum_S17, Trk_bls16d_V_Drum_S18	; Drum
@@ -15285,7 +15285,7 @@ Style_B2P075_bls16d_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bls16d1v", 5, 6, 9, 0x0b67, 0x0dd0, 0x0c2b, 0x05e1, 2, 7, 3, 2
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bls16d1v", 5, 6, 9, 0x0b67, 0x0dd0, 0x0c2b, 0x05e1, 2, 7, 3, 2
 
 ; dxi76d: locator [bank 7][program 24]
 Style_B7P024_dxi76d:
@@ -15353,7 +15353,7 @@ Style_B7P024_dxi76d:
 	part_sound	33, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi76d1n", 4, 4, 5, 0x06b7, 0x08e4, 0x05a4, 0x0410, 2, 6, 3, 2
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi76d1n", 4, 4, 5, 0x06b7, 0x08e4, 0x05a4, 0x0410, 2, 6, 3, 2
 Style_B7P024_dxi76d_V:
 	style_section_map
 	part_tracks	0x1f, Trk_dxi76d_V_Drum_S00, Trk_dxi76d_V_Drum_S01, Trk_dxi76d_V_Drum_S02, Trk_dxi76d_V_Drum_S03, Trk_dxi76d_V_Drum_S04, Trk_dxi76d_V_Drum_S05, Trk_dxi76d_V_Drum_S06, Trk_dxi76d_V_Drum_S07, Trk_dxi76d_V_Drum_S08, Trk_dxi76d_V_Drum_S09, Trk_dxi76d_V_Drum_S10, Trk_dxi76d_V_Drum_S11, Trk_dxi76d_V_Drum_S08, Trk_dxi76d_V_Drum_S09, Trk_dxi76d_V_Drum_S10, Trk_dxi76d_V_Drum_S11, Trk_dxi76d_V_Drum_S16, Trk_16s93d_N_Drum_S17, Trk_dxi76d_V_Drum_S18	; Drum
@@ -15419,7 +15419,7 @@ Style_B7P024_dxi76d_V:
 	part_sound	33, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi76d1v", 8, 8, 6, 0x09fc, 0x09e8, 0x0b78, 0x051f, 2, 8, 3, 2
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi76d1v", 8, 8, 6, 0x09fc, 0x09e8, 0x0b78, 0x051f, 2, 8, 3, 2
 
 ; gsp12s: locator [bank 4][program 77]
 Style_B4P077_gsp12s:
@@ -15487,7 +15487,7 @@ Style_B4P077_gsp12s:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp12s1n", 4, 5, 4, 0x07a4, 0x0792, 0x0782, 0x06d6, 2, 4, 5, 4
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp12s1n", 4, 5, 4, 0x07a4, 0x0792, 0x0782, 0x06d6, 2, 4, 5, 4
 Style_B4P077_gsp12s_V:
 	style_section_map
 	part_tracks	0x1d, Trk_gsp12s_V_Drum_S00, Trk_gsp12s_V_Drum_S01, Trk_gsp12s_V_Drum_S02, Trk_gsp12s_V_Drum_S03, Trk_gsp12s_V_Drum_S04, Trk_gsp12s_V_Drum_S05, Trk_gsp12s_V_Drum_S06, Trk_gsp12s_V_Drum_S07, Trk_gsp12s_V_Drum_S08, Trk_gsp12s_V_Drum_S09, Trk_gsp12s_V_Drum_S10, Trk_gsp12s_V_Drum_S11, Trk_gsp12s_V_Drum_S08, Trk_gsp12s_V_Drum_S09, Trk_gsp12s_V_Drum_S10, Trk_gsp12s_V_Drum_S11, Trk_gsp12s_V_Drum_S16, Trk_8sl47d_N_Drum_S17, Trk_gsp12s_V_Drum_S18	; Drum
@@ -15553,7 +15553,7 @@ Style_B4P077_gsp12s_V:
 	part_sound	88, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp12s1v", 8, 8, 10, 0x09b4, 0x097a, 0x07a0, 0x06f0, 2, 4, 4, 5
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp12s1v", 8, 8, 10, 0x09b4, 0x097a, 0x07a0, 0x06f0, 2, 4, 4, 5
 
 ; gsp36d: locator [bank 7][program 75]
 Style_B7P075_gsp36d:
@@ -15621,7 +15621,7 @@ Style_B7P075_gsp36d:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp36d1n", 4, 4, 7, 0x07b2, 0x0ad0, 0x061c, 0x047e, 2, 7, 3, 4
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp36d1n", 4, 4, 7, 0x07b2, 0x0ad0, 0x061c, 0x047e, 2, 7, 3, 4
 Style_B7P075_gsp36d_V:
 	style_section_map
 	part_tracks	0x13, Trk_gsp36d_V_Drum_S00, Trk_gsp36d_V_Drum_S01, Trk_gsp36d_V_Drum_S02, Trk_gsp36d_V_Drum_S03, Trk_gsp36d_V_Drum_S04, Trk_gsp36d_V_Drum_S05, Trk_gsp36d_V_Drum_S06, Trk_gsp36d_V_Drum_S07, Trk_gsp36d_V_Drum_S08, Trk_gsp36d_V_Drum_S09, Trk_gsp36d_V_Drum_S10, Trk_gsp36d_V_Drum_S11, Trk_gsp36d_V_Drum_S08, Trk_gsp36d_V_Drum_S09, Trk_gsp36d_V_Drum_S10, Trk_gsp36d_V_Drum_S11, Trk_gsp36d_V_Drum_S16, Trk_bls16d_N_Drum_S17, Trk_gsp36d_V_Drum_S18	; Drum
@@ -15687,7 +15687,7 @@ Style_B7P075_gsp36d_V:
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	93, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp36d1v", 5, 6, 8, 0x0db2, 0x0e20, 0x0b71, 0x041a, 2, 9, 4, 5
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gsp36d1v", 5, 6, 8, 0x0db2, 0x0e20, 0x0b71, 0x041a, 2, 9, 4, 5
 
 ; cny27h: locator [bank 6][program 17]
 Style_B6P017_cny27h:
@@ -15755,7 +15755,7 @@ Style_B6P017_cny27h:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny27h1n", 2, 3, 4, 0x092b, 0x0a68, 0x03c2, 0x049e, 2, 5, 6, 4
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny27h1n", 2, 3, 4, 0x092b, 0x0a68, 0x03c2, 0x049e, 2, 5, 6, 4
 Style_B6P017_cny27h_V:
 	style_section_map
 	part_tracks	0x15, Trk_cny27h_V_Drum_S00, Trk_cny27h_V_Drum_S01, Trk_cny27h_V_Drum_S02, Trk_cny27h_V_Drum_S03, Trk_cny27h_V_Drum_S04, Trk_cny27h_V_Drum_S05, Trk_cny27h_V_Drum_S06, Trk_cny27h_V_Drum_S07, Trk_cny27h_V_Drum_S08, Trk_cny27h_V_Drum_S09, Trk_cny27h_V_Drum_S10, Trk_cny27h_V_Drum_S11, Trk_cny27h_V_Drum_S08, Trk_cny27h_V_Drum_S09, Trk_cny27h_V_Drum_S10, Trk_cny27h_V_Drum_S11, Trk_cny27h_V_Drum_S16, Trk_cny27h_N_Drum_S17, Trk_cny27h_V_Drum_S18	; Drum
@@ -15821,7 +15821,7 @@ Style_B6P017_cny27h_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny27h1v", 5, 6, 9, 0x0d14, 0x1057, 0x0a50, 0x066a, 4, 6, 5, 4
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny27h1v", 5, 6, 9, 0x0d14, 0x1057, 0x0a50, 0x066a, 4, 6, 5, 4
 
 ; cny23s: locator [bank 7][program 17]
 Style_B7P017_cny23s:
@@ -15889,7 +15889,7 @@ Style_B7P017_cny23s:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny23s1n", 4, 2, 2, 0x04be, 0x0576, 0x018a, 0x03ba, 1, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny23s1n", 4, 2, 2, 0x04be, 0x0576, 0x018a, 0x03ba, 1, 4, 3, 3
 Style_B7P017_cny23s_V:
 	style_section_map
 	part_tracks	0x17, Trk_cny23s_V_Drum_S00, Trk_cny23s_V_Drum_S01, Trk_cny23s_V_Drum_S02, Trk_cny23s_V_Drum_S03, Trk_cny23s_V_Drum_S04, Trk_cny23s_V_Drum_S05, Trk_cny23s_V_Drum_S06, Trk_cny23s_V_Drum_S07, Trk_cny23s_V_Drum_S08, Trk_cny23s_V_Drum_S09, Trk_cny23s_V_Drum_S10, Trk_cny23s_V_Drum_S11, Trk_cny23s_V_Drum_S08, Trk_cny23s_V_Drum_S09, Trk_cny23s_V_Drum_S10, Trk_cny23s_V_Drum_S11, Trk_cny23s_V_Drum_S16, Trk_reg17r_N_Drum_S17, Trk_cny23s_V_Drum_S18	; Drum
@@ -15955,7 +15955,7 @@ Style_B7P017_cny23s_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny23s1v", 5, 4, 3, 0x0644, 0x06f9, 0x0270, 0x0492, 2, 3, 3, 3
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny23s1v", 5, 4, 3, 0x0644, 0x06f9, 0x0270, 0x0492, 2, 3, 3, 3
 
 ; 8cr36k: locator [bank 3][program 85]
 Style_B3P085_8cr36k:
@@ -16023,7 +16023,7 @@ Style_B3P085_8cr36k:
 	part_sound	31, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr36k1n", 2, 3, 1, 0x0368, 0x04ba, 0x02ac, 0x0439, 2, 6, 2, 0
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr36k1n", 2, 3, 1, 0x0368, 0x04ba, 0x02ac, 0x0439, 2, 6, 2, 0
 Style_B3P085_8cr36k_V:
 	style_section_map
 	part_tracks	0x28, Trk_8cr36k_V_Drum_S00, Trk_8cr36k_V_Drum_S01, Trk_8cr36k_V_Drum_S02, Trk_8cr36k_V_Drum_S03, Trk_8cr36k_V_Drum_S04, Trk_8cr36k_V_Drum_S05, Trk_8cr36k_V_Drum_S06, Trk_8cr36k_V_Drum_S07, Trk_8cr36k_V_Drum_S08, Trk_8cr36k_V_Drum_S09, Trk_8cr36k_V_Drum_S10, Trk_8cr36k_V_Drum_S11, Trk_8cr36k_V_Drum_S08, Trk_8cr36k_V_Drum_S09, Trk_8cr36k_V_Drum_S10, Trk_8cr36k_V_Drum_S11, Trk_8cr36k_V_Drum_S16, Trk_shr36d_N_Drum_S17, Trk_8cr36k_V_Drum_S18	; Drum
@@ -16089,7 +16089,7 @@ Style_B3P085_8cr36k_V:
 	part_sound	31, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr36k1v", 6, 4, 3, 0x0615, 0x067f, 0x0324, 0x0341, 2, 5, 3, 6
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr36k1v", 6, 4, 3, 0x0615, 0x067f, 0x0324, 0x0341, 2, 5, 3, 6
 
 ; 8cr46h: locator [bank 4][program 85]
 Style_B4P085_8cr46h:
@@ -16157,7 +16157,7 @@ Style_B4P085_8cr46h:
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 3, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr46h1n", 2, 2, 2, 0x09ce, 0x0a62, 0x02c0, 0x0472, 2, 7, 5, 2
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr46h1n", 2, 2, 2, 0x09ce, 0x0a62, 0x02c0, 0x0472, 2, 7, 5, 2
 Style_B4P085_8cr46h_V:
 	style_section_map
 	part_tracks	0x1c, Trk_8cr46h_V_Drum_S00, Trk_8cr46h_V_Drum_S01, Trk_8cr46h_V_Drum_S02, Trk_8cr46h_V_Drum_S03, Trk_8cr46h_V_Drum_S04, Trk_8cr46h_V_Drum_S05, Trk_8cr46h_V_Drum_S06, Trk_8cr46h_V_Drum_S07, Trk_8cr46h_V_Drum_S08, Trk_8cr46h_V_Drum_S09, Trk_8cr46h_V_Drum_S10, Trk_8cr46h_V_Drum_S11, Trk_8cr46h_V_Drum_S08, Trk_8cr46h_V_Drum_S09, Trk_8cr46h_V_Drum_S10, Trk_8cr46h_V_Drum_S11, Trk_8cr46h_V_Drum_S16, Trk_8rr17d_N_Drum_S17, Trk_8cr46h_V_Drum_S18	; Drum
@@ -16223,7 +16223,7 @@ Style_B4P085_8cr46h_V:
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 3, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr46h1v", 8, 4, 9, 0x0b20, 0x0d7c, 0x05d2, 0x05d1, 2, 4, 5, 7
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr46h1v", 8, 4, 9, 0x0b20, 0x0d7c, 0x05d2, 0x05d1, 2, 4, 5, 7
 
 ; wst26p: locator [bank 1][program 21]
 Style_B1P021_wst26p:
@@ -16291,7 +16291,7 @@ Style_B1P021_wst26p:
 	part_sound	1, 3, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	1, 3, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wst26p1n", 3, 2, 2, 0x055e, 0x0668, 0x0216, 0x0422, 2, 3, 3, 3
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wst26p1n", 3, 2, 2, 0x055e, 0x0668, 0x0216, 0x0422, 2, 3, 3, 3
 Style_B1P021_wst26p_V:
 	style_section_map
 	part_tracks	0x2f, Trk_wst26p_V_Drum_S00, Trk_wst26p_V_Drum_S01, Trk_wst26p_V_Drum_S02, Trk_wst26p_V_Drum_S03, Trk_wst26p_V_Drum_S04, Trk_wst26p_V_Drum_S05, Trk_wst26p_V_Drum_S06, Trk_wst26p_V_Drum_S07, Trk_wst26p_V_Drum_S08, Trk_wst26p_V_Drum_S09, Trk_wst26p_V_Drum_S10, Trk_wst26p_V_Drum_S11, Trk_wst26p_V_Drum_S08, Trk_wst26p_V_Drum_S09, Trk_wst26p_V_Drum_S10, Trk_wst26p_V_Drum_S11, Trk_wst26p_V_Drum_S16, Trk_16b16k_N_Drum_S17, Trk_wst26p_V_Drum_S18	; Drum
@@ -16357,7 +16357,7 @@ Style_B1P021_wst26p_V:
 	part_sound	1, 3, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	33, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wst26p1v", 4, 4, 6, 0x09d6, 0x0bfe, 0x054a, 0x04da, 1, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wst26p1v", 4, 4, 6, 0x09d6, 0x0bfe, 0x054a, 0x04da, 1, 5, 4, 4
 
 ; blg43s: locator [bank 3][program 20]
 Style_B3P020_blg43s:
@@ -16425,7 +16425,7 @@ Style_B3P020_blg43s:
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg43s1n", 2, 2, 2, 0x0870, 0x0984, 0x031c, 0x0428, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg43s1n", 2, 2, 2, 0x0870, 0x0984, 0x031c, 0x0428, 2, 3, 3, 4
 Style_B3P020_blg43s_V:
 	style_section_map
 	part_tracks	0x23, Trk_blg43s_V_Drum_S00, Trk_blg43s_V_Drum_S01, Trk_blg43s_V_Drum_S02, Trk_blg43s_V_Drum_S03, Trk_blg43s_V_Drum_S04, Trk_blg43s_V_Drum_S05, Trk_blg43s_V_Drum_S06, Trk_blg43s_V_Drum_S07, Trk_blg43s_V_Drum_S08, Trk_blg43s_V_Drum_S09, Trk_blg43s_V_Drum_S10, Trk_blg43s_V_Drum_S11, Trk_blg43s_V_Drum_S08, Trk_blg43s_V_Drum_S09, Trk_blg43s_V_Drum_S10, Trk_blg43s_V_Drum_S11, Trk_blg43s_V_Drum_S16, Trk_16s26d_N_Drum_S17, Trk_blg43s_V_Drum_S18	; Drum
@@ -16491,7 +16491,7 @@ Style_B3P020_blg43s_V:
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg43s1v", 4, 4, 6, 0x0b60, 0x0c5e, 0x0824, 0x0522, 1, 3, 4, 4
+	style_tail	TIMESIG_4_4, 0x23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg43s1v", 4, 4, 6, 0x0b60, 0x0c5e, 0x0824, 0x0522, 1, 3, 4, 4
 
 ; blg57h: locator [bank 4][program 20]
 Style_B4P020_blg57h:
@@ -16559,7 +16559,7 @@ Style_B4P020_blg57h:
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg57h1n", 4, 4, 2, 0x05b4, 0x066d, 0x022e, 0x04de, 2, 3, 4, 2
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg57h1n", 4, 4, 2, 0x05b4, 0x066d, 0x022e, 0x04de, 2, 3, 4, 2
 Style_B4P020_blg57h_V:
 	style_section_map
 	part_tracks	0x34, Trk_blg57h_V_Drum_S00, Trk_blg57h_V_Drum_S01, Trk_blg57h_V_Drum_S02, Trk_blg57h_V_Drum_S03, Trk_blg57h_V_Drum_S04, Trk_blg57h_V_Drum_S05, Trk_blg57h_V_Drum_S06, Trk_blg57h_V_Drum_S07, Trk_blg57h_V_Drum_S08, Trk_blg57h_V_Drum_S09, Trk_blg57h_V_Drum_S10, Trk_blg57h_V_Drum_S11, Trk_blg57h_V_Drum_S08, Trk_blg57h_V_Drum_S09, Trk_blg57h_V_Drum_S10, Trk_blg57h_V_Drum_S11, Trk_blg57h_V_Drum_S16, Trk_8rr75s_N_Drum_S17, Trk_blg57h_V_Drum_S18	; Drum
@@ -16625,7 +16625,7 @@ Style_B4P020_blg57h_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg57h1v", 8, 8, 4, 0x064d, 0x08cf, 0x0582, 0x075b, 2, 5, 6, 6
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "blg57h1v", 8, 8, 4, 0x064d, 0x08cf, 0x0582, 0x075b, 2, 5, 6, 6
 
 ; cny37m: locator [bank 3][program 18]
 Style_B3P018_cny37m:
@@ -16693,7 +16693,7 @@ Style_B3P018_cny37m:
 	part_sound	20, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny37m1n", 4, 5, 3, 0x0630, 0x0680, 0x03f1, 0x0324, 2, 5, 6, 4
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny37m1n", 4, 5, 3, 0x0630, 0x0680, 0x03f1, 0x0324, 2, 5, 6, 4
 Style_B3P018_cny37m_V:
 	style_section_map
 	part_tracks	0x34, Trk_cny37m_V_Drum_S00, Trk_cny37m_V_Drum_S01, Trk_cny37m_V_Drum_S02, Trk_cny37m_V_Drum_S03, Trk_cny37m_V_Drum_S04, Trk_cny37m_V_Drum_S05, Trk_cny37m_V_Drum_S06, Trk_cny37m_V_Drum_S07, Trk_cny37m_V_Drum_S08, Trk_cny37m_V_Drum_S09, Trk_cny37m_V_Drum_S10, Trk_cny37m_V_Drum_S11, Trk_cny37m_V_Drum_S08, Trk_cny37m_V_Drum_S09, Trk_cny37m_V_Drum_S10, Trk_cny37m_V_Drum_S11, Trk_cny37m_V_Drum_S16, Trk_8rr75s_N_Drum_S17, Trk_cny37m_V_Drum_S18	; Drum
@@ -16759,7 +16759,7 @@ Style_B3P018_cny37m_V:
 	part_sound	20, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny37m1v", 5, 4, 4, 0x0727, 0x08b1, 0x023d, 0x04ca, 2, 7, 7, 4
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny37m1v", 5, 4, 4, 0x0727, 0x08b1, 0x023d, 0x04ca, 2, 7, 7, 4
 
 ; 8cr57k: locator [bank 5][program 85]
 Style_B5P085_8cr57k:
@@ -16827,7 +16827,7 @@ Style_B5P085_8cr57k:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	74, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr57k1n", 3, 4, 2, 0x0668, 0x08ca, 0x0438, 0x04a6, 2, 5, 5, 3
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr57k1n", 3, 4, 2, 0x0668, 0x08ca, 0x0438, 0x04a6, 2, 5, 5, 3
 Style_B5P085_8cr57k_V:
 	style_section_map
 	part_tracks	0x30, Trk_8cr57k_V_Drum_S00, Trk_8cr57k_V_Drum_S01, Trk_8cr57k_V_Drum_S02, Trk_8cr57k_V_Drum_S03, Trk_8cr57k_V_Drum_S04, Trk_8cr57k_V_Drum_S05, Trk_8cr57k_V_Drum_S06, Trk_8cr57k_V_Drum_S07, Trk_8cr57k_V_Drum_S08, Trk_8cr57k_V_Drum_S09, Trk_8cr57k_V_Drum_S10, Trk_8cr57k_V_Drum_S11, Trk_8cr57k_V_Drum_S08, Trk_8cr57k_V_Drum_S09, Trk_8cr57k_V_Drum_S10, Trk_8cr57k_V_Drum_S11, Trk_8cr57k_V_Drum_S16, Trk_rbs15s_N_Drum_S17, Trk_8cr57k_V_Drum_S18	; Drum
@@ -16893,7 +16893,7 @@ Style_B5P085_8cr57k_V:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	74, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr57k1v", 6, 4, 5, 0x0b01, 0x0608, 0x0354, 0x04c3, 2, 5, 6, 5
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr57k1v", 6, 4, 5, 0x0b01, 0x0608, 0x0354, 0x04c3, 2, 5, 6, 5
 
 ; cnw12s: locator [bank 0][program 19]
 Style_B0P019_cnw12s:
@@ -16961,7 +16961,7 @@ Style_B0P019_cnw12s:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cnw12s1n", 4, 4, 2, 0x04f6, 0x0440, 0x02b4, 0x04a6, 2, 4, 4, 4
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cnw12s1n", 4, 4, 2, 0x04f6, 0x0440, 0x02b4, 0x04a6, 2, 4, 4, 4
 Style_B0P019_cnw12s_V:
 	style_section_map
 	part_tracks	0x36, Trk_cnw12s_V_Drum_S00, Trk_cnw12s_V_Drum_S01, Trk_cnw12s_V_Drum_S02, Trk_cnw12s_V_Drum_S03, Trk_cnw12s_V_Drum_S04, Trk_cnw12s_V_Drum_S05, Trk_cnw12s_V_Drum_S06, Trk_cnw12s_V_Drum_S07, Trk_cnw12s_V_Drum_S08, Trk_cnw12s_V_Drum_S09, Trk_cnw12s_V_Drum_S10, Trk_cnw12s_V_Drum_S11, Trk_cnw12s_V_Drum_S08, Trk_cnw12s_V_Drum_S09, Trk_cnw12s_V_Drum_S10, Trk_cnw12s_V_Drum_S11, Trk_cnw12s_V_Drum_S16, Trk_jwf77s_N_Drum_S17, Trk_cnw12s_V_Drum_S18	; Drum
@@ -17027,7 +17027,7 @@ Style_B0P019_cnw12s_V:
 	part_sound	31, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cnw12s1v", 5, 8, 3, 0x05b3, 0x0608, 0x077e, 0x040b, 2, 6, 3, 6
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cnw12s1v", 5, 8, 3, 0x05b3, 0x0608, 0x077e, 0x040b, 2, 6, 3, 6
 
 ; 8cr23m: locator [bank 2][program 85]
 Style_B2P085_8cr23m:
@@ -17095,7 +17095,7 @@ Style_B2P085_8cr23m:
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr23m1n", 4, 5, 2, 0x077e, 0x065f, 0x05b9, 0x043a, 2, 5, 5, 3
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr23m1n", 4, 5, 2, 0x077e, 0x065f, 0x05b9, 0x043a, 2, 5, 5, 3
 Style_B2P085_8cr23m_V:
 	style_section_map
 	part_tracks	0x30, Trk_8cr23m_V_Drum_S00, Trk_8cr23m_V_Drum_S01, Trk_8cr23m_V_Drum_S02, Trk_8cr23m_V_Drum_S03, Trk_8cr23m_V_Drum_S04, Trk_8cr23m_V_Drum_S05, Trk_8cr23m_V_Drum_S06, Trk_8cr23m_V_Drum_S07, Trk_8cr23m_V_Drum_S08, Trk_8cr23m_V_Drum_S09, Trk_8cr23m_V_Drum_S10, Trk_8cr23m_V_Drum_S11, Trk_8cr23m_V_Drum_S08, Trk_8cr23m_V_Drum_S09, Trk_8cr23m_V_Drum_S10, Trk_8cr23m_V_Drum_S11, Trk_8cr23m_V_Drum_S16, Trk_rbs15s_N_Drum_S17, Trk_8cr23m_V_Drum_S18	; Drum
@@ -17161,7 +17161,7 @@ Style_B2P085_8cr23m_V:
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 48, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr23m1v", 4, 6, 3, 0x0827, 0x08a6, 0x05a9, 0x0698, 2, 6, 4, 9
+	style_tail	TIMESIG_4_4, 0x30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8cr23m1v", 4, 6, 3, 0x0827, 0x08a6, 0x05a9, 0x0698, 2, 6, 4, 9
 
 ; cny96d: locator [bank 1][program 18]
 Style_B1P018_cny96d:
@@ -17229,7 +17229,7 @@ Style_B1P018_cny96d:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny96d1n", 4, 4, 4, 0x07e8, 0x07b0, 0x03d4, 0x04ea, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny96d1n", 4, 4, 4, 0x07e8, 0x07b0, 0x03d4, 0x04ea, 2, 4, 4, 0
 Style_B1P018_cny96d_V:
 	style_section_map
 	part_tracks	0x1f, Trk_cny96d_V_Drum_S00, Trk_cny96d_V_Drum_S01, Trk_cny96d_V_Drum_S02, Trk_cny96d_V_Drum_S03, Trk_cny96d_V_Drum_S04, Trk_cny96d_V_Drum_S05, Trk_cny96d_V_Drum_S06, Trk_cny96d_V_Drum_S07, Trk_cny96d_V_Drum_S08, Trk_cny96d_V_Drum_S09, Trk_cny96d_V_Drum_S10, Trk_cny96d_V_Drum_S11, Trk_cny96d_V_Drum_S08, Trk_cny96d_V_Drum_S09, Trk_cny96d_V_Drum_S10, Trk_cny96d_V_Drum_S11, Trk_cny96d_V_Drum_S16, Trk_16s93d_N_Drum_S17, Trk_cny96d_V_Drum_S18	; Drum
@@ -17295,7 +17295,7 @@ Style_B1P018_cny96d_V:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	101, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny96d1v", 8, 4, 11, 0x0a74, 0x0a04, 0x0660, 0x0496, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x1f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cny96d1v", 8, 4, 11, 0x0a74, 0x0a04, 0x0660, 0x0496, 2, 4, 3, 4
 
 ; rbd56p: locator [bank 3][program 75]
 Style_B3P075_rbd56p:
@@ -17363,7 +17363,7 @@ Style_B3P075_rbd56p:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd56p1n", 2, 4, 5, 0x0862, 0x0afc, 0x0298, 0x04c9, 2, 7, 7, 5
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd56p1n", 2, 4, 5, 0x0862, 0x0afc, 0x0298, 0x04c9, 2, 7, 7, 5
 Style_B3P075_rbd56p_V:
 	style_section_map
 	part_tracks	0x1e, Trk_rbd56p_V_Drum_S00, Trk_rbd56p_V_Drum_S01, Trk_rbd56p_V_Drum_S02, Trk_rbd56p_V_Drum_S03, Trk_rbd56p_V_Drum_S04, Trk_rbd56p_V_Drum_S05, Trk_rbd56p_V_Drum_S06, Trk_rbd56p_V_Drum_S07, Trk_rbd56p_V_Drum_S08, Trk_rbd56p_V_Drum_S09, Trk_rbd56p_V_Drum_S10, Trk_rbd56p_V_Drum_S11, Trk_rbd56p_V_Drum_S08, Trk_rbd56p_V_Drum_S09, Trk_rbd56p_V_Drum_S10, Trk_rbd56p_V_Drum_S11, Trk_rbd56p_V_Drum_S16, Trk_fkr12c_N_Drum_S17, Trk_rbd56p_V_Drum_S18	; Drum
@@ -17429,7 +17429,7 @@ Style_B3P075_rbd56p_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	29, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd56p1v", 3, 4, 3, 0x0d0a, 0x10be, 0x03e2, 0x06bd, 2, 5, 6, 5
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd56p1v", 3, 4, 3, 0x0d0a, 0x10be, 0x03e2, 0x06bd, 2, 5, 6, 5
 
 ; rmb55s: locator [bank 4][program 58]
 Style_B4P058_rmb55s:
@@ -17497,7 +17497,7 @@ Style_B4P058_rmb55s:
 	part_sound	65, 0, 0x40, 0, 54, 8, 127	; ACCOMP2
 	part_sound	53, 0, 0x40, 0, 54, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb55s1n", 2, 4, 2, 0x05c8, 0x08ec, 0x04f6, 0x06e0, 1, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb55s1n", 2, 4, 2, 0x05c8, 0x08ec, 0x04f6, 0x06e0, 1, 4, 3, 4
 Style_B4P058_rmb55s_V:
 	style_section_map
 	part_tracks	0x28, Trk_rmb55s_V_Drum_S00, Trk_rmb55s_V_Drum_S01, Trk_rmb55s_V_Drum_S02, Trk_rmb55s_V_Drum_S03, Trk_rmb55s_V_Drum_S04, Trk_rmb55s_V_Drum_S05, Trk_rmb55s_V_Drum_S06, Trk_rmb55s_V_Drum_S07, Trk_rmb55s_V_Drum_S08, Trk_rmb55s_V_Drum_S09, Trk_rmb55s_V_Drum_S10, Trk_rmb55s_V_Drum_S11, Trk_rmb55s_V_Drum_S08, Trk_rmb55s_V_Drum_S09, Trk_rmb55s_V_Drum_S10, Trk_rmb55s_V_Drum_S11, Trk_rmb55s_V_Drum_S16, Trk_shr36d_N_Drum_S17, Trk_rmb55s_V_Drum_S18	; Drum
@@ -17563,7 +17563,7 @@ Style_B4P058_rmb55s_V:
 	part_sound	65, 0, 0x40, 0, 54, 8, 127	; ACCOMP2
 	part_sound	53, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb55s1v", 4, 4, 6, 0x0900, 0x097c, 0x08a6, 0x08b6, 1, 4, 2, 4
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb55s1v", 4, 4, 6, 0x0900, 0x097c, 0x08a6, 0x08b6, 1, 4, 2, 4
 
 ; bgn33d: locator [bank 2][program 59]
 Style_B2P059_bgn33d:
@@ -17631,7 +17631,7 @@ Style_B2P059_bgn33d:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	99, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgn33d1n", 4, 2, 5, 0x0638, 0x08d4, 0x0224, 0x05f1, 2, 6, 6, 4
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgn33d1n", 4, 2, 5, 0x0638, 0x08d4, 0x0224, 0x05f1, 2, 6, 6, 4
 Style_B2P059_bgn33d_V:
 	style_section_map
 	part_tracks	0x25, Trk_bgn33d_V_Drum_S00, Trk_bgn33d_V_Drum_S01, Trk_bgn33d_V_Drum_S02, Trk_bgn33d_V_Drum_S03, Trk_bgn33d_V_Drum_S04, Trk_bgn33d_V_Drum_S05, Trk_bgn33d_V_Drum_S06, Trk_bgn33d_V_Drum_S07, Trk_bgn33d_V_Drum_S08, Trk_bgn33d_V_Drum_S09, Trk_bgn33d_V_Drum_S10, Trk_bgn33d_V_Drum_S11, Trk_bgn33d_V_Drum_S08, Trk_bgn33d_V_Drum_S09, Trk_bgn33d_V_Drum_S10, Trk_bgn33d_V_Drum_S11, Trk_bgn33d_V_Drum_S16, Trk_d1642c_N_Drum_S17, Trk_bgn33d_V_Drum_S18	; Drum
@@ -17697,7 +17697,7 @@ Style_B2P059_bgn33d_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgn33d1v", 4, 4, 6, 0x0a43, 0x0c7e, 0x0640, 0x07d4, 2, 5, 6, 5
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bgn33d1v", 4, 4, 6, 0x0a43, 0x0c7e, 0x0640, 0x07d4, 2, 5, 6, 5
 
 ; cba17s: locator [bank 3][program 67]
 Style_B3P067_cba17s:
@@ -17765,7 +17765,7 @@ Style_B3P067_cba17s:
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cba17s1n", 2, 1, 2, 0x0890, 0x07b0, 0x0290, 0x0402, 1, 2, 2, 2
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cba17s1n", 2, 1, 2, 0x0890, 0x07b0, 0x0290, 0x0402, 1, 2, 2, 2
 Style_B3P067_cba17s_V:
 	style_section_map
 	part_tracks	0x24, Trk_cba17s_V_Drum_S00, Trk_cba17s_V_Drum_S01, Trk_cba17s_V_Drum_S02, Trk_cba17s_V_Drum_S03, Trk_cba17s_V_Drum_S04, Trk_cba17s_V_Drum_S05, Trk_cba17s_V_Drum_S06, Trk_cba17s_V_Drum_S07, Trk_cba17s_V_Drum_S08, Trk_cba17s_V_Drum_S09, Trk_cba17s_V_Drum_S10, Trk_cba17s_V_Drum_S11, Trk_cba17s_V_Drum_S08, Trk_cba17s_V_Drum_S09, Trk_cba17s_V_Drum_S10, Trk_cba17s_V_Drum_S11, Trk_cba17s_V_Drum_S16, Trk_8br37p_N_Drum_S17, Trk_cba17s_V_Drum_S18	; Drum
@@ -17831,7 +17831,7 @@ Style_B3P067_cba17s_V:
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cba17s1v", 4, 2, 8, 0x0da0, 0x0c88, 0x0352, 0x06e6, 2, 2, 2, 3
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cba17s1v", 4, 2, 8, 0x0da0, 0x0c88, 0x0352, 0x06e6, 2, 2, 2, 3
 
 ; cha43d: locator [bank 3][program 57]
 Style_B3P057_cha43d:
@@ -17899,7 +17899,7 @@ Style_B3P057_cha43d:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cha43d1n", 2, 2, 2, 0x09ec, 0x0a26, 0x04fa, 0x0614, 2, 6, 4, 5
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cha43d1n", 2, 2, 2, 0x09ec, 0x0a26, 0x04fa, 0x0614, 2, 6, 4, 5
 Style_B3P057_cha43d_V:
 	style_section_map
 	part_tracks	0x1b, Trk_cha43d_V_Drum_S00, Trk_cha43d_V_Drum_S01, Trk_cha43d_V_Drum_S02, Trk_cha43d_V_Drum_S03, Trk_cha43d_V_Drum_S04, Trk_cha43d_V_Drum_S05, Trk_cha43d_V_Drum_S06, Trk_cha43d_V_Drum_S07, Trk_cha43d_V_Drum_S08, Trk_cha43d_V_Drum_S09, Trk_cha43d_V_Drum_S10, Trk_cha43d_V_Drum_S11, Trk_cha43d_V_Drum_S08, Trk_cha43d_V_Drum_S09, Trk_cha43d_V_Drum_S10, Trk_cha43d_V_Drum_S11, Trk_cha43d_V_Drum_S16, Trk_dxi65k_N_Drum_S17, Trk_cha43d_V_Drum_S18	; Drum
@@ -17965,7 +17965,7 @@ Style_B3P057_cha43d_V:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cha43d1v", 4, 4, 6, 0x0b9a, 0x0ecc, 0x063a, 0x075a, 2, 5, 5, 4
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cha43d1v", 4, 4, 6, 0x0b9a, 0x0ecc, 0x063a, 0x075a, 2, 5, 5, 4
 
 ; mmb66p: locator [bank 4][program 56]
 Style_B4P056_mmb66p:
@@ -18033,7 +18033,7 @@ Style_B4P056_mmb66p:
 	part_sound	65, 0, 0x40, 0, 59, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb66p1n", 4, 2, 6, 0x09b2, 0x0c00, 0x04bc, 0x0baa, 2, 8, 6, 6
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb66p1n", 4, 2, 6, 0x09b2, 0x0c00, 0x04bc, 0x0baa, 2, 8, 6, 6
 Style_B4P056_mmb66p_V:
 	style_section_map
 	part_tracks	0x10, Trk_mmb66p_V_Drum_S00, Trk_mmb66p_V_Drum_S01, Trk_mmb66p_V_Drum_S02, Trk_mmb66p_V_Drum_S03, Trk_mmb66p_V_Drum_S04, Trk_mmb66p_V_Drum_S05, Trk_mmb66p_V_Drum_S06, Trk_mmb66p_V_Drum_S07, Trk_mmb66p_V_Drum_S08, Trk_mmb66p_V_Drum_S09, Trk_mmb66p_V_Drum_S10, Trk_mmb66p_V_Drum_S11, Trk_mmb66p_V_Drum_S08, Trk_mmb66p_V_Drum_S09, Trk_mmb66p_V_Drum_S10, Trk_mmb66p_V_Drum_S11, Trk_mmb66p_V_Drum_S16, Trk_gsp46h_N_Drum_S17, Trk_mmb66p_V_Drum_S18	; Drum
@@ -18099,7 +18099,7 @@ Style_B4P056_mmb66p_V:
 	part_sound	65, 0, 0x40, 0, 59, 8, 127	; ACCOMP2
 	part_sound	2, 1, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb66p1v", 4, 4, 7, 0x0ebc, 0x104c, 0x0af4, 0x0b76, 1, 8, 6, 4
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb66p1v", 4, 4, 7, 0x0ebc, 0x104c, 0x0af4, 0x0b76, 1, 8, 6, 4
 
 ; bsn46k: locator [bank 0][program 48]
 Style_B0P048_bsn46k:
@@ -18167,7 +18167,7 @@ Style_B0P048_bsn46k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn46k1n", 2, 2, 2, 0x08b8, 0x083c, 0x03fa, 0x0404, 2, 4, 4, 0
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn46k1n", 2, 2, 2, 0x08b8, 0x083c, 0x03fa, 0x0404, 2, 4, 4, 0
 Style_B0P048_bsn46k_V:
 	style_section_map
 	part_tracks	0x1b, Trk_bsn46k_V_Drum_S00, Trk_bsn46k_V_Drum_S01, Trk_bsn46k_V_Drum_S02, Trk_bsn46k_V_Drum_S03, Trk_bsn46k_V_Drum_S04, Trk_bsn46k_V_Drum_S05, Trk_bsn46k_V_Drum_S06, Trk_bsn46k_V_Drum_S07, Trk_bsn46k_V_Drum_S08, Trk_bsn46k_V_Drum_S09, Trk_bsn46k_V_Drum_S10, Trk_bsn46k_V_Drum_S11, Trk_bsn46k_V_Drum_S08, Trk_bsn46k_V_Drum_S09, Trk_bsn46k_V_Drum_S10, Trk_bsn46k_V_Drum_S11, Trk_bsn46k_V_Drum_S16, Trk_dxi65k_N_Drum_S17, Trk_bsn46k_V_Drum_S18	; Drum
@@ -18233,7 +18233,7 @@ Style_B0P048_bsn46k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn46k1v", 4, 4, 6, 0x09a6, 0x0a99, 0x0616, 0x0436, 2, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn46k1v", 4, 4, 6, 0x09a6, 0x0a99, 0x0616, 0x0436, 2, 5, 5, 2
 
 ; bsn56p: locator [bank 1][program 48]
 Style_B1P048_bsn56p:
@@ -18301,7 +18301,7 @@ Style_B1P048_bsn56p:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	25, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn56p1n", 1, 5, 1, 0x0f8c, 0x1100, 0x071e, 0x0740, 1, 5, 5, 6
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn56p1n", 1, 5, 1, 0x0f8c, 0x1100, 0x071e, 0x0740, 1, 5, 5, 6
 Style_B1P048_bsn56p_V:
 	style_section_map
 	part_tracks	0x09, Trk_bsn56p_V_Drum_S00, Trk_bsn56p_V_Drum_S01, Trk_bsn56p_V_Drum_S02, Trk_bsn56p_V_Drum_S03, Trk_bsn56p_V_Drum_S04, Trk_bsn56p_V_Drum_S05, Trk_bsn56p_V_Drum_S06, Trk_bsn56p_V_Drum_S07, Trk_bsn56p_V_Drum_S08, Trk_bsn56p_V_Drum_S09, Trk_bsn56p_V_Drum_S10, Trk_bsn56p_V_Drum_S11, Trk_bsn56p_V_Drum_S08, Trk_bsn56p_V_Drum_S09, Trk_bsn56p_V_Drum_S10, Trk_bsn56p_V_Drum_S11, Trk_bsn56p_V_Drum_S16, Trk_bsn56p_N_Drum_S17, Trk_bsn56p_V_Drum_S18	; Drum
@@ -18367,7 +18367,7 @@ Style_B1P048_bsn56p_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	25, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn56p1v", 5, 6, 14, 0x130c, 0x1206, 0x08da, 0x0826, 1, 7, 6, 5
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn56p1v", 5, 6, 14, 0x130c, 0x1206, 0x08da, 0x0826, 1, 7, 6, 5
 
 ; smb76g: locator [bank 6][program 51]
 Style_B6P051_smb76g:
@@ -18435,7 +18435,7 @@ Style_B6P051_smb76g:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 6, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb76g1n", 4, 2, 10, 0x0d2a, 0x13f4, 0x0756, 0x0e04, 1, 5, 3, 3
+	style_tail	TIMESIG_4_4, 0x06, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb76g1n", 4, 2, 10, 0x0d2a, 0x13f4, 0x0756, 0x0e04, 1, 5, 3, 3
 Style_B6P051_smb76g_V:
 	style_section_map
 	part_tracks	0x06, Trk_smb76g_V_Drum_S00, Trk_smb76g_V_Drum_S01, Trk_smb76g_V_Drum_S02, Trk_smb76g_V_Drum_S03, Trk_smb76g_V_Drum_S04, Trk_smb76g_V_Drum_S05, Trk_smb76g_V_Drum_S06, Trk_smb76g_V_Drum_S07, Trk_smb76g_V_Drum_S08, Trk_smb76g_V_Drum_S09, Trk_smb76g_V_Drum_S10, Trk_smb76g_V_Drum_S11, Trk_smb76g_V_Drum_S08, Trk_smb76g_V_Drum_S09, Trk_smb76g_V_Drum_S10, Trk_smb76g_V_Drum_S11, Trk_smb76g_V_Drum_S16, Trk_8rb26k_N_Drum_S17, Trk_smb76g_V_Drum_S18	; Drum
@@ -18501,7 +18501,7 @@ Style_B6P051_smb76g_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 6, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb76g1v", 8, 8, 21, 0x11b8, 0x1684, 0x1ce4, 0x0e0c, 1, 4, 3, 2
+	style_tail	TIMESIG_4_4, 0x06, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb76g1v", 8, 8, 21, 0x11b8, 0x1684, 0x1ce4, 0x0e0c, 1, 4, 3, 2
 
 ; sls56h: locator [bank 4][program 68]
 Style_B4P068_sls56h:
@@ -18569,7 +18569,7 @@ Style_B4P068_sls56h:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sls56h1n", 2, 2, 2, 0x0bd2, 0x1036, 0x06e2, 0x0778, 2, 7, 4, 2
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sls56h1n", 2, 2, 2, 0x0bd2, 0x1036, 0x06e2, 0x0778, 2, 7, 4, 2
 Style_B4P068_sls56h_V:
 	style_section_map
 	part_tracks	0x0e, Trk_sls56h_V_Drum_S00, Trk_sls56h_V_Drum_S01, Trk_sls56h_V_Drum_S02, Trk_sls56h_V_Drum_S03, Trk_sls56h_V_Drum_S04, Trk_sls56h_V_Drum_S05, Trk_sls56h_V_Drum_S06, Trk_sls56h_V_Drum_S07, Trk_sls56h_V_Drum_S08, Trk_sls56h_V_Drum_S09, Trk_sls56h_V_Drum_S10, Trk_sls56h_V_Drum_S11, Trk_sls56h_V_Drum_S08, Trk_sls56h_V_Drum_S09, Trk_sls56h_V_Drum_S10, Trk_sls56h_V_Drum_S11, Trk_sls56h_V_Drum_S16, Trk_dtp37r_N_Drum_S17, Trk_sls56h_V_Drum_S18	; Drum
@@ -18635,7 +18635,7 @@ Style_B4P068_sls56h_V:
 	part_sound	20, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sls56h1v", 4, 4, 5, 0x10f0, 0x0a24, 0x0992, 0x09f2, 2, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "sls56h1v", 4, 4, 5, 0x10f0, 0x0a24, 0x0992, 0x09f2, 2, 6, 4, 3
 
 ; tng53d: locator [bank 4][program 53]
 Style_B4P053_tng53d:
@@ -18703,7 +18703,7 @@ Style_B4P053_tng53d:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	99, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng53d1n", 4, 4, 3, 0x078a, 0x078e, 0x04de, 0x0428, 2, 5, 4, 3
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng53d1n", 4, 4, 3, 0x078a, 0x078e, 0x04de, 0x0428, 2, 5, 4, 3
 Style_B4P053_tng53d_V:
 	style_section_map
 	part_tracks	0x2e, Trk_tng53d_V_Drum_S00, Trk_tng53d_V_Drum_S01, Trk_tng53d_V_Drum_S02, Trk_tng53d_V_Drum_S03, Trk_tng53d_V_Drum_S04, Trk_tng53d_V_Drum_S05, Trk_tng53d_V_Drum_S06, Trk_tng53d_V_Drum_S07, Trk_tng53d_V_Drum_S08, Trk_tng53d_V_Drum_S09, Trk_tng53d_V_Drum_S10, Trk_tng53d_V_Drum_S11, Trk_tng53d_V_Drum_S08, Trk_tng53d_V_Drum_S09, Trk_tng53d_V_Drum_S10, Trk_tng53d_V_Drum_S11, Trk_tng53d_V_Drum_S16, Trk_sbg35n_N_Drum_S17, Trk_tng53d_V_Drum_S18	; Drum
@@ -18769,7 +18769,7 @@ Style_B4P053_tng53d_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	99, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 46, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng53d1v", 4, 4, 4, 0x084c, 0x0924, 0x05b8, 0x06c0, 2, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x2e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng53d1v", 4, 4, 4, 0x084c, 0x0924, 0x05b8, 0x06c0, 2, 4, 4, 3
 
 ; rmb66p: locator [bank 5][program 58]
 Style_B5P058_rmb66p:
@@ -18837,7 +18837,7 @@ Style_B5P058_rmb66p:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	20, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb66p1n", 4, 4, 8, 0x0b90, 0x0cfe, 0x08b0, 0x0c9e, 2, 3, 7, 5
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb66p1n", 4, 4, 8, 0x0b90, 0x0cfe, 0x08b0, 0x0c9e, 2, 3, 7, 5
 Style_B5P058_rmb66p_V:
 	style_section_map
 	part_tracks	0x0e, Trk_rmb66p_V_Drum_S00, Trk_rmb66p_V_Drum_S01, Trk_rmb66p_V_Drum_S02, Trk_rmb66p_V_Drum_S03, Trk_rmb66p_V_Drum_S04, Trk_rmb66p_V_Drum_S05, Trk_rmb66p_V_Drum_S06, Trk_rmb66p_V_Drum_S07, Trk_rmb66p_V_Drum_S08, Trk_rmb66p_V_Drum_S09, Trk_rmb66p_V_Drum_S10, Trk_rmb66p_V_Drum_S11, Trk_rmb66p_V_Drum_S08, Trk_rmb66p_V_Drum_S09, Trk_rmb66p_V_Drum_S10, Trk_rmb66p_V_Drum_S11, Trk_rmb66p_V_Drum_S16, Trk_dtp37r_N_Drum_S17, Trk_rmb66p_V_Drum_S18	; Drum
@@ -18903,7 +18903,7 @@ Style_B5P058_rmb66p_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	20, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 14, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb66p1v", 4, 7, 10, 0x0c0e, 0x0eee, 0x0952, 0x0b5c, 1, 6, 7, 5
+	style_tail	TIMESIG_4_4, 0x0e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb66p1v", 4, 7, 10, 0x0c0e, 0x0eee, 0x0952, 0x0b5c, 1, 6, 7, 5
 
 ; mmb43c: locator [bank 2][program 56]
 Style_B2P056_mmb43c:
@@ -18971,7 +18971,7 @@ Style_B2P056_mmb43c:
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb43c1n", 4, 4, 3, 0x07ae, 0x0964, 0x0320, 0x078c, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb43c1n", 4, 4, 3, 0x07ae, 0x0964, 0x0320, 0x078c, 2, 4, 4, 4
 Style_B2P056_mmb43c_V:
 	style_section_map
 	part_tracks	0x1c, Trk_mmb43c_V_Drum_S00, Trk_mmb43c_V_Drum_S01, Trk_mmb43c_V_Drum_S02, Trk_mmb43c_V_Drum_S03, Trk_mmb43c_V_Drum_S04, Trk_mmb43c_V_Drum_S05, Trk_mmb43c_V_Drum_S06, Trk_mmb43c_V_Drum_S07, Trk_mmb43c_V_Drum_S08, Trk_mmb43c_V_Drum_S09, Trk_mmb43c_V_Drum_S10, Trk_mmb43c_V_Drum_S11, Trk_mmb43c_V_Drum_S08, Trk_mmb43c_V_Drum_S09, Trk_mmb43c_V_Drum_S10, Trk_mmb43c_V_Drum_S11, Trk_mmb43c_V_Drum_S16, Trk_8rr17d_N_Drum_S17, Trk_mmb43c_V_Drum_S18	; Drum
@@ -19037,7 +19037,7 @@ Style_B2P056_mmb43c_V:
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb43c1v", 4, 8, 5, 0x09ea, 0x0b62, 0x0854, 0x0754, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x1c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mmb43c1v", 4, 8, 5, 0x09ea, 0x0b62, 0x0854, 0x0754, 2, 5, 4, 4
 
 ; cbr46d: locator [bank 4][program 118]
 Style_B4P118_cbr46d:
@@ -19105,7 +19105,7 @@ Style_B4P118_cbr46d:
 	part_sound	13, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr46d1n", 4, 2, 9, 0x0d4c, 0x11e8, 0x0420, 0x06ec, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr46d1n", 4, 2, 9, 0x0d4c, 0x11e8, 0x0420, 0x06ec, 2, 3, 3, 4
 Style_B4P118_cbr46d_V:
 	style_section_map
 	part_tracks	0x09, Trk_cbr46d_V_Drum_S00, Trk_cbr46d_V_Drum_S01, Trk_cbr46d_V_Drum_S02, Trk_cbr46d_V_Drum_S03, Trk_cbr46d_V_Drum_S04, Trk_cbr46d_V_Drum_S05, Trk_cbr46d_V_Drum_S06, Trk_cbr46d_V_Drum_S07, Trk_cbr46d_V_Drum_S08, Trk_cbr46d_V_Drum_S09, Trk_cbr46d_V_Drum_S10, Trk_cbr46d_V_Drum_S11, Trk_cbr46d_V_Drum_S08, Trk_cbr46d_V_Drum_S09, Trk_cbr46d_V_Drum_S10, Trk_cbr46d_V_Drum_S11, Trk_cbr46d_V_Drum_S16, Trk_bsn56p_N_Drum_S17, Trk_cbr46d_V_Drum_S18	; Drum
@@ -19171,7 +19171,7 @@ Style_B4P118_cbr46d_V:
 	part_sound	13, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr46d1v", 5, 5, 12, 0x0f76, 0x0f78, 0x0b5c, 0x066c, 1, 3, 2, 3
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr46d1v", 5, 5, 12, 0x0f76, 0x0f78, 0x0b5c, 0x066c, 1, 3, 2, 3
 
 ; tng66d: locator [bank 5][program 53]
 Style_B5P053_tng66d:
@@ -19239,7 +19239,7 @@ Style_B5P053_tng66d:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng66d1n", 5, 6, 4, 0x0622, 0x06e0, 0x05e2, 0x0412, 2, 6, 0, 0
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng66d1n", 5, 6, 4, 0x0622, 0x06e0, 0x05e2, 0x0412, 2, 6, 0, 0
 Style_B5P053_tng66d_V:
 	style_section_map
 	part_tracks	0x2c, Trk_tng66d_V_Drum_S00, Trk_tng66d_V_Drum_S01, Trk_tng66d_V_Drum_S02, Trk_tng66d_V_Drum_S03, Trk_tng66d_V_Drum_S04, Trk_tng66d_V_Drum_S05, Trk_tng66d_V_Drum_S06, Trk_tng66d_V_Drum_S07, Trk_tng66d_V_Drum_S08, Trk_tng66d_V_Drum_S09, Trk_tng66d_V_Drum_S10, Trk_tng66d_V_Drum_S11, Trk_tng66d_V_Drum_S08, Trk_tng66d_V_Drum_S09, Trk_tng66d_V_Drum_S10, Trk_tng66d_V_Drum_S11, Trk_tng66d_V_Drum_S16, Trk_8bb57m_N_Drum_S17, Trk_tng66d_V_Drum_S18	; Drum
@@ -19305,7 +19305,7 @@ Style_B5P053_tng66d_V:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng66d1v", 5, 4, 4, 0x09c0, 0x0968, 0x05c8, 0x06bc, 2, 6, 3, 0
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tng66d1v", 5, 4, 4, 0x09c0, 0x0968, 0x05c8, 0x06bc, 2, 6, 3, 0
 
 ; rmb76n: locator [bank 6][program 58]
 Style_B6P058_rmb76n:
@@ -19373,7 +19373,7 @@ Style_B6P058_rmb76n:
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb76n1n", 4, 4, 5, 0x060a, 0x0a54, 0x0502, 0x0792, 2, 7, 3, 5
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb76n1n", 4, 4, 5, 0x060a, 0x0a54, 0x0502, 0x0792, 2, 7, 3, 5
 Style_B6P058_rmb76n_V:
 	style_section_map
 	part_tracks	0x20, Trk_rmb76n_V_Drum_S00, Trk_rmb76n_V_Drum_S01, Trk_rmb76n_V_Drum_S02, Trk_rmb76n_V_Drum_S03, Trk_rmb76n_V_Drum_S04, Trk_rmb76n_V_Drum_S05, Trk_rmb76n_V_Drum_S06, Trk_rmb76n_V_Drum_S07, Trk_rmb76n_V_Drum_S08, Trk_rmb76n_V_Drum_S09, Trk_rmb76n_V_Drum_S10, Trk_rmb76n_V_Drum_S11, Trk_rmb76n_V_Drum_S08, Trk_rmb76n_V_Drum_S09, Trk_rmb76n_V_Drum_S10, Trk_rmb76n_V_Drum_S11, Trk_rmb76n_V_Drum_S16, Trk_sgf47m_N_Drum_S17, Trk_rmb76n_V_Drum_S18	; Drum
@@ -19439,7 +19439,7 @@ Style_B6P058_rmb76n_V:
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb76n1v", 4, 8, 4, 0x09fa, 0x0aec, 0x0b38, 0x0663, 2, 7, 4, 7
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rmb76n1v", 4, 8, 4, 0x09fa, 0x0aec, 0x0b38, 0x0663, 2, 7, 4, 7
 
 ; bsn35d: locator [bank 7][program 48]
 Style_B7P048_bsn35d:
@@ -19507,7 +19507,7 @@ Style_B7P048_bsn35d:
 	part_sound	6, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn35d1n", 3, 2, 3, 0x0b84, 0x0b16, 0x0302, 0x045d, 2, 5, 5, 2
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn35d1n", 3, 2, 3, 0x0b84, 0x0b16, 0x0302, 0x045d, 2, 5, 5, 2
 Style_B7P048_bsn35d_V:
 	style_section_map
 	part_tracks	0x17, Trk_bsn35d_V_Drum_S00, Trk_bsn35d_V_Drum_S01, Trk_bsn35d_V_Drum_S02, Trk_bsn35d_V_Drum_S03, Trk_bsn35d_V_Drum_S04, Trk_bsn35d_V_Drum_S05, Trk_bsn35d_V_Drum_S06, Trk_bsn35d_V_Drum_S07, Trk_bsn35d_V_Drum_S08, Trk_bsn35d_V_Drum_S09, Trk_bsn35d_V_Drum_S10, Trk_bsn35d_V_Drum_S11, Trk_bsn35d_V_Drum_S08, Trk_bsn35d_V_Drum_S09, Trk_bsn35d_V_Drum_S10, Trk_bsn35d_V_Drum_S11, Trk_bsn35d_V_Drum_S16, Trk_reg17r_N_Drum_S17, Trk_bsn35d_V_Drum_S18	; Drum
@@ -19573,7 +19573,7 @@ Style_B7P048_bsn35d_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	77, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn35d1v", 4, 4, 9, 0x0d10, 0x0e41, 0x08dc, 0x0658, 2, 5, 6, 4
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsn35d1v", 4, 4, 9, 0x0d10, 0x0e41, 0x08dc, 0x0658, 2, 5, 6, 4
 
 ; smb65c: locator [bank 5][program 51]
 Style_B5P051_smb65c:
@@ -19641,7 +19641,7 @@ Style_B5P051_smb65c:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb65c1n", 4, 5, 10, 0x0e14, 0x0d66, 0x0a32, 0x0664, 2, 6, 4, 4
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb65c1n", 4, 5, 10, 0x0e14, 0x0d66, 0x0a32, 0x0664, 2, 6, 4, 4
 Style_B5P051_smb65c_V:
 	style_section_map
 	part_tracks	0x0b, Trk_smb65c_V_Drum_S00, Trk_smb65c_V_Drum_S01, Trk_smb65c_V_Drum_S02, Trk_smb65c_V_Drum_S03, Trk_smb65c_V_Drum_S04, Trk_smb65c_V_Drum_S05, Trk_smb65c_V_Drum_S06, Trk_smb65c_V_Drum_S07, Trk_smb65c_V_Drum_S08, Trk_smb65c_V_Drum_S09, Trk_smb65c_V_Drum_S10, Trk_smb65c_V_Drum_S11, Trk_smb65c_V_Drum_S08, Trk_smb65c_V_Drum_S09, Trk_smb65c_V_Drum_S10, Trk_smb65c_V_Drum_S11, Trk_smb65c_V_Drum_S16, Trk_8br97g_N_Drum_S17, Trk_smb65c_V_Drum_S18	; Drum
@@ -19707,7 +19707,7 @@ Style_B5P051_smb65c_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb65c1v", 4, 4, 9, 0x0e56, 0x0df2, 0x0888, 0x0736, 2, 5, 3, 4
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "smb65c1v", 4, 4, 9, 0x0e56, 0x0df2, 0x0888, 0x0736, 2, 5, 3, 4
 
 ; mrg16h: locator [bank 1][program 67]
 Style_B1P067_mrg16h:
@@ -19775,7 +19775,7 @@ Style_B1P067_mrg16h:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	77, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrg16h1n", 2, 2, 5, 0x0a0e, 0x0d80, 0x0400, 0x0944, 2, 4, 5, 4
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrg16h1n", 2, 2, 5, 0x0a0e, 0x0d80, 0x0400, 0x0944, 2, 4, 5, 4
 Style_B1P067_mrg16h_V:
 	style_section_map
 	part_tracks	0x0f, Trk_mrg16h_V_Drum_S00, Trk_mrg16h_V_Drum_S01, Trk_mrg16h_V_Drum_S02, Trk_mrg16h_V_Drum_S03, Trk_mrg16h_V_Drum_S04, Trk_mrg16h_V_Drum_S05, Trk_mrg16h_V_Drum_S06, Trk_mrg16h_V_Drum_S07, Trk_mrg16h_V_Drum_S08, Trk_mrg16h_V_Drum_S09, Trk_mrg16h_V_Drum_S10, Trk_mrg16h_V_Drum_S11, Trk_mrg16h_V_Drum_S08, Trk_mrg16h_V_Drum_S09, Trk_mrg16h_V_Drum_S10, Trk_mrg16h_V_Drum_S11, Trk_mrg16h_V_Drum_S16, Trk_8sf17p_N_Drum_S17, Trk_mrg16h_V_Drum_S18	; Drum
@@ -19841,7 +19841,7 @@ Style_B1P067_mrg16h_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrg16h1v", 5, 3, 8, 0x10c9, 0x1428, 0x08be, 0x0b5e, 1, 6, 4, 4
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mrg16h1v", 5, 3, 8, 0x10c9, 0x1428, 0x08be, 0x0b5e, 1, 6, 4, 4
 
 ; psd27n: locator [bank 2][program 69]
 Style_B2P069_psd27n:
@@ -19909,7 +19909,7 @@ Style_B2P069_psd27n:
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	57, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "psd27n1n", 4, 4, 7, 0x09c0, 0x0b2e, 0x07d6, 0x05d8, 2, 7, 5, 4
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "psd27n1n", 4, 4, 7, 0x09c0, 0x0b2e, 0x07d6, 0x05d8, 2, 7, 5, 4
 Style_B2P069_psd27n_V:
 	style_section_map
 	part_tracks	0x0d, Trk_psd27n_V_Drum_S00, Trk_psd27n_V_Drum_S01, Trk_psd27n_V_Drum_S02, Trk_psd27n_V_Drum_S03, Trk_psd27n_V_Drum_S04, Trk_psd27n_V_Drum_S05, Trk_psd27n_V_Drum_S06, Trk_psd27n_V_Drum_S07, Trk_psd27n_V_Drum_S08, Trk_psd27n_V_Drum_S09, Trk_psd27n_V_Drum_S10, Trk_psd27n_V_Drum_S11, Trk_psd27n_V_Drum_S08, Trk_psd27n_V_Drum_S09, Trk_psd27n_V_Drum_S10, Trk_psd27n_V_Drum_S11, Trk_psd27n_V_Drum_S16, Trk_sbr76g_N_Drum_S17, Trk_psd27n_V_Drum_S18	; Drum
@@ -19975,7 +19975,7 @@ Style_B2P069_psd27n_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "psd27n1v", 4, 4, 7, 0x0a52, 0x0cd4, 0x08c4, 0x0652, 1, 6, 5, 5
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "psd27n1v", 4, 4, 7, 0x0a52, 0x0cd4, 0x08c4, 0x0652, 1, 6, 5, 5
 
 ; mca65k: locator [bank 5][program 0]
 Style_B5P000_mca65k:
@@ -20043,7 +20043,7 @@ Style_B5P000_mca65k:
 	part_sound	54, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	69, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca65k1n", 3, 2, 9, 0x0aae, 0x0ed8, 0x0562, 0x0798, 2, 5, 5, 5
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca65k1n", 3, 2, 9, 0x0aae, 0x0ed8, 0x0562, 0x0798, 2, 5, 5, 5
 Style_B5P000_mca65k_V:
 	style_section_map
 	part_tracks	0x0d, Trk_mca65k_V_Drum_S00, Trk_mca65k_V_Drum_S01, Trk_mca65k_V_Drum_S02, Trk_mca65k_V_Drum_S03, Trk_mca65k_V_Drum_S04, Trk_mca65k_V_Drum_S05, Trk_mca65k_V_Drum_S06, Trk_mca65k_V_Drum_S07, Trk_mca65k_V_Drum_S08, Trk_mca65k_V_Drum_S09, Trk_mca65k_V_Drum_S10, Trk_mca65k_V_Drum_S11, Trk_mca65k_V_Drum_S08, Trk_mca65k_V_Drum_S09, Trk_mca65k_V_Drum_S10, Trk_mca65k_V_Drum_S11, Trk_mca65k_V_Drum_S16, Trk_sbr76g_N_Drum_S17, Trk_mca65k_V_Drum_S18	; Drum
@@ -20109,7 +20109,7 @@ Style_B5P000_mca65k_V:
 	part_sound	54, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	69, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca65k1v", 6, 4, 13, 0x0da8, 0x0c50, 0x0ac6, 0x062e, 2, 5, 4, 5
+	style_tail	TIMESIG_4_4, 0x0d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca65k1v", 6, 4, 13, 0x0da8, 0x0c50, 0x0ac6, 0x062e, 2, 5, 4, 5
 
 ; mca52s: locator [bank 1][program 2]
 Style_B1P002_mca52s:
@@ -20177,7 +20177,7 @@ Style_B1P002_mca52s:
 	part_sound	69, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca52s1n", 2, 2, 2, 0x062c, 0x07ea, 0x0266, 0x0492, 1, 5, 2, 1
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca52s1n", 2, 2, 2, 0x062c, 0x07ea, 0x0266, 0x0492, 1, 5, 2, 1
 Style_B1P002_mca52s_V:
 	style_section_map
 	part_tracks	0x2f, Trk_mca52s_V_Drum_S00, Trk_mca52s_V_Drum_S01, Trk_mca52s_V_Drum_S02, Trk_mca52s_V_Drum_S03, Trk_mca52s_V_Drum_S04, Trk_mca52s_V_Drum_S05, Trk_mca52s_V_Drum_S06, Trk_mca52s_V_Drum_S07, Trk_mca52s_V_Drum_S08, Trk_mca52s_V_Drum_S09, Trk_mca52s_V_Drum_S10, Trk_mca52s_V_Drum_S11, Trk_mca52s_V_Drum_S08, Trk_mca52s_V_Drum_S09, Trk_mca52s_V_Drum_S10, Trk_mca52s_V_Drum_S11, Trk_mca52s_V_Drum_S16, Trk_16b16k_N_Drum_S17, Trk_mca52s_V_Drum_S18	; Drum
@@ -20243,7 +20243,7 @@ Style_B1P002_mca52s_V:
 	part_sound	69, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 47, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca52s1v", 4, 4, 5, 0x0a76, 0x0700, 0x07f6, 0x0586, 1, 3, 2, 2
+	style_tail	TIMESIG_4_4, 0x2f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mca52s1v", 4, 4, 5, 0x0a76, 0x0700, 0x07f6, 0x0586, 1, 3, 2, 2
 
 ; mcg97e: locator [bank 4][program 1]
 Style_B4P001_mcg97e:
@@ -20311,7 +20311,7 @@ Style_B4P001_mcg97e:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	9, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mcg97e1n", 2, 2, 4, 0x0bac, 0x0ca6, 0x03b2, 0x068c, 2, 6, 3, 2
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mcg97e1n", 2, 2, 4, 0x0bac, 0x0ca6, 0x03b2, 0x068c, 2, 6, 3, 2
 Style_B4P001_mcg97e_V:
 	style_section_map
 	part_tracks	0x18, Trk_mcg97e_V_Drum_S00, Trk_mcg97e_V_Drum_S01, Trk_mcg97e_V_Drum_S02, Trk_mcg97e_V_Drum_S03, Trk_mcg97e_V_Drum_S04, Trk_mcg97e_V_Drum_S05, Trk_mcg97e_V_Drum_S06, Trk_mcg97e_V_Drum_S07, Trk_mcg97e_V_Drum_S08, Trk_mcg97e_V_Drum_S09, Trk_mcg97e_V_Drum_S10, Trk_mcg97e_V_Drum_S11, Trk_mcg97e_V_Drum_S08, Trk_mcg97e_V_Drum_S09, Trk_mcg97e_V_Drum_S10, Trk_mcg97e_V_Drum_S11, Trk_mcg97e_V_Drum_S16, Trk_8br17r_N_Drum_S17, Trk_mcg97e_V_Drum_S18	; Drum
@@ -20377,7 +20377,7 @@ Style_B4P001_mcg97e_V:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	54, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mcg97e1v", 4, 4, 6, 0x0bfe, 0x0cd6, 0x07d2, 0x0894, 1, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mcg97e1v", 4, 4, 6, 0x0bfe, 0x0cd6, 0x07d2, 0x0894, 1, 6, 4, 3
 
 ; plk87e: locator [bank 0][program 4]
 Style_B0P004_plk87e:
@@ -20445,7 +20445,7 @@ Style_B0P004_plk87e:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	20, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk87e1n", 2, 2, 3, 0x0b78, 0x0e8a, 0x040e, 0x0504, 2, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk87e1n", 2, 2, 3, 0x0b78, 0x0e8a, 0x040e, 0x0504, 2, 4, 3, 3
 Style_B0P004_plk87e_V:
 	style_section_map
 	part_tracks	0x12, Trk_plk87e_V_Drum_S00, Trk_plk87e_V_Drum_S01, Trk_plk87e_V_Drum_S02, Trk_plk87e_V_Drum_S03, Trk_plk87e_V_Drum_S04, Trk_plk87e_V_Drum_S05, Trk_plk87e_V_Drum_S06, Trk_plk87e_V_Drum_S07, Trk_plk87e_V_Drum_S08, Trk_plk87e_V_Drum_S09, Trk_plk87e_V_Drum_S10, Trk_plk87e_V_Drum_S11, Trk_plk87e_V_Drum_S08, Trk_plk87e_V_Drum_S09, Trk_plk87e_V_Drum_S10, Trk_plk87e_V_Drum_S11, Trk_plk87e_V_Drum_S16, Trk_dcs17d_N_Drum_S17, Trk_plk87e_V_Drum_S18	; Drum
@@ -20511,7 +20511,7 @@ Style_B0P004_plk87e_V:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	20, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk87e1v", 4, 4, 9, 0x0cda, 0x0ea6, 0x092e, 0x05e4, 1, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk87e1v", 4, 4, 9, 0x0cda, 0x0ea6, 0x092e, 0x05e4, 1, 4, 4, 4
 
 ; plk97e: locator [bank 1][program 4]
 Style_B1P004_plk97e:
@@ -20579,7 +20579,7 @@ Style_B1P004_plk97e:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk97e1n", 4, 4, 10, 0x0804, 0x0cdc, 0x0652, 0x05d6, 2, 5, 4, 3
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk97e1n", 4, 4, 10, 0x0804, 0x0cdc, 0x0652, 0x05d6, 2, 5, 4, 3
 Style_B1P004_plk97e_V:
 	style_section_map
 	part_tracks	0x08, Trk_plk97e_V_Drum_S00, Trk_plk97e_V_Drum_S01, Trk_plk97e_V_Drum_S02, Trk_plk97e_V_Drum_S03, Trk_plk97e_V_Drum_S04, Trk_plk97e_V_Drum_S05, Trk_plk97e_V_Drum_S06, Trk_plk97e_V_Drum_S07, Trk_plk97e_V_Drum_S08, Trk_plk97e_V_Drum_S09, Trk_plk97e_V_Drum_S10, Trk_plk97e_V_Drum_S11, Trk_plk97e_V_Drum_S08, Trk_plk97e_V_Drum_S09, Trk_plk97e_V_Drum_S10, Trk_plk97e_V_Drum_S11, Trk_plk97e_V_Drum_S16, Trk_jzr17k_N_Drum_S17, Trk_plk97e_V_Drum_S18	; Drum
@@ -20645,7 +20645,7 @@ Style_B1P004_plk97e_V:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk97e1v", 8, 8, 19, 0x09be, 0x0fd8, 0x138e, 0x0770, 2, 4, 5, 5
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "plk97e1v", 8, 8, 19, 0x09be, 0x0fd8, 0x138e, 0x0770, 2, 4, 5, 5
 
 ; wzs76d: locator [bank 7][program 8]
 Style_B7P008_wzs76d:
@@ -20713,7 +20713,7 @@ Style_B7P008_wzs76d:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs76d1n", 4, 7, 2, 0x04a0, 0x046f, 0x03a6, 0x039b, 2, 4, 6, 0
+	style_tail	TIMESIG_3_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs76d1n", 4, 7, 2, 0x04a0, 0x046f, 0x03a6, 0x039b, 2, 4, 6, 0
 Style_B7P008_wzs76d_V:
 	style_section_map
 	part_tracks	0x2b, Trk_wzs76d_V_Drum_S00, Trk_wzs76d_V_Drum_S01, Trk_wzs76d_V_Drum_S02, Trk_wzs76d_V_Drum_S03, Trk_wzs76d_V_Drum_S04, Trk_wzs76d_V_Drum_S05, Trk_wzs76d_V_Drum_S06, Trk_wzs76d_V_Drum_S07, Trk_wzs76d_V_Drum_S08, Trk_wzs76d_V_Drum_S09, Trk_wzs76d_V_Drum_S10, Trk_wzs76d_V_Drum_S11, Trk_wzs76d_V_Drum_S08, Trk_wzs76d_V_Drum_S09, Trk_wzs76d_V_Drum_S10, Trk_wzs76d_V_Drum_S11, Trk_wzs76d_V_Drum_S16, Trk_wzs76d_N_Drum_S17, Trk_wzs76d_V_Drum_S18	; Drum
@@ -20779,7 +20779,7 @@ Style_B7P008_wzs76d_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 43, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs76d1v", 8, 8, 7, 0x05a4, 0x05d2, 0x0684, 0x0401, 2, 4, 6, 5
+	style_tail	TIMESIG_3_4, 0x2b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs76d1v", 8, 8, 7, 0x05a4, 0x05d2, 0x0684, 0x0401, 2, 4, 6, 5
 
 ; wzs86k: locator [bank 2][program 13]
 Style_B2P013_wzs86k:
@@ -20847,7 +20847,7 @@ Style_B2P013_wzs86k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs86k1n", 1, 2, 1, 0x0441, 0x05f2, 0x0126, 0x03c4, 2, 4, 6, 6
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs86k1n", 1, 2, 1, 0x0441, 0x05f2, 0x0126, 0x03c4, 2, 4, 6, 6
 Style_B2P013_wzs86k_V:
 	style_section_map
 	part_tracks	0x36, Trk_wzs86k_V_Drum_S00, Trk_wzs86k_V_Drum_S01, Trk_wzs86k_V_Drum_S02, Trk_wzs86k_V_Drum_S03, Trk_wzs86k_V_Drum_S04, Trk_wzs86k_V_Drum_S05, Trk_wzs86k_V_Drum_S06, Trk_wzs86k_V_Drum_S07, Trk_wzs86k_V_Drum_S08, Trk_wzs86k_V_Drum_S09, Trk_wzs86k_V_Drum_S10, Trk_wzs86k_V_Drum_S11, Trk_wzs86k_V_Drum_S08, Trk_wzs86k_V_Drum_S09, Trk_wzs86k_V_Drum_S10, Trk_wzs86k_V_Drum_S11, Trk_wzs86k_V_Drum_S16, Trk_jwf77s_N_Drum_S17, Trk_wzs86k_V_Drum_S18	; Drum
@@ -20913,7 +20913,7 @@ Style_B2P013_wzs86k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs86k1v", 2, 4, 2, 0x0502, 0x05f6, 0x03c4, 0x0428, 2, 4, 6, 6
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs86k1v", 2, 4, 2, 0x0502, 0x05f6, 0x03c4, 0x0428, 2, 4, 6, 6
 
 ; wzv47d: locator [bank 3][program 9]
 Style_B3P009_wzv47d:
@@ -20981,7 +20981,7 @@ Style_B3P009_wzv47d:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv47d1n", 4, 5, 2, 0x041c, 0x04b0, 0x04ee, 0x0327, 1, 5, 4, 4
+	style_tail	TIMESIG_3_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv47d1n", 4, 5, 2, 0x041c, 0x04b0, 0x04ee, 0x0327, 1, 5, 4, 4
 Style_B3P009_wzv47d_V:
 	style_section_map
 	part_tracks	0x35, Trk_wzv47d_V_Drum_S00, Trk_wzv47d_V_Drum_S01, Trk_wzv47d_V_Drum_S02, Trk_wzv47d_V_Drum_S03, Trk_wzv47d_V_Drum_S04, Trk_wzv47d_V_Drum_S05, Trk_wzv47d_V_Drum_S06, Trk_wzv47d_V_Drum_S07, Trk_wzv47d_V_Drum_S08, Trk_wzv47d_V_Drum_S09, Trk_wzv47d_V_Drum_S10, Trk_wzv47d_V_Drum_S11, Trk_wzv47d_V_Drum_S08, Trk_wzv47d_V_Drum_S09, Trk_wzv47d_V_Drum_S10, Trk_wzv47d_V_Drum_S11, Trk_wzv47d_V_Drum_S16, Trk_wzv47d_N_Drum_S17, Trk_wzv47d_V_Drum_S18	; Drum
@@ -21047,7 +21047,7 @@ Style_B3P009_wzv47d_V:
 	part_sound	28, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	102, 6, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv47d1v", 8, 5, 7, 0x0524, 0x07e2, 0x049a, 0x0579, 2, 5, 4, 4
+	style_tail	TIMESIG_3_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv47d1v", 8, 5, 7, 0x0524, 0x07e2, 0x049a, 0x0579, 2, 5, 4, 4
 
 ; wzg47e: locator [bank 5][program 10]
 Style_B5P010_wzg47e:
@@ -21115,7 +21115,7 @@ Style_B5P010_wzg47e:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzg47e1n", 4, 4, 3, 0x047a, 0x067c, 0x0214, 0x049c, 1, 3, 4, 2
+	style_tail	TIMESIG_3_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzg47e1n", 4, 4, 3, 0x047a, 0x067c, 0x0214, 0x049c, 1, 3, 4, 2
 Style_B5P010_wzg47e_V:
 	style_section_map
 	part_tracks	0x34, Trk_wzg47e_V_Drum_S00, Trk_wzg47e_V_Drum_S01, Trk_wzg47e_V_Drum_S02, Trk_wzg47e_V_Drum_S03, Trk_wzg47e_V_Drum_S04, Trk_wzg47e_V_Drum_S05, Trk_wzg47e_V_Drum_S06, Trk_wzg47e_V_Drum_S07, Trk_wzg47e_V_Drum_S08, Trk_wzg47e_V_Drum_S09, Trk_wzg47e_V_Drum_S10, Trk_wzg47e_V_Drum_S11, Trk_wzg47e_V_Drum_S08, Trk_wzg47e_V_Drum_S09, Trk_wzg47e_V_Drum_S10, Trk_wzg47e_V_Drum_S11, Trk_wzg47e_V_Drum_S16, Trk_wzg47e_N_Drum_S17, Trk_wzg47e_V_Drum_S18	; Drum
@@ -21181,7 +21181,7 @@ Style_B5P010_wzg47e_V:
 	part_sound	21, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzg47e1v", 8, 8, 6, 0x054a, 0x06fa, 0x05d0, 0x05ec, 2, 4, 4, 2
+	style_tail	TIMESIG_3_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzg47e1v", 8, 8, 6, 0x054a, 0x06fa, 0x05d0, 0x05ec, 2, 4, 4, 2
 
 ; wzc47n: locator [bank 3][program 11]
 Style_B3P011_wzc47n:
@@ -21249,7 +21249,7 @@ Style_B3P011_wzc47n:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	104, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzc47n1n", 8, 4, 5, 0x0462, 0x05fa, 0x0274, 0x04fc, 2, 7, 5, 6
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzc47n1n", 8, 4, 5, 0x0462, 0x05fa, 0x0274, 0x04fc, 2, 7, 5, 6
 Style_B3P011_wzc47n_V:
 	style_section_map
 	part_tracks	0x36, Trk_wzc47n_V_Drum_S00, Trk_wzc47n_V_Drum_S01, Trk_wzc47n_V_Drum_S02, Trk_wzc47n_V_Drum_S03, Trk_wzc47n_V_Drum_S04, Trk_wzc47n_V_Drum_S05, Trk_wzc47n_V_Drum_S06, Trk_wzc47n_V_Drum_S07, Trk_wzc47n_V_Drum_S08, Trk_wzc47n_V_Drum_S09, Trk_wzc47n_V_Drum_S10, Trk_wzc47n_V_Drum_S11, Trk_wzc47n_V_Drum_S08, Trk_wzc47n_V_Drum_S09, Trk_wzc47n_V_Drum_S10, Trk_wzc47n_V_Drum_S11, Trk_wzc47n_V_Drum_S16, Trk_jwf77s_N_Drum_S17, Trk_wzc47n_V_Drum_S18	; Drum
@@ -21315,7 +21315,7 @@ Style_B3P011_wzc47n_V:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 54, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzc47n1v", 4, 8, 2, 0x04c8, 0x05c4, 0x051a, 0x04a0, 2, 7, 4, 7
+	style_tail	TIMESIG_3_4, 0x36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzc47n1v", 4, 8, 2, 0x04c8, 0x05c4, 0x051a, 0x04a0, 2, 7, 4, 7
 
 ; wzv32n: locator [bank 2][program 9]
 Style_B2P009_wzv32n:
@@ -21383,7 +21383,7 @@ Style_B2P009_wzv32n:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv32n1n", 4, 4, 3, 0x049e, 0x0510, 0x03b0, 0x04b4, 1, 3, 5, 4
+	style_tail	TIMESIG_3_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv32n1n", 4, 4, 3, 0x049e, 0x0510, 0x03b0, 0x04b4, 1, 3, 5, 4
 Style_B2P009_wzv32n_V:
 	style_section_map
 	part_tracks	0x33, Trk_wzv32n_V_Drum_S00, Trk_wzv32n_V_Drum_S01, Trk_wzv32n_V_Drum_S02, Trk_wzv32n_V_Drum_S03, Trk_wzv32n_V_Drum_S04, Trk_wzv32n_V_Drum_S05, Trk_wzv32n_V_Drum_S06, Trk_wzv32n_V_Drum_S07, Trk_wzv32n_V_Drum_S08, Trk_wzv32n_V_Drum_S09, Trk_wzv32n_V_Drum_S10, Trk_wzv32n_V_Drum_S11, Trk_wzv32n_V_Drum_S08, Trk_wzv32n_V_Drum_S09, Trk_wzv32n_V_Drum_S10, Trk_wzv32n_V_Drum_S11, Trk_wzv32n_V_Drum_S16, Trk_wzv32n_N_Drum_S17, Trk_wzv32n_V_Drum_S18	; Drum
@@ -21449,7 +21449,7 @@ Style_B2P009_wzv32n_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv32n1v", 4, 8, 4, 0x06b6, 0x0838, 0x0624, 0x05e0, 1, 5, 5, 5
+	style_tail	TIMESIG_3_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzv32n1v", 4, 8, 4, 0x06b6, 0x0838, 0x0624, 0x05e0, 1, 5, 5, 5
 
 ; wzs87e: locator [bank 0][program 8]
 Style_B0P008_wzs87e:
@@ -21517,7 +21517,7 @@ Style_B0P008_wzs87e:
 	part_sound	20, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs87e1n", 4, 4, 2, 0x0682, 0x062a, 0x034a, 0x042a, 1, 3, 4, 2
+	style_tail	TIMESIG_3_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs87e1n", 4, 4, 2, 0x0682, 0x062a, 0x034a, 0x042a, 1, 3, 4, 2
 Style_B0P008_wzs87e_V:
 	style_section_map
 	part_tracks	0x33, Trk_wzs87e_V_Drum_S00, Trk_wzs87e_V_Drum_S01, Trk_wzs87e_V_Drum_S02, Trk_wzs87e_V_Drum_S03, Trk_wzs87e_V_Drum_S04, Trk_wzs87e_V_Drum_S05, Trk_wzs87e_V_Drum_S06, Trk_wzs87e_V_Drum_S07, Trk_wzs87e_V_Drum_S08, Trk_wzs87e_V_Drum_S09, Trk_wzs87e_V_Drum_S10, Trk_wzs87e_V_Drum_S11, Trk_wzs87e_V_Drum_S08, Trk_wzs87e_V_Drum_S09, Trk_wzs87e_V_Drum_S10, Trk_wzs87e_V_Drum_S11, Trk_wzs87e_V_Drum_S16, Trk_wzv32n_N_Drum_S17, Trk_wzs87e_V_Drum_S18	; Drum
@@ -21583,7 +21583,7 @@ Style_B0P008_wzs87e_V:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	20, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs87e1v", 8, 8, 6, 0x0690, 0x0646, 0x06de, 0x0592, 2, 3, 4, 4
+	style_tail	TIMESIG_3_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "wzs87e1v", 8, 8, 6, 0x0690, 0x0646, 0x06de, 0x0592, 2, 3, 4, 4
 
 ; trd17k: locator [bank 0][program 26]
 Style_B0P026_trd17k:
@@ -21651,7 +21651,7 @@ Style_B0P026_trd17k:
 	part_sound	111, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd17k1n", 4, 4, 4, 0x0507, 0x074c, 0x0395, 0x05dc, 1, 6, 3, 1
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd17k1n", 4, 4, 4, 0x0507, 0x074c, 0x0395, 0x05dc, 1, 6, 3, 1
 Style_B0P026_trd17k_V:
 	style_section_map
 	part_tracks	0x2a, Trk_trd17k_V_Drum_S00, Trk_trd17k_V_Drum_S01, Trk_trd17k_V_Drum_S02, Trk_trd17k_V_Drum_S03, Trk_trd17k_V_Drum_S04, Trk_trd17k_V_Drum_S05, Trk_trd17k_V_Drum_S06, Trk_trd17k_V_Drum_S07, Trk_trd17k_V_Drum_S08, Trk_trd17k_V_Drum_S09, Trk_trd17k_V_Drum_S10, Trk_trd17k_V_Drum_S11, Trk_trd17k_V_Drum_S08, Trk_trd17k_V_Drum_S09, Trk_trd17k_V_Drum_S10, Trk_trd17k_V_Drum_S11, Trk_trd17k_V_Drum_S16, Trk_8bh97k_N_Drum_S17, Trk_trd17k_V_Drum_S18	; Drum
@@ -21717,7 +21717,7 @@ Style_B0P026_trd17k_V:
 	part_sound	111, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 42, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd17k1v", 4, 8, 5, 0x0770, 0x0826, 0x0d86, 0x032f, 2, 6, 1, 2
+	style_tail	TIMESIG_4_4, 0x2a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd17k1v", 4, 8, 5, 0x0770, 0x0826, 0x0d86, 0x032f, 2, 6, 1, 2
 
 ; ppp17g: locator [bank 6][program 4]
 Style_B6P004_ppp17g:
@@ -21785,7 +21785,7 @@ Style_B6P004_ppp17g:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ppp17g1n", 2, 2, 3, 0x072a, 0x0c40, 0x0466, 0x07ae, 1, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ppp17g1n", 2, 2, 3, 0x072a, 0x0c40, 0x0466, 0x07ae, 1, 4, 4, 3
 Style_B6P004_ppp17g_V:
 	style_section_map
 	part_tracks	0x0c, Trk_ppp17g_V_Drum_S00, Trk_ppp17g_V_Drum_S01, Trk_ppp17g_V_Drum_S02, Trk_ppp17g_V_Drum_S03, Trk_ppp17g_V_Drum_S04, Trk_ppp17g_V_Drum_S05, Trk_ppp17g_V_Drum_S06, Trk_ppp17g_V_Drum_S07, Trk_ppp17g_V_Drum_S08, Trk_ppp17g_V_Drum_S09, Trk_ppp17g_V_Drum_S10, Trk_ppp17g_V_Drum_S11, Trk_ppp17g_V_Drum_S08, Trk_ppp17g_V_Drum_S09, Trk_ppp17g_V_Drum_S10, Trk_ppp17g_V_Drum_S11, Trk_ppp17g_V_Drum_S16, Trk_slr77p_N_Drum_S17, Trk_ppp17g_V_Drum_S18	; Drum
@@ -21851,7 +21851,7 @@ Style_B6P004_ppp17g_V:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ppp17g1v", 5, 5, 11, 0x1091, 0x1454, 0x0f56, 0x0942, 2, 3, 3, 6
+	style_tail	TIMESIG_4_4, 0x0c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ppp17g1v", 5, 5, 11, 0x1091, 0x1454, 0x0f56, 0x0942, 2, 3, 3, 6
 
 ; trd27s: locator [bank 2][program 26]
 Style_B2P026_trd27s:
@@ -21919,7 +21919,7 @@ Style_B2P026_trd27s:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	109, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd27s1n", 2, 2, 2, 0x0732, 0x09e6, 0x02e6, 0x04bc, 2, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd27s1n", 2, 2, 2, 0x0732, 0x09e6, 0x02e6, 0x04bc, 2, 4, 3, 3
 Style_B2P026_trd27s_V:
 	style_section_map
 	part_tracks	0x08, Trk_trd27s_V_Drum_S00, Trk_trd27s_V_Drum_S01, Trk_trd27s_V_Drum_S02, Trk_trd27s_V_Drum_S03, Trk_trd27s_V_Drum_S04, Trk_trd27s_V_Drum_S05, Trk_trd27s_V_Drum_S06, Trk_trd27s_V_Drum_S07, Trk_trd27s_V_Drum_S08, Trk_trd27s_V_Drum_S09, Trk_trd27s_V_Drum_S10, Trk_trd27s_V_Drum_S11, Trk_trd27s_V_Drum_S08, Trk_trd27s_V_Drum_S09, Trk_trd27s_V_Drum_S10, Trk_trd27s_V_Drum_S11, Trk_trd27s_V_Drum_S16, Trk_jzr17k_N_Drum_S17, Trk_trd27s_V_Drum_S18	; Drum
@@ -21985,7 +21985,7 @@ Style_B2P026_trd27s_V:
 	part_sound	121, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	125, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 8, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd27s1v", 3, 3, 2, 0x0a38, 0x0a20, 0x038a, 0x058e, 1, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x08, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd27s1v", 3, 3, 2, 0x0a38, 0x0a20, 0x038a, 0x058e, 1, 4, 3, 3
 
 ; gpp17g: locator [bank 5][program 120]
 Style_B5P120_gpp17g:
@@ -22053,7 +22053,7 @@ Style_B5P120_gpp17g:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	116, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpp17g1n", 5, 5, 9, 0x08fa, 0x0b46, 0x09b2, 0x06e2, 2, 4, 3, 3
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpp17g1n", 5, 5, 9, 0x08fa, 0x0b46, 0x09b2, 0x06e2, 2, 4, 3, 3
 Style_B5P120_gpp17g_V:
 	style_section_map
 	part_tracks	0x0a, Trk_gpp17g_V_Drum_S00, Trk_gpp17g_V_Drum_S01, Trk_gpp17g_V_Drum_S02, Trk_gpp17g_V_Drum_S03, Trk_gpp17g_V_Drum_S04, Trk_gpp17g_V_Drum_S05, Trk_gpp17g_V_Drum_S06, Trk_gpp17g_V_Drum_S07, Trk_gpp17g_V_Drum_S08, Trk_gpp17g_V_Drum_S09, Trk_gpp17g_V_Drum_S10, Trk_gpp17g_V_Drum_S11, Trk_gpp17g_V_Drum_S08, Trk_gpp17g_V_Drum_S09, Trk_gpp17g_V_Drum_S10, Trk_gpp17g_V_Drum_S11, Trk_gpp17g_V_Drum_S16, Trk_gpp17g_N_Drum_S17, Trk_gpp17g_V_Drum_S18	; Drum
@@ -22119,7 +22119,7 @@ Style_B5P120_gpp17g_V:
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	116, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpp17g1v", 8, 6, 11, 0x0ebc, 0x0f30, 0x0fcc, 0x0856, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpp17g1v", 8, 6, 11, 0x0ebc, 0x0f30, 0x0fcc, 0x0856, 2, 3, 3, 4
 
 ; pmc27g: locator [bank 5][program 4]
 Style_B5P004_pmc27g:
@@ -22187,7 +22187,7 @@ Style_B5P004_pmc27g:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc27g1n", 2, 2, 3, 0x0710, 0x0bde, 0x048e, 0x053a, 2, 4, 4, 4
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc27g1n", 2, 2, 3, 0x0710, 0x0bde, 0x048e, 0x053a, 2, 4, 4, 4
 Style_B5P004_pmc27g_V:
 	style_section_map
 	part_tracks	0x16, Trk_pmc27g_V_Drum_S00, Trk_pmc27g_V_Drum_S01, Trk_pmc27g_V_Drum_S02, Trk_pmc27g_V_Drum_S03, Trk_pmc27g_V_Drum_S04, Trk_pmc27g_V_Drum_S05, Trk_pmc27g_V_Drum_S06, Trk_pmc27g_V_Drum_S07, Trk_pmc27g_V_Drum_S08, Trk_pmc27g_V_Drum_S09, Trk_pmc27g_V_Drum_S10, Trk_pmc27g_V_Drum_S11, Trk_pmc27g_V_Drum_S08, Trk_pmc27g_V_Drum_S09, Trk_pmc27g_V_Drum_S10, Trk_pmc27g_V_Drum_S11, Trk_pmc27g_V_Drum_S16, Trk_tec27r_N_Drum_S17, Trk_pmc27g_V_Drum_S18	; Drum
@@ -22253,7 +22253,7 @@ Style_B5P004_pmc27g_V:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	82, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc27g1v", 5, 4, 10, 0x0b6b, 0x1170, 0x0a32, 0x0722, 2, 4, 3, 5
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc27g1v", 5, 4, 10, 0x0b6b, 0x1170, 0x0a32, 0x0722, 2, 4, 3, 5
 
 ; jlo17d: locator [bank 7][program 4]
 Style_B7P004_jlo17d:
@@ -22321,7 +22321,7 @@ Style_B7P004_jlo17d:
 	part_sound	26, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jlo17d1n", 4, 1, 6, 0x0d88, 0x0f46, 0x02d6, 0x0670, 1, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jlo17d1n", 4, 1, 6, 0x0d88, 0x0f46, 0x02d6, 0x0670, 1, 4, 4, 3
 Style_B7P004_jlo17d_V:
 	style_section_map
 	part_tracks	0x0a, Trk_jlo17d_V_Drum_S00, Trk_jlo17d_V_Drum_S01, Trk_jlo17d_V_Drum_S02, Trk_jlo17d_V_Drum_S03, Trk_jlo17d_V_Drum_S04, Trk_jlo17d_V_Drum_S05, Trk_jlo17d_V_Drum_S06, Trk_jlo17d_V_Drum_S07, Trk_jlo17d_V_Drum_S08, Trk_jlo17d_V_Drum_S09, Trk_jlo17d_V_Drum_S10, Trk_jlo17d_V_Drum_S11, Trk_jlo17d_V_Drum_S08, Trk_jlo17d_V_Drum_S09, Trk_jlo17d_V_Drum_S10, Trk_jlo17d_V_Drum_S11, Trk_jlo17d_V_Drum_S16, Trk_gpp17g_N_Drum_S17, Trk_jlo17d_V_Drum_S18	; Drum
@@ -22387,7 +22387,7 @@ Style_B7P004_jlo17d_V:
 	part_sound	28, 2, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jlo17d1v", 4, 4, 13, 0x10ec, 0x12c2, 0x0abc, 0x08df, 2, 5, 3, 5
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jlo17d1v", 4, 4, 13, 0x10ec, 0x12c2, 0x0abc, 0x08df, 2, 5, 3, 5
 
 ; trd37p: locator [bank 3][program 26]
 Style_B3P026_trd37p:
@@ -22455,7 +22455,7 @@ Style_B3P026_trd37p:
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	31, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd37p1n", 5, 4, 5, 0x08f1, 0x0a83, 0x03a3, 0x0500, 1, 5, 5, 5
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd37p1n", 5, 4, 5, 0x08f1, 0x0a83, 0x03a3, 0x0500, 1, 5, 5, 5
 Style_B3P026_trd37p_V:
 	style_section_map
 	part_tracks	0x26, Trk_trd37p_V_Drum_S00, Trk_trd37p_V_Drum_S01, Trk_trd37p_V_Drum_S02, Trk_trd37p_V_Drum_S03, Trk_trd37p_V_Drum_S04, Trk_trd37p_V_Drum_S05, Trk_trd37p_V_Drum_S06, Trk_trd37p_V_Drum_S07, Trk_trd37p_V_Drum_S08, Trk_trd37p_V_Drum_S09, Trk_trd37p_V_Drum_S10, Trk_trd37p_V_Drum_S11, Trk_trd37p_V_Drum_S08, Trk_trd37p_V_Drum_S09, Trk_trd37p_V_Drum_S10, Trk_trd37p_V_Drum_S11, Trk_trd37p_V_Drum_S16, Trk_8pr76d_N_Drum_S17, Trk_trd37p_V_Drum_S18	; Drum
@@ -22521,7 +22521,7 @@ Style_B3P026_trd37p_V:
 	part_sound	27, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	26, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 38, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd37p1v", 5, 4, 6, 0x0985, 0x094e, 0x04dc, 0x0803, 1, 3, 5, 3
+	style_tail	TIMESIG_4_4, 0x26, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd37p1v", 5, 4, 6, 0x0985, 0x094e, 0x04dc, 0x0803, 1, 3, 5, 3
 
 ; dxi97p: locator [bank 1][program 24]
 Style_B1P024_dxi97p:
@@ -22589,7 +22589,7 @@ Style_B1P024_dxi97p:
 	part_sound	96, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi97p1n", 4, 4, 4, 0x0719, 0x0770, 0x0497, 0x043a, 1, 3, 3, 6
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi97p1n", 4, 4, 4, 0x0719, 0x0770, 0x0497, 0x043a, 1, 3, 3, 6
 Style_B1P024_dxi97p_V:
 	style_section_map
 	part_tracks	0x09, Trk_dxi97p_V_Drum_S00, Trk_dxi97p_V_Drum_S01, Trk_dxi97p_V_Drum_S02, Trk_dxi97p_V_Drum_S03, Trk_dxi97p_V_Drum_S04, Trk_dxi97p_V_Drum_S05, Trk_dxi97p_V_Drum_S06, Trk_dxi97p_V_Drum_S07, Trk_dxi97p_V_Drum_S08, Trk_dxi97p_V_Drum_S09, Trk_dxi97p_V_Drum_S10, Trk_dxi97p_V_Drum_S11, Trk_dxi97p_V_Drum_S08, Trk_dxi97p_V_Drum_S09, Trk_dxi97p_V_Drum_S10, Trk_dxi97p_V_Drum_S11, Trk_dxi97p_V_Drum_S16, Trk_bsn56p_N_Drum_S17, Trk_dxi97p_V_Drum_S18	; Drum
@@ -22655,7 +22655,7 @@ Style_B1P024_dxi97p_V:
 	part_sound	100, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 9, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi97p1v", 5, 4, 5, 0x0980, 0x0add, 0x0537, 0x086c, 1, 4, 5, 5
+	style_tail	TIMESIG_4_4, 0x09, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi97p1v", 5, 4, 5, 0x0980, 0x0add, 0x0537, 0x086c, 1, 4, 5, 5
 
 ; tec37r: locator [bank 6][program 126]
 Style_B6P126_tec37r:
@@ -22723,7 +22723,7 @@ Style_B6P126_tec37r:
 	part_sound	96, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	118, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec37r1n", 2, 2, 2, 0x0974, 0x0ccc, 0x035c, 0x04d0, 1, 1, 2, 3
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec37r1n", 2, 2, 2, 0x0974, 0x0ccc, 0x035c, 0x04d0, 1, 1, 2, 3
 Style_B6P126_tec37r_V:
 	style_section_map
 	part_tracks	0x1b, Trk_tec37r_V_Drum_S00, Trk_tec37r_V_Drum_S01, Trk_tec37r_V_Drum_S02, Trk_tec37r_V_Drum_S03, Trk_tec37r_V_Drum_S04, Trk_tec37r_V_Drum_S05, Trk_tec37r_V_Drum_S06, Trk_tec37r_V_Drum_S07, Trk_tec37r_V_Drum_S08, Trk_tec37r_V_Drum_S09, Trk_tec37r_V_Drum_S10, Trk_tec37r_V_Drum_S11, Trk_tec37r_V_Drum_S08, Trk_tec37r_V_Drum_S09, Trk_tec37r_V_Drum_S10, Trk_tec37r_V_Drum_S11, Trk_tec37r_V_Drum_S16, Trk_dxi65k_N_Drum_S17, Trk_tec37r_V_Drum_S18	; Drum
@@ -22789,7 +22789,7 @@ Style_B6P126_tec37r_V:
 	part_sound	96, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	118, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 27, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec37r1v", 4, 2, 6, 0x0e38, 0x0e2e, 0x03aa, 0x06e0, 1, 3, 5, 2
+	style_tail	TIMESIG_4_4, 0x1b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "tec37r1v", 4, 2, 6, 0x0e38, 0x0e2e, 0x03aa, 0x06e0, 1, 3, 5, 2
 
 ; bsw97s: locator [bank 1][program 38]
 Style_B1P038_bsw97s:
@@ -22857,7 +22857,7 @@ Style_B1P038_bsw97s:
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw97s1n", 8, 5, 7, 0x0765, 0x0940, 0x041c, 0x044c, 2, 5, 5, 5
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw97s1n", 8, 5, 7, 0x0765, 0x0940, 0x041c, 0x044c, 2, 5, 5, 5
 Style_B1P038_bsw97s_V:
 	style_section_map
 	part_tracks	0x1e, Trk_bsw97s_V_Drum_S00, Trk_bsw97s_V_Drum_S01, Trk_bsw97s_V_Drum_S02, Trk_bsw97s_V_Drum_S03, Trk_bsw97s_V_Drum_S04, Trk_bsw97s_V_Drum_S05, Trk_bsw97s_V_Drum_S06, Trk_bsw97s_V_Drum_S07, Trk_bsw97s_V_Drum_S08, Trk_bsw97s_V_Drum_S09, Trk_bsw97s_V_Drum_S10, Trk_bsw97s_V_Drum_S11, Trk_bsw97s_V_Drum_S08, Trk_bsw97s_V_Drum_S09, Trk_bsw97s_V_Drum_S10, Trk_bsw97s_V_Drum_S11, Trk_bsw97s_V_Drum_S16, Trk_fkr12c_N_Drum_S17, Trk_bsw97s_V_Drum_S18	; Drum
@@ -22923,7 +22923,7 @@ Style_B1P038_bsw97s_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw97s1v", 8, 6, 6, 0x0a31, 0x096a, 0x0572, 0x04ad, 2, 4, 6, 6
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "bsw97s1v", 8, 6, 6, 0x0a31, 0x096a, 0x0572, 0x04ad, 2, 4, 6, 6
 
 ; pmc15d: locator [bank 4][program 4]
 Style_B4P004_pmc15d:
@@ -22991,7 +22991,7 @@ Style_B4P004_pmc15d:
 	part_sound	23, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc15d1n", 2, 2, 3, 0x0916, 0x0b38, 0x04f2, 0x0506, 1, 6, 6, 2
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc15d1n", 2, 2, 3, 0x0916, 0x0b38, 0x04f2, 0x0506, 1, 6, 6, 2
 Style_B4P004_pmc15d_V:
 	style_section_map
 	part_tracks	0x1d, Trk_pmc15d_V_Drum_S00, Trk_pmc15d_V_Drum_S01, Trk_pmc15d_V_Drum_S02, Trk_pmc15d_V_Drum_S03, Trk_pmc15d_V_Drum_S04, Trk_pmc15d_V_Drum_S05, Trk_pmc15d_V_Drum_S06, Trk_pmc15d_V_Drum_S07, Trk_pmc15d_V_Drum_S08, Trk_pmc15d_V_Drum_S09, Trk_pmc15d_V_Drum_S10, Trk_pmc15d_V_Drum_S11, Trk_pmc15d_V_Drum_S08, Trk_pmc15d_V_Drum_S09, Trk_pmc15d_V_Drum_S10, Trk_pmc15d_V_Drum_S11, Trk_pmc15d_V_Drum_S16, Trk_8sl47d_N_Drum_S17, Trk_pmc15d_V_Drum_S18	; Drum
@@ -23057,7 +23057,7 @@ Style_B4P004_pmc15d_V:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	64, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 29, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc15d1v", 4, 4, 5, 0x0ce4, 0x0b93, 0x073a, 0x0448, 2, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x1d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "pmc15d1v", 4, 4, 5, 0x0ce4, 0x0b93, 0x073a, 0x0448, 2, 6, 4, 3
 
 ; xms17k: locator [bank 1][program 26]
 Style_B1P026_xms17k:
@@ -23125,7 +23125,7 @@ Style_B1P026_xms17k:
 	part_sound	32, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	108, 2, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "xms17k1n", 4, 6, 4, 0x09e5, 0x10de, 0x09c0, 0x052c, 5, 9, 8, 8
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "xms17k1n", 4, 6, 4, 0x09e5, 0x10de, 0x09c0, 0x052c, 5, 9, 8, 8
 Style_B1P026_xms17k_V:
 	style_section_map
 	part_tracks	0x0f, Trk_xms17k_V_Drum_S00, Trk_xms17k_V_Drum_S01, Trk_xms17k_V_Drum_S02, Trk_xms17k_V_Drum_S03, Trk_xms17k_V_Drum_S04, Trk_xms17k_V_Drum_S05, Trk_xms17k_V_Drum_S06, Trk_xms17k_V_Drum_S07, Trk_xms17k_V_Drum_S08, Trk_xms17k_V_Drum_S09, Trk_xms17k_V_Drum_S10, Trk_xms17k_V_Drum_S11, Trk_xms17k_V_Drum_S08, Trk_xms17k_V_Drum_S09, Trk_xms17k_V_Drum_S10, Trk_xms17k_V_Drum_S11, Trk_xms17k_V_Drum_S16, Trk_8sf17p_N_Drum_S17, Trk_xms17k_V_Drum_S18	; Drum
@@ -23191,7 +23191,7 @@ Style_B1P026_xms17k_V:
 	part_sound	104, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	102, 6, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "xms17k1v", 5, 8, 8, 0x0efc, 0x0a18, 0x0b42, 0x0542, 6, 4, 11, 11
+	style_tail	TIMESIG_4_4, 0x0f, 61, 61, 13, 61, 61, 61, 61, 61, 1, "xms17k1v", 5, 8, 8, 0x0efc, 0x0a18, 0x0b42, 0x0542, 6, 4, 11, 11
 
 ; shw33k: locator [bank 2][program 15]
 Style_B2P015_shw33k:
@@ -23259,7 +23259,7 @@ Style_B2P015_shw33k:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	32, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw33k1n", 5, 4, 9, 0x0734, 0x0958, 0x0822, 0x0462, 2, 5, 6, 3
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw33k1n", 5, 4, 9, 0x0734, 0x0958, 0x0822, 0x0462, 2, 5, 6, 3
 Style_B2P015_shw33k_V:
 	style_section_map
 	part_tracks	0x11, Trk_shw33k_V_Drum_S00, Trk_shw33k_V_Drum_S01, Trk_shw33k_V_Drum_S02, Trk_shw33k_V_Drum_S03, Trk_shw33k_V_Drum_S04, Trk_shw33k_V_Drum_S05, Trk_shw33k_V_Drum_S06, Trk_shw33k_V_Drum_S07, Trk_shw33k_V_Drum_S08, Trk_shw33k_V_Drum_S09, Trk_shw33k_V_Drum_S10, Trk_shw33k_V_Drum_S11, Trk_shw33k_V_Drum_S08, Trk_shw33k_V_Drum_S09, Trk_shw33k_V_Drum_S10, Trk_shw33k_V_Drum_S11, Trk_shw33k_V_Drum_S16, Trk_16s47p_N_Drum_S17, Trk_shw33k_V_Drum_S18	; Drum
@@ -23325,7 +23325,7 @@ Style_B2P015_shw33k_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	32, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw33k1v", 4, 6, 10, 0x0aee, 0x0e54, 0x0b22, 0x0546, 2, 5, 9, 5
+	style_tail	TIMESIG_4_4, 0x11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw33k1v", 4, 6, 10, 0x0aee, 0x0e54, 0x0b22, 0x0546, 2, 5, 9, 5
 
 ; rbd66k: locator [bank 7][program 74]
 Style_B7P074_rbd66k:
@@ -23393,7 +23393,7 @@ Style_B7P074_rbd66k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd66k1n", 4, 3, 4, 0x08c0, 0x0ab0, 0x0543, 0x04c0, 2, 4, 5, 7
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd66k1n", 4, 3, 4, 0x08c0, 0x0ab0, 0x0543, 0x04c0, 2, 4, 5, 7
 Style_B7P074_rbd66k_V:
 	style_section_map
 	part_tracks	0x1e, Trk_rbd66k_V_Drum_S00, Trk_rbd66k_V_Drum_S01, Trk_rbd66k_V_Drum_S02, Trk_rbd66k_V_Drum_S03, Trk_rbd66k_V_Drum_S04, Trk_rbd66k_V_Drum_S05, Trk_rbd66k_V_Drum_S06, Trk_rbd66k_V_Drum_S07, Trk_rbd66k_V_Drum_S08, Trk_rbd66k_V_Drum_S09, Trk_rbd66k_V_Drum_S10, Trk_rbd66k_V_Drum_S11, Trk_rbd66k_V_Drum_S08, Trk_rbd66k_V_Drum_S09, Trk_rbd66k_V_Drum_S10, Trk_rbd66k_V_Drum_S11, Trk_rbd66k_V_Drum_S16, Trk_fkr12c_N_Drum_S17, Trk_rbd66k_V_Drum_S18	; Drum
@@ -23459,7 +23459,7 @@ Style_B7P074_rbd66k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 30, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd66k1v", 4, 6, 4, 0x0a2a, 0x0b86, 0x0954, 0x048c, 2, 4, 4, 6
+	style_tail	TIMESIG_4_4, 0x1e, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd66k1v", 4, 6, 4, 0x0a2a, 0x0b86, 0x0954, 0x048c, 2, 4, 4, 6
 
 ; qst36p: locator [bank 2][program 28]
 Style_B2P028_qst36p:
@@ -23527,7 +23527,7 @@ Style_B2P028_qst36p:
 	part_sound	1, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	1, 1, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst36p1n", 4, 2, 3, 0x0574, 0x060c, 0x0245, 0x040e, 2, 4, 4, 3
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst36p1n", 4, 2, 3, 0x0574, 0x060c, 0x0245, 0x040e, 2, 4, 4, 3
 Style_B2P028_qst36p_V:
 	style_section_map
 	part_tracks	0x2d, Trk_qst36p_V_Drum_S00, Trk_qst36p_V_Drum_S01, Trk_qst36p_V_Drum_S02, Trk_qst36p_V_Drum_S03, Trk_qst36p_V_Drum_S04, Trk_qst36p_V_Drum_S05, Trk_qst36p_V_Drum_S06, Trk_qst36p_V_Drum_S07, Trk_qst36p_V_Drum_S08, Trk_qst36p_V_Drum_S09, Trk_qst36p_V_Drum_S10, Trk_qst36p_V_Drum_S11, Trk_qst36p_V_Drum_S08, Trk_qst36p_V_Drum_S09, Trk_qst36p_V_Drum_S10, Trk_qst36p_V_Drum_S11, Trk_qst36p_V_Drum_S16, Trk_srr55d_N_Drum_S17, Trk_qst36p_V_Drum_S18	; Drum
@@ -23593,7 +23593,7 @@ Style_B2P028_qst36p_V:
 	part_sound	1, 1, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst36p1v", 4, 4, 4, 0x08d6, 0x0ab7, 0x04dc, 0x0488, 1, 6, 4, 3
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst36p1v", 4, 4, 4, 0x08d6, 0x0ab7, 0x04dc, 0x0488, 1, 6, 4, 3
 
 ; fxt36p: locator [bank 2][program 30]
 Style_B2P030_fxt36p:
@@ -23661,7 +23661,7 @@ Style_B2P030_fxt36p:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt36p1n", 4, 4, 3, 0x0524, 0x06fa, 0x059e, 0x040c, 1, 5, 7, 4
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt36p1n", 4, 4, 3, 0x0524, 0x06fa, 0x059e, 0x040c, 1, 5, 7, 4
 Style_B2P030_fxt36p_V:
 	style_section_map
 	part_tracks	0x2d, Trk_fxt36p_V_Drum_S00, Trk_fxt36p_V_Drum_S01, Trk_fxt36p_V_Drum_S02, Trk_fxt36p_V_Drum_S03, Trk_fxt36p_V_Drum_S04, Trk_fxt36p_V_Drum_S05, Trk_fxt36p_V_Drum_S06, Trk_fxt36p_V_Drum_S07, Trk_fxt36p_V_Drum_S08, Trk_fxt36p_V_Drum_S09, Trk_fxt36p_V_Drum_S10, Trk_fxt36p_V_Drum_S11, Trk_fxt36p_V_Drum_S08, Trk_fxt36p_V_Drum_S09, Trk_fxt36p_V_Drum_S10, Trk_fxt36p_V_Drum_S11, Trk_fxt36p_V_Drum_S16, Trk_srr55d_N_Drum_S17, Trk_fxt36p_V_Drum_S18	; Drum
@@ -23727,7 +23727,7 @@ Style_B2P030_fxt36p_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	25, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt36p1v", 4, 4, 6, 0x0920, 0x0a6c, 0x060e, 0x040a, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt36p1v", 4, 4, 6, 0x0920, 0x0a6c, 0x060e, 0x040a, 2, 5, 4, 4
 
 ; fxt83k: locator [bank 1][program 30]
 Style_B1P030_fxt83k:
@@ -23795,7 +23795,7 @@ Style_B1P030_fxt83k:
 	part_sound	99, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt83k1n", 5, 4, 3, 0x07ad, 0x078a, 0x0368, 0x0468, 2, 7, 4, 4
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt83k1n", 5, 4, 3, 0x07ad, 0x078a, 0x0368, 0x0468, 2, 7, 4, 4
 Style_B1P030_fxt83k_V:
 	style_section_map
 	part_tracks	0x2c, Trk_fxt83k_V_Drum_S00, Trk_fxt83k_V_Drum_S01, Trk_fxt83k_V_Drum_S02, Trk_fxt83k_V_Drum_S03, Trk_fxt83k_V_Drum_S04, Trk_fxt83k_V_Drum_S05, Trk_fxt83k_V_Drum_S06, Trk_fxt83k_V_Drum_S07, Trk_fxt83k_V_Drum_S08, Trk_fxt83k_V_Drum_S09, Trk_fxt83k_V_Drum_S10, Trk_fxt83k_V_Drum_S11, Trk_fxt83k_V_Drum_S08, Trk_fxt83k_V_Drum_S09, Trk_fxt83k_V_Drum_S10, Trk_fxt83k_V_Drum_S11, Trk_fxt83k_V_Drum_S16, Trk_8bb57m_N_Drum_S17, Trk_fxt83k_V_Drum_S18	; Drum
@@ -23861,7 +23861,7 @@ Style_B1P030_fxt83k_V:
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	68, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 44, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt83k1v", 4, 8, 3, 0x08e2, 0x0718, 0x0b4e, 0x0476, 2, 7, 7, 4
+	style_tail	TIMESIG_4_4, 0x2c, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt83k1v", 4, 8, 3, 0x08e2, 0x0718, 0x0b4e, 0x0476, 2, 7, 7, 4
 
 ; fxt26p: locator [bank 1][program 29]
 Style_B1P029_fxt26p:
@@ -23929,7 +23929,7 @@ Style_B1P029_fxt26p:
 	part_sound	91, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt26p1n", 4, 4, 5, 0x08dc, 0x0986, 0x0758, 0x053e, 1, 3, 6, 2
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt26p1n", 4, 4, 5, 0x08dc, 0x0986, 0x0758, 0x053e, 1, 3, 6, 2
 Style_B1P029_fxt26p_V:
 	style_section_map
 	part_tracks	0x20, Trk_fxt26p_V_Drum_S00, Trk_fxt26p_V_Drum_S01, Trk_fxt26p_V_Drum_S02, Trk_fxt26p_V_Drum_S03, Trk_fxt26p_V_Drum_S04, Trk_fxt26p_V_Drum_S05, Trk_fxt26p_V_Drum_S06, Trk_fxt26p_V_Drum_S07, Trk_fxt26p_V_Drum_S08, Trk_fxt26p_V_Drum_S09, Trk_fxt26p_V_Drum_S10, Trk_fxt26p_V_Drum_S11, Trk_fxt26p_V_Drum_S08, Trk_fxt26p_V_Drum_S09, Trk_fxt26p_V_Drum_S10, Trk_fxt26p_V_Drum_S11, Trk_fxt26p_V_Drum_S16, Trk_sgf47m_N_Drum_S17, Trk_fxt26p_V_Drum_S18	; Drum
@@ -23995,7 +23995,7 @@ Style_B1P029_fxt26p_V:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	56, 2, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt26p1v", 4, 4, 5, 0x08d0, 0x0984, 0x08c6, 0x0754, 2, 8, 6, 6
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt26p1v", 4, 4, 5, 0x08d0, 0x0984, 0x08c6, 0x0754, 2, 8, 6, 6
 
 ; fxt56k: locator [bank 3][program 29]
 Style_B3P029_fxt56k:
@@ -24063,7 +24063,7 @@ Style_B3P029_fxt56k:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt56k1n", 4, 4, 4, 0x08ec, 0x081a, 0x0370, 0x05e4, 1, 4, 8, 0
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt56k1n", 4, 4, 4, 0x08ec, 0x081a, 0x0370, 0x05e4, 1, 4, 8, 0
 Style_B3P029_fxt56k_V:
 	style_section_map
 	part_tracks	0x24, Trk_fxt56k_V_Drum_S00, Trk_fxt56k_V_Drum_S01, Trk_fxt56k_V_Drum_S02, Trk_fxt56k_V_Drum_S03, Trk_fxt56k_V_Drum_S04, Trk_fxt56k_V_Drum_S05, Trk_fxt56k_V_Drum_S06, Trk_fxt56k_V_Drum_S07, Trk_fxt56k_V_Drum_S08, Trk_fxt56k_V_Drum_S09, Trk_fxt56k_V_Drum_S10, Trk_fxt56k_V_Drum_S11, Trk_fxt56k_V_Drum_S08, Trk_fxt56k_V_Drum_S09, Trk_fxt56k_V_Drum_S10, Trk_fxt56k_V_Drum_S11, Trk_fxt56k_V_Drum_S16, Trk_8br37p_N_Drum_S17, Trk_fxt56k_V_Drum_S18	; Drum
@@ -24129,7 +24129,7 @@ Style_B3P029_fxt56k_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 36, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt56k1v", 8, 6, 10, 0x08d6, 0x092a, 0x0576, 0x04ca, 2, 6, 6, 5
+	style_tail	TIMESIG_4_4, 0x24, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt56k1v", 8, 6, 10, 0x08d6, 0x092a, 0x0576, 0x04ca, 2, 6, 6, 5
 
 ; qst23k: locator [bank 1][program 28]
 Style_B1P028_qst23k:
@@ -24197,7 +24197,7 @@ Style_B1P028_qst23k:
 	part_sound	89, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst23k1n", 4, 4, 3, 0x05a2, 0x069e, 0x0378, 0x034a, 2, 4, 6, 0
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst23k1n", 4, 4, 3, 0x05a2, 0x069e, 0x0378, 0x034a, 2, 4, 6, 0
 Style_B1P028_qst23k_V:
 	style_section_map
 	part_tracks	0x31, Trk_qst23k_V_Drum_S00, Trk_qst23k_V_Drum_S01, Trk_qst23k_V_Drum_S02, Trk_qst23k_V_Drum_S03, Trk_qst23k_V_Drum_S04, Trk_qst23k_V_Drum_S05, Trk_qst23k_V_Drum_S06, Trk_qst23k_V_Drum_S07, Trk_qst23k_V_Drum_S08, Trk_qst23k_V_Drum_S09, Trk_qst23k_V_Drum_S10, Trk_qst23k_V_Drum_S11, Trk_qst23k_V_Drum_S08, Trk_qst23k_V_Drum_S09, Trk_qst23k_V_Drum_S10, Trk_qst23k_V_Drum_S11, Trk_qst23k_V_Drum_S16, Trk_8bs17m_N_Drum_S17, Trk_qst23k_V_Drum_S18	; Drum
@@ -24263,7 +24263,7 @@ Style_B1P028_qst23k_V:
 	part_sound	28, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	77, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 49, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst23k1v", 4, 8, 3, 0x0790, 0x071c, 0x08dc, 0x04e4, 2, 5, 5, 3
+	style_tail	TIMESIG_4_4, 0x31, 61, 61, 13, 61, 61, 61, 61, 61, 1, "qst23k1v", 4, 8, 3, 0x0790, 0x071c, 0x08dc, 0x04e4, 2, 5, 5, 3
 
 ; rbd43n: locator [bank 6][program 74]
 Style_B6P074_rbd43n:
@@ -24331,7 +24331,7 @@ Style_B6P074_rbd43n:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd43n1n", 4, 4, 6, 0x0746, 0x08c6, 0x0613, 0x058c, 2, 6, 5, 9
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd43n1n", 4, 4, 6, 0x0746, 0x08c6, 0x0613, 0x058c, 2, 6, 5, 9
 Style_B6P074_rbd43n_V:
 	style_section_map
 	part_tracks	0x0b, Trk_rbd43n_V_Drum_S00, Trk_rbd43n_V_Drum_S01, Trk_rbd43n_V_Drum_S02, Trk_rbd43n_V_Drum_S03, Trk_rbd43n_V_Drum_S04, Trk_rbd43n_V_Drum_S05, Trk_rbd43n_V_Drum_S06, Trk_rbd43n_V_Drum_S07, Trk_rbd43n_V_Drum_S08, Trk_rbd43n_V_Drum_S09, Trk_rbd43n_V_Drum_S10, Trk_rbd43n_V_Drum_S11, Trk_rbd43n_V_Drum_S08, Trk_rbd43n_V_Drum_S09, Trk_rbd43n_V_Drum_S10, Trk_rbd43n_V_Drum_S11, Trk_rbd43n_V_Drum_S16, Trk_8br97g_N_Drum_S17, Trk_rbd43n_V_Drum_S18	; Drum
@@ -24397,7 +24397,7 @@ Style_B6P074_rbd43n_V:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 11, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd43n1v", 4, 4, 7, 0x0dcf, 0x0a64, 0x066c, 0x060e, 2, 7, 6, 6
+	style_tail	TIMESIG_4_4, 0x0b, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rbd43n1v", 4, 4, 7, 0x0dcf, 0x0a64, 0x066c, 0x060e, 2, 7, 6, 6
 
 ; shw43n: locator [bank 3][program 15]
 Style_B3P015_shw43n:
@@ -24465,7 +24465,7 @@ Style_B3P015_shw43n:
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	8, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw43n1n", 4, 4, 6, 0x09de, 0x0ca0, 0x0639, 0x07fb, 2, 8, 5, 5
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw43n1n", 4, 4, 6, 0x09de, 0x0ca0, 0x0639, 0x07fb, 2, 8, 5, 5
 Style_B3P015_shw43n_V:
 	style_section_map
 	part_tracks	0x17, Trk_shw43n_V_Drum_S00, Trk_shw43n_V_Drum_S01, Trk_shw43n_V_Drum_S02, Trk_shw43n_V_Drum_S03, Trk_shw43n_V_Drum_S04, Trk_shw43n_V_Drum_S05, Trk_shw43n_V_Drum_S06, Trk_shw43n_V_Drum_S07, Trk_shw43n_V_Drum_S08, Trk_shw43n_V_Drum_S09, Trk_shw43n_V_Drum_S10, Trk_shw43n_V_Drum_S11, Trk_shw43n_V_Drum_S08, Trk_shw43n_V_Drum_S09, Trk_shw43n_V_Drum_S10, Trk_shw43n_V_Drum_S11, Trk_shw43n_V_Drum_S16, Trk_reg17r_N_Drum_S17, Trk_shw43n_V_Drum_S18	; Drum
@@ -24531,7 +24531,7 @@ Style_B3P015_shw43n_V:
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	56, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 23, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw43n1v", 4, 4, 8, 0x0a6c, 0x0abe, 0x077c, 0x071e, 2, 8, 6, 5
+	style_tail	TIMESIG_4_4, 0x17, 61, 61, 13, 61, 61, 61, 61, 61, 1, "shw43n1v", 4, 4, 8, 0x0a6c, 0x0abe, 0x077c, 0x071e, 2, 8, 6, 5
 
 ; dxi53s: locator [bank 5][program 24]
 Style_B5P024_dxi53s:
@@ -24599,7 +24599,7 @@ Style_B5P024_dxi53s:
 	part_sound	1, 1, 0x40, 1, 54, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi53s1n", 2, 2, 2, 0x076a, 0x0636, 0x02e8, 0x030c, 1, 3, 3, 1
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi53s1n", 2, 2, 2, 0x076a, 0x0636, 0x02e8, 0x030c, 1, 3, 3, 1
 Style_B5P024_dxi53s_V:
 	style_section_map
 	part_tracks	0x32, Trk_dxi53s_V_Drum_S00, Trk_dxi53s_V_Drum_S01, Trk_dxi53s_V_Drum_S02, Trk_dxi53s_V_Drum_S03, Trk_dxi53s_V_Drum_S04, Trk_dxi53s_V_Drum_S05, Trk_dxi53s_V_Drum_S06, Trk_dxi53s_V_Drum_S07, Trk_dxi53s_V_Drum_S08, Trk_dxi53s_V_Drum_S09, Trk_dxi53s_V_Drum_S10, Trk_dxi53s_V_Drum_S11, Trk_dxi53s_V_Drum_S08, Trk_dxi53s_V_Drum_S09, Trk_dxi53s_V_Drum_S10, Trk_dxi53s_V_Drum_S11, Trk_dxi53s_V_Drum_S16, Trk_8br86d_N_Drum_S17, Trk_dxi53s_V_Drum_S18	; Drum
@@ -24665,7 +24665,7 @@ Style_B5P024_dxi53s_V:
 	part_sound	1, 1, 0x40, 1, 54, 8, 127	; ACCOMP2
 	part_sound	48, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi53s1v", 4, 4, 4, 0x0874, 0x091a, 0x04c6, 0x042e, 1, 4, 4, 2
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "dxi53s1v", 4, 4, 4, 0x0874, 0x091a, 0x04c6, 0x042e, 1, 4, 4, 2
 
 ; fxt46d: locator [bank 2][program 29]
 Style_B2P029_fxt46d:
@@ -24733,7 +24733,7 @@ Style_B2P029_fxt46d:
 	part_sound	51, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt46d1n", 3, 2, 2, 0x0754, 0x0812, 0x0204, 0x0412, 2, 3, 3, 3
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt46d1n", 3, 2, 2, 0x0754, 0x0812, 0x0204, 0x0412, 2, 3, 3, 3
 Style_B2P029_fxt46d_V:
 	style_section_map
 	part_tracks	0x32, Trk_fxt46d_V_Drum_S00, Trk_fxt46d_V_Drum_S01, Trk_fxt46d_V_Drum_S02, Trk_fxt46d_V_Drum_S03, Trk_fxt46d_V_Drum_S04, Trk_fxt46d_V_Drum_S05, Trk_fxt46d_V_Drum_S06, Trk_fxt46d_V_Drum_S07, Trk_fxt46d_V_Drum_S08, Trk_fxt46d_V_Drum_S09, Trk_fxt46d_V_Drum_S10, Trk_fxt46d_V_Drum_S11, Trk_fxt46d_V_Drum_S08, Trk_fxt46d_V_Drum_S09, Trk_fxt46d_V_Drum_S10, Trk_fxt46d_V_Drum_S11, Trk_fxt46d_V_Drum_S16, Trk_8br86d_N_Drum_S17, Trk_fxt46d_V_Drum_S18	; Drum
@@ -24799,7 +24799,7 @@ Style_B2P029_fxt46d_V:
 	part_sound	51, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 50, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt46d1v", 4, 4, 3, 0x08ba, 0x07a4, 0x04d2, 0x04d2, 2, 4, 4, 2
+	style_tail	TIMESIG_4_4, 0x32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt46d1v", 4, 4, 3, 0x08ba, 0x07a4, 0x04d2, 0x04d2, 2, 4, 4, 2
 
 ; fxt15d: locator [bank 0][program 29]
 Style_B0P029_fxt15d:
@@ -24867,7 +24867,7 @@ Style_B0P029_fxt15d:
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt15d1n", 4, 3, 3, 0x059a, 0x060c, 0x0250, 0x0494, 2, 5, 4, 4
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt15d1n", 4, 3, 3, 0x059a, 0x060c, 0x0250, 0x0494, 2, 5, 4, 4
 Style_B0P029_fxt15d_V:
 	style_section_map
 	part_tracks	0x34, Trk_fxt15d_V_Drum_S00, Trk_fxt15d_V_Drum_S01, Trk_fxt15d_V_Drum_S02, Trk_fxt15d_V_Drum_S03, Trk_fxt15d_V_Drum_S04, Trk_fxt15d_V_Drum_S05, Trk_fxt15d_V_Drum_S06, Trk_fxt15d_V_Drum_S07, Trk_fxt15d_V_Drum_S08, Trk_fxt15d_V_Drum_S09, Trk_fxt15d_V_Drum_S10, Trk_fxt15d_V_Drum_S11, Trk_fxt15d_V_Drum_S08, Trk_fxt15d_V_Drum_S09, Trk_fxt15d_V_Drum_S10, Trk_fxt15d_V_Drum_S11, Trk_fxt15d_V_Drum_S16, Trk_8rr75s_N_Drum_S17, Trk_fxt15d_V_Drum_S18	; Drum
@@ -24933,7 +24933,7 @@ Style_B0P029_fxt15d_V:
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	50, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 52, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt15d1v", 4, 4, 4, 0x079e, 0x078a, 0x054c, 0x0566, 2, 8, 5, 6
+	style_tail	TIMESIG_4_4, 0x34, 61, 61, 13, 61, 61, 61, 61, 61, 1, "fxt15d1v", 4, 4, 4, 0x079e, 0x078a, 0x054c, 0x0566, 2, 8, 5, 6
 
 ; grc17d: locator [bank 3][program 60]
 Style_B3P060_grc17d:
@@ -25001,7 +25001,7 @@ Style_B3P060_grc17d:
 	part_sound	35, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "grc17d1n", 6, 2, 6, 0x0532, 0x0862, 0x0240, 0x04ee, 1, 3, 3, 0
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "grc17d1n", 6, 2, 6, 0x0532, 0x0862, 0x0240, 0x04ee, 1, 3, 3, 0
 Style_B3P060_grc17d_V:
 	style_section_map
 	part_tracks	0x0a, Trk_grc17d_V_Drum_S00, Trk_grc17d_V_Drum_S01, Trk_grc17d_V_Drum_S02, Trk_grc17d_V_Drum_S03, Trk_grc17d_V_Drum_S04, Trk_grc17d_V_Drum_S05, Trk_grc17d_V_Drum_S06, Trk_grc17d_V_Drum_S07, Trk_grc17d_V_Drum_S08, Trk_grc17d_V_Drum_S09, Trk_grc17d_V_Drum_S10, Trk_grc17d_V_Drum_S11, Trk_grc17d_V_Drum_S08, Trk_grc17d_V_Drum_S09, Trk_grc17d_V_Drum_S10, Trk_grc17d_V_Drum_S11, Trk_grc17d_V_Drum_S16, Trk_gpp17g_N_Drum_S17, Trk_grc17d_V_Drum_S18	; Drum
@@ -25067,7 +25067,7 @@ Style_B3P060_grc17d_V:
 	part_sound	35, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "grc17d1v", 6, 4, 7, 0x09d0, 0x0ddc, 0x0626, 0x05e6, 2, 4, 3, 4
+	style_tail	TIMESIG_4_4, 0x0a, 61, 61, 13, 61, 61, 61, 61, 61, 1, "grc17d1v", 6, 4, 7, 0x09d0, 0x0ddc, 0x0626, 0x05e6, 2, 4, 3, 4
 
 ; gpy17n: locator [bank 3][program 69]
 Style_B3P069_gpy17n:
@@ -25135,7 +25135,7 @@ Style_B3P069_gpy17n:
 	part_sound	18, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	99, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy17n1n", 4, 4, 5, 0x0882, 0x09c6, 0x07a6, 0x0517, 1, 4, 6, 5
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy17n1n", 4, 4, 5, 0x0882, 0x09c6, 0x07a6, 0x0517, 1, 4, 6, 5
 Style_B3P069_gpy17n_V:
 	style_section_map
 	part_tracks	0x20, Trk_gpy17n_V_Drum_S00, Trk_gpy17n_V_Drum_S01, Trk_gpy17n_V_Drum_S02, Trk_gpy17n_V_Drum_S03, Trk_gpy17n_V_Drum_S04, Trk_gpy17n_V_Drum_S05, Trk_gpy17n_V_Drum_S06, Trk_gpy17n_V_Drum_S07, Trk_gpy17n_V_Drum_S08, Trk_gpy17n_V_Drum_S09, Trk_gpy17n_V_Drum_S10, Trk_gpy17n_V_Drum_S11, Trk_gpy17n_V_Drum_S08, Trk_gpy17n_V_Drum_S09, Trk_gpy17n_V_Drum_S10, Trk_gpy17n_V_Drum_S11, Trk_gpy17n_V_Drum_S16, Trk_sgf47m_N_Drum_S17, Trk_gpy17n_V_Drum_S18	; Drum
@@ -25201,7 +25201,7 @@ Style_B3P069_gpy17n_V:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 32, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy17n1v", 4, 4, 6, 0x093c, 0x0aa4, 0x0646, 0x0862, 1, 3, 6, 4
+	style_tail	TIMESIG_4_4, 0x20, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy17n1v", 4, 4, 6, 0x093c, 0x0aa4, 0x0646, 0x0862, 1, 3, 6, 4
 
 ; mar17h: locator [bank 2][program 67]
 Style_B2P067_mar17h:
@@ -25269,7 +25269,7 @@ Style_B2P067_mar17h:
 	part_sound	56, 0, 0x40, 0, 59, 8, 127	; ACCOMP2
 	part_sound	48, 4, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mar17h1n", 2, 2, 5, 0x09de, 0x0b78, 0x0468, 0x0774, 2, 6, 3, 4
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mar17h1n", 2, 2, 5, 0x09de, 0x0b78, 0x0468, 0x0774, 2, 6, 3, 4
 Style_B2P067_mar17h_V:
 	style_section_map
 	part_tracks	0x10, Trk_mar17h_V_Drum_S00, Trk_mar17h_V_Drum_S01, Trk_mar17h_V_Drum_S02, Trk_mar17h_V_Drum_S03, Trk_mar17h_V_Drum_S04, Trk_mar17h_V_Drum_S05, Trk_mar17h_V_Drum_S06, Trk_mar17h_V_Drum_S07, Trk_mar17h_V_Drum_S08, Trk_mar17h_V_Drum_S09, Trk_mar17h_V_Drum_S10, Trk_mar17h_V_Drum_S11, Trk_mar17h_V_Drum_S08, Trk_mar17h_V_Drum_S09, Trk_mar17h_V_Drum_S10, Trk_mar17h_V_Drum_S11, Trk_mar17h_V_Drum_S16, Trk_gsp46h_N_Drum_S17, Trk_mar17h_V_Drum_S18	; Drum
@@ -25335,7 +25335,7 @@ Style_B2P067_mar17h_V:
 	part_sound	56, 0, 0x40, 0, 59, 8, 127	; ACCOMP2
 	part_sound	48, 4, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mar17h1v", 4, 4, 6, 0x113d, 0x12d8, 0x0854, 0x06c6, 2, 6, 5, 4
+	style_tail	TIMESIG_4_4, 0x10, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mar17h1v", 4, 4, 6, 0x113d, 0x12d8, 0x0854, 0x06c6, 2, 6, 5, 4
 
 ; gpy37d: locator [bank 1][program 61]
 Style_B1P061_gpy37d:
@@ -25403,7 +25403,7 @@ Style_B1P061_gpy37d:
 	part_sound	21, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 7, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy37d1n", 4, 4, 6, 0x0d8a, 0x0eb3, 0x0860, 0x06ad, 1, 4, 6, 0
+	style_tail	TIMESIG_4_4, 0x07, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy37d1n", 4, 4, 6, 0x0d8a, 0x0eb3, 0x0860, 0x06ad, 1, 4, 6, 0
 Style_B1P061_gpy37d_V:
 	style_section_map
 	part_tracks	0x07, Trk_gpy37d_V_Drum_S00, Trk_gpy37d_V_Drum_S01, Trk_gpy37d_V_Drum_S02, Trk_gpy37d_V_Drum_S03, Trk_gpy37d_V_Drum_S04, Trk_gpy37d_V_Drum_S05, Trk_gpy37d_V_Drum_S06, Trk_gpy37d_V_Drum_S07, Trk_gpy37d_V_Drum_S08, Trk_gpy37d_V_Drum_S09, Trk_gpy37d_V_Drum_S10, Trk_gpy37d_V_Drum_S11, Trk_gpy37d_V_Drum_S08, Trk_gpy37d_V_Drum_S09, Trk_gpy37d_V_Drum_S10, Trk_gpy37d_V_Drum_S11, Trk_gpy37d_V_Drum_S16, Trk_dsb16g_N_Drum_S17, Trk_gpy37d_V_Drum_S18	; Drum
@@ -25469,7 +25469,7 @@ Style_B1P061_gpy37d_V:
 	part_sound	21, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 7, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy37d1v", 8, 4, 13, 0x1381, 0x0e9e, 0x0ed0, 0x0748, 2, 4, 6, 6
+	style_tail	TIMESIG_4_4, 0x07, 61, 61, 13, 61, 61, 61, 61, 61, 1, "gpy37d1v", 8, 4, 13, 0x1381, 0x0e9e, 0x0ed0, 0x0748, 2, 4, 6, 6
 
 ; mzr27d: locator [bank 4][program 10]
 Style_B4P010_mzr27d:
@@ -25537,7 +25537,7 @@ Style_B4P010_mzr27d:
 	part_sound	78, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mzr27d1n", 2, 2, 1, 0x04bc, 0x05f5, 0x02c2, 0x043a, 1, 3, 4, 4
+	style_tail	TIMESIG_3_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mzr27d1n", 2, 2, 1, 0x04bc, 0x05f5, 0x02c2, 0x043a, 1, 3, 4, 4
 Style_B4P010_mzr27d_V:
 	style_section_map
 	part_tracks	0x37, Trk_mzr27d_V_Drum_S00, Trk_mzr27d_V_Drum_S01, Trk_mzr27d_V_Drum_S02, Trk_mzr27d_V_Drum_S03, Trk_mzr27d_V_Drum_S04, Trk_mzr27d_V_Drum_S05, Trk_mzr27d_V_Drum_S06, Trk_mzr27d_V_Drum_S07, Trk_mzr27d_V_Drum_S08, Trk_mzr27d_V_Drum_S09, Trk_mzr27d_V_Drum_S10, Trk_mzr27d_V_Drum_S11, Trk_mzr27d_V_Drum_S08, Trk_mzr27d_V_Drum_S09, Trk_mzr27d_V_Drum_S10, Trk_mzr27d_V_Drum_S11, Trk_mzr27d_V_Drum_S16, Trk_jwf67k_N_Drum_S17, Trk_mzr27d_V_Drum_S18	; Drum
@@ -25603,7 +25603,7 @@ Style_B4P010_mzr27d_V:
 	part_sound	78, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	6, 55, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mzr27d1v", 4, 4, 3, 0x067a, 0x071c, 0x047a, 0x053a, 1, 3, 3, 4
+	style_tail	TIMESIG_3_4, 0x37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "mzr27d1v", 4, 4, 3, 0x067a, 0x071c, 0x047a, 0x053a, 1, 3, 3, 4
 
 ; jig27p: locator [bank 4][program 5]
 Style_B4P005_jig27p:
@@ -25671,7 +25671,7 @@ Style_B4P005_jig27p:
 	part_sound	72, 4, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jig27p1n", 3, 4, 4, 0x0b72, 0x0d02, 0x06c4, 0x053a, 1, 4, 3, 5
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jig27p1n", 3, 4, 4, 0x0b72, 0x0d02, 0x06c4, 0x053a, 1, 4, 3, 5
 Style_B4P005_jig27p_V:
 	style_section_map
 	part_tracks	0x15, Trk_jig27p_V_Drum_S00, Trk_jig27p_V_Drum_S01, Trk_jig27p_V_Drum_S02, Trk_jig27p_V_Drum_S03, Trk_jig27p_V_Drum_S04, Trk_jig27p_V_Drum_S05, Trk_jig27p_V_Drum_S06, Trk_jig27p_V_Drum_S07, Trk_jig27p_V_Drum_S08, Trk_jig27p_V_Drum_S09, Trk_jig27p_V_Drum_S10, Trk_jig27p_V_Drum_S11, Trk_jig27p_V_Drum_S08, Trk_jig27p_V_Drum_S09, Trk_jig27p_V_Drum_S10, Trk_jig27p_V_Drum_S11, Trk_jig27p_V_Drum_S16, Trk_cny27h_N_Drum_S17, Trk_jig27p_V_Drum_S18	; Drum
@@ -25737,7 +25737,7 @@ Style_B4P005_jig27p_V:
 	part_sound	96, 2, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 49, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jig27p1v", 3, 4, 5, 0x0f47, 0x0f55, 0x0526, 0x059f, 2, 5, 2, 5
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "jig27p1v", 3, 4, 5, 0x0f47, 0x0f55, 0x0526, 0x059f, 2, 5, 2, 5
 
 ; trd47p: locator [bank 4][program 26]
 Style_B4P026_trd47p:
@@ -25805,7 +25805,7 @@ Style_B4P026_trd47p:
 	part_sound	80, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd47p1n", 5, 4, 4, 0x08fa, 0x084f, 0x0400, 0x04ec, 2, 3, 4, 5
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd47p1n", 5, 4, 4, 0x08fa, 0x084f, 0x0400, 0x04ec, 2, 3, 4, 5
 Style_B4P026_trd47p_V:
 	style_section_map
 	part_tracks	0x28, Trk_trd47p_V_Drum_S00, Trk_trd47p_V_Drum_S01, Trk_trd47p_V_Drum_S02, Trk_trd47p_V_Drum_S03, Trk_trd47p_V_Drum_S04, Trk_trd47p_V_Drum_S05, Trk_trd47p_V_Drum_S06, Trk_trd47p_V_Drum_S07, Trk_trd47p_V_Drum_S08, Trk_trd47p_V_Drum_S09, Trk_trd47p_V_Drum_S10, Trk_trd47p_V_Drum_S11, Trk_trd47p_V_Drum_S08, Trk_trd47p_V_Drum_S09, Trk_trd47p_V_Drum_S10, Trk_trd47p_V_Drum_S11, Trk_trd47p_V_Drum_S16, Trk_shr36d_N_Drum_S17, Trk_trd47p_V_Drum_S18	; Drum
@@ -25871,7 +25871,7 @@ Style_B4P026_trd47p_V:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 40, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd47p1v", 5, 6, 5, 0x099b, 0x0824, 0x06b4, 0x04f2, 1, 3, 6, 5
+	style_tail	TIMESIG_4_4, 0x28, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trd47p1v", 5, 6, 5, 0x099b, 0x0824, 0x06b4, 0x04f2, 1, 3, 6, 5
 
 ; trn17d: locator [bank 3][program 5]
 Style_B3P005_trn17d:
@@ -25939,7 +25939,7 @@ Style_B3P005_trn17d:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	72, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trn17d1n", 2, 2, 3, 0x07dc, 0x0bc4, 0x023a, 0x05ec, 1, 3, 3, 2
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trn17d1n", 2, 2, 3, 0x07dc, 0x0bc4, 0x023a, 0x05ec, 1, 3, 3, 2
 Style_B3P005_trn17d_V:
 	style_section_map
 	part_tracks	0x21, Trk_trn17d_V_Drum_S00, Trk_trn17d_V_Drum_S01, Trk_trn17d_V_Drum_S02, Trk_trn17d_V_Drum_S03, Trk_trn17d_V_Drum_S04, Trk_trn17d_V_Drum_S05, Trk_trn17d_V_Drum_S06, Trk_trn17d_V_Drum_S07, Trk_trn17d_V_Drum_S08, Trk_trn17d_V_Drum_S09, Trk_trn17d_V_Drum_S10, Trk_trn17d_V_Drum_S11, Trk_trn17d_V_Drum_S08, Trk_trn17d_V_Drum_S09, Trk_trn17d_V_Drum_S10, Trk_trn17d_V_Drum_S11, Trk_trn17d_V_Drum_S16, Trk_rbd87p_N_Drum_S17, Trk_trn17d_V_Drum_S18	; Drum
@@ -26005,7 +26005,7 @@ Style_B3P005_trn17d_V:
 	part_sound	82, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	72, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trn17d1v", 5, 4, 8, 0x09ce, 0x0ac0, 0x0792, 0x058e, 1, 4, 3, 2
+	style_tail	TIMESIG_4_4, 0x21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "trn17d1v", 5, 4, 8, 0x09ce, 0x0ac0, 0x0792, 0x058e, 1, 4, 3, 2
 
 ; ori64i: locator [bank 5][program 60]
 Style_B5P060_ori64i:
@@ -26073,7 +26073,7 @@ Style_B5P060_ori64i:
 	part_sound	22, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	5, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori64i1n", 5, 3, 6, 0x0874, 0x0aa2, 0x0640, 0x0568, 1, 3, 5, 4
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori64i1n", 5, 3, 6, 0x0874, 0x0aa2, 0x0640, 0x0568, 1, 3, 5, 4
 Style_B5P060_ori64i_V:
 	style_section_map
 	part_tracks	0x13, Trk_ori64i_V_Drum_S00, Trk_ori64i_V_Drum_S01, Trk_ori64i_V_Drum_S02, Trk_ori64i_V_Drum_S03, Trk_ori64i_V_Drum_S04, Trk_ori64i_V_Drum_S05, Trk_ori64i_V_Drum_S06, Trk_ori64i_V_Drum_S07, Trk_ori64i_V_Drum_S08, Trk_ori64i_V_Drum_S09, Trk_ori64i_V_Drum_S10, Trk_ori64i_V_Drum_S11, Trk_ori64i_V_Drum_S08, Trk_ori64i_V_Drum_S09, Trk_ori64i_V_Drum_S10, Trk_ori64i_V_Drum_S11, Trk_ori64i_V_Drum_S16, Trk_bls16d_N_Drum_S17, Trk_ori64i_V_Drum_S18	; Drum
@@ -26139,7 +26139,7 @@ Style_B5P060_ori64i_V:
 	part_sound	5, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 19, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori64i1v", 4, 5, 9, 0x0eb6, 0x0e4c, 0x0898, 0x06f8, 2, 3, 5, 10
+	style_tail	TIMESIG_4_4, 0x13, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori64i1v", 4, 5, 9, 0x0eb6, 0x0e4c, 0x0898, 0x06f8, 2, 3, 5, 10
 
 ; ori54i: locator [bank 4][program 60]
 Style_B4P060_ori54i:
@@ -26207,7 +26207,7 @@ Style_B4P060_ori54i:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori54i1n", 4, 4, 4, 0x079e, 0x0860, 0x0370, 0x06f4, 1, 3, 3, 3
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori54i1n", 4, 4, 4, 0x079e, 0x0860, 0x0370, 0x06f4, 1, 3, 3, 3
 Style_B4P060_ori54i_V:
 	style_section_map
 	part_tracks	0x25, Trk_ori54i_V_Drum_S00, Trk_ori54i_V_Drum_S01, Trk_ori54i_V_Drum_S02, Trk_ori54i_V_Drum_S03, Trk_ori54i_V_Drum_S04, Trk_ori54i_V_Drum_S05, Trk_ori54i_V_Drum_S06, Trk_ori54i_V_Drum_S07, Trk_ori54i_V_Drum_S08, Trk_ori54i_V_Drum_S09, Trk_ori54i_V_Drum_S10, Trk_ori54i_V_Drum_S11, Trk_ori54i_V_Drum_S08, Trk_ori54i_V_Drum_S09, Trk_ori54i_V_Drum_S10, Trk_ori54i_V_Drum_S11, Trk_ori54i_V_Drum_S16, Trk_d1642c_N_Drum_S17, Trk_ori54i_V_Drum_S18	; Drum
@@ -26273,7 +26273,7 @@ Style_B4P060_ori54i_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	65, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 37, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori54i1v", 8, 5, 9, 0x0bd1, 0x084a, 0x0592, 0x0704, 1, 3, 4, 3
+	style_tail	TIMESIG_4_4, 0x25, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori54i1v", 8, 5, 9, 0x0bd1, 0x084a, 0x0592, 0x0704, 1, 3, 4, 3
 
 ; rge83d: locator [bank 2][program 71]
 Style_B2P071_rge83d:
@@ -26341,7 +26341,7 @@ Style_B2P071_rge83d:
 	part_sound	15, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	91, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge83d1n", 2, 2, 4, 0x0837, 0x0ac2, 0x058a, 0x062e, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge83d1n", 2, 2, 4, 0x0837, 0x0ac2, 0x058a, 0x062e, 2, 3, 3, 4
 Style_B2P071_rge83d_V:
 	style_section_map
 	part_tracks	0x16, Trk_rge83d_V_Drum_S00, Trk_rge83d_V_Drum_S01, Trk_rge83d_V_Drum_S02, Trk_rge83d_V_Drum_S03, Trk_rge83d_V_Drum_S04, Trk_rge83d_V_Drum_S05, Trk_rge83d_V_Drum_S06, Trk_rge83d_V_Drum_S07, Trk_rge83d_V_Drum_S08, Trk_rge83d_V_Drum_S09, Trk_rge83d_V_Drum_S10, Trk_rge83d_V_Drum_S11, Trk_rge83d_V_Drum_S08, Trk_rge83d_V_Drum_S09, Trk_rge83d_V_Drum_S10, Trk_rge83d_V_Drum_S11, Trk_rge83d_V_Drum_S16, Trk_tec27r_N_Drum_S17, Trk_rge83d_V_Drum_S18	; Drum
@@ -26407,7 +26407,7 @@ Style_B2P071_rge83d_V:
 	part_sound	15, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	91, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 22, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge83d1v", 4, 4, 7, 0x0ed4, 0x0ef4, 0x085b, 0x05ee, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x16, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge83d1v", 4, 4, 7, 0x0ed4, 0x0ef4, 0x085b, 0x05ee, 2, 3, 3, 4
 
 ; rge93c: locator [bank 3][program 71]
 Style_B3P071_rge93c:
@@ -26475,7 +26475,7 @@ Style_B3P071_rge93c:
 	part_sound	90, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	104, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge93c1n", 4, 2, 4, 0x0aef, 0x0b22, 0x0461, 0x0577, 2, 4, 5, 1
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge93c1n", 4, 2, 4, 0x0aef, 0x0b22, 0x0461, 0x0577, 2, 4, 5, 1
 Style_B3P071_rge93c_V:
 	style_section_map
 	part_tracks	0x15, Trk_rge93c_V_Drum_S00, Trk_rge93c_V_Drum_S01, Trk_rge93c_V_Drum_S02, Trk_rge93c_V_Drum_S03, Trk_rge93c_V_Drum_S04, Trk_rge93c_V_Drum_S05, Trk_rge93c_V_Drum_S06, Trk_rge93c_V_Drum_S07, Trk_rge93c_V_Drum_S08, Trk_rge93c_V_Drum_S09, Trk_rge93c_V_Drum_S10, Trk_rge93c_V_Drum_S11, Trk_rge93c_V_Drum_S08, Trk_rge93c_V_Drum_S09, Trk_rge93c_V_Drum_S10, Trk_rge93c_V_Drum_S11, Trk_rge93c_V_Drum_S16, Trk_cny27h_N_Drum_S17, Trk_rge93c_V_Drum_S18	; Drum
@@ -26541,7 +26541,7 @@ Style_B3P071_rge93c_V:
 	part_sound	90, 0, 0x40, 1, 64, 8, 127	; ACCOMP2
 	part_sound	11, 1, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 21, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge93c1v", 4, 3, 8, 0x0f93, 0x0fff, 0x05ee, 0x06c1, 2, 5, 4, 3
+	style_tail	TIMESIG_4_4, 0x15, 61, 61, 13, 61, 61, 61, 61, 61, 1, "rge93c1v", 4, 3, 8, 0x0f93, 0x0fff, 0x05ee, 0x06c1, 2, 5, 4, 3
 
 ; ori97i: locator [bank 2][program 60]
 Style_B2P060_ori97i:
@@ -26609,7 +26609,7 @@ Style_B2P060_ori97i:
 	part_sound	70, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	70, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori97i1n", 4, 3, 5, 0x0a60, 0x0a7c, 0x04b4, 0x09d4, 1, 3, 2, 2
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori97i1n", 4, 3, 5, 0x0a60, 0x0a7c, 0x04b4, 0x09d4, 1, 3, 2, 2
 Style_B2P060_ori97i_V:
 	style_section_map
 	part_tracks	0x12, Trk_ori97i_V_Drum_S00, Trk_ori97i_V_Drum_S01, Trk_ori97i_V_Drum_S02, Trk_ori97i_V_Drum_S03, Trk_ori97i_V_Drum_S04, Trk_ori97i_V_Drum_S05, Trk_ori97i_V_Drum_S06, Trk_ori97i_V_Drum_S07, Trk_ori97i_V_Drum_S08, Trk_ori97i_V_Drum_S09, Trk_ori97i_V_Drum_S10, Trk_ori97i_V_Drum_S11, Trk_ori97i_V_Drum_S08, Trk_ori97i_V_Drum_S09, Trk_ori97i_V_Drum_S10, Trk_ori97i_V_Drum_S11, Trk_ori97i_V_Drum_S16, Trk_dcs17d_N_Drum_S17, Trk_ori97i_V_Drum_S18	; Drum
@@ -26675,7 +26675,7 @@ Style_B2P060_ori97i_V:
 	part_sound	100, 3, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	70, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 18, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori97i1v", 8, 3, 15, 0x0d50, 0x0e01, 0x067b, 0x0a40, 2, 3, 3, 4
+	style_tail	TIMESIG_4_4, 0x12, 61, 61, 13, 61, 61, 61, 61, 61, 1, "ori97i1v", 8, 3, 15, 0x0d50, 0x0e01, 0x067b, 0x0a40, 2, 3, 3, 4
 
 ; cbr57n: locator [bank 5][program 118]
 Style_B5P118_cbr57n:
@@ -26743,7 +26743,7 @@ Style_B5P118_cbr57n:
 	part_sound	10, 1, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	48, 4, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr57n1n", 4, 4, 5, 0x0628, 0x0856, 0x04be, 0x0570, 2, 5, 3, 2
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr57n1n", 4, 4, 5, 0x0628, 0x0856, 0x04be, 0x0570, 2, 5, 3, 2
 Style_B5P118_cbr57n_V:
 	style_section_map
 	part_tracks	0x2d, Trk_cbr57n_V_Drum_S00, Trk_cbr57n_V_Drum_S01, Trk_cbr57n_V_Drum_S02, Trk_cbr57n_V_Drum_S03, Trk_cbr57n_V_Drum_S04, Trk_cbr57n_V_Drum_S05, Trk_cbr57n_V_Drum_S06, Trk_cbr57n_V_Drum_S07, Trk_cbr57n_V_Drum_S08, Trk_cbr57n_V_Drum_S09, Trk_cbr57n_V_Drum_S10, Trk_cbr57n_V_Drum_S11, Trk_cbr57n_V_Drum_S08, Trk_cbr57n_V_Drum_S09, Trk_cbr57n_V_Drum_S10, Trk_cbr57n_V_Drum_S11, Trk_cbr57n_V_Drum_S16, Trk_srr55d_N_Drum_S17, Trk_cbr57n_V_Drum_S18	; Drum
@@ -26809,7 +26809,7 @@ Style_B5P118_cbr57n_V:
 	part_sound	15, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	91, 0, 0x40, 1, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	7, 45, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr57n1v", 4, 4, 5, 0x08a0, 0x0851, 0x051a, 0x077a, 2, 8, 4, 3
+	style_tail	TIMESIG_4_4, 0x2d, 61, 61, 13, 61, 61, 61, 61, 61, 1, "cbr57n1v", 4, 4, 5, 0x08a0, 0x0851, 0x051a, 0x077a, 2, 8, 4, 3
 
 ; 8beats: locator [bank 3][program 24]
 Style_B3P024_8beats:
@@ -26877,7 +26877,7 @@ Style_B3P024_8beats:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	11, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8beats1n", 2, 2, 3, 0x0621, 0x055e, 0x04a3, 0x04a3, 1, 3, 3, 1
+	style_tail	TIMESIG_8_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8beats1n", 2, 2, 3, 0x0621, 0x055e, 0x04a3, 0x04a3, 1, 3, 3, 1
 Style_B3P024_8beats_V:
 	style_section_map
 	part_tracks	0x35, Trk_8beats_V_Drum_S00, Trk_8beats_V_Drum_S01, Trk_8beats_V_Drum_S02, Trk_8beats_V_Drum_S03, Trk_8beats_V_Drum_S04, Trk_8beats_V_Drum_S05, Trk_8beats_V_Drum_S06, Trk_8beats_V_Drum_S07, Trk_8beats_V_Drum_S08, Trk_8beats_V_Drum_S09, Trk_8beats_V_Drum_S10, Trk_8beats_V_Drum_S11, Trk_8beats_V_Drum_S08, Trk_8beats_V_Drum_S09, Trk_8beats_V_Drum_S10, Trk_8beats_V_Drum_S11, Trk_8beats_V_Drum_S16, Trk_8beats_N_Drum_S17, Trk_8beats_V_Drum_S18	; Drum
@@ -26943,7 +26943,7 @@ Style_B3P024_8beats_V:
 	part_sound	1, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	52, 0, 0x40, 0, 64, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	11, 53, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8beats1v", 2, 2, 3, 0x0621, 0x055e, 0x04a3, 0x04a3, 1, 3, 3, 1
+	style_tail	TIMESIG_8_4, 0x35, 61, 61, 13, 61, 61, 61, 61, 61, 1, "8beats1v", 2, 2, 3, 0x0621, 0x055e, 0x04a3, 0x04a3, 1, 3, 3, 1
 
 ; 6beats: locator [bank 2][program 8]
 Style_B2P008_6beats:
@@ -27011,7 +27011,7 @@ Style_B2P008_6beats:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	9, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6beats1n", 2, 3, 4, 0x067d, 0x0623, 0x0565, 0x052b, 2, 4, 5, 4
+	style_tail	TIMESIG_6_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6beats1n", 2, 3, 4, 0x067d, 0x0623, 0x0565, 0x052b, 2, 4, 5, 4
 Style_B2P008_6beats_V:
 	style_section_map
 	part_tracks	0x33, Trk_6beats_V_Drum_S00, Trk_6beats_V_Drum_S01, Trk_6beats_V_Drum_S02, Trk_6beats_V_Drum_S03, Trk_6beats_V_Drum_S04, Trk_6beats_V_Drum_S05, Trk_6beats_V_Drum_S06, Trk_6beats_V_Drum_S07, Trk_6beats_V_Drum_S08, Trk_6beats_V_Drum_S09, Trk_6beats_V_Drum_S10, Trk_6beats_V_Drum_S11, Trk_6beats_V_Drum_S08, Trk_6beats_V_Drum_S09, Trk_6beats_V_Drum_S10, Trk_6beats_V_Drum_S11, Trk_6beats_V_Drum_S16, Trk_6beats_N_Drum_S17, Trk_6beats_V_Drum_S18	; Drum
@@ -27077,5 +27077,5 @@ Style_B2P008_6beats_V:
 	part_sound	0, 0, 0x40, 0, 64, 8, 127	; ACCOMP2
 	part_sound	100, 0, 0x40, 0, 59, 8, 127	; ACCOMP3
 	sound_block_end
-	style_tail	9, 51, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6beats1v", 2, 3, 4, 0x067d, 0x0623, 0x0565, 0x052b, 2, 4, 5, 4
+	style_tail	TIMESIG_6_4, 0x33, 61, 61, 13, 61, 61, 61, 61, 61, 1, "6beats1v", 2, 3, 4, 0x067d, 0x0623, 0x0565, 0x052b, 2, 4, 5, 4
 

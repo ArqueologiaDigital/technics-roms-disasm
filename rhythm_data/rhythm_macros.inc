@@ -114,6 +114,9 @@
 ;   slots 16..18  AccVoice_SelectPartOffset (0x20, 0x22, 0x420: RAM 0x32ff bits 0/1),
 ;                 AccVoice_Reset_SelectMode (0x330a), AccVoice_ThirdLayer_SelectMode (0x24/0x424)
 ;   slots 8..11   no reader traced yet
+; Measured over all 404 halves x 6 parts (probes/slot_bars_probe.py): every track in slots
+; 0..15 and 17 is exactly one bar; slots 16 and 18 hold 1..8 bars.  [INFERENCE] 12..15 are the
+; fill-ins (AccPedal_DirectionA picks the pair member) and 16 / 18 intro / ending patterns.
 .macro	part_tracks bank, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18
 	.short	\s0 - (RhythmData_Base + (\bank << 16)), \s1 - (RhythmData_Base + (\bank << 16))
 	.short	\s2 - (RhythmData_Base + (\bank << 16)), \s3 - (RhythmData_Base + (\bank << 16))
@@ -146,6 +149,14 @@
 .macro	sound_block_end
 	.fill	14, 1, 0xff
 .endm
+
+; Time-signature codes (+0x3d0): the index of TimeSig_DisplayStrings, whose names they are;
+; AccTone_LookupByProgram_Table holds the beats per bar.  Measured: every track in slots
+; 0..15 and 17 of a half is exactly one bar of its half's code (probes/slot_bars_probe.py).
+.equ	TIMESIG_3_4, 6
+.equ	TIMESIG_4_4, 7
+.equ	TIMESIG_6_4, 9
+.equ	TIMESIG_8_4, 11
 
 ; +0x3d0: the half's tail.
 ;   +0x3d0 time_sig      AccStyle_ReadVoiceParam: beats per bar through AccTone_LookupByProgram_Table;
