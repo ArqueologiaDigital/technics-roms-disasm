@@ -23462,11579 +23462,18714 @@ DEMORUN_ResNames:
 	.long	RN_empty_6309	# fdemo_d16_JpegFile1
 .incbin_range "baserom/kn7000_program.rom", 0x396548, 0x39654C
 
-zlib_4879654C:	# census: opaque -- compressed: a zlib stream, 643 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x39654C, 0x3967CF
-	.align	4, 0xFF
-zlib_487967D0:	# census: opaque -- compressed: a zlib stream, 654 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3967D0, 0x396A5E
-	.align	4, 0xFF
-zlib_48796A60:	# census: opaque -- compressed: a zlib stream, 597 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x396A60, 0x396CB5
-	.align	4, 0xFF
-zlib_48796CB8:	# census: opaque -- compressed: a zlib stream, 747 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x396CB8, 0x396FA3
-	.align	4, 0xFF
-zlib_48796FA4:	# census: opaque -- compressed: a zlib stream, 791 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x396FA4, 0x3972BB
-	.align	4, 0xFF
-zlib_487972BC:	# census: opaque -- compressed: a zlib stream, 639 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3972BC, 0x39753B
-	.align	4, 0xFF
-zlib_4879753C:	# census: opaque -- compressed: a zlib stream, 759 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x39753C, 0x397833
-	.align	4, 0xFF
-zlib_48797834:	# census: opaque -- compressed: a zlib stream, 776 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x397834, 0x397B3C
-zlib_48797B3C:	# census: opaque -- compressed: a zlib stream, 726 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x397B3C, 0x397E12
-	.align	4, 0xFF
-zlib_48797E14:	# census: opaque -- compressed: a zlib stream, 776 bytes, inflating to 2272 bytes that begin 5a 5a 5a 5a 00 01 0d 00; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x397E14, 0x39811C
-zlib_4879811C:	# census: opaque -- compressed: a zlib stream, 15756 bytes, inflating to 32512 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x39811C, 0x39BEA8
-zlib_4879BEA8:	# census: opaque -- compressed: a zlib stream, 12347 bytes, inflating to 21760 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x39BEA8, 0x39EEE3
-	.align	4, 0xFF
-zlib_4879EEE4:	# census: opaque -- compressed: a zlib stream, 6797 bytes, inflating to 12544 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x39EEE4, 0x3A0971
-	.align	4, 0xFF
-zlib_487A0974:	# census: opaque -- compressed: a zlib stream, 7000 bytes, inflating to 12032 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3A0974, 0x3A24CC
-zlib_487A24CC:	# census: opaque -- compressed: a zlib stream, 9543 bytes, inflating to 16384 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3A24CC, 0x3A4A13
-	.align	4, 0xFF
-zlib_487A4A14:	# census: opaque -- compressed: a zlib stream, 5302 bytes, inflating to 11264 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3A4A14, 0x3A5ECA
-	.align	4, 0xFF
-zlib_487A5ECC:	# census: opaque -- compressed: a zlib stream, 6873 bytes, inflating to 12544 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3A5ECC, 0x3A79A5
-	.align	4, 0xFF
-zlib_487A79A8:	# census: opaque -- compressed: a zlib stream, 12756 bytes, inflating to 29184 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3A79A8, 0x3AAB7C
-zlib_487AAB7C:	# census: opaque -- compressed: a zlib stream, 5739 bytes, inflating to 10240 bytes that begin 80 00 00 ff ff 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AAB7C, 0x3AC1E7
-	.align	4, 0xFF
-zlib_487AC1E8:	# census: opaque -- compressed: a zlib stream, 8191 bytes, inflating to 22272 bytes that begin 80 00 00 02 00 81 81 81; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AC1E8, 0x3AE1E7
-	.align	4, 0xFF
-zlib_487AE1E8:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AE1E8, 0x3AE60E
-	.align	4, 0xFF
-zlib_487AE610:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AE610, 0x3AEA36
-	.align	4, 0xFF
-zlib_487AEA38:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AEA38, 0x3AEE5E
-	.align	4, 0xFF
-zlib_487AEE60:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AEE60, 0x3AF286
-	.align	4, 0xFF
-zlib_487AF288:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AF288, 0x3AF6AE
-	.align	4, 0xFF
-zlib_487AF6B0:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AF6B0, 0x3AFAD6
-	.align	4, 0xFF
-zlib_487AFAD8:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AFAD8, 0x3AFEFE
-	.align	4, 0xFF
-zlib_487AFF00:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3AFF00, 0x3B0326
-	.align	4, 0xFF
-zlib_487B0328:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3B0328, 0x3B074E
-	.align	4, 0xFF
-zlib_487B0750:	# census: opaque -- compressed: a zlib stream, 1062 bytes, inflating to 14976 bytes that begin " Soloist Sounds ..."; Python's zlib at level 6 re-compresses it byte-exactly, so the inflated data, once its format is typed, can be the source; the inflated bytes are not committed (bulk dump bytes)
-.incbin_range "baserom/kn7000_program.rom", 0x3B0750, 0x3B0B76
-	.align	4, 0xFF
+zlib_4879654C:	# DemoSong01: its song record, 2272 bytes, stored as a zlib stream of 643 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
 
-.mnbase 0x4FC4F498   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong01_Record
 
-data_50000010:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0B78, 0x3B0B7C
-data_50000014:
-	.space	4, 0x00
-data_50000018:
-	.space	1, 0x00
-data_50000019:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0B81, 0x3B0B84
-data_5000001C:
-	.space	4, 0xFF
-data_50000020:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0B88, 0x3B0B8C
-data_50000024:
-	.space	4, 0x00
-data_50000028:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0B90, 0x3B0B94
-data_5000002C:
-	.space	4, 0x00
-data_50000030:
-	.space	1, 0x00
-data_50000031:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0B99, 0x3B0B9C
-data_50000034:
-	.space	4, 0xFF
-data_50000038:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0BA0, 0x3B0BA4
-data_5000003C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0BA4, 0x3B0BA8
-data_50000040:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0BA8, 0x3B0BB8
-data_50000050:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0BB8, 0x3B0C38
-
-Str_empty_286:	.asciz "{\xBA"
-.incbin_range "baserom/kn7000_program.rom", 0x3B0C3B, 0x3B0E38
-data_500002D0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0E38, 0x3B0E3C
-data_500002D4:
-	.space	4, 0x00
-data_500002D8:
-	.space	4, 0x00
-data_500002DC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0E44, 0x3B0E48
-data_500002E0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B0E48, 0x3B0E4C
-	.space	1020, 0x00
-data_500006E0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1248, 0x3B124C
-data_500006E4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B124C, 0x3B1250
-data_500006E8:
-	.space	4, 0x00
-data_500006EC:
-	.space	4, 0x00
-data_500006F0:
-	.space	4, 0xFF
-data_500006F4:
-	.space	4, 0xFF
-data_500006F8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1260, 0x3B1264
-data_500006FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1264, 0x3B1268
-data_50000700:
-	.space	4, 0x00
-data_50000704:
-	.space	4, 0x00
-data_50000708:
-	.space	4, 0xFF
-data_5000070C:
-	.space	4, 0xFF
-data_50000710:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1278, 0x3B127C
-
-names_50000714:
-	.long	Str_PART1_5
-	.long	Str_PART2_3
-	.long	Str_PART3
-	.long	Str_PART4
-	.long	Str_PART5
-	.long	Str_PART6
-	.long	Str_PART7
-	.long	Str_PART8
-	.long	Str_PART9
-	.long	Str_PART10
-	.long	Str_PART11
-	.long	Str_PART12
-	.long	Str_PART13
-	.long	Str_PART14
-	.long	Str_PART15
-	.long	Str_PART16
-	.long	Str_RIGHT1_5
-	.long	Str_RIGHT2_5
-	.long	Str_LEFT_7
-	.long	Str_ACCOMP1_2
-	.long	Str_ACCOMP2_2
-	.long	Str_ACCOMP3_2
-	.long	Str_ACCOMP4_2
-	.long	Str_ACCOMP5_2
-	.long	Str_BASS_3
-	.long	Str_DRUM1
-	.long	Str_DRUM2
-	.long	Str_CHORD_6
-	.long	Str_ROOT_BASS
-	.long	Str_PADS_14
-	.long	Str_PADS_13
-	.long	Str_CONTROL_5
-	.long	Str_METRONOME
-	.long	Str_CHORD_FINDER_4
-	.long	Str_MIC_15
-	.long	Str_APC_2
-ptrs_500007A4:
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-ptrs_500007D8:
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-ptrs_5000080C:
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-ptrs_50000840:
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1118
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A11A8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1238
-	.long	ptrs_485A0FF8
-	.long	ptrs_485A1088
-ptrs_50000874:
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_5000080C
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-data_50000974:
-.incbin_range "baserom/kn7000_program.rom", 0x3B14DC, 0x3B14E0
-data_50000978:
-.incbin_range "baserom/kn7000_program.rom", 0x3B14E0, 0x3B14E4
-data_5000097C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B14E4, 0x3B14F4
-data_5000098C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B14F4, 0x3B1504
-data_5000099C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1504, 0x3B1514
-data_500009AC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1514, 0x3B1524
-data_500009BC:
-	.space	8, 0x00
-data_500009C4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B152C, 0x3B1530
-data_500009C8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1530, 0x3B1534
-data_500009CC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1534, 0x3B1538
-data_500009D0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1538, 0x3B153C
-data_500009D4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B153C, 0x3B1544
-data_500009DC:
-	.space	4, 0x00
-data_500009E0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1548, 0x3B1550
-data_500009E8:
-	.space	4, 0x00
-data_500009EC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1554, 0x3B155C
-data_500009F4:
-	.space	4, 0x00
-PanelSimulator_window:
-	.space	4, 0xFF
-PanelSimulator_TitleMenu_DEBUG_TOOLS_selected:
-	.space	4, 0x00
-ClipBoard_window:
-	.space	4, 0xFF
-DefaultWindow_parent:
-	.space	4, 0xFF
-DefaultWindow_child:
-	.space	4, 0xFF
-data_50000A0C:
-	.space	1, 0x00
-data_50000A0D:
-	.space	1, 0x00
-data_50000A0E:
-	.space	1, 0x00
-data_50000A0F:
-	.align	4, 0x00
-data_50000A10:
-	.space	1, 0x00
-data_50000A11:
-	.space	1, 0x00
-data_50000A12:
-	.space	1, 0x00
-data_50000A13:
-	.align	4, 0x00
-data_50000A14:
-	.space	1, 0x00
-data_50000A15:
-.incbin_range "baserom/kn7000_program.rom", 0x3B157D, 0x3B1580
-data_50000A18:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1580, 0x3B159C
-	.space	100, 0x00
-data_50000A98:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1600, 0x3B1666
-data_50000AFE:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1666, 0x3B166C
-data_50000B04:
-.incbin_range "baserom/kn7000_program.rom", 0x3B166C, 0x3B1674
-data_50000B0C:
-	.space	1, 0x00
-data_50000B0D:
-	.space	1, 0x00
-data_50000B0E:
-	.space	1, 0x00
-data_50000B0F:
-	.align	4, 0x00
-data_50000B10:
-	.space	2, 0x00
-data_50000B12:
-	.space	1, 0x00
-data_50000B13:
-	.align	4, 0x00
-data_50000B14:
-	.space	4, 0x00
-data_50000B18:
-	.space	1, 0x00
-data_50000B19:
-	.space	1, 0x00
-data_50000B1A:
-	.space	1, 0x00
-data_50000B1B:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1683, 0x3B1688
-data_50000B20:
-	.space	2, 0x00
-data_50000B22:
-	.space	11, 0x00
-data_50000B2D:
-	.space	1, 0x00
-data_50000B2E:
-	.space	14, 0x00
-data_50000B3C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B16A4, 0x3B16A8
-data_50000B40:
-.incbin_range "baserom/kn7000_program.rom", 0x3B16A8, 0x3B16AC
-data_50000B44:
-	.space	2, 0x00
-data_50000B46:
-	.space	38, 0x00
-data_50000B6C:
-	.space	40, 0x00
-data_50000B94:
-	.space	40, 0x00
-data_50000BBC:
-	.space	4, 0x00
-data_50000BC0:
-	.space	4, 0x00
-data_50000BC4:
-	.space	4, 0x00
-data_50000BC8:
-	.space	34, 0xFF
-data_50000BEA:
-	.space	34, 0xFF
-data_50000C0C:
-	.space	2, 0x00
-data_50000C0E:
-	.align	4, 0x00
-data_50000C10:
-	.space	3, 0x00
-data_50000C13:
-	.align	4, 0x00
-data_50000C14:
-	.space	8, 0x00
-data_50000C1C:
-	.space	4, 0x00
-ptrs_50000C20:
-	.long	zlib_4879654C
-	.long	zlib_487967D0
-	.long	zlib_48796A60
-	.long	zlib_48796CB8
-	.long	zlib_48796FA4
-	.long	zlib_487972BC
-	.long	zlib_4879753C
-	.long	zlib_48797834
-	.long	zlib_48797B3C
-	.long	zlib_48797E14
-	.long	data_487297F0
-	.long	data_487297F1
-ptrs_50000C50:
-	.long	zlib_4879811C
-	.long	zlib_4879BEA8
-	.long	zlib_4879EEE4
-	.long	zlib_487A0974
-	.long	zlib_487A24CC
-	.long	zlib_487A4A14
-	.long	zlib_487A5ECC
-	.long	zlib_487A79A8
-	.long	zlib_487AAB7C
-	.long	zlib_487AC1E8
-	.long	data_487297EC
-	.long	data_487297ED
-ptrs_50000C80:
-	.long	zlib_487AE1E8
-	.long	zlib_487AE610
-	.long	zlib_487AEA38
-	.long	zlib_487AEE60
-	.long	zlib_487AF288
-	.long	zlib_487AF6B0
-	.long	zlib_487AFAD8
-	.long	zlib_487AFF00
-	.long	zlib_487B0328
-	.long	zlib_487B0750
-	.long	data_487297EE
-	.long	data_487297EF
-data_50000CB0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1818, 0x3B181C
-data_50000CB4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B181C, 0x3B1820
-data_50000CB8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1820, 0x3B1824
-data_50000CBC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1824, 0x3B1828
-data_50000CC0:
-	.space	1, 0x00
-data_50000CC1:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1829, 0x3B182C
-data_50000CC4:
-	.space	1, 0x01
-data_50000CC5:
-.incbin_range "baserom/kn7000_program.rom", 0x3B182D, 0x3B1830
-data_50000CC8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1830, 0x3B1834
-data_50000CCC:
-	.space	4, 0x00
-data_50000CD0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1838, 0x3B183C
-data_50000CD4:
-	.space	4, 0x00
-data_50000CD8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1840, 0x3B1844
-data_50000CDC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1844, 0x3B1848
-data_50000CE0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1848, 0x3B184C
-data_50000CE4:
-	.space	2, 0x00
-data_50000CE6:
-	.align	4, 0x00
-data_50000CE8:
-	.space	34, 0x00
-data_50000D0A:
-	.align	4, 0x00
-data_50000D0C:
-	.space	40, 0x00
-data_50000D34:
-	.space	38, 0x00
-data_50000D5A:
-	.align	4, 0x00
-data_50000D5C:
-	.space	4, 0x00
-data_50000D60:
-.incbin_range "baserom/kn7000_program.rom", 0x3B18C8, 0x3B1940
-data_50000DD8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1940, 0x3B19B4
-data_50000E4C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B19B4, 0x3B1A29
-	.space	67, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B1A6C, 0x3B1A78
-data_50000F10:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1A78, 0x3B1A8A
-data_50000F22:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1A8A, 0x3B1A8C
-data_50000F24:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1A8C, 0x3B1AA0
-data_50000F38:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1AA0, 0x3B1AB4
-data_50000F4C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1AB4, 0x3B1AC8
-data_50000F60:
-	.space	4, 0x00
-data_50000F64:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1ACC, 0x3B1B18
-data_50000FB0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1B18, 0x3B1B94
-data_5000102C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1B94, 0x3B1C10
-data_500010A8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1C10, 0x3B1C88
-data_50001120:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1C88, 0x3B1D00
-data_50001198:
-	.space	4, 0x00
-Str_TECHNICS_V1_0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D04, 0x3B1D0C
-
-Str_V1_0_2:	.asciz " V1.0   "
+# DemoSong01_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 255, 255, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 240, 7, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 5, 0, 26, 0, 29, 0, 40, 0, 47, 0, 50, 0, 56, 0, 59
+	.byte	0, 64, 0, 71, 0, 76, 0, 89, 0, 93, 0, 94, 0, 120, 0, 127
+	.byte	0, 57, 132, 43, 10, 163, 94, 47, 218, 30, 26, 174, 179, 45, 232, 120
+	.byte	28, 1, 1, 0, 1, 0, 0, 0, 128, 0, 89, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 255, 255, 0, 0, 0, 0, 0, 0
+	sq_track	0x80, 1	# track 1
+	sq_track	0x80, 6	# track 2
+	sq_track	0x80, 27	# track 3
+	sq_track	0x80, 30	# track 4
+	sq_track	0x80, 41	# track 5
+	sq_track	0x80, 48	# track 6
+	sq_track	0x80, 51	# track 7
+	sq_track	0x80, 57	# track 8
+	sq_track	0x80, 60	# track 9
+	sq_track	0x80, 65	# track 10
+	sq_track	0x80, 72	# track 11
+	sq_track	0x80, 77	# track 12
+	sq_track	0x80, 90	# track 13
+	sq_track	0x80, 94	# track 14
+	sq_track	0x80, 95	# track 15
+	sq_track	0x80, 121	# track 16
+# +0x100..+0x11F, not traced
+	.byte	75, 73, 84, 49, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 0, 1, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 61, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 72, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 80, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 5, 0, 32, 94, 37, 8, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 48, 5, 32, 127, 53, 234, 2, 0, 0, 0, 0, 54, 80, 142, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 60, 64, 32, 121, 53, 234, 2, 0, 0, 0, 0, 62, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 0, 0, 38, 91, 37, 202, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 64, 0, 38, 100, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 16, 0, 38, 100, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 48, 0, 38, 123, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 99, 4, 100
+	PMR_42_14	90, 8, 0, 16, 0, 0, 0, 0, 250, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 2, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 32, 0, 18, 9, 16, 0, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 2, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-Str_Insert_Style_Disk_of_Technics_KN_1000_75_2:	.asciz "Insert Style Disk of    Technics KN 1000/750"
-Str_V1_0:	.asciz "V1.0"
+zlib_487967D0:	# DemoSong02: its song record, 2272 bytes, stored as a zlib stream of 654 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong02_Record
+
+# DemoSong02_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 255, 15, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 80, 5, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 15, 0, 20, 0, 28, 0, 34, 0, 50, 0, 59, 0, 65, 0, 67
+	.byte	0, 73, 0, 77, 0, 82, 0, 85, 0, 255, 255, 255, 255, 255, 255, 255
+	.byte	255, 206, 203, 189, 235, 207, 64, 193, 228, 146, 139, 47, 129, 5, 5, 5
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 86, 0, 131, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 255, 15, 0, 0, 0, 0, 0, 0
+	sq_track	0x80, 1	# track 1
+	sq_track	0x80, 16	# track 2
+	sq_track	0x80, 21	# track 3
+	sq_track	0x80, 29	# track 4
+	sq_track	0x80, 35	# track 5
+	sq_track	0x80, 51	# track 6
+	sq_track	0x80, 60	# track 7
+	sq_track	0x80, 66	# track 8
+	sq_track	0x80, 68	# track 9
+	sq_track	0x80, 74	# track 10
+	sq_track	0x80, 78	# track 11
+	sq_track	0x80, 83	# track 12
+	sq_track	0x00, 65535	# track 13
+	sq_track	0x00, 65535	# track 14
+	sq_track	0x00, 65535	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	77, 105, 100, 105, 32, 71, 114, 97, 110, 100, 32, 50, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 1, 49, 32, 105, 53, 249, 2, 0, 0, 0, 0, 198, 80, 153, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 61, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 72, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 80, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 39, 32, 32, 115, 37, 8, 2, 0, 0, 0, 0, 80, 80, 80, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 9, 0, 38, 120, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 9, 0, 38, 115, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 48, 20, 32, 100, 53, 234, 2, 0, 0, 0, 0, 0, 80, 0, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 60, 16, 32, 95, 53, 234, 2, 0, 0, 0, 0, 53, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 8, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 0, 0, 38, 100, 37, 202, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 31, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 80, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 99, 4, 100
+	PMR_42_14	90, 8, 0, 16, 0, 0, 0, 0, 250, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 2, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 19, 2, 18, 9, 53, 36, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 19, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-data_500011E4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D4C, 0x3B1D5C
-OneTouchPlay_window:
-	.space	4, 0xFF
-OneTouchPlay_OtpRamBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D60, 0x3B1D64
-MusicStylistMenu_window:
-	.space	4, 0xFF
-MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY_selected:
-	.space	4, 0x00
-MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST_selected:
-	.space	4, 0x00
-MusicStylistMenu_TitleMenu_MUSICAL_ERA_selected:
-	.space	4, 0x00
-MusicStylistMenu_TitleMenu_CUSTOM_STYLIST_selected:
-	.space	4, 0x00
-MusicStylistMenu_TitleMenu_ORGAN_STYLIST_selected:
-	.space	4, 0x00
-MusicStylistCategory_window:
-	.space	4, 0xFF
-MusicStylistCategory_TitleMenu_ALPHABET_selected:
-	.space	4, 0x00
-CategoryBox_selected:
-	.space	2, 0x00
-SubCategoryBox_selected:
+zlib_48796A60:	# DemoSong03: its song record, 2272 bytes, stored as a zlib stream of 597 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong03_Record
+
+# DemoSong03_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 175, 7, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 16, 3, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 11, 0, 20, 0, 26, 0, 30, 0, 255, 255, 34, 0, 255, 255, 35
+	.byte	0, 37, 0, 41, 0, 49, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255
+	.byte	255, 51, 33, 18, 53, 5, 58, 5, 219, 54, 188, 229, 5, 5, 5, 5
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 5, 0, 167, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 175, 7, 0, 0, 0, 0, 0, 0
+	sq_track	0x80, 1	# track 1
+	sq_track	0x80, 12	# track 2
+	sq_track	0x80, 21	# track 3
+	sq_track	0x80, 27	# track 4
+	sq_track	0x00, 65535	# track 5
+	sq_track	0x80, 31	# track 6
+	sq_track	0x00, 65535	# track 7
+	sq_track	0x80, 35	# track 8
+	sq_track	0x80, 36	# track 9
+	sq_track	0x80, 38	# track 10
+	sq_track	0x80, 42	# track 11
+	sq_track	0x00, 65535	# track 12
+	sq_track	0x00, 65535	# track 13
+	sq_track	0x00, 65535	# track 14
+	sq_track	0x00, 65535	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	84, 114, 97, 99, 107, 32, 49, 32, 32, 32, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 19, 0, 32, 90, 53, 249, 2, 0, 0, 0, 0, 158, 80, 173, 127, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 127, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 19, 0, 32, 75, 53, 249, 2, 0, 0, 0, 0, 158, 80, 173, 127, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 127, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 19, 37, 32, 90, 37, 8, 2, 0, 0, 0, 0, 150, 80, 50, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 0, 0, 38, 100, 37, 202, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 99, 4, 100
+	PMR_42_14	90, 8, 0, 16, 0, 0, 0, 0, 250, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 127, 2, 32, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 21, 0, 21, 0, 72, 0, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 19, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-CategoryStyleBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D88, 0x3B1D8C
-MusicStylistCategory_EraTitleMenu_ERA_selected:
-	.space	4, 0x00
-MusicStylistCategory_StrRadioBox_CATEGORY_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D90, 0x3B1D94
-MusicStylistAlphabetical_window:
-	.space	4, 0xFF
-AlphabetBox_selected:
-	.space	2, 0xFF
-AlphabetStyle_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1D9A, 0x3B1D9C
-MusicStylistAlphabetical_EraTitleMenu_ERA_selected:
-	.space	4, 0x00
-MusicStylistAlphabetical_CtgOrgTitleMenu_CATEGORY_selected:
-	.space	4, 0x00
-MusicStylistAlphabetical_StrRadioBox_ALPHABET_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DA4, 0x3B1DA8
-MusicStylistEra_window:
-	.space	4, 0xFF
-MusicStylistEra_TitleMenu_ALPHABET_selected:
-	.space	4, 0x00
-EraBox_selected:
-	.space	2, 0xFF
-EraStyleBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DB2, 0x3B1DB4
-MusicStylistEra_CtgOrgTitleMenu_CATEGORY_selected:
-	.space	4, 0x00
-MusicStylistEra_StrRadioBox_ERA_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DB8, 0x3B1DBC
-MusicStylistCustom_window:
-	.space	4, 0xFF
-CustomBox_selected:
-	.space	2, 0xFF
-CustomStyleBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DC2, 0x3B1DC4
-MusicStylistOrgan_window:
-	.space	4, 0xFF
-MusicStylistOrgan_TitleMenu_ALPHABET_selected:
-	.space	4, 0x00
-MusicStylistOrgan_EraTitleMenu_ERA_selected:
-	.space	4, 0x00
-OrgStyleList_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DD0, 0x3B1DD2
-OrgSubCtgList_selected:
+zlib_48796CB8:	# DemoSong04: its song record, 2272 bytes, stored as a zlib stream of 747 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong04_Record
+
+# DemoSong04_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 250, 195, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 240, 2, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 255, 255, 2, 0, 255, 255, 6, 0, 10, 0, 16, 0, 23, 0, 28
+	.byte	0, 33, 0, 36, 0, 255, 255, 255, 255, 255, 255, 255, 255, 42, 0, 47
+	.byte	0, 5, 225, 5, 87, 59, 30, 47, 139, 138, 43, 5, 5, 5, 5, 177
+	.byte	96, 1, 1, 0, 1, 0, 0, 0, 1, 0, 169, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 250, 195, 0, 0, 0, 0, 0, 0
+	sq_track	0x00, 65535	# track 1
+	sq_track	0x80, 1	# track 2
+	sq_track	0x00, 65535	# track 3
+	sq_track	0x80, 3	# track 4
+	sq_track	0x80, 7	# track 5
+	sq_track	0x80, 11	# track 6
+	sq_track	0x80, 17	# track 7
+	sq_track	0x80, 24	# track 8
+	sq_track	0x80, 29	# track 9
+	sq_track	0x80, 34	# track 10
+	sq_track	0x00, 65535	# track 11
+	sq_track	0x00, 65535	# track 12
+	sq_track	0x00, 65535	# track 13
+	sq_track	0x00, 65535	# track 14
+	sq_track	0x80, 37	# track 15
+	sq_track	0x80, 43	# track 16
+# +0x100..+0x11F, not traced
+	.byte	75, 73, 84, 49, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 53, 70, 32, 73, 53, 249, 2, 0, 0, 0, 0, 188, 80, 30, 9, 141, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 53, 70, 32, 121, 53, 249, 2, 0, 0, 0, 0, 188, 80, 30, 100, 141, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 56, 80, 32, 121, 37, 8, 2, 0, 0, 0, 0, 52, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 99, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 27, 24, 40, 73, 53, 234, 2, 0, 0, 0, 0, 248, 80, 40, 9, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 2, 80, 127, 53, 234, 2, 0, 0, 0, 0, 28, 80, 50, 100, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 101, 48, 32, 101, 53, 234, 2, 0, 0, 0, 0, 80, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 99, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 26, 0, 32, 75, 53, 234, 2, 0, 0, 0, 0, 62, 80, 183, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 32, 48, 32, 97, 53, 234, 2, 0, 0, 0, 0, 80, 80, 144, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 25, 46, 32, 87, 53, 234, 2, 0, 0, 0, 0, 57, 80, 80, 100, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 22, 6, 32, 125, 181, 234, 2, 0, 0, 0, 0, 166, 80, 60, 92, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 52, 35, 32, 99, 53, 234, 2, 0, 0, 0, 0, 80, 80, 40, 70, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 16, 6, 32, 103, 53, 234, 2, 0, 0, 0, 0, 28, 80, 50, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 26, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 21, 70, 32, 91, 37, 202, 2, 0, 0, 0, 0, 63, 80, 50, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 48, 64, 32, 127, 53, 234, 2, 0, 0, 0, 0, 28, 80, 145, 1, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 56, 22, 32, 119, 53, 234, 2, 0, 0, 0, 0, 77, 80, 66, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 1, 16, 32, 127, 53, 234, 2, 0, 0, 0, 0, 25, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 84, 73, 36, 54, 83, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 56, 0, 38, 100, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 1, 4, 38, 73, 53, 234, 2, 0, 0, 0, 0, 80, 84, 64, 55, 0, 0, 0, 0, 64, 0, 0, 0, 0, 84, 73, 36, 54, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 9, 0, 38, 123, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 20, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	90, 0, 0, 16, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 2, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 55, 1, 55, 1, 18, 2, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 1, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 19, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-MusicStylistOrgan_StrRadioBox_ORGAN_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DD4, 0x3B1DD8
-CUR_STYLE_IDX:
-	.space	2, 0x00
-data_50001272:
-	.align	4, 0x00
-data_50001274:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DDC, 0x3B1DE0
-data_50001278:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DE0, 0x3B1DE4
-data_5000127C:
-	.space	4, 0x00
-data_50001280:
-	.space	4, 0x00
-data_50001284:
-	.space	2, 0x00
-data_50001286:
-	.align	4, 0x00
-data_50001288:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DF0, 0x3B1DF4
-data_5000128C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DF4, 0x3B1DF8
-data_50001290:
-	.space	4, 0x00
-data_50001294:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1DFC, 0x3B1E00
-data_50001298:
-	.space	4, 0xFF
-TtSoftver_window:
-	.space	4, 0xFF
-TtDebug_window:
-	.space	4, 0xFF
-TtDebug_ScreenMenu_MEMO_LOG_selected:
-	.space	4, 0x00
-TtDebug_ScreenMenu_ICON_LIST_selected:
-	.space	4, 0x00
-TtDebug_ScreenMenu_COLOR_LIST_selected:
-	.space	4, 0x00
-TtDebug_DbModeEditBox_DEBUG_MODE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E18, 0x3B1E1C
-TtDebug_TitleMenu_MEMORY_DUMP_selected:
-	.space	4, 0x00
-TtDebug_ScreenMenu_BITMAP_LOAD_selected:
-	.space	4, 0x00
-TtDebug_DbVariableMenu1_selected:
-	.space	4, 0x00
-TtDebug_DbVariableMenu1_no:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E28, 0x3B1E2C
-TtMemoryDump_window:
-	.space	4, 0xFF
-TtMemoryDump_IndexToggle_ON_onoff:
-	.space	4, 0x00
-MemoLog_window:
-	.space	4, 0xFF
-IconList_window:
-	.space	4, 0xFF
-IconList_IconList1_list:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E3C, 0x3B1E40
-ColorList_window:
-	.space	4, 0xFF
-BitmapDisp_window:
-	.space	4, 0xFF
-BitmapLoad_window:
-	.space	4, 0xFF
-BitmapLoad_ScreenMenu_LOAD_selected:
-	.space	4, 0x00
-BitmapLoad_DbBitmapFile_BITMAP_FILE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E50, 0x3B1E54
-data_500012EC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E54, 0x3B1E58
-data_500012F0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E58, 0x3B1E5C
-data_500012F4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E5C, 0x3B1E60
-data_500012F8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E60, 0x3B1E64
-data_500012FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E64, 0x3B1E6C
-data_50001304:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1E6C, 0x3B1E70
-NamingWindow_parent:
-	.space	4, 0xFF
-NamingWindow_child:
-	.space	4, 0xFF
-NamingWindow_NamingEditSw1_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw2_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw3_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw4_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw5_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw6_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw7_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw8_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw9_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw10_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw11_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw12_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw13_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw14_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw15_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw16_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw17_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw18_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw19_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw20_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw21_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw22_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw23_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw24_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw25_page:
-	.space	4, 0x00
-NamingWindow_NamingEditSw26_page:
-	.space	4, 0x00
-NamingCursorBox_cursor:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1EE0, 0x3B1EE4
-NamingABC_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B1EE4, 0x3B1EE8
-NamingSymbol_onoff:
-	.space	4, 0x00
-NamingWindow_IndexPushSw1_sw:
-	.space	4, 0x00
-TtNaming_window:
-	.space	4, 0xFF
+zlib_48796FA4:	# DemoSong05: its song record, 2272 bytes, stored as a zlib stream of 791 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
 
-		AcIndexToggle	NamingABC, super=NamingWindow, next=NamingSymbol, prev=NamingWindow_Label_POSITION, X=8, Y=122, W=39, H=22, font=4, stron=Str_ABC, stroff=Str_ABC_2, onoff=NamingABC_onoff, editsw=ES_Left3, index=108	# stron "ABC"; stroff "ABC"
-		AcIndexToggle	NamingSymbol, super=NamingWindow, next=NamingWindow_Label_SHIFT, prev=NamingABC, X=8, Y=165, W=39, H=22, font=4, stron=Str_123, stroff=Str_123_2, onoff=NamingSymbol_onoff, editsw=ES_Left4, index=108, tag=1	# stron "123"; stroff "123"
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong05_Record
 
-Str_We_are_Taian_BOYS_2:	.asciz "We are Taian BOYS!"
+# DemoSong05_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 180, 255, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 4, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 255, 255, 255, 255, 5, 0, 255, 255, 14, 0, 22, 0, 255, 255, 23
+	.byte	0, 35, 0, 42, 0, 44, 0, 48, 0, 50, 0, 51, 0, 59, 0, 64
+	.byte	0, 5, 5, 79, 5, 210, 118, 5, 154, 184, 134, 103, 137, 8, 164, 205
+	.byte	118, 1, 1, 0, 1, 0, 0, 0, 65, 0, 152, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 180, 255, 0, 0, 0, 0, 0, 0
+	sq_track	0x00, 65535	# track 1
+	sq_track	0x00, 65535	# track 2
+	sq_track	0x80, 1	# track 3
+	sq_track	0x00, 65535	# track 4
+	sq_track	0x80, 6	# track 5
+	sq_track	0x80, 15	# track 6
+	sq_track	0x00, 65535	# track 7
+	sq_track	0x80, 23	# track 8
+	sq_track	0x80, 24	# track 9
+	sq_track	0x80, 36	# track 10
+	sq_track	0x80, 43	# track 11
+	sq_track	0x80, 45	# track 12
+	sq_track	0x80, 49	# track 13
+	sq_track	0x80, 51	# track 14
+	sq_track	0x80, 52	# track 15
+	sq_track	0x80, 60	# track 16
+# +0x100..+0x11F, not traced
+	.byte	66, 114, 105, 103, 104, 116, 32, 69, 108, 32, 66, 97, 115, 115, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 1, 36, 32, 117, 53, 249, 2, 0, 0, 0, 0, 201, 80, 138, 0, 0, 64, 24, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 89, 3, 80, 92, 53, 249, 2, 0, 0, 0, 0, 238, 80, 80, 45, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 33, 16, 32, 116, 37, 8, 2, 0, 0, 0, 0, 38, 80, 80, 0, 0, 64, 24, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 85, 0, 35, 255
+	PMR_ENTRY	0x14, 92, 0, 35, 255
+	PMR_ENTRY	0x15, 77, 0, 35, 255
+	PMR_ENTRY	0x16, 66, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 79, 12, 81, 54, 53, 234, 2, 0, 0, 0, 0, 178, 80, 50, 51, 136, 64, 64, 64, 64, 64, 64, 64, 64, 112, 71, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 1, 36, 32, 109, 53, 234, 2, 0, 0, 0, 0, 201, 80, 138, 26, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 50, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 65, 52, 32, 98, 181, 234, 2, 0, 0, 0, 0, 178, 80, 20, 46, 134, 64, 64, 64, 64, 64, 64, 64, 64, 112, 62, 28, 88, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 80, 72, 32, 73, 181, 234, 2, 0, 0, 0, 0, 40, 80, 188, 76, 146, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 127, 21, 81, 118, 53, 234, 2, 0, 0, 0, 0, 80, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 27, 16, 40, 78, 53, 234, 2, 0, 0, 0, 0, 255, 80, 214, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 85, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 29, 0, 32, 67, 37, 202, 2, 0, 0, 0, 0, 208, 0, 193, 0, 0, 64, 39, 64, 64, 64, 64, 64, 64, 112, 83, 28, 64, 50, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 63, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 0, 80, 232, 50, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 20, 78, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 84, 84, 32, 43, 53, 234, 2, 0, 0, 0, 0, 255, 80, 178, 93, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 61, 97, 32, 99, 53, 234, 2, 0, 0, 0, 0, 166, 80, 79, 38, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 71, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 61, 7, 80, 95, 53, 234, 2, 0, 0, 0, 0, 229, 80, 80, 44, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 78, 28, 57, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 3, 0, 38, 105, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 67, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 9, 0, 38, 127, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 67, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	96, 1, 0, 16, 0, 0, 0, 48, 74, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	160, 80, 2, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 55, 2, 20, 4, 100, 4, 64, 4, 64, 32, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 25, 27, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 1, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 1, 16, 17, 18, 9, 8, 0, 3, 4, 20, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-MESSAGE_TtMessage_window:
-	.space	4, 0xFF
-NoMessage_parent:
-	.space	4, 0xFF
-NoMessage_child:
-	.space	4, 0xFF
-Completed_parent:
-	.space	4, 0xFF
-Completed_child:
-	.space	4, 0xFF
-Reminder_parent:
-	.space	4, 0xFF
-Reminder_child:
-	.space	4, 0xFF
-Error_parent:
-	.space	4, 0xFF
-Error_child:
-	.space	4, 0xFF
-Other_parent:
-	.space	4, 0xFF
-Other_child:
-	.space	4, 0xFF
-PleaseWait_parent:
-	.space	4, 0xFF
-PleaseWait_child:
-	.space	4, 0xFF
-MESSAGE_CheckMessage_parent:
-	.space	4, 0xFF
-MESSAGE_CheckMessage_child:
-	.space	4, 0xFF
-MESSAGE_CheckMessage_RamEditBox1_selected:
-	.space	4, 0x00
-MESSAGE_CheckMessage_RamEditBox1_data:	.asciz "Z"
-	.align	4, 0x00
-MESSAGE_CheckMessage_RamEditBox_Language_selected:
-	.space	4, 0x00
-MESSAGE_CheckMessage_RamEditBox_Language_data:
-	.space	4, 0x00
-Completed2_parent:
-	.space	4, 0xFF
-Completed2_child:
-	.space	4, 0xFF
-WELCOME_TtWelcome_window:
-	.space	4, 0xFF
-AllInitial_window:
-	.space	4, 0xFF
-FactoryInitial_window:
-	.space	4, 0xFF
-MPVersion_window:
-	.space	4, 0xFF
+zlib_487972BC:	# DemoSong06: its song record, 2272 bytes, stored as a zlib stream of 639 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
 
-ptrs_50001464:
-	.long	Str_PAL_4
-	.long	Str_NTSC_4
-TtSdmenu_window:
-	.space	4, 0xFF
-TtSdmenu_TitleMenu_PART_SETTING_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_KEY_SCALING_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_TECHNI_CHORD_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_SOUND_LOAD_OPTION_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_MIXER_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_MASTER_TUNING_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_MONITOR_SETTING_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_SEPARATE_OUT_SETTING_selected:
-	.space	4, 0x00
-TtSdmenu_TitleMenu_APC_REVERB_SETTING_selected:
-	.space	4, 0x00
-SOUND_TtSdpart_window:
-	.space	4, 0xFF
-SOUND_TtSdpart_ResetPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2000, 0x3B2004
-SpsPage1_parent:
-	.space	4, 0xFF
-SpsPage1_child:
-	.space	4, 0xFF
-SpsPage1_SpsMmmEdit_PAN_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_PAN_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2010, 0x3B2014
-SpsPage1_SpsVolEdit_VOLUME_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2014, 0x3B2018
-SpsPage1_SpsVolEdit_VOLUME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2018, 0x3B201C
-SpsPage1_SpsMmmEdit_SUSTAIN_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_SUSTAIN_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2020, 0x3B2024
-SpsPage1_SpsMmmEdit_SUSTAIN_LENGTH_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_SUSTAIN_LENGTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2028, 0x3B202C
-SpsPage1_SpsMmmEdit_KEY_SHIFT_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_KEY_SHIFT_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2030, 0x3B2034
-SpsPage1_SpsMmmEdit_TUNING_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_TUNING_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2038, 0x3B203C
-SpsPage1_SpsMmmEdit_BEND_RANGE_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit_BEND_RANGE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2040, 0x3B2044
-SpsPage1_SpsPan1_selected:
-	.space	4, 0x00
-SpsPage1_SpsPan1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2048, 0x3B204C
-SpsPage1_SpsMmmEdit1_selected:
-	.space	4, 0x00
-SpsPage1_SpsMmmEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2050, 0x3B2054
-SpsPage2_parent:
-	.space	4, 0xFF
-SpsPage2_child:
-	.space	4, 0xFF
-SpsPage2_SpsMmmEdit_CHORUS_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_CHORUS_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2060, 0x3B2064
-SpsPage2_SpsMmmEdit_REVERB_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2064, 0x3B2068
-SpsPage2_SpsMmmEdit_REVERB_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2068, 0x3B206C
-SpsPage2_SpsMmmEdit_MULTI_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_MULTI_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2070, 0x3B2074
-SpsPage2_SpsMmmEdit_MULTI_DEPTH_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_MULTI_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2078, 0x3B207C
-SpsPage2_SpsMmmEdit_SOUND_DSP_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_SOUND_DSP_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2080, 0x3B2084
-SpsPage2_SpsMmmEdit_SOUND_DSP_DEPTH_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_SOUND_DSP_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2088, 0x3B208C
-SpsPage2_SpsMmmEdit_DIGITAL_EFFECT_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_DIGITAL_EFFECT_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2090, 0x3B2094
-SpsPage2_SpsMmmEdit1_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2098, 0x3B209C
-SpsPage2_SpsMmmEdit_CHORUS_DEPTH_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_CHORUS_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20A0, 0x3B20A4
-SpsPage2_SpsMmmEdit2_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20A8, 0x3B20AC
-SpsPage2_SpsMmmEdit3_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20B0, 0x3B20B4
-SpsPage2_SpsMmmEdit4_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit4_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20B8, 0x3B20BC
-SpsPage2_SpsMmmEdit_SOUND_DSP_TYPE_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit_SOUND_DSP_TYPE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20C0, 0x3B20C4
-SpsPage2_SpsMmmEdit5_selected:
-	.space	4, 0x00
-SpsPage2_SpsMmmEdit5_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20C8, 0x3B20CC
-SpsPage3_parent:
-	.space	4, 0xFF
-SpsPage3_child:
-	.space	4, 0xFF
-SpsPage3_SpsMmmEdit_GLIDE_PEDAL_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20D4, 0x3B20D8
-SpsPage3_SpsMmmEdit_GLIDE_PEDAL_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20D8, 0x3B20DC
-SpsPage3_SpsMmmEdit_SUSTAIN_PEDAL_selected:
-	.space	4, 0x00
-SpsPage3_SpsMmmEdit_SUSTAIN_PEDAL_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20E0, 0x3B20E4
-SpsPage3_SpsMmmEdit_PART_EXP_PEDAL_selected:
-	.space	4, 0x00
-SpsPage3_SpsMmmEdit_PART_EXP_PEDAL_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20E8, 0x3B20EC
-SpsPage3_SpsMmmEdit_AFTER_TOUCH_selected:
-	.space	4, 0x00
-SpsPage3_SpsMmmEdit_AFTER_TOUCH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20F0, 0x3B20F4
-SpsPage3_SpsMmmEdit_ORIGINAL_TUNING_selected:
-	.space	4, 0x00
-SpsPage3_SpsMmmEdit_ORIGINAL_TUNING_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B20F8, 0x3B20FC
-SpsPage3_SpsMmmEdit1_selected:
-	.space	4, 0x00
-SpsPage3_SpsMmmEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2100, 0x3B2104
-SpsPage4_parent:
-	.space	4, 0xFF
-SpsPage4_child:
-	.space	4, 0xFF
-SpsPage4_SpsMmmEdit1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B210C, 0x3B2110
-SpsPage4_SpsMmmEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2110, 0x3B2114
-SpsPage4_SpsMmmEdit_BRIGHTNESS_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_BRIGHTNESS_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2118, 0x3B211C
-SpsPage4_SpsMmmEdit_ATTACK_TIME_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_ATTACK_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2120, 0x3B2124
-SpsPage4_SpsMmmEdit_DECAY_TIME_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_DECAY_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2128, 0x3B212C
-SpsPage4_SpsMmmEdit_RELEASE_TIME_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_RELEASE_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2130, 0x3B2134
-SpsPage4_SpsMmmEdit_VIBRATO_RATE_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_VIBRATO_RATE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2138, 0x3B213C
-SpsPage4_SpsMmmEdit_VIBRATO_DEPTH_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_VIBRATO_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2140, 0x3B2144
-SpsPage4_SpsMmmEdit_VIBRATO_DELAY_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit_VIBRATO_DELAY_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2148, 0x3B214C
-SpsPage4_SpsMmmEdit2_selected:
-	.space	4, 0x00
-SpsPage4_SpsMmmEdit2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2150, 0x3B2154
-SpsPage5_parent:
-	.space	4, 0xFF
-SpsPage5_child:
-	.space	4, 0xFF
-SpsPage5_SpsMmmEdit_MONO_POLY_MODE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B215C, 0x3B2160
-SpsPage5_SpsMmmEdit_MONO_POLY_MODE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2160, 0x3B2164
-SpsPage5_SpsMmmEdit_PORTAMENTO_selected:
-	.space	4, 0x00
-SpsPage5_SpsMmmEdit_PORTAMENTO_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2168, 0x3B216C
-SpsPage5_SpsMmmEdit_PORTAMENTO_TIME_selected:
-	.space	4, 0x00
-SpsPage5_SpsMmmEdit_PORTAMENTO_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2170, 0x3B2174
-SpsPage5_SpsMmmEdit_MSB_selected:
-	.space	4, 0x00
-SpsPage5_SpsMmmEdit_MSB_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2178, 0x3B217C
-SpsPage5_SpsMmmEdit_LSB_selected:
-	.space	4, 0x00
-SpsPage5_SpsMmmEdit_LSB_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2180, 0x3B2184
-SpsPage5_SpsMmmEdit1_selected:
-	.space	4, 0x00
-SpsPage5_SpsMmmEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2188, 0x3B218C
-TtSdmtune_window:
-	.space	4, 0xFF
-TtSdmtune_MmmEditBox_MASTER_TUNING_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2190, 0x3B2194
-TtSdmtune_MmmEditBox_MASTER_TUNING_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2194, 0x3B2198
-SOUND_TtSdkeyscl_window:
-	.space	4, 0xFF
-OctTunTemplate_window:
-	.space	4, 0xFF
-KeyScalingWin_parent:
-	.space	4, 0xFF
-KeyScalingWin_child:
-	.space	4, 0xFF
-KeyScalingWin_SpsKsclPart1_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclPart1_part:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21AC, 0x3B21B0
-KeyScalingWin_SpsKsclEdit_ORIGINAL_TUNING_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21B0, 0x3B21B4
-KeyScalingWin_SpsKsclEdit_ORIGINAL_TUNING_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21B4, 0x3B21B8
-KeyScalingWin_SpsKsclEdit1_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21BC, 0x3B21C0
-KeyScalingWin_ScreenMenu_OCTAVE_TUNING_TEMPLA_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit2_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21C8, 0x3B21CC
-KeyScalingWin_SpsKsclEdit3_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21D0, 0x3B21D4
-KeyScalingWin_SpsKsclEdit4_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit4_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21D8, 0x3B21DC
-KeyScalingWin_SpsKsclEdit5_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit5_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21E0, 0x3B21E4
-KeyScalingWin_SpsKsclEdit6_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit6_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21E8, 0x3B21EC
-KeyScalingWin_SpsKsclEdit7_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit7_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21F0, 0x3B21F4
-KeyScalingWin_SpsKsclEdit8_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit8_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B21F8, 0x3B21FC
-KeyScalingWin_SpsKsclEdit9_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit9_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2200, 0x3B2204
-KeyScalingWin_SpsKsclEdit10_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit10_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2208, 0x3B220C
-KeyScalingWin_SpsKsclEdit11_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit11_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2210, 0x3B2214
-KeyScalingWin_SpsKsclEdit12_selected:
-	.space	4, 0x00
-KeyScalingWin_SpsKsclEdit12_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2218, 0x3B221C
-OctTunTemplateWin_parent:
-	.space	4, 0xFF
-OctTunTemplateWin_child:
-	.space	4, 0xFF
-OctTunTemplateWin_KsclTypeEdit1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2224, 0x3B2228
-OctTunTemplateWin_KsclShiftEdit1_selected:
-	.space	4, 0x00
-OctTunTemplateWin_KsclCopyEdit1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B222C, 0x3B2230
-SOUND_TtSdmixer_window:
-	.space	4, 0xFF
-SOUND_TtSdmixer_MixerCase1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2234, 0x3B2236
-SOUND_TtSdmixer_MixerCase2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2236, 0x3B2238
-SOUND_TtSdmixer_MixerCase3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2238, 0x3B223A
-SOUND_TtSdmixer_MixPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B223A, 0x3B223C
-SOUND_TtSdmixer_MixOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B223C, 0x3B2240
-ExMixerMenu_parent:
-	.space	4, 0xFF
-ExMixerMenu_child:
-	.space	4, 0xFF
-ExMixerMenu_MixerExMenu_EDIT_MIXER_selected:
-	.space	4, 0x00
-PartMixerEdit_window:
-	.space	4, 0xFF
-SOUND_TtSdtecd_window:
-	.space	4, 0xFF
-SOUND_TtSdtecd_MmmEditBox_ORCHESTRATOR_selected:
-	.space	4, 0x00
-SOUND_TtSdtecd_MmmEditBox_ORCHESTRATOR_data:
-	.space	2, 0x00
-SOUND_TtSdtecd_TechniChord1_type:
-	.align	4, 0x00
-SOUND_TtSqmixer_window:
-	.space	4, 0xFF
-TtSdmonitor_window:
-	.space	4, 0xFF
-Sdmonitoron_selected:
-	.space	4, 0x00
-Sdmonitoroff_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2268, 0x3B226C
-TtSdmonitor_MonImage1_onoff:
-	.space	4, 0x00
-TtSdseparate_window:
-	.space	4, 0xFF
-Sdspoff_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2274, 0x3B2278
-Sdspstereo_selected:
-	.space	4, 0x00
-Sdspmono_selected:
-	.space	4, 0x00
-Sdspwinmono_parent:
-	.space	4, 0xFF
-Sdspwinmono_child:
-	.space	4, 0xFF
-Sdsppartmono_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2288, 0x3B228A
-Sdsppartmono_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B228A, 0x3B228C
-Sdsppartmono_pcol:
-	.space	4, 0x00
-Sdsppartmono_prow:
-	.space	4, 0x00
-Sdsppartmono_crow:
-	.space	4, 0x00
-Sdspwinstereo_parent:
-	.space	4, 0xFF
-Sdspwinstereo_child:
-	.space	4, 0xFF
-Sdsppartstereo_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B22A0, 0x3B22A4
-Sdsppartstereo_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B22A4, 0x3B22A8
-Sdspwinetc_parent:
-	.space	4, 0xFF
-Sdspwinetc_child:
-	.space	4, 0xFF
-Sdspmainout_onoff:
-	.space	4, 0x00
-Sdspexpression_onoff:
-	.space	4, 0x00
-SOUND_TtSdapcrev_window:
-	.space	4, 0xFF
-SOUND_TtSdapcrev_GridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B22BC, 0x3B22BE
-SOUND_TtSdapcrev_GridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B22BE, 0x3B22C0
-SOUND_TtSdapcrev_GridBox1_pcol:
-	.space	4, 0x00
-SOUND_TtSdapcrev_GridBox1_prow:
-	.space	4, 0x00
-SOUND_TtSdapcrev_GridBox1_crow:
-	.space	4, 0x00
-ApcRevChkWin_parent:
-	.space	4, 0xFF
-ApcRevChkWin_child:
-	.space	4, 0xFF
-ApcRevChkWin_GridBox1_selrow:
-	.space	2, 0xFF
-ApcRevChkWin_GridBox1_selcol:
-	.align	4, 0x00
-ApcRevChkWin_GridBox1_pcol:
-	.space	4, 0x00
-ApcRevChkWin_GridBox1_prow:
-	.space	4, 0x00
-ApcRevChkWin_GridBox1_crow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B22E0, 0x3B2328
-ptrs_500017C0:
-	.long	data_485EB65C
-	.long	data_485EB67E
-	.long	data_485EB6A0
-	.long	data_485EB6C2
-	.long	data_485EB6E4
-	.long	data_485EB706
-	.long	data_485EB728
-	.long	data_485EB74A
-	.long	data_485EB76C
-	.long	data_485EB78E
-data_500017E8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2350, 0x3B23B0
-data_50001848:
-.incbin_range "baserom/kn7000_program.rom", 0x3B23B0, 0x3B23B4
-data_5000184C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B23B4, 0x3B23B8
-data_50001850:
-.incbin_range "baserom/kn7000_program.rom", 0x3B23B8, 0x3B23BC
-ptrs_50001854:
-	.long	Str_PART_1
-	.long	Str_PART_2_2
-	.long	Str_PART_3_2
-	.long	Str_PART_4_2
-	.long	Str_PART_5_2
-	.long	Str_PART_6_2
-	.long	Str_PART_7_2
-	.long	Str_PART_8_2
-	.long	Str_PART_9_2
-	.long	Str_PART_10
-	.long	Str_PART_11
-	.long	Str_PART_12
-	.long	Str_PART_13
-	.long	Str_PART_14
-	.long	Str_PART_15
-	.long	Str_PART_16
-	.long	data_485ED4E4
-	.long	data_485ED4EC
-	.long	Str_LEFT_6
-	.long	Str_ACCOMP1
-	.long	Str_ACCOMP2
-	.long	Str_ACCOMP3
-	.long	Str_ACCOMP4
-	.long	Str_ACCOMP5
-	.long	Str_BASS_2
-	.long	Str_DRUM_1
-	.long	Str_DRUM_2_2
-	.long	Str_CHORD_4
-	.long	Str_R_BASS
-	.long	Str_PADS_12
-	.long	Str_PADS_11
-	.long	Str_B_PEDAL
-	.long	Str_empty_285
-	.long	Str_empty_284
-	.long	Str_empty_283
-	.long	Str_empty_282
-	.long	Str_empty_281
-ptrs_500018E8:
-	.long	Str_PT_1
-	.long	Str_PT_2
-	.long	Str_PT_3
-	.long	Str_PT_4
-	.long	Str_PT_5
-	.long	Str_PT_6
-	.long	Str_PT_7
-	.long	Str_PT_8
-	.long	Str_PT_9
-	.long	Str_PT10
-	.long	Str_PT11
-	.long	Str_PT12
-	.long	Str_PT13
-	.long	Str_PT14
-	.long	Str_PT15
-	.long	Str_PT16
-	.long	Str_RT_1
-	.long	Str_RT_2
-	.long	Str_LEFT_5
-	.long	Str_ACP1
-	.long	Str_ACP2
-	.long	Str_ACP3
-	.long	Str_ACP4
-	.long	Str_ACP5
-	.long	Str_BASS
-	.long	Str_DRM1
-	.long	Str_DRM2
-	.long	Str_CHRD
-	.long	Str_R_BA
-	.long	Str_PADS_9
-	.long	Str_PADS_8
-	.long	Str_B_PD
-	.long	Str_empty_280
-	.long	Str_empty_279
-	.long	Str_empty_278
-	.long	Str_empty_277
-	.long	Str_empty_276
-ptrs_5000197C:
-	.long	Str_TRACK_1
-	.long	Str_TRACK_2_2
-	.long	Str_TRACK_3_2
-	.long	Str_TRACK_4_2
-	.long	Str_TRACK_5_2
-	.long	Str_TRACK_6_2
-	.long	Str_TRACK_7_2
-	.long	Str_TRACK_8_2
-	.long	Str_TRACK_9_2
-names_500019A0:
-	.long	Str_TRACK10
-	.long	Str_TRACK11
-	.long	Str_TRACK12
-	.long	Str_TRACK13
-	.long	Str_TRACK14
-	.long	Str_TRACK15
-	.long	Str_TRACK16
-ptrs_500019BC:
-	.long	Str_TR_1
-	.long	Str_TR_2
-	.long	Str_TR_3
-	.long	Str_TR_4
-	.long	Str_TR_5
-	.long	Str_TR_6
-	.long	Str_TR_7
-	.long	Str_TR_8
-	.long	Str_TR_9
-names_500019E0:
-	.long	Str_TR10
-	.long	Str_TR11
-	.long	Str_TR12
-	.long	Str_TR13
-	.long	Str_TR14
-	.long	Str_TR15
-	.long	Str_TR16
-data_500019FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2564, 0x3B2568
-TtHomepage_window:
-	.space	4, 0xFF
-HpParts1_window:
-	.space	4, 0xFF
-HppBar1_x:
-	.space	2, 0x00
-HppBar1_y:
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong06_Record
+
+# DemoSong06_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 255, 7, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 192, 2, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 2, 0, 9, 0, 14, 0, 20, 0, 33, 0, 35, 0, 37, 0, 38
+	.byte	0, 40, 0, 42, 0, 44, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255
+	.byte	255, 30, 214, 115, 111, 214, 251, 9, 238, 201, 156, 189, 5, 5, 5, 5
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 12, 0, 172, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 255, 7, 0, 0, 0, 0, 0, 0
+	sq_track	0x80, 1	# track 1
+	sq_track	0x80, 3	# track 2
+	sq_track	0x80, 10	# track 3
+	sq_track	0x80, 15	# track 4
+	sq_track	0x80, 21	# track 5
+	sq_track	0x80, 34	# track 6
+	sq_track	0x80, 36	# track 7
+	sq_track	0x80, 38	# track 8
+	sq_track	0x80, 39	# track 9
+	sq_track	0x80, 41	# track 10
+	sq_track	0x80, 43	# track 11
+	sq_track	0x00, 65535	# track 12
+	sq_track	0x00, 65535	# track 13
+	sq_track	0x00, 65535	# track 14
+	sq_track	0x00, 65535	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	71, 105, 114, 108, 115, 32, 68, 111, 111, 87, 97, 104, 66, 97, 112, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 0, 1, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 84, 64, 32, 90, 53, 249, 2, 0, 0, 0, 0, 182, 80, 211, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 0, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 5, 0, 32, 94, 37, 8, 2, 0, 0, 0, 0, 158, 80, 208, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 29, 0, 38, 120, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 28, 0, 38, 115, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 125, 40, 32, 100, 53, 234, 2, 0, 0, 0, 0, 208, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 0, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 112, 56, 32, 90, 37, 202, 2, 0, 0, 0, 0, 80, 80, 40, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 127, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 99, 4, 100
+	PMR_42_14	90, 8, 0, 16, 0, 0, 0, 0, 138, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 1, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 32, 0, 27, 1, 16, 0, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 19, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-HppBar1_AdPmemName1_dx:
-	.space	2, 0x00
-HppBar1_AdPmemName1_dy:
-	.align	4, 0x00
-HppBar1_AdFadeBox1_dx:
-	.space	2, 0x00
-HppBar1_AdFadeBox1_dy:
-	.align	4, 0x00
-HppBar1_AdMonRcv1_dx:
-	.space	2, 0x00
-HppBar1_AdMonRcv1_dy:
-	.align	4, 0x00
-HppVol1_x:
-	.space	2, 0x00
-HppVol1_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2582, 0x3B2584
-HppVol1_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2584, 0x3B2586
-HppNmR1_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2586, 0x3B2588
-HppNmR1_y:
-	.space	2, 0x00
-HppNmR1_AdSoundName1_dx:
-	.align	4, 0x00
-HppNmR1_AdSoundName1_dy:
-	.space	2, 0x00
-HppNmR1_AdSoundName2_dx:
-	.align	4, 0x00
-HppNmR1_AdSoundName2_dy:
-	.space	2, 0x00
-HppNmR1_AdSoundName3_dx:
-	.align	4, 0x00
-HppNmR1_AdSoundName3_dy:
-	.space	2, 0x00
-HppNmR1_AdStrBox_RIGHT1_dx:
-	.align	4, 0x00
-HppNmR1_AdStrBox_RIGHT1_dy:
-	.space	2, 0x00
-HppNmR1_AdStrBox_RIGHT2_dx:
-	.align	4, 0x00
-HppNmR1_AdStrBox_RIGHT2_dy:
-	.space	2, 0x00
-HppNmR1_AdStrBox_LEFT_dx:
-	.align	4, 0x00
-HppNmR1_AdStrBox_LEFT_dy:
-	.space	2, 0x00
-HppNmR1_AdSplitBox1_dx:
-	.align	4, 0x00
-HppNmR1_AdSplitBox1_dy:
-	.space	2, 0x00
-HppNmR1_AdTransposeBox1_dx:
-	.align	4, 0x00
-HppNmR1_AdTransposeBox1_dy:
-	.space	2, 0x00
-HppNmR1_AdRightOct1_dx:
-	.align	4, 0x00
-HppNmR1_AdRightOct1_dy:
-	.space	2, 0x00
-HppNmL1_x:
-	.align	4, 0x00
-HppNmL1_y:
-	.space	2, 0x00
-HppNmL1_AdRhythmName1_dx:
-	.align	4, 0x00
-HppNmL1_AdRhythmName1_dy:
-	.space	2, 0x00
-HppNmL1_AdTempoBox1_dx:
-	.align	4, 0x00
-HppNmL1_AdTempoBox1_dy:
-	.space	2, 0x00
-HppNmL1_AdChordBox1_dx:
-	.align	4, 0x00
-HppNmL1_AdChordBox1_dy:
-	.space	2, 0x00
-HppNmL1_AdStrBox_RHYTHM_dx:
-	.align	4, 0x00
-HppNmL1_AdStrBox_RHYTHM_dy:
-	.space	2, 0x00
-HppNmL1_AdPadRun1_dx:
-	.align	4, 0x00
-HppNmL1_AdPadRun1_dy:
-.incbin_range "baserom/kn7000_program.rom", 0x3B25C4, 0x3B25C8
-HpVolNm1_parent:
-	.space	4, 0xFF
-HpVolNm1_child:
-	.space	4, 0xFF
-HpVolNm1_AdMixerVolWide1_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVolWide1_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVolWide2_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVolWide2_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVolWide3_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVolWide3_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolNm1_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolNm1_AdMixerVol10_dy:
-	.align	4, 0x00
-HpVolNm2_parent:
-	.space	4, 0xFF
-HpVolNm2_child:
-	.space	4, 0xFF
-HpVolNm2_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol10_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol11_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol11_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol12_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol12_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol13_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol13_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol14_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol14_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol15_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol15_dy:
-	.align	4, 0x00
-HpVolNm2_AdMixerVol16_dx:
-	.space	2, 0x00
-HpVolNm2_AdMixerVol16_dy:
-	.align	4, 0x00
-HpParts2_window:
-	.space	4, 0xFF
-HppBar2_x:
-	.space	2, 0x00
-HppBar2_y:
+zlib_4879753C:	# DemoSong07: its song record, 2272 bytes, stored as a zlib stream of 759 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong07_Record
+
+# DemoSong07_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 254, 195, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 16, 3, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 255, 255, 8, 0, 10, 0, 15, 0, 21, 0, 23, 0, 27, 0, 29
+	.byte	0, 33, 0, 35, 0, 255, 255, 255, 255, 255, 255, 255, 255, 46, 0, 49
+	.byte	0, 5, 220, 145, 8, 5, 221, 79, 186, 103, 146, 5, 5, 5, 5, 34
+	.byte	114, 1, 1, 0, 1, 0, 0, 0, 1, 0, 167, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 254, 195, 0, 0, 0, 0, 0, 0
+	sq_track	0x00, 65535	# track 1
+	sq_track	0x80, 1	# track 2
+	sq_track	0x80, 9	# track 3
+	sq_track	0x80, 11	# track 4
+	sq_track	0x80, 16	# track 5
+	sq_track	0x80, 22	# track 6
+	sq_track	0x80, 24	# track 7
+	sq_track	0x80, 28	# track 8
+	sq_track	0x80, 30	# track 9
+	sq_track	0x80, 34	# track 10
+	sq_track	0x00, 65535	# track 11
+	sq_track	0x00, 65535	# track 12
+	sq_track	0x00, 65535	# track 13
+	sq_track	0x00, 65535	# track 14
+	sq_track	0x80, 36	# track 15
+	sq_track	0x80, 47	# track 16
+# +0x100..+0x11F, not traced
+	.byte	75, 73, 84, 49, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 27, 32, 40, 73, 53, 249, 2, 0, 0, 0, 0, 248, 80, 127, 9, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 84, 40, 32, 73, 53, 249, 2, 0, 0, 0, 0, 188, 80, 214, 11, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 27, 32, 32, 77, 37, 8, 2, 0, 0, 0, 0, 75, 80, 208, 10, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 99, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 105, 0, 35, 255
+	PMR_ENTRY	0x14, 105, 0, 35, 255
+	PMR_ENTRY	0x15, 105, 0, 35, 255
+	PMR_ENTRY	0x16, 105, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 2, 80, 73, 53, 234, 2, 0, 0, 0, 0, 28, 80, 50, 9, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 84, 40, 32, 73, 53, 234, 2, 0, 0, 0, 0, 188, 80, 214, 11, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 27, 32, 32, 77, 53, 234, 2, 0, 0, 0, 0, 75, 80, 208, 10, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 99, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 48, 16, 32, 127, 53, 234, 2, 0, 0, 0, 0, 40, 80, 49, 64, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 48, 57, 32, 107, 53, 234, 2, 0, 0, 0, 0, 80, 80, 60, 50, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 45, 0, 32, 107, 53, 234, 2, 0, 0, 0, 0, 46, 80, 198, 100, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 6, 0, 32, 77, 53, 234, 2, 0, 0, 0, 0, 80, 80, 67, 110, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 0, 37, 80, 93, 53, 234, 2, 0, 0, 0, 0, 30, 80, 40, 100, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 1, 16, 32, 101, 53, 234, 2, 0, 0, 0, 0, 25, 80, 60, 30, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 26, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 90, 81, 32, 91, 37, 202, 2, 0, 0, 0, 0, 190, 80, 202, 18, 0, 64, 64, 64, 64, 64, 64, 64, 64, 96, 58, 60, 50, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 48, 64, 32, 127, 53, 234, 2, 0, 0, 0, 0, 28, 80, 145, 1, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 84, 64, 32, 71, 53, 234, 2, 0, 0, 0, 0, 182, 80, 211, 80, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 1, 16, 32, 127, 53, 234, 2, 0, 0, 0, 0, 25, 80, 60, 64, 0, 64, 64, 64, 64, 64, 64, 64, 64, 84, 73, 36, 54, 83, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 56, 96, 32, 100, 53, 234, 2, 0, 0, 0, 0, 73, 80, 71, 64, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 65, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 30, 0, 38, 127, 53, 234, 2, 0, 0, 0, 0, 80, 84, 64, 30, 0, 0, 0, 0, 64, 0, 0, 0, 0, 84, 73, 36, 54, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 48, 0, 38, 119, 53, 234, 2, 0, 0, 0, 0, 80, 80, 64, 20, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	90, 0, 0, 16, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 2, 0, 22, 0, 76, 16, 0, 0, 91, 0, 0, 0, 32, 42, 72, 19, 18, 11, 68, 0, 16, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-HppBar2_AdPmemName1_dx:
-	.space	2, 0x00
-HppBar2_AdPmemName1_dy:
-	.align	4, 0x00
-HppBar2_AdPmemBankName1_dx:
-	.space	2, 0x00
-HppBar2_AdPmemBankName1_dy:
-	.align	4, 0x00
-HppBar2_AdLabel_PMEM_dx:
-	.space	2, 0x00
-HppBar2_AdLabel_PMEM_dy:
-	.align	4, 0x00
-HppVol2_x:
-	.space	2, 0x00
-HppVol2_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2662, 0x3B2664
-HppVol2_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2664, 0x3B2666
-HppNmR2_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2666, 0x3B2668
-HppNmR2_y:
-	.space	2, 0x00
-HppNmR2_AdSoundName1_dx:
-	.align	4, 0x00
-HppNmR2_AdSoundName1_dy:
-	.space	2, 0x00
-HppNmR2_AdSoundName2_dx:
-	.align	4, 0x00
-HppNmR2_AdSoundName2_dy:
-	.space	2, 0x00
-HppNmR2_AdSoundName3_dx:
-	.align	4, 0x00
-HppNmR2_AdSoundName3_dy:
-	.space	2, 0x00
-HppNmR2_AdStrBox_RIGHT1_dx:
-	.align	4, 0x00
-HppNmR2_AdStrBox_RIGHT1_dy:
-	.space	2, 0x00
-HppNmR2_AdStrBox_RIGHT2_dx:
-	.align	4, 0x00
-HppNmR2_AdStrBox_RIGHT2_dy:
-	.space	2, 0x00
-HppNmR2_AdStrBox_LEFT_dx:
-	.align	4, 0x00
-HppNmR2_AdStrBox_LEFT_dy:
-	.space	2, 0x00
-HppNmR2_AdSplitBox1_dx:
-	.align	4, 0x00
-HppNmR2_AdSplitBox1_dy:
-	.space	2, 0x00
-HppNmR2_AdTransposeBox1_dx:
-	.align	4, 0x00
-HppNmR2_AdTransposeBox1_dy:
-	.space	2, 0x00
-HppNmL2_x:
-	.align	4, 0x00
-HppNmL2_y:
-	.space	2, 0x00
-HppNmL2_AdRhythmName1_dx:
-	.align	4, 0x00
-HppNmL2_AdRhythmName1_dy:
-	.space	2, 0x00
-HppNmL2_AdTempoBox1_dx:
-	.align	4, 0x00
-HppNmL2_AdTempoBox1_dy:
-	.space	2, 0x00
-HppNmL2_AdChordBox1_dx:
-	.align	4, 0x00
-HppNmL2_AdChordBox1_dy:
-	.space	2, 0x00
-HppNmL2_AdStrBox_RHYTHM_dx:
-	.align	4, 0x00
-HppNmL2_AdStrBox_RHYTHM_dy:
-	.space	2, 0x00
-HppNmL2_AdPadRun1_dx:
-	.align	4, 0x00
-HppNmL2_AdPadRun1_dy:
-	.space	2, 0x00
-HppUBmp_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B26A2, 0x3B26A4
-HppUBmp_y:
-	.space	2, 0x00
-HppUBmp_AdHpBmp1_dx:
-	.align	4, 0x00
-HppUBmp_AdHpBmp1_dy:
-.incbin_range "baserom/kn7000_program.rom", 0x3B26A8, 0x3B26AC
-HpVolSt1_parent:
-	.space	4, 0xFF
-HpVolSt1_child:
-	.space	4, 0xFF
-HpVolSt1_AdMixerVolWS1_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolWS1_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolWS2_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolWS2_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolWS3_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolWS3_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS9_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS9_dy:
-	.align	4, 0x00
-HpVolSt1_AdMixerVolS10_dx:
-	.space	2, 0x00
-HpVolSt1_AdMixerVolS10_dy:
-	.align	4, 0x00
-HpVolSt2_parent:
-	.space	4, 0xFF
-HpVolSt2_child:
-	.space	4, 0xFF
-HpVolSt2_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS9_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS9_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS10_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS10_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS11_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS11_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS12_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS12_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS13_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS13_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS14_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS14_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS15_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS15_dy:
-	.align	4, 0x00
-HpVolSt2_AdMixerVolS16_dx:
-	.space	2, 0x00
-HpVolSt2_AdMixerVolS16_dy:
-	.align	4, 0x00
-HpVolNm3_parent:
-	.space	4, 0xFF
-HpVolNm3_child:
-	.space	4, 0xFF
-HpVolNm3_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol10_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol11_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol11_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol12_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol12_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol13_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol13_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol14_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol14_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol15_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol15_dy:
-	.align	4, 0x00
-HpVolNm3_AdMixerVol16_dx:
-	.space	2, 0x00
-HpVolNm3_AdMixerVol16_dy:
-	.align	4, 0x00
-HpVolSt3_parent:
-	.space	4, 0xFF
-HpVolSt3_child:
-	.space	4, 0xFF
-HpVolSt3_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS9_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS9_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS10_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS10_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS11_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS11_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS12_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS12_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS13_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS13_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS14_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS14_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS15_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS15_dy:
-	.align	4, 0x00
-HpVolSt3_AdMixerVolS16_dx:
-	.space	2, 0x00
-HpVolSt3_AdMixerVolS16_dy:
-	.align	4, 0x00
-HpVolNm4_parent:
-	.space	4, 0xFF
-HpVolNm4_child:
-	.space	4, 0xFF
-HpVolNm4_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol10_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol11_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol11_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol12_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol12_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol13_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol13_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol14_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol14_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol15_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol15_dy:
-	.align	4, 0x00
-HpVolNm4_AdMixerVol16_dx:
-	.space	2, 0x00
-HpVolNm4_AdMixerVol16_dy:
-	.align	4, 0x00
-HpVolSt4_parent:
-	.space	4, 0xFF
-HpVolSt4_child:
-	.space	4, 0xFF
-HpVolSt4_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS9_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS9_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS10_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS10_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS11_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS11_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS12_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS12_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS13_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS13_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS14_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS14_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS15_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS15_dy:
-	.align	4, 0x00
-HpVolSt4_AdMixerVolS16_dx:
-	.space	2, 0x00
-HpVolSt4_AdMixerVolS16_dy:
-	.align	4, 0x00
-HpVolTr1_parent:
-	.space	4, 0xFF
-HpVolTr1_child:
-	.space	4, 0xFF
-HpVolTr1_AdTrackVol1_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol1_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol2_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol2_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol3_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol3_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol4_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol4_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol5_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol5_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol6_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol6_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol7_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol7_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol8_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol8_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol9_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol9_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol10_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol10_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol11_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol11_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol12_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol12_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol13_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol13_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol14_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol14_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol15_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol15_dy:
-	.align	4, 0x00
-HpVolTr1_AdTrackVol16_dx:
-	.space	2, 0x00
-HpVolTr1_AdTrackVol16_dy:
-	.align	4, 0x00
-HpVolNmH1_parent:
-	.space	4, 0xFF
-HpVolNmH1_child:
-	.space	4, 0xFF
-HpVolNmH1_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH1_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH1_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH1_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH1_AdMixerVolWide1_dx:
-	.space	2, 0x00
-HpVolNmH1_AdMixerVolWide1_dy:
-	.align	4, 0x00
-HpVolNmH1_AdMixerVolWide2_dx:
-	.space	2, 0x00
-HpVolNmH1_AdMixerVolWide2_dy:
-	.align	4, 0x00
-HpVolNmH1_AdMixerVolWide3_dx:
-	.space	2, 0x00
-HpVolNmH1_AdMixerVolWide3_dy:
-	.align	4, 0x00
-HpVolNmH2_parent:
-	.space	4, 0xFF
-HpVolNmH2_child:
-	.space	4, 0xFF
-HpVolNmH2_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH2_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH2_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNmH3_parent:
-	.space	4, 0xFF
-HpVolNmH3_child:
-	.space	4, 0xFF
-HpVolNmH3_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH3_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH3_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNmH4_parent:
-	.space	4, 0xFF
-HpVolNmH4_child:
-	.space	4, 0xFF
-HpVolNmH4_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH4_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH4_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolStH1_parent:
-	.space	4, 0xFF
-HpVolStH1_child:
-	.space	4, 0xFF
-HpVolStH1_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH1_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH1_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH1_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH1_AdMixerVolWS1_dx:
-	.space	2, 0x00
-HpVolStH1_AdMixerVolWS1_dy:
-	.align	4, 0x00
-HpVolStH1_AdMixerVolWS2_dx:
-	.space	2, 0x00
-HpVolStH1_AdMixerVolWS2_dy:
-	.align	4, 0x00
-HpVolStH1_AdMixerVolWS3_dx:
-	.space	2, 0x00
-HpVolStH1_AdMixerVolWS3_dy:
-	.align	4, 0x00
-HpVolStH2_parent:
-	.space	4, 0xFF
-HpVolStH2_child:
-	.space	4, 0xFF
-HpVolStH2_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH2_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH2_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolStH3_parent:
-	.space	4, 0xFF
-HpVolStH3_child:
-	.space	4, 0xFF
-HpVolStH3_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH3_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH3_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolStH4_parent:
-	.space	4, 0xFF
-HpVolStH4_child:
-	.space	4, 0xFF
-HpVolStH4_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH4_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH4_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpParts3_window:
-	.space	4, 0xFF
-HppVol3_x:
-	.space	2, 0x00
-HppVol3_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B29C6, 0x3B29C8
-HppVol3_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B29C8, 0x3B29CA
-HppBar3_x:
-	.align	4, 0x00
-HppBar3_y:
-	.space	2, 0xFF
-HppBar3_AdRhythmName1_dx:
-	.align	4, 0x00
-HppBar3_AdRhythmName1_dy:
-	.space	2, 0x00
-HppBar3_AdLabel_RHYTHM_dx:
-	.align	4, 0x00
-HppBar3_AdLabel_RHYTHM_dy:
-	.space	2, 0x00
-HppBar3_AdChordBox1_dx:
-	.align	4, 0x00
-HppBar3_AdChordBox1_dy:
-	.space	2, 0x00
-HppBar3_AdTempoBox1_dx:
-	.align	4, 0x00
-HppBar3_AdTempoBox1_dy:
-	.space	2, 0x00
-HppPmBk_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B29DE, 0x3B29E0
-HppPmBk_y:
-	.space	2, 0x00
-HppPmBk_AdPmemBankName1_dx:
-	.align	4, 0x00
-HppPmBk_AdPmemBankName1_dy:
-	.space	2, 0x00
-HppPmBk_AdStrBox_PMEM_dx:
-	.align	4, 0x00
-HppPmBk_AdStrBox_PMEM_dy:
-	.space	2, 0x00
-HppSdCt_x:
-	.align	4, 0x00
-HppSdCt_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B29EC, 0x3B29EE
-HppSdCt_AdIcon1_dx:
-	.align	4, 0x00
-HppSdCt_AdIcon1_dy:
-	.space	2, 0x00
-HppSdCt_AdStrBox_SOUND_CONTROLLER_dx:
-	.align	4, 0x00
-HppSdCt_AdStrBox_SOUND_CONTROLLER_dy:
-	.space	2, 0x00
-HppSdCt_AdLine1_dx:
-	.align	4, 0x00
-HppSdCt_AdLine1_dy:
-	.space	2, 0x00
-HppSdCt_AdLine2_dx:
-	.align	4, 0x00
-HppSdCt_AdLine2_dy:
-	.space	2, 0x00
-HppSdCt_AdBox1_dx:
-	.align	4, 0x00
-HppSdCt_AdBox1_dy:
-	.space	2, 0x00
-HppSdCt_AdSndCtrlY1_dx:
-	.align	4, 0x00
-HppSdCt_AdSndCtrlY1_dy:
-	.space	2, 0x00
-HppSdCt_AdSndCtrlX1_dx:
-	.align	4, 0x00
-HppSdCt_AdSndCtrlX1_dy:
-	.space	2, 0x00
-HppPmX8_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A0A, 0x3B2A0C
-HppPmX8_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A0C, 0x3B2A0E
-HppPmX8_AdBox1_dx:
-	.align	4, 0x00
-HppPmX8_AdBox1_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName1_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName1_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName2_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName2_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName3_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName3_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName4_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName4_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName5_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName5_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName6_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName6_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName7_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName7_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemXName8_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemXName8_dy:
-	.space	2, 0x00
-HppPmX8_AdStrBox_PMEM_dx:
-	.align	4, 0x00
-HppPmX8_AdStrBox_PMEM_dy:
-	.space	2, 0x00
-HppPmX8_AdPmemBankName1_dx:
-	.align	4, 0x00
-HppPmX8_AdPmemBankName1_dy:
-	.space	2, 0x00
-HppSeqM_x:
-	.align	4, 0x00
-HppSeqM_y:
-	.space	2, 0x00
-HppSeqM_AdStrBox_SEQUENCER_dx:
-	.align	4, 0x00
-HppSeqM_AdStrBox_SEQUENCER_dy:
-	.space	2, 0x00
-HppSeqM_AdSeqCurSngName1_dx:
-	.align	4, 0x00
-HppSeqM_AdSeqCurSngName1_dy:
-	.space	2, 0x00
-HppSeqM_AdSeqRun1_dx:
-	.align	4, 0x00
-HppSeqM_AdSeqRun1_dy:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A48, 0x3B2A4C
-HpParts4_window:
-	.space	4, 0xFF
-HppVol4_x:
-	.space	2, 0x00
-HppVol4_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A52, 0x3B2A54
-HppVol4_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A54, 0x3B2A56
-HppBar4_x:
-	.align	4, 0x00
-HppBar4_y:
-	.space	2, 0xFF
-HppBar4_AdPadRun1_dx:
-	.align	4, 0x00
-HppBar4_AdPadRun1_dy:
-	.space	2, 0x00
-HppBar4_AdPadBank1_dx:
-	.align	4, 0x00
-HppBar4_AdPadBank1_dy:
-	.space	2, 0x00
-HppBar4_AdLabel_PADS_dx:
-	.align	4, 0x00
-HppBar4_AdLabel_PADS_dy:
-	.space	2, 0x00
-HppPdBk_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A66, 0x3B2A68
-HppPdBk_y:
-	.space	2, 0x00
-HppPdBk_AdStrBox_PADS_dx:
-	.align	4, 0x00
-HppPdBk_AdStrBox_PADS_dy:
-	.space	2, 0x00
-HppPdBk_AdPadBank1_dx:
-	.align	4, 0x00
-HppPdBk_AdPadBank1_dy:
-	.space	2, 0x00
-HppPdX6_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A72, 0x3B2A74
-HppPdX6_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A74, 0x3B2A76
-HppPdX6_AdBox1_dx:
-	.align	4, 0x00
-HppPdX6_AdBox1_dy:
-	.space	2, 0x00
-HppPdX6_AdStrBox_PADS_dx:
-	.align	4, 0x00
-HppPdX6_AdStrBox_PADS_dy:
-	.space	2, 0x00
-HppPdX6_AdPadBank1_dx:
-	.align	4, 0x00
-HppPdX6_AdPadBank1_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName1_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName1_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName2_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName2_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName3_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName3_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName4_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName4_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName5_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName5_dy:
-	.space	2, 0x00
-HppPdX6_AdPadName6_dx:
-	.align	4, 0x00
-HppPdX6_AdPadName6_dy:
-	.space	2, 0x00
-HppFvBk_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A9A, 0x3B2A9C
-HppFvBk_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2A9C, 0x3B2A9E
-HppFvBk_AdFavBankName1_dx:
-	.align	4, 0x00
-HppFvBk_AdFavBankName1_dy:
-	.space	2, 0x00
-HppFvBk_AdStrBox_FAVORITES_dx:
-	.align	4, 0x00
-HppFvBk_AdStrBox_FAVORITES_dy:
-	.space	2, 0x00
-HppFtSw_x:
-	.align	4, 0x00
-HppFtSw_y:
-	.space	2, 0x00
-HppFtSw_AdBox1_dx:
-	.align	4, 0x00
-HppFtSw_AdBox1_dy:
-	.space	2, 0x00
-HppFtSw_AdStrBox_FOOT_SWITCH_dx:
-	.align	4, 0x00
-HppFtSw_AdStrBox_FOOT_SWITCH_dy:
-	.space	2, 0x00
-HppFtSw_AdFootSw1_dx:
-	.align	4, 0x00
-HppFtSw_AdFootSw1_dy:
-	.space	2, 0x00
-HppFtSw_AdFootSw2_dx:
-	.align	4, 0x00
-HppFtSw_AdFootSw2_dy:
-	.space	2, 0x00
-HppFtCt_x:
-	.align	4, 0x00
-HppFtCt_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2ABC, 0x3B2ABE
-HppFtCt_AdBox1_dx:
-	.align	4, 0x00
-HppFtCt_AdBox1_dy:
-	.space	2, 0x00
-HppFtCt_AdStrBox_FOOT_CONTROLLER_dx:
-	.align	4, 0x00
-HppFtCt_AdStrBox_FOOT_CONTROLLER_dy:
-	.space	2, 0x00
-HppFtCt_AdFootSw1_dx:
-	.align	4, 0x00
-HppFtCt_AdFootSw1_dy:
-	.space	2, 0x00
-HppFtCt_AdFootSw2_dx:
-	.align	4, 0x00
-HppFtCt_AdFootSw2_dy:
-	.space	2, 0x00
-HppFtCt_AdFootSw3_dx:
-	.align	4, 0x00
-HppFtCt_AdFootSw3_dy:
-	.space	2, 0x00
-HppFtCt_AdFootSw4_dx:
-	.align	4, 0x00
-HppFtCt_AdFootSw4_dy:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2AD4, 0x3B2AD8
-HpParts5_window:
-	.space	4, 0xFF
-HppVol5_x:
-	.space	2, 0x00
-HppVol5_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2ADE, 0x3B2AE0
-HppVol5_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2AE0, 0x3B2AE2
-HppBar5_x:
-	.align	4, 0x00
-HppBar5_y:
-	.space	2, 0xFF
-HppBar5_AdSplitBox1_dx:
-	.align	4, 0x00
-HppBar5_AdSplitBox1_dy:
-	.space	2, 0x00
-HppBar5_AdRightOct1_dx:
-	.align	4, 0x00
-HppBar5_AdRightOct1_dy:
-	.space	2, 0x00
-HppBar5_AdTransposeBox1_dx:
-	.align	4, 0x00
-HppBar5_AdTransposeBox1_dy:
-	.space	2, 0x00
-HppBar5_AdFadeBox1_dx:
-	.align	4, 0x00
-HppBar5_AdFadeBox1_dy:
-	.space	2, 0x00
-HppSdLd_x:
-	.align	4, 0x00
-HppSdLd_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2AF8, 0x3B2AFA
-HppSdLd_AdBox1_dx:
-	.align	4, 0x00
-HppSdLd_AdBox1_dy:
-	.space	2, 0x00
-HppSdLd_AdStrBox_SOUND_LOAD_OPTION_dx:
-	.align	4, 0x00
-HppSdLd_AdStrBox_SOUND_LOAD_OPTION_dy:
-	.space	2, 0x00
-HppSdLd_AdSndLdOpt1_dx:
-	.align	4, 0x00
-HppSdLd_AdSndLdOpt1_dy:
-	.space	2, 0x00
-HppSdLd_AdSndLdOpt2_dx:
-	.align	4, 0x00
-HppSdLd_AdSndLdOpt2_dy:
-	.space	2, 0x00
-HppSdLd_AdSndLdOpt3_dx:
-	.align	4, 0x00
-HppSdLd_AdSndLdOpt3_dy:
-	.space	2, 0x00
-HppSdLd_AdSndLdOpt4_dx:
-	.align	4, 0x00
-HppSdLd_AdSndLdOpt4_dy:
-	.space	2, 0x00
-HppSdLd_AdSndLdOpt5_dx:
-	.align	4, 0x00
-HppSdLd_AdSndLdOpt5_dy:
-	.space	2, 0x00
-HppSdLd_AdLine1_dx:
-	.align	4, 0x00
-HppSdLd_AdLine1_dy:
-	.space	2, 0x00
-HppSDsp_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B1A, 0x3B2B1C
-HppSDsp_y:
-	.space	2, 0x00
-HppSDsp_AdBox1_dx:
-	.align	4, 0x00
-HppSDsp_AdBox1_dy:
-	.space	2, 0x00
-HppSDsp_AdStrBox_SOUND_DSP_dx:
-	.align	4, 0x00
-HppSDsp_AdStrBox_SOUND_DSP_dy:
-	.space	2, 0x00
-HppSDsp_AdSndDspAlloc1_dx:
-	.align	4, 0x00
-HppSDsp_AdSndDspAlloc1_dy:
-	.space	2, 0x00
-HppSDsp_AdEffectType1_dx:
-	.align	4, 0x00
-HppSDsp_AdEffectType1_dy:
-	.space	2, 0x00
-HppSDsp_AdEffectType2_dx:
-	.align	4, 0x00
-HppSDsp_AdEffectType2_dy:
-	.space	2, 0x00
-HppSDsp_AdEffectType3_dx:
-	.align	4, 0x00
-HppSDsp_AdEffectType3_dy:
-	.space	2, 0x00
-HppChdL_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B36, 0x3B2B38
-HppChdL_y:
-	.space	2, 0x00
-HppChdL_AdChordBox1_dx:
-	.align	4, 0x00
-HppChdL_AdChordBox1_dy:
-	.space	2, 0x00
-HppTmpL_x:
-	.align	4, 0x00
-HppTmpL_y:
-	.space	2, 0x00
-HppTmpL_AdTempoBox1_dx:
-	.align	4, 0x00
-HppTmpL_AdTempoBox1_dy:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B44, 0x3B2B48
-HpParts6_window:
-	.space	4, 0xFF
-HppVol6_x:
-	.space	2, 0x00
-HppVol6_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B4E, 0x3B2B50
-HppVol6_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B50, 0x3B2B52
-HppVol8_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B52, 0x3B2B54
-HppVol8_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B54, 0x3B2B56
-HppVol8_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B56, 0x3B2B58
-HppBar6_x:
-	.space	2, 0x00
-HppBar6_y:
+zlib_48797834:	# DemoSong08: its song record, 2272 bytes, stored as a zlib stream of 776 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong08_Record
+
+# DemoSong08_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 251, 127, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 32, 7, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 3, 0, 12, 0, 255, 255, 17, 0, 19, 0, 47, 0, 50, 0, 64
+	.byte	0, 70, 0, 73, 0, 85, 0, 87, 0, 95, 0, 109, 0, 114, 0, 255
+	.byte	255, 80, 92, 5, 102, 73, 69, 116, 77, 223, 250, 191, 135, 159, 150, 104
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 115, 0, 102, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 251, 127, 0, 0, 0, 0, 0, 0
+	sq_track	0x80, 1	# track 1
+	sq_track	0x80, 4	# track 2
+	sq_track	0x00, 65535	# track 3
+	sq_track	0x80, 13	# track 4
+	sq_track	0x80, 18	# track 5
+	sq_track	0x80, 20	# track 6
+	sq_track	0x80, 48	# track 7
+	sq_track	0x80, 51	# track 8
+	sq_track	0x80, 65	# track 9
+	sq_track	0x80, 71	# track 10
+	sq_track	0x80, 74	# track 11
+	sq_track	0x80, 86	# track 12
+	sq_track	0x80, 88	# track 13
+	sq_track	0x80, 96	# track 14
+	sq_track	0x80, 110	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	74, 97, 122, 122, 32, 118, 105, 98, 101, 115, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 11, 16, 32, 125, 117, 249, 2, 0, 0, 0, 0, 45, 0, 65, 27, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 38, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 0, 40, 32, 96, 53, 249, 2, 0, 0, 0, 0, 0, 0, 60, 31, 0, 64, 28, 69, 64, 64, 64, 64, 64, 108, 64, 28, 47, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 5, 0, 32, 94, 37, 8, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 85, 0, 35, 255
+	PMR_ENTRY	0x14, 92, 0, 35, 255
+	PMR_ENTRY	0x15, 77, 0, 35, 255
+	PMR_ENTRY	0x16, 66, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 33, 48, 32, 109, 53, 234, 2, 0, 0, 0, 0, 60, 0, 80, 0, 0, 64, 28, 72, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 73, 20, 32, 88, 181, 234, 2, 0, 0, 0, 0, 0, 0, 30, 44, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 43, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 25, 0, 32, 68, 53, 234, 2, 0, 0, 0, 0, 52, 0, 80, 27, 0, 64, 34, 64, 64, 64, 64, 64, 64, 108, 76, 28, 62, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 24, 26, 32, 127, 53, 234, 2, 0, 0, 0, 0, 30, 0, 0, 20, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 70, 28, 59, 91, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 48, 20, 32, 106, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 60, 0, 64, 40, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 61, 8, 32, 88, 53, 234, 2, 0, 0, 0, 0, 55, 0, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 20, 0, 38, 113, 37, 202, 2, 0, 0, 0, 0, 80, 0, 64, 32, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 20, 0, 38, 81, 53, 234, 2, 0, 0, 0, 0, 80, 0, 64, 29, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 73, 24, 81, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 17, 0, 38, 92, 53, 234, 2, 0, 0, 0, 0, 80, 0, 64, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 24, 67, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 72, 0, 38, 109, 53, 234, 2, 0, 0, 0, 0, 80, 0, 64, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 56, 52, 32, 112, 181, 234, 2, 0, 0, 0, 0, 30, 0, 20, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 11, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 57, 98, 32, 108, 53, 234, 2, 0, 0, 0, 0, 40, 0, 80, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 11, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 56, 52, 32, 127, 53, 234, 2, 0, 0, 0, 0, 30, 80, 20, 25, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	96, 1, 0, 16, 0, 0, 0, 48, 250, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	160, 80, 2, 0, 22, 0, 64, 4, 0, 0, 91, 0, 0, 0, 18, 8, 32, 0, 16, 0, 72, 47, 68, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 25, 27, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 73, 72, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 1, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 4, 16, 17, 18, 127, 20, 0, 9, 8, 19, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
+zlib_48797B3C:	# DemoSong09: its song record, 2272 bytes, stored as a zlib stream of 726 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong09_Record
+
+# DemoSong09_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 254, 119, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 128, 2, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 255, 255, 1, 0, 5, 0, 8, 0, 12, 0, 14, 0, 18, 0, 26
+	.byte	0, 27, 0, 30, 0, 32, 0, 255, 255, 35, 0, 39, 0, 40, 0, 255
+	.byte	255, 5, 209, 75, 185, 74, 27, 212, 28, 192, 255, 114, 5, 218, 222, 147
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 41, 0, 176, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 254, 119, 0, 0, 0, 0, 0, 0
+	sq_track	0x00, 65535	# track 1
+	sq_track	0x80, 1	# track 2
+	sq_track	0x80, 2	# track 3
+	sq_track	0x80, 6	# track 4
+	sq_track	0x80, 9	# track 5
+	sq_track	0x80, 13	# track 6
+	sq_track	0x80, 15	# track 7
+	sq_track	0x80, 19	# track 8
+	sq_track	0x80, 27	# track 9
+	sq_track	0x80, 28	# track 10
+	sq_track	0x80, 31	# track 11
+	sq_track	0x00, 65535	# track 12
+	sq_track	0x80, 33	# track 13
+	sq_track	0x80, 36	# track 14
+	sq_track	0x80, 40	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	80, 105, 122, 122, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 45, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 46, 0, 198, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 45, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 46, 0, 198, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 64, 20, 32, 104, 165, 8, 2, 0, 0, 0, 0, 178, 0, 20, 62, 0, 64, 64, 64, 64, 64, 64, 64, 64, 112, 84, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 85, 0, 35, 255
+	PMR_ENTRY	0x14, 92, 0, 35, 255
+	PMR_ENTRY	0x15, 77, 0, 35, 255
+	PMR_ENTRY	0x16, 66, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 33, 0, 32, 125, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 36, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 46, 80, 32, 73, 53, 234, 2, 0, 0, 0, 0, 0, 0, 214, 0, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 88, 16, 32, 88, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 52, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 70, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 4, 24, 32, 92, 53, 234, 2, 0, 0, 0, 0, 178, 0, 255, 62, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 48, 16, 32, 109, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 60, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 48, 56, 32, 117, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 27, 0, 38, 115, 37, 202, 2, 0, 0, 0, 0, 0, 0, 0, 15, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 1, 0, 38, 118, 53, 234, 2, 0, 0, 0, 0, 0, 0, 0, 112, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 71, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 0, 1, 32, 104, 53, 234, 2, 0, 0, 0, 0, 0, 0, 60, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 71, 48, 32, 111, 53, 234, 2, 0, 0, 0, 0, 34, 0, 50, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 68, 4, 32, 127, 53, 234, 2, 0, 0, 0, 0, 60, 0, 20, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 47, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 46, 16, 32, 95, 53, 234, 2, 0, 0, 0, 0, 48, 0, 168, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 16, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 60, 64, 32, 113, 53, 234, 2, 0, 0, 0, 0, 62, 0, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	3, 0, 32, 16, 0, 0, 0, 48, 134, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 64, 0, 0, 0
+	PMR_4C_30	128, 80, 4, 32, 22, 0, 64, 32, 0, 0, 91, 0, 0, 0, 76, 9, 76, 9, 72, 8, 76, 10, 76, 10, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 1, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 1, 16, 17, 18, 13, 14, 0, 9, 8, 20, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
 	.align	4, 0xFF
-HppBar6_AdSeqCurSngName1_dx:
-	.space	2, 0x00
-HppBar6_AdSeqCurSngName1_dy:
-	.align	4, 0x00
-HppBar6_AdTempoBox1_dx:
-	.space	2, 0x00
-HppBar6_AdTempoBox1_dy:
-	.align	4, 0x00
-HppBar6_AdSeqRun1_dx:
-	.space	2, 0x00
-HppBar6_AdSeqRun1_dy:
-	.align	4, 0x00
-HppGEff_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B68, 0x3B2B6A
-HppGEff_y:
-	.align	4, 0x00
-HppGEff_AdBox1_dx:
-	.space	2, 0x00
-HppGEff_AdBox1_dy:
-	.align	4, 0x00
-HppGEff_AdStrBox_GLOBAL_EFFECTS_dx:
-	.space	2, 0x00
-HppGEff_AdStrBox_GLOBAL_EFFECTS_dy:
-	.align	4, 0x00
-HppGEff_AdEffectType1_dx:
-	.space	2, 0x00
-HppGEff_AdEffectType1_dy:
-	.align	4, 0x00
-HppGEff_AdEffectType2_dx:
-	.space	2, 0x00
-HppGEff_AdEffectType2_dy:
-	.align	4, 0x00
-HppGEff_AdEffectType3_dx:
-	.space	2, 0x00
-HppGEff_AdEffectType3_dy:
-	.align	4, 0x00
-HppSplt_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B80, 0x3B2B82
-HppSplt_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B82, 0x3B2B84
-HppSplt_AdSplitBox1_dx:
-	.space	2, 0x00
-HppSplt_AdSplitBox1_dy:
-	.align	4, 0x00
-HppROct_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B88, 0x3B2B8A
-HppROct_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B8A, 0x3B2B8C
-HppROct_AdRightOct1_dx:
-	.space	2, 0x00
-HppROct_AdRightOct1_dy:
-	.align	4, 0x00
-HppTrsp_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B90, 0x3B2B92
-HppTrsp_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B92, 0x3B2B94
-HppTrsp_AdTransposeBox1_dx:
-	.space	2, 0x00
-HppTrsp_AdTransposeBox1_dy:
-	.align	4, 0x00
-HppPadR_x:
-	.space	2, 0x00
-HppPadR_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2B9A, 0x3B2B9C
-HppPadR_AdPadRun1_dx:
-	.space	2, 0x00
-HppPadR_AdPadRun1_dy:
-	.align	4, 0x00
-HppPmem_x:
-	.space	2, 0x00
-HppPmem_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BA2, 0x3B2BA4
-HppPmem_AdPmemName1_dx:
-	.space	2, 0x00
-HppPmem_AdPmemName1_dy:
-	.align	4, 0x00
-HppPmem_AdStrBox_PMEM_dx:
-	.space	2, 0x00
-HppPmem_AdStrBox_PMEM_dy:
-	.align	4, 0x00
-HppTmpM_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BAC, 0x3B2BAE
-HppTmpM_y:
-	.align	4, 0x00
-HppTmpM_AdTempoBox1_dx:
-	.space	2, 0x00
-HppTmpM_AdTempoBox1_dy:
-	.align	4, 0x00
-HppChdM_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BB4, 0x3B2BB6
-HppChdM_y:
-	.align	4, 0x00
-HppChdM_AdChordBox1_dx:
-	.space	2, 0x00
-HppChdM_AdChordBox1_dy:
-	.align	4, 0x00
-HppMnVo_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BBC, 0x3B2BBE
-HppMnVo_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BBE, 0x3B2BC0
-HppMnVo_AdMonRcv1_dx:
-	.space	2, 0x00
-HppMnVo_AdMonRcv1_dy:
-	.align	4, 0x00
-HpParts7_window:
-	.space	4, 0xFF
-HppVol7_x:
-	.space	2, 0x00
-HppVol7_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BCA, 0x3B2BCC
-HppVol7_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BCC, 0x3B2BCE
-HppVol9_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BCE, 0x3B2BD0
-HppVol9_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BD0, 0x3B2BD2
-HppVol9_RstOtherPart1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BD2, 0x3B2BD4
-HppR1SL_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BD4, 0x3B2BD6
-HppR1SL_y:
-	.align	4, 0x00
-HppR1SL_AdSoundName1_dx:
-	.space	2, 0x00
-HppR1SL_AdSoundName1_dy:
-	.align	4, 0x00
-HppR1SL_AdStrBox_RIGHT1_dx:
-	.space	2, 0x00
-HppR1SL_AdStrBox_RIGHT1_dy:
-	.align	4, 0x00
-HppR2SL_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BE0, 0x3B2BE2
-HppR2SL_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BE2, 0x3B2BE4
-HppR2SL_AdSoundName1_dx:
-	.space	2, 0x00
-HppR2SL_AdSoundName1_dy:
-	.align	4, 0x00
-HppR2SL_AdStrBox_RIGHT2_dx:
-	.space	2, 0x00
-HppR2SL_AdStrBox_RIGHT2_dy:
-	.align	4, 0x00
-HppLtSL_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BEC, 0x3B2BEE
-HppLtSL_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BEE, 0x3B2BF0
-HppLtSL_AdSoundName1_dx:
-	.space	2, 0x00
-HppLtSL_AdSoundName1_dy:
-	.align	4, 0x00
-HppLtSL_AdStrBox_LEFT_dx:
-	.space	2, 0x00
-HppLtSL_AdStrBox_LEFT_dy:
-	.align	4, 0x00
-HppRhyL_x:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BF8, 0x3B2BFA
-HppRhyL_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2BFA, 0x3B2BFC
-HppRhyL_AdStrBox_RHYTHM_dx:
-	.space	2, 0x00
-HppRhyL_AdStrBox_RHYTHM_dy:
-	.align	4, 0x00
-HppRhyL_AdRhythmName1_dx:
-	.space	2, 0x00
-HppRhyL_AdRhythmName1_dy:
-	.align	4, 0x00
-HppR1SM_x:
-	.space	2, 0x00
-HppR1SM_y:
-	.align	4, 0x00
-HppR1SM_AdSoundName1_dx:
-	.space	2, 0x00
-HppR1SM_AdSoundName1_dy:
-	.align	4, 0x00
-HppR1SM_AdStrBox_RIGHT1_dx:
-	.space	2, 0x00
-HppR1SM_AdStrBox_RIGHT1_dy:
-	.align	4, 0x00
-HppR2SM_x:
-	.space	2, 0x00
-HppR2SM_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2C12, 0x3B2C14
-HppR2SM_AdSoundName1_dx:
-	.space	2, 0x00
-HppR2SM_AdSoundName1_dy:
-	.align	4, 0x00
-HppR2SM_AdStrBox_RIGHT2_dx:
-	.space	2, 0x00
-HppR2SM_AdStrBox_RIGHT2_dy:
-	.align	4, 0x00
-HppLtSM_x:
-	.space	2, 0x00
-HppLtSM_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2C1E, 0x3B2C20
-HppLtSM_AdSoundName1_dx:
-	.space	2, 0x00
-HppLtSM_AdSoundName1_dy:
-	.align	4, 0x00
-HppLtSM_AdStrBox_LEFT_dx:
-	.space	2, 0x00
-HppLtSM_AdStrBox_LEFT_dy:
-	.align	4, 0x00
-HppRhyM_x:
-	.space	2, 0x00
-HppRhyM_y:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2C2A, 0x3B2C2C
-HppRhyM_AdStrBox_RHYTHM_dx:
-	.space	2, 0x00
-HppRhyM_AdStrBox_RHYTHM_dy:
-	.align	4, 0x00
-HppRhyM_AdRhythmName1_dx:
-	.space	2, 0x00
-HppRhyM_AdRhythmName1_dy:
-	.align	4, 0x00
-HpVolNmH5_parent:
-	.space	4, 0xFF
-HpVolNmH5_child:
-	.space	4, 0xFF
-HpVolNmH5_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH5_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH5_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH5_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH5_AdMixerVolWide1_dx:
-	.space	2, 0x00
-HpVolNmH5_AdMixerVolWide1_dy:
-	.align	4, 0x00
-HpVolNmH5_AdMixerVolWide2_dx:
-	.space	2, 0x00
-HpVolNmH5_AdMixerVolWide2_dy:
-	.align	4, 0x00
-HpVolNmH5_AdMixerVolWide3_dx:
-	.space	2, 0x00
-HpVolNmH5_AdMixerVolWide3_dy:
-	.align	4, 0x00
-HpVolNmH6_parent:
-	.space	4, 0xFF
-HpVolNmH6_child:
-	.space	4, 0xFF
-HpVolNmH6_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH6_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH6_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNmH7_parent:
-	.space	4, 0xFF
-HpVolNmH7_child:
-	.space	4, 0xFF
-HpVolNmH7_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH7_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH7_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNmH8_parent:
-	.space	4, 0xFF
-HpVolNmH8_child:
-	.space	4, 0xFF
-HpVolNmH8_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNmH8_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNmH8_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolStH5_parent:
-	.space	4, 0xFF
-HpVolStH5_child:
-	.space	4, 0xFF
-HpVolStH5_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH5_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH5_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH5_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH5_AdMixerVolWS1_dx:
-	.space	2, 0x00
-HpVolStH5_AdMixerVolWS1_dy:
-	.align	4, 0x00
-HpVolStH5_AdMixerVolWS2_dx:
-	.space	2, 0x00
-HpVolStH5_AdMixerVolWS2_dy:
-	.align	4, 0x00
-HpVolStH5_AdMixerVolWS3_dx:
-	.space	2, 0x00
-HpVolStH5_AdMixerVolWS3_dy:
-	.align	4, 0x00
-HpVolStH6_parent:
-	.space	4, 0xFF
-HpVolStH6_child:
-	.space	4, 0xFF
-HpVolStH6_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH6_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH6_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolStH7_parent:
-	.space	4, 0xFF
-HpVolStH7_child:
-	.space	4, 0xFF
-HpVolStH7_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH7_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH7_AdMixerVolS8_dy:
-	.align	4, 0x00
-HpVolStH8_parent:
-	.space	4, 0xFF
-HpVolStH8_child:
-	.space	4, 0xFF
-HpVolStH8_AdMixerVolS1_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS1_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS2_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS2_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS3_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS3_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS4_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS4_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS5_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS5_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS6_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS6_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS7_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS7_dy:
-	.align	4, 0x00
-HpVolStH8_AdMixerVolS8_dx:
-	.space	2, 0x00
-HpVolStH8_AdMixerVolS8_dy:
-	.align	4, 0x00
-TtProgram_window:
-	.space	4, 0xFF
-TtProgram_ModeMenu_SOUND_selected:
-	.space	4, 0x00
-TtProgram_ModeMenu_REVERB_EFFECT_selected:
-	.space	4, 0x00
-TtProgram_ModeMenu_CONTROL_selected:
-	.space	4, 0x00
-TtProgram_ModeMenu_MIDI_selected:
-	.space	4, 0x00
-TtCthomepage_window:
-	.space	4, 0xFF
-TtCthomepage_UserHpMenu_USER_EDIT_selected:
-	.space	4, 0x00
-TtCthomepage_TitleMenu_PICTURE_LOAD_selected:
-	.space	4, 0x00
-TtCthomepage_HpTypeEdit_TYPE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2D7C, 0x3B2D80
-UserHpEdit_window:
-	.space	4, 0xFF
-UserHpEdit_HpPartsList1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2D84, 0x3B2D88
-TtProgramKN7000_parent:
-	.space	4, 0xFF
-TtProgramKN7000_child:
-	.space	4, 0xFF
-TtProgramKN7000_ModeMenu_PERFORMANCE_PADS_selected:
-	.space	4, 0x00
-TtProgramKN7000_ModeMenu_COMPOSER_selected:
-	.space	4, 0x00
-TtProgramKN7000_ModeMenu_SEQUENCER_selected:
-	.space	4, 0x00
-TtProgramKN7000_ModeMenu_SOUND_EDIT_selected:
-	.space	4, 0x00
-TtProgramPR804_parent:
-	.space	4, 0xFF
-TtProgramPR804_child:
-	.space	4, 0xFF
-TtProgramPR804_ModeMenu_CUSTOMIZE_selected:
-	.space	4, 0x00
-TtProgramPR804_ModeMenu_PIANO_PERFORMANCE_PA_selected:
-	.space	4, 0x00
-TtProgramPR804_ModeMenu_COMPOSER_selected:
-	.space	4, 0x00
-TtProgramPR804_ModeMenu_SEQUENCER_selected:
-	.space	4, 0x00
-TtProgramPR804_ModeMenu_SOUND_EDIT_selected:
-	.space	4, 0x00
-TtProgramPR804_TitleMenu_TOUCH_SENSITIVITY_selected:
-	.space	4, 0x00
-TtProgramPR604_parent:
-	.space	4, 0xFF
-TtProgramPR604_child:
-	.space	4, 0xFF
-TtProgramPR604_ModeMenu_CUSTOMIZE_selected:
-	.space	4, 0x00
-TtProgramPR604_ModeMenu_COMPOSER_selected:
-	.space	4, 0x00
-TtProgramPR604_ModeMenu_SEQUENCER_selected:
-	.space	4, 0x00
-TtProgramPR604_ModeMenu_SOUND_EDIT_selected:
-	.space	4, 0x00
-TtProgramPR604_TitleMenu_TOUCH_SENSITIVITY_selected:
-	.space	4, 0x00
-HpVolNm804_parent:
-	.space	4, 0xFF
-HpVolNm804_child:
-	.space	4, 0xFF
-HpVolNm804_AdMixerVolWide1_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVolWide1_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVolWide2_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVolWide2_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol10_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol11_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol11_dy:
-	.align	4, 0x00
-HpVolNm804_AdMixerVol12_dx:
-	.space	2, 0x00
-HpVolNm804_AdMixerVol12_dy:
-	.align	4, 0x00
-HpVolMn604_parent:
-	.space	4, 0xFF
-HpVolMn604_child:
-	.space	4, 0xFF
-HpVolMn604_AdMixerVolWide1_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVolWide1_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVolWide2_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVolWide2_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVolWide3_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVolWide3_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol1_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol1_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol2_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol2_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol3_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol3_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol4_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol4_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol5_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol5_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol6_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol6_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol7_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol7_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol8_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol8_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol9_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol9_dy:
-	.align	4, 0x00
-HpVolMn604_AdMixerVol10_dx:
-	.space	2, 0x00
-HpVolMn604_AdMixerVol10_dy:
-	.align	4, 0x00
-data_500022F0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E58, 0x3B2E5C
-data_500022F4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E5C, 0x3B2E60
-data_500022F8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E60, 0x3B2E80
-data_50002318:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E80, 0x3B2E84
-data_5000231C:
-	.space	4, 0xFF
-SNDRHY_TtSvari_window:
-	.space	4, 0xFF
-SNDRHY_TtSvari_SndPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E8C, 0x3B2E90
-SvariNormal_parent:
-	.space	4, 0xFF
-SvariNormal_child:
-	.space	4, 0xFF
-SvariNormal_SndVari1_caption:
-	.space	4, 0x00
-SvariNormal_SndVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2E9C, 0x3B2EA0
-SvariNormal_SndVari1_selected:
-	.space	4, 0x00
-SvariNormal_SndVari1_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EA4, 0x3B2EA8
-SvariNormal_SndVari2_caption:
-	.space	4, 0x00
-SvariNormal_SndVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EAC, 0x3B2EB0
-SvariNormal_SndVari2_selected:
-	.space	4, 0x00
-SvariNormal_SndVari2_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EB4, 0x3B2EB8
-SvariNormal_SndVari3_caption:
-	.space	4, 0x00
-SvariNormal_SndVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EBC, 0x3B2EC0
-SvariNormal_SndVari3_selected:
-	.space	4, 0x00
-SvariNormal_SndVari3_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EC4, 0x3B2EC8
-SvariNormal_SndVari4_caption:
-	.space	4, 0x00
-SvariNormal_SndVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2ECC, 0x3B2ED0
-SvariNormal_SndVari4_selected:
-	.space	4, 0x00
-SvariNormal_SndVari4_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2ED4, 0x3B2ED8
-SvariNormal_SndVari5_caption:
-	.space	4, 0x00
-SvariNormal_SndVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EDC, 0x3B2EE0
-SvariNormal_SndVari5_selected:
-	.space	4, 0x00
-SvariNormal_SndVari5_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EE4, 0x3B2EE8
-SvariNormal_SndVari6_caption:
-	.space	4, 0x00
-SvariNormal_SndVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EEC, 0x3B2EF0
-SvariNormal_SndVari6_selected:
-	.space	4, 0x00
-SvariNormal_SndVari6_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EF4, 0x3B2EF8
-SvariNormal_SndVari7_caption:
-	.space	4, 0x00
-SvariNormal_SndVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2EFC, 0x3B2F00
-SvariNormal_SndVari7_selected:
-	.space	4, 0x00
-SvariNormal_SndVari7_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F04, 0x3B2F08
-SvariNormal_SndVari8_caption:
-	.space	4, 0x00
-SvariNormal_SndVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F0C, 0x3B2F10
-SvariNormal_SndVari8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F10, 0x3B2F14
-SvariNormal_SndVari8_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F14, 0x3B2F18
-SvariNormal_SndVari9_caption:
-	.space	4, 0x00
-SvariNormal_SndVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F1C, 0x3B2F20
-SvariNormal_SndVari9_selected:
-	.space	4, 0x00
-SvariNormal_SndVari9_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F24, 0x3B2F28
-SvariNormal_SndVari10_caption:
-	.space	4, 0x00
-SvariNormal_SndVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F2C, 0x3B2F30
-SvariNormal_SndVari10_selected:
-	.space	4, 0x00
-SvariNormal_SndVari10_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F34, 0x3B2F38
-SvariDrawbar_parent:
-	.space	4, 0xFF
-SvariDrawbar_child:
-	.space	4, 0xFF
-SvariDrawbar_Tremolo_FAST_onoff:
-	.space	4, 0x00
-SvariDrawbar_Perc223_2_onoff:
-	.space	4, 0x00
-SvariDrawbar_Perc4_4_onoff:
-	.space	4, 0x00
-SvariDrawbar_DrawAttack_DRAWBAR_ATTACK_TIME_selected:
-	.space	4, 0x00
-SvariDrawbar_DrawAttack_DRAWBAR_ATTACK_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F50, 0x3B2F54
-SvariDrawbar_DrawRelease_RELEASE_TIME_selected:
-	.space	4, 0x00
-SvariDrawbar_DrawRelease_RELEASE_TIME_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F58, 0x3B2F5C
-SvariDrawbar_PercDecay_PERCUSSIVE_TONE_DECA_selected:
-	.space	4, 0x00
-SvariDrawbar_PercDecay_PERCUSSIVE_TONE_DECA_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F60, 0x3B2F64
-SvariDrawbar_PercLevel_LEVEL_selected:
-	.space	4, 0x00
-SvariDrawbar_PercLevel_LEVEL_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F68, 0x3B2F6C
-SvariDrawbar_DrawVari1_caption:
-	.space	4, 0x00
-SvariDrawbar_DrawVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F70, 0x3B2F74
-SvariDrawbar_DrawVari1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F74, 0x3B2F78
-SvariDrawbar_DrawVari1_swvari:
-	.space	4, 0x00
-SvariAccordion_parent:
-	.space	4, 0xFF
-SvariAccordion_child:
-	.space	4, 0xFF
-SvariAccordion_AcdnTab1_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F88, 0x3B2F8C
-SvariAccordion_AcdnTab1_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab1_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F90, 0x3B2F94
-SvariAccordion_AcdnTab2_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2F98, 0x3B2F9C
-SvariAccordion_AcdnTab2_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab2_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FA0, 0x3B2FA4
-SvariAccordion_AcdnTab3_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FA8, 0x3B2FAC
-SvariAccordion_AcdnTab3_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab3_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FB0, 0x3B2FB4
-SvariAccordion_AcdnTab4_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FB8, 0x3B2FBC
-SvariAccordion_AcdnTab4_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab4_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FC0, 0x3B2FC4
-SvariAccordion_AcdnTab5_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FC8, 0x3B2FCC
-SvariAccordion_AcdnTab5_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab5_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FD0, 0x3B2FD4
-SvariAccordion_AcdnTab6_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FD8, 0x3B2FDC
-SvariAccordion_AcdnTab6_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab6_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FE0, 0x3B2FE4
-SvariAccordion_AcdnTab7_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FE8, 0x3B2FEC
-SvariAccordion_AcdnTab7_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab7_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FF0, 0x3B2FF4
-SvariAccordion_AcdnTab8_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B2FF8, 0x3B2FFC
-SvariAccordion_AcdnTab8_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab8_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3000, 0x3B3004
-SvariAccordion_AcdnTab9_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3008, 0x3B300C
-SvariAccordion_AcdnTab9_selected:
-	.space	4, 0x00
-SvariAccordion_AcdnTab9_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3010, 0x3B3014
-SvariAccordion_AcdnTab10_caption:
-	.space	4, 0x00
-SvariAccordion_AcdnTab10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3018, 0x3B301C
-SvariAccordion_AcdnTab10_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B301C, 0x3B3020
-SvariAccordion_AcdnTab10_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3020, 0x3B3024
-SvariExplorer_parent:
-	.space	4, 0xFF
-SvariExplorer_child:
-	.space	4, 0xFF
-SvariExplorer_SndExpGroup1_selected:
-	.space	4, 0xFF
-SvariExplorer_SndExpVari1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3030, 0x3B3034
-SvariExplorer_SndExpVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3034, 0x3B3038
-SvariExplorer_SndExpVari1_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari1_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B303C, 0x3B3040
-SvariExplorer_SndExpVari2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3040, 0x3B3044
-SvariExplorer_SndExpVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3044, 0x3B3048
-SvariExplorer_SndExpVari2_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari2_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B304C, 0x3B3050
-SvariExplorer_SndExpVari3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3050, 0x3B3054
-SvariExplorer_SndExpVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3054, 0x3B3058
-SvariExplorer_SndExpVari3_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari3_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B305C, 0x3B3060
-SvariExplorer_SndExpVari4_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3060, 0x3B3064
-SvariExplorer_SndExpVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3064, 0x3B3068
-SvariExplorer_SndExpVari4_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari4_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B306C, 0x3B3070
-SvariExplorer_SndExpVari5_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3070, 0x3B3074
-SvariExplorer_SndExpVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3074, 0x3B3078
-SvariExplorer_SndExpVari5_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari5_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B307C, 0x3B3080
-SvariExplorer_SndExpVari6_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3080, 0x3B3084
-SvariExplorer_SndExpVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3084, 0x3B3088
-SvariExplorer_SndExpVari6_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari6_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B308C, 0x3B3090
-SvariExplorer_SndExpVari7_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3090, 0x3B3094
-SvariExplorer_SndExpVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3094, 0x3B3098
-SvariExplorer_SndExpVari7_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari7_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B309C, 0x3B30A0
-SvariExplorer_SndExpVari8_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30A0, 0x3B30A4
-SvariExplorer_SndExpVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30A4, 0x3B30A8
-SvariExplorer_SndExpVari8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30A8, 0x3B30AC
-SvariExplorer_SndExpVari8_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30AC, 0x3B30B0
-SvariExplorer_SndExpVari9_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30B0, 0x3B30B4
-SvariExplorer_SndExpVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30B4, 0x3B30B8
-SvariExplorer_SndExpVari9_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari9_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30BC, 0x3B30C0
-SvariExplorer_SndExpVari10_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30C0, 0x3B30C4
-SvariExplorer_SndExpVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30C4, 0x3B30C8
-SvariExplorer_SndExpVari10_selected:
-	.space	4, 0x00
-SvariExplorer_SndExpVari10_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30CC, 0x3B30D0
-SvariExplorer_AbcToggle_ALPHABET_onoff:
-	.space	4, 0x00
-SvariMemory_parent:
-	.space	4, 0xFF
-SvariMemory_child:
-	.space	4, 0xFF
-SvariMemory_SndVari1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30DC, 0x3B30E0
-SvariMemory_SndVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30E0, 0x3B30E4
-SvariMemory_SndVari1_selected:
-	.space	4, 0x00
-SvariMemory_SndVari1_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30E8, 0x3B30EC
-SvariMemory_SndVari2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30EC, 0x3B30F0
-SvariMemory_SndVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30F0, 0x3B30F4
-SvariMemory_SndVari2_selected:
-	.space	4, 0x00
-SvariMemory_SndVari2_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30F8, 0x3B30FC
-SvariMemory_SndVari3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B30FC, 0x3B3100
-SvariMemory_SndVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3100, 0x3B3104
-SvariMemory_SndVari3_selected:
-	.space	4, 0x00
-SvariMemory_SndVari3_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3108, 0x3B310C
-SvariMemory_SndVari4_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B310C, 0x3B3110
-SvariMemory_SndVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3110, 0x3B3114
-SvariMemory_SndVari4_selected:
-	.space	4, 0x00
-SvariMemory_SndVari4_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3118, 0x3B311C
-SvariMemory_SndVari5_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B311C, 0x3B3120
-SvariMemory_SndVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3120, 0x3B3124
-SvariMemory_SndVari5_selected:
-	.space	4, 0x00
-SvariMemory_SndVari5_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3128, 0x3B312C
-SvariMemory_SndVari6_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B312C, 0x3B3130
-SvariMemory_SndVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3130, 0x3B3134
-SvariMemory_SndVari6_selected:
-	.space	4, 0x00
-SvariMemory_SndVari6_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3138, 0x3B313C
-SvariMemory_SndVari7_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B313C, 0x3B3140
-SvariMemory_SndVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3140, 0x3B3144
-SvariMemory_SndVari7_selected:
-	.space	4, 0x00
-SvariMemory_SndVari7_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3148, 0x3B314C
-SvariMemory_SndVari8_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B314C, 0x3B3150
-SvariMemory_SndVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3150, 0x3B3154
-SvariMemory_SndVari8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3154, 0x3B3158
-SvariMemory_SndVari8_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3158, 0x3B315C
-SvariMemory_SndVari9_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B315C, 0x3B3160
-SvariMemory_SndVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3160, 0x3B3164
-SvariMemory_SndVari9_selected:
-	.space	4, 0x00
-SvariMemory_SndVari9_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3168, 0x3B316C
-SvariMemory_SndVari10_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B316C, 0x3B3170
-SvariMemory_SndVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3170, 0x3B3174
-SvariMemory_SndVari10_selected:
-	.space	4, 0x00
-SvariMemory_SndVari10_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3178, 0x3B317C
-DrawbarWrite_parent:
-	.space	4, 0xFF
-DrawbarWrite_child:
-	.space	4, 0xFF
-DrawbarWrite_TitleMenu_WRITE_selected:
-	.space	4, 0x00
-RvariNormal_parent:
-	.space	4, 0xFF
-RvariNormal_child:
-	.space	4, 0xFF
-RvariNormal_RhyVari1_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3194, 0x3B3198
-RvariNormal_RhyVari1_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari1_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B319C, 0x3B31A0
-RvariNormal_RhyVari2_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31A4, 0x3B31A8
-RvariNormal_RhyVari2_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31AC, 0x3B31B0
-RvariNormal_RhyVari3_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31B4, 0x3B31B8
-RvariNormal_RhyVari3_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31BC, 0x3B31C0
-RvariNormal_RhyVari4_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31C4, 0x3B31C8
-RvariNormal_RhyVari4_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31CC, 0x3B31D0
-RvariNormal_RhyVari5_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31D4, 0x3B31D8
-RvariNormal_RhyVari5_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31DC, 0x3B31E0
-RvariNormal_RhyVari6_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31E4, 0x3B31E8
-RvariNormal_RhyVari6_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31EC, 0x3B31F0
-RvariNormal_RhyVari7_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31F4, 0x3B31F8
-RvariNormal_RhyVari7_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B31FC, 0x3B3200
-RvariNormal_RhyVari8_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3204, 0x3B3208
-RvariNormal_RhyVari8_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B320C, 0x3B3210
-RvariNormal_RhyVari9_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3214, 0x3B3218
-RvariNormal_RhyVari9_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari9_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B321C, 0x3B3220
-RvariNormal_RhyVari10_caption:
-	.space	4, 0x00
-RvariNormal_RhyVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3224, 0x3B3228
-RvariNormal_RhyVari10_selected:
-	.space	4, 0x00
-RvariNormal_RhyVari10_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B322C, 0x3B3230
-SNDRHY_TtRvari_window:
-	.space	4, 0xFF
-SNDRHY_TtRvari_RhyPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3234, 0x3B3238
-RvariCustom_parent:
-	.space	4, 0xFF
-RvariCustom_child:
-	.space	4, 0xFF
-RvariCustom_RhyVari1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3240, 0x3B3244
-RvariCustom_RhyVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3244, 0x3B3248
-RvariCustom_RhyVari1_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari1_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B324C, 0x3B3250
-RvariCustom_RhyVari2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3250, 0x3B3254
-RvariCustom_RhyVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3254, 0x3B3258
-RvariCustom_RhyVari2_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B325C, 0x3B3260
-RvariCustom_RhyVari3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3260, 0x3B3264
-RvariCustom_RhyVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3264, 0x3B3268
-RvariCustom_RhyVari3_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B326C, 0x3B3270
-RvariCustom_RhyVari4_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3270, 0x3B3274
-RvariCustom_RhyVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3274, 0x3B3278
-RvariCustom_RhyVari4_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B327C, 0x3B3280
-RvariCustom_RhyVari5_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3280, 0x3B3284
-RvariCustom_RhyVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3284, 0x3B3288
-RvariCustom_RhyVari5_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B328C, 0x3B3290
-RvariCustom_RhyVari6_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3290, 0x3B3294
-RvariCustom_RhyVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3294, 0x3B3298
-RvariCustom_RhyVari6_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B329C, 0x3B32A0
-RvariCustom_RhyVari7_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32A0, 0x3B32A4
-RvariCustom_RhyVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32A4, 0x3B32A8
-RvariCustom_RhyVari7_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32A8, 0x3B32AC
-RvariCustom_RhyVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32AC, 0x3B32B0
-RvariCustom_RhyVari8_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32B0, 0x3B32B4
-RvariCustom_RhyVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32B4, 0x3B32B8
-RvariCustom_RhyVari8_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32BC, 0x3B32C0
-RvariCustom_RhyVari9_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32C0, 0x3B32C4
-RvariCustom_RhyVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32C4, 0x3B32C8
-RvariCustom_RhyVari9_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari9_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32CC, 0x3B32D0
-RvariCustom_RhyVari10_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32D0, 0x3B32D4
-RvariCustom_RhyVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32D4, 0x3B32D8
-RvariCustom_RhyVari10_selected:
-	.space	4, 0x00
-RvariCustom_RhyVari10_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32DC, 0x3B32E0
-RvariMemory_parent:
-	.space	4, 0xFF
-RvariMemory_child:
-	.space	4, 0xFF
-RvariMemory_RhyVari1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32E8, 0x3B32EC
-RvariMemory_RhyVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32EC, 0x3B32F0
-RvariMemory_RhyVari1_selected:
-	.space	4, 0x00
-RvariMemory_RhyVari1_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32F4, 0x3B32F8
-RvariMemory_RhyVari2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32F8, 0x3B32FC
-RvariMemory_RhyVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B32FC, 0x3B3300
-RvariMemory_RhyVari2_selected:
-	.space	4, 0x00
-RvariMemory_RhyVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3304, 0x3B3308
-RvariMemory_RhyVari3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3308, 0x3B330C
-RvariMemory_RhyVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B330C, 0x3B3310
-RvariMemory_RhyVari3_selected:
-	.space	4, 0x00
-RvariMemory_RhyVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3314, 0x3B3318
-SNDRHY_TtSedrawbar_window:
-	.space	4, 0xFF
-SvariOrgan_parent:
-	.space	4, 0xFF
-SvariOrgan_child:
-	.space	4, 0xFF
-SubWinEuro_parent:
-	.space	4, 0xFF
-SubWinEuro_child:
-	.space	4, 0xFF
-SubWinEuro_Tremolo_FAST_onoff:
-	.space	4, 0x00
-SubWinEuro_TabPerc223_2_onoff:
-	.space	4, 0x00
-SubWinEuro_TabPerc4_4_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab1_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab2_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab3_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab4_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab5_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab6_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab7_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab8_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab9_onoff:
-	.space	4, 0x00
-SubWinEuro_OrganTab10_onoff:
-	.space	4, 0x00
-SubWinEuro_TabVibrato_ON_onoff:
-	.space	4, 0x00
-SubWinPipe_parent:
-	.space	4, 0xFF
-SubWinPipe_child:
-	.space	4, 0xFF
-SubWinPipe_OrganTab1_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab2_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab3_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab4_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab5_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab6_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab7_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab8_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab9_onoff:
-	.space	4, 0x00
-SubWinPipe_OrganTab10_onoff:
-	.space	4, 0x00
-SubWinPipe_TabTremulant_ON_onoff:
-	.space	4, 0x00
-SubWinPipe_TabTremulant_ON2_onoff:
-	.space	4, 0x00
-SubWinPipe_TabTremulant_ON3_onoff:
-	.space	4, 0x00
-SubWinUs_parent:
-	.space	4, 0xFF
-SubWinUs_child:
-	.space	4, 0xFF
-SubWinUs_Tremolo_FAST_onoff:
-	.space	4, 0x00
-SubWinUs_TabPerc223_2_onoff:
-	.space	4, 0x00
-SubWinUs_TabPerc4_4_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab1_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab2_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab3_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab4_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab5_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab6_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab7_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab8_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab9_onoff:
-	.space	4, 0x00
-SubWinUs_OrganTab10_onoff:
-	.space	4, 0x00
-SubWinUs_TabVibrato_ON_onoff:
-	.space	4, 0x00
-SvariExpEw_parent:
-	.space	4, 0xFF
-SvariExpEw_child:
-	.space	4, 0xFF
-SvariExpEw_SndExpGroup1_selected:
-	.space	4, 0xFF
-SvariExpEw_SndExpVari1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B33EC, 0x3B33F0
-SvariExpEw_SndExpVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B33F0, 0x3B33F4
-SvariExpEw_SndExpVari1_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari1_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B33F8, 0x3B33FC
-SvariExpEw_SndExpVari2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B33FC, 0x3B3400
-SvariExpEw_SndExpVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3400, 0x3B3404
-SvariExpEw_SndExpVari2_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari2_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3408, 0x3B340C
-SvariExpEw_SndExpVari3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B340C, 0x3B3410
-SvariExpEw_SndExpVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3410, 0x3B3414
-SvariExpEw_SndExpVari3_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari3_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3418, 0x3B341C
-SvariExpEw_SndExpVari4_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B341C, 0x3B3420
-SvariExpEw_SndExpVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3420, 0x3B3424
-SvariExpEw_SndExpVari4_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari4_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3428, 0x3B342C
-SvariExpEw_SndExpVari5_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B342C, 0x3B3430
-SvariExpEw_SndExpVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3430, 0x3B3434
-SvariExpEw_SndExpVari5_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari5_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3438, 0x3B343C
-SvariExpEw_SndExpVari6_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B343C, 0x3B3440
-SvariExpEw_SndExpVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3440, 0x3B3444
-SvariExpEw_SndExpVari6_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari6_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3448, 0x3B344C
-SvariExpEw_SndExpVari7_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B344C, 0x3B3450
-SvariExpEw_SndExpVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3450, 0x3B3454
-SvariExpEw_SndExpVari7_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari7_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3458, 0x3B345C
-SvariExpEw_SndExpVari8_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B345C, 0x3B3460
-SvariExpEw_SndExpVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3460, 0x3B3464
-SvariExpEw_SndExpVari8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3464, 0x3B3468
-SvariExpEw_SndExpVari8_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3468, 0x3B346C
-SvariExpEw_SndExpVari9_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B346C, 0x3B3470
-SvariExpEw_SndExpVari9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3470, 0x3B3474
-SvariExpEw_SndExpVari9_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari9_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3478, 0x3B347C
-SvariExpEw_SndExpVari10_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B347C, 0x3B3480
-SvariExpEw_SndExpVari10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3480, 0x3B3484
-SvariExpEw_SndExpVari10_selected:
-	.space	4, 0x00
-SvariExpEw_SndExpVari10_swvari:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3488, 0x3B348C
-SvariExpEw_ExpToggle_EXP1_onoff:
-	.space	4, 0x00
-SvariExpEw_ExpToggle_EXP2_onoff:
-	.space	4, 0x00
-SvariExpEw_ExpToggle_EXP3_onoff:
-	.space	4, 0x00
-SvariExpEw_ExpToggle_EXP4_onoff:
-	.space	4, 0x00
-SNDRHY_TtSeorgan_window:
-	.space	4, 0xFF
-OrganWrite_parent:
-	.space	4, 0xFF
-OrganWrite_child:
-	.space	4, 0xFF
-OrganWrite_TitleMenu_WRITE_selected:
-	.space	4, 0x00
-data_50002944:
-.incbin_range "baserom/kn7000_program.rom", 0x3B34AC, 0x3B34B0
-TtFavorite_window:
-	.space	4, 0xFF
-TtFavorite_Favorite1_selected:
-	.space	4, 0x00
-TtFavorite_Favorite2_selected:
-	.space	4, 0x00
-TtFavorite_Favorite3_selected:
-	.space	4, 0x00
-TtFavorite_Favorite4_selected:
-	.space	4, 0x00
-TtFavorite_Favorite5_selected:
-	.space	4, 0x00
-TtFavorite_Favorite6_selected:
-	.space	4, 0x00
-TtFavorite_Favorite7_selected:
-	.space	4, 0x00
-TtFavorite_Favorite8_selected:
-	.space	4, 0x00
-TtFavorite_Favorite9_selected:
-	.space	4, 0x00
-TtFavorite_Favorite10_selected:
-	.space	4, 0x00
-TtFavorite_FavBank1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B34DC, 0x3B34E0
-TtCtFavorite_window:
-	.space	4, 0xFF
-TtCtFavorite_FavBank1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B34E4, 0x3B34E8
-TtCtFavorite_ScreenMenu_BANK_NAMING_selected:
-	.space	4, 0x00
-TtCtFavorite_FavCategory1_selected:
-	.space	2, 0x00
-TtCtFavorite_FavItem1_selected:
-	.align	4, 0x00
-TtCtFavorite_IndexPushSw1_sw:
-	.space	4, 0x00
-FavBankNaming_window:
-	.space	4, 0xFF
-FavPreview_parent:
-	.space	4, 0xFF
-FavPreview_child:
-	.space	4, 0xFF
-FavPreview_Favorite1_selected:
-	.space	4, 0x00
-FavPreview_Favorite2_selected:
-	.space	4, 0x00
-FavPreview_Favorite3_selected:
-	.space	4, 0x00
-FavPreview_Favorite4_selected:
-	.space	4, 0x00
-FavPreview_Favorite5_selected:
-	.space	4, 0x00
-FavPreview_Favorite6_selected:
-	.space	4, 0x00
-FavPreview_Favorite7_selected:
-	.space	4, 0x00
-FavPreview_Favorite8_selected:
-	.space	4, 0x00
-FavPreview_Favorite9_selected:
-	.space	4, 0x00
-FavPreview_IndexPushSw1_sw:
-	.space	4, 0x00
-TtCtFavoritePR_window:
-	.space	4, 0xFF
-TtCtFavoritePR_FavCategory1_selected:
-	.space	2, 0x00
-TtCtFavoritePR_FavItem1_selected:
-	.align	4, 0x00
-TtCtFavoritePR_IndexPushSw1_sw:
-	.space	4, 0x00
-TtFavoritePR_window:
-	.space	4, 0xFF
-TtFavoritePR_Favorite1_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite2_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite3_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite4_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite5_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite6_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite7_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite8_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite9_selected:
-	.space	4, 0x00
-TtFavoritePR_Favorite10_selected:
-	.space	4, 0x00
-STYLCNVWAIT_window:
-	.space	4, 0xFF
-STYLCNVMODL_window:
-	.space	4, 0xFF
-StylCnvModlBox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3568, 0x3B356C
-STYLCNVCNVT_window:
-	.space	4, 0xFF
-StylCnvCnvtBox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3570, 0x3B3574
-STYLCNVSTOR_window:
-	.space	4, 0xFF
-STYLCNVSTOR_RamEditBox_Data_Storage_to_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3578, 0x3B357C
-STYLCNVSTOR_RamEditBox_Data_Storage_to_data:
-	.space	4, 0x00
-STYLCNVTXT_window:
-	.space	4, 0xFF
-STYLCNVSEL_window:
-	.space	4, 0xFF
-StylCnvSelBox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3588, 0x3B358C
-STYLCNVCONT_window:
-	.space	4, 0xFF
-data_50002A28:
-	.space	4, 0x00
-stest1_window:
-	.space	4, 0xFF
-test1_ram_parent:
-	.space	4, 0xFF
-test1_ram_child:
-	.space	4, 0xFF
-test1_rhyrom_parent:
-	.space	4, 0xFF
-test1_rhyrom_child:
-	.space	4, 0xFF
-test1_cpu_parent:
-	.space	4, 0xFF
-test1_cpu_child:
-	.space	4, 0xFF
-stest2_window:
-	.space	4, 0xFF
-TEST2OKOK_parent:
-	.space	4, 0xFF
-TEST2OKOK_child:
-	.space	4, 0xFF
-TEST2NGNG_parent:
-	.space	4, 0xFF
-TEST2NGNG_child:
-	.space	4, 0xFF
-TEST2OKNG_parent:
-	.space	4, 0xFF
-TEST2OKNG_child:
-	.space	4, 0xFF
-TEST2NGOK_parent:
-	.space	4, 0xFF
-TEST2NGOK_child:
-	.space	4, 0xFF
-DIAG_TtlScreen_CHECK_by_SINE_WAVE_window:
-	.space	4, 0xFF
-stest3_window:
-	.space	4, 0xFF
-sinewavetest_parent:
-	.space	4, 0xFF
-sinewavetest_child:
-	.space	4, 0xFF
-sinewavetest_nowswno:
-	.space	2, 0x00
-sinewavetest_oldswno:
-	.align	4, 0x00
-stest4_window:
-	.space	4, 0xFF
-stest4_RamEditBox_CPL_selected:
-	.space	4, 0x00
-stest4_RamEditBox_CPL_data:
-	.space	4, 0x00
-stest4_RamEditBox_CPC_selected:
-	.space	4, 0x00
-stest4_RamEditBox_CPC_data:
-	.space	4, 0x00
-stest4_RamEditBox_CPR_selected:
-	.space	4, 0x00
-stest4_RamEditBox_CPR_data:
-	.space	4, 0x00
-stest4_RamEditBox_CPSD_selected:
-	.space	4, 0x00
-stest4_RamEditBox_CPSD_data:
-	.space	4, 0x00
-CP_AllOKNG2_okng:
-	.space	4, 0x00
-stest5_window:
-	.space	4, 0xFF
-TEST5_Red_parent:
-	.space	4, 0xFF
-TEST5_Red_child:
-	.space	4, 0xFF
-TEST5_Blue_parent:
-	.space	4, 0xFF
-TEST5_Blue_child:
-	.space	4, 0xFF
-TEST5_Green_parent:
-	.space	4, 0xFF
-TEST5_Green_child:
-	.space	4, 0xFF
-TEST5_White_parent:
-	.space	4, 0xFF
-TEST5_White_child:
-	.space	4, 0xFF
-TEST5_Black_parent:
-	.space	4, 0xFF
-TEST5_Black_child:
-	.space	4, 0xFF
-TEST5_TP_parent:
-	.space	4, 0xFF
-TEST5_TP_child:
-	.space	4, 0xFF
-TEST5_Itimatu_parent:
-	.space	4, 0xFF
-TEST5_Itimatu_child:
-	.space	4, 0xFF
-stest6_window:
-	.space	4, 0xFF
-TEST6_OK_parent:
-	.space	4, 0xFF
-TEST6_OK_child:
-	.space	4, 0xFF
-TEST6_NO_parent:
-	.space	4, 0xFF
-TEST6_NO_child:
-	.space	4, 0xFF
-TEST6DSP_OK_parent:
-	.space	4, 0xFF
-TEST6DSP_OK_child:
-	.space	4, 0xFF
-TEST6DSP_NO_parent:
-	.space	4, 0xFF
-TEST6DSP_NO_child:
-	.space	4, 0xFF
-stest7_window:
-	.space	4, 0xFF
-T7_TOTAL_selected:
-	.space	4, 0x00
-T7_OK_selected:
-	.space	4, 0x00
-T7_NG_selected:
-	.space	4, 0x00
-test_ext_window:
-	.space	4, 0xFF
-DIAG_TtlScreen1_window:
-	.space	4, 0xFF
-Testmenu7_parent:
-	.space	4, 0xFF
-Testmenu7_child:
-	.space	4, 0xFF
-Testmenu7_nowswno:
-	.space	2, 0x00
-Testmenu7_oldswno:
-	.align	4, 0x00
-INOUT_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu1_parent:
-	.space	4, 0xFF
-Testmenu1_child:
-	.space	4, 0xFF
-ProgramROM_OKNG2_okng:
-	.space	4, 0x00
-ProgramROM_OKNG1_okng:
-	.space	4, 0x00
-RhythmROM_OKNG_okng:
-	.space	4, 0x00
-CustomROM_OKNG_okng:
-	.space	4, 0x00
-DemoROM_OKNG_okng:
-	.space	4, 0x00
-ROM_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu2_parent:
-	.space	4, 0xFF
-Testmenu2_child:
-	.space	4, 0xFF
-WorkRAM_OKNG1_okng:
-	.space	4, 0x00
-WorkRAM_OKNG2_okng:
-	.space	4, 0x00
-StaticRAM_OKNG_okng:
-	.space	4, 0x00
-LcdVRAM_OKNG_okng:
-	.space	4, 0x00
-FastRAM_OKNG1_okng:
-	.space	4, 0x00
-FastRAM_OKNG2_okng:
-	.space	4, 0x00
-RAM_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu3_parent:
-	.space	4, 0xFF
-Testmenu3_child:
-	.space	4, 0xFF
-PanelCPL_OKNG_okng:
-	.space	4, 0x00
-PanelCPR_OKNG_okng:
-	.space	4, 0x00
-Dsp_OKNG_okng:
-	.space	4, 0x00
-DspRAM_OKNG1_okng:
-	.space	4, 0x00
-DspRAM_OKNG2_okng:
-	.space	4, 0x00
-Fdc_OKNG_okng:
-	.space	4, 0x00
-OTHER_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu5_parent:
-	.space	4, 0xFF
-Testmenu5_child:
-	.space	4, 0xFF
-Testmenu5_RamEditBox_CPL_selected:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPL_data:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPC_selected:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPC_data:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPR_selected:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPR_data:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPSD_selected:
-	.space	4, 0x00
-Testmenu5_RamEditBox_CPSD_data:
-	.space	4, 0x00
-CP_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu6_parent:
-	.space	4, 0xFF
-Testmenu6_child:
-	.space	4, 0xFF
-Testmenu8_parent:
-	.space	4, 0xFF
-Testmenu8_child:
-	.space	4, 0xFF
-MIDIIO_OKNG_okng:
-	.space	4, 0x00
-Testmenu8_MmmEditBox_BASS_PEDAL_SW_selected:
-	.space	4, 0x00
-Testmenu8_MmmEditBox_BASS_PEDAL_SW_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3744, 0x3B3748
-Testmenu8_IndexWideTgl_INTERFACE_onoff:
-	.space	4, 0x00
-Testmenu8_IndexWideTgl_NORMAL_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B374C, 0x3B3750
-Testmenu9_parent:
-	.space	4, 0xFF
-Testmenu9_child:
-	.space	4, 0xFF
-MasterTG_OKNG1_okng:
-	.space	4, 0x00
-MasterTG_OKNG2_okng:
-	.space	4, 0x00
-SubTG_OKNG2_okng:
-	.space	4, 0x00
-SubTG_OKNG1_okng:
-	.space	4, 0x00
-WAVE_AllOKNG_okng:
-	.space	4, 0x00
-Testmenu10_parent:
-	.space	4, 0xFF
-Testmenu10_child:
-	.space	4, 0xFF
-Testmenu10_nowswno:
-	.space	2, 0x00
-Testmenu10_oldswno:
-	.align	4, 0x00
-Testmenu4_parent:
-	.space	4, 0xFF
-Testmenu4_child:
-	.space	4, 0xFF
-TM_FD_TOTAL_selected:
-	.space	4, 0x00
-TM_FD_OK_selected:
-	.space	4, 0x00
-TM_FD_NG_selected:
-	.space	4, 0x00
-Testmenu4_MmmBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B378C, 0x3B3790
-DIAG_Screen1_window:
-	.space	4, 0xFF
-DIAG_TitleMenu_DEBUG_TOOLS_selected:
-	.space	4, 0x00
-TM_MIDI_WAIT_parent:
-	.space	4, 0xFF
-TM_MIDI_WAIT_child:
-	.space	4, 0xFF
-TM_ROM_WAIT_parent:
-	.space	4, 0xFF
-TM_ROM_WAIT_child:
-	.space	4, 0xFF
-TM_RAM_WAIT_parent:
-	.space	4, 0xFF
-TM_RAM_WAIT_child:
-	.space	4, 0xFF
-TM_DEVICE_WAIT_parent:
-	.space	4, 0xFF
-TM_DEVICE_WAIT_child:
-	.space	4, 0xFF
-LCDB_OK_parent:
-	.space	4, 0xFF
-LCDB_OK_child:
-	.space	4, 0xFF
-LOWB_OK_parent:
-	.space	4, 0xFF
-LOWB_OK_child:
-	.space	4, 0xFF
-M1_ALLSW_OK_parent:
-	.space	4, 0xFF
-M1_ALLSW_OK_child:
-	.space	4, 0xFF
-TestMenu2_window:
-	.space	4, 0xFF
-TestMenu2_TestMenuPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B37D4, 0x3B37D8
-Testmenu11_parent:
-	.space	4, 0xFF
-Testmenu11_child:
-	.space	4, 0xFF
-Exp1_OKNG_okng:
-	.space	4, 0x00
-Exp2_OKNG_okng:
-	.space	4, 0x00
-Exp1_OKNG11_okng:
-	.space	4, 0x00
-Exp1_OKNG12_okng:
-	.space	4, 0x00
-Exp1_OKNG22_okng:
-	.space	4, 0x00
-Exp1_OKNG21_okng:
-	.space	4, 0x00
-Exp2_OKNG11_okng:
-	.space	4, 0x00
-Exp2_OKNG12_okng:
-	.space	4, 0x00
-Exp2_OKNG22_okng:
-	.space	4, 0x00
-Exp2_OKNG21_okng:
-	.space	4, 0x00
-Exp3_OKNG_okng:
-	.space	4, 0x00
-Exp4_OKNG_okng:
-	.space	4, 0x00
-Exp3_OKNG11_okng:
-	.space	4, 0x00
-Exp3_OKNG12_okng:
-	.space	4, 0x00
-Exp3_OKNG22_okng:
-	.space	4, 0x00
-Exp3_OKNG21_okng:
-	.space	4, 0x00
-Exp4_OKNG11_okng:
-	.space	4, 0x00
-Exp4_OKNG12_okng:
-	.space	4, 0x00
-Exp4_OKNG22_okng:
-	.space	4, 0x00
-Exp4_OKNG21_okng:
-	.space	4, 0x00
-EXP_AllOKNG_okng:
-	.space	4, 0x00
-TM_EXP_WAIT_parent:
-	.space	4, 0xFF
-TM_EXP_WAIT_child:
-	.space	4, 0xFF
-TestmenuSD_parent:
-	.space	4, 0xFF
-TestmenuSD_child:
-	.space	4, 0xFF
-SD1_OKNG_okng:
-	.space	4, 0x00
-SDTotalBox_selected:
-	.space	4, 0x00
-SDOKBox_selected:
-	.space	4, 0x00
-SDNGBox_selected:
-	.space	4, 0x00
-TestmenuSD_MmmBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3854, 0x3B3858
-TestmenuSD_IndexWideTgl_START_onoff:
-	.space	4, 0x00
-TestmenuSD_IndexWideTgl_STOP_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B385C, 0x3B3860
-TM_SD_WAIT_parent:
-	.space	4, 0xFF
-TM_SD_WAIT_child:
-	.space	4, 0xFF
-TEST5_VIDEOOUT_parent:
-	.space	4, 0xFF
-TEST5_VIDEOOUT_child:
-	.space	4, 0xFF
-TEST5_VIDEOOUT_IndexWideTgl_PAL_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3870, 0x3B3874
-TEST5_VIDEOOUT_IndexWideTgl_NTSC_onoff:
-	.space	4, 0x00
-data_50002D10:
-	.space	4, 0x00
-data_50002D14:
-	.space	4, 0x00
-data_50002D18:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3880, 0x3B389C
-data_50002D34:
-	.space	4, 0x00
-data_50002D38:
-	.space	4, 0x00
-data_50002D3C:
-	.space	4, 0x00
-data_50002D40:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38A8, 0x3B38AA
-data_50002D42:
-	.space	1, 0xF5
-data_50002D43:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38AB, 0x3B38AD
-data_50002D45:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38AD, 0x3B38AF
-data_50002D47:
-	.align	4, 0xF5
+zlib_48797E14:	# DemoSong10: its song record, 2272 bytes, stored as a zlib stream of 776 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
 
-Str_a_3:	.asciz "a"
+# 1 song record(s) of 0x8e0 bytes.
+# DemoSong10_Record
+
+# DemoSong10_Record_Song1
+	.ascii	"ZZZZ"
+	.byte	0, 0x01, 0x0d	# +4: 1 = a 10-song file; +5: the model signature
+# +0x07..+0xCF, not traced
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	1, 18, 0, 192, 7, 0, 0, 254, 127, 16, 17, 18, 3, 4, 5, 6
+	.byte	7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 112, 5, 255, 255, 0, 1, 2, 3, 1
+	.byte	1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1
+	.byte	1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 3
+	.byte	0, 255, 255, 6, 0, 14, 0, 21, 0, 35, 0, 37, 0, 39, 0, 40
+	.byte	0, 41, 0, 55, 0, 67, 0, 77, 0, 80, 0, 83, 0, 87, 0, 255
+	.byte	255, 5, 112, 98, 229, 177, 67, 47, 217, 252, 219, 253, 147, 99, 42, 132
+	.byte	5, 1, 1, 0, 1, 0, 0, 0, 88, 0, 129, 4, 0, 0, 0, 0
+	.byte	0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 254, 127, 0, 0, 0, 0, 0, 0
+	sq_track	0x00, 65535	# track 1
+	sq_track	0x80, 1	# track 2
+	sq_track	0x80, 7	# track 3
+	sq_track	0x80, 15	# track 4
+	sq_track	0x80, 22	# track 5
+	sq_track	0x80, 36	# track 6
+	sq_track	0x80, 38	# track 7
+	sq_track	0x80, 40	# track 8
+	sq_track	0x80, 41	# track 9
+	sq_track	0x80, 42	# track 10
+	sq_track	0x80, 56	# track 11
+	sq_track	0x80, 68	# track 12
+	sq_track	0x80, 78	# track 13
+	sq_track	0x80, 81	# track 14
+	sq_track	0x80, 84	# track 15
+	sq_track	0x00, 65535	# track 16
+# +0x100..+0x11F, not traced
+	.byte	80, 111, 108, 121, 32, 83, 121, 110, 116, 104, 32, 32, 32, 32, 32, 32
+	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+# GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+# (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+# which no parameter record covers
+	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
+	PMR_NAME_HEAD
+	.ascii	"                "
+	PMR_NAME_TAIL	0, 0
+	PMR_PART	0x10, 1, 1, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 0, 60, 40, 0, 64, 29, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x11, 90, 0, 32, 108, 53, 249, 2, 0, 0, 0, 0, 168, 0, 176, 40, 0, 64, 28, 64, 64, 64, 64, 64, 64, 108, 82, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x12, 4, 28, 40, 94, 37, 8, 2, 0, 0, 0, 0, 210, 80, 127, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_ENTRY	0x13, 85, 0, 35, 255
+	PMR_ENTRY	0x14, 92, 0, 35, 255
+	PMR_ENTRY	0x15, 77, 0, 35, 255
+	PMR_ENTRY	0x16, 66, 0, 35, 255
+	PMR_ENTRY	0x17, 105, 0, 35, 255
+	PMR_ENTRY	0x18, 105, 0, 35, 255
+	PMR_ENTRY	0x19, 105, 0, 35, 255
+	PMR_ENTRY	0x1a, 105, 0, 35, 255
+	PMR_PART	0x1b, 5, 0, 32, 94, 37, 194, 2, 0, 0, 0, 0, 158, 80, 208, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1c, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x1f, 33, 0, 32, 105, 53, 194, 2, 0, 0, 0, 0, 40, 80, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x00, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x01, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x02, 0, 0, 32, 100, 53, 234, 2, 0, 0, 0, 0, 85, 80, 60, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x03, 33, 0, 32, 118, 53, 234, 2, 0, 0, 0, 0, 40, 0, 80, 0, 0, 64, 29, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x04, 30, 0, 32, 117, 53, 234, 2, 0, 0, 0, 0, 255, 204, 80, 0, 0, 64, 30, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x05, 2, 72, 32, 73, 53, 234, 2, 0, 0, 0, 0, 102, 0, 177, 41, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x06, 61, 97, 32, 104, 53, 234, 2, 0, 0, 0, 0, 166, 0, 79, 46, 0, 64, 32, 64, 64, 64, 64, 64, 64, 108, 78, 28, 40, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x07, 125, 17, 32, 104, 53, 234, 2, 0, 0, 0, 0, 70, 0, 80, 45, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 101, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x08, 55, 48, 32, 105, 53, 234, 2, 0, 0, 0, 0, 46, 0, 80, 40, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 55, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x09, 20, 0, 38, 127, 37, 202, 2, 0, 0, 0, 0, 80, 0, 64, 32, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0a, 17, 0, 38, 118, 53, 234, 2, 0, 0, 0, 0, 80, 0, 64, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0b, 7, 8, 32, 100, 53, 234, 2, 0, 0, 0, 0, 58, 0, 50, 29, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 34, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0c, 37, 0, 32, 82, 53, 234, 2, 0, 0, 0, 0, 80, 0, 80, 9, 0, 64, 30, 64, 64, 64, 64, 64, 64, 108, 72, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0d, 66, 48, 32, 110, 181, 234, 2, 0, 0, 0, 0, 168, 0, 30, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 104, 88, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0e, 97, 32, 32, 114, 53, 234, 2, 0, 0, 0, 0, 16, 0, 67, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_PART	0x0f, 56, 0, 38, 89, 53, 234, 2, 0, 0, 0, 0, 80, 0, 64, 35, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_43_2	255, 0
+	PMR_4B_8	255, 0, 0, 0, 192, 0, 255, 255
+	PMR_4A_4	128, 80, 4, 60
+	PMR_42_14	96, 1, 0, 16, 0, 0, 0, 48, 136, 0, 0, 0, 0, 0
+	PMR_41_8	1, 0, 0, 0, 52, 0, 0, 0
+	PMR_4C_30	128, 80, 0, 32, 22, 0, 64, 36, 0, 0, 91, 0, 0, 0, 32, 0, 18, 8, 57, 0, 72, 47, 68, 0, 0, 0, 0, 0, 0, 0
+	PMR_4D_14	5, 24, 11, 15, 24, 14, 15, 24, 17, 15, 24, 23, 24, 0
+	PMR_44_20	6, 60, 64, 255, 7, 2, 4, 7, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	PMR_46_4	105, 0, 0, 0
+	PMR_45_2	0, 0
+	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
+	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
+	PMR_END
+# +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 1, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 4, 16, 17, 18, 127, 20, 0, 9, 8, 19, 19, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+# payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+# not keep (measured)
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0
+	.endzlib
+zlib_4879811C:	# DemoSong01: its event memory, 32512 bytes, stored as a zlib stream of 15756 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 127 cells of 256 bytes.  Tracks typed event by event: 16 of 16.
+# DemoSong01_Events
+	sq_cell	0x80, 0, 2	# cell 1: song 1 track 1, 1 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 16, 7, 73
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 27, 24, 40
+	sq_beat
+	sq_cc	0, 0, 16, 7, 73
+	sq_note	3, 0, 53, 111, 17, 0
+	sq_cc	24, 0, 16, 91, 9
+	sq_note	25, 0, 55, 76, 12, 0
+	sq_note	51, 0, 55, 66, 11, 0
+	sq_note	76, 0, 55, 101, 13, 0
+	sq_beat
+	sq_note	32, 0, 55, 70, 5, 0
+	sq_note	55, 0, 55, 113, 11, 0
+	sq_note	78, 0, 55, 70, 10, 0
+	sq_beat
+	sq_note	4, 0, 55, 78, 8, 0
+	sq_note	31, 0, 55, 111, 10, 0
+	sq_note	77, 0, 55, 98, 7, 0
+	sq_beat
+	sq_note	5, 0, 58, 111, 20, 0
+	sq_note	22, 0, 59, 73, 17, 0
+	sq_note	48, 0, 53, 57, 8, 0
+	sq_note	71, 0, 53, 81, 8, 0
+	sq_beat
+	sq_note	1, 0, 53, 107, 12, 0
+	sq_note	17, 0, 55, 89, 14, 0
+	sq_note	45, 0, 55, 73, 11, 0
+	sq_note	72, 0, 55, 109, 12, 0
+	sq_beat
+	sq_note	22, 0, 55, 69, 8, 0
+	sq_note	50, 0, 55, 115, 33, 0
+	sq_beat
+	sq_note	30, 0, 55, 105, 10, 0
+	sq_note	77, 0, 53, 81, 5, 0
+	sq_beat
+	sq_note	3, 0, 60, 116, 36, 0
+	sq_bend	12, 0, 0, 65
+	sq_bend	15, 0, 64, 68
+	sq_bend	18, 0, 64, 70
+	sq_bend	21, 0, 64, 75
+	sq_bend	24, 0, 64, 82
+	sq_bend	29, 0, 0, 64
+	sq_bend	32, 0, 64, 62
+	sq_bend	35, 0, 0, 64
+	sq_note	51, 0, 58, 94, 14, 0
+	sq_note	71, 0, 59, 87, 11, 0
+	sq_beat
+	sq_note	4, 0, 53, 99, 15, 0
+	.byte	0x19, 0x90, 0x37	# bytes 1..3 of `sq_note	25, 0, 55, 71, 10, 0` (the event spans two cells)
+	sq_cell	0x80, 1, 3	# cell 2: song 1 track 1, 2 of 5
+	.byte	0x47, 0x0a, 0x00	# bytes 4..6 of `sq_note	25, 0, 55, 71, 10, 0` (the event spans two cells)
+	sq_note	48, 0, 55, 90, 10, 0
+	sq_note	73, 0, 55, 110, 13, 0
+	sq_beat
+	sq_note	21, 0, 55, 72, 8, 0
+	sq_note	51, 0, 55, 110, 10, 0
+	sq_note	73, 0, 55, 65, 8, 0
+	sq_note	94, 0, 55, 71, 6, 0
+	sq_beat
+	sq_note	27, 0, 55, 98, 6, 0
+	sq_note	75, 0, 55, 83, 6, 0
+	sq_beat
+	sq_note	2, 0, 58, 114, 17, 0
+	sq_note	23, 0, 59, 65, 14, 0
+	sq_note	23, 0, 60, 60, 5, 0
+	sq_note	49, 0, 53, 53, 10, 0
+	sq_note	73, 0, 53, 88, 9, 0
+	sq_beat
+	sq_note	0, 0, 53, 111, 15, 0
+	sq_note	22, 0, 55, 73, 10, 0
+	sq_note	47, 0, 55, 85, 8, 0
+	sq_note	73, 0, 55, 110, 11, 0
+	sq_beat
+	sq_note	26, 0, 55, 93, 7, 0
+	sq_note	50, 0, 60, 111, 17, 0
+	sq_note	78, 0, 53, 73, 7, 0
+	sq_beat
+	sq_note	5, 0, 58, 112, 22, 0
+	sq_note	27, 0, 59, 78, 19, 0
+	sq_note	48, 0, 53, 58, 8, 0
+	sq_note	74, 0, 53, 72, 8, 0
+	sq_beat
+	sq_note	4, 0, 55, 105, 14, 0
+	sq_note	32, 0, 53, 67, 7, 0
+	sq_note	51, 0, 55, 101, 14, 0
+	sq_note	73, 0, 55, 56, 9, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 57, 98, 14, 0
+	sq_note	74, 0, 57, 81, 13, 0
+	sq_beat
+	sq_note	27, 0, 57, 105, 8, 0
+	sq_note	74, 0, 57, 87, 5, 0
+	sq_beat
+	sq_note	2, 0, 57, 98, 11, 0
+	sq_note	24, 0, 57, 80, 14, 0
+	sq_note	77, 0, 57, 100, 8, 0
+	sq_beat
+	sq_note	51, 0, 57, 100, 34, 0
+	sq_beat
+	sq_note	26, 0, 57, 87, 5, 0
+	sq_note	50, 0, 69, 113, 13, 0
+	sq_note	73, 0, 69, 80, 18, 0
+	sq_beat
+	sq_cell	0x80, 2, 4	# cell 3: song 1 track 1, 3 of 5
+	sq_note	1, 0, 57, 76, 5, 0
+	sq_note	27, 0, 69, 110, 12, 0
+	sq_note	74, 0, 57, 85, 5, 0
+	sq_beat
+	sq_note	2, 0, 69, 110, 13, 0
+	sq_note	25, 0, 69, 75, 11, 0
+	sq_note	48, 0, 57, 91, 6, 0
+	sq_note	74, 0, 69, 107, 10, 0
+	sq_beat
+	sq_note	50, 0, 57, 103, 12, 0
+	sq_note	73, 0, 57, 78, 14, 0
+	sq_beat
+	sq_note	26, 0, 57, 107, 13, 0
+	sq_note	73, 0, 57, 85, 6, 0
+	sq_beat
+	sq_note	0, 0, 57, 108, 11, 0
+	sq_note	22, 0, 57, 76, 14, 0
+	sq_note	51, 0, 57, 83, 5, 0
+	sq_note	75, 0, 57, 113, 13, 0
+	sq_beat
+	sq_note	28, 0, 57, 91, 7, 0
+	sq_note	50, 0, 57, 111, 13, 0
+	sq_note	73, 0, 57, 78, 14, 0
+	sq_beat
+	sq_note	26, 0, 57, 59, 5, 0
+	sq_note	49, 0, 57, 42, 13, 0
+	sq_note	74, 0, 57, 26, 12, 0
+	sq_beat
+	sq_note	26, 0, 57, 16, 16, 0
+	sq_note	75, 0, 57, 10, 7, 0
+	sq_beat
+	sq_note	1, 0, 57, 8, 13, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 16, 7, 73
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 16, 6, 32
+	sq_beat
+	sq_cc	0, 0, 16, 7, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 90, 117, 15, 0
+	.byte	0x06	# bytes 1..1 of `sq_note	6, 0, 91, 116, 76, 3` (the event spans two cells)
+	sq_cell	0x80, 3, 5	# cell 4: song 1 track 1, 4 of 5
+	.byte	0x90, 0x5b, 0x74, 0x4c, 0x03	# bytes 2..6 of `sq_note	6, 0, 91, 116, 76, 3` (the event spans two cells)
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 89, 111, 22, 1
+	sq_beat
+	sq_note	91, 0, 84, 113, 20, 0
+	sq_note	92, 0, 91, 81, 92, 1
+	sq_note	94, 0, 85, 109, 9, 0
+	sq_beat
+	sq_note	8, 0, 86, 99, 47, 0
+	sq_note	49, 0, 84, 99, 29, 0
+	sq_note	85, 0, 86, 56, 11, 0
+	sq_note	85, 0, 84, 88, 88, 0
+	sq_beat
+	sq_note	73, 0, 86, 93, 18, 0
+	sq_note	76, 0, 88, 73, 7, 0
+	sq_note	82, 0, 84, 93, 23, 0
+	sq_note	89, 0, 87, 78, 5, 0
+	sq_beat
+	sq_note	3, 0, 82, 91, 28, 1
+	sq_beat
+	sq_note	40, 0, 79, 108, 16, 0
+	sq_note	68, 0, 82, 112, 16, 0
+	sq_note	89, 0, 84, 89, 21, 0
+	sq_note	90, 0, 83, 80, 5, 0
+	sq_beat
+	sq_note	21, 0, 85, 107, 17, 0
+	sq_note	45, 0, 86, 96, 24, 0
+	sq_note	70, 0, 82, 66, 8, 0
+	sq_note	85, 0, 79, 96, 13, 0
+	sq_beat
+	sq_note	6, 0, 84, 96, 23, 0
+	sq_note	26, 0, 82, 107, 18, 0
+	sq_note	46, 0, 79, 90, 19, 0
+	sq_note	69, 0, 77, 90, 15, 0
+	sq_note	92, 0, 74, 110, 24, 0
+	sq_beat
+	sq_note	22, 0, 73, 101, 16, 0
+	sq_note	45, 0, 72, 85, 16, 0
+	sq_note	66, 0, 70, 99, 20, 0
+	sq_note	94, 0, 67, 96, 21, 0
+	sq_beat
+	sq_note	23, 0, 65, 90, 18, 0
+	sq_note	53, 0, 72, 106, 14, 0
+	sq_note	72, 0, 65, 88, 20, 0
+	sq_beat
+	sq_note	2, 0, 70, 112, 20, 0
+	sq_note	27, 0, 67, 98, 17, 0
+	sq_note	46, 0, 65, 93, 16, 0
+	sq_note	71, 0, 62, 96, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 4, 65535	# cell 5: song 1 track 1, 5 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	198, 0x00	# after the end of track
+	sq_cell	0x80, 0, 7	# cell 6: song 1 track 2, 1 of 21
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 48, 16, 32
+	sq_cc	1, 0, 17, 7, 119
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	72, 0, 17, 91, 40
+	sq_note	95, 0, 74, 90, 70, 0
+	sq_beat
+	sq_note	65, 0, 76, 92, 74, 0
+	sq_beat
+	sq_note	45, 0, 77, 96, 70, 0
+	sq_beat
+	sq_note	22, 0, 86, 98, 78, 0
+	sq_beat
+	sq_note	0, 0, 83, 101, 50, 0
+	sq_note	49, 0, 79, 101, 45, 0
+	sq_beat
+	sq_note	2, 0, 77, 100, 71, 0
+	sq_note	73, 0, 76, 74, 71, 0
+	sq_beat
+	sq_note	46, 0, 72, 80, 72, 0
+	sq_beat
+	sq_note	20, 0, 67, 93, 78, 0
+	sq_beat
+	sq_note	2, 0, 64, 101, 48, 0
+	sq_note	50, 0, 60, 88, 52, 0
+	sq_beat
+	sq_note	48, 0, 36, 97, 14, 0
+	sq_note	48, 0, 48, 95, 11, 0
+	sq_note	48, 0, 60, 111, 11, 0
+	sq_beat
+	sq_note	23, 0, 36, 96, 13, 0
+	sq_note	23, 0, 48, 93, 12, 0
+	sq_note	23, 0, 60, 110, 10, 0
+	sq_beat
+	sq_note	1, 0, 36, 98, 14, 0
+	sq_note	1, 0, 48, 98, 11, 0
+	sq_note	1, 0, 60, 110, 11, 0
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 17, 20, 32
+	sq_cc	0, 0, 17, 7, 127
+	sq_cc	24, 0, 17, 91, 40
+	sq_beat
+	sq_beat
+	sq_note	16, 0, 36, 78, 14, 0
+	sq_note	16, 0, 38, 76, 21, 0
+	sq_note	16, 0, 40, 81, 29, 0
+	sq_note	18, 0, 41, 83, 35, 0
+	sq_note	35, 0, 43, 14, 27, 0
+	sq_note	39, 0, 45, 49, 30, 0
+	sq_note	48, 0, 47, 43, 29, 0
+	sq_note	58, 0, 48, 53, 27, 0
+	sq_note	67, 0, 50, 45, 25, 0
+	sq_note	75, 0, 52, 49, 26, 0
+	.byte	0x54, 0x90, 0x35, 0x30, 0x19	# bytes 1..5 of `sq_note	84, 0, 53, 48, 25, 0` (the event spans two cells)
+	sq_cell	0x80, 6, 8	# cell 7: song 1 track 2, 2 of 21
+	.byte	0x00	# bytes 6..6 of `sq_note	84, 0, 53, 48, 25, 0` (the event spans two cells)
+	sq_note	91, 0, 55, 47, 26, 0
+	sq_beat
+	sq_note	3, 0, 57, 48, 26, 0
+	sq_note	14, 0, 59, 47, 22, 0
+	sq_note	20, 0, 60, 45, 23, 0
+	sq_note	28, 0, 62, 40, 22, 0
+	sq_note	35, 0, 64, 43, 23, 0
+	sq_note	43, 0, 65, 45, 23, 0
+	sq_note	49, 0, 67, 37, 25, 0
+	sq_press	53, 0, 1
+	sq_note	55, 0, 69, 28, 28, 0
+	sq_press	56, 0, 0
+	sq_note	61, 0, 71, 20, 31, 0
+	sq_note	61, 0, 72, 38, 38, 0
+	sq_note	68, 0, 74, 40, 38, 0
+	sq_note	72, 0, 76, 53, 36, 0
+	sq_note	80, 0, 77, 55, 30, 0
+	sq_note	88, 0, 79, 54, 76, 0
+	sq_note	95, 0, 81, 53, 17, 0
+	sq_beat
+	sq_note	10, 0, 70, 112, 18, 0
+	sq_note	28, 0, 71, 98, 52, 0
+	sq_note	81, 0, 69, 90, 5, 0
+	sq_note	85, 0, 67, 83, 5, 0
+	sq_beat
+	sq_beat
+	sq_note	30, 0, 67, 90, 5, 0
+	sq_note	52, 0, 72, 121, 24, 0
+	sq_note	52, 0, 76, 108, 24, 0
+	sq_note	79, 0, 67, 83, 5, 0
+	sq_beat
+	sq_note	3, 0, 70, 114, 22, 0
+	sq_note	4, 0, 74, 99, 41, 0
+	sq_note	7, 0, 73, 91, 5, 0
+	sq_note	27, 0, 71, 70, 20, 0
+	sq_note	73, 0, 55, 95, 5, 0
+	sq_beat
+	sq_note	0, 0, 65, 116, 20, 0
+	sq_note	26, 0, 67, 83, 10, 0
+	sq_note	52, 0, 55, 73, 5, 0
+	sq_note	78, 0, 67, 113, 59, 0
+	sq_beat
+	sq_note	31, 0, 55, 101, 6, 0
+	sq_note	54, 0, 72, 120, 23, 0
+	sq_note	95, 0, 55, 94, 5, 0
+	sq_beat
+	sq_note	34, 0, 70, 116, 23, 0
+	sq_note	56, 0, 71, 75, 16, 0
+	sq_note	80, 0, 55, 83, 6, 0
+	sq_beat
+	.byte	0x07	# bytes 1..1 of `sq_note	7, 0, 67, 116, 21, 0` (the event spans two cells)
+	sq_cell	0x80, 7, 9	# cell 8: song 1 track 2, 3 of 21
+	.byte	0x90, 0x43, 0x74, 0x15, 0x00	# bytes 2..6 of `sq_note	7, 0, 67, 116, 21, 0` (the event spans two cells)
+	sq_note	37, 0, 55, 80, 5, 0
+	sq_note	55, 0, 65, 110, 17, 0
+	sq_note	81, 0, 67, 90, 10, 0
+	sq_beat
+	sq_beat
+	sq_note	25, 0, 55, 99, 6, 0
+	sq_note	50, 0, 64, 121, 11, 0
+	sq_note	67, 0, 65, 89, 14, 0
+	sq_note	76, 0, 64, 88, 17, 0
+	sq_note	93, 0, 61, 99, 12, 0
+	sq_beat
+	sq_note	13, 0, 62, 76, 12, 0
+	sq_note	30, 0, 65, 95, 13, 0
+	sq_note	48, 0, 69, 68, 11, 0
+	sq_note	69, 0, 76, 101, 18, 0
+	sq_note	87, 0, 73, 102, 8, 0
+	sq_beat
+	sq_note	7, 0, 74, 84, 15, 0
+	sq_note	23, 0, 76, 83, 14, 0
+	sq_note	37, 0, 77, 103, 14, 0
+	sq_note	56, 0, 79, 83, 14, 0
+	sq_note	71, 0, 80, 91, 11, 0
+	sq_note	88, 0, 81, 98, 58, 0
+	sq_beat
+	sq_note	45, 0, 60, 76, 5, 0
+	sq_note	55, 0, 79, 101, 20, 0
+	sq_note	77, 0, 81, 100, 11, 0
+	sq_beat
+	sq_note	5, 0, 75, 109, 14, 0
+	sq_note	5, 0, 74, 83, 6, 0
+	sq_note	19, 0, 76, 104, 23, 0
+	sq_note	49, 0, 74, 99, 23, 0
+	sq_note	78, 0, 72, 96, 12, 0
+	sq_note	80, 0, 60, 68, 5, 0
+	sq_beat
+	sq_note	6, 0, 70, 112, 22, 0
+	sq_note	27, 0, 71, 81, 15, 0
+	sq_note	51, 0, 67, 92, 20, 0
+	sq_beat
+	sq_note	2, 0, 72, 121, 25, 0
+	sq_note	26, 0, 59, 78, 5, 0
+	sq_note	47, 0, 70, 112, 17, 0
+	sq_note	67, 0, 71, 85, 11, 0
+	sq_beat
+	sq_pc	1, 0, 16, 6, 32
+	sq_note	3, 0, 73, 111, 57, 0
+	sq_note	3, 0, 78, 116, 52, 0
+	sq_note	3, 0, 81, 104, 56, 0
+	.byte	0x37, 0x90, 0x4d, 0x59	# bytes 1..4 of `sq_note	55, 0, 77, 89, 14, 0` (the event spans two cells)
+	sq_cell	0x80, 8, 10	# cell 9: song 1 track 2, 4 of 21
+	.byte	0x0e, 0x00	# bytes 5..6 of `sq_note	55, 0, 77, 89, 14, 0` (the event spans two cells)
+	sq_note	55, 0, 79, 87, 6, 0
+	sq_note	56, 0, 76, 83, 18, 0
+	sq_note	66, 0, 74, 73, 13, 0
+	sq_note	72, 0, 72, 41, 11, 0
+	sq_note	78, 0, 71, 79, 10, 0
+	sq_note	84, 0, 69, 93, 10, 0
+	sq_note	90, 0, 67, 93, 8, 0
+	sq_beat
+	sq_note	0, 0, 65, 93, 7, 0
+	sq_note	4, 0, 64, 93, 8, 0
+	sq_note	10, 0, 62, 93, 7, 0
+	sq_note	15, 0, 60, 87, 6, 0
+	sq_note	18, 0, 71, 71, 11, 0
+	sq_note	22, 0, 69, 66, 15, 0
+	sq_note	33, 0, 67, 50, 13, 0
+	sq_note	41, 0, 65, 53, 14, 0
+	sq_note	52, 0, 64, 50, 14, 0
+	sq_note	61, 0, 62, 47, 16, 0
+	sq_note	71, 0, 60, 45, 15, 0
+	sq_note	83, 0, 59, 41, 13, 0
+	sq_note	92, 0, 57, 45, 14, 0
+	sq_beat
+	sq_note	6, 0, 55, 43, 14, 0
+	sq_note	18, 0, 53, 36, 12, 0
+	sq_note	28, 0, 52, 41, 14, 0
+	sq_note	48, 0, 48, 43, 16, 0
+	sq_note	58, 0, 47, 43, 15, 0
+	sq_note	69, 0, 45, 43, 16, 0
+	sq_note	79, 0, 43, 49, 11, 0
+	sq_note	86, 0, 41, 56, 10, 0
+	sq_note	93, 0, 40, 63, 7, 0
+	sq_beat
+	sq_note	3, 0, 38, 71, 5, 0
+	sq_note	7, 0, 71, 90, 30, 0
+	sq_note	8, 0, 79, 98, 41, 0
+	sq_note	8, 0, 75, 117, 13, 0
+	sq_note	13, 0, 76, 100, 32, 0
+	sq_note	49, 0, 78, 72, 22, 0
+	sq_note	52, 0, 69, 90, 16, 0
+	sq_note	52, 0, 74, 88, 19, 0
+	sq_note	65, 0, 50, 60, 5, 0
+	sq_note	68, 0, 52, 83, 10, 0
+	sq_note	71, 0, 53, 78, 12, 0
+	sq_note	77, 0, 55, 64, 13, 0
+	sq_cell	0x80, 9, 11	# cell 10: song 1 track 2, 5 of 21
+	sq_note	78, 0, 57, 56, 16, 0
+	sq_note	83, 0, 59, 45, 15, 0
+	sq_note	88, 0, 60, 31, 11, 0
+	sq_beat
+	sq_note	4, 0, 76, 104, 40, 0
+	sq_note	5, 0, 72, 113, 20, 0
+	sq_cc	24, 0, 17, 91, 59
+	sq_note	28, 0, 73, 96, 19, 0
+	sq_note	50, 0, 64, 105, 5, 0
+	sq_note	75, 0, 67, 119, 41, 0
+	sq_beat
+	sq_note	28, 0, 64, 106, 5, 0
+	sq_note	52, 0, 69, 127, 32, 0
+	sq_beat
+	sq_note	6, 0, 64, 116, 5, 0
+	sq_note	32, 0, 72, 120, 34, 0
+	sq_note	36, 0, 75, 73, 5, 0
+	sq_note	78, 0, 64, 111, 5, 0
+	sq_beat
+	sq_note	4, 0, 74, 110, 14, 0
+	sq_note	17, 0, 75, 99, 13, 0
+	sq_note	31, 0, 76, 87, 17, 0
+	sq_note	53, 0, 79, 98, 14, 0
+	sq_note	73, 0, 81, 98, 11, 0
+	sq_note	79, 0, 64, 105, 5, 0
+	sq_beat
+	sq_note	3, 0, 81, 108, 18, 0
+	sq_note	5, 0, 86, 100, 60, 0
+	sq_note	8, 0, 82, 104, 15, 0
+	sq_note	25, 0, 83, 93, 39, 0
+	sq_note	51, 0, 64, 96, 7, 0
+	sq_note	73, 0, 81, 98, 46, 0
+	sq_note	73, 0, 85, 94, 46, 0
+	sq_beat
+	sq_note	29, 0, 67, 95, 8, 0
+	sq_note	53, 0, 79, 110, 17, 0
+	sq_note	68, 0, 84, 94, 14, 0
+	sq_note	75, 0, 83, 44, 15, 0
+	sq_note	85, 0, 81, 90, 17, 0
+	sq_note	94, 0, 79, 73, 19, 0
+	sq_beat
+	sq_note	29, 0, 76, 93, 15, 0
+	sq_note	43, 0, 67, 61, 5, 0
+	sq_note	54, 0, 75, 111, 20, 0
+	sq_note	59, 0, 78, 75, 5, 0
+	sq_note	59, 0, 79, 78, 36, 0
+	sq_note	76, 0, 76, 80, 18, 0
+	sq_beat
+	.byte	0x08, 0x90, 0x4a, 0x65	# bytes 1..4 of `sq_note	8, 0, 74, 101, 24, 0` (the event spans two cells)
+	sq_cell	0x80, 10, 12	# cell 11: song 1 track 2, 6 of 21
+	.byte	0x18, 0x00	# bytes 5..6 of `sq_note	8, 0, 74, 101, 24, 0` (the event spans two cells)
+	sq_note	11, 0, 79, 87, 26, 0
+	sq_note	29, 0, 64, 95, 6, 0
+	sq_note	48, 0, 72, 105, 24, 0
+	sq_note	49, 0, 79, 84, 25, 0
+	sq_note	74, 0, 64, 98, 7, 0
+	sq_beat
+	sq_note	1, 0, 72, 110, 17, 0
+	sq_note	3, 0, 79, 93, 29, 0
+	sq_note	22, 0, 74, 88, 16, 0
+	sq_note	32, 0, 72, 84, 11, 0
+	sq_note	52, 0, 69, 96, 18, 0
+	sq_note	75, 0, 72, 105, 12, 0
+	sq_beat
+	sq_note	0, 0, 57, 88, 22, 0
+	sq_cc	24, 0, 17, 91, 100
+	sq_note	24, 0, 67, 97, 10, 0
+	sq_note	47, 0, 83, 104, 14, 0
+	sq_note	48, 0, 87, 127, 21, 0
+	sq_note	48, 0, 91, 101, 40, 1
+	sq_note	50, 0, 90, 99, 5, 0
+	sq_note	69, 0, 88, 97, 17, 1
+	sq_note	72, 0, 83, 61, 11, 1
+	sq_beat
+	sq_note	80, 0, 72, 100, 5, 0
+	sq_beat
+	sq_note	0, 0, 81, 101, 39, 0
+	sq_note	0, 0, 86, 104, 39, 0
+	sq_note	1, 0, 90, 105, 38, 0
+	sq_note	26, 0, 72, 83, 6, 0
+	sq_note	26, 0, 74, 81, 5, 0
+	sq_note	48, 0, 79, 90, 24, 0
+	sq_note	48, 0, 84, 95, 26, 0
+	sq_note	48, 0, 88, 90, 26, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 29, 0, 32
+	sq_cc	95, 0, 17, 7, 28
+	sq_beat
+	sq_cc	0, 0, 17, 10, 58
+	sq_note	0, 0, 65, 90, 5, 0
+	sq_beat
+	sq_note	52, 0, 53, 105, 92, 0
+	sq_beat
+	.byte	0x00, 0xb0	# bytes 1..2 of `sq_cc	0, 0, 17, 1, 6` (the event spans two cells)
+	sq_cell	0x80, 11, 13	# cell 12: song 1 track 2, 7 of 21
+	.byte	0x11, 0x01, 0x06	# bytes 3..5 of `sq_cc	0, 0, 17, 1, 6` (the event spans two cells)
+	sq_cc	0, 0, 17, 1, 11
+	sq_cc	4, 0, 17, 1, 17
+	sq_cc	7, 0, 17, 1, 22
+	sq_cc	7, 0, 17, 1, 28
+	sq_cc	11, 0, 17, 1, 33
+	sq_cc	14, 0, 17, 1, 38
+	sq_cc	14, 0, 17, 1, 43
+	sq_cc	17, 0, 17, 1, 52
+	sq_cc	20, 0, 17, 1, 56
+	sq_cc	23, 0, 17, 1, 58
+	sq_cc	24, 0, 17, 1, 59
+	sq_cc	30, 0, 17, 1, 55
+	sq_cc	33, 0, 17, 1, 50
+	sq_cc	34, 0, 17, 1, 42
+	sq_cc	37, 0, 17, 1, 32
+	sq_cc	40, 0, 17, 1, 18
+	sq_cc	40, 0, 17, 1, 0
+	sq_note	48, 0, 60, 103, 91, 0
+	sq_beat
+	sq_note	47, 0, 65, 109, 67, 3
+	sq_bend	78, 0, 0, 65
+	sq_bend	82, 0, 64, 65
+	sq_bend	85, 0, 0, 68
+	sq_bend	88, 0, 0, 70
+	sq_bend	91, 0, 0, 71
+	sq_bend	94, 0, 64, 72
+	sq_beat
+	sq_bend	2, 0, 0, 73
+	sq_bend	6, 0, 64, 75
+	sq_bend	8, 0, 64, 78
+	sq_bend	12, 0, 64, 79
+	sq_bend	15, 0, 0, 82
+	sq_bend	15, 0, 64, 83
+	sq_bend	19, 0, 64, 85
+	sq_bend	22, 0, 0, 90
+	sq_bend	25, 0, 0, 92
+	sq_bend	31, 0, 0, 99
+	sq_bend	34, 0, 0, 102
+	sq_bend	38, 0, 0, 107
+	sq_bend	41, 0, 0, 112
+	sq_bend	44, 0, 0, 115
+	sq_bend	48, 0, 64, 122
+	sq_bend	52, 0, 64, 126
+	sq_bend	54, 0, 127, 127
+	sq_beat
+	sq_cc	50, 0, 17, 1, 1
+	sq_cc	50, 0, 17, 1, 3
+	sq_cc	53, 0, 17, 1, 4
+	sq_cc	54, 0, 17, 1, 6
+	sq_cc	57, 0, 17, 1, 7
+	sq_cc	60, 0, 17, 1, 9
+	sq_cc	60, 0, 17, 1, 10
+	sq_cc	63, 0, 17, 1, 12
+	sq_cc	63, 0, 17, 1, 14
+	sq_cc	67, 0, 17, 1, 16
+	sq_cc	70, 0, 17, 1, 17
+	.byte	0x46	# bytes 1..1 of `sq_cc	70, 0, 17, 1, 19` (the event spans two cells)
+	sq_cell	0x80, 12, 14	# cell 13: song 1 track 2, 8 of 21
+	.byte	0xb0, 0x11, 0x01, 0x13	# bytes 2..5 of `sq_cc	70, 0, 17, 1, 19` (the event spans two cells)
+	sq_cc	74, 0, 17, 1, 21
+	sq_cc	77, 0, 17, 1, 25
+	sq_cc	80, 0, 17, 1, 27
+	sq_cc	80, 0, 17, 1, 28
+	sq_cc	83, 0, 17, 1, 30
+	sq_cc	86, 0, 17, 1, 31
+	sq_cc	87, 0, 17, 1, 33
+	sq_cc	90, 0, 17, 1, 35
+	sq_cc	93, 0, 17, 1, 36
+	sq_cc	93, 0, 17, 1, 38
+	sq_beat
+	sq_cc	0, 0, 17, 1, 39
+	sq_cc	1, 0, 17, 1, 40
+	sq_cc	4, 0, 17, 1, 42
+	sq_cc	6, 0, 17, 1, 43
+	sq_cc	7, 0, 17, 1, 44
+	sq_cc	10, 0, 17, 1, 45
+	sq_cc	16, 0, 17, 1, 47
+	sq_cc	17, 0, 17, 1, 48
+	sq_cc	26, 0, 17, 1, 51
+	sq_cc	39, 0, 17, 1, 52
+	sq_cc	49, 0, 17, 1, 53
+	sq_cc	62, 0, 17, 1, 55
+	sq_cc	72, 0, 17, 1, 57
+	sq_cc	76, 0, 17, 1, 58
+	sq_cc	82, 0, 17, 1, 60
+	sq_beat
+	sq_cc	2, 0, 17, 1, 57
+	sq_cc	3, 0, 17, 1, 55
+	sq_cc	6, 0, 17, 1, 53
+	sq_cc	9, 0, 17, 1, 45
+	sq_bend	13, 0, 64, 95
+	sq_cc	13, 0, 17, 1, 40
+	sq_bend	13, 0, 0, 80
+	sq_cc	16, 0, 17, 1, 33
+	sq_bend	16, 0, 64, 71
+	sq_cc	16, 0, 17, 1, 26
+	sq_bend	20, 0, 0, 64
+	sq_cc	20, 0, 17, 1, 18
+	sq_bend	21, 0, 0, 63
+	sq_cc	21, 0, 17, 1, 9
+	sq_cc	22, 0, 17, 1, 0
+	sq_note	25, 0, 68, 111, 51, 0
+	sq_bend	26, 0, 0, 64
+	sq_note	71, 0, 70, 94, 26, 0
+	sq_beat
+	sq_note	14, 0, 70, 104, 61, 1
+	sq_bend	24, 0, 64, 64
+	sq_bend	28, 0, 64, 65
+	sq_bend	31, 0, 0, 67
+	sq_bend	31, 0, 64, 68
+	sq_bend	35, 0, 0, 70
+	sq_bend	38, 0, 64, 72
+	.byte	0x29, 0xe0, 0x40	# bytes 1..3 of `sq_bend	41, 0, 64, 73` (the event spans two cells)
+	sq_cell	0x80, 13, 15	# cell 14: song 1 track 2, 9 of 21
+	.byte	0x49	# bytes 4..4 of `sq_bend	41, 0, 64, 73` (the event spans two cells)
+	sq_bend	41, 0, 0, 75
+	sq_bend	44, 0, 0, 77
+	sq_bend	48, 0, 64, 79
+	sq_bend	51, 0, 64, 82
+	sq_bend	54, 0, 0, 84
+	sq_bend	57, 0, 64, 86
+	sq_bend	57, 0, 0, 90
+	sq_bend	61, 0, 0, 92
+	sq_bend	64, 0, 0, 96
+	sq_bend	64, 0, 0, 99
+	sq_bend	67, 0, 0, 107
+	sq_bend	70, 0, 64, 110
+	sq_bend	74, 0, 0, 112
+	sq_bend	75, 0, 0, 115
+	sq_bend	77, 0, 0, 117
+	sq_bend	80, 0, 0, 118
+	sq_bend	83, 0, 64, 126
+	sq_bend	84, 0, 127, 127
+	sq_beat
+	sq_bend	50, 0, 0, 94
+	sq_bend	53, 0, 64, 71
+	sq_bend	56, 0, 0, 65
+	sq_bend	60, 0, 0, 64
+	sq_note	66, 0, 68, 96, 21, 0
+	sq_note	91, 0, 65, 94, 6, 3
+	sq_beat
+	sq_cc	23, 0, 17, 1, 7
+	sq_cc	26, 0, 17, 1, 16
+	sq_cc	30, 0, 17, 1, 21
+	sq_cc	32, 0, 17, 1, 26
+	sq_cc	33, 0, 17, 1, 31
+	sq_cc	36, 0, 17, 1, 36
+	sq_cc	39, 0, 17, 1, 40
+	sq_cc	40, 0, 17, 1, 45
+	sq_cc	43, 0, 17, 1, 52
+	sq_cc	45, 0, 17, 1, 56
+	sq_cc	49, 0, 17, 1, 59
+	sq_cc	49, 0, 17, 1, 62
+	sq_cc	53, 0, 17, 1, 65
+	sq_cc	55, 0, 17, 1, 71
+	sq_cc	59, 0, 17, 1, 75
+	sq_cc	59, 0, 17, 1, 77
+	sq_cc	62, 0, 17, 1, 81
+	sq_cc	65, 0, 17, 1, 83
+	sq_cc	66, 0, 17, 1, 86
+	sq_cc	69, 0, 17, 1, 87
+	sq_cc	72, 0, 17, 1, 90
+	sq_cc	78, 0, 17, 1, 92
+	sq_cc	85, 0, 17, 1, 85
+	sq_cc	88, 0, 17, 1, 78
+	sq_cc	88, 0, 17, 1, 69
+	sq_cc	91, 0, 17, 1, 59
+	sq_cc	92, 0, 17, 1, 45
+	sq_cc	95, 0, 17, 1, 26
+	sq_beat
+	sq_cc	2, 0, 17, 1, 8
+	.byte	0x03, 0xb0	# bytes 1..2 of `sq_cc	3, 0, 17, 1, 0` (the event spans two cells)
+	sq_cell	0x80, 14, 16	# cell 15: song 1 track 2, 10 of 21
+	.byte	0x11, 0x01, 0x00	# bytes 3..5 of `sq_cc	3, 0, 17, 1, 0` (the event spans two cells)
+	sq_beat
+	sq_bend	17, 0, 64, 63
+	sq_bend	23, 0, 64, 62
+	sq_bend	30, 0, 0, 62
+	sq_bend	31, 0, 64, 61
+	sq_bend	34, 0, 64, 60
+	sq_bend	37, 0, 64, 59
+	sq_bend	40, 0, 64, 58
+	sq_bend	44, 0, 0, 58
+	sq_bend	47, 0, 0, 57
+	sq_bend	50, 0, 64, 56
+	sq_bend	53, 0, 64, 55
+	sq_bend	57, 0, 64, 54
+	sq_bend	60, 0, 0, 54
+	sq_bend	63, 0, 64, 53
+	sq_bend	70, 0, 0, 51
+	sq_bend	74, 0, 64, 50
+	sq_bend	76, 0, 64, 44
+	sq_bend	80, 0, 64, 38
+	sq_bend	83, 0, 0, 23
+	sq_bend	87, 0, 0, 7
+	sq_bend	89, 0, 0, 0
+	sq_beat
+	sq_bend	0, 0, 0, 55
+	sq_bend	4, 0, 0, 65
+	sq_bend	10, 0, 0, 64
+	sq_bend	82, 0, 64, 63
+	sq_bend	86, 0, 0, 62
+	sq_bend	89, 0, 64, 59
+	sq_bend	92, 0, 64, 58
+	sq_bend	95, 0, 64, 56
+	sq_beat
+	sq_bend	3, 0, 64, 54
+	sq_bend	6, 0, 64, 50
+	sq_bend	9, 0, 0, 44
+	sq_bend	13, 0, 64, 38
+	sq_bend	16, 0, 0, 30
+	sq_bend	19, 0, 0, 25
+	sq_bend	22, 0, 0, 18
+	sq_bend	22, 0, 0, 11
+	sq_bend	26, 0, 0, 4
+	sq_bend	26, 0, 0, 0
+	sq_note	47, 0, 77, 116, 91, 2
+	sq_bend	62, 0, 0, 4
+	sq_bend	65, 0, 0, 14
+	sq_bend	68, 0, 0, 19
+	sq_bend	68, 0, 0, 24
+	sq_bend	72, 0, 0, 27
+	sq_bend	74, 0, 0, 31
+	sq_bend	75, 0, 64, 34
+	sq_bend	78, 0, 0, 38
+	sq_bend	81, 0, 0, 44
+	sq_bend	85, 0, 64, 46
+	sq_bend	85, 0, 64, 49
+	sq_bend	87, 0, 0, 52
+	sq_bend	91, 0, 0, 54
+	sq_bend	91, 0, 0, 55
+	sq_bend	94, 0, 0, 56
+	sq_beat
+	sq_bend	2, 0, 64, 57
+	sq_bend	6, 0, 0, 59
+	sq_bend	8, 0, 0, 60
+	sq_bend	12, 0, 64, 61
+	sq_bend	14, 0, 0, 62
+	.byte	0x12, 0xe0	# bytes 1..2 of `sq_bend	18, 0, 64, 62` (the event spans two cells)
+	sq_cell	0x80, 15, 17	# cell 16: song 1 track 2, 11 of 21
+	.byte	0x40, 0x3e	# bytes 3..4 of `sq_bend	18, 0, 64, 62` (the event spans two cells)
+	sq_bend	18, 0, 0, 63
+	sq_bend	21, 0, 64, 63
+	sq_bend	25, 0, 0, 64
+	sq_cc	70, 0, 17, 1, 4
+	sq_cc	70, 0, 17, 1, 8
+	sq_cc	74, 0, 17, 1, 12
+	sq_cc	77, 0, 17, 1, 16
+	sq_cc	77, 0, 17, 1, 20
+	sq_cc	80, 0, 17, 1, 24
+	sq_cc	81, 0, 17, 1, 28
+	sq_cc	84, 0, 17, 1, 33
+	sq_cc	87, 0, 17, 1, 41
+	sq_cc	91, 0, 17, 1, 44
+	sq_cc	94, 0, 17, 1, 47
+	sq_cc	94, 0, 17, 1, 50
+	sq_beat
+	sq_cc	1, 0, 17, 1, 57
+	sq_cc	5, 0, 17, 1, 60
+	sq_cc	8, 0, 17, 1, 66
+	sq_cc	11, 0, 17, 1, 69
+	sq_cc	13, 0, 17, 1, 71
+	sq_cc	14, 0, 17, 1, 75
+	sq_cc	17, 0, 17, 1, 77
+	sq_cc	17, 0, 17, 1, 79
+	sq_cc	21, 0, 17, 1, 81
+	sq_cc	23, 0, 17, 1, 85
+	sq_cc	27, 0, 17, 1, 86
+	sq_cc	30, 0, 17, 1, 88
+	sq_cc	33, 0, 17, 1, 90
+	sq_cc	37, 0, 17, 1, 91
+	sq_cc	40, 0, 17, 1, 92
+	sq_cc	43, 0, 17, 1, 93
+	sq_cc	46, 0, 17, 1, 94
+	sq_cc	89, 0, 17, 1, 93
+	sq_cc	92, 0, 17, 1, 92
+	sq_beat
+	sq_cc	3, 0, 17, 1, 88
+	sq_cc	3, 0, 17, 1, 87
+	sq_cc	7, 0, 17, 1, 83
+	sq_cc	10, 0, 17, 1, 73
+	sq_cc	13, 0, 17, 1, 64
+	sq_cc	13, 0, 17, 1, 54
+	sq_cc	16, 0, 17, 1, 42
+	sq_cc	19, 0, 17, 1, 26
+	sq_cc	20, 0, 17, 1, 5
+	sq_cc	23, 0, 17, 1, 0
+	sq_note	48, 0, 79, 95, 21, 0
+	sq_note	71, 0, 80, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 82, 97, 25, 0
+	sq_note	21, 0, 80, 91, 27, 0
+	sq_pc	42, 0, 29, 0, 32
+	sq_cell	0x80, 16, 18	# cell 17: song 1 track 2, 12 of 21
+	sq_note	44, 0, 79, 83, 23, 0
+	sq_note	67, 0, 77, 89, 21, 0
+	sq_note	93, 0, 76, 95, 21, 0
+	sq_beat
+	sq_note	22, 0, 79, 103, 21, 0
+	sq_note	43, 0, 76, 89, 20, 0
+	sq_note	63, 0, 72, 95, 21, 0
+	sq_note	90, 0, 75, 104, 18, 0
+	sq_beat
+	sq_note	11, 0, 72, 88, 28, 0
+	sq_note	38, 0, 74, 94, 24, 0
+	sq_note	61, 0, 73, 95, 23, 0
+	sq_note	83, 0, 72, 90, 34, 0
+	sq_beat
+	sq_note	14, 0, 71, 91, 21, 0
+	sq_note	37, 0, 74, 99, 28, 0
+	sq_note	63, 0, 71, 88, 11, 0
+	sq_note	76, 0, 67, 80, 17, 0
+	sq_beat
+	sq_note	1, 0, 70, 102, 21, 0
+	sq_note	23, 0, 67, 79, 21, 0
+	sq_note	47, 0, 68, 96, 10, 0
+	sq_note	69, 0, 67, 74, 12, 0
+	sq_note	88, 0, 68, 93, 29, 0
+	sq_beat
+	sq_note	23, 0, 69, 89, 16, 0
+	sq_note	39, 0, 70, 62, 18, 0
+	sq_note	51, 0, 71, 78, 26, 0
+	sq_note	77, 0, 72, 96, 21, 0
+	sq_note	95, 0, 68, 102, 86, 0
+	sq_beat
+	sq_bend	19, 0, 64, 69
+	sq_bend	22, 0, 0, 96
+	sq_bend	26, 0, 0, 117
+	sq_bend	26, 0, 127, 127
+	sq_bend	32, 0, 0, 88
+	sq_bend	36, 0, 0, 72
+	sq_bend	39, 0, 0, 64
+	sq_bend	52, 0, 127, 127
+	sq_bend	65, 0, 64, 65
+	sq_bend	68, 0, 64, 59
+	sq_bend	75, 0, 0, 64
+	sq_note	85, 0, 65, 90, 22, 0
+	sq_beat
+	sq_note	15, 0, 60, 98, 19, 0
+	sq_note	36, 0, 68, 109, 87, 0
+	sq_bend	44, 0, 0, 73
+	sq_bend	48, 0, 0, 91
+	sq_bend	52, 0, 64, 95
+	sq_bend	54, 0, 0, 81
+	sq_bend	58, 0, 0, 71
+	sq_bend	61, 0, 0, 64
+	sq_bend	77, 0, 64, 71
+	sq_bend	78, 0, 0, 94
+	sq_cell	0x80, 17, 19	# cell 18: song 1 track 2, 13 of 21
+	sq_bend	81, 0, 127, 127
+	sq_bend	91, 0, 64, 80
+	sq_bend	94, 0, 0, 64
+	sq_beat
+	sq_note	17, 0, 65, 88, 24, 0
+	sq_note	40, 0, 60, 89, 22, 0
+	sq_note	65, 0, 68, 109, 93, 0
+	sq_bend	73, 0, 64, 67
+	sq_bend	76, 0, 64, 72
+	sq_bend	76, 0, 64, 78
+	sq_bend	80, 0, 64, 85
+	sq_bend	83, 0, 0, 89
+	sq_bend	90, 0, 0, 69
+	sq_bend	93, 0, 0, 64
+	sq_beat
+	sq_bend	10, 0, 0, 67
+	sq_bend	14, 0, 64, 78
+	sq_bend	14, 0, 0, 104
+	sq_bend	17, 0, 127, 127
+	sq_bend	23, 0, 0, 100
+	sq_bend	27, 0, 0, 77
+	sq_bend	30, 0, 0, 75
+	sq_bend	33, 0, 0, 77
+	sq_bend	36, 0, 0, 65
+	sq_bend	40, 0, 0, 63
+	sq_bend	46, 0, 0, 64
+	sq_note	54, 0, 65, 85, 21, 0
+	sq_note	70, 0, 60, 92, 19, 0
+	sq_note	91, 0, 68, 109, 87, 0
+	sq_beat
+	sq_bend	3, 0, 64, 65
+	sq_bend	6, 0, 64, 71
+	sq_bend	6, 0, 64, 79
+	sq_bend	10, 0, 0, 109
+	sq_bend	12, 0, 0, 117
+	sq_bend	19, 0, 64, 77
+	sq_bend	23, 0, 64, 69
+	sq_bend	25, 0, 64, 64
+	sq_bend	26, 0, 0, 64
+	sq_bend	35, 0, 0, 71
+	sq_bend	35, 0, 0, 90
+	sq_bend	39, 0, 127, 127
+	sq_bend	51, 0, 64, 82
+	sq_bend	52, 0, 0, 69
+	sq_bend	55, 0, 0, 64
+	sq_bend	59, 0, 0, 63
+	sq_bend	62, 0, 0, 64
+	sq_note	71, 0, 65, 87, 28, 0
+	sq_note	94, 0, 61, 85, 31, 0
+	sq_beat
+	sq_note	40, 0, 70, 117, 25, 2
+	sq_bend	70, 0, 64, 64
+	sq_bend	74, 0, 0, 65
+	sq_bend	77, 0, 64, 66
+	sq_bend	81, 0, 64, 69
+	sq_bend	84, 0, 64, 70
+	sq_bend	87, 0, 0, 72
+	sq_bend	90, 0, 64, 72
+	sq_beat
+	sq_bend	4, 0, 64, 73
+	sq_bend	7, 0, 0, 75
+	sq_bend	11, 0, 0, 76
+	sq_cell	0x80, 18, 20	# cell 19: song 1 track 2, 14 of 21
+	sq_bend	14, 0, 64, 76
+	sq_bend	23, 0, 64, 78
+	sq_bend	27, 0, 0, 82
+	sq_bend	31, 0, 64, 83
+	sq_bend	33, 0, 0, 84
+	sq_bend	37, 0, 0, 86
+	sq_bend	40, 0, 64, 86
+	sq_bend	46, 0, 0, 90
+	sq_bend	51, 0, 64, 91
+	sq_bend	56, 0, 0, 94
+	sq_bend	60, 0, 0, 95
+	sq_bend	66, 0, 0, 97
+	sq_bend	69, 0, 64, 97
+	sq_bend	76, 0, 0, 100
+	sq_bend	79, 0, 0, 101
+	sq_bend	86, 0, 0, 104
+	sq_bend	92, 0, 0, 108
+	sq_bend	95, 0, 0, 110
+	sq_beat
+	sq_bend	3, 0, 64, 110
+	sq_bend	7, 0, 0, 116
+	sq_bend	19, 0, 127, 127
+	sq_bend	49, 0, 0, 91
+	sq_bend	52, 0, 0, 75
+	sq_bend	52, 0, 0, 65
+	sq_bend	56, 0, 0, 64
+	sq_note	57, 0, 68, 93, 29, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 17, 7, 30
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	35, 0, 64, 62
+	sq_bend	38, 0, 0, 56
+	sq_bend	42, 0, 0, 52
+	sq_bend	45, 0, 0, 42
+	sq_bend	46, 0, 0, 30
+	sq_note	48, 0, 79, 116, 63, 4
+	sq_bend	49, 0, 0, 0
+	sq_bend	71, 0, 0, 17
+	sq_bend	75, 0, 0, 24
+	sq_bend	77, 0, 64, 34
+	sq_bend	81, 0, 0, 40
+	sq_bend	81, 0, 0, 43
+	sq_bend	85, 0, 0, 47
+	sq_bend	88, 0, 64, 51
+	sq_bend	91, 0, 64, 53
+	sq_bend	94, 0, 0, 55
+	sq_beat
+	sq_bend	1, 0, 0, 56
+	sq_bend	2, 0, 64, 56
+	sq_bend	6, 0, 0, 57
+	sq_bend	8, 0, 64, 58
+	sq_bend	11, 0, 64, 59
+	sq_bend	15, 0, 64, 61
+	sq_bend	18, 0, 64, 62
+	sq_bend	18, 0, 0, 63
+	sq_cell	0x80, 19, 21	# cell 20: song 1 track 2, 15 of 21
+	sq_bend	21, 0, 64, 63
+	sq_bend	24, 0, 0, 64
+	sq_cc	90, 0, 17, 1, 5
+	sq_cc	94, 0, 17, 1, 8
+	sq_cc	94, 0, 17, 1, 12
+	sq_beat
+	sq_cc	2, 0, 17, 1, 15
+	sq_cc	4, 0, 17, 1, 18
+	sq_cc	4, 0, 17, 1, 22
+	sq_cc	7, 0, 17, 1, 26
+	sq_cc	11, 0, 17, 1, 29
+	sq_cc	11, 0, 17, 1, 33
+	sq_cc	14, 0, 17, 1, 39
+	sq_cc	17, 0, 17, 1, 42
+	sq_cc	21, 0, 17, 1, 45
+	sq_cc	21, 0, 17, 1, 46
+	sq_cc	24, 0, 17, 1, 49
+	sq_cc	27, 0, 17, 1, 51
+	sq_cc	27, 0, 17, 1, 53
+	sq_cc	30, 0, 17, 1, 56
+	sq_cc	34, 0, 17, 1, 58
+	sq_cc	37, 0, 17, 1, 61
+	sq_cc	41, 0, 17, 1, 62
+	sq_cc	41, 0, 17, 1, 64
+	sq_cc	43, 0, 17, 1, 65
+	sq_cc	47, 0, 17, 1, 68
+	sq_cc	51, 0, 17, 1, 69
+	sq_cc	54, 0, 17, 1, 70
+	sq_cc	55, 0, 17, 1, 71
+	sq_cc	57, 0, 17, 1, 73
+	sq_cc	60, 0, 17, 1, 74
+	sq_cc	63, 0, 17, 1, 75
+	sq_cc	69, 0, 17, 1, 78
+	sq_cc	70, 0, 17, 1, 79
+	sq_cc	83, 0, 17, 1, 80
+	sq_cc	85, 0, 17, 1, 81
+	sq_cc	92, 0, 17, 1, 82
+	sq_beat
+	sq_cc	0, 0, 17, 1, 84
+	sq_cc	6, 0, 17, 1, 86
+	sq_cc	22, 0, 17, 1, 84
+	sq_cc	26, 0, 17, 1, 80
+	sq_cc	26, 0, 17, 1, 77
+	sq_cc	30, 0, 17, 1, 72
+	sq_cc	32, 0, 17, 1, 65
+	sq_cc	33, 0, 17, 1, 56
+	sq_cc	36, 0, 17, 1, 45
+	sq_cc	37, 0, 17, 1, 32
+	sq_cc	39, 0, 17, 1, 16
+	sq_cc	43, 0, 17, 1, 0
+	sq_beat
+	sq_bend	9, 0, 64, 63
+	sq_bend	12, 0, 0, 63
+	.byte	0x12, 0xe0	# bytes 1..2 of `sq_bend	18, 0, 0, 62` (the event spans two cells)
+	sq_cell	0x80, 20, 22	# cell 21: song 1 track 2, 16 of 21
+	.byte	0x00, 0x3e	# bytes 3..4 of `sq_bend	18, 0, 0, 62` (the event spans two cells)
+	sq_bend	22, 0, 64, 60
+	sq_bend	25, 0, 0, 60
+	sq_bend	28, 0, 64, 58
+	sq_bend	31, 0, 64, 57
+	sq_bend	32, 0, 0, 57
+	sq_bend	35, 0, 0, 56
+	sq_bend	38, 0, 64, 55
+	sq_bend	38, 0, 0, 55
+	sq_bend	42, 0, 64, 54
+	sq_bend	44, 0, 0, 54
+	sq_bend	48, 0, 0, 53
+	sq_bend	54, 0, 64, 51
+	sq_bend	55, 0, 64, 50
+	sq_bend	58, 0, 64, 49
+	sq_bend	61, 0, 0, 48
+	sq_bend	65, 0, 64, 46
+	sq_bend	68, 0, 0, 46
+	sq_bend	75, 0, 64, 44
+	sq_bend	77, 0, 0, 44
+	sq_bend	80, 0, 0, 41
+	sq_bend	84, 0, 0, 40
+	sq_bend	87, 0, 0, 39
+	sq_bend	90, 0, 0, 37
+	sq_bend	94, 0, 64, 34
+	sq_bend	94, 0, 0, 33
+	sq_beat
+	sq_bend	2, 0, 64, 31
+	sq_bend	2, 0, 0, 29
+	sq_bend	4, 0, 0, 26
+	sq_bend	8, 0, 0, 15
+	sq_bend	12, 0, 0, 0
+	sq_bend	30, 0, 64, 62
+	sq_bend	34, 0, 0, 64
+	sq_beat
+	sq_bend	23, 0, 64, 59
+	sq_bend	26, 0, 64, 57
+	sq_bend	29, 0, 64, 53
+	sq_bend	33, 0, 0, 51
+	sq_bend	36, 0, 64, 42
+	sq_bend	40, 0, 0, 32
+	sq_bend	43, 0, 64, 25
+	sq_bend	46, 0, 0, 9
+	sq_bend	49, 0, 0, 0
+	sq_note	58, 0, 72, 119, 92, 1
+	sq_bend	71, 0, 0, 14
+	sq_bend	75, 0, 0, 23
+	sq_bend	79, 0, 0, 28
+	sq_bend	80, 0, 64, 34
+	sq_bend	81, 0, 64, 38
+	sq_bend	82, 0, 0, 43
+	sq_bend	85, 0, 0, 47
+	sq_bend	88, 0, 64, 53
+	sq_bend	92, 0, 0, 55
+	sq_beat
+	sq_bend	0, 0, 0, 58
+	sq_bend	3, 0, 0, 61
+	sq_bend	5, 0, 64, 62
+	sq_bend	9, 0, 64, 63
+	sq_bend	9, 0, 0, 64
+	sq_cc	78, 0, 17, 1, 7
+	sq_cc	78, 0, 17, 1, 14
+	sq_cc	82, 0, 17, 1, 21
+	sq_cc	84, 0, 17, 1, 27
+	sq_cell	0x80, 21, 23	# cell 22: song 1 track 2, 17 of 21
+	sq_cc	85, 0, 17, 1, 34
+	sq_cc	88, 0, 17, 1, 40
+	sq_cc	92, 0, 17, 1, 52
+	sq_cc	94, 0, 17, 1, 62
+	sq_beat
+	sq_cc	3, 0, 17, 1, 66
+	sq_cc	5, 0, 17, 1, 76
+	sq_cc	8, 0, 17, 1, 80
+	sq_cc	12, 0, 17, 1, 84
+	sq_cc	12, 0, 17, 1, 87
+	sq_cc	15, 0, 17, 1, 91
+	sq_cc	18, 0, 17, 1, 92
+	sq_cc	28, 0, 17, 1, 86
+	sq_cc	31, 0, 17, 1, 72
+	sq_cc	35, 0, 17, 1, 62
+	sq_cc	38, 0, 17, 1, 51
+	sq_cc	38, 0, 17, 1, 37
+	sq_cc	41, 0, 17, 1, 19
+	sq_cc	45, 0, 17, 1, 0
+	sq_note	52, 0, 70, 111, 48, 0
+	sq_beat
+	sq_note	4, 0, 69, 110, 35, 1
+	sq_beat
+	sq_note	41, 0, 65, 108, 78, 3
+	sq_beat
+	sq_cc	61, 0, 17, 1, 6
+	sq_cc	64, 0, 17, 1, 8
+	sq_cc	68, 0, 17, 1, 12
+	sq_cc	68, 0, 17, 1, 15
+	sq_cc	71, 0, 17, 1, 18
+	sq_cc	74, 0, 17, 1, 21
+	sq_cc	75, 0, 17, 1, 24
+	sq_cc	78, 0, 17, 1, 30
+	sq_cc	81, 0, 17, 1, 32
+	sq_cc	84, 0, 17, 1, 34
+	sq_cc	84, 0, 17, 1, 36
+	sq_cc	87, 0, 17, 1, 39
+	sq_cc	90, 0, 17, 1, 41
+	sq_cc	91, 0, 17, 1, 44
+	sq_cc	94, 0, 17, 1, 46
+	sq_beat
+	sq_cc	2, 0, 17, 1, 47
+	sq_cc	7, 0, 17, 1, 49
+	sq_cc	11, 0, 17, 1, 50
+	sq_cc	11, 0, 17, 1, 51
+	sq_cc	17, 0, 17, 1, 54
+	sq_cc	24, 0, 17, 1, 55
+	sq_cc	30, 0, 17, 1, 57
+	sq_cc	34, 0, 17, 1, 58
+	sq_cc	40, 0, 17, 1, 60
+	sq_cc	67, 0, 17, 1, 59
+	sq_cc	70, 0, 17, 1, 56
+	sq_cc	74, 0, 17, 1, 50
+	.byte	0x4d, 0xb0, 0x11	# bytes 1..3 of `sq_cc	77, 0, 17, 1, 47` (the event spans two cells)
+	sq_cell	0x80, 22, 24	# cell 23: song 1 track 2, 18 of 21
+	.byte	0x01, 0x2f	# bytes 4..5 of `sq_cc	77, 0, 17, 1, 47` (the event spans two cells)
+	sq_cc	80, 0, 17, 1, 36
+	sq_cc	83, 0, 17, 1, 29
+	sq_cc	87, 0, 17, 1, 10
+	sq_cc	90, 0, 17, 1, 0
+	sq_beat
+	sq_bend	72, 0, 64, 63
+	sq_bend	78, 0, 64, 62
+	sq_bend	82, 0, 0, 62
+	sq_bend	86, 0, 0, 61
+	sq_bend	89, 0, 64, 60
+	sq_bend	92, 0, 64, 59
+	sq_bend	95, 0, 0, 59
+	sq_beat
+	sq_bend	3, 0, 0, 58
+	sq_bend	3, 0, 64, 57
+	sq_bend	6, 0, 0, 56
+	sq_bend	9, 0, 64, 54
+	sq_bend	12, 0, 64, 48
+	sq_bend	15, 0, 0, 42
+	sq_bend	16, 0, 0, 31
+	sq_bend	19, 0, 0, 11
+	sq_bend	22, 0, 0, 0
+	sq_bend	28, 0, 64, 63
+	sq_bend	32, 0, 0, 65
+	sq_bend	35, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 67, 101, 25, 0
+	sq_note	68, 0, 69, 101, 16, 0
+	sq_note	88, 0, 70, 104, 13, 1
+	sq_beat
+	sq_bend	64, 0, 0, 63
+	sq_bend	67, 0, 64, 62
+	sq_bend	70, 0, 0, 62
+	sq_bend	71, 0, 0, 61
+	sq_bend	74, 0, 0, 60
+	sq_bend	74, 0, 0, 59
+	sq_bend	78, 0, 0, 58
+	sq_bend	80, 0, 0, 57
+	sq_bend	81, 0, 0, 55
+	sq_bend	84, 0, 0, 54
+	sq_bend	87, 0, 64, 46
+	sq_bend	91, 0, 0, 32
+	sq_bend	93, 0, 0, 21
+	sq_beat
+	sq_bend	2, 0, 0, 0
+	sq_bend	11, 0, 64, 64
+	sq_bend	17, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 53, 103, 28, 0
+	sq_note	71, 0, 55, 92, 18, 0
+	sq_note	90, 0, 58, 96, 18, 0
+	sq_beat
+	sq_note	16, 0, 53, 85, 26, 0
+	sq_note	39, 0, 55, 90, 20, 0
+	sq_note	65, 0, 58, 111, 20, 0
+	sq_note	88, 0, 60, 98, 21, 0
+	sq_beat
+	sq_note	14, 0, 61, 101, 19, 0
+	sq_note	38, 0, 62, 93, 28, 0
+	sq_note	63, 0, 65, 88, 19, 0
+	sq_cell	0x80, 23, 25	# cell 24: song 1 track 2, 19 of 21
+	sq_note	82, 0, 67, 95, 24, 0
+	sq_beat
+	sq_note	11, 0, 70, 75, 17, 0
+	sq_note	29, 0, 72, 100, 19, 0
+	sq_note	52, 0, 73, 107, 19, 0
+	sq_note	73, 0, 74, 96, 18, 0
+	sq_beat
+	sq_bend	31, 0, 0, 62
+	sq_bend	34, 0, 64, 59
+	sq_bend	38, 0, 0, 54
+	sq_bend	41, 0, 0, 43
+	sq_note	44, 0, 84, 120, 73, 2
+	sq_bend	44, 0, 0, 35
+	sq_bend	48, 0, 64, 26
+	sq_bend	48, 0, 0, 18
+	sq_bend	51, 0, 0, 9
+	sq_bend	54, 0, 0, 3
+	sq_bend	54, 0, 0, 0
+	sq_bend	76, 0, 0, 4
+	sq_bend	80, 0, 0, 14
+	sq_bend	84, 0, 0, 17
+	sq_bend	86, 0, 0, 21
+	sq_bend	87, 0, 0, 23
+	sq_bend	90, 0, 0, 29
+	sq_bend	93, 0, 0, 31
+	sq_beat
+	sq_bend	0, 0, 64, 34
+	sq_bend	1, 0, 0, 37
+	sq_bend	4, 0, 64, 38
+	sq_bend	7, 0, 0, 40
+	sq_bend	8, 0, 0, 42
+	sq_bend	11, 0, 64, 44
+	sq_bend	11, 0, 0, 45
+	sq_bend	16, 0, 64, 48
+	sq_bend	17, 0, 0, 50
+	sq_bend	20, 0, 64, 52
+	sq_bend	23, 0, 64, 53
+	sq_bend	27, 0, 64, 54
+	sq_bend	33, 0, 0, 56
+	sq_bend	36, 0, 64, 56
+	sq_bend	37, 0, 0, 57
+	sq_bend	40, 0, 64, 57
+	sq_bend	43, 0, 0, 59
+	sq_bend	47, 0, 64, 59
+	sq_bend	49, 0, 64, 60
+	sq_bend	53, 0, 64, 61
+	sq_bend	59, 0, 0, 63
+	sq_bend	63, 0, 64, 63
+	sq_bend	66, 0, 0, 64
+	sq_beat
+	sq_cc	26, 0, 17, 1, 8
+	sq_cc	29, 0, 17, 1, 15
+	sq_cc	29, 0, 17, 1, 23
+	sq_cc	33, 0, 17, 1, 29
+	sq_cc	33, 0, 17, 1, 34
+	sq_cc	36, 0, 17, 1, 39
+	sq_cc	39, 0, 17, 1, 47
+	sq_cc	42, 0, 17, 1, 52
+	sq_cc	45, 0, 17, 1, 60
+	sq_cc	49, 0, 17, 1, 69
+	.byte	0x34	# bytes 1..1 of `sq_cc	52, 0, 17, 1, 73` (the event spans two cells)
+	sq_cell	0x80, 24, 26	# cell 25: song 1 track 2, 20 of 21
+	.byte	0xb0, 0x11, 0x01, 0x49	# bytes 2..5 of `sq_cc	52, 0, 17, 1, 73` (the event spans two cells)
+	sq_cc	55, 0, 17, 1, 76
+	sq_cc	55, 0, 17, 1, 79
+	sq_cc	59, 0, 17, 1, 81
+	sq_cc	62, 0, 17, 1, 86
+	sq_cc	66, 0, 17, 1, 88
+	sq_cc	78, 0, 17, 1, 84
+	sq_cc	78, 0, 17, 1, 78
+	sq_cc	82, 0, 17, 1, 70
+	sq_cc	82, 0, 17, 1, 60
+	sq_cc	85, 0, 17, 1, 48
+	sq_cc	88, 0, 17, 1, 33
+	sq_cc	88, 0, 17, 1, 13
+	sq_cc	91, 0, 17, 1, 0
+	sq_beat
+	sq_note	27, 0, 79, 111, 93, 0
+	sq_bend	48, 0, 64, 65
+	sq_bend	51, 0, 0, 69
+	sq_bend	51, 0, 64, 71
+	sq_bend	54, 0, 64, 74
+	sq_bend	57, 0, 0, 77
+	sq_bend	57, 0, 0, 80
+	sq_bend	61, 0, 64, 83
+	sq_bend	61, 0, 64, 86
+	sq_bend	64, 0, 0, 89
+	sq_bend	67, 0, 0, 92
+	sq_bend	67, 0, 64, 95
+	sq_bend	71, 0, 0, 100
+	sq_bend	71, 0, 0, 104
+	sq_bend	74, 0, 64, 110
+	sq_bend	77, 0, 127, 127
+	sq_beat
+	sq_bend	7, 0, 0, 95
+	sq_bend	8, 0, 0, 76
+	sq_bend	10, 0, 0, 66
+	sq_bend	14, 0, 0, 64
+	sq_note	20, 0, 77, 100, 24, 0
+	sq_note	41, 0, 74, 92, 18, 0
+	sq_note	59, 0, 72, 72, 16, 0
+	sq_note	80, 0, 79, 113, 4, 1
+	sq_bend	95, 0, 64, 66
+	sq_beat
+	sq_bend	0, 0, 0, 71
+	sq_bend	4, 0, 0, 84
+	sq_bend	6, 0, 64, 91
+	sq_bend	10, 0, 0, 99
+	sq_bend	13, 0, 0, 100
+	sq_bend	16, 0, 64, 90
+	sq_bend	20, 0, 64, 72
+	sq_bend	23, 0, 64, 66
+	sq_bend	26, 0, 0, 64
+	sq_bend	36, 0, 64, 73
+	sq_bend	40, 0, 64, 88
+	sq_bend	43, 0, 127, 127
+	sq_bend	56, 0, 64, 97
+	sq_bend	59, 0, 0, 64
+	sq_bend	62, 0, 0, 60
+	sq_bend	66, 0, 0, 64
+	.byte	0x4d, 0x90, 0x54, 0x49, 0x51	# bytes 1..5 of `sq_note	77, 0, 84, 73, 81, 1` (the event spans two cells)
+	sq_cell	0x80, 25, 65535	# cell 26: song 1 track 2, 21 of 21
+	.byte	0x01	# bytes 6..6 of `sq_note	77, 0, 84, 73, 81, 1` (the event spans two cells)
+	sq_beat
+	sq_bend	48, 0, 64, 63
+	sq_bend	52, 0, 0, 63
+	sq_bend	55, 0, 0, 62
+	sq_bend	58, 0, 0, 60
+	sq_bend	62, 0, 64, 59
+	sq_bend	65, 0, 0, 58
+	sq_bend	68, 0, 0, 57
+	sq_bend	71, 0, 0, 56
+	sq_bend	75, 0, 0, 55
+	sq_bend	78, 0, 64, 54
+	sq_bend	81, 0, 64, 53
+	sq_bend	85, 0, 0, 53
+	sq_bend	91, 0, 64, 49
+	sq_bend	95, 0, 0, 48
+	sq_beat
+	sq_bend	2, 0, 64, 46
+	sq_bend	8, 0, 64, 44
+	sq_bend	8, 0, 0, 43
+	sq_bend	11, 0, 64, 40
+	sq_bend	18, 0, 64, 37
+	sq_bend	25, 0, 0, 32
+	sq_bend	28, 0, 0, 28
+	sq_bend	31, 0, 64, 25
+	sq_bend	34, 0, 0, 23
+	sq_bend	34, 0, 0, 17
+	sq_bend	38, 0, 0, 13
+	sq_bend	41, 0, 0, 5
+	sq_bend	42, 0, 0, 0
+	sq_bend	74, 0, 0, 58
+	sq_bend	77, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	123, 0x00	# after the end of track
+	sq_cell	0x80, 0, 28	# cell 27: song 1 track 3, 1 of 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 101, 48, 32
+	sq_cc	1, 0, 18, 7, 101
+	sq_cc	1, 0, 18, 10, 99
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 26, 95, 85, 7
+	sq_note	92, 0, 38, 90, 18, 4
+	sq_note	92, 0, 45, 101, 42, 5
+	sq_note	93, 0, 50, 105, 14, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 95, 8, 32
+	sq_cc	0, 0, 18, 7, 87
+	sq_beat
+	sq_note	2, 0, 28, 113, 0, 15
+	sq_press	8, 0, 3
+	sq_press	11, 0, 7
+	sq_press	14, 0, 11
+	sq_press	17, 0, 4
+	sq_press	19, 0, 0
+	sq_beat
+	sq_note	87, 0, 40, 109, 8, 13
+	sq_beat
+	sq_beat
+	sq_note	74, 0, 57, 94, 94, 8
+	sq_beat
+	sq_note	36, 0, 62, 85, 33, 18
+	sq_beat
+	sq_note	85, 0, 67, 108, 79, 16
+	sq_beat
+	sq_note	86, 0, 64, 103, 81, 15
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 59, 99, 49, 4
+	sq_beat
+	sq_beat
+	sq_note	90, 0, 57, 79, 81, 1
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 33, 120, 1, 4
+	sq_note	95, 0, 60, 99, 68, 3
+	sq_note	95, 0, 55, 78, 70, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	83, 0, 57, 89, 82, 3
+	sq_note	83, 0, 59, 85, 82, 3
+	sq_note	83, 0, 31, 125, 90, 3
+	sq_press	87, 0, 8
+	sq_press	89, 0, 31
+	sq_press	92, 0, 42
+	sq_press	92, 0, 48
+	sq_press	95, 0, 52
+	sq_beat
+	sq_press	0, 0, 54
+	.byte	0x04	# bytes 1..1 of `sq_press	4, 0, 44` (the event spans two cells)
+	sq_cell	0x80, 27, 29	# cell 28: song 1 track 3, 2 of 3
+	.byte	0xd0, 0x2c	# bytes 2..3 of `sq_press	4, 0, 44` (the event spans two cells)
+	sq_press	5, 0, 35
+	sq_press	7, 0, 28
+	sq_press	10, 0, 22
+	sq_press	11, 0, 19
+	sq_press	18, 0, 22
+	sq_press	19, 0, 23
+	sq_press	24, 0, 20
+	sq_press	28, 0, 17
+	sq_press	28, 0, 13
+	sq_press	31, 0, 8
+	sq_press	33, 0, 3
+	sq_press	34, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	61, 0, 1
+	sq_press	64, 0, 3
+	sq_press	70, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 56, 80, 32
+	sq_cc	0, 0, 18, 7, 121
+	sq_cc	1, 0, 18, 10, 62
+	sq_beat
+	sq_note	8, 0, 77, 96, 59, 4
+	sq_note	10, 0, 72, 93, 57, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 60, 101, 21, 0
+	sq_note	23, 0, 58, 83, 21, 0
+	sq_note	44, 0, 57, 73, 26, 0
+	sq_note	70, 0, 55, 78, 21, 0
+	sq_beat
+	sq_note	4, 0, 60, 106, 21, 0
+	sq_note	28, 0, 58, 80, 24, 0
+	sq_note	53, 0, 57, 89, 16, 0
+	sq_note	81, 0, 55, 103, 18, 0
+	sq_beat
+	.byte	0x39, 0x90, 0x2b, 0x43	# bytes 1..4 of `sq_note	57, 0, 43, 67, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 28, 65535	# cell 29: song 1 track 3, 3 of 3
+	.byte	0x10, 0x00	# bytes 5..6 of `sq_note	57, 0, 43, 67, 16, 0` (the event spans two cells)
+	sq_note	84, 0, 43, 73, 15, 0
+	sq_beat
+	sq_note	15, 0, 43, 83, 12, 0
+	sq_note	34, 0, 43, 93, 14, 0
+	sq_note	60, 0, 43, 101, 11, 0
+	sq_note	85, 0, 43, 121, 17, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	212, 0x00	# after the end of track
+	sq_cell	0x80, 0, 31	# cell 30: song 1 track 4, 1 of 11
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	94, 0, 48, 5, 32
+	sq_cc	95, 0, 3, 7, 127
+	sq_beat
+	sq_note	0, 0, 79, 108, 8, 0
+	sq_note	1, 0, 67, 110, 11, 0
+	sq_note	19, 0, 81, 93, 9, 0
+	sq_note	24, 0, 69, 98, 11, 0
+	sq_note	43, 0, 82, 96, 62, 0
+	sq_note	48, 0, 70, 95, 9, 0
+	sq_note	72, 0, 64, 97, 13, 0
+	sq_note	74, 0, 52, 94, 10, 0
+	sq_note	93, 0, 65, 95, 11, 0
+	sq_note	94, 0, 53, 83, 9, 0
+	sq_beat
+	sq_note	21, 0, 67, 93, 9, 0
+	sq_note	22, 0, 55, 85, 59, 0
+	sq_note	46, 0, 84, 90, 10, 0
+	sq_note	48, 0, 68, 111, 11, 0
+	sq_note	48, 0, 72, 113, 12, 0
+	sq_note	65, 0, 85, 75, 8, 0
+	sq_note	70, 0, 73, 102, 12, 0
+	sq_note	91, 0, 86, 78, 10, 0
+	sq_note	95, 0, 74, 89, 12, 0
+	sq_beat
+	sq_note	21, 0, 91, 83, 13, 0
+	sq_note	23, 0, 69, 104, 10, 0
+	sq_note	23, 0, 79, 116, 9, 0
+	sq_note	41, 0, 90, 86, 13, 0
+	sq_note	46, 0, 78, 101, 10, 0
+	sq_note	64, 0, 89, 69, 15, 0
+	sq_note	69, 0, 77, 101, 10, 0
+	sq_note	70, 0, 70, 105, 10, 0
+	sq_note	89, 0, 88, 86, 16, 0
+	sq_note	93, 0, 76, 84, 12, 0
+	sq_beat
+	sq_note	18, 0, 87, 81, 11, 0
+	sq_note	21, 0, 75, 106, 12, 0
+	sq_note	23, 0, 71, 98, 11, 0
+	sq_note	41, 0, 86, 90, 15, 0
+	sq_note	45, 0, 74, 94, 12, 0
+	sq_note	66, 0, 85, 102, 13, 0
+	sq_note	69, 0, 73, 111, 11, 0
+	sq_note	94, 0, 38, 100, 13, 0
+	sq_note	95, 0, 38, 103, 15, 0
+	sq_beat
+	.byte	0x16	# bytes 1..1 of `sq_note	22, 0, 45, 89, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 30, 32	# cell 31: song 1 track 4, 2 of 11
+	.byte	0x90, 0x2d, 0x59, 0x0b, 0x00	# bytes 2..6 of `sq_note	22, 0, 45, 89, 11, 0` (the event spans two cells)
+	sq_note	23, 0, 45, 101, 11, 0
+	sq_note	42, 0, 50, 93, 8, 0
+	sq_note	46, 0, 50, 103, 9, 0
+	sq_note	68, 0, 64, 91, 8, 0
+	sq_note	68, 0, 65, 100, 8, 0
+	sq_note	68, 0, 74, 96, 14, 0
+	sq_note	71, 0, 38, 95, 10, 0
+	sq_note	94, 0, 45, 85, 9, 0
+	sq_note	95, 0, 45, 75, 9, 0
+	sq_beat
+	sq_note	20, 0, 50, 81, 6, 0
+	sq_note	21, 0, 48, 76, 10, 0
+	sq_note	44, 0, 53, 84, 12, 0
+	sq_note	46, 0, 67, 86, 9, 0
+	sq_note	46, 0, 69, 96, 9, 0
+	sq_note	46, 0, 77, 91, 11, 0
+	sq_note	69, 0, 52, 90, 12, 0
+	sq_note	92, 0, 48, 100, 11, 0
+	sq_beat
+	sq_note	20, 0, 50, 91, 10, 0
+	sq_note	24, 0, 67, 90, 8, 0
+	sq_note	24, 0, 69, 104, 8, 0
+	sq_note	24, 0, 76, 92, 11, 0
+	sq_note	44, 0, 41, 74, 8, 0
+	sq_note	68, 0, 43, 70, 7, 0
+	sq_note	71, 0, 38, 71, 6, 0
+	sq_note	92, 0, 45, 89, 9, 0
+	sq_note	95, 0, 64, 96, 9, 0
+	sq_note	95, 0, 65, 103, 9, 0
+	sq_beat
+	sq_note	0, 0, 72, 95, 10, 0
+	sq_note	19, 0, 48, 93, 9, 0
+	sq_note	44, 0, 43, 88, 12, 0
+	sq_note	67, 0, 45, 103, 18, 0
+	sq_note	94, 0, 38, 94, 11, 0
+	sq_beat
+	sq_note	22, 0, 45, 90, 9, 0
+	sq_note	45, 0, 50, 94, 11, 0
+	sq_note	67, 0, 64, 90, 10, 0
+	sq_note	67, 0, 65, 99, 9, 0
+	sq_note	68, 0, 74, 89, 14, 0
+	sq_note	68, 0, 38, 100, 9, 0
+	sq_beat
+	sq_note	21, 0, 45, 81, 9, 0
+	sq_note	44, 0, 71, 89, 9, 0
+	.byte	0x2c	# bytes 1..1 of `sq_note	44, 0, 72, 99, 10, 0` (the event spans two cells)
+	sq_cell	0x80, 31, 33	# cell 32: song 1 track 4, 3 of 11
+	.byte	0x90, 0x48, 0x63, 0x0a, 0x00	# bytes 2..6 of `sq_note	44, 0, 72, 99, 10, 0` (the event spans two cells)
+	sq_note	44, 0, 81, 92, 11, 0
+	sq_note	46, 0, 48, 86, 11, 0
+	sq_note	70, 0, 57, 90, 11, 0
+	sq_beat
+	sq_note	21, 0, 72, 107, 9, 0
+	sq_note	21, 0, 71, 92, 10, 0
+	sq_note	21, 0, 79, 92, 10, 0
+	sq_note	49, 0, 53, 96, 12, 0
+	sq_note	72, 0, 55, 89, 10, 0
+	sq_note	94, 0, 67, 88, 9, 0
+	sq_note	94, 0, 69, 104, 9, 0
+	sq_note	94, 0, 76, 88, 11, 0
+	sq_beat
+	sq_note	0, 0, 48, 95, 13, 0
+	sq_note	23, 0, 50, 92, 12, 0
+	sq_note	46, 0, 64, 90, 8, 0
+	sq_note	46, 0, 65, 98, 8, 0
+	sq_note	46, 0, 41, 101, 23, 0
+	sq_note	46, 0, 72, 93, 10, 0
+	sq_note	71, 0, 43, 90, 19, 0
+	sq_beat
+	sq_note	2, 0, 38, 98, 10, 0
+	sq_note	24, 0, 45, 96, 9, 0
+	sq_note	47, 0, 50, 93, 11, 0
+	sq_note	48, 0, 38, 68, 5, 0
+	sq_note	69, 0, 38, 103, 8, 0
+	sq_note	69, 0, 64, 87, 8, 0
+	sq_note	70, 0, 65, 96, 8, 0
+	sq_note	70, 0, 74, 86, 11, 0
+	sq_beat
+	sq_note	20, 0, 38, 96, 13, 0
+	sq_note	43, 0, 45, 96, 12, 0
+	sq_note	43, 0, 67, 85, 9, 0
+	sq_note	43, 0, 69, 99, 9, 0
+	sq_note	44, 0, 77, 83, 11, 0
+	sq_note	67, 0, 48, 81, 14, 0
+	sq_note	92, 0, 53, 96, 14, 0
+	sq_beat
+	sq_note	20, 0, 52, 98, 13, 0
+	sq_note	21, 0, 67, 86, 9, 0
+	sq_note	21, 0, 69, 100, 8, 0
+	sq_note	21, 0, 76, 86, 12, 0
+	sq_note	44, 0, 48, 91, 12, 0
+	sq_note	67, 0, 41, 105, 18, 0
+	sq_note	91, 0, 43, 78, 12, 0
+	.byte	0x5d	# bytes 1..1 of `sq_note	93, 0, 72, 78, 61, 0` (the event spans two cells)
+	sq_cell	0x80, 32, 34	# cell 33: song 1 track 4, 4 of 11
+	.byte	0x90, 0x48, 0x4e, 0x3d, 0x00	# bytes 2..6 of `sq_note	93, 0, 72, 78, 61, 0` (the event spans two cells)
+	sq_note	93, 0, 65, 97, 64, 0
+	sq_note	94, 0, 60, 94, 60, 0
+	sq_beat
+	sq_note	20, 0, 45, 90, 17, 0
+	sq_note	46, 0, 48, 105, 19, 0
+	sq_note	70, 0, 67, 89, 11, 0
+	sq_note	70, 0, 62, 83, 10, 0
+	sq_note	70, 0, 74, 84, 12, 0
+	sq_note	70, 0, 72, 84, 10, 0
+	sq_note	71, 0, 50, 83, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 52, 39, 32
+	sq_cc	2, 0, 3, 7, 107
+	sq_beat
+	sq_note	7, 0, 28, 100, 29, 5
+	sq_note	8, 0, 40, 47, 32, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	31, 0, 67, 44, 49, 1
+	sq_note	34, 0, 59, 45, 37, 1
+	sq_beat
+	sq_note	77, 0, 66, 49, 26, 0
+	sq_note	81, 0, 57, 53, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	34, 0, 47, 81, 46, 0
+	sq_note	81, 0, 52, 73, 63, 0
+	sq_beat
+	sq_note	35, 0, 67, 79, 53, 1
+	sq_note	35, 0, 59, 75, 39, 1
+	sq_beat
+	sq_note	84, 0, 66, 70, 27, 0
+	sq_note	86, 0, 57, 81, 19, 0
+	sq_beat
+	sq_note	38, 0, 52, 85, 9, 0
+	sq_note	89, 0, 40, 100, 56, 0
+	sq_beat
+	sq_note	42, 0, 47, 88, 50, 0
+	sq_note	90, 0, 52, 91, 75, 0
+	sq_beat
+	sq_note	43, 0, 67, 81, 35, 1
+	sq_note	43, 0, 59, 83, 30, 1
+	sq_beat
+	sq_note	81, 0, 66, 82, 34, 0
+	sq_note	83, 0, 57, 90, 24, 0
+	sq_beat
+	.byte	0x24, 0x90, 0x34, 0x5a, 0x09	# bytes 1..5 of `sq_note	36, 0, 52, 90, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 33, 35	# cell 34: song 1 track 4, 5 of 11
+	.byte	0x00	# bytes 6..6 of `sq_note	36, 0, 52, 90, 9, 0` (the event spans two cells)
+	sq_note	90, 0, 45, 98, 56, 0
+	sq_beat
+	sq_note	48, 0, 52, 96, 95, 0
+	sq_beat
+	sq_note	48, 0, 59, 86, 21, 1
+	sq_note	48, 0, 60, 101, 32, 1
+	sq_note	48, 0, 67, 90, 40, 1
+	sq_beat
+	sq_note	88, 0, 66, 62, 20, 0
+	sq_note	89, 0, 57, 81, 18, 0
+	sq_beat
+	sq_note	44, 0, 52, 89, 11, 0
+	sq_beat
+	sq_note	45, 0, 43, 97, 47, 0
+	sq_note	89, 0, 50, 97, 60, 0
+	sq_beat
+	sq_note	41, 0, 59, 85, 38, 1
+	sq_note	41, 0, 67, 75, 52, 1
+	sq_beat
+	sq_note	46, 0, 50, 89, 6, 0
+	sq_note	87, 0, 66, 85, 34, 0
+	sq_note	90, 0, 57, 85, 28, 0
+	sq_beat
+	sq_note	39, 0, 50, 85, 5, 0
+	sq_beat
+	sq_note	1, 0, 40, 100, 47, 0
+	sq_note	48, 0, 47, 80, 29, 0
+	sq_note	92, 0, 52, 86, 46, 0
+	sq_beat
+	sq_note	41, 0, 67, 85, 92, 0
+	sq_note	43, 0, 59, 90, 81, 0
+	sq_beat
+	sq_note	43, 0, 57, 83, 72, 0
+	sq_note	44, 0, 66, 85, 49, 0
+	sq_note	94, 0, 47, 75, 6, 0
+	sq_beat
+	sq_note	41, 0, 54, 71, 18, 0
+	sq_note	41, 0, 62, 83, 22, 0
+	sq_note	85, 0, 40, 90, 57, 0
+	sq_beat
+	sq_note	38, 0, 47, 76, 44, 0
+	sq_note	92, 0, 52, 83, 39, 0
+	sq_beat
+	sq_note	43, 0, 59, 81, 39, 0
+	sq_note	44, 0, 67, 80, 49, 0
+	sq_note	91, 0, 66, 69, 69, 0
+	sq_note	93, 0, 57, 80, 83, 0
+	sq_beat
+	sq_note	53, 0, 47, 67, 5, 0
+	sq_note	90, 0, 62, 80, 42, 0
+	sq_note	92, 0, 54, 77, 37, 0
+	sq_beat
+	sq_note	49, 0, 52, 73, 6, 0
+	sq_note	91, 0, 40, 104, 45, 0
+	sq_note	94, 0, 44, 75, 5, 0
+	sq_cell	0x80, 34, 36	# cell 35: song 1 track 4, 6 of 11
+	sq_beat
+	sq_note	44, 0, 47, 81, 34, 0
+	sq_beat
+	sq_note	2, 0, 52, 98, 35, 0
+	sq_note	45, 0, 59, 95, 32, 0
+	sq_note	45, 0, 67, 94, 39, 0
+	sq_note	91, 0, 57, 79, 68, 0
+	sq_note	91, 0, 66, 71, 69, 0
+	sq_beat
+	sq_note	44, 0, 47, 105, 31, 0
+	sq_note	91, 0, 62, 105, 52, 0
+	sq_beat
+	sq_note	45, 0, 43, 95, 40, 0
+	sq_note	94, 0, 45, 98, 78, 0
+	sq_beat
+	sq_note	42, 0, 59, 81, 0, 1
+	sq_note	83, 0, 60, 85, 54, 0
+	sq_note	83, 0, 67, 86, 60, 0
+	sq_beat
+	sq_note	47, 0, 47, 100, 33, 0
+	sq_note	90, 0, 54, 81, 54, 0
+	sq_beat
+	sq_note	39, 0, 62, 95, 53, 0
+	sq_note	40, 0, 57, 91, 38, 0
+	sq_note	93, 0, 64, 67, 32, 0
+	sq_note	93, 0, 59, 78, 30, 0
+	sq_beat
+	sq_note	42, 0, 47, 81, 14, 0
+	sq_beat
+	sq_note	0, 0, 41, 107, 59, 0
+	sq_note	51, 0, 48, 81, 47, 0
+	sq_beat
+	sq_note	0, 0, 53, 83, 41, 0
+	sq_note	42, 0, 68, 74, 42, 1
+	sq_note	42, 0, 60, 89, 35, 1
+	sq_beat
+	sq_note	86, 0, 67, 61, 40, 0
+	sq_note	90, 0, 58, 69, 32, 0
+	sq_beat
+	sq_note	33, 0, 53, 65, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 58, 36, 72, 1
+	sq_note	1, 0, 63, 36, 3, 2
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 60, 50, 89, 1
+	sq_note	1, 0, 56, 43, 54, 1
+	sq_beat
+	sq_note	83, 0, 56, 49, 14, 2
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 58, 48, 92, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 41, 107, 59, 0
+	sq_note	51, 0, 48, 81, 47, 0
+	sq_beat
+	sq_note	0, 0, 53, 83, 41, 0
+	.byte	0x2a, 0x90, 0x44	# bytes 1..3 of `sq_note	42, 0, 68, 74, 42, 1` (the event spans two cells)
+	sq_cell	0x80, 35, 37	# cell 36: song 1 track 4, 7 of 11
+	.byte	0x4a, 0x2a, 0x01	# bytes 4..6 of `sq_note	42, 0, 68, 74, 42, 1` (the event spans two cells)
+	sq_note	42, 0, 60, 89, 35, 1
+	sq_beat
+	sq_note	86, 0, 67, 61, 40, 0
+	sq_note	90, 0, 58, 69, 32, 0
+	sq_beat
+	sq_note	33, 0, 53, 50, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	90, 0, 65, 48, 1, 2
+	sq_note	92, 0, 60, 48, 0, 2
+	sq_beat
+	sq_beat
+	sq_note	83, 0, 63, 48, 8, 1
+	sq_note	86, 0, 58, 42, 0, 1
+	sq_beat
+	sq_note	86, 0, 56, 42, 95, 1
+	sq_note	86, 0, 60, 42, 7, 2
+	sq_beat
+	sq_beat
+	sq_note	85, 0, 58, 57, 77, 1
+	sq_beat
+	sq_note	7, 0, 55, 45, 18, 0
+	sq_beat
+	sq_beat
+	sq_note	39, 0, 43, 72, 51, 0
+	sq_note	91, 0, 50, 95, 50, 0
+	sq_beat
+	sq_note	42, 0, 62, 80, 45, 1
+	sq_note	43, 0, 67, 73, 40, 1
+	sq_beat
+	sq_note	88, 0, 65, 64, 56, 0
+	sq_note	91, 0, 60, 71, 54, 0
+	sq_beat
+	sq_note	46, 0, 50, 77, 46, 0
+	sq_note	95, 0, 43, 89, 51, 0
+	sq_beat
+	sq_note	50, 0, 50, 78, 42, 0
+	sq_note	93, 0, 53, 73, 88, 0
+	sq_note	93, 0, 62, 77, 50, 0
+	sq_beat
+	sq_note	44, 0, 60, 68, 44, 1
+	sq_beat
+	sq_note	91, 0, 57, 71, 22, 0
+	sq_beat
+	sq_note	39, 0, 50, 77, 23, 0
+	sq_note	77, 0, 43, 73, 71, 0
+	sq_beat
+	sq_note	42, 0, 50, 68, 38, 0
+	sq_note	88, 0, 70, 91, 56, 0
+	sq_note	91, 0, 62, 73, 42, 0
+	sq_beat
+	sq_note	48, 0, 69, 69, 43, 1
+	sq_note	53, 0, 60, 74, 33, 1
+	sq_beat
+	sq_note	93, 0, 62, 81, 64, 0
+	sq_beat
+	sq_note	50, 0, 46, 65, 26, 0
+	sq_beat
+	sq_note	8, 0, 46, 64, 13, 0
+	sq_note	51, 0, 60, 80, 39, 0
+	.byte	0x33, 0x90, 0x41, 0x4c, 0x1f	# bytes 1..5 of `sq_note	51, 0, 65, 76, 31, 1` (the event spans two cells)
+	sq_cell	0x80, 36, 38	# cell 37: song 1 track 4, 8 of 11
+	.byte	0x01	# bytes 6..6 of `sq_note	51, 0, 65, 76, 31, 1` (the event spans two cells)
+	sq_note	91, 0, 72, 85, 92, 0
+	sq_beat
+	sq_note	84, 0, 60, 73, 92, 0
+	sq_note	84, 0, 69, 76, 4, 1
+	sq_beat
+	sq_note	36, 0, 53, 78, 52, 0
+	sq_note	88, 0, 65, 73, 58, 0
+	sq_note	89, 0, 57, 76, 58, 0
+	sq_beat
+	sq_note	44, 0, 60, 69, 44, 0
+	sq_beat
+	sq_note	44, 0, 53, 58, 34, 0
+	sq_note	89, 0, 62, 81, 54, 0
+	sq_note	91, 0, 57, 60, 31, 0
+	sq_beat
+	sq_note	40, 0, 60, 65, 46, 1
+	sq_note	76, 0, 55, 12, 85, 0
+	sq_beat
+	sq_note	86, 0, 58, 70, 60, 0
+	sq_note	89, 0, 53, 70, 51, 0
+	sq_beat
+	sq_note	44, 0, 50, 78, 39, 0
+	sq_note	89, 0, 43, 77, 56, 0
+	sq_beat
+	sq_note	47, 0, 50, 86, 45, 0
+	sq_note	91, 0, 70, 93, 55, 0
+	sq_note	93, 0, 62, 73, 38, 0
+	sq_beat
+	sq_note	47, 0, 69, 73, 75, 0
+	sq_note	50, 0, 60, 64, 3, 1
+	sq_beat
+	sq_note	44, 0, 58, 66, 85, 0
+	sq_note	45, 0, 65, 84, 88, 0
+	sq_beat
+	sq_note	43, 0, 53, 71, 24, 0
+	sq_note	44, 0, 62, 65, 30, 0
+	sq_note	86, 0, 43, 85, 53, 0
+	sq_beat
+	sq_note	46, 0, 50, 80, 51, 0
+	sq_beat
+	sq_note	43, 0, 60, 79, 7, 1
+	sq_note	45, 0, 53, 81, 79, 0
+	sq_beat
+	sq_note	44, 0, 62, 88, 43, 0
+	sq_note	46, 0, 55, 81, 27, 0
+	sq_beat
+	sq_note	2, 0, 50, 91, 29, 0
+	sq_note	45, 0, 65, 85, 93, 0
+	sq_note	45, 0, 60, 72, 70, 0
+	sq_beat
+	sq_note	40, 0, 67, 93, 44, 0
+	sq_note	41, 0, 62, 86, 34, 0
+	sq_note	90, 0, 50, 83, 8, 0
+	sq_beat
+	sq_note	43, 0, 65, 86, 68, 0
+	.byte	0x2b, 0x90, 0x46, 0x6b, 0x56	# bytes 1..5 of `sq_note	43, 0, 70, 107, 86, 0` (the event spans two cells)
+	sq_cell	0x80, 37, 39	# cell 38: song 1 track 4, 9 of 11
+	.byte	0x00	# bytes 6..6 of `sq_note	43, 0, 70, 107, 86, 0` (the event spans two cells)
+	sq_beat
+	sq_note	35, 0, 72, 93, 47, 0
+	sq_note	37, 0, 67, 83, 44, 0
+	sq_note	85, 0, 74, 90, 46, 0
+	sq_note	88, 0, 69, 93, 45, 0
+	sq_beat
+	sq_note	41, 0, 72, 84, 18, 0
+	sq_note	43, 0, 77, 103, 19, 0
+	sq_beat
+	sq_note	39, 0, 43, 72, 51, 0
+	sq_note	91, 0, 50, 95, 50, 0
+	sq_beat
+	sq_note	42, 0, 62, 80, 45, 1
+	sq_note	43, 0, 67, 73, 40, 1
+	sq_beat
+	sq_note	88, 0, 65, 64, 56, 0
+	sq_note	91, 0, 60, 71, 54, 0
+	sq_beat
+	sq_note	46, 0, 50, 77, 46, 0
+	sq_note	95, 0, 43, 89, 51, 0
+	sq_beat
+	sq_note	50, 0, 50, 78, 42, 0
+	sq_note	93, 0, 53, 73, 88, 0
+	sq_note	93, 0, 62, 77, 50, 0
+	sq_beat
+	sq_note	44, 0, 60, 68, 44, 1
+	sq_beat
+	sq_note	91, 0, 57, 71, 22, 0
+	sq_beat
+	sq_note	39, 0, 50, 77, 23, 0
+	sq_note	77, 0, 43, 73, 71, 0
+	sq_beat
+	sq_note	42, 0, 50, 68, 38, 0
+	sq_note	88, 0, 70, 91, 56, 0
+	sq_note	91, 0, 62, 73, 42, 0
+	sq_beat
+	sq_note	48, 0, 69, 69, 43, 1
+	sq_note	53, 0, 60, 74, 33, 1
+	sq_beat
+	sq_note	93, 0, 62, 81, 64, 0
+	sq_beat
+	sq_note	50, 0, 46, 65, 26, 0
+	sq_beat
+	sq_note	8, 0, 46, 64, 13, 0
+	sq_note	51, 0, 60, 80, 39, 0
+	sq_note	51, 0, 65, 76, 31, 1
+	sq_note	91, 0, 72, 85, 92, 0
+	sq_beat
+	sq_note	84, 0, 60, 73, 92, 0
+	sq_note	84, 0, 69, 76, 4, 1
+	sq_beat
+	sq_note	36, 0, 53, 78, 52, 0
+	sq_note	88, 0, 65, 73, 58, 0
+	sq_note	89, 0, 57, 76, 58, 0
+	sq_beat
+	sq_note	44, 0, 60, 69, 44, 0
+	sq_beat
+	.byte	0x2c, 0x90, 0x35	# bytes 1..3 of `sq_note	44, 0, 53, 58, 34, 0` (the event spans two cells)
+	sq_cell	0x80, 38, 40	# cell 39: song 1 track 4, 10 of 11
+	.byte	0x3a, 0x22, 0x00	# bytes 4..6 of `sq_note	44, 0, 53, 58, 34, 0` (the event spans two cells)
+	sq_note	89, 0, 62, 81, 54, 0
+	sq_note	91, 0, 57, 60, 31, 0
+	sq_beat
+	sq_note	40, 0, 60, 65, 46, 1
+	sq_note	76, 0, 55, 12, 85, 0
+	sq_beat
+	sq_note	86, 0, 58, 70, 60, 0
+	sq_note	89, 0, 53, 70, 51, 0
+	sq_beat
+	sq_note	44, 0, 50, 78, 39, 0
+	sq_note	89, 0, 43, 77, 56, 0
+	sq_beat
+	sq_note	47, 0, 50, 86, 45, 0
+	sq_note	91, 0, 70, 93, 55, 0
+	sq_note	93, 0, 62, 73, 38, 0
+	sq_beat
+	sq_note	47, 0, 69, 73, 75, 0
+	sq_note	50, 0, 60, 64, 3, 1
+	sq_beat
+	sq_note	44, 0, 58, 66, 85, 0
+	sq_note	45, 0, 65, 84, 88, 0
+	sq_beat
+	sq_note	43, 0, 53, 71, 24, 0
+	sq_note	44, 0, 62, 65, 30, 0
+	sq_note	86, 0, 43, 85, 53, 0
+	sq_beat
+	sq_note	46, 0, 50, 80, 51, 0
+	sq_beat
+	sq_note	43, 0, 60, 79, 7, 1
+	sq_note	45, 0, 53, 81, 79, 0
+	sq_beat
+	sq_note	44, 0, 62, 88, 43, 0
+	sq_note	46, 0, 55, 81, 27, 0
+	sq_beat
+	sq_note	2, 0, 50, 91, 29, 0
+	sq_note	45, 0, 65, 85, 93, 0
+	sq_note	45, 0, 60, 72, 70, 0
+	sq_beat
+	sq_note	40, 0, 67, 93, 44, 0
+	sq_note	41, 0, 62, 86, 34, 0
+	sq_note	90, 0, 50, 83, 8, 0
+	sq_beat
+	sq_note	43, 0, 65, 86, 68, 0
+	sq_note	43, 0, 70, 107, 86, 0
+	sq_beat
+	sq_note	35, 0, 72, 93, 47, 0
+	sq_note	37, 0, 67, 83, 44, 0
+	sq_note	85, 0, 74, 90, 46, 0
+	sq_note	88, 0, 69, 93, 45, 0
+	sq_beat
+	sq_note	41, 0, 72, 84, 18, 0
+	sq_note	43, 0, 77, 103, 19, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 39, 65535	# cell 40: song 1 track 4, 11 of 11
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	245, 0x00	# after the end of track
+	sq_cell	0x80, 0, 42	# cell 41: song 1 track 5, 1 of 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 39, 32, 32
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 26, 115, 70, 1
+	sq_cc	89, 0, 4, 64, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	58, 0, 4, 64, 0
+	sq_note	95, 0, 26, 104, 19, 0
+	sq_beat
+	sq_note	22, 0, 33, 86, 16, 0
+	sq_note	46, 0, 38, 95, 13, 0
+	sq_note	71, 0, 26, 83, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 26, 108, 19, 0
+	sq_beat
+	sq_note	22, 0, 33, 93, 15, 0
+	sq_note	46, 0, 38, 90, 12, 0
+	sq_note	68, 0, 26, 81, 11, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 36, 105, 32, 0
+	sq_beat
+	sq_note	28, 0, 36, 105, 26, 0
+	sq_beat
+	sq_note	4, 0, 36, 107, 42, 0
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 36, 105, 32, 0
+	sq_beat
+	sq_note	28, 0, 36, 105, 26, 0
+	sq_beat
+	sq_note	4, 0, 36, 107, 42, 0
+	sq_beat
+	sq_pc	95, 0, 33, 48, 32
+	sq_beat
+	sq_note	4, 0, 43, 111, 35, 0
+	sq_note	53, 0, 31, 95, 7, 0
+	sq_note	76, 0, 35, 99, 20, 0
+	sq_beat
+	sq_note	30, 0, 35, 85, 10, 0
+	sq_note	51, 0, 36, 85, 34, 0
+	sq_beat
+	sq_note	2, 0, 31, 85, 5, 0
+	sq_note	29, 0, 37, 94, 34, 0
+	sq_note	75, 0, 31, 73, 5, 0
+	sq_beat
+	sq_note	2, 0, 38, 96, 26, 0
+	sq_note	30, 0, 31, 76, 5, 0
+	sq_note	50, 0, 41, 85, 7, 0
+	sq_note	75, 0, 42, 95, 13, 0
+	sq_beat
+	sq_note	4, 0, 43, 91, 9, 0
+	sq_note	25, 0, 43, 65, 10, 0
+	sq_note	48, 0, 31, 88, 5, 0
+	sq_note	74, 0, 35, 96, 33, 0
+	sq_beat
+	sq_note	23, 0, 31, 76, 6, 0
+	.byte	0x31, 0x90	# bytes 1..2 of `sq_note	49, 0, 36, 93, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 41, 43	# cell 42: song 1 track 5, 2 of 7
+	.byte	0x24, 0x5d, 0x0b, 0x00	# bytes 3..6 of `sq_note	49, 0, 36, 93, 11, 0` (the event spans two cells)
+	sq_note	71, 0, 36, 65, 13, 0
+	sq_beat
+	sq_note	4, 0, 36, 76, 6, 0
+	sq_note	28, 0, 37, 92, 13, 0
+	sq_note	74, 0, 36, 71, 6, 0
+	sq_beat
+	sq_note	1, 0, 38, 105, 24, 0
+	sq_note	29, 0, 36, 76, 7, 0
+	sq_note	51, 0, 41, 90, 8, 0
+	sq_note	76, 0, 42, 82, 11, 0
+	sq_beat
+	sq_note	2, 0, 43, 83, 28, 0
+	sq_note	45, 0, 33, 91, 9, 0
+	sq_note	69, 0, 28, 96, 32, 0
+	sq_beat
+	sq_note	21, 0, 28, 73, 9, 0
+	sq_note	46, 0, 29, 86, 34, 0
+	sq_note	95, 0, 29, 91, 11, 0
+	sq_beat
+	sq_note	28, 0, 30, 94, 26, 0
+	sq_note	71, 0, 30, 99, 13, 0
+	sq_beat
+	sq_note	3, 0, 34, 102, 16, 0
+	sq_note	29, 0, 35, 71, 11, 0
+	sq_note	54, 0, 36, 85, 14, 0
+	sq_note	78, 0, 37, 87, 10, 0
+	sq_beat
+	sq_note	2, 0, 38, 88, 19, 0
+	sq_note	26, 0, 31, 89, 10, 0
+	sq_note	47, 0, 34, 107, 11, 0
+	sq_note	63, 0, 35, 61, 35, 0
+	sq_beat
+	sq_note	6, 0, 31, 91, 5, 0
+	sq_note	31, 0, 36, 99, 33, 0
+	sq_note	77, 0, 31, 86, 5, 0
+	sq_beat
+	sq_note	4, 0, 37, 106, 33, 0
+	sq_note	51, 0, 31, 95, 5, 0
+	sq_note	77, 0, 38, 107, 33, 0
+	sq_beat
+	sq_note	30, 0, 31, 103, 7, 0
+	sq_note	53, 0, 41, 107, 12, 0
+	sq_note	76, 0, 42, 99, 14, 0
+	sq_beat
+	sq_note	4, 0, 45, 111, 35, 0
+	sq_note	53, 0, 33, 95, 7, 0
+	sq_note	76, 0, 37, 99, 20, 0
+	sq_beat
+	sq_note	30, 0, 37, 85, 10, 0
+	sq_note	51, 0, 38, 85, 34, 0
+	sq_beat
+	sq_note	2, 0, 33, 85, 5, 0
+	sq_cell	0x80, 42, 44	# cell 43: song 1 track 5, 3 of 7
+	sq_note	29, 0, 39, 94, 34, 0
+	sq_note	75, 0, 33, 73, 5, 0
+	sq_beat
+	sq_note	2, 0, 40, 96, 26, 0
+	sq_note	30, 0, 33, 76, 5, 0
+	sq_note	50, 0, 43, 85, 7, 0
+	sq_note	75, 0, 44, 95, 13, 0
+	sq_beat
+	sq_note	4, 0, 45, 91, 9, 0
+	sq_note	25, 0, 45, 65, 10, 0
+	sq_note	48, 0, 33, 88, 5, 0
+	sq_note	74, 0, 37, 96, 33, 0
+	sq_beat
+	sq_note	23, 0, 33, 76, 6, 0
+	sq_note	49, 0, 38, 93, 11, 0
+	sq_note	71, 0, 38, 65, 13, 0
+	sq_beat
+	sq_note	4, 0, 38, 76, 6, 0
+	sq_note	28, 0, 39, 92, 13, 0
+	sq_note	74, 0, 38, 71, 6, 0
+	sq_beat
+	sq_note	1, 0, 40, 105, 24, 0
+	sq_note	29, 0, 38, 76, 7, 0
+	sq_note	51, 0, 43, 90, 8, 0
+	sq_note	76, 0, 44, 82, 11, 0
+	sq_beat
+	sq_note	2, 0, 45, 83, 28, 0
+	sq_note	45, 0, 35, 91, 9, 0
+	sq_note	69, 0, 30, 96, 32, 0
+	sq_beat
+	sq_note	21, 0, 30, 73, 9, 0
+	sq_note	46, 0, 31, 86, 34, 0
+	sq_note	95, 0, 31, 91, 11, 0
+	sq_beat
+	sq_note	28, 0, 32, 94, 26, 0
+	sq_note	71, 0, 32, 99, 13, 0
+	sq_beat
+	sq_note	3, 0, 36, 102, 16, 0
+	sq_note	29, 0, 37, 71, 11, 0
+	sq_note	54, 0, 38, 85, 14, 0
+	sq_note	78, 0, 39, 87, 10, 0
+	sq_beat
+	sq_note	2, 0, 40, 88, 19, 0
+	sq_note	26, 0, 33, 89, 10, 0
+	sq_note	47, 0, 36, 70, 11, 0
+	sq_note	63, 0, 37, 66, 35, 0
+	sq_beat
+	sq_note	6, 0, 33, 68, 5, 0
+	sq_note	31, 0, 38, 53, 33, 0
+	sq_note	77, 0, 33, 55, 5, 0
+	sq_beat
+	.byte	0x04, 0x90, 0x27, 0x2b, 0x21	# bytes 1..5 of `sq_note	4, 0, 39, 43, 33, 0` (the event spans two cells)
+	sq_cell	0x80, 43, 45	# cell 44: song 1 track 5, 4 of 7
+	.byte	0x00	# bytes 6..6 of `sq_note	4, 0, 39, 43, 33, 0` (the event spans two cells)
+	sq_note	51, 0, 33, 46, 5, 0
+	sq_note	77, 0, 40, 24, 33, 0
+	sq_beat
+	sq_note	30, 0, 33, 39, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 33, 16, 32
+	sq_cc	2, 0, 4, 7, 119
+	sq_note	74, 0, 36, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 29, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 36, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 29, 94, 57, 0
+	sq_note	72, 0, 36, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 41, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 29, 85, 58, 0
+	sq_note	71, 0, 36, 92, 62, 0
+	sq_beat
+	sq_note	48, 0, 29, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 36, 61, 18, 0
+	sq_note	95, 0, 37, 102, 57, 0
+	sq_beat
+	sq_note	70, 0, 32, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 39, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 39, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 34, 102, 33, 0
+	sq_note	48, 0, 27, 101, 36, 0
+	sq_beat
+	sq_note	74, 0, 36, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 29, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 36, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 29, 94, 57, 0
+	sq_note	72, 0, 36, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 41, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 29, 85, 58, 0
+	sq_note	71, 0, 36, 92, 62, 0
+	sq_cell	0x80, 44, 46	# cell 45: song 1 track 5, 5 of 7
+	sq_beat
+	sq_note	48, 0, 29, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 36, 61, 18, 0
+	sq_note	95, 0, 37, 102, 57, 0
+	sq_beat
+	sq_note	70, 0, 32, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 39, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 39, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 34, 102, 33, 0
+	sq_note	48, 0, 27, 101, 36, 0
+	sq_beat
+	sq_note	2, 0, 31, 101, 69, 0
+	sq_note	74, 0, 38, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 31, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 31, 94, 57, 0
+	sq_note	72, 0, 38, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 43, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 31, 85, 58, 0
+	sq_note	71, 0, 38, 92, 62, 0
+	sq_beat
+	sq_note	48, 0, 31, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 38, 61, 18, 0
+	sq_note	95, 0, 39, 102, 57, 0
+	sq_beat
+	sq_note	70, 0, 34, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 41, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 41, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 36, 102, 33, 0
+	sq_note	48, 0, 29, 101, 36, 0
+	sq_beat
+	sq_note	74, 0, 38, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 31, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 31, 94, 57, 0
+	sq_note	72, 0, 38, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 43, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 31, 85, 58, 0
+	sq_note	71, 0, 38, 92, 62, 0
+	sq_beat
+	sq_note	48, 0, 31, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 45, 47	# cell 46: song 1 track 5, 6 of 7
+	sq_note	68, 0, 38, 61, 18, 0
+	sq_note	95, 0, 39, 102, 57, 0
+	sq_beat
+	sq_note	70, 0, 34, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 41, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 41, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 36, 102, 33, 0
+	sq_note	48, 0, 29, 101, 36, 0
+	sq_beat
+	sq_note	2, 0, 31, 101, 69, 0
+	sq_note	74, 0, 38, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 31, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 31, 94, 57, 0
+	sq_note	72, 0, 38, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 43, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 31, 85, 58, 0
+	sq_note	71, 0, 38, 92, 62, 0
+	sq_beat
+	sq_note	48, 0, 31, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 38, 61, 18, 0
+	sq_note	95, 0, 39, 102, 57, 0
+	sq_beat
+	sq_note	70, 0, 34, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 41, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 41, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 36, 102, 33, 0
+	sq_note	48, 0, 29, 101, 36, 0
+	sq_beat
+	sq_note	74, 0, 38, 107, 61, 0
+	sq_beat
+	sq_note	49, 0, 31, 104, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	2, 0, 31, 94, 57, 0
+	sq_note	72, 0, 38, 95, 59, 0
+	sq_beat
+	sq_note	49, 0, 43, 96, 31, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 110, 41, 0
+	sq_beat
+	sq_note	0, 0, 31, 85, 58, 0
+	sq_note	71, 0, 38, 92, 62, 0
+	sq_beat
+	sq_note	48, 0, 31, 94, 29, 0
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 38, 61, 18, 0
+	.byte	0x5f, 0x90, 0x27	# bytes 1..3 of `sq_note	95, 0, 39, 102, 57, 0` (the event spans two cells)
+	sq_cell	0x80, 46, 65535	# cell 47: song 1 track 5, 7 of 7
+	.byte	0x66, 0x39, 0x00	# bytes 4..6 of `sq_note	95, 0, 39, 102, 57, 0` (the event spans two cells)
+	sq_beat
+	sq_note	70, 0, 34, 106, 62, 0
+	sq_beat
+	sq_note	49, 0, 41, 109, 28, 0
+	sq_beat
+	sq_note	74, 0, 41, 109, 12, 0
+	sq_beat
+	sq_note	2, 0, 36, 102, 33, 0
+	sq_note	48, 0, 29, 101, 36, 0
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 31, 102, 76, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	94, 0, 3
+	sq_beat
+	sq_note	2, 0, 48, 115, 24, 0
+	sq_press	2, 0, 0
+	sq_note	26, 0, 46, 94, 24, 0
+	sq_note	48, 0, 45, 80, 21, 0
+	sq_note	72, 0, 43, 78, 21, 0
+	sq_beat
+	sq_note	6, 0, 48, 110, 23, 0
+	sq_note	29, 0, 46, 96, 22, 0
+	sq_note	53, 0, 45, 99, 14, 0
+	sq_note	78, 0, 43, 109, 26, 0
+	sq_beat
+	sq_press	4, 0, 27
+	sq_press	7, 0, 8
+	sq_press	11, 0, 0
+	sq_note	63, 0, 31, 65, 13, 0
+	sq_note	88, 0, 31, 76, 12, 0
+	sq_beat
+	sq_note	19, 0, 31, 84, 12, 0
+	sq_note	39, 0, 31, 95, 14, 0
+	sq_note	66, 0, 31, 103, 11, 0
+	sq_note	92, 0, 31, 118, 15, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	92, 0x00	# after the end of track
+	sq_cell	0x80, 0, 49	# cell 48: song 1 track 6, 1 of 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 60, 64, 32
+	sq_cc	95, 0, 5, 7, 121
+	sq_beat
+	sq_note	6, 0, 67, 111, 11, 0
+	sq_note	31, 0, 69, 107, 9, 0
+	sq_note	53, 0, 70, 99, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	25, 0, 67, 93, 11, 0
+	sq_note	46, 0, 66, 86, 11, 0
+	sq_note	67, 0, 65, 80, 11, 0
+	sq_note	91, 0, 64, 95, 12, 0
+	sq_beat
+	sq_note	21, 0, 63, 92, 12, 0
+	sq_note	46, 0, 62, 90, 10, 0
+	sq_note	70, 0, 61, 81, 7, 0
+	sq_note	94, 0, 62, 93, 60, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	40, 0, 62, 105, 18, 0
+	sq_note	63, 0, 64, 101, 20, 0
+	sq_note	84, 0, 65, 96, 68, 0
+	sq_beat
+	.byte	0x3e, 0x90, 0x40	# bytes 1..3 of `sq_note	62, 0, 64, 109, 65, 0` (the event spans two cells)
+	sq_cell	0x80, 48, 50	# cell 49: song 1 track 6, 2 of 3
+	.byte	0x6d, 0x41, 0x00	# bytes 4..6 of `sq_note	62, 0, 64, 109, 65, 0` (the event spans two cells)
+	sq_beat
+	sq_note	40, 0, 60, 113, 47, 0
+	sq_note	94, 0, 62, 99, 43, 1
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 67, 101, 67, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 62, 110, 16, 0
+	sq_note	65, 0, 64, 105, 24, 0
+	sq_note	87, 0, 65, 103, 69, 0
+	sq_beat
+	sq_note	64, 0, 64, 104, 62, 0
+	sq_beat
+	sq_note	38, 0, 60, 108, 8, 1
+	sq_beat
+	sq_note	48, 0, 62, 86, 85, 0
+	sq_beat
+	sq_note	42, 0, 55, 76, 17, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 62, 93, 24, 0
+	sq_note	70, 0, 64, 95, 22, 0
+	sq_note	93, 0, 65, 86, 92, 0
+	sq_beat
+	sq_note	91, 0, 64, 67, 90, 0
+	sq_beat
+	sq_note	89, 0, 62, 70, 53, 1
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 55, 77, 53, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 67, 94, 16, 0
+	sq_note	70, 0, 69, 91, 21, 0
+	sq_note	92, 0, 70, 74, 64, 0
+	sq_beat
+	sq_note	63, 0, 69, 92, 65, 0
+	sq_beat
+	sq_note	34, 0, 65, 76, 53, 0
+	sq_note	91, 0, 60, 60, 3, 1
+	sq_beat
+	sq_note	89, 0, 62, 76, 80, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 62, 97, 16, 0
+	sq_note	65, 0, 64, 83, 18, 0
+	sq_note	87, 0, 65, 83, 48, 1
+	sq_beat
+	sq_beat
+	sq_note	44, 0, 64, 96, 95, 0
+	sq_beat
+	sq_note	47, 0, 62, 91, 44, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 58, 84, 71, 0
+	sq_beat
+	sq_note	50, 0, 67, 98, 16, 0
+	sq_note	71, 0, 69, 95, 21, 0
+	sq_note	93, 0, 70, 84, 94, 0
+	sq_beat
+	sq_note	95, 0, 69, 93, 65, 0
+	sq_beat
+	sq_note	66, 0, 65, 99, 60, 0
+	sq_beat
+	.byte	0x25, 0x90, 0x3c	# bytes 1..3 of `sq_note	37, 0, 60, 86, 58, 0` (the event spans two cells)
+	sq_cell	0x80, 49, 65535	# cell 50: song 1 track 6, 3 of 3
+	.byte	0x56, 0x3a, 0x00	# bytes 4..6 of `sq_note	37, 0, 60, 86, 58, 0` (the event spans two cells)
+	sq_note	91, 0, 62, 83, 51, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 65, 51, 37, 4
+	sq_note	4, 0, 72, 76, 63, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 72, 113, 16, 0
+	sq_beat
+	sq_note	22, 0, 70, 91, 23, 0
+	sq_note	46, 0, 69, 84, 22, 0
+	sq_note	72, 0, 67, 83, 21, 0
+	sq_beat
+	sq_note	7, 0, 72, 116, 23, 0
+	sq_note	31, 0, 70, 91, 20, 0
+	sq_note	54, 0, 69, 93, 17, 0
+	sq_note	77, 0, 67, 101, 25, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	161, 0x00	# after the end of track
+	sq_cell	0x80, 0, 52	# cell 51: song 1 track 7, 1 of 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 61, 97, 32
+	sq_cc	3, 0, 6, 7, 77
+	sq_cc	72, 0, 6, 91, 40
+	sq_beat
+	sq_beat
+	sq_note	22, 0, 69, 120, 11, 0
+	sq_note	68, 0, 70, 107, 11, 0
+	sq_beat
+	sq_note	20, 0, 71, 118, 11, 0
+	sq_note	70, 0, 74, 118, 6, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 6, 10, 103
+	sq_note	2, 0, 68, 114, 13, 0
+	sq_note	22, 0, 67, 74, 10, 0
+	sq_note	47, 0, 56, 104, 5, 0
+	sq_note	75, 0, 68, 119, 17, 0
+	sq_beat
+	sq_note	1, 0, 67, 78, 10, 0
+	sq_note	26, 0, 56, 112, 6, 0
+	sq_note	52, 0, 68, 119, 18, 0
+	sq_note	76, 0, 67, 97, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 68, 114, 13, 0
+	sq_note	22, 0, 67, 74, 10, 0
+	sq_note	47, 0, 56, 104, 5, 0
+	sq_note	75, 0, 68, 119, 17, 0
+	sq_beat
+	sq_note	1, 0, 67, 78, 10, 0
+	sq_note	26, 0, 56, 112, 6, 0
+	sq_note	52, 0, 68, 119, 18, 0
+	sq_note	76, 0, 67, 97, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 6, 10, 79
+	sq_note	3, 0, 67, 120, 35, 2
+	sq_note	4, 0, 55, 113, 36, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 6, 7, 83
+	sq_beat
+	sq_note	49, 0, 67, 103, 19, 0
+	sq_note	65, 0, 69, 103, 14, 0
+	sq_note	80, 0, 70, 104, 12, 0
+	sq_beat
+	sq_note	0, 0, 71, 108, 25, 0
+	sq_note	30, 0, 72, 111, 19, 0
+	sq_note	51, 0, 73, 106, 21, 0
+	sq_note	77, 0, 74, 99, 20, 0
+	sq_beat
+	sq_cell	0x80, 51, 53	# cell 52: song 1 track 7, 2 of 6
+	sq_note	6, 0, 70, 114, 21, 0
+	sq_note	26, 0, 71, 96, 27, 0
+	sq_note	49, 0, 67, 104, 23, 0
+	sq_note	74, 0, 64, 86, 20, 0
+	sq_beat
+	sq_note	0, 0, 69, 121, 23, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 64, 116, 14, 0
+	sq_note	50, 0, 67, 105, 17, 0
+	sq_note	51, 0, 57, 110, 14, 0
+	sq_beat
+	sq_note	2, 0, 63, 106, 14, 0
+	sq_note	2, 0, 66, 107, 15, 0
+	sq_note	4, 0, 58, 107, 15, 0
+	sq_note	25, 0, 59, 106, 14, 0
+	sq_note	26, 0, 64, 100, 12, 0
+	sq_note	26, 0, 67, 90, 15, 0
+	sq_beat
+	sq_note	3, 0, 64, 116, 15, 0
+	sq_note	4, 0, 67, 106, 17, 0
+	sq_note	5, 0, 59, 113, 15, 0
+	sq_note	51, 0, 66, 105, 20, 0
+	sq_note	52, 0, 58, 107, 14, 0
+	sq_note	53, 0, 63, 105, 13, 0
+	sq_note	74, 0, 59, 111, 15, 0
+	sq_note	75, 0, 64, 104, 11, 0
+	sq_note	76, 0, 67, 93, 14, 0
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 55, 109, 15, 0
+	sq_note	46, 0, 67, 120, 17, 0
+	sq_note	70, 0, 57, 110, 17, 0
+	sq_note	70, 0, 69, 105, 18, 0
+	sq_beat
+	sq_note	25, 0, 57, 109, 15, 0
+	sq_note	25, 0, 69, 120, 14, 0
+	sq_note	73, 0, 72, 121, 16, 0
+	sq_note	74, 0, 60, 116, 14, 0
+	sq_beat
+	sq_note	26, 0, 74, 116, 14, 0
+	sq_note	26, 0, 62, 113, 12, 0
+	sq_note	72, 0, 64, 121, 61, 0
+	sq_note	72, 0, 76, 121, 55, 0
+	sq_beat
+	sq_note	46, 0, 62, 107, 18, 0
+	sq_note	47, 0, 74, 120, 18, 0
+	sq_note	74, 0, 60, 100, 17, 0
+	sq_note	76, 0, 72, 101, 14, 0
+	sq_beat
+	.byte	0x00, 0xb0, 0x06	# bytes 1..3 of `sq_cc	0, 0, 6, 91, 85` (the event spans two cells)
+	sq_cell	0x80, 52, 54	# cell 53: song 1 track 7, 3 of 6
+	.byte	0x5b, 0x55	# bytes 4..5 of `sq_cc	0, 0, 6, 91, 85` (the event spans two cells)
+	sq_note	3, 0, 62, 108, 21, 0
+	sq_note	3, 0, 74, 116, 19, 0
+	sq_note	24, 0, 60, 91, 16, 0
+	sq_note	25, 0, 72, 98, 12, 0
+	sq_cc	48, 0, 6, 91, 110
+	sq_beat
+	sq_note	17, 0, 72, 118, 17, 0
+	sq_note	18, 0, 60, 121, 17, 0
+	sq_note	38, 0, 57, 91, 16, 0
+	sq_note	40, 0, 69, 100, 18, 0
+	sq_note	69, 0, 55, 83, 15, 0
+	sq_note	94, 0, 62, 115, 23, 0
+	sq_beat
+	sq_note	0, 0, 74, 125, 21, 0
+	sq_note	21, 0, 72, 85, 20, 0
+	sq_note	24, 0, 60, 93, 17, 0
+	sq_note	45, 0, 69, 103, 16, 0
+	sq_note	50, 0, 57, 88, 11, 0
+	sq_note	67, 0, 67, 91, 11, 0
+	sq_note	69, 0, 55, 80, 5, 0
+	sq_note	69, 0, 57, 77, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	54, 0, 67, 120, 16, 0
+	sq_beat
+	sq_note	53, 0, 65, 118, 64, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 67, 121, 14, 0
+	sq_beat
+	sq_note	47, 0, 65, 121, 18, 0
+	sq_beat
+	sq_note	44, 0, 67, 126, 14, 0
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 65, 120, 83, 0
+	sq_beat
+	sq_note	95, 0, 65, 116, 41, 0
+	sq_beat
+	sq_note	46, 0, 67, 119, 17, 0
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 53, 55	# cell 54: song 1 track 7, 4 of 6
+	sq_note	49, 0, 65, 105, 23, 0
+	sq_note	70, 0, 67, 100, 18, 0
+	sq_note	95, 0, 70, 104, 16, 0
+	sq_beat
+	sq_note	22, 0, 72, 94, 26, 0
+	sq_note	45, 0, 73, 101, 18, 0
+	sq_note	67, 0, 74, 95, 26, 0
+	sq_note	92, 0, 72, 91, 23, 0
+	sq_beat
+	sq_note	17, 0, 70, 102, 21, 0
+	sq_note	40, 0, 67, 100, 18, 0
+	sq_note	65, 0, 65, 92, 14, 0
+	sq_beat
+	sq_note	48, 0, 67, 110, 11, 0
+	sq_beat
+	sq_note	45, 0, 65, 120, 15, 1
+	sq_beat
+	sq_note	95, 0, 65, 115, 47, 0
+	sq_beat
+	sq_note	50, 0, 67, 111, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 67, 123, 14, 0
+	sq_beat
+	sq_note	49, 0, 65, 120, 16, 0
+	sq_beat
+	sq_note	49, 0, 67, 127, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 67, 126, 14, 0
+	sq_beat
+	sq_note	48, 0, 65, 120, 14, 0
+	sq_beat
+	sq_note	44, 0, 65, 116, 95, 0
+	sq_beat
+	sq_note	45, 0, 67, 115, 16, 0
+	sq_beat
+	sq_note	52, 0, 65, 103, 24, 0
+	sq_note	73, 0, 67, 85, 14, 0
+	sq_note	93, 0, 70, 87, 18, 0
+	sq_beat
+	sq_note	20, 0, 72, 90, 21, 0
+	sq_note	42, 0, 73, 99, 16, 0
+	sq_note	64, 0, 74, 99, 21, 0
+	sq_note	85, 0, 70, 96, 24, 0
+	sq_beat
+	sq_note	13, 0, 67, 97, 17, 0
+	sq_note	34, 0, 65, 70, 18, 0
+	sq_note	60, 0, 70, 107, 13, 0
+	sq_beat
+	sq_note	54, 0, 67, 120, 16, 0
+	sq_beat
+	sq_note	53, 0, 65, 118, 64, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 67, 121, 14, 0
+	sq_beat
+	sq_note	47, 0, 65, 121, 18, 0
+	sq_beat
+	sq_note	44, 0, 67, 126, 14, 0
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 65, 120, 83, 0
+	sq_beat
+	sq_cell	0x80, 54, 56	# cell 55: song 1 track 7, 5 of 6
+	sq_note	95, 0, 65, 116, 41, 0
+	sq_beat
+	sq_note	46, 0, 67, 119, 17, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 65, 105, 23, 0
+	sq_note	70, 0, 67, 100, 18, 0
+	sq_note	95, 0, 70, 104, 16, 0
+	sq_beat
+	sq_note	22, 0, 72, 94, 26, 0
+	sq_note	45, 0, 73, 101, 18, 0
+	sq_note	67, 0, 74, 95, 26, 0
+	sq_note	92, 0, 72, 91, 23, 0
+	sq_beat
+	sq_note	17, 0, 70, 102, 21, 0
+	sq_note	40, 0, 67, 100, 18, 0
+	sq_note	65, 0, 65, 92, 14, 0
+	sq_beat
+	sq_note	48, 0, 67, 110, 11, 0
+	sq_beat
+	sq_note	45, 0, 65, 120, 15, 1
+	sq_beat
+	sq_note	95, 0, 65, 115, 47, 0
+	sq_beat
+	sq_note	50, 0, 67, 111, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 67, 123, 14, 0
+	sq_beat
+	sq_note	49, 0, 65, 120, 16, 0
+	sq_beat
+	sq_note	49, 0, 67, 127, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 67, 126, 14, 0
+	sq_beat
+	sq_note	48, 0, 65, 120, 14, 0
+	sq_beat
+	sq_note	44, 0, 65, 116, 95, 0
+	sq_beat
+	sq_note	45, 0, 67, 115, 16, 0
+	sq_beat
+	sq_note	52, 0, 65, 103, 24, 0
+	sq_note	73, 0, 67, 85, 14, 0
+	sq_note	93, 0, 70, 87, 18, 0
+	sq_beat
+	sq_note	20, 0, 72, 90, 21, 0
+	sq_note	42, 0, 73, 99, 16, 0
+	sq_note	64, 0, 74, 99, 21, 0
+	sq_note	85, 0, 70, 96, 24, 0
+	sq_beat
+	sq_note	13, 0, 67, 97, 17, 0
+	sq_note	34, 0, 65, 70, 18, 0
+	sq_note	60, 0, 70, 107, 13, 0
+	sq_beat
+	sq_cc	0, 0, 6, 7, 97
+	sq_cc	0, 0, 6, 10, 83
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 72, 110, 26, 0
+	sq_beat
+	sq_note	19, 0, 70, 92, 24, 0
+	.byte	0x2d, 0x90	# bytes 1..2 of `sq_note	45, 0, 69, 83, 21, 0` (the event spans two cells)
+	sq_cell	0x80, 55, 65535	# cell 56: song 1 track 7, 6 of 6
+	.byte	0x45, 0x53, 0x15, 0x00	# bytes 3..6 of `sq_note	45, 0, 69, 83, 21, 0` (the event spans two cells)
+	sq_note	70, 0, 67, 80, 22, 0
+	sq_note	93, 0, 72, 116, 24, 0
+	sq_beat
+	sq_note	22, 0, 70, 97, 29, 0
+	sq_note	47, 0, 69, 95, 16, 0
+	sq_note	71, 0, 67, 104, 27, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	208, 0x00	# after the end of track
+	sq_cell	0x80, 0, 58	# cell 57: song 1 track 8, 1 of 3
+	sq_8n	0, 0, 122, 1
+	sq_8n	0, 10, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 80, 0
+	sq_pc	1, 0, 73, 4, 32
+	sq_cc	1, 0, 7, 7, 93
+	sq_cc	2, 0, 7, 10, 28
+	sq_beat
+	sq_beat
+	sq_note	26, 0, 74, 42, 19, 0
+	sq_note	38, 0, 76, 44, 17, 0
+	sq_note	49, 0, 77, 53, 9, 0
+	sq_note	58, 0, 79, 56, 6, 0
+	sq_note	65, 0, 81, 60, 15, 0
+	sq_note	79, 0, 82, 75, 13, 0
+	sq_note	87, 0, 85, 79, 13, 0
+	sq_beat
+	sq_note	3, 0, 86, 91, 11, 0
+	sq_note	12, 0, 88, 84, 15, 0
+	sq_note	23, 0, 89, 91, 11, 0
+	sq_note	33, 0, 91, 96, 8, 0
+	sq_note	44, 0, 93, 106, 14, 0
+	sq_note	57, 0, 95, 109, 10, 0
+	sq_note	68, 0, 96, 118, 16, 0
+	sq_note	82, 0, 97, 123, 14, 0
+	sq_beat
+	sq_pc	0, 0, 72, 0, 32
+	sq_note	2, 0, 98, 65, 12, 0
+	sq_beat
+	sq_note	76, 0, 77, 83, 12, 0
+	sq_note	76, 0, 86, 105, 9, 0
+	sq_note	84, 0, 88, 83, 12, 0
+	sq_note	86, 0, 79, 93, 11, 0
+	sq_note	94, 0, 89, 103, 9, 0
+	sq_beat
+	sq_note	1, 0, 81, 81, 9, 0
+	sq_note	26, 0, 88, 113, 10, 0
+	sq_note	28, 0, 79, 94, 12, 0
+	sq_note	34, 0, 89, 101, 13, 0
+	sq_note	36, 0, 81, 96, 9, 0
+	sq_note	45, 0, 91, 93, 9, 0
+	sq_note	45, 0, 84, 96, 11, 0
+	sq_note	70, 0, 89, 105, 10, 0
+	sq_note	71, 0, 81, 91, 13, 0
+	sq_note	78, 0, 91, 101, 15, 0
+	sq_note	79, 0, 84, 97, 13, 0
+	sq_note	90, 0, 93, 96, 11, 0
+	sq_note	91, 0, 86, 93, 8, 0
+	sq_beat
+	sq_cell	0x80, 57, 59	# cell 58: song 1 track 8, 2 of 3
+	sq_note	21, 0, 89, 116, 7, 0
+	sq_note	22, 0, 81, 98, 8, 0
+	sq_note	41, 0, 91, 110, 9, 0
+	sq_note	43, 0, 83, 99, 9, 0
+	sq_note	66, 0, 88, 111, 8, 0
+	sq_note	66, 0, 79, 108, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	76, 0, 97, 101, 11, 0
+	sq_note	84, 0, 98, 101, 13, 0
+	sq_note	94, 0, 99, 114, 13, 0
+	sq_beat
+	sq_note	28, 0, 92, 106, 8, 0
+	sq_note	52, 0, 92, 111, 8, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 80, 0
+	sq_note	74, 0, 97, 92, 11, 0
+	sq_note	82, 0, 98, 101, 14, 0
+	sq_note	94, 0, 99, 112, 13, 0
+	sq_beat
+	sq_8n	0, 0, 90, 0
+	sq_note	27, 0, 92, 111, 7, 0
+	sq_note	51, 0, 92, 114, 7, 0
+	sq_beat
+	sq_8n	0, 0, 100, 0
+	sq_8n	0, 10, 1, 64
+	sq_beat
+	sq_8n	0, 0, 108, 0
+	sq_beat
+	sq_8n	0, 0, 113, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 2, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 3, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 4, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 125, 0
+	sq_8n	0, 10, 5, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 6, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 7, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 8, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 9, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 58, 65535	# cell 59: song 1 track 8, 3 of 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 10, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 11, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 12, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 13, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 14, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 15, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 16, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 17, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 120, 0
+	sq_cc	0, 0, 7, 10, 91
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	79, 0, 12
+	sq_press	83, 0, 17
+	sq_press	86, 0, 21
+	sq_press	88, 0, 3
+	sq_press	92, 0, 0
+	sq_beat
+	sq_note	1, 0, 96, 118, 18, 0
+	sq_note	20, 0, 94, 97, 18, 0
+	sq_note	44, 0, 93, 81, 21, 0
+	sq_note	65, 0, 91, 92, 21, 0
+	sq_beat
+	sq_note	0, 0, 96, 121, 22, 0
+	sq_note	22, 0, 94, 101, 21, 0
+	sq_note	44, 0, 93, 98, 20, 0
+	sq_note	70, 0, 91, 110, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	37, 0x00	# after the end of track
+	sq_cell	0x80, 0, 61	# cell 60: song 1 track 9, 1 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 46, 16, 32
+	sq_cc	1, 0, 8, 10, 26
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 52, 59, 8, 0
+	sq_note	38, 0, 53, 65, 6, 0
+	sq_note	45, 0, 55, 88, 5, 0
+	sq_note	51, 0, 57, 78, 5, 0
+	sq_note	56, 0, 59, 71, 6, 0
+	sq_note	60, 0, 61, 90, 8, 0
+	sq_note	66, 0, 62, 95, 7, 0
+	sq_note	73, 0, 64, 92, 7, 0
+	sq_note	79, 0, 65, 95, 7, 0
+	sq_note	85, 0, 67, 91, 7, 0
+	sq_note	90, 0, 69, 91, 8, 0
+	sq_beat
+	sq_note	0, 0, 71, 90, 7, 0
+	sq_note	6, 0, 73, 93, 7, 0
+	sq_note	11, 0, 74, 95, 6, 0
+	sq_note	17, 0, 76, 92, 7, 0
+	sq_note	23, 0, 77, 91, 7, 0
+	sq_note	28, 0, 79, 85, 7, 0
+	sq_note	35, 0, 81, 85, 6, 0
+	sq_note	41, 0, 83, 83, 8, 0
+	sq_note	47, 0, 85, 83, 8, 0
+	sq_note	54, 0, 86, 80, 8, 0
+	sq_note	60, 0, 88, 76, 9, 0
+	sq_note	69, 0, 89, 75, 8, 0
+	sq_note	76, 0, 91, 64, 9, 0
+	sq_note	84, 0, 93, 66, 7, 0
+	sq_note	92, 0, 95, 69, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	27, 0, 52, 34, 8, 0
+	sq_note	33, 0, 53, 52, 10, 0
+	sq_note	44, 0, 55, 52, 6, 0
+	sq_note	50, 0, 57, 55, 7, 0
+	sq_note	58, 0, 59, 61, 5, 0
+	sq_note	61, 0, 61, 62, 7, 0
+	sq_note	67, 0, 62, 64, 6, 0
+	sq_note	72, 0, 64, 62, 7, 0
+	sq_note	79, 0, 65, 62, 7, 0
+	sq_note	85, 0, 67, 62, 6, 0
+	sq_note	91, 0, 69, 65, 6, 0
+	sq_beat
+	sq_cell	0x80, 60, 62	# cell 61: song 1 track 9, 2 of 5
+	sq_note	1, 0, 71, 71, 7, 0
+	sq_note	6, 0, 73, 78, 7, 0
+	sq_note	12, 0, 74, 79, 7, 0
+	sq_note	18, 0, 76, 83, 7, 0
+	sq_note	24, 0, 77, 86, 6, 0
+	sq_note	29, 0, 79, 86, 7, 0
+	sq_note	35, 0, 81, 83, 6, 0
+	sq_note	41, 0, 83, 81, 6, 0
+	sq_note	46, 0, 85, 81, 8, 0
+	sq_note	53, 0, 86, 72, 7, 0
+	sq_note	60, 0, 88, 66, 8, 0
+	sq_note	68, 0, 89, 66, 8, 0
+	sq_note	76, 0, 91, 68, 10, 0
+	sq_note	85, 0, 93, 72, 10, 0
+	sq_note	92, 0, 95, 83, 9, 0
+	sq_beat
+	sq_note	6, 0, 98, 94, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	59, 0, 45, 53, 12, 0
+	sq_note	68, 0, 47, 57, 12, 0
+	sq_note	78, 0, 48, 60, 10, 0
+	sq_note	86, 0, 50, 64, 8, 0
+	sq_note	94, 0, 52, 66, 10, 0
+	sq_beat
+	sq_note	5, 0, 54, 80, 10, 0
+	sq_note	14, 0, 55, 81, 9, 0
+	sq_note	23, 0, 57, 81, 8, 0
+	sq_note	31, 0, 59, 69, 8, 0
+	sq_note	38, 0, 60, 91, 11, 0
+	sq_note	47, 0, 62, 92, 10, 0
+	sq_note	55, 0, 64, 91, 10, 0
+	sq_note	65, 0, 66, 88, 9, 0
+	sq_note	73, 0, 67, 80, 10, 0
+	sq_note	80, 0, 69, 89, 10, 0
+	sq_note	89, 0, 71, 87, 8, 0
+	sq_beat
+	sq_note	0, 0, 72, 88, 10, 0
+	sq_note	9, 0, 74, 88, 7, 0
+	.byte	0x10, 0x90, 0x4c	# bytes 1..3 of `sq_note	16, 0, 76, 89, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 61, 63	# cell 62: song 1 track 9, 3 of 5
+	.byte	0x59, 0x09, 0x00	# bytes 4..6 of `sq_note	16, 0, 76, 89, 9, 0` (the event spans two cells)
+	sq_note	24, 0, 78, 85, 9, 0
+	sq_note	33, 0, 79, 78, 8, 0
+	sq_note	40, 0, 81, 81, 9, 0
+	sq_note	49, 0, 83, 80, 10, 0
+	sq_note	58, 0, 84, 80, 11, 0
+	sq_note	68, 0, 86, 73, 12, 0
+	sq_note	78, 0, 88, 67, 12, 0
+	sq_note	89, 0, 89, 71, 11, 0
+	sq_beat
+	sq_note	4, 0, 91, 63, 11, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	60, 0, 62, 76, 10, 0
+	sq_note	68, 0, 64, 79, 10, 0
+	sq_note	78, 0, 65, 93, 9, 0
+	sq_note	88, 0, 67, 96, 8, 0
+	sq_note	94, 0, 69, 96, 9, 0
+	sq_beat
+	sq_note	8, 0, 70, 89, 8, 0
+	sq_note	15, 0, 72, 94, 9, 0
+	sq_note	21, 0, 74, 96, 9, 0
+	sq_note	29, 0, 76, 91, 10, 0
+	.byte	0x26	# bytes 1..1 of `sq_note	38, 0, 77, 93, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 62, 64	# cell 63: song 1 track 9, 4 of 5
+	.byte	0x90, 0x4d, 0x5d, 0x09, 0x00	# bytes 2..6 of `sq_note	38, 0, 77, 93, 9, 0` (the event spans two cells)
+	sq_note	44, 0, 79, 89, 9, 0
+	sq_note	52, 0, 81, 90, 9, 0
+	sq_note	59, 0, 82, 90, 10, 0
+	sq_note	65, 0, 84, 96, 9, 0
+	sq_note	72, 0, 86, 103, 8, 0
+	sq_note	76, 0, 100, 91, 11, 0
+	sq_note	78, 0, 88, 98, 8, 0
+	sq_note	79, 0, 98, 72, 17, 0
+	sq_note	87, 0, 89, 98, 5, 0
+	sq_note	93, 0, 96, 85, 11, 0
+	sq_beat
+	sq_note	6, 0, 94, 90, 9, 0
+	sq_note	14, 0, 93, 88, 9, 0
+	sq_note	20, 0, 91, 89, 10, 0
+	sq_note	27, 0, 89, 85, 11, 0
+	sq_note	35, 0, 88, 85, 9, 0
+	sq_note	41, 0, 86, 89, 12, 0
+	sq_note	49, 0, 84, 83, 11, 0
+	sq_note	58, 0, 82, 83, 11, 0
+	sq_note	66, 0, 81, 85, 9, 0
+	sq_note	72, 0, 79, 83, 13, 0
+	sq_note	83, 0, 77, 85, 11, 0
+	sq_note	91, 0, 76, 85, 11, 0
+	sq_beat
+	sq_note	4, 0, 74, 85, 5, 0
+	sq_note	16, 0, 67, 56, 8, 0
+	sq_note	24, 0, 69, 83, 9, 0
+	sq_note	34, 0, 70, 75, 9, 0
+	sq_note	42, 0, 72, 84, 10, 0
+	sq_note	51, 0, 74, 88, 9, 0
+	sq_note	59, 0, 76, 86, 9, 0
+	sq_note	67, 0, 77, 88, 9, 0
+	sq_note	75, 0, 79, 84, 7, 0
+	sq_note	82, 0, 81, 87, 9, 0
+	sq_note	88, 0, 82, 84, 8, 0
+	sq_note	88, 0, 96, 68, 14, 0
+	sq_beat
+	sq_note	1, 0, 84, 90, 5, 0
+	sq_note	5, 0, 94, 83, 11, 0
+	sq_note	13, 0, 93, 77, 11, 0
+	sq_note	21, 0, 91, 70, 11, 0
+	sq_note	30, 0, 89, 70, 11, 0
+	sq_note	36, 0, 88, 66, 11, 0
+	.byte	0x2d, 0x90, 0x56	# bytes 1..3 of `sq_note	45, 0, 86, 75, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 63, 65535	# cell 64: song 1 track 9, 5 of 5
+	.byte	0x4b, 0x0b, 0x00	# bytes 4..6 of `sq_note	45, 0, 86, 75, 11, 0` (the event spans two cells)
+	sq_note	53, 0, 84, 70, 10, 0
+	sq_note	61, 0, 82, 61, 8, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	225, 0x00	# after the end of track
+	sq_cell	0x80, 0, 66	# cell 65: song 1 track 10, 1 of 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 9, 7, 91
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 56, 80, 32
+	sq_cc	1, 0, 9, 7, 101
+	sq_note	74, 0, 40, 101, 8, 0
+	sq_beat
+	sq_note	0, 0, 41, 88, 7, 0
+	sq_note	23, 0, 43, 95, 74, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 57, 98, 32
+	sq_cc	1, 0, 9, 7, 113
+	sq_note	74, 0, 64, 98, 10, 0
+	sq_note	74, 0, 74, 98, 13, 0
+	sq_note	74, 0, 65, 109, 10, 0
+	sq_beat
+	sq_note	48, 0, 71, 101, 9, 0
+	sq_note	48, 0, 72, 115, 8, 0
+	sq_note	49, 0, 77, 107, 11, 0
+	sq_beat
+	sq_note	23, 0, 69, 116, 8, 0
+	sq_note	23, 0, 76, 101, 9, 0
+	sq_note	23, 0, 67, 104, 7, 0
+	sq_note	92, 0, 72, 104, 8, 1
+	sq_note	93, 0, 64, 99, 8, 1
+	sq_note	93, 0, 65, 108, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	74, 0, 65, 110, 9, 0
+	sq_note	74, 0, 74, 101, 12, 0
+	sq_note	74, 0, 64, 100, 8, 0
+	sq_beat
+	sq_note	48, 0, 72, 113, 10, 0
+	sq_note	48, 0, 81, 104, 12, 0
+	sq_beat
+	sq_note	28, 0, 79, 99, 11, 0
+	sq_note	29, 0, 71, 111, 8, 0
+	sq_beat
+	sq_note	0, 0, 76, 106, 20, 0
+	sq_note	1, 0, 67, 105, 17, 0
+	sq_press	5, 0, 5
+	sq_press	7, 0, 6
+	sq_press	9, 0, 0
+	sq_note	49, 0, 64, 90, 18, 0
+	sq_note	50, 0, 72, 108, 26, 0
+	sq_note	73, 0, 74, 93, 12, 0
+	sq_note	75, 0, 65, 92, 9, 0
+	sq_beat
+	sq_note	73, 0, 64, 108, 8, 0
+	sq_note	73, 0, 65, 108, 7, 0
+	sq_note	73, 0, 74, 116, 10, 0
+	sq_beat
+	sq_note	49, 0, 69, 95, 10, 0
+	.byte	0x32, 0x90, 0x4d, 0x6b	# bytes 1..4 of `sq_note	50, 0, 77, 107, 10, 0` (the event spans two cells)
+	sq_cell	0x80, 65, 67	# cell 66: song 1 track 10, 2 of 7
+	.byte	0x0a, 0x00	# bytes 5..6 of `sq_note	50, 0, 77, 107, 10, 0` (the event spans two cells)
+	sq_beat
+	sq_note	26, 0, 67, 101, 9, 0
+	sq_note	26, 0, 76, 103, 10, 0
+	sq_press	30, 0, 2
+	sq_press	32, 0, 0
+	sq_beat
+	sq_note	3, 0, 64, 100, 4, 1
+	sq_note	3, 0, 65, 110, 2, 1
+	sq_note	4, 0, 72, 118, 3, 1
+	sq_beat
+	sq_note	1, 0, 63, 126, 18, 0
+	sq_note	1, 0, 58, 111, 18, 0
+	sq_note	3, 0, 68, 123, 18, 0
+	sq_note	25, 0, 62, 96, 7, 0
+	sq_note	25, 0, 67, 86, 9, 0
+	sq_note	52, 0, 53, 81, 5, 0
+	sq_note	73, 0, 63, 123, 16, 0
+	sq_note	75, 0, 58, 108, 16, 0
+	sq_note	76, 0, 68, 119, 18, 0
+	sq_note	95, 0, 62, 99, 7, 0
+	sq_beat
+	sq_note	1, 0, 67, 90, 8, 0
+	sq_note	28, 0, 53, 96, 5, 0
+	sq_note	53, 0, 68, 121, 19, 0
+	sq_note	54, 0, 58, 110, 14, 0
+	sq_note	55, 0, 63, 121, 14, 0
+	sq_note	71, 0, 62, 87, 9, 0
+	sq_note	74, 0, 67, 88, 9, 0
+	sq_beat
+	sq_note	3, 0, 53, 101, 5, 0
+	sq_note	26, 0, 63, 118, 5, 0
+	sq_note	50, 0, 63, 121, 23, 0
+	sq_note	76, 0, 65, 106, 9, 0
+	sq_beat
+	sq_note	7, 0, 53, 87, 5, 0
+	sq_note	30, 0, 58, 123, 19, 0
+	sq_note	51, 0, 60, 95, 89, 0
+	sq_beat
+	sq_note	1, 0, 63, 126, 18, 0
+	sq_note	1, 0, 58, 111, 18, 0
+	sq_note	3, 0, 68, 123, 18, 0
+	sq_note	25, 0, 62, 96, 7, 0
+	sq_note	25, 0, 67, 86, 9, 0
+	sq_note	52, 0, 53, 81, 5, 0
+	sq_note	73, 0, 63, 123, 16, 0
+	sq_note	75, 0, 58, 108, 16, 0
+	sq_note	76, 0, 68, 119, 18, 0
+	sq_note	95, 0, 62, 99, 7, 0
+	sq_beat
+	.byte	0x01	# bytes 1..1 of `sq_note	1, 0, 67, 90, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 66, 68	# cell 67: song 1 track 10, 3 of 7
+	.byte	0x90, 0x43, 0x5a, 0x08, 0x00	# bytes 2..6 of `sq_note	1, 0, 67, 90, 8, 0` (the event spans two cells)
+	sq_note	28, 0, 53, 96, 5, 0
+	sq_note	53, 0, 68, 121, 19, 0
+	sq_note	54, 0, 58, 110, 14, 0
+	sq_note	55, 0, 63, 121, 14, 0
+	sq_note	71, 0, 62, 87, 9, 0
+	sq_note	74, 0, 67, 88, 9, 0
+	sq_beat
+	sq_note	3, 0, 53, 101, 5, 0
+	sq_note	26, 0, 63, 118, 5, 0
+	sq_note	50, 0, 63, 121, 23, 0
+	sq_note	76, 0, 65, 106, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 9, 7, 105
+	sq_note	54, 0, 57, 96, 11, 0
+	sq_note	55, 0, 62, 110, 10, 0
+	sq_note	55, 0, 67, 96, 14, 0
+	sq_beat
+	sq_note	48, 0, 60, 109, 60, 2
+	sq_note	48, 0, 65, 105, 63, 2
+	sq_note	49, 0, 55, 92, 60, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 57, 95, 12, 0
+	sq_note	48, 0, 62, 108, 11, 0
+	sq_note	48, 0, 67, 93, 14, 0
+	sq_beat
+	sq_note	44, 0, 65, 110, 14, 0
+	sq_note	44, 0, 60, 113, 12, 0
+	.byte	0x2d, 0x90	# bytes 1..2 of `sq_note	45, 0, 55, 93, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 67, 69	# cell 68: song 1 track 10, 4 of 7
+	.byte	0x37, 0x5d, 0x0b, 0x00	# bytes 3..6 of `sq_note	45, 0, 55, 93, 11, 0` (the event spans two cells)
+	sq_beat
+	sq_note	41, 0, 62, 116, 13, 0
+	sq_note	41, 0, 67, 100, 16, 0
+	sq_note	42, 0, 57, 103, 12, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 60, 110, 30, 1
+	sq_note	49, 0, 65, 107, 27, 1
+	sq_note	49, 0, 55, 91, 28, 1
+	sq_beat
+	sq_note	94, 0, 55, 92, 32, 0
+	sq_note	94, 0, 60, 105, 36, 0
+	sq_note	95, 0, 65, 105, 38, 0
+	sq_beat
+	sq_note	46, 0, 62, 109, 13, 0
+	sq_note	46, 0, 67, 86, 15, 0
+	sq_note	46, 0, 57, 93, 12, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 62, 116, 14, 0
+	sq_note	51, 0, 67, 105, 16, 0
+	sq_note	51, 0, 57, 100, 12, 0
+	sq_beat
+	sq_note	48, 0, 55, 103, 53, 2
+	sq_note	48, 0, 60, 113, 58, 2
+	sq_note	48, 0, 65, 111, 53, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 57, 103, 12, 0
+	sq_note	48, 0, 62, 119, 11, 0
+	sq_note	48, 0, 67, 103, 15, 0
+	sq_beat
+	sq_note	47, 0, 65, 116, 16, 0
+	sq_note	47, 0, 55, 105, 16, 0
+	sq_note	47, 0, 60, 119, 12, 0
+	sq_beat
+	sq_note	43, 0, 67, 105, 14, 0
+	sq_note	43, 0, 62, 123, 13, 0
+	sq_note	43, 0, 57, 105, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 70, 116, 14, 0
+	sq_note	42, 0, 60, 108, 14, 0
+	sq_note	43, 0, 65, 113, 14, 0
+	sq_beat
+	sq_note	45, 0, 62, 100, 14, 0
+	sq_note	45, 0, 67, 116, 12, 0
+	sq_note	46, 0, 72, 119, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 70, 122, 14, 0
+	sq_note	46, 0, 74, 103, 17, 0
+	sq_note	47, 0, 65, 105, 14, 0
+	sq_beat
+	sq_note	46, 0, 65, 109, 14, 0
+	.byte	0x2e, 0x90	# bytes 1..2 of `sq_note	46, 0, 72, 109, 17, 0` (the event spans two cells)
+	sq_cell	0x80, 68, 70	# cell 69: song 1 track 10, 5 of 7
+	.byte	0x48, 0x6d, 0x11, 0x00	# bytes 3..6 of `sq_note	46, 0, 72, 109, 17, 0` (the event spans two cells)
+	sq_beat
+	sq_note	43, 0, 60, 105, 54, 1
+	sq_note	43, 0, 65, 116, 53, 1
+	sq_note	43, 0, 69, 116, 53, 1
+	sq_beat
+	sq_beat
+	sq_note	54, 0, 57, 96, 11, 0
+	sq_note	55, 0, 62, 110, 10, 0
+	sq_note	55, 0, 67, 96, 14, 0
+	sq_beat
+	sq_note	48, 0, 60, 109, 60, 2
+	sq_note	48, 0, 65, 105, 63, 2
+	sq_note	49, 0, 55, 92, 60, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 57, 95, 12, 0
+	sq_note	48, 0, 62, 108, 11, 0
+	sq_note	48, 0, 67, 93, 14, 0
+	sq_beat
+	sq_note	44, 0, 65, 110, 14, 0
+	sq_note	44, 0, 60, 113, 12, 0
+	sq_note	45, 0, 55, 93, 11, 0
+	sq_beat
+	sq_note	41, 0, 62, 116, 13, 0
+	sq_note	41, 0, 67, 100, 16, 0
+	sq_note	42, 0, 57, 103, 12, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 60, 110, 30, 1
+	sq_note	49, 0, 65, 107, 27, 1
+	sq_note	49, 0, 55, 91, 28, 1
+	sq_beat
+	sq_note	94, 0, 55, 92, 32, 0
+	sq_note	94, 0, 60, 105, 36, 0
+	sq_note	95, 0, 65, 105, 38, 0
+	sq_beat
+	sq_note	46, 0, 62, 109, 13, 0
+	sq_note	46, 0, 67, 86, 15, 0
+	sq_note	46, 0, 57, 93, 12, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 62, 116, 14, 0
+	sq_note	51, 0, 67, 105, 16, 0
+	sq_note	51, 0, 57, 100, 12, 0
+	sq_beat
+	sq_note	48, 0, 55, 103, 53, 2
+	sq_note	48, 0, 60, 113, 58, 2
+	sq_note	48, 0, 65, 111, 53, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 57, 103, 12, 0
+	sq_note	48, 0, 62, 119, 11, 0
+	sq_note	48, 0, 67, 103, 15, 0
+	sq_beat
+	sq_note	47, 0, 65, 116, 16, 0
+	sq_cell	0x80, 69, 71	# cell 70: song 1 track 10, 6 of 7
+	sq_note	47, 0, 55, 105, 16, 0
+	sq_note	47, 0, 60, 119, 12, 0
+	sq_beat
+	sq_note	43, 0, 67, 105, 14, 0
+	sq_note	43, 0, 62, 123, 13, 0
+	sq_note	43, 0, 57, 105, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 70, 116, 14, 0
+	sq_note	42, 0, 60, 108, 14, 0
+	sq_note	43, 0, 65, 113, 14, 0
+	sq_beat
+	sq_note	45, 0, 62, 100, 14, 0
+	sq_note	45, 0, 67, 116, 12, 0
+	sq_note	46, 0, 72, 119, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 70, 122, 14, 0
+	sq_note	46, 0, 74, 103, 17, 0
+	sq_note	47, 0, 65, 105, 14, 0
+	sq_beat
+	sq_note	46, 0, 65, 109, 14, 0
+	sq_note	46, 0, 72, 109, 17, 0
+	sq_beat
+	sq_note	43, 0, 60, 105, 54, 1
+	sq_note	43, 0, 65, 116, 53, 1
+	sq_note	43, 0, 69, 116, 53, 1
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 9, 7, 91
+	sq_cc	0, 0, 9, 10, 103
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	81, 0, 7
+	sq_press	84, 0, 3
+	sq_press	85, 0, 13
+	sq_press	87, 0, 25
+	sq_press	87, 0, 16
+	sq_press	90, 0, 1
+	sq_press	91, 0, 29
+	sq_press	94, 0, 8
+	sq_beat
+	sq_note	0, 0, 60, 127, 20, 0
+	sq_press	1, 0, 0
+	sq_note	5, 0, 48, 125, 24, 0
+	sq_note	19, 0, 58, 99, 21, 0
+	sq_note	26, 0, 46, 104, 22, 0
+	sq_note	41, 0, 57, 92, 18, 0
+	sq_note	48, 0, 45, 86, 20, 0
+	sq_note	64, 0, 55, 95, 18, 0
+	sq_note	69, 0, 43, 92, 22, 0
+	sq_note	93, 0, 60, 127, 28, 0
+	sq_beat
+	sq_note	5, 0, 48, 120, 26, 0
+	sq_note	20, 0, 58, 102, 21, 0
+	sq_note	26, 0, 46, 106, 29, 0
+	sq_note	46, 0, 57, 105, 18, 0
+	.byte	0x33, 0x90, 0x2d, 0x6b	# bytes 1..4 of `sq_note	51, 0, 45, 107, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 70, 65535	# cell 71: song 1 track 10, 7 of 7
+	.byte	0x10, 0x00	# bytes 5..6 of `sq_note	51, 0, 45, 107, 16, 0` (the event spans two cells)
+	sq_note	73, 0, 55, 118, 21, 0
+	sq_note	76, 0, 43, 116, 21, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	229, 0x00	# after the end of track
+	sq_cell	0x80, 0, 73	# cell 72: song 1 track 11, 1 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 13, 0, 32
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	26, 0, 74, 79, 7, 0
+	sq_note	38, 0, 76, 95, 8, 0
+	sq_note	50, 0, 77, 98, 6, 0
+	sq_note	62, 0, 76, 100, 8, 0
+	sq_note	73, 0, 77, 84, 7, 0
+	sq_note	84, 0, 79, 103, 6, 0
+	sq_beat
+	sq_note	1, 0, 77, 103, 8, 0
+	sq_note	13, 0, 79, 91, 7, 0
+	sq_note	24, 0, 81, 103, 7, 0
+	sq_note	37, 0, 79, 96, 8, 0
+	sq_note	50, 0, 81, 97, 7, 0
+	sq_note	62, 0, 84, 109, 6, 0
+	sq_note	73, 0, 81, 98, 8, 0
+	sq_note	86, 0, 84, 107, 7, 0
+	sq_beat
+	sq_note	1, 0, 86, 101, 7, 0
+	sq_note	13, 0, 84, 100, 7, 0
+	sq_note	25, 0, 86, 94, 7, 0
+	sq_note	36, 0, 88, 107, 7, 0
+	sq_note	49, 0, 89, 105, 7, 0
+	sq_note	60, 0, 86, 105, 7, 0
+	sq_note	72, 0, 88, 113, 8, 0
+	sq_note	84, 0, 89, 103, 9, 0
+	sq_beat
+	sq_note	1, 0, 91, 104, 7, 0
+	sq_note	13, 0, 91, 110, 7, 0
+	sq_note	26, 0, 93, 95, 6, 0
+	sq_note	37, 0, 93, 92, 5, 0
+	sq_note	37, 0, 95, 90, 6, 0
+	sq_note	49, 0, 96, 109, 9, 0
+	sq_note	62, 0, 95, 97, 6, 0
+	sq_note	73, 0, 93, 108, 7, 0
+	sq_note	85, 0, 91, 103, 7, 0
+	sq_beat
+	sq_note	1, 0, 93, 118, 7, 0
+	sq_note	12, 0, 91, 101, 8, 0
+	sq_note	25, 0, 89, 90, 7, 0
+	sq_note	38, 0, 88, 104, 6, 0
+	sq_note	52, 0, 91, 100, 7, 0
+	sq_note	64, 0, 89, 95, 8, 0
+	.byte	0x4a, 0x90, 0x58, 0x67	# bytes 1..4 of `sq_note	74, 0, 88, 103, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 72, 74	# cell 73: song 1 track 11, 2 of 5
+	.byte	0x08, 0x00	# bytes 5..6 of `sq_note	74, 0, 88, 103, 8, 0` (the event spans two cells)
+	sq_note	87, 0, 86, 104, 7, 0
+	sq_beat
+	sq_note	3, 0, 84, 83, 7, 0
+	sq_note	16, 0, 81, 69, 9, 0
+	sq_note	29, 0, 79, 66, 7, 0
+	sq_note	39, 0, 77, 88, 7, 0
+	sq_note	51, 0, 84, 84, 9, 0
+	sq_note	62, 0, 81, 82, 9, 0
+	sq_note	75, 0, 79, 80, 7, 0
+	sq_note	85, 0, 77, 80, 8, 0
+	sq_beat
+	sq_note	2, 0, 76, 89, 9, 0
+	sq_note	14, 0, 74, 87, 7, 0
+	sq_note	26, 0, 72, 83, 6, 0
+	sq_note	38, 0, 69, 58, 9, 0
+	sq_note	50, 0, 67, 74, 8, 0
+	sq_note	63, 0, 72, 64, 9, 0
+	sq_note	75, 0, 69, 59, 8, 0
+	sq_note	88, 0, 67, 62, 8, 0
+	sq_beat
+	sq_note	4, 0, 69, 62, 5, 0
+	sq_note	15, 0, 72, 62, 9, 0
+	sq_note	27, 0, 74, 88, 7, 0
+	sq_note	39, 0, 76, 103, 7, 0
+	sq_note	50, 0, 77, 93, 8, 0
+	sq_note	62, 0, 79, 87, 8, 0
+	sq_note	73, 0, 81, 110, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 53, 74, 32
+	sq_cc	0, 0, 10, 7, 101
+	sq_cc	1, 0, 10, 10, 101
+	sq_cc	24, 0, 10, 91, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 67, 109, 16, 0
+	sq_beat
+	.byte	0x2c	# bytes 1..1 of `sq_note	44, 0, 66, 107, 18, 0` (the event spans two cells)
+	sq_cell	0x80, 73, 75	# cell 74: song 1 track 11, 3 of 5
+	.byte	0x90, 0x42, 0x6b, 0x12, 0x00	# bytes 2..6 of `sq_note	44, 0, 66, 107, 18, 0` (the event spans two cells)
+	sq_beat
+	sq_note	42, 0, 62, 111, 20, 0
+	sq_beat
+	sq_note	43, 0, 64, 115, 24, 0
+	sq_beat
+	sq_note	43, 0, 59, 109, 16, 0
+	sq_note	93, 0, 62, 111, 31, 0
+	sq_beat
+	sq_note	48, 0, 64, 97, 13, 0
+	sq_note	73, 0, 67, 99, 25, 0
+	sq_beat
+	sq_note	25, 0, 66, 109, 16, 0
+	sq_note	48, 0, 62, 93, 16, 0
+	sq_note	68, 0, 57, 78, 18, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 48, 64, 32
+	sq_cc	1, 0, 10, 7, 127
+	sq_cc	1, 0, 10, 10, 38
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 55, 113, 22, 0
+	sq_note	56, 0, 67, 109, 16, 0
+	sq_note	70, 0, 57, 103, 20, 0
+	sq_note	79, 0, 69, 110, 14, 0
+	sq_note	92, 0, 58, 111, 17, 0
+	sq_beat
+	sq_note	1, 0, 68, 92, 5, 0
+	sq_note	3, 0, 70, 111, 14, 0
+	sq_note	12, 0, 69, 81, 5, 0
+	sq_beat
+	sq_note	44, 0, 55, 96, 19, 0
+	sq_note	46, 0, 67, 116, 17, 0
+	sq_note	67, 0, 69, 103, 14, 0
+	sq_note	69, 0, 57, 105, 18, 0
+	sq_note	86, 0, 70, 114, 16, 0
+	sq_note	90, 0, 58, 104, 16, 0
+	sq_beat
+	sq_note	45, 0, 69, 108, 19, 0
+	sq_note	47, 0, 57, 105, 24, 0
+	sq_note	66, 0, 70, 107, 14, 0
+	sq_cell	0x80, 74, 76	# cell 75: song 1 track 11, 4 of 5
+	sq_note	68, 0, 58, 81, 22, 0
+	sq_note	89, 0, 72, 100, 16, 0
+	sq_note	89, 0, 60, 110, 16, 0
+	sq_beat
+	sq_note	43, 0, 58, 102, 16, 0
+	sq_note	44, 0, 70, 112, 15, 0
+	sq_note	63, 0, 72, 105, 16, 0
+	sq_note	65, 0, 60, 101, 16, 0
+	sq_note	86, 0, 74, 113, 26, 0
+	sq_note	90, 0, 62, 104, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 67, 107, 18, 0
+	sq_note	67, 0, 69, 109, 17, 0
+	sq_note	90, 0, 70, 114, 22, 0
+	sq_beat
+	sq_note	46, 0, 69, 93, 18, 0
+	sq_note	71, 0, 70, 99, 8, 0
+	sq_note	90, 0, 74, 100, 32, 0
+	sq_beat
+	sq_note	21, 0, 72, 105, 22, 0
+	sq_note	40, 0, 70, 101, 21, 0
+	sq_note	63, 0, 69, 96, 19, 0
+	sq_note	90, 0, 72, 118, 21, 0
+	sq_beat
+	sq_note	18, 0, 70, 109, 19, 0
+	sq_note	40, 0, 69, 104, 19, 0
+	sq_note	66, 0, 67, 94, 18, 0
+	sq_note	93, 0, 70, 114, 18, 0
+	sq_beat
+	sq_note	21, 0, 69, 100, 24, 0
+	sq_note	48, 0, 67, 87, 16, 0
+	sq_note	70, 0, 65, 90, 14, 0
+	sq_note	94, 0, 62, 103, 43, 0
+	sq_beat
+	sq_note	52, 0, 67, 105, 23, 0
+	sq_note	75, 0, 65, 104, 26, 0
+	sq_beat
+	sq_note	4, 0, 62, 99, 17, 0
+	sq_note	25, 0, 60, 94, 19, 0
+	sq_note	52, 0, 58, 112, 32, 0
+	sq_beat
+	sq_note	0, 0, 60, 104, 24, 0
+	sq_note	21, 0, 58, 105, 24, 0
+	sq_note	41, 0, 57, 101, 23, 0
+	sq_note	63, 0, 55, 98, 18, 0
+	sq_beat
+	sq_note	10, 0, 77, 89, 5, 0
+	sq_note	10, 0, 79, 86, 91, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 77, 97, 9, 2
+	sq_beat
+	.byte	0x5e	# bytes 1..1 of `sq_note	94, 0, 76, 89, 8, 2` (the event spans two cells)
+	sq_cell	0x80, 75, 65535	# cell 76: song 1 track 11, 5 of 5
+	.byte	0x90, 0x4c, 0x59, 0x08, 0x02	# bytes 2..6 of `sq_note	94, 0, 76, 89, 8, 2` (the event spans two cells)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 74, 103, 59, 2
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 72, 96, 75, 0
+	sq_beat
+	sq_note	23, 0, 70, 99, 60, 0
+	sq_note	88, 0, 67, 95, 79, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	8, 0, 43, 96, 91, 4
+	sq_note	8, 0, 77, 94, 91, 4
+	sq_note	9, 0, 51, 102, 90, 4
+	sq_note	9, 0, 81, 96, 90, 4
+	sq_note	10, 0, 72, 81, 90, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 72, 121, 23, 0
+	sq_note	20, 0, 70, 112, 20, 0
+	sq_note	39, 0, 69, 106, 22, 0
+	sq_note	64, 0, 67, 112, 19, 0
+	sq_note	93, 0, 72, 125, 24, 0
+	sq_beat
+	sq_note	19, 0, 70, 114, 19, 0
+	sq_note	40, 0, 69, 114, 19, 0
+	sq_note	63, 0, 67, 117, 21, 0
+	sq_beat
+	sq_note	50, 0, 43, 104, 11, 0
+	sq_note	72, 0, 43, 106, 13, 0
+	sq_beat
+	sq_note	4, 0, 43, 107, 13, 0
+	sq_note	25, 0, 43, 109, 11, 0
+	sq_note	48, 0, 43, 116, 9, 0
+	sq_note	71, 0, 43, 127, 15, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	81, 0x00	# after the end of track
+	sq_cell	0x80, 0, 78	# cell 77: song 1 track 12, 1 of 13
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 84, 64, 32
+	sq_cc	0, 0, 11, 1, 72
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 74, 101, 9, 0
+	sq_note	24, 0, 86, 94, 11, 0
+	sq_cc	33, 0, 11, 1, 2
+	sq_cc	36, 0, 11, 1, 3
+	sq_cc	36, 0, 11, 1, 4
+	sq_cc	38, 0, 11, 1, 5
+	sq_cc	40, 0, 11, 1, 7
+	sq_cc	42, 0, 11, 1, 9
+	sq_cc	44, 0, 11, 1, 10
+	sq_cc	46, 0, 11, 1, 12
+	sq_cc	48, 0, 11, 1, 13
+	sq_note	49, 0, 74, 93, 7, 0
+	sq_cc	50, 0, 11, 1, 15
+	sq_cc	53, 0, 11, 1, 18
+	sq_cc	54, 0, 11, 1, 19
+	sq_cc	56, 0, 11, 1, 21
+	sq_cc	59, 0, 11, 1, 22
+	sq_cc	60, 0, 11, 1, 23
+	sq_cc	63, 0, 11, 1, 25
+	sq_cc	68, 0, 11, 1, 27
+	sq_cc	73, 0, 11, 1, 29
+	sq_note	73, 0, 74, 83, 8, 0
+	sq_cc	79, 0, 11, 1, 31
+	sq_cc	83, 0, 11, 1, 32
+	sq_cc	89, 0, 11, 1, 35
+	sq_cc	93, 0, 11, 1, 38
+	sq_cc	95, 0, 11, 1, 39
+	sq_beat
+	sq_note	1, 0, 86, 93, 12, 0
+	sq_cc	2, 0, 11, 1, 41
+	sq_cc	3, 0, 11, 1, 42
+	sq_cc	7, 0, 11, 1, 45
+	sq_cc	7, 0, 11, 1, 46
+	sq_cc	10, 0, 11, 1, 47
+	sq_cc	11, 0, 11, 1, 48
+	sq_cc	13, 0, 11, 1, 50
+	sq_cc	16, 0, 11, 1, 51
+	sq_cc	20, 0, 11, 1, 53
+	sq_cc	24, 0, 11, 1, 55
+	sq_note	25, 0, 74, 93, 8, 0
+	sq_cc	28, 0, 11, 1, 58
+	sq_cc	32, 0, 11, 1, 60
+	sq_cc	34, 0, 11, 1, 61
+	sq_cc	38, 0, 11, 1, 62
+	sq_cc	42, 0, 11, 1, 64
+	.byte	0x2e, 0xb0	# bytes 1..2 of `sq_cc	46, 0, 11, 1, 66` (the event spans two cells)
+	sq_cell	0x80, 77, 79	# cell 78: song 1 track 12, 2 of 13
+	.byte	0x0b, 0x01, 0x42	# bytes 3..5 of `sq_cc	46, 0, 11, 1, 66` (the event spans two cells)
+	sq_note	48, 0, 74, 76, 8, 0
+	sq_cc	51, 0, 11, 1, 68
+	sq_cc	59, 0, 11, 1, 70
+	sq_cc	63, 0, 11, 1, 73
+	sq_cc	69, 0, 11, 1, 75
+	sq_cc	69, 0, 11, 1, 76
+	sq_note	72, 0, 86, 88, 11, 0
+	sq_cc	73, 0, 11, 1, 78
+	sq_cc	77, 0, 11, 1, 79
+	sq_cc	79, 0, 11, 1, 80
+	sq_cc	91, 0, 11, 1, 81
+	sq_beat
+	sq_note	0, 0, 74, 85, 8, 0
+	sq_cc	2, 0, 11, 1, 82
+	sq_cc	7, 0, 11, 1, 83
+	sq_cc	10, 0, 11, 1, 84
+	sq_cc	14, 0, 11, 1, 86
+	sq_cc	22, 0, 11, 1, 88
+	sq_note	25, 0, 86, 84, 11, 0
+	sq_cc	29, 0, 11, 1, 90
+	sq_cc	30, 0, 11, 1, 91
+	sq_cc	33, 0, 11, 1, 94
+	sq_cc	36, 0, 11, 1, 97
+	sq_cc	38, 0, 11, 1, 98
+	sq_cc	41, 0, 11, 1, 100
+	sq_cc	47, 0, 11, 1, 104
+	sq_cc	49, 0, 11, 1, 105
+	sq_note	50, 0, 74, 85, 8, 0
+	sq_cc	55, 0, 11, 1, 107
+	sq_cc	59, 0, 11, 1, 109
+	sq_cc	67, 0, 11, 1, 110
+	sq_cc	73, 0, 11, 1, 112
+	sq_note	77, 0, 74, 68, 7, 0
+	sq_cc	79, 0, 11, 1, 114
+	sq_cc	80, 0, 11, 1, 116
+	sq_cc	82, 0, 11, 1, 117
+	sq_cc	84, 0, 11, 1, 119
+	sq_cc	87, 0, 11, 1, 121
+	sq_cc	90, 0, 11, 1, 122
+	sq_cc	94, 0, 11, 1, 127
+	sq_beat
+	sq_note	2, 0, 86, 86, 11, 0
+	sq_note	24, 0, 74, 80, 7, 0
+	sq_cc	31, 0, 11, 1, 125
+	sq_cc	33, 0, 11, 1, 123
+	sq_cc	35, 0, 11, 1, 121
+	sq_cc	37, 0, 11, 1, 120
+	sq_cc	41, 0, 11, 1, 117
+	sq_cc	41, 0, 11, 1, 116
+	.byte	0x2b, 0xb0, 0x0b	# bytes 1..3 of `sq_cc	43, 0, 11, 1, 115` (the event spans two cells)
+	sq_cell	0x80, 78, 80	# cell 79: song 1 track 12, 3 of 13
+	.byte	0x01, 0x73	# bytes 4..5 of `sq_cc	43, 0, 11, 1, 115` (the event spans two cells)
+	sq_cc	45, 0, 11, 1, 112
+	sq_note	47, 0, 74, 80, 11, 0
+	sq_cc	47, 0, 11, 1, 111
+	sq_cc	49, 0, 11, 1, 108
+	sq_cc	52, 0, 11, 1, 106
+	sq_cc	54, 0, 11, 1, 105
+	sq_cc	55, 0, 11, 1, 102
+	sq_cc	57, 0, 11, 1, 100
+	sq_cc	59, 0, 11, 1, 99
+	sq_cc	60, 0, 11, 1, 98
+	sq_cc	61, 0, 11, 1, 96
+	sq_cc	62, 0, 11, 1, 95
+	sq_cc	64, 0, 11, 1, 94
+	sq_cc	65, 0, 11, 1, 93
+	sq_cc	66, 0, 11, 1, 91
+	sq_cc	67, 0, 11, 1, 90
+	sq_cc	70, 0, 11, 1, 88
+	sq_note	71, 0, 86, 90, 11, 0
+	sq_cc	71, 0, 11, 1, 86
+	sq_cc	72, 0, 11, 1, 85
+	sq_cc	76, 0, 11, 1, 82
+	sq_cc	78, 0, 11, 1, 81
+	sq_cc	78, 0, 11, 1, 80
+	sq_cc	80, 0, 11, 1, 78
+	sq_cc	82, 0, 11, 1, 76
+	sq_cc	84, 0, 11, 1, 75
+	sq_cc	86, 0, 11, 1, 74
+	sq_cc	86, 0, 11, 1, 73
+	sq_cc	88, 0, 11, 1, 71
+	sq_cc	92, 0, 11, 1, 67
+	sq_cc	94, 0, 11, 1, 66
+	sq_note	95, 0, 74, 86, 10, 0
+	sq_beat
+	sq_cc	0, 0, 11, 1, 65
+	sq_cc	1, 0, 11, 1, 64
+	sq_cc	2, 0, 11, 1, 63
+	sq_cc	2, 0, 11, 1, 61
+	sq_cc	4, 0, 11, 1, 60
+	sq_cc	6, 0, 11, 1, 59
+	sq_cc	7, 0, 11, 1, 58
+	sq_cc	8, 0, 11, 1, 56
+	sq_cc	10, 0, 11, 1, 55
+	sq_cc	10, 0, 11, 1, 54
+	sq_cc	12, 0, 11, 1, 53
+	sq_cc	13, 0, 11, 1, 52
+	sq_cc	14, 0, 11, 1, 51
+	sq_cc	16, 0, 11, 1, 50
+	sq_cc	17, 0, 11, 1, 49
+	sq_cc	19, 0, 11, 1, 48
+	sq_cc	22, 0, 11, 1, 46
+	sq_cell	0x80, 79, 81	# cell 80: song 1 track 12, 4 of 13
+	sq_note	23, 0, 86, 85, 11, 0
+	sq_cc	29, 0, 11, 1, 44
+	sq_cc	37, 0, 11, 1, 43
+	sq_cc	39, 0, 11, 1, 42
+	sq_cc	43, 0, 11, 1, 41
+	sq_cc	45, 0, 11, 1, 40
+	sq_note	48, 0, 74, 90, 12, 0
+	sq_cc	49, 0, 11, 1, 38
+	sq_cc	55, 0, 11, 1, 35
+	sq_cc	57, 0, 11, 1, 34
+	sq_cc	57, 0, 11, 1, 33
+	sq_cc	59, 0, 11, 1, 32
+	sq_cc	59, 0, 11, 1, 31
+	sq_cc	62, 0, 11, 1, 30
+	sq_cc	63, 0, 11, 1, 29
+	sq_cc	64, 0, 11, 1, 27
+	sq_cc	65, 0, 11, 1, 26
+	sq_cc	68, 0, 11, 1, 24
+	sq_cc	70, 0, 11, 1, 22
+	sq_cc	70, 0, 11, 1, 21
+	sq_cc	72, 0, 11, 1, 20
+	sq_note	73, 0, 86, 84, 12, 0
+	sq_cc	74, 0, 11, 1, 18
+	sq_cc	76, 0, 11, 1, 17
+	sq_cc	80, 0, 11, 1, 15
+	sq_beat
+	sq_cc	0, 0, 11, 1, 14
+	sq_note	1, 0, 74, 87, 10, 0
+	sq_cc	4, 0, 11, 1, 12
+	sq_cc	9, 0, 11, 1, 10
+	sq_cc	11, 0, 11, 1, 9
+	sq_cc	11, 0, 11, 1, 8
+	sq_cc	15, 0, 11, 1, 6
+	sq_cc	17, 0, 11, 1, 5
+	sq_cc	19, 0, 11, 1, 4
+	sq_cc	23, 0, 11, 1, 2
+	sq_note	25, 0, 86, 88, 13, 0
+	sq_cc	29, 0, 11, 1, 0
+	sq_note	48, 0, 74, 87, 8, 0
+	sq_note	72, 0, 74, 83, 11, 0
+	sq_cc	89, 0, 11, 1, 2
+	sq_cc	91, 0, 11, 1, 5
+	sq_cc	93, 0, 11, 1, 11
+	sq_cc	95, 0, 11, 1, 13
+	sq_cc	95, 0, 11, 1, 16
+	sq_beat
+	sq_note	0, 0, 86, 90, 12, 0
+	sq_cc	1, 0, 11, 1, 19
+	sq_cc	3, 0, 11, 1, 21
+	sq_cc	4, 0, 11, 1, 24
+	.byte	0x05	# bytes 1..1 of `sq_cc	5, 0, 11, 1, 27` (the event spans two cells)
+	sq_cell	0x80, 80, 82	# cell 81: song 1 track 12, 5 of 13
+	.byte	0xb0, 0x0b, 0x01, 0x1b	# bytes 2..5 of `sq_cc	5, 0, 11, 1, 27` (the event spans two cells)
+	sq_cc	7, 0, 11, 1, 30
+	sq_cc	7, 0, 11, 1, 32
+	sq_cc	9, 0, 11, 1, 38
+	sq_cc	11, 0, 11, 1, 41
+	sq_cc	13, 0, 11, 1, 46
+	sq_cc	16, 0, 11, 1, 49
+	sq_cc	17, 0, 11, 1, 51
+	sq_cc	17, 0, 11, 1, 54
+	sq_cc	20, 0, 11, 1, 59
+	sq_cc	21, 0, 11, 1, 60
+	sq_note	23, 0, 74, 83, 8, 0
+	sq_cc	24, 0, 11, 1, 64
+	sq_cc	25, 0, 11, 1, 65
+	sq_cc	27, 0, 11, 1, 67
+	sq_cc	28, 0, 11, 1, 68
+	sq_cc	30, 0, 11, 1, 71
+	sq_cc	34, 0, 11, 1, 74
+	sq_cc	36, 0, 11, 1, 75
+	sq_cc	40, 0, 11, 1, 78
+	sq_cc	42, 0, 11, 1, 79
+	sq_cc	46, 0, 11, 1, 80
+	sq_note	47, 0, 74, 80, 11, 0
+	sq_cc	48, 0, 11, 1, 81
+	sq_cc	52, 0, 11, 1, 83
+	sq_cc	54, 0, 11, 1, 84
+	sq_cc	56, 0, 11, 1, 86
+	sq_cc	63, 0, 11, 1, 88
+	sq_cc	66, 0, 11, 1, 90
+	sq_note	71, 0, 86, 89, 13, 0
+	sq_cc	73, 0, 11, 1, 93
+	sq_cc	76, 0, 11, 1, 95
+	sq_cc	77, 0, 11, 1, 96
+	sq_cc	81, 0, 11, 1, 98
+	sq_cc	83, 0, 11, 1, 99
+	sq_cc	85, 0, 11, 1, 101
+	sq_cc	87, 0, 11, 1, 103
+	sq_cc	89, 0, 11, 1, 105
+	sq_cc	93, 0, 11, 1, 108
+	sq_note	95, 0, 74, 86, 11, 0
+	sq_beat
+	sq_cc	0, 0, 11, 1, 109
+	sq_cc	0, 0, 11, 1, 110
+	sq_cc	1, 0, 11, 1, 111
+	sq_cc	1, 0, 11, 1, 113
+	sq_cc	4, 0, 11, 1, 114
+	sq_cc	6, 0, 11, 1, 115
+	sq_cc	6, 0, 11, 1, 116
+	sq_cc	8, 0, 11, 1, 117
+	sq_cc	9, 0, 11, 1, 118
+	.byte	0x0a, 0xb0	# bytes 1..2 of `sq_cc	10, 0, 11, 1, 119` (the event spans two cells)
+	sq_cell	0x80, 81, 83	# cell 82: song 1 track 12, 6 of 13
+	.byte	0x0b, 0x01, 0x77	# bytes 3..5 of `sq_cc	10, 0, 11, 1, 119` (the event spans two cells)
+	sq_cc	11, 0, 11, 1, 121
+	sq_cc	15, 0, 11, 1, 125
+	sq_cc	16, 0, 11, 1, 127
+	sq_note	23, 0, 86, 88, 12, 0
+	sq_note	48, 0, 74, 89, 11, 0
+	sq_cc	71, 0, 11, 1, 123
+	sq_cc	73, 0, 11, 1, 120
+	sq_note	73, 0, 86, 83, 12, 0
+	sq_cc	75, 0, 11, 1, 116
+	sq_cc	78, 0, 11, 1, 115
+	sq_cc	79, 0, 11, 1, 113
+	sq_cc	79, 0, 11, 1, 112
+	sq_cc	81, 0, 11, 1, 110
+	sq_cc	85, 0, 11, 1, 106
+	sq_cc	85, 0, 11, 1, 105
+	sq_cc	87, 0, 11, 1, 104
+	sq_cc	89, 0, 11, 1, 103
+	sq_cc	90, 0, 11, 1, 101
+	sq_cc	94, 0, 11, 1, 97
+	sq_cc	95, 0, 11, 1, 95
+	sq_beat
+	sq_note	1, 0, 74, 84, 11, 0
+	sq_cc	1, 0, 11, 1, 93
+	sq_cc	4, 0, 11, 1, 91
+	sq_cc	6, 0, 11, 1, 90
+	sq_cc	7, 0, 11, 1, 89
+	sq_cc	8, 0, 11, 1, 88
+	sq_cc	10, 0, 11, 1, 86
+	sq_cc	10, 0, 11, 1, 85
+	sq_cc	12, 0, 11, 1, 84
+	sq_cc	14, 0, 11, 1, 82
+	sq_cc	16, 0, 11, 1, 81
+	sq_cc	18, 0, 11, 1, 79
+	sq_cc	20, 0, 11, 1, 76
+	sq_cc	22, 0, 11, 1, 75
+	sq_cc	24, 0, 11, 1, 73
+	sq_note	25, 0, 86, 80, 12, 0
+	sq_cc	26, 0, 11, 1, 71
+	sq_cc	28, 0, 11, 1, 70
+	sq_cc	30, 0, 11, 1, 68
+	sq_cc	32, 0, 11, 1, 67
+	sq_cc	36, 0, 11, 1, 65
+	sq_cc	40, 0, 11, 1, 62
+	sq_cc	47, 0, 11, 1, 59
+	sq_note	50, 0, 74, 77, 6, 0
+	sq_cc	53, 0, 11, 1, 57
+	sq_cc	54, 0, 11, 1, 56
+	sq_cc	57, 0, 11, 1, 53
+	sq_cc	59, 0, 11, 1, 52
+	.byte	0x3f	# bytes 1..1 of `sq_cc	63, 0, 11, 1, 49` (the event spans two cells)
+	sq_cell	0x80, 82, 84	# cell 83: song 1 track 12, 7 of 13
+	.byte	0xb0, 0x0b, 0x01, 0x31	# bytes 2..5 of `sq_cc	63, 0, 11, 1, 49` (the event spans two cells)
+	sq_cc	65, 0, 11, 1, 46
+	sq_cc	67, 0, 11, 1, 43
+	sq_cc	69, 0, 11, 1, 42
+	sq_cc	72, 0, 11, 1, 41
+	sq_cc	72, 0, 11, 1, 39
+	sq_cc	73, 0, 11, 1, 38
+	sq_note	74, 0, 74, 69, 11, 0
+	sq_cc	76, 0, 11, 1, 36
+	sq_cc	76, 0, 11, 1, 35
+	sq_cc	77, 0, 11, 1, 33
+	sq_cc	79, 0, 11, 1, 31
+	sq_cc	81, 0, 11, 1, 29
+	sq_cc	83, 0, 11, 1, 28
+	sq_cc	84, 0, 11, 1, 27
+	sq_cc	86, 0, 11, 1, 26
+	sq_cc	91, 0, 11, 1, 24
+	sq_beat
+	sq_cc	1, 0, 11, 1, 23
+	sq_note	2, 0, 86, 74, 10, 0
+	sq_note	25, 0, 74, 83, 8, 0
+	sq_cc	32, 0, 11, 1, 21
+	sq_cc	35, 0, 11, 1, 19
+	sq_cc	39, 0, 11, 1, 17
+	sq_cc	41, 0, 11, 1, 16
+	sq_cc	45, 0, 11, 1, 14
+	sq_cc	45, 0, 11, 1, 13
+	sq_cc	49, 0, 11, 1, 11
+	sq_note	49, 0, 86, 65, 10, 0
+	sq_cc	55, 0, 11, 1, 8
+	sq_cc	59, 0, 11, 1, 7
+	sq_cc	65, 0, 11, 1, 5
+	sq_note	72, 0, 74, 73, 8, 0
+	sq_cc	74, 0, 11, 1, 4
+	sq_cc	82, 0, 11, 1, 3
+	sq_cc	85, 0, 11, 1, 0
+	sq_beat
+	sq_note	1, 0, 86, 64, 9, 0
+	sq_note	24, 0, 74, 83, 10, 0
+	sq_cc	37, 0, 11, 1, 4
+	sq_cc	39, 0, 11, 1, 5
+	sq_cc	41, 0, 11, 1, 7
+	sq_cc	41, 0, 11, 1, 8
+	sq_cc	43, 0, 11, 1, 10
+	sq_cc	45, 0, 11, 1, 12
+	sq_cc	45, 0, 11, 1, 13
+	sq_cc	47, 0, 11, 1, 17
+	sq_note	49, 0, 86, 73, 8, 0
+	sq_cc	49, 0, 11, 1, 18
+	sq_cc	52, 0, 11, 1, 22
+	.byte	0x35, 0xb0	# bytes 1..2 of `sq_cc	53, 0, 11, 1, 25` (the event spans two cells)
+	sq_cell	0x80, 83, 85	# cell 84: song 1 track 12, 8 of 13
+	.byte	0x0b, 0x01, 0x19	# bytes 3..5 of `sq_cc	53, 0, 11, 1, 25` (the event spans two cells)
+	sq_cc	55, 0, 11, 1, 27
+	sq_cc	57, 0, 11, 1, 31
+	sq_cc	59, 0, 11, 1, 33
+	sq_cc	61, 0, 11, 1, 34
+	sq_cc	62, 0, 11, 1, 36
+	sq_cc	63, 0, 11, 1, 39
+	sq_cc	65, 0, 11, 1, 41
+	sq_cc	67, 0, 11, 1, 44
+	sq_cc	70, 0, 11, 1, 45
+	sq_cc	71, 0, 11, 1, 49
+	sq_note	73, 0, 86, 81, 13, 0
+	sq_cc	74, 0, 11, 1, 51
+	sq_cc	74, 0, 11, 1, 52
+	sq_cc	76, 0, 11, 1, 54
+	sq_cc	78, 0, 11, 1, 55
+	sq_cc	78, 0, 11, 1, 57
+	sq_cc	80, 0, 11, 1, 58
+	sq_cc	82, 0, 11, 1, 61
+	sq_cc	84, 0, 11, 1, 63
+	sq_cc	84, 0, 11, 1, 64
+	sq_cc	86, 0, 11, 1, 65
+	sq_cc	88, 0, 11, 1, 67
+	sq_cc	90, 0, 11, 1, 68
+	sq_cc	92, 0, 11, 1, 71
+	sq_beat
+	sq_cc	0, 0, 11, 1, 73
+	sq_note	2, 0, 74, 87, 11, 0
+	sq_cc	2, 0, 11, 1, 74
+	sq_cc	6, 0, 11, 1, 77
+	sq_cc	8, 0, 11, 1, 79
+	sq_cc	10, 0, 11, 1, 80
+	sq_cc	12, 0, 11, 1, 81
+	sq_cc	17, 0, 11, 1, 83
+	sq_cc	20, 0, 11, 1, 85
+	sq_cc	22, 0, 11, 1, 86
+	sq_note	26, 0, 86, 85, 10, 0
+	sq_cc	27, 0, 11, 1, 88
+	sq_cc	30, 0, 11, 1, 90
+	sq_cc	33, 0, 11, 1, 92
+	sq_cc	35, 0, 11, 1, 93
+	sq_cc	39, 0, 11, 1, 96
+	sq_cc	41, 0, 11, 1, 97
+	sq_cc	45, 0, 11, 1, 99
+	sq_cc	45, 0, 11, 1, 101
+	sq_cc	49, 0, 11, 1, 103
+	sq_note	51, 0, 74, 88, 8, 0
+	sq_cc	53, 0, 11, 1, 105
+	sq_cc	56, 0, 11, 1, 107
+	sq_cc	59, 0, 11, 1, 109
+	.byte	0x3d, 0xb0, 0x0b	# bytes 1..3 of `sq_cc	61, 0, 11, 1, 111` (the event spans two cells)
+	sq_cell	0x80, 84, 86	# cell 85: song 1 track 12, 9 of 13
+	.byte	0x01, 0x6f	# bytes 4..5 of `sq_cc	61, 0, 11, 1, 111` (the event spans two cells)
+	sq_cc	64, 0, 11, 1, 112
+	sq_cc	72, 0, 11, 1, 111
+	sq_note	73, 0, 74, 80, 8, 0
+	sq_cc	74, 0, 11, 1, 109
+	sq_cc	76, 0, 11, 1, 106
+	sq_cc	78, 0, 11, 1, 104
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 52, 84, 25, 0
+	sq_note	72, 0, 57, 85, 27, 0
+	sq_note	94, 0, 59, 73, 23, 0
+	sq_beat
+	sq_note	22, 0, 64, 94, 25, 0
+	sq_note	47, 0, 69, 76, 20, 0
+	sq_note	70, 0, 71, 83, 22, 0
+	sq_note	95, 0, 76, 91, 24, 0
+	sq_beat
+	sq_note	25, 0, 71, 86, 19, 0
+	sq_note	48, 0, 69, 81, 19, 0
+	sq_cc	63, 0, 11, 1, 1
+	sq_cc	66, 0, 11, 1, 2
+	sq_note	71, 0, 64, 93, 22, 0
+	sq_cc	73, 0, 11, 1, 4
+	sq_cc	79, 0, 11, 1, 7
+	sq_cc	89, 0, 11, 1, 9
+	sq_beat
+	sq_cc	0, 0, 11, 1, 10
+	sq_note	0, 0, 59, 84, 25, 0
+	sq_cc	9, 0, 11, 1, 12
+	sq_cc	19, 0, 11, 1, 14
+	sq_cc	22, 0, 11, 1, 15
+	sq_note	23, 0, 57, 81, 21, 0
+	sq_cc	28, 0, 11, 1, 16
+	sq_cc	35, 0, 11, 1, 17
+	sq_cc	44, 0, 11, 1, 19
+	sq_note	48, 0, 52, 89, 27, 0
+	sq_cc	51, 0, 11, 1, 21
+	sq_cc	57, 0, 11, 1, 23
+	sq_cc	60, 0, 11, 1, 24
+	sq_cc	69, 0, 11, 1, 26
+	sq_note	72, 0, 57, 80, 27, 0
+	sq_cc	76, 0, 11, 1, 29
+	.byte	0x53, 0xb0	# bytes 1..2 of `sq_cc	83, 0, 11, 1, 31` (the event spans two cells)
+	sq_cell	0x80, 85, 87	# cell 86: song 1 track 12, 10 of 13
+	.byte	0x0b, 0x01, 0x1f	# bytes 3..5 of `sq_cc	83, 0, 11, 1, 31` (the event spans two cells)
+	sq_cc	89, 0, 11, 1, 32
+	sq_beat
+	sq_note	0, 0, 59, 73, 19, 0
+	sq_cc	3, 0, 11, 1, 34
+	sq_cc	15, 0, 11, 1, 35
+	sq_note	23, 0, 64, 96, 22, 0
+	sq_cc	25, 0, 11, 1, 36
+	sq_cc	35, 0, 11, 1, 38
+	sq_cc	41, 0, 11, 1, 40
+	sq_note	48, 0, 69, 78, 18, 0
+	sq_cc	51, 0, 11, 1, 42
+	sq_cc	57, 0, 11, 1, 44
+	sq_cc	67, 0, 11, 1, 46
+	sq_note	72, 0, 71, 90, 19, 0
+	sq_cc	89, 0, 11, 1, 48
+	sq_beat
+	sq_note	1, 0, 76, 95, 20, 0
+	sq_cc	9, 0, 11, 1, 49
+	sq_cc	15, 0, 11, 1, 50
+	sq_cc	25, 0, 11, 1, 52
+	sq_note	25, 0, 71, 86, 19, 0
+	sq_cc	34, 0, 11, 1, 54
+	sq_cc	41, 0, 11, 1, 56
+	sq_note	47, 0, 69, 91, 17, 0
+	sq_cc	51, 0, 11, 1, 57
+	sq_cc	60, 0, 11, 1, 58
+	sq_note	72, 0, 64, 90, 19, 0
+	sq_beat
+	sq_note	0, 0, 59, 86, 27, 0
+	sq_cc	19, 0, 11, 1, 60
+	sq_note	24, 0, 57, 86, 19, 0
+	sq_note	48, 0, 52, 87, 29, 0
+	sq_cc	67, 0, 11, 1, 61
+	sq_note	72, 0, 57, 80, 27, 0
+	sq_cc	83, 0, 11, 1, 63
+	sq_note	94, 0, 59, 85, 22, 0
+	sq_beat
+	sq_cc	13, 0, 11, 1, 64
+	sq_note	23, 0, 64, 98, 22, 0
+	sq_cc	44, 0, 11, 1, 65
+	sq_note	46, 0, 69, 81, 20, 0
+	sq_cc	63, 0, 11, 1, 66
+	sq_note	71, 0, 71, 85, 17, 0
+	sq_cc	80, 0, 11, 1, 67
+	sq_note	95, 0, 76, 95, 22, 0
+	sq_cc	95, 0, 11, 1, 68
+	sq_beat
+	sq_cc	19, 0, 11, 1, 69
+	sq_note	25, 0, 71, 83, 20, 0
+	sq_cc	36, 0, 11, 1, 70
+	sq_cell	0x80, 86, 88	# cell 87: song 1 track 12, 11 of 13
+	sq_note	47, 0, 69, 90, 23, 0
+	sq_cc	59, 0, 11, 1, 71
+	sq_cc	71, 0, 11, 1, 72
+	sq_note	74, 0, 64, 91, 21, 0
+	sq_cc	88, 0, 11, 1, 73
+	sq_beat
+	sq_note	2, 0, 59, 91, 28, 0
+	sq_note	24, 0, 57, 86, 21, 0
+	sq_cc	34, 0, 11, 1, 75
+	sq_cc	48, 0, 11, 1, 76
+	sq_note	49, 0, 52, 92, 29, 0
+	sq_cc	51, 0, 11, 1, 77
+	sq_cc	61, 0, 11, 1, 78
+	sq_note	74, 0, 57, 84, 26, 0
+	sq_beat
+	sq_note	1, 0, 59, 86, 22, 0
+	sq_cc	1, 0, 11, 1, 79
+	sq_cc	14, 0, 11, 1, 81
+	sq_note	25, 0, 64, 99, 24, 0
+	sq_cc	28, 0, 11, 1, 82
+	sq_cc	37, 0, 11, 1, 83
+	sq_cc	47, 0, 11, 1, 85
+	sq_note	49, 0, 69, 87, 21, 0
+	sq_cc	50, 0, 11, 1, 87
+	sq_cc	54, 0, 11, 1, 88
+	sq_cc	67, 0, 11, 1, 90
+	sq_note	72, 0, 71, 93, 21, 0
+	sq_cc	76, 0, 11, 1, 91
+	sq_cc	77, 0, 11, 1, 92
+	sq_cc	90, 0, 11, 1, 93
+	sq_beat
+	sq_note	1, 0, 76, 98, 24, 0
+	sq_note	26, 0, 71, 89, 21, 0
+	sq_cc	46, 0, 11, 1, 94
+	sq_note	48, 0, 69, 96, 19, 0
+	sq_note	72, 0, 64, 96, 25, 0
+	sq_cc	72, 0, 11, 1, 95
+	sq_cc	85, 0, 11, 1, 96
+	sq_beat
+	sq_note	1, 0, 59, 89, 27, 0
+	sq_cc	3, 0, 11, 1, 97
+	sq_note	23, 0, 57, 87, 20, 0
+	sq_cc	32, 0, 11, 1, 99
+	sq_note	46, 0, 52, 93, 31, 0
+	sq_cc	65, 0, 11, 1, 100
+	sq_note	71, 0, 57, 85, 30, 0
+	sq_note	95, 0, 59, 91, 22, 0
+	sq_beat
+	sq_note	24, 0, 64, 98, 26, 0
+	sq_note	50, 0, 69, 78, 24, 0
+	sq_cell	0x80, 87, 89	# cell 88: song 1 track 12, 12 of 13
+	sq_cc	50, 0, 11, 1, 101
+	sq_cc	67, 0, 11, 1, 102
+	sq_note	74, 0, 71, 93, 21, 0
+	sq_cc	77, 0, 11, 1, 103
+	sq_cc	93, 0, 11, 1, 104
+	sq_beat
+	sq_note	1, 0, 76, 100, 24, 0
+	sq_cc	11, 0, 11, 1, 105
+	sq_note	26, 0, 71, 89, 21, 0
+	sq_cc	27, 0, 11, 1, 107
+	sq_cc	44, 0, 11, 1, 109
+	sq_note	47, 0, 69, 93, 19, 0
+	sq_cc	60, 0, 11, 1, 110
+	sq_note	72, 0, 64, 94, 23, 0
+	sq_beat
+	sq_note	0, 0, 59, 92, 29, 0
+	sq_cc	0, 0, 11, 1, 112
+	sq_cc	19, 0, 11, 1, 113
+	sq_note	24, 0, 57, 89, 17, 0
+	sq_cc	46, 0, 11, 1, 114
+	sq_note	48, 0, 52, 98, 29, 0
+	sq_note	71, 0, 57, 86, 31, 0
+	sq_cc	75, 0, 11, 1, 115
+	sq_cc	89, 0, 11, 1, 117
+	sq_beat
+	sq_note	0, 0, 59, 80, 22, 0
+	sq_note	24, 0, 64, 99, 23, 0
+	sq_note	49, 0, 69, 79, 21, 0
+	sq_cc	52, 0, 11, 1, 118
+	sq_cc	65, 0, 11, 1, 119
+	sq_note	73, 0, 71, 93, 18, 0
+	sq_cc	81, 0, 11, 1, 120
+	sq_beat
+	sq_note	0, 0, 76, 100, 23, 0
+	sq_cc	11, 0, 11, 1, 121
+	sq_note	25, 0, 71, 92, 19, 0
+	sq_note	46, 0, 69, 90, 20, 0
+	sq_cc	57, 0, 11, 1, 122
+	sq_cc	64, 0, 11, 1, 125
+	sq_note	70, 0, 64, 95, 25, 0
+	sq_cc	74, 0, 11, 1, 127
+	sq_note	94, 0, 59, 98, 31, 0
+	sq_beat
+	sq_note	23, 0, 57, 94, 22, 0
+	sq_note	47, 0, 52, 96, 29, 0
+	sq_note	70, 0, 57, 87, 27, 0
+	sq_note	94, 0, 59, 95, 25, 0
+	sq_beat
+	sq_note	23, 0, 64, 99, 24, 0
+	sq_note	48, 0, 69, 90, 22, 0
+	.byte	0x48	# bytes 1..1 of `sq_note	72, 0, 71, 95, 19, 0` (the event spans two cells)
+	sq_cell	0x80, 88, 65535	# cell 89: song 1 track 12, 13 of 13
+	.byte	0x90, 0x47, 0x5f, 0x13, 0x00	# bytes 2..6 of `sq_note	72, 0, 71, 95, 19, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 76, 98, 23, 0
+	sq_note	24, 0, 71, 91, 21, 0
+	sq_note	46, 0, 69, 86, 17, 0
+	sq_note	70, 0, 64, 93, 19, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 56, 22, 32
+	sq_cc	1, 0, 11, 7, 119
+	sq_beat
+	sq_note	7, 0, 84, 120, 66, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	76, 0x00	# after the end of track
+	sq_cell	0x80, 0, 91	# cell 90: song 1 track 13, 1 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 1, 16, 32
+	sq_cc	0, 0, 12, 7, 127
+	sq_cc	1, 0, 12, 10, 48
+	sq_beat
+	sq_note	0, 0, 28, 110, 94, 14
+	sq_note	1, 0, 40, 100, 0, 15
+	sq_press	6, 0, 25
+	sq_press	8, 0, 32
+	sq_press	11, 0, 2
+	sq_press	15, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 33, 116, 92, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 31, 113, 73, 3
+	sq_note	48, 0, 55, 90, 43, 3
+	sq_note	91, 0, 57, 95, 0, 3
+	sq_beat
+	sq_note	46, 0, 62, 103, 43, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 28, 101, 54, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 96, 16, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 35, 77, 43, 0
+	sq_note	95, 0, 28, 100, 39, 3
+	sq_beat
+	sq_note	75, 0, 40, 101, 18, 3
+	sq_beat
+	sq_note	53, 0, 67, 89, 57, 2
+	sq_note	54, 0, 57, 90, 49, 2
+	sq_note	54, 0, 62, 100, 55, 2
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 28, 80, 39, 0
+	sq_beat
+	sq_note	1, 0, 33, 110, 95, 1
+	sq_note	67, 0, 55, 86, 27, 1
+	sq_note	68, 0, 60, 99, 33, 1
+	sq_note	69, 0, 64, 99, 31, 1
+	sq_beat
+	sq_beat
+	.byte	0x03, 0x90	# bytes 1..2 of `sq_note	3, 0, 35, 109, 66, 1` (the event spans two cells)
+	sq_cell	0x80, 90, 92	# cell 91: song 1 track 13, 2 of 4
+	.byte	0x23, 0x6d, 0x42, 0x01	# bytes 3..6 of `sq_note	3, 0, 35, 109, 66, 1` (the event spans two cells)
+	sq_note	53, 0, 57, 96, 35, 1
+	sq_note	53, 0, 62, 115, 35, 1
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 12, 10, 83
+	sq_beat
+	sq_note	53, 0, 56, 102, 21, 4
+	sq_note	53, 0, 63, 101, 25, 4
+	sq_note	54, 0, 55, 87, 19, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 63, 84, 13, 0
+	sq_note	51, 0, 56, 89, 9, 0
+	sq_note	53, 0, 55, 71, 9, 0
+	sq_beat
+	sq_note	24, 0, 56, 79, 34, 0
+	sq_note	24, 0, 63, 80, 37, 0
+	sq_note	27, 0, 55, 69, 30, 0
+	sq_note	72, 0, 48, 96, 5, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 63, 94, 24, 2
+	sq_note	49, 0, 56, 96, 20, 2
+	sq_note	50, 0, 55, 79, 25, 2
+	sq_beat
+	sq_beat
+	sq_note	66, 0, 46, 71, 6, 0
+	sq_note	94, 0, 56, 80, 54, 0
+	sq_note	94, 0, 63, 86, 57, 0
+	sq_note	95, 0, 61, 85, 53, 0
+	sq_beat
+	sq_note	67, 0, 61, 93, 12, 0
+	sq_note	67, 0, 63, 86, 14, 0
+	sq_note	68, 0, 56, 86, 10, 0
+	sq_beat
+	sq_beat
+	sq_note	26, 0, 46, 83, 6, 0
+	sq_note	46, 0, 53, 84, 59, 0
+	sq_note	46, 0, 58, 99, 59, 0
+	sq_note	47, 0, 63, 96, 59, 0
+	sq_beat
+	sq_note	9, 0, 46, 86, 5, 0
+	sq_note	25, 0, 58, 90, 34, 0
+	sq_note	25, 0, 63, 93, 34, 0
+	sq_note	26, 0, 53, 81, 34, 0
+	sq_beat
+	sq_beat
+	sq_note	53, 0, 56, 102, 21, 4
+	sq_note	53, 0, 63, 101, 25, 4
+	sq_note	54, 0, 55, 87, 19, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 63, 84, 13, 0
+	sq_note	51, 0, 56, 89, 9, 0
+	sq_note	53, 0, 55, 71, 9, 0
+	sq_beat
+	.byte	0x18	# bytes 1..1 of `sq_note	24, 0, 56, 79, 34, 0` (the event spans two cells)
+	sq_cell	0x80, 91, 93	# cell 92: song 1 track 13, 3 of 4
+	.byte	0x90, 0x38, 0x4f, 0x22, 0x00	# bytes 2..6 of `sq_note	24, 0, 56, 79, 34, 0` (the event spans two cells)
+	sq_note	24, 0, 63, 80, 37, 0
+	sq_note	27, 0, 55, 69, 30, 0
+	sq_note	72, 0, 48, 96, 5, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 63, 94, 24, 2
+	sq_note	49, 0, 56, 96, 20, 2
+	sq_note	50, 0, 55, 79, 25, 2
+	sq_beat
+	sq_beat
+	sq_note	66, 0, 46, 71, 6, 0
+	sq_note	94, 0, 56, 80, 54, 0
+	sq_note	94, 0, 63, 86, 57, 0
+	sq_note	95, 0, 61, 85, 53, 0
+	sq_beat
+	sq_note	67, 0, 61, 93, 12, 0
+	sq_note	67, 0, 63, 86, 14, 0
+	sq_note	68, 0, 56, 86, 10, 0
+	sq_beat
+	sq_beat
+	sq_note	26, 0, 46, 83, 6, 0
+	sq_note	46, 0, 53, 84, 59, 0
+	sq_note	46, 0, 58, 99, 59, 0
+	sq_note	47, 0, 63, 96, 59, 0
+	sq_beat
+	sq_note	9, 0, 46, 86, 5, 0
+	sq_note	25, 0, 58, 90, 34, 0
+	sq_note	25, 0, 63, 93, 34, 0
+	sq_note	26, 0, 53, 81, 34, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	58, 0, 43, 58, 16, 0
+	sq_note	63, 0, 31, 62, 13, 0
+	sq_note	88, 0, 43, 69, 16, 0
+	sq_note	89, 0, 31, 64, 13, 0
+	sq_beat
+	sq_note	18, 0, 31, 74, 9, 0
+	sq_note	19, 0, 43, 75, 16, 0
+	.byte	0x24	# bytes 1..1 of `sq_note	36, 0, 31, 77, 12, 0` (the event spans two cells)
+	sq_cell	0x80, 92, 65535	# cell 93: song 1 track 13, 4 of 4
+	.byte	0x90, 0x1f, 0x4d, 0x0c, 0x00	# bytes 2..6 of `sq_note	36, 0, 31, 77, 12, 0` (the event spans two cells)
+	sq_note	45, 0, 43, 78, 15, 0
+	sq_note	62, 0, 31, 88, 11, 0
+	sq_note	70, 0, 43, 87, 14, 0
+	sq_note	84, 0, 31, 105, 12, 0
+	sq_note	95, 0, 43, 109, 11, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	210, 0x00	# after the end of track
+	sq_cell	0x80, 0, 65535	# cell 94: song 1 track 14, 1 of 1
+	sq_note	0, 0, 84, 127, 2, 2
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 85, 127, 0, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	23, 0x00	# after the end of track
+	sq_cell	0x80, 0, 96	# cell 95: song 1 track 15, 1 of 26
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 16, 0, 38
+	sq_cc	0, 0, 14, 7, 125
+	sq_cc	24, 0, 14, 91, 100
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 49, 107, 7, 0
+	sq_note	50, 0, 44, 91, 8, 0
+	sq_beat
+	sq_note	0, 0, 44, 76, 9, 0
+	sq_note	45, 0, 44, 69, 7, 0
+	sq_note	93, 0, 44, 87, 7, 0
+	sq_beat
+	sq_note	45, 0, 44, 73, 5, 0
+	sq_note	94, 0, 44, 82, 5, 0
+	sq_beat
+	sq_note	1, 0, 52, 55, 7, 0
+	sq_note	13, 0, 52, 60, 7, 0
+	sq_note	25, 0, 52, 65, 6, 0
+	sq_note	37, 0, 52, 72, 7, 0
+	sq_note	45, 0, 52, 78, 7, 0
+	sq_note	48, 0, 44, 90, 6, 0
+	sq_note	58, 0, 52, 87, 14, 0
+	sq_note	71, 0, 52, 97, 10, 0
+	sq_note	84, 0, 52, 106, 5, 0
+	sq_note	95, 0, 52, 118, 6, 0
+	sq_note	95, 0, 36, 109, 10, 0
+	sq_beat
+	sq_note	3, 0, 44, 92, 5, 0
+	sq_note	51, 0, 44, 93, 7, 0
+	sq_beat
+	sq_note	2, 0, 44, 91, 7, 0
+	sq_note	49, 0, 44, 93, 8, 0
+	sq_beat
+	sq_note	1, 0, 44, 90, 7, 0
+	sq_note	48, 0, 44, 87, 7, 0
+	sq_beat
+	sq_note	1, 0, 44, 95, 8, 0
+	sq_note	47, 0, 44, 79, 7, 0
+	sq_note	72, 0, 46, 95, 7, 0
+	sq_note	79, 0, 41, 73, 7, 0
+	sq_note	90, 0, 41, 98, 9, 0
+	sq_note	95, 0, 44, 89, 8, 0
+	sq_beat
+	sq_note	7, 0, 41, 127, 8, 0
+	sq_note	47, 0, 44, 91, 7, 0
+	sq_note	95, 0, 44, 89, 5, 0
+	sq_beat
+	sq_note	47, 0, 44, 92, 7, 0
+	sq_note	95, 0, 44, 90, 7, 0
+	sq_beat
+	.byte	0x1a, 0x90, 0x32, 0x74	# bytes 1..4 of `sq_note	26, 0, 50, 116, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 95, 97	# cell 96: song 1 track 15, 2 of 26
+	.byte	0x09, 0x00	# bytes 5..6 of `sq_note	26, 0, 50, 116, 9, 0` (the event spans two cells)
+	sq_note	49, 0, 44, 95, 7, 0
+	sq_note	72, 0, 47, 116, 11, 0
+	sq_beat
+	sq_note	2, 0, 44, 91, 5, 0
+	sq_note	24, 0, 43, 121, 28, 0
+	sq_note	51, 0, 44, 76, 5, 0
+	sq_note	70, 0, 41, 120, 12, 0
+	sq_beat
+	sq_note	2, 0, 44, 102, 10, 0
+	sq_note	50, 0, 44, 96, 11, 0
+	sq_note	51, 0, 36, 103, 9, 0
+	sq_beat
+	sq_note	2, 0, 38, 108, 50, 1
+	sq_note	2, 0, 44, 101, 12, 0
+	sq_note	27, 0, 36, 116, 9, 0
+	sq_note	50, 0, 44, 95, 11, 0
+	sq_beat
+	sq_note	3, 0, 44, 91, 11, 0
+	sq_note	3, 0, 36, 110, 9, 0
+	sq_note	52, 0, 44, 95, 11, 0
+	sq_beat
+	sq_note	4, 0, 43, 113, 10, 0
+	sq_note	4, 0, 44, 95, 10, 0
+	sq_note	5, 0, 41, 100, 9, 0
+	sq_note	52, 0, 44, 104, 10, 0
+	sq_beat
+	sq_note	2, 0, 44, 102, 10, 0
+	sq_note	50, 0, 44, 96, 11, 0
+	sq_note	51, 0, 36, 103, 9, 0
+	sq_beat
+	sq_note	2, 0, 38, 108, 50, 1
+	sq_note	2, 0, 44, 101, 12, 0
+	sq_note	27, 0, 36, 116, 9, 0
+	sq_note	50, 0, 44, 95, 11, 0
+	sq_beat
+	sq_note	3, 0, 44, 91, 11, 0
+	sq_note	3, 0, 36, 110, 9, 0
+	sq_note	52, 0, 44, 95, 11, 0
+	sq_beat
+	sq_note	4, 0, 44, 95, 10, 0
+	sq_note	52, 0, 44, 104, 10, 0
+	sq_pc	95, 0, 20, 0, 38
+	sq_beat
+	sq_cc	0, 0, 14, 7, 127
+	sq_note	0, 0, 20, 91, 14, 0
+	sq_note	3, 0, 36, 115, 18, 0
+	sq_cc	24, 0, 14, 91, 17
+	sq_note	47, 0, 42, 67, 14, 0
+	sq_note	77, 0, 40, 105, 14, 0
+	sq_beat
+	sq_note	1, 0, 20, 87, 15, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 42, 67, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 96, 98	# cell 97: song 1 track 15, 3 of 26
+	.byte	0x90, 0x2a, 0x43, 0x0d, 0x00	# bytes 2..6 of `sq_note	48, 0, 42, 67, 13, 0` (the event spans two cells)
+	sq_note	50, 0, 36, 113, 17, 0
+	sq_note	95, 0, 20, 76, 15, 0
+	sq_beat
+	sq_note	47, 0, 36, 71, 12, 0
+	sq_note	50, 0, 42, 66, 10, 0
+	sq_note	74, 0, 36, 80, 12, 0
+	sq_note	94, 0, 40, 111, 20, 0
+	sq_beat
+	sq_note	1, 0, 20, 99, 17, 0
+	sq_note	48, 0, 42, 65, 13, 0
+	sq_note	49, 0, 36, 67, 7, 0
+	sq_note	95, 0, 36, 119, 45, 0
+	sq_beat
+	sq_note	1, 0, 20, 93, 14, 0
+	sq_note	49, 0, 42, 63, 13, 0
+	sq_note	76, 0, 40, 100, 13, 0
+	sq_note	95, 0, 20, 96, 14, 0
+	sq_beat
+	sq_note	49, 0, 42, 71, 13, 0
+	sq_note	51, 0, 36, 119, 31, 0
+	sq_beat
+	sq_note	0, 0, 20, 93, 16, 0
+	sq_note	50, 0, 42, 77, 11, 0
+	sq_note	65, 0, 35, 72, 18, 0
+	sq_note	79, 0, 36, 96, 11, 0
+	sq_beat
+	sq_note	0, 0, 40, 108, 20, 0
+	sq_note	2, 0, 20, 84, 13, 0
+	sq_note	48, 0, 42, 81, 13, 0
+	sq_note	95, 0, 36, 113, 25, 0
+	sq_beat
+	sq_note	1, 0, 20, 87, 12, 0
+	sq_note	48, 0, 42, 64, 13, 0
+	sq_note	77, 0, 40, 103, 15, 0
+	sq_note	93, 0, 20, 86, 14, 0
+	sq_beat
+	sq_note	47, 0, 42, 69, 13, 0
+	sq_note	50, 0, 36, 121, 18, 0
+	sq_beat
+	sq_note	0, 0, 20, 96, 13, 0
+	sq_note	49, 0, 42, 73, 11, 0
+	sq_note	51, 0, 36, 78, 10, 0
+	sq_note	76, 0, 36, 95, 7, 0
+	sq_beat
+	sq_note	0, 0, 40, 115, 20, 0
+	sq_note	1, 0, 20, 95, 12, 0
+	sq_note	49, 0, 42, 69, 11, 0
+	sq_note	52, 0, 36, 91, 5, 0
+	sq_note	95, 0, 36, 123, 45, 0
+	sq_beat
+	.byte	0x01	# bytes 1..1 of `sq_note	1, 0, 20, 94, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 97, 99	# cell 98: song 1 track 15, 4 of 26
+	.byte	0x90, 0x14, 0x5e, 0x0b, 0x00	# bytes 2..6 of `sq_note	1, 0, 20, 94, 11, 0` (the event spans two cells)
+	sq_note	50, 0, 42, 66, 11, 0
+	sq_note	70, 0, 40, 105, 15, 0
+	sq_note	95, 0, 20, 91, 11, 0
+	sq_beat
+	sq_note	48, 0, 36, 113, 8, 0
+	sq_note	50, 0, 42, 62, 13, 0
+	sq_note	94, 0, 36, 111, 12, 0
+	sq_beat
+	sq_note	0, 0, 20, 90, 12, 0
+	sq_note	46, 0, 36, 87, 5, 0
+	sq_note	48, 0, 42, 70, 10, 0
+	sq_note	71, 0, 36, 101, 8, 0
+	sq_note	94, 0, 40, 119, 14, 0
+	sq_beat
+	sq_note	0, 0, 20, 99, 11, 0
+	sq_note	21, 0, 36, 111, 13, 0
+	sq_note	47, 0, 42, 81, 11, 0
+	sq_beat
+	sq_note	0, 0, 20, 91, 14, 0
+	sq_note	3, 0, 36, 116, 12, 0
+	sq_note	5, 0, 55, 105, 76, 1
+	sq_note	30, 0, 36, 84, 11, 0
+	sq_note	47, 0, 42, 83, 15, 0
+	sq_note	47, 0, 44, 67, 14, 0
+	sq_note	56, 0, 36, 93, 11, 0
+	sq_note	91, 0, 42, 51, 10, 0
+	sq_beat
+	sq_note	1, 0, 20, 87, 15, 0
+	sq_note	47, 0, 42, 92, 16, 0
+	sq_note	48, 0, 44, 67, 13, 0
+	sq_note	51, 0, 40, 113, 14, 0
+	sq_note	94, 0, 42, 42, 14, 0
+	sq_note	95, 0, 20, 76, 15, 0
+	sq_beat
+	sq_note	46, 0, 42, 89, 16, 0
+	sq_note	47, 0, 36, 71, 12, 0
+	sq_note	50, 0, 44, 66, 10, 0
+	sq_note	74, 0, 36, 80, 12, 0
+	sq_note	93, 0, 42, 60, 14, 0
+	sq_note	94, 0, 40, 111, 20, 0
+	sq_beat
+	sq_note	1, 0, 20, 99, 17, 0
+	sq_note	46, 0, 42, 91, 14, 0
+	sq_note	48, 0, 44, 65, 13, 0
+	sq_note	49, 0, 36, 67, 7, 0
+	sq_note	95, 0, 36, 119, 45, 0
+	sq_beat
+	.byte	0x01, 0x90, 0x14, 0x5d	# bytes 1..4 of `sq_note	1, 0, 20, 93, 14, 0` (the event spans two cells)
+	sq_cell	0x80, 98, 100	# cell 99: song 1 track 15, 5 of 26
+	.byte	0x0e, 0x00	# bytes 5..6 of `sq_note	1, 0, 20, 93, 14, 0` (the event spans two cells)
+	sq_note	2, 0, 42, 62, 11, 0
+	sq_note	48, 0, 42, 89, 16, 0
+	sq_note	49, 0, 44, 63, 13, 0
+	sq_note	76, 0, 40, 100, 13, 0
+	sq_note	95, 0, 42, 64, 14, 0
+	sq_note	95, 0, 20, 96, 14, 0
+	sq_beat
+	sq_note	49, 0, 44, 71, 13, 0
+	sq_note	50, 0, 42, 82, 14, 0
+	sq_note	51, 0, 36, 119, 31, 0
+	sq_beat
+	sq_note	0, 0, 42, 63, 15, 0
+	sq_note	0, 0, 20, 93, 16, 0
+	sq_note	49, 0, 42, 87, 17, 0
+	sq_note	50, 0, 44, 77, 11, 0
+	sq_note	65, 0, 35, 72, 18, 0
+	sq_note	79, 0, 36, 96, 11, 0
+	sq_beat
+	sq_note	0, 0, 40, 108, 20, 0
+	sq_note	1, 0, 42, 64, 13, 0
+	sq_note	2, 0, 20, 84, 13, 0
+	sq_note	48, 0, 44, 81, 13, 0
+	sq_note	48, 0, 42, 89, 17, 0
+	sq_note	95, 0, 36, 113, 25, 0
+	sq_beat
+	sq_note	1, 0, 20, 87, 12, 0
+	sq_note	2, 0, 42, 52, 12, 0
+	sq_note	48, 0, 44, 64, 13, 0
+	sq_note	50, 0, 42, 87, 15, 0
+	sq_note	77, 0, 40, 103, 15, 0
+	sq_note	93, 0, 20, 86, 14, 0
+	sq_beat
+	sq_note	1, 0, 42, 56, 14, 0
+	sq_note	47, 0, 44, 69, 13, 0
+	sq_note	48, 0, 42, 86, 15, 0
+	sq_note	50, 0, 36, 121, 18, 0
+	sq_note	95, 0, 42, 71, 15, 0
+	sq_beat
+	sq_note	0, 0, 20, 96, 13, 0
+	sq_note	49, 0, 44, 73, 11, 0
+	sq_note	51, 0, 36, 78, 10, 0
+	sq_note	51, 0, 42, 95, 17, 0
+	sq_note	76, 0, 36, 95, 7, 0
+	sq_beat
+	sq_note	0, 0, 40, 115, 20, 0
+	sq_note	1, 0, 20, 95, 12, 0
+	sq_note	3, 0, 42, 51, 14, 0
+	.byte	0x31, 0x90	# bytes 1..2 of `sq_note	49, 0, 44, 69, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 99, 101	# cell 100: song 1 track 15, 6 of 26
+	.byte	0x2c, 0x45, 0x0b, 0x00	# bytes 3..6 of `sq_note	49, 0, 44, 69, 11, 0` (the event spans two cells)
+	sq_note	49, 0, 42, 91, 17, 0
+	sq_note	52, 0, 36, 91, 5, 0
+	sq_note	95, 0, 36, 123, 45, 0
+	sq_beat
+	sq_note	0, 0, 42, 66, 14, 0
+	sq_note	1, 0, 20, 94, 11, 0
+	sq_note	47, 0, 42, 91, 16, 0
+	sq_note	50, 0, 44, 66, 11, 0
+	sq_note	70, 0, 40, 105, 15, 0
+	sq_note	95, 0, 20, 91, 11, 0
+	sq_beat
+	sq_note	1, 0, 42, 62, 12, 0
+	sq_note	3, 0, 52, 81, 14, 0
+	sq_note	48, 0, 52, 80, 13, 0
+	sq_note	48, 0, 36, 113, 8, 0
+	sq_note	48, 0, 42, 92, 15, 0
+	sq_note	50, 0, 44, 62, 13, 0
+	sq_note	94, 0, 36, 111, 12, 0
+	sq_note	95, 0, 42, 69, 14, 0
+	sq_beat
+	sq_note	0, 0, 20, 90, 12, 0
+	sq_note	1, 0, 52, 94, 14, 0
+	sq_note	48, 0, 42, 95, 17, 0
+	sq_note	48, 0, 44, 70, 10, 0
+	sq_note	50, 0, 52, 100, 14, 0
+	sq_note	93, 0, 42, 57, 15, 0
+	sq_beat
+	sq_note	0, 0, 20, 99, 11, 0
+	sq_note	1, 0, 52, 103, 14, 0
+	sq_note	45, 0, 42, 93, 14, 0
+	sq_note	47, 0, 44, 81, 11, 0
+	sq_note	49, 0, 52, 116, 14, 0
+	sq_beat
+	sq_pc	0, 0, 31, 0, 38
+	sq_note	1, 0, 44, 6, 15, 0
+	sq_note	75, 0, 42, 8, 14, 0
+	sq_beat
+	sq_note	0, 0, 44, 9, 15, 0
+	sq_note	52, 0, 46, 11, 10, 0
+	sq_beat
+	sq_note	3, 0, 44, 14, 13, 0
+	sq_note	72, 0, 42, 18, 14, 0
+	sq_beat
+	sq_note	0, 0, 44, 20, 16, 0
+	sq_note	51, 0, 46, 24, 13, 0
+	sq_beat
+	sq_note	3, 0, 44, 26, 13, 0
+	sq_note	70, 0, 42, 27, 19, 0
+	.byte	0x5f, 0x90, 0x2c, 0x1b, 0x10	# bytes 1..5 of `sq_note	95, 0, 44, 27, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 100, 102	# cell 101: song 1 track 15, 7 of 26
+	.byte	0x00	# bytes 6..6 of `sq_note	95, 0, 44, 27, 16, 0` (the event spans two cells)
+	sq_beat
+	sq_note	49, 0, 46, 28, 11, 0
+	sq_beat
+	sq_note	1, 0, 44, 30, 9, 0
+	sq_note	25, 0, 44, 32, 19, 0
+	sq_note	72, 0, 42, 33, 14, 0
+	sq_beat
+	sq_note	0, 0, 44, 35, 17, 0
+	sq_note	48, 0, 46, 37, 12, 0
+	sq_beat
+	sq_note	0, 0, 44, 39, 14, 0
+	sq_note	69, 0, 42, 41, 12, 0
+	sq_note	95, 0, 44, 41, 12, 0
+	sq_beat
+	sq_note	48, 0, 46, 41, 13, 0
+	sq_beat
+	sq_note	1, 0, 44, 42, 12, 0
+	sq_note	24, 0, 44, 42, 16, 0
+	sq_note	73, 0, 42, 42, 14, 0
+	sq_note	95, 0, 44, 43, 15, 0
+	sq_beat
+	sq_note	48, 0, 46, 43, 13, 0
+	sq_beat
+	sq_note	1, 0, 44, 44, 12, 0
+	sq_note	71, 0, 42, 48, 16, 0
+	sq_note	95, 0, 44, 50, 16, 0
+	sq_beat
+	sq_note	49, 0, 46, 53, 12, 0
+	sq_beat
+	sq_note	0, 0, 44, 56, 16, 0
+	sq_note	73, 0, 42, 61, 14, 0
+	sq_note	95, 0, 44, 62, 11, 0
+	sq_beat
+	sq_note	22, 0, 44, 64, 16, 0
+	sq_note	46, 0, 46, 65, 12, 0
+	sq_note	93, 0, 44, 66, 12, 0
+	sq_beat
+	sq_note	69, 0, 42, 69, 13, 0
+	sq_note	93, 0, 44, 69, 14, 0
+	sq_beat
+	sq_note	47, 0, 46, 71, 12, 0
+	sq_note	94, 0, 44, 72, 14, 0
+	sq_beat
+	sq_note	71, 0, 42, 75, 14, 0
+	sq_note	94, 0, 44, 77, 14, 0
+	sq_beat
+	sq_note	47, 0, 46, 91, 16, 0
+	sq_beat
+	sq_note	1, 0, 44, 92, 16, 0
+	sq_note	73, 0, 42, 92, 14, 0
+	sq_beat
+	sq_note	1, 0, 44, 93, 14, 0
+	sq_note	49, 0, 46, 93, 15, 0
+	sq_beat
+	sq_note	2, 0, 44, 106, 9, 0
+	sq_note	26, 0, 44, 78, 12, 0
+	.byte	0x4b, 0x90, 0x2a, 0x5c	# bytes 1..4 of `sq_note	75, 0, 42, 92, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 101, 103	# cell 102: song 1 track 15, 8 of 26
+	.byte	0x0d, 0x00	# bytes 5..6 of `sq_note	75, 0, 42, 92, 13, 0` (the event spans two cells)
+	sq_beat
+	sq_note	1, 0, 44, 111, 12, 0
+	sq_note	49, 0, 46, 106, 14, 0
+	sq_beat
+	sq_note	5, 0, 44, 105, 14, 0
+	sq_note	73, 0, 42, 62, 19, 0
+	sq_beat
+	sq_note	1, 0, 44, 92, 14, 0
+	sq_note	49, 0, 46, 97, 15, 0
+	sq_beat
+	sq_note	2, 0, 44, 91, 11, 0
+	sq_note	25, 0, 44, 61, 16, 0
+	sq_note	73, 0, 42, 84, 18, 0
+	sq_beat
+	sq_note	1, 0, 44, 105, 11, 0
+	sq_note	48, 0, 46, 95, 12, 0
+	sq_note	95, 0, 44, 102, 16, 0
+	sq_beat
+	sq_note	71, 0, 42, 93, 17, 0
+	sq_beat
+	sq_note	0, 0, 44, 106, 14, 0
+	sq_note	48, 0, 46, 96, 13, 0
+	sq_beat
+	sq_note	1, 0, 44, 101, 11, 0
+	sq_note	25, 0, 44, 69, 16, 0
+	sq_note	73, 0, 42, 79, 14, 0
+	sq_note	95, 0, 44, 96, 6, 0
+	sq_beat
+	sq_note	24, 0, 44, 71, 16, 0
+	sq_note	46, 0, 46, 76, 21, 0
+	sq_note	95, 0, 44, 105, 14, 0
+	sq_beat
+	sq_note	70, 0, 42, 77, 14, 0
+	sq_note	93, 0, 44, 105, 16, 0
+	sq_beat
+	sq_note	46, 0, 46, 95, 16, 0
+	sq_beat
+	sq_note	0, 0, 44, 104, 9, 0
+	sq_note	24, 0, 44, 73, 14, 0
+	sq_note	72, 0, 42, 79, 18, 0
+	sq_note	95, 0, 44, 105, 13, 0
+	sq_beat
+	sq_note	47, 0, 46, 93, 13, 0
+	sq_note	95, 0, 44, 99, 9, 0
+	sq_beat
+	sq_pc	0, 0, 9, 0, 38
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 38, 118, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 17, 0
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_cc	24, 0, 14, 91, 55
+	.byte	0x30, 0x90, 0x36, 0x63, 0x08	# bytes 1..5 of `sq_note	48, 0, 54, 99, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 102, 104	# cell 103: song 1 track 15, 9 of 26
+	.byte	0x00	# bytes 6..6 of `sq_note	48, 0, 54, 99, 8, 0` (the event spans two cells)
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_beat
+	sq_note	0, 0, 48, 119, 14, 0
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	sq_note	48, 0, 35, 91, 8, 0
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	1, 0, 56, 124, 15, 0
+	sq_note	46, 0, 54, 91, 6, 0
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	.byte	0x00, 0x90, 0x2f	# bytes 1..3 of `sq_note	0, 0, 47, 120, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 103, 105	# cell 104: song 1 track 15, 10 of 26
+	.byte	0x78, 0x10, 0x00	# bytes 4..6 of `sq_note	0, 0, 47, 120, 16, 0` (the event spans two cells)
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	47, 0, 45, 113, 12, 0
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	sq_note	95, 0, 42, 106, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	sq_note	45, 0, 54, 95, 6, 0
+	sq_note	46, 0, 42, 46, 9, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	.byte	0x2d, 0x90	# bytes 1..2 of `sq_note	45, 0, 42, 51, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 104, 106	# cell 105: song 1 track 15, 11 of 26
+	.byte	0x2a, 0x33, 0x0d, 0x00	# bytes 3..6 of `sq_note	45, 0, 42, 51, 13, 0` (the event spans two cells)
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 45, 120, 26, 0
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	71, 0, 36, 116, 8, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_note	95, 0, 43, 116, 18, 0
+	sq_beat
+	sq_note	2, 0, 56, 122, 11, 0
+	sq_note	21, 0, 35, 101, 11, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 36, 107, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 17, 0
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_note	48, 0, 54, 99, 8, 0
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_beat
+	sq_note	0, 0, 48, 119, 14, 0
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 35, 91, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 105, 107	# cell 106: song 1 track 15, 12 of 26
+	.byte	0x90, 0x23, 0x5b, 0x08, 0x00	# bytes 2..6 of `sq_note	48, 0, 35, 91, 8, 0` (the event spans two cells)
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	1, 0, 56, 124, 15, 0
+	sq_note	46, 0, 54, 91, 6, 0
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	sq_note	0, 0, 47, 120, 16, 0
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	47, 0, 45, 113, 12, 0
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	sq_note	95, 0, 42, 106, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_cell	0x80, 106, 108	# cell 107: song 1 track 15, 13 of 26
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	sq_note	45, 0, 54, 95, 6, 0
+	sq_note	46, 0, 42, 46, 9, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	sq_note	45, 0, 42, 51, 13, 0
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 45, 120, 26, 0
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	71, 0, 36, 116, 8, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_note	95, 0, 43, 116, 18, 0
+	sq_beat
+	sq_note	2, 0, 56, 122, 11, 0
+	sq_note	21, 0, 35, 101, 11, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 36, 107, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x2a, 0x6b	# bytes 1..4 of `sq_note	0, 0, 42, 107, 17, 0` (the event spans two cells)
+	sq_cell	0x80, 107, 109	# cell 108: song 1 track 15, 14 of 26
+	.byte	0x11, 0x00	# bytes 5..6 of `sq_note	0, 0, 42, 107, 17, 0` (the event spans two cells)
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_cc	24, 0, 14, 91, 55
+	sq_note	48, 0, 54, 99, 8, 0
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_beat
+	sq_note	0, 0, 48, 119, 14, 0
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	sq_note	48, 0, 35, 91, 8, 0
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	1, 0, 56, 124, 15, 0
+	.byte	0x2e, 0x90, 0x36, 0x5b	# bytes 1..4 of `sq_note	46, 0, 54, 91, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 108, 110	# cell 109: song 1 track 15, 15 of 26
+	.byte	0x06, 0x00	# bytes 5..6 of `sq_note	46, 0, 54, 91, 6, 0` (the event spans two cells)
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	sq_note	0, 0, 47, 120, 16, 0
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	47, 0, 45, 113, 12, 0
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	sq_note	95, 0, 42, 106, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	.byte	0x2d, 0x90, 0x36	# bytes 1..3 of `sq_note	45, 0, 54, 95, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 109, 111	# cell 110: song 1 track 15, 16 of 26
+	.byte	0x5f, 0x06, 0x00	# bytes 4..6 of `sq_note	45, 0, 54, 95, 6, 0` (the event spans two cells)
+	sq_note	46, 0, 42, 46, 9, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	sq_note	45, 0, 42, 51, 13, 0
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 45, 120, 26, 0
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	71, 0, 36, 116, 8, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_note	95, 0, 43, 116, 18, 0
+	sq_beat
+	sq_note	2, 0, 56, 122, 11, 0
+	sq_note	21, 0, 35, 101, 11, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 36, 107, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 17, 0
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_note	48, 0, 54, 99, 8, 0
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_beat
+	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 48, 119, 14, 0` (the event spans two cells)
+	sq_cell	0x80, 110, 112	# cell 111: song 1 track 15, 17 of 26
+	.byte	0x90, 0x30, 0x77, 0x0e, 0x00	# bytes 2..6 of `sq_note	0, 0, 48, 119, 14, 0` (the event spans two cells)
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	sq_note	48, 0, 35, 91, 8, 0
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	1, 0, 56, 124, 15, 0
+	sq_note	46, 0, 54, 91, 6, 0
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	sq_note	0, 0, 47, 120, 16, 0
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	47, 0, 45, 113, 12, 0
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	.byte	0x5f	# bytes 1..1 of `sq_note	95, 0, 42, 106, 19, 0` (the event spans two cells)
+	sq_cell	0x80, 111, 113	# cell 112: song 1 track 15, 18 of 26
+	.byte	0x90, 0x2a, 0x6a, 0x13, 0x00	# bytes 2..6 of `sq_note	95, 0, 42, 106, 19, 0` (the event spans two cells)
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	sq_note	45, 0, 54, 95, 6, 0
+	sq_note	46, 0, 42, 46, 9, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	sq_note	45, 0, 42, 51, 13, 0
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 45, 120, 26, 0
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	71, 0, 36, 116, 8, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_note	95, 0, 43, 116, 18, 0
+	sq_beat
+	.byte	0x02, 0x90, 0x38, 0x7a, 0x0b	# bytes 1..5 of `sq_note	2, 0, 56, 122, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 112, 114	# cell 113: song 1 track 15, 19 of 26
+	.byte	0x00	# bytes 6..6 of `sq_note	2, 0, 56, 122, 11, 0` (the event spans two cells)
+	sq_note	21, 0, 35, 101, 11, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 36, 107, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 17, 0
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_cc	24, 0, 14, 91, 55
+	sq_note	48, 0, 54, 99, 8, 0
+	sq_note	49, 0, 53, 95, 14, 0
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 51, 67, 18, 0
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	51, 0, 53, 84, 16, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 51, 56, 14, 0
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	49, 0, 53, 90, 14, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_beat
+	sq_note	0, 0, 48, 119, 14, 0
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	1, 0, 51, 65, 13, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	sq_note	48, 0, 35, 91, 8, 0
+	sq_note	50, 0, 53, 88, 14, 0
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	1, 0, 51, 81, 13, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_cell	0x80, 113, 115	# cell 114: song 1 track 15, 20 of 26
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	49, 0, 53, 83, 14, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	1, 0, 51, 63, 14, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	48, 0, 53, 84, 13, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	94, 0, 51, 69, 14, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	1, 0, 56, 124, 15, 0
+	sq_note	46, 0, 54, 91, 6, 0
+	sq_note	47, 0, 53, 84, 13, 0
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_note	95, 0, 51, 95, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	sq_note	0, 0, 47, 120, 16, 0
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	47, 0, 45, 113, 12, 0
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	48, 0, 53, 78, 11, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	0, 0, 51, 82, 11, 0
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	48, 0, 53, 80, 13, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	sq_note	95, 0, 42, 106, 19, 0
+	.byte	0x5f	# bytes 1..1 of `sq_note	95, 0, 51, 81, 14, 0` (the event spans two cells)
+	sq_cell	0x80, 114, 116	# cell 115: song 1 track 15, 21 of 26
+	.byte	0x90, 0x33, 0x51, 0x0e, 0x00	# bytes 2..6 of `sq_note	95, 0, 51, 81, 14, 0` (the event spans two cells)
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_note	49, 0, 53, 80, 11, 0
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_note	95, 0, 51, 81, 14, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	48, 0, 53, 69, 10, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 51, 82, 13, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	48, 0, 53, 91, 15, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	94, 0, 51, 64, 11, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	sq_note	45, 0, 54, 95, 6, 0
+	sq_note	45, 0, 53, 85, 13, 0
+	sq_note	46, 0, 42, 46, 9, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	91, 0, 51, 81, 13, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	sq_note	44, 0, 53, 90, 14, 0
+	sq_note	45, 0, 42, 51, 13, 0
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	91, 0, 51, 76, 12, 0
+	.byte	0x5f	# bytes 1..1 of `sq_note	95, 0, 42, 102, 18, 0` (the event spans two cells)
+	sq_cell	0x80, 115, 117	# cell 116: song 1 track 15, 22 of 26
+	.byte	0x90, 0x2a, 0x66, 0x12, 0x00	# bytes 2..6 of `sq_note	95, 0, 42, 102, 18, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 45, 120, 26, 0
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	46, 0, 53, 85, 11, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	71, 0, 36, 116, 8, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_note	94, 0, 51, 81, 9, 0
+	sq_note	95, 0, 43, 116, 18, 0
+	sq_beat
+	sq_note	2, 0, 56, 122, 11, 0
+	sq_note	21, 0, 35, 101, 11, 0
+	sq_note	45, 0, 53, 91, 12, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 36, 107, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 17, 0
+	sq_note	0, 0, 36, 123, 23, 0
+	sq_note	2, 0, 55, 116, 16, 0
+	sq_note	2, 0, 56, 119, 11, 0
+	sq_note	48, 0, 53, 81, 13, 0
+	sq_note	48, 0, 54, 99, 8, 0
+	sq_note	51, 0, 42, 76, 11, 0
+	sq_note	73, 0, 36, 121, 14, 0
+	sq_note	73, 0, 42, 60, 12, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	3, 0, 56, 122, 12, 0
+	sq_note	4, 0, 51, 82, 11, 0
+	sq_note	46, 0, 54, 99, 7, 0
+	sq_note	48, 0, 42, 36, 6, 0
+	sq_note	51, 0, 53, 71, 9, 0
+	sq_note	70, 0, 42, 56, 8, 0
+	sq_note	95, 0, 42, 105, 19, 0
+	sq_beat
+	sq_note	2, 0, 51, 66, 8, 0
+	sq_note	2, 0, 56, 112, 14, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	49, 0, 53, 75, 11, 0
+	sq_note	70, 0, 42, 66, 13, 0
+	sq_note	72, 0, 38, 116, 6, 0
+	sq_note	95, 0, 51, 76, 13, 0
+	sq_beat
+	sq_cell	0x80, 116, 118	# cell 117: song 1 track 15, 23 of 26
+	sq_note	0, 0, 48, 119, 14, 0
+	sq_note	0, 0, 42, 105, 18, 0
+	sq_note	2, 0, 56, 124, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 61, 9, 0
+	sq_note	48, 0, 35, 91, 8, 0
+	sq_note	49, 0, 53, 76, 11, 0
+	sq_note	72, 0, 42, 57, 11, 0
+	sq_note	95, 0, 51, 81, 14, 0
+	sq_note	95, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	48, 0, 42, 42, 9, 0
+	sq_note	48, 0, 53, 73, 12, 0
+	sq_note	48, 0, 54, 93, 6, 0
+	sq_note	70, 0, 42, 61, 13, 0
+	sq_note	70, 0, 36, 125, 12, 0
+	sq_note	95, 0, 42, 102, 21, 0
+	sq_beat
+	sq_note	2, 0, 51, 70, 9, 0
+	sq_note	2, 0, 56, 119, 14, 0
+	sq_note	46, 0, 42, 49, 12, 0
+	sq_note	46, 0, 36, 121, 6, 0
+	sq_note	47, 0, 54, 97, 7, 0
+	sq_note	48, 0, 53, 76, 11, 0
+	sq_note	70, 0, 42, 76, 11, 0
+	sq_note	95, 0, 42, 104, 22, 0
+	sq_beat
+	sq_note	0, 0, 51, 70, 11, 0
+	sq_note	1, 0, 56, 124, 15, 0
+	sq_note	46, 0, 54, 91, 6, 0
+	sq_note	48, 0, 53, 76, 11, 0
+	sq_note	48, 0, 42, 57, 14, 0
+	sq_note	72, 0, 38, 108, 6, 0
+	sq_note	74, 0, 42, 67, 10, 0
+	sq_note	94, 0, 51, 77, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 65, 7, 0
+	sq_note	0, 0, 47, 120, 16, 0
+	sq_note	3, 0, 56, 109, 13, 0
+	sq_note	22, 0, 35, 103, 11, 0
+	sq_note	24, 0, 42, 86, 10, 0
+	sq_note	45, 0, 54, 104, 6, 0
+	sq_note	46, 0, 53, 78, 12, 0
+	.byte	0x2f	# bytes 1..1 of `sq_note	47, 0, 45, 113, 12, 0` (the event spans two cells)
+	sq_cell	0x80, 117, 119	# cell 118: song 1 track 15, 24 of 26
+	.byte	0x90, 0x2d, 0x71, 0x0c, 0x00	# bytes 2..6 of `sq_note	47, 0, 45, 113, 12, 0` (the event spans two cells)
+	sq_note	47, 0, 46, 109, 14, 0
+	sq_note	70, 0, 42, 91, 14, 0
+	sq_note	93, 0, 51, 77, 13, 0
+	sq_note	95, 0, 42, 85, 13, 0
+	sq_beat
+	sq_note	1, 0, 36, 113, 5, 0
+	sq_note	1, 0, 56, 122, 15, 0
+	sq_note	45, 0, 53, 78, 11, 0
+	sq_note	47, 0, 54, 99, 6, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	72, 0, 36, 121, 16, 0
+	sq_note	92, 0, 51, 75, 13, 0
+	sq_note	95, 0, 42, 106, 19, 0
+	sq_beat
+	sq_note	2, 0, 56, 111, 11, 0
+	sq_note	44, 0, 53, 83, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	48, 0, 42, 43, 8, 0
+	sq_note	48, 0, 36, 123, 8, 0
+	sq_note	70, 0, 42, 69, 10, 0
+	sq_note	93, 0, 51, 82, 13, 0
+	sq_note	95, 0, 42, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 56, 112, 13, 0
+	sq_note	45, 0, 53, 81, 13, 0
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	94, 0, 51, 79, 6, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	43, 0, 54, 94, 8, 0
+	sq_note	46, 0, 42, 51, 10, 0
+	sq_note	48, 0, 53, 66, 7, 0
+	sq_note	70, 0, 42, 56, 11, 0
+	sq_note	75, 0, 36, 118, 14, 0
+	sq_note	94, 0, 51, 80, 11, 0
+	sq_note	95, 0, 42, 104, 20, 0
+	sq_beat
+	sq_note	1, 0, 56, 122, 14, 0
+	sq_note	5, 0, 36, 110, 17, 0
+	sq_note	45, 0, 54, 95, 6, 0
+	.byte	0x2e	# bytes 1..1 of `sq_note	46, 0, 42, 46, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 118, 120	# cell 119: song 1 track 15, 25 of 26
+	.byte	0x90, 0x2a, 0x2e, 0x09, 0x00	# bytes 2..6 of `sq_note	46, 0, 42, 46, 9, 0` (the event spans two cells)
+	sq_note	46, 0, 53, 76, 11, 0
+	sq_note	69, 0, 42, 55, 9, 0
+	sq_note	94, 0, 51, 82, 11, 0
+	sq_note	94, 0, 42, 104, 19, 0
+	sq_beat
+	sq_note	3, 0, 56, 116, 13, 0
+	sq_note	45, 0, 42, 51, 13, 0
+	sq_note	46, 0, 53, 76, 11, 0
+	sq_note	47, 0, 54, 99, 8, 0
+	sq_note	51, 0, 38, 116, 15, 0
+	sq_note	70, 0, 42, 59, 9, 0
+	sq_note	93, 0, 51, 72, 6, 0
+	sq_note	95, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	1, 0, 56, 119, 14, 0
+	sq_note	1, 0, 38, 71, 11, 0
+	sq_note	25, 0, 38, 76, 15, 0
+	sq_note	47, 0, 54, 96, 6, 0
+	sq_note	47, 0, 42, 71, 11, 0
+	sq_note	50, 0, 38, 73, 9, 0
+	sq_note	68, 0, 42, 82, 11, 0
+	sq_note	73, 0, 38, 85, 12, 0
+	sq_note	91, 0, 51, 79, 11, 0
+	sq_note	93, 0, 46, 107, 19, 0
+	sq_beat
+	sq_note	2, 0, 38, 88, 12, 0
+	sq_note	2, 0, 56, 122, 11, 0
+	sq_note	25, 0, 38, 96, 13, 0
+	sq_note	46, 0, 54, 104, 8, 0
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_note	48, 0, 38, 108, 13, 0
+	sq_note	71, 0, 38, 113, 12, 0
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 36, 120, 16, 0
+	sq_note	2, 0, 49, 116, 12, 0
+	sq_note	82, 0, 52, 54, 9, 0
+	sq_beat
+	sq_note	11, 0, 52, 58, 12, 0
+	sq_note	28, 0, 52, 64, 13, 0
+	sq_note	55, 0, 52, 66, 11, 0
+	sq_note	71, 0, 52, 69, 11, 0
+	sq_note	92, 0, 52, 74, 12, 0
+	sq_beat
+	sq_note	12, 0, 52, 78, 13, 0
+	sq_note	35, 0, 52, 88, 9, 0
+	.byte	0x32, 0x90, 0x34, 0x5d, 0x08	# bytes 1..5 of `sq_note	50, 0, 52, 93, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 119, 65535	# cell 120: song 1 track 15, 26 of 26
+	.byte	0x00	# bytes 6..6 of `sq_note	50, 0, 52, 93, 8, 0` (the event spans two cells)
+	sq_note	68, 0, 52, 105, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 38, 81, 13, 0
+	sq_note	1, 0, 48, 113, 17, 0
+	sq_note	21, 0, 47, 91, 22, 0
+	sq_note	27, 0, 38, 71, 14, 0
+	sq_note	47, 0, 45, 70, 17, 0
+	sq_note	52, 0, 38, 70, 9, 0
+	sq_note	71, 0, 43, 71, 17, 0
+	sq_note	76, 0, 38, 78, 14, 0
+	sq_beat
+	sq_note	4, 0, 38, 80, 12, 0
+	sq_note	5, 0, 48, 120, 21, 0
+	sq_note	26, 0, 38, 67, 12, 0
+	sq_note	27, 0, 47, 93, 23, 0
+	sq_note	52, 0, 45, 98, 13, 0
+	sq_note	53, 0, 38, 73, 9, 0
+	sq_note	78, 0, 43, 115, 15, 0
+	sq_note	78, 0, 38, 96, 15, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	135, 0x00	# after the end of track
+	sq_cell	0x80, 0, 122	# cell 121: song 1 track 16, 1 of 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 48, 0, 38
+	sq_cc	95, 0, 15, 7, 123
+	sq_beat
+	sq_note	0, 0, 36, 126, 9, 0
+	sq_note	3, 0, 59, 126, 12, 0
+	sq_note	53, 0, 81, 57, 7, 0
+	sq_note	72, 0, 81, 55, 6, 0
+	sq_note	81, 0, 81, 63, 6, 0
+	sq_note	92, 0, 81, 57, 8, 0
+	sq_beat
+	sq_note	10, 0, 81, 62, 6, 0
+	sq_note	20, 0, 81, 58, 7, 0
+	sq_note	32, 0, 81, 60, 7, 0
+	sq_note	41, 0, 81, 57, 6, 0
+	sq_note	55, 0, 81, 61, 8, 0
+	sq_note	65, 0, 81, 58, 6, 0
+	sq_note	79, 0, 81, 65, 7, 0
+	sq_note	89, 0, 81, 40, 6, 0
+	sq_beat
+	sq_note	7, 0, 81, 32, 7, 0
+	sq_note	19, 0, 81, 32, 5, 0
+	sq_note	29, 0, 81, 39, 8, 0
+	sq_note	41, 0, 81, 42, 7, 0
+	sq_note	53, 0, 81, 45, 8, 0
+	sq_note	63, 0, 81, 36, 8, 0
+	sq_note	75, 0, 45, 43, 9, 0
+	sq_note	76, 0, 81, 39, 7, 0
+	sq_note	85, 0, 45, 55, 6, 0
+	sq_note	87, 0, 81, 42, 7, 0
+	sq_beat
+	sq_note	2, 0, 45, 61, 7, 0
+	sq_note	3, 0, 81, 49, 17, 0
+	sq_note	14, 0, 45, 83, 7, 0
+	sq_note	26, 0, 45, 80, 7, 0
+	sq_note	27, 0, 81, 71, 7, 0
+	sq_note	36, 0, 81, 73, 7, 0
+	sq_note	38, 0, 45, 96, 7, 0
+	sq_note	49, 0, 45, 92, 6, 0
+	sq_note	49, 0, 81, 67, 7, 0
+	sq_note	59, 0, 81, 78, 7, 0
+	sq_note	60, 0, 45, 93, 7, 0
+	sq_note	71, 0, 45, 101, 5, 0
+	sq_note	72, 0, 81, 76, 7, 0
+	sq_note	81, 0, 81, 83, 7, 0
+	.byte	0x55, 0x90	# bytes 1..2 of `sq_note	85, 0, 45, 111, 7, 0` (the event spans two cells)
+	sq_cell	0x80, 121, 123	# cell 122: song 1 track 16, 2 of 7
+	.byte	0x2d, 0x6f, 0x07, 0x00	# bytes 3..6 of `sq_note	85, 0, 45, 111, 7, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 36, 123, 11, 0
+	sq_note	1, 0, 50, 123, 6, 0
+	sq_note	1, 0, 57, 123, 85, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 45, 69, 8, 0
+	sq_note	74, 0, 45, 68, 9, 0
+	sq_beat
+	sq_note	1, 0, 50, 115, 8, 0
+	sq_note	2, 0, 38, 106, 11, 0
+	sq_note	27, 0, 38, 90, 5, 0
+	sq_note	37, 0, 38, 93, 5, 0
+	sq_note	45, 0, 38, 101, 6, 0
+	sq_note	71, 0, 38, 115, 13, 0
+	sq_beat
+	sq_note	20, 0, 38, 67, 5, 0
+	sq_note	46, 0, 38, 118, 10, 0
+	sq_note	72, 0, 38, 86, 7, 0
+	sq_note	95, 0, 38, 79, 5, 0
+	sq_beat
+	sq_note	25, 0, 38, 118, 9, 0
+	sq_beat
+	sq_note	4, 0, 38, 105, 8, 0
+	sq_note	30, 0, 38, 91, 5, 0
+	sq_note	40, 0, 38, 93, 5, 0
+	sq_note	46, 0, 45, 49, 7, 0
+	sq_note	50, 0, 38, 113, 7, 0
+	sq_note	69, 0, 45, 71, 7, 0
+	sq_note	75, 0, 38, 110, 9, 0
+	sq_beat
+	sq_note	0, 0, 50, 115, 8, 0
+	sq_note	5, 0, 38, 109, 5, 0
+	sq_note	8, 0, 81, 120, 9, 0
+	sq_note	29, 0, 38, 83, 5, 0
+	sq_note	40, 0, 38, 105, 5, 0
+	sq_note	51, 0, 38, 106, 8, 0
+	sq_note	74, 0, 38, 123, 8, 0
+	sq_beat
+	sq_note	49, 0, 38, 104, 5, 0
+	sq_note	74, 0, 38, 110, 6, 0
+	sq_beat
+	sq_note	3, 0, 38, 78, 5, 0
+	sq_note	26, 0, 38, 127, 8, 0
+	sq_note	74, 0, 38, 73, 5, 0
+	sq_beat
+	sq_note	1, 0, 38, 109, 6, 0
+	sq_note	28, 0, 38, 90, 5, 0
+	sq_note	37, 0, 38, 85, 5, 0
+	sq_note	48, 0, 38, 113, 6, 0
+	.byte	0x47	# bytes 1..1 of `sq_note	71, 0, 38, 108, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 122, 124	# cell 123: song 1 track 16, 3 of 7
+	.byte	0x90, 0x26, 0x6c, 0x06, 0x00	# bytes 2..6 of `sq_note	71, 0, 38, 108, 6, 0` (the event spans two cells)
+	sq_note	93, 0, 24, 118, 69, 2
+	sq_beat
+	sq_note	47, 0, 48, 100, 8, 0
+	sq_beat
+	sq_note	27, 0, 48, 101, 9, 0
+	sq_beat
+	sq_note	7, 0, 48, 103, 8, 0
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 20, 0, 38
+	sq_beat
+	sq_beat
+	sq_note	65, 0, 40, 110, 10, 0
+	sq_beat
+	sq_note	10, 0, 40, 113, 11, 0
+	sq_note	31, 0, 40, 85, 13, 0
+	sq_note	55, 0, 36, 110, 12, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 48, 0, 38
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 57, 118, 23, 0
+	sq_note	1, 0, 24, 123, 68, 4
+	sq_note	1, 0, 36, 119, 29, 0
+	sq_press	23, 0, 5
+	sq_press	25, 0, 8
+	sq_press	32, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 30, 0, 38
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 36, 111, 21, 0
+	sq_note	74, 0, 36, 116, 21, 0
+	sq_beat
+	sq_note	49, 0, 36, 113, 14, 0
+	sq_beat
+	sq_note	73, 0, 36, 79, 7, 0
+	sq_beat
+	sq_note	2, 0, 39, 114, 26, 0
+	sq_note	49, 0, 36, 78, 10, 0
+	sq_beat
+	sq_note	1, 0, 36, 119, 34, 0
+	sq_note	74, 0, 36, 113, 19, 0
+	sq_beat
+	sq_note	50, 0, 36, 120, 20, 0
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 39, 122, 17, 0
+	sq_beat
+	sq_note	0, 0, 36, 110, 31, 0
+	sq_note	71, 0, 36, 110, 18, 0
+	sq_beat
+	sq_note	45, 0, 36, 119, 21, 0
+	sq_beat
+	.byte	0x48, 0x90, 0x24	# bytes 1..3 of `sq_note	72, 0, 36, 88, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 123, 125	# cell 124: song 1 track 16, 4 of 7
+	.byte	0x58, 0x06, 0x00	# bytes 4..6 of `sq_note	72, 0, 36, 88, 6, 0` (the event spans two cells)
+	sq_beat
+	sq_note	1, 0, 39, 122, 22, 0
+	sq_note	51, 0, 36, 81, 5, 0
+	sq_beat
+	sq_note	0, 0, 36, 119, 22, 0
+	sq_note	74, 0, 36, 116, 18, 0
+	sq_beat
+	sq_note	50, 0, 36, 106, 8, 0
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 39, 124, 16, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 39, 114, 16, 0
+	sq_note	48, 0, 39, 114, 21, 0
+	sq_beat
+	sq_note	25, 0, 39, 114, 20, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 39, 102, 14, 0
+	sq_beat
+	sq_note	1, 0, 39, 112, 16, 0
+	sq_beat
+	sq_note	49, 0, 39, 107, 12, 0
+	sq_beat
+	sq_note	0, 0, 39, 107, 16, 0
+	sq_note	70, 0, 39, 114, 13, 0
+	sq_beat
+	sq_pc	0, 0, 48, 0, 38
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	55, 0, 50, 65, 10, 0
+	sq_note	78, 0, 50, 73, 5, 0
+	sq_note	92, 0, 50, 84, 9, 0
+	sq_beat
+	sq_note	13, 0, 50, 85, 9, 0
+	sq_note	31, 0, 50, 91, 7, 0
+	sq_note	47, 0, 50, 92, 6, 0
+	sq_note	63, 0, 50, 101, 10, 0
+	sq_note	79, 0, 50, 101, 6, 0
+	sq_note	93, 0, 50, 103, 11, 0
+	sq_beat
+	sq_note	18, 0, 50, 103, 17, 0
+	sq_note	40, 0, 50, 103, 11, 0
+	sq_note	59, 0, 50, 108, 10, 0
+	sq_note	83, 0, 50, 118, 6, 0
+	sq_beat
+	sq_note	5, 0, 43, 127, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 50, 81, 9, 0
+	sq_note	69, 0, 50, 96, 11, 0
+	.byte	0x5e, 0x90, 0x32	# bytes 1..3 of `sq_note	94, 0, 50, 120, 18, 0` (the event spans two cells)
+	sq_cell	0x80, 124, 126	# cell 125: song 1 track 16, 5 of 7
+	.byte	0x78, 0x12, 0x00	# bytes 4..6 of `sq_note	94, 0, 50, 120, 18, 0` (the event spans two cells)
+	sq_beat
+	sq_note	52, 0, 43, 85, 6, 0
+	sq_note	77, 0, 43, 85, 9, 0
+	sq_beat
+	sq_note	2, 0, 43, 119, 16, 0
+	sq_note	51, 0, 43, 83, 8, 0
+	sq_note	79, 0, 43, 97, 9, 0
+	sq_beat
+	sq_note	2, 0, 43, 118, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	44, 0, 50, 81, 10, 0
+	sq_note	73, 0, 50, 95, 13, 0
+	sq_beat
+	sq_note	1, 0, 50, 108, 11, 0
+	sq_note	30, 0, 50, 96, 9, 0
+	sq_note	47, 0, 50, 88, 7, 0
+	sq_note	74, 0, 50, 105, 8, 0
+	sq_beat
+	sq_note	2, 0, 50, 121, 10, 0
+	sq_beat
+	sq_note	50, 0, 43, 111, 11, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	55, 0, 50, 65, 10, 0
+	sq_note	78, 0, 50, 73, 5, 0
+	sq_note	92, 0, 50, 84, 9, 0
+	sq_beat
+	sq_note	13, 0, 50, 85, 9, 0
+	sq_note	31, 0, 50, 91, 7, 0
+	sq_note	47, 0, 50, 92, 6, 0
+	sq_note	63, 0, 50, 101, 10, 0
+	sq_note	79, 0, 50, 101, 6, 0
+	sq_note	93, 0, 50, 103, 11, 0
+	sq_beat
+	sq_note	18, 0, 50, 103, 17, 0
+	sq_note	40, 0, 50, 103, 11, 0
+	sq_note	59, 0, 50, 108, 10, 0
+	sq_note	83, 0, 50, 118, 6, 0
+	sq_beat
+	sq_note	5, 0, 43, 127, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 50, 81, 9, 0
+	sq_note	69, 0, 50, 96, 11, 0
+	sq_note	94, 0, 50, 120, 18, 0
+	sq_beat
+	sq_note	52, 0, 43, 85, 6, 0
+	sq_note	77, 0, 43, 85, 9, 0
+	sq_beat
+	sq_note	2, 0, 43, 119, 16, 0
+	sq_note	51, 0, 43, 83, 8, 0
+	.byte	0x4f, 0x90, 0x2b, 0x61	# bytes 1..4 of `sq_note	79, 0, 43, 97, 9, 0` (the event spans two cells)
+	sq_cell	0x80, 125, 127	# cell 126: song 1 track 16, 6 of 7
+	.byte	0x09, 0x00	# bytes 5..6 of `sq_note	79, 0, 43, 97, 9, 0` (the event spans two cells)
+	sq_beat
+	sq_note	2, 0, 43, 118, 13, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 50, 73, 11, 0
+	sq_note	74, 0, 50, 79, 13, 0
+	sq_beat
+	sq_note	0, 0, 50, 85, 9, 0
+	sq_note	27, 0, 50, 84, 10, 0
+	sq_note	48, 0, 50, 98, 11, 0
+	sq_note	72, 0, 50, 94, 13, 0
+	sq_beat
+	sq_note	1, 0, 50, 107, 13, 0
+	sq_note	24, 0, 50, 103, 13, 0
+	sq_note	48, 0, 50, 106, 11, 0
+	sq_note	71, 0, 50, 104, 14, 0
+	sq_beat
+	sq_note	1, 0, 50, 110, 11, 0
+	sq_note	23, 0, 50, 113, 12, 0
+	sq_note	47, 0, 50, 121, 10, 0
+	sq_note	71, 0, 50, 118, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	86, 0, 16
+	sq_press	91, 0, 0
+	sq_beat
+	sq_note	1, 0, 38, 118, 13, 0
+	sq_note	26, 0, 38, 91, 13, 0
+	sq_note	49, 0, 38, 95, 8, 0
+	sq_note	72, 0, 38, 99, 13, 0
+	sq_beat
+	sq_note	2, 0, 38, 116, 11, 0
+	sq_note	22, 0, 38, 101, 13, 0
+	sq_note	52, 0, 38, 116, 9, 0
+	sq_note	76, 0, 38, 126, 13, 0
+	sq_press	82, 0, 4
+	sq_press	84, 0, 6
+	sq_press	88, 0, 0
+	sq_beat
+	sq_press	2, 0, 4
+	sq_press	3, 0, 1
+	sq_press	5, 0, 0
+	sq_press	7, 0, 0
+	sq_note	47, 0, 43, 70, 11, 0
+	sq_note	63, 0, 38, 70, 14, 0
+	sq_note	73, 0, 43, 70, 15, 0
+	sq_note	89, 0, 38, 83, 14, 0
+	sq_beat
+	sq_note	3, 0, 43, 95, 13, 0
+	sq_note	18, 0, 38, 96, 13, 0
+	sq_note	25, 0, 43, 98, 13, 0
+	sq_note	35, 0, 38, 96, 12, 0
+	sq_note	48, 0, 43, 110, 11, 0
+	sq_note	62, 0, 38, 110, 11, 0
+	sq_note	73, 0, 43, 126, 13, 0
+	sq_cell	0x80, 126, 65535	# cell 127: song 1 track 16, 7 of 7
+	sq_note	86, 0, 38, 127, 14, 0
+	sq_note	88, 0, 36, 127, 15, 0
+	sq_note	88, 0, 57, 127, 15, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.space	227, 0x00	# after the end of track
+	.endzlib
+zlib_4879BEA8:	# DemoSong02: its event memory, 21760 bytes, stored as a zlib stream of 12347 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
+
+# 85 cells of 256 bytes.  Tracks typed event by event: 12 of 12.
+# DemoSong02_Events
+	sq_cell	0x80, 0, 2	# cell 1: song 1 track 1, 1 of 15
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 79, 96, 55, 0
+	sq_note	0, 0, 55, 81, 69, 6
+	sq_cc	13, 0, 16, 64, 127
+	sq_note	48, 0, 69, 71, 51, 0
+	sq_note	48, 0, 62, 69, 31, 6
+	sq_beat
+	sq_note	0, 0, 67, 63, 72, 5
+	sq_note	0, 0, 71, 73, 27, 0
+	sq_note	48, 0, 78, 95, 19, 0
+	sq_beat
+	sq_note	48, 0, 69, 73, 26, 0
+	sq_beat
+	sq_note	0, 0, 71, 76, 20, 0
+	sq_note	48, 0, 76, 101, 18, 0
+	sq_beat
+	sq_note	48, 0, 69, 65, 22, 0
+	sq_beat
+	sq_note	0, 0, 71, 70, 19, 0
+	sq_note	48, 0, 74, 95, 15, 0
+	sq_beat
+	sq_note	48, 0, 69, 73, 16, 0
+	sq_beat
+	sq_note	0, 0, 74, 86, 16, 0
+	sq_note	48, 0, 76, 96, 19, 0
+	sq_cc	91, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 79, 100, 45, 0
+	sq_note	0, 0, 55, 79, 92, 5
+	sq_cc	45, 0, 16, 64, 127
+	sq_note	48, 0, 69, 76, 32, 0
+	sq_note	48, 0, 62, 71, 50, 5
+	sq_beat
+	sq_note	0, 0, 67, 63, 92, 4
+	sq_note	0, 0, 71, 81, 22, 0
+	sq_note	48, 0, 78, 92, 15, 0
+	sq_beat
+	sq_note	48, 0, 69, 72, 26, 0
+	sq_beat
+	sq_note	0, 0, 71, 63, 16, 0
+	sq_note	48, 0, 76, 104, 19, 0
+	sq_beat
+	sq_note	48, 0, 69, 70, 24, 0
+	sq_beat
+	sq_note	0, 0, 71, 69, 22, 0
+	sq_note	48, 0, 74, 96, 15, 0
+	sq_beat
+	sq_note	48, 0, 69, 71, 21, 0
+	sq_beat
+	sq_note	0, 0, 74, 95, 19, 0
+	sq_note	48, 0, 76, 93, 20, 0
+	sq_cc	91, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 77, 93, 84, 0
+	sq_note	0, 0, 51, 82, 43, 6
+	sq_note	48, 0, 67, 64, 44, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 58, 52, 92, 5` (the event spans two cells)
+	sq_cell	0x80, 1, 3	# cell 2: song 1 track 1, 2 of 15
+	.byte	0x90, 0x3a, 0x34, 0x5c, 0x05	# bytes 2..6 of `sq_note	48, 0, 58, 52, 92, 5` (the event spans two cells)
+	sq_cc	49, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 65, 58, 43, 5
+	sq_note	0, 0, 70, 67, 28, 0
+	sq_note	48, 0, 75, 96, 20, 0
+	sq_beat
+	sq_note	48, 0, 67, 80, 28, 0
+	sq_beat
+	sq_note	0, 0, 70, 37, 20, 0
+	sq_note	48, 0, 74, 101, 19, 0
+	sq_beat
+	sq_note	48, 0, 67, 73, 31, 0
+	sq_beat
+	sq_note	0, 0, 70, 62, 25, 0
+	sq_note	48, 0, 72, 96, 20, 0
+	sq_beat
+	sq_note	48, 0, 67, 70, 24, 0
+	sq_beat
+	sq_note	0, 0, 72, 85, 18, 0
+	sq_note	48, 0, 74, 90, 16, 0
+	sq_beat
+	sq_note	0, 0, 77, 100, 73, 0
+	sq_note	0, 0, 51, 77, 26, 7
+	sq_cc	4, 0, 16, 64, 0
+	sq_note	48, 0, 67, 61, 38, 0
+	sq_note	48, 0, 58, 52, 91, 6
+	sq_cc	54, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 65, 67, 50, 6
+	sq_note	0, 0, 70, 63, 24, 0
+	sq_note	48, 0, 75, 95, 15, 0
+	sq_beat
+	sq_note	48, 0, 67, 73, 25, 0
+	sq_beat
+	sq_note	0, 0, 70, 63, 21, 0
+	sq_note	48, 0, 74, 93, 19, 0
+	sq_beat
+	sq_note	48, 0, 67, 63, 27, 0
+	sq_beat
+	sq_note	0, 0, 70, 54, 22, 0
+	sq_note	48, 0, 72, 95, 19, 0
+	sq_beat
+	sq_note	48, 0, 67, 67, 16, 0
+	sq_beat
+	sq_note	48, 0, 72, 96, 24, 0
+	sq_cc	61, 0, 16, 64, 0
+	sq_note	72, 0, 74, 96, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 122, 48, 0
+	sq_note	0, 0, 48, 80, 54, 2
+	sq_note	48, 0, 60, 85, 80, 0
+	sq_note	48, 0, 56, 75, 76, 0
+	sq_cc	58, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 63, 81, 38, 0
+	sq_note	48, 0, 68, 106, 73, 0
+	sq_cell	0x80, 2, 4	# cell 3: song 1 track 1, 3 of 15
+	sq_note	48, 0, 60, 61, 76, 0
+	sq_beat
+	sq_note	0, 0, 56, 76, 43, 0
+	sq_note	48, 0, 60, 81, 25, 0
+	sq_note	48, 0, 63, 101, 26, 0
+	sq_beat
+	sq_cc	47, 0, 16, 64, 0
+	sq_note	48, 0, 62, 81, 63, 0
+	sq_note	48, 0, 65, 104, 94, 0
+	sq_note	48, 0, 58, 83, 19, 1
+	sq_note	48, 0, 50, 81, 15, 3
+	sq_beat
+	sq_cc	5, 0, 16, 64, 127
+	sq_note	48, 0, 62, 95, 13, 2
+	sq_beat
+	sq_note	48, 0, 58, 90, 48, 0
+	sq_note	48, 0, 65, 101, 42, 0
+	sq_beat
+	sq_note	0, 0, 70, 102, 38, 0
+	sq_note	48, 0, 58, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 65, 103, 25, 0
+	sq_cc	94, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 67, 91, 49, 0
+	sq_note	0, 0, 63, 94, 39, 0
+	sq_note	0, 0, 51, 96, 38, 1
+	sq_cc	35, 0, 16, 64, 127
+	sq_note	48, 0, 58, 84, 57, 0
+	sq_beat
+	sq_note	0, 0, 67, 81, 34, 0
+	sq_cc	43, 0, 16, 64, 0
+	sq_note	48, 0, 63, 85, 31, 0
+	sq_note	48, 0, 60, 86, 36, 0
+	sq_note	48, 0, 53, 85, 72, 0
+	sq_note	48, 0, 68, 82, 51, 0
+	sq_cc	70, 0, 16, 64, 127
+	sq_beat
+	sq_cc	40, 0, 16, 64, 0
+	sq_note	48, 0, 58, 82, 34, 0
+	sq_note	48, 0, 55, 96, 32, 0
+	sq_note	48, 0, 63, 91, 28, 0
+	sq_note	48, 0, 67, 88, 26, 0
+	sq_note	48, 0, 70, 85, 28, 0
+	sq_cc	62, 0, 16, 64, 127
+	sq_beat
+	sq_note	48, 0, 63, 93, 88, 1
+	sq_note	48, 0, 56, 82, 73, 0
+	sq_note	48, 0, 51, 92, 45, 1
+	sq_note	48, 0, 60, 96, 90, 1
+	sq_note	48, 0, 44, 76, 48, 2
+	.byte	0x30, 0x90, 0x3a	# bytes 1..3 of `sq_note	48, 0, 58, 82, 85, 1` (the event spans two cells)
+	sq_cell	0x80, 3, 5	# cell 4: song 1 track 1, 4 of 15
+	.byte	0x52, 0x55, 0x01	# bytes 4..6 of `sq_note	48, 0, 58, 82, 85, 1` (the event spans two cells)
+	sq_cc	52, 0, 16, 64, 0
+	sq_beat
+	sq_note	48, 0, 56, 49, 92, 0
+	sq_cc	49, 0, 16, 64, 127
+	sq_beat
+	sq_note	48, 0, 51, 92, 45, 0
+	sq_beat
+	sq_note	0, 0, 63, 93, 43, 0
+	sq_note	0, 0, 60, 101, 36, 0
+	sq_note	0, 0, 58, 87, 27, 0
+	sq_note	0, 0, 56, 96, 26, 0
+	sq_beat
+	sq_note	0, 0, 51, 81, 15, 0
+	sq_beat
+	sq_note	0, 0, 48, 83, 38, 2
+	sq_note	0, 0, 63, 109, 50, 0
+	sq_cc	1, 0, 16, 64, 0
+	sq_note	48, 0, 60, 83, 79, 0
+	sq_note	48, 0, 56, 71, 92, 0
+	sq_cc	59, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 63, 91, 31, 0
+	sq_note	48, 0, 68, 111, 73, 0
+	sq_note	48, 0, 63, 71, 15, 0
+	sq_note	48, 0, 60, 84, 82, 0
+	sq_beat
+	sq_note	0, 0, 56, 82, 43, 0
+	sq_note	48, 0, 60, 78, 22, 0
+	sq_note	48, 0, 63, 101, 30, 0
+	sq_beat
+	sq_cc	43, 0, 16, 64, 0
+	sq_note	48, 0, 58, 83, 32, 1
+	sq_note	48, 0, 65, 107, 40, 1
+	sq_note	48, 0, 62, 87, 70, 0
+	sq_note	48, 0, 50, 79, 7, 3
+	sq_beat
+	sq_cc	13, 0, 16, 64, 127
+	sq_note	48, 0, 62, 99, 38, 1
+	sq_beat
+	sq_note	48, 0, 58, 81, 27, 0
+	sq_note	72, 0, 65, 75, 19, 0
+	sq_beat
+	sq_note	0, 0, 58, 81, 36, 0
+	sq_note	0, 0, 70, 112, 57, 0
+	sq_note	0, 0, 62, 85, 64, 0
+	sq_beat
+	sq_note	0, 0, 65, 108, 74, 0
+	sq_note	0, 0, 62, 91, 69, 0
+	sq_cc	82, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 39, 107, 60, 0
+	sq_note	48, 0, 51, 96, 25, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 13, 0
+	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 58, 81, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 4, 6	# cell 5: song 1 track 1, 5 of 15
+	.byte	0x90, 0x3a, 0x51, 0x0d, 0x00	# bytes 2..6 of `sq_note	0, 0, 58, 81, 13, 0` (the event spans two cells)
+	sq_note	0, 0, 39, 99, 26, 0
+	sq_note	0, 0, 67, 91, 21, 0
+	sq_note	48, 0, 58, 91, 54, 0
+	sq_note	48, 0, 39, 44, 7, 0
+	sq_note	48, 0, 63, 104, 68, 0
+	sq_note	48, 0, 67, 103, 79, 0
+	sq_note	48, 0, 51, 92, 26, 0
+	sq_beat
+	sq_note	0, 0, 39, 91, 60, 0
+	sq_note	48, 0, 60, 95, 27, 0
+	sq_note	48, 0, 68, 99, 33, 0
+	sq_note	48, 0, 63, 91, 26, 0
+	sq_note	48, 0, 51, 95, 27, 0
+	sq_beat
+	sq_note	0, 0, 39, 91, 62, 0
+	sq_note	48, 0, 60, 92, 40, 0
+	sq_note	48, 0, 63, 107, 70, 0
+	sq_note	48, 0, 68, 104, 73, 0
+	sq_note	48, 0, 51, 90, 34, 0
+	sq_beat
+	sq_note	0, 0, 39, 96, 67, 0
+	sq_note	48, 0, 51, 99, 26, 0
+	sq_note	48, 0, 63, 87, 22, 0
+	sq_note	48, 0, 65, 99, 32, 0
+	sq_note	48, 0, 70, 91, 33, 0
+	sq_beat
+	sq_note	0, 0, 39, 86, 18, 0
+	sq_note	48, 0, 51, 97, 54, 1
+	sq_note	48, 0, 39, 101, 52, 1
+	sq_note	48, 0, 65, 85, 57, 1
+	sq_note	48, 0, 58, 96, 57, 1
+	sq_note	48, 0, 70, 76, 60, 1
+	sq_note	48, 0, 63, 93, 58, 1
+	sq_note	48, 0, 67, 92, 63, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 70, 119, 54, 0
+	sq_note	0, 0, 55, 88, 69, 2
+	sq_cc	32, 0, 16, 64, 127
+	sq_note	48, 0, 67, 79, 75, 0
+	sq_note	48, 0, 63, 82, 18, 2
+	sq_beat
+	sq_note	0, 0, 70, 74, 38, 0
+	sq_note	48, 0, 75, 111, 84, 0
+	sq_note	48, 0, 67, 73, 31, 1
+	sq_beat
+	sq_note	48, 0, 65, 78, 70, 0
+	.byte	0x30, 0x90, 0x46, 0x6a	# bytes 1..4 of `sq_note	48, 0, 70, 106, 27, 0` (the event spans two cells)
+	sq_cell	0x80, 5, 7	# cell 6: song 1 track 1, 6 of 15
+	.byte	0x1b, 0x00	# bytes 5..6 of `sq_note	48, 0, 70, 106, 27, 0` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 69, 89, 70, 0
+	sq_note	48, 0, 72, 105, 3, 1
+	sq_note	48, 0, 57, 86, 67, 3
+	sq_cc	60, 0, 16, 64, 0
+	sq_beat
+	sq_cc	21, 0, 16, 64, 127
+	sq_note	48, 0, 69, 98, 36, 2
+	sq_note	48, 0, 65, 76, 54, 1
+	sq_beat
+	sq_note	48, 0, 72, 108, 55, 0
+	sq_beat
+	sq_note	0, 0, 77, 113, 73, 0
+	sq_note	48, 0, 65, 76, 44, 0
+	sq_beat
+	sq_note	48, 0, 70, 96, 22, 0
+	sq_note	72, 0, 72, 93, 27, 0
+	sq_beat
+	sq_note	0, 0, 65, 70, 19, 0
+	sq_note	0, 0, 70, 97, 69, 0
+	sq_note	0, 0, 74, 106, 51, 0
+	sq_note	0, 0, 58, 99, 34, 1
+	sq_cc	4, 0, 16, 64, 0
+	sq_note	48, 0, 65, 75, 66, 0
+	sq_cc	49, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 74, 88, 25, 0
+	sq_note	48, 0, 67, 81, 48, 0
+	sq_note	48, 0, 70, 99, 45, 0
+	sq_note	48, 0, 75, 104, 51, 0
+	sq_note	48, 0, 60, 93, 86, 0
+	sq_cc	49, 0, 16, 64, 0
+	sq_cc	82, 0, 16, 64, 127
+	sq_beat
+	sq_note	48, 0, 62, 96, 31, 0
+	sq_note	48, 0, 77, 83, 32, 0
+	sq_note	48, 0, 65, 76, 39, 0
+	sq_note	48, 0, 74, 90, 28, 0
+	sq_note	48, 0, 70, 83, 31, 0
+	sq_cc	54, 0, 16, 64, 0
+	sq_cc	84, 0, 16, 64, 127
+	sq_beat
+	sq_note	48, 0, 70, 97, 92, 1
+	sq_note	48, 0, 67, 91, 90, 1
+	sq_note	48, 0, 65, 83, 81, 0
+	sq_note	48, 0, 63, 89, 56, 1
+	sq_note	48, 0, 58, 70, 66, 2
+	sq_note	48, 0, 51, 73, 63, 2
+	sq_cc	60, 0, 16, 64, 0
+	sq_beat
+	sq_cc	21, 0, 16, 64, 127
+	.byte	0x30, 0x90, 0x41	# bytes 1..3 of `sq_note	48, 0, 65, 56, 2, 1` (the event spans two cells)
+	sq_cell	0x80, 6, 8	# cell 7: song 1 track 1, 7 of 15
+	.byte	0x38, 0x02, 0x01	# bytes 4..6 of `sq_note	48, 0, 65, 56, 2, 1` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 63, 91, 74, 0
+	sq_beat
+	sq_note	0, 0, 65, 85, 39, 0
+	sq_note	0, 0, 70, 87, 3, 1
+	sq_note	0, 0, 67, 90, 63, 0
+	sq_beat
+	sq_cc	94, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 70, 117, 43, 0
+	sq_note	0, 0, 55, 89, 50, 2
+	sq_note	48, 0, 67, 72, 82, 0
+	sq_note	48, 0, 63, 79, 3, 1
+	sq_cc	50, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 70, 82, 33, 0
+	sq_note	48, 0, 70, 47, 6, 0
+	sq_note	48, 0, 75, 107, 73, 0
+	sq_note	48, 0, 67, 52, 76, 0
+	sq_beat
+	sq_note	0, 0, 63, 89, 48, 0
+	sq_note	48, 0, 67, 61, 19, 0
+	sq_note	48, 0, 70, 91, 26, 0
+	sq_beat
+	sq_note	48, 0, 65, 80, 72, 0
+	sq_note	48, 0, 57, 74, 56, 2
+	sq_note	48, 0, 72, 100, 70, 1
+	sq_note	48, 0, 69, 103, 0, 1
+	sq_cc	54, 0, 16, 64, 0
+	sq_beat
+	sq_cc	10, 0, 16, 64, 127
+	sq_note	48, 0, 60, 75, 32, 1
+	sq_note	48, 0, 65, 89, 22, 1
+	sq_beat
+	sq_note	48, 0, 69, 86, 24, 0
+	sq_beat
+	sq_note	0, 0, 65, 85, 73, 0
+	sq_note	0, 0, 69, 97, 75, 0
+	sq_note	0, 0, 72, 95, 80, 0
+	sq_note	0, 0, 77, 91, 70, 0
+	sq_beat
+	sq_note	0, 0, 65, 89, 72, 0
+	sq_note	0, 0, 72, 93, 75, 0
+	sq_note	0, 0, 69, 101, 75, 0
+	sq_cc	87, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 46, 107, 66, 0
+	sq_note	48, 0, 58, 95, 31, 0
+	sq_beat
+	sq_note	0, 0, 65, 80, 16, 0
+	sq_note	0, 0, 74, 98, 18, 0
+	sq_note	0, 0, 70, 93, 16, 0
+	sq_note	0, 0, 46, 97, 66, 0
+	sq_cell	0x80, 7, 9	# cell 8: song 1 track 1, 8 of 15
+	sq_note	48, 0, 65, 96, 66, 0
+	sq_note	48, 0, 74, 109, 80, 0
+	sq_note	48, 0, 70, 105, 78, 0
+	sq_note	48, 0, 58, 101, 34, 0
+	sq_beat
+	sq_note	0, 0, 46, 92, 63, 0
+	sq_note	48, 0, 75, 105, 22, 0
+	sq_note	48, 0, 58, 102, 27, 0
+	sq_note	48, 0, 70, 80, 20, 0
+	sq_note	48, 0, 67, 93, 25, 0
+	sq_beat
+	sq_note	0, 0, 46, 94, 63, 0
+	sq_note	48, 0, 67, 86, 69, 0
+	sq_note	48, 0, 70, 104, 78, 0
+	sq_note	48, 0, 58, 90, 38, 0
+	sq_note	48, 0, 75, 105, 76, 0
+	sq_beat
+	sq_note	0, 0, 46, 91, 64, 0
+	sq_note	48, 0, 65, 90, 27, 0
+	sq_note	48, 0, 58, 95, 33, 0
+	sq_note	48, 0, 77, 91, 31, 0
+	sq_note	48, 0, 70, 94, 28, 0
+	sq_beat
+	sq_note	0, 0, 46, 93, 64, 0
+	sq_note	48, 0, 58, 102, 31, 0
+	sq_note	48, 0, 77, 95, 4, 2
+	sq_note	48, 0, 65, 87, 2, 2
+	sq_note	48, 0, 72, 101, 3, 2
+	sq_note	48, 0, 70, 97, 3, 2
+	sq_beat
+	sq_note	0, 0, 46, 94, 62, 0
+	sq_note	48, 0, 58, 95, 44, 0
+	sq_beat
+	sq_note	0, 0, 46, 112, 49, 0
+	sq_note	48, 0, 58, 112, 30, 0
+	sq_beat
+	sq_note	0, 0, 39, 109, 57, 0
+	sq_note	48, 0, 51, 101, 37, 0
+	sq_beat
+	sq_note	0, 0, 67, 84, 14, 0
+	sq_note	0, 0, 63, 91, 15, 0
+	sq_note	0, 0, 58, 79, 15, 0
+	sq_note	0, 0, 39, 97, 60, 0
+	sq_note	48, 0, 58, 91, 62, 0
+	sq_note	48, 0, 63, 104, 67, 0
+	sq_note	48, 0, 67, 103, 74, 0
+	sq_note	48, 0, 51, 101, 34, 0
+	sq_beat
+	sq_note	0, 0, 39, 99, 63, 0
+	.byte	0x30, 0x90	# bytes 1..2 of `sq_note	48, 0, 65, 88, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 8, 10	# cell 9: song 1 track 1, 9 of 15
+	.byte	0x41, 0x58, 0x10, 0x00	# bytes 3..6 of `sq_note	48, 0, 65, 88, 16, 0` (the event spans two cells)
+	sq_note	48, 0, 69, 88, 22, 0
+	sq_note	48, 0, 51, 96, 34, 0
+	sq_note	48, 0, 60, 78, 26, 0
+	sq_beat
+	sq_note	0, 0, 39, 93, 60, 0
+	sq_note	48, 0, 51, 101, 30, 0
+	sq_note	48, 0, 69, 101, 75, 1
+	sq_note	48, 0, 65, 103, 38, 1
+	sq_note	48, 0, 60, 96, 63, 1
+	sq_beat
+	sq_note	0, 0, 39, 89, 64, 0
+	sq_note	48, 0, 51, 93, 22, 0
+	sq_beat
+	sq_note	0, 0, 39, 90, 42, 0
+	sq_note	48, 0, 67, 100, 32, 2
+	sq_note	48, 0, 62, 94, 39, 2
+	sq_note	48, 0, 70, 87, 30, 2
+	sq_note	48, 0, 51, 99, 34, 0
+	sq_beat
+	sq_note	0, 0, 39, 84, 61, 0
+	sq_note	48, 0, 51, 81, 32, 0
+	sq_beat
+	sq_note	0, 0, 39, 99, 57, 0
+	sq_note	48, 0, 51, 95, 32, 0
+	sq_beat
+	sq_note	0, 0, 39, 99, 61, 0
+	sq_note	48, 0, 51, 89, 31, 0
+	sq_beat
+	sq_note	0, 0, 39, 90, 57, 0
+	sq_note	0, 0, 58, 78, 14, 0
+	sq_note	0, 0, 67, 91, 22, 0
+	sq_note	0, 0, 63, 91, 19, 0
+	sq_note	48, 0, 58, 87, 57, 0
+	sq_note	48, 0, 67, 98, 70, 0
+	sq_note	48, 0, 63, 102, 58, 0
+	sq_note	48, 0, 51, 92, 36, 0
+	sq_beat
+	sq_note	0, 0, 39, 92, 58, 0
+	sq_note	48, 0, 65, 91, 22, 0
+	sq_note	48, 0, 60, 89, 20, 0
+	sq_note	48, 0, 69, 86, 30, 0
+	sq_note	48, 0, 51, 96, 32, 0
+	sq_beat
+	sq_note	0, 0, 39, 90, 62, 0
+	sq_note	48, 0, 63, 92, 51, 0
+	sq_note	48, 0, 72, 97, 57, 0
+	sq_note	48, 0, 69, 105, 49, 0
+	sq_note	48, 0, 51, 97, 37, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x27	# bytes 1..3 of `sq_note	0, 0, 39, 94, 68, 0` (the event spans two cells)
+	sq_cell	0x80, 9, 11	# cell 10: song 1 track 1, 10 of 15
+	.byte	0x5e, 0x44, 0x00	# bytes 4..6 of `sq_note	0, 0, 39, 94, 68, 0` (the event spans two cells)
+	sq_note	48, 0, 62, 93, 31, 0
+	sq_note	48, 0, 67, 105, 32, 0
+	sq_note	48, 0, 70, 102, 36, 0
+	sq_note	48, 0, 51, 102, 42, 0
+	sq_beat
+	sq_note	0, 0, 65, 68, 16, 0
+	sq_note	0, 0, 69, 65, 27, 0
+	sq_note	0, 0, 60, 75, 21, 0
+	sq_note	0, 0, 39, 90, 58, 0
+	sq_note	48, 0, 51, 99, 40, 0
+	sq_note	48, 0, 70, 96, 7, 2
+	sq_note	48, 0, 67, 95, 3, 2
+	sq_note	48, 0, 62, 91, 12, 2
+	sq_beat
+	sq_note	0, 0, 39, 92, 58, 0
+	sq_note	48, 0, 51, 86, 42, 0
+	sq_beat
+	sq_note	0, 0, 39, 107, 63, 0
+	sq_note	48, 0, 51, 106, 31, 0
+	sq_beat
+	sq_note	0, 0, 38, 99, 60, 0
+	sq_note	48, 0, 50, 96, 32, 0
+	sq_beat
+	sq_note	0, 0, 55, 77, 12, 0
+	sq_note	0, 0, 38, 91, 63, 0
+	sq_note	0, 0, 64, 90, 14, 0
+	sq_note	0, 0, 60, 95, 16, 0
+	sq_note	48, 0, 55, 93, 64, 0
+	sq_note	48, 0, 64, 103, 74, 0
+	sq_note	48, 0, 60, 105, 74, 0
+	sq_note	48, 0, 50, 100, 40, 0
+	sq_beat
+	sq_note	0, 0, 38, 93, 61, 0
+	sq_note	48, 0, 67, 90, 28, 0
+	sq_note	48, 0, 57, 87, 22, 0
+	sq_note	48, 0, 64, 100, 32, 0
+	sq_note	48, 0, 50, 105, 42, 0
+	sq_note	48, 0, 60, 103, 28, 0
+	sq_beat
+	sq_note	0, 0, 38, 90, 57, 0
+	sq_note	48, 0, 67, 95, 12, 1
+	sq_note	48, 0, 64, 106, 70, 1
+	sq_note	48, 0, 60, 105, 42, 1
+	sq_note	48, 0, 57, 88, 57, 1
+	sq_note	48, 0, 50, 101, 39, 0
+	sq_beat
+	sq_note	0, 0, 38, 93, 63, 0
+	sq_note	48, 0, 50, 105, 42, 0
+	sq_cell	0x80, 10, 12	# cell 11: song 1 track 1, 11 of 15
+	sq_beat
+	sq_note	0, 0, 38, 96, 63, 0
+	sq_note	48, 0, 62, 107, 74, 1
+	sq_note	48, 0, 50, 108, 43, 0
+	sq_note	48, 0, 57, 91, 84, 1
+	sq_note	48, 0, 66, 101, 74, 1
+	sq_beat
+	sq_note	0, 0, 38, 93, 48, 0
+	sq_note	48, 0, 50, 110, 44, 0
+	sq_beat
+	sq_note	0, 0, 38, 92, 70, 0
+	sq_note	48, 0, 50, 100, 22, 0
+	sq_beat
+	sq_note	0, 0, 48, 97, 30, 1
+	sq_note	0, 0, 36, 98, 24, 1
+	sq_note	0, 0, 65, 113, 48, 0
+	sq_note	0, 0, 60, 118, 68, 0
+	sq_note	0, 0, 57, 91, 26, 0
+	sq_note	48, 0, 57, 78, 42, 0
+	sq_beat
+	sq_note	0, 0, 60, 63, 15, 0
+	sq_note	0, 0, 65, 73, 25, 0
+	sq_note	48, 0, 50, 104, 79, 0
+	sq_note	48, 0, 38, 96, 78, 0
+	sq_note	48, 0, 55, 96, 72, 0
+	sq_note	48, 0, 64, 109, 66, 0
+	sq_note	48, 0, 60, 108, 70, 0
+	sq_note	48, 0, 67, 99, 75, 0
+	sq_beat
+	sq_cc	47, 0, 16, 64, 127
+	sq_note	48, 0, 50, 87, 74, 0
+	sq_note	48, 0, 38, 92, 63, 0
+	sq_note	48, 0, 67, 90, 63, 0
+	sq_note	48, 0, 55, 93, 51, 0
+	sq_note	48, 0, 64, 103, 57, 0
+	sq_note	48, 0, 60, 105, 61, 0
+	sq_beat
+	sq_cc	94, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 55, 94, 27, 0
+	sq_note	0, 0, 40, 95, 75, 0
+	sq_note	0, 0, 52, 104, 85, 0
+	sq_note	0, 0, 64, 116, 52, 0
+	sq_note	0, 0, 67, 100, 70, 0
+	sq_note	0, 0, 60, 116, 49, 0
+	sq_cc	43, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 55, 74, 39, 0
+	sq_note	0, 0, 60, 90, 22, 0
+	sq_cc	47, 0, 16, 64, 0
+	sq_cell	0x80, 11, 13	# cell 12: song 1 track 1, 12 of 15
+	sq_note	48, 0, 54, 97, 51, 0
+	sq_note	48, 0, 42, 104, 52, 0
+	sq_note	48, 0, 69, 98, 49, 0
+	sq_note	48, 0, 66, 109, 46, 0
+	sq_note	48, 0, 57, 94, 45, 0
+	sq_note	48, 0, 62, 111, 50, 0
+	sq_beat
+	sq_cc	1, 0, 16, 64, 127
+	sq_cc	31, 0, 16, 64, 0
+	sq_note	48, 0, 54, 105, 88, 0
+	sq_note	48, 0, 42, 105, 84, 0
+	sq_note	48, 0, 69, 101, 0, 1
+	sq_note	48, 0, 66, 107, 0, 1
+	sq_note	48, 0, 62, 119, 0, 1
+	sq_note	48, 0, 57, 103, 92, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 67, 94, 60, 0
+	sq_note	0, 0, 43, 81, 42, 6
+	sq_cc	29, 0, 16, 64, 127
+	sq_note	48, 0, 50, 63, 88, 5
+	sq_note	48, 0, 57, 76, 69, 0
+	sq_beat
+	sq_note	0, 0, 55, 64, 39, 5
+	sq_note	0, 0, 59, 77, 31, 0
+	sq_note	48, 0, 66, 95, 25, 0
+	sq_beat
+	sq_note	48, 0, 57, 81, 31, 0
+	sq_beat
+	sq_note	0, 0, 59, 71, 22, 0
+	sq_note	48, 0, 64, 103, 22, 0
+	sq_beat
+	sq_note	48, 0, 57, 72, 34, 0
+	sq_beat
+	sq_note	0, 0, 59, 69, 22, 0
+	sq_note	48, 0, 62, 103, 22, 0
+	sq_beat
+	sq_note	48, 0, 59, 69, 22, 0
+	sq_beat
+	sq_note	0, 0, 62, 100, 19, 0
+	sq_note	48, 0, 64, 103, 30, 0
+	sq_cc	90, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 67, 97, 80, 0
+	sq_note	0, 0, 43, 84, 43, 5
+	sq_note	48, 0, 57, 73, 52, 0
+	sq_note	48, 0, 50, 66, 94, 4
+	sq_cc	64, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 59, 46, 28, 0
+	sq_note	0, 0, 55, 55, 44, 4
+	sq_note	48, 0, 66, 91, 19, 0
+	sq_beat
+	.byte	0x30, 0x90, 0x39	# bytes 1..3 of `sq_note	48, 0, 57, 70, 40, 0` (the event spans two cells)
+	sq_cell	0x80, 12, 14	# cell 13: song 1 track 1, 13 of 15
+	.byte	0x46, 0x28, 0x00	# bytes 4..6 of `sq_note	48, 0, 57, 70, 40, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 59, 63, 28, 0
+	sq_note	48, 0, 64, 96, 22, 0
+	sq_beat
+	sq_note	48, 0, 57, 56, 44, 0
+	sq_beat
+	sq_note	0, 0, 59, 76, 34, 0
+	sq_note	48, 0, 62, 101, 26, 0
+	sq_beat
+	sq_note	48, 0, 57, 69, 41, 0
+	sq_beat
+	sq_note	0, 0, 62, 80, 36, 0
+	sq_note	48, 0, 64, 80, 44, 0
+	sq_beat
+	sq_note	0, 0, 65, 76, 1, 2
+	sq_note	0, 0, 39, 84, 87, 5
+	sq_cc	6, 0, 16, 64, 0
+	sq_note	48, 0, 55, 67, 18, 1
+	sq_note	48, 0, 46, 59, 61, 5
+	sq_cc	60, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 53, 59, 12, 5
+	sq_note	0, 0, 58, 65, 38, 0
+	sq_note	48, 0, 63, 96, 40, 0
+	sq_beat
+	sq_note	48, 0, 55, 69, 92, 0
+	sq_beat
+	sq_note	0, 0, 58, 51, 38, 0
+	sq_note	48, 0, 62, 93, 39, 0
+	sq_beat
+	sq_note	48, 0, 55, 68, 57, 0
+	sq_beat
+	sq_note	0, 0, 58, 59, 34, 0
+	sq_note	48, 0, 60, 96, 34, 0
+	sq_beat
+	sq_note	48, 0, 55, 61, 34, 0
+	sq_beat
+	sq_note	0, 0, 60, 75, 32, 0
+	sq_note	48, 0, 62, 81, 39, 0
+	sq_cc	91, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 65, 85, 68, 1
+	sq_note	0, 0, 39, 75, 63, 6
+	sq_note	48, 0, 55, 60, 82, 0
+	sq_note	48, 0, 46, 66, 22, 6
+	sq_cc	72, 0, 16, 64, 127
+	sq_beat
+	sq_note	0, 0, 53, 56, 73, 5
+	sq_note	0, 0, 58, 56, 38, 0
+	sq_note	48, 0, 63, 85, 22, 0
+	sq_beat
+	sq_note	48, 0, 55, 70, 48, 0
+	sq_beat
+	sq_note	0, 0, 58, 60, 33, 0
+	sq_note	48, 0, 62, 98, 28, 0
+	sq_beat
+	sq_note	48, 0, 55, 63, 36, 0
+	sq_cell	0x80, 13, 15	# cell 14: song 1 track 1, 14 of 15
+	sq_beat
+	sq_note	0, 0, 58, 52, 28, 0
+	sq_note	48, 0, 60, 85, 22, 0
+	sq_beat
+	sq_note	48, 0, 55, 64, 33, 0
+	sq_beat
+	sq_note	0, 0, 60, 76, 37, 0
+	sq_note	48, 0, 62, 91, 19, 0
+	sq_cc	54, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 63, 117, 46, 0
+	sq_note	0, 0, 48, 80, 72, 2
+	sq_cc	0, 0, 16, 64, 127
+	sq_note	48, 0, 60, 83, 66, 0
+	sq_note	48, 0, 56, 70, 37, 1
+	sq_beat
+	sq_note	0, 0, 63, 91, 31, 0
+	sq_note	48, 0, 68, 105, 49, 0
+	sq_note	48, 0, 60, 76, 73, 0
+	sq_beat
+	sq_note	48, 0, 60, 75, 22, 0
+	sq_note	48, 0, 63, 99, 26, 0
+	sq_note	48, 0, 56, 69, 31, 0
+	sq_beat
+	sq_cc	45, 0, 16, 64, 0
+	sq_note	48, 0, 65, 101, 90, 0
+	sq_note	48, 0, 62, 79, 74, 0
+	sq_note	48, 0, 50, 83, 69, 2
+	sq_beat
+	sq_cc	3, 0, 16, 64, 127
+	sq_note	48, 0, 62, 96, 89, 0
+	sq_note	48, 0, 58, 82, 56, 0
+	sq_beat
+	sq_note	48, 0, 65, 93, 37, 0
+	sq_note	48, 0, 58, 72, 26, 0
+	sq_beat
+	sq_note	3, 0, 58, 69, 16, 0
+	sq_note	7, 0, 70, 106, 15, 0
+	sq_beat
+	sq_note	0, 0, 75, 104, 20, 0
+	sq_note	42, 0, 77, 93, 32, 0
+	sq_cc	92, 0, 16, 64, 0
+	sq_beat
+	sq_note	0, 0, 63, 99, 73, 0
+	sq_note	1, 0, 79, 80, 57, 0
+	sq_note	3, 0, 70, 83, 45, 0
+	sq_cc	23, 0, 16, 64, 127
+	sq_beat
+	sq_cc	15, 0, 16, 64, 0
+	sq_note	20, 0, 65, 75, 75, 0
+	sq_note	21, 0, 72, 84, 55, 0
+	sq_note	21, 0, 80, 101, 66, 0
+	sq_cc	42, 0, 16, 64, 127
+	sq_beat
+	sq_cc	66, 0, 16, 64, 0
+	sq_cell	0x80, 14, 65535	# cell 15: song 1 track 1, 15 of 15
+	sq_note	68, 0, 67, 80, 58, 0
+	sq_note	74, 0, 74, 78, 56, 0
+	sq_note	75, 0, 82, 97, 51, 0
+	sq_beat
+	sq_cc	0, 0, 16, 64, 127
+	sq_beat
+	sq_note	50, 0, 48, 73, 38, 2
+	sq_note	69, 0, 56, 70, 19, 2
+	sq_note	78, 0, 60, 59, 30, 2
+	sq_note	84, 0, 63, 66, 12, 2
+	sq_beat
+	sq_note	0, 0, 68, 59, 9, 2
+	sq_note	1, 0, 72, 77, 11, 2
+	sq_cc	3, 0, 16, 64, 0
+	sq_note	17, 0, 75, 77, 94, 1
+	sq_cc	50, 0, 16, 64, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	80, 0, 50, 65, 68, 2
+	sq_beat
+	sq_note	3, 0, 58, 61, 60, 2
+	sq_note	12, 0, 62, 68, 61, 2
+	sq_note	19, 0, 65, 74, 39, 2
+	sq_note	31, 0, 70, 52, 32, 2
+	sq_cc	35, 0, 16, 64, 0
+	sq_note	47, 0, 74, 78, 6, 2
+	sq_note	55, 0, 77, 73, 3, 2
+	sq_cc	85, 0, 16, 64, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	8, 0, 75, 73, 82, 9
+	sq_note	19, 0, 70, 69, 74, 9
+	sq_note	37, 0, 67, 74, 57, 9
+	sq_note	50, 0, 51, 69, 42, 9
+	sq_note	66, 0, 65, 67, 27, 9
+	sq_note	73, 0, 58, 71, 20, 9
+	sq_cc	78, 0, 16, 64, 0
+	sq_note	85, 0, 63, 87, 6, 9
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	14, 0, 95, 144, 42, 85, 13, 0, 129, 1, 144, 36, 113, 5, 0, 1
+	.byte	144, 56, 122, 15, 0, 47, 144, 54, 99, 6, 0, 70, 144, 42, 59, 9
+	.byte	0, 72, 144, 36, 121, 16, 0, 95, 144, 42, 106, 19, 0, 129, 2, 144
+	.byte	56
+	sq_cell	0x80, 0, 17	# cell 16: song 1 track 2, 1 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	0, 0, 0
+	sq_pc	0, 0, 65, 52, 32
+	sq_cc	0, 0, 17, 7, 98
+	sq_cc	1, 0, 17, 10, 121
+	sq_a	37, 1, 17, 0, 32, 0, 95, 1
+	sq_cc	37, 0, 17, 95, 90
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 104, 20, 0
+	sq_note	72, 0, 64, 113, 32, 0
+	sq_beat
+	sq_note	0, 0, 65, 116, 49, 0
+	sq_press	14, 0, 3
+	sq_press	18, 0, 4
+	sq_press	21, 0, 5
+	sq_press	25, 0, 2
+	sq_press	30, 0, 0
+	sq_note	48, 0, 60, 101, 42, 0
+	sq_beat
+	sq_note	0, 0, 57, 89, 36, 0
+	sq_note	48, 0, 67, 127, 48, 0
+	sq_bend	55, 0, 0, 56
+	sq_bend	57, 0, 0, 50
+	sq_bend	61, 0, 0, 39
+	sq_bend	62, 0, 64, 26
+	sq_bend	66, 0, 0, 15
+	sq_bend	69, 0, 0, 4
+	sq_press	69, 0, 2
+	sq_bend	69, 0, 0, 2
+	sq_bend	73, 0, 0, 19
+	sq_press	76, 0, 0
+	sq_bend	76, 0, 0, 36
+	.byte	0x51, 0xe0	# bytes 1..2 of `sq_bend	81, 0, 0, 58` (the event spans two cells)
+	sq_cell	0x80, 16, 18	# cell 17: song 1 track 2, 2 of 5
+	.byte	0x00, 0x3a	# bytes 3..4 of `sq_bend	81, 0, 0, 58` (the event spans two cells)
+	sq_bend	85, 0, 64, 63
+	sq_bend	89, 0, 0, 64
+	sq_beat
+	sq_bend	47, 0, 0, 56
+	sq_note	48, 0, 67, 127, 94, 0
+	sq_bend	53, 0, 64, 47
+	sq_bend	54, 0, 0, 36
+	sq_bend	55, 0, 0, 23
+	sq_bend	58, 0, 0, 10
+	sq_bend	59, 0, 0, 1
+	sq_bend	61, 0, 0, 0
+	sq_bend	66, 0, 0, 18
+	sq_bend	70, 0, 64, 42
+	sq_bend	73, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 67, 127, 44, 0
+	sq_press	13, 0, 7
+	sq_press	20, 0, 2
+	sq_press	24, 0, 0
+	sq_note	48, 0, 64, 98, 38, 0
+	sq_beat
+	sq_note	0, 0, 60, 90, 33, 0
+	sq_bend	42, 0, 0, 56
+	sq_bend	45, 0, 0, 16
+	sq_note	48, 0, 69, 127, 54, 0
+	sq_bend	49, 0, 0, 0
+	sq_press	60, 0, 10
+	sq_press	61, 0, 13
+	sq_press	65, 0, 12
+	sq_bend	68, 0, 64, 44
+	sq_press	72, 0, 7
+	sq_bend	73, 0, 0, 59
+	sq_press	73, 0, 4
+	sq_bend	73, 0, 0, 64
+	sq_press	75, 0, 0
+	sq_beat
+	sq_bend	46, 0, 0, 45
+	sq_note	48, 0, 69, 127, 68, 0
+	sq_bend	49, 0, 0, 27
+	sq_bend	54, 0, 0, 0
+	sq_bend	60, 0, 0, 47
+	sq_bend	65, 0, 0, 64
+	sq_press	65, 0, 24
+	sq_bend	69, 0, 64, 65
+	sq_press	74, 0, 18
+	sq_bend	74, 0, 0, 64
+	sq_press	74, 0, 16
+	sq_press	76, 0, 6
+	sq_press	81, 0, 0
+	sq_beat
+	sq_note	48, 0, 67, 120, 19, 0
+	sq_note	72, 0, 69, 127, 16, 0
+	sq_press	77, 0, 23
+	sq_beat
+	sq_cc	0, 0, 17, 7, 103
+	sq_note	0, 0, 71, 120, 85, 0
+	sq_beat
+	sq_note	0, 0, 74, 100, 30, 0
+	sq_note	48, 0, 74, 110, 51, 0
+	sq_beat
+	sq_bend	46, 0, 64, 60
+	sq_note	48, 0, 76, 126, 44, 1
+	sq_bend	51, 0, 64, 54
+	sq_bend	53, 0, 0, 42
+	sq_bend	58, 0, 0, 34
+	.byte	0x3e, 0xe0	# bytes 1..2 of `sq_bend	62, 0, 0, 12` (the event spans two cells)
+	sq_cell	0x80, 17, 19	# cell 18: song 1 track 2, 3 of 5
+	.byte	0x00, 0x0c	# bytes 3..4 of `sq_bend	62, 0, 0, 12` (the event spans two cells)
+	sq_bend	66, 0, 0, 3
+	sq_press	66, 0, 2
+	sq_bend	69, 0, 0, 0
+	sq_press	73, 0, 26
+	sq_bend	82, 0, 0, 24
+	sq_bend	85, 0, 64, 34
+	sq_bend	89, 0, 0, 54
+	sq_bend	93, 0, 0, 64
+	sq_beat
+	sq_bend	56, 0, 64, 67
+	sq_bend	61, 0, 64, 71
+	sq_bend	64, 0, 64, 85
+	sq_bend	68, 0, 0, 95
+	sq_bend	72, 0, 64, 97
+	sq_bend	76, 0, 0, 98
+	sq_bend	84, 0, 0, 89
+	sq_bend	88, 0, 0, 78
+	sq_bend	92, 0, 0, 73
+	sq_bend	95, 0, 0, 64
+	sq_beat
+	sq_note	0, 0, 74, 115, 18, 3
+	sq_press	24, 0, 90
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	0, 0, 0
+	sq_note	48, 0, 76, 100, 27, 0
+	sq_note	72, 0, 74, 90, 13, 0
+	sq_bend	87, 0, 0, 59
+	sq_bend	91, 0, 64, 45
+	sq_bend	94, 0, 64, 34
+	sq_beat
+	sq_note	0, 0, 79, 127, 6, 1
+	sq_bend	3, 0, 0, 22
+	sq_bend	5, 0, 0, 9
+	sq_bend	6, 0, 0, 0
+	sq_press	18, 0, 4
+	sq_bend	18, 0, 0, 50
+	sq_bend	22, 0, 0, 64
+	sq_press	25, 0, 0
+	sq_beat
+	sq_note	48, 0, 79, 121, 48, 0
+	sq_beat
+	sq_bend	36, 0, 0, 58
+	sq_bend	39, 0, 0, 54
+	sq_bend	43, 0, 64, 42
+	sq_bend	47, 0, 0, 36
+	sq_note	48, 0, 81, 127, 53, 0
+	sq_bend	52, 0, 0, 21
+	sq_bend	55, 0, 0, 19
+	sq_bend	63, 0, 64, 47
+	sq_bend	66, 0, 64, 54
+	sq_bend	70, 0, 0, 64
+	sq_beat
+	sq_note	48, 0, 79, 127, 46, 0
+	sq_beat
+	sq_bend	41, 0, 0, 55
+	sq_bend	44, 0, 64, 50
+	sq_note	48, 0, 76, 120, 45, 0
+	sq_bend	48, 0, 0, 37
+	sq_bend	53, 0, 0, 26
+	sq_bend	55, 0, 64, 26
+	sq_bend	60, 0, 0, 39
+	sq_bend	64, 0, 0, 49
+	sq_bend	68, 0, 0, 61
+	sq_bend	71, 0, 0, 64
+	sq_beat
+	.byte	0x30, 0x90, 0x4a, 0x77	# bytes 1..4 of `sq_note	48, 0, 74, 119, 39, 0` (the event spans two cells)
+	sq_cell	0x80, 18, 20	# cell 19: song 1 track 2, 4 of 5
+	.byte	0x27, 0x00	# bytes 5..6 of `sq_note	48, 0, 74, 119, 39, 0` (the event spans two cells)
+	sq_beat
+	sq_bend	37, 0, 64, 58
+	sq_bend	41, 0, 64, 55
+	sq_bend	46, 0, 0, 48
+	sq_note	48, 0, 71, 121, 45, 0
+	sq_bend	51, 0, 0, 41
+	sq_bend	54, 0, 0, 40
+	sq_bend	62, 0, 0, 48
+	sq_bend	65, 0, 0, 57
+	sq_bend	69, 0, 64, 60
+	sq_bend	73, 0, 0, 64
+	sq_beat
+	sq_note	0, 0, 69, 78, 39, 0
+	sq_note	48, 0, 67, 74, 38, 0
+	sq_bend	88, 0, 0, 62
+	sq_bend	91, 0, 0, 55
+	sq_bend	95, 0, 64, 51
+	sq_beat
+	sq_note	0, 0, 70, 114, 88, 0
+	sq_bend	5, 0, 64, 45
+	sq_bend	7, 0, 64, 40
+	sq_bend	8, 0, 0, 32
+	sq_bend	11, 0, 0, 31
+	sq_bend	15, 0, 64, 31
+	sq_bend	19, 0, 64, 42
+	sq_bend	24, 0, 0, 55
+	sq_bend	27, 0, 0, 62
+	sq_bend	31, 0, 0, 64
+	sq_beat
+	sq_note	0, 0, 74, 103, 45, 0
+	sq_note	48, 0, 69, 98, 51, 0
+	sq_beat
+	sq_note	48, 0, 70, 105, 76, 0
+	sq_bend	95, 0, 0, 63
+	sq_beat
+	sq_bend	6, 0, 0, 62
+	sq_bend	7, 0, 64, 58
+	sq_bend	11, 0, 64, 56
+	sq_bend	15, 0, 64, 53
+	sq_bend	19, 0, 64, 51
+	sq_bend	23, 0, 64, 50
+	sq_bend	35, 0, 64, 54
+	sq_bend	39, 0, 64, 59
+	sq_bend	43, 0, 64, 62
+	sq_bend	46, 0, 0, 64
+	sq_note	48, 0, 67, 91, 78, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 67, 119, 36, 0
+	sq_note	48, 0, 69, 83, 27, 0
+	sq_bend	85, 0, 64, 60
+	sq_bend	89, 0, 64, 56
+	sq_bend	93, 0, 0, 43
+	sq_beat
+	sq_note	0, 0, 70, 119, 86, 0
+	sq_bend	0, 0, 64, 31
+	sq_bend	7, 0, 0, 10
+	sq_bend	9, 0, 0, 3
+	sq_bend	16, 0, 64, 25
+	sq_bend	21, 0, 64, 38
+	sq_bend	25, 0, 64, 56
+	sq_bend	28, 0, 0, 64
+	sq_beat
+	.byte	0x00, 0x90, 0x4a	# bytes 1..3 of `sq_note	0, 0, 74, 108, 35, 0` (the event spans two cells)
+	sq_cell	0x80, 19, 65535	# cell 20: song 1 track 2, 5 of 5
+	.byte	0x6c, 0x23, 0x00	# bytes 4..6 of `sq_note	0, 0, 74, 108, 35, 0` (the event spans two cells)
+	sq_note	48, 0, 69, 96, 43, 0
+	sq_beat
+	sq_note	48, 0, 70, 114, 48, 0
+	sq_bend	49, 0, 0, 62
+	sq_bend	53, 0, 64, 59
+	sq_bend	54, 0, 64, 56
+	sq_bend	58, 0, 64, 49
+	sq_bend	62, 0, 0, 45
+	sq_bend	65, 0, 64, 40
+	sq_bend	69, 0, 0, 41
+	sq_bend	73, 0, 0, 51
+	sq_bend	76, 0, 0, 61
+	sq_bend	80, 0, 0, 64
+	sq_beat
+	sq_note	0, 0, 69, 68, 22, 0
+	sq_note	48, 0, 67, 93, 1, 3
+	sq_beat
+	sq_beat
+	sq_press	41, 0, 1
+	sq_press	45, 0, 3
+	sq_press	46, 0, 6
+	sq_press	50, 0, 12
+	sq_press	53, 0, 13
+	sq_press	57, 0, 16
+	sq_press	61, 0, 17
+	sq_press	66, 0, 22
+	sq_press	69, 0, 24
+	sq_press	73, 0, 27
+	sq_press	77, 0, 28
+	sq_press	80, 0, 31
+	sq_press	84, 0, 32
+	sq_press	85, 0, 34
+	sq_press	89, 0, 36
+	sq_press	93, 0, 38
+	sq_beat
+	sq_press	0, 0, 41
+	sq_press	4, 0, 43
+	sq_press	8, 0, 44
+	sq_press	17, 0, 46
+	sq_press	20, 0, 47
+	sq_press	40, 0, 41
+	sq_press	44, 0, 38
+	sq_press	47, 0, 34
+	sq_press	49, 0, 28
+	sq_press	52, 0, 20
+	sq_press	53, 0, 12
+	sq_press	56, 0, 2
+	sq_press	60, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	224, 0, 47, 88, 224, 64, 51, 91, 224, 64, 53, 94, 224, 0, 55, 129
+	.byte	1, 224, 0, 56, 2, 224, 64, 56, 6, 224, 0, 57, 8, 224, 64, 58
+	.byte	11, 224, 64, 59, 15, 224, 64, 61, 18, 224, 64, 62, 18, 224, 0, 63
+	.byte	21, 224, 64, 63
+	sq_cell	0x80, 0, 22	# cell 21: song 1 track 3, 1 of 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 39, 32, 32
+	sq_cc	0, 0, 18, 7, 115
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 31, 78, 44, 0
+	sq_beat
+	sq_note	1, 0, 41, 95, 25, 0
+	sq_note	20, 0, 43, 90, 40, 0
+	sq_note	55, 0, 41, 74, 44, 0
+	sq_beat
+	sq_note	0, 0, 39, 67, 22, 6
+	sq_beat
+	sq_beat
+	sq_cc	67, 0, 18, 1, 2
+	sq_cc	71, 0, 18, 1, 4
+	sq_cc	74, 0, 18, 1, 7
+	sq_cc	78, 0, 18, 1, 9
+	sq_cc	83, 0, 18, 1, 12
+	sq_cc	86, 0, 18, 1, 14
+	sq_cc	90, 0, 18, 1, 18
+	sq_cc	94, 0, 18, 1, 22
+	sq_beat
+	sq_cc	2, 0, 18, 1, 23
+	sq_cc	6, 0, 18, 1, 25
+	sq_cc	10, 0, 18, 1, 26
+	sq_cc	13, 0, 18, 1, 28
+	sq_cc	17, 0, 18, 1, 30
+	sq_cc	20, 0, 18, 1, 31
+	sq_cc	25, 0, 18, 1, 33
+	sq_cc	29, 0, 18, 1, 34
+	sq_cc	32, 0, 18, 1, 35
+	sq_cc	40, 0, 18, 1, 37
+	sq_cc	43, 0, 18, 1, 38
+	sq_cc	52, 0, 18, 1, 40
+	sq_cc	62, 0, 18, 1, 41
+	sq_cc	74, 0, 18, 1, 39
+	sq_cc	78, 0, 18, 1, 38
+	sq_cc	83, 0, 18, 1, 35
+	sq_cc	86, 0, 18, 1, 34
+	sq_cc	90, 0, 18, 1, 30
+	sq_cc	94, 0, 18, 1, 27
+	sq_beat
+	sq_cc	2, 0, 18, 1, 25
+	sq_cc	6, 0, 18, 1, 22
+	sq_cc	10, 0, 18, 1, 21
+	sq_cc	13, 0, 18, 1, 18
+	sq_cc	17, 0, 18, 1, 15
+	sq_cc	20, 0, 18, 1, 13
+	sq_cc	25, 0, 18, 1, 10
+	sq_cc	29, 0, 18, 1, 8
+	sq_cc	32, 0, 18, 1, 5
+	sq_cc	36, 0, 18, 1, 2
+	.byte	0x28, 0xb0	# bytes 1..2 of `sq_cc	40, 0, 18, 1, 0` (the event spans two cells)
+	sq_cell	0x80, 21, 23	# cell 22: song 1 track 3, 2 of 8
+	.byte	0x12, 0x01, 0x00	# bytes 3..5 of `sq_cc	40, 0, 18, 1, 0` (the event spans two cells)
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 34, 75, 37, 0
+	sq_beat
+	sq_note	48, 0, 34, 71, 48, 0
+	sq_beat
+	sq_note	0, 0, 27, 56, 60, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 27, 51, 28, 0
+	sq_note	48, 0, 27, 89, 30, 0
+	sq_beat
+	sq_note	0, 0, 36, 78, 44, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 85, 76, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 58, 25, 0
+	sq_note	72, 0, 38, 60, 25, 0
+	sq_beat
+	sq_note	0, 0, 39, 76, 55, 1
+	sq_beat
+	sq_note	48, 0, 41, 83, 9, 1
+	sq_beat
+	sq_note	48, 0, 43, 76, 6, 1
+	sq_beat
+	sq_note	48, 0, 44, 69, 82, 2
+	sq_beat
+	sq_press	57, 0, 4
+	sq_press	61, 0, 6
+	sq_press	66, 0, 11
+	sq_press	69, 0, 12
+	sq_press	73, 0, 16
+	sq_press	76, 0, 20
+	sq_press	81, 0, 22
+	sq_press	85, 0, 24
+	sq_press	88, 0, 26
+	sq_press	92, 0, 28
+	sq_beat
+	sq_press	0, 0, 31
+	sq_press	1, 0, 32
+	sq_press	3, 0, 34
+	sq_press	8, 0, 36
+	sq_press	12, 0, 38
+	sq_press	15, 0, 41
+	sq_press	19, 0, 43
+	sq_press	22, 0, 44
+	sq_press	27, 0, 46
+	sq_press	31, 0, 47
+	sq_press	34, 0, 49
+	sq_press	38, 0, 52
+	sq_press	39, 0, 53
+	sq_press	43, 0, 55
+	sq_press	46, 0, 57
+	sq_press	54, 0, 60
+	sq_press	81, 0, 57
+	sq_press	85, 0, 54
+	sq_press	88, 0, 48
+	sq_press	92, 0, 45
+	sq_beat
+	sq_press	1, 0, 39
+	sq_press	4, 0, 36
+	sq_press	8, 0, 28
+	sq_press	12, 0, 14
+	sq_press	15, 0, 4
+	sq_press	19, 0, 0
+	sq_note	48, 0, 39, 86, 32, 0
+	sq_beat
+	sq_note	48, 0, 39, 106, 43, 0
+	sq_beat
+	sq_note	0, 0, 36, 81, 25, 2
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 90, 90, 0
+	sq_beat
+	sq_note	48, 0, 38, 83, 91, 3
+	sq_beat
+	sq_cell	0x80, 22, 24	# cell 23: song 1 track 3, 3 of 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 84, 27, 0
+	sq_note	72, 0, 38, 93, 19, 0
+	sq_beat
+	sq_note	0, 0, 27, 91, 57, 0
+	sq_note	48, 0, 39, 79, 38, 0
+	sq_beat
+	sq_note	0, 0, 27, 71, 53, 0
+	sq_note	48, 0, 39, 67, 44, 0
+	sq_beat
+	sq_note	0, 0, 27, 62, 52, 0
+	sq_note	48, 0, 39, 71, 50, 0
+	sq_beat
+	sq_note	0, 0, 27, 74, 49, 0
+	sq_note	48, 0, 39, 81, 50, 0
+	sq_beat
+	sq_note	0, 0, 27, 80, 49, 0
+	sq_note	48, 0, 39, 87, 46, 0
+	sq_beat
+	sq_note	0, 0, 27, 84, 42, 0
+	sq_note	48, 0, 39, 99, 48, 0
+	sq_beat
+	sq_note	0, 0, 27, 92, 39, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 31, 81, 34, 2
+	sq_press	89, 0, 3
+	sq_press	93, 0, 4
+	sq_beat
+	sq_press	0, 0, 6
+	sq_press	1, 0, 7
+	sq_press	5, 0, 11
+	sq_press	9, 0, 12
+	sq_press	12, 0, 14
+	sq_press	16, 0, 16
+	sq_press	19, 0, 19
+	sq_press	24, 0, 22
+	sq_press	28, 0, 24
+	sq_press	31, 0, 27
+	sq_press	35, 0, 28
+	sq_press	39, 0, 29
+	sq_press	40, 0, 32
+	sq_press	43, 0, 34
+	sq_press	47, 0, 35
+	sq_press	51, 0, 36
+	sq_press	54, 0, 37
+	sq_press	58, 0, 39
+	sq_press	63, 0, 42
+	sq_press	66, 0, 43
+	sq_press	70, 0, 44
+	sq_press	73, 0, 46
+	sq_press	77, 0, 48
+	sq_press	82, 0, 51
+	sq_press	89, 0, 54
+	sq_beat
+	sq_press	19, 0, 49
+	sq_press	24, 0, 45
+	sq_press	28, 0, 40
+	sq_press	31, 0, 14
+	sq_press	35, 0, 0
+	sq_note	48, 0, 31, 90, 82, 0
+	sq_press	54, 0, 12
+	sq_press	58, 0, 22
+	sq_press	63, 0, 28
+	sq_press	70, 0, 24
+	sq_press	73, 0, 17
+	sq_press	77, 0, 13
+	sq_press	82, 0, 8
+	sq_press	85, 0, 7
+	sq_press	89, 0, 1
+	sq_press	93, 0, 0
+	sq_beat
+	sq_note	48, 0, 33, 74, 82, 3
+	sq_beat
+	.byte	0x13	# bytes 1..1 of `sq_press	19, 0, 1` (the event spans two cells)
+	sq_cell	0x80, 23, 25	# cell 24: song 1 track 3, 4 of 8
+	.byte	0xd0, 0x01	# bytes 2..3 of `sq_press	19, 0, 1` (the event spans two cells)
+	sq_press	24, 0, 5
+	sq_press	28, 0, 8
+	sq_press	31, 0, 11
+	sq_press	35, 0, 13
+	sq_press	39, 0, 14
+	sq_press	43, 0, 17
+	sq_press	47, 0, 20
+	sq_press	51, 0, 22
+	sq_press	54, 0, 24
+	sq_press	58, 0, 25
+	sq_press	63, 0, 28
+	sq_press	66, 0, 31
+	sq_press	70, 0, 32
+	sq_press	73, 0, 33
+	sq_press	77, 0, 34
+	sq_press	82, 0, 36
+	sq_press	93, 0, 38
+	sq_beat
+	sq_press	16, 0, 36
+	sq_press	19, 0, 34
+	sq_press	24, 0, 32
+	sq_press	28, 0, 28
+	sq_press	31, 0, 25
+	sq_press	35, 0, 17
+	sq_press	39, 0, 13
+	sq_press	43, 0, 3
+	sq_press	47, 0, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 31, 84, 21, 0
+	sq_note	72, 0, 33, 76, 18, 0
+	sq_beat
+	sq_note	0, 0, 34, 90, 44, 1
+	sq_beat
+	sq_note	48, 0, 36, 90, 7, 1
+	sq_beat
+	sq_note	48, 0, 38, 93, 9, 1
+	sq_beat
+	sq_note	48, 0, 39, 77, 63, 2
+	sq_beat
+	sq_press	9, 0, 1
+	sq_press	12, 0, 4
+	sq_press	13, 0, 8
+	sq_press	16, 0, 12
+	sq_press	17, 0, 14
+	sq_press	21, 0, 17
+	sq_press	24, 0, 23
+	sq_press	28, 0, 28
+	sq_press	31, 0, 31
+	sq_press	36, 0, 35
+	sq_press	40, 0, 37
+	sq_press	43, 0, 41
+	sq_press	47, 0, 44
+	sq_press	51, 0, 47
+	sq_press	55, 0, 51
+	sq_press	59, 0, 53
+	sq_press	63, 0, 57
+	sq_press	66, 0, 60
+	sq_press	70, 0, 62
+	sq_press	75, 0, 65
+	sq_press	78, 0, 67
+	sq_press	82, 0, 69
+	sq_press	85, 0, 73
+	sq_press	89, 0, 75
+	sq_press	94, 0, 77
+	sq_beat
+	sq_press	1, 0, 79
+	sq_press	5, 0, 83
+	sq_press	12, 0, 87
+	sq_press	21, 0, 89
+	sq_press	24, 0, 91
+	sq_press	31, 0, 96
+	sq_press	55, 0, 91
+	sq_press	66, 0, 83
+	sq_press	70, 0, 78
+	sq_press	75, 0, 68
+	sq_press	78, 0, 57
+	sq_press	82, 0, 53
+	sq_press	85, 0, 44
+	sq_press	89, 0, 38
+	sq_press	94, 0, 19
+	sq_beat
+	sq_press	3, 0, 0
+	.byte	0x30, 0x90	# bytes 1..2 of `sq_note	48, 0, 34, 99, 32, 0` (the event spans two cells)
+	sq_cell	0x80, 24, 26	# cell 25: song 1 track 3, 5 of 8
+	.byte	0x22, 0x63, 0x20, 0x00	# bytes 3..6 of `sq_note	48, 0, 34, 99, 32, 0` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 34, 104, 42, 0
+	sq_beat
+	sq_note	0, 0, 31, 86, 20, 2
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 31, 98, 1, 1
+	sq_beat
+	sq_note	48, 0, 33, 92, 73, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 31, 70, 16, 0
+	sq_note	72, 0, 33, 80, 22, 0
+	sq_beat
+	sq_note	0, 0, 34, 93, 36, 0
+	sq_note	48, 0, 34, 91, 37, 0
+	sq_beat
+	sq_note	0, 0, 34, 89, 36, 0
+	sq_note	48, 0, 34, 67, 32, 0
+	sq_beat
+	sq_note	0, 0, 34, 87, 38, 0
+	sq_note	48, 0, 34, 57, 28, 0
+	sq_beat
+	sq_note	0, 0, 34, 96, 38, 0
+	sq_note	48, 0, 34, 58, 32, 0
+	sq_beat
+	sq_note	0, 0, 34, 95, 36, 0
+	sq_note	48, 0, 34, 69, 34, 0
+	sq_beat
+	sq_note	0, 0, 34, 97, 36, 0
+	sq_note	48, 0, 34, 70, 36, 0
+	sq_beat
+	sq_note	0, 0, 34, 99, 34, 0
+	sq_note	48, 0, 34, 90, 34, 0
+	sq_beat
+	sq_note	0, 0, 34, 112, 32, 0
+	sq_note	48, 0, 34, 119, 26, 0
+	sq_beat
+	sq_cc	0, 0, 18, 7, 120
+	sq_note	0, 0, 27, 103, 57, 0
+	sq_note	48, 0, 39, 57, 49, 0
+	sq_beat
+	sq_note	0, 0, 27, 67, 57, 0
+	sq_note	48, 0, 39, 58, 46, 0
+	sq_beat
+	sq_note	0, 0, 27, 62, 54, 0
+	sq_note	48, 0, 39, 62, 44, 0
+	sq_beat
+	sq_note	0, 0, 27, 59, 55, 0
+	sq_note	48, 0, 39, 64, 48, 0
+	sq_beat
+	sq_note	0, 0, 27, 61, 56, 0
+	sq_note	48, 0, 39, 67, 45, 0
+	sq_beat
+	sq_note	0, 0, 27, 62, 49, 0
+	sq_note	48, 0, 39, 64, 40, 0
+	sq_beat
+	sq_note	0, 0, 27, 69, 51, 0
+	sq_note	48, 0, 39, 57, 50, 0
+	sq_beat
+	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 27, 75, 60, 0` (the event spans two cells)
+	sq_cell	0x80, 25, 27	# cell 26: song 1 track 3, 6 of 8
+	.byte	0x90, 0x1b, 0x4b, 0x3c, 0x00	# bytes 2..6 of `sq_note	0, 0, 27, 75, 60, 0` (the event spans two cells)
+	sq_note	48, 0, 39, 89, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 71, 61, 0
+	sq_note	48, 0, 39, 77, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 76, 55, 0
+	sq_note	48, 0, 39, 69, 54, 0
+	sq_beat
+	sq_note	0, 0, 27, 70, 57, 0
+	sq_note	48, 0, 39, 81, 48, 0
+	sq_beat
+	sq_note	0, 0, 27, 65, 55, 0
+	sq_note	48, 0, 39, 81, 55, 0
+	sq_beat
+	sq_note	0, 0, 27, 70, 58, 0
+	sq_note	48, 0, 39, 75, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 71, 51, 0
+	sq_note	48, 0, 39, 78, 44, 0
+	sq_beat
+	sq_note	0, 0, 27, 72, 49, 0
+	sq_note	48, 0, 39, 69, 34, 0
+	sq_beat
+	sq_note	0, 0, 27, 89, 73, 0
+	sq_note	48, 0, 39, 86, 39, 0
+	sq_beat
+	sq_note	0, 0, 26, 95, 51, 0
+	sq_note	48, 0, 38, 70, 39, 0
+	sq_beat
+	sq_note	0, 0, 26, 80, 51, 0
+	sq_note	48, 0, 38, 69, 45, 0
+	sq_beat
+	sq_note	0, 0, 26, 78, 57, 0
+	sq_note	48, 0, 38, 78, 44, 0
+	sq_beat
+	sq_note	0, 0, 26, 83, 57, 0
+	sq_note	48, 0, 38, 76, 48, 0
+	sq_beat
+	sq_note	0, 0, 26, 78, 55, 0
+	sq_note	48, 0, 38, 71, 42, 0
+	sq_beat
+	sq_note	0, 0, 26, 78, 54, 0
+	sq_note	48, 0, 38, 71, 42, 0
+	sq_beat
+	sq_note	0, 0, 26, 83, 42, 0
+	sq_note	48, 0, 38, 72, 40, 0
+	sq_beat
+	sq_note	0, 0, 26, 90, 90, 0
+	sq_note	48, 0, 38, 69, 34, 0
+	sq_beat
+	sq_note	0, 0, 24, 95, 34, 1
+	sq_beat
+	sq_note	48, 0, 26, 109, 72, 0
+	sq_beat
+	sq_note	48, 0, 26, 103, 32, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 28, 100, 43, 1
+	sq_beat
+	.byte	0x30, 0x90	# bytes 1..2 of `sq_note	48, 0, 30, 109, 69, 0` (the event spans two cells)
+	sq_cell	0x80, 26, 28	# cell 27: song 1 track 3, 7 of 8
+	.byte	0x1e, 0x6d, 0x45, 0x00	# bytes 3..6 of `sq_note	48, 0, 30, 109, 69, 0` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 30, 119, 90, 0
+	sq_press	70, 0, 2
+	sq_press	77, 0, 0
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 18, 7, 115
+	sq_note	0, 0, 31, 99, 25, 6
+	sq_beat
+	sq_beat
+	sq_press	61, 0, 2
+	sq_press	66, 0, 4
+	sq_press	69, 0, 6
+	sq_press	73, 0, 7
+	sq_press	77, 0, 8
+	sq_press	81, 0, 11
+	sq_press	85, 0, 12
+	sq_press	89, 0, 13
+	sq_beat
+	sq_press	0, 0, 16
+	sq_press	12, 0, 20
+	sq_press	15, 0, 22
+	sq_press	23, 0, 24
+	sq_press	31, 0, 27
+	sq_press	35, 0, 28
+	sq_press	42, 0, 31
+	sq_press	50, 0, 32
+	sq_press	57, 0, 34
+	sq_press	69, 0, 36
+	sq_press	77, 0, 39
+	sq_press	89, 0, 42
+	sq_beat
+	sq_press	3, 0, 43
+	sq_press	12, 0, 44
+	sq_press	28, 0, 45
+	sq_press	57, 0, 44
+	sq_press	66, 0, 42
+	sq_press	69, 0, 41
+	sq_press	78, 0, 37
+	sq_press	81, 0, 36
+	sq_press	85, 0, 35
+	sq_press	92, 0, 32
+	sq_beat
+	sq_press	0, 0, 31
+	sq_press	5, 0, 28
+	sq_press	12, 0, 27
+	sq_press	19, 0, 24
+	sq_press	31, 0, 23
+	sq_press	38, 0, 20
+	sq_press	43, 0, 17
+	sq_press	47, 0, 16
+	sq_press	50, 0, 14
+	sq_press	54, 0, 12
+	sq_press	61, 0, 8
+	sq_press	69, 0, 4
+	sq_press	73, 0, 0
+	sq_beat
+	sq_note	48, 0, 38, 88, 39, 0
+	sq_beat
+	sq_note	48, 0, 38, 90, 39, 0
+	sq_beat
+	sq_note	0, 0, 31, 78, 49, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 38, 75, 40, 0
+	sq_beat
+	sq_note	0, 0, 43, 90, 94, 0
+	sq_beat
+	sq_note	0, 0, 38, 86, 45, 0
+	sq_note	48, 0, 31, 78, 51, 0
+	sq_beat
+	sq_note	0, 0, 27, 92, 44, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 39, 99, 40, 0
+	sq_beat
+	sq_note	48, 0, 39, 93, 43, 0
+	sq_beat
+	sq_note	0, 0, 27, 77, 24, 6
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 27, 65535	# cell 28: song 1 track 3, 8 of 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 27, 76, 54, 0
+	sq_beat
+	sq_note	0, 0, 39, 107, 40, 0
+	sq_note	48, 0, 27, 95, 38, 0
+	sq_beat
+	sq_note	5, 0, 24, 98, 22, 2
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 24, 93, 92, 0
+	sq_beat
+	sq_note	51, 0, 26, 85, 44, 3
+	sq_beat
+	sq_press	47, 0, 1
+	sq_press	56, 0, 3
+	sq_press	63, 0, 5
+	sq_press	67, 0, 6
+	sq_press	75, 0, 8
+	sq_press	86, 0, 11
+	sq_press	94, 0, 13
+	sq_beat
+	sq_press	9, 0, 14
+	sq_press	10, 0, 16
+	sq_press	37, 0, 18
+	sq_press	47, 0, 19
+	sq_press	67, 0, 21
+	sq_press	82, 0, 22
+	sq_press	94, 0, 23
+	sq_beat
+	sq_press	10, 0, 24
+	sq_press	63, 0, 22
+	sq_press	68, 0, 20
+	sq_press	82, 0, 22
+	sq_press	86, 0, 16
+	sq_press	89, 0, 5
+	sq_press	94, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 24, 71, 64, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	80, 0, 26, 70, 80, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 27, 78, 0, 11
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_press	94, 0, 2
+	sq_beat
+	sq_press	10, 0, 4
+	sq_press	30, 0, 5
+	sq_press	49, 0, 6
+	sq_beat
+	sq_press	10, 0, 4
+	sq_press	30, 0, 3
+	sq_press	45, 0, 1
+	sq_press	61, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	90, 18, 0, 53, 144, 72, 106, 14, 0, 72, 144, 65, 88, 20, 0, 129
+	.byte	2, 144, 70, 112, 20, 0, 27, 144, 67, 98, 17, 0, 46, 144, 65, 93
+	.byte	16, 0, 71, 144, 62, 96, 6, 0, 129, 129, 129, 129, 129, 129, 129, 129
+	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
+	.byte	129, 129
+	sq_cell	0x80, 0, 30	# cell 29: song 1 track 4, 1 of 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 9, 0, 38
+	sq_cc	0, 0, 3, 7, 120
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 60, 24, 0
+	sq_beat
+	sq_note	0, 0, 36, 86, 19, 0
+	sq_note	48, 0, 36, 93, 18, 0
+	sq_beat
+	sq_note	0, 0, 36, 118, 70, 0
+	sq_beat
+	sq_note	48, 0, 36, 96, 22, 0
+	sq_beat
+	sq_note	0, 0, 37, 127, 54, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 37, 127, 21, 0
+	sq_note	48, 0, 36, 115, 24, 0
+	sq_beat
+	sq_note	48, 0, 36, 116, 10, 0
+	sq_beat
+	sq_note	0, 0, 36, 118, 62, 0
+	sq_beat
+	sq_note	48, 0, 36, 101, 13, 0
+	sq_beat
+	sq_note	0, 0, 37, 127, 25, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 36, 66, 16, 0
+	sq_beat
+	sq_note	0, 0, 37, 127, 21, 0
+	sq_beat
+	sq_note	0, 0, 48, 126, 5, 0
+	sq_note	0, 0, 36, 116, 19, 0
+	sq_note	48, 0, 36, 125, 14, 0
+	sq_note	72, 0, 45, 107, 12, 0
+	sq_beat
+	sq_note	0, 0, 36, 118, 75, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 25, 0
+	sq_beat
+	sq_note	48, 0, 36, 119, 73, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 26, 0
+	sq_beat
+	sq_note	48, 0, 36, 95, 12, 0
+	sq_beat
+	sq_note	0, 0, 36, 119, 86, 0
+	sq_beat
+	sq_note	48, 0, 36, 118, 45, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 22, 0
+	sq_note	48, 0, 36, 118, 37, 0
+	sq_beat
+	sq_note	48, 0, 36, 126, 42, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 22, 0
+	sq_beat
+	sq_note	48, 0, 43, 125, 7, 0
+	sq_note	48, 0, 36, 109, 9, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x24	# bytes 1..3 of `sq_note	0, 0, 36, 121, 84, 0` (the event spans two cells)
+	sq_cell	0x80, 29, 31	# cell 30: song 1 track 4, 2 of 6
+	.byte	0x79, 0x54, 0x00	# bytes 4..6 of `sq_note	0, 0, 36, 121, 84, 0` (the event spans two cells)
+	sq_beat
+	sq_note	89, 0, 40, 105, 5, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 21, 0
+	sq_beat
+	sq_note	48, 0, 36, 126, 56, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 14, 0
+	sq_beat
+	sq_note	0, 0, 41, 127, 16, 0
+	sq_note	48, 0, 43, 127, 14, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 37, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 25, 0
+	sq_note	0, 0, 36, 116, 36, 0
+	sq_beat
+	sq_note	0, 0, 36, 118, 34, 0
+	sq_beat
+	sq_note	0, 0, 36, 123, 37, 0
+	sq_note	0, 0, 38, 127, 20, 0
+	sq_beat
+	sq_note	0, 0, 36, 123, 34, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 22, 0
+	sq_note	0, 0, 36, 126, 32, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 74, 0
+	sq_note	48, 0, 50, 113, 6, 0
+	sq_note	72, 0, 50, 116, 13, 0
+	sq_beat
+	sq_note	0, 0, 50, 120, 5, 0
+	sq_note	48, 0, 48, 123, 5, 0
+	sq_beat
+	sq_note	0, 0, 36, 118, 66, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 20, 0
+	sq_beat
+	sq_note	48, 0, 36, 123, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 20, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 36, 110, 42, 0
+	sq_beat
+	sq_note	48, 0, 36, 116, 30, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 20, 0
+	sq_note	48, 0, 36, 116, 30, 0
+	sq_beat
+	sq_note	48, 0, 36, 125, 5, 1
+	sq_beat
+	sq_cc	31, 0, 3, 74, 69
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 16, 0
+	sq_note	48, 0, 36, 125, 19, 0
+	sq_note	48, 0, 43, 127, 14, 0
+	sq_beat
+	sq_note	48, 0, 43, 126, 7, 0
+	sq_note	48, 0, 36, 115, 8, 0
+	sq_beat
+	sq_note	0, 0, 36, 116, 87, 0
+	sq_beat
+	sq_cell	0x80, 30, 32	# cell 31: song 1 track 4, 3 of 6
+	sq_beat
+	sq_note	0, 0, 40, 127, 9, 0
+	sq_note	48, 0, 36, 115, 21, 0
+	sq_beat
+	sq_note	48, 0, 36, 120, 38, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 98, 9, 0
+	sq_note	48, 0, 40, 119, 9, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 9, 0
+	sq_note	0, 0, 36, 127, 21, 0
+	sq_note	48, 0, 40, 127, 13, 0
+	sq_beat
+	sq_note	0, 0, 36, 121, 19, 0
+	sq_beat
+	sq_note	0, 0, 36, 120, 21, 0
+	sq_note	0, 0, 38, 126, 5, 0
+	sq_beat
+	sq_note	0, 0, 36, 116, 24, 0
+	sq_beat
+	sq_note	0, 0, 36, 123, 25, 0
+	sq_note	0, 0, 38, 127, 14, 0
+	sq_beat
+	sq_note	0, 0, 36, 125, 21, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 12, 0
+	sq_note	0, 0, 36, 126, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 126, 25, 0
+	sq_note	48, 0, 38, 105, 7, 0
+	sq_beat
+	sq_note	0, 0, 38, 107, 6, 0
+	sq_note	0, 0, 36, 126, 22, 0
+	sq_note	24, 0, 38, 117, 15, 0
+	sq_note	48, 0, 38, 127, 9, 0
+	sq_beat
+	sq_cc	0, 0, 3, 7, 120
+	sq_note	0, 0, 36, 127, 29, 0
+	sq_beat
+	sq_note	0, 0, 36, 125, 26, 0
+	sq_note	0, 0, 38, 127, 19, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 26, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 19, 0
+	sq_note	0, 0, 36, 126, 26, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 27, 0
+	sq_beat
+	sq_note	0, 0, 40, 94, 5, 0
+	sq_note	0, 0, 36, 127, 26, 0
+	sq_note	0, 0, 38, 127, 21, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 29, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 26, 0
+	sq_note	0, 0, 38, 125, 15, 0
+	sq_note	48, 0, 38, 111, 14, 0
+	.byte	0x48, 0x90	# bytes 1..2 of `sq_note	72, 0, 40, 111, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 31, 33	# cell 32: song 1 track 4, 4 of 6
+	.byte	0x28, 0x6f, 0x10, 0x00	# bytes 3..6 of `sq_note	72, 0, 40, 111, 16, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 36, 127, 27, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 16, 0
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 21, 0
+	sq_note	0, 0, 38, 127, 21, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 25, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_note	0, 0, 38, 127, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 25, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 20, 0
+	sq_note	0, 0, 38, 126, 15, 0
+	sq_note	48, 0, 38, 125, 17, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_note	0, 0, 38, 127, 13, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 25, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 15, 0
+	sq_note	0, 0, 36, 127, 22, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 25, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 24, 0
+	sq_note	0, 0, 38, 127, 16, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 26, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 27, 0
+	sq_note	0, 0, 38, 127, 10, 0
+	sq_note	48, 0, 38, 125, 13, 0
+	sq_note	72, 0, 38, 123, 9, 0
+	sq_beat
+	sq_note	0, 0, 36, 127, 37, 0
+	sq_note	48, 0, 50, 106, 5, 0
+	sq_note	72, 0, 50, 115, 12, 0
+	sq_beat
+	sq_note	0, 0, 50, 120, 5, 0
+	sq_note	48, 0, 38, 127, 16, 0
+	sq_note	48, 0, 36, 127, 22, 0
+	sq_beat
+	sq_note	48, 0, 40, 127, 18, 0
+	sq_note	48, 0, 36, 127, 30, 0
+	sq_beat
+	sq_note	0, 0, 48, 106, 5, 0
+	sq_note	24, 0, 48, 116, 5, 0
+	.byte	0x30, 0x90, 0x30, 0x7f, 0x08	# bytes 1..5 of `sq_note	48, 0, 48, 127, 8, 0` (the event spans two cells)
+	sq_cell	0x80, 32, 34	# cell 33: song 1 track 4, 5 of 6
+	.byte	0x00	# bytes 6..6 of `sq_note	48, 0, 48, 127, 8, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 36, 127, 33, 0
+	sq_note	72, 0, 48, 113, 5, 0
+	sq_beat
+	sq_note	0, 0, 48, 113, 9, 0
+	sq_note	24, 0, 48, 127, 6, 0
+	sq_note	48, 0, 38, 127, 20, 0
+	sq_note	48, 0, 36, 127, 21, 0
+	sq_beat
+	sq_note	0, 0, 48, 123, 5, 0
+	sq_note	24, 0, 48, 115, 7, 0
+	sq_note	48, 0, 38, 112, 5, 0
+	sq_note	48, 0, 36, 127, 22, 0
+	sq_note	48, 0, 47, 98, 9, 0
+	sq_beat
+	sq_note	48, 0, 36, 127, 24, 0
+	sq_note	48, 0, 45, 127, 5, 0
+	sq_note	72, 0, 36, 119, 24, 0
+	sq_note	72, 0, 43, 127, 24, 0
+	sq_beat
+	sq_cc	0, 0, 3, 7, 120
+	sq_note	0, 0, 36, 127, 1, 1
+	sq_beat
+	sq_note	48, 0, 36, 118, 30, 0
+	sq_beat
+	sq_note	0, 0, 40, 126, 29, 0
+	sq_note	48, 0, 36, 116, 25, 0
+	sq_beat
+	sq_note	48, 0, 36, 118, 71, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 36, 115, 64, 0
+	sq_beat
+	sq_note	0, 0, 40, 120, 25, 0
+	sq_note	48, 0, 36, 119, 30, 0
+	sq_beat
+	sq_note	48, 0, 36, 107, 16, 0
+	sq_beat
+	sq_note	0, 0, 36, 121, 91, 0
+	sq_beat
+	sq_note	48, 0, 36, 116, 32, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 25, 0
+	sq_note	48, 0, 36, 111, 30, 0
+	sq_beat
+	sq_note	48, 0, 36, 116, 62, 0
+	sq_beat
+	sq_note	48, 0, 40, 127, 22, 0
+	sq_beat
+	sq_note	48, 0, 36, 104, 37, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 22, 0
+	sq_note	48, 0, 36, 94, 13, 0
+	sq_beat
+	sq_note	0, 0, 36, 113, 22, 0
+	sq_note	48, 0, 38, 110, 16, 0
+	sq_note	72, 0, 40, 124, 11, 0
+	sq_beat
+	sq_note	0, 0, 36, 123, 92, 0
+	sq_beat
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 36, 109, 27, 0` (the event spans two cells)
+	sq_cell	0x80, 33, 65535	# cell 34: song 1 track 4, 6 of 6
+	.byte	0x90, 0x24, 0x6d, 0x1b, 0x00	# bytes 2..6 of `sq_note	48, 0, 36, 109, 27, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 40, 120, 17, 0
+	sq_note	48, 0, 36, 108, 23, 0
+	sq_beat
+	sq_note	48, 0, 36, 113, 57, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 36, 104, 14, 0
+	sq_note	48, 0, 36, 104, 27, 0
+	sq_beat
+	sq_note	0, 0, 40, 127, 23, 0
+	sq_beat
+	sq_note	0, 0, 36, 98, 16, 0
+	sq_note	48, 0, 36, 84, 7, 0
+	sq_beat
+	sq_note	0, 0, 36, 116, 92, 0
+	sq_beat
+	sq_note	48, 0, 36, 113, 27, 0
+	sq_beat
+	sq_note	0, 0, 40, 126, 17, 0
+	sq_note	48, 0, 36, 115, 29, 0
+	sq_beat
+	sq_note	48, 0, 36, 110, 45, 0
+	sq_beat
+	sq_note	48, 0, 40, 123, 23, 0
+	sq_beat
+	sq_note	0, 0, 36, 94, 12, 0
+	sq_note	48, 0, 36, 101, 23, 0
+	sq_beat
+	sq_note	0, 0, 40, 120, 22, 0
+	sq_note	48, 0, 50, 110, 13, 0
+	sq_note	72, 0, 40, 120, 12, 0
+	sq_beat
+	sq_note	0, 0, 48, 118, 6, 0
+	sq_note	48, 0, 47, 126, 5, 0
+	sq_beat
+	sq_cc	0, 0, 3, 7, 120
+	sq_note	0, 0, 36, 127, 44, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 40, 127, 22, 0
+	sq_note	48, 0, 36, 96, 32, 0
+	sq_beat
+	sq_note	48, 0, 36, 116, 53, 0
+	sq_beat
+	sq_note	48, 0, 36, 109, 44, 0
+	sq_beat
+	sq_note	48, 0, 36, 100, 23, 0
+	sq_beat
+	sq_note	0, 0, 38, 127, 20, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	224, 64, 72, 129, 4, 224, 64, 73, 7, 224, 0, 75, 11, 224, 0, 76
+	.byte	14, 224, 64, 76
+	sq_cell	0x80, 0, 36	# cell 35: song 1 track 5, 1 of 16
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 59, 127, 42, 0
+	sq_note	0, 0, 84, 103, 84, 0
+	sq_note	0, 0, 69, 98, 25, 0
+	sq_note	48, 0, 59, 88, 26, 0
+	sq_note	48, 0, 81, 74, 19, 0
+	sq_note	48, 0, 69, 60, 21, 0
+	sq_beat
+	sq_note	0, 0, 53, 61, 18, 0
+	sq_note	0, 0, 80, 54, 15, 0
+	sq_note	0, 0, 69, 55, 19, 0
+	sq_note	48, 0, 81, 80, 12, 0
+	sq_note	48, 0, 51, 90, 44, 0
+	sq_note	48, 0, 69, 60, 16, 0
+	sq_beat
+	sq_note	0, 0, 81, 116, 9, 0
+	sq_note	0, 0, 59, 105, 19, 0
+	sq_note	0, 0, 69, 96, 25, 0
+	sq_note	48, 0, 51, 75, 15, 0
+	sq_note	48, 0, 69, 59, 21, 0
+	sq_beat
+	sq_note	0, 0, 69, 46, 19, 0
+	sq_note	0, 0, 51, 83, 18, 0
+	sq_note	48, 0, 69, 53, 22, 0
+	sq_note	48, 0, 51, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 56, 19, 0
+	sq_note	0, 0, 51, 72, 28, 0
+	sq_note	48, 0, 59, 70, 19, 0
+	sq_note	48, 0, 69, 87, 25, 0
+	sq_beat
+	sq_note	0, 0, 69, 56, 21, 0
+	sq_note	0, 0, 51, 50, 16, 0
+	sq_note	48, 0, 69, 51, 15, 0
+	sq_note	48, 0, 51, 74, 22, 0
+	sq_beat
+	sq_note	0, 0, 69, 101, 24, 0
+	sq_note	0, 0, 59, 96, 22, 0
+	sq_note	48, 0, 75, 104, 12, 0
+	sq_note	48, 0, 69, 66, 21, 0
+	sq_note	48, 0, 51, 70, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 57, 20, 0
+	sq_note	0, 0, 51, 84, 19, 0
+	sq_note	48, 0, 75, 104, 12, 0
+	sq_note	48, 0, 69, 58, 21, 0
+	sq_note	48, 0, 51, 96, 13, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x45, 0x46, 0x1c	# bytes 1..5 of `sq_note	0, 0, 69, 70, 28, 0` (the event spans two cells)
+	sq_cell	0x80, 35, 37	# cell 36: song 1 track 5, 2 of 16
+	.byte	0x00	# bytes 6..6 of `sq_note	0, 0, 69, 70, 28, 0` (the event spans two cells)
+	sq_note	0, 0, 51, 114, 34, 0
+	sq_note	48, 0, 69, 60, 21, 0
+	sq_note	48, 0, 59, 105, 16, 0
+	sq_beat
+	sq_note	0, 0, 53, 85, 7, 0
+	sq_note	0, 0, 69, 65, 16, 0
+	sq_note	48, 0, 69, 76, 14, 0
+	sq_note	48, 0, 51, 104, 22, 0
+	sq_beat
+	sq_note	0, 0, 69, 113, 22, 0
+	sq_note	0, 0, 59, 116, 20, 0
+	sq_note	48, 0, 69, 63, 15, 0
+	sq_note	48, 0, 51, 87, 8, 0
+	sq_beat
+	sq_note	0, 0, 69, 63, 19, 0
+	sq_note	0, 0, 51, 84, 18, 0
+	sq_note	48, 0, 51, 95, 13, 0
+	sq_note	48, 0, 69, 64, 25, 0
+	sq_beat
+	sq_note	0, 0, 69, 63, 19, 0
+	sq_note	0, 0, 51, 85, 21, 0
+	sq_note	48, 0, 81, 104, 18, 0
+	sq_note	48, 0, 69, 100, 25, 0
+	sq_note	48, 0, 59, 96, 19, 0
+	sq_beat
+	sq_note	0, 0, 80, 78, 7, 0
+	sq_note	0, 0, 69, 66, 16, 0
+	sq_note	0, 0, 51, 82, 21, 0
+	sq_note	48, 0, 80, 80, 5, 0
+	sq_note	48, 0, 69, 70, 16, 0
+	sq_note	48, 0, 51, 91, 6, 0
+	sq_note	72, 0, 51, 104, 18, 0
+	sq_beat
+	sq_note	0, 0, 69, 110, 25, 0
+	sq_note	0, 0, 59, 108, 16, 0
+	sq_note	48, 0, 70, 64, 19, 0
+	sq_note	48, 0, 81, 79, 7, 0
+	sq_note	48, 0, 69, 70, 16, 0
+	sq_note	48, 0, 51, 102, 15, 0
+	sq_beat
+	sq_note	0, 0, 70, 92, 16, 0
+	sq_note	0, 0, 81, 111, 6, 0
+	sq_note	0, 0, 69, 69, 21, 0
+	sq_note	0, 0, 51, 102, 13, 0
+	sq_note	48, 0, 70, 107, 15, 0
+	sq_note	48, 0, 81, 115, 6, 0
+	sq_note	48, 0, 69, 67, 19, 0
+	.byte	0x30, 0x90, 0x33	# bytes 1..3 of `sq_note	48, 0, 51, 99, 12, 0` (the event spans two cells)
+	sq_cell	0x80, 36, 38	# cell 37: song 1 track 5, 3 of 16
+	.byte	0x63, 0x0c, 0x00	# bytes 4..6 of `sq_note	48, 0, 51, 99, 12, 0` (the event spans two cells)
+	sq_note	72, 0, 59, 96, 15, 0
+	sq_beat
+	sq_note	0, 0, 82, 124, 9, 0
+	sq_note	0, 0, 69, 85, 24, 0
+	sq_note	0, 0, 84, 101, 12, 0
+	sq_note	0, 0, 51, 119, 26, 0
+	sq_note	48, 0, 59, 93, 18, 0
+	sq_note	48, 0, 69, 73, 22, 0
+	sq_beat
+	sq_note	0, 0, 53, 91, 7, 0
+	sq_note	0, 0, 69, 68, 19, 0
+	sq_note	48, 0, 69, 81, 13, 0
+	sq_note	48, 0, 51, 114, 19, 0
+	sq_beat
+	sq_note	0, 0, 75, 107, 25, 0
+	sq_note	0, 0, 69, 116, 25, 0
+	sq_note	0, 0, 59, 116, 25, 0
+	sq_note	48, 0, 69, 70, 16, 0
+	sq_note	48, 0, 51, 87, 8, 0
+	sq_beat
+	sq_note	0, 0, 69, 66, 19, 0
+	sq_note	0, 0, 51, 86, 13, 0
+	sq_note	48, 0, 69, 61, 19, 0
+	sq_note	48, 0, 51, 109, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 66, 19, 0
+	sq_note	0, 0, 51, 89, 18, 0
+	sq_note	48, 0, 69, 107, 22, 0
+	sq_note	48, 0, 59, 105, 20, 0
+	sq_beat
+	sq_note	0, 0, 69, 70, 14, 0
+	sq_note	0, 0, 51, 67, 13, 0
+	sq_note	48, 0, 51, 86, 16, 0
+	sq_note	48, 0, 69, 81, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 119, 22, 0
+	sq_note	0, 0, 59, 109, 28, 0
+	sq_note	48, 0, 75, 94, 21, 0
+	sq_note	48, 0, 51, 84, 13, 0
+	sq_note	48, 0, 69, 66, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 99, 21, 0
+	sq_note	0, 0, 69, 65, 19, 0
+	sq_note	24, 0, 75, 93, 13, 0
+	sq_note	48, 0, 53, 96, 7, 0
+	sq_note	48, 0, 69, 67, 20, 0
+	sq_note	72, 0, 59, 96, 15, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x33, 0x6d, 0x1a	# bytes 1..5 of `sq_note	0, 0, 51, 109, 26, 0` (the event spans two cells)
+	sq_cell	0x80, 37, 39	# cell 38: song 1 track 5, 4 of 16
+	.byte	0x00	# bytes 6..6 of `sq_note	0, 0, 51, 109, 26, 0` (the event spans two cells)
+	sq_note	0, 0, 69, 80, 26, 0
+	sq_note	48, 0, 59, 87, 18, 0
+	sq_note	48, 0, 69, 56, 20, 0
+	sq_beat
+	sq_note	0, 0, 51, 104, 18, 0
+	sq_note	0, 0, 69, 63, 15, 0
+	sq_note	48, 0, 53, 96, 6, 0
+	sq_note	48, 0, 69, 83, 15, 0
+	sq_note	72, 0, 51, 114, 15, 0
+	sq_beat
+	sq_note	0, 0, 59, 105, 18, 0
+	sq_note	0, 0, 69, 115, 25, 0
+	sq_note	48, 0, 51, 82, 5, 0
+	sq_note	48, 0, 69, 65, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 93, 13, 0
+	sq_note	0, 0, 69, 61, 24, 0
+	sq_note	48, 0, 69, 67, 21, 0
+	sq_note	48, 0, 51, 102, 13, 0
+	sq_beat
+	sq_note	0, 0, 69, 73, 16, 0
+	sq_note	0, 0, 51, 97, 21, 0
+	sq_note	48, 0, 69, 113, 25, 0
+	sq_note	48, 0, 59, 106, 22, 0
+	sq_beat
+	sq_note	0, 0, 53, 60, 7, 0
+	sq_note	0, 0, 69, 69, 19, 0
+	sq_note	48, 0, 69, 68, 14, 0
+	sq_note	48, 0, 51, 87, 18, 0
+	sq_beat
+	sq_note	0, 0, 59, 108, 21, 0
+	sq_note	0, 0, 69, 110, 22, 0
+	sq_note	48, 0, 69, 69, 19, 0
+	sq_note	48, 0, 53, 70, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 99, 15, 0
+	sq_note	0, 0, 69, 65, 16, 0
+	sq_note	48, 0, 51, 111, 6, 0
+	sq_note	48, 0, 69, 87, 15, 0
+	sq_note	72, 0, 51, 111, 7, 0
+	sq_beat
+	sq_note	0, 0, 69, 121, 27, 0
+	sq_note	0, 0, 49, 124, 6, 0
+	sq_note	0, 0, 53, 127, 7, 0
+	sq_note	48, 0, 69, 70, 21, 0
+	sq_note	48, 0, 42, 93, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 84, 5, 0
+	sq_note	0, 0, 69, 63, 19, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 69, 85, 15, 0` (the event spans two cells)
+	sq_cell	0x80, 38, 40	# cell 39: song 1 track 5, 5 of 16
+	.byte	0x90, 0x45, 0x55, 0x0f, 0x00	# bytes 2..6 of `sq_note	48, 0, 69, 85, 15, 0` (the event spans two cells)
+	sq_note	48, 0, 42, 89, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 124, 13, 0
+	sq_note	0, 0, 69, 120, 25, 0
+	sq_note	48, 0, 69, 68, 13, 0
+	sq_note	48, 0, 42, 90, 19, 0
+	sq_beat
+	sq_note	0, 0, 69, 61, 14, 0
+	sq_note	0, 0, 42, 91, 6, 0
+	sq_note	48, 0, 42, 114, 8, 0
+	sq_note	48, 0, 69, 61, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 96, 14, 0
+	sq_note	0, 0, 69, 45, 16, 0
+	sq_note	48, 0, 42, 104, 7, 0
+	sq_note	48, 0, 69, 63, 19, 0
+	sq_beat
+	sq_note	0, 0, 42, 99, 18, 0
+	sq_note	0, 0, 69, 70, 19, 0
+	sq_note	48, 0, 42, 92, 6, 0
+	sq_note	48, 0, 69, 98, 18, 0
+	sq_note	72, 0, 42, 101, 12, 0
+	sq_beat
+	sq_note	0, 0, 42, 119, 13, 0
+	sq_note	0, 0, 69, 119, 22, 0
+	sq_note	48, 0, 69, 65, 12, 0
+	sq_note	48, 0, 42, 99, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 106, 7, 0
+	sq_note	0, 0, 69, 69, 19, 0
+	sq_note	48, 0, 42, 95, 5, 0
+	sq_note	48, 0, 69, 65, 19, 0
+	sq_note	72, 0, 42, 102, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 119, 13, 0
+	sq_note	0, 0, 69, 70, 22, 0
+	sq_note	48, 0, 42, 96, 19, 0
+	sq_note	48, 0, 69, 68, 18, 0
+	sq_beat
+	sq_note	0, 0, 42, 94, 12, 0
+	sq_note	0, 0, 69, 70, 14, 0
+	sq_note	48, 0, 42, 99, 15, 0
+	sq_note	48, 0, 69, 101, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 119, 22, 0
+	sq_note	0, 0, 20, 122, 13, 0
+	sq_note	48, 0, 42, 101, 19, 0
+	sq_note	48, 0, 69, 71, 15, 0
+	sq_beat
+	.byte	0x00, 0x90	# bytes 1..2 of `sq_note	0, 0, 42, 94, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 39, 41	# cell 40: song 1 track 5, 6 of 16
+	.byte	0x2a, 0x5e, 0x06, 0x00	# bytes 3..6 of `sq_note	0, 0, 42, 94, 6, 0` (the event spans two cells)
+	sq_note	0, 0, 69, 68, 16, 0
+	sq_note	48, 0, 42, 109, 19, 0
+	sq_note	48, 0, 69, 67, 19, 0
+	sq_beat
+	sq_note	0, 0, 42, 101, 6, 0
+	sq_note	0, 0, 69, 61, 21, 0
+	sq_note	48, 0, 21, 124, 16, 0
+	sq_note	48, 0, 69, 67, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 19, 0
+	sq_note	0, 0, 69, 80, 14, 0
+	sq_note	48, 0, 42, 91, 6, 0
+	sq_note	48, 0, 69, 104, 14, 0
+	sq_beat
+	sq_note	0, 0, 69, 123, 21, 0
+	sq_note	0, 0, 21, 127, 16, 0
+	sq_note	48, 0, 69, 77, 14, 0
+	sq_note	48, 0, 42, 109, 19, 0
+	sq_beat
+	sq_note	0, 0, 69, 73, 14, 0
+	sq_note	0, 0, 42, 107, 9, 0
+	sq_note	48, 0, 69, 70, 15, 0
+	sq_note	48, 0, 21, 112, 5, 0
+	sq_note	72, 0, 42, 102, 10, 0
+	sq_beat
+	sq_note	0, 0, 69, 71, 18, 0
+	sq_note	0, 0, 49, 127, 5, 0
+	sq_note	48, 0, 69, 67, 15, 0
+	sq_note	48, 0, 42, 99, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 71, 13, 0
+	sq_note	0, 0, 42, 105, 5, 0
+	sq_note	48, 0, 42, 84, 5, 0
+	sq_note	48, 0, 69, 97, 15, 0
+	sq_note	72, 0, 42, 102, 13, 0
+	sq_beat
+	sq_note	0, 0, 69, 120, 19, 0
+	sq_note	0, 0, 42, 122, 12, 0
+	sq_note	48, 0, 69, 83, 13, 0
+	sq_note	48, 0, 42, 99, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 70, 13, 0
+	sq_note	0, 0, 42, 99, 6, 0
+	sq_note	48, 0, 69, 69, 16, 0
+	sq_note	48, 0, 42, 119, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 60, 15, 0
+	sq_note	0, 0, 42, 99, 16, 0
+	.byte	0x30, 0x90, 0x45, 0x3d	# bytes 1..4 of `sq_note	48, 0, 69, 61, 15, 0` (the event spans two cells)
+	sq_cell	0x80, 40, 42	# cell 41: song 1 track 5, 7 of 16
+	.byte	0x0f, 0x00	# bytes 5..6 of `sq_note	48, 0, 69, 61, 15, 0` (the event spans two cells)
+	sq_note	48, 0, 42, 106, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 101, 16, 0
+	sq_note	0, 0, 69, 69, 15, 0
+	sq_note	48, 0, 69, 90, 15, 0
+	sq_note	48, 0, 42, 102, 7, 0
+	sq_note	72, 0, 42, 105, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 120, 21, 0
+	sq_note	0, 0, 20, 112, 12, 0
+	sq_note	48, 0, 69, 89, 15, 0
+	sq_note	48, 0, 42, 102, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 84, 15, 0
+	sq_note	0, 0, 42, 111, 13, 0
+	sq_note	48, 0, 69, 104, 14, 0
+	sq_note	48, 0, 42, 101, 14, 0
+	sq_beat
+	sq_note	0, 0, 49, 127, 10, 0
+	sq_note	0, 0, 44, 127, 24, 0
+	sq_note	48, 0, 21, 116, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 13, 0
+	sq_note	48, 0, 46, 111, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 109, 14, 0
+	sq_note	48, 0, 46, 114, 8, 0
+	sq_beat
+	sq_note	0, 0, 42, 114, 16, 0
+	sq_note	48, 0, 46, 122, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 117, 16, 0
+	sq_note	48, 0, 46, 124, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 119, 15, 0
+	sq_note	48, 0, 46, 122, 5, 0
+	sq_beat
+	sq_note	0, 0, 57, 122, 18, 0
+	sq_note	48, 0, 51, 126, 6, 0
+	sq_beat
+	sq_note	0, 0, 59, 126, 15, 0
+	sq_note	48, 0, 53, 127, 5, 0
+	sq_beat
+	sq_note	0, 0, 69, 36, 12, 0
+	sq_note	0, 0, 49, 127, 13, 0
+	sq_note	48, 0, 42, 79, 21, 0
+	sq_beat
+	sq_note	0, 0, 42, 90, 6, 0
+	sq_note	0, 0, 69, 68, 14, 0
+	sq_note	48, 0, 42, 93, 19, 0
+	sq_note	48, 0, 69, 67, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 127, 19, 0
+	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 69, 108, 19, 0` (the event spans two cells)
+	sq_cell	0x80, 41, 43	# cell 42: song 1 track 5, 8 of 16
+	.byte	0x90, 0x45, 0x6c, 0x13, 0x00	# bytes 2..6 of `sq_note	0, 0, 69, 108, 19, 0` (the event spans two cells)
+	sq_note	48, 0, 42, 77, 18, 0
+	sq_note	48, 0, 69, 69, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 76, 8, 0
+	sq_note	48, 0, 42, 114, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 79, 15, 0
+	sq_note	0, 0, 69, 79, 13, 0
+	sq_note	48, 0, 42, 87, 19, 0
+	sq_note	48, 0, 69, 96, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 79, 20, 0
+	sq_note	48, 0, 42, 82, 6, 0
+	sq_note	72, 0, 42, 87, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 122, 18, 0
+	sq_note	0, 0, 69, 103, 18, 0
+	sq_note	48, 0, 42, 86, 21, 0
+	sq_note	48, 0, 69, 103, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 92, 5, 0
+	sq_note	48, 0, 42, 84, 5, 0
+	sq_note	72, 0, 42, 91, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 75, 15, 0
+	sq_note	0, 0, 42, 119, 16, 0
+	sq_note	48, 0, 42, 83, 22, 0
+	sq_note	48, 0, 69, 95, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 67, 8, 0
+	sq_note	48, 0, 42, 89, 8, 0
+	sq_beat
+	sq_note	0, 0, 69, 99, 13, 0
+	sq_note	0, 0, 42, 117, 18, 0
+	sq_note	48, 0, 69, 96, 10, 0
+	sq_note	48, 0, 42, 80, 19, 0
+	sq_beat
+	sq_note	0, 0, 42, 75, 7, 0
+	sq_note	48, 0, 42, 114, 20, 0
+	sq_beat
+	sq_note	0, 0, 42, 77, 19, 0
+	sq_note	0, 0, 69, 95, 13, 0
+	sq_note	48, 0, 42, 99, 16, 0
+	sq_note	48, 0, 69, 96, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 81, 19, 0
+	sq_note	48, 0, 42, 91, 6, 0
+	sq_note	72, 0, 42, 96, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 117, 14, 0
+	sq_note	0, 0, 69, 99, 9, 0
+	sq_cell	0x80, 42, 44	# cell 43: song 1 track 5, 9 of 16
+	sq_note	48, 0, 69, 101, 10, 0
+	sq_note	48, 0, 42, 89, 19, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 10, 0
+	sq_note	48, 0, 42, 95, 7, 0
+	sq_note	72, 0, 42, 93, 15, 0
+	sq_beat
+	sq_note	0, 0, 69, 99, 14, 0
+	sq_note	0, 0, 49, 112, 13, 0
+	sq_note	48, 0, 69, 95, 13, 0
+	sq_note	48, 0, 42, 80, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 91, 5, 0
+	sq_note	48, 0, 42, 84, 14, 0
+	sq_beat
+	sq_note	0, 0, 69, 101, 9, 0
+	sq_note	0, 0, 42, 122, 16, 0
+	sq_note	48, 0, 42, 79, 16, 0
+	sq_note	48, 0, 69, 101, 13, 0
+	sq_beat
+	sq_note	0, 0, 42, 79, 6, 0
+	sq_note	48, 0, 42, 122, 16, 0
+	sq_beat
+	sq_note	0, 0, 69, 94, 8, 0
+	sq_note	0, 0, 42, 76, 19, 0
+	sq_note	48, 0, 69, 100, 13, 0
+	sq_note	48, 0, 42, 102, 18, 0
+	sq_beat
+	sq_note	0, 0, 42, 82, 19, 0
+	sq_note	48, 0, 42, 82, 8, 0
+	sq_note	72, 0, 42, 89, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 114, 18, 0
+	sq_note	0, 0, 69, 105, 8, 0
+	sq_note	48, 0, 69, 107, 8, 0
+	sq_note	48, 0, 42, 89, 16, 0
+	sq_beat
+	sq_note	0, 0, 42, 122, 16, 0
+	sq_note	48, 0, 42, 86, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 95, 16, 0
+	sq_note	0, 0, 57, 127, 9, 0
+	sq_note	48, 0, 46, 109, 14, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 16, 0
+	sq_note	48, 0, 46, 97, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 99, 19, 0
+	sq_note	48, 0, 46, 97, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 99, 19, 0
+	sq_note	48, 0, 46, 102, 10, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x2a	# bytes 1..3 of `sq_note	0, 0, 42, 99, 19, 0` (the event spans two cells)
+	sq_cell	0x80, 43, 45	# cell 44: song 1 track 5, 10 of 16
+	.byte	0x63, 0x13, 0x00	# bytes 4..6 of `sq_note	0, 0, 42, 99, 19, 0` (the event spans two cells)
+	sq_note	48, 0, 46, 96, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 19, 0
+	sq_note	48, 0, 46, 99, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 20, 0
+	sq_note	48, 0, 46, 107, 12, 0
+	sq_beat
+	sq_note	0, 0, 42, 112, 13, 0
+	sq_note	48, 0, 46, 116, 5, 0
+	sq_beat
+	sq_cc	0, 0, 4, 7, 115
+	sq_note	0, 0, 49, 127, 5, 0
+	sq_note	0, 0, 42, 102, 12, 0
+	sq_note	48, 0, 46, 83, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 92, 12, 0
+	sq_note	48, 0, 46, 96, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 89, 13, 0
+	sq_note	48, 0, 46, 99, 8, 0
+	sq_beat
+	sq_note	0, 0, 42, 89, 14, 0
+	sq_note	48, 0, 46, 99, 7, 0
+	sq_beat
+	sq_note	0, 0, 42, 96, 15, 0
+	sq_note	48, 0, 46, 96, 7, 0
+	sq_beat
+	sq_note	0, 0, 42, 94, 14, 0
+	sq_note	48, 0, 46, 101, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 97, 19, 0
+	sq_note	48, 0, 46, 99, 9, 0
+	sq_beat
+	sq_note	0, 0, 42, 107, 16, 0
+	sq_note	48, 0, 20, 102, 15, 0
+	sq_note	72, 0, 46, 94, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 114, 16, 0
+	sq_note	48, 0, 46, 96, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 18, 0
+	sq_note	48, 0, 46, 99, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 16, 0
+	sq_note	48, 0, 46, 101, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 101, 18, 0
+	sq_note	48, 0, 46, 107, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 102, 16, 0
+	sq_note	48, 0, 46, 112, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 101, 16, 0
+	sq_note	48, 0, 46, 114, 5, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x2a	# bytes 1..3 of `sq_note	0, 0, 42, 109, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 44, 46	# cell 45: song 1 track 5, 11 of 16
+	.byte	0x6d, 0x10, 0x00	# bytes 4..6 of `sq_note	0, 0, 42, 109, 16, 0` (the event spans two cells)
+	sq_note	48, 0, 20, 89, 10, 0
+	sq_note	72, 0, 46, 104, 10, 0
+	sq_beat
+	sq_note	0, 0, 42, 114, 15, 0
+	sq_note	48, 0, 20, 96, 13, 0
+	sq_note	72, 0, 46, 104, 7, 0
+	sq_beat
+	sq_note	0, 0, 57, 127, 9, 0
+	sq_note	0, 0, 42, 111, 15, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 15, 0
+	sq_note	48, 0, 46, 109, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 19, 0
+	sq_note	48, 0, 46, 111, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 94, 16, 0
+	sq_note	48, 0, 46, 112, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 15, 0
+	sq_note	48, 0, 46, 112, 6, 0
+	sq_beat
+	sq_note	0, 0, 42, 104, 18, 0
+	sq_note	48, 0, 46, 107, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 105, 19, 0
+	sq_note	48, 0, 46, 109, 5, 0
+	sq_beat
+	sq_note	0, 0, 42, 111, 15, 0
+	sq_note	48, 0, 20, 106, 12, 0
+	sq_note	72, 0, 46, 109, 6, 0
+	sq_beat
+	sq_note	0, 0, 49, 127, 6, 0
+	sq_beat
+	sq_note	0, 0, 51, 122, 5, 0
+	sq_note	48, 0, 57, 127, 13, 0
+	sq_note	48, 0, 53, 123, 10, 0
+	sq_beat
+	sq_note	48, 0, 53, 127, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 49, 127, 9, 0
+	sq_beat
+	sq_note	0, 0, 59, 116, 6, 0
+	sq_note	48, 0, 57, 127, 12, 0
+	sq_note	48, 0, 53, 127, 13, 0
+	sq_beat
+	sq_note	48, 0, 49, 127, 15, 0
+	sq_beat
+	sq_note	48, 0, 53, 116, 24, 0
+	sq_note	72, 0, 52, 120, 24, 0
+	sq_note	72, 0, 53, 125, 24, 0
+	sq_beat
+	sq_cc	0, 0, 4, 7, 115
+	sq_note	0, 0, 57, 127, 25, 0
+	sq_note	0, 0, 52, 127, 12, 0
+	.byte	0x00, 0x90, 0x35	# bytes 1..3 of `sq_note	0, 0, 53, 127, 42, 0` (the event spans two cells)
+	sq_cell	0x80, 45, 47	# cell 46: song 1 track 5, 12 of 16
+	.byte	0x7f, 0x2a, 0x00	# bytes 4..6 of `sq_note	0, 0, 53, 127, 42, 0` (the event spans two cells)
+	sq_note	48, 0, 59, 98, 26, 0
+	sq_note	48, 0, 69, 70, 21, 0
+	sq_note	48, 0, 81, 84, 19, 0
+	sq_beat
+	sq_note	0, 0, 53, 71, 18, 0
+	sq_note	0, 0, 69, 65, 19, 0
+	sq_note	0, 0, 80, 64, 15, 0
+	sq_note	48, 0, 51, 100, 44, 0
+	sq_note	48, 0, 69, 70, 16, 0
+	sq_note	48, 0, 81, 90, 12, 0
+	sq_beat
+	sq_note	0, 0, 59, 115, 19, 0
+	sq_note	0, 0, 69, 106, 25, 0
+	sq_note	0, 0, 81, 126, 9, 0
+	sq_note	48, 0, 51, 85, 15, 0
+	sq_note	48, 0, 69, 69, 21, 0
+	sq_beat
+	sq_note	0, 0, 51, 93, 18, 0
+	sq_note	0, 0, 69, 56, 19, 0
+	sq_note	48, 0, 51, 89, 15, 0
+	sq_note	48, 0, 69, 63, 22, 0
+	sq_beat
+	sq_note	0, 0, 51, 82, 28, 0
+	sq_note	0, 0, 69, 66, 19, 0
+	sq_note	48, 0, 59, 80, 19, 0
+	sq_note	48, 0, 69, 97, 25, 0
+	sq_beat
+	sq_note	0, 0, 51, 60, 16, 0
+	sq_note	0, 0, 69, 66, 21, 0
+	sq_note	48, 0, 51, 84, 22, 0
+	sq_note	48, 0, 69, 61, 15, 0
+	sq_beat
+	sq_note	0, 0, 59, 106, 22, 0
+	sq_note	0, 0, 69, 111, 24, 0
+	sq_note	48, 0, 51, 80, 16, 0
+	sq_note	48, 0, 69, 76, 21, 0
+	sq_note	48, 0, 75, 114, 12, 0
+	sq_beat
+	sq_note	0, 0, 51, 94, 19, 0
+	sq_note	0, 0, 69, 67, 20, 0
+	sq_note	48, 0, 51, 106, 13, 0
+	sq_note	48, 0, 69, 68, 21, 0
+	sq_note	48, 0, 75, 114, 12, 0
+	sq_beat
+	sq_note	0, 0, 51, 124, 34, 0
+	sq_note	0, 0, 69, 80, 28, 0
+	sq_note	48, 0, 59, 115, 16, 0
+	sq_note	48, 0, 69, 70, 21, 0
+	sq_cell	0x80, 46, 48	# cell 47: song 1 track 5, 13 of 16
+	sq_beat
+	sq_note	0, 0, 53, 95, 7, 0
+	sq_note	0, 0, 69, 75, 16, 0
+	sq_note	48, 0, 51, 114, 22, 0
+	sq_note	48, 0, 69, 86, 14, 0
+	sq_beat
+	sq_note	0, 0, 59, 126, 20, 0
+	sq_note	0, 0, 69, 123, 22, 0
+	sq_note	48, 0, 51, 97, 8, 0
+	sq_note	48, 0, 69, 73, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 94, 18, 0
+	sq_note	0, 0, 69, 73, 19, 0
+	sq_note	48, 0, 51, 105, 13, 0
+	sq_note	48, 0, 69, 74, 25, 0
+	sq_beat
+	sq_note	0, 0, 51, 95, 21, 0
+	sq_note	0, 0, 69, 73, 19, 0
+	sq_note	48, 0, 59, 106, 19, 0
+	sq_note	48, 0, 69, 110, 25, 0
+	sq_note	48, 0, 81, 114, 18, 0
+	sq_beat
+	sq_note	0, 0, 51, 92, 21, 0
+	sq_note	0, 0, 69, 76, 16, 0
+	sq_note	0, 0, 80, 88, 7, 0
+	sq_note	48, 0, 51, 101, 6, 0
+	sq_note	48, 0, 69, 80, 16, 0
+	sq_note	48, 0, 80, 90, 5, 0
+	sq_note	72, 0, 51, 114, 18, 0
+	sq_beat
+	sq_note	0, 0, 59, 118, 16, 0
+	sq_note	0, 0, 69, 120, 25, 0
+	sq_note	48, 0, 51, 112, 15, 0
+	sq_note	48, 0, 69, 80, 16, 0
+	sq_note	48, 0, 70, 74, 19, 0
+	sq_note	48, 0, 81, 89, 7, 0
+	sq_beat
+	sq_note	0, 0, 51, 112, 13, 0
+	sq_note	0, 0, 69, 79, 21, 0
+	sq_note	0, 0, 70, 102, 16, 0
+	sq_note	0, 0, 81, 121, 6, 0
+	sq_note	48, 0, 51, 109, 12, 0
+	sq_note	48, 0, 69, 77, 19, 0
+	sq_note	48, 0, 70, 117, 15, 0
+	sq_note	48, 0, 81, 125, 6, 0
+	sq_note	72, 0, 59, 106, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 127, 26, 0
+	.byte	0x00, 0x90, 0x45	# bytes 1..3 of `sq_note	0, 0, 69, 95, 24, 0` (the event spans two cells)
+	sq_cell	0x80, 47, 49	# cell 48: song 1 track 5, 14 of 16
+	.byte	0x5f, 0x18, 0x00	# bytes 4..6 of `sq_note	0, 0, 69, 95, 24, 0` (the event spans two cells)
+	sq_note	0, 0, 82, 127, 9, 0
+	sq_note	0, 0, 84, 111, 12, 0
+	sq_note	48, 0, 59, 103, 18, 0
+	sq_note	48, 0, 69, 83, 22, 0
+	sq_beat
+	sq_note	0, 0, 53, 101, 7, 0
+	sq_note	0, 0, 69, 78, 19, 0
+	sq_note	48, 0, 51, 124, 19, 0
+	sq_note	48, 0, 69, 91, 13, 0
+	sq_beat
+	sq_note	0, 0, 59, 126, 25, 0
+	sq_note	0, 0, 69, 126, 25, 0
+	sq_note	0, 0, 75, 117, 25, 0
+	sq_note	48, 0, 51, 97, 8, 0
+	sq_note	48, 0, 69, 80, 16, 0
+	sq_beat
+	sq_note	0, 0, 51, 96, 13, 0
+	sq_note	0, 0, 69, 76, 19, 0
+	sq_note	48, 0, 51, 119, 15, 0
+	sq_note	48, 0, 69, 71, 19, 0
+	sq_beat
+	sq_note	0, 0, 51, 99, 18, 0
+	sq_note	0, 0, 69, 76, 19, 0
+	sq_note	48, 0, 59, 115, 20, 0
+	sq_note	48, 0, 69, 117, 22, 0
+	sq_beat
+	sq_note	0, 0, 51, 77, 13, 0
+	sq_note	0, 0, 69, 80, 14, 0
+	sq_note	48, 0, 51, 96, 16, 0
+	sq_note	48, 0, 69, 91, 15, 0
+	sq_beat
+	sq_note	0, 0, 59, 119, 28, 0
+	sq_note	0, 0, 69, 127, 22, 0
+	sq_note	48, 0, 51, 94, 13, 0
+	sq_note	48, 0, 69, 76, 15, 0
+	sq_note	48, 0, 75, 104, 21, 0
+	sq_beat
+	sq_note	0, 0, 51, 109, 21, 0
+	sq_note	0, 0, 69, 75, 19, 0
+	sq_note	24, 0, 75, 103, 13, 0
+	sq_note	48, 0, 53, 106, 7, 0
+	sq_note	48, 0, 69, 77, 20, 0
+	sq_note	72, 0, 59, 106, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 119, 26, 0
+	sq_note	0, 0, 69, 90, 26, 0
+	sq_note	48, 0, 59, 97, 18, 0
+	sq_note	48, 0, 69, 66, 20, 0
+	sq_cell	0x80, 48, 50	# cell 49: song 1 track 5, 15 of 16
+	sq_beat
+	sq_note	0, 0, 51, 114, 18, 0
+	sq_note	0, 0, 69, 73, 15, 0
+	sq_note	48, 0, 53, 106, 6, 0
+	sq_note	48, 0, 69, 93, 15, 0
+	sq_note	72, 0, 51, 124, 15, 0
+	sq_beat
+	sq_note	0, 0, 59, 115, 18, 0
+	sq_note	0, 0, 69, 125, 25, 0
+	sq_note	48, 0, 51, 92, 5, 0
+	sq_note	48, 0, 69, 75, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 103, 13, 0
+	sq_note	0, 0, 69, 71, 24, 0
+	sq_note	48, 0, 51, 112, 13, 0
+	sq_note	48, 0, 69, 77, 21, 0
+	sq_beat
+	sq_note	0, 0, 51, 107, 21, 0
+	sq_note	0, 0, 69, 83, 16, 0
+	sq_note	48, 0, 59, 116, 22, 0
+	sq_note	48, 0, 69, 123, 25, 0
+	sq_beat
+	sq_note	0, 0, 53, 70, 7, 0
+	sq_note	0, 0, 69, 79, 19, 0
+	sq_note	48, 0, 51, 97, 18, 0
+	sq_note	48, 0, 69, 78, 14, 0
+	sq_beat
+	sq_note	0, 0, 59, 118, 21, 0
+	sq_note	0, 0, 69, 120, 22, 0
+	sq_note	48, 0, 53, 80, 15, 0
+	sq_note	48, 0, 69, 79, 19, 0
+	sq_beat
+	sq_note	0, 0, 51, 109, 15, 0
+	sq_note	0, 0, 69, 75, 16, 0
+	sq_note	48, 0, 51, 121, 6, 0
+	sq_note	48, 0, 69, 97, 15, 0
+	sq_note	72, 0, 51, 121, 7, 0
+	sq_beat
+	sq_note	0, 0, 84, 127, 24, 0
+	sq_note	4, 0, 53, 127, 8, 0
+	sq_note	7, 0, 69, 120, 21, 0
+	sq_note	58, 0, 69, 73, 15, 0
+	sq_beat
+	sq_note	4, 0, 69, 81, 17, 0
+	sq_note	9, 0, 51, 66, 13, 0
+	sq_note	52, 0, 69, 90, 11, 0
+	sq_note	58, 0, 59, 109, 12, 0
+	sq_beat
+	sq_note	5, 0, 69, 116, 18, 0
+	sq_note	9, 0, 51, 96, 14, 0
+	.byte	0x35	# bytes 1..1 of `sq_note	53, 0, 53, 113, 7, 0` (the event spans two cells)
+	sq_cell	0x80, 49, 65535	# cell 50: song 1 track 5, 16 of 16
+	.byte	0x90, 0x35, 0x71, 0x07, 0x00	# bytes 2..6 of `sq_note	53, 0, 53, 113, 7, 0` (the event spans two cells)
+	sq_note	54, 0, 69, 76, 13, 0
+	sq_beat
+	sq_note	3, 0, 69, 83, 14, 0
+	sq_note	48, 0, 69, 109, 24, 0
+	sq_note	53, 0, 53, 118, 6, 0
+	sq_beat
+	sq_note	0, 0, 69, 80, 17, 0
+	sq_note	0, 0, 51, 54, 19, 0
+	sq_note	45, 0, 69, 76, 19, 0
+	sq_note	50, 0, 53, 110, 6, 0
+	sq_note	95, 0, 69, 72, 17, 0
+	sq_beat
+	sq_note	44, 0, 69, 69, 19, 0
+	sq_note	51, 0, 51, 95, 23, 0
+	sq_beat
+	sq_note	0, 0, 57, 127, 13, 0
+	sq_note	2, 0, 69, 76, 18, 0
+	sq_beat
+	sq_note	3, 0, 51, 96, 23, 0
+	sq_note	52, 0, 53, 66, 13, 0
+	sq_beat
+	sq_note	7, 0, 59, 105, 13, 0
+	sq_beat
+	sq_note	26, 0, 59, 93, 13, 0
+	sq_beat
+	sq_note	64, 0, 59, 90, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 51, 118, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	80, 0, 59, 127, 5, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 53, 24, 24, 0
+	sq_note	12, 0, 53, 14, 64, 0
+	sq_note	24, 0, 53, 32, 12, 0
+	sq_note	36, 0, 53, 54, 12, 0
+	sq_note	48, 0, 53, 73, 12, 0
+	sq_note	64, 0, 53, 123, 7, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 84, 127, 24, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	67, 120, 16, 0, 129, 53, 144, 65, 118, 64, 1, 129, 129, 129, 129, 51
+	.byte	144, 67, 121, 14, 0, 129, 47, 144, 65, 121, 18, 0, 129, 44, 144, 67
+	.byte	126, 14, 0, 129, 129, 47, 144, 65, 120, 83, 0, 129, 95, 144, 65, 116
+	sq_cell	0x80, 0, 52	# cell 51: song 1 track 6, 1 of 9
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 90, 16, 32
+	sq_cc	0, 0, 5, 7, 115
+	sq_cc	0, 0, 5, 10, 64
+	sq_beat
+	sq_note	0, 0, 58, 105, 16, 0
+	sq_note	0, 0, 63, 114, 16, 0
+	sq_note	0, 0, 67, 116, 20, 0
+	sq_note	48, 0, 58, 119, 70, 0
+	sq_note	48, 0, 63, 122, 67, 0
+	sq_note	48, 0, 67, 123, 74, 0
+	sq_beat
+	sq_note	48, 0, 60, 105, 19, 0
+	sq_note	48, 0, 65, 113, 20, 0
+	sq_note	48, 0, 69, 106, 21, 0
+	sq_beat
+	sq_note	48, 0, 60, 116, 74, 1
+	sq_note	48, 0, 65, 125, 65, 1
+	sq_note	48, 0, 69, 127, 79, 1
+	sq_press	60, 0, 27
+	sq_press	71, 0, 0
+	sq_beat
+	sq_cc	4, 0, 5, 1, 4
+	sq_cc	7, 0, 5, 1, 10
+	sq_cc	10, 0, 5, 1, 13
+	sq_cc	14, 0, 5, 1, 16
+	sq_cc	15, 0, 5, 1, 19
+	sq_cc	19, 0, 5, 1, 27
+	sq_cc	22, 0, 5, 1, 32
+	sq_cc	26, 0, 5, 1, 41
+	sq_cc	29, 0, 5, 1, 45
+	sq_cc	33, 0, 5, 1, 53
+	.byte	0x25, 0xb0, 0x05, 0x01	# bytes 1..4 of `sq_cc	37, 0, 5, 1, 57` (the event spans two cells)
+	sq_cell	0x80, 51, 53	# cell 52: song 1 track 6, 2 of 9
+	.byte	0x39	# bytes 5..5 of `sq_cc	37, 0, 5, 1, 57` (the event spans two cells)
+	sq_cc	38, 0, 5, 1, 60
+	sq_cc	42, 0, 5, 1, 64
+	sq_cc	45, 0, 5, 1, 70
+	sq_cc	49, 0, 5, 1, 74
+	sq_cc	54, 0, 5, 1, 81
+	sq_cc	57, 0, 5, 1, 88
+	sq_cc	61, 0, 5, 1, 91
+	sq_cc	64, 0, 5, 1, 97
+	sq_cc	68, 0, 5, 1, 100
+	sq_press	73, 0, 2
+	sq_cc	73, 0, 5, 1, 104
+	sq_press	73, 0, 4
+	sq_cc	73, 0, 5, 1, 106
+	sq_press	77, 0, 6
+	sq_cc	77, 0, 5, 1, 108
+	sq_press	77, 0, 8
+	sq_cc	80, 0, 5, 1, 111
+	sq_press	80, 0, 10
+	sq_cc	80, 0, 5, 1, 112
+	sq_press	84, 0, 11
+	sq_cc	84, 0, 5, 1, 114
+	sq_press	84, 0, 12
+	sq_cc	84, 0, 5, 1, 116
+	sq_cc	87, 0, 5, 1, 118
+	sq_cc	92, 0, 5, 1, 121
+	sq_beat
+	sq_press	0, 0, 4
+	sq_press	11, 0, 7
+	sq_press	16, 0, 10
+	sq_cc	16, 0, 5, 1, 117
+	sq_press	19, 0, 11
+	sq_cc	19, 0, 5, 1, 112
+	sq_cc	23, 0, 5, 1, 107
+	sq_cc	26, 0, 5, 1, 102
+	sq_press	26, 0, 4
+	sq_cc	26, 0, 5, 1, 97
+	sq_press	30, 0, 0
+	sq_cc	31, 0, 5, 1, 90
+	sq_cc	35, 0, 5, 1, 76
+	sq_cc	37, 0, 5, 1, 69
+	sq_cc	39, 0, 5, 1, 60
+	sq_cc	42, 0, 5, 1, 50
+	sq_cc	46, 0, 5, 1, 29
+	sq_note	48, 0, 62, 105, 55, 2
+	sq_note	48, 0, 67, 111, 59, 2
+	sq_note	48, 0, 70, 112, 55, 2
+	sq_cc	51, 0, 5, 1, 10
+	sq_cc	54, 0, 5, 1, 0
+	sq_press	58, 0, 12
+	sq_press	62, 0, 13
+	sq_press	65, 0, 16
+	sq_press	69, 0, 4
+	sq_press	72, 0, 3
+	sq_press	76, 0, 5
+	sq_press	81, 0, 7
+	sq_press	84, 0, 8
+	sq_beat
+	sq_press	8, 0, 12
+	sq_press	11, 0, 14
+	sq_press	15, 0, 15
+	sq_press	19, 0, 16
+	sq_cell	0x80, 52, 54	# cell 53: song 1 track 6, 3 of 9
+	sq_press	27, 0, 18
+	sq_press	31, 0, 20
+	sq_press	38, 0, 23
+	sq_cc	46, 0, 5, 1, 6
+	sq_cc	51, 0, 5, 1, 10
+	sq_press	55, 0, 24
+	sq_cc	55, 0, 5, 1, 13
+	sq_cc	57, 0, 5, 1, 15
+	sq_cc	59, 0, 5, 1, 17
+	sq_cc	62, 0, 5, 1, 20
+	sq_cc	66, 0, 5, 1, 24
+	sq_cc	69, 0, 5, 1, 28
+	sq_cc	73, 0, 5, 1, 30
+	sq_cc	77, 0, 5, 1, 32
+	sq_cc	78, 0, 5, 1, 34
+	sq_press	81, 0, 25
+	sq_cc	81, 0, 5, 1, 36
+	sq_cc	85, 0, 5, 1, 40
+	sq_cc	89, 0, 5, 1, 45
+	sq_cc	92, 0, 5, 1, 47
+	sq_beat
+	sq_press	1, 0, 27
+	sq_cc	1, 0, 5, 1, 52
+	sq_cc	6, 0, 5, 1, 57
+	sq_cc	8, 0, 5, 1, 59
+	sq_cc	12, 0, 5, 1, 65
+	sq_cc	16, 0, 5, 1, 67
+	sq_press	21, 0, 28
+	sq_cc	21, 0, 5, 1, 74
+	sq_cc	24, 0, 5, 1, 81
+	sq_cc	28, 0, 5, 1, 84
+	sq_cc	31, 0, 5, 1, 87
+	sq_cc	33, 0, 5, 1, 90
+	sq_cc	35, 0, 5, 1, 94
+	sq_press	40, 0, 27
+	sq_cc	40, 0, 5, 1, 99
+	sq_cc	43, 0, 5, 1, 101
+	sq_press	47, 0, 24
+	sq_cc	52, 0, 5, 1, 102
+	sq_press	59, 0, 22
+	sq_cc	59, 0, 5, 1, 97
+	sq_cc	63, 0, 5, 1, 88
+	sq_press	67, 0, 19
+	sq_cc	67, 0, 5, 1, 82
+	sq_cc	70, 0, 5, 1, 69
+	sq_cc	75, 0, 5, 1, 62
+	sq_press	78, 0, 16
+	sq_cc	78, 0, 5, 1, 55
+	sq_press	78, 0, 14
+	sq_cc	78, 0, 5, 1, 47
+	sq_press	83, 0, 12
+	sq_cc	83, 0, 5, 1, 39
+	sq_press	83, 0, 11
+	sq_cc	86, 0, 5, 1, 30
+	sq_press	86, 0, 7
+	sq_cc	86, 0, 5, 1, 22
+	sq_press	91, 0, 5
+	.byte	0x5b, 0xb0, 0x05, 0x01	# bytes 1..4 of `sq_cc	91, 0, 5, 1, 4` (the event spans two cells)
+	sq_cell	0x80, 53, 55	# cell 54: song 1 track 6, 4 of 9
+	.byte	0x04	# bytes 5..5 of `sq_cc	91, 0, 5, 1, 4` (the event spans two cells)
+	sq_cc	93, 0, 5, 1, 0
+	sq_beat
+	sq_press	2, 0, 0
+	sq_beat
+	sq_note	0, 0, 58, 105, 18, 0
+	sq_note	0, 0, 63, 106, 16, 0
+	sq_note	0, 0, 67, 106, 21, 0
+	sq_note	48, 0, 58, 109, 62, 0
+	sq_note	48, 0, 63, 107, 61, 0
+	sq_note	48, 0, 67, 116, 67, 0
+	sq_press	64, 0, 11
+	sq_press	68, 0, 2
+	sq_press	71, 0, 0
+	sq_beat
+	sq_note	48, 0, 60, 103, 16, 0
+	sq_note	48, 0, 65, 116, 20, 0
+	sq_note	48, 0, 69, 111, 21, 0
+	sq_press	56, 0, 8
+	sq_press	59, 0, 0
+	sq_beat
+	sq_note	48, 0, 63, 104, 74, 0
+	sq_note	48, 0, 69, 113, 85, 0
+	sq_note	48, 0, 72, 103, 83, 0
+	sq_press	56, 0, 24
+	sq_cc	57, 0, 5, 1, 6
+	sq_press	61, 0, 34
+	sq_cc	61, 0, 5, 1, 15
+	sq_press	64, 0, 20
+	sq_cc	64, 0, 5, 1, 21
+	sq_press	68, 0, 12
+	sq_cc	68, 0, 5, 1, 34
+	sq_press	71, 0, 17
+	sq_cc	71, 0, 5, 1, 39
+	sq_press	75, 0, 19
+	sq_cc	75, 0, 5, 1, 49
+	sq_cc	79, 0, 5, 1, 62
+	sq_cc	82, 0, 5, 1, 69
+	sq_press	87, 0, 23
+	sq_cc	87, 0, 5, 1, 76
+	sq_press	87, 0, 24
+	sq_cc	87, 0, 5, 1, 83
+	sq_cc	91, 0, 5, 1, 90
+	sq_cc	94, 0, 5, 1, 97
+	sq_beat
+	sq_press	0, 0, 19
+	sq_cc	0, 0, 5, 1, 103
+	sq_press	3, 0, 16
+	sq_cc	4, 0, 5, 1, 108
+	sq_press	4, 0, 15
+	sq_cc	7, 0, 5, 1, 113
+	sq_press	7, 0, 13
+	sq_cc	7, 0, 5, 1, 118
+	sq_press	10, 0, 12
+	sq_cc	10, 0, 5, 1, 125
+	sq_cc	14, 0, 5, 1, 127
+	sq_press	14, 0, 4
+	sq_press	18, 0, 0
+	sq_cc	22, 0, 5, 1, 123
+	sq_cc	25, 0, 5, 1, 120
+	sq_cc	30, 0, 5, 1, 109
+	sq_cell	0x80, 54, 56	# cell 55: song 1 track 6, 5 of 9
+	sq_cc	33, 0, 5, 1, 93
+	sq_cc	38, 0, 5, 1, 84
+	sq_cc	42, 0, 5, 1, 62
+	sq_cc	44, 0, 5, 1, 49
+	sq_note	48, 0, 62, 90, 30, 0
+	sq_note	48, 0, 67, 99, 25, 0
+	sq_note	48, 0, 70, 89, 32, 0
+	sq_cc	49, 0, 5, 1, 19
+	sq_cc	54, 0, 5, 1, 0
+	sq_beat
+	sq_note	0, 0, 60, 85, 22, 0
+	sq_note	0, 0, 65, 100, 24, 0
+	sq_note	0, 0, 69, 105, 29, 0
+	sq_note	48, 0, 62, 95, 94, 1
+	sq_note	48, 0, 67, 111, 1, 2
+	sq_note	48, 0, 70, 116, 4, 2
+	sq_press	61, 0, 8
+	sq_press	68, 0, 0
+	sq_press	80, 0, 1
+	sq_press	84, 0, 4
+	sq_press	87, 0, 7
+	sq_press	92, 0, 12
+	sq_beat
+	sq_press	0, 0, 13
+	sq_press	4, 0, 14
+	sq_cc	4, 0, 5, 1, 3
+	sq_press	6, 0, 16
+	sq_cc	6, 0, 5, 1, 6
+	sq_cc	7, 0, 5, 1, 9
+	sq_cc	8, 0, 5, 1, 11
+	sq_press	12, 0, 18
+	sq_cc	12, 0, 5, 1, 14
+	sq_press	15, 0, 19
+	sq_cc	15, 0, 5, 1, 17
+	sq_press	15, 0, 20
+	sq_cc	19, 0, 5, 1, 20
+	sq_press	19, 0, 22
+	sq_cc	19, 0, 5, 1, 23
+	sq_press	24, 0, 23
+	sq_cc	24, 0, 5, 1, 29
+	sq_cc	27, 0, 5, 1, 34
+	sq_press	31, 0, 24
+	sq_cc	31, 0, 5, 1, 37
+	sq_cc	35, 0, 5, 1, 43
+	sq_cc	38, 0, 5, 1, 45
+	sq_press	43, 0, 27
+	sq_cc	43, 0, 5, 1, 52
+	sq_cc	46, 0, 5, 1, 56
+	sq_cc	47, 0, 5, 1, 59
+	sq_press	52, 0, 28
+	sq_cc	52, 0, 5, 1, 63
+	sq_press	54, 0, 29
+	sq_cc	54, 0, 5, 1, 67
+	sq_press	54, 0, 31
+	sq_cc	54, 0, 5, 1, 71
+	sq_press	58, 0, 32
+	sq_cc	58, 0, 5, 1, 74
+	sq_cc	62, 0, 5, 1, 79
+	sq_cell	0x80, 55, 57	# cell 56: song 1 track 6, 6 of 9
+	sq_cc	65, 0, 5, 1, 82
+	sq_cc	66, 0, 5, 1, 84
+	sq_cc	70, 0, 5, 1, 87
+	sq_press	73, 0, 35
+	sq_cc	75, 0, 5, 1, 92
+	sq_cc	77, 0, 5, 1, 94
+	sq_press	82, 0, 36
+	sq_cc	82, 0, 5, 1, 95
+	sq_press	82, 0, 37
+	sq_beat
+	sq_press	16, 0, 36
+	sq_press	20, 0, 34
+	sq_press	23, 0, 29
+	sq_press	28, 0, 27
+	sq_cc	28, 0, 5, 1, 90
+	sq_press	28, 0, 24
+	sq_cc	32, 0, 5, 1, 86
+	sq_press	32, 0, 21
+	sq_cc	32, 0, 5, 1, 81
+	sq_press	35, 0, 16
+	sq_cc	35, 0, 5, 1, 75
+	sq_press	36, 0, 12
+	sq_cc	36, 0, 5, 1, 68
+	sq_press	39, 0, 5
+	sq_cc	39, 0, 5, 1, 62
+	sq_press	39, 0, 0
+	sq_cc	44, 0, 5, 1, 49
+	sq_cc	47, 0, 5, 1, 37
+	sq_cc	52, 0, 5, 1, 30
+	sq_cc	55, 0, 5, 1, 15
+	sq_cc	58, 0, 5, 1, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 55, 108, 15, 0
+	sq_note	0, 0, 60, 110, 15, 0
+	sq_note	0, 0, 64, 109, 14, 0
+	sq_note	48, 0, 55, 105, 67, 0
+	sq_note	48, 0, 60, 116, 70, 0
+	sq_note	48, 0, 64, 118, 72, 0
+	sq_press	60, 0, 8
+	sq_press	63, 0, 16
+	sq_press	72, 0, 0
+	sq_beat
+	sq_note	48, 0, 57, 97, 20, 0
+	sq_note	48, 0, 60, 113, 25, 0
+	sq_note	48, 0, 64, 113, 24, 0
+	sq_note	48, 0, 67, 113, 25, 0
+	sq_beat
+	sq_note	48, 0, 57, 108, 65, 1
+	sq_note	48, 0, 60, 121, 62, 1
+	sq_note	48, 0, 64, 116, 71, 1
+	sq_note	48, 0, 67, 110, 58, 1
+	sq_cc	62, 0, 5, 1, 3
+	sq_press	66, 0, 12
+	sq_cc	66, 0, 5, 1, 7
+	sq_cc	69, 0, 5, 1, 10
+	sq_cc	73, 0, 5, 1, 13
+	sq_press	73, 0, 0
+	.byte	0x49, 0xb0, 0x05	# bytes 1..3 of `sq_cc	73, 0, 5, 1, 16` (the event spans two cells)
+	sq_cell	0x80, 56, 58	# cell 57: song 1 track 6, 7 of 9
+	.byte	0x01, 0x10	# bytes 4..5 of `sq_cc	73, 0, 5, 1, 16` (the event spans two cells)
+	sq_cc	77, 0, 5, 1, 18
+	sq_cc	80, 0, 5, 1, 20
+	sq_cc	81, 0, 5, 1, 21
+	sq_cc	89, 0, 5, 1, 25
+	sq_cc	92, 0, 5, 1, 30
+	sq_beat
+	sq_cc	0, 0, 5, 1, 33
+	sq_cc	6, 0, 5, 1, 40
+	sq_cc	7, 0, 5, 1, 43
+	sq_cc	8, 0, 5, 1, 47
+	sq_cc	12, 0, 5, 1, 49
+	sq_cc	16, 0, 5, 1, 55
+	sq_cc	19, 0, 5, 1, 59
+	sq_cc	23, 0, 5, 1, 62
+	sq_cc	24, 0, 5, 1, 66
+	sq_cc	28, 0, 5, 1, 69
+	sq_cc	31, 0, 5, 1, 75
+	sq_cc	35, 0, 5, 1, 79
+	sq_cc	38, 0, 5, 1, 81
+	sq_press	38, 0, 4
+	sq_cc	42, 0, 5, 1, 83
+	sq_press	42, 0, 7
+	sq_cc	42, 0, 5, 1, 85
+	sq_press	47, 0, 8
+	sq_cc	47, 0, 5, 1, 88
+	sq_press	47, 0, 11
+	sq_cc	52, 0, 5, 1, 90
+	sq_press	52, 0, 12
+	sq_cc	52, 0, 5, 1, 92
+	sq_cc	54, 0, 5, 1, 95
+	sq_press	54, 0, 13
+	sq_cc	55, 0, 5, 1, 96
+	sq_press	59, 0, 15
+	sq_cc	59, 0, 5, 1, 97
+	sq_press	59, 0, 16
+	sq_cc	63, 0, 5, 1, 98
+	sq_press	63, 0, 17
+	sq_cc	63, 0, 5, 1, 99
+	sq_press	66, 0, 20
+	sq_press	70, 0, 22
+	sq_cc	70, 0, 5, 1, 101
+	sq_press	74, 0, 23
+	sq_press	77, 0, 24
+	sq_press	89, 0, 22
+	sq_press	93, 0, 20
+	sq_beat
+	sq_press	0, 0, 14
+	sq_press	5, 0, 8
+	sq_press	9, 0, 5
+	sq_press	13, 0, 3
+	sq_cc	13, 0, 5, 1, 96
+	sq_cc	16, 0, 5, 1, 92
+	sq_cc	17, 0, 5, 1, 87
+	sq_cc	20, 0, 5, 1, 83
+	sq_cc	21, 0, 5, 1, 76
+	sq_press	25, 0, 0
+	sq_cc	25, 0, 5, 1, 69
+	sq_cc	28, 0, 5, 1, 49
+	sq_cc	32, 0, 5, 1, 38
+	.byte	0x24, 0xb0	# bytes 1..2 of `sq_cc	36, 0, 5, 1, 11` (the event spans two cells)
+	sq_cell	0x80, 57, 59	# cell 58: song 1 track 6, 8 of 9
+	.byte	0x05, 0x01, 0x0b	# bytes 3..5 of `sq_cc	36, 0, 5, 1, 11` (the event spans two cells)
+	sq_cc	39, 0, 5, 1, 0
+	sq_note	48, 0, 57, 101, 55, 1
+	sq_note	48, 0, 62, 119, 45, 1
+	sq_note	48, 0, 66, 114, 57, 1
+	sq_press	58, 0, 14
+	sq_press	67, 0, 12
+	sq_press	74, 0, 0
+	sq_press	86, 0, 4
+	sq_beat
+	sq_press	17, 0, 2
+	sq_press	22, 0, 0
+	sq_beat
+	sq_note	48, 0, 62, 96, 25, 0
+	sq_note	72, 0, 64, 107, 13, 0
+	sq_beat
+	sq_note	0, 0, 57, 104, 0, 1
+	sq_note	0, 0, 60, 115, 1, 1
+	sq_note	0, 0, 65, 106, 9, 1
+	sq_press	11, 0, 12
+	sq_press	18, 0, 13
+	sq_press	22, 0, 11
+	sq_press	25, 0, 8
+	sq_press	30, 0, 6
+	sq_press	34, 0, 0
+	sq_beat
+	sq_note	48, 0, 60, 121, 41, 0
+	sq_note	48, 0, 64, 127, 41, 0
+	sq_note	48, 0, 67, 127, 41, 0
+	sq_press	66, 0, 46
+	sq_press	73, 0, 3
+	sq_press	77, 0, 0
+	sq_beat
+	sq_note	48, 0, 60, 120, 78, 0
+	sq_note	48, 0, 64, 127, 80, 0
+	sq_note	48, 0, 67, 126, 80, 0
+	sq_press	62, 0, 44
+	sq_press	65, 0, 45
+	sq_press	74, 0, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 60, 123, 6, 1
+	sq_note	0, 0, 64, 127, 95, 0
+	sq_note	0, 0, 67, 127, 7, 1
+	sq_press	17, 0, 42
+	sq_press	21, 0, 48
+	sq_press	29, 0, 0
+	sq_beat
+	sq_note	48, 0, 62, 119, 44, 0
+	sq_note	48, 0, 66, 127, 48, 0
+	sq_note	48, 0, 69, 126, 50, 0
+	sq_press	64, 0, 34
+	sq_press	68, 0, 29
+	sq_press	72, 0, 0
+	sq_beat
+	sq_note	48, 0, 62, 125, 64, 0
+	sq_note	48, 0, 66, 127, 61, 0
+	sq_note	48, 0, 69, 127, 65, 0
+	sq_press	61, 0, 47
+	sq_press	65, 0, 48
+	sq_press	73, 0, 8
+	sq_press	74, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 58, 65535	# cell 59: song 1 track 6, 9 of 9
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	72, 90, 34, 0, 129, 14, 144, 71, 91, 21, 0, 37, 144, 74, 99, 28
+	.byte	0, 63, 144, 71, 88, 11, 0, 76, 144, 67, 80, 17, 0, 129, 1, 144
+	.byte	70, 102, 21, 0, 23, 144, 67, 79, 21, 0, 47, 144, 68, 96, 10, 0
+	.byte	69, 144, 67, 74, 12, 0, 88, 144, 68, 93, 29, 0, 129, 23, 144, 69
+	.byte	89, 16, 0, 39, 144, 70, 62, 18, 0, 51, 144, 71, 78, 26, 0, 77
+	.byte	144, 72, 96, 21, 0, 95, 144, 68, 102, 86, 0, 129, 19, 224, 64, 69
+	.byte	22, 224, 0, 96, 26, 224, 0, 117, 26, 224, 127, 127, 32, 224, 0, 88
+	.byte	36, 224, 0, 72, 39, 224, 0, 64, 52, 224, 127, 127, 65, 224, 64, 65
+	.byte	68, 224, 64, 59, 75, 224, 0, 64, 85, 144, 65, 90, 22, 0, 129, 15
+	.byte	144, 60, 98, 19, 0, 36, 144, 68, 109, 87, 0, 44, 224, 0, 73, 48
+	.byte	224, 0, 91, 52, 224, 64, 95, 54, 224, 0, 81, 58, 224, 0, 71, 61
+	.byte	224, 0, 64, 77, 224, 64, 71, 78, 224, 0, 94, 81, 224, 127, 127
+	sq_cell	0x80, 0, 61	# cell 60: song 1 track 7, 1 of 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 55, 119, 21, 0
+	sq_press	12, 0, 13
+	sq_press	16, 0, 6
+	sq_press	19, 0, 0
+	sq_note	48, 0, 62, 80, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 80, 19, 0
+	sq_note	48, 0, 62, 80, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 21, 0
+	sq_note	48, 0, 62, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 67, 86, 20, 0
+	sq_note	48, 0, 62, 81, 15, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 19, 0
+	sq_note	48, 0, 62, 81, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 19, 0
+	sq_note	48, 0, 62, 80, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 81, 19, 0
+	sq_note	48, 0, 62, 83, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 81, 19, 0
+	sq_note	48, 0, 62, 93, 19, 0
+	sq_beat
+	sq_note	0, 0, 55, 98, 19, 0
+	sq_note	48, 0, 62, 78, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 83, 19, 0
+	sq_note	48, 0, 62, 84, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 85, 22, 0
+	sq_note	48, 0, 62, 76, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 85, 20, 0
+	sq_note	48, 0, 62, 79, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 86, 19, 0
+	sq_note	48, 0, 62, 79, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 85, 21, 0
+	sq_note	48, 0, 62, 78, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 83, 20, 0
+	sq_note	48, 0, 62, 85, 20, 0
+	sq_beat
+	sq_note	0, 0, 67, 90, 21, 0
+	sq_note	48, 0, 62, 108, 21, 0
+	sq_beat
+	sq_note	0, 0, 51, 95, 19, 0
+	sq_note	48, 0, 58, 87, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 96, 19, 0
+	sq_note	48, 0, 58, 86, 18, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x3f, 0x5b	# bytes 1..4 of `sq_note	0, 0, 63, 91, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 60, 62	# cell 61: song 1 track 7, 2 of 6
+	.byte	0x0d, 0x00	# bytes 5..6 of `sq_note	0, 0, 63, 91, 13, 0` (the event spans two cells)
+	sq_note	48, 0, 58, 77, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 13, 0
+	sq_note	48, 0, 58, 74, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 89, 13, 0
+	sq_note	48, 0, 58, 76, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 58, 77, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 15, 0
+	sq_note	48, 0, 58, 69, 14, 0
+	sq_beat
+	sq_note	0, 0, 63, 89, 14, 0
+	sq_note	48, 0, 58, 83, 18, 0
+	sq_beat
+	sq_note	0, 0, 51, 109, 13, 0
+	sq_note	48, 0, 58, 67, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 58, 82, 19, 0
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 58, 75, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 16, 0
+	sq_note	48, 0, 58, 71, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 93, 15, 0
+	sq_note	48, 0, 58, 75, 13, 0
+	sq_beat
+	sq_note	0, 0, 63, 96, 15, 0
+	sq_note	48, 0, 58, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 99, 15, 0
+	sq_note	48, 0, 58, 86, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 102, 12, 0
+	sq_note	48, 0, 58, 106, 9, 0
+	sq_beat
+	sq_note	0, 0, 75, 42, 57, 3
+	sq_note	0, 0, 60, 39, 43, 3
+	sq_note	0, 0, 68, 37, 15, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 70, 29, 81, 3
+	sq_note	48, 0, 77, 56, 81, 3
+	sq_note	48, 0, 62, 60, 0, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	72, 0, 63, 50, 50, 1
+	sq_beat
+	sq_note	0, 0, 79, 61, 39, 1
+	sq_note	0, 0, 70, 37, 67, 2
+	sq_beat
+	sq_note	48, 0, 65, 55, 81, 0
+	.byte	0x30, 0x90, 0x50, 0x41	# bytes 1..4 of `sq_note	48, 0, 80, 65, 92, 0` (the event spans two cells)
+	sq_cell	0x80, 61, 63	# cell 62: song 1 track 7, 3 of 6
+	.byte	0x5c, 0x00	# bytes 5..6 of `sq_note	48, 0, 80, 65, 92, 0` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 67, 41, 86, 0
+	sq_note	48, 0, 82, 57, 93, 0
+	sq_beat
+	sq_note	48, 0, 68, 46, 32, 3
+	sq_note	48, 0, 72, 61, 79, 3
+	sq_note	48, 0, 70, 41, 28, 3
+	sq_beat
+	sq_beat
+	sq_note	24, 0, 75, 5, 8, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 75, 45, 31, 3
+	sq_note	0, 0, 60, 48, 31, 3
+	sq_note	0, 0, 68, 36, 6, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 70, 37, 55, 4
+	sq_note	48, 0, 62, 54, 50, 4
+	sq_note	48, 0, 77, 53, 52, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 75, 51, 93, 0
+	sq_note	0, 0, 63, 56, 38, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 67, 52, 29, 3
+	sq_note	0, 0, 55, 54, 21, 3
+	sq_note	0, 0, 75, 49, 18, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 77, 64, 27, 4
+	sq_note	48, 0, 69, 60, 31, 4
+	sq_note	48, 0, 57, 50, 18, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 74, 65, 44, 1
+	sq_note	0, 0, 58, 55, 46, 1
+	sq_beat
+	sq_note	48, 0, 75, 64, 78, 0
+	sq_note	48, 0, 60, 59, 87, 0
+	sq_beat
+	sq_note	48, 0, 62, 69, 71, 0
+	sq_note	48, 0, 77, 73, 72, 0
+	sq_beat
+	sq_note	48, 0, 65, 49, 65, 3
+	sq_note	48, 0, 63, 56, 57, 3
+	sq_note	48, 0, 70, 53, 86, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 55, 45, 78, 2
+	sq_note	0, 0, 67, 50, 44, 1
+	sq_note	0, 0, 70, 54, 44, 1
+	sq_beat
+	sq_note	48, 0, 75, 63, 73, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 57, 44, 20, 4
+	.byte	0x30, 0x90, 0x41	# bytes 1..3 of `sq_note	48, 0, 65, 48, 34, 4` (the event spans two cells)
+	sq_cell	0x80, 62, 64	# cell 63: song 1 track 7, 4 of 6
+	.byte	0x30, 0x22, 0x04	# bytes 4..6 of `sq_note	48, 0, 65, 48, 34, 4` (the event spans two cells)
+	sq_note	48, 0, 72, 61, 90, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 77, 54, 33, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 70, 102, 22, 0
+	sq_note	0, 0, 58, 89, 24, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 91, 76, 57, 1
+	sq_note	0, 0, 55, 119, 21, 0
+	sq_press	12, 0, 13
+	sq_press	16, 0, 6
+	sq_press	19, 0, 0
+	sq_note	48, 0, 62, 80, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 80, 19, 0
+	sq_note	48, 0, 90, 71, 2, 2
+	sq_note	48, 0, 62, 80, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 21, 0
+	sq_note	48, 0, 62, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 67, 86, 20, 0
+	sq_note	48, 0, 88, 73, 2, 2
+	sq_note	48, 0, 62, 81, 15, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 19, 0
+	sq_note	48, 0, 62, 81, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 87, 19, 0
+	sq_note	48, 0, 86, 72, 44, 2
+	sq_note	48, 0, 62, 80, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 81, 19, 0
+	sq_note	48, 0, 62, 83, 18, 0
+	sq_beat
+	sq_note	0, 0, 67, 81, 19, 0
+	sq_note	48, 0, 62, 93, 19, 0
+	sq_beat
+	sq_note	0, 0, 91, 76, 48, 1
+	sq_note	0, 0, 55, 98, 19, 0
+	sq_note	48, 0, 62, 78, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 83, 19, 0
+	sq_note	48, 0, 90, 69, 1, 2
+	sq_note	48, 0, 62, 84, 16, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x43, 0x55	# bytes 1..4 of `sq_note	0, 0, 67, 85, 22, 0` (the event spans two cells)
+	sq_cell	0x80, 63, 65	# cell 64: song 1 track 7, 5 of 6
+	.byte	0x16, 0x00	# bytes 5..6 of `sq_note	0, 0, 67, 85, 22, 0` (the event spans two cells)
+	sq_note	48, 0, 62, 76, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 85, 20, 0
+	sq_note	48, 0, 88, 79, 94, 1
+	sq_note	48, 0, 62, 79, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 86, 19, 0
+	sq_note	48, 0, 62, 79, 19, 0
+	sq_beat
+	sq_note	0, 0, 67, 85, 21, 0
+	sq_note	48, 0, 86, 68, 94, 1
+	sq_note	48, 0, 62, 78, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 83, 20, 0
+	sq_note	48, 0, 62, 85, 20, 0
+	sq_beat
+	sq_note	0, 0, 67, 90, 21, 0
+	sq_note	48, 0, 62, 108, 21, 0
+	sq_beat
+	sq_note	0, 0, 89, 79, 50, 1
+	sq_note	0, 0, 51, 95, 19, 0
+	sq_note	48, 0, 58, 87, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 96, 19, 0
+	sq_note	48, 0, 87, 76, 90, 1
+	sq_note	48, 0, 58, 86, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 13, 0
+	sq_note	48, 0, 58, 77, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 13, 0
+	sq_note	48, 0, 86, 74, 87, 1
+	sq_note	48, 0, 58, 74, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 89, 13, 0
+	sq_note	48, 0, 58, 76, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 84, 73, 51, 2
+	sq_note	48, 0, 58, 77, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 15, 0
+	sq_note	48, 0, 58, 69, 14, 0
+	sq_beat
+	sq_note	0, 0, 63, 89, 14, 0
+	sq_note	48, 0, 58, 83, 18, 0
+	sq_beat
+	sq_note	0, 0, 89, 76, 48, 1
+	sq_note	0, 0, 51, 109, 13, 0
+	sq_note	48, 0, 58, 67, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 87, 80, 0, 2
+	sq_note	48, 0, 58, 82, 19, 0
+	sq_cell	0x80, 64, 65535	# cell 65: song 1 track 7, 6 of 6
+	sq_beat
+	sq_note	0, 0, 63, 94, 19, 0
+	sq_note	48, 0, 58, 75, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 91, 16, 0
+	sq_note	48, 0, 86, 73, 0, 2
+	sq_note	48, 0, 58, 71, 18, 0
+	sq_beat
+	sq_note	0, 0, 63, 93, 15, 0
+	sq_note	48, 0, 58, 75, 13, 0
+	sq_beat
+	sq_note	0, 0, 63, 96, 15, 0
+	sq_note	48, 0, 84, 71, 5, 2
+	sq_note	48, 0, 58, 79, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 99, 15, 0
+	sq_note	48, 0, 58, 86, 15, 0
+	sq_beat
+	sq_note	0, 0, 63, 102, 12, 0
+	sq_note	48, 0, 58, 106, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	83, 0, 56, 20, 58, 4
+	sq_note	85, 0, 63, 26, 59, 4
+	sq_note	85, 0, 48, 42, 59, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	33, 0, 50, 57, 27, 5
+	sq_note	36, 0, 58, 19, 25, 5
+	sq_note	38, 0, 65, 36, 19, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 55, 9, 6, 11
+	sq_note	45, 0, 46, 46, 3, 11
+	sq_note	47, 0, 63, 15, 1, 11
+	sq_note	58, 0, 39, 41, 86, 10
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	144, 42, 102, 21, 0, 129, 2, 144, 56, 119, 14, 0, 46, 144, 42, 49
+	.byte	12, 0, 46, 144, 36, 121, 6, 0, 47, 144, 54, 97, 7, 0, 70, 144
+	.byte	42, 76, 11, 0, 95, 144, 42, 104, 22, 0, 129, 1, 144, 56, 124, 15
+	.byte	0, 46, 144, 54, 91, 6, 0, 48, 144, 42, 57, 14, 0, 72
+	sq_cell	0x80, 0, 67	# cell 66: song 1 track 8, 1 of 2
+	sq_8n	0, 0, 122, 1
+	sq_8n	0, 10, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 29, 1
+	sq_pc	0, 0, 60, 16, 32
+	sq_cc	0, 0, 7, 7, 95
+	sq_cc	0, 0, 7, 10, 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 84, 52, 0
+	sq_beat
+	sq_note	0, 0, 67, 76, 48, 0
+	sq_note	48, 0, 69, 79, 57, 0
+	sq_beat
+	sq_note	0, 0, 70, 71, 34, 15
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 69, 97, 32, 0
+	sq_beat
+	sq_note	48, 0, 69, 85, 49, 0
+	sq_beat
+	sq_note	0, 0, 67, 61, 30, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 1, 64
+	sq_beat
+	sq_8n	0, 0, 28, 1
+	sq_note	0, 0, 60, 71, 24, 2
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 60, 76, 93, 0
+	sq_beat
+	sq_note	48, 0, 62, 79, 84, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 74, 69, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 60, 67, 24, 0
+	sq_note	72, 0, 62, 74, 27, 0
+	sq_beat
+	sq_note	0, 0, 63, 73, 55, 1
+	sq_beat
+	sq_note	48, 0, 65, 73, 4, 1
+	sq_beat
+	sq_note	48, 0, 67, 70, 9, 1
+	sq_beat
+	sq_note	48, 0, 68, 69, 37, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 60, 64, 24, 1
+	sq_beat
+	sq_note	48, 0, 60, 76, 85, 0
+	sq_beat
+	sq_note	48, 0, 60, 75, 84, 0
+	sq_beat
+	sq_note	48, 0, 62, 73, 75, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 75, 82, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 60, 80, 27, 0
+	sq_note	72, 0, 62, 80, 25, 0
+	sq_beat
+	sq_note	0, 0, 63, 71, 64, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 66, 65535	# cell 67: song 1 track 8, 2 of 2
+	sq_beat
+	sq_8n	0, 10, 2, 64
+	sq_beat
+	sq_8n	0, 0, 27, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 3, 64
+	sq_beat
+	sq_8n	0, 0, 26, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 4, 64
+	sq_beat
+	sq_8n	0, 0, 27, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 84, 52, 0
+	sq_beat
+	sq_note	0, 0, 67, 76, 48, 0
+	sq_note	48, 0, 69, 79, 57, 0
+	sq_beat
+	sq_note	0, 0, 70, 71, 34, 15
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 69, 97, 32, 0
+	sq_beat
+	sq_note	48, 0, 69, 85, 49, 0
+	sq_beat
+	sq_note	0, 0, 67, 61, 30, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 5, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	12, 0, 63, 57, 33, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	37, 0, 65, 65, 4, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	44, 0, 67, 63, 0, 11
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	42, 69, 11, 0, 52, 144, 36, 91, 5, 0, 95, 144, 36, 123, 45, 0
+	.byte	129, 1, 144, 20, 94, 11, 0, 50, 144, 42, 66
+	sq_cell	0x80, 0, 69	# cell 68: song 1 track 9, 1 of 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 87, 72, 32
+	sq_cc	0, 0, 8, 7, 90
+	sq_cc	1, 0, 8, 10, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	24, 0, 8, 126, 1
+	sq_note	48, 0, 60, 96, 24, 0
+	sq_note	72, 0, 62, 115, 20, 0
+	sq_beat
+	sq_note	11, 0, 63, 105, 34, 1
+	sq_beat
+	sq_note	52, 0, 68, 111, 90, 0
+	sq_beat
+	sq_note	52, 0, 63, 104, 73, 0
+	sq_beat
+	sq_note	48, 0, 63, 95, 22, 0
+	sq_note	65, 0, 65, 109, 79, 1
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 70, 117, 80, 1
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 63, 109, 14, 0
+	sq_note	73, 0, 65, 110, 20, 0
+	sq_beat
+	sq_note	2, 0, 67, 110, 50, 1
+	sq_beat
+	sq_note	50, 0, 68, 109, 6, 1
+	sq_beat
+	sq_note	60, 0, 70, 111, 84, 0
+	sq_beat
+	sq_note	55, 0, 63, 94, 49, 3
+	sq_beat
+	sq_press	66, 0, 2
+	sq_press	70, 0, 4
+	sq_press	73, 0, 8
+	sq_press	78, 0, 12
+	sq_press	80, 0, 14
+	sq_press	85, 0, 17
+	sq_press	89, 0, 19
+	sq_press	92, 0, 22
+	sq_beat
+	sq_press	0, 0, 24
+	sq_press	1, 0, 25
+	sq_press	5, 0, 27
+	sq_press	8, 0, 28
+	sq_press	12, 0, 29
+	sq_press	16, 0, 32
+	sq_press	19, 0, 33
+	sq_press	23, 0, 34
+	sq_press	28, 0, 36
+	sq_press	31, 0, 37
+	sq_press	35, 0, 39
+	sq_press	40, 0, 42
+	sq_press	47, 0, 44
+	sq_press	52, 0, 45
+	sq_press	54, 0, 47
+	sq_press	58, 0, 48
+	sq_press	59, 0, 49
+	sq_press	62, 0, 51
+	sq_press	73, 0, 53
+	sq_press	82, 0, 55
+	sq_beat
+	sq_press	8, 0, 49
+	sq_press	12, 0, 46
+	sq_press	16, 0, 42
+	sq_press	19, 0, 38
+	.byte	0x14	# bytes 1..1 of `sq_press	20, 0, 35` (the event spans two cells)
+	sq_cell	0x80, 68, 70	# cell 69: song 1 track 9, 2 of 6
+	.byte	0xd0, 0x23	# bytes 2..3 of `sq_press	20, 0, 35` (the event spans two cells)
+	sq_press	24, 0, 31
+	sq_press	28, 0, 17
+	sq_press	31, 0, 8
+	sq_press	35, 0, 0
+	sq_beat
+	sq_note	95, 0, 62, 103, 19, 0
+	sq_beat
+	sq_note	14, 0, 63, 104, 30, 1
+	sq_beat
+	sq_note	48, 0, 68, 105, 88, 0
+	sq_beat
+	sq_note	50, 0, 63, 106, 62, 0
+	sq_beat
+	sq_note	44, 0, 63, 106, 21, 0
+	sq_note	60, 0, 65, 106, 86, 1
+	sq_beat
+	sq_beat
+	sq_note	54, 0, 70, 119, 87, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 67, 113, 32, 0
+	sq_note	49, 0, 67, 115, 80, 0
+	sq_beat
+	sq_note	52, 0, 68, 117, 20, 0
+	sq_beat
+	sq_note	47, 0, 68, 112, 2, 1
+	sq_beat
+	sq_note	55, 0, 67, 108, 39, 0
+	sq_beat
+	sq_note	4, 0, 65, 86, 51, 0
+	sq_note	54, 0, 67, 109, 7, 2
+	sq_beat
+	sq_cc	17, 0, 8, 1, 10
+	sq_cc	20, 0, 8, 1, 17
+	sq_cc	24, 0, 8, 1, 21
+	sq_cc	29, 0, 8, 1, 28
+	sq_cc	32, 0, 8, 1, 32
+	sq_cc	36, 0, 8, 1, 40
+	sq_cc	41, 0, 8, 1, 48
+	sq_cc	43, 0, 8, 1, 51
+	sq_cc	48, 0, 8, 1, 59
+	sq_cc	52, 0, 8, 1, 63
+	sq_cc	55, 0, 8, 1, 67
+	sq_cc	56, 0, 8, 1, 70
+	sq_cc	59, 0, 8, 1, 77
+	sq_cc	62, 0, 8, 1, 79
+	sq_cc	94, 0, 8, 1, 73
+	sq_beat
+	sq_cc	2, 0, 8, 1, 64
+	sq_cc	6, 0, 8, 1, 58
+	sq_cc	10, 0, 8, 1, 42
+	sq_cc	13, 0, 8, 1, 25
+	sq_cc	17, 0, 8, 1, 15
+	sq_cc	20, 0, 8, 1, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 58, 107, 40, 1
+	sq_cc	32, 0, 8, 1, 3
+	.byte	0x24, 0xb0, 0x08	# bytes 1..3 of `sq_cc	36, 0, 8, 1, 8` (the event spans two cells)
+	sq_cell	0x80, 69, 71	# cell 70: song 1 track 9, 3 of 6
+	.byte	0x01, 0x08	# bytes 4..5 of `sq_cc	36, 0, 8, 1, 8` (the event spans two cells)
+	sq_cc	40, 0, 8, 1, 10
+	sq_cc	43, 0, 8, 1, 16
+	sq_cc	47, 0, 8, 1, 19
+	sq_cc	53, 0, 8, 1, 25
+	sq_cc	55, 0, 8, 1, 32
+	sq_cc	59, 0, 8, 1, 36
+	sq_cc	63, 0, 8, 1, 43
+	sq_cc	66, 0, 8, 1, 46
+	sq_cc	71, 0, 8, 1, 52
+	sq_cc	75, 0, 8, 1, 57
+	sq_cc	78, 0, 8, 1, 60
+	sq_cc	82, 0, 8, 1, 65
+	sq_cc	86, 0, 8, 1, 68
+	sq_cc	90, 0, 8, 1, 73
+	sq_cc	94, 0, 8, 1, 77
+	sq_beat
+	sq_cc	2, 0, 8, 1, 78
+	sq_cc	5, 0, 8, 1, 80
+	sq_cc	17, 0, 8, 1, 77
+	sq_cc	21, 0, 8, 1, 74
+	sq_cc	26, 0, 8, 1, 68
+	sq_cc	29, 0, 8, 1, 63
+	sq_cc	33, 0, 8, 1, 51
+	sq_cc	37, 0, 8, 1, 35
+	sq_cc	40, 0, 8, 1, 26
+	sq_cc	44, 0, 8, 1, 6
+	sq_cc	48, 0, 8, 1, 0
+	sq_note	50, 0, 63, 112, 84, 0
+	sq_beat
+	sq_note	53, 0, 58, 116, 19, 0
+	sq_beat
+	sq_note	51, 0, 60, 113, 84, 1
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 65, 118, 86, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 62, 116, 12, 0
+	sq_note	55, 0, 62, 116, 79, 0
+	sq_beat
+	sq_note	58, 0, 63, 117, 15, 0
+	sq_beat
+	sq_note	52, 0, 63, 114, 88, 0
+	sq_beat
+	sq_note	53, 0, 62, 121, 46, 0
+	sq_beat
+	sq_note	2, 0, 60, 73, 48, 0
+	sq_note	50, 0, 62, 111, 43, 1
+	sq_press	91, 0, 3
+	sq_press	95, 0, 12
+	sq_beat
+	sq_press	4, 0, 17
+	sq_press	6, 0, 20
+	sq_press	10, 0, 24
+	sq_press	11, 0, 28
+	sq_press	15, 0, 31
+	sq_press	18, 0, 36
+	sq_press	22, 0, 41
+	sq_press	26, 0, 44
+	sq_press	29, 0, 46
+	sq_press	31, 0, 48
+	sq_press	34, 0, 52
+	sq_cell	0x80, 70, 72	# cell 71: song 1 track 9, 4 of 6
+	sq_press	38, 0, 56
+	sq_press	39, 0, 60
+	sq_press	41, 0, 64
+	sq_press	45, 0, 67
+	sq_press	50, 0, 72
+	sq_press	53, 0, 73
+	sq_press	57, 0, 76
+	sq_press	64, 0, 78
+	sq_press	76, 0, 73
+	sq_press	80, 0, 59
+	sq_press	84, 0, 46
+	sq_press	88, 0, 28
+	sq_press	92, 0, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 27, 127, 35, 0
+	sq_note	48, 0, 39, 102, 44, 0
+	sq_beat
+	sq_note	0, 0, 27, 96, 39, 0
+	sq_note	48, 0, 39, 104, 48, 0
+	sq_beat
+	sq_note	0, 0, 27, 91, 47, 0
+	sq_note	48, 0, 39, 102, 47, 0
+	sq_beat
+	sq_note	0, 0, 27, 87, 39, 0
+	sq_note	48, 0, 39, 104, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 89, 49, 0
+	sq_note	48, 0, 39, 104, 45, 0
+	sq_beat
+	sq_note	0, 0, 27, 87, 33, 0
+	sq_note	48, 0, 39, 101, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 90, 42, 0
+	sq_note	48, 0, 39, 101, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 93, 35, 0
+	sq_note	48, 0, 39, 104, 44, 0
+	sq_beat
+	sq_note	0, 0, 27, 99, 38, 0
+	sq_note	48, 0, 39, 102, 41, 0
+	sq_beat
+	sq_note	0, 0, 27, 96, 36, 0
+	sq_note	48, 0, 39, 106, 43, 0
+	sq_beat
+	sq_note	0, 0, 27, 92, 36, 0
+	sq_note	48, 0, 39, 107, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 95, 35, 0
+	sq_note	48, 0, 39, 106, 43, 0
+	sq_beat
+	sq_note	0, 0, 27, 91, 35, 0
+	sq_note	48, 0, 39, 107, 41, 0
+	sq_beat
+	sq_note	0, 0, 27, 91, 35, 0
+	sq_note	48, 0, 39, 109, 42, 0
+	sq_beat
+	sq_note	0, 0, 27, 93, 32, 0
+	sq_note	48, 0, 39, 107, 36, 0
+	sq_beat
+	sq_note	0, 0, 27, 97, 32, 0
+	sq_note	48, 0, 39, 112, 38, 0
+	sq_beat
+	.byte	0x00, 0x90	# bytes 1..2 of `sq_note	0, 0, 26, 95, 29, 0` (the event spans two cells)
+	sq_cell	0x80, 71, 73	# cell 72: song 1 track 9, 5 of 6
+	.byte	0x1a, 0x5f, 0x1d, 0x00	# bytes 3..6 of `sq_note	0, 0, 26, 95, 29, 0` (the event spans two cells)
+	sq_note	48, 0, 38, 109, 36, 0
+	sq_beat
+	sq_note	0, 0, 26, 95, 31, 0
+	sq_note	48, 0, 38, 106, 41, 0
+	sq_beat
+	sq_note	0, 0, 26, 96, 28, 0
+	sq_note	48, 0, 38, 110, 39, 0
+	sq_beat
+	sq_note	0, 0, 26, 97, 26, 0
+	sq_note	48, 0, 38, 108, 39, 0
+	sq_beat
+	sq_note	0, 0, 26, 97, 27, 0
+	sq_note	48, 0, 38, 110, 36, 0
+	sq_beat
+	sq_note	0, 0, 26, 96, 27, 0
+	sq_note	48, 0, 38, 108, 36, 0
+	sq_beat
+	sq_note	0, 0, 26, 98, 25, 0
+	sq_note	48, 0, 38, 110, 35, 0
+	sq_beat
+	sq_note	0, 0, 26, 104, 25, 0
+	sq_note	48, 0, 38, 125, 22, 0
+	sq_press	65, 0, 6
+	sq_press	72, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	57, 0, 60, 99, 11, 0
+	sq_note	81, 0, 62, 103, 22, 0
+	sq_beat
+	sq_note	7, 0, 63, 107, 33, 1
+	sq_beat
+	sq_note	49, 0, 68, 99, 88, 0
+	sq_beat
+	sq_note	55, 0, 63, 107, 23, 0
+	sq_beat
+	sq_note	53, 0, 65, 103, 88, 1
+	sq_beat
+	sq_beat
+	sq_cc	21, 0, 8, 1, 2
+	sq_cc	23, 0, 8, 1, 4
+	sq_cc	28, 0, 8, 1, 7
+	sq_cc	32, 0, 8, 1, 8
+	sq_cc	36, 0, 8, 1, 12
+	sq_cc	39, 0, 8, 1, 15
+	sq_cc	43, 0, 8, 1, 17
+	sq_cc	48, 0, 8, 1, 22
+	sq_cc	53, 0, 8, 1, 24
+	sq_note	54, 0, 70, 96, 3, 1
+	sq_cc	55, 0, 8, 1, 30
+	sq_cc	59, 0, 8, 1, 37
+	.byte	0x3f	# bytes 1..1 of `sq_cc	63, 0, 8, 1, 40` (the event spans two cells)
+	sq_cell	0x80, 72, 65535	# cell 73: song 1 track 9, 6 of 6
+	.byte	0xb0, 0x08, 0x01, 0x28	# bytes 2..5 of `sq_cc	63, 0, 8, 1, 40` (the event spans two cells)
+	sq_cc	67, 0, 8, 1, 43
+	sq_cc	68, 0, 8, 1, 47
+	sq_cc	71, 0, 8, 1, 50
+	sq_cc	75, 0, 8, 1, 56
+	sq_cc	79, 0, 8, 1, 62
+	sq_cc	83, 0, 8, 1, 64
+	sq_cc	87, 0, 8, 1, 70
+	sq_cc	91, 0, 8, 1, 72
+	sq_cc	95, 0, 8, 1, 76
+	sq_beat
+	sq_cc	4, 0, 8, 1, 77
+	sq_cc	19, 0, 8, 1, 69
+	sq_cc	22, 0, 8, 1, 65
+	sq_cc	23, 0, 8, 1, 60
+	sq_cc	26, 0, 8, 1, 56
+	sq_cc	31, 0, 8, 1, 47
+	sq_cc	35, 0, 8, 1, 43
+	sq_cc	38, 0, 8, 1, 32
+	sq_cc	42, 0, 8, 1, 21
+	sq_cc	46, 0, 8, 1, 16
+	sq_cc	51, 0, 8, 1, 4
+	sq_cc	54, 0, 8, 1, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	44, 144, 62, 65, 30, 0, 86, 144, 43, 85, 53, 0, 129, 46, 144, 50
+	.byte	80, 51, 0, 129, 43, 144, 60, 79, 7, 1, 45, 144, 53, 81, 79, 0
+	.byte	129, 44, 144, 62, 88, 43, 0, 46, 144, 55, 81, 27, 0, 129, 2, 144
+	.byte	50, 91, 29, 0, 45, 144, 65, 85, 93, 0, 45, 144, 60, 72, 70, 0
+	.byte	129, 40, 144, 67, 93, 44, 0, 41, 144, 62, 86, 34, 0, 90, 144, 50
+	.byte	83, 8, 0, 129, 43, 144, 65, 86, 68, 0, 43, 144, 70, 107, 86, 0
+	.byte	129, 35, 144, 72, 93, 47, 0, 37, 144, 67, 83, 44, 0
+	sq_cell	0x80, 0, 75	# cell 74: song 1 track 10, 1 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 62, 8, 32
+	sq_cc	0, 0, 9, 7, 85
+	sq_cc	1, 0, 9, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 63, 97, 15, 0
+	sq_note	48, 0, 67, 90, 19, 0
+	sq_note	48, 0, 55, 103, 10, 0
+	sq_note	72, 0, 65, 98, 26, 0
+	sq_note	72, 0, 69, 110, 25, 0
+	sq_note	72, 0, 57, 91, 22, 0
+	sq_beat
+	sq_note	0, 0, 67, 90, 16, 1
+	sq_note	0, 0, 70, 109, 27, 1
+	sq_note	0, 0, 58, 102, 26, 1
+	sq_beat
+	sq_note	48, 0, 67, 90, 67, 0
+	sq_note	48, 0, 75, 107, 83, 0
+	sq_note	48, 0, 58, 73, 73, 0
+	sq_beat
+	sq_note	48, 0, 70, 119, 22, 0
+	sq_note	48, 0, 58, 104, 19, 0
+	sq_note	48, 0, 67, 99, 24, 0
+	sq_beat
+	sq_note	48, 0, 69, 91, 58, 1
+	sq_note	48, 0, 60, 90, 68, 1
+	sq_note	48, 0, 72, 107, 77, 1
+	sq_cc	49, 0, 9, 74, 69
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 77, 110, 62, 1
+	sq_note	48, 0, 69, 85, 0, 1
+	sq_note	48, 0, 60, 94, 75, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 58, 91, 13, 0
+	sq_note	48, 0, 62, 83, 9, 0
+	sq_note	48, 0, 70, 111, 13, 0
+	sq_note	72, 0, 60, 100, 20, 0
+	sq_note	72, 0, 72, 111, 20, 0
+	sq_cell	0x80, 74, 76	# cell 75: song 1 track 10, 2 of 4
+	sq_note	72, 0, 63, 87, 25, 0
+	sq_beat
+	sq_note	0, 0, 62, 106, 28, 1
+	sq_note	0, 0, 74, 106, 42, 1
+	sq_note	0, 0, 65, 87, 39, 1
+	sq_beat
+	sq_note	48, 0, 75, 107, 85, 0
+	sq_note	48, 0, 67, 93, 87, 0
+	sq_note	48, 0, 63, 111, 29, 0
+	sq_beat
+	sq_note	48, 0, 77, 103, 19, 0
+	sq_note	48, 0, 69, 104, 18, 0
+	sq_note	48, 0, 65, 108, 18, 0
+	sq_beat
+	sq_note	48, 0, 58, 91, 59, 2
+	sq_note	48, 0, 63, 81, 4, 2
+	sq_note	48, 0, 70, 101, 24, 3
+	sq_note	48, 0, 67, 85, 27, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 63, 99, 15, 0
+	sq_note	48, 0, 55, 104, 9, 0
+	sq_note	48, 0, 67, 110, 12, 0
+	sq_note	72, 0, 65, 93, 21, 0
+	sq_note	72, 0, 69, 107, 21, 0
+	sq_note	72, 0, 57, 96, 20, 0
+	sq_beat
+	sq_note	0, 0, 70, 112, 26, 1
+	sq_note	0, 0, 67, 89, 23, 1
+	sq_note	0, 0, 58, 102, 27, 1
+	sq_beat
+	sq_note	48, 0, 63, 109, 74, 0
+	sq_note	48, 0, 75, 127, 77, 0
+	sq_note	48, 0, 67, 83, 78, 0
+	sq_beat
+	sq_note	48, 0, 67, 100, 18, 0
+	sq_note	48, 0, 58, 112, 19, 0
+	sq_note	48, 0, 70, 119, 19, 0
+	sq_beat
+	sq_note	48, 0, 60, 99, 69, 1
+	sq_note	48, 0, 72, 105, 62, 1
+	sq_note	48, 0, 69, 95, 53, 1
+	sq_note	48, 0, 69, 89, 58, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 77, 96, 77, 1
+	sq_note	48, 0, 69, 90, 26, 1
+	sq_note	48, 0, 65, 94, 42, 1
+	sq_note	48, 0, 69, 96, 79, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 62, 113, 16, 0
+	sq_note	48, 0, 67, 99, 16, 0
+	.byte	0x48	# bytes 1..1 of `sq_note	72, 0, 60, 103, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 75, 77	# cell 76: song 1 track 10, 3 of 4
+	.byte	0x90, 0x3c, 0x67, 0x10, 0x00	# bytes 2..6 of `sq_note	72, 0, 60, 103, 16, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 65, 95, 47, 2
+	sq_note	0, 0, 62, 104, 83, 0
+	sq_beat
+	sq_note	0, 0, 70, 95, 10, 0
+	sq_note	0, 0, 62, 93, 13, 0
+	sq_note	0, 0, 74, 115, 10, 0
+	sq_note	48, 0, 62, 103, 80, 0
+	sq_note	48, 0, 74, 113, 71, 0
+	sq_note	48, 0, 70, 97, 67, 0
+	sq_beat
+	sq_note	48, 0, 63, 112, 15, 0
+	sq_note	48, 0, 70, 99, 18, 0
+	sq_note	48, 0, 75, 117, 16, 0
+	sq_beat
+	sq_note	48, 0, 63, 107, 78, 0
+	sq_note	48, 0, 70, 102, 66, 0
+	sq_note	48, 0, 75, 116, 70, 0
+	sq_beat
+	sq_note	48, 0, 74, 126, 37, 0
+	sq_note	48, 0, 70, 102, 19, 0
+	sq_note	48, 0, 62, 119, 39, 0
+	sq_beat
+	sq_note	0, 0, 72, 93, 30, 0
+	sq_note	0, 0, 60, 73, 41, 0
+	sq_note	0, 0, 70, 87, 18, 0
+	sq_note	48, 0, 70, 102, 42, 1
+	sq_note	48, 0, 62, 95, 8, 1
+	sq_note	48, 0, 74, 120, 38, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 60, 109, 24, 0
+	sq_note	72, 0, 62, 113, 17, 0
+	sq_beat
+	sq_note	0, 0, 63, 106, 32, 1
+	sq_note	0, 0, 60, 93, 8, 1
+	sq_note	0, 0, 56, 75, 17, 1
+	.byte	0x00, 0x90, 0x30, 0x4c, 0x15	# bytes 1..5 of `sq_note	0, 0, 48, 76, 21, 1` (the event spans two cells)
+	sq_cell	0x80, 76, 65535	# cell 77: song 1 track 10, 4 of 4
+	.byte	0x01	# bytes 6..6 of `sq_note	0, 0, 48, 76, 21, 1` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 68, 83, 83, 0
+	sq_note	48, 0, 60, 93, 77, 0
+	sq_note	48, 0, 48, 72, 75, 0
+	sq_note	48, 0, 56, 69, 73, 0
+	sq_beat
+	sq_note	48, 0, 63, 102, 23, 0
+	sq_note	48, 0, 60, 79, 23, 0
+	sq_note	48, 0, 48, 67, 24, 0
+	sq_note	48, 0, 56, 70, 29, 0
+	sq_beat
+	sq_note	48, 0, 50, 79, 53, 1
+	sq_note	48, 0, 58, 77, 49, 1
+	sq_note	48, 0, 62, 84, 51, 1
+	sq_note	48, 0, 65, 95, 66, 1
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 70, 84, 34, 1
+	sq_note	48, 0, 62, 93, 33, 1
+	sq_note	48, 0, 58, 82, 30, 1
+	sq_note	48, 0, 50, 83, 30, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	0, 0, 144, 36, 123, 23, 0, 2, 144, 55, 116, 16, 0, 2, 144, 56
+	.byte	119, 11, 0, 48, 144, 54, 99, 8, 0, 51, 144, 42, 76, 11, 0, 73
+	.byte	144, 36, 121, 14, 0, 73, 144, 42, 60, 12, 0, 95, 144, 42, 102, 18
+	.byte	0, 129, 3, 144, 56, 122, 12, 0, 46, 144, 54, 99, 7, 0, 48, 144
+	.byte	42, 36, 6, 0, 70, 144, 42, 56, 8, 0, 95, 144, 42, 105, 19, 0
+	.byte	129, 2, 144, 56, 112, 14, 0, 47, 144, 54, 96, 6, 0, 70, 144, 42
+	.byte	66, 13, 0, 72, 144, 38, 116, 6, 0, 129, 0, 144, 48, 119, 14, 0
+	.byte	0, 144, 42, 105
+	sq_cell	0x80, 0, 79	# cell 78: song 1 track 11, 1 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 31, 0, 32
+	sq_cc	0, 0, 10, 7, 60
+	sq_cc	0, 0, 10, 10, 125
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 77, 111, 61, 1
+	sq_press	32, 0, 4
+	sq_press	35, 0, 6
+	sq_press	40, 0, 11
+	sq_press	44, 0, 13
+	sq_press	47, 0, 14
+	sq_press	52, 0, 16
+	sq_press	55, 0, 17
+	sq_press	59, 0, 20
+	sq_press	63, 0, 22
+	sq_press	67, 0, 23
+	sq_press	70, 0, 24
+	sq_press	77, 0, 27
+	sq_press	82, 0, 28
+	sq_bend	82, 0, 64, 63
+	sq_press	89, 0, 29
+	sq_bend	89, 0, 0, 63
+	sq_bend	93, 0, 64, 62
+	sq_beat
+	sq_bend	2, 0, 0, 62
+	sq_press	2, 0, 32
+	sq_bend	2, 0, 64, 61
+	sq_bend	5, 0, 64, 60
+	sq_bend	9, 0, 0, 60
+	sq_press	13, 0, 33
+	sq_bend	13, 0, 0, 59
+	sq_bend	16, 0, 64, 57
+	sq_bend	21, 0, 0, 57
+	sq_bend	25, 0, 0, 56
+	sq_press	25, 0, 31
+	sq_bend	28, 0, 64, 55
+	sq_press	28, 0, 28
+	sq_bend	28, 0, 64, 54
+	sq_press	32, 0, 25
+	sq_bend	32, 0, 64, 53
+	sq_press	32, 0, 22
+	sq_bend	33, 0, 0, 53
+	sq_press	37, 0, 16
+	sq_bend	37, 0, 64, 51
+	sq_press	37, 0, 7
+	sq_bend	40, 0, 64, 49
+	sq_press	40, 0, 1
+	sq_bend	40, 0, 0, 48
+	sq_press	44, 0, 0
+	sq_bend	44, 0, 64, 46
+	sq_bend	47, 0, 0, 44
+	sq_note	48, 0, 75, 99, 80, 1
+	sq_bend	52, 0, 0, 42
+	sq_bend	67, 0, 0, 45
+	sq_bend	70, 0, 64, 48
+	sq_bend	74, 0, 0, 53
+	sq_bend	77, 0, 64, 54
+	sq_bend	82, 0, 64, 56
+	sq_bend	86, 0, 64, 57
+	sq_bend	89, 0, 64, 59
+	sq_bend	93, 0, 0, 61
+	sq_beat
+	sq_bend	2, 0, 0, 62
+	sq_bend	5, 0, 0, 63
+	sq_bend	9, 0, 64, 63
+	.byte	0x0d, 0xe0	# bytes 1..2 of `sq_bend	13, 0, 0, 64` (the event spans two cells)
+	sq_cell	0x80, 78, 80	# cell 79: song 1 track 11, 2 of 5
+	.byte	0x00, 0x40	# bytes 3..4 of `sq_bend	13, 0, 0, 64` (the event spans two cells)
+	sq_beat
+	sq_note	48, 0, 74, 111, 7, 2
+	sq_press	63, 0, 1
+	sq_press	67, 0, 0
+	sq_beat
+	sq_press	28, 0, 1
+	sq_press	40, 0, 4
+	sq_press	52, 0, 6
+	sq_bend	52, 0, 64, 63
+	sq_bend	59, 0, 0, 63
+	sq_bend	67, 0, 64, 61
+	sq_press	70, 0, 8
+	sq_bend	74, 0, 64, 60
+	sq_bend	79, 0, 0, 60
+	sq_press	82, 0, 11
+	sq_bend	82, 0, 64, 59
+	sq_bend	86, 0, 64, 58
+	sq_press	94, 0, 12
+	sq_bend	94, 0, 64, 57
+	sq_beat
+	sq_bend	2, 0, 64, 56
+	sq_press	5, 0, 8
+	sq_bend	5, 0, 0, 56
+	sq_press	9, 0, 7
+	sq_bend	10, 0, 64, 55
+	sq_press	10, 0, 6
+	sq_bend	10, 0, 0, 55
+	sq_bend	13, 0, 64, 54
+	sq_bend	17, 0, 0, 54
+	sq_press	17, 0, 4
+	sq_bend	17, 0, 64, 53
+	sq_bend	21, 0, 0, 53
+	sq_press	25, 0, 0
+	sq_bend	25, 0, 64, 50
+	sq_bend	29, 0, 0, 48
+	sq_bend	32, 0, 0, 47
+	sq_bend	37, 0, 0, 45
+	sq_bend	40, 0, 0, 43
+	sq_bend	47, 0, 0, 42
+	sq_note	48, 0, 72, 78, 68, 1
+	sq_bend	59, 0, 64, 45
+	sq_bend	63, 0, 0, 47
+	sq_bend	67, 0, 0, 51
+	sq_bend	71, 0, 0, 54
+	sq_bend	74, 0, 64, 55
+	sq_bend	79, 0, 64, 57
+	sq_bend	82, 0, 64, 58
+	sq_bend	86, 0, 0, 60
+	sq_bend	89, 0, 0, 62
+	sq_bend	93, 0, 64, 62
+	sq_beat
+	sq_bend	2, 0, 64, 63
+	sq_bend	5, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 65, 101, 2, 3
+	sq_press	47, 0, 1
+	sq_press	52, 0, 2
+	sq_press	53, 0, 3
+	sq_press	55, 0, 4
+	sq_press	59, 0, 5
+	sq_press	67, 0, 7
+	sq_press	71, 0, 8
+	sq_bend	71, 0, 0, 63
+	sq_press	79, 0, 11
+	sq_bend	79, 0, 64, 62
+	sq_press	79, 0, 12
+	sq_bend	82, 0, 0, 62
+	sq_bend	86, 0, 0, 61
+	sq_bend	89, 0, 64, 60
+	sq_press	94, 0, 15
+	sq_cell	0x80, 79, 81	# cell 80: song 1 track 11, 3 of 5
+	sq_bend	94, 0, 64, 59
+	sq_beat
+	sq_bend	2, 0, 0, 59
+	sq_press	5, 0, 16
+	sq_bend	9, 0, 0, 58
+	sq_bend	13, 0, 64, 57
+	sq_bend	17, 0, 0, 56
+	sq_bend	25, 0, 0, 55
+	sq_bend	28, 0, 64, 54
+	sq_bend	32, 0, 64, 53
+	sq_press	37, 0, 14
+	sq_bend	37, 0, 64, 51
+	sq_bend	40, 0, 0, 50
+	sq_press	44, 0, 12
+	sq_bend	44, 0, 64, 48
+	sq_press	44, 0, 10
+	sq_bend	49, 0, 64, 47
+	sq_press	49, 0, 8
+	sq_bend	49, 0, 0, 46
+	sq_press	53, 0, 5
+	sq_bend	53, 0, 0, 45
+	sq_press	53, 0, 2
+	sq_bend	53, 0, 64, 42
+	sq_press	56, 0, 0
+	sq_bend	56, 0, 64, 40
+	sq_bend	59, 0, 0, 35
+	sq_bend	63, 0, 0, 32
+	sq_bend	68, 0, 64, 26
+	sq_bend	70, 0, 0, 22
+	sq_bend	75, 0, 0, 15
+	sq_bend	79, 0, 0, 11
+	sq_bend	82, 0, 0, 5
+	sq_bend	86, 0, 0, 2
+	sq_bend	89, 0, 0, 1
+	sq_bend	94, 0, 0, 0
+	sq_beat
+	sq_beat
+	sq_bend	7, 0, 0, 11
+	sq_bend	9, 0, 64, 25
+	sq_bend	13, 0, 0, 33
+	sq_bend	17, 0, 64, 45
+	sq_bend	21, 0, 64, 50
+	sq_bend	25, 0, 64, 56
+	sq_bend	28, 0, 64, 61
+	sq_bend	32, 0, 0, 63
+	sq_bend	37, 0, 0, 64
+	sq_note	48, 0, 62, 105, 30, 3
+	sq_beat
+	sq_press	5, 0, 3
+	sq_press	13, 0, 4
+	sq_press	21, 0, 7
+	sq_press	28, 0, 8
+	sq_press	32, 0, 11
+	sq_bend	33, 0, 64, 63
+	sq_press	37, 0, 12
+	sq_bend	40, 0, 64, 62
+	sq_press	44, 0, 13
+	sq_bend	47, 0, 64, 61
+	sq_press	56, 0, 14
+	sq_bend	56, 0, 64, 60
+	sq_bend	59, 0, 64, 59
+	sq_bend	63, 0, 0, 59
+	sq_press	67, 0, 16
+	sq_bend	71, 0, 64, 57
+	sq_bend	79, 0, 0, 56
+	sq_bend	82, 0, 64, 55
+	sq_bend	86, 0, 0, 55
+	sq_bend	89, 0, 0, 54
+	sq_bend	94, 0, 64, 53
+	sq_beat
+	.byte	0x03	# bytes 1..1 of `sq_bend	3, 0, 0, 52` (the event spans two cells)
+	sq_cell	0x80, 80, 82	# cell 81: song 1 track 11, 4 of 5
+	.byte	0xe0, 0x00, 0x34	# bytes 2..4 of `sq_bend	3, 0, 0, 52` (the event spans two cells)
+	sq_bend	5, 0, 64, 51
+	sq_bend	9, 0, 64, 49
+	sq_bend	13, 0, 64, 48
+	sq_press	17, 0, 14
+	sq_bend	17, 0, 0, 48
+	sq_bend	21, 0, 0, 46
+	sq_press	26, 0, 13
+	sq_bend	26, 0, 64, 44
+	sq_bend	29, 0, 0, 42
+	sq_bend	32, 0, 64, 40
+	sq_bend	37, 0, 0, 39
+	sq_press	37, 0, 12
+	sq_bend	37, 0, 64, 37
+	sq_press	40, 0, 11
+	sq_bend	40, 0, 0, 36
+	sq_press	40, 0, 8
+	sq_bend	44, 0, 64, 31
+	sq_press	47, 0, 7
+	sq_bend	49, 0, 0, 29
+	sq_press	49, 0, 5
+	sq_bend	49, 0, 64, 26
+	sq_press	52, 0, 4
+	sq_bend	53, 0, 64, 25
+	sq_press	56, 0, 2
+	sq_bend	56, 0, 0, 22
+	sq_press	56, 0, 0
+	sq_bend	56, 0, 0, 19
+	sq_bend	59, 0, 0, 14
+	sq_bend	64, 0, 0, 7
+	sq_bend	68, 0, 0, 0
+	sq_beat
+	sq_beat
+	sq_bend	3, 0, 0, 21
+	sq_bend	7, 0, 0, 55
+	sq_bend	9, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 81, 65535	# cell 82: song 1 track 11, 5 of 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	144, 54, 104, 6, 0, 47, 144, 45, 113, 12, 0, 47, 144, 46, 109, 14
+	.byte	0, 70, 144, 42, 91, 14, 0, 95, 144, 42, 85, 13, 0, 129, 1, 144
+	.byte	36, 113, 5, 0, 1, 144, 56, 122, 15, 0, 47, 144, 54, 99, 6, 0
+	.byte	70, 144, 42, 59, 9, 0, 72, 144, 36, 121, 16, 0, 95, 144, 42, 106
+	.byte	19, 0, 129, 2, 144, 56, 111, 11, 0, 47, 144, 54, 96, 6, 0, 48
+	.byte	144, 42, 43, 8, 0, 48, 144, 36, 123, 8, 0, 70, 144, 42, 69, 10
+	.byte	0, 95, 144, 42, 104, 21, 0, 129, 0, 144, 56, 112, 13, 0, 46, 144
+	.byte	42, 51, 11, 0, 49, 144, 54, 96, 6, 0, 69, 144, 42, 59, 9, 0
+	.byte	72, 144, 38, 113, 8, 0, 95, 144, 45, 120, 18, 0, 95, 144, 42, 104
+	.byte	20, 0, 129, 1, 144, 56, 119, 14, 0, 43, 144, 54, 94, 8, 0, 46
+	.byte	144, 42, 51, 10, 0, 70, 144, 42, 56, 11, 0, 75, 144, 36, 118, 14
+	.byte	0, 95, 144, 42, 104, 20, 0, 129, 1, 144, 56, 122, 14, 0, 5, 144
+	.byte	36, 110, 17, 0, 45, 144, 54, 95, 6, 0, 46, 144, 42, 46, 9, 0
+	sq_cell	0x80, 0, 84	# cell 83: song 1 track 12, 1 of 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 30, 16, 32
+	sq_cc	0, 0, 11, 7, 90
+	sq_cc	0, 0, 11, 10, 26
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	41, 0, 64, 63
+	sq_bend	44, 0, 0, 62
+	sq_bend	48, 0, 0, 61
+	sq_bend	53, 0, 0, 59
+	sq_bend	56, 0, 0, 57
+	sq_bend	60, 0, 0, 56
+	sq_bend	64, 0, 64, 53
+	sq_bend	67, 0, 0, 51
+	sq_bend	72, 0, 64, 44
+	sq_bend	76, 0, 0, 34
+	sq_bend	79, 0, 0, 26
+	sq_bend	83, 0, 0, 5
+	sq_bend	86, 0, 0, 0
+	sq_beat
+	sq_note	0, 0, 48, 103, 38, 3
+	sq_bend	30, 0, 0, 9
+	sq_bend	34, 0, 64, 25
+	sq_bend	37, 0, 0, 35
+	sq_bend	41, 0, 0, 38
+	sq_bend	44, 0, 64, 42
+	sq_bend	49, 0, 64, 44
+	sq_bend	54, 0, 64, 47
+	sq_bend	56, 0, 64, 50
+	sq_bend	60, 0, 64, 52
+	sq_bend	64, 0, 64, 53
+	sq_bend	68, 0, 0, 54
+	sq_bend	72, 0, 0, 55
+	sq_bend	76, 0, 64, 55
+	sq_bend	79, 0, 0, 56
+	sq_bend	84, 0, 0, 57
+	sq_bend	88, 0, 0, 58
+	sq_bend	91, 0, 64, 58
+	sq_bend	95, 0, 0, 59
+	sq_beat
+	sq_bend	4, 0, 0, 60
+	sq_bend	11, 0, 64, 61
+	sq_bend	14, 0, 0, 62
+	sq_bend	18, 0, 0, 63
+	sq_bend	25, 0, 64, 63
+	sq_bend	37, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_bend	30, 0, 64, 62
+	sq_bend	34, 0, 0, 60
+	sq_bend	37, 0, 64, 54
+	sq_bend	41, 0, 64, 45
+	sq_bend	46, 0, 0, 41
+	sq_note	48, 0, 50, 96, 92, 3
+	.byte	0x31	# bytes 1..1 of `sq_bend	49, 0, 0, 31` (the event spans two cells)
+	sq_cell	0x80, 83, 85	# cell 84: song 1 track 12, 2 of 3
+	.byte	0xe0, 0x00, 0x1f	# bytes 2..4 of `sq_bend	49, 0, 0, 31` (the event spans two cells)
+	sq_bend	54, 0, 0, 24
+	sq_bend	56, 0, 0, 21
+	sq_bend	60, 0, 0, 18
+	sq_bend	68, 0, 0, 25
+	sq_bend	72, 0, 0, 31
+	sq_bend	76, 0, 0, 43
+	sq_bend	79, 0, 0, 51
+	sq_bend	83, 0, 64, 53
+	sq_bend	88, 0, 64, 56
+	sq_bend	91, 0, 0, 58
+	sq_bend	95, 0, 0, 61
+	sq_beat
+	sq_bend	4, 0, 64, 63
+	sq_bend	6, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 48, 63, 32, 0
+	sq_note	72, 0, 50, 86, 20, 0
+	sq_beat
+	sq_note	0, 0, 51, 95, 31, 0
+	sq_note	48, 0, 51, 71, 18, 0
+	sq_beat
+	sq_note	0, 0, 51, 73, 19, 0
+	sq_note	48, 0, 51, 70, 15, 0
+	sq_beat
+	sq_note	0, 0, 51, 73, 15, 0
+	sq_note	48, 0, 51, 67, 14, 0
+	sq_beat
+	sq_note	0, 0, 51, 82, 19, 0
+	sq_note	48, 0, 51, 65, 14, 0
+	sq_beat
+	sq_note	0, 0, 51, 69, 13, 0
+	sq_note	48, 0, 51, 64, 9, 0
+	sq_beat
+	sq_note	0, 0, 51, 79, 10, 0
+	sq_note	48, 0, 51, 102, 90, 1
+	sq_beat
+	sq_press	14, 0, 3
+	sq_press	16, 0, 6
+	sq_press	19, 0, 8
+	sq_press	23, 0, 13
+	sq_press	26, 0, 16
+	sq_press	30, 0, 18
+	sq_press	35, 0, 23
+	sq_press	38, 0, 24
+	sq_press	42, 0, 27
+	sq_press	46, 0, 28
+	sq_press	47, 0, 29
+	sq_press	49, 0, 32
+	sq_press	53, 0, 33
+	sq_press	58, 0, 35
+	sq_press	61, 0, 37
+	sq_press	65, 0, 41
+	sq_press	68, 0, 43
+	sq_press	72, 0, 44
+	sq_press	76, 0, 46
+	sq_press	84, 0, 49
+	sq_press	88, 0, 52
+	sq_press	91, 0, 53
+	sq_press	92, 0, 55
+	sq_beat
+	sq_press	0, 0, 57
+	sq_press	4, 0, 60
+	sq_press	16, 0, 62
+	sq_press	34, 0, 51
+	sq_press	37, 0, 41
+	sq_press	38, 0, 26
+	sq_press	42, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cell	0x80, 84, 65535	# cell 85: song 1 track 12, 3 of 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	144, 59, 111, 15, 0, 75, 144, 64, 104, 11, 0, 76, 144, 67, 93, 14
+	.byte	0, 129, 129, 46, 144, 55, 109, 15, 0, 46, 144, 67, 120, 17, 0, 70
+	.byte	144, 57, 110, 17, 0, 70, 144, 69, 105, 18, 0, 129, 25, 144, 57, 109
+	.byte	15, 0, 25, 144, 69, 120, 14, 0, 73, 144, 72, 121, 16, 0, 74, 144
+	.byte	60, 116, 14, 0, 129, 26, 144, 74, 116, 14, 0, 26, 144, 62, 113, 12
+	.byte	0, 72, 144, 64, 121, 61, 0, 72, 144, 76, 121, 55, 0, 129, 46, 144
+	.byte	62, 107, 18, 0, 47, 144, 74, 120, 18, 0, 74, 144, 60, 100, 17, 0
+	.byte	76, 144, 72, 101, 14, 0, 129, 0, 176, 6, 91, 85, 3, 144
+	.endzlib
 	.align	4, 0xFF
-data_50002D4C:
-	.space	4, 0x00
-data_50002D50:
-	.space	4, 0x00
-data_50002D54:
-	.space	4, 0x00
-data_50002D58:
-	.space	4, 0x00
-data_50002D5C:
-	.space	4, 0x00
-data_50002D60:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38C8, 0x3B38CD
-data_50002D65:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38CD, 0x3B38D4
-writeprt_window:
-	.space	4, 0xFF
-writeprt_GridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38D8, 0x3B38DA
-writeprt_GridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B38DA, 0x3B38DC
-writeprt_GridBox1_pcol:
-	.space	4, 0x00
-writeprt_GridBox1_prow:
-	.space	4, 0x00
-writeprt_GridBox1_crow:
-	.space	4, 0x00
-cusmenu_window:
-	.space	4, 0xFF
-cusmenu_TitleMenu_HOME_PAGE_SETTING_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_FAVORITES_SETTING_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_DISPLAY_TIME_OUT_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_WALLPAPER_SETTING_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_CUSTOM_PANEL_MODE_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_DATA_PROTECTION_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_LANGUAGE_SETTING_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_DISK_PREFERENCES_selected:
-	.space	4, 0x00
-cusmenu_TitleMenu_VIDEO_OUT_MODE_SETTI_selected:
-	.space	4, 0x00
-custommem_window:
-	.space	4, 0xFF
-custommem_MenuBox_PANEL_MEMORY_selected:
-	.space	4, 0x00
-custommem_MenuBox_ALL_PANEL_selected:
-	.space	4, 0x00
-distim_window:
-	.space	4, 0xFF
-distim_DispTimeSetGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3924, 0x3B3926
-distim_DispTimeSetGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3926, 0x3B3928
-distim_DispTimeSetGridBox1_pcol:
-	.space	4, 0x00
-distim_DispTimeSetGridBox1_prow:
-	.space	4, 0x00
-distim_DispTimeSetGridBox1_crow:
-	.space	4, 0x00
-wallpaper_window:
-	.space	4, 0xFF
-wallpaper_RamEditBox_PRESET_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3938, 0x3B393C
-wallpaper_RamEditBox_PRESET_data:
-	.space	4, 0x00
-wallpaper_RamEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3940, 0x3B3944
-wallpaper_RamEditBox1_data:
-	.space	4, 0x00
-wallpaper_RamEditBox_MENU_PAGE_selected:
-	.space	4, 0x00
-wallpaper_RamEditBox_MENU_PAGE_data:
-	.space	4, 0x00
-wallpaper_RamEditBox_OTHER_selected:
-	.space	4, 0x00
-wallpaper_RamEditBox_OTHER_data:
-	.space	4, 0x00
-MIDIset_window:
-	.space	4, 0xFF
-MIDIset_ParaLoadOptGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B395C, 0x3B395E
-MIDIset_ParaLoadOptGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B395E, 0x3B3960
-MIDIset_ParaLoadOptGridBox1_pcol:
-	.space	4, 0x00
-MIDIset_ParaLoadOptGridBox1_prow:
-	.space	4, 0x00
-MIDIset_ParaLoadOptGridBox1_crow:
-	.space	4, 0x00
-langset_window:
-	.space	4, 0xFF
-langset_IndexWideToggle_ENGLISH_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3970, 0x3B3974
-langset_IndexWideToggle_GERMAN_onoff:
-	.space	4, 0x00
-langset_IndexWideToggle_FRENCH_onoff:
-	.space	4, 0x00
-langset_IndexWideToggle_SPANISH_onoff:
-	.space	4, 0x00
-LangSetWin_parent:
-	.space	4, 0xFF
-LangSetWin_child:
-	.space	4, 0xFF
-LangSetWin_IndexWideToggle_ENGLISH_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3988, 0x3B398C
-LangSetWin_IndexWideToggle_GERMAN_onoff:
-	.space	4, 0x00
-LangSetWin_IndexWideToggle_FRENCH_onoff:
-	.space	4, 0x00
-LangSetWin_IndexWideToggle_SPANISH_onoff:
-	.space	4, 0x00
-diskpre_window:
-	.space	4, 0xFF
-CustumMenuPage1_parent:
-	.space	4, 0xFF
-CustumMenuPage1_child:
-	.space	4, 0xFF
-CustumMenuPage1_TitleMenu_HOME_PAGE_SETTING_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_FAVORITES_SETTING_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_DISPLAY_TIME_OUT_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_WALLPAPER_SETTING_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_CUSTOM_PANEL_MODE_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_MIDI_SETTING_LOAD_OP_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_DATA_PROTECTION_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_LANGUAGE_SETTING_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_DISK_PREFERENCES_selected:
-	.space	4, 0x00
-CustumMenuPage1_TitleMenu_VIDEO_OUT_SETTING_selected:
-	.space	4, 0x00
-CustumMenuPage2_parent:
-	.space	4, 0xFF
-CustumMenuPage2_child:
-	.space	4, 0xFF
-CustumMenuPage2_TitleMenu_FOOT_SETTING_selected:
-	.space	4, 0x00
-data_50002E70:
-.incbin_range "baserom/kn7000_program.rom", 0x3B39D8, 0x3B39DC
-data_50002E74:
-.incbin_range "baserom/kn7000_program.rom", 0x3B39DC, 0x3B39E0
-controlmenu_window:
-	.space	4, 0xFF
-controlmenu_TitleMenu_INITIAL_selected:
-	.space	4, 0x00
-controlmenu_TitleMenu_FOOT_CONTROLLERS_selected:
-	.space	4, 0x00
-controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT_selected:
-	.space	4, 0x00
-controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER_selected:
-	.space	4, 0x00
-controlmenu_TitleMenu_PANEL_MEMORY_MODE_selected:
-	.space	4, 0x00
-controlmenu_TitleMenu_FADE_IN_OUT_SETTING_selected:
-	.space	4, 0x00
-initial_window:
-	.space	4, 0xFF
-CONTROL_Window1_parent:
-	.space	4, 0xFF
-CONTROL_Window1_child:
-	.space	4, 0xFF
-SYSINIKIND1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A08, 0x3B3A0C
-SYSINISURE_window:
-	.space	4, 0xFF
-fswcon_window:
-	.space	4, 0xFF
-fswcon_FSWAssGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A14, 0x3B3A16
-fswcon_FSWAssGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A16, 0x3B3A18
-fswcon_FSWAssGridBox1_pcol:
-	.space	4, 0x00
-fswcon_FSWAssGridBox1_prow:
-	.space	4, 0x00
-fswcon_FSWAssGridBox1_crow:
-	.space	4, 0x00
-tssen_window:
-	.space	4, 0xFF
-tssen_TchSensGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A28, 0x3B3A2A
-tssen_TchSensGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A2A, 0x3B3A2C
-tssen_TchSensGridBox1_pcol:
-	.space	4, 0x00
-tssen_TchSensGridBox1_prow:
-	.space	4, 0x00
-tssen_TchSensGridBox1_crow:
-	.space	4, 0x00
-msamode_window:
-	.space	4, 0xFF
-msamode_MenuBox_RHYTHM_selected:
-	.space	4, 0x00
-msamode_MenuBox_SOUND_RHYTHM_selected:
-	.space	4, 0x00
-msamode_MenuBox_PANEL_MEMORY_selected:
-	.space	4, 0x00
-msamode_MSAModeBox1_newmsamode:
-	.space	2, 0x00
-msamode_MSAModeBox1_oldmsamode:
-	.align	4, 0x00
-MSAsanple_parent:
-	.space	4, 0xFF
-MSAsanple_child:
-	.space	4, 0xFF
-MSAsanple_EditBox_RHYTHM_selected:
-	.space	4, 0x00
-MSAsanple_EditBox_SOUND_RHYTHM_selected:
-	.space	4, 0x00
-MSAsanple_EditBox_PANEL_MEMORY_selected:
-	.space	4, 0x00
-CONTROL_TtlScreen_PANEL_MEMORY_MODE_window:
-	.space	4, 0xFF
-CONTROL_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A64, 0x3B3A68
-PMEM_page1_parent:
-	.space	4, 0xFF
-PMEM_page1_child:
-	.space	4, 0xFF
-PMEM_page1_PmemModeBox1_newpmemmode:
-	.space	2, 0x00
-PMEM_page1_PmemModeBox1_oldpmemmode:
-	.align	4, 0x00
-PMEM_page1_MenuBox_NORMAL_selected:
-	.space	4, 0x00
-PMEM_page1_MenuBox_EXPAND_selected:
-	.space	4, 0x00
-PMEM_page2_parent:
-	.space	4, 0xFF
-PMEM_page2_child:
-	.space	4, 0xFF
-PMEM_page2_GridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A84, 0x3B3A86
-PMEM_page2_GridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A86, 0x3B3A88
-PMEM_page2_GridBox1_pcol:
-	.space	4, 0x00
-PMEM_page2_GridBox1_prow:
-	.space	4, 0x00
-PMEM_page2_GridBox1_crow:
-	.space	4, 0x00
-PMEM_page2_GridBox2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A94, 0x3B3A96
-PMEM_page2_GridBox2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3A96, 0x3B3A98
-PMEM_page2_GridBox2_pcol:
-	.space	4, 0x00
-PMEM_page2_GridBox2_prow:
-	.space	4, 0x00
-PMEM_page2_GridBox2_crow:
-	.space	4, 0x00
-fadeinout_window:
-	.space	4, 0xFF
-fadeinout_FadeSetGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AA8, 0x3B3AAA
-fadeinout_FadeSetGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AAA, 0x3B3AAC
-fadeinout_FadeSetGridBox1_pcol:
-	.space	4, 0x00
-fadeinout_FadeSetGridBox1_prow:
-	.space	4, 0x00
-fadeinout_FadeSetGridBox1_crow:
-	.space	4, 0x00
-data_50002F50:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AB8, 0x3B3ABC
-MdMenu_window:
-	.space	4, 0xFF
-MdMenu_TitleMenu_PART_SETTING_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_CONTROL_MESSAGES_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_REALTIME_MESSAGES_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_COMMON_SETTING_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_INPUT_OUTPUT_SETTING_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_MIDI_PRESETS_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_MODE_SETTING_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_PROGRAM_CHANGE_MIDI_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_PANEL_MEMORY_OUTPUT_selected:
-	.space	4, 0x00
-MdMenu_TitleMenu_COMPUTER_CONNECTION_selected:
-	.space	4, 0x00
-MdPart_window:
-	.space	4, 0xFF
-MidiPartSetGridBox_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AEC, 0x3B3AEE
-MidiPartSetGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AEE, 0x3B3AF0
-MidiPartSetGridBox_pcol:
-	.space	4, 0x00
-MidiPartSetGridBox_prow:
-	.space	4, 0x00
-MidiPartSetGridBox_crow:
-	.space	4, 0x00
-MidiPartSetGridBox_page:
-	.space	2, 0x00
-MdPart_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3AFE, 0x3B3B00
-MdCtrl_window:
-	.space	4, 0xFF
-MidiControlSetGridBox_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B04, 0x3B3B06
-MidiControlSetGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B06, 0x3B3B08
-MidiControlSetGridBox_pcol:
-	.space	4, 0x00
-MidiControlSetGridBox_prow:
-	.space	4, 0x00
-MidiControlSetGridBox_crow:
-	.space	4, 0x00
-MidiControlSetGridBox_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B14, 0x3B3B18
-MdReal_window:
-	.space	4, 0xFF
-RealtimeCommandsBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B1C, 0x3B3B20
-RealtimeCommandsBox_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B20, 0x3B3B24
-ClockBox_selected:
-	.space	4, 0x00
-ClockBox_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B28, 0x3B3B2C
-MdCom_window:
-	.space	4, 0xFF
-MidiCommonSetGridBox_selrow:
-	.space	2, 0x00
-MidiCommonSetGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B32, 0x3B3B34
-MidiCommonSetGridBox_pcol:
-	.space	4, 0x00
-MidiCommonSetGridBox_prow:
-	.space	4, 0x00
-MidiCommonSetGridBox_crow:
-	.space	4, 0x00
-MdInout_window:
-	.space	4, 0xFF
-MidiInputSetGridBox_selrow:
-	.space	2, 0x00
-MidiInputSetGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B46, 0x3B3B48
-MidiInputSetGridBox_pcol:
-	.space	4, 0x00
-MidiInputSetGridBox_prow:
-	.space	4, 0x00
-MidiInputSetGridBox_crow:
-	.space	4, 0x00
-MdPreset_window:
-	.space	4, 0xFF
-MidiPresetsPageBox_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B58, 0x3B3B5C
-MidiPresetsWindowSlaveWith_parent:
-	.space	4, 0xFF
-MidiPresetsWindowSlaveWith_child:
-	.space	4, 0xFF
-MidiPresetsSlaveWithListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B64, 0x3B3B68
-MidiPresetsWindowMasterWith_parent:
-	.space	4, 0xFF
-MidiPresetsWindowMasterWith_child:
-	.space	4, 0xFF
-MidiPresetsMasterWithListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B70, 0x3B3B74
-MidiPresetsWindowSlaveWithout_parent:
-	.space	4, 0xFF
-MidiPresetsWindowSlaveWithout_child:
-	.space	4, 0xFF
-MidiPresetsSlaveWithoutListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B7C, 0x3B3B80
-MidiPresetsWindowMasterWithout_parent:
-	.space	4, 0xFF
-MidiPresetsWindowMasterWithout_child:
-	.space	4, 0xFF
-MidiPresetsMasterWithoutListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B88, 0x3B3B8C
-MidiPresetsWindowUserLoad_parent:
-	.space	4, 0xFF
-MidiPresetsWindowUserLoad_child:
-	.space	4, 0xFF
-MidiPresetsUserLoadListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3B94, 0x3B3B98
-MidiPresetsWindowUserSave_parent:
-	.space	4, 0xFF
-MidiPresetsWindowUserSave_child:
-	.space	4, 0xFF
-MidiPresetsUserSaveListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BA0, 0x3B3BA4
-MidiPresetsSplitBox_onoff:
-	.space	4, 0x00
-MdMode_window:
-	.space	4, 0xFF
-MdMode_TGModeSel1_caption:
-	.space	4, 0x00
-MdMode_TGModeSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BB0, 0x3B3BB4
-MdMode_TGModeSel1_selected:
-	.space	4, 0x00
-MdMode_TGModeSel2_caption:
-	.space	4, 0x00
-MdMode_TGModeSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BBC, 0x3B3BC0
-MdMode_TGModeSel2_selected:
-	.space	4, 0x00
-NxSureWindow_parent:
-	.space	4, 0xFF
-NxSureWindow_child:
-	.space	4, 0xFF
-GmSureWindow_parent:
-	.space	4, 0xFF
-GmSureWindow_child:
-	.space	4, 0xFF
-MdModeM_window:
-	.space	4, 0xFF
-MdModeM_TGModeSel1_caption:
-	.space	4, 0x00
-MdModeM_TGModeSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BDC, 0x3B3BE0
-MdModeM_TGModeSel1_selected:
-	.space	4, 0x00
-MdModeM_TGModeSel2_caption:
-	.space	4, 0x00
-MdModeM_TGModeSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BE8, 0x3B3BEC
-MdModeM_TGModeSel2_selected:
-	.space	4, 0x00
-MdModeM_TGModeSel3_caption:
-	.space	4, 0x00
-MdModeM_TGModeSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3BF4, 0x3B3BF8
-MdModeM_TGModeSel3_selected:
-	.space	4, 0x00
-MdTxpcg_window:
-	.space	4, 0xFF
-PcgOutGridBox_selrow:
-	.space	2, 0x00
-PcgOutGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C02, 0x3B3C04
-PcgOutGridBox_pcol:
-	.space	4, 0x00
-PcgOutGridBox_prow:
-	.space	4, 0x00
-PcgOutGridBox_crow:
-	.space	4, 0x00
-MdTxpcg_MidiPcgOutSendEditSw_SEND_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C10, 0x3B3C14
-MdComp_window:
-	.space	4, 0xFF
-MdComp_MmmEditBox_MODE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C18, 0x3B3C1C
-MdComp_MmmEditBox_MODE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C1C, 0x3B3C20
-MdPmlctl_window:
-	.space	4, 0xFF
-PmemOutLGridBox_selrow:
-	.space	2, 0x00
-PmemOutLGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C26, 0x3B3C28
-PmemOutLGridBox_pcol:
-	.space	4, 0x00
-PmemOutLGridBox_prow:
-	.space	4, 0x00
-PmemOutLGridBox_crow:
-	.space	4, 0x00
-PmemOutRGridBox_selrow:
-	.space	2, 0xFF
-PmemOutRGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C36, 0x3B3C38
-PmemOutRGridBox_pcol:
-	.space	4, 0x00
-PmemOutRGridBox_prow:
-	.space	4, 0x00
-PmemOutRGridBox_crow:
-	.space	4, 0x00
-PmBkSel_window:
-	.space	4, 0xFF
-PmBkPageBox_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C48, 0x3B3C4C
-PmBkSelWindow1_parent:
-	.space	4, 0xFF
-PmBkSelWindow1_child:
-	.space	4, 0xFF
-PmBkSelWindow1_PmemBankSel1_caption:
-	.space	4, 0x00
-PmBkSelWindow1_PmemBankSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C58, 0x3B3C5C
-PmBkSelWindow1_PmemBankSel1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C5C, 0x3B3C60
-PmBkSelWindow1_PmemBankSel2_caption:
-	.space	4, 0x00
-PmBkSelWindow1_PmemBankSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C64, 0x3B3C68
-PmBkSelWindow1_PmemBankSel2_selected:
-	.space	4, 0x00
-PmBkSelWindow1_PmemBankSel3_caption:
-	.space	4, 0x00
-PmBkSelWindow1_PmemBankSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C70, 0x3B3C74
-PmBkSelWindow1_PmemBankSel3_selected:
-	.space	4, 0x00
-PmBkSelWindow2_parent:
-	.space	4, 0xFF
-PmBkSelWindow2_child:
-	.space	4, 0xFF
-PmBkSelWindow2_PmemBankSel1_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C84, 0x3B3C88
-PmBkSelWindow2_PmemBankSel1_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel2_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C90, 0x3B3C94
-PmBkSelWindow2_PmemBankSel2_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel3_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3C9C, 0x3B3CA0
-PmBkSelWindow2_PmemBankSel3_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel4_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CA8, 0x3B3CAC
-PmBkSelWindow2_PmemBankSel4_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel5_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CB4, 0x3B3CB8
-PmBkSelWindow2_PmemBankSel5_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel6_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CC0, 0x3B3CC4
-PmBkSelWindow2_PmemBankSel6_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel7_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CCC, 0x3B3CD0
-PmBkSelWindow2_PmemBankSel7_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel8_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CD8, 0x3B3CDC
-PmBkSelWindow2_PmemBankSel8_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel9_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CE4, 0x3B3CE8
-PmBkSelWindow2_PmemBankSel9_selected:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel10_caption:
-	.space	4, 0x00
-PmBkSelWindow2_PmemBankSel10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3CF0, 0x3B3CF4
-PmBkSelWindow2_PmemBankSel10_selected:
-	.space	4, 0x00
-PmBkSelWindow3_parent:
-	.space	4, 0xFF
-PmBkSelWindow3_child:
-	.space	4, 0xFF
-PmBkSelWindow3_MmmEditBox_BANK_selected:
-	.space	4, 0x00
-PmBkSelWindow3_MmmEditBox_BANK_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D04, 0x3B3D08
-PmView_window:
-	.space	4, 0xFF
-PmName_window:
-	.space	4, 0xFF
-PmBkName_window:
-	.space	4, 0xFF
-data_500031AC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D14, 0x3B3D28
-VocalistWorkstation_window:
-	.space	4, 0xFF
-VocalistPage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D2C, 0x3B3D30
-VocalistWindow1_parent:
-	.space	4, 0xFF
-VocalistWindow1_child:
-	.space	4, 0xFF
-VocalistListBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D38, 0x3B3D3C
-HarmOnOffBox_onoff:
-	.space	4, 0x00
-VocalistWindow2_parent:
-	.space	4, 0xFF
-VocalistWindow2_child:
-	.space	4, 0xFF
-VocalistPage2Box_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D48, 0x3B3D4A
-VocalistPage2Box_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D4A, 0x3B3D4C
-VocalistPage2Box_pcol:
-	.space	4, 0x00
-VocalistPage2Box_prow:
-	.space	4, 0x00
-VocalistPage2Box_crow:
-	.space	4, 0x00
-data_500031F0:
-	.space	1, 0x00
-data_500031F1:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D59, 0x3B3D5C
-TtSeMenu_window:
-	.space	4, 0xFF
-TtSeMenu_TitleMenu_TONE_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_AMPLITUDE_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_PITCH_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_FILTER_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_EASY_EDIT_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_LFO_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_EFFECT_selected:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_CONTROLLER_selected:
-	.space	4, 0x00
-TtSeMenu_CompareToggleSe_EDITED_onoff:
-	.space	4, 0x00
-TtSeMenu_TitleMenu_WRITE_selected:
-	.space	4, 0x00
-TtSeTone_window:
-	.space	4, 0xFF
-TtSeTone_ResetPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D8C, 0x3B3D90
-Tone1_parent:
-	.space	4, 0xFF
-Tone1_child:
-	.space	4, 0xFF
-gridTone1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D98, 0x3B3D9A
-gridTone1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3D9A, 0x3B3D9C
-gridTone1_pcol:
-	.space	4, 0x00
-gridTone1_prow:
-	.space	4, 0x00
-gridTone1_crow:
-	.space	4, 0x00
-Tone1_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DA8, 0x3B3DAC
-Tone1_EditBoxSe_ON_OFF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DAC, 0x3B3DB0
-Tone1_EditBoxSe_TIME_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DB0, 0x3B3DB4
-SoloTone1_onoff:
-	.space	4, 0x00
-Tone1_CompareToggleSe_EDITED_onoff:
-	.space	4, 0x00
-ToneLayer1_parent:
-	.space	4, 0xFF
-ToneLayer1_child:
-	.space	4, 0xFF
-gridLayer1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DC4, 0x3B3DC6
-gridLayer1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DC6, 0x3B3DC8
-gridLayer1_pcol:
-	.space	4, 0x00
-gridLayer1_prow:
-	.space	4, 0x00
-gridLayer1_crow:
-	.space	4, 0x00
-SoloLayer1_onoff:
-	.space	4, 0x00
-ToneLayer2_parent:
-	.space	4, 0xFF
-ToneLayer2_child:
-	.space	4, 0xFF
-gridLayer2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DE0, 0x3B3DE2
-gridLayer2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DE2, 0x3B3DE4
-gridLayer2_pcol:
-	.space	4, 0x00
-gridLayer2_prow:
-	.space	4, 0x00
-gridLayer2_crow:
-	.space	4, 0x00
-SoloLayer2_onoff:
-	.space	4, 0x00
-Tone2_parent:
-	.space	4, 0xFF
-Tone2_child:
-	.space	4, 0xFF
-Tset1On_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3DFC, 0x3B3E00
-Tset2On_selected:
-	.space	4, 0x00
-Tset3On_selected:
-	.space	4, 0x00
-Tset4On_selected:
-	.space	4, 0x00
-SoloTone2_onoff:
-	.space	4, 0x00
-ToneSetGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E10, 0x3B3E12
-ToneSetGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E12, 0x3B3E14
-ToneSetGrid_pcol:
-	.space	4, 0x00
-ToneSetGrid_prow:
-	.space	4, 0x00
-ToneSetGrid_crow:
-	.space	4, 0x00
-ToneSelect_parent:
-	.space	4, 0xFF
-ToneSelect_child:
-	.space	4, 0xFF
-ToneSelect_GridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E28, 0x3B3E2A
-ToneSelect_GridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E2A, 0x3B3E2C
-ToneSelect_GridBoxSe1_pcol:
-	.space	4, 0x00
-ToneSelect_GridBoxSe1_prow:
-	.space	4, 0x00
-ToneSelect_GridBoxSe1_crow:
-	.space	4, 0x00
-ToneSelect_SoloToggleSe_SOLO_onoff:
-	.space	4, 0x00
-ToneSelect_TitleMenu_TONE_COPY_selected:
-	.space	4, 0x00
-ToneCopy_parent:
-	.space	4, 0xFF
-ToneCopy_child:
-	.space	4, 0xFF
-ToneDynamics_parent:
-	.space	4, 0xFF
-ToneDynamics_child:
-	.space	4, 0xFF
-ToneDynamics_1stEditBoxSe_1st_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E50, 0x3B3E54
-ToneDynamics_2ndEditBoxSe_2nd_selected:
-	.space	4, 0x00
-ToneDynamics_3rdEditBoxSe_3rd_selected:
-	.space	4, 0x00
-ToneDynamics_4thEditBoxSe_4th_selected:
-	.space	4, 0x00
-ToneDynamics_SoloToggleSe_SOLO_onoff:
-	.space	4, 0x00
-ToneDynamics_TsetGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E64, 0x3B3E66
-ToneDynamics_TsetGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E66, 0x3B3E68
-ToneDynamics_TsetGridBoxSe1_pcol:
-	.space	4, 0x00
-ToneDynamics_TsetGridBoxSe1_prow:
-	.space	4, 0x00
-ToneDynamics_TsetGridBoxSe1_crow:
-	.space	4, 0x00
-TtSeAmp_window:
-	.space	4, 0xFF
-TtSeAmp_ResetPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E78, 0x3B3E7C
-Amp1_parent:
-	.space	4, 0xFF
-Amp1_child:
-	.space	4, 0xFF
-gridAmp1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E84, 0x3B3E86
-gridAmp1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3E86, 0x3B3E88
-gridAmp1_pcol:
-	.space	4, 0x00
-gridAmp1_prow:
-	.space	4, 0x00
-gridAmp1_crow:
-	.space	4, 0x00
-SoloAmp1_onoff:
-	.space	4, 0x00
-Amp2_parent:
-	.space	4, 0xFF
-Amp2_child:
-	.space	4, 0xFF
-gridAmp2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EA0, 0x3B3EA2
-gridAmp2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EA2, 0x3B3EA4
-gridAmp2_pcol:
-	.space	4, 0x00
-gridAmp2_prow:
-	.space	4, 0x00
-gridAmp2_crow:
-	.space	4, 0x00
-SoloAmp2_onoff:
-	.space	4, 0x00
-Amp3_parent:
-	.space	4, 0xFF
-Amp3_child:
-	.space	4, 0xFF
-gridAmp3_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EBC, 0x3B3EBE
-gridAmp3_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EBE, 0x3B3EC0
-gridAmp3_pcol:
-	.space	4, 0x00
-gridAmp3_prow:
-	.space	4, 0x00
-gridAmp3_crow:
-	.space	4, 0x00
-SoloAmp3_onoff:
-	.space	4, 0x00
-TtSePitch_window:
-	.space	4, 0xFF
-TtSePitch_ResetPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3ED4, 0x3B3ED8
-Pitch1_parent:
-	.space	4, 0xFF
-Pitch1_child:
-	.space	4, 0xFF
-gridPitch1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EE0, 0x3B3EE2
-gridPitch1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EE2, 0x3B3EE4
-gridPitch1_pcol:
-	.space	4, 0x00
-gridPitch1_prow:
-	.space	4, 0x00
-gridPitch1_crow:
-	.space	4, 0x00
-Pitch1_EditBoxSe_OCT_SHIFT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EF0, 0x3B3EF4
-Pitch1_EditBoxSe_RIGHT_SPLIT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EF4, 0x3B3EF8
-Pitch1_EditBoxSe_LEFT_SPLIT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3EF8, 0x3B3EFC
-SoloPitch1_onoff:
-	.space	4, 0x00
-Pitch2_parent:
-	.space	4, 0xFF
-Pitch2_child:
-	.space	4, 0xFF
-gridPitch2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F08, 0x3B3F0A
-gridPitch2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F0A, 0x3B3F0C
-gridPitch2_pcol:
-	.space	4, 0x00
-gridPitch2_prow:
-	.space	4, 0x00
-gridPitch2_crow:
-	.space	4, 0x00
-SoloPitch2_onoff:
-	.space	4, 0x00
-Pitch3_parent:
-	.space	4, 0xFF
-Pitch3_child:
-	.space	4, 0xFF
-gridPitch3_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F24, 0x3B3F26
-gridPitch3_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F26, 0x3B3F28
-gridPitch3_pcol:
-	.space	4, 0x00
-gridPitch3_prow:
-	.space	4, 0x00
-gridPitch3_crow:
-	.space	4, 0x00
-SoloPitch3_onoff:
-	.space	4, 0x00
-TtSeFilter_window:
-	.space	4, 0xFF
-TtSeFilter_ResetPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F3C, 0x3B3F40
-Filter1_parent:
-	.space	4, 0xFF
-Filter1_child:
-	.space	4, 0xFF
-gridFilter1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F48, 0x3B3F4A
-gridFilter1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F4A, 0x3B3F4C
-gridFilter1_pcol:
-	.space	4, 0x00
-gridFilter1_prow:
-	.space	4, 0x00
-gridFilter1_crow:
-	.space	4, 0x00
-SoloFilter1_onoff:
-	.space	4, 0x00
-Filter2_parent:
-	.space	4, 0xFF
-Filter2_child:
-	.space	4, 0xFF
-gridFilter2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F64, 0x3B3F66
-gridFilter2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F66, 0x3B3F68
-gridFilter2_pcol:
-	.space	4, 0x00
-gridFilter2_prow:
-	.space	4, 0x00
-gridFilter2_crow:
-	.space	4, 0x00
-SoloFilter2_onoff:
-	.space	4, 0x00
-Filter3_parent:
-	.space	4, 0xFF
-Filter3_child:
-	.space	4, 0xFF
-gridFilter3_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F80, 0x3B3F82
-gridFilter3_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F82, 0x3B3F84
-gridFilter3_pcol:
-	.space	4, 0x00
-gridFilter3_prow:
-	.space	4, 0x00
-gridFilter3_crow:
-	.space	4, 0x00
-SoloFilter3_onoff:
-	.space	4, 0x00
-Filter4_parent:
-	.space	4, 0xFF
-Filter4_child:
-	.space	4, 0xFF
-gridFilter4_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F9C, 0x3B3F9E
-gridFilter4_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3F9E, 0x3B3FA0
-gridFilter4_pcol:
-	.space	4, 0x00
-gridFilter4_prow:
-	.space	4, 0x00
-gridFilter4_crow:
-	.space	4, 0x00
-SoloFilter4_onoff:
-	.space	4, 0x00
-TtSeEasy_window:
-	.space	4, 0xFF
-TtSeEasy_EditBoxSe_BRILLIANCE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FB4, 0x3B3FB8
-TtSeEasy_EditBoxSe_VIBRATO_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FB8, 0x3B3FBC
-TtSeEasy_EditBoxSe_VIBRATO_SPEED_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FBC, 0x3B3FC0
-TtSeEasy_EditBoxSe_OCTAVE_SHIFT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FC0, 0x3B3FC4
-TtSeEasy_EditBoxSe_VIBRATO_DELAY_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FC4, 0x3B3FC8
-TtSeEasy_EditBoxSe_ATTACK_TIME_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FC8, 0x3B3FCC
-TtSeEasy_EditBoxSe_RELEASE_TIME_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FCC, 0x3B3FD0
-TtSeEasy_EditBoxSe_DIGITAL_EFFECT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FD0, 0x3B3FD4
-TtSeEasy_TitleMenu_WRITE_selected:
-	.space	4, 0x00
-TtSeLfo_window:
-	.space	4, 0xFF
-TtSeLfo_LfoPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FDC, 0x3B3FE0
-LFO1_parent:
-	.space	4, 0xFF
-LFO1_child:
-	.space	4, 0xFF
-gridLfo1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FE8, 0x3B3FEA
-gridLfo1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B3FEA, 0x3B3FEC
-gridLfo1_pcol:
-	.space	4, 0x00
-gridLfo1_prow:
-	.space	4, 0x00
-gridLfo1_crow:
-	.space	4, 0x00
-SoloLfo1_onoff:
-	.space	4, 0x00
-LFO1_TitleMenuView1Se_OVERVIEW_selected:
-	.space	4, 0x00
-LFO2_parent:
-	.space	4, 0xFF
-LFO2_child:
-	.space	4, 0xFF
-gridLfo2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4008, 0x3B400A
-gridLfo2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B400A, 0x3B400C
-gridLfo2_pcol:
-	.space	4, 0x00
-gridLfo2_prow:
-	.space	4, 0x00
-gridLfo2_crow:
-	.space	4, 0x00
-SoloLfo2_onoff:
-	.space	4, 0x00
-LFO2_TitleMenuView2Se_OVERVIEW_selected:
-	.space	4, 0x00
-LFO3_parent:
-	.space	4, 0xFF
-LFO3_child:
-	.space	4, 0xFF
-gridLfo3_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4028, 0x3B402A
-gridLfo3_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B402A, 0x3B402C
-gridLfo3_pcol:
-	.space	4, 0x00
-gridLfo3_prow:
-	.space	4, 0x00
-gridLfo3_crow:
-	.space	4, 0x00
-SoloLfo3_onoff:
-	.space	4, 0x00
-LFO3_TitleMenuView3Se_OVERVIEW_selected:
-	.space	4, 0x00
-LFO4_parent:
-	.space	4, 0xFF
-LFO4_child:
-	.space	4, 0xFF
-gridLfo4_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4048, 0x3B404A
-gridLfo4_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B404A, 0x3B404C
-gridLfo4_pcol:
-	.space	4, 0x00
-gridLfo4_prow:
-	.space	4, 0x00
-gridLfo4_crow:
-	.space	4, 0x00
-SoloLfo4_onoff:
-	.space	4, 0x00
-LFO4_TitleMenuView4Se_OVERVIEW_selected:
-	.space	4, 0x00
-TtSeDigEff_window:
-	.space	4, 0xFF
-TtSeDigEff_ResetPageSe1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4064, 0x3B4068
-Effect1_parent:
-	.space	4, 0xFF
-Effect1_child:
-	.space	4, 0xFF
-Effect1_EditBoxSe_ON_OFF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4070, 0x3B4074
-Effect1_EditBoxSe_TEN_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4074, 0x3B4078
-Effect1_EditBoxSe_SUF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4078, 0x3B407C
-Effect1_EditBoxSe_VARI_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B407C, 0x3B4080
-Effect1_EditBoxSe_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4080, 0x3B4084
-Effect1_EditBoxSe_ON_OFF2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4084, 0x3B4088
-Effect1_EditBoxSe_DEPTH2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4088, 0x3B408C
-Effect1_EditBoxSe_ADJUST_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B408C, 0x3B4090
-Effect1_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4090, 0x3B4094
-PortaOnBak_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4094, 0x3B4098
-PortaTimeBak_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4098, 0x3B409C
-DspEffect_parent:
-	.space	4, 0xFF
-DspEffect_child:
-	.space	4, 0xFF
-DspEffect_EditBoxSe_ON_OFF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40A4, 0x3B40A8
-DspEffect_EditBoxSe_GROUP_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40A8, 0x3B40AC
-DspType_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40AC, 0x3B40B0
-DspEffect_EditBoxSe_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40B0, 0x3B40B4
-DspEffect_EditBoxSe_VARI_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40B4, 0x3B40B8
-DspEffect_EditBoxSe_ON_OFF2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40B8, 0x3B40BC
-DspEffect_EditBoxSe_DEPTH2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40BC, 0x3B40C0
-DspEffect_EditBoxSe_ADJUST_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40C0, 0x3B40C4
-DspEffect_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40C4, 0x3B40C8
-PortaOn_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40C8, 0x3B40CC
-PortaTime_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40CC, 0x3B40D0
-DigitalEffect_parent:
-	.space	4, 0xFF
-DigitalEffect_child:
-	.space	4, 0xFF
-TtSedMain_window:
-	.space	4, 0xFF
-TtSedMain_DrumGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40DC, 0x3B40DE
-TtSedMain_DrumGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40DE, 0x3B40E0
-TtSedMain_DrumGridBoxSe1_pcol:
-	.space	4, 0x00
-TtSedMain_DrumGridBoxSe1_prow:
-	.space	4, 0x00
-TtSedMain_DrumGridBoxSe1_crow:
-	.space	4, 0x00
-DrumKeyName_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40EC, 0x3B40F0
-TtSedMain_TitleMenu_DETAIL_EDIT_selected:
-	.space	4, 0x00
-TtSedMain_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B40F4, 0x3B40F8
-TtSeControl_window:
-	.space	4, 0xFF
-Ctrl1_parent:
-	.space	4, 0xFF
-Ctrl1_child:
-	.space	4, 0xFF
-Ctrl1_EditBoxSe_GLIDE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4104, 0x3B4108
-Ctrl1_CtrlGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4108, 0x3B410A
-Ctrl1_CtrlGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B410A, 0x3B410C
-Ctrl1_CtrlGridBoxSe1_pcol:
-	.space	4, 0x00
-Ctrl1_CtrlGridBoxSe1_prow:
-	.space	4, 0x00
-Ctrl1_CtrlGridBoxSe1_crow:
-	.space	4, 0x00
-Effect2_parent:
-	.space	4, 0xFF
-Effect2_child:
-	.space	4, 0xFF
-Effect2_ChEditBoxSe_PsEditBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4120, 0x3B4124
-Effect2_ChEditBoxSe_PsEditBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4124, 0x3B4128
-Effect2_ChEditBoxSe_PsEditBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4128, 0x3B412C
-Effect2_ChEditBoxSe_PsEditBox4_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B412C, 0x3B4130
-Effect2_ChEditBoxSe_PsEditBox5_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4130, 0x3B4134
-Effect2_ChEditBoxSe_PsEditBox6_selected:
-	.space	4, 0x00
-Effect2_ChEditBoxSe_PsEditBox7_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4138, 0x3B413C
-Effect2_ChEditBoxSe_PsEditBox8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B413C, 0x3B4140
-Effect2_EditBoxSe_TYPE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4140, 0x3B4144
-Effect2_EditBoxSe_ON_OFF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4144, 0x3B4148
-Effect2_EditBoxSe_STEREO_MONO_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4148, 0x3B414C
-TtSeWrite_window:
-	.space	4, 0xFF
-TtSeWrite_TitleMenu_SOUND_NAMING_selected:
-	.space	4, 0x00
-TtSeWrite_EditBoxSe_MEMORY_BANK_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4154, 0x3B4158
-TtSeName_window:
-	.space	4, 0xFF
-TtSeCopy_window:
-	.space	4, 0xFF
-TtSeCopy_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4160, 0x3B4164
-TtSeCopy_EditBoxSe2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4164, 0x3B4168
-TtSeCopy_EditBoxSe3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4168, 0x3B416C
-TtSedMenu_window:
-	.space	4, 0xFF
-TtSedMenu_TitleMenu_TONE_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_AMPLITUDE_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_FILTER_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_LFO_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_EFFECT_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_CONTROLLER_selected:
-	.space	4, 0x00
-TtSedMenu_TitleMenu_DRUM_SOUND_NAMING_selected:
-	.space	4, 0x00
-TtSedAmp_window:
-	.space	4, 0xFF
-DrumAmpEnv_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4190, 0x3B4192
-DrumAmpEnv_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4192, 0x3B4194
-DrumAmpEnv_pcol:
-	.space	4, 0x00
-DrumAmpEnv_prow:
-	.space	4, 0x00
-DrumAmpEnv_crow:
-	.space	4, 0x00
-TtSedAmp_EditBoxSe1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41A0, 0x3B41A4
-TtSedFilter_window:
-	.space	4, 0xFF
-TtSedFilter_DrumGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41A8, 0x3B41AA
-TtSedFilter_DrumGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41AA, 0x3B41AC
-TtSedFilter_DrumGridBoxSe1_pcol:
-	.space	4, 0x00
-TtSedFilter_DrumGridBoxSe1_prow:
-	.space	4, 0x00
-TtSedFilter_DrumGridBoxSe1_crow:
-	.space	4, 0x00
-TtSedTone_window:
-	.space	4, 0xFF
-DrumToneDynam_parent:
-	.space	4, 0xFF
-DrumToneDynam_child:
-	.space	4, 0xFF
-DrumToneDynam_DrumAc1stEditBoxSe_1st_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41C4, 0x3B41C8
-DrumToneDynam_DrumAc2ndEditBoxSe_2nd_selected:
-	.space	4, 0x00
-DrumToneDynam_TsetGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41CC, 0x3B41CE
-DrumToneDynam_TsetGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41CE, 0x3B41D0
-DrumToneDynam_TsetGridBoxSe1_pcol:
-	.space	4, 0x00
-DrumToneDynam_TsetGridBoxSe1_prow:
-	.space	4, 0x00
-DrumToneDynam_TsetGridBoxSe1_crow:
-	.space	4, 0x00
-DrumToneDynam_EditBoxSe_PRIORITY_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41DC, 0x3B41E0
-DrumToneDynam_EditBoxSe_DAMP_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41E0, 0x3B41E4
-DrumToneDynam_EditBoxSe_GROUP_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41E4, 0x3B41E8
-TtSedControl_window:
-	.space	4, 0xFF
-TtSedControl_DrumAcCtrlGridBoxSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41EC, 0x3B41EE
-TtSedControl_DrumAcCtrlGridBoxSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B41EE, 0x3B41F0
-TtSedControl_DrumAcCtrlGridBoxSe1_pcol:
-	.space	4, 0x00
-TtSedControl_DrumAcCtrlGridBoxSe1_prow:
-	.space	4, 0x00
-TtSedControl_DrumAcCtrlGridBoxSe1_crow:
-	.space	4, 0x00
-TtSedLfo_window:
-	.space	4, 0xFF
-TtSedLfo_DrumGridBoxSe21_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4200, 0x3B4202
-TtSedLfo_DrumGridBoxSe21_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4202, 0x3B4204
-TtSedLfo_DrumGridBoxSe21_pcol:
-	.space	4, 0x00
-TtSedLfo_DrumGridBoxSe21_prow:
-	.space	4, 0x00
-TtSedLfo_DrumGridBoxSe21_crow:
-	.space	4, 0x00
-TtSedEff_window:
-	.space	4, 0xFF
-TtSedEff_EditBoxSe_ON_OFF_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4214, 0x3B4218
-TtSedEff_EditBoxSe_GROUP_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4218, 0x3B421C
-DspTypeDrm_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B421C, 0x3B4220
-TtSedEff_EditBoxSe_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4220, 0x3B4224
-TtSedEff_EditBoxSe_VARI_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4224, 0x3B4228
-TtDrumSoundNaming_window:
-	.space	4, 0xFF
-TtSeLfoView_window:
-	.space	4, 0xFF
-TtSeLfoView_GridBoxScrlSe1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4230, 0x3B4232
-TtSeLfoView_GridBoxScrlSe1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4232, 0x3B4234
-TtSeLfoView_GridBoxScrlSe1_pcol:
-	.space	4, 0x00
-TtSeLfoView_GridBoxScrlSe1_prow:
-	.space	4, 0x00
-TtSeLfoView_GridBoxScrlSe1_crow:
-	.space	4, 0x00
+zlib_4879EEE4:	# DemoSong03: its event memory, 12544 bytes, stored as a zlib stream of 6797 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6
 
-		AcIndexEditSw	swVal0, super=Effect2, next=Effect2_FuncBoxSe1, prev=Effect2_Box1, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, style=3
-		AcIndexEditSw	swVal1, super=Effect2, next=swVal2, prev=Effect2_FuncBoxSe1, X=364, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=11, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, style=3
-		AcIndexEditSw	swVal2, super=Effect2, next=swVal3, prev=swVal1, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=3
-		AcIndexEditSw	swVal3, super=Effect2, next=swVal4, prev=swVal2, X=444, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=13, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, style=3
-		AcIndexEditSw	swVal4, super=Effect2, next=swVal5, prev=swVal3, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=14, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, style=3
-		AcIndexEditSw	swVal5, super=Effect2, next=swVal6, prev=swVal4, flag=VF_Invisible, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, style=3
-		AcIndexEditSw	swVal6, super=Effect2, next=swVal7, prev=swVal5, X=564, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=16, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=3
-		AcIndexEditSw	swVal7, super=Effect2, next=Effect2_FuncBoxSe2, prev=swVal6, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=17, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=3
-
-Str_Sound_Naming_Edt_5:	.asciz "Sound Naming Edt"
+# 49 cells of 256 bytes.  Tracks typed event by event: 9 of 9.
+# DemoSong03_Events
+	sq_cell	0x80, 0, 2	# cell 1: song 1 track 1, 1 of 11
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 86, 88, 20, 0
+	sq_note	23, 0, 89, 88, 13, 0
+	sq_note	43, 0, 94, 88, 12, 0
+	sq_note	63, 0, 89, 88, 18, 0
+	sq_note	81, 0, 84, 88, 21, 0
+	sq_beat
+	sq_note	5, 0, 88, 88, 17, 0
+	sq_note	23, 0, 93, 88, 15, 0
+	sq_note	40, 0, 88, 88, 15, 0
+	sq_note	61, 0, 82, 88, 16, 0
+	sq_note	81, 0, 86, 88, 12, 0
+	sq_beat
+	sq_note	5, 0, 91, 88, 16, 0
+	sq_note	25, 0, 86, 88, 15, 0
+	sq_note	44, 0, 81, 88, 18, 0
+	sq_note	60, 0, 85, 88, 15, 0
+	sq_note	74, 0, 88, 88, 14, 0
+	sq_note	89, 0, 93, 88, 13, 0
+	sq_beat
+	sq_note	25, 0, 74, 78, 54, 0
+	sq_note	67, 0, 77, 78, 14, 0
+	sq_note	68, 0, 82, 78, 15, 0
+	sq_beat
+	sq_note	9, 0, 72, 78, 64, 0
+	sq_note	52, 0, 76, 78, 19, 0
+	sq_note	53, 0, 81, 78, 18, 0
+	sq_note	94, 0, 70, 78, 56, 0
+	sq_beat
+	sq_note	34, 0, 79, 78, 16, 0
+	sq_note	36, 0, 74, 78, 16, 0
+	sq_note	86, 0, 64, 78, 5, 1
+	sq_note	87, 0, 73, 78, 4, 1
+	sq_note	87, 0, 76, 78, 4, 1
+	sq_note	87, 0, 81, 78, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	10, 0, 86, 88, 20, 0
+	sq_note	30, 0, 89, 88, 13, 0
+	sq_note	50, 0, 94, 88, 13, 0
+	sq_note	70, 0, 89, 88, 17, 0
+	sq_note	88, 0, 84, 88, 21, 0
+	sq_beat
+	sq_note	12, 0, 88, 88, 17, 0
+	sq_note	29, 0, 93, 88, 15, 0
+	sq_note	47, 0, 88, 88, 15, 0
+	sq_note	68, 0, 82, 88, 16, 0
+	sq_note	88, 0, 86, 88, 12, 0
+	sq_beat
+	.byte	0x0c, 0x90, 0x5b, 0x58	# bytes 1..4 of `sq_note	12, 0, 91, 88, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 1, 3	# cell 2: song 1 track 1, 2 of 11
+	.byte	0x10, 0x00	# bytes 5..6 of `sq_note	12, 0, 91, 88, 16, 0` (the event spans two cells)
+	sq_note	32, 0, 86, 88, 15, 0
+	sq_note	51, 0, 81, 88, 16, 0
+	sq_note	67, 0, 85, 88, 15, 0
+	sq_note	81, 0, 88, 88, 15, 0
+	sq_beat
+	sq_note	0, 0, 93, 88, 17, 0
+	sq_note	32, 0, 50, 78, 80, 0
+	sq_note	32, 0, 74, 78, 54, 0
+	sq_note	74, 0, 77, 78, 14, 0
+	sq_note	75, 0, 82, 78, 15, 0
+	sq_beat
+	sq_note	16, 0, 48, 78, 2, 1
+	sq_note	16, 0, 72, 78, 64, 0
+	sq_note	59, 0, 76, 78, 19, 0
+	sq_note	60, 0, 81, 78, 18, 0
+	sq_beat
+	sq_note	15, 0, 46, 78, 14, 1
+	sq_note	15, 0, 70, 78, 56, 0
+	sq_note	63, 0, 79, 78, 16, 0
+	sq_note	64, 0, 74, 78, 16, 0
+	sq_beat
+	sq_note	30, 0, 45, 78, 66, 1
+	sq_note	30, 0, 64, 78, 66, 1
+	sq_note	32, 0, 73, 78, 64, 1
+	sq_note	32, 0, 76, 78, 64, 1
+	sq_note	32, 0, 81, 78, 64, 1
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 79, 82, 48, 0
+	sq_note	58, 0, 77, 82, 54, 0
+	sq_beat
+	sq_note	19, 0, 76, 82, 32, 0
+	sq_note	54, 0, 74, 82, 24, 0
+	sq_note	82, 0, 73, 82, 23, 0
+	sq_beat
+	sq_note	9, 0, 71, 82, 19, 0
+	sq_note	29, 0, 73, 82, 17, 0
+	sq_note	48, 0, 69, 82, 17, 0
+	sq_note	68, 0, 71, 82, 19, 0
+	sq_note	86, 0, 73, 82, 16, 0
+	sq_beat
+	sq_note	8, 0, 74, 82, 14, 0
+	sq_note	24, 0, 76, 82, 15, 0
+	sq_note	41, 0, 77, 82, 15, 0
+	sq_note	57, 0, 79, 82, 17, 0
+	sq_note	75, 0, 81, 82, 16, 0
+	sq_note	92, 0, 79, 82, 15, 0
+	sq_beat
+	sq_note	13, 0, 77, 82, 17, 0
+	.byte	0x20, 0x90, 0x4c, 0x52, 0x11	# bytes 1..5 of `sq_note	32, 0, 76, 82, 17, 0` (the event spans two cells)
+	sq_cell	0x80, 2, 4	# cell 3: song 1 track 1, 3 of 11
+	.byte	0x00	# bytes 6..6 of `sq_note	32, 0, 76, 82, 17, 0` (the event spans two cells)
+	sq_note	49, 0, 74, 82, 18, 0
+	sq_note	68, 0, 77, 82, 21, 0
+	sq_note	88, 0, 81, 82, 24, 0
+	sq_beat
+	sq_note	15, 0, 85, 82, 20, 0
+	sq_note	33, 0, 86, 82, 19, 0
+	sq_note	54, 0, 81, 82, 18, 0
+	sq_note	72, 0, 83, 82, 18, 0
+	sq_note	90, 0, 85, 82, 14, 0
+	sq_beat
+	sq_note	12, 0, 86, 82, 17, 0
+	sq_note	28, 0, 88, 82, 19, 0
+	sq_note	47, 0, 89, 82, 20, 0
+	sq_note	66, 0, 91, 82, 19, 0
+	sq_note	86, 0, 93, 82, 22, 0
+	sq_beat
+	sq_note	11, 0, 94, 82, 28, 0
+	sq_note	32, 0, 74, 86, 60, 0
+	sq_note	73, 0, 77, 86, 16, 0
+	sq_note	74, 0, 82, 86, 16, 0
+	sq_beat
+	sq_note	12, 0, 69, 86, 56, 0
+	sq_note	48, 0, 76, 86, 18, 0
+	sq_note	48, 0, 81, 86, 20, 0
+	sq_note	86, 0, 70, 86, 62, 0
+	sq_beat
+	sq_note	26, 0, 79, 86, 18, 0
+	sq_note	27, 0, 74, 86, 18, 0
+	sq_note	72, 0, 81, 86, 74, 0
+	sq_note	73, 0, 64, 86, 74, 0
+	sq_note	73, 0, 76, 86, 73, 0
+	sq_note	73, 0, 73, 86, 73, 0
+	sq_beat
+	sq_pc	95, 0, 17, 20, 32
+	sq_cc	95, 0, 16, 7, 127
+	sq_beat
+	sq_cc	48, 0, 16, 91, 29
+	sq_beat
+	sq_beat
+	sq_note	29, 0, 74, 101, 20, 0
+	sq_note	29, 0, 79, 105, 12, 0
+	sq_note	29, 0, 82, 104, 26, 0
+	sq_note	30, 0, 68, 106, 20, 0
+	sq_note	77, 0, 75, 104, 19, 0
+	sq_note	77, 0, 80, 114, 22, 0
+	sq_note	77, 0, 83, 103, 24, 0
+	sq_note	77, 0, 69, 103, 17, 0
+	sq_beat
+	sq_note	29, 0, 70, 117, 19, 0
+	sq_note	30, 0, 76, 104, 24, 0
+	.byte	0x1e, 0x90, 0x54	# bytes 1..3 of `sq_note	30, 0, 84, 113, 24, 0` (the event spans two cells)
+	sq_cell	0x80, 3, 5	# cell 4: song 1 track 1, 4 of 11
+	.byte	0x71, 0x18, 0x00	# bytes 4..6 of `sq_note	30, 0, 84, 113, 24, 0` (the event spans two cells)
+	sq_note	30, 0, 81, 113, 24, 0
+	sq_beat
+	sq_note	77, 0, 65, 68, 5, 0
+	sq_note	93, 0, 67, 71, 5, 0
+	sq_beat
+	sq_note	4, 0, 68, 89, 11, 0
+	sq_note	18, 0, 69, 85, 23, 0
+	sq_note	50, 0, 72, 103, 22, 0
+	sq_note	79, 0, 70, 105, 20, 0
+	sq_beat
+	sq_note	32, 0, 65, 110, 21, 0
+	sq_beat
+	sq_note	46, 0, 84, 116, 11, 0
+	sq_note	52, 0, 86, 119, 37, 0
+	sq_note	53, 0, 89, 113, 39, 0
+	sq_beat
+	sq_beat
+	sq_note	76, 0, 70, 80, 5, 0
+	sq_note	76, 0, 71, 108, 10, 0
+	sq_note	78, 0, 72, 91, 30, 0
+	sq_beat
+	sq_note	8, 0, 71, 84, 16, 0
+	sq_note	32, 0, 65, 100, 8, 0
+	sq_note	47, 0, 70, 111, 33, 0
+	sq_beat
+	sq_note	2, 0, 68, 116, 39, 0
+	sq_note	48, 0, 65, 96, 28, 0
+	sq_note	80, 0, 63, 104, 10, 0
+	sq_beat
+	sq_note	0, 0, 65, 91, 26, 0
+	sq_beat
+	sq_note	3, 0, 68, 109, 41, 0
+	sq_note	49, 0, 70, 79, 24, 0
+	sq_note	81, 0, 68, 104, 25, 0
+	sq_beat
+	sq_note	31, 0, 65, 108, 21, 0
+	sq_beat
+	sq_note	49, 0, 84, 118, 10, 0
+	sq_note	54, 0, 88, 80, 5, 0
+	sq_note	55, 0, 86, 119, 36, 0
+	sq_note	56, 0, 89, 110, 38, 0
+	sq_beat
+	sq_beat
+	sq_note	81, 0, 75, 111, 8, 0
+	sq_note	82, 0, 76, 110, 11, 0
+	sq_note	86, 0, 77, 98, 31, 0
+	sq_beat
+	sq_note	12, 0, 76, 76, 13, 0
+	sq_note	22, 0, 75, 91, 8, 0
+	sq_note	35, 0, 72, 92, 11, 0
+	sq_note	49, 0, 70, 114, 37, 0
+	sq_note	86, 0, 68, 55, 11, 0
+	sq_beat
+	sq_note	1, 0, 69, 113, 39, 0
+	sq_beat
+	.byte	0x32, 0x90, 0x46	# bytes 1..3 of `sq_note	50, 0, 70, 83, 43, 0` (the event spans two cells)
+	sq_cell	0x80, 4, 6	# cell 5: song 1 track 1, 5 of 11
+	.byte	0x53, 0x2b, 0x00	# bytes 4..6 of `sq_note	50, 0, 70, 83, 43, 0` (the event spans two cells)
+	sq_note	51, 0, 76, 92, 40, 0
+	sq_note	51, 0, 81, 89, 39, 0
+	sq_note	51, 0, 84, 91, 39, 0
+	sq_beat
+	sq_note	30, 0, 80, 81, 25, 0
+	sq_note	30, 0, 83, 77, 21, 0
+	sq_note	31, 0, 75, 89, 27, 0
+	sq_note	32, 0, 69, 93, 27, 0
+	sq_note	81, 0, 82, 80, 75, 1
+	sq_note	82, 0, 74, 97, 62, 1
+	sq_note	84, 0, 68, 102, 80, 1
+	sq_note	84, 0, 79, 90, 67, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 75, 124, 44, 0
+	sq_note	1, 0, 86, 126, 52, 0
+	sq_note	1, 0, 81, 123, 49, 0
+	sq_note	1, 0, 89, 121, 46, 0
+	sq_note	48, 0, 84, 30, 9, 0
+	sq_note	54, 0, 83, 88, 6, 0
+	sq_note	58, 0, 81, 97, 6, 0
+	sq_note	62, 0, 79, 98, 5, 0
+	sq_note	64, 0, 77, 99, 5, 0
+	sq_note	68, 0, 76, 97, 5, 0
+	sq_note	71, 0, 74, 98, 5, 0
+	sq_note	74, 0, 72, 88, 5, 0
+	sq_note	77, 0, 71, 98, 5, 0
+	sq_note	80, 0, 69, 101, 5, 0
+	sq_note	82, 0, 67, 95, 5, 0
+	sq_note	86, 0, 65, 86, 5, 0
+	sq_beat
+	sq_note	77, 0, 70, 105, 9, 0
+	sq_note	79, 0, 71, 110, 15, 0
+	sq_note	88, 0, 72, 68, 29, 0
+	sq_beat
+	sq_note	19, 0, 70, 85, 6, 0
+	sq_note	25, 0, 68, 92, 9, 0
+	sq_note	34, 0, 65, 83, 14, 0
+	sq_note	51, 0, 70, 117, 35, 0
+	sq_beat
+	sq_note	2, 0, 68, 109, 41, 0
+	sq_note	47, 0, 65, 100, 26, 0
+	sq_note	80, 0, 63, 111, 11, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 86, 113, 12, 1
+	sq_note	32, 0, 79, 113, 14, 1
+	.byte	0x20, 0x90, 0x53, 0x76	# bytes 1..4 of `sq_note	32, 0, 83, 118, 20, 1` (the event spans two cells)
+	sq_cell	0x80, 5, 7	# cell 6: song 1 track 1, 6 of 11
+	.byte	0x14, 0x01	# bytes 5..6 of `sq_note	32, 0, 83, 118, 20, 1` (the event spans two cells)
+	sq_note	32, 0, 75, 116, 20, 1
+	sq_beat
+	sq_note	54, 0, 81, 47, 9, 0
+	sq_note	61, 0, 79, 86, 7, 0
+	sq_note	66, 0, 77, 90, 6, 0
+	sq_note	69, 0, 76, 93, 6, 0
+	sq_note	73, 0, 74, 93, 6, 0
+	sq_note	77, 0, 72, 87, 5, 0
+	sq_note	82, 0, 71, 90, 5, 0
+	sq_note	86, 0, 69, 90, 5, 0
+	sq_pc	95, 0, 16, 7, 32
+	sq_beat
+	sq_cc	0, 0, 16, 7, 115
+	sq_cc	0, 0, 16, 10, 64
+	sq_note	4, 0, 82, 107, 8, 0
+	sq_note	5, 0, 83, 119, 10, 0
+	sq_note	5, 0, 84, 121, 37, 0
+	sq_beat
+	sq_note	2, 0, 80, 105, 64, 0
+	sq_note	78, 0, 77, 104, 14, 0
+	sq_beat
+	sq_note	30, 0, 82, 93, 29, 0
+	sq_note	30, 0, 89, 93, 32, 0
+	sq_note	34, 0, 87, 84, 6, 0
+	sq_beat
+	sq_beat
+	sq_note	38, 0, 77, 100, 5, 0
+	sq_note	49, 0, 80, 89, 25, 0
+	sq_note	50, 0, 84, 90, 28, 0
+	sq_beat
+	sq_note	5, 0, 82, 102, 34, 0
+	sq_note	5, 0, 86, 110, 36, 0
+	sq_note	41, 0, 81, 88, 8, 0
+	sq_note	50, 0, 82, 74, 7, 0
+	sq_note	59, 0, 87, 112, 16, 0
+	sq_note	73, 0, 82, 94, 11, 0
+	sq_note	85, 0, 81, 84, 10, 0
+	sq_beat
+	sq_note	3, 0, 80, 116, 10, 0
+	sq_note	19, 0, 79, 98, 11, 0
+	sq_note	31, 0, 78, 99, 9, 0
+	sq_note	44, 0, 77, 95, 9, 0
+	sq_note	55, 0, 76, 79, 8, 0
+	sq_note	65, 0, 75, 119, 9, 0
+	sq_note	84, 0, 74, 87, 10, 0
+	sq_beat
+	sq_note	2, 0, 82, 109, 15, 0
+	sq_note	17, 0, 75, 81, 9, 0
+	sq_note	28, 0, 74, 93, 11, 0
+	.byte	0x28, 0x90, 0x49	# bytes 1..3 of `sq_note	40, 0, 73, 105, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 6, 8	# cell 7: song 1 track 1, 7 of 11
+	.byte	0x69, 0x0b, 0x00	# bytes 4..6 of `sq_note	40, 0, 73, 105, 11, 0` (the event spans two cells)
+	sq_note	53, 0, 72, 95, 8, 0
+	sq_note	66, 0, 71, 80, 10, 0
+	sq_note	77, 0, 70, 109, 9, 0
+	sq_note	86, 0, 68, 107, 8, 0
+	sq_beat
+	sq_note	1, 0, 69, 91, 10, 0
+	sq_note	18, 0, 75, 106, 11, 0
+	sq_beat
+	sq_note	81, 0, 86, 116, 45, 0
+	sq_note	82, 0, 89, 110, 36, 0
+	sq_note	82, 0, 80, 116, 34, 0
+	sq_beat
+	sq_note	22, 0, 85, 49, 5, 0
+	sq_note	26, 0, 84, 75, 9, 0
+	sq_note	31, 0, 83, 90, 7, 0
+	sq_note	34, 0, 81, 96, 6, 0
+	sq_note	39, 0, 79, 96, 5, 0
+	sq_note	42, 0, 77, 95, 5, 0
+	sq_note	45, 0, 76, 96, 5, 0
+	sq_note	48, 0, 74, 99, 5, 0
+	sq_note	51, 0, 72, 87, 5, 0
+	sq_note	55, 0, 71, 89, 5, 0
+	sq_beat
+	sq_note	34, 0, 77, 103, 6, 0
+	sq_note	49, 0, 82, 109, 23, 0
+	sq_note	52, 0, 86, 107, 29, 0
+	sq_beat
+	sq_note	1, 0, 80, 111, 31, 0
+	sq_note	3, 0, 86, 113, 30, 0
+	sq_note	84, 0, 77, 103, 7, 0
+	sq_beat
+	sq_note	4, 0, 82, 109, 30, 0
+	sq_note	4, 0, 86, 110, 30, 0
+	sq_note	72, 0, 82, 111, 9, 0
+	sq_note	72, 0, 83, 116, 14, 0
+	sq_note	73, 0, 84, 120, 35, 0
+	sq_note	89, 0, 77, 85, 5, 0
+	sq_beat
+	sq_note	33, 0, 77, 81, 12, 0
+	sq_note	48, 0, 80, 96, 30, 0
+	sq_note	80, 0, 81, 103, 26, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 76, 93, 62, 0
+	sq_note	48, 0, 70, 82, 66, 0
+	sq_note	48, 0, 84, 93, 62, 0
+	sq_beat
+	sq_note	32, 0, 69, 93, 12, 0
+	sq_note	32, 0, 75, 99, 21, 0
+	.byte	0x20, 0x90, 0x53, 0x64	# bytes 1..4 of `sq_note	32, 0, 83, 100, 21, 0` (the event spans two cells)
+	sq_cell	0x80, 7, 9	# cell 8: song 1 track 1, 8 of 11
+	.byte	0x15, 0x00	# bytes 5..6 of `sq_note	32, 0, 83, 100, 21, 0` (the event spans two cells)
+	sq_note	80, 0, 82, 104, 42, 0
+	sq_note	80, 0, 74, 110, 59, 0
+	sq_note	80, 0, 68, 107, 44, 0
+	sq_beat
+	sq_note	35, 0, 73, 76, 8, 0
+	sq_note	42, 0, 72, 76, 7, 0
+	sq_note	48, 0, 71, 83, 6, 0
+	sq_note	52, 0, 69, 94, 5, 0
+	sq_note	56, 0, 67, 96, 5, 0
+	sq_note	59, 0, 65, 98, 5, 0
+	sq_note	61, 0, 64, 101, 5, 0
+	sq_note	64, 0, 62, 104, 5, 0
+	sq_note	67, 0, 60, 98, 5, 0
+	sq_note	70, 0, 59, 103, 5, 0
+	sq_note	72, 0, 57, 113, 5, 0
+	sq_note	75, 0, 55, 100, 5, 0
+	sq_note	77, 0, 53, 95, 5, 0
+	sq_note	81, 0, 52, 96, 5, 0
+	sq_note	85, 0, 50, 86, 5, 0
+	sq_beat
+	sq_cc	95, 0, 16, 7, 127
+	sq_pc	95, 0, 19, 86, 32
+	sq_cc	95, 0, 16, 10, 64
+	sq_beat
+	sq_note	0, 0, 63, 45, 46, 0
+	sq_note	46, 0, 65, 56, 26, 0
+	sq_note	65, 0, 67, 60, 17, 0
+	sq_note	81, 0, 68, 63, 21, 0
+	sq_beat
+	sq_note	0, 0, 70, 67, 11, 0
+	sq_note	14, 0, 72, 70, 17, 0
+	sq_note	30, 0, 74, 73, 16, 0
+	sq_note	46, 0, 75, 77, 13, 0
+	sq_note	61, 0, 77, 80, 16, 0
+	sq_note	72, 0, 79, 83, 17, 0
+	sq_note	86, 0, 80, 87, 16, 0
+	sq_beat
+	sq_note	6, 0, 82, 90, 44, 0
+	sq_note	54, 0, 79, 52, 40, 0
+	sq_note	91, 0, 75, 72, 35, 0
+	sq_beat
+	sq_note	32, 0, 77, 71, 29, 0
+	sq_note	68, 0, 79, 77, 39, 0
+	sq_beat
+	sq_note	12, 0, 75, 76, 38, 0
+	sq_note	50, 0, 72, 70, 42, 0
+	sq_note	92, 0, 74, 83, 44, 0
+	sq_beat
+	.byte	0x2a, 0x90, 0x4b, 0x46	# bytes 1..4 of `sq_note	42, 0, 75, 70, 30, 0` (the event spans two cells)
+	sq_cell	0x80, 8, 10	# cell 9: song 1 track 1, 9 of 11
+	.byte	0x1e, 0x00	# bytes 5..6 of `sq_note	42, 0, 75, 70, 30, 0` (the event spans two cells)
+	sq_note	69, 0, 74, 58, 12, 0
+	sq_note	79, 0, 73, 84, 15, 0
+	sq_note	95, 0, 72, 68, 43, 0
+	sq_beat
+	sq_note	50, 0, 68, 57, 60, 0
+	sq_beat
+	sq_note	15, 0, 70, 59, 74, 0
+	sq_note	91, 0, 72, 48, 38, 1
+	sq_beat
+	sq_beat
+	sq_note	33, 0, 70, 47, 15, 0
+	sq_note	46, 0, 72, 74, 16, 0
+	sq_note	58, 0, 70, 58, 58, 1
+	sq_beat
+	sq_beat
+	sq_pc	24, 0, 19, 67, 32
+	sq_cc	25, 0, 16, 7, 127
+	sq_cc	26, 0, 16, 10, 64
+	sq_cc	26, 0, 16, 91, 75
+	sq_note	47, 0, 63, 60, 52, 0
+	sq_note	95, 0, 67, 77, 59, 0
+	sq_beat
+	sq_note	47, 0, 70, 72, 61, 0
+	sq_note	95, 0, 75, 79, 93, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 74, 69, 73, 0
+	sq_beat
+	sq_note	51, 0, 75, 55, 29, 0
+	sq_note	73, 0, 76, 71, 30, 0
+	sq_beat
+	sq_note	0, 0, 77, 61, 14, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	64, 0, 75, 84, 71, 0
+	sq_beat
+	sq_note	40, 0, 74, 83, 55, 0
+	sq_beat
+	sq_note	0, 0, 77, 82, 55, 0
+	sq_note	60, 0, 76, 80, 66, 0
+	sq_beat
+	sq_note	33, 0, 75, 79, 61, 0
+	sq_beat
+	sq_note	0, 0, 74, 78, 59, 0
+	sq_note	64, 0, 75, 77, 64, 0
+	sq_beat
+	sq_note	32, 0, 74, 73, 43, 0
+	sq_note	92, 0, 72, 86, 22, 0
+	sq_beat
+	sq_note	13, 0, 74, 80, 20, 0
+	sq_note	27, 0, 72, 65, 20, 0
+	sq_note	82, 0, 67, 89, 59, 0
+	sq_beat
+	sq_note	43, 0, 68, 62, 65, 0
+	sq_beat
+	sq_note	5, 0, 70, 72, 25, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 67, 91, 87, 0
+	sq_beat
+	sq_note	48, 0, 68, 86, 65, 0
+	sq_cell	0x80, 9, 11	# cell 10: song 1 track 1, 10 of 11
+	sq_beat
+	sq_note	9, 0, 70, 66, 72, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 19, 94, 32
+	sq_cc	95, 0, 16, 7, 100
+	sq_beat
+	sq_cc	0, 0, 16, 10, 64
+	sq_note	3, 0, 70, 68, 66, 2
+	sq_note	3, 0, 73, 62, 66, 2
+	sq_note	4, 0, 80, 87, 17, 1
+	sq_note	4, 0, 76, 84, 65, 2
+	sq_beat
+	sq_note	29, 0, 79, 82, 40, 1
+	sq_beat
+	sq_note	68, 0, 77, 71, 2, 1
+	sq_note	70, 0, 72, 71, 2, 1
+	sq_note	70, 0, 75, 71, 2, 1
+	sq_note	72, 0, 68, 71, 2, 1
+	sq_beat
+	sq_note	70, 0, 73, 76, 83, 0
+	sq_note	72, 0, 70, 76, 81, 0
+	sq_note	74, 0, 76, 76, 79, 0
+	sq_note	75, 0, 79, 85, 78, 0
+	sq_beat
+	sq_note	55, 0, 80, 88, 86, 0
+	sq_note	61, 0, 72, 97, 79, 0
+	sq_note	61, 0, 75, 97, 79, 0
+	sq_note	61, 0, 77, 97, 79, 0
+	sq_beat
+	sq_note	45, 0, 84, 85, 83, 0
+	sq_note	46, 0, 75, 76, 81, 0
+	sq_note	46, 0, 77, 76, 81, 0
+	sq_note	46, 0, 80, 76, 81, 0
+	sq_beat
+	sq_beat
+	sq_note	25, 0, 87, 75, 1, 4
+	sq_note	26, 0, 84, 82, 0, 4
+	sq_note	27, 0, 80, 62, 92, 3
+	sq_beat
+	sq_note	6, 0, 89, 78, 75, 0
+	sq_note	92, 0, 91, 69, 36, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	31, 0, 91, 77, 2, 4
+	sq_note	32, 0, 80, 77, 76, 2
+	sq_note	33, 0, 86, 88, 72, 2
+	sq_note	34, 0, 79, 76, 72, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	11, 0, 78, 68, 48, 0
+	sq_note	13, 0, 85, 69, 48, 0
+	sq_note	44, 0, 77, 67, 48, 0
+	sq_note	56, 0, 84, 62, 30, 0
+	.byte	0x4c, 0x90	# bytes 1..2 of `sq_note	76, 0, 76, 63, 48, 0` (the event spans two cells)
+	sq_cell	0x80, 10, 65535	# cell 11: song 1 track 1, 11 of 11
+	.byte	0x4c, 0x3f, 0x30, 0x00	# bytes 3..6 of `sq_note	76, 0, 76, 63, 48, 0` (the event spans two cells)
+	sq_note	82, 0, 83, 78, 49, 0
+	sq_beat
+	sq_note	22, 0, 75, 67, 75, 6
+	sq_note	28, 0, 82, 56, 69, 6
+	sq_note	32, 0, 87, 83, 66, 6
+	sq_note	32, 0, 79, 78, 65, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	48, 144, 60, 96, 63, 1, 129, 0, 144, 39, 89, 64, 0, 48, 144, 51
+	.byte	93, 22, 0, 129, 0, 144, 39, 90, 42, 0, 48, 144, 67, 100, 32, 2
+	.byte	48, 144, 62, 94, 39, 2, 48, 144, 70, 87, 30, 2, 48, 144, 51, 99
+	.byte	34, 0, 129, 0, 144, 39, 84, 61, 0, 48, 144, 51, 81, 32, 0, 129
+	.byte	0, 144, 39, 99, 57, 0, 48, 144, 51, 95, 32, 0, 129, 0, 144, 39
+	.byte	99, 61, 0, 48, 144, 51, 89, 31, 0, 129, 0, 144, 39, 90, 57, 0
+	.byte	0, 144, 58, 78, 14, 0, 0, 144, 67, 91, 22, 0, 0, 144, 63, 91
+	.byte	19, 0, 48, 144, 58, 87, 57, 0, 48, 144, 67, 98, 70, 0, 48, 144
+	.byte	63, 102, 58, 0, 48, 144, 51, 92, 36, 0, 129, 0, 144, 39, 92, 58
+	.byte	0, 48, 144, 65, 91, 22, 0, 48, 144, 60, 89, 20, 0, 48, 144, 69
+	.byte	86, 30, 0, 48, 144, 51, 96, 32, 0, 129, 0, 144, 39, 90, 62, 0
+	.byte	48, 144, 63, 92, 51, 0, 48, 144, 72, 97, 57, 0, 48, 144, 69, 105
+	.byte	49, 0, 48, 144, 51, 97, 37, 0, 129, 0, 144, 39
+	sq_cell	0x80, 0, 13	# cell 12: song 1 track 2, 1 of 9
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 74, 76, 20, 0
+	sq_note	20, 0, 77, 76, 13, 0
+	sq_note	40, 0, 82, 76, 13, 0
+	sq_note	60, 0, 77, 76, 17, 0
+	sq_note	78, 0, 72, 76, 21, 0
+	sq_beat
+	sq_note	2, 0, 76, 76, 17, 0
+	sq_note	19, 0, 81, 76, 15, 0
+	sq_note	37, 0, 76, 76, 15, 0
+	sq_note	58, 0, 70, 76, 16, 0
+	sq_note	78, 0, 74, 76, 12, 0
+	sq_beat
+	sq_note	2, 0, 79, 76, 16, 0
+	sq_note	22, 0, 74, 76, 15, 0
+	sq_note	41, 0, 69, 76, 25, 0
+	sq_note	57, 0, 73, 76, 15, 0
+	sq_note	71, 0, 76, 76, 20, 0
+	sq_note	86, 0, 81, 76, 17, 0
+	sq_beat
+	sq_note	22, 0, 38, 78, 80, 0
+	sq_note	22, 0, 62, 78, 54, 0
+	sq_note	64, 0, 65, 78, 14, 0
+	sq_note	65, 0, 70, 78, 15, 0
+	sq_beat
+	sq_note	6, 0, 36, 78, 84, 0
+	sq_note	6, 0, 60, 78, 64, 0
+	sq_note	49, 0, 64, 78, 19, 0
+	sq_note	50, 0, 69, 78, 18, 0
+	sq_note	91, 0, 34, 78, 90, 0
+	sq_note	91, 0, 58, 78, 56, 0
+	sq_beat
+	sq_note	31, 0, 67, 78, 16, 0
+	sq_note	32, 0, 62, 78, 16, 0
+	sq_note	82, 0, 33, 78, 5, 1
+	sq_note	82, 0, 52, 78, 5, 1
+	sq_note	84, 0, 61, 78, 4, 1
+	sq_note	84, 0, 64, 78, 4, 1
+	sq_note	84, 0, 69, 78, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 74, 76, 20, 0
+	sq_note	27, 0, 77, 76, 13, 0
+	sq_note	46, 0, 82, 76, 13, 0
+	sq_note	67, 0, 77, 76, 18, 0
+	sq_note	85, 0, 72, 76, 21, 0
+	sq_beat
+	sq_note	9, 0, 76, 76, 17, 0
+	.byte	0x1a, 0x90, 0x51, 0x4c, 0x0f	# bytes 1..5 of `sq_note	26, 0, 81, 76, 15, 0` (the event spans two cells)
+	sq_cell	0x80, 12, 14	# cell 13: song 1 track 2, 2 of 9
+	.byte	0x00	# bytes 6..6 of `sq_note	26, 0, 81, 76, 15, 0` (the event spans two cells)
+	sq_note	44, 0, 76, 76, 15, 0
+	sq_note	65, 0, 70, 76, 16, 0
+	sq_note	85, 0, 74, 76, 12, 0
+	sq_beat
+	sq_note	9, 0, 79, 76, 16, 0
+	sq_note	29, 0, 74, 76, 15, 0
+	sq_note	47, 0, 69, 76, 25, 0
+	sq_note	64, 0, 73, 76, 15, 0
+	sq_note	77, 0, 76, 76, 20, 0
+	sq_note	93, 0, 81, 76, 17, 0
+	sq_beat
+	sq_note	32, 0, 38, 78, 80, 0
+	sq_note	32, 0, 62, 78, 54, 0
+	sq_note	74, 0, 65, 78, 14, 0
+	sq_note	75, 0, 70, 78, 15, 0
+	sq_beat
+	sq_note	16, 0, 36, 78, 2, 1
+	sq_note	16, 0, 60, 78, 64, 0
+	sq_note	59, 0, 64, 78, 19, 0
+	sq_note	60, 0, 69, 78, 18, 0
+	sq_beat
+	sq_note	15, 0, 34, 78, 14, 1
+	sq_note	15, 0, 58, 78, 56, 0
+	sq_note	63, 0, 67, 78, 16, 0
+	sq_note	64, 0, 62, 78, 16, 0
+	sq_beat
+	sq_note	30, 0, 33, 78, 66, 1
+	sq_note	30, 0, 52, 78, 66, 1
+	sq_note	32, 0, 61, 78, 64, 1
+	sq_note	32, 0, 64, 78, 64, 1
+	sq_note	32, 0, 69, 78, 64, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 62, 86, 60, 0
+	sq_note	73, 0, 65, 86, 16, 0
+	sq_note	74, 0, 70, 86, 16, 0
+	sq_beat
+	sq_note	12, 0, 57, 86, 56, 0
+	sq_note	48, 0, 64, 86, 18, 0
+	sq_note	48, 0, 69, 86, 20, 0
+	sq_note	86, 0, 58, 86, 62, 0
+	sq_beat
+	sq_note	26, 0, 67, 86, 18, 0
+	sq_note	27, 0, 62, 86, 18, 0
+	sq_note	72, 0, 69, 86, 70, 0
+	sq_note	73, 0, 52, 86, 70, 0
+	sq_note	73, 0, 64, 86, 69, 0
+	sq_note	73, 0, 61, 86, 69, 0
+	sq_cell	0x80, 13, 15	# cell 14: song 1 track 2, 3 of 9
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 16, 30, 32
+	sq_cc	4, 0, 17, 10, 64
+	sq_cc	4, 0, 17, 7, 120
+	sq_cc	26, 0, 17, 91, 20
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 75, 87, 57, 0
+	sq_note	4, 0, 69, 77, 55, 0
+	sq_note	80, 0, 69, 107, 14, 0
+	sq_note	80, 0, 75, 107, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 68, 69, 69, 0
+	sq_note	0, 0, 74, 75, 69, 0
+	sq_note	80, 0, 68, 82, 13, 0
+	sq_note	80, 0, 74, 99, 11, 0
+	sq_beat
+	sq_note	47, 0, 68, 86, 30, 0
+	sq_note	48, 0, 74, 84, 30, 0
+	sq_note	80, 0, 75, 99, 12, 0
+	sq_note	80, 0, 69, 99, 13, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 69, 93, 11, 0
+	sq_note	0, 0, 75, 101, 12, 0
+	sq_beat
+	sq_note	1, 0, 75, 96, 12, 0
+	sq_note	2, 0, 69, 86, 11, 0
+	sq_note	80, 0, 69, 92, 12, 0
+	sq_note	80, 0, 75, 96, 12, 0
+	sq_beat
+	sq_note	48, 0, 75, 99, 54, 0
+	sq_note	48, 0, 69, 87, 50, 0
+	sq_beat
+	sq_note	0, 0, 74, 81, 60, 0
+	sq_note	0, 0, 68, 81, 60, 0
+	sq_note	78, 0, 68, 91, 10, 0
+	sq_note	79, 0, 74, 99, 9, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 68, 94, 60, 0
+	sq_note	1, 0, 74, 96, 60, 0
+	sq_note	79, 0, 68, 92, 11, 0
+	sq_note	79, 0, 74, 85, 11, 0
+	sq_beat
+	sq_note	48, 0, 68, 89, 14, 0
+	sq_note	48, 0, 74, 96, 22, 0
+	sq_note	78, 0, 69, 73, 24, 0
+	sq_note	78, 0, 75, 85, 19, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 69, 87, 13, 0
+	sq_note	1, 0, 75, 102, 11, 0
+	sq_beat
+	sq_note	2, 0, 75, 84, 10, 0
+	.byte	0x02	# bytes 1..1 of `sq_note	2, 0, 69, 80, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 14, 16	# cell 15: song 1 track 2, 4 of 9
+	.byte	0x90, 0x45, 0x50, 0x0b, 0x00	# bytes 2..6 of `sq_note	2, 0, 69, 80, 11, 0` (the event spans two cells)
+	sq_note	80, 0, 69, 90, 13, 0
+	sq_note	80, 0, 75, 97, 11, 0
+	sq_beat
+	sq_note	49, 0, 69, 78, 38, 0
+	sq_note	49, 0, 75, 86, 39, 0
+	sq_beat
+	sq_note	56, 0, 70, 99, 63, 0
+	sq_note	56, 0, 76, 100, 66, 0
+	sq_beat
+	sq_note	33, 0, 75, 70, 15, 0
+	sq_note	35, 0, 69, 83, 16, 0
+	sq_note	80, 0, 68, 92, 9, 2
+	sq_note	81, 0, 74, 98, 11, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 17, 2, 32
+	sq_cc	1, 0, 17, 7, 120
+	sq_cc	2, 0, 17, 10, 64
+	sq_note	49, 0, 75, 96, 12, 0
+	sq_note	49, 0, 69, 91, 12, 0
+	sq_beat
+	sq_note	32, 0, 75, 81, 12, 0
+	sq_note	33, 0, 69, 83, 11, 0
+	sq_beat
+	sq_note	0, 0, 69, 79, 12, 0
+	sq_note	0, 0, 75, 67, 14, 0
+	sq_note	81, 0, 69, 80, 13, 0
+	sq_note	81, 0, 75, 80, 12, 0
+	sq_beat
+	sq_note	49, 0, 75, 76, 16, 0
+	sq_note	49, 0, 69, 81, 12, 0
+	sq_beat
+	sq_note	48, 0, 75, 84, 13, 0
+	sq_note	49, 0, 69, 78, 11, 0
+	sq_beat
+	sq_note	31, 0, 75, 83, 15, 0
+	sq_note	31, 0, 69, 75, 11, 0
+	sq_beat
+	sq_note	0, 0, 75, 84, 16, 0
+	sq_note	0, 0, 69, 81, 11, 0
+	sq_note	79, 0, 75, 78, 16, 0
+	sq_note	80, 0, 69, 76, 12, 0
+	sq_beat
+	sq_note	49, 0, 75, 83, 15, 0
+	sq_note	49, 0, 69, 83, 14, 0
+	sq_beat
+	sq_note	49, 0, 68, 76, 10, 0
+	sq_note	49, 0, 74, 88, 15, 0
+	sq_beat
+	sq_note	32, 0, 68, 79, 12, 0
+	sq_note	32, 0, 74, 81, 12, 0
+	.byte	0x5e, 0x90, 0x44, 0x4f	# bytes 1..4 of `sq_note	94, 0, 68, 79, 12, 0` (the event spans two cells)
+	sq_cell	0x80, 15, 17	# cell 16: song 1 track 2, 5 of 9
+	.byte	0x0c, 0x00	# bytes 5..6 of `sq_note	94, 0, 68, 79, 12, 0` (the event spans two cells)
+	sq_beat
+	sq_note	1, 0, 74, 86, 12, 0
+	sq_note	79, 0, 74, 90, 16, 0
+	sq_note	79, 0, 68, 84, 13, 0
+	sq_beat
+	sq_note	48, 0, 68, 82, 14, 0
+	sq_note	48, 0, 74, 87, 14, 0
+	sq_beat
+	sq_note	48, 0, 75, 85, 12, 0
+	sq_note	48, 0, 69, 81, 12, 0
+	sq_beat
+	sq_note	32, 0, 69, 80, 11, 0
+	sq_note	32, 0, 75, 94, 10, 0
+	sq_beat
+	sq_note	1, 0, 75, 86, 14, 0
+	sq_note	1, 0, 69, 79, 11, 0
+	sq_note	79, 0, 69, 78, 14, 0
+	sq_note	79, 0, 75, 91, 14, 0
+	sq_beat
+	sq_note	48, 0, 75, 86, 19, 0
+	sq_note	48, 0, 69, 77, 19, 0
+	sq_beat
+	sq_note	0, 0, 70, 89, 46, 1
+	sq_note	0, 0, 76, 97, 46, 1
+	sq_beat
+	sq_note	48, 0, 75, 61, 16, 0
+	sq_note	49, 0, 69, 74, 27, 0
+	sq_note	79, 0, 74, 75, 87, 1
+	sq_note	80, 0, 68, 69, 77, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 19, 87, 32
+	sq_cc	3, 0, 17, 7, 127
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 65, 30, 62, 1
+	sq_note	2, 0, 77, 31, 60, 1
+	sq_note	4, 0, 74, 31, 59, 1
+	sq_note	5, 0, 67, 32, 58, 1
+	sq_note	6, 0, 70, 32, 56, 1
+	sq_note	52, 0, 64, 56, 22, 0
+	sq_note	72, 0, 63, 50, 23, 0
+	sq_note	90, 0, 62, 58, 29, 0
+	sq_beat
+	sq_note	23, 0, 61, 57, 29, 0
+	sq_note	46, 0, 60, 53, 28, 0
+	sq_note	71, 0, 66, 62, 27, 1
+	sq_note	72, 0, 69, 54, 27, 1
+	sq_note	73, 0, 63, 58, 26, 1
+	sq_note	75, 0, 74, 42, 24, 1
+	sq_beat
+	sq_beat
+	sq_note	28, 0, 72, 59, 76, 1
+	sq_note	29, 0, 68, 39, 54, 2
+	.byte	0x1e	# bytes 1..1 of `sq_note	30, 0, 60, 57, 52, 2` (the event spans two cells)
+	sq_cell	0x80, 16, 18	# cell 17: song 1 track 2, 6 of 9
+	.byte	0x90, 0x3c, 0x39, 0x34, 0x02	# bytes 2..6 of `sq_note	30, 0, 60, 57, 52, 2` (the event spans two cells)
+	sq_note	31, 0, 63, 35, 52, 2
+	sq_note	31, 0, 65, 58, 52, 2
+	sq_beat
+	sq_note	37, 0, 56, 29, 90, 4
+	sq_beat
+	sq_note	77, 0, 70, 24, 50, 3
+	sq_note	78, 0, 67, 13, 49, 3
+	sq_note	81, 0, 62, 43, 46, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 19, 87, 32
+	sq_cc	2, 0, 17, 7, 127
+	sq_cc	4, 0, 17, 91, 75
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 67, 84, 16, 0
+	sq_note	48, 0, 70, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 70, 84, 16, 0
+	sq_note	48, 0, 67, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 72, 84, 16, 0
+	sq_note	48, 0, 70, 84, 16, 0
+	sq_note	48, 0, 67, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 67, 84, 16, 0
+	sq_note	48, 0, 70, 84, 16, 0
+	sq_note	48, 0, 74, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 70, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	.byte	0x2f, 0x90	# bytes 1..2 of `sq_note	47, 0, 70, 84, 16, 0` (the event spans two cells)
+	sq_cell	0x80, 17, 19	# cell 18: song 1 track 2, 7 of 9
+	.byte	0x46, 0x54, 0x10, 0x00	# bytes 3..6 of `sq_note	47, 0, 70, 84, 16, 0` (the event spans two cells)
+	sq_note	47, 0, 67, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	sq_note	1, 0, 70, 84, 60, 0
+	sq_note	1, 0, 67, 106, 60, 0
+	sq_note	1, 0, 74, 106, 60, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 69, 84, 44, 0
+	sq_note	1, 0, 72, 84, 44, 0
+	sq_beat
+	sq_note	47, 0, 69, 84, 16, 0
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 72, 84, 16, 0
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 72, 84, 16, 0
+	sq_note	48, 0, 68, 84, 16, 0
+	sq_beat
+	sq_note	48, 0, 68, 84, 16, 0
+	sq_note	48, 0, 72, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	sq_note	47, 0, 68, 84, 16, 0
+	sq_note	47, 0, 74, 84, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 70, 57, 20, 2
+	sq_note	0, 0, 74, 57, 93, 0
+	sq_note	2, 0, 65, 57, 87, 0
+	sq_note	2, 0, 67, 57, 88, 0
+	sq_note	95, 0, 68, 54, 20, 1
+	sq_beat
+	sq_note	0, 0, 73, 54, 20, 1
+	sq_note	0, 0, 64, 54, 19, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 63, 47, 22, 1
+	sq_note	0, 0, 68, 47, 22, 1
+	sq_note	0, 0, 65, 47, 22, 1
+	sq_note	0, 0, 72, 47, 22, 1
+	sq_beat
+	sq_note	54, 0, 70, 42, 24, 0
+	sq_note	56, 0, 67, 42, 22, 0
+	sq_beat
+	sq_cell	0x80, 18, 20	# cell 19: song 1 track 2, 8 of 9
+	sq_beat
+	sq_pc	1, 0, 19, 87, 32
+	sq_cc	2, 0, 17, 7, 90
+	sq_note	3, 0, 70, 68, 66, 2
+	sq_note	3, 0, 67, 67, 66, 2
+	sq_note	3, 0, 73, 62, 66, 2
+	sq_note	4, 0, 76, 84, 65, 2
+	sq_beat
+	sq_beat
+	sq_note	68, 0, 65, 58, 95, 0
+	sq_note	70, 0, 72, 71, 2, 1
+	sq_note	70, 0, 75, 71, 2, 1
+	sq_note	72, 0, 68, 71, 2, 1
+	sq_beat
+	sq_note	70, 0, 67, 76, 83, 0
+	sq_note	70, 0, 73, 76, 83, 0
+	sq_note	72, 0, 70, 76, 81, 0
+	sq_note	74, 0, 76, 76, 79, 0
+	sq_beat
+	sq_note	57, 0, 68, 97, 83, 0
+	sq_note	61, 0, 72, 97, 79, 0
+	sq_note	61, 0, 75, 97, 79, 0
+	sq_note	61, 0, 77, 97, 79, 0
+	sq_beat
+	sq_note	46, 0, 75, 76, 81, 0
+	sq_note	46, 0, 77, 76, 81, 0
+	sq_note	46, 0, 80, 76, 81, 0
+	sq_note	48, 0, 72, 76, 81, 0
+	sq_beat
+	sq_beat
+	sq_note	25, 0, 87, 75, 1, 4
+	sq_note	25, 0, 75, 80, 80, 0
+	sq_note	26, 0, 84, 82, 0, 4
+	sq_note	27, 0, 80, 62, 92, 3
+	sq_beat
+	sq_note	4, 0, 77, 66, 9, 1
+	sq_beat
+	sq_note	4, 0, 79, 66, 16, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	31, 0, 91, 77, 2, 4
+	sq_note	32, 0, 80, 77, 76, 2
+	sq_note	33, 0, 86, 88, 74, 2
+	sq_note	34, 0, 79, 76, 76, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	11, 0, 78, 68, 36, 0
+	sq_note	13, 0, 85, 69, 42, 0
+	sq_note	44, 0, 77, 67, 36, 0
+	sq_note	56, 0, 84, 62, 30, 0
+	sq_note	76, 0, 76, 63, 44, 0
+	sq_note	82, 0, 83, 78, 42, 0
+	sq_beat
+	sq_note	22, 0, 75, 67, 75, 6
+	.byte	0x1c	# bytes 1..1 of `sq_note	28, 0, 82, 56, 69, 6` (the event spans two cells)
+	sq_cell	0x80, 19, 65535	# cell 20: song 1 track 2, 9 of 9
+	.byte	0x90, 0x52, 0x38, 0x45, 0x06	# bytes 2..6 of `sq_note	28, 0, 82, 56, 69, 6` (the event spans two cells)
+	sq_note	32, 0, 87, 83, 66, 6
+	sq_note	32, 0, 79, 78, 65, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	5, 1, 15, 59, 176, 5, 1, 17, 62, 176, 5, 1, 20, 66, 176, 5
+	.byte	1, 24, 69, 176, 5, 1, 28, 73, 176, 5, 1, 30, 77, 176, 5, 1
+	.byte	32, 78, 176, 5, 1, 34, 81, 208, 25, 81, 176, 5, 1, 36, 85, 176
+	.byte	5, 1, 40, 89, 176, 5, 1, 45, 92, 176, 5, 1, 47, 129, 1, 208
+	.byte	27, 1, 176, 5, 1, 52, 6, 176, 5, 1, 57, 8, 176, 5, 1, 59
+	.byte	12, 176, 5, 1, 65, 16, 176, 5, 1, 67, 21, 208, 28, 21, 176, 5
+	.byte	1, 74, 24, 176, 5, 1, 81, 28, 176, 5, 1, 84, 31, 176, 5, 1
+	.byte	87, 33, 176, 5, 1, 90, 35, 176, 5, 1, 94, 40, 208, 27, 40, 176
+	.byte	5, 1, 99, 43, 176, 5, 1, 101, 47, 208, 24, 52, 176, 5, 1, 102
+	.byte	59, 208, 22, 59, 176, 5, 1, 97, 63, 176, 5, 1, 88, 67, 208, 19
+	.byte	67, 176, 5, 1, 82, 70, 176, 5, 1, 69, 75, 176, 5, 1, 62, 78
+	.byte	208, 16, 78, 176, 5, 1, 55, 78, 208, 14, 78, 176, 5, 1, 47, 83
+	.byte	208, 12, 83, 176, 5, 1, 39, 83, 208, 11, 86, 176, 5, 1, 30, 86
+	.byte	208, 7, 86, 176, 5, 1, 22, 91, 208, 5, 91, 176, 5, 1
+	sq_cell	0x80, 0, 22	# cell 21: song 1 track 3, 1 of 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 18, 10, 0
+	sq_cc	0, 0, 18, 91, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	22, 0, 50, 78, 80, 0
+	sq_note	22, 0, 74, 78, 54, 0
+	sq_note	64, 0, 77, 78, 14, 0
+	sq_note	65, 0, 82, 78, 15, 0
+	sq_beat
+	sq_note	6, 0, 48, 78, 84, 0
+	sq_note	6, 0, 72, 78, 64, 0
+	sq_note	49, 0, 76, 78, 19, 0
+	sq_note	50, 0, 81, 78, 18, 0
+	sq_note	91, 0, 46, 78, 90, 0
+	sq_note	91, 0, 70, 78, 56, 0
+	sq_beat
+	sq_note	31, 0, 79, 78, 16, 0
+	sq_note	32, 0, 74, 78, 16, 0
+	sq_note	82, 0, 45, 78, 5, 1
+	sq_note	82, 0, 64, 78, 5, 1
+	sq_note	84, 0, 73, 78, 4, 1
+	sq_note	84, 0, 76, 78, 4, 1
+	sq_note	84, 0, 81, 78, 4, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 50, 78, 80, 0
+	sq_note	32, 0, 74, 78, 54, 0
+	sq_note	74, 0, 77, 78, 14, 0
+	sq_note	75, 0, 82, 78, 15, 0
+	sq_beat
+	sq_note	16, 0, 48, 78, 2, 1
+	sq_note	16, 0, 72, 78, 64, 0
+	sq_note	59, 0, 76, 78, 19, 0
+	sq_note	60, 0, 81, 78, 18, 0
+	sq_beat
+	sq_note	15, 0, 46, 78, 14, 1
+	sq_note	15, 0, 70, 78, 56, 0
+	sq_note	63, 0, 79, 78, 16, 0
+	sq_note	64, 0, 74, 78, 16, 0
+	sq_beat
+	sq_note	30, 0, 45, 78, 66, 1
+	sq_note	30, 0, 64, 78, 66, 1
+	sq_note	32, 0, 73, 78, 64, 1
+	sq_note	32, 0, 76, 78, 64, 1
+	sq_note	32, 0, 81, 78, 64, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 62, 86, 60, 0
+	.byte	0x20, 0x90, 0x4a, 0x56, 0x3c	# bytes 1..5 of `sq_note	32, 0, 74, 86, 60, 0` (the event spans two cells)
+	sq_cell	0x80, 21, 23	# cell 22: song 1 track 3, 2 of 6
+	.byte	0x00	# bytes 6..6 of `sq_note	32, 0, 74, 86, 60, 0` (the event spans two cells)
+	sq_note	73, 0, 65, 86, 16, 0
+	sq_note	73, 0, 77, 86, 16, 0
+	sq_note	74, 0, 70, 86, 16, 0
+	sq_note	74, 0, 82, 86, 16, 0
+	sq_beat
+	sq_note	12, 0, 57, 86, 56, 0
+	sq_note	12, 0, 69, 86, 56, 0
+	sq_note	48, 0, 64, 86, 18, 0
+	sq_note	48, 0, 76, 86, 18, 0
+	sq_note	48, 0, 69, 86, 20, 0
+	sq_note	48, 0, 81, 86, 20, 0
+	sq_note	86, 0, 58, 86, 62, 0
+	sq_note	86, 0, 70, 86, 62, 0
+	sq_beat
+	sq_note	26, 0, 67, 86, 18, 0
+	sq_note	26, 0, 79, 86, 18, 0
+	sq_note	27, 0, 62, 86, 18, 0
+	sq_note	27, 0, 74, 86, 18, 0
+	sq_note	72, 0, 69, 86, 74, 0
+	sq_note	72, 0, 81, 86, 74, 0
+	sq_note	73, 0, 52, 86, 74, 0
+	sq_note	73, 0, 64, 86, 74, 0
+	sq_note	73, 0, 64, 86, 73, 0
+	sq_note	73, 0, 76, 86, 73, 0
+	sq_note	73, 0, 61, 86, 73, 0
+	sq_note	73, 0, 73, 86, 73, 0
+	sq_beat
+	sq_beat
+	sq_pc	2, 0, 27, 25, 40
+	sq_cc	3, 0, 18, 7, 127
+	sq_cc	3, 0, 18, 10, 0
+	sq_beat
+	sq_beat
+	sq_cc	72, 0, 18, 91, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 56, 87, 40, 0
+	sq_bend	18, 0, 64, 64
+	sq_bend	20, 0, 64, 65
+	sq_bend	21, 0, 64, 66
+	sq_bend	23, 0, 0, 68
+	sq_bend	26, 0, 0, 70
+	sq_bend	26, 0, 64, 72
+	sq_bend	28, 0, 0, 77
+	sq_bend	29, 0, 0, 81
+	sq_bend	33, 0, 0, 69
+	sq_bend	33, 0, 0, 64
+	sq_note	51, 0, 53, 63, 34, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	86, 0, 53, 71, 6, 0
+	sq_beat
+	sq_note	5, 0, 58, 71, 48, 0
+	sq_bend	29, 0, 0, 66
+	.byte	0x20, 0xe0, 0x40	# bytes 1..3 of `sq_bend	32, 0, 64, 67` (the event spans two cells)
+	sq_cell	0x80, 22, 24	# cell 23: song 1 track 3, 3 of 6
+	.byte	0x43	# bytes 4..4 of `sq_bend	32, 0, 64, 67` (the event spans two cells)
+	sq_bend	35, 0, 0, 68
+	sq_bend	35, 0, 0, 69
+	sq_bend	37, 0, 0, 70
+	sq_bend	37, 0, 0, 71
+	sq_bend	40, 0, 64, 72
+	sq_bend	42, 0, 0, 77
+	sq_bend	45, 0, 64, 80
+	sq_bend	45, 0, 64, 85
+	sq_bend	47, 0, 0, 90
+	sq_bend	50, 0, 0, 94
+	sq_bend	51, 0, 0, 97
+	sq_bend	52, 0, 0, 100
+	sq_bend	55, 0, 64, 102
+	sq_bend	55, 0, 0, 104
+	sq_bend	57, 0, 0, 106
+	sq_bend	58, 0, 0, 108
+	sq_bend	60, 0, 0, 109
+	sq_bend	65, 0, 0, 111
+	sq_bend	75, 0, 0, 107
+	sq_bend	78, 0, 0, 103
+	sq_bend	80, 0, 0, 99
+	sq_bend	80, 0, 0, 93
+	sq_bend	83, 0, 0, 82
+	sq_bend	85, 0, 0, 77
+	sq_bend	88, 0, 0, 71
+	sq_bend	90, 0, 0, 69
+	sq_bend	93, 0, 0, 67
+	sq_bend	93, 0, 0, 65
+	sq_bend	95, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 56, 89, 45, 0
+	sq_bend	31, 0, 0, 68
+	sq_bend	33, 0, 0, 70
+	sq_bend	34, 0, 0, 74
+	sq_bend	36, 0, 0, 81
+	sq_bend	38, 0, 64, 90
+	sq_bend	43, 0, 0, 62
+	sq_bend	46, 0, 0, 64
+	sq_note	51, 0, 53, 83, 36, 0
+	sq_beat
+	sq_beat
+	sq_note	81, 0, 60, 99, 19, 0
+	sq_beat
+	sq_note	30, 0, 56, 93, 43, 0
+	sq_bend	37, 0, 64, 64
+	sq_bend	40, 0, 0, 66
+	sq_bend	42, 0, 0, 68
+	sq_bend	45, 0, 0, 69
+	sq_bend	47, 0, 64, 70
+	sq_bend	50, 0, 0, 71
+	sq_bend	52, 0, 0, 72
+	sq_bend	52, 0, 64, 73
+	sq_bend	55, 0, 64, 75
+	sq_bend	56, 0, 0, 78
+	sq_bend	57, 0, 0, 79
+	sq_bend	60, 0, 0, 80
+	sq_bend	72, 0, 64, 75
+	sq_bend	75, 0, 0, 68
+	sq_bend	78, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 53, 69, 36, 0
+	sq_beat
+	sq_beat
+	.byte	0x02	# bytes 1..1 of `sq_note	2, 0, 53, 63, 52, 0` (the event spans two cells)
+	sq_cell	0x80, 23, 25	# cell 24: song 1 track 3, 4 of 6
+	.byte	0x90, 0x35, 0x3f, 0x34, 0x00	# bytes 2..6 of `sq_note	2, 0, 53, 63, 52, 0` (the event spans two cells)
+	sq_beat
+	sq_note	3, 0, 53, 66, 8, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	35, 0, 64, 66
+	sq_bend	36, 0, 0, 69
+	sq_bend	37, 0, 64, 70
+	sq_bend	39, 0, 0, 72
+	sq_bend	41, 0, 64, 72
+	sq_bend	41, 0, 64, 73
+	sq_bend	44, 0, 64, 74
+	sq_bend	46, 0, 0, 75
+	sq_bend	46, 0, 0, 76
+	sq_bend	49, 0, 64, 76
+	sq_bend	51, 0, 64, 78
+	sq_bend	54, 0, 0, 80
+	sq_bend	59, 0, 64, 76
+	sq_bend	61, 0, 64, 73
+	sq_bend	62, 0, 64, 71
+	sq_bend	64, 0, 0, 69
+	sq_bend	66, 0, 64, 66
+	sq_bend	67, 0, 64, 64
+	sq_bend	69, 0, 0, 64
+	sq_beat
+	sq_bend	11, 0, 0, 66
+	sq_bend	14, 0, 64, 69
+	sq_bend	16, 0, 64, 82
+	sq_bend	19, 0, 0, 90
+	sq_bend	21, 0, 0, 95
+	sq_bend	24, 0, 64, 74
+	sq_bend	24, 0, 0, 64
+	sq_bend	26, 0, 64, 63
+	sq_bend	29, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 19, 70, 32
+	sq_cc	2, 0, 18, 7, 127
+	sq_cc	2, 0, 18, 10, 64
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 39, 66, 72, 1
+	sq_beat
+	sq_note	73, 0, 42, 78, 54, 1
+	sq_beat
+	sq_beat
+	sq_note	30, 0, 41, 74, 42, 2
+	sq_beat
+	sq_beat
+	sq_note	79, 0, 46, 74, 48, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 51, 98, 43, 0
+	sq_beat
+	sq_note	0, 0, 46, 72, 42, 0
+	sq_note	95, 0, 51, 100, 45, 0
+	sq_beat
+	sq_note	95, 0, 46, 85, 46, 0
+	sq_beat
+	sq_note	95, 0, 51, 97, 40, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 46, 69, 38, 0
+	sq_beat
+	sq_note	0, 0, 51, 100, 33, 0
+	sq_beat
+	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 46, 79, 47, 0` (the event spans two cells)
+	sq_cell	0x80, 24, 26	# cell 25: song 1 track 3, 5 of 6
+	.byte	0x90, 0x2e, 0x4f, 0x2f, 0x00	# bytes 2..6 of `sq_note	0, 0, 46, 79, 47, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 51, 99, 29, 0
+	sq_note	95, 0, 46, 72, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 51, 99, 50, 0
+	sq_beat
+	sq_note	0, 0, 46, 86, 47, 0
+	sq_beat
+	sq_note	0, 0, 51, 107, 76, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 42, 88, 82, 0
+	sq_beat
+	sq_note	95, 0, 41, 76, 63, 0
+	sq_beat
+	sq_note	95, 0, 48, 98, 50, 0
+	sq_beat
+	sq_note	95, 0, 41, 93, 61, 0
+	sq_beat
+	sq_note	95, 0, 48, 104, 57, 0
+	sq_beat
+	sq_note	95, 0, 41, 88, 65, 0
+	sq_beat
+	sq_note	94, 0, 48, 99, 49, 0
+	sq_beat
+	sq_note	49, 0, 46, 84, 46, 0
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 44, 87, 46, 0
+	sq_note	95, 0, 43, 91, 64, 0
+	sq_beat
+	sq_note	95, 0, 43, 91, 83, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 48, 94, 77, 0
+	sq_beat
+	sq_note	0, 0, 48, 94, 44, 0
+	sq_note	48, 0, 43, 93, 46, 0
+	sq_beat
+	sq_note	0, 0, 41, 106, 85, 0
+	sq_beat
+	sq_note	0, 0, 45, 106, 49, 0
+	sq_note	49, 0, 46, 107, 40, 0
+	sq_beat
+	sq_beat
+	sq_pc	1, 0, 19, 70, 32
+	sq_cc	1, 0, 18, 7, 127
+	sq_cc	1, 0, 18, 10, 64
+	sq_note	3, 0, 48, 93, 66, 2
+	sq_beat
+	sq_beat
+	sq_note	78, 0, 53, 85, 9, 1
+	sq_beat
+	sq_note	92, 0, 52, 90, 71, 0
+	sq_beat
+	sq_note	70, 0, 51, 102, 86, 0
+	sq_beat
+	sq_note	61, 0, 48, 83, 76, 0
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 44, 109, 66, 0
+	sq_beat
+	sq_note	17, 0, 43, 86, 75, 0
+	sq_beat
+	sq_note	0, 0, 41, 104, 4, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	34, 0, 46, 102, 68, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	0x16, 0x90, 0x27, 0x5d	# bytes 1..4 of `sq_note	22, 0, 39, 93, 78, 6` (the event spans two cells)
+	sq_cell	0x80, 25, 65535	# cell 26: song 1 track 3, 6 of 6
+	.byte	0x4e, 0x06	# bytes 5..6 of `sq_note	22, 0, 39, 93, 78, 6` (the event spans two cells)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	1, 70, 49, 176, 5, 1, 74, 54, 176, 5, 1, 81, 57, 176, 5, 1
+	.byte	88, 61, 176, 5, 1, 91, 64, 176, 5, 1, 97, 68, 176, 5, 1, 100
+	.byte	73, 208, 2, 73, 176, 5, 1, 104, 73, 208, 4, 73, 176, 5, 1, 106
+	.byte	77, 208, 6, 77, 176, 5, 1, 108, 77, 208, 8, 80, 176, 5, 1, 111
+	.byte	80, 208, 10, 80, 176, 5, 1, 112, 84, 208, 11, 84, 176, 5, 1, 114
+	.byte	84, 208, 12, 84, 176, 5, 1, 116, 87, 176, 5, 1, 118, 92, 176, 5
+	.byte	1, 121, 129, 0, 208, 4, 11, 208, 7, 16, 208, 10, 16, 176, 5, 1
+	.byte	117, 19, 208, 11, 19, 176, 5, 1, 112, 23, 176, 5, 1, 107, 26, 176
+	.byte	5, 1, 102, 26, 208, 4, 26, 176, 5, 1, 97, 30, 208, 0, 31, 176
+	.byte	5, 1, 90, 35, 176, 5, 1, 76, 37, 176, 5, 1, 69, 39, 176, 5
+	.byte	1, 60, 42, 176, 5, 1, 50, 46, 176, 5, 1, 29, 48, 144, 62, 105
+	.byte	55, 2, 48, 144, 67, 111, 59, 2, 48, 144, 70, 112, 55, 2, 51, 176
+	.byte	5, 1, 10, 54, 176, 5, 1, 0, 58, 208, 12, 62, 208, 13, 65, 208
+	.byte	16, 69, 208, 4, 72, 208, 3, 76, 208, 5, 81, 208, 7, 84, 208, 8
+	.byte	129, 8, 208, 12, 11, 208, 14, 15, 208, 15, 19, 208, 16
+	sq_cell	0x80, 0, 28	# cell 27: song 1 track 4, 1 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 19, 32, 32
+	sq_cc	0, 0, 3, 7, 100
+	sq_cc	0, 0, 3, 10, 64
+	sq_cc	1, 0, 3, 91, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	22, 0, 50, 78, 80, 0
+	sq_beat
+	sq_note	6, 0, 48, 78, 84, 0
+	sq_note	91, 0, 46, 78, 90, 0
+	sq_beat
+	sq_note	82, 0, 45, 78, 5, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 50, 78, 80, 0
+	sq_beat
+	sq_note	16, 0, 48, 78, 2, 1
+	sq_beat
+	sq_note	15, 0, 46, 78, 14, 1
+	sq_beat
+	sq_note	30, 0, 45, 78, 66, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 50, 86, 60, 0
+	sq_beat
+	sq_note	12, 0, 48, 86, 56, 0
+	sq_note	86, 0, 46, 86, 62, 0
+	sq_beat
+	sq_note	73, 0, 45, 86, 78, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 19, 81, 32
+	sq_cc	1, 0, 3, 91, 60
+	sq_cc	2, 0, 3, 7, 127
+	sq_beat
+	sq_note	50, 0, 79, 100, 8, 0
+	sq_note	50, 0, 82, 95, 7, 0
+	sq_note	50, 0, 86, 104, 7, 0
+	sq_note	51, 0, 89, 106, 10, 0
+	sq_beat
+	sq_note	46, 0, 79, 89, 44, 0
+	sq_note	46, 0, 82, 80, 43, 0
+	sq_note	46, 0, 86, 89, 38, 0
+	sq_cell	0x80, 27, 29	# cell 28: song 1 track 4, 2 of 4
+	sq_note	95, 0, 82, 90, 18, 0
+	sq_beat
+	sq_note	0, 0, 87, 101, 18, 0
+	sq_note	0, 0, 84, 106, 17, 0
+	sq_note	1, 0, 79, 97, 16, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 65, 104, 29, 0
+	sq_note	1, 0, 67, 101, 29, 0
+	sq_note	1, 0, 70, 93, 27, 0
+	sq_note	1, 0, 74, 104, 30, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 75, 100, 38, 0
+	sq_note	0, 0, 66, 96, 31, 0
+	sq_note	0, 0, 69, 115, 33, 0
+	sq_note	0, 0, 72, 107, 33, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 77, 90, 9, 0
+	sq_note	48, 0, 80, 87, 9, 0
+	sq_note	48, 0, 84, 98, 8, 0
+	sq_note	48, 0, 87, 100, 9, 0
+	sq_beat
+	sq_note	47, 0, 77, 87, 9, 0
+	sq_note	47, 0, 80, 83, 8, 0
+	sq_note	47, 0, 84, 89, 11, 0
+	sq_note	95, 0, 77, 85, 35, 0
+	sq_note	95, 0, 84, 91, 38, 0
+	sq_note	95, 0, 87, 91, 38, 0
+	sq_note	95, 0, 80, 78, 34, 0
+	sq_beat
+	sq_note	47, 0, 77, 80, 12, 0
+	sq_note	47, 0, 80, 83, 11, 0
+	sq_note	47, 0, 84, 90, 15, 0
+	sq_note	94, 0, 77, 85, 38, 0
+	sq_note	94, 0, 84, 89, 34, 0
+	sq_note	94, 0, 87, 78, 29, 0
+	sq_note	94, 0, 80, 83, 39, 0
+	sq_beat
+	sq_note	47, 0, 80, 83, 25, 0
+	sq_note	47, 0, 82, 85, 25, 0
+	sq_note	47, 0, 77, 89, 24, 0
+	sq_note	47, 0, 86, 100, 24, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 77, 99, 10, 0
+	sq_note	4, 0, 79, 104, 10, 0
+	sq_note	4, 0, 82, 98, 8, 0
+	sq_note	4, 0, 86, 102, 12, 0
+	sq_beat
+	.byte	0x03, 0x90, 0x50, 0x5b	# bytes 1..4 of `sq_note	3, 0, 80, 91, 17, 1` (the event spans two cells)
+	sq_cell	0x80, 28, 30	# cell 29: song 1 track 4, 3 of 4
+	.byte	0x11, 0x01	# bytes 5..6 of `sq_note	3, 0, 80, 91, 17, 1` (the event spans two cells)
+	sq_note	3, 0, 85, 85, 19, 1
+	sq_note	3, 0, 82, 87, 17, 1
+	sq_note	4, 0, 76, 90, 18, 1
+	sq_beat
+	sq_note	51, 0, 80, 110, 10, 0
+	sq_note	51, 0, 82, 116, 10, 0
+	sq_note	53, 0, 76, 99, 10, 0
+	sq_beat
+	sq_note	5, 0, 80, 83, 42, 0
+	sq_note	5, 0, 84, 94, 43, 0
+	sq_note	6, 0, 75, 88, 37, 0
+	sq_note	6, 0, 77, 97, 39, 0
+	sq_note	54, 0, 77, 102, 12, 0
+	sq_note	55, 0, 80, 89, 12, 0
+	sq_note	55, 0, 75, 84, 9, 0
+	sq_beat
+	sq_note	4, 0, 75, 85, 25, 0
+	sq_note	4, 0, 77, 99, 25, 0
+	sq_note	4, 0, 80, 83, 28, 0
+	sq_note	4, 0, 84, 88, 30, 0
+	sq_note	54, 0, 82, 107, 24, 0
+	sq_note	55, 0, 74, 104, 24, 0
+	sq_note	55, 0, 79, 110, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 79, 114, 69, 0
+	sq_beat
+	sq_note	0, 0, 68, 98, 66, 0
+	sq_note	0, 0, 72, 116, 65, 0
+	sq_note	0, 0, 75, 102, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	61, 0, 79, 109, 72, 0
+	sq_note	62, 0, 68, 93, 73, 0
+	sq_note	63, 0, 70, 111, 69, 0
+	sq_note	63, 0, 74, 114, 72, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	24, 0, 86, 108, 23, 0
+	sq_note	26, 0, 79, 110, 27, 0
+	sq_note	26, 0, 83, 115, 22, 0
+	sq_beat
+	sq_note	19, 0, 82, 121, 19, 0
+	sq_note	19, 0, 85, 123, 21, 0
+	sq_note	21, 0, 78, 127, 19, 0
+	sq_beat
+	sq_note	10, 0, 77, 122, 29, 0
+	sq_note	11, 0, 84, 114, 16, 0
+	sq_note	12, 0, 81, 117, 23, 0
+	.byte	0x2e	# bytes 1..1 of `sq_note	46, 0, 80, 123, 28, 0` (the event spans two cells)
+	sq_cell	0x80, 29, 65535	# cell 30: song 1 track 4, 4 of 4
+	.byte	0x90, 0x50, 0x7b, 0x1c, 0x00	# bytes 2..6 of `sq_note	46, 0, 80, 123, 28, 0` (the event spans two cells)
+	sq_note	47, 0, 76, 113, 39, 0
+	sq_note	48, 0, 83, 105, 23, 0
+	sq_note	84, 0, 75, 119, 20, 2
+	sq_note	85, 0, 80, 76, 17, 0
+	sq_note	92, 0, 82, 99, 14, 2
+	sq_note	93, 0, 79, 102, 14, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	0, 129, 0, 144, 27, 65, 55, 0, 48, 144, 39, 81, 55, 0, 129, 0
+	.byte	144, 27, 70, 58, 0, 48, 144, 39, 75, 42, 0, 129, 0, 144, 27, 71
+	.byte	51, 0, 48, 144, 39, 78, 44, 0, 129, 0, 144, 27, 72, 49, 0, 48
+	.byte	144, 39, 69, 34, 0, 129, 0, 144, 27, 89, 73, 0, 48, 144, 39, 86
+	.byte	39, 0, 129, 0, 144, 26, 95, 51, 0, 48, 144, 38, 70, 39, 0, 129
+	.byte	0, 144, 26, 80, 51, 0, 48, 144, 38, 69, 45, 0, 129, 0, 144, 26
+	.byte	78, 57, 0, 48, 144, 38, 78, 44, 0, 129, 0, 144, 26, 83, 57, 0
+	.byte	48, 144, 38, 76, 48, 0, 129, 0, 144, 26, 78, 55, 0, 48, 144, 38
+	.byte	71, 42, 0, 129, 0, 144, 26, 78, 54, 0, 48, 144, 38, 71, 42, 0
+	.byte	129, 0, 144, 26, 83, 42, 0, 48, 144, 38, 72, 40, 0, 129, 0, 144
+	.byte	26, 90, 90, 0, 48, 144, 38, 69, 34, 0, 129, 0, 144, 24, 95, 34
+	.byte	1, 129, 48, 144, 26, 109, 72, 0, 129, 48, 144, 26, 103, 32, 1, 129
+	.byte	129, 0, 144, 28, 100, 43, 1, 129, 48, 144
+	sq_cell	0x80, 0, 32	# cell 31: song 1 track 6, 1 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 33, 0, 32
+	sq_cc	1, 0, 5, 7, 120
+	sq_cc	1, 0, 5, 10, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	0, 0, 5, 91, 0
+	sq_beat
+	sq_beat
+	sq_note	28, 0, 34, 39, 29, 0
+	sq_note	78, 0, 35, 45, 31, 0
+	sq_beat
+	sq_note	29, 0, 36, 53, 29, 0
+	sq_beat
+	sq_note	0, 0, 29, 84, 35, 0
+	sq_beat
+	sq_note	47, 0, 29, 67, 28, 0
+	sq_note	79, 0, 34, 65, 65, 0
+	sq_beat
+	sq_note	50, 0, 34, 80, 9, 0
+	sq_beat
+	sq_note	48, 0, 35, 60, 23, 0
+	sq_note	80, 0, 36, 79, 12, 0
+	sq_beat
+	sq_note	31, 0, 29, 90, 8, 0
+	sq_beat
+	sq_note	2, 0, 29, 68, 18, 0
+	sq_note	82, 0, 29, 47, 12, 0
+	sq_beat
+	sq_note	0, 0, 29, 74, 41, 0
+	sq_note	51, 0, 29, 78, 8, 0
+	sq_beat
+	sq_note	32, 0, 29, 69, 7, 0
+	sq_note	50, 0, 33, 76, 41, 0
+	sq_beat
+	sq_note	1, 0, 34, 72, 17, 0
+	sq_beat
+	sq_note	49, 0, 34, 87, 28, 0
+	sq_note	80, 0, 34, 56, 16, 0
+	sq_beat
+	sq_note	32, 0, 34, 89, 11, 0
+	sq_beat
+	sq_note	50, 0, 39, 86, 30, 0
+	sq_note	79, 0, 41, 64, 17, 0
+	sq_beat
+	sq_note	30, 0, 29, 84, 12, 0
+	sq_beat
+	sq_note	3, 0, 29, 81, 17, 0
+	sq_beat
+	sq_note	0, 0, 29, 76, 28, 0
+	sq_note	48, 0, 29, 76, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 36, 82, 70, 0
+	sq_beat
+	sq_note	32, 0, 35, 68, 21, 0
+	sq_note	82, 0, 34, 62, 43, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	0x06, 0x90, 0x1d	# bytes 1..3 of `sq_note	6, 0, 29, 112, 53, 0` (the event spans two cells)
+	sq_cell	0x80, 31, 33	# cell 32: song 1 track 6, 2 of 4
+	.byte	0x70, 0x35, 0x00	# bytes 4..6 of `sq_note	6, 0, 29, 112, 53, 0` (the event spans two cells)
+	sq_beat
+	sq_note	94, 0, 44, 83, 90, 0
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 45, 88, 60, 0
+	sq_note	82, 0, 46, 90, 14, 0
+	sq_beat
+	sq_note	32, 0, 45, 76, 12, 0
+	sq_note	50, 0, 41, 64, 24, 0
+	sq_note	80, 0, 36, 45, 15, 0
+	sq_beat
+	sq_note	2, 0, 35, 73, 25, 0
+	sq_note	32, 0, 34, 51, 21, 0
+	sq_note	51, 0, 32, 79, 29, 0
+	sq_note	83, 0, 33, 83, 16, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 29, 66, 44, 0
+	sq_note	48, 0, 33, 76, 47, 0
+	sq_beat
+	sq_note	1, 0, 34, 63, 46, 0
+	sq_note	49, 0, 35, 68, 44, 0
+	sq_beat
+	sq_note	1, 0, 36, 69, 48, 0
+	sq_note	50, 0, 37, 67, 43, 0
+	sq_beat
+	sq_note	2, 0, 38, 68, 38, 0
+	sq_note	49, 0, 40, 68, 43, 0
+	sq_beat
+	sq_note	0, 0, 41, 69, 47, 0
+	sq_note	50, 0, 43, 69, 42, 0
+	sq_beat
+	sq_note	1, 0, 44, 80, 49, 0
+	sq_note	50, 0, 45, 73, 42, 0
+	sq_beat
+	sq_note	1, 0, 41, 60, 50, 0
+	sq_note	49, 0, 36, 61, 53, 0
+	sq_beat
+	sq_note	1, 0, 35, 68, 46, 0
+	sq_note	51, 0, 38, 63, 34, 0
+	sq_note	80, 0, 34, 75, 67, 0
+	sq_beat
+	sq_note	50, 0, 35, 67, 42, 0
+	sq_beat
+	sq_note	1, 0, 36, 71, 43, 0
+	sq_note	48, 0, 37, 52, 44, 0
+	sq_beat
+	sq_note	1, 0, 38, 74, 42, 0
+	sq_note	48, 0, 41, 84, 45, 0
+	sq_beat
+	sq_note	0, 0, 43, 78, 26, 0
+	sq_note	32, 0, 38, 51, 10, 0
+	sq_note	48, 0, 41, 76, 86, 0
+	sq_beat
+	sq_note	49, 0, 40, 69, 48, 0
+	sq_beat
+	sq_note	2, 0, 38, 53, 46, 0
+	.byte	0x31, 0x90, 0x24, 0x3a, 0x2b	# bytes 1..5 of `sq_note	49, 0, 36, 58, 43, 0` (the event spans two cells)
+	sq_cell	0x80, 32, 34	# cell 33: song 1 track 6, 3 of 4
+	.byte	0x00	# bytes 6..6 of `sq_note	49, 0, 36, 58, 43, 0` (the event spans two cells)
+	sq_note	94, 0, 34, 59, 47, 0
+	sq_beat
+	sq_note	50, 0, 33, 60, 45, 0
+	sq_beat
+	sq_note	0, 0, 39, 80, 28, 0
+	sq_note	26, 0, 29, 56, 11, 0
+	sq_note	45, 0, 32, 70, 28, 0
+	sq_note	76, 0, 31, 82, 66, 0
+	sq_beat
+	sq_note	50, 0, 33, 81, 46, 0
+	sq_beat
+	sq_note	0, 0, 34, 63, 42, 0
+	sq_note	48, 0, 35, 76, 45, 0
+	sq_note	95, 0, 36, 74, 49, 0
+	sq_beat
+	sq_note	48, 0, 37, 72, 47, 0
+	sq_beat
+	sq_note	3, 0, 38, 66, 45, 0
+	sq_note	51, 0, 40, 49, 46, 0
+	sq_beat
+	sq_note	3, 0, 34, 31, 46, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	72, 0, 19, 71, 32
+	sq_cc	72, 0, 5, 7, 100
+	sq_cc	72, 0, 5, 10, 64
+	sq_cc	73, 0, 5, 91, 60
+	sq_note	90, 0, 58, 30, 67, 0
+	sq_beat
+	sq_note	55, 0, 60, 35, 49, 0
+	sq_beat
+	sq_note	3, 0, 63, 37, 53, 0
+	sq_note	55, 0, 65, 40, 43, 0
+	sq_beat
+	sq_note	2, 0, 67, 43, 49, 0
+	sq_note	53, 0, 70, 46, 48, 0
+	sq_beat
+	sq_note	5, 0, 74, 49, 92, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 72, 53, 0, 2
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 70, 40, 48, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 67, 36, 4, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 66, 49, 2, 2
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 65, 38, 40, 2
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 70, 50, 31, 0
+	sq_note	67, 0, 71, 71, 36, 0
+	sq_note	94, 0, 72, 60, 2, 1
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 70, 44, 4, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	0x00, 0x90, 0x43, 0x40, 0x5e	# bytes 1..5 of `sq_note	0, 0, 67, 64, 94, 0` (the event spans two cells)
+	sq_cell	0x80, 33, 65535	# cell 34: song 1 track 6, 4 of 4
+	.byte	0x00	# bytes 6..6 of `sq_note	0, 0, 67, 64, 94, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 64, 79, 20, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 65, 71, 22, 1
+	sq_beat
+	sq_note	50, 0, 70, 78, 49, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
+	.byte	129, 129, 0, 144, 91, 76, 57, 1, 0, 144, 55, 119, 21, 0, 12, 208
+	.byte	13, 16, 208, 6, 19, 208, 0, 48, 144, 62, 80, 19, 0, 129, 0, 144
+	.byte	67, 80, 19, 0, 48, 144, 90, 71, 2, 2, 48, 144, 62, 80, 18, 0
+	.byte	129, 0, 144, 67, 87, 21, 0, 48, 144, 62, 79, 15, 0, 129, 0, 144
+	.byte	67, 86, 20, 0, 48, 144, 88, 73, 2, 2, 48, 144, 62, 81, 15, 0
+	.byte	129, 0, 144, 67, 87, 19, 0, 48, 144, 62, 81, 18, 0, 129, 0, 144
+	.byte	67, 87, 19, 0, 48, 144, 86, 72, 44, 2, 48, 144, 62, 80, 19, 0
+	.byte	129, 0, 144, 67, 81, 19, 0, 48, 144, 62, 83, 18, 0, 129, 0, 144
+	.byte	67, 81, 19, 0, 48, 144, 62, 93, 19, 0, 129, 0, 144, 91, 76, 48
+	.byte	1, 0, 144, 55, 98, 19, 0, 48, 144, 62, 78, 16, 0, 129, 0, 144
+	.byte	67, 83, 19, 0, 48, 144, 90, 69, 1, 2, 48, 144, 62, 84, 16, 0
+	.byte	129, 0, 144, 67, 85
+	sq_cell	0x80, 0, 65535	# cell 35: song 1 track 8, 1 of 1
+	sq_8n	0, 0, 122, 1
+	sq_8n	0, 10, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 0, 99, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 1, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 2, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 3, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 9, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 3, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 9, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 4, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 5, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 6, 64
+	sq_8n	44, 0, 27, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 7, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_8n	0, 10, 8, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	1, 129, 129, 48, 144, 62, 75, 82, 1, 129, 129, 48, 144, 60, 80, 27
+	.byte	0, 72, 144, 62, 80, 25, 0, 129, 0, 144, 63, 71, 64, 7, 129, 129
+	.byte	129, 129, 129, 129
+	sq_cell	0x80, 0, 37	# cell 36: song 1 track 9, 1 of 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 64, 0, 38
+	sq_cc	1, 0, 8, 7, 127
+	sq_cc	48, 0, 8, 91, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 75, 104, 77, 0
+	sq_beat
+	sq_note	0, 0, 76, 101, 68, 0
+	sq_beat
+	sq_note	0, 0, 77, 111, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 14, 0, 32
+	sq_cc	1, 0, 8, 7, 127
+	sq_cc	24, 0, 8, 91, 80
+	sq_note	49, 0, 65, 55, 16, 1
+	sq_beat
+	sq_note	90, 0, 70, 47, 38, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 19, 67, 32
+	sq_cc	0, 0, 8, 7, 100
+	sq_cc	0, 0, 8, 10, 64
+	sq_cc	0, 0, 8, 91, 64
+	sq_note	4, 0, 80, 87, 24, 1
+	sq_beat
+	sq_note	29, 0, 79, 82, 40, 1
+	sq_beat
+	sq_note	68, 0, 77, 71, 4, 1
+	sq_beat
+	sq_note	75, 0, 79, 85, 78, 0
+	sq_beat
+	sq_note	55, 0, 80, 88, 86, 0
+	sq_beat
+	sq_note	45, 0, 84, 85, 83, 0
+	sq_beat
+	sq_beat
+	.byte	0x19, 0x90	# bytes 1..2 of `sq_note	25, 0, 87, 75, 76, 0` (the event spans two cells)
+	sq_cell	0x80, 36, 65535	# cell 37: song 1 track 9, 2 of 2
+	.byte	0x57, 0x4b, 0x4c, 0x00	# bytes 3..6 of `sq_note	25, 0, 87, 75, 76, 0` (the event spans two cells)
+	sq_beat
+	sq_note	6, 0, 89, 78, 86, 0
+	sq_note	92, 0, 91, 69, 36, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	31, 0, 91, 77, 2, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	32, 0, 87, 83, 66, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	102, 44, 0, 129, 0, 144, 27, 96, 39, 0, 48, 144, 39, 104, 48, 0
+	.byte	129, 0, 144, 27, 91, 47, 0, 48, 144, 39, 102, 47, 0, 129, 0, 144
+	.byte	27, 87, 39, 0, 48, 144, 39, 104, 42, 0, 129, 0, 144, 27, 89, 49
+	.byte	0, 48, 144, 39, 104, 45, 0, 129, 0, 144, 27, 87, 33, 0, 48, 144
+	.byte	39, 101, 42, 0, 129, 0, 144, 27, 90, 42, 0, 48, 144, 39, 101, 42
+	.byte	0, 129, 0, 144, 27, 93, 35, 0, 48, 144, 39, 104, 44, 0, 129, 0
+	.byte	144, 27, 99, 38, 0, 48, 144, 39, 102, 41, 0, 129, 0, 144, 27, 96
+	.byte	36, 0, 48, 144, 39, 106, 43, 0, 129, 0, 144, 27, 92, 36, 0, 48
+	.byte	144, 39, 107, 42, 0, 129, 0, 144, 27, 95, 35, 0, 48, 144, 39, 106
+	.byte	43, 0, 129, 0, 144, 27, 91, 35, 0, 48, 144, 39, 107, 41, 0, 129
+	.byte	0, 144, 27, 91, 35, 0, 48, 144, 39, 109, 42, 0, 129, 0, 144, 27
+	.byte	93, 32, 0, 48, 144, 39, 107, 36, 0, 129, 0, 144, 27, 97, 32, 0
+	.byte	48, 144, 39, 112, 38, 0, 129, 0, 144
+	sq_cell	0x80, 0, 39	# cell 38: song 1 track 10, 1 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 44, 0, 38
+	sq_cc	0, 0, 9, 7, 127
+	sq_cc	1, 0, 9, 91, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 51, 40, 6, 0
+	sq_note	32, 0, 40, 20, 6, 0
+	sq_note	48, 0, 40, 60, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	80, 0, 39, 114, 6, 0
+	sq_beat
+	sq_note	46, 0, 56, 83, 16, 0
+	sq_beat
+	sq_note	35, 0, 56, 70, 12, 0
+	sq_beat
+	sq_note	2, 0, 56, 62, 11, 0
+	sq_note	83, 0, 56, 73, 12, 0
+	sq_beat
+	sq_note	51, 0, 56, 78, 13, 0
+	sq_beat
+	sq_note	50, 0, 56, 81, 12, 0
+	sq_beat
+	sq_note	35, 0, 56, 85, 12, 0
+	sq_beat
+	sq_note	5, 0, 56, 82, 15, 0
+	sq_note	80, 0, 56, 83, 13, 0
+	sq_beat
+	sq_note	47, 0, 56, 83, 14, 0
+	sq_beat
+	sq_note	48, 0, 56, 85, 13, 0
+	sq_beat
+	sq_note	34, 0, 56, 83, 12, 0
+	sq_beat
+	sq_note	3, 0, 56, 85, 13, 0
+	sq_note	80, 0, 56, 87, 13, 0
+	sq_beat
+	sq_note	50, 0, 56, 83, 12, 0
+	sq_beat
+	sq_note	54, 0, 56, 83, 13, 0
+	sq_beat
+	sq_note	29, 0, 56, 82, 12, 0
+	sq_beat
+	sq_note	3, 0, 56, 83, 13, 0
+	sq_note	79, 0, 56, 83, 12, 0
+	sq_beat
+	sq_note	51, 0, 56, 90, 12, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 44, 0, 38
+	.byte	0x00, 0xb0, 0x09	# bytes 1..3 of `sq_cc	0, 0, 9, 7, 90` (the event spans two cells)
+	sq_cell	0x80, 38, 40	# cell 39: song 1 track 10, 2 of 4
+	.byte	0x07, 0x5a	# bytes 4..5 of `sq_cc	0, 0, 9, 7, 90` (the event spans two cells)
+	sq_cc	72, 0, 9, 91, 50
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	0, 0, 48, 0, 38
+	sq_cc	1, 0, 9, 7, 90
+	sq_beat
+	sq_note	0, 0, 29, 46, 26, 0
+	sq_note	48, 0, 38, 88, 20, 0
+	sq_beat
+	sq_note	0, 0, 29, 61, 21, 0
+	sq_note	48, 0, 38, 96, 26, 0
+	sq_beat
+	sq_note	0, 0, 29, 58, 25, 0
+	sq_note	48, 0, 38, 91, 25, 0
+	sq_note	95, 0, 29, 54, 25, 0
+	sq_beat
+	sq_note	48, 0, 38, 89, 27, 0
+	sq_note	95, 0, 29, 55, 25, 0
+	sq_beat
+	sq_note	48, 0, 38, 88, 29, 0
+	sq_note	95, 0, 29, 54, 26, 0
+	sq_beat
+	sq_note	48, 0, 38, 88, 31, 0
+	sq_note	95, 0, 29, 52, 25, 0
+	sq_beat
+	sq_note	48, 0, 38, 90, 29, 0
+	sq_beat
+	sq_note	0, 0, 29, 55, 23, 0
+	sq_note	48, 0, 38, 86, 27, 0
+	sq_beat
+	sq_note	0, 0, 29, 57, 24, 0
+	sq_note	48, 0, 38, 86, 27, 0
+	sq_beat
+	sq_note	0, 0, 29, 61, 21, 0
+	sq_note	48, 0, 38, 85, 26, 0
+	sq_beat
+	sq_note	0, 0, 29, 66, 23, 0
+	sq_note	48, 0, 38, 89, 30, 0
+	sq_beat
+	sq_note	0, 0, 29, 64, 21, 0
+	sq_note	48, 0, 38, 89, 29, 0
+	sq_beat
+	sq_note	0, 0, 29, 72, 23, 0
+	sq_note	2, 0, 38, 86, 27, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 38, 88, 33, 0
+	sq_note	2, 0, 29, 75, 23, 0
+	sq_beat
+	sq_note	48, 0, 38, 88, 31, 0
+	sq_beat
+	sq_note	0, 0, 29, 80, 23, 0
+	sq_note	48, 0, 38, 89, 29, 0
+	sq_beat
+	sq_note	0, 0, 29, 71, 23, 0
+	sq_note	48, 0, 38, 91, 35, 0
+	sq_beat
+	sq_note	0, 0, 29, 72, 21, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 38, 86, 32, 0` (the event spans two cells)
+	sq_cell	0x80, 39, 41	# cell 40: song 1 track 10, 3 of 4
+	.byte	0x90, 0x26, 0x56, 0x20, 0x00	# bytes 2..6 of `sq_note	48, 0, 38, 86, 32, 0` (the event spans two cells)
+	sq_beat
+	sq_note	0, 0, 29, 70, 21, 0
+	sq_note	48, 0, 38, 88, 31, 0
+	sq_beat
+	sq_note	0, 0, 29, 72, 23, 0
+	sq_note	48, 0, 38, 89, 27, 0
+	sq_beat
+	sq_note	0, 0, 29, 66, 24, 0
+	sq_note	48, 0, 38, 88, 27, 0
+	sq_note	48, 0, 29, 72, 24, 0
+	sq_beat
+	sq_note	48, 0, 38, 86, 35, 0
+	sq_beat
+	sq_note	48, 0, 38, 89, 27, 0
+	sq_note	48, 0, 29, 70, 17, 0
+	sq_beat
+	sq_note	0, 0, 29, 78, 27, 0
+	sq_note	95, 0, 38, 91, 26, 0
+	sq_beat
+	sq_note	0, 0, 29, 66, 23, 0
+	sq_note	95, 0, 38, 93, 27, 0
+	sq_beat
+	sq_note	0, 0, 29, 73, 26, 0
+	sq_beat
+	sq_note	0, 0, 29, 74, 21, 0
+	sq_note	50, 0, 29, 74, 21, 0
+	sq_beat
+	sq_note	0, 0, 38, 40, 6, 0
+	sq_note	0, 0, 26, 86, 27, 0
+	sq_note	8, 0, 38, 32, 6, 0
+	sq_note	16, 0, 38, 20, 6, 0
+	sq_note	22, 0, 38, 38, 6, 0
+	sq_note	29, 0, 38, 26, 6, 0
+	sq_note	35, 0, 38, 57, 6, 0
+	sq_note	41, 0, 38, 32, 6, 0
+	sq_note	47, 0, 38, 65, 6, 0
+	sq_note	53, 0, 38, 38, 6, 0
+	sq_note	59, 0, 38, 75, 6, 0
+	sq_note	67, 0, 38, 44, 6, 0
+	sq_note	73, 0, 38, 62, 6, 0
+	sq_note	77, 0, 38, 50, 6, 0
+	sq_note	84, 0, 38, 80, 6, 0
+	sq_note	91, 0, 38, 56, 6, 0
+	sq_beat
+	sq_note	0, 0, 38, 74, 6, 0
+	sq_note	0, 0, 36, 119, 19, 0
+	sq_note	0, 0, 26, 100, 19, 0
+	sq_note	47, 0, 36, 106, 17, 0
+	sq_note	47, 0, 38, 96, 17, 0
+	sq_note	48, 0, 26, 108, 18, 0
+	sq_beat
+	sq_cell	0x80, 40, 65535	# cell 41: song 1 track 10, 4 of 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	12, 0, 48, 0, 38
+	sq_cc	12, 0, 9, 7, 100
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 38, 98, 51, 0
+	sq_note	0, 0, 36, 99, 49, 0
+	sq_note	0, 0, 26, 110, 51, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	61, 0, 26, 117, 27, 0
+	sq_note	64, 0, 36, 106, 25, 0
+	sq_note	64, 0, 38, 106, 26, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 38, 47, 6, 0
+	sq_beat
+	sq_note	4, 0, 38, 20, 6, 0
+	sq_note	12, 0, 38, 52, 6, 0
+	sq_note	20, 0, 38, 56, 6, 0
+	sq_note	27, 0, 38, 26, 6, 0
+	sq_note	32, 0, 38, 61, 12, 0
+	sq_note	38, 0, 38, 32, 5, 0
+	sq_note	46, 0, 38, 65, 6, 0
+	sq_note	52, 0, 38, 38, 10, 0
+	sq_note	56, 0, 38, 70, 5, 0
+	sq_note	64, 0, 38, 44, 6, 0
+	sq_note	70, 0, 38, 74, 6, 0
+	sq_note	76, 0, 38, 50, 10, 0
+	sq_note	80, 0, 38, 79, 5, 0
+	sq_note	88, 0, 38, 56, 6, 0
+	sq_note	92, 0, 38, 83, 6, 0
+	sq_note	94, 0, 36, 119, 19, 0
+	sq_note	94, 0, 26, 119, 19, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	144, 42, 102, 18, 0, 48, 144, 46, 99, 10, 0, 129, 0, 144, 42, 102
+	.byte	16, 0, 48, 144, 46, 101, 6, 0, 129, 0, 144, 42, 101, 18, 0, 48
+	.byte	144, 46, 107, 5, 0, 129, 0, 144, 42, 102, 16, 0, 48, 144, 46, 112
+	.byte	6, 0, 129, 0, 144, 42, 101, 16, 0, 48, 144, 46, 114, 5, 0, 129
+	.byte	0, 144, 42
+	sq_cell	0x80, 0, 43	# cell 42: song 1 track 11, 1 of 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_pc	95, 0, 45, 0, 38
+	sq_cc	95, 0, 10, 7, 127
+	sq_cc	95, 0, 10, 91, 0
+	sq_beat
+	sq_note	2, 0, 36, 90, 14, 0
+	sq_note	32, 0, 39, 49, 5, 0
+	sq_note	48, 0, 39, 90, 5, 0
+	sq_note	48, 0, 21, 49, 5, 0
+	sq_note	55, 0, 38, 27, 5, 0
+	sq_note	63, 0, 38, 75, 5, 0
+	sq_note	71, 0, 38, 40, 5, 0
+	sq_note	79, 0, 38, 90, 6, 0
+	sq_note	88, 0, 38, 115, 5, 0
+	sq_beat
+	sq_note	0, 0, 39, 118, 5, 0
+	sq_note	16, 0, 38, 65, 5, 0
+	sq_note	32, 0, 38, 122, 6, 0
+	sq_note	48, 0, 39, 67, 5, 0
+	sq_note	48, 0, 21, 59, 5, 0
+	sq_note	48, 0, 36, 78, 6, 0
+	sq_note	64, 0, 38, 101, 6, 0
+	sq_note	79, 0, 36, 108, 6, 0
+	sq_note	80, 0, 39, 118, 5, 0
+	sq_note	80, 0, 126, 122, 5, 0
+	sq_beat
+	sq_note	28, 0, 50, 115, 68, 0
+	sq_beat
+	sq_note	0, 0, 48, 86, 66, 0
+	sq_note	81, 0, 47, 51, 12, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	32, 0, 38, 70, 6, 0
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_note	64, 0, 38, 40, 6, 0
+	sq_note	80, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	48, 0, 44, 60, 6, 0
+	sq_note	48, 0, 38, 115, 6, 0
+	sq_note	48, 0, 36, 72, 13, 0
+	sq_note	78, 0, 39, 110, 14, 0
+	.byte	0x5f, 0x90, 0x24	# bytes 1..3 of `sq_note	95, 0, 36, 97, 11, 0` (the event spans two cells)
+	sq_cell	0x80, 42, 44	# cell 43: song 1 track 11, 2 of 8
+	.byte	0x61, 0x0b, 0x00	# bytes 4..6 of `sq_note	95, 0, 36, 97, 11, 0` (the event spans two cells)
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	47, 0, 36, 97, 46, 0
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	80, 0, 38, 47, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 39, 0
+	sq_note	46, 0, 44, 53, 6, 0
+	sq_note	48, 0, 36, 75, 11, 0
+	sq_note	80, 0, 38, 82, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	31, 0, 38, 70, 6, 0
+	sq_note	47, 0, 36, 95, 5, 0
+	sq_note	47, 0, 44, 63, 6, 0
+	sq_note	63, 0, 38, 40, 6, 0
+	sq_note	79, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	47, 0, 38, 115, 6, 0
+	sq_note	47, 0, 44, 60, 6, 0
+	sq_note	47, 0, 36, 72, 13, 0
+	sq_note	77, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	46, 0, 36, 97, 46, 0
+	sq_note	47, 0, 38, 42, 6, 0
+	sq_note	47, 0, 44, 58, 6, 0
+	sq_note	63, 0, 38, 72, 6, 0
+	sq_note	79, 0, 38, 47, 6, 0
+	sq_note	95, 0, 39, 115, 38, 0
+	sq_beat
+	sq_note	47, 0, 21, 76, 6, 0
+	sq_note	47, 0, 36, 75, 10, 0
+	sq_note	79, 0, 38, 82, 6, 0
+	sq_note	79, 0, 44, 30, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	32, 0, 38, 70, 6, 0
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_note	64, 0, 38, 40, 6, 0
+	sq_note	80, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_cell	0x80, 43, 45	# cell 44: song 1 track 11, 3 of 8
+	sq_note	48, 0, 44, 60, 6, 0
+	sq_note	48, 0, 38, 115, 6, 0
+	sq_note	48, 0, 36, 72, 13, 0
+	sq_note	78, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	47, 0, 36, 97, 46, 0
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	80, 0, 38, 47, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 39, 0
+	sq_note	46, 0, 44, 53, 6, 0
+	sq_note	48, 0, 36, 75, 11, 0
+	sq_note	80, 0, 38, 82, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	31, 0, 38, 70, 6, 0
+	sq_note	47, 0, 36, 95, 5, 0
+	sq_note	47, 0, 44, 63, 6, 0
+	sq_note	63, 0, 38, 40, 6, 0
+	sq_note	79, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	47, 0, 38, 115, 6, 0
+	sq_note	47, 0, 44, 60, 6, 0
+	sq_note	47, 0, 36, 72, 13, 0
+	sq_note	77, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	46, 0, 36, 97, 46, 0
+	sq_note	47, 0, 38, 42, 6, 0
+	sq_note	47, 0, 44, 58, 6, 0
+	sq_note	63, 0, 38, 72, 6, 0
+	sq_note	79, 0, 38, 47, 6, 0
+	sq_note	95, 0, 39, 115, 38, 0
+	sq_beat
+	sq_note	47, 0, 21, 76, 6, 0
+	sq_note	47, 0, 43, 120, 38, 0
+	sq_note	47, 0, 36, 75, 10, 0
+	sq_beat
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	.byte	0x30, 0x90, 0x2c	# bytes 1..3 of `sq_note	48, 0, 44, 60, 6, 0` (the event spans two cells)
+	sq_cell	0x80, 44, 46	# cell 45: song 1 track 11, 4 of 8
+	.byte	0x3c, 0x06, 0x00	# bytes 4..6 of `sq_note	48, 0, 44, 60, 6, 0` (the event spans two cells)
+	sq_note	48, 0, 38, 115, 6, 0
+	sq_note	48, 0, 36, 72, 13, 0
+	sq_note	78, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	47, 0, 36, 97, 46, 0
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	80, 0, 38, 47, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 39, 0
+	sq_note	46, 0, 44, 53, 6, 0
+	sq_note	48, 0, 36, 75, 11, 0
+	sq_note	80, 0, 38, 82, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 14, 0
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_beat
+	sq_note	77, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	46, 0, 36, 97, 46, 0
+	sq_note	47, 0, 38, 42, 6, 0
+	sq_note	47, 0, 44, 58, 6, 0
+	sq_note	63, 0, 38, 72, 6, 0
+	sq_note	79, 0, 38, 47, 6, 0
+	sq_note	95, 0, 39, 115, 38, 0
+	sq_beat
+	sq_note	47, 0, 21, 76, 6, 0
+	sq_note	47, 0, 36, 75, 10, 0
+	sq_note	79, 0, 38, 82, 6, 0
+	sq_note	79, 0, 44, 30, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 68, 6, 0
+	sq_note	48, 0, 44, 45, 6, 0
+	sq_note	80, 0, 50, 110, 77, 0
+	sq_note	80, 0, 36, 68, 6, 0
+	sq_beat
+	sq_note	32, 0, 39, 73, 6, 0
+	sq_note	48, 0, 39, 98, 6, 0
+	sq_note	48, 0, 44, 48, 6, 0
+	sq_note	48, 0, 36, 75, 6, 0
+	sq_note	55, 0, 38, 122, 6, 0
+	sq_note	63, 0, 39, 88, 6, 0
+	sq_note	72, 0, 38, 107, 6, 0
+	sq_cell	0x80, 45, 47	# cell 46: song 1 track 11, 5 of 8
+	sq_note	83, 0, 39, 68, 6, 0
+	sq_note	94, 0, 38, 85, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 65, 6, 0
+	sq_note	10, 0, 39, 58, 6, 0
+	sq_note	19, 0, 38, 72, 6, 0
+	sq_note	29, 0, 39, 48, 6, 0
+	sq_note	37, 0, 38, 62, 6, 0
+	sq_note	46, 0, 39, 40, 6, 0
+	sq_note	48, 0, 21, 55, 6, 0
+	sq_note	54, 0, 38, 60, 6, 0
+	sq_note	63, 0, 39, 40, 6, 0
+	sq_note	80, 0, 20, 13, 6, 0
+	sq_beat
+	sq_note	0, 0, 19, 62, 6, 0
+	sq_note	16, 0, 20, 6, 6, 0
+	sq_note	32, 0, 20, 51, 6, 0
+	sq_note	32, 0, 36, 35, 6, 0
+	sq_note	47, 0, 36, 88, 6, 0
+	sq_note	48, 0, 21, 86, 6, 0
+	sq_note	64, 0, 36, 64, 6, 0
+	sq_note	80, 0, 20, 55, 6, 0
+	sq_note	80, 0, 36, 54, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	32, 0, 38, 70, 6, 0
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_note	64, 0, 38, 40, 6, 0
+	sq_note	80, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	48, 0, 44, 60, 6, 0
+	sq_note	48, 0, 38, 115, 6, 0
+	sq_note	48, 0, 36, 72, 13, 0
+	sq_note	78, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	32, 0, 52, 85, 8, 0
+	sq_note	47, 0, 36, 97, 46, 0
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	80, 0, 38, 47, 6, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x27, 0x73, 0x27	# bytes 1..5 of `sq_note	0, 0, 39, 115, 39, 0` (the event spans two cells)
+	sq_cell	0x80, 46, 48	# cell 47: song 1 track 11, 6 of 8
+	.byte	0x00	# bytes 6..6 of `sq_note	0, 0, 39, 115, 39, 0` (the event spans two cells)
+	sq_note	46, 0, 44, 53, 6, 0
+	sq_note	48, 0, 36, 75, 11, 0
+	sq_note	80, 0, 38, 82, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	31, 0, 38, 70, 6, 0
+	sq_note	47, 0, 36, 95, 5, 0
+	sq_note	47, 0, 44, 63, 6, 0
+	sq_note	63, 0, 38, 40, 6, 0
+	sq_note	79, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	47, 0, 38, 115, 6, 0
+	sq_note	47, 0, 44, 60, 6, 0
+	sq_note	47, 0, 36, 72, 13, 0
+	sq_note	77, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	46, 0, 36, 97, 46, 0
+	sq_note	47, 0, 38, 42, 6, 0
+	sq_note	47, 0, 44, 58, 6, 0
+	sq_note	63, 0, 38, 72, 6, 0
+	sq_note	79, 0, 38, 47, 6, 0
+	sq_note	95, 0, 39, 115, 38, 0
+	sq_beat
+	sq_note	47, 0, 21, 76, 6, 0
+	sq_note	47, 0, 36, 75, 10, 0
+	sq_note	79, 0, 38, 82, 6, 0
+	sq_note	79, 0, 44, 30, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	32, 0, 38, 70, 6, 0
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_note	64, 0, 38, 40, 6, 0
+	sq_note	80, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 49, 94, 90, 0
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	48, 0, 44, 60, 6, 0
+	sq_note	48, 0, 38, 115, 6, 0
+	sq_note	48, 0, 36, 72, 13, 0
+	sq_note	78, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	.byte	0x2f, 0x90, 0x24	# bytes 1..3 of `sq_note	47, 0, 36, 97, 46, 0` (the event spans two cells)
+	sq_cell	0x80, 47, 49	# cell 48: song 1 track 11, 7 of 8
+	.byte	0x61, 0x2e, 0x00	# bytes 4..6 of `sq_note	47, 0, 36, 97, 46, 0` (the event spans two cells)
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	80, 0, 38, 47, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 39, 0
+	sq_note	46, 0, 44, 53, 6, 0
+	sq_note	48, 0, 36, 75, 11, 0
+	sq_note	80, 0, 38, 82, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	31, 0, 38, 70, 6, 0
+	sq_note	47, 0, 36, 95, 5, 0
+	sq_note	47, 0, 44, 63, 6, 0
+	sq_note	63, 0, 38, 40, 6, 0
+	sq_note	79, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	32, 0, 59, 83, 12, 0
+	sq_note	47, 0, 38, 115, 6, 0
+	sq_note	47, 0, 44, 60, 6, 0
+	sq_note	47, 0, 36, 72, 13, 0
+	sq_note	77, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	0, 0, 59, 98, 12, 0
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	46, 0, 36, 97, 16, 0
+	sq_note	47, 0, 38, 42, 6, 0
+	sq_note	47, 0, 44, 58, 6, 0
+	sq_note	63, 0, 38, 72, 6, 0
+	sq_note	80, 0, 39, 115, 38, 0
+	sq_note	80, 0, 36, 108, 16, 0
+	sq_beat
+	sq_note	32, 0, 51, 107, 7, 0
+	sq_note	47, 0, 21, 76, 6, 0
+	sq_beat
+	sq_note	0, 0, 36, 95, 14, 0
+	sq_note	32, 0, 38, 70, 6, 0
+	sq_note	48, 0, 44, 63, 6, 0
+	sq_note	48, 0, 36, 95, 5, 0
+	sq_note	64, 0, 38, 40, 6, 0
+	sq_note	80, 0, 38, 90, 6, 0
+	sq_beat
+	sq_note	0, 0, 39, 115, 32, 0
+	sq_note	48, 0, 44, 60, 6, 0
+	sq_note	48, 0, 38, 115, 6, 0
+	.byte	0x30	# bytes 1..1 of `sq_note	48, 0, 36, 72, 13, 0` (the event spans two cells)
+	sq_cell	0x80, 48, 65535	# cell 49: song 1 track 11, 8 of 8
+	.byte	0x90, 0x24, 0x48, 0x0d, 0x00	# bytes 2..6 of `sq_note	48, 0, 36, 72, 13, 0` (the event spans two cells)
+	sq_note	78, 0, 39, 110, 14, 0
+	sq_note	95, 0, 36, 97, 11, 0
+	sq_beat
+	sq_note	30, 0, 39, 113, 13, 0
+	sq_note	47, 0, 36, 97, 46, 0
+	sq_note	48, 0, 44, 58, 6, 0
+	sq_note	48, 0, 38, 42, 6, 0
+	sq_note	64, 0, 38, 72, 6, 0
+	sq_note	82, 0, 39, 73, 6, 0
+	sq_beat
+	sq_note	2, 0, 39, 98, 6, 0
+	sq_note	2, 0, 44, 48, 6, 0
+	sq_note	2, 0, 36, 75, 6, 0
+	sq_note	9, 0, 38, 122, 6, 0
+	sq_note	17, 0, 39, 88, 6, 0
+	sq_note	26, 0, 38, 107, 6, 0
+	sq_note	37, 0, 39, 68, 6, 0
+	sq_note	48, 0, 38, 85, 6, 0
+	sq_note	50, 0, 36, 65, 6, 0
+	sq_note	60, 0, 39, 58, 6, 0
+	sq_note	69, 0, 38, 72, 6, 0
+	sq_note	79, 0, 39, 48, 6, 0
+	sq_note	87, 0, 38, 62, 6, 0
+	sq_beat
+	sq_note	0, 0, 51, 42, 6, 0
+	sq_note	2, 0, 38, 42, 6, 0
+	sq_note	2, 0, 21, 64, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	# not events: cell bytes after the end of track (left over)
+	.byte	48, 144, 58, 70, 66, 2, 48, 144, 51, 73, 63, 2, 60, 176, 16, 64
+	.byte	0, 129, 21, 176, 16, 64, 127, 48, 144, 65
+	.endzlib
 	.align	4, 0xFF
-Str_Sound_Naming_Edt_6:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
-Str_DrumSoundName_2:	.asciz "DrumSoundName"
-	.align	4, 0xFF
-Str_Sound_Naming_Edt_7:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
-Str_Sound_Naming_Edt_8:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
-Str_Sound_Naming_3:	.asciz "Sound Naming "
-	.align	4, 0xFF
-Str_Sound_Naming_4:	.asciz "Sound Naming "
-	.align	4, 0xFF
-APDP_SeqTrackSwitchWin_parent:
-	.space	4, 0xFF
-APDP_SeqTrackSwitchWin_child:
-	.space	4, 0xFF
-APDP_SeqCycleClearWin_parent:
-	.space	4, 0xFF
-APDP_SeqCycleClearWin_child:
-	.space	4, 0xFF
-DirectPlaySwWin_parent:
-	.space	4, 0xFF
-DirectPlaySwWin_child:
-	.space	4, 0xFF
-PlayDisp_data:
-	.space	4, 0x00
-APDP_SeqTrackSwitchWin2_parent:
-	.space	4, 0xFF
-APDP_SeqTrackSwitchWin2_child:
-	.space	4, 0xFF
-DpSmfScreen_window:
-	.space	4, 0xFF
-DpSmfScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpSmfScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-DpSmfScreen_TitleMenu_LYRICS_selected:
-	.space	4, 0x00
-SMFMuteSw1_onoff:
-	.space	4, 0x00
-SMFMuteSw2_onoff:
-	.space	4, 0x00
-SMFMuteSw3_onoff:
-	.space	4, 0x00
-SMFMuteSw4_onoff:
-	.space	4, 0x00
-SMFMuteSw5_onoff:
-	.space	4, 0x00
-SMFMuteSw6_onoff:
-	.space	4, 0x00
-SMFMuteSw7_onoff:
-	.space	4, 0x00
-SMFMuteSw8_onoff:
-	.space	4, 0x00
-SMFMuteSw9_onoff:
-	.space	4, 0x00
-SMFMuteSw10_onoff:
-	.space	4, 0x00
-SMFMuteSw11_onoff:
-	.space	4, 0x00
-SMFMuteSw12_onoff:
-	.space	4, 0x00
-SMFMuteSw13_onoff:
-	.space	4, 0x00
-SMFMuteSw14_onoff:
-	.space	4, 0x00
-SMFMuteSw15_onoff:
-	.space	4, 0x00
-SMFMuteSw16_onoff:
-	.space	4, 0x00
-DpSmfLyrScreen_window:
-	.space	4, 0xFF
-DpSmfLyrScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpMdlySmfScreen_window:
-	.space	4, 0xFF
-DpMdlySmfScreen_TitleMenu_LYRICS_selected:
-	.space	4, 0x00
-DpMdlySmfScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpMdlySmfScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-SMFMedMuteSw1_onoff:
-	.space	4, 0x00
-SMFMedMuteSw2_onoff:
-	.space	4, 0x00
-SMFMedMuteSw3_onoff:
-	.space	4, 0x00
-SMFMedMuteSw4_onoff:
-	.space	4, 0x00
-SMFMedMuteSw5_onoff:
-	.space	4, 0x00
-SMFMedMuteSw6_onoff:
-	.space	4, 0x00
-SMFMedMuteSw7_onoff:
-	.space	4, 0x00
-SMFMedMuteSw8_onoff:
-	.space	4, 0x00
-SMFMedMuteSw9_onoff:
-	.space	4, 0x00
-SMFMedMuteSw10_onoff:
-	.space	4, 0x00
-SMFMedMuteSw11_onoff:
-	.space	4, 0x00
-SMFMedMuteSw12_onoff:
-	.space	4, 0x00
-SMFMedMuteSw13_onoff:
-	.space	4, 0x00
-SMFMedMuteSw14_onoff:
-	.space	4, 0x00
-SMFMedMuteSw15_onoff:
-	.space	4, 0x00
-SMFMedMuteSw16_onoff:
-	.space	4, 0x00
-DpMdlySmfLyrScreen_window:
-	.space	4, 0xFF
-DpMdlySmfLyrScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpMdlyDocScreen_window:
-	.space	4, 0xFF
-DpMdlyDocScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpMdlyDocScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-DOCMedR1Sw_onoff:
-	.space	4, 0x00
-DOCMedR2Sw_onoff:
-	.space	4, 0x00
-DOCMedOrchSw_onoff:
-	.space	4, 0x00
-APDP_SeqLyricsWin_parent:
-	.space	4, 0xFF
-APDP_SeqLyricsWin_child:
-	.space	4, 0xFF
-DpDocScreen_window:
-	.space	4, 0xFF
-DpDocScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpDocScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-DOCR1Sw_onoff:
-	.space	4, 0x00
-DOCR2Sw_onoff:
-	.space	4, 0x00
-DOCOrchSw_onoff:
-	.space	4, 0x00
-DpPDScreen_window:
-	.space	4, 0xFF
-DpPDScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpPDScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-PDR1Sw_onoff:
-	.space	4, 0x00
-PDOrchSw_onoff:
-	.space	4, 0x00
-DpMdlyPDScreen_window:
-	.space	4, 0xFF
-DpMdlyPDScreen_IntTitleMenuDP_MIC_selected:
-	.space	4, 0x00
-DpMdlyPDScreen_IntTitleMenuDP_MIXER_selected:
-	.space	4, 0x00
-PDMedR1Sw_onoff:
-	.space	4, 0x00
-PDMedOrchSw_onoff:
-	.space	4, 0x00
-Lyrics_parent:
-	.space	4, 0xFF
-Lyrics_child:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4578, 0x3B45AC
-data_50003A44:
-.incbin_range "baserom/kn7000_program.rom", 0x3B45AC, 0x3B45B0
-CmpMspStepScreen_window:
-	.space	4, 0xFF
-CmpStepPhrase_strp:
-	.space	4, 0x00
-CmpStepD2_stepdata:
-	.space	4, 0x00
-CmpStepD2_cur:
-	.space	4, 0xFF
-CmpStepD3_stepdata:
-	.space	4, 0x00
-CmpStepD3_cur:
-	.space	4, 0xFF
-CmpStepD4_stepdata:
-	.space	4, 0x00
-CmpStepD4_cur:
-	.space	4, 0xFF
-CmpStepD1_stepdata:
-	.space	4, 0x00
-CmpStepD1_cur:
-	.space	4, 0xFF
-CmpStepWin1_parent:
-	.space	4, 0xFF
-CmpStepWin1_child:
-	.space	4, 0xFF
-CmpStepEv1_strp:
-	.space	4, 0x00
-CmpStepEv4_strp:
-	.space	4, 0x00
-CmpStepEv5_strp:
-	.space	4, 0x00
-CmpStepWin2_parent:
-	.space	4, 0xFF
-CmpStepWin2_child:
-	.space	4, 0xFF
-CmpStepWin3_parent:
-	.space	4, 0xFF
-CmpStepWin3_child:
-	.space	4, 0xFF
-CmpStepWin4_parent:
-	.space	4, 0xFF
-CmpStepWin4_child:
-	.space	4, 0xFF
-MspChdStepScreen_window:
-	.space	4, 0xFF
-PadChdStepD2_stepdata:
-	.space	4, 0x00
-PadChdStepD2_cur:
-	.space	4, 0xFF
-PadChdStepM2_strp:
-	.space	4, 0x00
-PadChdStepD1_stepdata:
-	.space	4, 0x00
-PadChdStepD1_cur:
-	.space	4, 0xFF
-PadChdStepM1_strp:
-	.space	4, 0x00
-PadChdStepD3_stepdata:
-	.space	4, 0x00
-PadChdStepD3_cur:
-	.space	4, 0xFF
-PadChdStepM3_strp:
-	.space	4, 0x00
-PadChdStepD4_stepdata:
-	.space	4, 0x00
-PadChdStepD4_cur:
-	.space	4, 0xFF
-PadChdStepM4_strp:
-	.space	4, 0x00
-data_50003AD0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4638, 0x3B463C
-data_50003AD4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B463C, 0x3B4674
-data_50003B0C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4674, 0x3B4678
-data_50003B10:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4678, 0x3B467C
-data_50003B14:
-	.space	4, 0xFF
-SndArgrScreen_window:
-	.space	4, 0xFF
-SndArgrScreen_SndArgGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4684, 0x3B4686
-SndArgrScreen_SndArgGridBox1_selcol:
-	.align	4, 0x00
-SndArgrScreen_SndArgGridBox1_pcol:
-	.space	4, 0x00
-SndArgrScreen_SndArgGridBox1_prow:
-	.space	4, 0x00
-SndArgrScreen_SndArgGridBox1_crow:
-	.space	4, 0x00
-CmpMenuScreen_window:
-	.space	4, 0xFF
-CmpMenuScreen_TitleMenu_EASY_COMPOSER_selected:
-	.space	4, 0x00
-CmpMenuScreen_TitleMenu_PATTERN_COPY_selected:
-	.space	4, 0x00
-CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY_selected:
-	.space	4, 0x00
-CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER_selected:
-	.space	4, 0x00
-CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY_selected:
-	.space	4, 0x00
-CmpMenuScreen_FuncMenu_A_selected:
-	.space	4, 0x00
-CmpMenuScreen_FuncMenu_B_selected:
-	.space	4, 0x00
-CmpMenuScreen_FuncMenu_C_selected:
-	.space	4, 0x00
-CmpBkslScreen_window:
-	.space	4, 0xFF
-CmpBkslScreen_IntTitleMenu_DSP_SET_selected:
-	.space	4, 0x00
-CmpBkslScreen_TitleMenu_NAMING_selected:
-	.space	4, 0x00
-PatVari2_selected:
-	.space	2, 0xFF
-PatVari1_selected:
-	.align	4, 0x00
-PatIntro_selected:
-	.space	2, 0xFF
-PatVari4_selected:
-	.align	4, 0xFF
-PatEnding_selected:
-	.space	2, 0xFF
-PatVari3_selected:
-	.align	4, 0xFF
-CmpBkslScreen_SureWindowMenu_MEMORY_CLR_selected:
-	.space	4, 0x00
-CmpBkslSScreen_window:
-	.space	4, 0xFF
-CmpBkslSScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B46D8, 0x3B46DC
-CmpBkslSScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-CmpBkslSScreen_TitleMenu_KEY_SETTING_selected:
-	.space	4, 0x00
-CmpBkslSScreen_TitleMenu_MEASURE_EDIT_selected:
-	.space	4, 0x00
-CmpChordModifyMenu_selected:
-	.space	4, 0x00
-CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT_selected:
-	.space	4, 0x00
-CmNameScreen_window:
-	.space	4, 0xFF
-CmNameScreen_ScreenMenu_VARIATION_selected:
-	.space	4, 0x00
-CmpSetScreen_window:
-	.space	4, 0xFF
-CmpSetScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B46FC, 0x3B4700
-CmpSetScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-CmpRealScreen_window:
-	.space	4, 0xFF
-CmpRealScreen_TitleMenu_PART_BALANCE_selected:
-	.space	4, 0x00
-CmpRealScreen_TitleMenu_STEP_RECORD_selected:
-	.space	4, 0x00
-CmpRealSoloToggle_onoff:
-	.space	4, 0x00
-CmpRealScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4714, 0x3B4718
-CmpRealChdModGrp_selected:
-	.space	4, 0x00
-CmpRealChdModTyp_selected:
-	.space	4, 0x00
-CmpRealScreen_TitleMenu_PART_SETTING_selected:
-	.space	4, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox_selected:
-	.space	2, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox2_selected:
-	.align	4, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox3_selected:
-	.space	2, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox4_selected:
-	.align	4, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox5_selected:
-	.space	2, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox6_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B472E, 0x3B4730
-CmpRealScreen_CmpRecMuteBox_VwStrBox7_selected:
-	.space	2, 0x00
-CmpRealScreen_CmpRecMuteBox_VwStrBox8_selected:
-	.align	4, 0x00
-CmpBalScreen_window:
-	.space	4, 0xFF
-CmpNcpScreen_window:
-	.space	4, 0xFF
-CmPnCpPage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B473C, 0x3B4740
-CmpSeqCpScreen_window:
-	.space	4, 0xFF
-CmpSeqCpScreen_GridBoxDelux1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4744, 0x3B4746
-CmpSeqCpScreen_GridBoxDelux1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4746, 0x3B4748
-CmpSeqCpScreen_GridBoxDelux1_pcol:
-	.space	4, 0x00
-CmpSeqCpScreen_GridBoxDelux1_prow:
-	.space	4, 0x00
-CmpSeqCpScreen_GridBoxDelux1_crow:
-	.space	4, 0x00
-SeqToCmpFstMeas_selected:
-	.space	4, 0x00
-SeqToCmpLstMeas_selected:
-	.space	4, 0x00
-SeqToCmpTrans_selected:
-	.space	4, 0x00
-SeqToCmpMemory_selected:
-	.space	4, 0x00
-SeqToCmpPattern_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4764, 0x3B4768
-CmpSeqCpScreen_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-CmpEasyScreen_window:
-	.space	4, 0xFF
-CmpEasyScreen_GridBoxDelux1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4770, 0x3B4772
-CmpEasyScreen_GridBoxDelux1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4772, 0x3B4774
-CmpEasyScreen_GridBoxDelux1_pcol:
-	.space	4, 0x00
-CmpEasyScreen_GridBoxDelux1_prow:
-	.space	4, 0x00
-CmpEasyScreen_GridBoxDelux1_crow:
-	.space	4, 0x00
-CmpEasyScreen_FuncEditBox_MEMORY_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4780, 0x3B4784
-CmpEasyScreen_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-CmpPtPntChdMdfScreen_window:
-	.space	4, 0xFF
-CmpMeasEditScreen_window:
-	.space	4, 0xFF
-CmpMeasEditScreen_TitleMenu_MEASURE_COPY_selected:
-	.space	4, 0x00
-CmpMeasEditScreen_TitleMenu_MEASURE_ERASE_selected:
-	.space	4, 0x00
-CmpMeasEditScreen_TitleMenu_MEASURE_DELETE_selected:
-	.space	4, 0x00
-CmpMeasEditScreen_TitleMenu_MEASURE_INSERT_selected:
-	.space	4, 0x00
-CmpDspSetScreen_window:
-	.space	4, 0xFF
-CMP_CmpDspSetGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47A4, 0x3B47A6
-CMP_CmpDspSetGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47A6, 0x3B47A8
-CMP_CmpDspSetGrid_pcol:
-	.space	4, 0x00
-CMP_CmpDspSetGrid_prow:
-	.space	4, 0x00
-CMP_CmpDspSetGrid_crow:
-	.space	4, 0x00
-CmpDspSetTgl_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47B4, 0x3B47B8
-CmpCstmCpyScreen_window:
-	.space	4, 0xFF
-CmpCstmCpySrcNum_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47BC, 0x3B47C0
-CmpCstmCpyDstNum_selected:
-	.space	4, 0x00
-CmpPartSetScreen_window:
-	.space	4, 0xFF
-CmpPartSetScreen_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47C8, 0x3B47CC
-CmpMeasCpScreen_window:
-	.space	4, 0xFF
-CmpMCopySPart_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47D0, 0x3B47D4
-CmpMCopyFstMeas_selected:
-	.space	4, 0x00
-CmpMCopyLstMeas_selected:
-	.space	4, 0x00
-CmpMCopyDPart_selected:
-	.space	4, 0x00
-CmpMCopySrtMeas_selected:
-	.space	4, 0x00
-CmpMeasDelScreen_window:
-	.space	4, 0xFF
-CmpMDelFstMeas_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47E8, 0x3B47EC
-CmpMDelLstMeas_selected:
-	.space	4, 0x00
-CmpMeasErsScreen_window:
-	.space	4, 0xFF
-CmpMErsPart_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B47F4, 0x3B47F8
-CmpMErsFstMeas_selected:
-	.space	4, 0x00
-CmpMErsLstMeas_selected:
-	.space	4, 0x00
-CmpMeasErsScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-CmpMeasInsScreen_window:
-	.space	4, 0xFF
-CmpMInsFstMeas_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4808, 0x3B480C
-CmpMInsMeasNum_selected:
-	.space	4, 0x00
-CmpMemClrWin_parent:
-	.space	4, 0xFF
-CmpMemClrWin_child:
-	.space	4, 0xFF
-CmpMemClrWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpClrPtnWin_parent:
-	.space	4, 0xFF
-CmpClrPtnWin_child:
-	.space	4, 0xFF
-CmpClrPtnWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmVari1NameScreen_window:
-	.space	4, 0xFF
-CmVari1NameScreen_ScreenMenu_NEXT_VARI_selected:
-	.space	4, 0x00
-CmVari2NameScreen_window:
-	.space	4, 0xFF
-CmVari2NameScreen_ScreenMenu_NEXT_VARI_selected:
-	.space	4, 0x00
-CmVari3NameScreen_window:
-	.space	4, 0xFF
-CmVari3NameScreen_ScreenMenu_NEXT_VARI_selected:
-	.space	4, 0x00
-CmVari4NameScreen_window:
-	.space	4, 0xFF
-CmVari4NameScreen_ScreenMenu_NEXT_VARI_selected:
-	.space	4, 0x00
-CmpPtnCpP1Win_parent:
-	.space	4, 0xFF
-CmpPtnCpP1Win_child:
-	.space	4, 0xFF
-CmpPtnCpP1Win_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-CmpPtnCpP1Win_FuncEditBox1_selected:
-	.space	4, 0x00
-PnCpDstPtn_selected:
-	.space	4, 0x00
-PnCpDspYN_selected:
-	.space	4, 0x00
-CmpPtnCpP1Win_FuncEditBox2_selected:
-	.space	4, 0x00
-PnCpSrcPtn_selected:
-	.space	4, 0x00
-CmpPtnCpP1Win_FuncEditBox3_selected:
-	.space	4, 0x00
-CmpPtnCpP2Win_parent:
-	.space	4, 0xFF
-CmpPtnCpP2Win_child:
-	.space	4, 0xFF
-CmpPrtCpySrcGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4874, 0x3B4876
-CmpPrtCpySrcGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4876, 0x3B4878
-CmpPrtCpySrcGrid_pcol:
-	.space	4, 0x00
-CmpPrtCpySrcGrid_prow:
-	.space	4, 0x00
-CmpPrtCpySrcGrid_crow:
-	.space	4, 0x00
-CmpPrtCpyDstGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4884, 0x3B4886
-CmpPrtCpyDstGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4886, 0x3B4888
-CmpPrtCpyDstGrid_pcol:
-	.space	4, 0x00
-CmpPrtCpyDstGrid_prow:
-	.space	4, 0x00
-CmpPrtCpyDstGrid_crow:
-	.space	4, 0x00
-CmpPtnCpP2Win_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-CmpPtnCpP2Win_FuncEditBox1_selected:
-	.space	4, 0x00
-CmPnCpSureWin1_parent:
-	.space	4, 0xFF
-CmPnCpSureWin1_child:
-	.space	4, 0xFF
-CmPnCpSureWin1_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmPnCpSureWin2_parent:
-	.space	4, 0xFF
-CmPnCpSureWin2_child:
-	.space	4, 0xFF
-CmPnCpSureWin2_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmPnCpSureWin3_parent:
-	.space	4, 0xFF
-CmPnCpSureWin3_child:
-	.space	4, 0xFF
-CmPnCpSureWin3_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqToCmpIEWin_parent:
-	.space	4, 0xFF
-SeqToCmpIEWin_child:
-	.space	4, 0xFF
-SeqToCmpIEWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmSetPage2_parent:
-	.space	4, 0xFF
-CmSetPage2_child:
-	.space	4, 0xFF
-CmpSetGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B48D4, 0x3B48D6
-CmpSetGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B48D6, 0x3B48D8
-CmpSetGrid_pcol:
-	.space	4, 0x00
-CmpSetGrid_prow:
-	.space	4, 0x00
-CmpSetGrid_crow:
-	.space	4, 0x00
-CompDspSetAtt_parent:
-	.space	4, 0xFF
-CompDspSetAtt_child:
-	.space	4, 0xFF
-CmpPartSetP1Win_parent:
-	.space	4, 0xFF
-CmpPartSetP1Win_child:
-	.space	4, 0xFF
-CmPartSetG1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B48F4, 0x3B48F6
-CmPartSetG1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B48F6, 0x3B48F8
-CmPartSetG1_pcol:
-	.space	4, 0x00
-CmPartSetG1_prow:
-	.space	4, 0x00
-CmPartSetG1_crow:
-	.space	4, 0x00
-CmpPartSetP2Win_parent:
-	.space	4, 0xFF
-CmpPartSetP2Win_child:
-	.space	4, 0xFF
-CmPartSetG2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B490C, 0x3B490E
-CmPartSetG2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B490E, 0x3B4910
-CmPartSetG2_pcol:
-	.space	4, 0x00
-CmPartSetG2_prow:
-	.space	4, 0x00
-CmPartSetG2_crow:
-	.space	4, 0x00
-CmpPartSetP2Win_IntTitleMenu_DSP_SET_selected:
-	.space	4, 0x00
-CmpMCopyWin_parent:
-	.space	4, 0xFF
-CmpMCopyWin_child:
-	.space	4, 0xFF
-CmpMCopyWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMdelWin_parent:
-	.space	4, 0xFF
-CmpMdelWin_child:
-	.space	4, 0xFF
-CmpMdelWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMdelIEWin_parent:
-	.space	4, 0xFF
-CmpMdelIEWin_child:
-	.space	4, 0xFF
-CmpMdelIEWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMEraseWin_parent:
-	.space	4, 0xFF
-CmpMEraseWin_child:
-	.space	4, 0xFF
-CmpMEraseWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMInsWin_parent:
-	.space	4, 0xFF
-CmpMInsWin_child:
-	.space	4, 0xFF
-CmpMInsWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMInsIEWin_parent:
-	.space	4, 0xFF
-CmpMInsIEWin_child:
-	.space	4, 0xFF
-CmpMInsIEWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMsTs1Win_parent:
-	.space	4, 0xFF
-CmpMsTs1Win_child:
-	.space	4, 0xFF
-CmpMsTs1Win_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMsTs2Win_parent:
-	.space	4, 0xFF
-CmpMsTs2Win_child:
-	.space	4, 0xFF
-CmpMsTs2Win_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpMsTs3Win_parent:
-	.space	4, 0xFF
-CmpMsTs3Win_child:
-	.space	4, 0xFF
-CmpMsTs3Win_ScreenMenu_NO_selected:
-	.space	4, 0x00
-CmpStepScreen_window:
-	.space	4, 0xFF
-CmpCstmCpy2Screen_window:
-	.space	4, 0xFF
-CmpCstmCpySureWin_parent:
-	.space	4, 0xFF
-CmpCstmCpySureWin_child:
-	.space	4, 0xFF
-CmpCstmCpySureWin_ScreenMenu1_selected:
-	.space	4, 0x00
-
-		AcTitleMenu	CmpChordModifyMenu, super=CmpBkslSScreen, next=CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT, prev=CmpBkslSScreen_CmpPatternBox1, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpChordModifyMenu_selected, str=Str_CHORD_MODIFY_CHANGE, title=TT_CMPTCHD, icon=195	# str "CHORD MODIFY CHANGE"
-data_50003E74:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49DC, 0x3B49E0
-data_50003E78:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49E0, 0x3B49E4
-data_50003E7C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49E4, 0x3B49E8
-data_50003E80:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49E8, 0x3B49EC
-data_50003E84:
-	.space	4, 0x00
-data_50003E88:
-	.space	8, 0x00
-data_50003E90:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49F8, 0x3B49FC
-data_50003E94:
-.incbin_range "baserom/kn7000_program.rom", 0x3B49FC, 0x3B4A00
-data_50003E98:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A00, 0x3B4A04
-data_50003E9C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A04, 0x3B4A08
-data_50003EA0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A08, 0x3B4A0C
-data_50003EA4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A0C, 0x3B4A10
-data_50003EA8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A10, 0x3B4A14
-data_50003EAC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A14, 0x3B4A18
-data_50003EB0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A18, 0x3B4A1C
-data_50003EB4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A1C, 0x3B4A20
-data_50003EB8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A20, 0x3B4A24
-data_50003EBC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A24, 0x3B4A28
-data_50003EC0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A28, 0x3B4A2C
-data_50003EC4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A2C, 0x3B4A30
-data_50003EC8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A30, 0x3B4A34
-data_50003ECC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A34, 0x3B4A38
-data_50003ED0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A38, 0x3B4A3C
-data_50003ED4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A3C, 0x3B4A40
-data_50003ED8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A40, 0x3B4A44
-data_50003EDC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A44, 0x3B4A48
-data_50003EE0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A48, 0x3B4A4C
-data_50003EE4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A4C, 0x3B4A50
-data_50003EE8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A50, 0x3B4A54
-data_50003EEC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A54, 0x3B4A58
-data_50003EF0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A58, 0x3B4A5C
-data_50003EF4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A5C, 0x3B4A60
-data_50003EF8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A60, 0x3B4A64
-data_50003EFC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A64, 0x3B4A68
-data_50003F00:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A68, 0x3B4A6C
-data_50003F04:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A6C, 0x3B4A70
-data_50003F08:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A70, 0x3B4A74
-MspMenuScreen_window:
-	.space	4, 0xFF
-MspMenuScreen_TitleMenu_PHRASE_COPY_selected:
-	.space	4, 0x00
-MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY_selected:
-	.space	4, 0x00
-MspMenuScreen_TitleMenu_COMPILE_SET_selected:
-	.space	4, 0x00
-MspMenuScreen_FuncMenu_A_selected:
-	.space	4, 0x00
-MspMenuScreen_FuncMenu_C_selected:
-	.space	4, 0x00
-MspMenuScreen_FuncMenu_B_selected:
-	.space	4, 0x00
-MspBkslScreen_window:
-	.space	4, 0xFF
-MspBkslWin_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4A94, 0x3B4A98
-MspBkslScreen_PadNameBox_1_selected:
-	.space	4, 0x00
-MspBkslScreen_PadNameBox_2_selected:
-	.space	4, 0x00
-MspBkslScreen_PadNameBox_3_selected:
-	.space	4, 0x00
-MspBkslScreen_PadNameBox_4_selected:
-	.space	4, 0x00
-MspBkslScreen_PadNameBox_5_selected:
-	.space	4, 0x00
-MspBkslScreen_PadNameBox_6_selected:
-	.space	4, 0x00
-MspRealScreen_window:
-	.space	4, 0xFF
-MspRealScreen_TitleMenu_STEP_RECORD_selected:
-	.space	4, 0x00
-MspRealScreen_FuncEditBox1_selected:
-	.space	4, 0x00
-MspRealScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-PadRealChdModTyp_selected:
-	.space	4, 0x00
-MspRealScreen_TitleMenu_PART_SETTING_selected:
-	.space	4, 0x00
-MspNameScreen_window:
-	.space	4, 0xFF
-MspCompileSetScreen_window:
-	.space	4, 0xFF
-MspCompileSetGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4AD0, 0x3B4AD2
-MspCompileSetGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4AD2, 0x3B4AD4
-MspCompileSetGrid_pcol:
-	.space	4, 0x00
-MspCompileSetGrid_prow:
-	.space	4, 0x00
-MspCompileSetGrid_crow:
-	.space	4, 0x00
-MspCompileSetScreen_TitleMenu_NAMING_selected:
-	.space	4, 0x00
-MspCompileBankName_selected:
-	.space	4, 0x00
-MspSetScreen_window:
-	.space	4, 0xFF
-MspSetScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4AEC, 0x3B4AF0
-MspSetScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-MspSeqCpScreen_window:
-	.space	4, 0xFF
-MSP_SeqToPadCopyGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4AF8, 0x3B4AFA
-MSP_SeqToPadCopyGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4AFA, 0x3B4AFC
-MSP_SeqToPadCopyGrid_pcol:
-	.space	4, 0x00
-MSP_SeqToPadCopyGrid_prow:
-	.space	4, 0x00
-MSP_SeqToPadCopyGrid_crow:
-	.space	4, 0x00
-SeqToPadFstMeas_selected:
-	.space	4, 0x00
-SeqToPadLstMeas_selected:
-	.space	4, 0x00
-SeqToPadTrans_selected:
-	.space	4, 0x00
-SeqToPadMemory_selected:
-	.space	4, 0x00
-SeqToPadPattern_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4B18, 0x3B4B1C
-SeqToPadCopyChord_strp:
-	.space	4, 0x00
-MspSeqCpScreen_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-MspPadNameScreen_window:
-	.space	4, 0xFF
-MspPadSelScreen_window:
-	.space	4, 0xFF
-MspPadSelScreen_TitleMenu_BANK_NAMING_selected:
-	.space	4, 0x00
-MspPadSelScreen_SureWindowMenu_BANK_CLR_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_1_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_2_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_3_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_4_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_5_selected:
-	.space	4, 0x00
-MspPadSelScreen_RecPadNameBox_6_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_window:
-	.space	4, 0xFF
-MspPadSel_sScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4B50, 0x3B4B54
-MspPadSel_sScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_TitleMenu_KEY_SETTING_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_TitleMenu_CHORD_MODIFY_CHANGE_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_TitleMenu_PLAY_SETTING_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_SureWindowMenu_CLEAR_THE_PAD_selected:
-	.space	4, 0x00
-MspPadSel_sScreen_TitleMenu_PAD_NAMING_selected:
-	.space	4, 0x00
-MspChdDummyScreen_window:
-	.space	4, 0xFF
-MspPnCpScreen_window:
-	.space	4, 0xFF
-MspPnCpScreen_FuncEditBox1_selected:
-	.space	4, 0x00
-PnCpSrcPad_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4B78, 0x3B4B7C
-PnCpDstPad_selected:
-	.space	4, 0x00
-MspPnCpScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-MspPnCpScreen_FuncMenu_EDIT_selected:
-	.space	4, 0x00
-MspPtChdScreen_window:
-	.space	4, 0xFF
-MspSetGrid_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4B8C, 0x3B4B8E
-MspSetGrid_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4B8E, 0x3B4B90
-MspSetGrid_pcol:
-	.space	4, 0x00
-MspSetGrid_prow:
-	.space	4, 0x00
-MspSetGrid_crow:
-	.space	4, 0x00
-MspPartSetScreen_window:
-	.space	4, 0xFF
-MspPartSetScreen_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BA0, 0x3B4BA4
-MspPlaySetScreen_window:
-	.space	4, 0xFF
-MspPlaySetScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BA8, 0x3B4BAC
-MspPlaySetScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-MspGrpNameScreen_window:
-	.space	4, 0xFF
-MspGrpNameScreen_MspCompileBnkNmBox_BANK_selected:
-	.space	4, 0x00
-MspBksl1Win_parent:
-	.space	4, 0xFF
-MspBksl1Win_child:
-	.space	4, 0xFF
-MspBksl1Win_PadBankSel1_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BC4, 0x3B4BC8
-MspBksl1Win_PadBankSel1_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel2_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BD0, 0x3B4BD4
-MspBksl1Win_PadBankSel2_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel3_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BDC, 0x3B4BE0
-MspBksl1Win_PadBankSel3_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel4_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BE8, 0x3B4BEC
-MspBksl1Win_PadBankSel4_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel5_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4BF4, 0x3B4BF8
-MspBksl1Win_PadBankSel5_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel6_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C00, 0x3B4C04
-MspBksl1Win_PadBankSel6_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel7_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C0C, 0x3B4C10
-MspBksl1Win_PadBankSel7_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel8_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C18, 0x3B4C1C
-MspBksl1Win_PadBankSel8_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel9_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C24, 0x3B4C28
-MspBksl1Win_PadBankSel9_selected:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel10_caption:
-	.space	4, 0x00
-MspBksl1Win_PadBankSel10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C30, 0x3B4C34
-MspBksl1Win_PadBankSel10_selected:
-	.space	4, 0x00
-MspBksl2Win_parent:
-	.space	4, 0xFF
-MspBksl2Win_child:
-	.space	4, 0xFF
-MspBksl2Win_PadBankSel1_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C44, 0x3B4C48
-MspBksl2Win_PadBankSel1_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel2_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C50, 0x3B4C54
-MspBksl2Win_PadBankSel2_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel3_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C5C, 0x3B4C60
-MspBksl2Win_PadBankSel3_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel4_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C68, 0x3B4C6C
-MspBksl2Win_PadBankSel4_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel5_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C74, 0x3B4C78
-MspBksl2Win_PadBankSel5_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel6_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C80, 0x3B4C84
-MspBksl2Win_PadBankSel6_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C84, 0x3B4C88
-MspBksl2Win_PadBankSel7_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C8C, 0x3B4C90
-MspBksl2Win_PadBankSel7_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel8_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4C98, 0x3B4C9C
-MspBksl2Win_PadBankSel8_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel9_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel9_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CA4, 0x3B4CA8
-MspBksl2Win_PadBankSel9_selected:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel10_caption:
-	.space	4, 0x00
-MspBksl2Win_PadBankSel10_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CB0, 0x3B4CB4
-MspBksl2Win_PadBankSel10_selected:
-	.space	4, 0x00
-MspBksl3Win_parent:
-	.space	4, 0xFF
-MspBksl3Win_child:
-	.space	4, 0xFF
-MspBksl3Win_PadBankSel1_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CC0, 0x3B4CC4
-MspBksl3Win_PadBankSel1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CC4, 0x3B4CC8
-MspBksl3Win_PadBankSel1_selected:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel2_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CCC, 0x3B4CD0
-MspBksl3Win_PadBankSel2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CD0, 0x3B4CD4
-MspBksl3Win_PadBankSel2_selected:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel3_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CD8, 0x3B4CDC
-MspBksl3Win_PadBankSel3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CDC, 0x3B4CE0
-MspBksl3Win_PadBankSel3_selected:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel4_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CE4, 0x3B4CE8
-MspBksl3Win_PadBankSel4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CE8, 0x3B4CEC
-MspBksl3Win_PadBankSel4_selected:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel5_caption:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CF4, 0x3B4CF8
-MspBksl3Win_PadBankSel5_selected:
-	.space	4, 0x00
-MspBksl3Win_PadBankSel6_caption:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4CFC, 0x3B4D00
-MspBksl3Win_PadBankSel6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D00, 0x3B4D04
-MspBksl3Win_PadBankSel6_selected:
-	.space	4, 0x00
-PadRrecPartWin1_parent:
-	.space	4, 0xFF
-PadRrecPartWin1_child:
-	.space	4, 0xFF
-PadRrecPartWin1_CmpRecMuteBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D10, 0x3B4D12
-PadRrecPartWin1_CmpRecMuteBox_VwStrBox2_selected:
-	.align	4, 0x00
-MspRealSoloToggle_onoff:
-	.space	4, 0x00
-PadRrecPartWin2_parent:
-	.space	4, 0xFF
-PadRrecPartWin2_child:
-	.space	4, 0xFF
-PadRrecPartWin2_CmpRecMuteBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D20, 0x3B4D24
-PadRrecPartWin2_TitleMenu_CHORD_STEP_RECORD_selected:
-	.space	4, 0x00
-MspMemClrWin_parent:
-	.space	4, 0xFF
-MspMemClrWin_child:
-	.space	4, 0xFF
-MspMemClrWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-MspPartSetP1Win_parent:
-	.space	4, 0xFF
-MspPartSetP1Win_child:
-	.space	4, 0xFF
-MspPartSetG1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D3C, 0x3B4D3E
-MspPartSetG1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D3E, 0x3B4D40
-MspPartSetG1_pcol:
-	.space	4, 0x00
-MspPartSetG1_prow:
-	.space	4, 0x00
-MspPartSetG1_crow:
-	.space	4, 0x00
-MspPartSetP2Win_parent:
-	.space	4, 0xFF
-MspPartSetP2Win_child:
-	.space	4, 0xFF
-MspPartSetG2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D54, 0x3B4D56
-MspPartSetG2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D56, 0x3B4D58
-MspPartSetG2_pcol:
-	.space	4, 0x00
-MspPartSetG2_prow:
-	.space	4, 0x00
-MspPartSetG2_crow:
-	.space	4, 0x00
-MspClrPtnWin_parent:
-	.space	4, 0xFF
-MspClrPtnWin_child:
-	.space	4, 0xFF
-MspClrPtnWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-MspMsTs3Win_parent:
-	.space	4, 0xFF
-MspMsTs3Win_child:
-	.space	4, 0xFF
-MspMsTs3Win_ScreenMenu_NO_selected:
-	.space	4, 0x00
-PadRecPartWin1_parent:
-	.space	4, 0xFF
-PadRecPartWin1_child:
-	.space	4, 0xFF
-PadRecPartWin2_parent:
-	.space	4, 0xFF
-PadRecPartWin2_child:
-	.space	4, 0xFF
-MspStepScreen_window:
-	.space	4, 0xFF
-data_50004228:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D90, 0x3B4D94
-data_5000422C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D94, 0x3B4D98
-data_50004230:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D98, 0x3B4D9C
-data_50004234:
-	.space	2, 0x00
-data_50004236:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4D9E, 0x3B4DA0
-data_50004238:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DA0, 0x3B4DA4
-data_5000423C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DA4, 0x3B4DA8
-data_50004240:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DA8, 0x3B4DAC
-data_50004244:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DAC, 0x3B4DB0
-data_50004248:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DB0, 0x3B4DB4
-VideoOutScr_window:
-	.space	4, 0xFF
-PAL_VDOUT_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DB8, 0x3B4DBC
-NTSC_VDOUT_selected:
-	.space	4, 0x00
-DiskMenu_window:
-	.space	4, 0xFF
-TT_DKMENU1_selected:
-	.space	4, 0x00
-TT_DKMENU2_selected:
-	.space	4, 0x00
-TT_DKMENU3_selected:
-	.space	4, 0x00
-TT_DKMENU4_selected:
-	.space	4, 0x00
-TT_DKMENU5_selected:
-	.space	4, 0x00
-TT_DKMENU6_selected:
-	.space	4, 0x00
-TT_convert_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4DDC, 0x3B4DE0
-DKMENUcusldsv_selected:
-	.space	4, 0x00
-SD_ENTER_selected:
-	.space	4, 0x00
-DiskWaitWin_parent:
-	.space	4, 0xFF
-DiskWaitWin_child:
-	.space	4, 0xFF
-FMA_PleaseWait_paintok:
-	.space	4, 0x00
-DiskDeleteSureWin_parent:
-	.space	4, 0xFF
-DiskDeleteSureWin_child:
-	.space	4, 0xFF
-DiskSaveSureWin_parent:
-	.space	4, 0xFF
-DiskSaveSureWin_child:
-	.space	4, 0xFF
-PasswordWin_parent:
-	.space	4, 0xFF
-PasswordWin_child:
-	.space	4, 0xFF
-CheckPasswordWin_parent:
-	.space	4, 0xFF
-CheckPasswordWin_child:
-	.space	4, 0xFF
-DiskLoad_window:
-	.space	4, 0xFF
-DiskLoadPage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E18, 0x3B4E1C
-DiskLoadP1_parent:
-	.space	4, 0xFF
-DiskLoadP1_child:
-	.space	4, 0xFF
-TT_DKLD20_selected:
-	.space	4, 0x00
-TT_DKLD14_paintok:
-	.space	4, 0x00
-TT_DKLD15_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E2C, 0x3B4E30
-TT_DKLD15_paintok:
-	.space	4, 0x00
-TT_DKLD15_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E34, 0x3B4E38
-TT_DKLD17_paintok:
-	.space	4, 0x00
-LDdiskinf_paintok:
-	.space	4, 0x00
-DiskLoadP2_parent:
-	.space	4, 0xFF
-DiskLoadP2_child:
-	.space	4, 0xFF
-TT_DKLD27_paintok:
-	.space	4, 0x00
-TT_DKLD26_paintok:
-	.space	4, 0x00
-TT_DKLD26_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E50, 0x3B4E54
-DiskLoadP3_parent:
-	.space	4, 0xFF
-DiskLoadP3_child:
-	.space	4, 0xFF
-SingleLoadFile_paintok:
-	.space	4, 0x00
-SGLDnmbx_paintok:
-	.space	4, 0x00
-SGLDnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E64, 0x3B4E68
-SingleBankToggle_onoff:
-	.space	4, 0x00
-CmpOptionWin_parent:
-	.space	4, 0xFF
-CmpOptionWin_child:
-	.space	4, 0xFF
-SGLD_CMP_OPT_BOX_paintok:
-	.space	4, 0x00
-CmpSingleLoad_window:
-	.space	4, 0xFF
-CLDSflnmbx_sel_num:
-	.space	4, 0xFF
-CLDSflnmbx_paintok:
-	.space	4, 0x00
-CLDSflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E84, 0x3B4E88
-CLDSright2_onoff:
-	.space	4, 0x00
-CLDSselbox_paintok:
-	.space	4, 0x00
-CLDSselbox_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E90, 0x3B4E94
-WallpaperLoad_window:
-	.space	4, 0xFF
-WPLDflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4E98, 0x3B4E9C
-WPLDflnmbx_paintok:
-	.space	4, 0x00
-WPLDflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4EA0, 0x3B4EA4
-WPLDdknmbx_paintok:
-	.space	4, 0x00
-WPLDinfobx_paintok:
-	.space	4, 0x00
-DiskLoadSMF_window:
-	.space	4, 0xFF
-SMFLtech_selected:
-	.space	4, 0x00
-SMFLoadFilesBox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4EB4, 0x3B4EB8
-SMFLoadFilesBox_paintok:
-	.space	4, 0x00
-SMFLoadFilesBox_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4EBC, 0x3B4EC0
-SMFLwintgl_onoff:
-	.space	4, 0x00
-SMFLoadAsBox_paintok:
-	.space	4, 0x00
-SMFSeqToSongNumBox_paintok:
-	.space	4, 0x00
-SMFSeqSongNameBox_paintok:
-	.space	4, 0x00
-DiskInfoSmfLdWin_parent:
-	.space	4, 0xFF
-DiskInfoSmfLdWin_child:
-	.space	4, 0xFF
-SMFLdiskinf_paintok:
-	.space	4, 0x00
-SMFLdisknm_paintok:
-	.space	4, 0x00
-SongNameSmfLdWin_parent:
-	.space	4, 0xFF
-SongNameSmfLdWin_child:
-	.space	4, 0xFF
-SMFLsngnm_paintok:
-	.space	4, 0x00
-DiskSaveMenu_window:
-	.space	4, 0xFF
-TT_DKSVMENU1_selected:
-	.space	4, 0x00
-TT_DKSVMENU2_selected:
-	.space	4, 0x00
-DiskSaveName_window:
-	.space	4, 0xFF
-DiskSave_window:
-	.space	4, 0xFF
-DiskSavePage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F00, 0x3B4F04
-DiskSaveP1_parent:
-	.space	4, 0xFF
-DiskSaveP1_child:
-	.space	4, 0xFF
-SV_filesfx_paintok:
-	.space	4, 0x00
-SVfiles_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F10, 0x3B4F14
-SVfiles_paintok:
-	.space	4, 0x00
-SVfiles_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F18, 0x3B4F1C
-SVnmbx_paintok:
-	.space	4, 0x00
-SVnametitle_selected:
-	.space	4, 0x00
-SVdkinfobx_paintok:
-	.space	4, 0x00
-DiskSaveP2_parent:
-	.space	4, 0xFF
-DiskSaveP2_child:
-	.space	4, 0xFF
-SOflnm_paintok:
-	.space	4, 0x00
-SOopbx_paintok:
-	.space	4, 0x00
-SOopbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F38, 0x3B4F3C
-DiskSaveP3_parent:
-	.space	4, 0xFF
-DiskSaveP3_child:
-	.space	4, 0xFF
-SSflnmbox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F44, 0x3B4F48
-SSflnmbox_paintok:
-	.space	4, 0x00
-SSflnmbox_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F4C, 0x3B4F50
-SSsvflnmbx_paintok:
-	.space	4, 0x00
-DiskSaveNameSMF_window:
-	.space	4, 0xFF
-DiskSaveSMF_window:
-	.space	4, 0xFF
-DiskSmfSave_window:
-	.space	4, 0xFF
-SMFflnmbox_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F60, 0x3B4F64
-SMFflnmbox_paintok:
-	.space	4, 0x00
-SMFflnmbox_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F68, 0x3B4F6C
-SMFnm_selected:
-	.space	4, 0x00
-SMFtoggle1_onoff:
-	.space	4, 0x00
-SMFtoggle2_onoff:
-	.space	4, 0x00
-SMFdktype_paintok:
-	.space	4, 0x00
-SMFSaveSongNameBox_paintok:
-	.space	4, 0x00
-SMFSaveFileNameBox_paintok:
-	.space	4, 0x00
-SMFSeqFromSongNumBox_paintok:
-	.space	4, 0x00
-SMFSaveAsBox_paintok:
-	.space	4, 0x00
-DiskUtility_window:
-	.space	4, 0xFF
-DKTfnbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F90, 0x3B4F94
-DKTfnbx_paintok:
-	.space	4, 0x00
-DKTfnbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4F98, 0x3B4F9C
-DKTdknmstr_paintok:
-	.space	4, 0x00
-DKTdkinf_paintok:
-	.space	4, 0x00
-DKTcopy_selected:
-	.space	4, 0x00
-DKTformat_selected:
-	.space	4, 0x00
-DKUTmtocus_selected:
-	.space	4, 0x00
-DKUTmtosmf_selected:
-	.space	4, 0x00
-DKTrename_selected:
-	.space	4, 0x00
-FileCopy_window:
-	.space	4, 0xFF
-DKfcpsrcbx_paintok:
-	.space	4, 0x00
-DKfcpdstbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4FC0, 0x3B4FC4
-DKfcpdstbx_paintok:
-	.space	4, 0x00
-DKfcpdstbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4FC8, 0x3B4FCC
-FileRename_window:
-	.space	4, 0xFF
-DiskUtilitySMF_window:
-	.space	4, 0xFF
-DKSMFflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4FD4, 0x3B4FD8
-DKSMFflnmbx_paintok:
-	.space	4, 0x00
-DKSMFflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B4FDC, 0x3B4FE0
-DKTSformat_selected:
-	.space	4, 0x00
-DKTSwintgl_onoff:
-	.space	4, 0x00
-DKUTSmtocus_selected:
-	.space	4, 0x00
-DKUTSmtotech_selected:
-	.space	4, 0x00
-DKTSrename_selected:
-	.space	4, 0x00
-DiskInfoWin_parent:
-	.space	4, 0xFF
-DiskInfoWin_child:
-	.space	4, 0xFF
-DKTSdknmstr_paintok:
-	.space	4, 0x00
-DKTSdkinfo_paintok:
-	.space	4, 0x00
-SongNameWin_parent:
-	.space	4, 0xFF
-SongNameWin_child:
-	.space	4, 0xFF
-DKTSsgnmstr_paintok:
-	.space	4, 0x00
-FileRenameSmf_window:
-	.space	4, 0xFF
-DiskFormat_window:
-	.space	4, 0xFF
-DiskFormatPage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5018, 0x3B501C
-DiskFormatSureWin_parent:
-	.space	4, 0xFF
-DiskFormatSureWin_child:
-	.space	4, 0xFF
-DiskFormatSelectWin_parent:
-	.space	4, 0xFF
-DiskFormatSelectWin_child:
-	.space	4, 0xFF
-DKFT2hd_selected:
-	.space	4, 0x00
-DKFT2dd_selected:
-	.space	4, 0x00
-DiskFormatNamingWin_parent:
-	.space	4, 0xFF
-DiskFormatNamingWin_child:
-	.space	4, 0xFF
-DiskFormatNamingWin2_parent:
-	.space	4, 0xFF
-DiskFormatNamingWin2_child:
-	.space	4, 0xFF
-DiskSetup_window:
-	.space	4, 0xFF
-DKSetramedt_selected:
-	.space	4, 0x00
-DKSetramedt_data:
-	.space	4, 0x00
-DKSprioeditbx_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5050, 0x3B5054
-DKSprioeditbx_data:
-	.space	4, 0x00
-DiskSmfDirectPlay_window:
-	.space	4, 0xFF
-DPLflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B505C, 0x3B5060
-DPLflnmbx_paintok:
-	.space	4, 0x00
-DPLflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5064, 0x3B5068
-DPLright4_onoff:
-	.space	4, 0x00
-SmfMidiOut_onoff:
-	.space	4, 0x00
-DPLleft2_onoff:
-	.space	4, 0x00
-DPPlayAsBox_paintok:
-	.space	4, 0x00
-DPtoDOC_selected:
-	.space	4, 0x00
-SongNameDPSmfWin_parent:
-	.space	4, 0xFF
-SongNameDPSmfWin_child:
-	.space	4, 0xFF
-DPLsngnmbx_paintok:
-	.space	4, 0x00
-DiskInfoDPSmfWin_parent:
-	.space	4, 0xFF
-DiskInfoDPSmfWin_child:
-	.space	4, 0xFF
-DPLdknmpara_paintok:
-	.space	4, 0x00
-DPLdkinfopr_paintok:
-	.space	4, 0x00
-DiskDocDirectPlay_window:
-	.space	4, 0xFF
-DDPflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B509C, 0x3B50A0
-DDPflnmbx_paintok:
-	.space	4, 0x00
-DDPflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50A4, 0x3B50A8
-DDPdknmbx_paintok:
-	.space	4, 0x00
-DDPright4_onoff:
-	.space	4, 0x00
-DDPtoSMF_selected:
-	.space	4, 0x00
-DiskPdDirectPlay_window:
-	.space	4, 0xFF
-PDPflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50B8, 0x3B50BC
-PDPflnmbx_paintok:
-	.space	4, 0x00
-PDPflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50C0, 0x3B50C4
-PDPright4tgl_onoff:
-	.space	4, 0x00
-DiskSongMedley_window:
-	.space	4, 0xFF
-SMDfnbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50CC, 0x3B50D0
-SMDfnbx_paintok:
-	.space	4, 0x00
-SMDfnbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50D4, 0x3B50D8
-SMDright4_onoff:
-	.space	4, 0x00
-SMDright5_onoff:
-	.space	4, 0x00
-SongMedleyDiskName_paintok:
-	.space	4, 0x00
-SongMedleyDiskInfo_paintok:
-	.space	4, 0x00
-IntSongMedley_window:
-	.space	4, 0xFF
-IMDLflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50EC, 0x3B50F0
-IMDLflnmbx_paintok:
-	.space	4, 0x00
-IMDLflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B50F4, 0x3B50F8
-IMDLright4_onoff:
-	.space	4, 0x00
-LoadComposer_window:
-	.space	4, 0xFF
-CMPLDflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5100, 0x3B5104
-CMPLDflnmbx_paintok:
-	.space	4, 0x00
-CMPLDflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5108, 0x3B510C
-CMPLDdknmbx_paintok:
-	.space	4, 0x00
-CMPLDdkinfbx_paintok:
-	.space	4, 0x00
-DiskSaveNameCUS_window:
-	.space	4, 0xFF
-CustomStyleLoadSave_window:
-	.space	4, 0xFF
-TCUSSVmainbox_paintok:
-	.space	4, 0x00
-TCUSSVmainbox_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5120, 0x3B5124
-CusSaveFixWin_parent:
-	.space	4, 0xFF
-CusSaveFixWin_child:
-	.space	4, 0xFF
-CusSaveFixWin_TitleMenu_NAME_selected:
-	.space	4, 0x00
-CusSaveAsFileNameBox_paintok:
-	.space	4, 0x00
-CustomStyleDiskTools_window:
-	.space	4, 0xFF
-DKTCdknm_paintok:
-	.space	4, 0x00
-DKTCdkinfo_paintok:
-	.space	4, 0x00
-DKTCformat_selected:
-	.space	4, 0x00
-DKTCflnmbx_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5144, 0x3B5148
-DKTCflnmbx_paintok:
-	.space	4, 0x00
-DKTCflnmbx_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B514C, 0x3B5150
-DKUTCmtotech_selected:
-	.space	4, 0x00
-DKUTCmtosmf_selected:
-	.space	4, 0x00
-DKTCrename_selected:
-	.space	4, 0x00
-FileRenameCst_window:
-	.space	4, 0xFF
-PictureLoadDisk_window:
-	.space	4, 0xFF
-PictureLoadDisk_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5164, 0x3B5168
-PictureLoadDisk_FileNameBox1_paintok:
-	.space	4, 0x00
-PictureLoadDisk_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B516C, 0x3B5170
-PictureLoadDisk_ParaStrBox1_paintok:
-	.space	4, 0x00
-PictureLoadDisk_ParaStrBox2_paintok:
-	.space	4, 0x00
-PictureLoadDisk_OptionToggle_TOP_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5178, 0x3B517C
-PictureLoadDisk_OptionToggle_TOP_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B517C, 0x3B5180
-PictureLoadDisk_OptionToggle_MID_onoff:
-	.space	4, 0x00
-PictureLoadDisk_OptionToggle_MID_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5184, 0x3B5188
-PictureLoadDisk_OptionToggle_BTM_onoff:
-	.space	4, 0x00
-PictureLoadDisk_OptionToggle_BTM_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B518C, 0x3B5190
-PictureLoadDisk_TtlJgBox_SD_selected:
-	.space	4, 0x00
-DiskSaveDelPictSure_parent:
-	.space	4, 0xFF
-DiskSaveDelPictSure_child:
-	.space	4, 0xFF
-SaveSameNameSureWin_parent:
-	.space	4, 0xFF
-SaveSameNameSureWin_child:
-	.space	4, 0xFF
-		AcModeMenu	SD_ENTER, super=DiskMenu, prev=DKMNcatchttl, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=SD_ENTER_selected, str=Str_SD_MENU, mode=MD_SDC, icon=219	# str "SD MENU"
-		AcMonoIndexToggle	SingleBankToggle, super=DiskLoadP3, next=SingleLoadSwCtl, prev=DstMemBox, X=571, Y=79, W=61, H=22, stron=Str_BANK_8, stroff=Str_SINGLE, onoff=SingleBankToggle_onoff, editsw=ES_Right2, index=3	# stron "BANK"; stroff "SINGLE"
-data_500046A8:
-	.space	1, 0x14
-data_500046A9:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5211, 0x3B5214
-SeqMenuScreen_window:
-	.space	4, 0xFF
-SeqMenuScreen_TitleMenu_RECORD_EDIT_selected:
-	.space	4, 0x00
-SeqMenuScreen_TitleMenu_COPY_PASTE_selected:
-	.space	4, 0x00
-SeqMenuScreen_TitleMenu_RANGE_EDIT_selected:
-	.space	4, 0x00
-SeqMenuScreen_TitleMenu_PANEL_WRITE_selected:
-	.space	4, 0x00
-SeqMenuScreen_TitleMenu_NAMING_selected:
-	.space	4, 0x00
-SeqMenuSongName_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B522C, 0x3B5230
-SeqMenuScreen_TitleMenu_SD_AUDIO_SYNCHRO_selected:
-	.space	4, 0x00
-SeqEasyRecScreen_window:
-	.space	4, 0xFF
-SeqEasyRecScreen_TitleMenu_NAMING_selected:
-	.space	4, 0x00
-SeqEasyRecScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B523C, 0x3B5240
-SeqPlayScreen_window:
-	.space	4, 0xFF
-SeqPlyCyclTgl1_onoff:
-	.space	4, 0x00
-SeqPlayScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5248, 0x3B524C
-SeqPlayLyricsSM_selected:
-	.space	4, 0x00
-SeqPlayScreen_TitleMenu_MEDLEY_selected:
-	.space	4, 0x00
-SeqPlayScreen_IntTitleMenu_MIXER_selected:
-	.space	4, 0x00
-SeqPlayScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5258, 0x3B525C
-SeqCycPlyScreen_window:
-	.space	4, 0xFF
-SeqPlyCyclTgl2_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5260, 0x3B5264
-SeqCycPlyScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5264, 0x3B5268
-SeqCycPlySrtFE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5268, 0x3B526C
-SeqCycPlyEndFE_selected:
-	.space	4, 0x00
-SeqRealRecScreen_window:
-	.space	4, 0xFF
-SeqRealRecMetTgl_onoff:
-	.space	4, 0x00
-SeqCycleRecTgl_onoff:
-	.space	4, 0x00
-
-SeqRealRecScreen_SeqCapaBox_VwStrBox_selected:	.asciz "P"
-SeqRealRecScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B527E, 0x3B5280
-SeqRealRecScreen_IntTitleMenu_MIXER_selected:
-	.space	4, 0x00
-SeqTrkCpyScreen_window:
-	.space	4, 0xFF
-SeqTrackCopyFTrack_selected:
-	.space	4, 0x00
-SeqTrackCopyFSong_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B528C, 0x3B5290
-SeqTrackCopyTTrack_selected:
-	.space	4, 0x00
-SeqTrackCopyTSong_selected:
-	.space	4, 0x00
-SeqTrkCpyScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqCycRecScreen_window:
-	.space	4, 0xFF
-SeqCycleRecTgl2_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52A0, 0x3B52A4
-SeqCycRecMetTgl_onoff:
-	.space	4, 0x00
-SeqCycRecScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52A8, 0x3B52AC
-SeqCycRecSrtFE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52AC, 0x3B52B0
-SeqCycRecEndFE_selected:
-	.space	4, 0x00
-SeqPunchRecScreen_window:
-	.space	4, 0xFF
-SeqPunchMetTgl_onoff:
-	.space	4, 0x00
-SeqPunchAutoTgl_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52BC, 0x3B52C0
-SeqPunchPunchTgl_onoff:
-	.space	4, 0x00
-SeqPunchRecScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52C4, 0x3B52C8
-SeqPunchRecScreen_IntTitleMenu_MIXER_selected:
-	.space	4, 0x00
-SeqPunchRecScreen_SeqCapaBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52CC, 0x3B52D0
-SeqAtPunchRecScreen_window:
-	.space	4, 0xFF
-SeqAtPunchRecScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52D4, 0x3B52D8
-SeqPunchMSrtFE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52D8, 0x3B52DC
-SeqPunchMEndFE_selected:
-	.space	4, 0x00
-SeqPunchMCinFE_selected:
-	.space	4, 0x00
-SeqAutoPMMetTgl_onoff:
-	.space	4, 0x00
-SeqTrSelScreen_window:
-	.space	4, 0xFF
-SeqStepRecScreen_window:
-	.space	4, 0xFF
-SeqTrAsScreen_window:
-	.space	4, 0xFF
-SeqTrasGrid1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52F4, 0x3B52F6
-SeqTrasGrid1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B52F6, 0x3B52F8
-SeqTrasGrid1_pcol:
-	.space	4, 0x00
-SeqTrasGrid1_prow:
-	.space	4, 0x00
-SeqTrasGrid1_crow:
-	.space	4, 0x00
-SeqTrAsScreen_TitleMenu_PRESET_selected:
-	.space	4, 0x00
-SeqTrasGrid2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5308, 0x3B530A
-SeqTrasGrid2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B530A, 0x3B530C
-SeqTrasGrid2_pcol:
-	.space	4, 0x00
-SeqTrasGrid2_prow:
-	.space	4, 0x00
-SeqTrasGrid2_crow:
-	.space	4, 0x00
-SeqTrAsPsScreen_window:
-	.space	4, 0xFF
-SeqTrAsPSongSel_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B531C, 0x3B5320
-SeqTrasP1_selected:
-	.space	4, 0x00
-SeqTrasP2_selected:
-	.space	4, 0x00
-SeqTrasP3_selected:
-	.space	4, 0x00
-SeqPanelWriteScreen_window:
-	.space	4, 0xFF
-SeqSongSelScreen_window:
-	.space	4, 0xFF
-SeqSongSelScreen_SongSelBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5334, 0x3B5338
-SeqSongSelScreen_TitleMenu_NAMING_selected:
-	.space	4, 0x00
-SeqSongNamingScreen_window:
-	.space	4, 0xFF
-SeqSongClrScreen_window:
-	.space	4, 0xFF
-SeqSongClrSel_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5344, 0x3B5348
-SeqSongClrScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqSngCpyScreen_window:
-	.space	4, 0xFF
-SeqSongCopyFSong_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5350, 0x3B5354
-SeqSongCopyTSong_selected:
-	.space	4, 0x00
-SeqSngCpyScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqAftSetScreen_window:
-	.space	4, 0xFF
-SeqAftSetScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5360, 0x3B5364
-SeqRecEdtMnuScreen_window:
-	.space	4, 0xFF
-SeqRecEdtMnuScreen_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5368, 0x3B536C
-SeqNoteSelScreen_window:
-	.space	4, 0xFF
-SeqNoteEditScreen_window:
-	.space	4, 0xFF
-SeqNoteEditScreen_TitleMenu_PLAY_selected:
-	.space	4, 0x00
-SeqInfo_NE_strp:
-	.space	4, 0x00
-SeqNoteCycPScreen_window:
-	.space	4, 0xFF
-SeqNoteCycPScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5380, 0x3B5384
-SeqNoteSoloTgl_onoff:
-	.space	4, 0x00
-SeqNoteCycPlySrt_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5388, 0x3B538C
-SeqNoteCycPlyEnd_selected:
-	.space	4, 0x00
-SeqDrmSelScreen_window:
-	.space	4, 0xFF
-SeqDrmEdtScreen_window:
-	.space	4, 0xFF
-SeqInfo_DE_strp:
-	.space	4, 0x00
-SeqDrmEdtScreen_TitleMenu_PLAY_selected:
-	.space	4, 0x00
-SeqDrumCycPScreen_window:
-	.space	4, 0xFF
-SeqDrumCycPScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B53A4, 0x3B53A8
-SeqDrumSoloTgl_onoff:
-	.space	4, 0x00
-SeqDrumCycPlySrt_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B53AC, 0x3B53B0
-SeqDrumCycPlyEnd_selected:
-	.space	4, 0x00
-SeqTrkClrScreen_window:
-	.space	4, 0xFF
-SeqTrkClrScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqTrkMrgScreen_window:
-	.space	4, 0xFF
-FE_SeqTrkMrgS2Track_selected:
-	.space	4, 0x00
-FE_SeqTrkMrgDstTrack_selected:
-	.space	4, 0x00
-FE_SeqTrkMrgS1Track_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B53C8, 0x3B53CC
-SeqTrkMrgScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqQtzScreen_window:
-	.space	4, 0xFF
-SeqQtzTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B53D4, 0x3B53D8
-SeqQtzFstMeas_selected:
-	.space	4, 0x00
-SeqQtzLstMeas_selected:
-	.space	4, 0x00
-SeqQtzValue_selected:
-	.space	4, 0x00
-SeqQtzStrength_selected:
-	.space	4, 0x00
-SeqQtzWindow_selected:
-	.space	4, 0x00
-SeqQtzScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqTrnsScreen_window:
-	.space	4, 0xFF
-FE_SeqTrnsTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B53F4, 0x3B53F8
-FE_SeqTrnsTrns_selected:
-	.space	4, 0x00
-FE_SeqTrnsFstMsr_selected:
-	.space	4, 0x00
-FE_SeqTrnsLstMsr_selected:
-	.space	4, 0x00
-SeqTrnsScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqVeloCngScreen_window:
-	.space	4, 0xFF
-SeqVeloCngTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B540C, 0x3B5410
-SeqVeloCngVelo_selected:
-	.space	4, 0x00
-SeqVeloCngFstMeas_selected:
-	.space	4, 0x00
-SeqVeloCngLstMeas_selected:
-	.space	4, 0x00
-SeqVeloCngScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqNoteCngScreen_window:
-	.space	4, 0xFF
-FE_SeqNtChgTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5424, 0x3B5428
-FE_SeqNtChgFstMsr_selected:
-	.space	4, 0x00
-FE_SeqNtChgLstMsr_selected:
-	.space	4, 0x00
-FE_SeqNtChgSrcNt_selected:
-	.space	4, 0x00
-FE_SeqNtChgDstNt_selected:
-	.space	4, 0x00
-SeqNoteCngScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqAdvDlyScreen_window:
-	.space	4, 0xFF
-SeqAdvDlyTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5440, 0x3B5444
-SeqAdvDlyAdvDly_selected:
-	.space	4, 0x00
-SeqAdvDlyFstMeas_selected:
-	.space	4, 0x00
-SeqAdvDlyLstMeas_selected:
-	.space	4, 0x00
-SeqAdvDlyScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqMErsScreen_window:
-	.space	4, 0xFF
-SeqMsErsTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5458, 0x3B545C
-SeqMsErsFstMeas_selected:
-	.space	4, 0x00
-SeqMsErsLstMeas_selected:
-	.space	4, 0x00
-SeqMsErsData_selected:
-	.space	4, 0x00
-SeqMErsScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqMCpScreen_window:
-	.space	4, 0xFF
-SEQUENCER_FE_SeqMsCpFFstMeas_selected:
-	.space	4, 0x00
-SEQUENCER_FE_SeqMsCpFLstMeas_selected:
-	.space	4, 0x00
-SEQUENCER_FE_SeqMsCpFTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5478, 0x3B547C
-SeqMCpScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SEQUENCER_FE_SeqMsCpTTrack_selected:
-	.space	4, 0x00
-SEQUENCER_FE_SeqMsCpTSrtMeas_selected:
-	.space	4, 0x00
-SEQUENCER_FE_SeqMsCpTRep_selected:
-	.space	4, 0x00
-SeqMDelScreen_window:
-	.space	4, 0xFF
-SEQUENCER_FE_SeqMsDelTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5490, 0x3B5494
-FE_SeqMsDelFstMsr_selected:
-	.space	4, 0x00
-FE_SeqMsDelLstMsr_selected:
-	.space	4, 0x00
-SeqMDelScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqMInsScreen_window:
-	.space	4, 0xFF
-SeqMsInsFTrack_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B54A4, 0x3B54A8
-SeqMsInsFFstMeas_selected:
-	.space	4, 0x00
-SeqMsInsFLstMeas_selected:
-	.space	4, 0x00
-SeqMsInsTTrack_selected:
-	.space	4, 0x00
-SeqMsInsTSrtMeas_selected:
-	.space	4, 0x00
-SeqMsInsTRep_selected:
-	.space	4, 0x00
-SeqMInsScreen_SureWindowMenu_OK_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_window:
-	.space	4, 0xFF
-SeqSngCnstMnuScreen_TitleMenu_SONG_COPY_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_MEASURE_COPY_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_TRACK_MERGE_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_TRACK_CLEAR_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_SONG_CLEAR_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_MEASURE_ERASE_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_MEASURE_DELETE_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_MEASURE_INSERT_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_TRACK_COPY_selected:
-	.space	4, 0x00
-SeqSngCnstMnuScreen_TitleMenu_APC_TO_SMF_CONVERT_selected:
-	.space	4, 0x00
-SeqGlblEdtMnuScreen_window:
-	.space	4, 0xFF
-SeqGlblEdtMnuScreen_TitleMenu_VELOCITY_CHANGE_selected:
-	.space	4, 0x00
-SeqGlblEdtMnuScreen_TitleMenu_NOTE_CHANGE_selected:
-	.space	4, 0x00
-SeqGlblEdtMnuScreen_TitleMenu_QUANTIZE_selected:
-	.space	4, 0x00
-SeqGlblEdtMnuScreen_TitleMenu_TRANSPOSE_selected:
-	.space	4, 0x00
-SeqGlblEdtMnuScreen_TitleMenu_ADVANCE_DELAY_selected:
-	.space	4, 0x00
-SeqApcRemixScreen_window:
-	.space	4, 0xFF
-SeqApcRemixScreen_GridBoxDelux1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5508, 0x3B550A
-SeqApcRemixScreen_GridBoxDelux1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B550A, 0x3B550C
-SeqApcRemixScreen_GridBoxDelux1_pcol:
-	.space	4, 0x00
-SeqApcRemixScreen_GridBoxDelux1_prow:
-	.space	4, 0x00
-SeqApcRemixScreen_GridBoxDelux1_crow:
-	.space	4, 0x00
-SeqApcRemixScreen_GridBoxDelux2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5518, 0x3B551A
-SeqApcRemixScreen_GridBoxDelux2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B551A, 0x3B551C
-SeqApcRemixScreen_GridBoxDelux2_pcol:
-	.space	4, 0x00
-SeqApcRemixScreen_GridBoxDelux2_prow:
-	.space	4, 0x00
-SeqApcRemixScreen_GridBoxDelux2_crow:
-	.space	4, 0x00
-SeqStepBalScreen_window:
-	.space	4, 0xFF
-SeqMetroBalScreen_window:
-	.space	4, 0xFF
-SeqMdlyPlyScreen_window:
-	.space	4, 0xFF
-SeqMdlyPlyScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5534, 0x3B5538
-SeqMdlyPlyScreen_ScreenMenu_LYRICS_selected:
-	.space	4, 0x00
-SeqMdlyPlyScreen_IntTitleMenu_MIXER_selected:
-	.space	4, 0x00
-SeqMdlyPlyScreen_FuncMenu_SKIP_selected:
-	.space	4, 0x00
-DkMdlyPlyScreen_window:
-	.space	4, 0xFF
-DkMdlyPlyScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5548, 0x3B554C
-DkMdlyPlyScreen_ScreenMenu_LYRICS_selected:
-	.space	4, 0x00
-DkMdlyPlyScreen_IntTitleMenu_MIXER_selected:
-	.space	4, 0x00
-DkMdlyPlyScreen_FuncMenu_SKIP_selected:
-	.space	4, 0x00
-SeqPlayLyricsScreen_window:
-	.space	4, 0xFF
-SeqPlayLyricsScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B555C, 0x3B5560
-SeqPlayLyricsScreen_IntTitleMenu_MIC_selected:
-	.space	4, 0x00
-SeqPlayLyricsScreen_TitleMenu_MEDLEY_selected:
-	.space	4, 0x00
-LyricsSeq_parent:
-	.space	4, 0xFF
-LyricsSeq_child:
-	.space	4, 0xFF
-SeqLyricsWin_parent:
-	.space	4, 0xFF
-SeqLyricsWin_child:
-	.space	4, 0xFF
-SeqTrackSwitchWin_parent:
-	.space	4, 0xFF
-SeqTrackSwitchWin_child:
-	.space	4, 0xFF
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox2_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox3_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox4_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox5_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox6_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox7_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B558E, 0x3B5590
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox9_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox10_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox11_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox12_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox13_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox14_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox15_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqPlayRecBox_VwStrBox16_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55A2, 0x3B55A4
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox2_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55A6, 0x3B55A8
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox3_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55AA, 0x3B55AC
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox4_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox4_selected:	.asciz "@"
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox5_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox5_selected:	.asciz "A"
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox6_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox6_selected:	.asciz "B"
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox7_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox7_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55BA, 0x3B55BC
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55BC, 0x3B55BE
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55BE, 0x3B55C0
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox9_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox9_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55C2, 0x3B55C4
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox10_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox10_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55C6, 0x3B55C8
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox11_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox11_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55CA, 0x3B55CC
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox12_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox12_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55CE, 0x3B55D0
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox13_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox13_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55D2, 0x3B55D4
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox14_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox14_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55D6, 0x3B55D8
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox15_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox15_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55DA, 0x3B55DC
-SeqTrackSwitchWin_SeqTrackNumBox_VwStrBox16_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin_SeqTrackPartBox_VwStrBox16_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B55DE, 0x3B55E0
-SeqCycleClearWin_parent:
-	.space	4, 0xFF
-SeqCycleClearWin_child:
-	.space	4, 0xFF
-SeqRecEdtP1Win_parent:
-	.space	4, 0xFF
-SeqRecEdtP1Win_child:
-	.space	4, 0xFF
-SeqRecEdtP1Win_TitleMenu_REALTIME_RECORD_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_PUNCH_RECORD_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_STEP_RECORD_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_TRACK_ASSIGN_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_QUANTIZE_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_SONG_SELECT_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_SONG_CLEAR_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_TRACK_CLEAR_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_NOTE_EDIT_selected:
-	.space	4, 0x00
-SeqRecEdtP1Win_TitleMenu_DRUM_EDIT_selected:
-	.space	4, 0x00
-SeqRecEdtP2Win_parent:
-	.space	4, 0xFF
-SeqRecEdtP2Win_child:
-	.space	4, 0xFF
-SeqRecEdtP2Win_TitleMenu_AFTER_TOUCH_SETTING_selected:
-	.space	4, 0x00
-SeqSongClrWin_parent:
-	.space	4, 0xFF
-SeqSongClrWin_child:
-	.space	4, 0xFF
-SeqSongClrWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqTrackSwitchWin2_parent:
-	.space	4, 0xFF
-SeqTrackSwitchWin2_child:
-	.space	4, 0xFF
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox2_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox3_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox4_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox5_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox6_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox7_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox8_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox9_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox10_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox11_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox12_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox13_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox14_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox15_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqPlayRecBox_VwStrBox16_selected:
-	.align	4, 0x00
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B565A, 0x3B565C
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox2_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B565E, 0x3B5660
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox3_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5662, 0x3B5664
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox4_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox4_selected:	.asciz "@"
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox5_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox5_selected:	.asciz "A"
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox6_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox6_selected:	.asciz "B"
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox7_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox7_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5672, 0x3B5674
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox8_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox8_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5676, 0x3B5678
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox9_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox9_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B567A, 0x3B567C
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox10_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox10_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B567E, 0x3B5680
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox11_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox11_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5682, 0x3B5684
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox12_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox12_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5686, 0x3B5688
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox13_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox13_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B568A, 0x3B568C
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox14_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox14_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B568E, 0x3B5690
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox15_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox15_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5692, 0x3B5694
-SeqTrackSwitchWin2_SeqTrackNumBox_VwStrBox16_selected:
-	.space	2, 0x00
-SeqTrackSwitchWin2_SeqTrackPartBox_VwStrBox16_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5696, 0x3B5698
-SeqTrkClrWin_parent:
-	.space	4, 0xFF
-SeqTrkClrWin_child:
-	.space	4, 0xFF
-SeqTrkClrWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqAutoPunchWin_parent:
-	.space	4, 0xFF
-SeqAutoPunchWin_child:
-	.space	4, 0xFF
-SeqPunchAutoPunchInd_strp:
-	.space	4, 0x00
-SeqQtzWin_parent:
-	.space	4, 0xFF
-SeqQtzWin_child:
-	.space	4, 0xFF
-SeqQtzWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqTrasSureScreen_window:
-	.space	4, 0xFF
-SeqTrasSureScreen_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqMdlyLyricsScreen_window:
-	.space	4, 0xFF
-SeqMdlyLyricsScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B56C8, 0x3B56CC
-SeqMdlyLyricsScreen_FuncMenu_SKIP_selected:
-	.space	4, 0x00
-SeqMdlyLyricsScreen_IntTitleMenu_MIC_selected:
-	.space	4, 0x00
-DkMdlyLyricsScreen_window:
-	.space	4, 0xFF
-DkMdlyLyricsScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B56D8, 0x3B56DC
-DkMdlyLyricsScreen_FuncMenu_SKIP_selected:
-	.space	4, 0x00
-DkMdlyLyricsScreen_IntTitleMenu_MIC_selected:
-	.space	4, 0x00
-SeqTrackCopyWin_parent:
-	.space	4, 0xFF
-SeqTrackCopyWin_child:
-	.space	4, 0xFF
-SeqTrackCopyWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqSongCopyWin_parent:
-	.space	4, 0xFF
-SeqSongCopyWin_child:
-	.space	4, 0xFF
-SeqSongCopyWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqTrkMgrWin_parent:
-	.space	4, 0xFF
-SeqTrkMgrWin_child:
-	.space	4, 0xFF
-SeqTrkMgrWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqMeasCpWin_parent:
-	.space	4, 0xFF
-SeqMeasCpWin_child:
-	.space	4, 0xFF
-SeqMeasCpWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqMsErsWin_parent:
-	.space	4, 0xFF
-SeqMsErsWin_child:
-	.space	4, 0xFF
-SeqMsErsWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqMsDelWin_parent:
-	.space	4, 0xFF
-SeqMsDelWin_child:
-	.space	4, 0xFF
-SeqMsDelWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqMeasInsWin_parent:
-	.space	4, 0xFF
-SeqMeasInsWin_child:
-	.space	4, 0xFF
-SeqMeasInsWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-ApcRemixExeScreen_window:
-	.space	4, 0xFF
-ApcRemixExeScreen_SeqMeasBox_VwStrBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B573C, 0x3B573E
-ApcRemixExeScreen_SeqCapaBox_VwStrBox_selected:	.asciz "Z"
-ApcRemixAbortScreen_window:
-	.space	4, 0xFF
-ApcRemixAbortScreen_ScreenMenu_OK_selected:
-	.space	4, 0x00
-SeqApcRemixWin_parent:
-	.space	4, 0xFF
-SeqApcRemixWin_child:
-	.space	4, 0xFF
-SeqApcRemixWin_ScreenMenu1_selected:
-	.space	4, 0x00
-SeqNtCngWin_parent:
-	.space	4, 0xFF
-SeqNtCngWin_child:
-	.space	4, 0xFF
-SeqNtCngWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqVeloCngWin_parent:
-	.space	4, 0xFF
-SeqVeloCngWin_child:
-	.space	4, 0xFF
-SeqVeloCngWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqTransWin_parent:
-	.space	4, 0xFF
-SeqTransWin_child:
-	.space	4, 0xFF
-SeqTransWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqAdvDlyWin_parent:
-	.space	4, 0xFF
-SeqAdvDlyWin_child:
-	.space	4, 0xFF
-SeqAdvDlyWin_ScreenMenu_NO_selected:
-	.space	4, 0x00
-SeqStepP1_parent:
-	.space	4, 0xFF
-SeqStepP1_child:
-	.space	4, 0xFF
-SeqStepP1_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B578C, 0x3B5790
-SeqInfo2_SR_strp:
-	.space	4, 0x00
-SeqInfo1_SR_strp:
-	.space	4, 0x00
-SeqStepP2_parent:
-	.space	4, 0xFF
-SeqStepP2_child:
-	.space	4, 0xFF
-SeqStepP2_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57A0, 0x3B57A4
-SeqStepP2_IntTitleMenu_PICTURE_selected:
-	.space	4, 0x00
-SeqStepP3_parent:
-	.space	4, 0xFF
-SeqStepP3_child:
-	.space	4, 0xFF
-SeqStepP3_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57B0, 0x3B57B4
-SeqStepP3_SureWindowMenu_CLR_selected:
-	.space	4, 0x00
-SeqStepP4_parent:
-	.space	4, 0xFF
-SeqStepP4_child:
-	.space	4, 0xFF
-SeqStepP4_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57C0, 0x3B57C4
-SeqStepP4_SureWindowMenu_CLR_selected:
-	.space	4, 0x00
-SeqStepP5_parent:
-	.space	4, 0xFF
-SeqStepP5_child:
-	.space	4, 0xFF
-SeqInfo3_SR_strp:
-	.space	4, 0x00
-SeqStepP5_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57D4, 0x3B57D8
-SeqStepP6_parent:
-	.space	4, 0xFF
-SeqStepP6_child:
-	.space	4, 0xFF
-SeqStepP6_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57E0, 0x3B57E4
-SeqInfo4_SR_strp:
-	.space	4, 0x00
-SeqStepP7_parent:
-	.space	4, 0xFF
-SeqStepP7_child:
-	.space	4, 0xFF
-SeqStepP7_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57F0, 0x3B57F4
-SeqStepP8_parent:
-	.space	4, 0xFF
-SeqStepP8_child:
-	.space	4, 0xFF
-SeqStepP8_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B57FC, 0x3B5800
-StepP8PicTtl_selected:
-	.space	4, 0x00
-SeqStepP9_parent:
-	.space	4, 0xFF
-SeqStepP9_child:
-	.space	4, 0xFF
-SeqStepP9_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B580C, 0x3B5810
-StepP9PicTtl_selected:
-	.space	4, 0x00
-StepInfoWin5_parent:
-	.space	4, 0xFF
-StepInfoWin5_child:
-	.space	4, 0xFF
-SeqInfo5_SR_strp:
-	.space	4, 0x00
-SeqStepTrkClrWin_parent:
-	.space	4, 0xFF
-SeqStepTrkClrWin_child:
-	.space	4, 0xFF
-SeqStepTrkClrWin_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5828, 0x3B582C
-StepInfoWin6_parent:
-	.space	4, 0xFF
-StepInfoWin6_child:
-	.space	4, 0xFF
-SeqInfo6_SR_strp:
-	.space	4, 0x00
-SeqStepP7BalWin_parent:
-	.space	4, 0xFF
-SeqStepP7BalWin_child:
-	.space	4, 0xFF
-SeqStepP7BalWin_SendIndex1_obj:
-	.space	4, 0xFF
-StepInfoWin7_parent:
-	.space	4, 0xFF
-StepInfoWin7_child:
-	.space	4, 0xFF
-SeqInfo7_SR_strp:
-	.space	4, 0x00
-SeqStepP10_parent:
-	.space	4, 0xFF
-SeqStepP10_child:
-	.space	4, 0xFF
-SeqStepP10_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5858, 0x3B585C
-SeqStepP11_parent:
-	.space	4, 0xFF
-SeqStepP11_child:
-	.space	4, 0xFF
-SeqStepP11_SendIndex1_obj:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5864, 0x3B5868
-SeqStepP11_IntTitleMenu_PICTURE_selected:
-	.space	4, 0x00
-SeqSdAdSyncScreen_window:
-	.space	4, 0xFF
-SeqSdAdSyncScreen_FuncEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5870, 0x3B5874
-SeqSdAdSyncScreen_FuncEditBox2_selected:
-	.space	4, 0x00
-PreMemFulWin_parent:
-	.space	4, 0xFF
-PreMemFulWin_child:
-	.space	4, 0xFF
-
-		AcFuncEditSw	SeqTrAsOk, super=SeqTrAsScreen, next=SeqTrAsScreen_IndexWideES7, prev=SeqTrAsScreen_IndexWideES6, flag=VF_Invisible, X=583, Y=165, W=49, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SeqTrasOK
-		AcIndexEditSw	StepP8PicBox, super=SeqStepP8, next=StepP8PicLabel, prev=SeqStepP8_FixWinDelux1, X=561, Y=122, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=11, fontcolor=CL_BlackW, editsw=ES_Right3
-		VwLabel	StepP8PicLabel, super=SeqStepP8, next=StepP8PicTtl, prev=StepP8PicBox, X=578, Y=125, W=37, H=19, str=Str_PIC_2, font=4, fontcolor=CL_BlackW	# str "PIC"
-		AcIntTitleMenu	StepP8PicTtl, super=SeqStepP8, next=SeqStepP8_ShowHide1, prev=StepP8PicLabel, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=StepP8PicTtl_selected, str=Str_PICTURE_2, title=TT_SSWLIST	# str "PICTURE"
-		AcIndexEditSw	StepP9PicBox, super=SeqStepP9, next=StepP9PicLabel, prev=SeqStepP9_FixWinDelux1, X=561, Y=122, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=11, fontcolor=CL_Black, editsw=ES_Right3
-		VwLabel	StepP9PicLabel, super=SeqStepP9, next=StepP9PicTtl, prev=StepP9PicBox, X=578, Y=125, W=37, H=19, str=Str_PIC_3, font=4, fontcolor=CL_BlackW	# str "PIC"
-		AcIntTitleMenu	StepP9PicTtl, super=SeqStepP9, next=SeqStepP9_ShowHide1, prev=StepP9PicLabel, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=StepP9PicTtl_selected, str=Str_PICTURE_3, title=TT_SSWLIST	# str "PICTURE"
-data_50004E6C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B59D4, 0x3B59D8
-data_50004E70:
-.incbin_range "baserom/kn7000_program.rom", 0x3B59D8, 0x3B59DC
-
-Str_V_2:	.asciz "V"
-.incbin_range "baserom/kn7000_program.rom", 0x3B59DE, 0x3B59F4
-data_50004E8C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B59F4, 0x3B59F8
-data_50004E90:
-.incbin_range "baserom/kn7000_program.rom", 0x3B59F8, 0x3B59FC
-data_50004E94:
-.incbin_range "baserom/kn7000_program.rom", 0x3B59FC, 0x3B5A00
-data_50004E98:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5A00, 0x3B5A04
-data_50004E9C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5A04, 0x3B5A08
-Str_1_0_2_0_3_0_4_0_5_0_6_0_7_0_8_0_9_0_10_0_2:	.asciz " 1:________________:  0%\n 2:________________:  0%\n 3:________________:  0%\n 4:________________:  0%\n 5:________________:  0%\n 6:________________:  0%\n 7:________________:  0%\n 8:________________:  0%\n 9:________________:  0%\n10:________________:  0%\n    "
-	.align	4, 0x00
-data_50004FA0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B08, 0x3B5B0C
-data_50004FA4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B0C, 0x3B5B10
-data_50004FA8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B10, 0x3B5B14
-data_50004FAC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B14, 0x3B5B18
-data_50004FB0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B18, 0x3B5B1C
-data_50004FB4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B1C, 0x3B5B20
-data_50004FB8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B20, 0x3B5B24
-data_50004FBC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B24, 0x3B5B28
-data_50004FC0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B28, 0x3B5B2C
-data_50004FC4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B2C, 0x3B5B30
-Str_d_4:	.asciz "d"
-	.align	4, 0xFF
-Str_d_3:	.asciz "d"
-	.align	4, 0xFF
-data_50004FD0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B38, 0x3B5B3C
-data_50004FD4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B3C, 0x3B5B40
-data_50004FD8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B40, 0x3B5B44
-data_50004FDC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B44, 0x3B5B48
-data_50004FE0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B48, 0x3B5B4C
-data_50004FE4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B4C, 0x3B5B50
-data_50004FE8:
-	.space	1, 0xFF
-data_50004FE9:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B51, 0x3B5B54
-data_50004FEC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B54, 0x3B5B58
-data_50004FF0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B58, 0x3B5B5C
-data_50004FF4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B5C, 0x3B5B60
-data_50004FF8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B60, 0x3B5B64
-data_50004FFC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B64, 0x3B5B68
-Str_s:	.asciz "s"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B6A, 0x3B5B6C
-Str_r:	.asciz "r"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B6E, 0x3B5B70
-Str_x_2:	.asciz "x"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B72, 0x3B5B74
-Str_w:	.asciz "w"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B76, 0x3B5B78
-data_50005010:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B78, 0x3B5B7C
-data_50005014:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B7C, 0x3B5B80
-data_50005018:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B80, 0x3B5B84
-data_5000501C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B84, 0x3B5B88
-data_50005020:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B88, 0x3B5B8C
-data_50005024:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B8C, 0x3B5B90
-data_50005028:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B90, 0x3B5B94
-data_5000502C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B94, 0x3B5B98
-data_50005030:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B98, 0x3B5B9C
-data_50005034:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5B9C, 0x3B5BA0
-data_50005038:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BA0, 0x3B5BA4
-data_5000503C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BA4, 0x3B5BA8
-data_50005040:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BA8, 0x3B5BAC
-data_50005044:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BAC, 0x3B5BB0
-data_50005048:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BB0, 0x3B5BB4
-data_5000504C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BB4, 0x3B5BB8
-data_50005050:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BB8, 0x3B5BBC
-data_50005054:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BBC, 0x3B5BC0
-data_50005058:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BC0, 0x3B5BC4
-data_5000505C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BC4, 0x3B5BC8
-data_50005060:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BC8, 0x3B5BCC
-data_50005064:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BCC, 0x3B5BD0
-data_50005068:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BD0, 0x3B5BD4
-data_5000506C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BD4, 0x3B5BD8
-data_50005070:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BD8, 0x3B5BDC
-data_50005074:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BDC, 0x3B5BE0
-data_50005078:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BE0, 0x3B5BE4
-data_5000507C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BE4, 0x3B5BE8
-data_50005080:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BE8, 0x3B5BEC
-data_50005084:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BEC, 0x3B5BF0
-data_50005088:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BF0, 0x3B5BF4
-data_5000508C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BF4, 0x3B5BF8
-data_50005090:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BF8, 0x3B5BFC
-data_50005094:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5BFC, 0x3B5C00
-data_50005098:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C00, 0x3B5C04
-data_5000509C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C04, 0x3B5C08
-data_500050A0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C08, 0x3B5C0C
-data_500050A4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C0C, 0x3B5C10
-data_500050A8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C10, 0x3B5C14
-data_500050AC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C14, 0x3B5C18
-data_500050B0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C18, 0x3B5C1C
-data_500050B4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C1C, 0x3B5C20
-data_500050B8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C20, 0x3B5C24
-data_500050BC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C24, 0x3B5C28
-data_500050C0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C28, 0x3B5C2C
-data_500050C4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C2C, 0x3B5C30
-data_500050C8:
-	.space	16, 0x00
-data_500050D8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C40, 0x3B5C44
-data_500050DC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C44, 0x3B5C48
-data_500050E0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C48, 0x3B5C4C
-data_500050E4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C4C, 0x3B5C50
-data_500050E8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C50, 0x3B5C54
-data_500050EC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C54, 0x3B5C58
-data_500050F0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C58, 0x3B5C5C
-data_500050F4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C5C, 0x3B5C60
-data_500050F8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C60, 0x3B5C64
-data_500050FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C64, 0x3B5C68
-data_50005100:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C68, 0x3B5C6C
-data_50005104:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C6C, 0x3B5C70
-data_50005108:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C70, 0x3B5C74
-data_5000510C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C74, 0x3B5C78
-data_50005110:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C78, 0x3B5C7C
-data_50005114:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C7C, 0x3B5C80
-data_50005118:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C80, 0x3B5C84
-data_5000511C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C84, 0x3B5C88
-data_50005120:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C88, 0x3B5C8C
-data_50005124:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C8C, 0x3B5C90
-data_50005128:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C90, 0x3B5C94
-data_5000512C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C94, 0x3B5C98
-data_50005130:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C98, 0x3B5C9C
-data_50005134:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5C9C, 0x3B5CA0
-data_50005138:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CA0, 0x3B5CA4
-data_5000513C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CA4, 0x3B5CA8
-data_50005140:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CA8, 0x3B5CAC
-data_50005144:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CAC, 0x3B5CB0
-data_50005148:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CB0, 0x3B5CB4
-data_5000514C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CB4, 0x3B5CB8
-data_50005150:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CB8, 0x3B5CBC
-data_50005154:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CBC, 0x3B5CC0
-data_50005158:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CC0, 0x3B5CC4
-data_5000515C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CC4, 0x3B5CC8
-data_50005160:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CC8, 0x3B5CCC
-data_50005164:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CCC, 0x3B5CD0
-data_50005168:
-	.space	1, 0x00
-Str_empty_275:	.asciz " \xB7*"
-	.align	4, 0x00
-data_50005170:
-	.space	8, 0x00
-data_50005178:
-	.space	1, 0x00
-data_50005179:
-	.space	1, 0x00
-data_5000517A:
-	.align	4, 0xFF
-data_5000517C:
-	.space	4, 0xFF
-Str_V:	.asciz "V"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5CEA, 0x3B5D00
-data_50005198:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D00, 0x3B5D04
-data_5000519C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D04, 0x3B5D08
-data_500051A0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D08, 0x3B5D0C
-data_500051A4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D0C, 0x3B5D10
-data_500051A8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D10, 0x3B5D14
-data_500051AC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D14, 0x3B5D18
-data_500051B0:
-	.space	2, 0x00
-data_500051B2:
-	.align	4, 0x00
-data_500051B4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D1C, 0x3B5D28
-Str_empty_274:	.asciz "@"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D2A, 0x3B5D3C
-Str_C_3:	.asciz "C"
-	.align	4, 0x00
-Str_Q_3:	.asciz "\xBCQ"
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D43, 0x3B5D50
-Str_F_2:	.asciz "F"
-	.space	18, 0x00
-data_500051FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D64, 0x3B5D68
-data_50005200:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D68, 0x3B5D6C
-data_50005204:
-	.space	4, 0xFF
-data_50005208:
-	.space	1, 0x01
-data_50005209:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D71, 0x3B5D74
-data_5000520C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D74, 0x3B5D78
-data_50005210:
-	.space	4, 0x00
-data_50005214:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5D7C, 0x3B5D80
-data_50005218:
-	.space	4, 0xFF
-TtDemoMenu_window:
-	.space	4, 0xFF
-TtDemoMenu_DemoSelect_OVERTURE_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_SD_CARD_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_VINTAGE_ORGAN_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_SOUND_EXCELLENCE_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_RHYTHM_STYLE_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_MULTI_MEDIA_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_SEQUENCER_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_NETWORKING_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_EASE_OF_USE_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoSelect_CUSTOMIZE_selected:
-	.space	4, 0x00
-TtDemoMenu_DemoFdSelect_External_Demo_Song_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_window:
-	.space	4, 0xFF
-TtDemoMenuPR804_DemoSelect_OVERTURE_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_PROGRESSIVE_PIANIST_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_SOUND_EXCELLENCE_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_RHYTHM_STYLE_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_MULTI_MEDIA_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_SEQUENCER_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_NETWORKING_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoSelect_EASE_OF_USE_selected:
-	.space	4, 0x00
-TtDemoMenuPR804_DemoFdSelect_External_Demo_Song_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_window:
-	.space	4, 0xFF
-TtDemoMenuPR604_DemoSelect_OVERTURE_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_RHYTHM_STYLE_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_PROGRESSIVE_PIANIST_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_MULTI_MEDIA_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_SEQUENCER_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_NETWORKING_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoSelect_EASE_OF_USE_selected:
-	.space	4, 0x00
-TtDemoMenuPR604_DemoFdSelect_External_Demo_Song_selected:
-	.space	4, 0x00
-TtContrast_window:
-	.space	4, 0xFF
-TtContrast_ContrastEdit_CONTRAST_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E04, 0x3B5E08
-WriteWindow_parent:
-	.space	4, 0xFF
-WriteWindow_child:
-	.space	4, 0xFF
-SdCardMenu_window:
-	.space	4, 0xFF
-SD_MN_LDSW_selected:
-	.space	4, 0x00
-SD_MN_TLSW_selected:
-	.space	4, 0x00
-SD_MN_SVSW_selected:
-	.space	4, 0x00
-SD_MN_MEDSW_selected:
-	.space	4, 0x00
-SD_MN_PRESW_selected:
-	.space	4, 0x00
-SD_MN_CUSSW_selected:
-	.space	4, 0x00
-SD_MN_AUDSW_selected:
-	.space	4, 0x00
-SD_MN_SNDSW_selected:
-	.space	4, 0x00
-SD_MN_FAVSW_selected:
-	.space	4, 0x00
-SdCardLoad_window:
-	.space	4, 0xFF
-SdCardLoadPage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E3C, 0x3B5E3E
-SdCardP1Control_winnum:
-	.align	4, 0x00
-SdCardTools_window:
-	.space	4, 0xFF
-SD_TL_CNAME_paintok:
-	.space	4, 0x00
-SD_TL_CINF_paintok:
-	.space	4, 0x00
-SD_TL_R3SW_selected:
-	.space	4, 0x00
-SD_TL_R4SW_selected:
-	.space	4, 0x00
-SD_TL_R5SW_selected:
-	.space	4, 0x00
-SD_TL_L3SW_selected:
-	.space	4, 0x00
-SD_TL_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_TL_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E60, 0x3B5E64
-SD_TL_R2SW_selected:
-	.space	4, 0x00
-SD_TL_R1SW_selected:
-	.space	4, 0x00
-SD_TL_L2SW_selected:
-	.space	4, 0x00
-SdCardSvMenu_window:
-	.space	4, 0xFF
-SD_SVMN_R2SW_selected:
-	.space	4, 0x00
-SD_SVMN_R4SW_selected:
-	.space	4, 0x00
-SdCardSave_window:
-	.space	4, 0xFF
-SdCardSavePage_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E80, 0x3B5E84
-SdCardSvSmf_window:
-	.space	4, 0xFF
-SD_SVM_SaveFile_paintok:
-	.space	4, 0x00
-SD_SVM_CINF_paintok:
-	.space	4, 0x00
-SD_SVM_FROM_NAME_BOX_paintok:
-	.space	4, 0x00
-SD_SVM_FILEBOX_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E94, 0x3B5E98
-SD_SVM_FILEBOX_paintok:
-	.space	4, 0x00
-SD_SVM_FILEBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5E9C, 0x3B5EA0
-SD_SVM_FROM_NUM_BOX_paintok:
-	.space	4, 0x00
-SD_SVM_R3SW_onoff:
-	.space	4, 0x00
-SD_SVM_R4SW_onoff:
-	.space	4, 0x00
-SD_SVM_CNAME_paintok:
-	.space	4, 0x00
-SD_SVM_L1SW_selected:
-	.space	4, 0x00
-SD_SVM_SAVEAS_BOX_paintok:
-	.space	4, 0x00
-SdCardLdSmf_window:
-	.space	4, 0xFF
-SD_LDM_L1SW_selected:
-	.space	4, 0x00
-SD_LDM_CNAME_paintok:
-	.space	4, 0x00
-SD_LDM_CINF_paintok:
-	.space	4, 0x00
-SD_LDM_TO_NUM_BOX_paintok:
-	.space	4, 0x00
-SD_LDM_TO_NAME_BOX_paintok:
-	.space	4, 0x00
-SD_LDM_LOADAS_BOX_paintok:
-	.space	4, 0x00
-SD_LDM_R2SW_selected:
-	.space	4, 0x00
-SdCardLdSmf_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5ED8, 0x3B5EDC
-SdCardLdSmf_FileNameBox1_paintok:
-	.space	4, 0x00
-SdCardLdSmf_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5EE0, 0x3B5EE4
-SdCardLdSmf_PlistStrBox1_paintok:
-	.space	4, 0x00
-SdCardLoadP1_parent:
-	.space	4, 0xFF
-SdCardLoadP1_child:
-	.space	4, 0xFF
-SD_LD1_SFXBOX_paintok:
-	.space	4, 0x00
-SD_LD1_CNAME_paintok:
-	.space	4, 0x00
-SD_LD1_CINF_paintok:
-	.space	4, 0x00
-SD_LD1_L1SW_selected:
-	.space	4, 0x00
-SD_LD1_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_LD1_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F04, 0x3B5F08
-SdCardLoadP2_parent:
-	.space	4, 0xFF
-SdCardLoadP2_child:
-	.space	4, 0xFF
-SD_LD2_OPTBOX_paintok:
-	.space	4, 0x00
-SD_LD2_OPTBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F14, 0x3B5F18
-SD_LD2_FILENAME_paintok:
-	.space	4, 0x00
-SdCardLoadP3_parent:
-	.space	4, 0xFF
-SdCardLoadP3_child:
-	.space	4, 0xFF
-SD_LD3_SNGLBOX_paintok:
-	.space	4, 0x00
-SD_LD3_SNGLBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F28, 0x3B5F2C
-SD_LD3_R2SW_onoff:
-	.space	4, 0x00
-SdCardLoadP3_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdCardSaveP1_parent:
-	.space	4, 0xFF
-SdCardSaveP1_child:
-	.space	4, 0xFF
-SD_SV1_R5SW_selected:
-	.space	4, 0x00
-SD_SV1_SFXBOX_paintok:
-	.space	4, 0x00
-SD_SV1_CNAME_paintok:
-	.space	4, 0x00
-SD_SV1_CINF_paintok:
-	.space	4, 0x00
-SD_SV1_R2SW_selected:
-	.space	4, 0x00
-SD_SV1_SaveFile_paintok:
-	.space	4, 0x00
-SD_SV1_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_SV1_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F58, 0x3B5F5C
-SdCardSaveP2_parent:
-	.space	4, 0xFF
-SdCardSaveP2_child:
-	.space	4, 0xFF
-SD_SV2_OPTBOX_paintok:
-	.space	4, 0x00
-SD_SV2_OPTBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F68, 0x3B5F6C
-SD_SV2_SaveFile_paintok:
-	.space	4, 0x00
-SD_SV2_CNAME_paintok:
-	.space	4, 0x00
-SD_SV2_CINF_paintok:
-	.space	4, 0x00
-SdCardSaveP3_parent:
-	.space	4, 0xFF
-SdCardSaveP3_child:
-	.space	4, 0xFF
-SD_SV3_SNGBOX_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F80, 0x3B5F84
-SD_SV3_SNGBOX_paintok:
-	.space	4, 0x00
-SD_SV3_SNGBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5F88, 0x3B5F8C
-SD_SV3_SaveFile_paintok:
-	.space	4, 0x00
-SD_SV3_CNAME_paintok:
-	.space	4, 0x00
-SD_SV3_CINF_paintok:
-	.space	4, 0x00
-SdCardSortLoad_window:
-	.space	4, 0xFF
-SdCardNumLoad_window:
-	.space	4, 0xFF
-SdCardFileNaming_window:
-	.space	4, 0xFF
-SdCardToolsSmf_window:
-	.space	4, 0xFF
-SD_TLM_CNAME_paintok:
-	.space	4, 0x00
-SD_TLM_CINF_paintok:
-	.space	4, 0x00
-SD_TLM_R5SW_selected:
-	.space	4, 0x00
-SD_TLM_R4SW_selected:
-	.space	4, 0x00
-SD_TLM_R2SW_selected:
-	.space	4, 0x00
-SD_TLM_R3SW_selected:
-	.space	4, 0x00
-SD_TLM_L3SW_selected:
-	.space	4, 0x00
-SD_TLM_L4SW_selected:
-	.space	4, 0x00
-SdCardToolsSmf_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5FC8, 0x3B5FCC
-SdCardToolsSmf_FileNameBox1_paintok:
-	.space	4, 0x00
-SdCardToolsSmf_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5FD0, 0x3B5FD4
-SdCardToolsSmf_PlistStrBox1_paintok:
-	.space	4, 0x00
-SdCardToolsSmf_TtlJgBox_COPY_FROM_DISK_selected:
-	.space	4, 0x00
-SdCardToolsCus_window:
-	.space	4, 0xFF
-SD_TLC_FILEBOX_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5FE0, 0x3B5FE4
-SD_TLC_FILEBOX_paintok:
-	.space	4, 0x00
-SD_TLC_FILEBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B5FE8, 0x3B5FEC
-SD_TLC_R3SW_selected:
-	.space	4, 0x00
-SD_TLC_R4SW_selected:
-	.space	4, 0x00
-SD_TLC_R5SW_selected:
-	.space	4, 0x00
-SD_TLC_CNAME_paintok:
-	.space	4, 0x00
-SD_TLC_CINF_paintok:
-	.space	4, 0x00
-SD_TLC_R2SW_selected:
-	.space	4, 0x00
-SdcFileCopy_window:
-	.space	4, 0xFF
-SD_CP_CurrentFolder_paintok:
-	.space	4, 0x00
-SD_CP_CurrentFile_paintok:
-	.space	4, 0x00
-SD_CP_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_CP_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6014, 0x3B6018
-SdcFileCopyFromFd_window:
-	.space	4, 0xFF
-SD_FDCP_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_FDCP_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6020, 0x3B6024
-SD_FDCP_FDBOX_sel_num:
-	.space	4, 0xFF
-SD_FDCP_FDBOX_paintok:
-	.space	4, 0x00
-SD_FDCP_FDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B602C, 0x3B6030
-SdcFileCopySmf_window:
-	.space	4, 0xFF
-SdcFileCopySmf_FileNameBox1_sel_num:
-	.space	4, 0xFF
-SdcFileCopySmf_FileNameBox1_paintok:
-	.space	4, 0x00
-SdcFileCopySmf_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B603C, 0x3B6040
-SdcFileCopySmf_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdcFileCopySmf_TtlJgBox_PLAYLIST_NAMING_selected:
-	.space	4, 0x00
-SdSoundExport_window:
-	.space	4, 0xFF
-SD_TLEX_LBOX_FolderFileListBox1_paintok:
-	.space	4, 0x00
-SD_TLEX_LBOX_FolderFileListBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6050, 0x3B6054
-SdSoundExport_FileNameBox1_sel_num:
-	.space	4, 0xFF
-SdSoundExport_FileNameBox1_paintok:
-	.space	4, 0x00
-SdSoundExport_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B605C, 0x3B6060
-SdSoundInport_window:
-	.space	4, 0xFF
-SdSoundInport_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdSoundInport_PlayFileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6068, 0x3B606C
-SdSoundInport_PlayFileNameBox1_paintok:
-	.space	4, 0x00
-SdSoundInport_PlayFileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6070, 0x3B6074
-SdSoundInport_TtlJgBox_PLAYLIST_NAMING_selected:
-	.space	4, 0x00
-SdCardTechMedley_window:
-	.space	4, 0xFF
-SD_MDL_LISTBOX_sel_num:
-	.space	4, 0xFF
-SD_MDL_LISTBOX_paintok:
-	.space	4, 0x00
-SD_MDL_LISTBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6084, 0x3B6088
-SD_MDL_CURLIST_paintok:
-	.space	4, 0x00
-SD_MDL_R5SW_onoff:
-	.space	4, 0x00
-SD_MDL_R4SW_onoff:
-	.space	4, 0x00
-SD_MDL_EDIT_SW_selected:
-	.space	4, 0x00
-SdcSetup_window:
-	.space	4, 0xFF
-SdcSetup_RamEditBox_SD_PLAY_PRIORITY_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B609C, 0x3B60A0
-SdcSetup_RamEditBox_SD_PLAY_PRIORITY_data:
-	.space	4, 0x00
-SdcSetup_RamEditBox_SONG_SELECT_METHOD_selected:
-	.space	4, 0x00
-SdcSetup_RamEditBox_SONG_SELECT_METHOD_data:
-	.space	4, 0x00
-SdCardCustomLoadSave_window:
-	.space	4, 0xFF
-SD_CS_FOLDBOX_paintok:
-	.space	4, 0x00
-SD_CS_FOLDBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B60B4, 0x3B60B8
-SdcCustomSaveWin_parent:
-	.space	4, 0xFF
-SdcCustomSaveWin_child:
-	.space	4, 0xFF
-SD_CS2_SVASBOX_paintok:
-	.space	4, 0x00
-SdcCustomSaveWin_ScreenMenu_NAME_selected:
-	.space	4, 0x00
-SdCardFolderRename_window:
-	.space	4, 0xFF
-SdCardSongRename_window:
-	.space	4, 0xFF
-SdCardFormat_window:
-	.space	4, 0xFF
-SdcFormatSureWin_parent:
-	.space	4, 0xFF
-SdcFormatSureWin_child:
-	.space	4, 0xFF
-SdcFormatNamingWin_parent:
-	.space	4, 0xFF
-SdcFormatNamingWin_child:
-	.space	4, 0xFF
-SdCardFavoriteSongs_window:
-	.space	4, 0xFF
-SdCardFavoriteSongs_TitleMenu_FAVORITE_SONGS_SETTI_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong1_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong1_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B60F0, 0x3B60F4
-SdCardFavoriteSongs_FavoriteSong2_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong2_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B60F8, 0x3B60FC
-SdCardFavoriteSongs_FavoriteSong3_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong3_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6100, 0x3B6104
-SdCardFavoriteSongs_FavoriteSong4_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong4_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6108, 0x3B610C
-SdCardFavoriteSongs_FavoriteSong5_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong5_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6110, 0x3B6114
-SdCardFavoriteSongs_FavoriteSong6_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong6_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6118, 0x3B611C
-SdCardFavoriteSongs_FavoriteSong7_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong7_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6120, 0x3B6124
-SdCardFavoriteSongs_FavoriteSong8_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong8_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6128, 0x3B612C
-SdCardFavoriteSongs_FavoriteSong9_selected:
-	.space	4, 0x00
-SdCardFavoriteSongs_FavoriteSong9_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6130, 0x3B6134
-SdCardFavoriteSongs_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6134, 0x3B6138
-SdCardFavoriteSongs_FileNameBox1_paintok:
-	.space	4, 0x00
-SdCardFavoriteSongs_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B613C, 0x3B6140
-SdCardFavSongSet_window:
-	.space	4, 0xFF
-SdCardFavSongSet_FavoriteSong1_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong1_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6148, 0x3B614C
-SdCardFavSongSet_FavoriteSong2_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong2_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6150, 0x3B6154
-SdCardFavSongSet_FavoriteSong3_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong3_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6158, 0x3B615C
-SdCardFavSongSet_FavoriteSong4_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong4_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6160, 0x3B6164
-SdCardFavSongSet_FavoriteSong5_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong5_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6168, 0x3B616C
-SdCardFavSongSet_FavoriteSong6_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong6_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6170, 0x3B6174
-SdCardFavSongSet_FavoriteSong7_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong7_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6178, 0x3B617C
-SdCardFavSongSet_FavoriteSong8_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong8_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6180, 0x3B6184
-SdCardFavSongSet_FavoriteSong9_selected:
-	.space	4, 0x00
-SdCardFavSongSet_FavoriteSong9_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6188, 0x3B618C
-FavoriteSongTechWin_parent:
-	.space	4, 0xFF
-FavoriteSongTechWin_child:
-	.space	4, 0xFF
-FavoriteSongTechWin_FolderFileListBox1_paintok:
-	.space	4, 0x00
-FavoriteSongTechWin_FolderFileListBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6198, 0x3B619C
-FavoriteSongSmfWin_parent:
-	.space	4, 0xFF
-FavoriteSongSmfWin_child:
-	.space	4, 0xFF
-FavoriteSongSmfWin_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B61A4, 0x3B61A8
-FavoriteSongSmfWin_FileNameBox1_paintok:
-	.space	4, 0x00
-FavoriteSongSmfWin_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B61AC, 0x3B61B0
-FavoriteSongSmfWin_PlistStrBox1_paintok:
-	.space	4, 0x00
-SdCardFavSongSetSel_window:
-	.space	4, 0xFF
-SdCardFavSongSetSel_edited:
-	.space	4, 0x00
-SdCardFavSongSetSel_ScreenMenu1_selected:
-	.space	4, 0x00
-SdCardFavSongSetSel_WindowToggle_SD_SOUND_onoff:
-	.space	4, 0x00
-SdCardFavSongSetSel_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdCardSmfDeleteSure_window:
-	.space	4, 0xFF
-SdCardSmfDeleteSure_IndexParaStrBox1_paintok:
-	.space	4, 0x00
-SdCardCstNaming_window:
-	.space	4, 0xFF
-SdCardSdSoundNaming_window:
-	.space	4, 0xFF
-SdCardSongRenameSmf_window:
-	.space	4, 0xFF
-SdcCmpOptionWin_parent:
-	.space	4, 0xFF
-SdcCmpOptionWin_child:
-	.space	4, 0xFF
-SD_LD3_CMPOPTBOX_paintok:
-	.space	4, 0x00
-SdCardLoadP1AL_parent:
-	.space	4, 0xFF
-SdCardLoadP1AL_child:
-	.space	4, 0xFF
-SdCardLoadP1AL_PlayFileNameBox1_sel_num:
-	.space	4, 0xFF
-SdCardLoadP1AL_PlayFileNameBox1_paintok:
-	.space	4, 0x00
-SdCardLoadP1AL_PlayFileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B61F8, 0x3B61FC
-SD_LDAL_LSTBOX_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B61FC, 0x3B6200
-SD_LDAL_LSTBOX_paintok:
-	.space	4, 0x00
-SD_LDAL_LSTBOX_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6204, 0x3B6208
-SdCardLoadP1AL_FileSfxBox1_paintok:
-	.space	4, 0x00
-SdCardLoadP1AL_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdCardLoadP1AL_ParaStrBox2_paintok:
-	.space	4, 0x00
-SdCardLoadP1AL_TitleMenu_SD_SOUND_selected:
-	.space	4, 0x00
-SdCardLoadP1NM_parent:
-	.space	4, 0xFF
-SdCardLoadP1NM_child:
-	.space	4, 0xFF
-SdCardLoadP1NM_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdCardLoadP1NM_ParaStrBox2_paintok:
-	.space	4, 0x00
-SdCardLoadP1NM_FileSfxBox1_paintok:
-	.space	4, 0x00
-SD_LDNM_SONGNAME_sel_num:
-	.space	4, 0xFF
-SD_LDNM_SONGNAME_paintok:
-	.space	4, 0x00
-SD_LDNM_SONGNAME_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6234, 0x3B6238
-SdCardLoadP1NM_TitleMenu_SD_SOUND_selected:
-	.space	4, 0x00
-SdCardFavBankNaming_window:
-	.space	4, 0xFF
-SdCardMedleyEdit_window:
-	.space	4, 0xFF
-SdCardMedleyEdit_FolderFileListBox1_paintok:
-	.space	4, 0x00
-SdCardMedleyEdit_FolderFileListBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6248, 0x3B624C
-SdCardMedleyEdit_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B624C, 0x3B6250
-SdCardMedleyEdit_FileNameBox1_paintok:
-	.space	4, 0x00
-SdCardMedleyEdit_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6254, 0x3B6258
-SdCardMedleyEdit_ParaStrBox1_paintok:
-	.space	4, 0x00
-SdcSaveSureWin_parent:
-	.space	4, 0xFF
-SdcSaveSureWin_child:
-	.space	4, 0xFF
-SdcDeleteSureWin_parent:
-	.space	4, 0xFF
-SdcDeleteSureWin_child:
-	.space	4, 0xFF
-SdcOverWriteSureWin_parent:
-	.space	4, 0xFF
-SdcOverWriteSureWin_child:
-	.space	4, 0xFF
-SdCardPictureLoad_window:
-	.space	4, 0xFF
-SdCardPictureLoad_OptionToggle_TOP_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6278, 0x3B627C
-SdCardPictureLoad_OptionToggle_TOP_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B627C, 0x3B6280
-SdCardPictureLoad_OptionToggle_MID_onoff:
-	.space	4, 0x00
-SdCardPictureLoad_OptionToggle_MID_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6284, 0x3B6288
-SdCardPictureLoad_OptionToggle_BTM_onoff:
-	.space	4, 0x00
-SdCardPictureLoad_OptionToggle_BTM_paintok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B628C, 0x3B6290
-SdCardPictureLoad_FileNameBox1_sel_num:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6290, 0x3B6294
-SdCardPictureLoad_FileNameBox1_paintok:
-	.space	4, 0x00
-SdCardPictureLoad_FileNameBox1_aicok:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6298, 0x3B629C
-SdPictureDirectory_paintok:
-	.space	4, 0x00
-SdMidiWhichSaveWin_parent:
-	.space	4, 0xFF
-SdMidiWhichSaveWin_child:
-	.space	4, 0xFF
-SdCardPlaylistNameSmf_window:
-	.space	4, 0xFF
-SdCardPlaylistNameSmf2_window:
-	.space	4, 0xFF
-SdCardFileRenameCst_window:
-	.space	4, 0xFF
-SdMidiDeleteSureWin_parent:
-	.space	4, 0xFF
-SdMidiDeleteSureWin_child:
-	.space	4, 0xFF
-CacheWaitWin_parent:
-	.space	4, 0xFF
-CacheWaitWin_child:
-	.space	4, 0xFF
-CacheWaitWin_RotStrBox1_paintok:
-	.space	4, 0x00
-SdcCheckPasswordWin_parent:
-	.space	4, 0xFF
-SdcCheckPasswordWin_child:
-	.space	4, 0xFF
-
-		AcMonoIndexToggle	SD_LD3_R2SW, super=SdCardLoadP3, next=SD_LD3_SRCBNK, prev=SD_LD3_R1SW, X=571, Y=79, W=61, H=22, stron=Str_BANK_12, stroff=Str_SINGLE_3, onoff=SD_LD3_R2SW_onoff, editsw=ES_Right2, index=3	# stron "BANK"; stroff "SINGLE"
-		VwLabel	SD_MDL_FLDSEL_LABEL, super=SdCardTechMedley, next=SD_MDL_FLDSEL_UP, prev=SdCardTechMedley_Line1, flag=VF_Invisible, X=6, Y=103, W=108, H=19, str=Str_FOLDER_SELECT, fontcolor=CL_White	# str "FOLDER SELECT"
-		AcIndexEditSw	SD_MDL_FLDSEL_UP, super=SdCardTechMedley, next=SD_MDL_FLDSEL_DOWN, prev=SD_MDL_FLDSEL_LABEL, flag=VF_Invisible, X=8, Y=79, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=68, fontcolor=CL_Black, editsw=ES_Left2, style=1
-		AcIndexEditSw	SD_MDL_FLDSEL_DOWN, super=SdCardTechMedley, next=SD_MDL_EDIT_LABEL2, prev=SD_MDL_FLDSEL_UP, flag=VF_Invisible, X=8, Y=122, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=69, fontcolor=CL_Black, editsw=ES_Left3, style=2
-		VwLabel	SD_MDL_EDIT_LABEL2, super=SdCardTechMedley, next=SD_MDL_EDIT_SW, prev=SD_MDL_FLDSEL_DOWN, X=594, Y=92, W=36, H=19, str=Str_EDIT_8, fontcolor=CL_White	# str "EDIT"
-		AcTitleMenu	SD_MDL_EDIT_SW, super=SdCardTechMedley, sub=SD_MDL_EDIT_LABEL1, prev=SD_MDL_EDIT_LABEL2, X=530, Y=71, W=102, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=SD_MDL_EDIT_SW_selected, str=Str_empty_259, title=TT_SDCMDLYEDT	# str ""
-			VwLabel	SD_MDL_EDIT_LABEL1, super=SD_MDL_EDIT_SW, X=554, Y=78, W=76, H=19, str=Str_USER_LIST, fontcolor=CL_White	# str "USER LIST"
-data_500058A0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6408, 0x3B6410
-data_500058A8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6410, 0x3B6414
-data_500058AC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6414, 0x3B6418
-data_500058B0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6418, 0x3B641A
-data_500058B2:
-	.align	4, 0x00
-data_500058B4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B641C, 0x3B6420
-data_500058B8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6420, 0x3B6424
-Aloc_window:
-	.space	4, 0xFF
-AlocGridBox_selrow:
-	.space	2, 0x00
-AlocGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B642A, 0x3B642C
-AlocGridBox_pcol:
-	.space	4, 0x00
-AlocGridBox_prow:
-	.space	4, 0x00
-AlocGridBox_crow:
-	.space	4, 0x00
-AlocModeBox_onoff:
-	.space	4, 0x00
-LoadFilter_window:
-	.space	4, 0xFF
-FilterGridBox_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6440, 0x3B6442
-FilterGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6442, 0x3B6444
-FilterGridBox_pcol:
-	.space	4, 0x00
-FilterGridBox_prow:
-	.space	4, 0x00
-FilterGridBox_crow:
-	.space	4, 0x00
-Mixing_window:
-	.space	4, 0xFF
-EffectEdit_window:
-	.space	4, 0xFF
-EffEditGridBox_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6458, 0x3B645A
-EffEditGridBox_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B645A, 0x3B645C
-EffEditGridBox_pcol:
-	.space	4, 0x00
-EffEditGridBox_prow:
-	.space	4, 0x00
-EffEditGridBox_crow:
-	.space	4, 0x00
-EffectEdit_EffTitleMenu_NAMING_selected:
-	.space	4, 0x00
-EffectEdit_EffExpUsr1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B646C, 0x3B6470
-EffName_window:
-	.space	4, 0xFF
-EFF_NamingWindow1_parent:
-	.space	4, 0xFF
-EFF_NamingWindow1_child:
-	.space	4, 0xFF
-EFF_NamingEditSw1_page:
-	.space	4, 0x00
-EFF_NamingEditSw2_page:
-	.space	4, 0x00
-EFF_NamingEditSw3_page:
-	.space	4, 0x00
-EFF_NamingEditSw4_page:
-	.space	4, 0x00
-EFF_NamingEditSw5_page:
-	.space	4, 0x00
-EFF_NamingEditSw6_page:
-	.space	4, 0x00
-EFF_NamingEditSw7_page:
-	.space	4, 0x00
-EFF_NamingEditSw8_page:
-	.space	4, 0x00
-EFF_NamingEditSw9_page:
-	.space	4, 0x00
-EFF_NamingEditSw10_page:
-	.space	4, 0x00
-EFF_NamingEditSw11_page:
-	.space	4, 0x00
-EFF_NamingEditSw12_page:
-	.space	4, 0x00
-EFF_NamingEditSw13_page:
-	.space	4, 0x00
-EFF_NamingEditSw14_page:
-	.space	4, 0x00
-EFF_NamingEditSw15_page:
-	.space	4, 0x00
-EFF_NamingEditSw16_page:
-	.space	4, 0x00
-EFF_NamingEditSw17_page:
-	.space	4, 0x00
-EFF_NamingEditSw18_page:
-	.space	4, 0x00
-EFF_NamingEditSw19_page:
-	.space	4, 0x00
-EFF_NamingEditSw20_page:
-	.space	4, 0x00
-EFF_NamingEditSw21_page:
-	.space	4, 0x00
-EFF_NamingEditSw22_page:
-	.space	4, 0x00
-EFF_NamingEditSw23_page:
-	.space	4, 0x00
-EFF_NamingEditSw24_page:
-	.space	4, 0x00
-EFF_NamingEditSw25_page:
-	.space	4, 0x00
-EFF_NamingEditSw26_page:
-	.space	4, 0x00
-EFF_CursorBox1_cursor:
-	.space	4, 0xFF
-EFF_IndexToggle_ABC_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B64E8, 0x3B64EC
-EFF_IndexToggle_123_onoff:
-	.space	4, 0x00
-EFF_IndexPushSw1_sw:
-	.space	4, 0x00
-EFF_NamingWindow2_parent:
-	.space	4, 0xFF
-EFF_NamingWindow2_child:
-	.space	4, 0xFF
-EFF_NamingEditSw27_page:
-	.space	4, 0x00
-EFF_NamingEditSw28_page:
-	.space	4, 0x00
-EFF_NamingEditSw29_page:
-	.space	4, 0x00
-EFF_NamingEditSw30_page:
-	.space	4, 0x00
-EFF_NamingEditSw31_page:
-	.space	4, 0x00
-EFF_NamingEditSw32_page:
-	.space	4, 0x00
-EFF_NamingEditSw33_page:
-	.space	4, 0x00
-EFF_NamingEditSw34_page:
-	.space	4, 0x00
-EFF_NamingEditSw35_page:
-	.space	4, 0x00
-EFF_NamingEditSw36_page:
-	.space	4, 0x00
-EFF_NamingEditSw37_page:
-	.space	4, 0x00
-EFF_NamingEditSw38_page:
-	.space	4, 0x00
-EFF_NamingEditSw39_page:
-	.space	4, 0x00
-EFF_NamingEditSw40_page:
-	.space	4, 0x00
-EFF_NamingEditSw41_page:
-	.space	4, 0x00
-EFF_NamingEditSw42_page:
-	.space	4, 0x00
-EFF_NamingEditSw43_page:
-	.space	4, 0x00
-EFF_NamingEditSw44_page:
-	.space	4, 0x00
-EFF_NamingEditSw45_page:
-	.space	4, 0x00
-EFF_NamingEditSw46_page:
-	.space	4, 0x00
-EFF_NamingEditSw47_page:
-	.space	4, 0x00
-EFF_NamingEditSw48_page:
-	.space	4, 0x00
-EFF_NamingEditSw49_page:
-	.space	4, 0x00
-EFF_NamingEditSw50_page:
-	.space	4, 0x00
-EFF_NamingEditSw51_page:
-	.space	4, 0x00
-EFF_NamingEditSw52_page:
-	.space	4, 0x00
-EFF_CursorBox2_cursor:
-	.space	4, 0xFF
-EFF_IndexToggle_ABC2_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6568, 0x3B656C
-EFF_IndexToggle_1232_onoff:
-	.space	4, 0x00
-EFF_IndexPushSw2_sw:
-	.space	4, 0x00
-EFF_NamingWindow3_parent:
-	.space	4, 0xFF
-EFF_NamingWindow3_child:
-	.space	4, 0xFF
-EffectDebug_window:
-	.space	4, 0xFF
-EffApcModeBox_onoff:
-	.space	4, 0x00
-EffSysModeBox_onoff:
-	.space	4, 0x00
-EffectDebug_EffDispGridBox1_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6588, 0x3B658A
-EffectDebug_EffDispGridBox1_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B658A, 0x3B658C
-EffectDebug_EffDispGridBox1_pcol:
-	.space	4, 0x00
-EffectDebug_EffDispGridBox1_prow:
-	.space	4, 0x00
-EffectDebug_EffDispGridBox1_crow:
-	.space	4, 0x00
-EffectMenu_window:
-	.space	4, 0xFF
-EffectMenu_TitleMenu_MULTI_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_CHORUS_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_REVERB_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_MIC_REVERB_EFFECT_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_SOUND_LOAD_OPTION_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_ALLOCATION_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_MIXER_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_EQUALIZER_selected:
-	.space	4, 0x00
-EffectMenu_TitleMenu_SOUND_DSP_selected:
-	.space	4, 0x00
-MultiSel_window:
-	.space	4, 0xFF
-MultiSel_EffPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65C4, 0x3B65C6
-MultiSel_EffExpGroup1_selected:
-	.align	4, 0x00
-MultiSel_EffVari1_caption:
-	.space	4, 0x00
-MultiSel_EffVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65CC, 0x3B65D0
-MultiSel_EffVari1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65D0, 0x3B65D4
-MultiSel_EffVari1_param2:
-	.space	4, 0x00
-MultiSel_EffVari2_caption:
-	.space	4, 0x00
-MultiSel_EffVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65DC, 0x3B65E0
-MultiSel_EffVari2_selected:
-	.space	4, 0x00
-MultiSel_EffVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65E4, 0x3B65E8
-MultiSel_EffVari3_caption:
-	.space	4, 0x00
-MultiSel_EffVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65EC, 0x3B65F0
-MultiSel_EffVari3_selected:
-	.space	4, 0x00
-MultiSel_EffVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65F4, 0x3B65F8
-MultiSel_EffVari4_caption:
-	.space	4, 0x00
-MultiSel_EffVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B65FC, 0x3B6600
-MultiSel_EffVari4_selected:
-	.space	4, 0x00
-MultiSel_EffVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6604, 0x3B6608
-MultiSel_EffVari5_caption:
-	.space	4, 0x00
-MultiSel_EffVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B660C, 0x3B6610
-MultiSel_EffVari5_selected:
-	.space	4, 0x00
-MultiSel_EffVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6614, 0x3B6618
-MultiSel_EffVari6_caption:
-	.space	4, 0x00
-MultiSel_EffVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B661C, 0x3B6620
-MultiSel_EffVari6_selected:
-	.space	4, 0x00
-MultiSel_EffVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6624, 0x3B6628
-MultiSel_EffVari7_caption:
-	.space	4, 0x00
-MultiSel_EffVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B662C, 0x3B6630
-MultiSel_EffVari7_selected:
-	.space	4, 0x00
-MultiSel_EffVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6634, 0x3B6638
-MultiSel_EffVari8_caption:
-	.space	4, 0x00
-MultiSel_EffVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B663C, 0x3B6640
-MultiSel_EffVari8_selected:
-	.space	4, 0x00
-MultiSel_EffVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6644, 0x3B6648
-MultiSel_EffTitleMenu_DETAIL_EDIT_selected:
-	.space	4, 0x00
-MicSel_window:
-	.space	4, 0xFF
-MicEffMuteToggle_onoff:
-	.space	4, 0x00
-MicSel_EffTitleMenu_MULTI_EFFECT_SET_selected:
-	.space	4, 0x00
-MicRevToggle_onoff:
-	.space	4, 0x00
-MicEffToggle_onoff:
-	.space	4, 0x00
-HarmPartEdit_selected:
-	.space	4, 0x00
-HarmPartEdit_data:
-	.space	2, 0x00
-EffEditGridBox22_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6666, 0x3B6668
-EffEditGridBox22_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6668, 0x3B666C
-EffEditGridBox22_pcol:
-	.space	4, 0x00
-EffEditGridBox22_prow:
-	.space	4, 0x00
-EffEditGridBox22_crow:
-	.space	4, 0x00
-MicSel_MicFuncEditSw1_select:
-	.space	2, 0x00
-MicSel_MicFuncEditSw2_select:
-	.align	4, 0x00
-MicSel_MicFuncEditSw3_select:
-	.space	2, 0x00
-MicSel_MicFuncEditSw4_select:
-	.align	4, 0x00
-RevSel_window:
-	.space	4, 0xFF
-RevSel_EffExpGroup1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6684, 0x3B6688
-RevSel_EffVari1_caption:
-	.space	4, 0x00
-RevSel_EffVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B668C, 0x3B6690
-RevSel_EffVari1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6690, 0x3B6694
-RevSel_EffVari1_param2:
-	.space	4, 0x00
-RevSel_EffVari2_caption:
-	.space	4, 0x00
-RevSel_EffVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B669C, 0x3B66A0
-RevSel_EffVari2_selected:
-	.space	4, 0x00
-RevSel_EffVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66A4, 0x3B66A8
-RevSel_EffVari3_caption:
-	.space	4, 0x00
-RevSel_EffVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66AC, 0x3B66B0
-RevSel_EffVari3_selected:
-	.space	4, 0x00
-RevSel_EffVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66B4, 0x3B66B8
-RevSel_EffVari4_caption:
-	.space	4, 0x00
-RevSel_EffVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66BC, 0x3B66C0
-RevSel_EffVari4_selected:
-	.space	4, 0x00
-RevSel_EffVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66C4, 0x3B66C8
-RevSel_EffVari5_caption:
-	.space	4, 0x00
-RevSel_EffVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66CC, 0x3B66D0
-RevSel_EffVari5_selected:
-	.space	4, 0x00
-RevSel_EffVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66D4, 0x3B66D8
-RevSel_EffVari6_caption:
-	.space	4, 0x00
-RevSel_EffVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66DC, 0x3B66E0
-RevSel_EffVari6_selected:
-	.space	4, 0x00
-RevSel_EffVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66E4, 0x3B66E8
-RevSel_EffVari7_caption:
-	.space	4, 0x00
-RevSel_EffVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66EC, 0x3B66F0
-RevSel_EffVari7_selected:
-	.space	4, 0x00
-RevSel_EffVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66F4, 0x3B66F8
-RevSel_EffVari8_caption:
-	.space	4, 0x00
-RevSel_EffVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B66FC, 0x3B6700
-RevSel_EffVari8_selected:
-	.space	4, 0x00
-RevSel_EffVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6704, 0x3B6708
-RevSel_EffPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6708, 0x3B670C
-RevSel_EffTitleMenu_DETAIL_EDIT_selected:
-	.space	4, 0x00
-RevSel_MmmEditBox_TOTAL_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6710, 0x3B6714
-RevSel_MmmEditBox_TOTAL_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6714, 0x3B6718
-EFF_TtlScreen_REVERB_window:
-	.space	4, 0xFF
-EFF_EffTitleMenu_DETAIL_EDIT_selected:
-	.space	4, 0x00
-EFF_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6720, 0x3B6722
-EFF_EffExpGroup1_selected:
-	.align	4, 0x00
-EFF_EffVari1_caption:
-	.space	4, 0x00
-EFF_EffVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6728, 0x3B672C
-EFF_EffVari1_selected:
-	.space	4, 0x00
-EFF_EffVari1_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6730, 0x3B6734
-EFF_EffVari2_caption:
-	.space	4, 0x00
-EFF_EffVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6738, 0x3B673C
-EFF_EffVari2_selected:
-	.space	4, 0x00
-EFF_EffVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6740, 0x3B6744
-EFF_EffVari3_caption:
-	.space	4, 0x00
-EFF_EffVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6748, 0x3B674C
-EFF_EffVari3_selected:
-	.space	4, 0x00
-EFF_EffVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6750, 0x3B6754
-EFF_EffVari4_caption:
-	.space	4, 0x00
-EFF_EffVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6758, 0x3B675C
-EFF_EffVari4_selected:
-	.space	4, 0x00
-EFF_EffVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6760, 0x3B6764
-EFF_EffVari5_caption:
-	.space	4, 0x00
-EFF_EffVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6768, 0x3B676C
-EFF_EffVari5_selected:
-	.space	4, 0x00
-EFF_EffVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6770, 0x3B6774
-EFF_EffVari6_caption:
-	.space	4, 0x00
-EFF_EffVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6778, 0x3B677C
-EFF_EffVari6_selected:
-	.space	4, 0x00
-EFF_EffVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6780, 0x3B6784
-EFF_EffVari7_caption:
-	.space	4, 0x00
-EFF_EffVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6788, 0x3B678C
-EFF_EffVari7_selected:
-	.space	4, 0x00
-EFF_EffVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6790, 0x3B6794
-EFF_EffVari8_caption:
-	.space	4, 0x00
-EFF_EffVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6798, 0x3B679C
-EFF_EffVari8_selected:
-	.space	4, 0x00
-EFF_EffVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67A0, 0x3B67A4
-ChoSel_window:
-	.space	4, 0xFF
-ChoSel_EffVari1_caption:
-	.space	4, 0x00
-ChoSel_EffVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67AC, 0x3B67B0
-ChoSel_EffVari1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67B0, 0x3B67B4
-ChoSel_EffVari1_param2:
-	.space	4, 0x00
-ChoSel_EffPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67B8, 0x3B67BA
-ChoSel_EffExpGroup1_selected:
-	.align	4, 0x00
-ChoSel_EffVari2_caption:
-	.space	4, 0x00
-ChoSel_EffVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67C0, 0x3B67C4
-ChoSel_EffVari2_selected:
-	.space	4, 0x00
-ChoSel_EffVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67C8, 0x3B67CC
-ChoSel_EffVari3_caption:
-	.space	4, 0x00
-ChoSel_EffVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67D0, 0x3B67D4
-ChoSel_EffVari3_selected:
-	.space	4, 0x00
-ChoSel_EffVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67D8, 0x3B67DC
-ChoSel_EffVari4_caption:
-	.space	4, 0x00
-ChoSel_EffVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67E0, 0x3B67E4
-ChoSel_EffVari4_selected:
-	.space	4, 0x00
-ChoSel_EffVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67E8, 0x3B67EC
-ChoSel_EffVari5_caption:
-	.space	4, 0x00
-ChoSel_EffVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67F0, 0x3B67F4
-ChoSel_EffVari5_selected:
-	.space	4, 0x00
-ChoSel_EffVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B67F8, 0x3B67FC
-ChoSel_EffVari6_caption:
-	.space	4, 0x00
-ChoSel_EffVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6800, 0x3B6804
-ChoSel_EffVari6_selected:
-	.space	4, 0x00
-ChoSel_EffVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6808, 0x3B680C
-ChoSel_EffVari7_caption:
-	.space	4, 0x00
-ChoSel_EffVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6810, 0x3B6814
-ChoSel_EffVari7_selected:
-	.space	4, 0x00
-ChoSel_EffVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6818, 0x3B681C
-ChoSel_EffVari8_caption:
-	.space	4, 0x00
-ChoSel_EffVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6820, 0x3B6824
-ChoSel_EffVari8_selected:
-	.space	4, 0x00
-ChoSel_EffVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6828, 0x3B682C
-ChoSel_EffTitleMenu_DETAIL_EDIT_selected:
-	.space	4, 0x00
-DSPSel_window:
-	.space	4, 0xFF
-DSPSel_EffPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6834, 0x3B6836
-DSPSel_EffExpGroup1_selected:
-	.align	4, 0x00
-DSPSel_EffVari1_caption:
-	.space	4, 0x00
-DSPSel_EffVari1_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B683C, 0x3B6840
-DSPSel_EffVari1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6840, 0x3B6844
-DSPSel_EffVari1_param2:
-	.space	4, 0x00
-DSPSel_EffVari2_caption:
-	.space	4, 0x00
-DSPSel_EffVari2_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B684C, 0x3B6850
-DSPSel_EffVari2_selected:
-	.space	4, 0x00
-DSPSel_EffVari2_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6854, 0x3B6858
-DSPSel_EffVari3_caption:
-	.space	4, 0x00
-DSPSel_EffVari3_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B685C, 0x3B6860
-DSPSel_EffVari3_selected:
-	.space	4, 0x00
-DSPSel_EffVari3_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6864, 0x3B6868
-DSPSel_EffVari4_caption:
-	.space	4, 0x00
-DSPSel_EffVari4_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B686C, 0x3B6870
-DSPSel_EffVari4_selected:
-	.space	4, 0x00
-DSPSel_EffVari4_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6874, 0x3B6878
-DSPSel_EffVari5_caption:
-	.space	4, 0x00
-DSPSel_EffVari5_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B687C, 0x3B6880
-DSPSel_EffVari5_selected:
-	.space	4, 0x00
-DSPSel_EffVari5_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6884, 0x3B6888
-DSPSel_EffVari6_caption:
-	.space	4, 0x00
-DSPSel_EffVari6_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B688C, 0x3B6890
-DSPSel_EffVari6_selected:
-	.space	4, 0x00
-DSPSel_EffVari6_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6894, 0x3B6898
-DSPSel_EffVari7_caption:
-	.space	4, 0x00
-DSPSel_EffVari7_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B689C, 0x3B68A0
-DSPSel_EffVari7_selected:
-	.space	4, 0x00
-DSPSel_EffVari7_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68A4, 0x3B68A8
-DSPSel_EffVari8_caption:
-	.space	4, 0x00
-DSPSel_EffVari8_visible:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68AC, 0x3B68B0
-DSPSel_EffVari8_selected:
-	.space	4, 0x00
-DSPSel_EffVari8_param2:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68B4, 0x3B68B8
-DSPSel_RamBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68B8, 0x3B68BC
-DSPSel_MmmEditBox_DEPTH_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68BC, 0x3B68C0
-DSPSel_MmmEditBox_DEPTH_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68C0, 0x3B68C4
-DSPSel_EffTitleMenu_EDIT_selected:
-	.space	4, 0x00
-EqSel_window:
-	.space	4, 0xFF
-EQGain_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68CC, 0x3B68D0
-EQGain_EQEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68D0, 0x3B68D4
-EQGain_EQEditBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68D4, 0x3B68D8
-EQGain_EQEditBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68D8, 0x3B68DC
-EQGain_EQEditBox2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68DC, 0x3B68E0
-EQGain_EQEditBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68E0, 0x3B68E4
-EQGain_EQEditBox3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68E4, 0x3B68E8
-EQGain_EQEditBox4_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68E8, 0x3B68EC
-EQGain_EQEditBox4_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68EC, 0x3B68F0
-EQGain_EQEditBox5_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B68F0, 0x3B68F4
-EQGain_EQEditBox5_data:
-	.space	2, 0x00
-EQGain_GainBox1_data:
-	.align	4, 0x00
-EQGain_GainBox2_data:
-	.space	2, 0x00
-EQGain_GainBox3_data:
-	.align	4, 0x00
-EQGain_GainBox4_data:
-	.space	2, 0x00
-EQGain_GainBox5_data:
-	.align	4, 0x00
-EQFC_selected:
-	.space	4, 0x00
-EQFC_EQEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6904, 0x3B6908
-EQFC_EQEditBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6908, 0x3B690C
-EQFC_EQEditBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B690C, 0x3B6910
-EQFC_EQEditBox2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6910, 0x3B6914
-EQFC_EQEditBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6914, 0x3B6918
-EQFC_EQEditBox3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6918, 0x3B691C
-EQFC_EQEditBox4_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B691C, 0x3B6920
-EQFC_EQEditBox4_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6920, 0x3B6924
-EQFC_EQEditBox5_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6924, 0x3B6928
-EQFC_EQEditBox5_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6928, 0x3B692C
-EQQ_selected:
-	.space	4, 0x00
-EQQ_EQEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6930, 0x3B6934
-EQQ_EQEditBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6934, 0x3B6938
-EQQ_EQEditBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6938, 0x3B693C
-EQQ_EQEditBox2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B693C, 0x3B6940
-EQQ_EQEditBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6940, 0x3B6944
-EQQ_EQEditBox3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6944, 0x3B6948
-EQOnOff_onoff:
-	.space	4, 0x00
-EqSel_MicFuncEditSw1_select:
-	.space	2, 0x00
-EqSel_MicFuncEditSw2_select:
-	.align	4, 0x00
-EqSel_MicFuncEditSw3_select:
-	.space	2, 0x00
-EqSel_MicFuncEditSw4_select:
-	.align	4, 0x00
-EqSel_MicFuncEditSw5_select:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6954, 0x3B6958
-MicSel2_window:
-	.space	4, 0xFF
-MicSel2_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B695C, 0x3B6960
-MicSelPage1_parent:
-	.space	4, 0xFF
-MicSelPage1_child:
-	.space	4, 0xFF
-MicEffTogglePage1_onoff:
-	.space	4, 0x00
-MicRevTogglePage1_onoff:
-	.space	4, 0x00
-MicSelPage1_EffTitleMenu_MULTI_EFFECT_SET_selected:
-	.space	4, 0x00
-EffEditGridBox2_selrow:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6974, 0x3B6976
-EffEditGridBox2_selcol:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6976, 0x3B6978
-EffEditGridBox2_pcol:
-	.space	4, 0x00
-EffEditGridBox2_prow:
-	.space	4, 0x00
-EffEditGridBox2_crow:
-	.space	4, 0x00
-MicSelPage2_parent:
-	.space	4, 0xFF
-MicSelPage2_child:
-	.space	4, 0xFF
-MicEffTogglePage2_onoff:
-	.space	4, 0x00
-MicRevTogglePage2_onoff:
-	.space	4, 0x00
-MicSelPage2_MicFuncEditSw1_select:
-	.space	2, 0x00
-MicSelPage2_MicFuncEditSw2_select:
-	.align	4, 0x00
-MicSelPage2_MmmEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6998, 0x3B699C
-MicSelPage2_MmmEditBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B699C, 0x3B69A0
-HarmPartMute_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B69A0, 0x3B69A4
-HarmPartMute_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B69A4, 0x3B69A8
-MicSel3_window:
-	.space	4, 0xFF
-MicSel3_WindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B69AC, 0x3B69B0
-		AcIndexToggle	EFF_IndexToggle_ABC, super=EFF_NamingWindow1, next=EFF_IndexToggle_123, prev=EFF_Label_POSITION, X=8, Y=122, W=39, H=22, font=4, stron=Str_ABC_3, stroff=Str_ABC_4, onoff=EFF_IndexToggle_ABC_onoff, editsw=ES_Left3, index=108	# stron "ABC"; stroff "ABC"
-		AcIndexToggle	EFF_IndexToggle_123, super=EFF_NamingWindow1, next=EFF_Label_SHIFT, prev=EFF_IndexToggle_ABC, X=8, Y=165, W=39, H=22, font=4, stron=Str_123_3, stroff=Str_123_4, onoff=EFF_IndexToggle_123_onoff, editsw=ES_Left4, index=108, tag=1	# stron "123"; stroff "123"
-		AcIndexToggle	EFF_IndexToggle_ABC2, super=EFF_NamingWindow2, next=EFF_IndexToggle_1232, prev=EFF_Label_POSITION2, X=8, Y=122, W=39, H=22, font=4, stron=Str_ABC_5, stroff=Str_ABC_6, onoff=EFF_IndexToggle_ABC2_onoff, editsw=ES_Left3, index=108	# stron "ABC"; stroff "ABC"
-		AcIndexToggle	EFF_IndexToggle_1232, super=EFF_NamingWindow2, next=EFF_Label_SHIFT2, prev=EFF_IndexToggle_ABC2, X=8, Y=165, W=39, H=22, font=4, stron=Str_123_5, stroff=Str_123_6, onoff=EFF_IndexToggle_1232_onoff, editsw=ES_Left4, index=108, tag=1	# stron "123"; stroff "123"
-		AcFuncEditSw	EQOrigSw, super=EqSel, next=EQOrig, prev=EqSel_CatchEvent1, flag=VF_Invisible, X=593, Y=36, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, func=FN_EQOrigFunc
-		VwStrBox	EQOrig, super=EqSel, next=EqSel_MicFuncEditSw1, prev=EQOrigSw, flag=VF_Invisible, X=552, Y=36, W=80, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=1, fontcolor=CL_Black, str=Str_ORIGINAL	# str "ORIGINAL"
-data_50005F68:
-	.space	4, 0xFF
-data_50005F6C:
-	.space	4, 0xFF
-data_50005F70:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6AD8, 0x3B6ADC
-data_50005F74:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6ADC, 0x3B6AE0
-data_50005F78:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6AE0, 0x3B6AE4
-
-Str_empty_273:	.asciz "\"\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x3B6AE7, 0x3B6B20
-SplitSel_window:
-	.space	4, 0xFF
-SplitSel_MmmBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B24, 0x3B6B28
-ApcSel_window:
-	.space	4, 0xFF
-ApcOnbass_onoff:
-	.space	4, 0x00
-ApcMemory_onoff:
-	.space	4, 0x00
-ApcLefthold_onoff:
-	.space	4, 0x00
-ApcSel_APCRadioBox_BASIC_selected:
-	.space	4, 0x00
-ApcSel_APCRadioBox_FINGERED_selected:
-	.space	4, 0x00
-ApcSel_APCRadioBox_PIANIST_selected:
-	.space	4, 0x00
-CountIntro_onoff:
-	.space	4, 0x00
-ApcSel_TitleMenu_CHORD_FINDER_selected:
-	.space	4, 0x00
-ChdFdr_window:
-	.space	4, 0xFF
-RootBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B50, 0x3B6B54
-RootBox_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B54, 0x3B6B58
-TypeBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B58, 0x3B6B5C
-TypeBox_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B5C, 0x3B6B60
-InversionBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B60, 0x3B6B64
-InversionBox_data:
-	.space	4, 0x00
-ApcModeBox_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B68, 0x3B6B6C
-ApcModeBox_data:
-	.space	4, 0x00
-SdOct_window:
-	.space	4, 0xFF
-SdOct_MmmEditBox_OCTAVE_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B74, 0x3B6B78
-SdOct_MmmEditBox_OCTAVE_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B78, 0x3B6B7C
-ChordDebugWin_parent:
-	.space	4, 0xFF
-ChordDebugWin_child:
-	.space	4, 0xFF
-ChordDebugWin_RamEditBox1_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B84, 0x3B6B88
-ChordDebugWin_RamEditBox1_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B88, 0x3B6B8C
-ChordDebugWin_RamEditBox2_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B8C, 0x3B6B90
-ChordDebugWin_RamEditBox2_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B90, 0x3B6B94
-ChordDebugWin_RamEditBox3_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B94, 0x3B6B98
-ChordDebugWin_RamEditBox3_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B98, 0x3B6B9C
-ChordDebugWin_RamEditBox4_selected:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6B9C, 0x3B6BA0
-ChordDebugWin_RamEditBox4_data:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6BA0, 0x3B6BA4
-
-		AcRamEditInvBox	InversionBox, super=ChdFdr, next=TypeListBox, prev=ChdFdr_Box1, X=363, Y=66, W=257, H=34, color=CL_WallPattern, index=5, caption=Str_INVERSION, font=1, fontcolor=CL_White, align=1, length=7, editsw=ES_None, dial=1, selected=InversionBox_selected, func=FN_INVERSION, data=InversionBox_data	# caption "INVERSION:"
-		AcIndexWideES	InversionEditSw, super=ChdFdr, next=TYPERightsw, prev=TYPEUpDownsw, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=14
-		AcVisibleLabel	InversionLabel, super=ChdFdr, next=ChdFdr_KenbanBitmap1, prev=ChdFdr_Label_TYPE, X=402, Y=198, W=76, H=19, str=Str_INVERSION_2, font=1, fontcolor=CL_White	# str "INVERSION"
-		AcRamEditBox	ChordDebugWin_RamEditBox1, super=ChordDebugWin, next=ChordDebugWin_RamEditBox2, X=404, Y=188, W=33, H=22, color=CL_Silver, index=13, caption=Str_empty_119, font=3, fontcolor=CL_Black, length=13, editsw=ES_None, dial=1, selected=ChordDebugWin_RamEditBox1_selected, func=FN_On3WaitEditCheck, data=ChordDebugWin_RamEditBox1_data	# caption ""
-		AcRamEditBox	ChordDebugWin_RamEditBox2, super=ChordDebugWin, next=ChordDebugWin_RamEditBox3, prev=ChordDebugWin_RamEditBox1, X=364, Y=188, W=33, H=22, color=CL_Silver, index=12, caption=Str_empty_120, font=3, fontcolor=CL_Black, length=12, editsw=ES_None, dial=1, selected=ChordDebugWin_RamEditBox2_selected, func=FN_On2WaitEditCheck, data=ChordDebugWin_RamEditBox2_data	# caption ""
-		AcRamEditBox	ChordDebugWin_RamEditBox3, super=ChordDebugWin, next=ChordDebugWin_RamEditBox4, prev=ChordDebugWin_RamEditBox2, X=324, Y=188, W=33, H=22, color=CL_Silver, index=11, caption=Str_empty_121, font=3, fontcolor=CL_Black, length=11, editsw=ES_None, dial=1, selected=ChordDebugWin_RamEditBox3_selected, func=FN_On1WaitEditCheck, data=ChordDebugWin_RamEditBox3_data	# caption ""
-data_50006194:
-	.space	1, 0x00
-data_50006195:
-	.space	1, 0x00
-data_50006196:
-	.space	1, 0x00
-data_50006197:
-	.align	4, 0x00
-data_50006198:
-	.space	1, 0x00
-data_50006199:
-	.space	1, 0x00
-data_5000619A:
-	.space	1, 0x00
-data_5000619B:
-	.align	4, 0x00
-data_5000619C:
-	.space	1, 0x00
-data_5000619D:
-	.space	1, 0x00
-data_5000619E:
-	.space	1, 0x00
-data_5000619F:
-	.align	4, 0x00
-SDAudPlayScreen_window:
-	.space	4, 0xFF
-SDAudPlayScreen_TitleMenu_PLAYLIST_SELECT_selected:
-	.space	4, 0x00
-SDAudPlayScreen_IntTitleMenuSD_MIXER_selected:
-	.space	4, 0x00
-SDAudPlayScreen_SDFuncListBox1_paintok:
-	.space	4, 0x00
-SDAudPlayScreen_SDFuncListBox1_aicok:
-	.space	4, 0x00
-SDAudPlayScreen_IntTitleMenuSD_MIC_selected:
-	.space	4, 0x00
-SDAudPlayScreen_TitleMenu_SD_SOUND_PLAY_selected:
-	.space	4, 0x00
-SDAudLsSelScreen_window:
-	.space	4, 0xFF
-SDAudLsSelScreen_SDFuncListBox1_paintok:
-	.space	4, 0x00
-SDAudLsSelScreen_SDFuncListBox1_aicok:
-	.space	4, 0x00
-SDAudLsSelScreen_SDFuncListBox2_paintok:
-	.space	4, 0x00
-SDAudLsSelScreen_SDFuncListBox2_aicok:
-	.space	4, 0x00
-SDSndPlayScreen_window:
-	.space	4, 0xFF
-SDSndPlayScreen_TitleMenu_PLAYLIST_SELECT_selected:
-	.space	4, 0x00
-SDSndPlayScreen_TitleMenu_SD_AUDIO_PLAY_selected:
-	.space	4, 0x00
-SDSndPlayScreen_IntTitleMenuSD_MIXER_selected:
-	.space	4, 0x00
-SDSndPlayScreen_SDFuncListBox1_paintok:
-	.space	4, 0x00
-SDSndPlayScreen_SDFuncListBox1_aicok:
-	.space	4, 0x00
-SDSndPlayScreen_IntTitleMenuSD_MIC_selected:
-	.space	4, 0x00
-SDSndPlayScreen_SDMuteListBox1_paintok:
-	.space	4, 0x00
-SDSndPlayScreen_SDMuteListBox1_aicok:
-	.space	4, 0x00
-SDSndPlayScreen_TitleMenu_LYRICS_selected:
-	.space	4, 0x00
-SDSndLsSelScreen_window:
-	.space	4, 0xFF
-SDSndLsSelScreen_SDFuncListBox1_paintok:
-	.space	4, 0x00
-SDSndLsSelScreen_SDFuncListBox1_aicok:
-	.space	4, 0x00
-SDSndLsSelScreen_TitleMenu_EDIT_selected:
-	.space	4, 0x00
-SDSndLsSelScreen_SDFuncListBox2_paintok:
-	.space	4, 0x00
-SDSndLsSelScreen_SDFuncListBox2_aicok:
-	.space	4, 0x00
-SDSndLsEditScreen_window:
-	.space	4, 0xFF
-SDSndLsEditScreen_SDFuncListBox1_paintok:
-	.space	4, 0x00
-SDSndLsEditScreen_SDFuncListBox1_aicok:
-	.space	4, 0x00
-SDSndLsEditScreen_SDFuncListBox2_paintok:
-	.space	4, 0x00
-SDSndLsEditScreen_SDFuncListBox2_aicok:
-	.space	4, 0x00
-SDSndLsEditScreen_TitleMenu1_selected:
-	.space	4, 0x00
-SDSndLsNameScreen_window:
-	.space	4, 0xFF
-SDSndLyricsScreen_window:
-	.space	4, 0xFF
-SDSndLyricsScreen_IntTitleMenuSD_MIC_selected:
-	.space	4, 0x00
-ListModefySureWin_parent:
-	.space	4, 0xFF
-ListModefySureWin_child:
-	.space	4, 0xFF
-ListModefySureWin2_parent:
-	.space	4, 0xFF
-ListModefySureWin2_child:
-	.space	4, 0xFF
-ListDeleteSureWin_parent:
-	.space	4, 0xFF
-ListDeleteSureWin_child:
-	.space	4, 0xFF
-		IvSDFwdRewTimer	SDAudioFwdRewTimer, super=SDAudPlayScreen, next=SDAudPlayScreen_FuncOnOffWideES1, prev=SDAudPlayScreen_FuncEditSw1, flag=VF_InvisibleBox, X=32, Y=0, W=32, H=32, int_time=20
-			IvSDPlayTimer	AudPlayTimer, super=SDAudPlayScreen_TitleMenu_SD_SOUND_PLAY, flag=VF_InvisibleBox, X=56, Y=60, W=32, H=32, int_time=10
-					IvSDPlayTimer	SDSndPlayScreen_SDPlayTimer1, super=SDSndPlayScreen_IntTitleMenuSD_MIXER, prev=SDSndPlayScreen_SDFuncStrBox3, flag=VF_InvisibleBox, X=84, Y=76, W=32, H=32, int_time=5
-		IvSDFwdRewTimer	SDMIDIFwdRewTimer, super=SDSndPlayScreen, next=SDSndPlayScreen_FuncOnOffWideES1, prev=SDSndPlayScreen_FuncEditSw1, flag=VF_InvisibleBox, X=32, Y=0, W=32, H=32, int_time=20
-
-	TtlScreen	SDSndLsEditScreen, sub=SDSndLsEditScreen_FuncEditSw1, flag=VF_Fixed, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SDSndLsEditScreen_window, title=Str_SD_SOUND_PLAYLIST_EDIT, icon=217	# title "SD-SOUND PLAYLIST EDIT"
-data_500062FC:
-	.space	4, 0x00
-data_50006300:
-	.space	4, 0x00
-data_50006304:
-	.space	4, 0x00
-data_50006308:
-	.space	4, 0x00
-data_5000630C:
-	.space	4, 0x00
-data_50006310:
-	.space	4, 0x00
-data_50006314:
-	.space	4, 0x00
-data_50006318:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6E80, 0x3B6E84
-data_5000631C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6E84, 0x3B6E88
-data_50006320:
-	.space	1, 0x00
-data_50006321:
-	.space	1, 0x00
-data_50006322:
-	.space	1, 0x01
-
-Str_empty_272:	.asciz "                              "
-Str_empty_271:	.asciz "                                      "
-Str_empty_270:	.asciz "                                      "
-Str_empty_269:	.asciz "                                      "
-data_500063B7:
-	.align	4, 0x00
-data_500063B8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F20, 0x3B6F24
-data_500063BC:
-	.space	4, 0x00
-data_500063C0:
-	.space	4, 0x00
-data_500063C4:
-	.space	4, 0x00
-data_500063C8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F30, 0x3B6F34
-data_500063CC:
-	.space	1, 0x00
-data_500063CD:
-	.space	1, 0x00
-data_500063CE:
-	.space	1, 0x01
-data_500063CF:
-	.align	4, 0x01
-Str_INIT:	.asciz "INIT "
-	.align	4, 0xFF
-data_500063D8:
-	.space	1, 0x19
-data_500063D9:
-	.space	1, 0x00
-data_500063DA:
-	.align	4, 0x00
-data_500063DC:
-	.space	4, 0x00
-data_500063E0:
-	.space	2, 0x00
-data_500063E2:
-	.align	4, 0x00
-data_500063E4:
-	.space	2, 0x00
-data_500063E6:
-	.space	1, 0x00
-data_500063E7:
-	.align	4, 0x00
-data_500063E8:
-	.space	4, 0x00
-data_500063EC:
-	.space	4, 0x00
-data_500063F0:
-	.space	2, 0x00
-data_500063F2:
-	.space	1, 0x00
-data_500063F3:
-	.align	4, 0x00
-data_500063F4:
-	.space	1, 0x00
-data_500063F5:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F5D, 0x3B6F60
-data_500063F8:
-	.space	4, 0x00
-data_500063FC:
-	.space	4, 0x00
-data_50006400:
-	.space	1, 0x00
-data_50006401:
-	.space	1, 0x00
-data_50006402:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F6A, 0x3B6F6C
-data_50006404:
-	.space	1, 0x00
-data_50006405:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F6D, 0x3B6F70
-Str_x:	.asciz "x"
-	.align	4, 0x00
-data_5000640C:
-	.space	4, 0x00
-data_50006410:
-	.space	4, 0x00
-data_50006414:
-	.space	4, 0x00
-data_50006418:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F80, 0x3B6F84
-data_5000641C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F84, 0x3B6F88
-data_50006420:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F88, 0x3B6F8C
-data_50006424:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6F8C, 0x3B6F90
-TtSswRun_window:
-	.space	4, 0xFF
-TtSswList_window:
-	.space	4, 0xFF
-TtSswList_SswImgLoad_PICTURE_LOAD_selected:
-	.space	4, 0x00
-TtSswList_SswImgRename_RENAME_selected:
-	.space	4, 0x00
-TtSswListRename_window:
-	.space	4, 0xFF
-data_5000643C:
-	.space	1, 0x00
-data_5000643D:
-	.space	15, 0x00
-
-ptrs_5000644C:
-	.long	Str_BMP_16
-	.long	Str_JPG_15
-data_50006454:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6FBC, 0x3B6FC0
-HelpFunction_window:
-	.space	4, 0xFF
-HelpFunction_IndexWideToggle2_GERMAN_onoff:
-	.space	4, 0x00
-HelpFunction_IndexWideToggle2_FRENCH_onoff:
-	.space	4, 0x00
-HelpFunction_IndexWideToggle2_SPANISH_onoff:
-	.space	4, 0x00
-HelpFunction_IndexWideToggle2_ENGLISH_onoff:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6FD0, 0x3B6FD4
-HelpText_window:
-	.space	4, 0xFF
-HelpText_HelpWindowPage1_page:
-.incbin_range "baserom/kn7000_program.rom", 0x3B6FD8, 0x3B6FDC
-HelpAPCMENU_window:
-	.space	4, 0xFF
-HelpAPCMENU_TitleMenu_AUTO_PLAY_CHORD_MODE_selected:
-	.space	4, 0x00
-HelpAPCMENU_TitleMenu_COUNT_INTRO_selected:
-	.space	4, 0x00
-HelpAPCMENU_TitleMenu_LEFT_HOLD_selected:
-	.space	4, 0x00
-HelpAPCMENU_TitleMenu_CHORD_FINDER_selected:
-	.space	4, 0x00
-HelpPRGMENU_window:
-	.space	4, 0xFF
-HelpPRGMENU_TitleMenu_SOUND_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_REVERB_EFFECT_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_CONTROL_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_MIDI_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_SOUND_EDIT_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_SEQUENCER_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_COMPOSER_selected:
-	.space	4, 0x00
-HelpPRGMENU_TitleMenu_PERFORMANCE_PADS_selected:
-	.space	4, 0x00
-CheckHelp_parent:
-	.space	4, 0xFF
-CheckHelp_child:
-	.space	4, 0xFF
-CheckHelp_RamBox1_data:
-	.space	4, 0x00
-
-		AcHelpWindowPage	HelpText_HelpWindowPage1, super=HelpText, next=HelpText_ShowHide1, prev=HelpText_CatchEvent1, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=HelpText_HelpWindowPage1_page, pagemin=1, pagemax=1
-PCCom_window:
-	.space	4, 0xFF
-AMCOM_window:
-	.space	4, 0xFF
-data_500064E8:
-	.space	1, 0x00
-data_500064E9:
-	.space	1, 0x00
-data_500064EA:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7052, 0x3B7054
-demo1_1_window:
-	.space	4, 0xFF
-fdemo_a1_window:
-	.space	4, 0xFF
-fdemo_a2_window:
-	.space	4, 0xFF
-fdemo_a3_window:
-	.space	4, 0xFF
-fdemo_a4_window:
-	.space	4, 0xFF
-fdemo_a5_window:
-	.space	4, 0xFF
-fdemo_a6_window:
-	.space	4, 0xFF
-fdemo_a7_window:
-	.space	4, 0xFF
-fdemo_a8_window:
-	.space	4, 0xFF
-fdemo_a9_window:
-	.space	4, 0xFF
-fdemo_a10_window:
-	.space	4, 0xFF
-fdemo_a11_window:
-	.space	4, 0xFF
-fdemo_a12_window:
-	.space	4, 0xFF
-fdemo_b1_window:
-	.space	4, 0xFF
-fdemo_b2_window:
-	.space	4, 0xFF
-fdemo_b3_window:
-	.space	4, 0xFF
-fdemo_b4_window:
-	.space	4, 0xFF
-fdemo_c1_window:
-	.space	4, 0xFF
-fdemo_c2_window:
-	.space	4, 0xFF
-fdemo_c3_window:
-	.space	4, 0xFF
-fdemo_c4_window:
-	.space	4, 0xFF
-fdemo_c5_window:
-	.space	4, 0xFF
-fdemo_c8_window:
-	.space	4, 0xFF
-fdemo_c6_window:
-	.space	4, 0xFF
-fdemo_c7_window:
-	.space	4, 0xFF
-fdemo_d1_window:
-	.space	4, 0xFF
-fdemo_d4_window:
-	.space	4, 0xFF
-fdemo_d2_window:
-	.space	4, 0xFF
-fdemo_d5_window:
-	.space	4, 0xFF
-fdemo_d3_window:
-	.space	4, 0xFF
-fdemo_d6_window:
-	.space	4, 0xFF
-fdemo_d7_window:
-	.space	4, 0xFF
-fdemo_d8_window:
-	.space	4, 0xFF
-fdemo_d9_window:
-	.space	4, 0xFF
-fdemo_d10_window:
-	.space	4, 0xFF
-fdemo_d11_window:
-	.space	4, 0xFF
-fdemo_d12_window:
-	.space	4, 0xFF
-fdemo_e1_window:
-	.space	4, 0xFF
-fdemo_e2_window:
-	.space	4, 0xFF
-fdemo_e4_window:
-	.space	4, 0xFF
-fdemo_e3_window:
-	.space	4, 0xFF
-fdemo_f1_window:
-	.space	4, 0xFF
-fdemo_f2_window:
-	.space	4, 0xFF
-fdemo_f3_window:
-	.space	4, 0xFF
-fdemo_f4_window:
-	.space	4, 0xFF
-fdemo_f5_window:
-	.space	4, 0xFF
-fdemo_f6_window:
-	.space	4, 0xFF
-fdemo_g1_window:
-	.space	4, 0xFF
-fdemo_g2_window:
-	.space	4, 0xFF
-fdemo_g3_window:
-	.space	4, 0xFF
-fdemo_g4_window:
-	.space	4, 0xFF
-fdemo_g5_window:
-	.space	4, 0xFF
-fdemo_h1_window:
-	.space	4, 0xFF
-fdemo_h2_window:
-	.space	4, 0xFF
-fdemo_h3_window:
-	.space	4, 0xFF
-fdemo_h4_window:
-	.space	4, 0xFF
-fdemo_h5_window:
-	.space	4, 0xFF
-fdemo_h6_window:
-	.space	4, 0xFF
-fdemo_h7_window:
-	.space	4, 0xFF
-fdemo_i1_window:
-	.space	4, 0xFF
-fdemo_i2_window:
-	.space	4, 0xFF
-fdemo_i3_window:
-	.space	4, 0xFF
-fdemo_i4_window:
-	.space	4, 0xFF
-fdemo_i5_window:
-	.space	4, 0xFF
-fdemo_i6_window:
-	.space	4, 0xFF
-fdemo_j1_window:
-	.space	4, 0xFF
-fdemo_j2_window:
-	.space	4, 0xFF
-fdemo_j3_window:
-	.space	4, 0xFF
-fdemo_j4_window:
-	.space	4, 0xFF
-fdemo_j5_window:
-	.space	4, 0xFF
-fdemo_j6_window:
-	.space	4, 0xFF
-fdemo_j7_window:
-	.space	4, 0xFF
-fdemo_k1_window:
-	.space	4, 0xFF
-fdemo_k5_window:
-	.space	4, 0xFF
-fdemo_k2_window:
-	.space	4, 0xFF
-fdemo_k6_window:
-	.space	4, 0xFF
-fdemo_k3_window:
-	.space	4, 0xFF
-fdemo_k7_window:
-	.space	4, 0xFF
-fdemo_k4_window:
-	.space	4, 0xFF
-fdemo_l1_window:
-	.space	4, 0xFF
-fdemo_l2_window:
-	.space	4, 0xFF
-fdemo_l3_window:
-	.space	4, 0xFF
-fdemo_l4_window:
-	.space	4, 0xFF
-fdemo_l5_window:
-	.space	4, 0xFF
-fdemo_l6_window:
-	.space	4, 0xFF
-fdemo_l7_window:
-	.space	4, 0xFF
-fdemo_l8_window:
-	.space	4, 0xFF
-fdemo_l9_window:
-	.space	4, 0xFF
-fdemo_la_window:
-	.space	4, 0xFF
-fdemo_k8_window:
-	.space	4, 0xFF
-fdemo_k9_window:
-	.space	4, 0xFF
-fdemo_ka_window:
-	.space	4, 0xFF
-fdemo_kb_window:
-	.space	4, 0xFF
-fdemo_kc_window:
-	.space	4, 0xFF
-fdemo_ke_window:
-	.space	4, 0xFF
-fdemo_kf_window:
-	.space	4, 0xFF
-fdemo_e8_window:
-	.space	4, 0xFF
-fdemo_kd_window:
-	.space	4, 0xFF
-fdemo_kg_window:
-	.space	4, 0xFF
-fdemo_b5_window:
-	.space	4, 0xFF
-fdemo_b6_window:
-	.space	4, 0xFF
-fdemo_c9_window:
-	.space	4, 0xFF
-fdemo_c10_window:
-	.space	4, 0xFF
-fdemo_g6_window:
-	.space	4, 0xFF
-fdemo_h8_window:
-	.space	4, 0xFF
-fdemo_e5_window:
-	.space	4, 0xFF
-fdemo_e6_window:
-	.space	4, 0xFF
-fdemo_e7_window:
-	.space	4, 0xFF
-fdemo_a13_window:
-	.space	4, 0xFF
-fdemo_a14_window:
-	.space	4, 0xFF
-fdemo_a15_window:
-	.space	4, 0xFF
-fdemo_a16_window:
-	.space	4, 0xFF
-fdemo_a17_window:
-	.space	4, 0xFF
-fdemo_a18_window:
-	.space	4, 0xFF
-fdemo_d13_window:
-	.space	4, 0xFF
-fdemo_d14_window:
-	.space	4, 0xFF
-fdemo_d15_window:
-	.space	4, 0xFF
-fdemo_d16_window:
-	.space	4, 0xFF
-data_500066C4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B722C, 0x3B7230
-data_500066C8:
-	.space	4, 0x00
-data_500066CC:
-	.space	1, 0xFF
-data_500066CD:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7235, 0x3B7238
-data_500066D0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7238, 0x3B723C
-data_500066D4:
-	.space	4, 0x00
-data_500066D8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7240, 0x3B7248
-
-ptrs_500066E0:
-	.long	data_486BEBA9
-	.long	data_486BEBE5
-	.long	data_486BEF87
-	.long	data_486BF364
-	.long	data_486BF745
-	.long	data_486BFAFE
-	.long	data_486BFF35
-	.long	data_486BEF87
-	.long	data_486C035B
-	.long	data_486C06CD
-	.long	data_486C0953
-	.long	data_486BF745
-	.long	data_486C0C0A
-	.long	data_486BFAFE
-	.long	data_486BFF35
-	.long	data_486C0E96
-	.long	data_486C8A15
-	.long	data_486C8A15
-	.long	data_486C8E13
-	.long	data_486C8E13
-	.long	data_486C8219
-	.long	data_486C8219
-	.long	data_486C9211
-	.long	data_486C9211
-	.long	data_486C960F
-	.long	data_486C960F
-.incbin_range "baserom/kn7000_program.rom", 0x3B72B0, 0x3B73E8
-	.space	64, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B7428, 0x3B7490
-	.space	184, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B7548, 0x3B7588
-data_50006A20:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7588, 0x3B7728
-	.space	64, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B7768, 0x3B77D0
-	.space	184, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B7888, 0x3B78C8
-data_50006D60:
-.incbin_range "baserom/kn7000_program.rom", 0x3B78C8, 0x3B79A0
-data_50006E38:
-.incbin_range "baserom/kn7000_program.rom", 0x3B79A0, 0x3B7AA0
-data_50006F38:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7AA0, 0x3B7CB0
-data_50007148:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7CB0, 0x3B7CB2
-
-Str_Chorus_3:	.asciz "     Chorus     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7CC3, 0x3B7CC5
-Str_Ensemble_3:	.asciz "    Ensemble    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7CD6, 0x3B7CD8
-Str_Modulated_Chorus_3:	.asciz "Modulated Chorus"
-.incbin_range "baserom/kn7000_program.rom", 0x3B7CE9, 0x3B7CEB
-Str_Celeste_3:	.asciz "    Celeste     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7CFC, 0x3B7CFE
-Str_ModulatedCeleste:	.asciz "ModulatedCeleste"
-.incbin_range "baserom/kn7000_program.rom", 0x3B7D0F, 0x3B7D11
-Str_Phaser_3:	.asciz "     Phaser     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7D22, 0x3B7D24
-Str_Flanger_4:	.asciz "    Flanger     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7D35, 0x3B7D37
-Str_Standard_Rotary:	.asciz "Standard Rotary "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7D48, 0x3B7D5D
-Str_Auto_Pan_3:	.asciz "    Auto Pan    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7D6E, 0x3B7D94
-Str_5_Enhancer:	.asciz "5     Enhancer    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7DA7, 0x3B7DA9
-Str_Exciter_3:	.asciz "     Exciter    "
-Str_8_Auto_Wah:	.asciz "8     Auto Wah    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7DCD, 0x3B7DCF
-Str_Distortion_3:	.asciz "   Distortion   "
-Str_Overdrive_3:	.asciz "@    Overdrive    "
-Str_A_Distorted_Amp:	.asciz "A(  Distorted Amp "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E06, 0x3B7E08
-Str_Dual_Delay_3:	.asciz "   Dual Delay   "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E19, 0x3B7E1B
-Str_Cross_Delay_3:	.asciz "  Cross Delay   "
-data_500072C4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E2C, 0x3B7E2E
-Str_Chorus_4:	.asciz "     Chorus     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E3F, 0x3B7E41
-Str_Ensemble_4:	.asciz "    Ensemble    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E52, 0x3B7E54
-Str_Modulated_Chorus_4:	.asciz "Modulated Chorus"
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E65, 0x3B7E67
-Str_Phaser_4:	.asciz "     Phaser     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E78, 0x3B7E7A
-Str_Flanger_5:	.asciz "     Flanger    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E8B, 0x3B7E8D
-Str_Standard_Rotary_2:	.asciz "Standard Rotary "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7E9E, 0x3B7EB1
-Str_8_Auto_Wah_2:	.asciz "8     Auto Wah    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7EC4, 0x3B7EC6
-Str_Dual_Delay_4:	.asciz "   Dual Delay   "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7ED7, 0x3B7ED9
-Str_Cross_Delay_4:	.asciz "  Cross Delay   "
-data_50007382:
-.incbin_range "baserom/kn7000_program.rom", 0x3B7EEA, 0x3B7EEC
-Str_Chorus1_2:	.asciz "    Chorus1     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7EFD, 0x3B7FA8
-data_50007440:
-	.space	2, 0x00
-Str_Room1_2:	.asciz "     Room1      "
-	.align	4, 0x00
-Str_Room2_2:	.asciz "      Room2      "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7FCE, 0x3B7FD0
-Str_Plate1_2:	.asciz "     Plate1     "
-.incbin_range "baserom/kn7000_program.rom", 0x3B7FE1, 0x3B7FF6
-Str_Concert1_2:	.asciz "    Concert1    "
-.incbin_range "baserom/kn7000_program.rom", 0x3B8007, 0x3B801C
-Str_Large_Hall1_2:	.asciz "  Large Hall1   "
-.incbin_range "baserom/kn7000_program.rom", 0x3B802D, 0x3B8042
-Str_Live_Stage_2:	.asciz "   Live Stage   "
-.incbin_range "baserom/kn7000_program.rom", 0x3B8053, 0x3B8066
-data_500074FE:
-	.align	4, 0xFF
-data_50007500:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8068, 0x3B80AC
-data_50007544:
-.incbin_range "baserom/kn7000_program.rom", 0x3B80AC, 0x3B80E0
-data_50007578:
-	.space	2, 0x00
-data_5000757A:
-	.align	4, 0x00
-data_5000757C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B80E4, 0x3B81C4
-
-names_5000765C:
-	.long	Str_CHARA1
-	.long	Str_CHARA2
-	.long	Str_CHARA3
-	.long	Str_CHARA4
-	.long	Str_CHARA5
-	.long	Str_CHARA1P
-	.long	Str_CHARA6
-	.long	Str_CHARA1W
-	.long	Str_CHARA2W
-	.long	Str_CHARA5W
-	.long	Str_CHARA7W
-	.long	Str_CHARA7
-	.long	data_485B5899
-	.space	76, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B8244, 0x3B8278
-	.space	76, 0x00
-data_5000775C:
-	.space	4, 0x00
-data_50007760:
-	.space	4, 0x00
-data_50007764:
-.incbin_range "baserom/kn7000_program.rom", 0x3B82CC, 0x3B82D0
-data_50007768:
-.incbin_range "baserom/kn7000_program.rom", 0x3B82D0, 0x3B82D4
-ptrs_5000776C:
-	.long	data_48731844
-	.long	data_48731844
-	.long	data_48731AC4
-	.long	data_487318C4
-	.long	data_48731B44
-	.long	data_48731944
-	.long	data_48731BC4
-	.long	data_487319C4
-	.long	data_48731C44
-	.long	data_48731A44
-	.long	data_48731CC4
-	.long	data_487317C4
-	.long	data_48731D44
-	.long	data_48731844
-data_500077A4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B830C, 0x3B83DC
-data_50007874:
-.incbin_range "baserom/kn7000_program.rom", 0x3B83DC, 0x3B83E0
-
-Str_empty_268:	.asciz "("
-	.align	4, 0x00
-data_5000787C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B83E4, 0x3B83E8
-data_50007880:
-.incbin_range "baserom/kn7000_program.rom", 0x3B83E8, 0x3B83EC
-data_50007884:
-	.space	40, 0x00
-data_500078AC:
-	.space	2, 0x00
-data_500078AE:
-	.align	4, 0x00
-data_500078B0:
-	.space	1, 0x00
-data_500078B1:
-	.space	1, 0x00
-data_500078B2:
-	.space	31, 0x00
-data_500078D1:
-	.align	4, 0x00
-data_500078D4:
-	.space	40, 0x00
-data_500078FC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8464, 0x3B8468
-data_50007900:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8468, 0x3B8469
-	.space	71, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B84B0, 0x3B84B1
-	.space	71, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x3B84F8, 0x3B8560
-data_500079F8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8560, 0x3B8562
-data_500079FA:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8562, 0x3B857C
-
-ptrs_50007A14:
-	.long	Str_A_3
-	.long	data_50007900
-.incbin_range "baserom/kn7000_program.rom", 0x3B8584, 0x3B85B0
-data_50007A48:
-.incbin_range "baserom/kn7000_program.rom", 0x3B85B0, 0x3B85B4
-data_50007A4C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B85B4, 0x3B85B8
-data_50007A50:
-	.space	4, 0x00
-data_50007A54:
-	.space	4, 0x00
-data_50007A58:
-	.space	8, 0x00
-data_50007A60:
-	.space	8, 0x00
-data_50007A68:
-.incbin_range "baserom/kn7000_program.rom", 0x3B85D0, 0x3B85D4
-data_50007A6C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B85D4, 0x3B85E8
-data_50007A80:
-.incbin_range "baserom/kn7000_program.rom", 0x3B85E8, 0x3B85FC
-data_50007A94:
-	.space	8, 0x00
-
-Str_deflate_1_0_4_Copyright_1995_1996_Jean_l:	.asciz " deflate 1.0.4 Copyright 1995-1996 Jean-loup Gailly "
-	.align	4, 0xFF
-Str_inflate_1_0_4_Copyright_1995_1996_Mark_A:	.asciz " inflate 1.0.4 Copyright 1995-1996 Mark Adler "
-	.align	4, 0xFF
-data_50007B04:
-.incbin_range "baserom/kn7000_program.rom", 0x3B866C, 0x3B86C0
-
-ptrs_50007B58:
-	.long	Str_stream_error
-	.long	Str_data_error
-data_50007B60:
-.incbin_range "baserom/kn7000_program.rom", 0x3B86C8, 0x3B86CC
-ptrs_50007B64:
-	.long	Str_buffer_error
-	.long	Str_incompatible_version
-	.long	data_485CD529
-data_50007B70:
-	.space	32, 0x00
-data_50007B90:
-	.space	2, 0x00
-data_50007B92:
-	.align	4, 0x00
-data_50007B94:
-	.space	4, 0x00
-data_50007B98:
-	.space	4, 0x00
-data_50007B9C:
-	.space	4, 0x00
-data_50007BA0:
-	.space	2, 0x00
-data_50007BA2:
-	.align	4, 0x00
-data_50007BA4:
-	.space	2, 0x00
-data_50007BA6:
-	.align	4, 0x00
-data_50007BA8:
-	.space	4, 0x00
-data_50007BAC:
-	.space	2, 0x00
-data_50007BAE:
-	.space	254, 0x00
-data_50007CAC:
-	.space	2, 0x00
-data_50007CAE:
-	.space	256, 0x00
-data_50007DAE:
-	.align	4, 0x00
-data_50007DB0:
-	.space	4, 0x00
-data_50007DB4:
-	.space	2, 0x00
-data_50007DB6:
-	.space	1, 0x00
-data_50007DB7:
-	.align	4, 0x00
-data_50007DB8:
-	.space	8, 0x00
-data_50007DC0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8928, 0x3B892C
-data_50007DC4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B892C, 0x3B8930
-data_50007DC8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8930, 0x3B8934
-data_50007DCC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8934, 0x3B8938
-data_50007DD0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8938, 0x3B893C
-data_50007DD4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B893C, 0x3B8940
-data_50007DD8:
-	.space	2, 0x00
-data_50007DDA:
-	.space	1, 0x00
-
-Str_empty_267:	.asciz " "
-data_50007DDD:
-	.space	1, 0x00
-data_50007DDE:
-	.space	1, 0x00
-data_50007DDF:
-	.align	4, 0x00
-data_50007DE0:
-	.space	1, 0x00
-data_50007DE1:
-	.space	1, 0x00
-Str_empty_266:	.asciz "$"
-data_50007DE4:
-	.space	1, 0x01
-data_50007DE5:
-	.space	1, 0x00
-data_50007DE6:
-	.space	1, 0x00
-data_50007DE7:
-	.align	4, 0x00
-data_50007DE8:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8950, 0x3B8954
-data_50007DEC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8954, 0x3B8958
-data_50007DF0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8958, 0x3B8978
-data_50007E10:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8978, 0x3B897C
-data_50007E14:
-	.space	4, 0xFF
-data_50007E18:
-	.space	1, 0x00
-data_50007E19:
-	.space	1, 0x00
-data_50007E1A:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8982, 0x3B8988
-data_50007E20:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8988, 0x3B898E
-data_50007E26:
-	.space	6, 0x00
-data_50007E2C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8994, 0x3B8996
-data_50007E2E:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8996, 0x3B8998
-data_50007E30:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8998, 0x3B89A0
-data_50007E38:
-	.space	32, 0x00
-data_50007E58:
-	.space	32, 0x00
-data_50007E78:
-.incbin_range "baserom/kn7000_program.rom", 0x3B89E0, 0x3B89E2
-Str_d_2:	.asciz "d"
-data_50007E7C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B89E4, 0x3B89F2
-data_50007E8A:
-.incbin_range "baserom/kn7000_program.rom", 0x3B89F2, 0x3B89FC
-data_50007E94:
-.incbin_range "baserom/kn7000_program.rom", 0x3B89FC, 0x3B8A2E
-data_50007EC6:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A2E, 0x3B8A38
-data_50007ED0:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A38, 0x3B8A42
-data_50007EDA:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A42, 0x3B8A4C
-data_50007EE4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A4C, 0x3B8A50
-Str_Q_2:	.asciz "Q"
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A52, 0x3B8A56
-data_50007EEE:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A56, 0x3B8A5A
-Str_X:	.asciz "X"
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A5C, 0x3B8A64
-data_50007EFC:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8A64, 0x3B8AA4
-data_50007F3C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8AA4, 0x3B8AA8
-data_50007F40:
-	.space	2, 0x00
-data_50007F42:
-	.align	4, 0x00
-
-.mnbase 0x48400000   # flash addresses again
-
-Str_MILK_MN10300_Ver1_0R1:	.asciz "MILK MN10300 Ver1.0R1"
-.incbin_range "baserom/kn7000_program.rom", 0x3B8AC2, 0x3B8B48
-data_487B8B48:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B48, 0x3B8B4C
-data_487B8B4C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B4C, 0x3B8B50
-data_487B8B50:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B50, 0x3B8B58
-data_487B8B58:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B58, 0x3B8B5C
-data_487B8B5C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B5C, 0x3B8B6C
-data_487B8B6C:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B6C, 0x3B8B6E
-data_487B8B6E:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B6E, 0x3B8B72
-data_487B8B72:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8B72, 0x3B8E34
-func_487B8E34:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8E34, 0x3B8F9B
-func_487B8F9B:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8F9B, 0x3B8F9E
-func_487B8F9E:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8F9E, 0x3B8FA1
-func_487B8FA1:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8FA1, 0x3B8FA4
-loc_487B8FA4:
-.incbin_range "baserom/kn7000_program.rom", 0x3B8FA4, 0x3B8FD1
+zlib_487A0974:	# DemoSong04: its event memory, 12032 bytes, stored as a zlib stream of 7000 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
+	.zlib	6

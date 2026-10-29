@@ -16984,9 +16984,9 @@ func_48478C1D:
 # StylCnvWaitTtlFunc  (CPU 0x48478c2b)
 StylCnvWaitTtlFunc:
     add     -0x10, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_48478C44
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48478C41
     jmp     loc_48478CDD
 loc_48478C41:
@@ -17059,9 +17059,9 @@ loc_48478CE1:
 StylCnvModlTtlFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x40, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_48478CFF
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48478CFC
     jmp     loc_48478EF4
 loc_48478CFC:
@@ -17247,7 +17247,7 @@ loc_48478E6B:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01600009, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     mov     sp, a2
     add     0x20, a2
@@ -17520,9 +17520,9 @@ loc_48479116:
 # StylCnvTxtTtlFunc  (CPU 0x48479119)
 StylCnvTxtTtlFunc:
     add     -8, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_4847912E
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_4847917B
     bra     loc_4847917E
 loc_4847912E:
@@ -17571,9 +17571,9 @@ loc_4847917F:
 StylCnvCnvtTtlFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_4847919D
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4847919A
     jmp     loc_484792A2
 loc_4847919A:
@@ -17846,9 +17846,9 @@ loc_484793FF:
 StylCnvSelTtlFunc:
     movm    [d2,d3,a2], (sp)
     add     -0x1c, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_4847941C
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48479419
     bra     loc_48479491
 loc_48479419:
@@ -18004,7 +18004,7 @@ loc_48479589:
 # StylCnvStorTtlFunc  (CPU 0x4847958c)
 StylCnvStorTtlFunc:
     add     -8, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_484795C7
     mov     (0x18, sp), a0
     cmp     2, a0
@@ -18038,9 +18038,9 @@ loc_484795C8:
 # StylCnvContTtlFunc  (CPU 0x484795cb)
 StylCnvContTtlFunc:
     add     -0x14, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_484795E4
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_484795E1
     jmp     loc_48479661
 loc_484795E1:
@@ -18365,7 +18365,7 @@ loc_484798BB:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     a2, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     cmp     d3, d2
     blt     loc_48479884
@@ -20254,7 +20254,7 @@ loc_4847AA0C:
     add     d2, d1
     mov     d1, (0x10, sp)
     mov     0x01600008, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movhu   (0x5004e3fa), d0
     mov     0x28, d1
@@ -20264,7 +20264,7 @@ loc_4847AA0C:
     add     d0, d2
     mov     d2, (0x10, sp)
     mov     0x01600008, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     [d2,d3,a2,a3], 0x24
 loc_4847AA92:
@@ -20309,7 +20309,7 @@ loc_4847AAB2:
     add     d2, d0
     mov     d0, (0x10, sp)
     mov     0x01600010, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movhu   (0x5004e3fa), d0
     mov     0x28, d1
@@ -20319,7 +20319,7 @@ loc_4847AAB2:
     add     d0, d2
     mov     d2, (0x10, sp)
     mov     0x01600010, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     [d2,d3,a2,a3], 0x24
 loc_4847AB37:
@@ -20364,7 +20364,7 @@ loc_4847AB57:
     add     d2, d0
     mov     d0, (0x10, sp)
     mov     0x0160001f, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movhu   (0x5004e3fa), d0
     mov     0x28, d1
@@ -20374,7 +20374,7 @@ loc_4847AB57:
     add     d0, d2
     mov     d2, (0x10, sp)
     mov     0x0160001f, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_4847ABEA
 loc_4847ABDB:
@@ -20638,7 +20638,7 @@ InitializeBlock21_entry:
 # AcOtpRamBoxProc  (CPU 0x4847af77)
 AcOtpRamBoxProc:
     add     -0x14, sp
-    cmp     0x600af, d1
+    cmp     MT_GetFont, d1
     bne     loc_4847AF8D
     call    GetViewInstance, 0, 0
     mov     2, d0
@@ -20654,29 +20654,29 @@ MssNameFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     d0, d3
-    cmp     0x60044, d1
+    cmp     MT_GetRamString, d1
     beq     loc_4847AFEE
-    cmp     0x6003e, d1
+    cmp     MT_GetLargeStep, d1
     bne     loc_4847AFB4
     jmp     loc_4847B0D4
 loc_4847AFB4:
-    cmp     0x6003f, d1
+    cmp     MT_GetSmallStep, d1
     bne     loc_4847AFBF
     jmp     loc_4847B0D8
 loc_4847AFBF:
-    cmp     0x60040, d1
+    cmp     MT_GetMax, d1
     bne     loc_4847AFCA
     jmp     loc_4847B0DC
 loc_4847AFCA:
-    cmp     0x60041, d1
+    cmp     MT_GetMin, d1
     bne     loc_4847AFD5
     jmp     loc_4847B0E1
 loc_4847AFD5:
-    cmp     0x60042, d1
+    cmp     MT_GetRamAddress, d1
     bne     loc_4847AFE0
     jmp     loc_4847B0E5
 loc_4847AFE0:
-    cmp     0x60043, d1
+    cmp     MT_GetRamSize, d1
     bne     loc_4847AFEB
     jmp     loc_4847B0ED
 loc_4847AFEB:
@@ -20789,7 +20789,7 @@ loc_4847B0F2:
     ret     [d2,d3,a2,a3], 0x24
 # MusicStylistJpgData  (CPU 0x4847b0f5)
 MusicStylistJpgData:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4847B105
     mov     Jpeg_48736A6C, d0
     bra     loc_4847B106
@@ -20898,11 +20898,11 @@ AcStyleNameProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4847B1FF
     cmp     0x1550000, d1
     beq     loc_4847B1FF
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4847B21E
     bra     loc_4847B25E
 loc_4847B1FF:
@@ -20911,7 +20911,7 @@ loc_4847B1FF:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -20949,23 +20949,23 @@ AcCategoryListBoxProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4847B2C8
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4847B2FC
-    cmp     0x50011, d2
+    cmp     EV_INDEXSW_UP_AIC, d2
     bne     loc_4847B28E
     jmp     loc_4847B381
 loc_4847B28E:
-    cmp     0x5000f, d2
+    cmp     EV_INDEXSW_UP, d2
     bne     loc_4847B299
     jmp     loc_4847B381
 loc_4847B299:
-    cmp     0x50012, d2
+    cmp     EV_INDEXSW_DOWN_AIC, d2
     bne     loc_4847B2A4
     jmp     loc_4847B482
 loc_4847B2A4:
-    cmp     0x50010, d2
+    cmp     EV_INDEXSW_DOWN, d2
     bne     loc_4847B2AF
     jmp     loc_4847B482
 loc_4847B2AF:
@@ -20973,7 +20973,7 @@ loc_4847B2AF:
     bne     loc_4847B2BA
     jmp     loc_4847B580
 loc_4847B2BA:
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4847B2C5
     jmp     loc_4847B5C3
 loc_4847B2C5:
@@ -21012,13 +21012,13 @@ loc_4847B2FC:
     beq     loc_4847B34C
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -21027,13 +21027,13 @@ loc_4847B2FC:
 loc_4847B34C:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -21050,7 +21050,7 @@ loc_4847B381:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847B3A3
@@ -21062,7 +21062,7 @@ loc_4847B3A3:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     exth    d2
@@ -21071,14 +21071,14 @@ loc_4847B3A3:
     add     d2, d1
     mov     d1, (0x10, sp)
     add     -1, d2
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d2, d0
     exth    d0
     call    func_4847B629_entry, 0, 0x14
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -21088,21 +21088,21 @@ loc_4847B3A3:
     beq     loc_4847B41F
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847B43F
 loc_4847B41F:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847B43F:
     mov     1, d0
@@ -21137,7 +21137,7 @@ loc_4847B482:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847B4A4
@@ -21149,7 +21149,7 @@ loc_4847B4A4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     exth    d2
@@ -21159,13 +21159,13 @@ loc_4847B4A4:
     mov     d3, d0
     inc     d2
     exth    d2
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d2, d0
     call    func_4847B629_entry, 0, 0x14
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -21175,21 +21175,21 @@ loc_4847B4A4:
     beq     loc_4847B51E
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847B53E
 loc_4847B51E:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847B53E:
     mov     1, d0
@@ -21329,7 +21329,7 @@ AcSubCategoryListBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4847B681
     jmp     loc_4847B9F1
 loc_4847B681:
@@ -21390,7 +21390,7 @@ loc_4847B6D2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -21410,13 +21410,13 @@ loc_4847B6D2:
     beq     loc_4847B771
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -21425,13 +21425,13 @@ loc_4847B6D2:
 loc_4847B771:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -21448,7 +21448,7 @@ loc_4847B7A2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847B7C9
@@ -21460,20 +21460,20 @@ loc_4847B7C9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     add     -1, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     call    func_4847BBF7_entry, [d2,d3], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -21483,21 +21483,21 @@ loc_4847B7C9:
     beq     loc_4847B842
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847B862
 loc_4847B842:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847B862:
     mov     1, d0
@@ -21532,7 +21532,7 @@ loc_4847B8A1:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847B8C8
@@ -21544,19 +21544,19 @@ loc_4847B8C8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     2, d0
     call    func_4847BBF7_entry, [d2,d3], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -21566,21 +21566,21 @@ loc_4847B8C8:
     beq     loc_4847B93F
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847B95F
 loc_4847B93F:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847B95F:
     mov     1, d0
@@ -21907,7 +21907,7 @@ AcCtgStyleListBoxProc:
     add     -0x1c, sp
     mov     d0, (0x34, sp)
     mov     d1, (0x38, sp)
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4847BC9C
     jmp     loc_4847C1C0
 loc_4847BC9C:
@@ -21979,7 +21979,7 @@ loc_4847BCF1:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
@@ -22094,13 +22094,13 @@ loc_4847BE4D:
     beq     loc_4847BEA2
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
@@ -22109,13 +22109,13 @@ loc_4847BE4D:
 loc_4847BEA2:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
@@ -22133,7 +22133,7 @@ loc_4847BED5:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847BF00
@@ -22145,7 +22145,7 @@ loc_4847BF00:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
@@ -22161,35 +22161,35 @@ loc_4847BF2D:
     inc     d1
     mov     d1, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847BF7F
 loc_4847BF43:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847BF7F
 loc_4847BF57:
     add     -2, a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847BF7F
 loc_4847BF6C:
     add     -1, a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847BF7F:
     mov     1, d0
     call    func_4847C4AE_entry, [d2,d3,a2,a3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -22199,21 +22199,21 @@ loc_4847BF7F:
     beq     loc_4847BFCD
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847BFEF
 loc_4847BFCD:
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847BFEF:
     mov     1, d0
@@ -22251,7 +22251,7 @@ StyleListBoxDrawItem:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847C05B
@@ -22263,7 +22263,7 @@ loc_4847C05B:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
@@ -22276,28 +22276,28 @@ loc_4847C084:
     add     2, a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847C0BF
 loc_4847C099:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847C0BF
 loc_4847C0AD:
     inc     a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847C0BF:
     mov     2, d0
     call    func_4847C4AE_entry, [d2,d3,a2,a3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -22307,21 +22307,21 @@ loc_4847C0BF:
     beq     loc_4847C10D
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847C12F
 loc_4847C10D:
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847C12F:
     mov     1, d0
@@ -22869,7 +22869,7 @@ AcAlphabetListBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4847C5B2
     jmp     loc_4847C922
 loc_4847C5B2:
@@ -22930,7 +22930,7 @@ loc_4847C603:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -22950,13 +22950,13 @@ loc_4847C603:
     beq     loc_4847C6A2
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -22965,13 +22965,13 @@ loc_4847C603:
 loc_4847C6A2:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -22988,7 +22988,7 @@ loc_4847C6D3:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847C6FA
@@ -23000,20 +23000,20 @@ loc_4847C6FA:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     add     -1, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     call    func_4847CA90_entry, [d2], 0x18
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -23023,21 +23023,21 @@ loc_4847C6FA:
     beq     loc_4847C773
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847C793
 loc_4847C773:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847C793:
     mov     1, d0
@@ -23072,7 +23072,7 @@ loc_4847C7D2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847C7F9
@@ -23084,19 +23084,19 @@ loc_4847C7F9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     2, d0
     call    func_4847CA90_entry, [d2], 0x18
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -23106,21 +23106,21 @@ loc_4847C7F9:
     beq     loc_4847C870
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847C890
 loc_4847C870:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847C890:
     mov     1, d0
@@ -23381,7 +23381,7 @@ AcAlpStyleListBoxProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_4847CAF8
     jmp     loc_4847D031
 loc_4847CAF8:
@@ -23451,7 +23451,7 @@ loc_4847CB4A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -23499,13 +23499,13 @@ loc_4847CC13:
     beq     loc_4847CC63
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -23514,13 +23514,13 @@ loc_4847CC13:
 loc_4847CC63:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -23538,7 +23538,7 @@ loc_4847CC94:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847CCBC
@@ -23550,7 +23550,7 @@ loc_4847CCBC:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
@@ -23563,28 +23563,28 @@ loc_4847CCE3:
     inc     a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847CD1B
 loc_4847CCF6:
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847CD1B
 loc_4847CD09:
     add     -1, a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847CD1B:
     mov     1, d0
     call    func_4847D145_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -23594,21 +23594,21 @@ loc_4847CD1B:
     beq     loc_4847CD66
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847CD86
 loc_4847CD66:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847CD86:
     mov     1, d0
@@ -23644,7 +23644,7 @@ loc_4847CDC5:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847CDED
@@ -23656,7 +23656,7 @@ loc_4847CDED:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d0
@@ -23665,7 +23665,7 @@ loc_4847CDED:
     exth    d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847CE32
 loc_4847CE20:
@@ -23673,14 +23673,14 @@ loc_4847CE20:
     inc     d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847CE32:
     mov     2, d0
     call    func_4847D145_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -23690,21 +23690,21 @@ loc_4847CE32:
     beq     loc_4847CE7D
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847CE9D
 loc_4847CE7D:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847CE9D:
     mov     1, d0
@@ -23741,14 +23741,14 @@ loc_4847CEDC:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     add     -1, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     3, d0
     call    func_4847D145_entry, [d2,d3,a2,a3], 0x28
@@ -23787,14 +23787,14 @@ loc_4847CF5F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     inc     d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     4, d0
     call    func_4847D145_entry, [d2,d3,a2,a3], 0x28
@@ -24130,7 +24130,7 @@ AcEraListBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4847D278
     jmp     loc_4847D5E8
 loc_4847D278:
@@ -24191,7 +24191,7 @@ loc_4847D2C9:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24211,13 +24211,13 @@ loc_4847D2C9:
     beq     loc_4847D368
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -24226,13 +24226,13 @@ loc_4847D2C9:
 loc_4847D368:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -24249,7 +24249,7 @@ loc_4847D399:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847D3C0
@@ -24261,20 +24261,20 @@ loc_4847D3C0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     add     -1, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     call    func_4847D753_entry, [d2,d3,a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -24284,21 +24284,21 @@ loc_4847D3C0:
     beq     loc_4847D439
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847D459
 loc_4847D439:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847D459:
     mov     1, d0
@@ -24333,7 +24333,7 @@ loc_4847D498:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847D4BF
@@ -24345,19 +24345,19 @@ loc_4847D4BF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     2, d0
     call    func_4847D753_entry, [d2,d3,a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -24367,21 +24367,21 @@ loc_4847D4BF:
     beq     loc_4847D536
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847D556
 loc_4847D536:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847D556:
     mov     1, d0
@@ -24828,7 +24828,7 @@ IvEditSwForEraPageProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4847D999
     mov     (0x38, sp), a2
     mov     a2, (0x10, sp)
@@ -24887,7 +24887,7 @@ AcEraStyleListBoxProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_4847D9B9
     jmp     loc_4847DF3D
 loc_4847D9B9:
@@ -24957,7 +24957,7 @@ loc_4847DA0A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -25005,13 +25005,13 @@ loc_4847DAD3:
     beq     loc_4847DB23
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -25020,13 +25020,13 @@ loc_4847DAD3:
 loc_4847DB23:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -25044,7 +25044,7 @@ loc_4847DB54:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847DB7C
@@ -25056,7 +25056,7 @@ loc_4847DB7C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d0
@@ -25070,14 +25070,14 @@ loc_4847DBA2:
     inc     d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DBDC
 loc_4847DBB6:
     exth    d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DBDC
 loc_4847DBC9:
@@ -25085,14 +25085,14 @@ loc_4847DBC9:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847DBDC:
     mov     1, d0
     call    func_4847E0E6_entry, [d2,d3,a2,a3], 0x24
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -25102,21 +25102,21 @@ loc_4847DBDC:
     beq     loc_4847DC27
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847DC47
 loc_4847DC27:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847DC47:
     mov     1, d0
@@ -25152,7 +25152,7 @@ loc_4847DC86:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847DCAE
@@ -25164,7 +25164,7 @@ loc_4847DCAE:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
@@ -25173,21 +25173,21 @@ loc_4847DCAE:
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DCF3
 loc_4847DCE2:
     inc     a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847DCF3:
     mov     2, d0
     call    func_4847E0E6_entry, [d2,d3,a2,a3], 0x24
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -25197,21 +25197,21 @@ loc_4847DCF3:
     beq     loc_4847DD3E
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847DD5E
 loc_4847DD3E:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847DD5E:
     mov     1, d0
@@ -25247,7 +25247,7 @@ loc_4847DD9D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
@@ -25262,14 +25262,14 @@ loc_4847DDCB:
     inc     a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DE06
 loc_4847DDE0:
     exth    d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DE06
 loc_4847DDF3:
@@ -25277,7 +25277,7 @@ loc_4847DDF3:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847DE06:
     mov     3, d0
@@ -25316,7 +25316,7 @@ loc_4847DE53:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
@@ -25326,14 +25326,14 @@ loc_4847DE53:
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847DEA0
 loc_4847DE8F:
     inc     a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847DEA0:
     mov     4, d0
@@ -25760,7 +25760,7 @@ AcCustomListBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4847E23C
     jmp     loc_4847E5B8
 loc_4847E23C:
@@ -25821,7 +25821,7 @@ loc_4847E28D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -25841,13 +25841,13 @@ loc_4847E28D:
     beq     loc_4847E32C
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -25856,13 +25856,13 @@ loc_4847E28D:
 loc_4847E32C:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -25879,7 +25879,7 @@ loc_4847E35D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847E384
@@ -25891,20 +25891,20 @@ loc_4847E384:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     -1, d1
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     call    func_4847E721_entry, [d2,d3], 0x1c
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -25914,21 +25914,21 @@ loc_4847E384:
     beq     loc_4847E3FD
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847E41D
 loc_4847E3FD:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847E41D:
     mov     1, d0
@@ -25963,7 +25963,7 @@ loc_4847E45C:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847E483
@@ -25975,20 +25975,20 @@ loc_4847E483:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
     inc     d1
     mov     d1, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     2, d0
     call    func_4847E721_entry, [d2,d3], 0x1c
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -25998,21 +25998,21 @@ loc_4847E483:
     beq     loc_4847E4FB
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847E51B
 loc_4847E4FB:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847E51B:
     mov     1, d0
@@ -26327,7 +26327,7 @@ loc_4847E7E1:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
@@ -26379,13 +26379,13 @@ loc_4847E8BB:
     beq     loc_4847E910
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
@@ -26394,13 +26394,13 @@ loc_4847E8BB:
 loc_4847E910:
     add     0x1c, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
@@ -26418,7 +26418,7 @@ loc_4847E943:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847E96E
@@ -26430,7 +26430,7 @@ loc_4847E96E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
@@ -26445,14 +26445,14 @@ loc_4847E99B:
     inc     a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847E9ED
 loc_4847E9AF:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847E9ED
 loc_4847E9C3:
@@ -26460,21 +26460,21 @@ loc_4847E9C3:
     add     a0, d1
     mov     d1, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847E9ED
 loc_4847E9DA:
     add     -1, a0
     mov     a0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847E9ED:
     mov     1, d0
     call    func_4847EF3E_entry, 0, 0x14
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -26484,21 +26484,21 @@ loc_4847E9ED:
     beq     loc_4847EA3B
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847EA5D
 loc_4847EA3B:
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847EA5D:
     mov     1, d0
@@ -26534,7 +26534,7 @@ loc_4847EA9E:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4847EAC9
@@ -26546,7 +26546,7 @@ loc_4847EAC9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d0
@@ -26560,14 +26560,14 @@ loc_4847EAF1:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847EB2E
 loc_4847EB07:
     exth    d1
     mov     d1, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4847EB2E
 loc_4847EB1B:
@@ -26575,14 +26575,14 @@ loc_4847EB1B:
     inc     d1
     mov     d1, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4847EB2E:
     mov     2, d0
     call    func_4847EF3E_entry, 0, 0x14
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x34, a3), d0
     cmp     0, d0
@@ -26592,21 +26592,21 @@ loc_4847EB2E:
     beq     loc_4847EB7C
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4847EB9E
 loc_4847EB7C:
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
 loc_4847EB9E:
     mov     1, d0
@@ -27114,11 +27114,11 @@ AcEraTitleMenuProc:
     add     -0x20, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4847EFE0
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     beq     loc_4847EFE0
-    cmp     0x60051, d2
+    cmp     MT_CheckEditSw, d2
     beq     loc_4847EFFF
     cmp     0x1550000, d2
     beq     loc_4847F037
@@ -27144,7 +27144,7 @@ loc_4847EFFF:
     mov     a0, a2
     mov     a1, (0x10, sp)
     mov     0x000d0024, d0
-    mov     0x00060029, d1
+    mov     MT_MakeEditSwID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x28, a2), d1
     cmp     d0, d1
@@ -27213,9 +27213,9 @@ AcCtgOrgTitleMenuProc:
     add     -0x20, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     beq     loc_4847F0D4
-    cmp     0x6003a, d3
+    cmp     MT_GetString, d3
     bne     loc_4847F0C6
     jmp     loc_4847F15B
 loc_4847F0C6:
@@ -27230,7 +27230,7 @@ loc_4847F0D4:
     mov     (0x40, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4847F14D
@@ -27241,7 +27241,7 @@ loc_4847F0D4:
     beq     loc_4847F14D
     mov     0x00040035, d0
     mov     d0, (0x10, sp)
-    mov     0x00060014, d1
+    mov     MT_CheckClass, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     1, d0
@@ -27312,7 +27312,7 @@ loc_4847F1B2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -27350,7 +27350,7 @@ loc_4847F206:
 # MoreStyleFunc  (CPU 0x4847f209)
 MoreStyleFunc:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4847F23F
     mov     (0x24, sp), d0
     btst    0x80, d0
@@ -27496,7 +27496,7 @@ loc_4847F32A:
 
 func_4847F32D:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_4847F34B
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -27530,7 +27530,7 @@ loc_4847F37C:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
     clr     d1
@@ -27538,7 +27538,7 @@ loc_4847F37C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     3, d0
     mov     0x50, d1
@@ -27568,7 +27568,7 @@ loc_4847F3F6:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
     clr     d1
@@ -27578,7 +27578,7 @@ loc_4847F415:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movbu   (0x5004fb64), d0
     cmp     0, d0
@@ -27616,7 +27616,7 @@ loc_4847F484:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
     clr     d1
@@ -27624,7 +27624,7 @@ loc_4847F484:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     3, d0
     mov     0x51, d1
@@ -27712,7 +27712,7 @@ loc_4847F582:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
     clr     d1

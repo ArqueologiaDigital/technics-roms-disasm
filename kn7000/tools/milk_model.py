@@ -80,11 +80,13 @@ def find_raminit(src_glob):
     build's converted code: `mov N, d1 / cmp 0, d1 / ble ... / mov SRC, a0 /
     mov 0x50000010, a1`."""
     rx = re.compile(r"mov\s+(0x[0-9a-fA-F]+), d1\n\s+cmp\s+0, d1\n\s+ble\s+\S+\n"
-                    r"\s+mov\s+(0x48[0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]), a1\n")
+                    r"\s+mov\s+(0x48[0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
+    # (the destination is a number, or, once the data region is typed, its label <kind>_<ADDR>)
     for f in sorted(glob.glob(src_glob)):
         m = rx.search(open(f, encoding="latin-1").read())
         if m:
-            return int(m.group(2), 16), int(m.group(3), 16), int(m.group(1), 16)
+            dst = int(m.group(4), 16) if m.group(4) else int(m.group(3), 16)
+            return int(m.group(2), 16), dst, int(m.group(1), 16)
     sys.exit(f"milk_model: no initialised-RAM copy loop in {src_glob}")
 
 # byte size of each propdata type character (see Model._solve_sizes)

@@ -7,6 +7,9 @@
 # tools/milk_model.py for what each structure is and the firmware code that reads it.
 
 .include "src/constants.inc"
+.include "src/include/kn_song.inc"
+.include "src/include/panel_memory.inc"
+.include "src/include/kn_panel_extra.inc"
 .include "src/b893/program/data/gui_ids.inc"
 .include "src/b893/program/data/gui_classes.inc"
 
@@ -14,4 +17,6 @@
 .include "src/b893/program/data/data_00.s"
 .include "src/b893/program/data/data_01.s"
 .include "src/b893/program/data/data_02.s"
+.include "src/b893/program/data/data_03.s"
+.include "src/b893/program/data/data_04.s"
 .org 0x3B76B1

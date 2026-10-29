@@ -33861,13 +33861,13 @@ loc_4C0371A2:
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
-    mov     0x00060000, d1
+    mov     MT_GetClassSp, d1
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     exthu   d3
     clr     d0
@@ -33959,7 +33959,7 @@ TgVoiceForceOff_entry:
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     clr     d0
     mov     d0, (0x10, sp)
@@ -34006,7 +34006,7 @@ TgVoiceForceOffSoft_entry:
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     clr     d0
     mov     d0, (0x10, sp)
@@ -34123,13 +34123,13 @@ loc_4C037401:
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x10, a2), d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x14, a2), d0
-    mov     0x00060000, d1
+    mov     MT_GetClassSp, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
@@ -34401,7 +34401,7 @@ TgVoiceEgBurstWrite_entry:
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x12, a2), d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
@@ -34469,13 +34469,13 @@ loc_4C0377E8:
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x10, a2), d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x14, a2), d0
-    mov     0x00060000, d1
+    mov     MT_GetClassSp, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
@@ -34543,13 +34543,13 @@ TgVoiceEgRegsWriteRaw_entry:
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x10, a2), d0
-    mov     0x00050000, d1
+    mov     EV_NONE, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     movhu   (0x14, a2), d0
-    mov     0x00060000, d1
+    mov     MT_GetClassSp, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     extbu   d0

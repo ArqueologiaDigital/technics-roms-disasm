@@ -8782,11 +8782,11 @@ DbMemoProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x70, sp
     mov     d0, (0x88, sp)
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48487659
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_48487691
-    cmp     0x5001d, d1
+    cmp     EV_MEMODRAW, d1
     bne     loc_48487656
     jmp     loc_4848776E
 loc_48487656:
@@ -8804,7 +8804,7 @@ loc_48487659:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x88, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x80
@@ -8976,7 +8976,7 @@ loc_484877FF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x88, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48487820:
     clr     d0
@@ -9001,11 +9001,11 @@ func_48487831_entry:
     call    strcpy_entry, [a2], 4
     mov     a2, (0x10, sp)
     mov     0x00100026, d0
-    mov     0x0005001d, d1
+    mov     EV_MEMODRAW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     0x00100026, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     [a2,a3], 0x1c
 
@@ -9106,7 +9106,7 @@ loc_484878FE:
 loc_48487944:
     mov     (0x94, sp), d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d0
+    mov     MT_SeleDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -9118,7 +9118,7 @@ loc_48487944:
 loc_48487962:
     mov     (0x94, sp), d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d0
+    mov     MT_SeleDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -9140,7 +9140,7 @@ loc_48487980:
     bne     loc_484879D9
     mov     (0x94, sp), d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d0
+    mov     MT_SeleDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -9152,7 +9152,7 @@ loc_48487980:
 loc_484879BB:
     mov     (0x94, sp), d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d0
+    mov     MT_SeleDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -9183,18 +9183,18 @@ loc_484879D9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x8c
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x94, sp), d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d0
+    mov     MT_SeleDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -9346,7 +9346,7 @@ loc_48487B7F:
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     movbu   (d2, a2), d0
-    mov     0x000600b0, d1
+    mov     MT_GetColor, d1
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -9441,7 +9441,7 @@ loc_48487C67:
     movbu   d1, (0x3c, sp)
 loc_48487C6C:
     movbu   (d0, a2), d0
-    mov     0x000600b0, d1
+    mov     MT_GetColor, d1
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -9643,7 +9643,7 @@ loc_48487DAE:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48487E4C
 loc_48487E44:
@@ -9703,7 +9703,7 @@ loc_48487EBB:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x94, sp), d0
@@ -9750,7 +9750,7 @@ loc_48487F27:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x94, sp), d0
@@ -9778,7 +9778,7 @@ loc_48487F79:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x94, sp), d0
@@ -9793,7 +9793,7 @@ loc_48487F98:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x94, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_48487FF9
@@ -9837,7 +9837,7 @@ DbColorListProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_4848800D
     jmp     loc_484880B9
 loc_4848800D:
@@ -9937,21 +9937,21 @@ DbColorRGBProc:
     add     -0x34, sp
     mov     d0, (0x4c, sp)
     mov     d1, d3
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_48488106
-    cmp     0x5000f, d3
+    cmp     EV_INDEXSW_UP, d3
     bne     loc_484880E2
     jmp     loc_48488217
 loc_484880E2:
-    cmp     0x50010, d3
+    cmp     EV_INDEXSW_DOWN, d3
     bne     loc_484880ED
     jmp     loc_48488217
 loc_484880ED:
-    cmp     0x6004e, d3
+    cmp     MT_GetIndex, d3
     bne     loc_484880F8
     jmp     loc_484882D9
 loc_484880F8:
-    cmp     0x6004d, d3
+    cmp     MT_CheckIndex, d3
     bne     loc_48488103
     jmp     loc_484882E6
 loc_48488103:
@@ -10057,7 +10057,7 @@ loc_48488106:
     ret     [d2,d3,a2,a3], 0x44
 loc_48488217:
     mov     (0x54, sp), a2
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     a2, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
@@ -10067,7 +10067,7 @@ loc_4848822F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x4c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     a2, d2
@@ -10086,7 +10086,7 @@ loc_4848822F:
     and     0x00ff0000, d0
     lsr     16, d0
     movbu   d0, (0x32, sp)
-    cmp     0x50010, d3
+    cmp     EV_INDEXSW_DOWN, d3
     bne     loc_48488285
     exth    d2
     movbu   (d2, a1), d0
@@ -10113,7 +10113,7 @@ loc_4848828C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x4c, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     (0x4c, sp), d0
@@ -10165,21 +10165,21 @@ DbModeEditBoxProc:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_4848835F
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4848837F
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_4848839B
-    cmp     0x60062, d1
+    cmp     MT_GetParam, d1
     bne     loc_48488346
     jmp     loc_48488434
 loc_48488346:
-    cmp     0x5000f, d1
+    cmp     EV_INDEXSW_UP, d1
     bne     loc_48488351
     jmp     loc_4848843D
 loc_48488351:
-    cmp     0x50010, d1
+    cmp     EV_INDEXSW_DOWN, d1
     bne     loc_4848835C
     jmp     loc_48488485
 loc_4848835C:
@@ -10190,7 +10190,7 @@ loc_4848835F:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10214,7 +10214,7 @@ loc_484883A9:
     mov     a1, (0x5015080c)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10226,12 +10226,12 @@ loc_484883C2:
     mov     0x000e0000, d2
     add     d0, d2
     mov     d2, d0
-    mov     0x0006002c, d1
+    mov     MT_GetModeProcID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x5015080c), a0
     inc     d3
     mov     a0, (0x10, sp)
-    mov     0x000600e4, d1
+    mov     MT_SetDebugMode, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     d3, d0
     exth    d3
@@ -10246,12 +10246,12 @@ loc_484883F9:
     mov     0x000f0000, d2
     add     d0, d2
     mov     d2, d0
-    mov     0x00060032, d1
+    mov     MT_GetTitleProcID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x5015080c), a0
     inc     d3
     mov     a0, (0x10, sp)
-    mov     0x000600e4, d1
+    mov     MT_SetDebugMode, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     d3, d0
     exth    d3
@@ -10269,19 +10269,19 @@ loc_4848843D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d2, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48488482
     mov     a2, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48488482
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48488482:
@@ -10293,19 +10293,19 @@ loc_48488485:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d2, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484884C9
     mov     a2, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484884C9
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484884C9:
@@ -10323,29 +10323,29 @@ DbBitmapFileProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848852E
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     bne     loc_484884F4
     jmp     loc_4848857D
 loc_484884F4:
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_484884FF
     jmp     loc_4848859D
 loc_484884FF:
-    cmp     0x50011, d2
+    cmp     EV_INDEXSW_UP_AIC, d2
     bne     loc_4848850A
     jmp     loc_484885C4
 loc_4848850A:
-    cmp     0x5000f, d2
+    cmp     EV_INDEXSW_UP, d2
     bne     loc_48488515
     jmp     loc_484885C4
 loc_48488515:
-    cmp     0x50012, d2
+    cmp     EV_INDEXSW_DOWN_AIC, d2
     bne     loc_48488520
     jmp     loc_4848864A
 loc_48488520:
-    cmp     0x50010, d2
+    cmp     EV_INDEXSW_DOWN, d2
     bne     loc_4848852B
     jmp     loc_4848864A
 loc_4848852B:
@@ -10375,7 +10375,7 @@ loc_4848857D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10398,13 +10398,13 @@ loc_484885C4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48488646
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48488646
@@ -10426,7 +10426,7 @@ loc_4848862E:
     call    WakeUpMainTask_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48488646:
@@ -10438,13 +10438,13 @@ loc_4848864A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484886C9
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484886C9
@@ -10462,7 +10462,7 @@ loc_4848864A:
     call    WakeUpMainTask_entry, 0, 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484886C9:
@@ -10479,15 +10479,15 @@ DbBitmapLoadProc:
     movm    [d2], (sp)
     add     -0x18, sp
     mov     d0, d2
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_48488709
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48488757
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     bne     loc_484886FB
     jmp     loc_48488776
 loc_484886FB:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48488706
     jmp     loc_48488797
 loc_48488706:
@@ -10517,7 +10517,7 @@ loc_48488757:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10555,9 +10555,9 @@ IvMpVerWinProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_484887E4
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_48488809
     bra     loc_48488860
 loc_484887E4:
@@ -10566,7 +10566,7 @@ loc_484887E4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     Str_MpVW, d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10619,9 +10619,9 @@ loc_4848886B:
 # CaptureLcdCheck  (CPU 0x4848886e)
 CaptureLcdCheck:
     add     -8, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_48488883
-    cmp     0x50000, d1
+    cmp     EV_NONE, d1
     beq     loc_4848888D
     bra     loc_48488893
 loc_48488883:
@@ -10641,9 +10641,9 @@ AcProgVerBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_484888AF
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_484888CE
     bra     loc_484888ED
 loc_484888AF:
@@ -10652,7 +10652,7 @@ loc_484888AF:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10679,9 +10679,9 @@ AcTableVerBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48488913
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48488932
     bra     loc_48488951
 loc_48488913:
@@ -10690,7 +10690,7 @@ loc_48488913:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10717,9 +10717,9 @@ AcRhythmVerBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48488978
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48488998
     jmp     loc_484889FD
 loc_48488978:
@@ -10728,7 +10728,7 @@ loc_48488978:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10788,9 +10788,9 @@ AcAromVerBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48488A23
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48488A42
     bra     loc_48488A9E
 loc_48488A23:
@@ -10799,7 +10799,7 @@ loc_48488A23:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -10862,19 +10862,19 @@ DbVariableMenuProc:
     add     -0x18, sp
     mov     d0, (0x30, sp)
     mov     d1, (0x34, sp)
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48488AF2
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_48488B15
-    cmp     0x5000f, d1
+    cmp     EV_INDEXSW_UP, d1
     bne     loc_48488AD9
     jmp     loc_48488B78
 loc_48488AD9:
-    cmp     0x50010, d1
+    cmp     EV_INDEXSW_DOWN, d1
     bne     loc_48488AE4
     jmp     loc_48488C05
 loc_48488AE4:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48488AEF
     jmp     loc_48488C92
 loc_48488AEF:
@@ -10887,7 +10887,7 @@ loc_48488AF2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
@@ -10898,7 +10898,7 @@ loc_48488B15:
     mov     a0, a2
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48488B68
@@ -10935,7 +10935,7 @@ loc_48488B68:
     ret     [d2,d3,a2,a3], 0x28
 loc_48488B78:
     mov     (0x38, sp), a3
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -10991,7 +10991,7 @@ loc_48488BCB:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48488BF4:
     mov     a3, (0x10, sp)
@@ -11002,7 +11002,7 @@ loc_48488BF4:
     ret     [d2,d3,a2,a3], 0x28
 loc_48488C05:
     mov     (0x38, sp), a3
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11058,7 +11058,7 @@ loc_48488C59:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48488C82:
     mov     a3, (0x10, sp)
@@ -11079,7 +11079,7 @@ loc_48488C92:
     mov     (a0), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060015, d1
+    mov     MT_GetName, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, (0x14, sp)
     mov     a2, (8, sp)
@@ -11235,7 +11235,7 @@ AcNamingWindowProc:
     add     -0x48, sp
     mov     d0, (0x60, sp)
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     bge     loc_48488EBA
     jmp     loc_484899BA
 loc_48488EBA:
@@ -11293,7 +11293,7 @@ loc_48488F26:
     movhu   d0, (0x5006b58c)
     mov     d0, (0x10, sp)
     mov     (0x5006b580), d0
-    mov     0x00060072, d1
+    mov     MT_GetStringLength, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     movhu   d0, (0x5006b584)
     movhu   (0x5006b584), d0
@@ -11352,17 +11352,17 @@ loc_48488FF7:
     beq     loc_48489045
     mov     a0, (0x10, sp)
     mov     (0x5006b580), d0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     mov     0x6c, d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x006c0000, d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00050022, d1
+    mov     EV_YOUARESELECTED, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48489052
 loc_48489045:
@@ -11376,12 +11376,12 @@ loc_48489052:
     mov     0x65, d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     0x64, d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -11392,7 +11392,7 @@ loc_48489052:
     movhu   d0, (0x5006b58e)
     movhu   d0, (0x5006b592)
     movhu   (0x5006b588), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11402,7 +11402,7 @@ loc_48489052:
     mov     (0x60, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11670,7 +11670,7 @@ loc_4848937B:
     add     -1, d0
     movhu   d0, (0x5006b586)
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11691,7 +11691,7 @@ loc_484893BD:
     inc     d1
     movhu   d1, (0x5006b586)
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11726,10 +11726,10 @@ loc_484893F7:
     movbu   d1, (d0, a0)
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b590), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11771,10 +11771,10 @@ loc_48489498:
     movbu   d1, (d0, a0)
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b590), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11808,10 +11808,10 @@ loc_48489527:
     movbu   d1, (d0, a0)
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11840,10 +11840,10 @@ loc_4848958D:
     movbu   d1, (d2, a0)
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11959,10 +11959,10 @@ loc_4848968F:
 loc_484896B3:
     mov     a3, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -11985,17 +11985,17 @@ loc_48489700:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x5006b53c, d0
     mov     d0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48489743:
     clr     d0
@@ -12008,13 +12008,13 @@ loc_48489743:
     cmp     0x6d, a2
     bne     loc_4848978D
     clr     d0
-    cmp     0x50035, d3
+    cmp     EV_INDEXSW_ON, d3
     bne     loc_48489764
     mov     1, d0
 loc_48489764:
     movhu   d0, (0x5006b58c)
     movhu   (0x5006b588), d0
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -12044,10 +12044,10 @@ loc_484897A9:
     movbu   d1, (d0, a0)
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b590), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -12060,7 +12060,7 @@ loc_484897A9:
     inc     d1
     movhu   d1, (0x5006b586)
     movhu   (0x5006b586), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -12077,7 +12077,7 @@ loc_4848982C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x58
@@ -12099,25 +12099,25 @@ loc_4848982C:
     add     0x6c0000, d1
     mov     d1, (0x10, sp)
     mov     -1, d0
-    mov     0x00050022, d1
+    mov     EV_YOUARESELECTED, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848989E:
     movhu   (0x5006b588), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x58
     mov     (0x68, sp), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     movhu   d0, (0x5006b586)
     movhu   (0x5006b586), d0
     mov     ptrs_485D75B8, a2
     mov     d0, (0x10, sp)
     mov     0x0020001b, d0
     call    SendEvent_entry, [d2,d3], 0x24
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     0x5006b53c, a0
     mov     a0, (0x10, sp)
     mov     0x0020001b, d0
@@ -12159,7 +12159,7 @@ loc_48489934:
     bne     loc_4848990F
 loc_48489949:
     movhu   (0x5006b590), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -12171,7 +12171,7 @@ loc_48489949:
     movbu   d0, (d1, a0)
     mov     d1, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00060076, d1
+    mov     MT_SetCursor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_484899C8
@@ -12190,7 +12190,7 @@ loc_48489949:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x60, sp), d0
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484899B7:
     clr     d0
@@ -12209,9 +12209,9 @@ AcNamingEditSwProc:
     add     -0x20, sp
     mov     d0, d2
     mov     d1, (0x3c, sp)
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_484899FF
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_484899E6
     jmp     loc_48489A99
 loc_484899E6:
@@ -12219,7 +12219,7 @@ loc_484899E6:
     bne     loc_484899F1
     jmp     loc_48489B3D
 loc_484899F1:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_484899FC
     jmp     loc_48489B6A
 loc_484899FC:
@@ -12231,7 +12231,7 @@ loc_484899FF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x30, a3), a0
     exth    d0
@@ -12251,7 +12251,7 @@ loc_484899FF:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48489A95
@@ -12290,7 +12290,7 @@ loc_48489A99:
     mov     (0x40, sp), d3
     mov     d2, d0
     mov     d3, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48489AB2
@@ -12302,7 +12302,7 @@ loc_48489AB2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
@@ -12358,7 +12358,7 @@ loc_48489B3D:
     call    GetViewInstance, 0, 0
     mov     (0x30, a0), a0
     clr     d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     a2, (a0)
     mov     d0, (0x10, sp)
     mov     d2, d0
@@ -12372,7 +12372,7 @@ loc_48489B6A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x30, a2), a1
     mov     d0, d1
@@ -12400,11 +12400,11 @@ IvNamingProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48489BD3
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48489BF7
-    cmp     0x50002, d2
+    cmp     EV_HIDE, d2
     beq     loc_48489C35
     jmp     loc_48489C54
 loc_48489BD3:
@@ -12413,7 +12413,7 @@ loc_48489BD3:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     Str_Name, d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -12425,7 +12425,7 @@ loc_48489BF7:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x18, a0), d0
-    mov     0x00060071, d1
+    mov     MT_SetApFunction, d1
     mov     d0, (0x10, sp)
     mov     0x00200000, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -12461,11 +12461,11 @@ NamingCheck:
     movm    [d2], (sp)
     add     -0x10, sp
     mov     d0, d2
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48489C8B
     cmp     0x260000, d1
     beq     loc_48489C9D
-    cmp     0x60072, d1
+    cmp     MT_GetStringLength, d1
     beq     loc_48489CA0
     bra     loc_48489CAF
 loc_48489C8B:
@@ -12620,9 +12620,9 @@ TtMessage:
     movm    [d2], (sp)
     add     -0x14, sp
     clr     d2
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_48489E8D
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     beq     loc_48489EAE
     bra     loc_48489ED3
 loc_48489E8D:
@@ -12631,7 +12631,7 @@ loc_48489E8D:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48489ED3
 loc_48489EAE:
@@ -12659,17 +12659,17 @@ IvMessageProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_48489F09
-    cmp     0x600a7, d1
+    cmp     MT_InterruptOff, d1
     bne     loc_48489EF0
     jmp     loc_48489FA9
 loc_48489EF0:
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     bne     loc_48489EFB
     jmp     loc_48489FE6
 loc_48489EFB:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48489F06
     jmp     loc_4848A005
 loc_48489F06:
@@ -12702,7 +12702,7 @@ loc_48489F43:
     asl2    d0
     mov     (d0, a0), d0
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b5a0), d0
     exth    d0
@@ -12714,7 +12714,7 @@ loc_48489F43:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x000600a4, d1
+    mov     MT_SetKeep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     call    SetNeedUpdate_entry, [d2], 0x10
@@ -12739,9 +12739,9 @@ loc_48489FBA:
     exth    d0
     asl2    d0
     mov     (d0, a0), d0
-    mov     0x000600a7, d1
+    mov     MT_InterruptOff, d1
     mov     d1, (0x10, sp)
-    mov     0x000600a6, d1
+    mov     MT_SearchLink, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848A022
 loc_48489FE6:
@@ -12750,7 +12750,7 @@ loc_48489FE6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -12773,19 +12773,19 @@ func_4848A025:
     add     -0x24, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4848A065
-    cmp     0x50002, d3
+    cmp     EV_HIDE, d3
     beq     loc_4848A07C
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_4848A0A4
-    cmp     0x600b4, d3
+    cmp     MT_ParaDraw, d3
     beq     loc_4848A0C4
-    cmp     0x6003a, d3
+    cmp     MT_GetString, d3
     bne     loc_4848A057
     jmp     loc_4848A15A
 loc_4848A057:
-    cmp     0x600af, d3
+    cmp     MT_GetFont, d3
     bne     loc_4848A062
     jmp     loc_4848A1CE
 loc_4848A062:
@@ -12802,7 +12802,7 @@ loc_4848A065:
 loc_4848A07C:
     mov     d2, d1
     mov     d2, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -12821,7 +12821,7 @@ loc_4848A0A4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -12834,7 +12834,7 @@ loc_4848A0C4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x000600a3, d1
+    mov     MT_GetBoxColor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     a2, a0
@@ -12846,7 +12846,7 @@ loc_4848A0C4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     d2, (0x10, sp)
     mov     d2, d1
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -12857,7 +12857,7 @@ loc_4848A0C4:
     cmp     0, d0
     bne     loc_4848A131
     mov     d2, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -12867,7 +12867,7 @@ loc_4848A0C4:
     bra     loc_4848A148
 loc_4848A131:
     mov     d2, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -12952,13 +12952,13 @@ loc_4848A1E6:
 # CheckLanguage  (CPU 0x4848a1e9)
 CheckLanguage:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_4848A20E
-    cmp     0x60044, d1
+    cmp     MT_GetRamString, d1
     beq     loc_4848A24F
-    cmp     0x60042, d1
+    cmp     MT_GetRamAddress, d1
     beq     loc_4848A26D
-    cmp     0x60043, d1
+    cmp     MT_GetRamSize, d1
     beq     loc_4848A275
     bra     loc_4848A279
 loc_4848A20E:
@@ -12981,7 +12981,7 @@ loc_4848A23A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4848A27A
@@ -13009,17 +13009,17 @@ loc_4848A27A:
 CheckMessage:
     movm    [a2,a3], (sp)
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_4848A2AE
-    cmp     0x60044, d1
+    cmp     MT_GetRamString, d1
     bne     loc_4848A295
     jmp     loc_4848A336
 loc_4848A295:
-    cmp     0x60042, d1
+    cmp     MT_GetRamAddress, d1
     bne     loc_4848A2A0
     jmp     loc_4848A358
 loc_4848A2A0:
-    cmp     0x60043, d1
+    cmp     MT_GetRamSize, d1
     bne     loc_4848A2AB
     jmp     loc_4848A360
 loc_4848A2AB:
@@ -13036,7 +13036,7 @@ loc_4848A2AE:
     mov     (d0, a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x2c, sp), d0
     btst    0x80, d0
@@ -13070,7 +13070,7 @@ loc_4848A313:
     asl2    d0
     mov     (d0, a3), d0
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4848A365
@@ -13099,9 +13099,9 @@ loc_4848A365:
 # MessageText  (CPU 0x4848a368)
 MessageText:
     add     -8, sp
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4848A37D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4848A3D9
     bra     loc_4848A3DD
 loc_4848A37D:
@@ -13151,9 +13151,9 @@ loc_4848A3DE:
 MessageHeader:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4848A3FC
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     bne     loc_4848A3F9
     jmp     loc_4848A4C7
 loc_4848A3F9:
@@ -13176,7 +13176,7 @@ loc_4848A417:
     mov     a0, (0x1c, sp)
     mov     a0, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    PostEvent_entry, [d2,d3], 0x24
     clr     d0
     clr     d3
@@ -13223,7 +13223,7 @@ loc_4848A437:
     call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     (0x18, sp), a0
     mov     d3, d0
@@ -13387,9 +13387,9 @@ TtWelcome:
     movm    [d2], (sp)
     add     -0x1c, sp
     clr     d2
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_4848A6B6
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     bne     loc_4848A6B3
     jmp     loc_4848A786
 loc_4848A6B3:
@@ -13450,7 +13450,7 @@ loc_4848A76D:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848A788
 loc_4848A786:
@@ -13464,17 +13464,17 @@ AcWelcomeScreenProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848A7C4
-    cmp     0x50002, d2
+    cmp     EV_HIDE, d2
     beq     loc_4848A7EB
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4848A813
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     bne     loc_4848A7B6
     jmp     loc_4848A843
 loc_4848A7B6:
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     bne     loc_4848A7C1
     jmp     loc_4848A851
 loc_4848A7C1:
@@ -13486,14 +13486,14 @@ loc_4848A7C4:
     call    GetTitleNow_entry, 0, 0x10
     mov     1, d1
     mov     d1, (0x10, sp)
-    mov     0x000600a4, d1
+    mov     MT_SetKeep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3], 0x24
 loc_4848A7EB:
     mov     d3, d1
     mov     d3, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -13514,7 +13514,7 @@ loc_4848A813:
     cmp     0, d0
     bne     loc_4848A840
     mov     d3, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -13538,7 +13538,7 @@ loc_4848A851:
     cmp     -1, d0
     beq     loc_4848A882
     mov     d3, (0x10, sp)
-    mov     0x000600b4, d0
+    mov     MT_ParaDraw, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -13550,7 +13550,7 @@ loc_4848A882:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x000600a4, d1
+    mov     MT_SetKeep, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848A899:
     clr     d0
@@ -13566,9 +13566,9 @@ func_4848A8AA:
     movm    [d2], (sp)
     add     -0x1c, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4848A8C2
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4848A8E1
     bra     loc_4848A923
 loc_4848A8C2:
@@ -13577,7 +13577,7 @@ loc_4848A8C2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -13914,17 +13914,17 @@ loc_4848AD1A:
     retf    [d2], 4
 
 func_4848AD1D:
-    cmp     0x5001f, d0
+    cmp     EV_SWIN_AIC, d0
     beq     loc_4848AD4F
-    cmp     0x50011, d0
+    cmp     EV_INDEXSW_UP_AIC, d0
     beq     loc_4848AD4F
-    cmp     0x50005, d0
+    cmp     EV_SWIN, d0
     beq     loc_4848AD52
-    cmp     0x5000f, d0
+    cmp     EV_INDEXSW_UP, d0
     beq     loc_4848AD52
-    cmp     0x50012, d0
+    cmp     EV_INDEXSW_DOWN_AIC, d0
     beq     loc_4848AD57
-    cmp     0x50010, d0
+    cmp     EV_INDEXSW_DOWN, d0
     beq     loc_4848AD60
     bra     loc_4848AD6B
 loc_4848AD4F:
@@ -14051,7 +14051,7 @@ AcResetPageProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     bne     loc_4848AE7F
     mov     (0x30, sp), a2
     cmp     0, a2
@@ -14062,11 +14062,11 @@ loc_4848AE50:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060052, d1
+    mov     MT_GetPageMin, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848AE71:
     mov     a2, (0x10, sp)
@@ -14087,7 +14087,7 @@ IvOtherPartProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_4848AE9F
     jmp     loc_4848B08C
 loc_4848AE9F:
@@ -14148,7 +14148,7 @@ loc_4848AEFD:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00030001, d0
-    mov     0x0006009c, d1
+    mov     MT_OtherPartLed, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
 loc_4848AF33:
     clr     d0
@@ -14156,7 +14156,7 @@ loc_4848AF33:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00030001, d0
-    mov     0x0006009c, d1
+    mov     MT_OtherPartLed, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     (0x34, sp), a0
     mov     d2, d1
@@ -14172,7 +14172,7 @@ loc_4848AF33:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -14185,18 +14185,18 @@ loc_4848AF33:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060054, d1
+    mov     MT_GetPageNow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060053, d1
+    mov     MT_GetPageMax, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, a2
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060052, d1
+    mov     MT_GetPageMin, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
@@ -14227,7 +14227,7 @@ loc_4848AFEB:
     mov     (0x34, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     d2, d1
@@ -14265,7 +14265,7 @@ loc_4848AFEB:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -14389,7 +14389,7 @@ func_4848B153_entry:
     mov     (0x3c, sp), d2
     movhu   d1, (0x38, sp)
     mov     d0, d3
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     mov     0, a2
     bge     loc_4848B16B
     jmp     loc_4848B318
@@ -14449,7 +14449,7 @@ loc_4848B1A7:
     movhu   (0x38, sp), d2
     exth    d3
     mov     d2, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14463,7 +14463,7 @@ loc_4848B1A7:
     add     0x18, a0
     mov     d1, d0
     call    GetM3Em_entry, [d2,d3,a2], 0x24
-    mov     0x000600be, d0
+    mov     MT_GetMmmData, d0
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d2, d1
@@ -14475,7 +14475,7 @@ loc_4848B1A7:
     movhu   (0x38, sp), d2
     exth    d3
     mov     d2, d1
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14595,7 +14595,7 @@ loc_4848B334:
     exth    d3
     mov     a2, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14678,7 +14678,7 @@ func_4848B3DA:
     exth    d3
     mov     a3, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14745,7 +14745,7 @@ func_4848B478:
     exth    d3
     mov     a3, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14818,7 +14818,7 @@ loc_4848B53C:
     exth    d3
     mov     a3, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -14886,7 +14886,7 @@ loc_4848B5DA:
     exth    d3
     mov     a2, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15005,7 +15005,7 @@ loc_4848B6E2:
     mov     d0, d2
     jmp     loc_4848B7C7
 loc_4848B6F4:
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     mov     (0x44, sp), a0
     exthu   d1
@@ -15018,7 +15018,7 @@ loc_4848B70C:
     mov     d1, d0
     exthu   d0
     mov     d0, a3
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15045,7 +15045,7 @@ loc_4848B742:
     mov     d1, d0
     exthu   d0
     mov     d0, a2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15133,7 +15133,7 @@ loc_4848B7E6:
 loc_4848B818:
     mov     d1, d3
     exthu   d3
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15180,7 +15180,7 @@ loc_4848B86F:
     exth    d3
     mov     a3, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15411,7 +15411,7 @@ loc_4848BA7F:
     exth    d2
     mov     d0, a2
     mov     a2, d1
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15674,7 +15674,7 @@ func_4848BC9A:
     exth    d3
     mov     a2, d2
     exthu   d2
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15735,7 +15735,7 @@ loc_4848BD38:
     mov     d0, a2
     mov     a3, d3
     exthu   d3
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -15861,7 +15861,7 @@ func_4848BE52:
     call    func_4848B12D_entry, [d2], 0x1c
     cmp     0, d0
     beq     loc_4848BEBF
-    mov     0x00060062, d0
+    mov     MT_GetParam, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -16030,7 +16030,7 @@ func_4848BFF6_entry:
     mov     d2, (a2)
     mov     d3, (4, a2)
     movhu   (0x30, sp), d0
-    mov     0x000600c1, d1
+    mov     MT_AddMmm, d1
     movhu   d0, (8, a2)
     clr     d0
     mov     d0, (0xc, a2)
@@ -16039,7 +16039,7 @@ func_4848BFF6_entry:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     a2, (0x10, sp)
     mov     0x00030003, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2], 0x20
@@ -16555,11 +16555,11 @@ MmmMtune:
     add     -0x10, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x6003e, d2
+    cmp     MT_GetLargeStep, d2
     bge     loc_4848C4A4
     jmp     loc_4848C563
 loc_4848C4A4:
-    cmp     0x600be, d2
+    cmp     MT_GetMmmData, d2
     ble     loc_4848C4AF
     jmp     loc_4848C563
 loc_4848C4AF:
@@ -16652,9 +16652,9 @@ loc_4848C564:
 # TtSdtecd  (CPU 0x4848c567)
 TtSdtecd:
     add     -0x24, sp
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4848C57C
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_4848C5A1
     bra     loc_4848C5D3
 loc_4848C57C:
@@ -16662,7 +16662,7 @@ loc_4848C57C:
     mov     d0, (0x10, sp)
     mov     0xd, d0
     mov     d0, (0x14, sp)
-    mov     0x0005000e, d0
+    mov     EV_INTERRUPT_TITLE, d0
     mov     d0, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
@@ -16697,7 +16697,7 @@ AcTechniChordProc:
     add     -0x4c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_4848C5E9
     jmp     loc_4848CAFC
 loc_4848C5E9:
@@ -16772,7 +16772,7 @@ loc_4848C626:
     mov     data_485EC940, a0
     movhu   (d0, a0), d0
     mov     (0x28, a2), a0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     movhu   d0, (a0)
     clr     d0
     mov     d0, (0x10, sp)
@@ -16791,7 +16791,7 @@ loc_4848C6D5:
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     inc     d2
     mov     d2, d0
@@ -17037,7 +17037,7 @@ loc_4848C8D7:
     cmp     d1, d0
     beq     loc_4848C920
     mov     (a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     movhu   (a0), d0
     exth    d0
     mov     d0, (0x10, sp)
@@ -17047,7 +17047,7 @@ loc_4848C8D7:
     movhu   d2, (a0)
 loc_4848C920:
     mov     (a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     movhu   (a0), d0
     exth    d0
     mov     d0, (0x10, sp)
@@ -17058,11 +17058,11 @@ loc_4848C920:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     mov     d3, d0
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
@@ -17070,7 +17070,7 @@ loc_4848C920:
     mov     3, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x5c
@@ -17087,7 +17087,7 @@ loc_4848C920:
 loc_4848C995:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -17140,7 +17140,7 @@ loc_4848CA11:
 loc_4848CA2D:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -17190,7 +17190,7 @@ loc_4848CAAA:
     beq     loc_4848CACF
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848CACF:
@@ -17206,7 +17206,7 @@ loc_4848CACF:
     bne     loc_4848CAF9
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848CAF9:
@@ -17225,23 +17225,23 @@ MmmOrchestrator:
     movm    [d2], (sp)
     add     -0x10, sp
     mov     d0, d2
-    cmp     0x600bb, d1
+    cmp     MT_GetMmmString, d1
     beq     loc_4848CB52
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4848CB8C
-    cmp     0x600bd, d1
+    cmp     MT_GetMmmParam2, d1
     beq     loc_4848CB94
-    cmp     0x600ba, d1
+    cmp     MT_CheckMmmData, d1
     beq     loc_4848CB97
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     bne     loc_4848CB3D
     jmp     loc_4848CBAD
 loc_4848CB3D:
-    cmp     0x6003e, d1
+    cmp     MT_GetLargeStep, d1
     bne     loc_4848CB48
     jmp     loc_4848CBB8
 loc_4848CB48:
-    cmp     0x6003f, d1
+    cmp     MT_GetSmallStep, d1
     beq     loc_4848CBBC
     bra     loc_4848CBC0
 loc_4848CB52:
@@ -17304,13 +17304,13 @@ AcTcdImageProc:
     add     -0x2c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848CBF1
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4848CC0F
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848CC2F
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4848CBEE
     jmp     loc_4848CC9E
 loc_4848CBEE:
@@ -17331,7 +17331,7 @@ loc_4848CC0F:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -17385,7 +17385,7 @@ loc_4848CC9E:
     bne     loc_4848CCC3
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848CCC3:
@@ -17400,9 +17400,9 @@ loc_4848CCD1:
 # TtSdpart  (CPU 0x4848ccd4)
 TtSdpart:
     add     -0xc, sp
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4848CCE9
-    cmp     0x600e4, d1
+    cmp     MT_SetDebugMode, d1
     beq     loc_4848CCF6
     bra     loc_4848CCFD
 loc_4848CCE9:
@@ -17422,7 +17422,7 @@ IvSdpartProc:
     add     -0x14, sp
     mov     d0, (0x2c, sp)
     mov     d1, (0x30, sp)
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4848CD15
     jmp     loc_4848D0F1
 loc_4848CD15:
@@ -17489,7 +17489,7 @@ loc_4848CDBF:
     mov     data_485ECC54, a0
     mov     (d1, a0), d0
     mov     a2, (0x10, sp)
-    mov     0x00050031, d1
+    mov     EV_NEW_TITLE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     inc     d2
     exth    d2
@@ -17506,7 +17506,7 @@ loc_4848CDDE:
     asl2    d0
     mov     (d0, a0), d0
     mov     a2, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -17720,7 +17720,7 @@ loc_4848D030:
     mov     (d0, a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4848D079
@@ -17730,7 +17730,7 @@ loc_4848D030:
     asl2    d0
     mov     (d0, a3), d0
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D079:
     mov     a2, d0
@@ -17745,7 +17745,7 @@ loc_4848D079:
     asl2    d0
     mov     (d0, a3), d0
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848D0B8
 loc_4848D0AB:
@@ -17764,7 +17764,7 @@ loc_4848D0B8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4848D100
@@ -17786,9 +17786,9 @@ AcSpsPartProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_4848D123
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4848D142
     cmp     0x750000, d1
     beq     loc_4848D15E
@@ -17799,7 +17799,7 @@ loc_4848D123:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -17820,7 +17820,7 @@ loc_4848D15E:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -17837,19 +17837,19 @@ AcSpsSoundNameProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848D1CB
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848D1E9
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_4848D214
     cmp     0x750000, d2
     beq     loc_4848D227
-    cmp     0x50018, d2
+    cmp     EV_SOUNDNAME, d2
     bne     loc_4848D1BD
     jmp     loc_4848D252
 loc_4848D1BD:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4848D1C8
     jmp     loc_4848D27F
 loc_4848D1C8:
@@ -17869,7 +17869,7 @@ loc_4848D1E9:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5006b5ce), d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     0x00030004, d0
@@ -17887,7 +17887,7 @@ loc_4848D227:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5006b5ce), d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     0x00030004, d0
@@ -17904,7 +17904,7 @@ loc_4848D252:
     cmp     d1, d0
     bne     loc_4848D27C
     mov     (4, a2), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -17927,7 +17927,7 @@ loc_4848D27F:
     cmp     d1, d0
     bne     loc_4848D2C6
     movhu   (0x5006b5ce), d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     0x00030004, d0
@@ -17947,7 +17947,7 @@ AcSpsMmmEditProc:
     add     -0x24, sp
     mov     d0, (0x3c, sp)
     mov     d1, (0x40, sp)
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4848D2EB
     jmp     loc_4848D957
 loc_4848D2EB:
@@ -17986,7 +17986,7 @@ loc_4848D32B:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600d0, d1
+    mov     MT_SetMmmFilter, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x44, sp), a0
     mov     a0, (0x10, sp)
@@ -18002,7 +18002,7 @@ loc_4848D32B:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D375:
     clr     d0
@@ -18010,7 +18010,7 @@ loc_4848D375:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -18018,14 +18018,14 @@ loc_4848D375:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848D3B7
 loc_4848D3A5:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D3B7:
     mov     (0x44, sp), a0
@@ -18069,7 +18069,7 @@ loc_4848D3B7:
     mov     0x00760002, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18096,7 +18096,7 @@ loc_4848D3B7:
     mov     d0, d2
     mov     d2, d3
     mov     d3, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18110,7 +18110,7 @@ loc_4848D3B7:
     add     a0, d1
     mov     d1, (0x1c, sp)
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x1c, sp), d0
     exthu   d3
@@ -18136,7 +18136,7 @@ loc_4848D3B7:
     mov     d0, d2
     mov     d2, d3
     mov     d3, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18154,7 +18154,7 @@ loc_4848D3B7:
     mov     d2, d1
     call    MainAddM3Em_entry, [d2,d3,a2], 0x20
     mov     d3, d1
-    mov     0x000600c1, d0
+    mov     MT_AddMmm, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
     mov     a3, d0
@@ -18189,7 +18189,7 @@ loc_4848D3B7:
     exthu   d1
     exth    d2
     asl     24, d2
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18224,7 +18224,7 @@ loc_4848D3B7:
     mov     d3, d1
     exthu   d1
     mov     d0, a3
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18246,7 +18246,7 @@ loc_4848D3B7:
     exth    d1
     cmp     d0, d1
     bne     loc_4848D628
-    mov     0x000600be, d0
+    mov     MT_GetMmmData, d0
     mov     d0, (0x10, sp)
     mov     (a2), d0
     exthu   d3
@@ -18255,7 +18255,7 @@ loc_4848D3B7:
     mov     d2, d0
     call    func_4848B12D_entry, [d2], 0x1c
     mov     (0x18, sp), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (0x38, a0), a0
     movhu   d0, (a0)
     clr     d0
@@ -18288,7 +18288,7 @@ loc_4848D628:
     mov     d0, d2
     mov     d2, d1
     exthu   d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18301,7 +18301,7 @@ loc_4848D628:
     mov     sp, a0
     add     0x1c, a0
     call    GetM3Em_entry, [d2,d3,a2], 0x24
-    mov     0x000600be, d0
+    mov     MT_GetMmmData, d0
     mov     d0, (0x10, sp)
     mov     (0x1c, sp), d0
     mov     a3, d1
@@ -18310,7 +18310,7 @@ loc_4848D628:
     mov     d3, d0
     call    func_4848B12D_entry, [d2], 0x1c
     mov     (0x18, sp), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (0x38, a0), a0
     movhu   d0, (a0)
     clr     d0
@@ -18320,7 +18320,7 @@ loc_4848D628:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600d0, d1
+    mov     MT_SetMmmFilter, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x34
@@ -18334,7 +18334,7 @@ loc_4848D628:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D6FB:
     clr     d0
@@ -18346,7 +18346,7 @@ loc_4848D6FB:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4848D726
@@ -18354,7 +18354,7 @@ loc_4848D6FB:
 loc_4848D726:
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4848D73E
@@ -18383,7 +18383,7 @@ loc_4848D73E:
     call    func_4848B12D_entry, [d2], 0x1c
     cmp     0, d0
     beq     loc_4848D7C3
-    mov     0x0006003e, d0
+    mov     MT_GetLargeStep, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18392,7 +18392,7 @@ loc_4848D73E:
     exthu   d1
     call    func_4848B12D_entry, [d2], 0x1c
     mov     d0, a3
-    mov     0x0006003f, d0
+    mov     MT_GetSmallStep, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18409,7 +18409,7 @@ loc_4848D73E:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006003d, d1
+    mov     MT_CalcParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D7C3:
     clr     d0
@@ -18421,7 +18421,7 @@ loc_4848D7C3:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4848D7EE
@@ -18429,7 +18429,7 @@ loc_4848D7C3:
 loc_4848D7EE:
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4848D806
@@ -18458,7 +18458,7 @@ loc_4848D806:
     call    func_4848B12D_entry, [d2], 0x1c
     cmp     0, d0
     beq     loc_4848D87F
-    mov     0x000600a9, d0
+    mov     MT_CheckInitData, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18468,7 +18468,7 @@ loc_4848D806:
     call    func_4848B12D_entry, [d2], 0x1c
     cmp     0, d0
     beq     loc_4848D87F
-    mov     0x000600aa, d0
+    mov     MT_GetInitData, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18478,7 +18478,7 @@ loc_4848D806:
     call    func_4848B12D_entry, [d2], 0x1c
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848D87F:
     clr     d0
@@ -18501,12 +18501,12 @@ loc_4848D899:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     exth    d2
     clr     d0
-    mov     0x00060054, d1
+    mov     MT_GetPageNow, d1
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -18598,7 +18598,7 @@ loc_4848D99B:
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exthu   d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18611,7 +18611,7 @@ loc_4848D9D7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x00760002, d1
     mov     d0, d2
@@ -18631,7 +18631,7 @@ loc_4848D9D7:
     exthu   d1
     exth    d3
     asl     24, d3
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18640,7 +18640,7 @@ loc_4848D9D7:
     mov     d3, (0x18, sp)
     mov     d3, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     exthu   d2
@@ -18664,7 +18664,7 @@ loc_4848DA51:
     exth    d3
     asl     24, d3
     inc     d3
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18673,7 +18673,7 @@ loc_4848DA51:
     mov     d3, (0x18, sp)
     mov     d3, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     exthu   d2
@@ -18688,7 +18688,7 @@ loc_4848DA95:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
     clr     d0
@@ -18705,7 +18705,7 @@ loc_4848DA95:
     exthu   d1
     exth    d2
     asl     24, d2
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18714,7 +18714,7 @@ loc_4848DA95:
     mov     d2, (0x18, sp)
     mov     d2, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     exthu   d3
@@ -18748,7 +18748,7 @@ loc_4848DB0F:
     mov     d2, d3
     mov     d3, d1
     exthu   d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -18767,7 +18767,7 @@ loc_4848DB0F:
     mov     d2, (0x18, sp)
     mov     d0, d2
     exth    d2
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     mov     d3, d1
     clr     d0
@@ -18778,7 +18778,7 @@ loc_4848DB0F:
     mov     sp, a0
     add     0x18, a0
     call    GetM3Em_entry, [d2,d3,a2], 0x24
-    mov     0x000600be, d0
+    mov     MT_GetMmmData, d0
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     exthu   d3
@@ -18787,7 +18787,7 @@ loc_4848DB0F:
     mov     d2, d0
     call    func_4848B12D_entry, [d2], 0x1c
     mov     (0x38, a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     movhu   d0, (a0)
     clr     d0
     mov     d0, (0x10, sp)
@@ -18807,11 +18807,11 @@ AcSpsPanProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x30, sp
     mov     d0, (0x48, sp)
-    cmp     0x5000f, d1
+    cmp     EV_INDEXSW_UP, d1
     bge     loc_4848DBD5
     jmp     loc_4848DDED
 loc_4848DBD5:
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     ble     loc_4848DBE0
     jmp     loc_4848DDED
 loc_4848DBE0:
@@ -18849,7 +18849,7 @@ loc_4848DBFD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x48, sp), d0
-    mov     0x000600a3, d1
+    mov     MT_GetBoxColor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x18, sp), a0
     exth    d0
@@ -19034,13 +19034,13 @@ TtSdmixer:
     movm    [d2], (sp)
     add     -8, sp
     clr     d2
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4848DE25
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_4848DE2C
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     beq     loc_4848DE5F
-    cmp     0x6008e, d1
+    cmp     MT_GetInterruptTime, d1
     beq     loc_4848DE5D
     bra     loc_4848DE5F
 loc_4848DE25:
@@ -19068,15 +19068,15 @@ TtSqmixer:
     movm    [d2,d3], (sp)
     add     -0x10, sp
     clr     d3
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4848DE92
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_4848DE9A
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     bne     loc_4848DE84
     jmp     loc_4848DF75
 loc_4848DE84:
-    cmp     0x6008e, d1
+    cmp     MT_GetInterruptTime, d1
     bne     loc_4848DE8F
     jmp     loc_4848DF73
 loc_4848DE8F:
@@ -19194,7 +19194,7 @@ AcMixerScreenProc:
     add     -0x14, sp
     mov     d0, (0x2c, sp)
     mov     d1, (0x30, sp)
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4848DFBB
     jmp     loc_4848E6AD
 loc_4848DFBB:
@@ -19298,7 +19298,7 @@ loc_4848E0C1:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x000600a4, d1
+    mov     MT_SetKeep, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848E0D4:
     movhu   (0x5006b5d2), d0
@@ -19410,7 +19410,7 @@ loc_4848E1EB:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x000600a4, d1
+    mov     MT_SetKeep, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848E1FE:
     mov     (0x34, sp), d0
@@ -19500,7 +19500,7 @@ loc_4848E2E5:
     bra     loc_4848E35F
 loc_4848E32C:
     mov     (4, a2), d0
-    mov     0x00050027, d1
+    mov     EV_PARTSELECT, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -19512,7 +19512,7 @@ loc_4848E346:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050027, d1
+    mov     EV_PARTSELECT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848E35F:
     clr     d0
@@ -19628,7 +19628,7 @@ loc_4848E41F:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     -1, d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848E47D:
     movhu   (0x5006b5d4), d0
@@ -19731,7 +19731,7 @@ loc_4848E56A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4848E652
 loc_4848E5B8:
@@ -19792,7 +19792,7 @@ loc_4848E624:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848E652
 loc_4848E645:
@@ -19820,7 +19820,7 @@ loc_4848E671:
     cmp     0, a0
     bne     loc_4848E69E
     movhu   (0x5006b5d2), d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     exth    d0
     inc     d0
     movhu   d0, (0x5006b5d2)
@@ -19849,9 +19849,9 @@ IvSdmixerProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_4848E6D7
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4848E6F6
     bra     loc_4848E708
 loc_4848E6D7:
@@ -19860,7 +19860,7 @@ loc_4848E6D7:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -19883,11 +19883,11 @@ AcMixerProc:
     add     -0x38, sp
     mov     d0, (0x50, sp)
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bge     loc_4848E729
     jmp     loc_4848EAA5
 loc_4848E729:
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     ble     loc_4848E734
     jmp     loc_4848EAA5
 loc_4848E734:
@@ -19930,7 +19930,7 @@ loc_4848E765:
     cmp     d0, d1
     bne     loc_4848E7BB
     movhu   (a2), d0
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d0, (0x10, sp)
     mov     (0x50, sp), d0
     call    SetDialUp_entry, 0, 0xc
@@ -19939,7 +19939,7 @@ loc_4848E765:
     add     d0, a0
     mov     a0, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -19955,11 +19955,11 @@ loc_4848E7CB:
     exth    d3
     mov     d3, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d3, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b5da), d0
     exth    d0
@@ -20066,7 +20066,7 @@ loc_4848E8A3:
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
     mov     (0x58, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     mov     (0x50, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -20109,7 +20109,7 @@ loc_4848E92C:
     calls   (a0)
     mov     a2, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x0005001f, d1
+    mov     EV_SWIN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
@@ -20120,7 +20120,7 @@ loc_4848E955:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x48
     mov     (0x58, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     mov     (0x50, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -20187,7 +20187,7 @@ loc_4848E9EE:
     call    func_4848DF79, 0, 0
     mov     a0, a2
     movhu   (a2), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -20228,7 +20228,7 @@ loc_4848EA33:
     mov     (d0, a0), a0
     mov     d3, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     calls   (a0)
 loc_4848EA69:
     mov     d2, d3
@@ -20247,7 +20247,7 @@ loc_4848EA74:
     mov     a0, a2
     mov     a1, (0x10, sp)
     mov     0x000d0024, d0
-    mov     0x00060029, d1
+    mov     MT_MakeEditSwID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x18, a2), d1
     cmp     d0, d1
@@ -20271,19 +20271,19 @@ AcMixerCaseProc:
     add     -0x38, sp
     mov     d0, (0x50, sp)
     mov     d1, d2
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4848EAF2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848EB2D
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     bne     loc_4848EAD9
     jmp     loc_4848EBF4
 loc_4848EAD9:
-    cmp     0x600b3, d2
+    cmp     MT_SeleDraw, d2
     bne     loc_4848EAE4
     jmp     loc_4848EC40
 loc_4848EAE4:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4848EAEF
     jmp     loc_4848ED00
 loc_4848EAEF:
@@ -20298,11 +20298,11 @@ loc_4848EAFF:
     exth    d2
     mov     d2, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d2, (0x10, sp)
     mov     (0x50, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     inc     d3
     mov     d3, d2
@@ -20558,7 +20558,7 @@ loc_4848ED00:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848ED5F:
     clr     d0
@@ -20775,7 +20775,7 @@ func_4848EF06_entry:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00030002, d0
-    mov     0x000600d1, d1
+    mov     MT_ResetMmmFilter, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     4, d0
     call    SetMmmFilter_entry, [d2], 0x18
@@ -20786,16 +20786,16 @@ AcMixerExMenuProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     bne     loc_4848EF7D
     mov     (0x30, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4848EF70
     movhu   (0x5006b5d2), d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     exth    d0
     inc     d0
     movhu   d0, (0x5006b5d2)
@@ -20821,9 +20821,9 @@ IvExitMixerProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_4848EFA5
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4848EFB8
     jmp     loc_4848F0A0
 loc_4848EFA5:
@@ -20834,7 +20834,7 @@ loc_4848EFA5:
     ret     [d2,d3,a2], 0x20
 loc_4848EFB8:
     mov     (0x30, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
@@ -20853,14 +20853,14 @@ loc_4848EFDF:
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     call    PostEvent_entry, [d2,d3], 0x24
     jmp     loc_4848F093
 loc_4848EFFD:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060070, d1
+    mov     MT_IsInterrupt, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4848F065
@@ -20897,12 +20897,12 @@ loc_4848F065:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006006f, d1
+    mov     MT_InterruptExit, d1
     call    SendEvent_entry, [d2,d3], 0x24
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848F093:
     mov     a2, (0x10, sp)
@@ -20922,22 +20922,22 @@ AcMixPageProc:
     add     -0x14, sp
     mov     d0, (0x24, sp)
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848F0E4
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4848F0E4
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848F111
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4848F132
-    cmp     0x60053, d2
+    cmp     MT_GetPageMax, d2
     bne     loc_4848F0E1
     jmp     loc_4848F1B4
 loc_4848F0E1:
     jmp     loc_4848F1C7
 loc_4848F0E4:
     movhu   (0x5006b5da), d0
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     exth    d0
     mov     d0, a0
     inc     a0
@@ -20958,13 +20958,13 @@ loc_4848F111:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4848F132:
     mov     (0x2c, sp), d3
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d3, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
@@ -20972,7 +20972,7 @@ loc_4848F132:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
-    mov     0x00060054, d1
+    mov     MT_GetPageNow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     btst    0x80, d3
     beq     loc_4848F178
@@ -21004,7 +21004,7 @@ loc_4848F191:
     exth    d1
     mov     d1, (0x10, sp)
     mov     (0x24, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4848F1D2
@@ -21034,15 +21034,15 @@ IvMixPageCtrlProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4848F205
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848F254
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4848F1F7
     jmp     loc_4848F274
 loc_4848F1F7:
-    cmp     0x50016, d2
+    cmp     EV_PAGECHANGE, d2
     bne     loc_4848F202
     jmp     loc_4848F287
 loc_4848F202:
@@ -21065,14 +21065,14 @@ loc_4848F205:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4848F250
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848F250:
     clr     d0
@@ -21083,7 +21083,7 @@ loc_4848F254:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -21107,14 +21107,14 @@ loc_4848F287:
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4848F2C3
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848F2C3:
     mov     d2, d1
@@ -21132,7 +21132,7 @@ loc_4848F2C3:
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848F356
 loc_4848F2F2:
@@ -21145,14 +21145,14 @@ loc_4848F2F2:
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4848F323
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848F323:
     mov     d2, d1
@@ -21167,7 +21167,7 @@ loc_4848F323:
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4848F356
 loc_4848F34B:
@@ -21190,27 +21190,27 @@ AcMixPartSoundProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4848F3B8
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_4848F3D6
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4848F389
     jmp     loc_4848F41F
 loc_4848F389:
-    cmp     0x50027, d2
+    cmp     EV_PARTSELECT, d2
     bne     loc_4848F394
     jmp     loc_4848F432
 loc_4848F394:
-    cmp     0x50018, d2
+    cmp     EV_SOUNDNAME, d2
     bne     loc_4848F39F
     jmp     loc_4848F47B
 loc_4848F39F:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4848F3AA
     jmp     loc_4848F4FA
 loc_4848F3AA:
-    cmp     0x600ae, d2
+    cmp     MT_GetFontColor, d2
     bne     loc_4848F3B5
     jmp     loc_4848F55D
 loc_4848F3B5:
@@ -21245,7 +21245,7 @@ loc_4848F3D6:
     beq     loc_4848F41B
     mov     d2, (0x10, sp)
     mov     0x00030004, d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     call    FuncCall_entry, [d2], 0x18
 loc_4848F41B:
     clr     d0
@@ -21276,7 +21276,7 @@ loc_4848F432:
     beq     loc_4848F477
     mov     d2, (0x10, sp)
     mov     0x00030004, d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     call    FuncCall_entry, [d2], 0x18
 loc_4848F477:
     clr     d0
@@ -21319,7 +21319,7 @@ loc_4848F47B:
     call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -21357,7 +21357,7 @@ loc_4848F4FA:
     bne     loc_4848F55A
     mov     d3, (0x10, sp)
     mov     0x00030004, d0
-    mov     0x00060055, d1
+    mov     MT_GetSoundName, d1
     call    FuncCall_entry, [d2], 0x18
 loc_4848F55A:
     clr     d0
@@ -21393,9 +21393,9 @@ IvMixOtherPartProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d1, d2
-    cmp     0x60053, d2
+    cmp     MT_GetPageMax, d2
     beq     loc_4848F5BE
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_4848F5ED
     bra     loc_4848F5FF
 loc_4848F5BE:
@@ -21441,17 +21441,17 @@ func_4848F60D:
 func_4848F60D_entry:
     mov     d0, (0x48, sp)
     mov     d1, d3
-    cmp     0x600b4, d3
+    cmp     MT_ParaDraw, d3
     beq     loc_4848F64C
-    cmp     0x5001f, d1
+    cmp     EV_SWIN_AIC, d1
     bne     loc_4848F628
     jmp     loc_4848F6EF
 loc_4848F628:
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4848F633
     jmp     loc_4848F6EF
 loc_4848F633:
-    cmp     0x50028, d1
+    cmp     EV_SWBOTH, d1
     bne     loc_4848F63E
     jmp     loc_4848F7B8
 loc_4848F63E:
@@ -21560,7 +21560,7 @@ loc_4848F6EF:
     jmp     loc_4848F7B4
 loc_4848F736:
     movhu   (a3), d0
-    mov     0x0006003e, d1
+    mov     MT_GetLargeStep, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -21570,7 +21570,7 @@ loc_4848F736:
     mov     d0, d2
     movhu   (a3), d0
     exthu   d2
-    mov     0x0006003f, d1
+    mov     MT_GetSmallStep, d1
     mov     d1, (0x10, sp)
     clr     d1
     exth    d0
@@ -21593,7 +21593,7 @@ loc_4848F736:
     mul     d0, d2
 loc_4848F77B:
     movhu   (a3), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d1, (0x10, sp)
     clr     d1
     mov     d1, (0x14, sp)
@@ -21607,7 +21607,7 @@ loc_4848F77B:
     mov     d3, d1
     call    MainAddM3Em_entry, [d2,d3,a2], 0x20
     movhu   (a3), d0
-    mov     0x000600c1, d1
+    mov     MT_AddMmm, d1
     exth    d0
     mov     d1, (0x10, sp)
     mov     d3, (0x14, sp)
@@ -21649,7 +21649,7 @@ loc_4848F7B8:
     jmp     loc_4848F889
 loc_4848F7FF:
     movhu   (a2), d0
-    mov     0x000600a9, d1
+    mov     MT_CheckInitData, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -21660,23 +21660,23 @@ loc_4848F7FF:
     beq     loc_4848F889
     mov     a3, (0x10, sp)
     mov     -1, d0
-    mov     0x00050007, d1
+    mov     EV_SWOFF, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a3, d0
     or      0x80, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050007, d1
+    mov     EV_SWOFF, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (a2), d0
-    mov     0x000600aa, d1
+    mov     MT_GetInitData, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
     mov     d1, (0x14, sp)
     mov     d3, d1
     call    func_4848B12D_entry, [d2], 0x1c
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d0, d2
     movhu   (a2), d0
     mov     d1, (0x10, sp)
@@ -21692,7 +21692,7 @@ loc_4848F7FF:
     mov     d2, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     movhu   (a2), d0
-    mov     0x000600c0, d1
+    mov     MT_PutMmm, d1
     exth    d0
     mov     d1, (0x10, sp)
     mov     d2, (0x14, sp)
@@ -21739,7 +21739,7 @@ loc_4848F88D:
     cmp     0, d0
     beq     loc_4848F8FD
     movhu   (a2), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -21772,9 +21772,9 @@ func_4848F914:
     add     -0x30, sp
 func_4848F914_entry:
     mov     d0, d2
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_4848F930
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4848F92D
     jmp     loc_4848FA1F
 loc_4848F92D:
@@ -21930,7 +21930,7 @@ loc_4848FAA4:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     -1, d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4848FABF:
     clr     d0
@@ -21946,7 +21946,7 @@ func_4848FACE:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
     mov     d0, d2
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_4848FADF
     jmp     loc_4848FC19
 loc_4848FADF:
@@ -22094,21 +22094,21 @@ func_4848FC26:
 func_4848FC26_entry:
     mov     d0, (0x8c, sp)
     mov     d1, d3
-    cmp     0x600b4, d3
+    cmp     MT_ParaDraw, d3
     beq     loc_4848FC65
-    cmp     0x6003a, d3
+    cmp     MT_GetString, d3
     bne     loc_4848FC41
     jmp     loc_4848FE8B
 loc_4848FC41:
-    cmp     0x5001f, d3
+    cmp     EV_SWIN_AIC, d3
     bne     loc_4848FC4C
     jmp     loc_4848FEC3
 loc_4848FC4C:
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     bne     loc_4848FC57
     jmp     loc_4848FEC3
 loc_4848FC57:
-    cmp     0x50028, d3
+    cmp     EV_SWBOTH, d3
     bne     loc_4848FC62
     jmp     loc_4848FF73
 loc_4848FC62:
@@ -22292,7 +22292,7 @@ loc_4848FD83:
     mov     (d0, a0), a1
     mov     a2, (0x10, sp)
     mov     (0x8c, sp), d0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     calls   (a1)
     mov     0x20, d0
     call    Malloc_entry, [d2,a2,a3], 0x28
@@ -22401,7 +22401,7 @@ loc_4848FEC3:
     cmp     0, d0
     beq     loc_4848FF70
     movhu   (a2), d0
-    mov     0x0006003e, d1
+    mov     MT_GetLargeStep, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -22411,7 +22411,7 @@ loc_4848FEC3:
     mov     d0, d2
     movhu   (a2), d0
     exthu   d2
-    mov     0x0006003f, d1
+    mov     MT_GetSmallStep, d1
     mov     d1, (0x10, sp)
     clr     d1
     exth    d0
@@ -22434,7 +22434,7 @@ loc_4848FEC3:
     mul     d0, d2
 loc_4848FF4C:
     movhu   (a2), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d1, (0x10, sp)
     clr     d1
     mov     d1, (0x14, sp)
@@ -22464,7 +22464,7 @@ func_4848FF82:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d1, d2
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4848FFBE
     movhu   (0x5006b5d8), d1
     exth    d1
@@ -22493,7 +22493,7 @@ func_4848FFCB:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x40, sp
     mov     d0, d3
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_4848FFDC
     jmp     loc_484900D2
 loc_4848FFDC:
@@ -22576,7 +22576,7 @@ loc_48490081:
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     (0x2c, sp), a0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -22610,7 +22610,7 @@ func_484900DE:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x48, sp
     mov     d0, d3
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_484900EF
     jmp     loc_484902DD
 loc_484900EF:
@@ -22702,7 +22702,7 @@ loc_48490197:
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     (0x2c, sp), a0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -22723,7 +22723,7 @@ loc_48490197:
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x2c, sp), a0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -22831,7 +22831,7 @@ func_484902E9:
     add     -0x44, sp
 func_484902E9_entry:
     mov     d0, d3
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_484902FA
     jmp     loc_48490484
 loc_484902FA:
@@ -22920,7 +22920,7 @@ loc_4849039B:
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     (0x28, sp), a0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -22941,7 +22941,7 @@ loc_4849039B:
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x28, sp), a0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -23009,7 +23009,7 @@ func_48490490:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x44, sp
     mov     d0, d3
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     beq     loc_484904A1
     jmp     loc_4849061F
 loc_484904A1:
@@ -23098,7 +23098,7 @@ loc_48490542:
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     (0x2c, sp), a0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -23119,7 +23119,7 @@ loc_48490542:
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x2c, sp), a0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -23181,17 +23181,17 @@ func_4849062B:
     add     -0x50, sp
     mov     d0, (0x68, sp)
     mov     d1, d3
-    cmp     0x600b4, d3
+    cmp     MT_ParaDraw, d3
     beq     loc_4849066A
-    cmp     0x5001f, d3
+    cmp     EV_SWIN_AIC, d3
     bne     loc_48490646
     jmp     loc_4849089A
 loc_48490646:
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     bne     loc_48490651
     jmp     loc_4849089A
 loc_48490651:
-    cmp     0x50028, d3
+    cmp     EV_SWBOTH, d3
     bne     loc_4849065C
     jmp     loc_484909BF
 loc_4849065C:
@@ -23240,7 +23240,7 @@ loc_484906C2:
     mov     (0x30, sp), a0
     asl     24, d2
     movhu   (a0), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -23368,7 +23368,7 @@ loc_48490744:
     mov     4, d0
     call    DrawBitmapFast_entry, [d2,a2], 0x18
     mov     (0x30, sp), a0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     movhu   (a0), d0
     mov     d1, (0x10, sp)
     exth    d0
@@ -23453,7 +23453,7 @@ loc_4849089A:
     jmp     loc_484909BB
 loc_484908E2:
     movhu   (a3), d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -23466,7 +23466,7 @@ loc_484908E2:
     jmp     loc_48490984
 loc_48490901:
     movhu   (a3), d0
-    mov     0x0006003e, d1
+    mov     MT_GetLargeStep, d1
     exth    d0
     mov     d1, (0x10, sp)
     clr     d1
@@ -23475,7 +23475,7 @@ loc_48490901:
     call    func_4848B12D_entry, [d2], 0x1c
     mov     d0, d2
     movhu   (a3), d0
-    mov     0x0006003f, d1
+    mov     MT_GetSmallStep, d1
     mov     d1, (0x10, sp)
     clr     d1
     exth    d0
@@ -23499,7 +23499,7 @@ loc_48490901:
     mul     d0, d2
 loc_48490946:
     movhu   (a3), d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d1, (0x10, sp)
     clr     d1
     mov     d1, (0x14, sp)
@@ -23513,7 +23513,7 @@ loc_48490946:
     mov     d2, (0x10, sp)
     call    MainAddM3Em_entry, [d2,d3,a2], 0x20
     movhu   (a3), d0
-    mov     0x000600c1, d1
+    mov     MT_AddMmm, d1
     mov     d1, (0x10, sp)
     mov     (0x70, sp), d1
     exth    d0
@@ -23523,7 +23523,7 @@ loc_48490946:
     bra     loc_484909BB
 loc_48490984:
     mov     a2, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -23533,7 +23533,7 @@ loc_48490984:
     asl     24, d1
     mov     d1, (0x3c, sp)
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
     mov     a2, d1
@@ -23572,19 +23572,19 @@ loc_484909BF:
     cmp     0, d0
     beq     loc_48490A5C
     mov     a2, (0x10, sp)
-    mov     0x00050007, d1
+    mov     EV_SWOFF, d1
     asl     24, d2
     inc     d2
     mov     -1, d0
     call    SendEvent_entry, [d2,d3], 0x24
-    mov     0x00050007, d1
+    mov     EV_SWOFF, d1
     mov     a2, d0
     or      0x80, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d3, d1
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -23593,7 +23593,7 @@ loc_484909BF:
     mov     d2, (0x3c, sp)
     mov     d2, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    mov     0x000600c0, d0
+    mov     MT_PutMmm, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
     mov     d3, d1
@@ -23642,7 +23642,7 @@ loc_48490A60:
     call    func_4848B12D_entry, [d2], 0x1c
     cmp     0, d0
     beq     loc_48490AD7
-    mov     0x000600bc, d0
+    mov     MT_GetMmmParam1, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
@@ -23774,7 +23774,7 @@ AcSpsKsclEditProc:
     bne     loc_48490BE1
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     add     d0, d0
@@ -23840,7 +23840,7 @@ loc_48490C3F:
     movhu   d0, (0x5006b5ce)
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050031, d1
+    mov     EV_NEW_TITLE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48490C7C:
     mov     d3, d0
@@ -23855,7 +23855,7 @@ loc_48490C7C:
     beq     loc_48490CAA
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48490CAA:
@@ -23887,7 +23887,7 @@ loc_48490D02:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -23895,14 +23895,14 @@ loc_48490D02:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48490D41
 loc_48490D30:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48490D41:
     mov     (0x34, sp), a0
@@ -23962,7 +23962,7 @@ loc_48490D83:
 loc_48490DDD:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48490DEE:
@@ -24017,7 +24017,7 @@ loc_48490E48:
 loc_48490E6F:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24031,7 +24031,7 @@ loc_48490E6F:
     bcc     loc_48490EA7
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48490EA7:
@@ -24043,7 +24043,7 @@ loc_48490EA7:
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x34, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -24052,7 +24052,7 @@ loc_48490EA7:
     jmp     loc_48490FA8
 loc_48490ED2:
     mov     (0x34, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -24149,17 +24149,17 @@ IvSdkeysclProc:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50011, d1
+    cmp     EV_INDEXSW_UP_AIC, d1
     beq     loc_48490FFC
-    cmp     0x5000f, d1
+    cmp     EV_INDEXSW_UP, d1
     beq     loc_48490FFC
-    cmp     0x50012, d1
+    cmp     EV_INDEXSW_DOWN_AIC, d1
     beq     loc_48490FFC
-    cmp     0x50010, d1
+    cmp     EV_INDEXSW_DOWN, d1
     beq     loc_48490FFC
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_4849105B
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48490FF9
     jmp     loc_4849107A
 loc_48490FF9:
@@ -24208,7 +24208,7 @@ loc_4849105B:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24272,7 +24272,7 @@ loc_484910EB:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -24280,14 +24280,14 @@ loc_484910EB:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48491131
 loc_48491120:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491131:
     mov     d3, d0
@@ -24302,7 +24302,7 @@ loc_48491131:
     beq     loc_4849115F
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849115F:
@@ -24324,7 +24324,7 @@ loc_4849115F:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24338,7 +24338,7 @@ loc_4849115F:
     bcc     loc_484911C6
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484911C6:
@@ -24351,13 +24351,13 @@ loc_484911C6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491245
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491245
@@ -24382,7 +24382,7 @@ loc_484911C6:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     a3, d1
@@ -24448,7 +24448,7 @@ loc_484912AE:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -24456,14 +24456,14 @@ loc_484912AE:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484912F4
 loc_484912E3:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484912F4:
     mov     d3, d0
@@ -24478,7 +24478,7 @@ loc_484912F4:
     beq     loc_48491322
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491322:
@@ -24500,7 +24500,7 @@ loc_48491322:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24514,7 +24514,7 @@ loc_48491322:
     bcc     loc_48491389
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491389:
@@ -24527,13 +24527,13 @@ loc_48491389:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491420
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491420
@@ -24558,7 +24558,7 @@ loc_48491389:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b5e0), d0
     mov     0x00750001, d1
@@ -24588,11 +24588,11 @@ AcKsclShiftProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48491458
     cmp     0x750001, d1
     beq     loc_48491458
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48491477
     bra     loc_48491493
 loc_48491458:
@@ -24601,7 +24601,7 @@ loc_48491458:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24671,7 +24671,7 @@ loc_484914F1:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -24679,14 +24679,14 @@ loc_484914F1:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48491544
 loc_48491533:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491544:
     movhu   (0x5006b5ce), d0
@@ -24713,7 +24713,7 @@ loc_4849156F:
     beq     loc_4849159D
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849159D:
@@ -24754,7 +24754,7 @@ loc_484915E2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -24768,7 +24768,7 @@ loc_484915E2:
     bcc     loc_48491649
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491649:
@@ -24781,7 +24781,7 @@ loc_48491649:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491672
@@ -24789,7 +24789,7 @@ loc_48491649:
 loc_48491672:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491689
@@ -24820,7 +24820,7 @@ loc_484916B0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     a3, d1
@@ -24904,7 +24904,7 @@ loc_484917B8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484917CA:
     clr     d0
@@ -24919,13 +24919,13 @@ loc_484917DB:
     ret     [d2,d3,a2,a3], 0x24
 # BitmapMonback  (CPU 0x484917de)
 BitmapMonback:
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_48491800
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_48491808
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_4849180D
-    cmp     0x600ad, d1
+    cmp     MT_GetBitCount, d1
     beq     loc_48491811
     bra     loc_48491815
 loc_48491800:
@@ -24946,13 +24946,13 @@ loc_48491816:
     retf    0, 0
 # BitmapMonvol  (CPU 0x48491819)
 BitmapMonvol:
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_4849183B
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_48491843
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_48491847
-    cmp     0x600ad, d1
+    cmp     MT_GetBitCount, d1
     beq     loc_4849184B
     bra     loc_4849184F
 loc_4849183B:
@@ -24973,13 +24973,13 @@ loc_48491850:
     retf    0, 0
 # BitmapMonon  (CPU 0x48491853)
 BitmapMonon:
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_48491875
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_4849187D
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_48491881
-    cmp     0x600ad, d1
+    cmp     MT_GetBitCount, d1
     beq     loc_48491885
     bra     loc_48491889
 loc_48491875:
@@ -25000,13 +25000,13 @@ loc_4849188A:
     retf    0, 0
 # BitmapMonoff  (CPU 0x4849188d)
 BitmapMonoff:
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_484918AF
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_484918B7
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_484918BB
-    cmp     0x600ad, d1
+    cmp     MT_GetBitCount, d1
     beq     loc_484918BF
     bra     loc_484918C3
 loc_484918AF:
@@ -25031,19 +25031,19 @@ AcMonImageProc:
     add     -0x20, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48491902
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48491920
-    cmp     0x50021, d2
+    cmp     EV_IAMSELECTED, d2
     bne     loc_484918E9
     jmp     loc_4849199D
 loc_484918E9:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_484918F4
     jmp     loc_484919E0
 loc_484918F4:
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     bne     loc_484918FF
     jmp     loc_48491A67
 loc_484918FF:
@@ -25080,7 +25080,7 @@ loc_48491920:
 loc_48491953:
     mov     a0, (0x10, sp)
     mov     0x00700121, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), a0
     mov     (a0), d0
@@ -25091,11 +25091,11 @@ loc_48491953:
 loc_48491973:
     mov     a0, (0x10, sp)
     mov     0x00700120, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -25157,7 +25157,7 @@ loc_484919E0:
 loc_48491A1D:
     mov     a0, (0x10, sp)
     mov     0x00700121, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), a0
     mov     (a0), d0
@@ -25168,11 +25168,11 @@ loc_48491A1D:
 loc_48491A3D:
     mov     a0, (0x10, sp)
     mov     0x00700120, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491A63:
@@ -25189,7 +25189,7 @@ loc_48491A67:
     mov     0xe, a1
     add     a2, a1
     movhu   (a1), d0
-    mov     0x00060093, d1
+    mov     MT_GetBitmapWidth, d1
     movhu   d0, (0x1c, sp)
     movhu   (2, a1), d0
     add     0x1c, a3
@@ -25198,7 +25198,7 @@ loc_48491A67:
     mov     d0, (0x10, sp)
     mov     0x00720004, d0
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
-    mov     0x00060094, d1
+    mov     MT_GetBitmapHeight, d1
     mov     d0, d3
     clr     d0
     mov     d0, (0x10, sp)
@@ -25212,14 +25212,14 @@ loc_48491A67:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00720004, d0
-    mov     0x00060092, d1
+    mov     MT_GetBitmapData, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     bra     loc_48491AF1
 loc_48491ADB:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00720005, d0
-    mov     0x00060092, d1
+    mov     MT_GetBitmapData, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
 loc_48491AF1:
     mov     data_485EFF04, d1
@@ -25263,23 +25263,23 @@ SeparateOutProc:
     mov     d1, d2
     clr     d0
     movbu   d0, (0x14, sp)
-    cmp     0x60079, d2
+    cmp     MT_AreYouClassProc, d2
     beq     loc_48491B85
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48491B8A
-    cmp     0x50021, d2
+    cmp     EV_IAMSELECTED, d2
     bne     loc_48491B61
     jmp     loc_48491F23
 loc_48491B61:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_48491B6C
     jmp     loc_48491F77
 loc_48491B6C:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48491B77
     jmp     loc_48492027
 loc_48491B77:
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bne     loc_48491B82
     jmp     loc_4849208E
 loc_48491B82:
@@ -25295,7 +25295,7 @@ loc_48491B8A:
     mov     Str_CcEv_11, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x7040, d0
     clr     d1
@@ -25315,14 +25315,14 @@ loc_48491BCD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491C02
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     movbu   d0, (0x14, sp)
@@ -25330,14 +25330,14 @@ loc_48491C02:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491C37
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     movbu   d0, (0x14, sp)
@@ -25345,14 +25345,14 @@ loc_48491C37:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491C6C
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     movbu   d0, (0x14, sp)
@@ -25360,31 +25360,31 @@ loc_48491C6C:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00700127, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700128, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700129, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_48491E65
 loc_48491CB2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491CE7
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     movbu   d0, (0x14, sp)
@@ -25392,57 +25392,57 @@ loc_48491CE7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491D17
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491D17:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491D47
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491D47:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700127, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00700128, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700129, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_48491E65
 loc_48491D8D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491DC2
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700132, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     movbu   d0, (0x14, sp)
@@ -25450,43 +25450,43 @@ loc_48491DC2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491DF2
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491DF2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491E22
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070012e, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491E22:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700127, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700128, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00700129, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491E65:
     movbu   (0x14, sp), d0
@@ -25495,13 +25495,13 @@ loc_48491E65:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491E7E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700138, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48491E9B
@@ -25517,14 +25517,14 @@ loc_48491E9B:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070013b, d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48491EDD
 loc_48491EC6:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x0070013b, d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491EDD:
     mov     0x7045, d0
@@ -25537,14 +25537,14 @@ loc_48491EDD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070013c, d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48491F1F
 loc_48491F08:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x0070013c, d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48491F1F:
     clr     d0
@@ -25589,14 +25589,14 @@ loc_48491F77:
     mov     (0x34, sp), a2
     mov     0x0070013b, d0
     mov     a2, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491FC9
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070013b, d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48491FB9
@@ -25614,14 +25614,14 @@ loc_48491FC5:
 loc_48491FC9:
     mov     a2, (0x10, sp)
     mov     0x0070013c, d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48492019
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x0070013c, d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48492009
@@ -25654,7 +25654,7 @@ loc_48492027:
     bne     loc_48492055
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849208B
@@ -25665,7 +25665,7 @@ loc_48492055:
     bne     loc_48492071
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849208B
@@ -25676,7 +25676,7 @@ loc_48492071:
     bne     loc_4849208B
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849208B:
@@ -25707,19 +25707,19 @@ loc_484920C8:
 SpPartStereo:
     movm    [a2], (sp)
     add     -0x10, sp
-    cmp     0x600bb, d1
+    cmp     MT_GetMmmString, d1
     beq     loc_4849210A
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_48492127
-    cmp     0x600bd, d1
+    cmp     MT_GetMmmParam2, d1
     beq     loc_4849212C
-    cmp     0x600ba, d1
+    cmp     MT_CheckMmmData, d1
     beq     loc_4849212F
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     beq     loc_48492143
-    cmp     0x6003e, d1
+    cmp     MT_GetLargeStep, d1
     beq     loc_4849214E
-    cmp     0x6003f, d1
+    cmp     MT_GetSmallStep, d1
     beq     loc_48492152
     bra     loc_48492156
 loc_4849210A:
@@ -25771,11 +25771,11 @@ SpPartMono:
     add     -0x34, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_4849216C
     jmp     loc_484923DF
 loc_4849216C:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_48492177
     jmp     loc_484923DF
 loc_48492177:
@@ -25815,7 +25815,7 @@ loc_484921A8:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -25932,7 +25932,7 @@ loc_48492297:
     call    strcpy_entry, [a2], 4
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849232F
 loc_484922EE:
@@ -25954,7 +25954,7 @@ loc_484922EE:
     call    strcpy_entry, [a2], 4
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849232F:
     clr     d0
@@ -25994,7 +25994,7 @@ loc_4849235B:
     call    strcpy_entry, [a2], 4
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484923D9
 loc_4849239B:
@@ -26014,7 +26014,7 @@ loc_4849239B:
     call    strcpy_entry, [a2], 4
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484923D9:
     clr     d0
@@ -26028,11 +26028,11 @@ loc_484923E0:
 # TtSdapcrev  (CPU 0x484923e3)
 TtSdapcrev:
     add     -0x14, sp
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_48492430
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_48492400
-    cmp     0x600e4, d1
+    cmp     MT_SetDebugMode, d1
     beq     loc_48492428
     bra     loc_48492430
 loc_48492400:
@@ -26045,7 +26045,7 @@ loc_48492400:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00700141, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_48492430
 loc_48492428:
@@ -26060,11 +26060,11 @@ ApcRevFunc:
     add     -0x3c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_48492446
     jmp     loc_484927AA
 loc_48492446:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_48492451
     jmp     loc_484927AA
 loc_48492451:
@@ -26111,7 +26111,7 @@ loc_48492488:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26164,7 +26164,7 @@ loc_48492533:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26276,7 +26276,7 @@ loc_48492638:
 loc_48492652:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484926F9
 loc_4849266B:
@@ -26332,7 +26332,7 @@ loc_484926C2:
 loc_484926E1:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x14, sp), a0
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     mov     a0, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484926F9:
@@ -26399,7 +26399,7 @@ loc_4849276F:
 loc_4849278E:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484927A4:
     clr     d0
@@ -26416,11 +26416,11 @@ ApcRevCheck:
     add     -0x30, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_484927C0
     jmp     loc_48492903
 loc_484927C0:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_484927CB
     jmp     loc_48492903
 loc_484927CB:
@@ -26491,7 +26491,7 @@ loc_484927FB:
     call    GetFocusObject_entry, 0, 0x10
     add     0x28, d2
     mov     d2, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849287E:
     clr     d0
@@ -26538,7 +26538,7 @@ loc_4849287E:
     call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484928FD:
     clr     d0
@@ -26555,11 +26555,11 @@ TsRight1Func:
     add     -0x30, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_48492919
     jmp     loc_48492C1D
 loc_48492919:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_48492924
     jmp     loc_48492C1D
 loc_48492924:
@@ -26598,7 +26598,7 @@ loc_48492955:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26640,7 +26640,7 @@ loc_484929E8:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26722,7 +26722,7 @@ loc_48492AB4:
 loc_48492AC2:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48492B34
 loc_48492ADA:
@@ -26753,7 +26753,7 @@ loc_48492B11:
 loc_48492B1E:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48492B34:
     clr     d0
@@ -26807,7 +26807,7 @@ loc_48492B9F:
 loc_48492BAD:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48492C17
 loc_48492BC5:
@@ -26833,7 +26833,7 @@ loc_48492BF3:
 loc_48492C01:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48492C17:
     clr     d0
@@ -26850,11 +26850,11 @@ TsPart1Func:
     add     -0x30, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_48492C33
     jmp     loc_48492E3B
 loc_48492C33:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_48492C3E
     jmp     loc_48492E3B
 loc_48492C3E:
@@ -26891,7 +26891,7 @@ loc_48492C6E:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26924,7 +26924,7 @@ loc_48492CDB:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -26990,7 +26990,7 @@ loc_48492D86:
 loc_48492D93:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48492DA9:
     clr     d0
@@ -27042,7 +27042,7 @@ loc_48492E11:
 loc_48492E1F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48492E35:
     clr     d0
@@ -27059,11 +27059,11 @@ TsPart9Func:
     add     -0x30, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_48492E51
     jmp     loc_48493059
 loc_48492E51:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_48492E5C
     jmp     loc_48493059
 loc_48492E5C:
@@ -27100,7 +27100,7 @@ loc_48492E8C:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -27133,7 +27133,7 @@ loc_48492EF9:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -27199,7 +27199,7 @@ loc_48492FA4:
 loc_48492FB1:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48492FC7:
     clr     d0
@@ -27251,7 +27251,7 @@ loc_4849302F:
 loc_4849303D:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493053:
     clr     d0
@@ -27268,11 +27268,11 @@ TsAccomp1Func:
     add     -0x30, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50000, d2
+    cmp     EV_NONE, d2
     bge     loc_4849306F
     jmp     loc_48493277
 loc_4849306F:
-    cmp     0x60081, d2
+    cmp     MT_RequestGridDraw, d2
     ble     loc_4849307A
     jmp     loc_48493277
 loc_4849307A:
@@ -27309,7 +27309,7 @@ loc_484930AA:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -27342,7 +27342,7 @@ loc_48493117:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060083, d1
+    mov     MT_GetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     lsr     16, d1
@@ -27408,7 +27408,7 @@ loc_484931C2:
 loc_484931CF:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484931E5:
     clr     d0
@@ -27460,7 +27460,7 @@ loc_4849324D:
 loc_4849325B:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
-    mov     0x00060080, d1
+    mov     MT_GridDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493271:
     clr     d0
@@ -27637,17 +27637,17 @@ InitializeBlock03_entry:
     ret     [d2,d3,a2,a3], 0x3c
 
 func_484934D6:
-    cmp     0x5001f, d0
+    cmp     EV_SWIN_AIC, d0
     beq     loc_48493508
-    cmp     0x50011, d0
+    cmp     EV_INDEXSW_UP_AIC, d0
     beq     loc_48493508
-    cmp     0x50005, d0
+    cmp     EV_SWIN, d0
     beq     loc_4849350B
-    cmp     0x5000f, d0
+    cmp     EV_INDEXSW_UP, d0
     beq     loc_4849350B
-    cmp     0x50012, d0
+    cmp     EV_INDEXSW_DOWN_AIC, d0
     beq     loc_48493510
-    cmp     0x50010, d0
+    cmp     EV_INDEXSW_DOWN, d0
     beq     loc_48493519
     bra     loc_48493524
 loc_48493508:
@@ -27870,7 +27870,7 @@ IvRstOtherPartProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_484936E7
     jmp     loc_484938FE
 loc_484936E7:
@@ -27914,11 +27914,11 @@ loc_48493733:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060052, d1
+    mov     MT_GetPageMin, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493754:
     mov     a2, (0x10, sp)
@@ -27946,7 +27946,7 @@ loc_4849376F:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00030001, d0
-    mov     0x0006009c, d1
+    mov     MT_OtherPartLed, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
 loc_484937A5:
     clr     d0
@@ -27954,7 +27954,7 @@ loc_484937A5:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00030001, d0
-    mov     0x0006009c, d1
+    mov     MT_OtherPartLed, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     mov     (0x34, sp), a0
     mov     d2, d1
@@ -27970,7 +27970,7 @@ loc_484937A5:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050016, d1
+    mov     EV_PAGECHANGE, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -27983,18 +27983,18 @@ loc_484937A5:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060054, d1
+    mov     MT_GetPageNow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060053, d1
+    mov     MT_GetPageMax, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, a2
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060052, d1
+    mov     MT_GetPageMin, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
@@ -28025,7 +28025,7 @@ loc_4849385D:
     mov     (0x34, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
-    mov     0x00060075, d1
+    mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     d2, d1
@@ -28063,7 +28063,7 @@ loc_4849385D:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -28087,11 +28087,11 @@ IvPageControlOWProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48493930
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48493950
-    cmp     0x50016, d2
+    cmp     EV_PAGECHANGE, d2
     beq     loc_48493962
     jmp     loc_484939C1
 loc_48493930:
@@ -28100,7 +28100,7 @@ loc_48493930:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -28119,14 +28119,14 @@ loc_48493962:
     mov     (a3), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48493995
     mov     (a3), d0
     mov     5, d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493995:
     mov     (0x38, sp), a2
@@ -28142,7 +28142,7 @@ loc_48493995:
     mov     (a3), d0
     mov     5, d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484939BE:
     clr     d0
@@ -28159,11 +28159,11 @@ IvPageKNPRProc:
     add     -0x14, sp
     mov     d0, (0x2c, sp)
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_484939F2
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48493A13
-    cmp     0x50016, d2
+    cmp     EV_PAGECHANGE, d2
     beq     loc_48493A25
     jmp     loc_48493A82
 loc_484939F2:
@@ -28173,7 +28173,7 @@ loc_484939F2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -28190,14 +28190,14 @@ loc_48493A25:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48493A57
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493A57:
     mov     (0x34, sp), a2
@@ -28211,7 +28211,7 @@ loc_48493A57:
     bne     loc_48493A7F
     mov     5, d0
     mov     d0, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493A7F:
@@ -28226,7 +28226,7 @@ loc_48493A8D:
 # MdNormal  (CPU 0x48493a90)
 MdNormal:
     add     -8, sp
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     bne     loc_48493ACA
     mov     (0x18, sp), a0
     mov     (a0), d0
@@ -28251,9 +28251,9 @@ TtNormal:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
 TtNormal_entry:
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_48493AE9
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     bne     loc_48493AE6
     jmp     loc_48493BF1
 loc_48493AE6:
@@ -28417,13 +28417,13 @@ AcHpScreenProc:
     add     -0x20, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48493C5D
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48493C77
-    cmp     0x600d9, d2
+    cmp     MT_IconDraw, d2
     beq     loc_48493C97
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48493C5A
     jmp     loc_48493D01
 loc_48493C5A:
@@ -28444,7 +28444,7 @@ loc_48493C77:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600d9, d1
+    mov     MT_IconDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -28499,7 +28499,7 @@ loc_48493D01:
     bne     loc_48493D22
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600d9, d1
+    mov     MT_IconDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48493D22:
@@ -28523,7 +28523,7 @@ IvCustomizeHpProc:
     exthu   d0
     cmp     6, d0
     bne     loc_48493D6C
-    cmp     0x60024, d3
+    cmp     MT_SearchClass, d3
     bne     loc_48493D5D
     mov     (0x2c, sp), a0
     cmp     0x4002d, a0
@@ -28625,7 +28625,7 @@ loc_48493E1A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060021, d1
+    mov     MT_GetInstanceSize, d1
     call    SendEvent_entry, [d2,d3], 0x24
     add     a2, d0
     mov     8, d1
@@ -28657,7 +28657,7 @@ loc_48493E1A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060021, d1
+    mov     MT_GetInstanceSize, d1
     call    SendEvent_entry, [d2,d3], 0x24
     add     a2, d0
     mov     8, d1
@@ -28824,13 +28824,13 @@ AcSplitBoxProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48493FD6
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494001
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48494021
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48493FD3
     jmp     loc_4849409E
 loc_48493FD3:
@@ -28853,7 +28853,7 @@ loc_48494001:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -28918,7 +28918,7 @@ loc_4849409E:
 loc_484940BB:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484940CC:
@@ -28936,17 +28936,17 @@ AcFadeBoxProc:
     add     -0x2c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494115
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494133
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     beq     loc_48494153
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_48494107
     jmp     loc_48494299
 loc_48494107:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494112
     jmp     loc_484942C4
 loc_48494112:
@@ -28967,7 +28967,7 @@ loc_48494133:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -28997,13 +28997,13 @@ loc_4849418D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600af, d1
+    mov     MT_GetFont, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600ae, d1
+    mov     MT_GetFontColor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   d0, (0x14, sp)
     mov     (0x18, sp), d0
@@ -29137,11 +29137,11 @@ loc_484942C4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484942FA:
@@ -29158,7 +29158,7 @@ AcPadRunProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, d3
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48494324
     cmp     0x350000, d1
     beq     loc_48494349
@@ -29248,11 +29248,11 @@ loc_484943FA:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a3, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -29262,7 +29262,7 @@ loc_484943FA:
 loc_48494455:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494466:
@@ -29361,11 +29361,11 @@ loc_4849454E:
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a3, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_48494647
 loc_48494593:
@@ -29424,11 +29424,11 @@ loc_48494600:
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a3, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_48494647:
     clr     d0
@@ -29440,13 +29440,13 @@ AcRhyRunProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494678
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494696
     cmp     0x350001, d2
     beq     loc_484946B3
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494675
     jmp     loc_48494729
 loc_48494675:
@@ -29497,7 +29497,7 @@ loc_484946DD:
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a3, a0
@@ -29506,7 +29506,7 @@ loc_484946DD:
 loc_48494715:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494726:
@@ -29586,7 +29586,7 @@ AcSeqRunProc:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, (0x28, sp)
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48494804
     cmp     0x350005, d1
     beq     loc_48494829
@@ -29626,7 +29626,7 @@ loc_48494850:
     call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -29635,7 +29635,7 @@ loc_4849487F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494891:
     clr     d0
@@ -29709,11 +29709,11 @@ loc_48494919:
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a3, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_48494981:
     clr     d0
@@ -29723,7 +29723,7 @@ AcSeqCurSngNameProc:
     movm    [d2,a2,a3], (sp)
     add     -0x18, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849499D
     cmp     0x350006, d1
     beq     loc_484949C1
@@ -29757,7 +29757,7 @@ loc_484949C1:
     call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     d2, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a3, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -29774,9 +29774,9 @@ AcFavBankNameProc:
     movm    [d2,a2], (sp)
     add     -0x2c, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48494A33
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48494A52
     bra     loc_48494A82
 loc_48494A33:
@@ -29785,7 +29785,7 @@ loc_48494A33:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -29821,13 +29821,13 @@ AcRightOctProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494ABD
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494ADB
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48494AFB
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494ABA
     jmp     loc_48494B8A
 loc_48494ABA:
@@ -29848,7 +29848,7 @@ loc_48494ADB:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -29911,7 +29911,7 @@ loc_48494B8A:
     bne     loc_48494BAF
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494BAF:
@@ -29929,17 +29929,17 @@ AcSndCtrlXProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494BF8
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494C21
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48494C43
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494BEA
     jmp     loc_48494D12
 loc_48494BEA:
-    cmp     0x600bc, d2
+    cmp     MT_GetMmmParam1, d2
     bne     loc_48494BF5
     jmp     loc_48494D48
 loc_48494BF5:
@@ -29948,7 +29948,7 @@ loc_48494BF8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     call    SendEvent_entry, [d2,d3], 0x24
     call    SetMmmFilter_entry, [d2], 0x18
     mov     (0x30, sp), a0
@@ -29966,7 +29966,7 @@ loc_48494C21:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -29974,7 +29974,7 @@ loc_48494C21:
 loc_48494C43:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d1
@@ -30054,7 +30054,7 @@ loc_48494D12:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), d1
@@ -30062,7 +30062,7 @@ loc_48494D12:
     bne     loc_48494D45
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494D45:
@@ -30083,9 +30083,9 @@ loc_48494D5A:
 AcSndCtrlYProc:
     movm    [a2], (sp)
     add     -0x14, sp
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48494D74
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_48494D86
     bra     loc_48494D8B
 loc_48494D74:
@@ -30111,13 +30111,13 @@ AcPmemBankNameProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494DC6
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494DE4
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48494E04
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494DC3
     jmp     loc_48494E4C
 loc_48494DC3:
@@ -30138,7 +30138,7 @@ loc_48494DE4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30176,7 +30176,7 @@ loc_48494E4C:
     bne     loc_48494E71
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494E71:
@@ -30194,13 +30194,13 @@ AcPmemXNameProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494EAF
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48494ED7
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48494EF7
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494EAC
     jmp     loc_48494F67
 loc_48494EAC:
@@ -30223,7 +30223,7 @@ loc_48494ED7:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30232,9 +30232,9 @@ loc_48494EF7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d0, a3
     clr     d0
     mov     d0, (0x10, sp)
@@ -30283,7 +30283,7 @@ loc_48494F67:
 loc_48494F82:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48494F93:
@@ -30301,13 +30301,13 @@ AcFootSwProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48494FD1
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48495007
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48495027
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48494FCE
     jmp     loc_484950BE
 loc_48494FCE:
@@ -30339,7 +30339,7 @@ loc_48495007:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30431,7 +30431,7 @@ loc_484950BE:
     bne     loc_484950FD
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484950FD:
@@ -30449,13 +30449,13 @@ AcPadBankProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849513B
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48495159
     cmp     0x350007, d2
     beq     loc_4849518F
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48495138
     jmp     loc_484951D6
 loc_48495138:
@@ -30500,7 +30500,7 @@ loc_4849518F:
     call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -30535,13 +30535,13 @@ AcPadNameProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48495244
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48495262
     cmp     0x350008, d2
     beq     loc_484952A9
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48495241
     jmp     loc_48495310
 loc_48495241:
@@ -30609,7 +30609,7 @@ loc_484952A9:
     call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
@@ -30651,13 +30651,13 @@ AcSndLdOptProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849538E
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_484953BC
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_484953DC
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849538B
     jmp     loc_4849542F
 loc_4849538B:
@@ -30683,7 +30683,7 @@ loc_484953BC:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30734,7 +30734,7 @@ loc_4849542F:
     bne     loc_48495466
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495466:
@@ -30752,13 +30752,13 @@ AcSndDspAllocProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_484954A1
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_484954BF
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_484954DE
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     beq     loc_48495511
     jmp     loc_48495539
 loc_484954A1:
@@ -30777,7 +30777,7 @@ loc_484954BF:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30808,7 +30808,7 @@ loc_48495511:
     bne     loc_48495536
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495536:
@@ -30826,13 +30826,13 @@ AcEffectTypeProc:
     add     -0x20, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48495574
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_484955A5
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_484955C5
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48495571
     jmp     loc_4849567B
 loc_48495571:
@@ -30861,7 +30861,7 @@ loc_484955A5:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -30955,7 +30955,7 @@ loc_4849567B:
     bne     loc_484956B5
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484956B5:
@@ -30970,7 +30970,7 @@ loc_484956C3:
 # AcMixerVolSProc  (CPU 0x484956c6)
 AcMixerVolSProc:
     add     -0x14, sp
-    cmp     0x600d9, d1
+    cmp     MT_IconDraw, d1
     bne     loc_484956D4
     clr     d0
     bra     loc_484956DF
@@ -30986,17 +30986,17 @@ AcTrackVolProc:
     add     -0x58, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x600d9, d2
+    cmp     MT_IconDraw, d2
     beq     loc_4849571F
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     beq     loc_48495723
-    cmp     0x60051, d2
+    cmp     MT_CheckEditSw, d2
     beq     loc_48495723
-    cmp     0x600e8, d2
+    cmp     MT_GetPartID, d2
     beq     loc_4849574D
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48495772
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4849571C
     jmp     loc_4849585E
 loc_4849571C:
@@ -31008,7 +31008,7 @@ loc_48495723:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600e8, d1
+    mov     MT_GetPartID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exthu   d0
     cmp     0x22, d0
@@ -31068,7 +31068,7 @@ loc_48495772:
     inc     d0
     movhu   d0, (0x30, sp)
     movhu   (0x34, sp), d0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     exth    d0
     add     -1, d0
     movhu   d0, (0x34, sp)
@@ -31183,9 +31183,9 @@ AcHpBmpProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x464, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_484958EF
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48495911
     jmp     loc_484959D0
 loc_484958EF:
@@ -31194,7 +31194,7 @@ loc_484958EF:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -31286,13 +31286,13 @@ AcMonitorOnProc:
 AcMonitorOnProc_entry:
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48495A17
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48495A35
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48495A55
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     beq     loc_48495A8A
     jmp     loc_48495AB2
 loc_48495A17:
@@ -31311,7 +31311,7 @@ loc_48495A35:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -31342,7 +31342,7 @@ loc_48495A8A:
     bne     loc_48495AAF
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495AAF:
@@ -31360,13 +31360,13 @@ AcRcVolumeProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48495AEC
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_48495B0A
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_48495B2A
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48495AE9
     bra     loc_48495B65
 loc_48495AE9:
@@ -31387,7 +31387,7 @@ loc_48495B0A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -31421,7 +31421,7 @@ loc_48495B65:
     bne     loc_48495B8A
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495B8A:
@@ -31443,13 +31443,13 @@ AcMonRcvProc:
 # TtCtHomepage  (CPU 0x48495baa)
 TtCtHomepage:
     add     -0x14, sp
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     bne     loc_48495BB8
     jmp     loc_48495CAD
 loc_48495BB8:
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_48495BE1
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_48495BF1
     cmp     0x360006, d1
     bne     loc_48495BD3
@@ -31491,7 +31491,7 @@ loc_48495C2C:
     mov     d0, (0x5006b794)
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     3, d0
     mov     0x48, d1
@@ -31503,7 +31503,7 @@ loc_48495C5C:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0xf, d0
     clr     d1
@@ -31511,7 +31511,7 @@ loc_48495C5C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     3, d0
     mov     0x23, d1
@@ -31584,7 +31584,7 @@ loc_48495D02:
     mov     d0, (0x5006b600)
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
@@ -31607,7 +31607,7 @@ loc_48495D67:
     bgt     loc_48495D90
     exth    d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495D90:
@@ -31620,7 +31620,7 @@ loc_48495D90:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -31632,13 +31632,13 @@ loc_48495D90:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48495E33
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48495DF0
@@ -31647,13 +31647,13 @@ loc_48495DF0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003e, d1
+    mov     MT_GetLargeStep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003f, d1
+    mov     MT_GetSmallStep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exthu   d0
     mov     d0, (0x10, sp)
@@ -31663,14 +31663,14 @@ loc_48495DF0:
     call    func_484934D6, 0, 0
     exth    d0
     mov     d0, (0x10, sp)
-    mov     0x0006003d, d1
+    mov     MT_CalcParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_48495EB7
 loc_48495E33:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
@@ -31689,7 +31689,7 @@ loc_48495E33:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00330001, d0
-    mov     0x000600b5, d1
+    mov     MT_Init, d1
     call    TtNormal_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     mov     d0, (0x5006b790)
@@ -31770,12 +31770,12 @@ loc_48495F20:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     -1, d0
@@ -31783,7 +31783,7 @@ loc_48495F20:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48495F6F:
     clr     d0
@@ -31836,7 +31836,7 @@ loc_48495FD4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, (0x18, sp)
@@ -31929,7 +31929,7 @@ loc_4849608F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
@@ -31990,17 +31990,17 @@ loc_48496103:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a3, (0x10, sp)
     mov     (0x3c, sp), d0
@@ -32017,17 +32017,17 @@ loc_48496164:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     -1, d0
@@ -32035,7 +32035,7 @@ loc_48496164:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484961C4:
     clr     d0
@@ -32048,7 +32048,7 @@ loc_484961C4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     -1, d0
@@ -32056,17 +32056,17 @@ loc_484961C4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48496223:
     clr     d0
@@ -32182,17 +32182,17 @@ loc_48496338:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     exth    d2
     mov     d2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     d2, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -32223,7 +32223,7 @@ loc_484963C1:
     mov     (0x3c, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x44, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -32246,7 +32246,7 @@ loc_484963E8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, d3
@@ -32304,7 +32304,7 @@ loc_48496459:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x1c, sp), a1
     mov     -1, d1
@@ -32316,7 +32316,7 @@ loc_48496459:
     movhu   d1, (a0)
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x44, sp), d0
     mov     a3, d1
@@ -32367,7 +32367,7 @@ loc_48496507:
     exth    d3
     mov     d3, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x44, sp), d0
     mov     a3, d1
@@ -32403,7 +32403,7 @@ loc_4849658D:
     sub     d1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_484965AB
@@ -32444,12 +32444,12 @@ loc_484965F7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x2c, a2), a0
     mov     d0, d2
@@ -32459,7 +32459,7 @@ loc_484965F7:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     -1, d0
     mov     0x00350004, d1
@@ -32480,7 +32480,7 @@ loc_48496676:
     sub     d1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484966DB
@@ -32495,7 +32495,7 @@ loc_48496676:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00330001, d0
-    mov     0x000600b5, d1
+    mov     MT_Init, d1
     call    TtNormal_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     mov     d0, (0x5006b790)
@@ -32623,11 +32623,11 @@ AcHpPartsSetProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_484967D2
     cmp     0x350004, d1
     beq     loc_484967D2
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_484967F1
     bra     loc_48496810
 loc_484967D2:
@@ -32636,7 +32636,7 @@ loc_484967D2:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -32669,7 +32669,7 @@ AcUserHpMenuProc:
     jmp     loc_484968D4
 loc_48496832:
     mov     (0x34, sp), d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -33701,7 +33701,7 @@ HmpInstall_entry:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00330001, d0
-    mov     0x000600b5, d1
+    mov     MT_Init, d1
     call    TtNormal_entry, [d2,d3,a2,a3], 0x30
     mov     (0x5006b798), d1
     mov     0x9681118c, a0
@@ -33995,17 +33995,17 @@ loc_48497450:
     retf    [d2], 4
 
 func_48497453:
-    cmp     0x5001f, d0
+    cmp     EV_SWIN_AIC, d0
     beq     loc_48497485
-    cmp     0x50011, d0
+    cmp     EV_INDEXSW_UP_AIC, d0
     beq     loc_48497485
-    cmp     0x50005, d0
+    cmp     EV_SWIN, d0
     beq     loc_48497488
-    cmp     0x5000f, d0
+    cmp     EV_INDEXSW_UP, d0
     beq     loc_48497488
-    cmp     0x50012, d0
+    cmp     EV_INDEXSW_DOWN_AIC, d0
     beq     loc_4849748D
-    cmp     0x50010, d0
+    cmp     EV_INDEXSW_DOWN, d0
     beq     loc_48497496
     bra     loc_484974A1
 loc_48497485:
@@ -34270,13 +34270,13 @@ TtRvari:
     movm    [d2], (sp)
     add     -0x20, sp
     clr     d2
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_484976C0
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_484976E5
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     beq     loc_484976EC
-    cmp     0x6008e, d1
+    cmp     MT_GetInterruptTime, d1
     beq     loc_484976F0
     bra     loc_484976F2
 loc_484976C0:
@@ -34284,7 +34284,7 @@ loc_484976C0:
     mov     d0, (0x10, sp)
     mov     5, d0
     mov     d0, (0x14, sp)
-    mov     0x0005000e, d0
+    mov     EV_INTERRUPT_TITLE, d0
     mov     d0, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
@@ -34437,12 +34437,12 @@ loc_48497872:
     cmp     d0, d2
     beq     loc_484978C1
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     0x000f0005, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    PostEvent_entry, [d2,d3], 0x24
     bra     loc_484978E2
 loc_484978C1:
@@ -34454,7 +34454,7 @@ loc_484978C1:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b7e8), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484978E2:
     mov     a3, (0x10, sp)
@@ -34475,13 +34475,13 @@ AcRhyVariProc:
     add     -0x1c, sp
     mov     d0, (0x34, sp)
     mov     d1, (0x38, sp)
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849794B
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4849791C
     jmp     loc_48497AA0
 loc_4849791C:
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     bne     loc_48497927
     jmp     loc_48497AE9
 loc_48497927:
@@ -34489,11 +34489,11 @@ loc_48497927:
     bne     loc_48497932
     jmp     loc_48497B58
 loc_48497932:
-    cmp     0x600c6, d1
+    cmp     MT_GetCaption, d1
     bne     loc_4849793D
     jmp     loc_48497B80
 loc_4849793D:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48497948
     jmp     loc_48497C0A
 loc_48497948:
@@ -34518,7 +34518,7 @@ loc_48497970:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
     movhu   (0x5006b7dc), d0
@@ -34610,7 +34610,7 @@ loc_48497A38:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     movhu   (0x5006b7de), d0
@@ -34654,7 +34654,7 @@ loc_48497A8D:
     ret     [d2,d3,a2,a3], 0x2c
 loc_48497AA0:
     mov     (0x3c, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -34703,14 +34703,14 @@ loc_48497AE9:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48497B54
 loc_48497B42:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x34, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48497B54:
     clr     d0
@@ -34807,15 +34807,15 @@ AcRhyPageProc:
     add     -0x14, sp
     mov     d0, (0x24, sp)
     mov     d1, d3
-    cmp     0x50009, d3
+    cmp     EV_PAINT, d3
     beq     loc_48497C69
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_48497C9E
-    cmp     0x60053, d3
+    cmp     MT_GetPageMax, d3
     beq     loc_48497CBA
-    cmp     0x60014, d3
+    cmp     MT_CheckClass, d3
     beq     loc_48497CC4
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     bne     loc_48497C66
     jmp     loc_48497CE3
 loc_48497C66:
@@ -34829,7 +34829,7 @@ loc_48497C69:
     cmp     1, d0
     beq     loc_48497C9A
     movhu   (0x5006b7de), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     exth    d0
     mov     d0, a0
     inc     a0
@@ -34876,7 +34876,7 @@ loc_48497CE3:
     jmp     loc_48497D8A
 loc_48497CF1:
     mov     (0x2c, sp), d2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d2, (0x10, sp)
     mov     (0x24, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -34918,12 +34918,12 @@ loc_48497D57:
     inc     d1
     mov     d1, (0x10, sp)
     mov     (0x24, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b7e8), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_48497DA5
@@ -34945,9 +34945,9 @@ AcRhyGroupProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48497DC0
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48497DDF
     bra     loc_48497DF2
 loc_48497DC0:
@@ -34956,7 +34956,7 @@ loc_48497DC0:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -34979,11 +34979,11 @@ AcRhyCmpVariProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48497E21
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48497E41
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     beq     loc_48497E96
     jmp     loc_48497EC7
 loc_48497E21:
@@ -34992,7 +34992,7 @@ loc_48497E21:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -35007,7 +35007,7 @@ loc_48497E41:
     beq     loc_48497E84
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
@@ -35031,7 +35031,7 @@ loc_48497E96:
     cmp     0xc000, d0
     bne     loc_48497EC4
     mov     (4, a2), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d0, (0x5006b7e4)
     clr     d0
     mov     d0, (0x10, sp)
@@ -35051,13 +35051,13 @@ AcRhyImageProc:
     movm    [d2,a2], (sp)
     add     -0x20, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48497EFC
-    cmp     0x600e7, d1
+    cmp     MT_WaitDraw, d1
     bne     loc_48497EEE
     jmp     loc_48497F75
 loc_48497EEE:
-    cmp     0x5003a, d1
+    cmp     EV_WAITDRAW, d1
     bne     loc_48497EF9
     jmp     loc_48497FF7
 loc_48497EF9:
@@ -35099,7 +35099,7 @@ loc_48497F50:
     call    func_484974EA_entry, [d2,d3,a2,a3], 0x30
     mov     d2, (0x10, sp)
     mov     -1, d0
-    mov     0x0005003a, d1
+    mov     EV_WAITDRAW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     ret     [d2,a2], 0x28
@@ -35169,7 +35169,7 @@ loc_48497FF7:
     call    SetNeedUpdate_entry, [d2], 0x10
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600e7, d1
+    mov     MT_WaitDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849802F:
@@ -35186,17 +35186,17 @@ TtSvari:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     0, a3
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_48498089
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     bne     loc_4849805A
     jmp     loc_4849810C
 loc_4849805A:
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     bne     loc_48498065
     jmp     loc_4849811B
 loc_48498065:
-    cmp     0x6008e, d1
+    cmp     MT_GetInterruptTime, d1
     bne     loc_48498070
     jmp     loc_4849811F
 loc_48498070:
@@ -36295,21 +36295,21 @@ AcSvariScreenProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48498B3F
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     bne     loc_48498B1B
     jmp     loc_48498C2E
 loc_48498B1B:
-    cmp     0x50002, d2
+    cmp     EV_HIDE, d2
     bne     loc_48498B26
     jmp     loc_48498C57
 loc_48498B26:
-    cmp     0x50038, d2
+    cmp     EV_LARGECHANGE, d2
     bne     loc_48498B31
     jmp     loc_48498C86
 loc_48498B31:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_48498B3C
     jmp     loc_48498CB0
 loc_48498B3C:
@@ -36396,7 +36396,7 @@ loc_48498C2E:
     exth    d1
     add     -1, d1
     mov     d1, (0x10, sp)
-    mov     0x000600db, d1
+    mov     MT_SetPageObject, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x3c, sp), a0
     mov     d2, d1
@@ -36422,7 +36422,7 @@ loc_48498C82:
     ret     [d2,d3,a2,a3], 0x2c
 loc_48498C86:
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     4, d0
     clr     d1
@@ -36485,7 +36485,7 @@ loc_48498D1E:
     beq     loc_48498D56
 loc_48498D3A:
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     4, d0
     clr     d1
@@ -36501,12 +36501,12 @@ loc_48498D56:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_48498EF8
 loc_48498D8E:
@@ -36534,7 +36534,7 @@ loc_48498DC5:
     cmp     0x11, d2
     beq     loc_48498DEA
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     4, d0
     clr     d1
@@ -36570,10 +36570,10 @@ loc_48498E1C:
     add     d2, d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050021, d1
+    mov     EV_IAMSELECTED, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b810), d0
-    mov     0x00050022, d1
+    mov     EV_YOUARESELECTED, d1
     exthu   d0
     add     d2, d0
     mov     d0, (0x10, sp)
@@ -36582,12 +36582,12 @@ loc_48498E1C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48498EF8
 loc_48498E86:
@@ -36621,7 +36621,7 @@ loc_48498EC6:
     cmp     d1, d0
     beq     loc_48498EF8
     mov     -1, d0
-    mov     0x0005000e, d1
+    mov     EV_INTERRUPT_TITLE, d1
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     4, d0
     clr     d1
@@ -36641,9 +36641,9 @@ AcSndVariProc:
     add     -0x24, sp
     mov     d0, (0x3c, sp)
     mov     d1, (0x40, sp)
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48498F54
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48498F25
     jmp     loc_484990FA
 loc_48498F25:
@@ -36651,15 +36651,15 @@ loc_48498F25:
     bne     loc_48498F30
     jmp     loc_484991A4
 loc_48498F30:
-    cmp     0x600c6, d1
+    cmp     MT_GetCaption, d1
     bne     loc_48498F3B
     jmp     loc_484991ED
 loc_48498F3B:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_48498F46
     jmp     loc_48499215
 loc_48498F46:
-    cmp     0x600ae, d1
+    cmp     MT_GetFontColor, d1
     bne     loc_48498F51
     jmp     loc_48499281
 loc_48498F51:
@@ -36684,7 +36684,7 @@ loc_48498F79:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     movhu   (0x5006b7f4), d0
@@ -36802,7 +36802,7 @@ loc_4849906D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x38, a3), a0
     mov     d0, d1
@@ -36861,7 +36861,7 @@ loc_484990E7:
     ret     [d2,d3,a2,a3], 0x34
 loc_484990FA:
     mov     (0x44, sp), a3
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a3, (0x10, sp)
     mov     (0x3c, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -36934,14 +36934,14 @@ loc_484991A4:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_484991E9
 loc_484991D7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_484991E9:
     clr     d0
@@ -37041,13 +37041,13 @@ AcSndPageProc:
     add     -0x14, sp
     mov     d0, (0x24, sp)
     mov     d1, d3
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_484992FB
-    cmp     0x60053, d3
+    cmp     MT_GetPageMax, d3
     beq     loc_48499330
-    cmp     0x60014, d3
+    cmp     MT_CheckClass, d3
     beq     loc_4849933A
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     beq     loc_48499359
     jmp     loc_4849940F
 loc_484992FB:
@@ -37064,7 +37064,7 @@ loc_484992FB:
     inc     d1
     mov     d1, (0x10, sp)
     mov     (0x24, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849932C:
     clr     d0
@@ -37094,7 +37094,7 @@ loc_48499359:
     jmp     loc_484993FF
 loc_48499367:
     mov     (0x2c, sp), d2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d2, (0x10, sp)
     mov     (0x24, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37131,7 +37131,7 @@ loc_484993AB:
     movhu   d0, (0x5006b7f6)
 loc_484993CD:
     movhu   (0x5006b7f6), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
@@ -37140,7 +37140,7 @@ loc_484993CD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4849941A
@@ -37162,9 +37162,9 @@ AcSndGroupProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48499436
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48499456
     jmp     loc_48499505
 loc_48499436:
@@ -37173,7 +37173,7 @@ loc_48499436:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -37252,15 +37252,15 @@ AcSndImageProc:
     movm    [d2,d3,a2], (sp)
     add     -0x20, sp
     mov     d0, d3
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48499542
-    cmp     0x600e7, d1
+    cmp     MT_WaitDraw, d1
     beq     loc_4849958D
-    cmp     0x5003a, d1
+    cmp     EV_WAITDRAW, d1
     bne     loc_48499534
     jmp     loc_4849960C
 loc_48499534:
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     bne     loc_4849953F
     jmp     loc_48499647
 loc_4849953F:
@@ -37284,7 +37284,7 @@ loc_48499542:
     call    func_484974EA_entry, [d2,d3,a2,a3], 0x30
     mov     d3, (0x10, sp)
     mov     -1, d0
-    mov     0x0005003a, d1
+    mov     EV_WAITDRAW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     ret     [d2,d3,a2], 0x2c
@@ -37347,7 +37347,7 @@ loc_4849960C:
     call    SetNeedUpdate_entry, [d2], 0x10
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600e7, d1
+    mov     MT_WaitDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48499644:
@@ -37369,7 +37369,7 @@ loc_48499647:
     bne     loc_48499682
     mov     d3, (0x10, sp)
     mov     -1, d0
-    mov     0x0005003a, d1
+    mov     EV_WAITDRAW, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_48499682:
     clr     d0
@@ -37386,13 +37386,13 @@ AcPartSelectProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_484996BD
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_484996DB
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     beq     loc_484996FA
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     beq     loc_48499715
     jmp     loc_4849974E
 loc_484996BD:
@@ -37411,7 +37411,7 @@ loc_484996DB:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -37435,11 +37435,11 @@ loc_48499715:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849974B:
@@ -37457,9 +37457,9 @@ AcAcdnTypeSwProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_48499776
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     beq     loc_484997A0
     jmp     loc_4849988E
 loc_48499776:
@@ -37469,7 +37469,7 @@ loc_48499776:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     movbu   (0x2c, a0), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37484,7 +37484,7 @@ loc_484997AE:
     mov     (0x2c, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_484997C7
@@ -37492,7 +37492,7 @@ loc_484997AE:
 loc_484997C7:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
@@ -37511,7 +37511,7 @@ loc_484997EF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849987C
 loc_4849980F:
@@ -37519,7 +37519,7 @@ loc_4849980F:
     movhu   d0, (0x5006b7f6)
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849987C
 loc_4849982D:
@@ -37536,7 +37536,7 @@ loc_4849983E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849987C
 loc_4849985E:
@@ -37545,7 +37545,7 @@ loc_4849985E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849987C:
     clr     d0
@@ -37569,7 +37569,7 @@ AcAcdnTabProc:
     add     -0x40, sp
     mov     d0, (0x58, sp)
     mov     d1, (0x5c, sp)
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bge     loc_484998B0
     jmp     loc_48499D24
 loc_484998B0:
@@ -37610,7 +37610,7 @@ loc_484998F0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     a0, a2
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x38, a1
@@ -37687,14 +37687,14 @@ loc_4849997C:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x000600a3, d1
+    mov     MT_GetBoxColor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
     exth    d3
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x000600a2, d1
+    mov     MT_GetBoxBorder, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     mov     (0x58, sp), d0
@@ -37719,7 +37719,7 @@ loc_48499A01:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48499A13:
     clr     d0
@@ -37735,13 +37735,13 @@ loc_48499A2B:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x000600af, d1
+    mov     MT_GetFont, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, (0x24, sp)
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x000600ae, d1
+    mov     MT_GetFontColor, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   d0, (0x28, sp)
     mov     0x100, d0
@@ -37751,7 +37751,7 @@ loc_48499A2B:
     cmp     0, a1
     bne     loc_48499A7B
     mov     (0x20, sp), a0
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     mov     a0, (0x10, sp)
     mov     (0x58, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37859,7 +37859,7 @@ loc_48499B6C:
     clr     d0
     ret     [d2,d3,a2,a3], 0x50
     mov     (0x60, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     mov     (0x58, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37919,14 +37919,14 @@ loc_48499BE9:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48499C40
 loc_48499C2E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48499C40:
     clr     d0
@@ -37934,7 +37934,7 @@ loc_48499C40:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48499C81
@@ -37963,7 +37963,7 @@ loc_48499C81:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48499CAE
@@ -37979,7 +37979,7 @@ loc_48499CAE:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_48499CD9
@@ -37995,7 +37995,7 @@ loc_48499CD9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x58, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     movhu   (0x5006b7f6), d0
@@ -38028,9 +38028,9 @@ AcAcdnTypeProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48499D4E
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48499D6D
     bra     loc_48499D89
 loc_48499D4E:
@@ -38039,7 +38039,7 @@ loc_48499D4E:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -38060,11 +38060,11 @@ loc_48499D89:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_48499D94:
     ret     [d2], 0x18
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_48499DB1
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_48499DB9
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_48499DBD
     bra     loc_48499DC2
 loc_48499DB1:
@@ -38080,11 +38080,11 @@ loc_48499DC2:
     clr     d0
 loc_48499DC3:
     retf    0, 0
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_48499DE0
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_48499DE8
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_48499DEC
     bra     loc_48499DF1
 loc_48499DE0:
@@ -38100,11 +38100,11 @@ loc_48499DF1:
     clr     d0
 loc_48499DF2:
     retf    0, 0
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_48499E0F
-    cmp     0x60093, d1
+    cmp     MT_GetBitmapWidth, d1
     beq     loc_48499E17
-    cmp     0x60094, d1
+    cmp     MT_GetBitmapHeight, d1
     beq     loc_48499E1B
     bra     loc_48499E20
 loc_48499E0F:
@@ -38126,11 +38126,11 @@ AcDrawbarProc:
     add     -0x24, sp
     mov     d0, (0x3c, sp)
     mov     d1, (0x40, sp)
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_48499E77
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48499EA2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     bne     loc_48499E48
     jmp     loc_48499EDB
 loc_48499E48:
@@ -38138,15 +38138,15 @@ loc_48499E48:
     bne     loc_48499E53
     jmp     loc_48499F0A
 loc_48499E53:
-    cmp     0x60098, d1
+    cmp     MT_RefreshParaDraw, d1
     bne     loc_48499E5E
     jmp     loc_48499F88
 loc_48499E5E:
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48499E69
     jmp     loc_4849A054
 loc_48499E69:
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     bne     loc_48499E74
     jmp     loc_4849A0EC
 loc_48499E74:
@@ -38184,7 +38184,7 @@ loc_48499EA2:
     mov     -1, d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00060098, d1
+    mov     MT_RefreshParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x34
@@ -38280,7 +38280,7 @@ loc_48499F90:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00060098, d1
+    mov     MT_RefreshParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x5006b7c0)
@@ -38363,7 +38363,7 @@ loc_4849A054:
     mov     (0x44, sp), d3
     mov     0x000d0024, d0
     mov     d3, (0x10, sp)
-    mov     0x00060029, d1
+    mov     MT_MakeEditSwID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     mov     (0x3c, sp), d0
@@ -38456,7 +38456,7 @@ loc_4849A0F2:
     exth    d3
     mov     d3, (0x10, sp)
     mov     (0x3c, sp), d0
-    mov     0x00060098, d1
+    mov     MT_RefreshParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849A135:
     mov     d2, d3
@@ -38485,13 +38485,13 @@ AcTremoloProc:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849A18C
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849A1AA
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4849A1D5
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849A189
     jmp     loc_4849A232
 loc_4849A189:
@@ -38528,7 +38528,7 @@ loc_4849A1D5:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849A223
@@ -38561,7 +38561,7 @@ loc_4849A232:
     cmp     0x8030, d0
     bne     loc_4849A25D
     mov     (4, a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -38582,19 +38582,19 @@ AcPerc223Proc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849A2A9
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849A2C7
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     bne     loc_4849A290
     jmp     loc_4849A317
 loc_4849A290:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4849A29B
     jmp     loc_4849A358
 loc_4849A29B:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849A2A6
     jmp     loc_4849A3D2
 loc_4849A2A6:
@@ -38631,7 +38631,7 @@ loc_4849A2C7:
     mov     d2, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (a0), d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -38647,14 +38647,14 @@ loc_4849A317:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00600017, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849A354
 loc_4849A33E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00600016, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849A354:
     clr     d0
@@ -38666,7 +38666,7 @@ loc_4849A358:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849A3C3
@@ -38720,7 +38720,7 @@ loc_4849A3D2:
     cmp     d0, d1
     bne     loc_4849A411
     mov     (a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -38741,13 +38741,13 @@ AcPerc4Proc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849A44F
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849A46D
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4849A4A9
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849A44C
     jmp     loc_4849A523
 loc_4849A44C:
@@ -38791,7 +38791,7 @@ loc_4849A4A9:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849A514
@@ -38845,7 +38845,7 @@ loc_4849A523:
     cmp     d0, d1
     bne     loc_4849A562
     mov     (a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -38904,12 +38904,12 @@ loc_4849A5C3:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600d0, d1
+    mov     MT_SetMmmFilter, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x38, sp), a0
     mov     a3, d1
@@ -38921,7 +38921,7 @@ loc_4849A5C3:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
@@ -38929,14 +38929,14 @@ loc_4849A5C3:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849A637
 loc_4849A626:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849A637:
     mov     (0x38, sp), a0
@@ -38949,7 +38949,7 @@ loc_4849A637:
     mov     (0x38, sp), a2
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     asl2    d0
@@ -38961,7 +38961,7 @@ loc_4849A637:
     ret     [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     call    SetMmmFilter_entry, [d2], 0x18
@@ -38969,7 +38969,7 @@ loc_4849A637:
     ret     [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x10000000, d1
@@ -38980,7 +38980,7 @@ loc_4849A637:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x10000000, d1
     mov     d1, (0x14, sp)
@@ -39002,7 +39002,7 @@ loc_4849A637:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     a0, a2
     call    SendEvent_entry, [d2,d3], 0x24
     mov     sp, a0
@@ -39011,7 +39011,7 @@ loc_4849A637:
     mov     d1, (0x14, sp)
     call    func_4849B8A1_entry, [d2,a2], 0x18
     mov     (0x14, sp), d0
-    mov     0x000600be, d1
+    mov     MT_GetMmmData, d1
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39024,7 +39024,7 @@ loc_4849A637:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -39040,18 +39040,18 @@ loc_4849A637:
     mov     d0, (0x10, sp)
     mov     a0, a3
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), d1
     cmp     d0, d1
     bne     loc_4849A7A6
     mov     (4, a2), d0
-    mov     0x000600be, d1
+    mov     MT_GetMmmData, d1
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x38, a3), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     movhu   d0, (a0)
     clr     d0
     mov     d0, (0x10, sp)
@@ -39067,7 +39067,7 @@ loc_4849A7A6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -39079,26 +39079,26 @@ loc_4849A7A6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003c, d1
+    mov     MT_CheckSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849A843
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849A843
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003e, d1
+    mov     MT_GetLargeStep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006003f, d1
+    mov     MT_GetSmallStep, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exthu   d0
     mov     d0, (0x10, sp)
@@ -39108,7 +39108,7 @@ loc_4849A7A6:
     call    func_48497453, 0, 0
     exth    d0
     mov     d0, (0x10, sp)
-    mov     0x0006003d, d1
+    mov     MT_CalcParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849A843:
@@ -39131,9 +39131,9 @@ loc_4849A860:
 # AcDrawAttackProc  (CPU 0x4849a863)
 AcDrawAttackProc:
     add     -0x14, sp
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4849A878
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     beq     loc_4849A880
     bra     loc_4849A888
 loc_4849A878:
@@ -39153,9 +39153,9 @@ loc_4849A893:
 # AcDrawReleaseProc  (CPU 0x4849a896)
 AcDrawReleaseProc:
     add     -0x14, sp
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4849A8AB
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     beq     loc_4849A8B3
     bra     loc_4849A8BB
 loc_4849A8AB:
@@ -39175,9 +39175,9 @@ loc_4849A8C6:
 # AcPercDecayProc  (CPU 0x4849a8c9)
 AcPercDecayProc:
     add     -0x14, sp
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4849A8DE
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     beq     loc_4849A8E6
     bra     loc_4849A8EE
 loc_4849A8DE:
@@ -39197,9 +39197,9 @@ loc_4849A8F9:
 # AcPercLevelProc  (CPU 0x4849a8fc)
 AcPercLevelProc:
     add     -0x14, sp
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4849A911
-    cmp     0x600be, d1
+    cmp     MT_GetMmmData, d1
     beq     loc_4849A919
     bra     loc_4849A921
 loc_4849A911:
@@ -39296,7 +39296,7 @@ loc_4849A9BB:
     ret     [d2,d3,a2,a3], 0x30
 loc_4849A9E1:
     mov     (0x40, sp), d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39381,7 +39381,7 @@ loc_4849AA82:
     mov     a2, (a0)
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849AAC7:
     clr     d0
@@ -39505,7 +39505,7 @@ loc_4849ABEA:
     jmp     loc_4849B0E8
 loc_4849ABED:
     movhu   (0x5006b812), d0
-    mov     0x00050021, d1
+    mov     EV_IAMSELECTED, d1
     exthu   d0
     add     0xa0000, d0
     mov     d0, (0x10, sp)
@@ -39523,7 +39523,7 @@ loc_4849AC1E:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5006b812), d0
-    mov     0x00050021, d1
+    mov     EV_IAMSELECTED, d1
     exthu   d0
     add     0xa0000, d0
     mov     d0, (0x10, sp)
@@ -39532,7 +39532,7 @@ loc_4849AC1E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x30
@@ -39600,7 +39600,7 @@ loc_4849ACE8:
     mov     (0x38, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x40, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39617,7 +39617,7 @@ loc_4849AD0F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d2
     exth    d0
@@ -39665,7 +39665,7 @@ loc_4849AD6E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), a1
     mov     (a2), a0
@@ -39676,7 +39676,7 @@ loc_4849AD6E:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x40, sp), d0
     mov     a3, d1
@@ -39684,12 +39684,12 @@ loc_4849AD6E:
     mov     (0x38, sp), d0
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x40, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SetDialUp_entry, 0, 0xc
     mov     (0x40, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SetDialDown_entry, 0, 0xc
@@ -39791,7 +39791,7 @@ loc_4849AF03:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x40, sp), d0
     mov     a3, d1
@@ -39799,12 +39799,12 @@ loc_4849AF03:
     mov     (0x38, sp), d0
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x40, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SetDialUp_entry, 0, 0xc
     mov     (0x40, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
     call    SetDialDown_entry, 0, 0xc
@@ -40026,7 +40026,7 @@ loc_4849B160:
     ret     [d2,d3,a2,a3], 0x34
 loc_4849B187:
     mov     (0x44, sp), d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     d0, (0x10, sp)
     mov     (0x3c, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40100,31 +40100,31 @@ AcExpToggleProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849B2A4
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849B2A4
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     bne     loc_4849B26A
     jmp     loc_4849B2EA
 loc_4849B26A:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4849B275
     jmp     loc_4849B313
 loc_4849B275:
-    cmp     0x50013, d2
+    cmp     EV_INDEXSELECT, d2
     bne     loc_4849B280
     jmp     loc_4849B46E
 loc_4849B280:
-    cmp     0x50022, d2
+    cmp     EV_YOUARESELECTED, d2
     bne     loc_4849B28B
     jmp     loc_4849B4B3
 loc_4849B28B:
-    cmp     0x6004e, d2
+    cmp     MT_GetIndex, d2
     bne     loc_4849B296
     jmp     loc_4849B514
 loc_4849B296:
-    cmp     0x6004d, d2
+    cmp     MT_CheckIndex, d2
     bne     loc_4849B2A1
     jmp     loc_4849B521
 loc_4849B2A1:
@@ -40196,7 +40196,7 @@ loc_4849B332:
     mov     (0x38, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849B34B
@@ -40205,7 +40205,7 @@ loc_4849B34B:
     add     0x30, a2
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (a2), d1
@@ -40214,7 +40214,7 @@ loc_4849B34B:
     cmp     -1, d1
     beq     loc_4849B37A
     movhu   (a2), d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -40224,7 +40224,7 @@ loc_4849B37A:
     bne     loc_4849B398
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (a3), d0
@@ -40280,12 +40280,12 @@ loc_4849B42D:
     add     d1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050021, d1
+    mov     EV_IAMSELECTED, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x28
@@ -40309,13 +40309,13 @@ loc_4849B46E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849B4AF
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849B4AF:
@@ -40348,14 +40348,14 @@ loc_4849B4B3:
     cmp     d0, d1
     bne     loc_4849B511
     movhu   (a1), d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     -1, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849B511:
@@ -40397,7 +40397,7 @@ AcSndExpWideESProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50007, d3
+    cmp     EV_SWOFF, d3
     bne     loc_4849B5C0
     call    GetVisible_entry, 0, 0xc
     cmp     0, d0
@@ -40405,14 +40405,14 @@ AcSndExpWideESProc:
     mov     (0x2c, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849B5B1
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
     exth    d1
@@ -40442,11 +40442,11 @@ AcAbcToggleProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849B5F0
-    cmp     0x50009, d3
+    cmp     EV_PAINT, d3
     beq     loc_4849B5F0
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     beq     loc_4849B612
     jmp     loc_4849B694
 loc_4849B5F0:
@@ -40463,7 +40463,7 @@ loc_4849B5F0:
     ret     [d2,d3,a2], 0x20
 loc_4849B612:
     mov     (0x30, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
@@ -40471,17 +40471,17 @@ loc_4849B612:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060063, d1
+    mov     MT_ToggleParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x00060062, d1
+    mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, (0x5006b854)
     call    func_48498629_entry, [d2,d3,a2], 0x30
     movhu   (0x5006b810), d0
-    mov     0x00050021, d1
+    mov     EV_IAMSELECTED, d1
     exthu   d0
     add     0xa0000, d0
     mov     d0, (0x10, sp)
@@ -40490,7 +40490,7 @@ loc_4849B612:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4849B69F
@@ -40508,7 +40508,7 @@ loc_4849B69F:
     ret     [d2,d3,a2], 0x20
 # TtSedrawbar  (CPU 0x4849b6a2)
 TtSedrawbar:
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     bne     loc_4849B6B2
     mov     9, d0
     mov     d0, (0x5006b808)
@@ -40521,7 +40521,7 @@ AcDrawbarScreenProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849B6C8
     jmp     loc_4849B750
 loc_4849B6C8:
@@ -40536,7 +40536,7 @@ loc_4849B6C8:
     call    GetViewInstance, 0, 0
     mov     a0, a2
     mov     (0x30, a2), d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     mov     d0, (0x5006b800)
     mov     1, d0
     mov     d0, (0x10, sp)
@@ -40549,7 +40549,7 @@ loc_4849B6C8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x34, a2), d0
     mov     a3, (0x10, sp)
@@ -40560,7 +40560,7 @@ loc_4849B6C8:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050031, d1
+    mov     EV_NEW_TITLE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849B74D:
     clr     d0
@@ -40793,11 +40793,11 @@ loc_4849B989:
     mov     a0, a2
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050014, d1
+    mov     EV_MMMDATA, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_4849BA89
 loc_4849B9FB:
@@ -40838,11 +40838,11 @@ loc_4849B9FB:
     mov     a0, a2
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050014, d1
+    mov     EV_MMMDATA, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_4849BA89
 loc_4849BA7E:
@@ -41081,19 +41081,19 @@ AcOrganSelectProc:
     movm    [d2,a2], (sp)
     add     -0x1c, sp
     mov     d0, d2
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849BCB1
     cmp     0x650003, d1
     beq     loc_4849BCB1
-    cmp     0x5000f, d1
+    cmp     EV_INDEXSW_UP, d1
     beq     loc_4849BCD1
-    cmp     0x50010, d1
+    cmp     EV_INDEXSW_DOWN, d1
     beq     loc_4849BCD1
-    cmp     0x600b4, d1
+    cmp     MT_ParaDraw, d1
     bne     loc_4849BCA3
     jmp     loc_4849BD24
 loc_4849BCA3:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     bne     loc_4849BCAE
     jmp     loc_4849BED6
 loc_4849BCAE:
@@ -41104,7 +41104,7 @@ loc_4849BCB1:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -41172,14 +41172,14 @@ loc_4849BD4D:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BD77
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BD77:
     mov     0x30, a2
@@ -41187,14 +41187,14 @@ loc_4849BD77:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BDA1
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BDA1:
     mov     0x28, a2
@@ -41202,7 +41202,7 @@ loc_4849BDA1:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BDBD
@@ -41211,7 +41211,7 @@ loc_4849BDBD:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4849BED3
 loc_4849BDD1:
@@ -41220,14 +41220,14 @@ loc_4849BDD1:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BDFB
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BDFB:
     mov     0x28, a2
@@ -41235,14 +41235,14 @@ loc_4849BDFB:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BE25
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BE25:
     mov     0x2c, a2
@@ -41250,7 +41250,7 @@ loc_4849BE25:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BE41
@@ -41259,7 +41259,7 @@ loc_4849BE41:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4849BED3
 loc_4849BE55:
@@ -41268,14 +41268,14 @@ loc_4849BE55:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BE7F
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BE7F:
     mov     0x28, a2
@@ -41283,14 +41283,14 @@ loc_4849BE7F:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849BEA9
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BEA9:
     mov     0x30, a2
@@ -41298,14 +41298,14 @@ loc_4849BEA9:
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060088, d1
+    mov     MT_CheckShowWindow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849BED3
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849BED3:
     clr     d0
@@ -41351,19 +41351,19 @@ AcTabPerc223Proc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849BF6B
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849BF89
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     bne     loc_4849BF52
     jmp     loc_4849BFD9
 loc_4849BF52:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4849BF5D
     jmp     loc_4849C01A
 loc_4849BF5D:
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849BF68
     jmp     loc_4849C094
 loc_4849BF68:
@@ -41400,7 +41400,7 @@ loc_4849BF89:
     mov     d2, d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (a0), d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -41416,14 +41416,14 @@ loc_4849BFD9:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00600017, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849C016
 loc_4849C000:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00600016, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849C016:
     clr     d0
@@ -41435,7 +41435,7 @@ loc_4849C01A:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849C085
@@ -41489,7 +41489,7 @@ loc_4849C094:
     cmp     d0, d1
     bne     loc_4849C0D3
     mov     (a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -41510,13 +41510,13 @@ AcTabPerc4Proc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849C111
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849C12F
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4849C16B
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849C10E
     jmp     loc_4849C1E5
 loc_4849C10E:
@@ -41560,7 +41560,7 @@ loc_4849C16B:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849C1D6
@@ -41614,7 +41614,7 @@ loc_4849C1E5:
     cmp     d0, d1
     bne     loc_4849C224
     mov     (a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -41635,13 +41635,13 @@ AcTabVibratoProc:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849C262
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849C280
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_4849C2BC
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849C25F
     jmp     loc_4849C336
 loc_4849C25F:
@@ -41685,7 +41685,7 @@ loc_4849C2BC:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849C327
@@ -41739,7 +41739,7 @@ loc_4849C336:
     cmp     d0, d1
     bne     loc_4849C375
     mov     (a2), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
@@ -41760,13 +41760,13 @@ AcTabTremulantProc:
     add     -0x1c, sp
     mov     d0, (0x30, sp)
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849C3B4
-    cmp     0x50009, d3
+    cmp     EV_PAINT, d3
     beq     loc_4849C3D3
-    cmp     0x50005, d3
+    cmp     EV_SWIN, d3
     beq     loc_4849C41E
-    cmp     0x50014, d3
+    cmp     EV_MMMDATA, d3
     bne     loc_4849C3B1
     jmp     loc_4849C4B4
 loc_4849C3B1:
@@ -41820,7 +41820,7 @@ loc_4849C41E:
     cmp     0, d0
     beq     loc_4849C4A4
     mov     (0x38, sp), a0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a0, (0x10, sp)
     mov     (0x30, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41899,7 +41899,7 @@ loc_4849C4B4:
 loc_4849C4F3:
     mov     a0, (0x10, sp)
     mov     (0x30, sp), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849C504:
     clr     d0
@@ -41916,31 +41916,31 @@ PsUsrBmpToggleProc:
     add     -0x1c, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849C571
-    cmp     0x50009, d2
+    cmp     EV_PAINT, d2
     beq     loc_4849C59A
-    cmp     0x50014, d2
+    cmp     EV_MMMDATA, d2
     bne     loc_4849C537
     jmp     loc_4849C5FD
 loc_4849C537:
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bne     loc_4849C542
     jmp     loc_4849C653
 loc_4849C542:
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     bne     loc_4849C54D
     jmp     loc_4849C6AE
 loc_4849C54D:
-    cmp     0x600b4, d2
+    cmp     MT_ParaDraw, d2
     bne     loc_4849C558
     jmp     loc_4849C6D9
 loc_4849C558:
-    cmp     0x60051, d2
+    cmp     MT_CheckEditSw, d2
     bne     loc_4849C563
     jmp     loc_4849C73A
 loc_4849C563:
-    cmp     0x60092, d2
+    cmp     MT_GetBitmapData, d2
     bne     loc_4849C56E
     jmp     loc_4849C766
 loc_4849C56E:
@@ -41949,7 +41949,7 @@ loc_4849C571:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     call    SendEvent_entry, [d2,d3], 0x24
     call    SetMmmFilter_entry, [d2], 0x18
     mov     (0x3c, sp), a0
@@ -41964,7 +41964,7 @@ loc_4849C59A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     a0, a2
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
@@ -41992,7 +41992,7 @@ loc_4849C5D4:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (a2), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (a0), d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -42005,7 +42005,7 @@ loc_4849C5FD:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a2), d1
@@ -42029,14 +42029,14 @@ loc_4849C5FD:
 loc_4849C63F:
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849C64F:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4849C653:
     mov     (0x3c, sp), a2
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     mov     a2, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
@@ -42044,7 +42044,7 @@ loc_4849C653:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600bc, d1
+    mov     MT_GetMmmParam1, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, d1
     and     0x80, d1
@@ -42073,7 +42073,7 @@ loc_4849C6AE:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x1c, a0), a0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     (a0), d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -42103,7 +42103,7 @@ loc_4849C6FB:
     add     0x18, a3
     movhu   d0, (0x1a, sp)
     mov     (a2), a0
-    mov     0x00060092, d1
+    mov     MT_GetBitmapData, d1
     mov     (a0), d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -42127,7 +42127,7 @@ loc_4849C73A:
     mov     (0x3c, sp), a0
     mov     0x000d0024, d0
     mov     a0, (0x10, sp)
-    mov     0x00060029, d1
+    mov     MT_MakeEditSwID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x18, a2), d1
     cmp     d0, d1
@@ -42150,9 +42150,9 @@ loc_4849C774:
 AcOrganTabProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-    cmp     0x600bc, d1
+    cmp     MT_GetMmmParam1, d1
     beq     loc_4849C78F
-    cmp     0x60092, d1
+    cmp     MT_GetBitmapData, d1
     beq     loc_4849C7A4
     jmp     loc_4849C834
 loc_4849C78F:
@@ -42418,11 +42418,11 @@ loc_4849C9DE:
     mov     a0, a2
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00050014, d1
+    mov     EV_MMMDATA, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
-    mov     0x00060023, d1
+    mov     MT_AutoFree, d1
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_4849CA59
 loc_4849CA4E:
@@ -42434,7 +42434,7 @@ loc_4849CA59:
     ret     [d2,d3,a2,a3], 0x24
 # TtSeorgan  (CPU 0x4849ca5d)
 TtSeorgan:
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     bne     loc_4849CA6D
     mov     0xa, d0
     mov     d0, (0x5006b808)
@@ -42447,7 +42447,7 @@ AcOrganScreenProc:
     add     -0x14, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849CA83
     jmp     loc_4849CB0B
 loc_4849CA83:
@@ -42462,7 +42462,7 @@ loc_4849CA83:
     call    GetViewInstance, 0, 0
     mov     a0, a2
     mov     (0x30, a2), d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     mov     d0, (0x5006b800)
     mov     1, d0
     mov     d0, (0x10, sp)
@@ -42475,7 +42475,7 @@ loc_4849CA83:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x34, a2), d0
     mov     a3, (0x10, sp)
@@ -42486,7 +42486,7 @@ loc_4849CA83:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x5006b800), d0
-    mov     0x00050031, d1
+    mov     EV_NEW_TITLE, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849CB08:
     clr     d0
@@ -42638,17 +42638,17 @@ InitializeBlock08_entry:
     ret     [d2,d3,a2,a3], 0x3c
 
 func_4849CD0F:
-    cmp     0x5001f, d0
+    cmp     EV_SWIN_AIC, d0
     beq     loc_4849CD41
-    cmp     0x50011, d0
+    cmp     EV_INDEXSW_UP_AIC, d0
     beq     loc_4849CD41
-    cmp     0x50005, d0
+    cmp     EV_SWIN, d0
     beq     loc_4849CD44
-    cmp     0x5000f, d0
+    cmp     EV_INDEXSW_UP, d0
     beq     loc_4849CD44
-    cmp     0x50012, d0
+    cmp     EV_INDEXSW_DOWN_AIC, d0
     beq     loc_4849CD49
-    cmp     0x50010, d0
+    cmp     EV_INDEXSW_DOWN, d0
     beq     loc_4849CD52
     bra     loc_4849CD5D
 loc_4849CD41:
@@ -42680,17 +42680,17 @@ func_4849CD60:
     add     -0x20, sp
     mov     d0, d3
     mov     0, a2
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4849CDC0
-    cmp     0x600d8, d1
+    cmp     MT_GetIntTitleType, d1
     bne     loc_4849CD7B
     jmp     loc_4849D0FC
 loc_4849CD7B:
-    cmp     0x6008e, d1
+    cmp     MT_GetInterruptTime, d1
     bne     loc_4849CD86
     jmp     loc_4849CE0D
 loc_4849CD86:
-    cmp     0x50014, d1
+    cmp     EV_MMMDATA, d1
     bne     loc_4849CD91
     jmp     loc_4849CE12
 loc_4849CD91:
@@ -42698,11 +42698,11 @@ loc_4849CD91:
     bne     loc_4849CD9C
     jmp     loc_4849CE67
 loc_4849CD9C:
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     bne     loc_4849CDA7
     jmp     loc_4849CE74
 loc_4849CDA7:
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_4849CDB2
     jmp     loc_4849CEC8
 loc_4849CDB2:
@@ -42716,7 +42716,7 @@ loc_4849CDC0:
     mov     d0, (0x10, sp)
     mov     6, d0
     mov     d0, (0x14, sp)
-    mov     0x0005000e, d0
+    mov     EV_INTERRUPT_TITLE, d0
     mov     d0, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
@@ -42727,7 +42727,7 @@ loc_4849CDC0:
     mov     d0, (0x10, sp)
     mov     6, d0
     mov     d0, (0x14, sp)
-    mov     0x0005000e, d0
+    mov     EV_INTERRUPT_TITLE, d0
     mov     d0, (0x18, sp)
     mov     1, d0
     mov     d0, (0x1c, sp)
@@ -42757,12 +42757,12 @@ loc_4849CE34:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006006f, d1
+    mov     MT_InterruptExit, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, a2
     jmp     loc_4849D0FC
@@ -42783,7 +42783,7 @@ loc_4849CE7D:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0xd, d0
     clr     d1
@@ -42791,7 +42791,7 @@ loc_4849CE7D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_4849CEBB:
     mov     0x10, d0
@@ -42902,7 +42902,7 @@ loc_4849CFC3:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849CFE6:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcLoadTtlJgFunc_entry, 0, 0x10
     jmp     loc_4849D0FC
@@ -42914,7 +42914,7 @@ loc_4849CFE6:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D012:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcSaveTtlJgFunc_entry, 0, 0x10
     jmp     loc_4849D0FC
@@ -42926,7 +42926,7 @@ loc_4849D012:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D03E:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcSaveSmfTtlJgFunc_entry, 0, 0x10
     jmp     loc_4849D0FC
@@ -42938,7 +42938,7 @@ loc_4849D03E:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D06A:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcMedleyTtlJgFunc_entry, 0, 0x10
     jmp     loc_4849D0FC
@@ -42950,7 +42950,7 @@ loc_4849D06A:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D096:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcUtilityTtlJgFunc_entry, 0, 0x10
     bra     loc_4849D0FC
@@ -42962,7 +42962,7 @@ loc_4849D096:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D0C1:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcFavoriteTtlJgFunc_entry, 0, 0x10
     bra     loc_4849D0FC
@@ -42974,7 +42974,7 @@ loc_4849D0C1:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4849D0EC:
     mov     d3, (0x10, sp)
-    mov     0x00050005, d1
+    mov     EV_SWIN, d1
     mov     d3, d0
     call    SdcCustomTtlJgFunc_entry, 0, 0x10
 loc_4849D0FC:
@@ -42986,15 +42986,15 @@ AcFavBankProc:
     add     -0x20, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_4849D136
-    cmp     0x600b3, d2
+    cmp     MT_SeleDraw, d2
     beq     loc_4849D159
-    cmp     0x5000f, d2
+    cmp     EV_INDEXSW_UP, d2
     beq     loc_4849D193
-    cmp     0x50010, d2
+    cmp     EV_INDEXSW_DOWN, d2
     beq     loc_4849D193
-    cmp     0x6003a, d2
+    cmp     MT_GetString, d2
     bne     loc_4849D133
     jmp     loc_4849D1B5
 loc_4849D133:
@@ -43039,7 +43039,7 @@ loc_4849D193:
     cmp     4, a2
     bcc     loc_4849D1B2
     mov     a2, (0x10, sp)
-    mov     0x000600b3, d1
+    mov     MT_SeleDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849D1B2:
@@ -43073,7 +43073,7 @@ AcFavoriteProc:
     add     -0x18, sp
     mov     d0, d2
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     bge     loc_4849D20B
     jmp     loc_4849D456
 loc_4849D20B:
@@ -43111,7 +43111,7 @@ loc_4849D248:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     0, d0
@@ -43153,7 +43153,7 @@ loc_4849D298:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
@@ -43183,7 +43183,7 @@ loc_4849D298:
 loc_4849D2FD:
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -43195,7 +43195,7 @@ loc_4849D2FD:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
@@ -43226,11 +43226,11 @@ loc_4849D367:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -43238,14 +43238,14 @@ loc_4849D367:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_4849D3EE
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     0, d0
@@ -43281,7 +43281,7 @@ loc_4849D3EE:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     cmp     0, d0
@@ -43380,7 +43380,7 @@ func_4849D4D4:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bge     loc_4849D4E6
     jmp     loc_4849D571
 loc_4849D4E6:
@@ -43455,7 +43455,7 @@ func_4849D575:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, d3
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bge     loc_4849D586
     jmp     loc_4849D6A4
 loc_4849D586:
@@ -43501,24 +43501,24 @@ loc_4849D5D4:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006006f, d1
+    mov     MT_InterruptExit, d1
     call    SendEvent_entry, [d2,d3], 0x24
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849D65E
 loc_4849D60E:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     0xd, d0
     clr     d1
@@ -43526,7 +43526,7 @@ loc_4849D60E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     0x10, d0
     clr     d1
@@ -43572,7 +43572,7 @@ func_4849D6A8:
     add     -0x44, sp
 func_4849D6A8_entry:
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4849D6B9
     jmp     loc_4849DAAB
 loc_4849D6B9:
@@ -43620,11 +43620,11 @@ loc_4849D6F6:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849D799
@@ -43648,11 +43648,11 @@ loc_4849D748:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849D799:
@@ -43668,7 +43668,7 @@ loc_4849D799:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -43711,7 +43711,7 @@ loc_4849D805:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -43782,7 +43782,7 @@ loc_4849D8CD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -43818,7 +43818,7 @@ loc_4849D8CD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     movhu   (0x5006b874), d0
@@ -43955,7 +43955,7 @@ func_4849DAAF:
     add     -0x34, sp
 func_4849DAAF_entry:
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4849DAC0
     jmp     loc_4849DCF5
 loc_4849DAC0:
@@ -44001,11 +44001,11 @@ loc_4849DAFD:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849DB40:
@@ -44017,7 +44017,7 @@ loc_4849DB40:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44048,7 +44048,7 @@ loc_4849DB8A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44116,7 +44116,7 @@ loc_4849DC2F:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44180,7 +44180,7 @@ func_4849DCF9:
 func_4849DCF9_entry:
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bge     loc_4849DD0B
     jmp     loc_4849DE5E
 loc_4849DD0B:
@@ -44221,7 +44221,7 @@ loc_4849DD48:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44265,7 +44265,7 @@ loc_4849DD9A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (0x30, sp), a2
     mov     Str_s_60, d1
@@ -44319,7 +44319,7 @@ func_4849DE62:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bge     loc_4849DE74
     jmp     loc_4849E0DC
 loc_4849DE74:
@@ -44362,7 +44362,7 @@ loc_4849DEC2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44379,7 +44379,7 @@ loc_4849DEC2:
     call    GetTitleNow_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006008b, d1
+    mov     MT_SetHold, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0x2c, d2
     bcs     loc_4849DF56
@@ -44423,11 +44423,11 @@ loc_4849DF56:
     mov     d2, a3
     add     data_48603758, a3
     mov     (0x10, a3), d0
-    cmp     0x5000c, d0
+    cmp     EV_CHANGE_MODE, d0
     beq     loc_4849DF85
-    cmp     0x5000d, d0
+    cmp     EV_CHANGE_TITLE, d0
     beq     loc_4849DFAE
-    cmp     0x5000e, d0
+    cmp     EV_INTERRUPT_TITLE, d0
     bne     loc_4849DF82
     jmp     loc_4849E003
 loc_4849DF82:
@@ -44461,7 +44461,7 @@ loc_4849DFAE:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     (a2), d0
     clr     d1
@@ -44469,7 +44469,7 @@ loc_4849DFAE:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
 loc_4849DFF4:
     mov     (0xc, a3), d0
@@ -44504,7 +44504,7 @@ loc_4849E010:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44529,7 +44529,7 @@ loc_4849E010:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44570,7 +44570,7 @@ func_4849E0E0:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, d3
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bge     loc_4849E0F1
     jmp     loc_4849E18F
 loc_4849E0F1:
@@ -44650,7 +44650,7 @@ func_4849E193:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     bge     loc_4849E1A5
     jmp     loc_4849E2FF
 loc_4849E1A5:
@@ -44696,11 +44696,11 @@ loc_4849E1E2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849E225:
@@ -44792,7 +44792,7 @@ func_4849E303:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, d2
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     bge     loc_4849E315
     jmp     loc_4849E428
 loc_4849E315:
@@ -44833,7 +44833,7 @@ loc_4849E352:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44878,7 +44878,7 @@ loc_4849E3A4:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (0x5006b874), d1
     exth    d0
@@ -44937,11 +44937,11 @@ loc_4849E444:
 
 func_4849E45D:
     add     -0x10, sp
-    cmp     0x600b5, d1
+    cmp     MT_Init, d1
     beq     loc_4849E4C1
-    cmp     0x6003b, d1
+    cmp     MT_SetParam, d1
     beq     loc_4849E482
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     beq     loc_4849E4C1
     cmp     0x860001, d1
     beq     loc_4849E491
@@ -44970,11 +44970,11 @@ AcFavScreenProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, (0x34, sp)
-    cmp     0x50002, d1
+    cmp     EV_HIDE, d1
     beq     loc_4849E4E7
-    cmp     0x50017, d1
+    cmp     EV_DIAL, d1
     beq     loc_4849E536
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_4849E554
     jmp     loc_4849E64D
 loc_4849E4E7:
@@ -44993,7 +44993,7 @@ loc_4849E4E7:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     3, d0
     mov     0x48, d1
@@ -45113,7 +45113,7 @@ loc_4849E59D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00800030, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849E64A:
     clr     d0
@@ -45127,7 +45127,7 @@ loc_4849E658:
 # FavSetFunc  (CPU 0x4849e65b)
 FavSetFunc:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4849E6A3
     mov     (0x24, sp), a0
     cmp     0x17, a0
@@ -45159,13 +45159,13 @@ FavBankNamingFunc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_4849E6D0
     cmp     0x260000, d1
     beq     loc_4849E6FD
-    cmp     0x60072, d1
+    cmp     MT_GetStringLength, d1
     beq     loc_4849E700
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     beq     loc_4849E704
     jmp     loc_4849E756
 loc_4849E6D0:
@@ -45208,7 +45208,7 @@ loc_4849E716:
     mov     d1, a0
     add     0x5006b890, a0
     mov     a0, (0x10, sp)
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x10, d0
     clr     d1
@@ -45228,33 +45228,33 @@ AcFavCategoryProc:
     add     -0x14, sp
     mov     d0, (0x2c, sp)
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849E7BA
-    cmp     0x50011, d3
+    cmp     EV_INDEXSW_UP_AIC, d3
     bne     loc_4849E775
     jmp     loc_4849E827
 loc_4849E775:
-    cmp     0x5000f, d3
+    cmp     EV_INDEXSW_UP, d3
     bne     loc_4849E780
     jmp     loc_4849E827
 loc_4849E780:
-    cmp     0x50012, d3
+    cmp     EV_INDEXSW_DOWN_AIC, d3
     bne     loc_4849E78B
     jmp     loc_4849E827
 loc_4849E78B:
-    cmp     0x50010, d3
+    cmp     EV_INDEXSW_DOWN, d3
     bne     loc_4849E796
     jmp     loc_4849E827
 loc_4849E796:
-    cmp     0x50035, d3
+    cmp     EV_INDEXSW_ON, d3
     bne     loc_4849E7A1
     jmp     loc_4849E970
 loc_4849E7A1:
-    cmp     0x50036, d3
+    cmp     EV_INDEXSW_OFF, d3
     bne     loc_4849E7AC
     jmp     loc_4849E9A3
 loc_4849E7AC:
-    cmp     0x6003a, d3
+    cmp     MT_GetString, d3
     bne     loc_4849E7B7
     jmp     loc_4849E9CF
 loc_4849E7B7:
@@ -45276,17 +45276,17 @@ loc_4849E7BA:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006004e, d1
+    mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d2
     exth    d2
     mov     d2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     d2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -45298,7 +45298,7 @@ loc_4849E827:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849E84A
@@ -45339,7 +45339,7 @@ loc_4849E880:
     cmp     d1, d2
     bge     loc_4849E8CF
     movhu   (0x5006b876), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     movhu   d0, (0x5006b878)
     mov     (0x2c, a1), a0
     movhu   (0x5006b878), d0
@@ -45367,7 +45367,7 @@ loc_4849E8CF:
     movhu   d0, (0x5006b878)
     mov     (0x2c, a1), a0
     movhu   (0x5006b878), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     exth    d0
     sub     d0, d2
     movhu   d2, (a0)
@@ -45380,7 +45380,7 @@ loc_4849E90A:
     sub     d1, d2
     mov     d2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849E91D:
     mov     d3, d1
@@ -45396,11 +45396,11 @@ loc_4849E91D:
 loc_4849E941:
     mov     a2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -45420,7 +45420,7 @@ loc_4849E97E:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x00800030, d0
-    mov     0x00050009, d1
+    mov     EV_PAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -45431,7 +45431,7 @@ loc_4849E9A3:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     6, a2
     bne     loc_4849E9CB
@@ -45501,25 +45501,25 @@ AcFavItemProc:
     add     -0x3c, sp
     mov     d0, (0x54, sp)
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     beq     loc_4849EAAD
-    cmp     0x50011, d3
+    cmp     EV_INDEXSW_UP_AIC, d3
     beq     loc_4849EAE6
-    cmp     0x5000f, d3
+    cmp     EV_INDEXSW_UP, d3
     beq     loc_4849EAE6
-    cmp     0x50012, d3
+    cmp     EV_INDEXSW_DOWN_AIC, d3
     beq     loc_4849EAE6
-    cmp     0x50010, d3
+    cmp     EV_INDEXSW_DOWN, d3
     beq     loc_4849EAE6
     cmp     0x850001, d3
     bne     loc_4849EA94
     jmp     loc_4849EC26
 loc_4849EA94:
-    cmp     0x6003a, d3
+    cmp     MT_GetString, d3
     bne     loc_4849EA9F
     jmp     loc_4849EC62
 loc_4849EA9F:
-    cmp     0x50014, d3
+    cmp     EV_MMMDATA, d3
     bne     loc_4849EAAA
     jmp     loc_4849ED14
 loc_4849EAAA:
@@ -45544,7 +45544,7 @@ loc_4849EAE6:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a3, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849EB09
@@ -45592,7 +45592,7 @@ loc_4849EB4E:
     cmp     d1, d2
     bge     loc_4849EB9D
     movhu   (0x5006b87a), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     movhu   d0, (0x5006b87c)
     mov     (0x2c, a1), a0
     movhu   (0x5006b87c), d0
@@ -45620,7 +45620,7 @@ loc_4849EB9D:
     movhu   d0, (0x5006b87c)
     mov     (0x2c, a1), a0
     movhu   (0x5006b87c), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     exth    d0
     sub     d0, d2
     movhu   d2, (a0)
@@ -45633,7 +45633,7 @@ loc_4849EBD8:
     sub     d1, d2
     mov     d2, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849EBEB:
     mov     a3, (0x10, sp)
@@ -45643,11 +45643,11 @@ loc_4849EBEB:
 loc_4849EBF7:
     mov     a3, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a3, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
@@ -45668,7 +45668,7 @@ loc_4849EC26:
     movhu   d0, (a0)
     mov     d0, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x4c
@@ -45765,7 +45765,7 @@ loc_4849ED3A:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4849ED76
 loc_4849ED59:
@@ -45776,7 +45776,7 @@ loc_4849ED59:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x54, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4849ED76:
     mov     (0x5c, sp), a0
@@ -45785,9 +45785,9 @@ loc_4849ED76:
     mov     (0x54, sp), d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x4c
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4849ED99
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4849EDA1
     bra     loc_4849EDA5
 loc_4849ED99:
@@ -46092,9 +46092,9 @@ InitializeBlock22_entry:
     ret     [d2,d3,a2,a3], 0x3c
 # StylCnvLangCheck  (CPU 0x4849f14d)
 StylCnvLangCheck:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4849F15F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4849F167
     bra     loc_4849F16B
 loc_4849F15F:
@@ -46123,17 +46123,17 @@ StylCnvStorBnkSel:
     inc     a0
     inc     d2
     lne
-    cmp     0x60044, d1
+    cmp     MT_GetRamString, d1
     beq     loc_4849F1BB
-    cmp     0x6003e, d1
+    cmp     MT_GetLargeStep, d1
     beq     loc_4849F1D4
-    cmp     0x6003f, d1
+    cmp     MT_GetSmallStep, d1
     beq     loc_4849F1D8
-    cmp     0x60040, d1
+    cmp     MT_GetMax, d1
     beq     loc_4849F1DC
-    cmp     0x60042, d1
+    cmp     MT_GetRamAddress, d1
     beq     loc_4849F1E0
-    cmp     0x60043, d1
+    cmp     MT_GetRamSize, d1
     beq     loc_4849F1E8
     bra     loc_4849F1EC
 loc_4849F1BB:
@@ -46170,7 +46170,7 @@ loc_4849F1ED:
 # StylCnvStorOkFunc  (CPU 0x4849f1f0)
 StylCnvStorOkFunc:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4849F216
     movbu   (0x50150810), d0
     mov     0x01660000, d1
@@ -46185,13 +46185,13 @@ PsStylCnvVerProc:
     movm    [d2,a2], (sp)
     add     -0x214, sp
     mov     d0, d2
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_4849F243
-    cmp     0x50002, d1
+    cmp     EV_HIDE, d1
     beq     loc_4849F253
-    cmp     0x6007d, d1
+    cmp     MT_GetStrPtr, d1
     beq     loc_4849F263
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849F26B
     bra     loc_4849F29C
 loc_4849F243:
@@ -46219,7 +46219,7 @@ loc_4849F26B:
     mov     0x50150811, a1
     call    strcpy_entry, [a2], 4
     mov     a2, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -46236,7 +46236,7 @@ PsParaListBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xbc, sp
     mov     d0, d3
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     bge     loc_4849F2C2
     jmp     loc_4849F730
 loc_4849F2C2:
@@ -46286,13 +46286,13 @@ loc_4849F2FE:
     mov     0x1c, a2
     add     d2, a2
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -46302,13 +46302,13 @@ loc_4849F358:
     mov     0x1c, a2
     add     d2, a2
     movhu   (a2), d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     call    SetDialUp_entry, 0, 0xc
     movhu   (a2), d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     d3, d0
@@ -46324,7 +46324,7 @@ loc_4849F382:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849F3B2
@@ -46335,37 +46335,37 @@ loc_4849F3B2:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     add     -1, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050011, d1
+    mov     EV_INDEXSW_UP_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     call    CheckProgDial, 0, 0
     cmp     0, d0
     beq     loc_4849F41B
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     mov     d3, d0
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4849F43B
 loc_4849F41B:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     mov     d3, d0
     call    SetDialDown_entry, 0, 0xc
 loc_4849F43B:
@@ -46385,7 +46385,7 @@ loc_4849F45A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004d, d1
+    mov     MT_CheckIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     bne     loc_4849F481
@@ -46396,38 +46396,38 @@ loc_4849F481:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d3, d0
-    mov     0x00060084, d1
+    mov     MT_GetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exth    d0
     mov     d0, a0
     inc     a0
     mov     a0, (0x10, sp)
     mov     d3, d0
-    mov     0x0006004a, d1
+    mov     MT_SetSelected, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050012, d1
+    mov     EV_INDEXSW_DOWN_AIC, d1
     call    SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
     call    CheckProgDial, 0, 0
     cmp     0, d0
     beq     loc_4849F4EB
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     mov     d3, d0
     call    SetDialDown_entry, 0, 0xc
     bra     loc_4849F514
 loc_4849F4EB:
     mov     a2, (0x10, sp)
     mov     d3, d0
-    mov     0x0005000f, d1
+    mov     EV_INDEXSW_UP, d1
     call    SetDialUp_entry, 0, 0xc
     mov     a2, (0x10, sp)
-    mov     0x00050010, d1
+    mov     EV_INDEXSW_DOWN, d1
     mov     d3, d0
     call    SetDialDown_entry, 0, 0xc
     mov     1, d0
@@ -46692,11 +46692,11 @@ PsSCTxtBoxProc:
     movm    [d2,a2], (sp)
     add     -0x214, sp
     mov     d0, d2
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_4849F760
-    cmp     0x50002, d1
+    cmp     EV_HIDE, d1
     beq     loc_4849F770
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849F780
     bra     loc_4849F7B1
 loc_4849F760:
@@ -46721,7 +46721,7 @@ loc_4849F780:
     mov     0x50150831, a1
     call    strcpy_entry, [a2], 4
     mov     a2, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -46738,13 +46738,13 @@ PsSCTxtBox2Proc:
     movm    [d2,a2], (sp)
     add     -0x214, sp
     mov     d0, d2
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_4849F7EE
-    cmp     0x50002, d1
+    cmp     EV_HIDE, d1
     beq     loc_4849F7FE
-    cmp     0x6007d, d1
+    cmp     MT_GetStrPtr, d1
     beq     loc_4849F80E
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_4849F816
     bra     loc_4849F847
 loc_4849F7EE:
@@ -46772,7 +46772,7 @@ loc_4849F816:
     mov     0x50150831, a1
     call    strcpy_entry, [a2], 4
     mov     a2, (0x10, sp)
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
@@ -47291,7 +47291,7 @@ loc_4849FDCA:
 # RomTestRunFunc  (CPU 0x4849fdcf)
 RomTestRunFunc:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_4849FDF4
     mov     (0x24, sp), a0
     mov     0x01030000, d0
@@ -47316,7 +47316,7 @@ MainRomTestFunc:
 loc_4849FE0C:
     mov     d0, (0x10, sp)
     mov     0x0100011a, d0
-    mov     0x00050001, d1
+    mov     EV_SHOW, d1
     call    ApPostEvent_entry, [d2], 0x1c
     call    func_4849FC4F_entry, [d2,d3,a2,a3], 0x24
     extbu   d0
@@ -47337,12 +47337,12 @@ loc_4849FE0C:
     mov     0x0100011a, d0
     extbu   d3
     or      d1, d3
-    mov     0x00050002, d1
+    mov     EV_HIDE, d1
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    ApPostEvent_entry, [d2], 0x1c
     movbu   (0x15, sp), d2
     btst    0x01, d2

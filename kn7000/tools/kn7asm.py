@@ -43,7 +43,16 @@
 #                                  no default must be given); arguments may be
 #                                  given by keyword, `NAME p2=b, p1=a`, in any
 #                                  order, after the positional ones; `\@` is
-#                                  the number of macro expansions so far.
+#                                  the number of macro expansions so far; the
+#                                  last parameter may be `name:vararg`, which
+#                                  takes every remaining argument (with their
+#                                  commas; empty when there is none).
+#   .zlib LEVEL                    the bytes of the lines up to `.endzlib`,
+#   ...                            compressed as one zlib stream (header,
+#   .endzlib                       deflate, Adler-32) at LEVEL with Python's
+#                                  zlib; labels inside take their offset in the
+#                                  uncompressed bytes.  The program's built-in
+#                                  demo songs are such streams (level 6).
 #   .ascii "text" [, "text" ...]   emit the bytes of each string
 #   .asciz "text" [, "text" ...]   the same, each followed by a NUL
 #                                  (escapes: \\ \" \n \r \t \0 and \xHH,
@@ -76,6 +85,7 @@ import argparse
 import os
 import re
 import sys
+import zlib
 
 # The MN10300 instruction encoder lives beside this file. It lets source lines
 # hold real MN10300 mnemonics (unidasm operand syntax) that assemble to bytes,
@@ -116,6 +126,7 @@ class Assembler:
         self.parsed = {}   # path -> its lines, parsed once for every pass
         self.macros = {}   # name -> (parameter names, body source lines)
         self.macro_defaults = {}   # name -> {parameter: its default} (only those that have one)
+        self.macro_vararg = set()  # macros whose last parameter is :vararg
         self.n_expansions = 0      # \@
         # Caches that outlive a pass. A macro invocation whose expansion is only
         # data directives with constant operands (numbers, operators and .equ
@@ -136,6 +147,7 @@ class Assembler:
         # encode the same operands at the same pc again)
         self.enc_prev, self.enc_cache = getattr(self, "enc_cache", {}), {}
         self.out = bytearray()
+        self.zlib_stack = []
         self.symbols = {}
         self.labels = {}
         self.cur_file = "<none>"
@@ -373,8 +385,10 @@ class Assembler:
                 for i, raw in enumerate(f, 1):
                     if macro is not None:
                         if strip_comment(raw).strip() == ".endm":
-                            names = [h.partition("=")[0] for h in macro[1]]
+                            names = [h.partition("=")[0].partition(":")[0] for h in macro[1]]
                             self.macros[macro[0]] = (names, macro[2])
+                            if macro[1] and macro[1][-1].endswith(":vararg"):
+                                self.macro_vararg.add(macro[0])
                             self.macro_defaults[macro[0]] = {
                                 n: d for n, eq, d in (h.partition("=") for h in macro[1]) if eq}
                             macro = None
@@ -403,7 +417,12 @@ class Assembler:
         params, _body = self.macros[name]
         defaults = self.macro_defaults.get(name, {})
         values, pos = {}, 0
-        for arg in self.split_args(rest):
+        args = self.split_args(rest)
+        if name in self.macro_vararg and len(args) >= len(params):
+            args = args[:len(params) - 1] + [", ".join(args[len(params) - 1:])]
+        elif name in self.macro_vararg and len(args) == len(params) - 1:
+            args = args + [""]
+        for arg in args:
             m = re.match(r"([A-Za-z_]\w*)\s*=(?!=)\s*(.*)$", arg, re.S) if "=" in arg else None
             if m and m.group(1) in params:
                 values[m.group(1)] = m.group(2).strip()
@@ -506,6 +525,15 @@ class Assembler:
             self.assemble_file(self.resolve_path(self.unquote(args[0])))
         elif op == ".mnbase":
             self.mn_base = self.evaluate(args[0])
+        elif op == ".zlib":
+            self.zlib_stack.append((self.out, self.mn_base, self.evaluate(args[0]) if args else 6))
+            self.out, self.mn_base = bytearray(), 0
+        elif op == ".endzlib":
+            if not self.zlib_stack:
+                raise AsmError(".endzlib without .zlib")
+            data = bytes(self.out)
+            self.out, self.mn_base, level = self.zlib_stack.pop()
+            self.out += zlib.compress(data, level)
         elif not op.startswith("."):
             # A bare mnemonic => an MN10300 instruction. PC-relative targets
             # (branches/calls/jumps) are absolute CPU addresses, so encode()
@@ -538,6 +566,8 @@ class Assembler:
         width, byte order and argument templates split at the parameters. None for
         any other macro (labels, instructions, other directives)."""
         params, body = self.macros[name]
+        if name in self.macro_vararg:
+            return None
         by_len = sorted(params, key=len, reverse=True)
         out = []
         for raw in body:

@@ -28,6 +28,7 @@
 .equ PROGRAM_ROM_BASE, 0x48400000
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/sp7001/symbols.inc"
+.include "src/sp7001/program/data/gui_event_ids.inc"   # EV_ / MT_ ids, named in mov / cmp immediates
 
 # 2 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
