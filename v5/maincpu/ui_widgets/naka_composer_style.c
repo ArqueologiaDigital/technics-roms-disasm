@@ -1271,7 +1271,8 @@ const naka_composer_style_t naka_composer_style_data
     .PaintArrowProc_name = ALIGNED_STRING("PaintArrowProc"),
 
     /* ==== SCREEN TITLE_STYLCNVWAIT "STYLE CONVERT" -- "TT_STYLCNVWAIT", title id 0x10, function NAKA_MAINFUNC_StylCnvWaitTtlFunc ====
-     * Path: mode MD_DISK > "STYLE CONVERT"
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT"
+     * Procedure: StylCnvWaitTtlFunc opens TITLE_MESAGE, TITLE_STYLCNVMODL
      * EXIT -> TITLE_DKMENU
      * Opened from: TITLE_DKMENU ("STYLE CONVERT") */
     .StylCnvWaitScreen = {
@@ -1285,7 +1286,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003D618,
+        .window = RAM_StylCnvWaitScreen_Window,
         .title = SELF(StyleConvert_text),
         .icon = idICON_i150,
     },
@@ -1324,7 +1325,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVMODL "STYLE TYPE SELECT" -- "TT_STYLCNVMODL", title id 0x11, function NAKA_MAINFUNC_StylCnvModlTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc)
+     * Procedure: StylCnvModlTtlFunc opens TITLE_STYLCNVWAIT
      * EXIT -> TITLE_DKMENU */
     .StylCnvModlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1337,7 +1339,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003D61C,
+        .window = RAM_StylCnvModlScreen_Window,
         .title = SELF(StyleTypeSelect_text),
         .icon = idICON_i150,
     },
@@ -1370,7 +1372,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003D620,
+        .sel_num = RAM_StylCnvModlBox_Sel_num,
     },
 
     .PREV_VwEditSwBox = {
@@ -1475,7 +1477,7 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVCNVT "STYLE CONVERT" -- "TT_STYLCNVCNVT", title id 0x12, function NAKA_MAINFUNC_StylCnvCnvtTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvCnvtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1488,7 +1490,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_STYLCNVWAIT,
-        .window = 0x0003D622,
+        .window = RAM_StylCnvCnvtScreen_Window,
         .title = SELF(StyleConvert_text_2),
         .icon = idICON_i150,
     },
@@ -1521,7 +1523,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003D626,
+        .sel_num = RAM_StylCnvCnvtBox_Sel_num,
     },
 
     .PREV_VwEditSwBox_2 = {
@@ -1610,7 +1612,7 @@ const naka_composer_style_t naka_composer_style_data
     .str_22 = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_STYLCNVSTOR "STORAGE DATA" -- "TT_STYLCNVSTOR", title id 0x13, function NAKA_MAINFUNC_StylCnvStorTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvStorScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1623,7 +1625,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_STYLCNVWAIT,
-        .window = 0x0003D628,
+        .window = RAM_StylCnvStorScreen_Window,
         .title = SELF(StorageData_text),
         .icon = idICON_i150,
     },
@@ -1648,9 +1650,9 @@ const naka_composer_style_t naka_composer_style_data
         .length = 0x000A,
         .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D62C,
+        .selected = RAM_StylCnvStorScreen_AcRamEditBox_Selected,
         .func = NAKA_APFUNC_StylCnvStorBnkSel,
-        .data = 0x0003D62E,
+        .data = RAM_StylCnvStorScreen_AcRamEditBox_Data,
     },
 
     .v13_e1_caption = "  Data Storage to :",
@@ -1694,7 +1696,7 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVTXT "STYLE CONVERT" -- "TT_STYLCNVTXT", title id 0x14, function NAKA_MAINFUNC_StylCnvTxtTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvTxtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1707,7 +1709,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_STYLCNVWAIT,
-        .window = 0x0003D632,
+        .window = RAM_StylCnvTxtScreen_Window,
         .title = SELF(StyleConvert_text_3),
         .icon = idICON_i150,
     },
@@ -1756,7 +1758,7 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVSEL "STYLE CONVERT" -- "TT_STYLCNVSEL", title id 0x15, function NAKA_MAINFUNC_StylCnvSelTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1769,7 +1771,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_STYLCNVWAIT,
-        .window = 0x0003D636,
+        .window = RAM_StylCnvSelScreen_Window,
         .title = SELF(StyleConvert_text_4),
         .icon = idICON_i150,
     },
@@ -1802,7 +1804,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003D63A,
+        .sel_num = RAM_StylCnvSelBox_Sel_num,
     },
 
     .PREV_VwEditSwBox_3 = {
@@ -1907,7 +1909,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVCONT "STYLE CONVERT" -- "TT_STYLCNVCONT", title id 0x16, function NAKA_MAINFUNC_StylCnvContTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: StylCnvSel_End opens TITLE_MESAGE
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvContScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1920,7 +1923,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_STYLCNVWAIT,
-        .window = 0x0003D63C,
+        .window = RAM_StylCnvContScreen_Window,
         .title = SELF(StyleConvert_text_5),
         .icon = idICON_i150,
     },
@@ -2024,13 +2027,14 @@ const naka_composer_style_t naka_composer_style_data
     .str_38 = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_CMMENU "COMPOSER MENU" -- "TT_CMMENU", title id 0xB0, function NAKA_MAINFUNC_CmpMenuTtlFunc ====
-     * Path: mode MD_CMP
+     * Path: COMPOSER MENU button (mode MD_CMP)
      * Menu: "BEND RANGE SET" -> TITLE_CMBEND
      * Menu: "EASY COMPOSER" -> TITLE_CMEASY
      * Menu: "PATTERN COPY" -> TITLE_CMPNCP
      * Menu: "CUSTOM COPY" -> TITLE_CMCSTMCP
      * Menu: "SEQ TO COMPOSER COPY" -> TITLE_CMSEQCP
      * Menu: "LOAD SINGLE COMPOSER" -> TITLE_CMPLDSNGL
+     * Procedure: CmpMenuTtl_MainHandler opens TITLE_CMBKSL
      * EXIT -> TITLE_NORMAL */
     .CmpMenuScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2043,7 +2047,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_Single2,
         .exit = TITLE_NORMAL,
-        .window = 0x0003D640,
+        .window = RAM_CmpMenuScreen_Window,
         .title = SELF(ComposerMenu_text),
         .icon = idICON_i75,
     },
@@ -2065,7 +2069,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left4,
-        .selected = 0x0003D644,
+        .selected = RAM_BendRangeSet_AcTitleMenu_Selected,
         .str = SELF(BendRangeSet_text),
         .title = TITLE_CMBEND,
         .icon = idICON_i9,
@@ -2088,7 +2092,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003D646,
+        .selected = RAM_EasyComposer_AcTitleMenu_Selected,
         .str = SELF(EasyComposer_text),
         .title = TITLE_CMEASY,
         .icon = idICON_i79,
@@ -2111,7 +2115,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003D648,
+        .selected = RAM_PatternCopy_AcTitleMenu_Selected,
         .str = SELF(PatternCopy_text),
         .title = TITLE_CMPNCP,
         .icon = idICON_i80,
@@ -2134,7 +2138,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003D64A,
+        .selected = RAM_CustomCopy_AcTitleMenu_Selected,
         .str = SELF(CustomCopy_text),
         .title = TITLE_CMCSTMCP,
         .icon = idICON_i159,
@@ -2157,7 +2161,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right4,
-        .selected = 0x0003D64C,
+        .selected = RAM_SeqToComposerCopy_AcTitleMenu_Selected,
         .str = SELF(SeqToComposerCopy_text),
         .title = TITLE_CMSEQCP,
         .icon = idICON_i81,
@@ -2180,7 +2184,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right5,
-        .selected = 0x0003D64E,
+        .selected = RAM_LoadSingleComposer_AcTitleMenu_Selected,
         .str = SELF(LoadSingleComposer_text),
         .title = TITLE_CMPLDSNGL,
         .icon = idICON_i82,
@@ -2292,7 +2296,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003D650,
+        .selected = RAM_CmpMenuScreen_VwMenuBox_Selected,
         .str = SELF(A_str),
         .icon = idICON_i76,
     },
@@ -2314,7 +2318,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003D652,
+        .selected = RAM_CmpMenuScreen_VwMenuBox_2_Selected,
         .str = SELF(B_str),
         .icon = idICON_i77,
     },
@@ -2336,7 +2340,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left3,
-        .selected = 0x0003D654,
+        .selected = RAM_CmpMenuScreen_VwMenuBox_3_Selected,
         .str = SELF(C_str),
         .icon = idICON_i78,
     },
@@ -2355,7 +2359,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMBKSL "RECORD MEMORY" -- "TT_CMBKSL", title id 0xB1, function NAKA_MAINFUNC_CmpBkslTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler)
+     * Procedure: CmpOffset_Dispatch opens TITLE_CMBKSL_S
      * EXIT -> TITLE_CMMENU */
     .CmpBkslScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2368,7 +2373,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D656,
+        .window = RAM_CmpBkslScreen_Window,
         .title = SELF(RecordMemory_text),
         .icon = idICON_i75,
     },
@@ -2401,7 +2406,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003D65A,
+        .selected = RAM_Variation_VwMenuBox_Selected,
         .str = SELF(Variation_str),
         .icon = idICON_None,
     },
@@ -2423,7 +2428,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003D65C,
+        .selected = RAM_Variation_VwMenuBox_2_Selected,
         .str = SELF(Variation_str_2),
         .icon = idICON_None,
     },
@@ -2445,7 +2450,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left3,
-        .selected = 0x0003D65E,
+        .selected = RAM_Intro_VwMenuBox_Selected,
         .str = SELF(Intro_str),
         .icon = idICON_None,
     },
@@ -2467,7 +2472,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left4,
-        .selected = 0x0003D660,
+        .selected = RAM_FillIn_VwMenuBox_Selected,
         .str = SELF(FillIn_str),
         .icon = idICON_None,
     },
@@ -2489,7 +2494,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left5,
-        .selected = 0x0003D662,
+        .selected = RAM_Ending_VwMenuBox_Selected,
         .str = SELF(Ending_str),
         .icon = idICON_None,
     },
@@ -2511,7 +2516,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003D664,
+        .selected = RAM_Variation_VwMenuBox_3_Selected,
         .str = SELF(Variation_str_3),
         .icon = idICON_None,
     },
@@ -2533,7 +2538,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003D666,
+        .selected = RAM_Variation_VwMenuBox_4_Selected,
         .str = SELF(Variation_str_4),
         .icon = idICON_None,
     },
@@ -2555,7 +2560,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right3,
-        .selected = 0x0003D668,
+        .selected = RAM_Intro_VwMenuBox_2_Selected,
         .str = SELF(Intro_str_2),
         .icon = idICON_None,
     },
@@ -2577,7 +2582,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right4,
-        .selected = 0x0003D66A,
+        .selected = RAM_FillIn_VwMenuBox_2_Selected,
         .str = SELF(FillIn_str_2),
         .icon = idICON_None,
     },
@@ -2599,7 +2604,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right5,
-        .selected = 0x0003D66C,
+        .selected = RAM_Ending_VwMenuBox_2_Selected,
         .str = SELF(Ending_str_2),
         .icon = idICON_None,
     },
@@ -2607,7 +2612,9 @@ const naka_composer_style_t naka_composer_style_data
     .Ending_str_2 = ALIGNED_STRING("ENDING 2"),
 
     /* ==== SCREEN TITLE_CMBKSL_S "RECORDING" -- "TT_CMBKSL_S", title id 0xB2, function NAKA_MAINFUNC_CmpBksl_STtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by
+     *       CmpOffset_Dispatch)
+     * Procedure: CmpBksl_STtlFunc opens TITLE_CMNAME, TITLE_CMREAL, TITLE_CMSET, TITLE_MESAGE
      * EXIT -> TITLE_CMBKSL */
     .CmpBkslSScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2620,7 +2627,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMBKSL,
-        .window = 0x0003D66E,
+        .window = RAM_CmpBkslSScreen_Window,
         .title = SELF(Recording_text_2),
         .icon = idICON_i75,
     },
@@ -2680,7 +2687,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left3,
-        .selected = 0x0003D672,
+        .selected = RAM_RecordSetting_VwMenuBox_Selected,
         .str = SELF(RecordSetting_str),
         .icon = idICON_i157,
     },
@@ -2886,7 +2893,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .editsw = ES_Left2,
-        .selected = 0x0003D674,
+        .selected = RAM_CmpNameMenu_Selected,
         .str = SELF(VariationNaming_str),
         .icon = idICON_i151,
     },
@@ -2908,7 +2915,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_LeftJustify,
         .editsw = ES_Left1,
-        .selected = 0x0003D676,
+        .selected = RAM_ClearTheEntirePattern_VwMenuBox_Selected,
         .str = SELF(ClearTheEntirePattern_str),
         .icon = idICON_None,
     },
@@ -2928,8 +2935,8 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003D678,
-        .child = 0x0003D67C,
+        .parent = RAM_CmpClrSure_Parent,
+        .child = RAM_CmpClrSure_Child,
     },
 
     .CmpClrYesSw = {
@@ -2989,7 +2996,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMNAME "VARIATION NAMING" -- "TT_CMNAME", title id 0xB3, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by
+     *       CmpOffset_Dispatch) > (by CmpBksl_STtlFunc)
      * EXIT -> TITLE_CMBKSL_S */
     .CmpNamingScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3002,7 +3010,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMBKSL_S,
-        .window = 0x0003D680,
+        .window = RAM_CmpNamingScreen_Window,
         .title = SELF(VariationNaming_text),
         .icon = idICON_i151,
     },
@@ -3071,7 +3079,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMSET "RECORD SETTING" -- "TT_CMSET", title id 0xB4, function NAKA_MAINFUNC_CmpSetTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by
+     *       CmpOffset_Dispatch) > (by CmpBksl_STtlFunc)
      * EXIT -> TITLE_CMBKSL_S */
     .CmpSetScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3084,7 +3093,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMBKSL_S,
-        .window = 0x0003D684,
+        .window = RAM_CmpSetScreen_Window,
         .title = SELF(RecordSetting_text),
         .icon = idICON_i157,
     },
@@ -3113,7 +3122,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_PageBack,
         .border = BD_3D_UP2,
         .index = 0xFFFF,
-        .page = 0x0003D688,
+        .page = RAM_CmSetPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0002,
     },
@@ -3166,8 +3175,8 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003D68A,
-        .child = 0x0003D68E,
+        .parent = RAM_CmSetPage1_Parent,
+        .child = RAM_CmSetPage1_Child,
     },
 
     .CmSetP1Grid = {
@@ -3187,11 +3196,11 @@ const naka_composer_style_t naka_composer_style_data
         .row = 0x0009,
         .col = 0x0002,
         .vertline = 0x0000,
-        .selrow = 0x0003D692,
-        .selcol = 0x0003D694,
-        .pcol = 0x0003D696,
-        .prow = 0x0003D69A,
-        .crow = 0x0003D69E,
+        .selrow = RAM_CmSetP1Grid_Selrow,
+        .selcol = RAM_CmSetP1Grid_Selcol,
+        .pcol = RAM_CmSetP1Grid_Pcol,
+        .prow = RAM_CmSetP1Grid_Prow,
+        .crow = RAM_CmSetP1Grid_Crow,
         .fixedcol = SELF(CmSetP1Grid_fixedcol),
         .fixedrow = SELF(CmSetP1Grid_fixedrow),
         .func = NAKA_APFUNC_CmpSetP1GridCheck,
@@ -3297,8 +3306,8 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003D6A2,
-        .child = 0x0003D6A6,
+        .parent = RAM_CmSetPage2_Parent,
+        .child = RAM_CmSetPage2_Child,
     },
 
     .CmpSetGrid = {
@@ -3318,11 +3327,11 @@ const naka_composer_style_t naka_composer_style_data
         .row = 0x0008,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D6AA,
-        .selcol = 0x0003D6AC,
-        .pcol = 0x0003D6AE,
-        .prow = 0x0003D6B2,
-        .crow = 0x0003D6B6,
+        .selrow = RAM_CmpSetGrid_Selrow,
+        .selcol = RAM_CmpSetGrid_Selcol,
+        .pcol = RAM_CmpSetGrid_Pcol,
+        .prow = RAM_CmpSetGrid_Prow,
+        .crow = RAM_CmpSetGrid_Crow,
         .fixedcol = SELF(CmpSetGrid_fixedcol),
         .fixedrow = SELF(CmpSetGrid_fixedrow),
         .func = NAKA_APFUNC_CmpSetGridCheck,
@@ -3391,7 +3400,7 @@ const naka_composer_style_t naka_composer_style_data
 
     /* ==== SCREEN TITLE_CMREAL "REALTIME RECORDING" -- "TT_CMREAL", title id 0xB5, function NAKA_MAINFUNC_CmpRealTtlFunc ====
      * What: the Composer (mode 0xE, MD_CMP) real-time page.
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler)
      * Menu: "BAL" -> TITLE_CMBAL
      * Menu: "STEP" -> TITLE_CMSTEP
      * EXIT -> TITLE_CMBKSL_S */
@@ -3406,7 +3415,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMBKSL_S,
-        .window = 0x0003D6BA,
+        .window = RAM_CmpRealScreen_Window,
         .title = SELF(RealtimeRecording_text),
         .icon = idICON_i158,
     },
@@ -3678,7 +3687,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003D6BE,
+        .selected = RAM_Bal_AcTitleMenu_Selected,
         .str = SELF(Bal_text),
         .title = TITLE_CMBAL,
         .icon = idICON_None,
@@ -3701,7 +3710,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003D6C0,
+        .selected = RAM_Step_AcTitleMenu_Selected,
         .str = SELF(Step_text),
         .title = TITLE_CMSTEP,
         .icon = idICON_None,
@@ -3740,7 +3749,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003D6C2,
+        .selected = RAM_PartClr_VwMenuBox_Selected,
         .str = SELF(PartClr_str),
         .icon = idICON_None,
     },
@@ -3762,7 +3771,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003D6C4,
+        .selected = RAM_AllEras_VwMenuBox_Selected,
         .str = SELF(AllEras_str),
         .icon = idICON_None,
     },
@@ -3784,7 +3793,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003D6C6,
+        .selected = RAM_InstErs_VwMenuBox_Selected,
         .str = SELF(InstErs_str),
         .icon = idICON_None,
     },
@@ -3806,7 +3815,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Right4,
-        .selected = 0x0003D6C8,
+        .selected = RAM_QUANTIZE_VwMenuBox_Selected,
         .str = SELF(QUANTIZE_str),
         .icon = idICON_None,
     },
@@ -3828,7 +3837,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Right5,
-        .selected = 0x0003D6CA,
+        .selected = RAM_Solo_VwMenuBox_Selected,
         .str = SELF(Solo_str),
         .icon = idICON_None,
     },
@@ -3868,7 +3877,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMSTEP -- "TT_CMSTEP", title id 0xB6, function NAKA_MAINFUNC_CmpStepTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler) >
+     *       "STEP"
      * EXIT -> TITLE_CMREAL
      * Opened from: TITLE_CMREAL ("STEP") */
     .NakaWidget_SunaView0B6_0_IvDirmdScreen = {
@@ -3882,11 +3892,12 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMREAL,
-        .window = 0x0003D6CC,
+        .window = RAM_NakaWidget_SunaView0B6_0_IvDirmdScreen_Window,
     },
 
     /* ==== SCREEN TITLE_CMBAL "PART BALANCE" -- "TT_CMBAL", title id 0xB7, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler) >
+     *       "BAL"
      * EXIT -> TITLE_CMREAL
      * Opened from: TITLE_CMREAL ("BAL") */
     .CmpBalScreen = {
@@ -3900,7 +3911,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMREAL,
-        .window = 0x0003D6D0,
+        .window = RAM_CmpBalScreen_Window,
         .title = SELF(PartBalance_text),
         .icon = idICON_i141,
     },
@@ -3984,7 +3995,7 @@ const naka_composer_style_t naka_composer_style_data
 
     /* ==== SCREEN TITLE_CMPNCP "PATTERN COPY" -- "TT_CMPNCP", title id 0xB8, function NAKA_MAINFUNC_CmpNcpTtlFunc ====
      * What: a Composer copy page. Three box procs fill different notify data while on it.
-     * Path: mode MD_CMP > "PATTERN COPY"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "PATTERN COPY"
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("PATTERN COPY") */
     .CmpNcpScreen = {
@@ -3998,7 +4009,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D6D4,
+        .window = RAM_CmpNcpScreen_Window,
         .title = SELF(PatternCopy_text_2),
         .icon = idICON_i80,
     },
@@ -4411,7 +4422,7 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMSEQCP "SEQ TO COMPOSER COPY" -- "TT_CMSEQCP", title id 0xB9, function NAKA_MAINFUNC_S2cTtlFunc ====
-     * Path: mode MD_CMP > "SEQ TO COMPOSER COPY"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "SEQ TO COMPOSER COPY"
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("SEQ TO COMPOSER COPY") */
     .S2CScreen = {
@@ -4425,7 +4436,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D6D8,
+        .window = RAM_S2CScreen_Window,
         .title = SELF(SeqToComposerCopy_text_2),
         .icon = idICON_i81,
     },
@@ -4897,11 +4908,11 @@ const naka_composer_style_t naka_composer_style_data
         .row = 0x0009,
         .col = 0x0002,
         .vertline = 0x0001,
-        .selrow = 0x0003D6DC,
-        .selcol = 0x0003D6DE,
-        .pcol = 0x0003D6E0,
-        .prow = 0x0003D6E4,
-        .crow = 0x0003D6E8,
+        .selrow = RAM_S2cGrid_Selrow,
+        .selcol = RAM_S2cGrid_Selcol,
+        .pcol = RAM_S2cGrid_Pcol,
+        .prow = RAM_S2cGrid_Prow,
+        .crow = RAM_S2cGrid_Crow,
         .fixedcol = SELF(S2cGrid_fixedcol),
         .fixedrow = SELF(S2cGrid_fixedrow),
         .func = NAKA_APFUNC_S2cGridCheck,
@@ -4959,7 +4970,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMEASY "EASY COMPOSER" -- "TT_CMEASY", title id 0xBA, function NAKA_MAINFUNC_CmEsyTtlFunc ====
-     * Path: mode MD_CMP > "EASY COMPOSER"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER"
+     * Procedure: CmpEsyTtl_MainHandler opens TITLE_CMREAL
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("EASY COMPOSER") */
     .CmpEasyScreen = {
@@ -4973,7 +4985,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D6EC,
+        .window = RAM_CmpEasyScreen_Window,
         .title = SELF(EasyComposer_text_2),
         .icon = idICON_i79,
     },
@@ -5006,7 +5018,7 @@ const naka_composer_style_t naka_composer_style_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right1,
-        .selected = 0x0003D6F0,
+        .selected = RAM_EDIT_VwMenuBox_Selected,
         .str = SELF(EDIT_str),
         .icon = idICON_None,
     },
@@ -5152,11 +5164,11 @@ const naka_composer_style_t naka_composer_style_data
         .row = 0x000A,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D6F2,
-        .selcol = 0x0003D6F4,
-        .pcol = 0x0003D6F6,
-        .prow = 0x0003D6FA,
-        .crow = 0x0003D6FE,
+        .selrow = RAM_EasyCmpGrid_Selrow,
+        .selcol = RAM_EasyCmpGrid_Selcol,
+        .pcol = RAM_EasyCmpGrid_Pcol,
+        .prow = RAM_EasyCmpGrid_Prow,
+        .crow = RAM_EasyCmpGrid_Crow,
         .fixedcol = SELF(EasyCmpGrid_fixedcol),
         .fixedrow = SELF(EasyCmpGrid_fixedrow),
         .func = NAKA_APFUNC_EasyCmpGridCheck,
@@ -5223,7 +5235,7 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_CMBEND "COMPOSER PITCH BEND RANGE SETTING" -- "TT_CMBEND", title id 0xBB, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_CMP > "BEND RANGE SET"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "BEND RANGE SET"
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("BEND RANGE SET") */
     .CmpBendScreen = {
@@ -5237,7 +5249,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D702,
+        .window = RAM_CmpBendScreen_Window,
         .title = SELF(ComposerPitchBendRange_text),
         .icon = idICON_i9,
     },
@@ -5281,9 +5293,9 @@ const naka_composer_style_t naka_composer_style_data
         .length = 0x0004,
         .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D706,
+        .selected = RAM_CmpBendScreen_AcLswEditBox_Selected,
         .func = NAKA_APFUNC_CmpBndRngFunc,
-        .data = 0x0003D708,
+        .data = RAM_CmpBendScreen_AcLswEditBox_Data,
     },
 
     .vBB_e2_caption = ALIGNED_STRING("    BEND RANGE  : "),
@@ -5304,7 +5316,7 @@ const naka_composer_style_t naka_composer_style_data
     .Value_text_2 = "VALUE",
 
     /* ==== SCREEN TITLE_CMMODE "MODE SELECT" -- "TT_CMMODE", title id 0xBD, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_CMMENU */
     .CmpModeScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5317,7 +5329,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D70A,
+        .window = RAM_CmpModeScreen_Window,
         .title = SELF(ModeSelect_text),
         .icon = idICON_i83,
     },
@@ -5462,7 +5474,7 @@ const naka_composer_style_t naka_composer_style_data
         .length = 0x0000,
         .editsw = ES_Left1,
         .dial = 0x0001,
-        .selected = 0x0003D70E,
+        .selected = RAM_CmpModeScreen_AcCmpMdBox_Selected,
         .ram = 0x00,
         ._pad_51 = { 0x00 },
     },
@@ -5487,7 +5499,7 @@ const naka_composer_style_t naka_composer_style_data
         .length = 0x0000,
         .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003D710,
+        .selected = RAM_CmpModeScreen_AcCmpMdBox_2_Selected,
         .ram = 0x01,
         ._pad_51 = { 0x00 },
     },
@@ -5495,7 +5507,8 @@ const naka_composer_style_t naka_composer_style_data
     .vBD_e10_caption = " EXPAND MODE:",
 
     /* ==== SCREEN TITLE_CMCSTMCP "CUSTOM COPY" -- "TT_CMCSTMCP", title id 0xBE, function NAKA_MAINFUNC_CstmCpTtlFunc ====
-     * Path: mode MD_CMP > "CUSTOM COPY"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "CUSTOM COPY"
+     * Procedure: CstmCpTtl_RecDispatch opens TITLE_MESAGE
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("CUSTOM COPY") */
     .CmpCstmCpScreen = {
@@ -5509,7 +5522,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003D712,
+        .window = RAM_CmpCstmCpScreen_Window,
         .title = SELF(CustomCopy_text_2),
         .icon = idICON_i159,
     },
@@ -5806,8 +5819,8 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003D716,
-        .child = 0x0003D71A,
+        .parent = RAM_CstmMemFulWin_Parent,
+        .child = RAM_CstmMemFulWin_Child,
     },
 
     .CstmMemFulWin_VwBox = {
@@ -5948,8 +5961,8 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003D71E,
-        .child = 0x0003D722,
+        .parent = RAM_CstmFuncSelWin_Parent,
+        .child = RAM_CstmFuncSelWin_Child,
     },
 
     .CstmFuncSelWin_VwBox = {
@@ -6078,7 +6091,7 @@ const naka_composer_style_t naka_composer_style_data
     .ABORT_str_2 = "ABORT",
 
     /* ==== SCREEN TITLE_MSPBKSL "MSP BANK SELECT" -- "TT_MSPBKSL", title id 0xC8, function NAKA_MAINFUNC_MspBkslTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_NORMAL */
     .MspBkslScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -6091,7 +6104,7 @@ const naka_composer_style_t naka_composer_style_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_NORMAL,
-        .window = 0x0003D726,
+        .window = RAM_MspBkslScreen_Window,
         .title = SELF(MspBankSelect_text),
         .icon = idICON_i163,
     },

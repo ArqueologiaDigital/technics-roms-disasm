@@ -54,6 +54,8 @@ extern const char ClassProps_AcFdemoScreen;
 extern const char ClassProps_AcPleaseWait;
 extern const char ClassProps_AcSndEMenu;
 extern const char ClassProps_IvMPver;
+extern const char ClassName_IvMPver;
+extern const char ClassPropdata_IvMPver;
 
 #define BASE  0x00E80FE2u
 
@@ -315,7 +317,7 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     .classdef_161_35 = { .proc = NAKA_ADDR(AcDrawbarNameProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 40, .selfsize = 4, .name = SELF(AcDrawbarName_name), .propdata = SELF(AcDrawbarName_code), .propname = NAKA_ADDR(ClassProps_AcDrawbarName) },
 
-    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = 0x00E81088, .propdata = 0x00E81086, .propname = NAKA_ADDR(ClassProps_IvMPver) },
+    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = NAKA_ADDR(ClassName_IvMPver), .propdata = NAKA_ADDR(ClassPropdata_IvMPver), .propname = NAKA_ADDR(ClassProps_IvMPver) },
 
     .classrun_161_x008C = 0x00000000,
 
@@ -724,7 +726,18 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     /* ==== SCREEN TITLE_SDMENU "SOUND MENU" -- "TT_SDMENU", title id 0x2, function NAKA_APFUNC_DefaultFunction ====
      * What: the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
-     * Path: mode MD_SOUND
+     * Path: MENU SOUND button (mode MD_SOUND)
+     * Menu: "PART SETTING" -> TITLE_SDPART
+     * Menu: "MIXER" -> TITLE_SDMIXER
+     * Menu: "MASTER TUNING" -> TITLE_SDMTUNE
+     * Menu: "KEY SCALING" -> TITLE_SDSCLTYP
+     * Menu: "REVERB & EQ PRESETS" -> TITLE_REVEQMENU
+     * Menu: "REVERB" -> TITLE_SDREVSET
+     * Menu: "EQUALIZER" -> TITLE_SDEQUALIZER
+     * Menu: "DSP EFFECT" -> TITLE_SDDSPEFF
+     * Menu: "ACOUSTIC ILLUSION" -> TITLE_SDACCILL
+     * Menu: "LEFT HOLD" -> TITLE_SDLFTHLD
+     * Menu: "TECHNI-CHORD" -> TITLE_SDTECD
      * EXIT -> TITLE_PS */
     .Sdmenu = {
         .class_ = NAKA_CLASS(TtlScreen),

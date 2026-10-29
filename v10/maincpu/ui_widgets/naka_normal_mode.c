@@ -100,7 +100,8 @@ typedef struct __attribute__((packed)) {
     naka_cls_IvPageOverWr_t normal_IvPageOverWr_5;
     /* element 22 of Viewable slot 0x1: IvPageOverWr (class id 0x0162001B) */
     naka_cls_IvPageOverWr_t normal_IvPageOverWr_6;
-    uint8_t bytes_0464[22];  /* 0x47 */
+    /* element 23 of Viewable slot 0x1: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_Normal_23_IvExit;
     /* zero padding */
     /* Window view record "N1", first 22 bytes (the Viewable part); color..child continue in extensions/extension_data.s */
     NakaWidget_N1_t NakaWidget_N1;
@@ -144,7 +145,7 @@ enum Toshi_Viewable_NORMAL_objects {
       OBJ_normal_IvPageOverWr_4,         /* 20 IvPageOverWr */
       OBJ_normal_IvPageOverWr_5,         /* 21 IvPageOverWr */
       OBJ_normal_IvPageOverWr_6,         /* 22 IvPageOverWr */
-      OBJ_NakaWidget_Normal_23_IvExit,   /* 23 IvExit, record outside the C sources (NakaWidget_Normal_23_IvExit) */
+      OBJ_NakaWidget_Normal_23_IvExit,   /* 23 IvExit */
     OBJ_NakaWidget_N1,                   /* 24 Window, record outside the C sources (NakaWidget_N1) */
       OBJ_Toshi_NORMAL_Elem25,           /* 25 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem25) */
       OBJ_Toshi_NORMAL_Elem26,           /* 26 AcMixerVol, record outside the C sources (Toshi_NORMAL_Elem26) */
@@ -591,7 +592,15 @@ const naka_normal_mode_t naka_normal_mode_data
         .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem60),
     },
 
-    .bytes_0464 = { 0x47, 0x00, 0x60, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x16, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },
+    .NakaWidget_Normal_23_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_normal,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_normal_IvPageOverWr_6,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+    },
 
     .NakaWidget_N1 = { NAKA_CLASS(Window), 0xFFFF, 0x0019, 0xFFFF, 0xFFFF, 0x0008, { 0, 127, 319, 236 } },
 

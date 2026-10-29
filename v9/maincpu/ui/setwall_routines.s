@@ -228,8 +228,8 @@ SetWall_NewSlotSelected:
 
 SetWall_DispatchSlotEvent:
 	xor wa, wa
-	ld a, 0xee:opc
-	call SoundCtrl_SendCommand
+	ld a, TT_MESAGE:opc
+	call UI_InterruptTitleByIndex
 
 SetWall_ToReturn:
 	jp SetWall_Return
@@ -1997,7 +1997,7 @@ SetWall_MiscDataAndCode:
 ; SqSngName_ApplyNameAndExit: Applies a song name just typed: copies the 16 bytes at 0x1159 to the current song name
 ;   (0xF280) and to the name field (+0x100) of the current song slot (SEQ_SONG_SLOTS + 0x800 * (0xFFE3)), then leaves
 ;   the naming page: title 0x83 (TITLE_SQEASYREC) when the current title is 0xA7 (TITLE_SQEASYNAME), else 0x8E
-;   (TITLE_SQSNGSEL), through UI_PostModeChangeEvent. Basis: callers + body -- the only caller is
+;   (TITLE_SQSNGSEL), through UI_ChangeTitleByIndex. Basis: callers + body -- the only caller is
 ;   MiddleFuncCall_OnSongNameSet (EVT_SONG_NAME_SET, MT_SongNameSet), which first Strcpys the name into 0x1159 (4441).
 SqSngName_ApplyNameAndExit:
 	ld	xix, 0xf280
@@ -2019,12 +2019,12 @@ SqSngName_ApplyNameAndExit:
 	cp (CURRENT_TITLE:16), 167
 	jr	z, SqSngName_ApplyNameAndExit_Skip2
 SqSngName_ApplyNameAndExit_Skip:
-	ld	a, 142:opc
-	call	UI_PostModeChangeEvent
+	ld	a, TT_SQSNGSEL:opc
+	call	UI_ChangeTitleByIndex
 	jp	SqSngName_ApplyNameAndExit_Return
 SqSngName_ApplyNameAndExit_Skip2:
-	ld	a, 131:opc
-	call	UI_PostModeChangeEvent
+	ld	a, TT_SQEASYREC:opc
+	call	UI_ChangeTitleByIndex
 SqSngName_ApplyNameAndExit_Return:
 	ret
 ; SqSngSel_CalcSongUsagePercent: Computes the memory use of song (0x286B) in percent into 0x286C: walks its 16 three-

@@ -62,7 +62,7 @@ SmfLoad_CheckSlotCount:
 
 	call	ApPostEvent
 
-	ldw wa, 0x61
+	ldw wa, TT_DKLD
 
 	jrl	SmfLoad_CallHandler
 
@@ -79,20 +79,20 @@ SmfLoad_AbortPartial:
 	call	ApPostEvent
 	ld	a, (32750:16)
 	extz	wa
-	call	UI_PostModeChangeEvent
+	call	UI_ChangeTitleByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	SmfLoad_CallStatusDisplay
 SmfLoad_ErrorCancel:
 	ld xwa, 0x600026
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 	jrl SmfLoad_CallHandler
 
 SmfLoad_Success:
@@ -107,15 +107,15 @@ SmfLoad_Success:
 	call	ApPostEvent
 	ld	a, (32750:16)
 	extz	wa
-	call	UI_PostModeChangeEvent
+	call	UI_ChangeTitleByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 SmfLoad_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr SmfLoad_Return
 
 SmfLoad_SendWait:
@@ -138,13 +138,13 @@ SmfLoad_HandleOk:
 	jr	nz, SmfLoad_Return
 	cp	(CURRENT_MODE:16), 7
 	jr	nz, SmfLoad_OkReturnCode
-	ldw	wa, 214
+	ldw	wa, TT_ETMENU
 	jr	SmfLoad_CallHandler
 SmfLoad_OkReturnCode:
-	ldw wa, 0x60
+	ldw wa, TT_DKMENU
 
 SmfLoad_CallHandler:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 SmfLoad_Return:
 	ld xhl, 0:i3
@@ -747,14 +747,14 @@ SmfFN_Save_Finish:
 	call ApPostEvent
 	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, SmfFN_Save_NoAltSlot
-	ldw wa, 0xa
+	ldw wa, MD_SEQ_PLAY
 	jr SmfFN_Save_CallResult
 
 SmfFN_Save_NoAltSlot:
-	ld wa, 1:i3
+	ld wa, MD_NORMAL:i3
 
 SmfFN_Save_CallResult:
-	call	UI_PostPartChangeEvent
+	call	UI_ChangeModeByIndex
 	ld	wa, (xsp+6)
 	ld	bc, 1:i3
 	calr	FileIO_ValidateSignedValue
@@ -763,7 +763,7 @@ SmfFN_Save_CallResult:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	SmfFN_CallStatusDisplayAndExit
 SmfFN_HandleOpen:
 	cp xiz, 0x4
@@ -819,13 +819,13 @@ SmfFN_Open_Execute:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
-	call	UI_PostPartChangeEvent
+	ld	wa, MD_NORMAL:i3
+	call	UI_ChangeModeByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	SmfFN_CallStatusDisplayAndExit
 SmfFN_HandleOpen2:
 	cp	xiz, 50
@@ -860,13 +860,13 @@ SmfFN_HandleOpen2:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	ld	wa, 1:i3
-	call	UI_PostPartChangeEvent
+	ld	wa, MD_NORMAL:i3
+	call	UI_ChangeModeByIndex
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	SmfFN_CallStatusDisplayAndExit
 SmfFN_HandleDelete:
 	cp xiz, 0x5
@@ -911,7 +911,7 @@ SmfFN_Delete_Execute:
 	ld	(33040:16), wa
 	ld	(xsp+4), wa
 SmfFN_Delete_AdjustIndex:
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr SmfFN_CallStatusDisplayAndExit
 
 SmfFN_HandleDelete2:
@@ -946,10 +946,10 @@ SmfFN_HandleDelete2:
 	ld	(0x8110:16), wa
 	ld	(xsp + 4), wa
 SmfFN_Delete2_AdjustIndex:
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 SmfFN_CallStatusDisplayAndExit:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl SmfFN_UpdateDisplay
 SmfFN_IgnoredEvents:
 	cp	xiz, 10

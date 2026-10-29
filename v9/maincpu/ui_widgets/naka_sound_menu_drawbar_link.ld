@@ -53,3 +53,5 @@ ClassProps_AcFdemoScreen = 0x00E80CAA;
 ClassProps_AcPleaseWait = 0x00E80CB6;
 ClassProps_AcSndEMenu = 0x00E80CB0;
 ClassProps_IvMPver = 0x00E80CF0;
+ClassName_IvMPver = 0x00E81088;
+ClassPropdata_IvMPver = 0x00E81086;

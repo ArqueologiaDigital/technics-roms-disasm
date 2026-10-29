@@ -2997,8 +2997,8 @@ SLDst_ScrollDispatch:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	jrl	SLDst_Return
 SLDst_Scroll_ChildReturn:
 	ld	xwa, (xsp+4)
@@ -3420,8 +3420,8 @@ CmpDst_ScrollModeA:
 	ld XBC,EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw WA, 0x00ee
-	call SoundCtrl_SendCommand
+	ldw WA, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	jrl t, CmpDst_Return
 CmpDst_ScrollMode7:
 .Lc_f9121f:
@@ -3713,18 +3713,18 @@ FmmCmpLoad_HandleCancel:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 176
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_CMMENU
+	call	UI_ChangeTitleByIndex
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	FmmCmpLoad_CallStatusDisplay
 FmmCmpLoad_HandleError:
 	ld xwa, 0x600026
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x7d
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKUTFRMT
+	call UI_ChangeTitleByIndex
 	jr FmmCmpLoad_Return
 
 FmmCmpLoad_HandleSuccess:
@@ -3733,12 +3733,12 @@ FmmCmpLoad_HandleSuccess:
 	ld	xbc, EVT_HIDE
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ldw	wa, 176
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_CMMENU
+	call	UI_ChangeTitleByIndex
 	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 FmmCmpLoad_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr FmmCmpLoad_Return
 
 FmmCmpLoad_HandleAbort:

@@ -38,117 +38,6 @@ extern const char NakaWidget_Perf3RhythmSel_StrOff;
 /* NakaWidget_SmfMdly2MicWidget's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaWidget_SongMdlyMixer's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaWidget_DOCMedR1Sw's element (scripts/converters/nakarest_reviewed_slices.py). */
-/* NakaWidget_SongMdly2Mixer's element (scripts/converters/nakarest_reviewed_slices.py). */
-/* NakaWidget_PDMedR1Sw's element (scripts/converters/nakarest_reviewed_slices.py). */
-/* NakaWidget_SMFMedMuteSw's element (scripts/converters/nakarest_reviewed_slices.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint32_t func;
-} NakaWidget_SMFMedMuteSw_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint32_t func;
-} NakaWidget_PDMedR1Sw_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t icon;
-} NakaWidget_SongMdly2Mixer_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint32_t font;
-    uint32_t stron;
-    uint32_t stroff;
-    uint32_t onoff;
-    uint16_t editsw;
-    uint32_t func;
-} NakaWidget_DOCMedR1Sw_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t icon;
-} NakaWidget_SongMdlyMixer_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint16_t index;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint16_t align;
-    uint16_t editsw;
-    uint32_t selected;
-    uint32_t str;
-    uint32_t icon;
-} NakaWidget_SmfMdly2MicWidget_t;
-
 typedef struct __attribute__((packed)) {
     char w0_code[2];
     char PsSongSelBoxProc_name[18];
@@ -362,11 +251,13 @@ typedef struct __attribute__((packed)) {
     char v73_e9_caption[2];
     /* element 10 of Viewable slot 0x73: IvMainEditSw (class id 0x01600029) */
     naka_cls_IvMainEditSw_t DpMdlySmf_IvMainEditSw;
-    uint8_t bytes_0d96[22];  /* 0x47 */
+    /* element 11 of Viewable slot 0x73: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_SmfMdlyOffOnSel;
     /* zero padding */
     /* 4 pointers */
     /* AcMuteToggleBox record "SMFMedMuteSw", element 12 of Viewable slot 0x73 (DpMdlySmf): OFF/ON toggle, onoff cell RAM 0x3dd66, func SMFMuteOnOffFunc (0x127000d) */
-    NakaWidget_SMFMedMuteSw_t NakaWidget_SMFMedMuteSw;
+    /* element 12 of Viewable slot 0x73: AcMuteToggleBox (class id 0x0167000F) */
+    naka_cls_AcMuteToggleBox_t NakaWidget_SMFMedMuteSw;
     /* "OFF": stroff of NakaWidget_SMFMedMuteSw */
     char NakaWidget_SMFMedMuteSw_StrOff[4];
     /* "ON" + 0xff fill: stron of NakaWidget_SMFMedMuteSw */
@@ -402,10 +293,12 @@ typedef struct __attribute__((packed)) {
     char Skip_text_3[6];
     /* element 8 of Viewable slot 0x74: IvMainEditSw (class id 0x01600029) */
     naka_cls_IvMainEditSw_t DpMdlyDoc_IvMainEditSw;
-    uint8_t bytes_0fd8[22];  /* 0x47 */
+    /* element 9 of Viewable slot 0x74: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_DocMdlyOffOnSel;
     /* zero padding */
     /* AcMuteToggleBox view record "DOCMedR1Sw": RT1 mute switch of the DOC medley screen, func Rt1MuteFunc */
-    NakaWidget_DOCMedR1Sw_t NakaWidget_DOCMedR1Sw;
+    /* element 10 of Viewable slot 0x74: AcMuteToggleBox (class id 0x0167000F) */
+    naka_cls_AcMuteToggleBox_t NakaWidget_DOCMedR1Sw;
     /* "RT1": stroff text of the AcMuteToggleBox NakaWidget_DOCMedR1Sw */
     char NakaStr_DOCMedR1SwOff[4];
     /* "RT1": stron text of the AcMuteToggleBox NakaWidget_DOCMedR1Sw */
@@ -443,11 +336,13 @@ typedef struct __attribute__((packed)) {
     char Skip_text_4[6];
     /* element 7 of Viewable slot 0x75: IvMainEditSw (class id 0x01600029) */
     naka_cls_IvMainEditSw_t DpMdlyPd_IvMainEditSw;
-    uint8_t bytes_1230[22];  /* 0x47 */
+    /* element 8 of Viewable slot 0x75: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_PdMdlyOffOnSel;
     /* zero padding */
     /* zero padding */
     /* AcMuteToggleBox record "PDMedR1Sw", element 9 of Viewable slot 0x75 (DpMdlyPd): RT1 mute toggle, onoff cell RAM 0x3dd82, func Rt1MuteFunc (0x127000e) */
-    NakaWidget_PDMedR1Sw_t NakaWidget_PDMedR1Sw;
+    /* element 9 of Viewable slot 0x75: AcMuteToggleBox (class id 0x0167000F) */
+    naka_cls_AcMuteToggleBox_t NakaWidget_PDMedR1Sw;
     /* "RT1": stroff of NakaWidget_PDMedR1Sw */
     char NakaWidget_PDMedR1Sw_StrOff[4];
     /* "RT1": stron of NakaWidget_PDMedR1Sw */
@@ -475,13 +370,15 @@ typedef struct __attribute__((packed)) {
     char Skip_text_5[6];
     /* element 4 of Viewable slot 0x76: IvMainEditSw (class id 0x01600029) */
     naka_cls_IvMainEditSw_t DpMdlySmfLyr_IvMainEditSw;
-    uint8_t bytes_13e8[22];  /* 0x47 */
+    /* element 5 of Viewable slot 0x76: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_SmfMdly2OffOnSel;
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* VwMenuBox view record: "MIC" menu item of the SMF medley lyrics screen (DpMdlySmfLyr element 6) */
-    NakaWidget_SmfMdly2MicWidget_t NakaWidget_SmfMdly2MicWidget;
+    /* element 6 of Viewable slot 0x76: VwMenuBox (class id 0x0160003D) */
+    naka_cls_VwMenuBox_t NakaWidget_SmfMdly2MicWidget;
     /* "MIC": text of the VwMenuBox NakaWidget_SmfMdly2MicWidget */
     char NakaStr_SmfMdlyMic[4];
     /* element 7 of Viewable slot 0x76: IvFixWin (class id 0x0160004A) */
@@ -511,14 +408,16 @@ typedef struct __attribute__((packed)) {
     /* element 10 of Viewable slot 0x78: Label (class id 0x0160002B) */
     naka_cls_Label_t Skip_Label_6;
     char Skip_text_6[6];
-    uint8_t bytes_15d8[22];  /* 0x47 */
+    /* element 11 of Viewable slot 0x78: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_SongMdlyOffOnSel;
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* VwMenuBox view record: "MIXER" menu item of the disk song medley screen (DkMdlyPly element 12) */
-    NakaWidget_SongMdlyMixer_t NakaWidget_SongMdlyMixer;
+    /* element 12 of Viewable slot 0x78: VwMenuBox (class id 0x0160003D) */
+    naka_cls_VwMenuBox_t NakaWidget_SongMdlyMixer;
     /* "MIXER": text of the VwMenuBox NakaWidget_SongMdlyMixer */
     char NakaStr_SongMdlyMixer[6];
     /* element 13 of Viewable slot 0x78: Window (class id 0x01600035) */
@@ -578,14 +477,16 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcCurSongNameBox_t SqMdlyPly_AcCurSongNameBox;
     /* element 9 of Viewable slot 0x7A: IvTrackSwitch (class id 0x0160005B) */
     naka_cls_IvTrackSwitch_t SqMdlyPly_IvTrackSwitch;
-    uint8_t bytes_19e8[22];  /* 0x47 */
+    /* element 10 of Viewable slot 0x7A: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_SongMdly2OffOnSel;
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* VwMenuBox record, element 11 of Viewable slot 0x7a (SqMdlyPly): the "MIXER" menu entry, edit switch 0x8a, selected cell RAM 0x3de02 */
-    NakaWidget_SongMdly2Mixer_t NakaWidget_SongMdly2Mixer;
+    /* element 11 of Viewable slot 0x7A: VwMenuBox (class id 0x0160003D) */
+    naka_cls_VwMenuBox_t NakaWidget_SongMdly2Mixer;
     /* "MIXER": the str of NakaWidget_SongMdly2Mixer */
     char NakaWidget_SongMdly2Mixer_Str[6];
     /* element 0 of Viewable slot 0x89 "SqTrSel": TtlScreen (class id 0x01600034) */
@@ -1027,8 +928,8 @@ enum Yoko_ViewTable_073_objects {
         OBJ_Skip_Label_2,               /*  8 Label */
       OBJ_DpMdlySmf_AcRamEditBox,       /*  9 AcRamEditBox */
       OBJ_DpMdlySmf_IvMainEditSw,       /* 10 IvMainEditSw */
-      OBJ_NakaWidget_SmfMdlyOffOnSel,   /* 11 IvExit, record outside the C sources (NakaWidget_SmfMdlyOffOnSel) */
-      OBJ_NakaWidget_SMFMedMuteSw,      /* 12 AcMuteToggleBox, record outside the C sources (NakaWidget_SMFMedMuteSw) */
+      OBJ_NakaWidget_SmfMdlyOffOnSel,   /* 11 IvExit */
+      OBJ_NakaWidget_SMFMedMuteSw,      /* 12 AcMuteToggleBox */
       OBJ_MIXER_VwMenuBox_4,            /* 13 VwMenuBox */
       OBJ_MIC_VwMenuBox_5,              /* 14 VwMenuBox */
       OBJ_MuteCh_Label_2,               /* 15 Label */
@@ -1050,8 +951,8 @@ enum Yoko_ViewTable_074_objects {
       OBJ_DpMdlyDoc_VwEditSwBox,        /*  6 VwEditSwBox */
         OBJ_Skip_Label_3,               /*  7 Label */
       OBJ_DpMdlyDoc_IvMainEditSw,       /*  8 IvMainEditSw */
-      OBJ_NakaWidget_DocMdlyOffOnSel,   /*  9 IvExit, record outside the C sources (NakaWidget_DocMdlyOffOnSel) */
-      OBJ_NakaWidget_DOCMedR1Sw,        /* 10 AcMuteToggleBox, record outside the C sources (NakaWidget_DOCMedR1Sw) */
+      OBJ_NakaWidget_DocMdlyOffOnSel,   /*  9 IvExit */
+      OBJ_NakaWidget_DOCMedR1Sw,        /* 10 AcMuteToggleBox */
       OBJ_DOCMedR2Sw,                   /* 11 AcMuteToggleBox "DOCMedR2Sw" */
       OBJ_DOCMedOrchSw,                 /* 12 AcMuteToggleBox "DOCMedOrchSw" */
       OBJ_MIXER_VwMenuBox_5,            /* 13 VwMenuBox */
@@ -1073,8 +974,8 @@ enum Yoko_ViewTable_075_objects {
       OBJ_DpMdlyPd_VwEditSwBox,        /*  5 VwEditSwBox */
         OBJ_Skip_Label_4,              /*  6 Label */
       OBJ_DpMdlyPd_IvMainEditSw,       /*  7 IvMainEditSw */
-      OBJ_NakaWidget_PdMdlyOffOnSel,   /*  8 IvExit, record outside the C sources (NakaWidget_PdMdlyOffOnSel) */
-      OBJ_NakaWidget_PDMedR1Sw,        /*  9 AcMuteToggleBox, record outside the C sources (NakaWidget_PDMedR1Sw) */
+      OBJ_NakaWidget_PdMdlyOffOnSel,   /*  8 IvExit */
+      OBJ_NakaWidget_PDMedR1Sw,        /*  9 AcMuteToggleBox */
       OBJ_PDMedOrchSw,                 /* 10 AcMuteToggleBox "PDMedOrchSw" */
       OBJ_MIXER_VwMenuBox_6,           /* 11 VwMenuBox */
       OBJ_MIC_VwMenuBox_7,             /* 12 VwMenuBox */
@@ -1092,8 +993,8 @@ enum Yoko_ViewTable_076_objects {
       OBJ_DpMdlySmfLyr_VwEditSwBox,       /*  2 VwEditSwBox */
         OBJ_Skip_Label_5,                 /*  3 Label */
       OBJ_DpMdlySmfLyr_IvMainEditSw,      /*  4 IvMainEditSw */
-      OBJ_NakaWidget_SmfMdly2OffOnSel,    /*  5 IvExit, record outside the C sources (NakaWidget_SmfMdly2OffOnSel) */
-        OBJ_NakaWidget_SmfMdly2MicWidget, /*  6 VwMenuBox, record outside the C sources (NakaWidget_SmfMdly2MicWidget) */
+      OBJ_NakaWidget_SmfMdly2OffOnSel,    /*  5 IvExit */
+        OBJ_NakaWidget_SmfMdly2MicWidget, /*  6 VwMenuBox */
       OBJ_NakaWidget_SmfMdly2OrchSel,     /*  7 IvFixWin */
 };
 
@@ -1115,8 +1016,8 @@ enum Yoko_ViewTable_078_objects {
       OBJ_DkMdlyPly_IvTrackSwitch,        /*  8 IvTrackSwitch */
       OBJ_DkMdlyPly_AcDiskFileNameBox,    /*  9 AcDiskFileNameBox */
       OBJ_Skip_Label_6,                   /* 10 Label */
-      OBJ_NakaWidget_SongMdlyOffOnSel,    /* 11 IvExit, record outside the C sources (NakaWidget_SongMdlyOffOnSel) */
-      OBJ_NakaWidget_SongMdlyMixer,       /* 12 VwMenuBox, record outside the C sources (NakaWidget_SongMdlyMixer) */
+      OBJ_NakaWidget_SongMdlyOffOnSel,    /* 11 IvExit */
+      OBJ_NakaWidget_SongMdlyMixer,       /* 12 VwMenuBox */
     OBJ_NakaWidget_SongMdlyOrchSel,       /* 13 Window */
       OBJ_NakaWidget_SongMdlySongSel1,    /* 14 AcTrackSwitch */
       OBJ_NakaWidget_SongMdlySongSel2,    /* 15 AcTrackSwitch */
@@ -1153,8 +1054,8 @@ enum Yoko_ViewTable_07A_objects {
       OBJ_SqMdlyPly_IvMainEditSw,         /*  7 IvMainEditSw */
       OBJ_SqMdlyPly_AcCurSongNameBox,     /*  8 AcCurSongNameBox */
       OBJ_SqMdlyPly_IvTrackSwitch,        /*  9 IvTrackSwitch */
-      OBJ_NakaWidget_SongMdly2OffOnSel,   /* 10 IvExit, record outside the C sources (NakaWidget_SongMdly2OffOnSel) */
-      OBJ_NakaWidget_SongMdly2Mixer,      /* 11 VwMenuBox, record outside the C sources (NakaWidget_SongMdly2Mixer) */
+      OBJ_NakaWidget_SongMdly2OffOnSel,   /* 10 IvExit */
+      OBJ_NakaWidget_SongMdly2Mixer,      /* 11 VwMenuBox */
 };
 
 /* Viewable table Yoko_ViewTable_089, registry slot 0x89, 5 elements.
@@ -1191,13 +1092,13 @@ enum Yoko_ViewTable_08B_objects {
     OBJ_SqTrAs,                          /*  0 TtlScreen "SqTrAs" */
       OBJ_Preset_AcTitleMenu,            /*  1 AcTitleMenu */
       OBJ_SqTrAs_AcCurrentSongBox,       /*  2 AcCurrentSongBox */
-      OBJ_TrAs_OkSwitchView,             /*  3 VwEditSwBox, RAM record initialised from the work-RAM image (TrAs_OkSwitchView) */
+      OBJ_TrAs_OkSwitchView,             /*  3 VwEditSwBox, record in naka_sequencer_channels.c */
       OBJ_TrAsGrid,                      /*  4 AcTrAsGridBox "TrAsGrid" */
         OBJ_TrAsGrid_TextBox,            /*  5 TextBox */
         OBJ_TrAsGrid_TextBox_2,          /*  6 TextBox */
         OBJ_TrAsGrid_TextBox_3,          /*  7 TextBox */
         OBJ_TrAsGrid_AcIndexWideES,      /*  8 AcIndexWideES */
-        OBJ_TrAs_PartSelectSwitchView,   /*  9 AcIndexWideES, RAM record initialised from the work-RAM image (TrAs_PartSelectSwitchView) */
+        OBJ_TrAs_PartSelectSwitchView,   /*  9 AcIndexWideES, record in naka_sequencer_channels.c */
         OBJ_TrAsGrid_AcIndexEditSw,      /* 10 AcIndexEditSw */
         OBJ_TrAsGrid_AcIndexEditSw_2,    /* 11 AcIndexEditSw */
       OBJ_SqTrAs_IvMainEditSw,           /* 12 IvMainEditSw */
@@ -1378,8 +1279,8 @@ enum Yoko_ViewTable_0E3_objects {
       OBJ_DemoRhy_PsWideToggle,        /*  7 PsWideToggle */
       OBJ_DemoRhy_PsWideToggle_2,      /*  8 PsWideToggle */
       OBJ_NakaWidget_Perf3RhythmSel,   /*  9 PsWideToggle, record outside the C sources (NakaWidget_Perf3RhythmSel) */
-      OBJ_NakaHdr_Perf2MeasureBoxData, /* 10 IvMainEditSw, record outside the C sources (NakaHdr_Perf2MeasureBoxData) */
-      OBJ_NakaHdr_Perf2FileListData,   /* 11 AcDemoMedleyDispBox, record outside the C sources (NakaHdr_Perf2FileListData) */
+      OBJ_NakaHdr_Perf2MeasureBoxData, /* 10 IvMainEditSw, record in naka_widget_tables_1.c */
+      OBJ_NakaHdr_Perf2FileListData,   /* 11 AcDemoMedleyDispBox, record in naka_widget_tables_1.c */
 };
 
 const naka_direct_play_t naka_direct_play_data
@@ -1390,8 +1291,10 @@ const naka_direct_play_t naka_direct_play_data
     .PsSongSelBoxProc_name = ALIGNED_STRING("PsSongSelBoxProc"),
 
     /* ==== SCREEN TITLE_DPSMF "SMF DIRECT PLAY  " -- "TT_DPSMF", title id 0x6F, function NAKA_MAINFUNC_DpSmfTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc)
      * Menu: "LYRICS" -> TITLE_DPSMFLYR
+     * Procedure: DpSmfTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPSMF */
     .DpSmf = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1673,7 +1576,7 @@ const naka_direct_play_t naka_direct_play_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003DD1C,
+        .selected = RAM_Mixer_AcTitleMenu_Selected,
         .str = SELF(Mixer_text),
         .title = TITLE_SQMIXER,
         .icon = idICON_None,
@@ -2131,7 +2034,9 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DPDOC "DOC DIRECT PLAY  " -- "TT_DPDOC", title id 0x70, function NAKA_MAINFUNC_DpDocTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc)
+     * Procedure: DpDocTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPDOC */
     .DpDoc = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2338,7 +2243,8 @@ const naka_direct_play_t naka_direct_play_data
     .MIC_str_2 = "MIC",
 
     /* ==== SCREEN TITLE_DPPD "PIANO DISC DIRECT PLAY    " -- "TT_DPPD", title id 0x71, function NAKA_MAINFUNC_DpPdTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: DpPdTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPPD */
     .DpPd = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2526,7 +2432,9 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DPSMFLYR "SMF DIRECT PLAY  " -- "TT_DPSMFLYR", title id 0x72, function NAKA_MAINFUNC_DpSmfLyrTtlFunc ====
      * What: the disk direct-play SMF page with lyrics.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc) > "LYRICS"
+     * Procedure: DpSmfLyrTtlFunc opens TITLE_ETMENU
      * EXIT -> TITLE_DPSMF
      * Opened from: TITLE_DPSMF ("LYRICS") */
     .DpSmfLyr = {
@@ -2629,8 +2537,10 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DPMDLYSMF "SMF MEDLEY" -- "TT_DPMDLYSMF", title id 0x73, function NAKA_MAINFUNC_DpMdlySmfTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc)
      * Menu: "LYRICS" -> TITLE_DPMDLYSMFLYR
+     * Procedure: DpMdlySmfTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPSMF */
     .DpMdlySmf = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2823,9 +2733,31 @@ const naka_direct_play_t naka_direct_play_data
         .func = NAKA_MAINFUNC_DpMdlySmfTtlFunc,
     },
 
-    .bytes_0d96 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x0C, 0x00, 0x0A, 0x00, 0x18, 0x00, 0x00, 0x00, 0x20, 0x00, 0x1F, 0x00, 0x3F, 0x00 },
+    .NakaWidget_SmfMdlyOffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_DpMdlySmf,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_SMFMedMuteSw,
+        .prev = OBJ_DpMdlySmf_IvMainEditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 32, 32, 32),
+    },
 
-    .NakaWidget_SMFMedMuteSw = { NAKA_CLASS(AcMuteToggleBox), 0x0000, 0xFFFF, 0x000D, 0x000B, 0x0008, { 244, 216, 275, 238 }, 0x00000000, SELF(NakaWidget_SMFMedMuteSw_StrOn), SELF(NakaWidget_SMFMedMuteSw_StrOff), 0x0003DD66, 0x0006, 0x0127000D },
+    .NakaWidget_SMFMedMuteSw = {
+        .class_ = NAKA_CLASS(AcMuteToggleBox),
+        .super = OBJ_DpMdlySmf,
+        .sub = NAKA_NONE,
+        .next = OBJ_MIXER_VwMenuBox_4,
+        .prev = OBJ_NakaWidget_SmfMdlyOffOnSel,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(244, 216, 32, 23),
+        .font = idCHARA1,
+        .stron = SELF(NakaWidget_SMFMedMuteSw_StrOn),
+        .stroff = SELF(NakaWidget_SMFMedMuteSw_StrOff),
+        .onoff = RAM_SMFMedMuteSw_OnOff,
+        .editsw = ES_Bottom7,
+        .func = NAKA_APFUNC_SMFMuteOnOffFunc,
+    },
 
     .NakaWidget_SMFMedMuteSw_StrOff = "OFF",
 
@@ -2909,7 +2841,9 @@ const naka_direct_play_t naka_direct_play_data
     .SmfMedley_text_3 = ALIGNED_STRING("SMF MEDLEY"),
 
     /* ==== SCREEN TITLE_DPMDLYDOC "DOC MEDLEY" -- "TT_DPMDLYDOC", title id 0x74, function NAKA_MAINFUNC_DpMdlyDocTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc)
+     * Procedure: DpMdlyDocTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPDOC */
     .DpMdlyDoc = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3036,9 +2970,31 @@ const naka_direct_play_t naka_direct_play_data
         .func = NAKA_MAINFUNC_DpMdlyDocTtlFunc,
     },
 
-    .bytes_0fd8 = { 0x47, 0x00, 0x60, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0x0A, 0x00, 0x08, 0x00, 0x18, 0x00, 0x00, 0x00, 0x20, 0x00, 0x1F, 0x00, 0x3F, 0x00 },
+    .NakaWidget_DocMdlyOffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_DpMdlyDoc,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_DOCMedR1Sw,
+        .prev = OBJ_DpMdlyDoc_IvMainEditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 32, 32, 32),
+    },
 
-    .NakaWidget_DOCMedR1Sw = { NAKA_CLASS(AcMuteToggleBox), 0x0001, 0xFFFF, 0x000B, 0x0009, 0x0008, { 270, 118, 311, 135 }, 0x00000000, SELF(NakaStr_DOCMedR1SwOn), SELF(NakaStr_DOCMedR1SwOff), 0x0003DD74, 0x000A, 0x0127000E },
+    .NakaWidget_DOCMedR1Sw = {
+        .class_ = NAKA_CLASS(AcMuteToggleBox),
+        .super = OBJ_DpMdlyDoc,
+        .sub = NAKA_NONE,
+        .next = OBJ_DOCMedR2Sw,
+        .prev = OBJ_NakaWidget_DocMdlyOffOnSel,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(270, 118, 42, 18),
+        .font = idCHARA1,
+        .stron = SELF(NakaStr_DOCMedR1SwOn),
+        .stroff = SELF(NakaStr_DOCMedR1SwOff),
+        .onoff = RAM_DOCMedR1Sw_OnOff,
+        .editsw = ES_Right3,
+        .func = NAKA_APFUNC_Rt1MuteFunc,
+    },
 
     .NakaStr_DOCMedR1SwOff = "RT1",
 
@@ -3129,7 +3085,8 @@ const naka_direct_play_t naka_direct_play_data
     .MIC_str_6 = "MIC",
 
     /* ==== SCREEN TITLE_DPMDLYPD "PIANO DISC MEDLEY    " -- "TT_DPMDLYPD", title id 0x75, function NAKA_MAINFUNC_DpMdlyPdTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: DpMdlyPdTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPPD */
     .DpMdlyPd = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3256,9 +3213,31 @@ const naka_direct_play_t naka_direct_play_data
         .func = NAKA_MAINFUNC_DpMdlyPdTtlFunc,
     },
 
-    .bytes_1230 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x09, 0x00, 0x07, 0x00, 0x18, 0x00, 0x00, 0x00, 0x20, 0x00, 0x1F, 0x00, 0x3F, 0x00 },
+    .NakaWidget_PdMdlyOffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_DpMdlyPd,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_PDMedR1Sw,
+        .prev = OBJ_DpMdlyPd_IvMainEditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 32, 32, 32),
+    },
 
-    .NakaWidget_PDMedR1Sw = { NAKA_CLASS(AcMuteToggleBox), 0x0000, 0xFFFF, 0x000A, 0x0008, 0x0008, { 270, 118, 311, 135 }, 0x00000000, SELF(NakaWidget_PDMedR1Sw_StrOn), SELF(NakaWidget_PDMedR1Sw_StrOff), 0x0003DD82, 0x000A, 0x0127000E },
+    .NakaWidget_PDMedR1Sw = {
+        .class_ = NAKA_CLASS(AcMuteToggleBox),
+        .super = OBJ_DpMdlyPd,
+        .sub = NAKA_NONE,
+        .next = OBJ_PDMedOrchSw,
+        .prev = OBJ_NakaWidget_PdMdlyOffOnSel,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(270, 118, 42, 18),
+        .font = idCHARA1,
+        .stron = SELF(NakaWidget_PDMedR1Sw_StrOn),
+        .stroff = SELF(NakaWidget_PDMedR1Sw_StrOff),
+        .onoff = RAM_PDMedR1Sw_OnOff,
+        .editsw = ES_Right3,
+        .func = NAKA_APFUNC_Rt1MuteFunc,
+    },
 
     .NakaWidget_PDMedR1Sw_StrOff = "RT1",
 
@@ -3330,7 +3309,9 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DPMDLYSMFLYR "SMF MEDLEY" -- "TT_DPMDLYSMFLYR", title id 0x76, function NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc ====
      * What: the direct-play medley SMF page with lyrics.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc) > "LYRICS"
+     * Procedure: DpMdlySmfLyrTtlFunc opens TITLE_ETMENU
      * EXIT -> TITLE_DPMDLYSMF
      * Opened from: TITLE_DPMDLYSMF ("LYRICS") */
     .DpMdlySmfLyr = {
@@ -3414,9 +3395,35 @@ const naka_direct_play_t naka_direct_play_data
         .func = NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc,
     },
 
-    .bytes_13e8 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0x06, 0x00, 0x07, 0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x20, 0x00, 0x1F, 0x00, 0x3F, 0x00 },
+    .NakaWidget_SmfMdly2OffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_DpMdlySmfLyr,
+        .sub = OBJ_NakaWidget_SmfMdly2MicWidget,
+        .next = OBJ_NakaWidget_SmfMdly2OrchSel,
+        .prev = OBJ_DpMdlySmfLyr_IvMainEditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 32, 32, 32),
+    },
 
-    .NakaWidget_SmfMdly2MicWidget = { NAKA_CLASS(VwMenuBox), 0x0005, 0xFFFF, 0xFFFF, 0xFFFF, 0x0008, { 8, 30, 41, 55 }, 0x00F5, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x0088, 0x0003DD8E, SELF(NakaStr_SmfMdlyMic), 0x00000000 },
+    .NakaWidget_SmfMdly2MicWidget = {
+        .class_ = NAKA_CLASS(VwMenuBox),
+        .super = OBJ_NakaWidget_SmfMdly2OffOnSel,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 30, 34, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left1,
+        .selected = RAM_Mic_VwMenuBox_Selected,
+        .str = SELF(NakaStr_SmfMdlyMic),
+        .icon = idICON_None,
+    },
 
     .NakaStr_SmfMdlyMic = "MIC",
 
@@ -3432,7 +3439,9 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DKMDLYPLY "SONG MEDLEY       " -- "TT_DKMDLYPLY", title id 0x78, function NAKA_MAINFUNC_DkMdlyPlyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by
+     *       FmmDiskMedleySelectFunc)
+     * Procedure: DkMdlyPlyTtlFunc opens TITLE_SQMIXER
      * EXIT -> TITLE_DKMDLY */
     .DkMdlyPly = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3598,9 +3607,35 @@ const naka_direct_play_t naka_direct_play_data
 
     .Skip_text_6 = ALIGNED_STRING("SKIP"),
 
-    .bytes_15d8 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x0C, 0x00, 0x0A, 0x00, 0x18, 0x00, 0x00, 0x00, 0x40, 0x00, 0x1F, 0x00, 0x5F, 0x00 },
+    .NakaWidget_SongMdlyOffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_DkMdlyPly,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_SongMdlyMixer,
+        .prev = OBJ_Skip_Label_6,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 64, 32, 32),
+    },
 
-    .NakaWidget_SongMdlyMixer = { NAKA_CLASS(VwMenuBox), 0x0000, 0xFFFF, 0xFFFF, 0x000B, 0x0008, { 8, 114, 57, 139 }, 0x00F5, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x008A, 0x0003DD94, SELF(NakaStr_SongMdlyMixer), 0x00000000 },
+    .NakaWidget_SongMdlyMixer = {
+        .class_ = NAKA_CLASS(VwMenuBox),
+        .super = OBJ_DkMdlyPly,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_NakaWidget_SongMdlyOffOnSel,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 50, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left3,
+        .selected = RAM_Mixer_VwMenuBox_Selected,
+        .str = SELF(NakaStr_SongMdlyMixer),
+        .icon = idICON_None,
+    },
 
     .NakaStr_SongMdlyMixer = "MIXER",
 
@@ -3846,7 +3881,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQMDLYPLY "SONG MEDLEY" -- "TT_SQMDLYPLY", title id 0x7A, function NAKA_MAINFUNC_SqMdlyPlyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: SqMdlyPlyTtlFunc opens TITLE_SQMIXER
      * EXIT -> TITLE_SQMDLY */
     .SqMdlyPly = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3996,9 +4032,35 @@ const naka_direct_play_t naka_direct_play_data
         .rect = NAKA_XYWH(0, 32, 32, 32),
     },
 
-    .bytes_19e8 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x0B, 0x00, 0x09, 0x00, 0x18, 0x00, 0x00, 0x00, 0x40, 0x00, 0x1F, 0x00, 0x5F, 0x00 },
+    .NakaWidget_SongMdly2OffOnSel = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_SqMdlyPly,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_SongMdly2Mixer,
+        .prev = OBJ_SqMdlyPly_IvTrackSwitch,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 64, 32, 32),
+    },
 
-    .NakaWidget_SongMdly2Mixer = { NAKA_CLASS(VwMenuBox), 0x0000, 0xFFFF, 0xFFFF, 0x000A, 0x0008, { 8, 114, 57, 139 }, 0x00F5, 0x0000, 0xFFFF, 0x00000000, 0x00FF, 0x0000, 0x008A, 0x0003DE02, SELF(NakaWidget_SongMdly2Mixer_Str), 0x00000000 },
+    .NakaWidget_SongMdly2Mixer = {
+        .class_ = NAKA_CLASS(VwMenuBox),
+        .super = OBJ_SqMdlyPly,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_NakaWidget_SongMdly2OffOnSel,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(8, 114, 50, 26),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+        .align = AL_Center,
+        .editsw = ES_Left3,
+        .selected = RAM_Mixer_VwMenuBox_Selected_2,
+        .str = SELF(NakaWidget_SongMdly2Mixer_Str),
+        .icon = idICON_None,
+    },
 
     .NakaWidget_SongMdly2Mixer_Str = "MIXER",
 
@@ -4077,7 +4139,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQSTEP -- "TT_SQSTEP", title id 0x8A, function NAKA_MAINFUNC_SqStepTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .NakaWidget_StepRecSubPanel = {
         .class_ = NAKA_CLASS(IvDirmdScreen),
@@ -4094,7 +4156,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQTRAS "TRACK ASSIGN   " -- "TT_SQTRAS", title id 0x8B, function NAKA_MAINFUNC_SqTrAsTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "TRACK ASSIGN"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN"
      * Menu: "PRESET" -> TITLE_SQTRASPS
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("TRACK ASSIGN") */
@@ -4464,7 +4526,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQTRASPS "TRACK ASSIGN PRESET" -- "TT_SQTRASPS", title id 0x8C, function NAKA_MAINFUNC_SqTrAsPsTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "TRACK ASSIGN" > "PRESET"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN" > "PRESET"
      * EXIT -> TITLE_SQTRAS
      * Opened from: TITLE_SQTRAS ("PRESET") */
     .SqTrAsPs = {
@@ -4971,7 +5033,7 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_SQSNGSEL "SONG SELECT/NAMING" -- "TT_SQSNGSEL", title id 0x8E, function NAKA_MAINFUNC_SqSngSelTtlFunc ====
      * What: the sequencer song-select page.
-     * Path: mode MD_SEQ > "CREATE" > "SONG SELECT /NAMING"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING"
      * Menu: "NAMING" -> TITLE_SQSNGNAME
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("SONG SELECT /NAMING") */
@@ -5008,7 +5070,7 @@ const naka_direct_play_t naka_direct_play_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003DE42,
+        .selected = RAM_Naming_AcTitleMenu_Selected,
         .str = SELF(Naming_text),
         .title = TITLE_SQSNGNAME,
         .icon = idICON_None,
@@ -5079,13 +5141,13 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_SQSNGNAME "NAMING" -- "TT_SQSNGNAME", title id 0x8F, function NAKA_MAINFUNC_SqSngNameTtlFunc ====
      * What: the sequencer song-name page.
-     * Path: mode MD_SEQ > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
      * EXIT -> TITLE_SQSNGSEL
      * Opened from: TITLE_SQSNGSEL ("NAMING")
     /* ==== SCREEN TITLE_SQEASYNAME "NAMING" -- "TT_SQEASYNAME", title id 0xA7, function NAKA_MAINFUNC_SqSngNameTtlFunc ====
      * What: the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008F0000,
      *       and its exit returns to ...
-     * Path: mode MD_SEQ_EREC > "NAMING"
+     * Path: SEQUENCER EASY REC button (mode MD_SEQ_EREC) > "NAMING"
      * EXIT -> TITLE_SQSNGSEL
      * Opened from: TITLE_SQEASYREC ("NAMING") */
     .SqNameing = {
@@ -5178,7 +5240,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQAFTSET "AFTER TOUCH SETTING" -- "TT_SQAFTSET", title id 0x92, function NAKA_MAINFUNC_SqAftSetTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "AFTER TOUCH SET"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "AFTER TOUCH SET"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("AFTER TOUCH SET") */
     .AfterTouchSet = {
@@ -5262,7 +5324,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQSTEPBAL "PART BALANCE" -- "TT_SQSTEPBAL", title id 0xA9, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQSTEP */
     .StepPartBal = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5359,7 +5421,7 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DEMOMENU "DEMONSTRATION" -- "TT_DEMOMENU", title id 0xE0, function NAKA_MAINFUNC_DemoMenuTtlFunc ====
      * What: the demo menu. It is the home title of mode 0x13, MD_DEMO.
-     * Path: mode MD_DEMO
+     * Path: DEMO button (mode MD_DEMO)
      * Menu: "PERFORMANCES" -> TITLE_DEMOSTYLE
      * Menu: "FEATURE PRESENTATION" -> TITLE_DEMOFEATURE
      * EXIT -> TITLE_NORMAL */
@@ -5439,7 +5501,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMOSTYLE "PERFORMANCES" -- "TT_DEMOSTYLE", title id 0xE1, function NAKA_MAINFUNC_DemoStyleTtlFunc ====
-     * Path: mode MD_DEMO > "PERFORMANCES"
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES"
+     * Procedure: DemoStyleTtlFunc opens TITLE_DEMORHY, TITLE_DEMOSOUND
      * EXIT -> TITLE_DEMOMENU
      * Opened from: TITLE_DEMOMENU ("PERFORMANCES") */
     .DemoStyle = {
@@ -5692,7 +5755,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMOSOUND "PERFORMANCES" -- "TT_DEMOSOUND", title id 0xE2, function NAKA_MAINFUNC_DemoSoundTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+     * Procedure: DemoSoundTtlFunc opens TITLE_DEMORHY, TITLE_DEMOSTYLE
      * EXIT -> TITLE_DEMOMENU */
     .DemoSound = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5944,7 +6008,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMORHY "PERFORMANCES" -- "TT_DEMORHY", title id 0xE3, function NAKA_MAINFUNC_DemoRhyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+     * Procedure: DemoRhyTtlFunc opens TITLE_DEMOSOUND, TITLE_DEMOSTYLE
      * EXIT -> TITLE_DEMOMENU */
     .DemoRhy = {
         .class_ = NAKA_CLASS(TtlScreen),

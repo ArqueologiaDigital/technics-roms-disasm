@@ -390,14 +390,53 @@ class Graph:
         p = self.links(key)[0]
         return None if p in (None, NONE) else (key[0], p)
 
-    def screen_titles(self, key):
-        """the titles that show the record at key: those whose view is it or an ancestor."""
+    def view_refs(self):
+        """(slot, k) of a view -> the records whose WindowID / ScreenID field (letters t, N) names
+        it: a window page shows its window object, so the window's widgets belong to the page's
+        screen."""
+        if hasattr(self, '_view_refs'):
+            return self._view_refs
+        refs = {}
+        for f in self.files:
+            for r in f.records:
+                lt = dict(self.letters.get(r['cls'], []))
+                for fld, letter in lt.items():
+                    if letter in 'tN' and fld in r['fields']:
+                        v = r['fields'][fld].strip()
+                        mm = re.match(r'^NAKA_VIEW_ID\(\w+, (OBJ_\w+)\)$', v)
+                        tgt = f.obj_index.get(mm.group(1)) if mm else None
+                        if tgt is None and re.match(r'^0x[0-9A-Fa-f]+$', v):
+                            x = int(v, 16)
+                            tgt = (x >> 16, x & 0xFFFF)
+                        if tgt:
+                            refs.setdefault(tgt, []).append((r['slot'], r['elem']))
+        for key in self.rom:
+            if key in self.rec:
+                continue
+            for fld, (ch, v) in self.rom_fields(key).items():
+                if ch in 'tN' and v not in (0, 0xFFFFFFFF):
+                    refs.setdefault((v >> 16, v & 0xFFFF), []).append(key)
+        self._view_refs = refs
+        return refs
+
+    def screen_titles(self, key, depth=0):
+        """the titles that show the record at key: those whose view is it or an ancestor, or
+        (through window pages) a view that names its top-level ancestor as its window."""
         seen = set()
+        top = key
         while key and key not in seen:
             seen.add(key)
             if key in self.view_titles:
                 return self.view_titles[key]
+            top = key
             key = self.parent(key)
+        if depth < 3:
+            out = []
+            for ref in self.view_refs().get(top, []):
+                for t in self.screen_titles(ref, depth + 1):
+                    if t not in out:
+                        out.append(t)
+            return out
         return []
 
     def children(self, key):
@@ -450,13 +489,18 @@ class Graph:
                         self.edges.append((frm, key, to, kind, self.label(f, r)))
 
     def menu_paths(self):
-        """title -> shortest [(mode or title, label)] path from a mode's home title over menu
-        (non-EXIT) edges."""
+        """title -> shortest [(mode or title, label)] path from a mode's home title, over menu
+        entries (data links first) and, when add_code_edges() ran, the code that opens a title
+        (a title procedure, or a menu box's function): a step's label is then
+        '"ENTRY" (by Func)' or '(by Func)'."""
         import collections
         adj = collections.defaultdict(list)
         for frm, key, to, kind, lab in self.edges:
             if kind == 'menu' and frm is not None and frm != to:
-                adj[frm].append((to, lab))
+                adj[frm].append((0, to, lab))
+        for frm, to, routine, lab in getattr(self, 'code_edges', []):
+            if frm != to:
+                adj[frm].append((1, to, ('"%s" (by %s)' % (lab, routine)) if lab else '(by %s)' % routine))
         path = {}
         q = collections.deque()
         for mid, md in sorted(self.modes.items()):
@@ -465,7 +509,7 @@ class Graph:
                 q.append(md['home'])
         while q:
             t = q.popleft()
-            for to, lab in adj[t]:
+            for pri, to, lab in sorted(adj[t], key=lambda x: x[0]):
                 if to not in path:
                     path[to] = path[t] + [(t, lab)]
                     q.append(to)
@@ -504,7 +548,13 @@ def title_path(g, tid, paths=None):
         return None
     parts = []
     for x, lab in paths[tid]:
-        parts.append('mode %s' % lab if x == 'mode' else ('"%s"' % lab if lab else '(unlabelled entry)'))
+        if x == 'mode':
+            b = getattr(g, 'mode_button', {}).get(lab)
+            parts.append('%s button (mode %s)' % (' / '.join(b), lab) if b else 'mode %s' % lab)
+        elif lab and (lab.startswith('"') or lab.startswith('(')):
+            parts.append(lab)
+        else:
+            parts.append('"%s"' % lab if lab else '(unlabelled entry)')
     return ' > '.join(parts)
 
 
@@ -521,3 +571,71 @@ def title_links(g):
         if frm is not None:
             menu[frm].append((lab, to))
     return menu, exits, into
+
+
+# ---------------------------------------------------------------- code-driven transitions
+FUNC_CLASSES = (0x1600001, 0x1600002, 0x1600003)      # Function, ApFunction, MainFunction tables
+
+
+def func_label(m, fid):
+    """the code label of function object id 0x01SS_KKKK (entry KKKK of the Function-class table
+    registered at slot SS), or None."""
+    if fid is None:
+        return None
+    r = m.by_slot.get((fid >> 16) & 0xFFF)
+    if not r or r['cls'] not in FUNC_CLASSES:
+        return None
+    el = m.entries(r)
+    k = fid & 0xFFFF
+    if k >= len(el):
+        return None
+    lab = m.name_of(el[k])
+    return lab[1] if lab[0] == el[k] else None
+
+
+def mode_buttons(tree='v10'):
+    """mode name (MD_X) -> [button names] from the mode-key maps of naka_extension_device.c
+    (`MD_X, /* CPx_SEGn 0xNN: BUTTON ... */` rows; PanelButton_ModeKey reads those maps)."""
+    out = {}
+    txt = read(os.path.join(ROOT, tree, 'maincpu', 'ui_widgets', 'naka_extension_device.c'))
+    for md, seg, bit, name in re.findall(r'^\s+(MD_\w+),\s+/\* (CP[LR]_SEG\d+) (0x[0-9A-F]+): ([^(*]+?)\s*(?:\(|\*/)', txt, re.M):
+        out.setdefault(md, []).append(name.strip())
+    return out
+
+
+def add_code_edges(g):
+    """g.code_edges: (from title, to title, routine) for every title procedure and menu box
+    function that passes a TT_* index; g.mode_button: MD_X -> buttons."""
+    sys.path.insert(0, os.path.join(ROOT, 'scripts', 'converters'))
+    import name_title_index_operands as N
+    extra = set()
+    for r in g.m.regs:
+        if r['cls'] in FUNC_CLASSES and g.m.inrom(r['table']):
+            for a in g.m.entries(r):
+                lab = g.m.name_of(a)
+                if lab[0] == a:
+                    extra.add(lab[1])
+    opens = N.opens_by_routine(g.tree, 'title', extra)
+    tt = {n: v for n, v in g.ids.items() if n.startswith('TT_')}
+    g.routine_opens = opens
+    g.code_edges = []
+    for tid, t in g.titles.items():
+        lab = func_label(g.m, t['func'])
+        for n in sorted(opens.get(lab, ())):
+            if n in tt:
+                g.code_edges.append((tid, 0x01A00000 + tt[n], lab, ''))
+    # a menu box's function often only calls the routine that opens the title
+    # (DirectPlayTtlJgFunc -> FileIO_DetectFileTypeAndPost): count its direct callees' titles too
+    calls = N.callees(g.tree, extra)
+    for frm, key, fn, label in g.func_entries:
+        lab = func_label(g.m, g.ids.get(fn))
+        if lab and lab in calls:
+            for c in calls[lab]:
+                opens[lab] = opens.get(lab, set()) | opens.get(c, set())
+        for n in sorted(opens.get(lab, ())):
+            if n in tt and frm is not None:
+                g.code_edges.append((frm, 0x01A00000 + tt[n], lab, label))
+    md = mode_buttons(g.tree)
+    g.mode_button = {}
+    for mid, m_ in g.modes.items():
+        g.mode_button[m_['name']] = md.get(m_['name'], [])

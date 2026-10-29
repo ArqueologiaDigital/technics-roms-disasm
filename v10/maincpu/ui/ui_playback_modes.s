@@ -269,7 +269,7 @@ Part_LookupParam:
 	ld	(SEQ_SELECTED_TRACK:16), e
 	ret
 ; Sets the word 0x287f to 1 and clears 0xd37; when the byte at 0xd60 is 1..16 it also clears
-; 0x1108 and calls UI_PostModeChangeEvent with A = 0x8a (a title change to TITLE_PS + 0x8a).
+; 0x1108 and calls UI_ChangeTitleByIndex with A = 0x8a (a title change to TITLE_PS + 0x8a).
 Part_ValidateAndActivate:
 	; --- Validation: check range, optionally call ---
 	ldw	(0x287f:16), 1
@@ -280,8 +280,8 @@ Part_ValidateAndActivate:
 	jr ugt, PartValidate_Done
 	ldw	(4360:16), 0
 	xor	wa, wa
-	ld a, 0x8a:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_SQSTEP:opc
+	call UI_ChangeTitleByIndex
 PartValidate_Done:
 	ret
 PlaybackDispatch_NullRet:
@@ -446,14 +446,14 @@ PlayMode_SendModeCommand:
 
 PlayCheck_PostMode79:
 	xor wa, wa
-	ld a, 0x79:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_SQMDLY:opc
+	call UI_ChangeTitleByIndex
 	jr PlayCheck_Return
 
 PlayCheck_PostMode77:
 	xor wa, wa
-	ld a, 0x77:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKMDLY:opc
+	call UI_ChangeTitleByIndex
 
 PlayCheck_Return:
 	ret
@@ -477,14 +477,14 @@ PlayMode_StartAndSendCommand:
 
 PlayStart_PostMode79:
 	xor wa, wa
-	ld a, 0x79:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_SQMDLY:opc
+	call UI_ChangeTitleByIndex
 	jr SongMode_PostEvtRetZero
 
 PlayStart_PostMode77:
 	xor wa, wa
-	ld a, 0x77:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKMDLY:opc
+	call UI_ChangeTitleByIndex
 
 SongMode_PostEvtRetZero:
 	ret
@@ -526,14 +526,14 @@ SeqRestart_SendPlaybackNotify:
 
 SeqNotify_PostMode79:
 	xor wa, wa
-	ld a, 0x79:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_SQMDLY:opc
+	call UI_ChangeTitleByIndex
 	jr SeqNotify_Return
 
 SeqNotify_PostMode77:
 	xor wa, wa
-	ld a, 0x77:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKMDLY:opc
+	call UI_ChangeTitleByIndex
 
 SeqNotify_Return:
 	ret
@@ -584,8 +584,8 @@ SongMode_CheckAndDispatch:
 SongMode_SendStopCommand:
 	ld (4437:16), 0
 	xor wa, wa
-	ld a, 0x6d:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPDOC:opc
+	call UI_ChangeTitleByIndex
 	ret
 
 SongMode_AbortAndClearBit2:
@@ -601,8 +601,8 @@ SongMode_StartPlayback:
 	call SongMode_AbortAndClearBit2
 	ld (4437:16), 1
 	xor wa, wa
-	ld a, 0x6d:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPDOC:opc
+	call UI_ChangeTitleByIndex
 
 SongMode_StartReturn:
 	ret
@@ -669,21 +669,21 @@ PartFormat_PartTypeDisp:
 
 PartFormat_PostMode6D:
 	xor wa, wa
-	ld a, 0x6d:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPDOC:opc
+	call UI_ChangeTitleByIndex
 	jr PartFormat_NullRet
 
 PartFormat_PostMode6E:
 	xor wa, wa
-	ld a, 0x6e:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPPD:opc
+	call UI_ChangeTitleByIndex
 	jr PartFormat_NullRet
 
 PartFormat_SendPlaybackCmd:
 	call PlayMode_SendStopEvent
 	xor wa, wa
-	ld a, 0x6c:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPSMF:opc
+	call UI_ChangeTitleByIndex
 	jr PartFormat_NullRet
 
 VoiceState_SqTrSelCaseD:
@@ -741,8 +741,8 @@ PartFormat_CheckAndDispatch:
 PartFormat_SendStopCommand:
 	ld (4437:16), 0
 	xor wa, wa
-	ld a, 0x6e:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPPD:opc
+	call UI_ChangeTitleByIndex
 	ret
 
 PartFormat_AbortAndClearBit2:
@@ -758,8 +758,8 @@ PartFormat_StartPlayback:
 	call PartFormat_AbortAndClearBit2
 	ld (4437:16), 1
 	xor wa, wa
-	ld a, 0x6e:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPPD:opc
+	call UI_ChangeTitleByIndex
 
 PartFormat_StartReturn:
 	ret
@@ -810,8 +810,8 @@ PlayMode_StopAbortRetZero:
 PlayModeStop_SendStopCmd:
 	ld (4437:16), 0
 	xor wa, wa
-	ld a, 0x6c:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPSMF:opc
+	call UI_ChangeTitleByIndex
 	ret
 
 PlayMode_StopAndAbort:
@@ -828,8 +828,8 @@ PlayMode_SendCommand6C:
 	call PlayMode_StopAndAbort
 	ld (4437:16), 1
 	xor wa, wa
-	ld a, 0x6c:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DKDPSMF:opc
+	call UI_ChangeTitleByIndex
 
 PlayModeStop_SendReturn:
 	ret
@@ -859,8 +859,8 @@ PlayMode_SendCommand6C_Return:
 ; SqSngNameTtlFunc title dispatch
 SqSngNameTtl_Dispatch:
 	xor wa, wa
-	ld a, 0x73:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_DPMDLYSMF:opc
+	call UI_ChangeTitleByIndex
 	ret
 
 CDlikeSwitch_NullRet:
@@ -1566,8 +1566,8 @@ SqMdlyPly_InitPlay:
 
 ; SqMdlyPly send audio command
 SqMdlyPly_SendAudioCmd:
-	ldw wa, 0xa5
-	call SoundCtrl_SendCommand
+	ldw wa, TT_SQMIXER
+	call UI_InterruptTitleByIndex
 	jr SqMdlyPly_ReturnZero
 
 ; SqMdlyPly check playback state
@@ -1645,8 +1645,8 @@ DkMdlyPly_InitPlay:
 	jr DkMdlyPly_ReturnZero
 
 DkMdlyPly_SendAudioA5:
-	ldw wa, 0xa5
-	call SoundCtrl_SendCommand
+	ldw wa, TT_SQMIXER
+	call UI_InterruptTitleByIndex
 	jr DkMdlyPly_ReturnZero
 
 DkMdlyPly_CheckPlayState:
@@ -1877,16 +1877,16 @@ DpMdlyDocTtlFunc_OnSwIn:
 	jr z, DpMdlyDoc_CaseB
 	cp xde, 0x8a
 	jr nz, DpMdlyDoc_ReturnZero
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpMdlyDoc_CaseC
 
 ; DpMdlyDoc case B
 DpMdlyDoc_CaseB:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpMdlyDoc case C
 DpMdlyDoc_CaseC:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpMdlyDoc_ReturnZero
 
 ; DpMdlyDoc case D
@@ -1971,16 +1971,16 @@ DpMdlyPdTtlFunc_OnSwIn:
 	jr z, DpMdlyPd_CaseB
 	cp xde, 0x8a
 	jr nz, DpMdlyPd_ReturnZero
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpMdlyPd_CaseC
 
 ; DpMdlyPd case B
 DpMdlyPd_CaseB:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpMdlyPd case C
 DpMdlyPd_CaseC:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpMdlyPd_ReturnZero
 
 ; DpMdlyPd case D
@@ -2069,16 +2069,16 @@ DpMdlySmfTtlFunc_OnSwIn:
 	jr z, DpMdlySmf_CaseB
 	cp xde, 0x8a
 	jr nz, DpMdlySmf_ReturnZero
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpMdlySmf_CaseC
 
 ; DpMdlySmf case B
 DpMdlySmf_CaseB:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpMdlySmf case C
 DpMdlySmf_CaseC:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpMdlySmf_ReturnZero
 
 ; DpMdlySmf case D
@@ -2190,8 +2190,8 @@ DpMdlySmfLyrTtlFunc_OnSwIn:
 	jr z, DpMdlySmfLyr_CaseB
 	cp xde, 0x88
 	jr nz, DpMdlySmfLyr_ReturnZero
-	ldw wa, 0xd6
-	call SoundCtrl_SendCommand
+	ldw wa, TT_ETMENU
+	call UI_InterruptTitleByIndex
 	jr DpMdlySmfLyr_ReturnZero
 
 ; DpMdlySmfLyr case B
@@ -3023,14 +3023,14 @@ DpDoc_NavigateBackward:
 	calr CDlikeSwTtl_DocNavDispatch
 	jr DpDocTtl_ReturnZero
 DpDocTtlFunc_OnMixer:
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpDoc_CaseF
 DpDocTtlFunc_OnMic:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpDocTtl case F
 DpDoc_CaseF:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpDocTtl_ReturnZero
 
 ; DpDocTtl case G
@@ -3153,14 +3153,14 @@ DpPd_NavigateBackward:
 	calr CDlikeSwTtl_PdNavDispatch
 	jr DpPdTtl_ReturnZero
 DpPdTtlFunc_OnMixer:
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpPd_CaseF
 DpPdTtlFunc_OnMic:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpPdTtl case F
 DpPd_CaseF:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpPdTtl_ReturnZero
 
 ; DpPdTtl case G
@@ -3292,14 +3292,14 @@ DpSmf_NavigateBackward:
 	calr CDlikeSwTtl_SongNavDispatch
 	jr DpSmfTtl_ReturnZero
 DpSmfTtlFunc_OnMixer:
-	ldw wa, 0xa5
+	ldw wa, TT_SQMIXER
 	jr DpSmf_CaseF
 DpSmfTtlFunc_OnMic:
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 
 ; DpSmfTtl case F
 DpSmf_CaseF:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DpSmfTtl_ReturnZero
 
 ; DpSmfTtl case G
@@ -3418,8 +3418,8 @@ DpSmfLyr_DispatchNavigation:
 	jr SeqStep_ReturnZero
 
 DpSmfLyr_SendSoundD6:
-	ldw wa, 0xd6
-	call SoundCtrl_SendCommand
+	ldw wa, TT_ETMENU
+	call UI_InterruptTitleByIndex
 	jr SeqStep_ReturnZero
 
 ; DpSmfLyrTtl case B

@@ -724,7 +724,18 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     /* ==== SCREEN TITLE_SDMENU "SOUND MENU" -- "TT_SDMENU", title id 0x2, function NAKA_APFUNC_DefaultFunction ====
      * What: the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
-     * Path: mode MD_SOUND
+     * Path: MENU SOUND button (mode MD_SOUND)
+     * Menu: "PART SETTING" -> TITLE_SDPART
+     * Menu: "MIXER" -> TITLE_SDMIXER
+     * Menu: "MASTER TUNING" -> TITLE_SDMTUNE
+     * Menu: "KEY SCALING" -> TITLE_SDSCLTYP
+     * Menu: "REVERB & EQ PRESETS" -> TITLE_REVEQMENU
+     * Menu: "REVERB" -> TITLE_SDREVSET
+     * Menu: "EQUALIZER" -> TITLE_SDEQUALIZER
+     * Menu: "DSP EFFECT" -> TITLE_SDDSPEFF
+     * Menu: "ACOUSTIC ILLUSION" -> TITLE_SDACCILL
+     * Menu: "LEFT HOLD" -> TITLE_SDLFTHLD
+     * Menu: "TECHNI-CHORD" -> TITLE_SDTECD
      * EXIT -> TITLE_PS */
     .Sdmenu = {
         .class_ = NAKA_CLASS(TtlScreen),

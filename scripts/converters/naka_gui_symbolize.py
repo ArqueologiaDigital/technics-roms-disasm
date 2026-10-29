@@ -451,12 +451,19 @@ def screen_headers(g):
                     if d:
                         L += wrap(d, '     * What:', '     *       ')
                     pth = G.title_path(g, tid, paths)
-                    L.append('     * Path: %s' % (pth or 'no menu entry opens it (opened by code)'))
+                    L += wrap(pth or 'none found (no data entry, and no traced code, opens it)', '     * Path:', '     *       ')
                     for lab, to in menu.get(tid, []):
                         L.append('     * Menu: "%s" -> %s' % (lab or '?', g.title_name(to)))
                     for frm, k2, fn, lab in g.func_entries:
                         if frm == tid:
-                            L.append('     * Menu: "%s" -> by code, %s' % (lab or '?', fn))
+                            fl = G.func_label(g.m, g.ids.get(fn))
+                            po = sorted('TITLE_' + n[3:] for n in g.routine_opens.get(fl, ()) if n.startswith('TT_'))
+                            L += wrap('"%s" -> by code, %s%s' % (lab or '?', fn, (' (%s)' % ', '.join(po)) if po else ''),
+                                      '     * Menu:', '     *       ')
+                    proc = G.func_label(g.m, t['func'])
+                    po = sorted('TITLE_' + n[3:] for n in g.routine_opens.get(proc, ()) if n.startswith('TT_'))
+                    if po:
+                        L += wrap('%s opens %s' % (proc, ', '.join(po)), '     * Procedure:', '     *       ')
                     if exits.get(tid):
                         L.append('     * EXIT -> %s' % ', '.join(g.title_name(x) for x in sorted(exits[tid])))
                     fr = sorted({(g.title_name(a) if a else 'an untitled view', b) for a, b in into.get(tid, [])})
@@ -568,7 +575,9 @@ def main():
     allf = [G.CFile(p) for p in G.tree_files(a.tree)]
     glob_index = build_global(allf)
     if a.check:
-        heads = screen_headers(G.Graph(a.tree, m))
+        gg = G.Graph(a.tree, m)
+        G.add_code_edges(gg)
+        heads = screen_headers(gg)
         stale = []
         for p in files:
             cur = G.read(p)
@@ -582,7 +591,11 @@ def main():
         print('naka_gui_symbolize --check %s: %s' % (a.tree, '%d stale' % len(stale) if stale else 'up to date'))
         sys.exit(1 if stale else 0)
     bad = 0
-    heads = screen_headers(G.Graph(a.tree, m)) if a.headers else {}
+    heads = {}
+    if a.headers:
+        gg = G.Graph(a.tree, m)
+        G.add_code_edges(gg)
+        heads = screen_headers(gg)
     for p in files:
         if a.headers:
             new, st = apply_headers(p, heads.get(os.path.basename(p), {})), {'headers': len(heads.get(os.path.basename(p), {}))}

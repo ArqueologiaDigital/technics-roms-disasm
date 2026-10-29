@@ -93,6 +93,68 @@ extern const char PsVariBoxProc;
 extern const char TtSdmenu;
 extern const char TtSdscltyp;
 extern const char VwUserBitmapSpProc;
+extern const char ClassName_AcAccordionTab;
+extern const char ClassName_AcDrawEditBox;
+extern const char ClassName_AcLswPartEditBox;
+extern const char ClassName_AcLswPartPan;
+extern const char ClassName_AcPartMixer;
+extern const char ClassName_AcPresentationBox;
+extern const char ClassName_AcPresentationControl;
+extern const char ClassName_AcResetPage;
+extern const char ClassName_AcTrackMixer;
+extern const char ClassName_AcVolPartEditBox;
+extern const char ClassName_AcWelcomScreen;
+extern const char ClassName_IvAccordion;
+extern const char ClassName_IvAccordionX;
+extern const char ClassName_IvDemofeature1;
+extern const char ClassName_IvDemofeature2;
+extern const char ClassName_IvDrawbar;
+extern const char ClassName_IvDrawbar1;
+extern const char ClassName_IvDrawbar2;
+extern const char ClassName_IvDrawbarNorm;
+extern const char ClassName_IvDrawbarSndE;
+extern const char ClassName_IvMesage;
+extern const char ClassName_IvPageOverWrite;
+extern const char ClassName_IvSdpart;
+extern const char ClassName_IvSdscltyp2;
+extern const char ClassName_IvSdtecd;
+extern const char ClassName_IvSdtecd1;
+extern const char ClassName_IvSoftver;
+extern const char ClassName_PsLabelBox;
+extern const char ClassName_PsMixerControl;
+extern const char ClassName_PsVariBox;
+extern const char ClassName_VwUserBitmapSp;
+extern const char ClassPropdata_AcAccordionTab;
+extern const char ClassPropdata_AcDrawEditBox;
+extern const char ClassPropdata_AcLswPartEditBox;
+extern const char ClassPropdata_AcLswPartPan;
+extern const char ClassPropdata_AcPartMixer;
+extern const char ClassPropdata_AcPresentationBox;
+extern const char ClassPropdata_AcPresentationControl;
+extern const char ClassPropdata_AcResetPage;
+extern const char ClassPropdata_AcTrackMixer;
+extern const char ClassPropdata_AcVolPartEditBox;
+extern const char ClassPropdata_AcWelcomScreen;
+extern const char ClassPropdata_IvAccordion;
+extern const char ClassPropdata_IvAccordionX;
+extern const char ClassPropdata_IvDemofeature1;
+extern const char ClassPropdata_IvDemofeature2;
+extern const char ClassPropdata_IvDrawbar;
+extern const char ClassPropdata_IvDrawbar1;
+extern const char ClassPropdata_IvDrawbar2;
+extern const char ClassPropdata_IvDrawbarNorm;
+extern const char ClassPropdata_IvDrawbarSndE;
+extern const char ClassPropdata_IvMesage;
+extern const char ClassPropdata_IvPageOverWrite;
+extern const char ClassPropdata_IvSdpart;
+extern const char ClassPropdata_IvSdscltyp2;
+extern const char ClassPropdata_IvSdtecd;
+extern const char ClassPropdata_IvSdtecd1;
+extern const char ClassPropdata_IvSoftver;
+extern const char ClassPropdata_PsLabelBox;
+extern const char ClassPropdata_PsMixerControl;
+extern const char ClassPropdata_PsVariBox;
+extern const char ClassPropdata_VwUserBitmapSp;
 
 #define BASE  0x00E5A39Eu
 
@@ -13542,37 +13604,37 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     .ClassProps_IvMPver_Names = "\0\xFF",
 
     .Murai_ClassTable_161 = {
-        { NAKA_ADDR(IvSdpartProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E812D8, 0x00E812D6, SELF(ClassProps_IvSdpart) },
-        { NAKA_ADDR(AcLswPartEditBoxProc), NAKA_CLASS(PsEditBox), 58, 8, 0x00E812C4, 0x00E812C0, SELF(ClassProps_AcLswPartEditBox) },
-        { NAKA_ADDR(AcVolPartEditBoxProc), NAKA_CLASS(PsEditBox), 62, 12, 0x00E812AE, 0x00E812AA, SELF(ClassProps_AcVolPartEditBox) },
-        { NAKA_ADDR(IvMesageProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E812A0, 0x00E8129E, SELF(ClassProps_IvMesage) },
-        { NAKA_ADDR(IvAccordionProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81292, 0x00E81290, SELF(ClassProps_IvAccordion) },
-        { NAKA_ADDR(IvAccordionXProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81282, 0x00E81280, SELF(ClassProps_IvAccordionX) },
-        { NAKA_ADDR(AcAccordionTabProc), NAKA_CLASS(AcIndexToggle), 52, 8, 0x00E81270, 0x00E8126C, SELF(AudioStream_Property_Table) },
-        { NAKA_ADDR(PsLabelBoxProc), NAKA_CLASS(VwBox), 48, 20, 0x00E81260, 0x00E81258, SELF(ClassProps_PsLabelBox) },
-        { NAKA_ADDR(IvSdtecdProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E8124E, 0x00E8124C, SELF(ClassProps_IvSdtecd) },
-        { NAKA_ADDR(IvSdtecd1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81242, 0x00E81240, SELF(ClassProps_IvSdtecd1) },
-        { NAKA_ADDR(IvSdscltyp2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81234, 0x00E81232, SELF(ClassProps_IvSdscltyp2) },
-        { NAKA_ADDR(AcWelcomScreenProc), NAKA_CLASS(Screen), 34, 0, 0x00E81222, 0x00E81220, SELF(ClassProps_AcWelcomScreen) },
-        { NAKA_ADDR(PsMixerControlProc), NAKA_CLASS(PsParaBox), 36, 0, 0x00E81210, 0x00E8120E, SELF(ClassProps_PsMixerControl) },
-        { NAKA_ADDR(AcPartMixerProc), NAKA_CLASS(PsMixerControl), 36, 0, 0x00E81202, 0x00E81200, SELF(ClassProps_AcPartMixer) },
-        { NAKA_ADDR(AcTrackMixerProc), NAKA_CLASS(PsMixerControl), 36, 0, 0x00E811F2, 0x00E811F0, SELF(ClassProps_AcTrackMixer) },
-        { NAKA_ADDR(IvSoftverProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E811E6, 0x00E811E4, SELF(ClassProps_IvSoftver) },
-        { NAKA_ADDR(IvPageOverWriteProc), NAKA_CLASS(PsInvisibleBox), 28, 6, 0x00E811D4, 0x00E811D0, SELF(ClassProps_IvPageOverWrite) },
-        { NAKA_ADDR(IvDrawbarProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E811C6, 0x00E811C4, SELF(ClassProps_IvDrawbar) },
-        { NAKA_ADDR(IvDrawbar1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E811B8, 0x00E811B6, SELF(ClassProps_IvDrawbar1) },
-        { NAKA_ADDR(IvDrawbar2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E811AA, 0x00E811A8, SELF(ClassProps_IvDrawbar2) },
-        { NAKA_ADDR(IvDrawbarNormProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E8119A, 0x00E81198, SELF(ClassProps_IvDrawbarNorm) },
-        { NAKA_ADDR(IvDrawbarSndEProc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E8118A, 0x00E81188, SELF(ClassProps_IvDrawbarSndE) },
-        { NAKA_ADDR(AcResetPageProc), NAKA_CLASS(AcWindowPage), 36, 0, 0x00E8117C, 0x00E8117A, SELF(ClassProps_AcResetPage) },
-        { NAKA_ADDR(PsVariBoxProc), NAKA_CLASS(VwBox), 42, 14, 0x00E81170, 0x00E8116A, SELF(ClassProps_PsVariBox) },
-        { NAKA_ADDR(AcPresentationControlProc), NAKA_CLASS(Window), 36, 0, 0x00E81154, 0x00E81152, SELF(ClassProps_AcPresentationControl) },
-        { NAKA_ADDR(IvDemofeature1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81142, 0x00E81140, SELF(ClassProps_IvDemofeature1) },
-        { NAKA_ADDR(IvDemofeature2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, 0x00E81130, 0x00E8112E, SELF(ClassProps_IvDemofeature2) },
-        { NAKA_ADDR(AcDrawEditBoxProc), NAKA_CLASS(AcLswPartEditBox), 58, 0, 0x00E81120, 0x00E8111E, SELF(ClassProps_AcDrawEditBox) },
-        { NAKA_ADDR(AcLswPartPanProc), NAKA_CLASS(VwBox), 36, 8, 0x00E81110, 0x00E8110C, SELF(ClassProps_AcLswPartPan) },
-        { NAKA_ADDR(AcPresentationBoxProc), NAKA_CLASS(PsParaBox), 48, 12, 0x00E810FA, 0x00E810F4, SELF(ClassProps_AcPresentationBox) },
-        { NAKA_ADDR(VwUserBitmapSpProc), NAKA_CLASS(VwUserBitmap), 26, 0, 0x00E810E4, 0x00E810E2, SELF(ClassProps_VwUserBitmapSp) },
+        { NAKA_ADDR(IvSdpartProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvSdpart), NAKA_ADDR(ClassPropdata_IvSdpart), SELF(ClassProps_IvSdpart) },
+        { NAKA_ADDR(AcLswPartEditBoxProc), NAKA_CLASS(PsEditBox), 58, 8, NAKA_ADDR(ClassName_AcLswPartEditBox), NAKA_ADDR(ClassPropdata_AcLswPartEditBox), SELF(ClassProps_AcLswPartEditBox) },
+        { NAKA_ADDR(AcVolPartEditBoxProc), NAKA_CLASS(PsEditBox), 62, 12, NAKA_ADDR(ClassName_AcVolPartEditBox), NAKA_ADDR(ClassPropdata_AcVolPartEditBox), SELF(ClassProps_AcVolPartEditBox) },
+        { NAKA_ADDR(IvMesageProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvMesage), NAKA_ADDR(ClassPropdata_IvMesage), SELF(ClassProps_IvMesage) },
+        { NAKA_ADDR(IvAccordionProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvAccordion), NAKA_ADDR(ClassPropdata_IvAccordion), SELF(ClassProps_IvAccordion) },
+        { NAKA_ADDR(IvAccordionXProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvAccordionX), NAKA_ADDR(ClassPropdata_IvAccordionX), SELF(ClassProps_IvAccordionX) },
+        { NAKA_ADDR(AcAccordionTabProc), NAKA_CLASS(AcIndexToggle), 52, 8, NAKA_ADDR(ClassName_AcAccordionTab), NAKA_ADDR(ClassPropdata_AcAccordionTab), SELF(AudioStream_Property_Table) },
+        { NAKA_ADDR(PsLabelBoxProc), NAKA_CLASS(VwBox), 48, 20, NAKA_ADDR(ClassName_PsLabelBox), NAKA_ADDR(ClassPropdata_PsLabelBox), SELF(ClassProps_PsLabelBox) },
+        { NAKA_ADDR(IvSdtecdProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvSdtecd), NAKA_ADDR(ClassPropdata_IvSdtecd), SELF(ClassProps_IvSdtecd) },
+        { NAKA_ADDR(IvSdtecd1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvSdtecd1), NAKA_ADDR(ClassPropdata_IvSdtecd1), SELF(ClassProps_IvSdtecd1) },
+        { NAKA_ADDR(IvSdscltyp2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvSdscltyp2), NAKA_ADDR(ClassPropdata_IvSdscltyp2), SELF(ClassProps_IvSdscltyp2) },
+        { NAKA_ADDR(AcWelcomScreenProc), NAKA_CLASS(Screen), 34, 0, NAKA_ADDR(ClassName_AcWelcomScreen), NAKA_ADDR(ClassPropdata_AcWelcomScreen), SELF(ClassProps_AcWelcomScreen) },
+        { NAKA_ADDR(PsMixerControlProc), NAKA_CLASS(PsParaBox), 36, 0, NAKA_ADDR(ClassName_PsMixerControl), NAKA_ADDR(ClassPropdata_PsMixerControl), SELF(ClassProps_PsMixerControl) },
+        { NAKA_ADDR(AcPartMixerProc), NAKA_CLASS(PsMixerControl), 36, 0, NAKA_ADDR(ClassName_AcPartMixer), NAKA_ADDR(ClassPropdata_AcPartMixer), SELF(ClassProps_AcPartMixer) },
+        { NAKA_ADDR(AcTrackMixerProc), NAKA_CLASS(PsMixerControl), 36, 0, NAKA_ADDR(ClassName_AcTrackMixer), NAKA_ADDR(ClassPropdata_AcTrackMixer), SELF(ClassProps_AcTrackMixer) },
+        { NAKA_ADDR(IvSoftverProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvSoftver), NAKA_ADDR(ClassPropdata_IvSoftver), SELF(ClassProps_IvSoftver) },
+        { NAKA_ADDR(IvPageOverWriteProc), NAKA_CLASS(PsInvisibleBox), 28, 6, NAKA_ADDR(ClassName_IvPageOverWrite), NAKA_ADDR(ClassPropdata_IvPageOverWrite), SELF(ClassProps_IvPageOverWrite) },
+        { NAKA_ADDR(IvDrawbarProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDrawbar), NAKA_ADDR(ClassPropdata_IvDrawbar), SELF(ClassProps_IvDrawbar) },
+        { NAKA_ADDR(IvDrawbar1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDrawbar1), NAKA_ADDR(ClassPropdata_IvDrawbar1), SELF(ClassProps_IvDrawbar1) },
+        { NAKA_ADDR(IvDrawbar2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDrawbar2), NAKA_ADDR(ClassPropdata_IvDrawbar2), SELF(ClassProps_IvDrawbar2) },
+        { NAKA_ADDR(IvDrawbarNormProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDrawbarNorm), NAKA_ADDR(ClassPropdata_IvDrawbarNorm), SELF(ClassProps_IvDrawbarNorm) },
+        { NAKA_ADDR(IvDrawbarSndEProc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDrawbarSndE), NAKA_ADDR(ClassPropdata_IvDrawbarSndE), SELF(ClassProps_IvDrawbarSndE) },
+        { NAKA_ADDR(AcResetPageProc), NAKA_CLASS(AcWindowPage), 36, 0, NAKA_ADDR(ClassName_AcResetPage), NAKA_ADDR(ClassPropdata_AcResetPage), SELF(ClassProps_AcResetPage) },
+        { NAKA_ADDR(PsVariBoxProc), NAKA_CLASS(VwBox), 42, 14, NAKA_ADDR(ClassName_PsVariBox), NAKA_ADDR(ClassPropdata_PsVariBox), SELF(ClassProps_PsVariBox) },
+        { NAKA_ADDR(AcPresentationControlProc), NAKA_CLASS(Window), 36, 0, NAKA_ADDR(ClassName_AcPresentationControl), NAKA_ADDR(ClassPropdata_AcPresentationControl), SELF(ClassProps_AcPresentationControl) },
+        { NAKA_ADDR(IvDemofeature1Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDemofeature1), NAKA_ADDR(ClassPropdata_IvDemofeature1), SELF(ClassProps_IvDemofeature1) },
+        { NAKA_ADDR(IvDemofeature2Proc), NAKA_CLASS(PsInvisibleBox), 22, 0, NAKA_ADDR(ClassName_IvDemofeature2), NAKA_ADDR(ClassPropdata_IvDemofeature2), SELF(ClassProps_IvDemofeature2) },
+        { NAKA_ADDR(AcDrawEditBoxProc), NAKA_CLASS(AcLswPartEditBox), 58, 0, NAKA_ADDR(ClassName_AcDrawEditBox), NAKA_ADDR(ClassPropdata_AcDrawEditBox), SELF(ClassProps_AcDrawEditBox) },
+        { NAKA_ADDR(AcLswPartPanProc), NAKA_CLASS(VwBox), 36, 8, NAKA_ADDR(ClassName_AcLswPartPan), NAKA_ADDR(ClassPropdata_AcLswPartPan), SELF(ClassProps_AcLswPartPan) },
+        { NAKA_ADDR(AcPresentationBoxProc), NAKA_CLASS(PsParaBox), 48, 12, NAKA_ADDR(ClassName_AcPresentationBox), NAKA_ADDR(ClassPropdata_AcPresentationBox), SELF(ClassProps_AcPresentationBox) },
+        { NAKA_ADDR(VwUserBitmapSpProc), NAKA_CLASS(VwUserBitmap), 26, 0, NAKA_ADDR(ClassName_VwUserBitmapSp), NAKA_ADDR(ClassPropdata_VwUserBitmapSp), SELF(ClassProps_VwUserBitmapSp) },
     },
 
     .Murai_ClassTable_161_Desc31Head = {

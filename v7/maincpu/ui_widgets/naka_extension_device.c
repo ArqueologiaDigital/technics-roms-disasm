@@ -1443,12 +1443,14 @@ typedef struct __attribute__((packed)) {
     uint32_t PanelEvent_InitPhaseHandlers[4];
     /* first bytes of the byte map PanelButton_ModeKey reads: base for panel event index 1, indexed by the lowest set button bit */
     uint8_t PanelButton_ModeKeyCodes[2];
-    uint16_t PanelButton_ModeKeyCodes_LeftSeg3;
-    uint16_t PanelButton_ModeKeyCodes_LeftSeg10;
-    uint16_t PanelButton_ModeKeyCodes_RightSeg4;
-    uint16_t PanelButton_ModeKeyCodes_RightSeg5;
-    uint16_t field_356c;
-    uint16_t field_356e;
+    /* the mode each mode key opens (PanelButton_ModeKey, audio/audio_control_engine.s: map[lowest set bit of
+     * the shifted button bits] becomes the EVT_SW_IN_MODE mode index); per segment, the button names are the
+     * MAME driver's CPL_SEGn / CPR_SEGn port names, the bit order the segment's action list (mask, shift) */
+    uint8_t PanelButton_ModeKeyCodes_LeftSeg3[2];
+    uint8_t PanelButton_ModeKeyCodes_LeftSeg10[2];
+    uint8_t PanelButton_ModeKeyCodes_RightSeg4[2];
+    uint8_t PanelButton_ModeKeyCodes_RightSeg5[2];
+    uint8_t PanelButton_ModeKeyCodes_RightSeg10[4];
     uint16_t field_3570;
     uint16_t field_3572;
     uint16_t field_3574;
@@ -1716,7 +1718,7 @@ const naka_extension_device_t naka_extension_device_data
     .w0_text = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_TEST2 -- "TT_TEST2", title id 0xF5, function NAKA_MAINFUNC_TEST2FUNC ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .TEST2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2069,7 +2071,7 @@ const naka_extension_device_t naka_extension_device_data
     /* ==== SCREEN TITLE_TEST3 -- "TT_TEST3", title id 0xF6, function NAKA_MAINFUNC_TEST3FUNC ====
      * What: a self-test screen. While it is up, some panel handlers stand down and one is active
      *       only there.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .TEST3 = {
         .class_ = NAKA_CLASS(SineWaveScreen),
@@ -2091,7 +2093,7 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .TEST4 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2146,7 +2148,7 @@ const naka_extension_device_t naka_extension_device_data
     .PanelSwLedCheck_text = ALIGNED_STRING("PANEL SW&LED CHECK"),
 
     /* ==== SCREEN TITLE_TEST5 -- "TT_TEST5", title id 0xF8, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .TEST5 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3144,7 +3146,7 @@ const naka_extension_device_t naka_extension_device_data
     .H_text_40 = "H",
 
     /* ==== SCREEN TITLE_TEST6 -- "TT_TEST6", title id 0xF9, function NAKA_MAINFUNC_TEST6FUNC ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .TEST6 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3283,7 +3285,7 @@ const naka_extension_device_t naka_extension_device_data
     .No_text_5 = ALIGNED_STRING("= NO"),
 
     /* ==== SCREEN TITLE_EXT -- "TT_EXT", title id 0xFB, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .EXT = {
         .class_ = NAKA_CLASS(IvScreen),
@@ -6359,20 +6361,36 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     .PanelButton_ModeKeyCodes = {
-        0x0E, 0x11,
+        MD_CMP,             /* CPL_SEG1 0x02: COMPOSER MENU */
+        MD_SND_ARG,         /* CPL_SEG1 0x04: SOUND ARRANGER SET */
     },
 
-    .PanelButton_ModeKeyCodes_LeftSeg3 = 0x0F13,
+    .PanelButton_ModeKeyCodes_LeftSeg3 = {
+        MD_DEMO,            /* CPL_SEG3 0x01: DEMO */
+        MD_MSP,             /* CPL_SEG3 0x04: MSP MENU */
+    },
 
-    .PanelButton_ModeKeyCodes_LeftSeg10 = 0xFF14,
+    .PanelButton_ModeKeyCodes_LeftSeg10 = {
+        MD_HELP,            /* CPL_SEG10 0x04: HELP */
+        0xFF,               /* no mode */
+    },
 
-    .PanelButton_ModeKeyCodes_RightSeg4 = 0xFF07,
+    .PanelButton_ModeKeyCodes_RightSeg4 = {
+        MD_ENTERTAINER,     /* CPR_SEG4 0x08: ENTERTAINER */
+        0xFF,               /* no mode */
+    },
 
-    .PanelButton_ModeKeyCodes_RightSeg5 = 0x0809,
+    .PanelButton_ModeKeyCodes_RightSeg5 = {
+        MD_SEQ_EREC,        /* CPR_SEG5 0x10: SEQUENCER EASY REC (MD_SEQ when byte 0x26FC is 1) */
+        MD_SEQ,             /* CPR_SEG5 0x20: SEQUENCER MENU (MD_SEQ_PLAY when bit 0 of 0x266A is set) */
+    },
 
-    .field_356c = 0x0402,
-
-    .field_356e = 0x0605,
+    .PanelButton_ModeKeyCodes_RightSeg10 = {
+        MD_SOUND,           /* CPR_SEG10 0x04: MENU SOUND */
+        MD_CONTROL,         /* CPR_SEG10 0x08: MENU CONTROL */
+        MD_MIDI,            /* CPR_SEG10 0x10: MENU MIDI */
+        MD_DISK,            /* CPR_SEG10 0x20: MENU DISK */
+    },
 
     .field_3570 = 0x0908,
 

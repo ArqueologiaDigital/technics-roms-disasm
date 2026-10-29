@@ -367,6 +367,18 @@ typedef struct __attribute__((packed)) {
 #define ASEQ_LOOP                0x84
 #define ASEQ_BLOCK_END           0x87
 
+/**
+ * A property type, one per propdata letter: SupportClass_PropTypeRecords[letter - 'A'], the
+ * table InitializeObjectTable registers at registry slot 0x260 (0x37 entries) and ClassProc
+ * indexes with `sub a, 0x41; add xwa, 0x2600000` (ui/ui_widget_defs.s).
+ */
+typedef struct __attribute__((packed)) {
+    uint32_t proc;     /* +0  the property-type procedure (swordProc .. IntTimeIDProc) */
+    uint16_t count;    /* +4  named values; CommonIDProc walks that many {name, value} pairs */
+    uint16_t size;     /* +6  the property's bytes (SupportClassProc_OnGetPropSize: ld hl, (xhl + 6)) */
+    uint32_t values;   /* +8  -> {name, value} pairs, or the type's name when count is 0 */
+} naka_prop_type_t;    /* 12 bytes */
+
 /* ── String alignment helper ────────────────────────────────── */
 
 /**

@@ -2118,7 +2118,7 @@ _Static_assert(sizeof(naka_disk_menu_file_io_t) == 30944,
 enum Cheap_ViewableTable_060_objects {
     OBJ_DiskMenu,                               /*  0 TtlScreen "DiskMenu" */
       OBJ_StyleConvert_AcTitleMenu,             /*  1 AcTitleMenu */
-      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu, RAM record initialised from the work-RAM image (Cheap_HardDiskMenuView) */
+      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu, record in naka_sequencer_channels.c */
       OBJ_Preferences_AcTitleMenu,              /*  3 AcTitleMenu */
       OBJ_Save_AcTitleMenu,                     /*  4 AcTitleMenu */
       OBJ_DiskTools_AcTtlJgBox,                 /*  5 AcTtlJgBox */
@@ -2273,7 +2273,7 @@ enum Cheap_ViewableTable_061_objects {
       OBJ_DiskLoadP3_PsFileNameBox_5,              /* 71 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_6,              /* 72 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_7,              /* 73 PsFileNameBox */
-      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle, RAM record initialised from the work-RAM image (Cheap_SingleBankToggleView) */
+      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle, record in naka_sequencer_channels.c */
     OBJ_DiskLoadSMF,                               /* 75 TtlScreen "DiskLoadSMF" */
       OBJ_Tech_AcTitleMenu,                        /* 76 AcTitleMenu */
       OBJ_DiskLoadSMF_AcIndexWideES,               /* 77 AcIndexWideES */
@@ -2723,15 +2723,19 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .PsFileNameBoxProc_str = "PsFileNameBoxProc",
 
     /* ==== SCREEN TITLE_DKMENU "DISK MENU" -- "TT_DKMENU", title id 0x60, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_DISK
+     * Path: MENU DISK button (mode MD_DISK)
      * Menu: "STYLE CONVERT" -> TITLE_STYLCNVWAIT
      * Menu: "PREFERENCES" -> TITLE_DKSETUP
      * Menu: "SAVE" -> TITLE_DKSVMENU
-     * Menu: "HARD DISK MAIN MENU" -> TITLE_HDDEXT
-     * Menu: "DISK TOOLS" -> by code, NAKA_MAINFUNC_UtilityTtlJgFunc
-     * Menu: "LOAD" -> by code, NAKA_MAINFUNC_LoadTtlJgFunc
-     * Menu: "DIRECT PLAY" -> by code, NAKA_MAINFUNC_DirectPlayTtlJgFunc
-     * Menu: "SONG MEDLEY" -> by code, NAKA_MAINFUNC_SongMedleyTtlJgFunc
+     * Menu: "?" -> TITLE_HDDEXT
+     * Menu: "DISK TOOLS" -> by code, NAKA_MAINFUNC_UtilityTtlJgFunc (TITLE_DKUT, TITLE_DKUTFRMT,
+     *       TITLE_DKUTSMF, TITLE_MESAGE)
+     * Menu: "LOAD" -> by code, NAKA_MAINFUNC_LoadTtlJgFunc (TITLE_DKLD, TITLE_DKLDSMF,
+     *       TITLE_DKUTFRMT, TITLE_MESAGE)
+     * Menu: "DIRECT PLAY" -> by code, NAKA_MAINFUNC_DirectPlayTtlJgFunc (TITLE_DKDPDOC,
+     *       TITLE_DKDPPD, TITLE_DKDPSMF, TITLE_DKUTFRMT, TITLE_MESAGE)
+     * Menu: "SONG MEDLEY" -> by code, NAKA_MAINFUNC_SongMedleyTtlJgFunc (TITLE_DKMDLY,
+     *       TITLE_DKUTFRMT, TITLE_MESAGE)
      * EXIT -> TITLE_PS */
     .DiskMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2926,7 +2930,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .SongMedley_str = "SONG MEDLEY",
 
     /* ==== SCREEN TITLE_SQMDLY "INTERNAL SONG MEDLEY" -- "TT_SQMDLY", title id 0x79, function NAKA_MAINFUNC_FmmIntMedleyFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: FmmIntMedleyFunc opens TITLE_MESAGE, TITLE_SQMDLYPLY
      * EXIT -> TITLE_SQPLAY
      * Opened from: an untitled view ("MEDLEY") */
     .IntSongMedley = {
@@ -3170,9 +3175,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Loop_text = ALIGNED_STRING("LOOP"),
 
     /* ==== SCREEN TITLE_DKSVNAME "SAVE FILE NAMING" -- "TT_DKSVNAME", title id 0x66, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SAVE" > "TECHNICS FORMAT" (by SaveTtlJgFunc) >
+     *       "NAME"
      * EXIT -> TITLE_DKSV
-     * Opened from: an untitled view ("NAME") */
+     * Opened from: TITLE_DKSV ("NAME") */
     .DiskSaveName = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3222,7 +3228,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_CMPLD "COMPOSER LOAD" -- "TT_CMPLD", title id 0xBC, function NAKA_MAINFUNC_FmmComposerLoadFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: FmmComposerLoadFunc opens TITLE_DKUTFRMT, TITLE_MESAGE
      * EXIT -> TITLE_DKMENU */
     .ComposerLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3453,7 +3460,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_DKSVNAMESMF "SAVE FILE NAMING" -- "TT_DKSVNAMESMF", title id 0x6A, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SAVE" > "SMF FORMAT 0" (by SaveSmfTtlJgFunc) >
+     *       "NAME"
      * EXIT -> TITLE_DKSVSMF
      * Opened from: TITLE_DKSVSMF ("NAME") */
     .DiskSaveNameSMF = {
@@ -3505,7 +3513,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_DKWPLD "WALLPAPER LOAD" -- "TT_DKWPLD", title id 0x63, function NAKA_MAINFUNC_FmmWallpaperLoadFunc ====
-     * Path: mode MD_CONTROL > "WALLPAPER SETTING" > "LOAD"
+     * Path: MENU CONTROL button (mode MD_CONTROL) > "WALLPAPER SETTING" > "LOAD"
+     * Procedure: FmmWallpaperLoadFunc opens TITLE_CTWALLSET, TITLE_DKUTFRMT, TITLE_MESAGE
      * EXIT -> TITLE_CTWALLSET
      * Opened from: TITLE_CTWALLSET ("LOAD"), an untitled view ("LOAD") */
     .WallpaperLoad = {
@@ -4040,9 +4049,12 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_DKLD -- "TT_DKLD", title id 0x61, function NAKA_MAINFUNC_FmmLoadTitleFunc ====
-     * Path: mode MD_ENTERTAINER > "DISK LOAD"
+     * Path: MENU DISK button (mode MD_DISK) > "LOAD" (by LoadTtlJgFunc)
+     * Menu: "SMF" -> TITLE_DKLDSMF
+     * Procedure: FmmLoadTitleFunc opens TITLE_DKLDSMF, TITLE_DKMENU, TITLE_DKUTFRMT, TITLE_ETMENU,
+     *       TITLE_MESAGE
      * EXIT -> TITLE_DKMENU
-     * Opened from: TITLE_DKLDSMF ("TECH"), TITLE_ETMENU ("DISK LOAD") */
+     * Opened from: TITLE_DKLDSMF ("TECH"), TITLE_ETMENU */
     .DiskLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5318,10 +5330,12 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .BANK_str = ALIGNED_STRING("BANK"),
 
     /* ==== SCREEN TITLE_DKLDSMF "SMF LOAD" -- "TT_DKLDSMF", title id 0x64, function NAKA_MAINFUNC_FmmSmfLoadTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "LOAD" (by LoadTtlJgFunc)
      * Menu: "TECH" -> TITLE_DKLD
+     * Procedure: FmmSmfLoadTitleFunc opens TITLE_DKLD, TITLE_DKMENU, TITLE_DKUTFRMT, TITLE_ETMENU,
+     *       TITLE_MESAGE
      * EXIT -> TITLE_DKMENU
-     * Opened from: an untitled view ("SMF") */
+     * Opened from: TITLE_DKLD ("SMF") */
     .DiskLoadSMF = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5865,7 +5879,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Load_text_7 = ALIGNED_STRING("LOAD"),
 
     /* ==== SCREEN TITLE_CMPLDSNGL "LOAD SINGLE COMPOSER" -- "TT_CMPLDSNGL", title id 0x62, function NAKA_MAINFUNC_FmmCmpSingleLoadFunc ====
-     * Path: mode MD_CMP > "LOAD SINGLE COMPOSER"
+     * Path: COMPOSER MENU button (mode MD_CMP) > "LOAD SINGLE COMPOSER"
+     * Procedure: FmmCmpSingleLoadFunc opens TITLE_CMMENU, TITLE_DKUTFRMT, TITLE_MESAGE
      * EXIT -> TITLE_CMMENU
      * Opened from: TITLE_CMMENU ("LOAD SINGLE COMPOSER") */
     .CmpSingleLoad = {
@@ -6302,9 +6317,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_DKSVMENU "SAVE" -- "TT_DKSVMENU", title id 0x65, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_DISK > "SAVE"
-     * Menu: "TECHNICS FORMAT" -> by code, NAKA_MAINFUNC_SaveTtlJgFunc
-     * Menu: "SMF FORMAT 0" -> by code, NAKA_MAINFUNC_SaveSmfTtlJgFunc
+     * Path: MENU DISK button (mode MD_DISK) > "SAVE"
+     * Menu: "TECHNICS FORMAT" -> by code, NAKA_MAINFUNC_SaveTtlJgFunc (TITLE_DKSV, TITLE_DKUTFRMT,
+     *       TITLE_MESAGE)
+     * Menu: "SMF FORMAT 0" -> by code, NAKA_MAINFUNC_SaveSmfTtlJgFunc (TITLE_DKSVSMF,
+     *       TITLE_DKUTFRMT, TITLE_MESAGE)
      * EXIT -> TITLE_DKMENU
      * Opened from: TITLE_DKMENU ("SAVE") */
     .DiskSaveMenu = {
@@ -6373,7 +6390,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     /* ==== SCREEN TITLE_DKSV -- "TT_DKSV", title id 0x67, function NAKA_MAINFUNC_FmmSaveTitleFunc ====
      * What: the disk SAVE page. The file-naming window returns to it.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SAVE" > "TECHNICS FORMAT" (by SaveTtlJgFunc)
+     * Menu: "NAME" -> TITLE_DKSVNAME
+     * Procedure: FmmSaveTitleFunc opens TITLE_DKMENU
      * EXIT -> TITLE_DKMENU */
     .DiskSave = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -7537,7 +7556,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     /* ==== SCREEN TITLE_DKSVSMF "SMF SAVE" -- "TT_DKSVSMF", title id 0x6B, function NAKA_MAINFUNC_FmmSmfSaveTitleFunc ====
      * What: the disk save-as-SMF page.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SAVE" > "SMF FORMAT 0" (by SaveSmfTtlJgFunc)
      * Menu: "NAME" -> TITLE_DKSVNAMESMF
      * EXIT -> TITLE_DKMENU */
     .DiskSmfSave = {
@@ -7928,7 +7947,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .As_text_2 = ALIGNED_STRING(" AS:"),
 
     /* ==== SCREEN TITLE_DKDPSMF "SMF DIRECT PLAY" -- "TT_DKDPSMF", title id 0x6C, function NAKA_MAINFUNC_FmmSmfMedleyFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
+     * Procedure: FmmSmfMedleyFunc opens TITLE_DPMDLYSMF, TITLE_DPSMF, TITLE_MESAGE
      * EXIT -> TITLE_DKMENU */
     .DiskSmfDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -8563,7 +8583,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Start_text_3 = "START",
 
     /* ==== SCREEN TITLE_DKDPDOC "DOC DIRECT PLAY" -- "TT_DKDPDOC", title id 0x6D, function NAKA_MAINFUNC_FmmDocMedleyFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
+     * Procedure: FmmDocMedleyFunc opens TITLE_DPDOC, TITLE_DPMDLYDOC, TITLE_MESAGE
      * EXIT -> TITLE_DKMENU */
     .DiskDocDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -8941,7 +8962,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Add_text_3 = "ADD",
 
     /* ==== SCREEN TITLE_DKDPPD "PIANO DISC DIRECT PLAY" -- "TT_DKDPPD", title id 0x6E, function NAKA_MAINFUNC_FmmPdMedleyFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
      * EXIT -> TITLE_DKMENU */
     .DiskPdDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -9301,7 +9322,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Add_text_4 = "ADD",
 
     /* ==== SCREEN TITLE_DKMDLY "SONG MEDLEY" -- "TT_DKMDLY", title id 0x77, function NAKA_MAINFUNC_FmmDiskMedleySelectFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc)
+     * Procedure: FmmDiskMedleySelectFunc opens TITLE_DKMDLYPLY, TITLE_DKMENU, TITLE_MESAGE
      * EXIT -> TITLE_DKMENU */
     .DiskSongMedley = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -9677,10 +9699,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .Loop_text_5 = ALIGNED_STRING("LOOP"),
 
     /* ==== SCREEN TITLE_DKUT "DISK TOOLS" -- "TT_DKUT", title id 0x7B, function NAKA_MAINFUNC_FmmUtilityTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
      * Menu: "SMF" -> TITLE_DKUTSMF
      * Menu: "?" -> TITLE_DKUTFRMT
-     * EXIT -> TITLE_DKMENU
+     * Procedure: FmmUtilityTitleFunc opens TITLE_DKUTFRMT, TITLE_DKUTSMF, TITLE_MESAGE
+     * EXIT -> TITLE_DKMENU, TITLE_DKUT
      * Opened from: TITLE_DKUTSMF ("TECH") */
     .DiskUtility = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -10113,7 +10136,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     },
 
     /* ==== SCREEN TITLE_DKUTFRMT "FLOPPY DISK FORMAT" -- "TT_DKUTFRMT", title id 0x7D, function NAKA_MAINFUNC_FmmFormatFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+     * Procedure: FmmFormatFunc opens TITLE_MESAGE
      * EXIT -> TITLE_DKMENU
      * Opened from: TITLE_DKUT, TITLE_DKUTSMF */
     .DiskFormat = {
@@ -10135,10 +10159,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .FloppyDiskFormat_text = ALIGNED_STRING("FLOPPY DISK FORMAT"),
 
     /* ==== SCREEN TITLE_DKUTSMF "SMF DISK TOOLS" -- "TT_DKUTSMF", title id 0x7C, function NAKA_MAINFUNC_FmmSmfUtilityTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
      * Menu: "TECH" -> TITLE_DKUT
      * Menu: "?" -> TITLE_DKUTFRMT
-     * EXIT -> TITLE_DKMENU
+     * Procedure: FmmSmfUtilityTitleFunc opens TITLE_DKUT, TITLE_DKUTFRMT, TITLE_MESAGE
+     * EXIT -> TITLE_DKMENU, TITLE_DKUTSMF
      * Opened from: TITLE_DKUT ("SMF") */
     .DiskUtilitySMF = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -11311,7 +11336,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .OverwriteSure_text = ALIGNED_STRING("OVERWRITE SURE"),
 
     /* ==== SCREEN TITLE_DKSETUP "PREFERENCES" -- "TT_DKSETUP", title id 0x7E, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_DISK > "PREFERENCES"
+     * Path: MENU DISK button (mode MD_DISK) > "PREFERENCES"
      * EXIT -> TITLE_DKMENU
      * Opened from: TITLE_DKMENU ("PREFERENCES") */
     .DiskSetup = {

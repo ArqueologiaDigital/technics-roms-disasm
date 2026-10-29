@@ -1699,8 +1699,8 @@ AccompSeq_GuardedNoteOff:
 	push xiy
 	push xiz
 	xor wa, wa
-	ld a, 0xc8:opc
-	call UI_PostModeChangeEvent
+	ld a, TT_MSPBKSL:opc
+	call UI_ChangeTitleByIndex
 	pop xiz
 	pop xiy
 	pop xix

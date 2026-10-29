@@ -10229,8 +10229,8 @@ DSP_Init_ErrorFlagSet_Join:
 	ret
 MidiSeq_PartLookup_Data_Helper:
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 MidiSeq_PartLookup_Data_Helper2:
 	ret
 MidiSeq_PartLookup_Data_Helper3:
@@ -10240,8 +10240,8 @@ MidiSeq_PartLookup_Data_Helper3:
 	extz	hl
 	lda	xbc, (MidiRx_PartLookup_ByteMap:24)
 	ld	(GLOBAL_ERROR_CODE), (xbc+hl)
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 MidiSeq_ApplyPendingParams:
 	bit	6, (0xbc5c:16)
 	ret z
@@ -10274,8 +10274,8 @@ MidiSeq_ClearSyncFlag:
 	ret
 MidiSeq_PartConfigure_Data:
 	ret
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 SysEx_SendDispatch_Helper:
 	set	3, (0xbc58:16)
 	; v7 bytes do not decode as v10's `push_f`

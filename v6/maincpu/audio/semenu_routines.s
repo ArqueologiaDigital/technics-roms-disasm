@@ -13,7 +13,7 @@ SeMenu_SendEvent:
 	cp (xsp), 0x0
 	jr nz, SeMenu_SendEvent_Indirect
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr SeMenu_SendEvent_StoreAndReturn
 
 SeMenu_SendEvent_Indirect:
@@ -2489,7 +2489,7 @@ SeMenu_CharToNameCharIndex_Join:
 	ld	(xbc), 0
 	ret
 ; SeMenu_GoToPageOnEnabledPart: Switches the sound editor to page WA (SeMenu_SendEvent with C = 0, i.e.
-;   UI_PostModeChangeEvent) after making sure the current part (0x65D) is enabled: keeps it if so, else selects the
+;   UI_ChangeTitleByIndex) after making sure the current part (0x65D) is enabled: keeps it if so, else selects the
 ;   first enabled part of 1..N (N = 2 when the mode byte 0x6AE is non-zero, else 4), else part 1. Basis: callers +
 ;   body -- SeTonTon1_OnSwitch15/25 and SeMenuTitleFunc_DispatchSwitch_Skip pass page codes 32, 38 and 61 (SeTonTon1's own
 ;   code is 34).
@@ -6826,7 +6826,7 @@ SePitPit1_OnColumn6_Join3:
 SePitPit1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SePitPit1_OnSideRow2:
@@ -6840,7 +6840,7 @@ SePitPit1_OnSideRow2:
 SePitPit1_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SePitPit1_OnSideRow3_Skip4
-	ldw	wa, 42
+	ldw	wa, TT_SEPITLFO1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SePitPit1_OnSideRow3_Skip4:
@@ -7157,13 +7157,13 @@ SePitLfo1_OnColumn8:
 SePitLfo1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SePitLfo1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SePitLfo1_OnSideRow2_Skip11
-	ldw	wa, 39
+	ldw	wa, TT_SEPITPIT1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SePitLfo1_OnSideRow2_Skip11:

@@ -484,7 +484,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_NORMAL,
-        .window = 0x0003D762,
+        .window = RAM_MspRecScreen_Window,
         .title = SELF(MspPhraseRecording_text),
         .icon = idICON_i166,
     },
@@ -690,9 +690,9 @@ const naka_msp_recording_t naka_msp_recording_data
         .length = 0x0014,
         .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D766,
+        .selected = RAM_MspRecScreen_AcRamEditBox_Selected,
         .func = NAKA_APFUNC_MspPlayModeFunc,
-        .data = 0x0003D768,
+        .data = RAM_MspRecScreen_AcRamEditBox_Data,
     },
 
     .vC9_e13_caption = "play mode :",
@@ -728,7 +728,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPMENU "MSP MENU" -- "TT_MSPMENU", title id 0xCA, function NAKA_MAINFUNC_MspMenuTtlFunc ====
-     * Path: mode MD_MSP
+     * Path: MSP MENU button (mode MD_MSP)
      * Menu: "COMPILE SET" -> TITLE_MSPGROUP
      * Menu: "Naming for User&COMPILE Banks" -> TITLE_MSPNAME
      * EXIT -> TITLE_NORMAL */
@@ -743,7 +743,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_Red,
         .border = BD_Single2,
         .exit = TITLE_NORMAL,
-        .window = 0x0003D76C,
+        .window = RAM_MspMenuScreen_Window,
         .title = SELF(MspMenu_text),
         .icon = idICON_i164,
     },
@@ -765,7 +765,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003D770,
+        .selected = RAM_CompileSet_AcTitleMenu_Selected,
         .str = SELF(CompileSet_text),
         .title = TITLE_MSPGROUP,
         .icon = idICON_i165,
@@ -788,7 +788,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left3,
-        .selected = 0x0003D772,
+        .selected = RAM_NamingForUserCompile_AcTitleMenu_Selected,
         .str = SELF(NamingForUserCompile_text),
         .title = TITLE_MSPNAME,
         .icon = idICON_i151,
@@ -825,9 +825,9 @@ const naka_msp_recording_t naka_msp_recording_data
         .length = 0x0008,
         .editsw = ES_None,
         .dial = 0x0001,
-        .selected = 0x0003D774,
+        .selected = RAM_MspMenuScreen_AcRamEditBox_Selected,
         .func = NAKA_APFUNC_MspNameBnkFunc,
-        .data = 0x0003D776,
+        .data = RAM_MspMenuScreen_AcRamEditBox_Data,
     },
 
     .vCA_e4_caption = "Naming Bank :",
@@ -852,7 +852,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPNAME "NAMING" -- "TT_MSPNAME", title id 0xCB, function NAKA_MAINFUNC_MspNameTtlFunc ====
-     * Path: mode MD_MSP > "Naming for User&COMPILE Banks"
+     * Path: MSP MENU button (mode MD_MSP) > "Naming for User&COMPILE Banks"
      * EXIT -> TITLE_MSPMENU
      * Opened from: TITLE_MSPMENU ("Naming for User&COMPILE Banks") */
     .MspNamingScreen = {
@@ -866,7 +866,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_MSPMENU,
-        .window = 0x0003D77A,
+        .window = RAM_MspNamingScreen_Window,
         .title = SELF(Naming_text),
         .icon = idICON_i151,
     },
@@ -920,7 +920,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPGROUP "MSP COMPILE SETTING" -- "TT_MSPGROUP", title id 0xCC, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_MSP > "COMPILE SET"
+     * Path: MSP MENU button (mode MD_MSP) > "COMPILE SET"
      * EXIT -> TITLE_MSPMENU
      * Opened from: TITLE_MSPMENU ("COMPILE SET") */
     .MspReGrpScreen = {
@@ -934,7 +934,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_MSPMENU,
-        .window = 0x0003D77E,
+        .window = RAM_MspReGrpScreen_Window,
         .title = SELF(MspCompileSetting_text),
         .icon = idICON_i165,
     },
@@ -995,11 +995,11 @@ const naka_msp_recording_t naka_msp_recording_data
         .row = 0x0009,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D782,
-        .selcol = 0x0003D784,
-        .pcol = 0x0003D786,
-        .prow = 0x0003D78A,
-        .crow = 0x0003D78E,
+        .selrow = RAM_MspRGrpGrid_Selrow,
+        .selcol = RAM_MspRGrpGrid_Selcol,
+        .pcol = RAM_MspRGrpGrid_Pcol,
+        .prow = RAM_MspRGrpGrid_Prow,
+        .crow = RAM_MspRGrpGrid_Crow,
         .fixedcol = SELF(MspRGrpGrid_fixedcol),
         .fixedrow = SELF(MspRGrpGrid_fixedrow),
         .func = NAKA_APFUNC_MspRGrpSetGridCheck,
@@ -1094,7 +1094,7 @@ const naka_msp_recording_t naka_msp_recording_data
 
     /* ==== SCREEN TITLE_SNDARG "SOUND ARRANGER" -- "TT_SNDARG", title id 0xDC, function NAKA_MAINFUNC_SndArgTtlFunc ====
      * What: the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
-     * Path: mode MD_SND_ARG
+     * Path: SOUND ARRANGER SET button (mode MD_SND_ARG)
      * EXIT -> TITLE_NORMAL */
     .SndArgrScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1107,7 +1107,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_NORMAL,
-        .window = 0x0003D792,
+        .window = RAM_SndArgrScreen_Window,
         .title = SELF(SoundArranger_text),
         .icon = idICON_i86,
     },
@@ -1187,11 +1187,11 @@ const naka_msp_recording_t naka_msp_recording_data
         .row = 0x0008,
         .col = 0x0003,
         .vertline = 0x0001,
-        .selrow = 0x0003D796,
-        .selcol = 0x0003D798,
-        .pcol = 0x0003D79A,
-        .prow = 0x0003D79E,
-        .crow = 0x0003D7A2,
+        .selrow = RAM_SndArgrGrid_Selrow,
+        .selcol = RAM_SndArgrGrid_Selcol,
+        .pcol = RAM_SndArgrGrid_Pcol,
+        .prow = RAM_SndArgrGrid_Prow,
+        .crow = RAM_SndArgrGrid_Crow,
         .fixedcol = SELF(SndArgrGrid_fixedcol),
         .fixedrow = SELF(SndArgrGrid_fixedrow),
         .func = NAKA_APFUNC_SndArgGridCheck,
@@ -1239,7 +1239,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_APCSEL "AUTO PLAY CHORD" -- "TT_APCSEL", title id 0xED, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .ApcSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1252,7 +1252,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003D7A6,
+        .window = RAM_ApcSelScreen_Window,
         .title = SELF(AutoPlayChord_text),
         .icon = idICON_i111,
     },
@@ -1277,7 +1277,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .length = 0x0000,
         .editsw = ES_Left2,
         .dial = 0x0001,
-        .selected = 0x0003D7AA,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_Selected,
         .apcdata = 0x01,
         ._pad_51 = { 0x00 },
     },
@@ -1302,7 +1302,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .length = 0x0000,
         .editsw = ES_Left3,
         .dial = 0x0001,
-        .selected = 0x0003D7AC,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_2_Selected,
         .apcdata = 0x02,
         ._pad_51 = { 0x00 },
     },
@@ -1327,7 +1327,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .length = 0x0000,
         .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003D7AE,
+        .selected = RAM_ApcSelScreen_AcApcMdBox_3_Selected,
         .apcdata = 0x03,
         ._pad_51 = { 0x00 },
     },
@@ -1345,7 +1345,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .font = idCHARA1,
         .stron = SELF(ApcMem_stron),
         .stroff = SELF(ApcMem_stroff),
-        .onoff = 0x0003D7B0,
+        .onoff = RAM_ApcMem_Onoff,
         .editsw = ES_Right2,
         .func = NAKA_APFUNC_ApcOnOffFunc,
         .pman_ad = 0x00000000,
@@ -1366,7 +1366,7 @@ const naka_msp_recording_t naka_msp_recording_data
         .font = idCHARA1,
         .stron = SELF(ApcOnBass_stron),
         .stroff = SELF(ApcOnBass_stroff),
-        .onoff = 0x0003D7B2,
+        .onoff = RAM_ApcOnBass_Onoff,
         .editsw = ES_Right3,
         .func = NAKA_APFUNC_ApcOnBasFunc,
         .pman_ad = 0x00000001,

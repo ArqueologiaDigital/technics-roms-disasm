@@ -75,14 +75,14 @@ CompLoad_HandleCancel:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 0
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr CompLoad_CallStatusDisplay
 
 CompLoad_HandleError:
@@ -90,8 +90,8 @@ CompLoad_HandleError:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x7d
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKUTFRMT
+	call UI_ChangeTitleByIndex
 	jrl CompLoad_Return
 
 CompLoad_HandleSuccess:
@@ -104,17 +104,17 @@ CompLoad_HandleSuccess:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 2
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 CompLoad_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl CompLoad_Return
 
 CompLoad_HandleAbort:
@@ -269,14 +269,14 @@ CompLoad_HideButtons_Loop:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 CompLoad_GetSelection:
 	ld wa, (0x7f80:16)
@@ -579,20 +579,20 @@ LoadFilter_OpLoad:
 	jr z, LoadFilter_Load_ShowCode1
 
 LoadFilter_Load_ShowCodeA:
-	ldw wa, 0xa
+	ldw wa, MD_SEQ_PLAY
 	jr LoadFilter_Load_CallHandler
 
 LoadFilter_Load_ShowCode1:
-	ld wa, 1:i3
+	ld wa, MD_NORMAL:i3
 
 LoadFilter_Load_CallHandler:
-	call UI_PostPartChangeEvent
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 LoadFilter_Return:
 	ld xhl, 0:i3
@@ -881,13 +881,13 @@ SaveFilter_Save_Execute:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr SaveFilter_CallStatusDisplay
 
 SaveFilter_OpFormat:
@@ -918,16 +918,16 @@ SaveFilter_OpFormat:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 SaveFilter_CallStatusDisplay:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr SaveFilter_Return
 
 SaveFilter_ResetAll:

@@ -4456,7 +4456,7 @@ MidiSetup_ReturnZero:
 ; lower in v7 (the UI state byte is 0x8c9c here, 0x8d38 in v10).  It acts only
 ; for type 0xa8 with payload 0xbfe1 == 5, bit 6 of 0xbfe3 set and
 ; (0xbfe2 & 0xbfe3) != 0: then, unless the UI state byte 0x8c9c is 0x0f, it
-; calls SoundCtrl_SendCommand(15).  Which panel control that type/payload is
+; calls UI_InterruptTitleByIndex(15).  Which panel control that type/payload is
 ; has NOT been established.  The name is kept because widget_dispatch.s
 ; (another lane) refers to it; until 2026-09-25 these bytes were a verbatim
 ; romslice (includes/romslices/v7_transplant_MidiPart_DataBlock.bin).
@@ -4474,8 +4474,8 @@ MidiPart_DataBlock:
 	ret	z
 	cp	(ACTIVE_TITLE:16), 0xf
 	ret	z
-	ldw	wa, 15
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_SDOCT
+	call	UI_InterruptTitleByIndex
 	ret
 InitializeMurai:
 	lda xsp, (xsp - 0x0e)

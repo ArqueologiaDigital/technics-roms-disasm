@@ -406,6 +406,14 @@ extern const char NakaWidget_SqMdlyPly;
 extern const char NakaWidget_SqTrAsPs;
 extern const char NakaWidget_StepPartBal;
 extern const char NakaWidget_YokoView074_0_TtlScreen;
+extern const char ClassName_AcEntertainerGridBox;
+extern const char ClassName_AccIll;
+extern const char ClassName_IvSongCopyExit;
+extern const char ClassName_SngSel;
+extern const char ClassName_SngSel2;
+extern const char ClassName_SqedtFix;
+extern const char ClassName_SqedtVal3;
+extern const char ClassName_SqplyVal;
 
 #define BASE  0x00E24056u
 
@@ -427,7 +435,8 @@ typedef struct __attribute__((packed)) {
      * 0xF29E43), sequencer/sequencer_ui.s:65): it begins with class id
      * 0x1600029 = IvMainEditSw, whose descriptor gives record_size 26.
      * --------------------------------------------------------------------- */
-    uint8_t NakaHdr_Perf2MeasureBoxData[26];
+    /* element 10 of Viewable slot 0xE3: IvMainEditSw (class id 0x01600029) */
+    naka_cls_IvMainEditSw_t NakaHdr_Perf2MeasureBoxData;
     /* ---------------------------------------------------------------------
      * NakaHdr_Perf2FileListData -- widget record, entry 11 of
      * Yoko_ViewTable_0E3 (registered by InitializeYoko (v10/v9 0xF29E6D, v7
@@ -435,7 +444,8 @@ typedef struct __attribute__((packed)) {
      * 0x1670014 = AcDemoMedleyDispBox, whose descriptor gives record_size
      * 36.
      * --------------------------------------------------------------------- */
-    uint8_t NakaHdr_Perf2FileListData[36];
+    /* element 11 of Viewable slot 0xE3: AcDemoMedleyDispBox (class id 0x01670014) */
+    naka_cls_AcDemoMedleyDispBox_t NakaHdr_Perf2FileListData;
     /* ---------------------------------------------------------------------
      * Yoko_ViewTable_06F -- object table: InitializeYoko (v10/v9 0xF29E6D,
      * v7 0xF29E43) (sequencer/sequencer_ui.s:21) registers it with
@@ -1631,6 +1641,29 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_widget_tables_1_t) == 12878,
     "naka_widget_tables_1 must be exactly 12878 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Yoko_ViewTable_0E3, registry slot 0xE3, 12 elements.
+ * InitializeYoko registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 12, Yoko_ViewTable_0E3, 0xE3`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Yoko_ViewTable_0E3, OBJ_x). */
+#define Yoko_ViewTable_0E3_SLOT 0x0E3u
+enum Yoko_ViewTable_0E3_objects {
+    OBJ_DemoRhy,                       /*  0 TtlScreen, record in naka_direct_play.c */
+      OBJ_DemoSong12,                  /*  1 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong13,                  /*  2 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong14,                  /*  3 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong15,                  /*  4 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong16,                  /*  5 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong17,                  /*  6 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoRhy_PsWideToggle,        /*  7 PsWideToggle, record in naka_direct_play.c */
+      OBJ_DemoRhy_PsWideToggle_2,      /*  8 PsWideToggle, record in naka_direct_play.c */
+      OBJ_NakaWidget_Perf3RhythmSel,   /*  9 PsWideToggle, record outside the C sources (NakaWidget_Perf3RhythmSel) */
+      OBJ_NakaHdr_Perf2MeasureBoxData, /* 10 IvMainEditSw */
+      OBJ_NakaHdr_Perf2FileListData,   /* 11 AcDemoMedleyDispBox */
+};
+
 const naka_widget_tables_1_t naka_widget_tables_1_data
     __attribute__((section(".text"), used)) = {
 
@@ -1641,14 +1674,30 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
     .txt_RHYTHM_off = ALIGNED_STRING("RHYTHM"),
 
     .NakaHdr_Perf2MeasureBoxData = {
-        0x29, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x0B, 0x00, 0x09, 0x00, 0x18, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00, 0x1B, 0x00, 0x47, 0x01,
+        .class_ = NAKA_CLASS(IvMainEditSw),
+        .super = OBJ_DemoRhy,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaHdr_Perf2FileListData,
+        .prev = OBJ_NakaWidget_Perf3RhythmSel,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_MAINFUNC_DemoRhyTtlFunc,
     },
 
     .NakaHdr_Perf2FileListData = {
-        0x14, 0x00, 0x67, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x0A, 0x00, 0x08, 0x00, 0x64, 0x00,
-        0x28, 0x00, 0xD5, 0x00, 0x3A, 0x00, 0xF5, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x04, 0x00, 0x00, 0x00,
-        0xFF, 0x00, 0x00, 0x00,
+        .class_ = NAKA_CLASS(AcDemoMedleyDispBox),
+        .super = OBJ_DemoRhy,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_NakaHdr_Perf2MeasureBoxData,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(100, 40, 114, 19),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .Yoko_ViewTable_06F = {
@@ -3797,14 +3846,14 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
         { NAKA_ADDR(EqualizerBoxProc), NAKA_CLASS(VwBox), 34, 6, 0x00E27578, NAKA_ADDR(NakaInst_SqedtVal_B), SELF(ClassProps_EqualizerBox) },
         { NAKA_ADDR(SqedtValProc), NAKA_CLASS(Viewable), 32, 10, 0x00E2756A, NAKA_ADDR(NakaInst_SqedtVal), SELF(ClassProps_SqedtVal) },
         { NAKA_ADDR(SqedtVal2Proc), NAKA_CLASS(Viewable), 30, 8, 0x00E2755A, NAKA_ADDR(NakaInst_SqedtVal2_End), SELF(ClassProps_SqedtVal2) },
-        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, 0x00E2754C, NAKA_ADDR(NakaInst_SqedtFix), SELF(ClassProps_SqedtFix) },
-        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, 0x00E27538, NAKA_ADDR(NakaInst_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
-        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, 0x00E2752C, NAKA_ADDR(NakaInst_SqplyVal), SELF(ClassProps_SqplyVal) },
-        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, 0x00E2751C, NAKA_ADDR(NakaInst_SqedtVal3), SELF(ClassProps_SqedtVal3) },
-        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, 0x00E27510, NAKA_ADDR(NakaInst_AccIll), SELF(ClassProps_AccIll) },
-        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E274F4, NAKA_ADDR(NakaInst_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
-        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, 0x00E274E8, NAKA_ADDR(NakaInst_SngSel), SELF(ClassProps_SngSel) },
-        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, 0x00E274DA, NAKA_ADDR(NakaInst_SngSel2), SELF(ClassProps_SngSel2) },
+        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, NAKA_ADDR(ClassName_SqedtFix), NAKA_ADDR(NakaInst_SqedtFix), SELF(ClassProps_SqedtFix) },
+        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, NAKA_ADDR(ClassName_IvSongCopyExit), NAKA_ADDR(NakaInst_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
+        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_SqplyVal), NAKA_ADDR(NakaInst_SqplyVal), SELF(ClassProps_SqplyVal) },
+        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, NAKA_ADDR(ClassName_SqedtVal3), NAKA_ADDR(NakaInst_SqedtVal3), SELF(ClassProps_SqedtVal3) },
+        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_AccIll), NAKA_ADDR(NakaInst_AccIll), SELF(ClassProps_AccIll) },
+        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcEntertainerGridBox), NAKA_ADDR(NakaInst_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
+        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, NAKA_ADDR(ClassName_SngSel), NAKA_ADDR(NakaInst_SngSel), SELF(ClassProps_SngSel) },
+        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, NAKA_ADDR(ClassName_SngSel2), NAKA_ADDR(NakaInst_SngSel2), SELF(ClassProps_SngSel2) },
     },
 
     .Kubo_ClassTable_168_Desc12Head = {

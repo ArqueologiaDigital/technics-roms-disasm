@@ -4481,7 +4481,7 @@ MidiSetup_ReturnZero:
 ; ../technics-docs/data-wheel-investigation.md, "Key DRAM Addresses"), and acts
 ; only for type 0xa8 with payload 0xc07d == 5, bit 6 of 0xc07f set and
 ; (0xc07e & 0xc07f) != 0: then, unless the UI state byte 0x8d38 is 0x0f, it
-; calls SoundCtrl_SendCommand(15) (ui/ui_control_panel.s).  Which panel control
+; calls UI_InterruptTitleByIndex(15) (ui/ui_control_panel.s).  Which panel control
 ; that type/payload is has NOT been established.  The name is kept because
 ; widget_dispatch.s (another lane) refers to it; the bytes were a verbatim blob
 ; in v7 and misframed code in v9/v10 until 2026-09-25.
@@ -4499,8 +4499,8 @@ MidiPart_DataBlock:
 	ret	z
 	cp	(ACTIVE_TITLE:16), 0xf
 	ret	z
-	ldw	wa, 15
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_SDOCT
+	call	UI_InterruptTitleByIndex
 	ret
 
 InitializeMurai:
