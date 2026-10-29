@@ -41,7 +41,7 @@ CLANG=$(LLVM_BIN)/clang
 
 .PHONY: decompress-demo-presets rebuild-demo-presets verify-demo-presets demo-midi demo-sidecars
 .PHONY: style-events style-midi verify-style-midi
-.PHONY: decompress-help-databases rebuild-help-databases verify-help-databases
+.PHONY: decompress-help-databases rebuild-help-databases verify-help-databases verify-help-db-text
 .PHONY: verify-stale-help-duplicate verify-ftbmp
 .PHONY: audit-icons-blob
 .PHONY: dsp dsp-verify dsp-flowcharts
@@ -1443,6 +1443,17 @@ demo-sidecars: decompress-demo-presets
 # The original payload slices live in original_ROMs/help_db_*_compressed.
 # original.bin (sliced once from icons_to_strings.bin at the offsets above,
 # header excluded, pad byte included).
+
+# The five live decompressed databases are themselves build products since 2026-10-29: their
+# source is the text listing help_db_<lang>.txt (scripts/build/help_db_text.py, whose `verify`
+# rebuilds each one equal to what the factory stream decompresses to).  german_stale stays a
+# committed .bin: a truncated remnant, not a ROM input.
+HELP_DB_PLAIN = $(foreach l,$(HELP_DB_LANGS),$(HELP_DB_DIR)/help_db_$(l).bin)
+$(HELP_DB_PLAIN) &: $(HELP_DB_PLAIN:.bin=.txt) scripts/build/help_db_text.py
+	python3 scripts/build/help_db_text.py build
+
+verify-help-db-text:
+	python3 scripts/build/help_db_text.py verify
 
 $(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin original_ROMs/help_db_%_compressed.original.bin
 	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_$*_compressed.original.bin
