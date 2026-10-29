@@ -34,7 +34,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("rom")
 ap.add_argument("--program")
 ap.add_argument("--table", help="table 84 (kn7000_table.rom): compare its copy of the header")
-ap.add_argument("--source", help="src/ic18/rhythm.s: also sum its .incbin_range bytes")
+ap.add_argument("--source", help="the src/ic18 directory: also measure its text against the bytes")
 a = ap.parse_args()
 d = open(a.rom, "rb").read()
 B = 0x10000
@@ -109,6 +109,7 @@ streams = bad = 0
 
 
 head_bytes = Counter()
+stream_bytes = Counter()
 
 
 def var(o, slot=None, kind="style"):
@@ -116,6 +117,7 @@ def var(o, slot=None, kind="style"):
     bars, beats = d[o] + 1, d[o + 1] + 1
     L = u16(o + 4)
     head_bytes[kind] += 9 + L
+    stream_bytes[kind] += u24(o + 6 + L)
     S = u24(o + 6 + L)
     s, e = o + 9 + L, o + 9 + L + S
     mark(o, e)
@@ -224,28 +226,18 @@ f1 = d.index(b"\xf5", p) + 1
 print(f"  then {p:#x}..{f1:#x} and {f1:#x}..{used:#x}; the second = the last {used - f1} bytes of the first: "
       f"{d[f1:used] == d[f1 - (used - f1):f1]}")
 print("top of chip:", d[0x3FFFE8:0x400000])
-o = p - 0
-q = d.index(b"\xf5", end) + 1
-oldhead = 0
-while q < used:
-    L = u16(q + 4)
-    S = u24(q + 6 + L)
-    if d[q + 2] != 0xFF or d[q + 9 + L] != 0xF4:
-        break
-    oldhead += 9 + L
-    q += 9 + L + S
-
 print("== bytes by representation")
 rows = [("header, count block, index, tables", offs["count-in table"] + 24),
         ("169 style records (0xC6 each)", 0xC6 * nst),
         ("variation headers + set-up events (styles)", head_bytes["style"]),
-        ("variation headers + set-up events (leftovers)", oldhead),
+        ("event streams of the styles", stream_bytes["style"]),
+        ("the leftovers, whole", used - end),
         ("count-in patterns, whole", (B + styles[0]) - (B + offs["count-in table"] + 24)),
         ("erased + version string", 0x400000 - used)]
 for n, v in rows:
     print(f"  {n:48s} {v:9,d}")
-typed = sum(v for _, v in rows)
-print(f"  {'typed in all':48s} {typed:9,d}; streams = {0x400000 - B - typed:,d} of {0x400000 - B:,d}")
+total = sum(v for _, v in rows)
+print(f"  {'sum':48s} {total:9,d} of {0x400000 - B:,d} bytes from 0x10000")
 if a.table:
     t = open(a.table, "rb").read()
     to = t.find(b"Technics Rhythms")
@@ -254,14 +246,20 @@ if a.table:
     print(f"table ROM copy at file {to:#x}, {n:#x} bytes: differs from IC18 in {len(diff)} bytes at",
           [hex(i) for i in diff], f"count {(t[to + 0x29] << 8) | t[to + 0x2A]}")
 if a.source:
+    import os
     import re
-    n = b = 0
-    for line in open(a.source, "rb"):
-        m = re.search(rb'\.incbin_range\s+"[^"]+",\s*(0x[0-9a-fA-F]+),\s*(0x[0-9a-fA-F]+)', line)
-        if m:
-            n, b = n + 1, b + int(m.group(2), 16) - int(m.group(1), 16)
-    print(f"  {a.source}: {n} .incbin_range, {b:,d} bytes")
-
+    files = [os.path.join(a.source, f) for f in ("rhythm.s", "old_build.s")]
+    for root, _, fs in os.walk(os.path.join(a.source, "styles")):
+        files += [os.path.join(root, f) for f in fs if f.endswith(".s")]
+    text = lines = incbins = 0
+    for f in files:
+        b = open(f, "rb").read()
+        text += len(b)
+        lines += b.count(b"\n")
+        incbins += len(re.findall(rb"^\s*(?:\S+:\s*)?\.incbin", b, re.M))
+    nstyle = len(files) - 2
+    print(f"  {a.source}: {len(files)} files ({nstyle} style files), {lines:,d} lines, {text:,d} bytes of text"
+          f" for {0x400000 - B:,d} bytes: {text / (0x400000 - B):.2f}x; .incbin lines: {incbins}")
 if a.program:
     prog = open(a.program, "rb").read()
     PB, go = 0x48400000, 0x48735EE4 - 0x48400000

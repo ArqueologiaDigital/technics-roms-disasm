@@ -5,12 +5,11 @@ IC18, the 4 MB mask ROM C3CBND000046 at `0x40000000`, holds the boot ROM in its 
 It is one resource, `"Technics Rhythms"`, at `0x40010000`: a header, a style-ID index, 169 styles
 of 20 variations each and 8 count-in patterns. The firmware reads it with LoadU16BE / LoadU24BE.
 
-[`src/ic18/rhythm.s`](../src/ic18/rhythm.s) is the source for that part. It types every record:
-the header, the index, the tables, each style's name, its part set-ups and its slot table. Each
-variation has a header and set-up events. The count-in patterns are typed event by event. The
-event streams of the 169 styles are each one labelled `.incbin_range` of the reference. They are
-3.9 MB of the ROM's music, which this public repository does not carry in bulk (see
-[Representation](#representation)). [`src/ic18/ic18.s`](../src/ic18/ic18.s) is `boot.s` plus
+[`src/ic18/rhythm.s`](../src/ic18/rhythm.s) is the source for that part. It holds the header, the
+index, the tables, the macros and the count-in patterns, and includes one file per style,
+`src/ic18/styles/<rhythm group>/<style>.s`, plus `src/ic18/old_build.s` for the leftovers past the
+last style. Every record and every event is typed, one event per line; nothing is `.incbin`'d
+(see [Representation](#representation)). [`src/ic18/ic18.s`](../src/ic18/ic18.s) is `boot.s` plus
 `rhythm.s`. `make verify-ic18-full` assembles it and compares all 4 MB with the chip.
 
 All addresses of firmware routines are program 941's (`kn7000_manual.sym`). Figures come from
@@ -132,7 +131,7 @@ to program `00 00 26`. On every beat it plays a note 37 (side stick in GM number
 `StyleVariationNameGet` (0x484335BF). The low 3 bits of the bound variation's meter byte pick
 which. The firmware takes its own table 0x48736078 instead when resource 0xD00A answers.
 `StyleVariationNameGet` is therefore misnamed: it returns a count-in pattern record, not a name.
-The source types these 8 patterns completely, events included.
+The source types these 8 patterns like any variation.
 
 ## A style record (0xC6 bytes)
 
@@ -212,7 +211,8 @@ What tells an A half from a B half is not known.
 Bytes 2/3 are `FF FF` in 2710 of the 3380 variations and `FF 02`-`FF 07` in the rest. The set-up
 events are only CC (22,351) and program changes (4,947). In the source, `var_head` writes the
 first six bytes from the bars, the beats and the two parts, with the length as a label difference.
-`ev_cc` / `ev_pc` lines follow. Then come `var_events`, the stream's `.incbin_range` and `var_end`.
+The set-up events follow, one per line (below). Then come `var_events` (the stream length as a label
+difference), the stream's events and `var_end`.
 
 The MEMORY ("TCMP") variation record is a different layout of the same fields: bars at +0x10,
 meter at +0x11, the stream offset at +0x15, no set-up events (`kn7000_manual.sym`, the TCMP
@@ -244,6 +244,26 @@ high byte mostly 0). The last is 0 on every note of parts 0 and 7 and takes a fe
 (1, 16, 80, 100 ...), so it reads as the chord-adaptation class. The player that reads them was
 not traced.
 
+**In the source**, one event per line, one macro per kind (defined in `rhythm.s`):
+
+| macro                                                                 | bytes                          | used for                                                       |
+|-----------------------------------------------------------------------|--------------------------------|----------------------------------------------------------------|
+| `n part,key,vel,len_lo,len_hi,cls`                                    | `9n key vel len_lo len_hi cls` | a note; `len_lo`/`len_hi`/`cls` named by the inference above   |
+| `vol`, `pan`, `expr`, `mod`, `sus`, `rev`, `cho`, `mode` `part,value` | `Bn CC value`                  | CC7, 10, 11, 1, 64, 91, 93, 97                                 |
+| `cc part,ctl,value`                                                   | `Bn ctl value`                 | any other controller (CC80-83, 92, 94 in set-ups)              |
+| `pc part,prog,bank_lsb,bank_msb`                                      | `Cn prog bank_lsb bank_msb`    | program change (set-ups only)                                  |
+| `bend part,lsb,msb`, `pres part,value`                                | `En lsb msb`, `Dn value`       | pitch bend, channel pressure                                   |
+| `@<any of the above> tick,...`                                        | `tick` then the event          | the event with the position byte before it                     |
+| `beat`, `end`                                                         | `F4`, `F5`                     | beat marker, end of stream                                     |
+| `at tick`                                                             | `tick`                         | a position byte with no event after it; not needed in this ROM |
+
+So `@n 48,0,BD1,64,16,0,0` is a bass drum on part 0 at tick 48 of the beat. On parts 0 and 7 a
+key from 27 to 87 is spelled by its GS/GM percussion name (`.equ BD1, 36` ...); other keys stay
+numbers. `[INFERENCE]` That the KN7000's kits follow that map rests on table 84's drum-voice
+records near file offset 0x1088D0, which list "Bass Drum 2", "Bass Drum 1", "Side Stick" and
+"Snare Drum 1" in the GM order of keys 35-38. The kits' own records were not decoded, so their
+names for the keys outside 27-87 (18 and 19 are frequent) are not used.
+
 ## Past the last style
 
 The last style, Bluegrass, ends at `0x3FBAD3`. 16,794 non-erased bytes follow, which no table
@@ -273,35 +293,38 @@ screen. The boot ROM can rewrite this data on units with an IC20 flash in this s
 
 ## Representation
 
-| part                                       | form in `src/ic18/rhythm.s`                                            | bytes     |
-|--------------------------------------------|------------------------------------------------------------------------|-----------|
-| header, count block, index, tables         | typed: `.ascii`, `.be16`/`.be24` with label differences, `sidx_*`      | 4,678     |
-| 169 style records                          | `.ascii` name, `style_units`, 8 x `style_part`, `style_slots`          | 33,462    |
-| 3,380 variation headers + set-up events    | `var_head`, `ev_cc`, `ev_pc`, `var_events`, `var_end`                  | 117,229   |
-| the 10 leftover variation headers + events | the same                                                               | 699       |
-| 8 count-in patterns                        | typed completely (`var_head`, `ev_pc`, `ev_beat`, `ev_note`, `ev_end`) | 364       |
-| erased flash, the version string           | `.space ..., 0xff`, `.ascii`                                           | 915       |
-| 3,393 event streams                        | `.incbin_range` of the reference, `census: opaque -- sequence: ...`    | 3,971,421 |
+| part                                    | form in the source                                                            | bytes     |
+|-----------------------------------------|-------------------------------------------------------------------------------|-----------|
+| header, count block, index, tables      | `rhythm.s`: `.ascii`, `.be16`/`.be24` with label differences, `sidx_*`        | 4,678     |
+| 169 style records                       | `styles/*/*.s`: `.ascii` name, `style_units`, 8 x `style_part`, `style_slots` | 33,462    |
+| 3,380 variation headers + set-up events | `var_head`, set-up events, `var_events`, `var_end`                            | 117,229   |
+| 3,380 event streams                     | one event per line                                                            | 3,955,326 |
+| 8 count-in patterns                     | `rhythm.s`, typed the same way                                                | 364       |
+| the leftovers                           | `old_build.s`: 10 variations and 3 fragments, the same way                    | 16,794    |
+| erased flash, the version string        | `.space ..., 0xff`, `.ascii`                                                  | 915       |
 
-The typed rows are 157,347 bytes. With the 3,971,421 bytes of streams, they make up the 4,128,768
-bytes from 0x10000 to the end. The probe prints this table ("bytes by representation"; with
-`--source` it also sums the `.incbin_range`s of `rhythm.s`).
+The probe prints these byte counts ("bytes by representation"; they add up to the 4,128,768
+bytes from 0x10000). With `--source src/ic18` it measures the text: 171 files (169 style files), 760,109 lines,
+14,378,065 bytes of text for the 4,128,768 bytes from 0x10000, 3.48 times the binary size, and
+0 `.incbin` lines.
 
-`python3 scripts/analysis/data_incbin_census.py` (2026-10-29, at the commit that added `rhythm.s`)
-gives the tree `kn7000-ic18` 3393 opaque entries of 3,971,421 bytes, all `sequence`, and 0
-generic. `boot.s` has no binary include.
+`python3 scripts/analysis/data_incbin_census.py` gives the tree `kn7000-ic18` no binary include
+at all: 0 generic, 0 opaque.
 
-**Why the streams are reference bytes.** They are the ROM's music, the rhythm patterns
-themselves, and this repository is public. Their structure is documented and checked: every byte
-of every stream is parsed by `tools/gen_ic18_rhythm_s.py` on each regeneration, and by the probe.
-The census has no opaque kind for them, so this lane added one, `sequence`, to
-`scripts/analysis/data_incbin_census.py`: a music event stream whose grammar is documented and
-which a committed tool parses event by event. It is the counterpart of `pcm` for samples. Each
-stream is still its own labelled item, with its bar count and size in its comment.
+**A fragment that begins inside an event.** `fragment_lines` in the generator writes the shortest
+prefix after which the rest parses to the fragment's end as the styles' streams do (a position
+byte is followed by an event, positions rise within a beat) as `.byte`, with a comment: 2 bytes
+for `OldBuildFragment1`, none for the other two fragments. Those 2 bytes are the end of an event;
+the byte after them, 0, reads as a position but could as well be the event's last byte.
 
-**kn7asm.** This tree needed two additions to `tools/kn7asm.py`: `.be16` / `.be24` / `.be32`, and
-`.macro` / `.endm` with named parameters, where `\p` is replaced by the argument and `\s_X` pastes
-a suffix. They do not change any other image's bytes; `make gate-kn7000` passes.
+**kn7asm.** This tree needed three additions to `tools/kn7asm.py`: `.be16` / `.be24` / `.be32`;
+`.macro` / `.endm` with named parameters, where `\p` is replaced by the argument and `\s_X`
+pastes a suffix; and caches that make 760,000 lines of macro invocations fast. A macro whose
+body is only data directives is compiled once, an invocation whose operands are numbers,
+operators and constant `.equ` names becomes its bytes once and is reused in every pass, and
+constant expressions are evaluated once. Assembling all of IC18 takes 18 s (13 s with the label
+seed of a previous build) on the development machine. No other image's bytes change;
+`make gate-kn7000` passes.
 
 ## Open questions
 
@@ -314,6 +337,9 @@ a suffix. They do not change any other image's bytes; `make gate-kn7000` passes.
 - The A/B halves of the intros and endings. A major/minor pair would fit, but nothing shows it.
 - A note's last three bytes: trace the pattern player that consumes `0x50122DC0` to fix the length
   and the class.
+- The drum kits' own key names: table 84 has drum-voice records with names ("H.H.On Beat",
+  "Reverse Snare" ...); decoding which kit and key each belongs to would name the keys outside the
+  GS/GM range and confirm the map.
 - `StyleVariationNameGet` returns a count-in pattern record. Renaming it (and its slot-20 caller's
   reading) is left to whoever next regenerates `src/program/`.
 - Which chip answers at the IC18/IC20 site of the owner's unit has not been checked (see the dump's
@@ -342,5 +368,5 @@ a suffix. They do not change any other image's bytes; `make gate-kn7000` passes.
 > - The chip ends with leftovers of an older build and the version string `jkr_33.ssf` (RHYTHM 33).
 >
 > The disassembly rebuilds all 4 MB byte for byte (`make -C kn7000 verify-ic18-full`), with
-> every record typed. Source: `kn7000/src/ic18/rhythm.s`; format notes:
+> every record and every event typed, one file per style. Source: `kn7000/src/ic18/rhythm.s`; format notes:
 > `kn7000/notes/ic18-rhythm-rom.md`.

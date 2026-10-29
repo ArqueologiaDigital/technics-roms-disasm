@@ -4,12 +4,13 @@ Run from this directory. The chip image is private: `~/compartilhado/technics_ro
 (SHA-1 `2dc71f5082063cd6b21e4ed16acd67e9d326a79f`), or the copy `make verify-ic18-full` leaves in
 `../../baserom/kn7000_ic18.rom`.
 
-| script                 | question it answers                                                                                                                                | command                                                                                                                                                                                                        |
-|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ic18_rhythm_probe.py` | what is where from 0x10000 to the end of the chip, does every record and event stream parse as the firmware reads it, and what do the fields hold? | `python3 -I ic18_rhythm_probe.py ~/compartilhado/technics_romsets/kn7000/c3cbnd000046.ic18 --program ../../baserom/kn7000_program.rom --table ../../baserom/kn7000_table.rom --source ../../src/ic18/rhythm.s` |
+| script                 | question it answers                                                                                                                                | command                                                                                                                                                                                               |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ic18_rhythm_probe.py` | what is where from 0x10000 to the end of the chip, does every record and event stream parse as the firmware reads it, and what do the fields hold? | `python3 -I ic18_rhythm_probe.py ~/compartilhado/technics_romsets/kn7000/c3cbnd000046.ic18 --program ../../baserom/kn7000_program.rom --table ../../baserom/kn7000_table.rom --source ../../src/ic18` |
 
 `--program` (program 941) adds the rhythm groups, `--table` (table 84) the comparison with the table ROM's copy
-of the header, `--source` the sum of `rhythm.s`'s `.incbin_range`s. The signals it reads, and what passes:
+of the header, `--source` (the `src/ic18` directory) the size of the text against the bytes and the
+number of `.incbin` lines (0). The signals it reads, and what passes:
 
 - the header's checksum word at file 0x10010 against the big-endian halfword sum it describes: `equal`;
 - the index: entries `< 220` (styles), `0x8000 + n` (aliases), `0x4000 + n` (table-ROM styles), and how many
@@ -20,7 +21,7 @@ of the header, `--source` the sum of `rhythm.s`'s `.incbin_range`s. The signals 
   the stored length, bars x beats 0xF4 markers, data bytes < 0x80);
 - the bytes below 0x80 between events: `max 95, falling within a beat: 0` is what makes them tick positions.
 
-What it printed on 2026-10-29, at the commit that added this README (abridged):
+What it printed on 2026-10-29 (abridged), at the commit that typed the event streams:
 
     checksum 0xe2da, over 0x100000 halfwords from +0x100000 (file 0x110000): recomputed 0xe2da equal
     count block 00 00 00 dc 00 60 0d 08 04 02 02 02 -> count 220, then 96
@@ -34,10 +35,13 @@ What it printed on 2026-10-29, at the commit that added this README (abridged):
     set-up events by status: {'0xb0': 22351, '0xc0': 4947}
     last style ends 0x3fbad3; non-0xFF bytes up to 0x3ffc6d (16794 bytes); then 0xFF to 0x3FFFE8
       of those 10 records' streams, 10 occur nowhere else in the chip
-      typed in all 157,347; streams = 3,971,421 of 4,128,768
-      ../../src/ic18/rhythm.s: 3393 .incbin_range, 3,971,421 bytes
+    == bytes by representation (header and tables 4,678; style records 33,462; variation headers and
+       set-up events 117,229; style event streams 3,955,326; leftovers 16,794; count-ins 364; erased and
+       version 915): sum 4,128,768 of 4,128,768 bytes from 0x10000
+      ../../src/ic18: 171 files (169 style files), 760,109 lines, 14,378,065 bytes of text for 4,128,768
+       bytes: 3.48x; .incbin lines: 0
     table ROM copy at file 0x3e828c, 0x1248 bytes: differs from IC18 in 7 bytes at [...] count 221
     243 rhythms in the groups; 169 of the 169 IC18 styles are in one; group order = chip order: True
 
-`tools/gen_ic18_rhythm_s.py` makes the same checks before it writes `src/ic18/rhythm.s`, and stops on any
-difference.
+`tools/gen_ic18_rhythm_s.py` makes the same checks before it writes `src/ic18/rhythm.s`, the style files and
+`old_build.s`, and stops on any difference.

@@ -63,7 +63,8 @@ kn7000_b935*.sym, kn7000_b893*.sym  Their symbols: ported from 941 through the o
 src/ic18/boot.s IC18's first 64 KB, the boot ROM and update system, GENERATED, fully
                 disassembled: see "IC18". kn7000_ic18.sym holds its names.
 src/ic18/rhythm.s  IC18 from 0x10000: the "Technics Rhythms" style data, GENERATED, every
-                record typed; src/ic18/ic18.s is boot.s + rhythm.s, the whole chip.
+                record and event typed; one file per style in src/ic18/styles/<group>/,
+                the leftovers in src/ic18/old_build.s; src/ic18/ic18.s is boot.s + rhythm.s.
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
                 disassembled: see "Style Convert Disk converters".
 cnv_manual.sym  Their names: one line per routine shared across converters.
@@ -352,8 +353,9 @@ chip image in the private romset (SHA-1 checked, not committed). Details:
 The rest of IC18, from `0x10000`, is the built-in rhythm data: the "Technics Rhythms" resource with 169
 styles of 20 variations and 8 count-in patterns (the other 51 of the 220 rhythms are in the table ROM).
 [`src/ic18/rhythm.s`](src/ic18/rhythm.s), made by [`tools/gen_ic18_rhythm_s.py`](tools/gen_ic18_rhythm_s.py),
-types every header, table, style record, part set-up and variation record. Only the event streams, the
-music itself, are `.incbin_range`s of the chip image. `make verify-ic18-full` rebuilds all 4 MB. Format:
+types every header, table, style record, part set-up and variation record, and every event of every
+pattern, one per line, a file per style under `src/ic18/styles/`. `make verify-ic18-full` rebuilds all
+4 MB. Format:
 [`notes/ic18-rhythm-rom.md`](notes/ic18-rhythm-rom.md).
 
 ## IC19, the picture ROM
