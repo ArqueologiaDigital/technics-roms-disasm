@@ -14,8 +14,9 @@ WHAT IT READS
 SIZE
   `.incbin "f", skip, count`  -> count;   `.incbin "f", skip` -> size(f) - skip;   `.incbin "f"` -> size(f);
   `.incbin_range "f", a, b`   -> b - a.
-  A file is looked up next to the including file, then in each ancestor directory (and its `build/`) up to the
-  repo root, and in `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
+  A file is looked up next to the including file, then in each ancestor directory up to the repo root; in an
+  ancestor's `build/`, also under the including file's path relative to that ancestor (floppy/build/kn6000/
+  ca6000s/ for floppy/kn6000/ca6000s/files/X.s); and in `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
   count is reported as `unsized`; run the tree's build first for exact byte figures.
 
 CLASSES (first match wins)
@@ -113,13 +114,20 @@ def num(tok):
 
 def locate(path, src, tree_dirs):
     cands = []
+    chain = []
     d = (ROOT / src).parent
     while True:
-        cands.append(d / path)
-        cands.append(d / "build" / path)
+        chain.append(d)
         if d == ROOT:
             break
         d = d.parent
+    for i, d in enumerate(chain):
+        cands.append(d / path)
+        if (d / "build").is_dir():
+            # a build tree mirroring the sources below it: floppy/build/kn6000/ca6000s/ for
+            # floppy/kn6000/ca6000s/files/X.s
+            for sub in chain[:i + 1]:
+                cands.append(d / "build" / sub.relative_to(d) / path)
     for td in tree_dirs:
         base = ROOT / td
         if base.is_file():
