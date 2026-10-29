@@ -3321,9 +3321,9 @@ HDAE5000_LyricBoxProc_OnPaint:
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0003:
-	cp	(0x23A19A:24), 0
+	cp	(HDAE5000_RAM_LyricLines_Init+240:24), 0
 	jrl	nz, HDAE5000_LyricBoxProc_Ev01CA0003_Join3
-	ld	(0x23A19A:24), 1
+	ld	(HDAE5000_RAM_LyricLines_Init+240:24), 1
 	lda xwa, (0x22a08c:24)
 	ld	xbc, xwa
 	ld xwa, (xsp + 0x0e)
@@ -4359,7 +4359,7 @@ HDAE5000_Lyrics_PlayToPosition:
 HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 
 	; --- clear the line state ---
-	ld (0x23a19a:24), 0x01		; (0x23A19A) = 1
+	ld (HDAE5000_RAM_LyricLines_Init+240:24), 0x01		; (0x23A19A) = 1
 	ldw (0x2304e0:24), 0x0000; (0x2304E0) = 0
 	ldw (0x2304e2:24), 0x0000; (0x2304E2) = 0
 	ldw (0x2304e4:24), 0x0000; (0x2304E4) = 0
@@ -4728,7 +4728,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	; second argument: line[slot+1] = 0x23A0D2 + 40*slot
 	ld wa, (xsp + 2)
 	muls wa, 40
-	lda xbc, (0x23a0d2:24); XBC = 0x23A0D2
+	lda xbc, (HDAE5000_RAM_LyricLines_Init+40:24); XBC = 0x23A0D2
 	exts xwa
 	add xwa, xbc
 	push xwa
@@ -7278,16 +7278,12 @@ HDAE5000_Get_Init_Flag:
 					; Records: SelectList, DbMemoCl, TtlScreenR, AcHddNamingWindow,
 					; IvHddNaming, HDTitleMenu, TtlScreenR2, TtlScreenR3,
 					; AcWindowPage1, IvScreenR2, AcLanguageText1, LyricBox, FDFileSelect
-.equ HDAE5000_RAM_DATA_A_SIZE, 0x239822	; Size word for RAM data area A (variable)
-.equ HDAE5000_RAM_DATA_A, 0x2397EA	; RAM data area A
-.equ HDAE5000_RAM_DATA_B_SIZE, 0x239870	; Size word for RAM data area B (variable)
-.equ HDAE5000_RAM_DATA_B, 0x239824	; RAM data area B
+; The RAM tables registered by HDAE5000_Handler_Registration (and the other image labels the
+; code reaches) are HDAE5000_RAM_<label>, defined at the end of hdae5000_init_data.s from the
+; labels themselves.  (The .equs that used to stand here, HDAE5000_RAM_DATA_A_SIZE ...
+; HDAE5000_PARALLEL_DATA_2, were unused and misnamed: 0x239822 is the ResEvent count,
+; 0x239872 the Function table, 0x239FD2 the MainFunction table.)
 .equ HDAE5000_DATA_COPY_DEST, 0x23952A	; Init data copy destination
-.equ HDAE5000_INIT_DATA_2, 0x239642	; Init data area (secondary)
-.equ HDAE5000_SERIAL_DATA_1, 0x239872	; Serial port data (primary)
-.equ HDAE5000_SERIAL_DATA_2, 0x2398AA	; Serial port data (secondary)
-.equ HDAE5000_PARALLEL_DATA_1, 0x239FD2	; Parallel port data (primary)
-.equ HDAE5000_PARALLEL_DATA_2, 0x23A00E	; Parallel port data (secondary)
 .equ HDAE5000_RAM_XAP_FLASH_ENTRY, 0x23feb0	; main-CPU RAM; HDAE5000_PPORT_Svc28_FlashXapFile calls it with the "XAP" descriptor.  Nothing in this ROM writes code there; what the main CPU puts there is not established
 .equ HDAE5000_XAP_DESC_LIMIT, 0x2f0000	; the descriptor's fourth word, after HDAE5000_ROM_HEADER (0x280000); 0x2F0000 is inside image data here, so it is a value, not a pointer.  Its meaning is not established
 	; (EQU→inline label) HDAE5000_UiObject_PtrTable = 0x2A5D2C
@@ -7610,7 +7606,7 @@ HDAE5000_Clear_Work_Buffer__clear_done:
 	ld (xde), 0x0	; Clear final odd byte
 HDAE5000_Clear_Work_Buffer__no_odd_byte:
 	; === Part 2: Copy init data from ROM to RAM ===
-	ld xde, 0x23952A	; Destination = RAM init area
+	ld xde, HDAE5000_DATA_COPY_DEST	; Destination = RAM init area (the image's copy)
 	ld xhl, HDAE5000_ObjHandler_Table	; Source = ROM init data
 	ld xbc, 0xC82	; Count = 3,202 bytes
 	or xbc, xbc
@@ -15321,9 +15317,9 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	ld	wa, (xsp+68)
 	ld	(HDAE5000_RAM_PportInfoBlock+187), wa
 	ldw	(HDAE5000_RAM_PportInfoBlock+189:24), 512
-	ld	a, (0x23A04A:24)
+	ld	a, (HDAE5000_RAM_FileFormat_VersionMajor:24)
 	ld	(HDAE5000_RAM_PportInfoBlock+200:24), a
-	ld	a, (0x23A04C:24)
+	ld	a, (HDAE5000_RAM_FileFormat_VersionMinor:24)
 	ld	(HDAE5000_RAM_PportInfoBlock+201:24), a
 	lda xwa, (HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_SendInfosAboutHd:24)
 	calr	HDAE5000_DebugTrace
@@ -17232,7 +17228,7 @@ HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; 0x295642 (660 bytes)
 	nop
 	jp .Lc2b_do_cleanup
 .Lc2b_check_compat:			; 0x295684
-	ld a, (0x23a04a:24); ld A, (0x23A04A) — compatibility byte
+	ld a, (HDAE5000_RAM_FileFormat_VersionMajor:24); ld A, (0x23A04A) — compatibility byte
 	nop
 	cp (2330868:24), a; cp (0x2390F4), A — match?
 	nop
