@@ -91,12 +91,14 @@ TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 # pictures) are indexed PNGs in src/table/<subdir>/; tools/table_png.py turns them back
 # into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
 TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
+# The style data's include files (tools/gen_table_styles.py) and their macros.
+TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s)
 build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
 	@mkdir -p build/table_png
 	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)
 	@touch $@
 
-build/kn7000_table.rom: src/table.s $(TABLE_JPGS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table.rom
+build/kn7000_table.rom: src/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
 
@@ -104,7 +106,7 @@ build/kn7000_table.rom: src/table.s $(TABLE_JPGS) build/table_png/.stamp tools/k
 # offsets to labelled segments, names and comments from tools/table_segments.py. The
 # committed files are the result; the build does not need this.
 .PHONY: table-src
-table-src: tools/gen_table_s.py tools/table_segments.py baserom/kn7000_table.rom
+table-src: tools/gen_table_s.py tools/table_segments.py tools/table_png.py tools/gen_table_styles.py baserom/kn7000_table.rom
 	$(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table.rom --out src/table.s \
 	    --jpg-dir src/table --title 'KN7000 "Table" flash image (build 84) - byte-exact.'
 
@@ -243,7 +245,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 

@@ -36,6 +36,7 @@ import gen_program_s as G     # noqa: E402  (disasm_function, encoder, name_targ
 import gen_symbols as GS      # noqa: E402  (find_tables)
 import table_segments as TS   # noqa: E402  (what each directory segment is)
 import table_png as TP        # noqa: E402  (raw pictures <-> indexed PNG files)
+import gen_table_styles as TST  # noqa: E402  (the "Technics Rhythms" style data)
 
 BASE = 0x48000000
 
@@ -480,6 +481,19 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
             B += gui_resource_tables(d, s, e, ROMQ, jpg_dir)
         elif kind == "help":
             B += help_texts(d, s, e, label)
+        elif kind == "tpad":
+            B += TST.tpad_container(d, s, e, label)
+        elif kind == "tcmp":
+            B += TST.tcmp_container(d, s, e, label)
+        elif kind == "zzzj":
+            B += TST.sram_record_defaults(d, s, e, label)
+        elif kind == "pads":
+            B += TST.technics_pads(d, s, e, label, jpg_dir, build)
+        elif kind == "styles":
+            B += TST.style_subtable(d, s, e, label, jpg_dir, build)
+        elif kind == "rhythms":
+            ss = dirents[59]
+            B += TST.rhythms_copy(d, s, e, label, TST.subtable_names(d, ss))
         elif kind == "offtab":
             B += offset_group(d, s, e, label, ROMQ, jpg_dir, TS.GROUPS[i])
         else:
@@ -548,7 +562,8 @@ def main():
         body.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{len(d):06X}")
     body.append(f".org 0x{len(d):06x}   # end of image")
 
-    L += ["", ".equ TABLE_ROM_BASE, 0x48000000",
+    L += ["", f'.include "{TST.MACROS}"   # the style format\'s record and event macros',
+          "", ".equ TABLE_ROM_BASE, 0x48000000",
           ".mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)"]
     if equ:
         L += ["", f"# {len(equ)} symbols referenced by the plug-in source (CPU addresses)"]

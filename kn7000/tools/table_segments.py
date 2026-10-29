@@ -160,27 +160,32 @@ def _segments():
         "table} (gfx_draw.ann, at the string renderer); each table ends with an all-zero",
         "row and is followed by the data its rows point at. The pointers are CPU",
         "addresses, not offsets."])
-    s[1] = ("SramRecordDefaultsZZZJ", "raw", None, [
+    s[1] = ("SramRecordDefaultsZZZJ", "zzzj", None, [
         "'ZZZJ', 0x00, 'K', 0x00, 0xDC (the 8-byte signature the reader compares with the",
-        "program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.",
-        "Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies",
+        "program's copy 0x485B7370), 8 zero bytes, then 220 records of 0x18 bytes, which fill",
+        "the segment. Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies",
         "records lo..hi over the battery-SRAM table at 0x84030FF8 (same stride), or a",
-        "program-ROM default record when the signature does not match.",
-        "TODO: what the 220 records configure."])
-    s[2] = ("FactoryMemStyleContainer", "raw", None, [
+        "program-ROM default record (0x485B737E) when the signature does not match. Each record",
+        "is eight 3-byte entries (zzzj_voice, src/table/style_macros.inc). TODO: what the 220",
+        "records configure."])
+    s[2] = ("FactoryMemStyleContainer", "tcmp", None, [
         "The factory MEMORY-style container ('TCMP'): MemStyleAreaLoadFactory copies it",
         "whole (through TableRomSeg02PtrSize) to MEM_STYLE_AREA 0x50180000 when it starts",
-        "with 'TCMP'. Format: notes/tcmp-container-synthesis.md."])
-    s[3] = ("FactoryMemPadContainer", "raw", None, [
+        "with 'TCMP'. Format: notes/tcmp-container-synthesis.md and kn7000_manual.sym (the",
+        "TCMP section); typed by tools/gen_table_styles.py, events one per line."])
+    s[3] = ("FactoryMemPadContainer", "tpad", None, [
         "The factory PERFORMANCE PAD user memory ('TPAD'): MemPadAreaLoadFactory clears the",
         "0xA000 bytes at 0x501F91A0 and, when this segment (TableRomSeg03PtrSize) starts",
         "with 'TPAD', copies it in; otherwise it builds an empty container",
-        "(notes/work-ram-map.md, 0x501F91A0)."])
-    s[4] = ("TechnicsPadsResource", "raw", None, [
-        "The built-in \"Technics Pads\" bank resource (16-byte space-padded name first).",
-        "TechnicsPadsResourceInit stores its address (TableRomSeg04Ptr) in 0x50007760 and,",
-        "when TechnicsPadsResourceParse rejects it, uses the program ROM's own \"Technics Pads\" copy",
-        "instead. Same header shape as TechnicsRhythmsTable (segment 83)."])
+        "(notes/work-ram-map.md, 0x501F91A0). Typed by tools/gen_table_styles.py by its",
+        "likeness to 'TCMP' (notes/table-semantics-2026-10-29.md); events one per line."])
+    s[4] = ("TechnicsPadsResource", "pads", None, [
+        "The built-in \"Technics Pads\" PERFORMANCE PAD bank: 120 pads, each a 16-byte name,",
+        "a bars/beats header, two part set-ups and an event stream in the style format of",
+        "notes/ic18-rhythm-rom.md. TechnicsPadsResourceInit stores its address",
+        "(TableRomSeg04Ptr) in 0x50007760 and TechnicsPadsResourceParse reads its header; when",
+        "the parse fails the program ROM's own copy (0x4872FE4C) is used. Each pad is an",
+        "include file src/table/pads/<Name>.s (tools/gen_table_styles.py)."])
     s[5] = ("OpeningAnimationFrames", "offtab", None, [
         "The boot opening screen's animation: OpeningFrameDraw draws frame n from u32",
         "offset n of this segment; 0 = no frame (it then stores -2 in the u16 at",
@@ -221,10 +226,13 @@ def _segments():
         "u16 table 0x485EC940 by GetM3EmVal(0x8081); 0 = none. Each entry is a 240 x 80",
         "1-bpp picture drawn with DrawBitmapSP2 (fg 0xFF, bg 0): 30-byte MSB-first rows.",
         "Kept as PNGs in src/table/tcd/ (tools/table_png.py)."])
-    s[59] = ("BuiltinStyleSubTable", "raw", None, [
-        "The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and",
-        "StyleBuiltinNameTableInit caches it in 0x50034B90 (kn7000_manual.sym, style-name",
-        "module). TODO: its record format."])
+    s[59] = ("BuiltinStyleSubTable", "styles", None, [
+        "The built-in styles the style-ID index sends to the table ROM (index entry",
+        "0x4000 + n = style n; StyleBuiltinNameResolve): TableRomStyleSubTablePtr returns",
+        "it and StyleBuiltinNameTableInit caches it in 0x50034B90. u24BE offsets, then the",
+        "styles in the \"Technics Rhythms\" format of notes/ic18-rhythm-rom.md, each in",
+        "its own include file src/table/styles/<Name>.s, typed event by event",
+        "(tools/gen_table_styles.py; macros src/table/style_macros.inc)."])
     s[67] = ("HelpTexts", "help", None, [
         "The HELP function's texts in four languages, English first ('After pressing the",
         "HELP button, ...'). InitializeBlock15 takes the u32 at +4 * (u16 at 0x500D3584)",
@@ -242,10 +250,12 @@ def _segments():
     s[72] = ("OrganTabImages", "offtab", None, [
         "AcOrganTabProc's drawbar tab pictures: u32 offsets from the segment start; each",
         "entry is a whole Windows BMP ('BM'), and 18 slots reuse another slot's picture."])
-    s[83] = ("TechnicsRhythmsTable", "raw", None, [
-        "A truncated in-flash copy of the built-in \"Technics Rhythms\" style resource.",
-        "TableRomStyleResourcePtr returns it; StyleBuiltinNameTableInit re-points the",
-        "style-name table here when it carries the signature (kn7000_manual.sym)."])
+    s[83] = ("TechnicsRhythmsTable", "rhythms", None, [
+        "A copy of IC18's \"Technics Rhythms\" header, count block, style-ID index, style",
+        "table and count-in table, without the styles (notes/ic18-rhythm-rom.md, \"The",
+        "table ROM's copy\"). TableRomStyleResourcePtr returns it; StyleBuiltinNameTableInit",
+        "re-points the index (0x50034B7C) here when it carries the signature. The style and",
+        "count-in offsets are IC18's (tools/gen_table_styles.py)."])
     return s
 
 
