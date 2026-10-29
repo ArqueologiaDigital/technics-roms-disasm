@@ -36,7 +36,23 @@
 #   .endm                          `\p1` is replaced by the argument text; the
 #                                  longest parameter name that prefixes the word
 #                                  wins (`\s_Intro` = argument s + "_Intro"),
-#                                  and `\()` is an empty separator
+#                                  and `\()` is an empty separator.
+#                                  Extensions (GNU as style): a parameter may
+#                                  have a default, `p2=0`, which an invocation
+#                                  that leaves it out takes (a parameter with
+#                                  no default must be given); arguments may be
+#                                  given by keyword, `NAME p2=b, p1=a`, in any
+#                                  order, after the positional ones; `\@` is
+#                                  the number of macro expansions so far; the
+#                                  last parameter may be `name:vararg`, which
+#                                  takes every remaining argument (with their
+#                                  commas; empty when there is none).
+#   .zlib LEVEL                    the bytes of the lines up to `.endzlib`,
+#   ...                            compressed as one zlib stream (header,
+#   .endzlib                       deflate, Adler-32) at LEVEL with Python's
+#                                  zlib; labels inside take their offset in the
+#                                  uncompressed bytes.  The program's built-in
+#                                  demo songs are such streams (level 6).
 #   .ascii "text" [, "text" ...]   emit the bytes of each string
 #   .asciz "text" [, "text" ...]   the same, each followed by a NUL
 #                                  (escapes: \\ \" \n \r \t \0 and \xHH,
@@ -51,8 +67,9 @@
 # An instruction operand may be NAME+N or NAME-N (folded to one number).
 #
 # EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ), and also
-# / (integer division), << >> | & with Python's precedence (| lowest, then &,
-# then the shifts, then + -, then * /): `PFMT | 18<<4 | 5`, `(Rec - Page) / 2`.
+# / (integer division), % << >> | & ^ ~ with Python's precedence (| lowest, then
+# ^, then &, then the shifts, then + -, then * / %, then unary ~):
+# `PFMT | 18<<4 | 5`, `(Rec - Page) / 2`.
 # Numeric byte/word/long args additionally accept the same expressions.
 #
 # An instruction operand or an EXPR may name a label defined LATER in the source
@@ -68,6 +85,7 @@ import argparse
 import os
 import re
 import sys
+import zlib
 
 # The MN10300 instruction encoder lives beside this file. It lets source lines
 # hold real MN10300 mnemonics (unidasm operand syntax) that assemble to bytes,
@@ -107,6 +125,9 @@ class Assembler:
         self.known = {}    # symbol -> value, as found by the previous pass
         self.parsed = {}   # path -> its lines, parsed once for every pass
         self.macros = {}   # name -> (parameter names, body source lines)
+        self.macro_defaults = {}   # name -> {parameter: its default} (only those that have one)
+        self.macro_vararg = set()  # macros whose last parameter is :vararg
+        self.n_expansions = 0      # \@
         # Caches that outlive a pass. A macro invocation whose expansion is only
         # data directives with constant operands (numbers, operators and .equ
         # names) emits the same bytes in every pass: (name, operands) -> bytes.
@@ -126,6 +147,7 @@ class Assembler:
         # encode the same operands at the same pc again)
         self.enc_prev, self.enc_cache = getattr(self, "enc_cache", {}), {}
         self.out = bytearray()
+        self.zlib_stack = []
         self.symbols = {}
         self.labels = {}
         self.cur_file = "<none>"
@@ -199,14 +221,14 @@ class Assembler:
     def evaluate(self, expr):
         expr = expr.strip()
         # tokenise into numbers, symbols and operators
-        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|<<|>>|[()+\-*/|&]", expr)
+        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|<<|>>|[()+\-*/%|&^~]", expr)
         py = []
         for tok in tokens:
             if re.fullmatch(r"0x[0-9A-Fa-f]+|\d+", tok):
                 py.append(str(int(tok, 0)))
             elif tok == "/":
                 py.append("//")                # integer division
-            elif tok in ("<<", ">>") or tok in "()+-*|&":
+            elif tok in ("<<", ">>") or tok in "()+-*%|&^~":
                 py.append(tok)
             else:
                 if tok == ".":
@@ -363,7 +385,12 @@ class Assembler:
                 for i, raw in enumerate(f, 1):
                     if macro is not None:
                         if strip_comment(raw).strip() == ".endm":
-                            self.macros[macro[0]] = (macro[1], macro[2])
+                            names = [h.partition("=")[0].partition(":")[0] for h in macro[1]]
+                            self.macros[macro[0]] = (names, macro[2])
+                            if macro[1] and macro[1][-1].endswith(":vararg"):
+                                self.macro_vararg.add(macro[0])
+                            self.macro_defaults[macro[0]] = {
+                                n: d for n, eq, d in (h.partition("=") for h in macro[1]) if eq}
                             macro = None
                         else:
                             macro[2].append(raw)
@@ -383,24 +410,56 @@ class Assembler:
             self.parsed[path] = out
         return self.parsed[path]
 
+    def bind_args(self, name, rest):
+        """The argument text of each parameter of macro `name`, in order:
+        positional arguments first, then `param=value` keywords in any order;
+        a parameter left out takes its default (an error if it has none)."""
+        params, _body = self.macros[name]
+        defaults = self.macro_defaults.get(name, {})
+        values, pos = {}, 0
+        args = self.split_args(rest)
+        if name in self.macro_vararg and len(args) >= len(params):
+            args = args[:len(params) - 1] + [", ".join(args[len(params) - 1:])]
+        elif name in self.macro_vararg and len(args) == len(params) - 1:
+            args = args + [""]
+        for arg in args:
+            m = re.match(r"([A-Za-z_]\w*)\s*=(?!=)\s*(.*)$", arg, re.S) if "=" in arg else None
+            if m and m.group(1) in params:
+                values[m.group(1)] = m.group(2).strip()
+                pos = len(params)          # no positional argument after a keyword
+            else:
+                if pos >= len(params):
+                    raise AsmError(f"macro {name} takes {len(params)} arguments, got more")
+                values[params[pos]] = arg
+                pos += 1
+        out = []
+        for p in params:
+            if p in values:
+                out.append(values[p])
+            elif p in defaults:
+                out.append(defaults[p])
+            else:
+                raise AsmError(f"macro {name}: argument {p} missing (it has no default)")
+        return out
+
     def expand_macro(self, name, rest):
         """The body lines of macro `name` with its parameters replaced."""
         params, body = self.macros[name]
-        args = self.split_args(rest)
-        if len(args) != len(params):
-            raise AsmError(f"macro {name} takes {len(params)} arguments, got {len(args)}")
-        values = dict(zip(params, args))
+        values = dict(zip(params, self.bind_args(name, rest)))
         by_len = sorted(params, key=len, reverse=True)
+        self.n_expansions += 1
 
         def repl(m):
             word = m.group(1)
             if word == "()":
                 return ""
+            if word == "@":
+                return str(self.n_expansions)
             for p in by_len:
                 if word.startswith(p):
                     return values[p] + word[len(p):]
             raise AsmError(f"macro {name}: unknown parameter \\{word}")
-        return [re.sub(r"\\(\(\)|\w+)", repl, raw) for raw in body]
+        return [re.sub(r"\\(\(\)|@|\w+)", repl, raw) for raw in body]
 
     def assemble_file(self, path):
         prev_file, prev_line = self.cur_file, self.cur_line
@@ -466,6 +525,15 @@ class Assembler:
             self.assemble_file(self.resolve_path(self.unquote(args[0])))
         elif op == ".mnbase":
             self.mn_base = self.evaluate(args[0])
+        elif op == ".zlib":
+            self.zlib_stack.append((self.out, self.mn_base, self.evaluate(args[0]) if args else 6))
+            self.out, self.mn_base = bytearray(), 0
+        elif op == ".endzlib":
+            if not self.zlib_stack:
+                raise AsmError(".endzlib without .zlib")
+            data = bytes(self.out)
+            self.out, self.mn_base, level = self.zlib_stack.pop()
+            self.out += zlib.compress(data, level)
         elif not op.startswith("."):
             # A bare mnemonic => an MN10300 instruction. PC-relative targets
             # (branches/calls/jumps) are absolute CPU addresses, so encode()
@@ -491,13 +559,15 @@ class Assembler:
 
     _DATA_WIDTH = {".byte": (1, "little"), ".word": (2, "little"), ".long": (4, "little"),
                    ".be16": (2, "big"), ".be24": (3, "big"), ".be32": (4, "big")}
-    _TOKEN = re.compile(r"\s*(?:(0x[0-9A-Fa-f]+|\d+)|([A-Za-z_.][\w.]*)|([()+\-*]))")
+    _TOKEN = re.compile(r"\s*(?:(0x[0-9A-Fa-f]+|\d+)|([A-Za-z_.][\w.]*)|(<<|>>|[()+\-*/%|&^~]))")
 
     def compile_macro(self, name):
         """A macro whose body is only data directives, compiled once: per line its
         width, byte order and argument templates split at the parameters. None for
         any other macro (labels, instructions, other directives)."""
         params, body = self.macros[name]
+        if name in self.macro_vararg:
+            return None
         by_len = sorted(params, key=len, reverse=True)
         out = []
         for raw in body:
@@ -538,7 +608,13 @@ class Assembler:
         if c is None or '"' in rest:
             return None
         nparams, lines = c
-        args = [a.strip() for a in rest.split(",")] if rest.strip() else []
+        if "=" in rest or name in self.macro_defaults and self.macro_defaults[name]:
+            try:
+                args = self.bind_args(name, rest)      # keywords / defaults
+            except AsmError:
+                return None
+        else:
+            args = [a.strip() for a in rest.split(",")] if rest.strip() else []
         if len(args) != nparams:
             return None
         out = bytearray()

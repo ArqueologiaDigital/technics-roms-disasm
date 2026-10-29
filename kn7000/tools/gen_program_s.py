@@ -61,10 +61,14 @@ TITLE = [                  # header comment lines after the licence
     '# region 1 and the library image are split at the recovered functions',
     '# (kn7000.sym + kn7000_manual.sym) and emitted as MN10300 assembly, each',
     '# instruction checked byte-exact by the mn10300_asm encoder; their parts',
-    '# are in src/program/. The data region stays raw .incbin_range except the',
-    '# palette. make verify guarantees byte-identity.',
+    '# are in src/program/. The data region is typed source in src/program/data/',
+    '# (tools/gen_data_s.py). make verify guarantees byte-identity.',
 ]
 DOC_XLATE = None           # optional fn(str)->str applied to FUNC_DOC lines
+# The data region as typed source (tools/gen_data_s.py --profile <build>): included
+# in place of the .incbin_range of file R1_END..LIB_FILE_BASE, from <OUT's
+# directory>/program/data/data.s ("auto", resolved in main once OUT is known).
+DATA_SRC = "auto"
 # Symbol files whose names were recovered AFTER the function split was made (e.g.
 # the SP7001 plug-in export table). Their names become boundaries and labels, but
 # a boundary of this kind INHERITS the converted state of the function it splits
@@ -3229,8 +3233,13 @@ class EmitCtx:
     """What every converted block's emission shares: the name of each address,
     the labels the converted code defines, and the tallies the header reports."""
 
-    def __init__(self, names, label_of, A, data_names):
+    def __init__(self, names, label_of, A, data_names, data_labels=None):
         self.names, self.label_of, self.A, self.data_names = names, label_of, A, data_names
+        # the typed data region's labels (<data dir>/labels.sym, tools/gen_data_s.py):
+        # {addr: name}, and the sorted (start, end, name) of its typed items
+        self.data_labels, self.data_items = data_labels or ({}, [])
+        self.event_ids = read_event_ids()
+        self.data_starts = [s for s, _e, _n in self.data_items]
         self.used = set()          # addresses of `names` referenced (an .equ unless labelled)
         self.data_used = set()     # addresses of annotation data names referenced
         self.ext = {}              # branch target outside the converted code -> loc_ name
@@ -3250,6 +3259,12 @@ class EmitCtx:
         if a in self.data_names:
             self.data_used.add(a)
             return self.data_names[a]
+        if a in self.data_labels:
+            return self.data_labels[a]
+        if self.data_items:
+            i = bisect.bisect_right(self.data_starts, a) - 1
+            if i >= 0 and self.data_items[i][0] < a < self.data_items[i][1]:
+                return f"{self.data_items[i][2]}+{a - self.data_items[i][0]}"
         if a in self.names:
             self.used.add(a)
             return self.names[a]
@@ -3282,6 +3297,12 @@ class EmitCtx:
             if nm is None:
                 nm = self.ext.setdefault(t, f"loc_{t:08X}")
             return re.sub(r"0x[0-9a-fA-F]+", nm, ops, count=1)
+
+        if mnem in ("mov", "cmp") and self.event_ids:
+            # an event or method id (`cmp 0x50001, d3`, `mov 0x00060025, d1`) by its EV_ / MT_ name
+            m = re.fullmatch(r"(0x[0-9a-fA-F]+), (d\d)", ops)
+            if m and int(m.group(1), 16) in self.event_ids:
+                return f"{self.event_ids[int(m.group(1), 16)]}, {m.group(2)}"
 
         def one(m):
             nm = self.ref(int(m.group(1), 16))
@@ -3426,7 +3447,7 @@ NEW_CODE_942 = (0x18598B, 0x185E8F)
 
 def select_profile(name):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
-    global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
+    global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA, DATA_SRC
     global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS
     if name == "941":
         return
@@ -3609,7 +3630,7 @@ MAP_CACHE = "build/offset-maps"     # offset_map.cached(): the maps the Makefile
 
 def select_ported_build(key):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
-    global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
+    global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA, DATA_SRC
     global FUNC_END, LIB_CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS, FUNC_DOC
     cfg = PORTED_BUILDS[key]
     code941 = [(0x80, R1_END, BASE), (LIB_FILE_BASE, IMAGE_END, LIB_CPU_BASE - LIB_FILE_BASE)]
@@ -3872,7 +3893,62 @@ def lib_split(sym_by_addr, manual):
     return out
 
 
+def event_ids_inc():
+    """The typed data region's gui_event_ids.inc (tools/gen_data_s.py), or None."""
+    if not DATA_SRC:
+        return None
+    path = os.path.join(os.path.dirname(DATA_SRC), "gui_event_ids.inc")
+    return path if os.path.exists(path) else None
+
+
+def read_event_ids():
+    """{value: name} of the MILK event and method ids (EV_*, MT_*: block 0's Event
+    and Method name tables, id = (slot << 16) | index) from gui_event_ids.inc."""
+    path = event_ids_inc()
+    ids = {}
+    if path:
+        for line in open(path):
+            m = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+            if m:
+                ids.setdefault(int(m.group(2), 16), m.group(1))
+    return ids
+
+
+def read_data_code_refs():
+    """The code addresses listed in the typed data region's code_refs.txt."""
+    if not DATA_SRC:
+        return set()
+    path = os.path.join(os.path.dirname(DATA_SRC), "code_refs.txt")
+    if not os.path.exists(path):
+        return set()
+    return {int(x, 16) for x in open(path).read().split() if x.startswith("0x")}
+
+
+def read_data_labels():
+    """({addr: name}, [(start, end, name)]) from the typed data region's
+    labels.sym, beside DATA_SRC; empty when there is none."""
+    if not DATA_SRC:
+        return {}, []
+    path = os.path.join(os.path.dirname(DATA_SRC), "labels.sym")
+    if not os.path.exists(path):
+        return {}, []
+    labels, items = {}, []
+    for line in open(path):
+        if line.startswith(";"):
+            continue
+        a, n, size = line.split()
+        a, size = int(a, 16), int(size)
+        labels[a] = n
+        if size:
+            items.append((a, a + size, n))
+    items.sort()
+    return labels, items
+
+
 def main():
+    global DATA_SRC
+    if DATA_SRC == "auto":
+        DATA_SRC = os.path.join(os.path.dirname(OUT) or ".", "program", "data", "data.s")
     d = open(ROM, "rb").read()
     syms = load_syms(d)
     manual = load_manual_syms()
@@ -3936,7 +4012,9 @@ def main():
          '',
          '.equ PROGRAM_ROM_BASE, 0x48400000',
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
-         f'.include "{SYMBOLS_INC}"',
+         f'.include "{SYMBOLS_INC}"'] + (
+         [f'.include "{event_ids_inc()}"   # EV_ / MT_ ids, named in mov / cmp immediates']
+         if event_ids_inc() else []) + [
          ''] + [BOOT] + [
          '',
          '# ============================================================================',
@@ -4032,6 +4110,9 @@ def main():
                     data_items[BASE + o] = (k, n, c, o)
                     if k == "ptr":            # a pointer word names code like an operand
                         imm_refs.update(struct.unpack_from(f"<{n}I", d, o))
+    # code addresses the typed data region's jump / pointer tables name loc_<ADDR>
+    data_code_refs = read_data_code_refs()
+    imm_refs.update(data_code_refs)
     for at in (0, 0xA):                   # the boot header's two jmp targets
         if d[at] == 0xDC:
             branches.add(BASE + at + int.from_bytes(d[at + 1:at + 5], "little", signed=True))
@@ -4127,7 +4208,10 @@ def main():
              for cpu, nm in label_of.items() if nm in inc and inc[nm] != cpu]
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
-    ctx = EmitCtx(names, label_of, A, data_names)
+    ctx = EmitCtx(names, label_of, A, data_names, read_data_labels())
+    for a in data_code_refs:              # one that is no instruction start (or has another name)
+        if label_of.get(a) != f"loc_{a:08X}":
+            ctx.ext.setdefault(a, f"loc_{a:08X}")
     ctx.pro_starts = {p for p, _ins in pro.values()}
     ctx.func_labels = sorted((a, nm) for a, nm in label_of.items() if a in code_starts
                              and not nm.startswith("loc_") and not nm.endswith("_entry"))
@@ -4234,7 +4318,8 @@ def main():
                 '#      are assembled under the shifted .mnbase so their labels and',
                 '#      PC-relative encodings are the 0x4C link addresses. ----',
                 f'.mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}']
-    cur2 = DATA_END
+    # with the data region as source, it covers the bytes up to the library image
+    cur2 = LIB_FILE_BASE if DATA_SRC else DATA_END
     lib_converted = 0
     # a section banner goes above the function's register-save prologue: when a
     # block holds only the prologue of the next one (`sprintf` before
@@ -4331,18 +4416,25 @@ def main():
     L[i:i] = E
     L.extend(body)
 
-    # data / resources region, with the display palette as typed .long
-    L += ['',
-          '# ---- data / resources region ----',
-          f'.incbin_range {ROMQ}, 0x{R1_END:06X}, 0x{PALETTE:06X}',
-          '',
-          '# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----',
-          'display_palette:']
-    for i in range(0, 512, 8):
-        row = ", ".join(f"0x{v:08X}" for v in pal[i:i + 8])
-        L.append(f"    .long {row}   # idx {i:3d}")
-    L += [f'.org 0x{PALETTE + 0x800:06X}',
-          f'.incbin_range {ROMQ}, 0x{PALETTE:06X} + 0x800, 0x{DATA_END:06X}']
+    if DATA_SRC:
+        # the data region (and the initialised-RAM image and tail before the
+        # library image) as typed source, generated by tools/gen_data_s.py
+        L += ['',
+              '# ---- data / resources region: typed source, tools/gen_data_s.py ----',
+              f'.include "{DATA_SRC}"']
+    else:
+        # data / resources region, with the display palette as typed .long
+        L += ['',
+              '# ---- data / resources region ----',
+              f'.incbin_range {ROMQ}, 0x{R1_END:06X}, 0x{PALETTE:06X}',
+              '',
+              '# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----',
+              'display_palette:']
+        for i in range(0, 512, 8):
+            row = ", ".join(f"0x{v:08X}" for v in pal[i:i + 8])
+            L.append(f"    .long {row}   # idx {i:3d}")
+        L += [f'.org 0x{PALETTE + 0x800:06X}',
+              f'.incbin_range {ROMQ}, 0x{PALETTE:06X} + 0x800, 0x{DATA_END:06X}']
     L.extend(lib_body)
 
     write_split(L)

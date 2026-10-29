@@ -179,7 +179,7 @@ SswActOpen:
     add     -0x10, sp
 SswActOpen_entry:
     mov     a0, a2
-    mov     0x486af834, a1
+    mov     Str_rb_5, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d2
     mov     d2, d1
@@ -217,7 +217,7 @@ loc_4858070E:
     mov     1, d0
     call    SswSlideshowRun_entry, [d2], 0x14
     mov     d0, d2
-    mov     0x486af838, a0
+    mov     data_486AF838, a0
     call    func_4858102B_entry, 0, 0x10
     mov     d2, d0
     exth    d0
@@ -322,7 +322,7 @@ loc_48580807:
     mov     -0x6b, d3
 loc_48580809:
     mov     (0x50172c90), a0
-    mov     0x486af83c, a1
+    mov     Str_SSW_ACT_V01, a1
     mov     (0x20, a0), a0
     mov     0xb, d0
     call    LibStrncmp, [a2], 4
@@ -346,11 +346,11 @@ SswSlideshowSectionCut_entry:
     mov     (0x50172c90), a0
     clr     d3
     mov     (0x20, a0), a0
-    mov     0x486af854, d0
+    mov     Str_SLIDESHOW_12, d0
     mov     d0, (0x18, sp)
     mov     0, a1
     clr     d0
-    mov     0x486af848, d1
+    mov     Str_SLIDESHOW_11, d1
     call    func_4857F19C_entry, [d2,d3,a2,a3], 0x14
     mov     d0, d2
     cmp     d3, d2
@@ -363,10 +363,10 @@ loc_48580870:
     mov     d1, d0
     call    SswPoolAlloc, 0, 0
     mov     (0x50172c90), a1
-    mov     0x486af870, d0
+    mov     Str_SLIDESHOW_7, d0
     mov     a0, (0x24, a1)
     mov     (0x50172c90), a0
-    mov     0x486af864, d1
+    mov     Str_SLIDESHOW_8, d1
     mov     (0x20, a0), a2
     mov     (0x24, a0), a1
     mov     d0, (0x18, sp)
@@ -405,11 +405,11 @@ SswActionSectionCut_entry:
     mov     (0x50172c90), a0
     clr     d3
     mov     (0x20, a0), a0
-    mov     0x486af889, d0
+    mov     Str_ACTION_5, d0
     mov     d0, (0x18, sp)
     mov     0, a1
     clr     d0
-    mov     0x486af880, d1
+    mov     Str_ACTION_8, d1
     call    func_4857F19C_entry, [d2,d3,a2,a3], 0x14
     mov     d0, d2
     cmp     d3, d2
@@ -422,10 +422,10 @@ loc_485808F8:
     mov     d1, d0
     call    SswPoolAlloc, 0, 0
     mov     (0x50172c90), a1
-    mov     0x486af89d, d0
+    mov     Str_ACTION_3, d0
     mov     a0, (0x28, a1)
     mov     (0x50172c90), a0
-    mov     0x486af894, d1
+    mov     Str_ACTION_4, d1
     mov     (0x20, a0), a2
     mov     (0x28, a0), a1
     mov     d0, (0x18, sp)
@@ -481,7 +481,7 @@ loc_48580976:
     call    DrawWall_entry, 0, 0x10
     call    func_485801B3_entry, [d2], 4
     call    func_4857F15A_entry, [d2], 4
-    mov     0x486af8a8, a0
+    mov     Str_NO_PICTURE_DATA, a0
     call    func_4858028C_entry, [d2,d3,a2,a3], 0x4c
     jmp     loc_48580A2A
 loc_4858099D:
@@ -588,7 +588,7 @@ func_48580A88:
     add     -0x10, sp
 func_48580A88_entry:
     mov     a0, a2
-    mov     0x486af8b8, a1
+    mov     Str_wb_3, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d2
     exth    d0
@@ -626,7 +626,7 @@ loc_48580AD1:
 func_48580AD4:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x12c, sp
-    mov     0x486af8bc, a0
+    mov     Str_SLIDESHOW_6, a0
     call    func_48580C50_entry, [d2,a2], 0x18
     mov     d0, a2
     exth    d0
@@ -654,12 +654,12 @@ loc_48580AF8:
     mov     d2, d0
     call    func_4858103F_entry, [d2,d3,a2], 0x1c
     mov     a3, (8, sp)
-    mov     0x486af8c8, d0
+    mov     Str_SSW_NO_d_IMG_s_2, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -680,7 +680,7 @@ loc_48580B4C:
     exth    d0
     cmp     0, d0
     bne     loc_48580B60
-    mov     0x486af8e0, a0
+    mov     Str_SLIDESHOW_5, a0
     call    func_48580C50_entry, [d2,a2], 0x18
     mov     d0, a2
 loc_48580B60:
@@ -688,7 +688,7 @@ loc_48580B60:
     exth    d0
     cmp     0, d0
     bne     loc_48580B74
-    mov     0x486af8f0, a0
+    mov     data_486AF8F0, a0
     call    func_48580C50_entry, [d2,a2], 0x18
     mov     d0, a2
 loc_48580B74:
@@ -703,7 +703,7 @@ func_48580B7D:
     mov     (0x28, a0), d1
     cmp     d0, d1
     beq     loc_48580BC7
-    mov     0x486af8f4, a0
+    mov     Str_ACTION_2, a0
     call    func_48580C50_entry, [d2,a2], 0x18
     mov     d0, d1
     exth    d1
@@ -716,14 +716,14 @@ loc_48580BA5:
     exth    d1
     cmp     0, d1
     bne     loc_48580BB6
-    mov     0x486af900, a0
+    mov     Str_ACTION, a0
     call    func_48580C50_entry, [d2,a2], 0x18
 loc_48580BB6:
     mov     d0, d1
     exth    d1
     cmp     0, d1
     bne     loc_48580BC7
-    mov     0x486af90c, a0
+    mov     data_486AF90C, a0
     call    func_48580C50_entry, [d2,a2], 0x18
 loc_48580BC7:
     ret     0, 0xc
@@ -755,7 +755,7 @@ loc_48580BDF:
     mov     d2, d0
     call    func_4858103F_entry, [d2,d3,a2], 0x1c
     mov     (0x10, sp), a0
-    mov     0x486af910, a1
+    mov     Str_wb_2, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d3
     exth    d0
@@ -785,7 +785,7 @@ loc_48580C36:
     cmp     0x1e, a3
     blt     loc_48580BDF
 loc_48580C41:
-    mov     0x486af914, a0
+    mov     data_486AF914, a0
     call    func_4858102B_entry, 0, 0x10
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x34
@@ -803,7 +803,7 @@ func_48580C50_entry:
     beq     loc_48580C6B
     bra     loc_48580C81
 loc_48580C6B:
-    mov     0x486af918, a0
+    mov     data_486AF918, a0
     mov     2, d0
     call    func_4853244D_entry, [d2,a2], 0x24
     cmp     2, d0
@@ -835,7 +835,7 @@ func_48580C84_entry:
     beq     loc_48580CD9
 loc_48580CA9:
     mov     (a1), d1
-    mov     0x486af91c, a1
+    mov     Str_SLIDESHOW_4, a1
     add     d2, d1
     mov     d1, a0
     mov     0xb, d0
@@ -873,16 +873,16 @@ loc_48580CE7:
     beq     loc_48580D25
     jmp     loc_48580E6F
 loc_48580D04:
-    mov     0x486af938, a0
+    mov     Str_SSW_ACT_V01_SLIDESHOW_2, a0
     call    LibStrlen, 0, 0
     mov     d0, d3
-    mov     0x486af954, a0
+    mov     Str_SSW_ACT_V01_SLIDESHOW, a0
     call    func_4853244D_entry, [d2,a2], 0x24
     cmp     d0, d3
     beq     loc_48580D25
     jmp     loc_48580E6F
 loc_48580D25:
-    mov     0x486af970, a0
+    mov     data_486AF970, a0
     mov     2, d0
     call    func_4853244D_entry, [d2,a2], 0x24
     cmp     2, d0
@@ -915,12 +915,12 @@ loc_48580D50:
     mov     d2, d0
     call    func_4858103F_entry, [d2,d3,a2], 0x1c
     mov     a3, (8, sp)
-    mov     0x486af974, d0
+    mov     Str_SSW_NO_d_IMG_s, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -960,7 +960,7 @@ loc_48580DC9:
     beq     loc_48580E02
 loc_48580DD1:
     mov     (a1), d1
-    mov     0x486af928, a1
+    mov     Str_SLIDESHOW_3, a1
     add     d3, d1
     mov     d1, a0
     mov     0xb, d0
@@ -1013,10 +1013,10 @@ loc_48580E21:
     bne     loc_48580E21
     bra     loc_48580E6C
 loc_48580E4C:
-    mov     0x486af98c, a0
+    mov     Str_SLIDESHOW_2, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
-    mov     0x486af99c, a0
+    mov     Str_SLIDESHOW, a0
     call    func_4853244D_entry, [d2,a2], 0x24
     cmp     d0, d2
     beq     loc_48580E6C
@@ -1033,7 +1033,7 @@ func_48580E76:
 func_48580E76_entry:
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x00060015, d1
+    mov     MT_GetName, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, a1
     mov     0x5009e290, a2
@@ -1095,7 +1095,7 @@ loc_48580EFD:
     mov     d0, (0x10, sp)
     cmp     0, d0
     bge     loc_48580EB0
-    mov     0x486af9ac, a0
+    mov     Str_Error_GetSswObjectID, a0
     call    func_484877EF_entry, [a2,a3], 0x1c
     mov     -1, d0
 loc_48580F1C:
@@ -1111,7 +1111,7 @@ func_48580F1F_entry:
     cmp     0, a3
     beq     loc_48580F50
     clr     d2
-    mov     0x5000644c, a2
+    mov     ptrs_5000644C, a2
 loc_48580F39:
     mov     (a2), a1
     mov     a3, a0
@@ -1136,7 +1136,7 @@ SswImageFileLoad:
 SswImageFileLoad_entry:
     mov     a1, a3
     mov     a0, (0x28, sp)
-    mov     0x486af9d0, a1
+    mov     Str_rb_4, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d1
     exth    d1
@@ -1197,7 +1197,7 @@ func_48580FF0:
     add     -0x10, sp
 func_48580FF0_entry:
     mov     a1, a2
-    mov     0x486af9d4, a1
+    mov     Str_wb, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d1
     exth    d1
@@ -1219,7 +1219,7 @@ func_4858102B:
     add     -0x10, sp
 func_4858102B_entry:
     mov     a0, a1
-    mov     0x5000643c, a0
+    mov     data_5000643C, a0
     call    strcpy_entry, [a2], 4
     ret     0, 0x10
 
@@ -1227,15 +1227,15 @@ func_4858103F:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
 func_4858103F_entry:
-    movbu   (0x5000643c), d1
+    movbu   (data_5000643C), d1
     mov     d0, d3
     mov     a0, a2
     cmp     0, d1
     beq     loc_4858108B
-    movbu   (0x5000643c), d1
+    movbu   (data_5000643C), d1
     exthu   d3
     movbu   d1, (a2)
-    movbu   (0x5000643d), d1
+    movbu   (data_5000643D), d1
     mov     d3, d0
     movbu   d1, (1, a2)
     inc     d0
@@ -1553,7 +1553,7 @@ PictureImport_entry:
     movhu   d0, (0x4ac, sp)
     mov     d1, a3
     mov     a0, a2
-    mov     0x486af9d8, a1
+    mov     Str_rb_3, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d1
     exth    d1
@@ -1815,31 +1815,31 @@ loc_485814FF:
     bra     loc_48581570
 loc_48581528:
     mov     a2, (8, sp)
-    mov     0x486af9dc, d0
+    mov     Str_0000BM_02d_s, d0
     mov     d0, (0xc, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     0x5000644c, a0
+    mov     ptrs_5000644C, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48581570
 loc_4858154D:
     mov     a2, (8, sp)
-    mov     0x486af9ec, d0
+    mov     Str_0000JP_02d_s, d0
     mov     d0, (0xc, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     0x5000644c, a0
+    mov     ptrs_5000644C, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48581570:
     mov     (0x30, sp), a1
     mov     a2, a0
@@ -1855,7 +1855,7 @@ loc_48581582:
 func_48581589:
     movm    [a2], (sp)
     add     -0x24, sp
-    mov     0x486af9fc, a1
+    mov     Str_DORA_JPG, a1
     mov     sp, a0
     add     0x14, a0
     mov     -0x10, d1
@@ -1869,24 +1869,24 @@ func_48581589:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    mov     0x486afa0c, a1
+    mov     Str_rb_2, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     a2, a0
     movhu   (0x5009e310), d0
-    movhu   (0x50006454), d1
+    movhu   (data_50006454), d1
     call    PictureImport_entry, [d2,d3,a2,a3], 0x10
     call    fmmclose_entry, 0, 0x14
     movhu   (0x5009e310), d0
     inc     d0
     movhu   d0, (0x5009e310)
-    movhu   (0x50006454), d0
+    movhu   (data_50006454), d0
     inc     d0
-    movhu   d0, (0x50006454)
-    movhu   (0x50006454), d0
+    movhu   d0, (data_50006454)
+    movhu   (data_50006454), d0
     cmp     3, d0
     ble     loc_485815F8
     mov     1, d0
-    movhu   d0, (0x50006454)
+    movhu   d0, (data_50006454)
 loc_485815F8:
     ret     [a2], 0x28
 # SswImageSizeCheck  (CPU 0x485815fb)
@@ -2057,11 +2057,11 @@ loc_4858172A:
 loc_4858172C:
     add     0x460, sp
     ret     [d2,d3,a2,a3], 0x10
-    movhu   d0, (0x50007f40)
+    movhu   d0, (data_50007F40)
     retf    0, 0
 
 func_4858173C:
-    movhu   d0, (0x50007f42)
+    movhu   d0, (data_50007F42)
     retf    0, 0
 
 func_48581745:
@@ -2365,7 +2365,7 @@ func_485819AE:
     and     0x0f, d0
     exthu   d0
     asl2    d0
-    mov     0x486afa60, a0
+    mov     ptrs_486AFA60, a0
     mov     (d0, a0), d1
     movhu   (0x22, sp), d0
     mov     d1, (0x1c, sp)
@@ -2449,7 +2449,7 @@ func_48581A79:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
 func_48581A79_entry:
-    movhu   (0x50007f42), d0
+    movhu   (data_50007F42), d0
     cmp     0, d0
     bne     loc_48581A8B
     ret     [d2,d3,a2,a3], 0x38
@@ -2905,7 +2905,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     4, d3
     movhu   d3, (0x24, sp)
-    mov     0x487916b4, d0
+    mov     HELP_Classes, d0
     mov     d0, (0x28, sp)
     mov     0xf4, d0
     mov     a3, a0
@@ -2916,7 +2916,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x4879172c, d0
+    mov     HELP_Events, d0
     mov     d0, (0x28, sp)
     mov     0xf5, d0
     mov     a3, a0
@@ -2927,7 +2927,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x48791730, d0
+    mov     HELP_Methods, d0
     mov     d0, (0x28, sp)
     mov     0xf6, d0
     mov     a3, a0
@@ -2937,7 +2937,7 @@ InitializeBlock15_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48791750, d0
+    mov     HELP_Functions, d0
     mov     d0, (0x28, sp)
     mov     0xf1, d0
     mov     a3, a0
@@ -2945,7 +2945,7 @@ InitializeBlock15_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48791764, d0
+    mov     HELP_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xf9, d0
     mov     a3, a0
@@ -2956,7 +2956,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     0xd, d2
     movhu   d2, (0x24, sp)
-    mov     0x48791778, d0
+    mov     HELP_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xf2, d0
     mov     a3, a0
@@ -2964,7 +2964,7 @@ InitializeBlock15_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x487917b0, d0
+    mov     HELP_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xfa, d0
     mov     a3, a0
@@ -2975,7 +2975,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x487917e8, d0
+    mov     HELP_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xf3, d0
     mov     a3, a0
@@ -2984,7 +2984,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x48791808, d0
+    mov     HELP_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xfb, d0
     mov     a3, a0
@@ -2995,7 +2995,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     0x23, d2
     movhu   d2, (0x24, sp)
-    mov     0x48791828, d0
+    mov     HELP_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0xf0, d0
     mov     a3, a0
@@ -3005,14 +3005,14 @@ InitializeBlock15_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x487918b8, d0
+    mov     HELP_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0xf8, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0xf, d0
-    mov     0x486b0570, a0
-    mov     0x486b0579, a1
+    mov     Str_OTB_HELP, a0
+    mov     Str_iaphelp, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f00f1, d0
     mov     d0, (0x10, sp)
@@ -3020,7 +3020,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x11, d0
     mov     0x00020000, d1
-    mov     0x486b0584, a0
+    mov     Str_MD_HELP, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x00f00000, d0
     mov     d0, (0x10, sp)
@@ -3028,7 +3028,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0xf1, d0
     mov     0x00f30003, d1
-    mov     0x486b058c, a0
+    mov     Str_TT_HELP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f0000e, d0
     mov     d0, (0x10, sp)
@@ -3036,7 +3036,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12c, d0
     mov     0x00f30004, d1
-    mov     0x486b0594, a0
+    mov     Str_TT_HELPAPCMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f00015, d0
     mov     d0, (0x10, sp)
@@ -3044,7 +3044,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12d, d0
     mov     0x00f30005, d1
-    mov     0x486b05a4, a0
+    mov     Str_TT_HELPPRGMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f00008, d0
     mov     d0, (0x10, sp)
@@ -3052,7 +3052,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12e, d0
     mov     0x00f30006, d1
-    mov     0x486b05b4, a0
+    mov     Str_TT_HELPTEXT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
@@ -3126,19 +3126,19 @@ func_48582163_entry:
     exth    d3
     cmp     0, d3
     bge     loc_48582177
-    mov     0x486b05cb, a0
+    mov     Str_Page_NG_1, a0
     ret     [d2,d3,a2], 0x1c
 loc_48582177:
     cmp     0, d3
     bne     loc_48582184
-    mov     0x486b05d6, a0
+    mov     Str_Page_NG_0, a0
     ret     [d2,d3,a2], 0x1c
 loc_48582184:
     call    func_485820F0, 0, 0
     exth    d0
     cmp     0x48, d0
     ble     loc_48582197
-    mov     0x486b05c0, a0
+    mov     Str_Help_No_NG, a0
     ret     [d2,d3,a2], 0x1c
 loc_48582197:
     movhu   (0x500c4d48), d0
@@ -3148,7 +3148,7 @@ loc_48582197:
     beq     loc_485821B3
     cmp     3, d0
     beq     loc_485821B3
-    mov     0x486b05e0, a1
+    mov     Str_Langage_NG, a1
     cmp     0, d0
     bne     loc_485821F4
 loc_485821B3:
@@ -3176,7 +3176,7 @@ loc_485821B3:
     mov     d0, a1
     cmp     0, a1
     bne     loc_485821F4
-    mov     0x486b05eb, a1
+    mov     Str_Table_NG, a1
 loc_485821F4:
     mov     0x5009e322, a2
     mov     a2, a0
@@ -3227,7 +3227,7 @@ loc_48582260:
 # RhyStopFunc  (CPU 0x48582263)
 RhyStopFunc:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_48582294
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -3252,13 +3252,13 @@ AcHelpTitleBoxProc:
     add     -0x114, sp
     mov     d0, (0x128, sp)
     mov     d1, d3
-    cmp     0x50001, d3
+    cmp     EV_SHOW, d3
     bne     loc_485822AD
     bra     loc_48582323
 loc_485822AD:
-    cmp     0x600b2, d3
+    cmp     MT_Draw, d3
     beq     loc_485822BF
-    cmp     0x600b4, d3
+    cmp     MT_ParaDraw, d3
     beq     loc_485822EE
     bra     loc_48582323
 loc_485822BF:
@@ -3270,14 +3270,14 @@ loc_485822BF:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x128, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_48582330
 loc_485822EE:
     call    GetViewInstance, 0, 0
     mov     (0x130, sp), a2
-    mov     0x00060049, d1
+    mov     MT_GetTableString, d1
     mov     a2, (0x14, sp)
     mov     (0x28, a0), d0
     mov     sp, a0
@@ -3302,7 +3302,7 @@ loc_48582330:
 HelpTitleCheck:
     movm    [a2], (sp)
     add     -0x10, sp
-    cmp     0x60049, d1
+    cmp     MT_GetTableString, d1
     bne     loc_48582357
     mov     (0x24, sp), a2
     call    func_48582214_entry, [d2,d3,a2], 0x14
@@ -3321,13 +3321,13 @@ AcHelpWindowPageProc:
     add     -0x14, sp
     mov     d0, (0x28, sp)
     mov     d1, d2
-    cmp     0x600b2, d2
+    cmp     MT_Draw, d2
     beq     loc_48582386
-    cmp     0x60052, d2
+    cmp     MT_GetPageMin, d2
     beq     loc_485823AC
-    cmp     0x60053, d2
+    cmp     MT_GetPageMax, d2
     beq     loc_485823BA
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_485823CE
     jmp     loc_48582471
 loc_48582386:
@@ -3338,7 +3338,7 @@ loc_48582386:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2], 0x20
@@ -3360,14 +3360,14 @@ loc_485823CE:
     mov     a0, a2
     mov     d3, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x00060051, d1
+    mov     MT_CheckEditSw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_48582463
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x00060054, d1
+    mov     MT_GetPageNow, d1
     call    SendEvent_entry, [d2,d3], 0x24
     btst    0x80, d3
     beq     loc_48582427
@@ -3384,7 +3384,7 @@ loc_48582412:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48582447
 loc_48582427:
@@ -3401,7 +3401,7 @@ loc_48582434:
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48582447:
     exth    d3
@@ -3410,7 +3410,7 @@ loc_48582447:
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x00050008, d1
+    mov     EV_ALLPAINT, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_4858247C
@@ -3429,7 +3429,7 @@ loc_4858247C:
 # HelpTitleFunc  (CPU 0x4858247f)
 HelpTitleFunc:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_485824C0
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -3455,7 +3455,7 @@ loc_485824C0:
 # HelpPRGMENUTitleFunc  (CPU 0x485824c4)
 HelpPRGMENUTitleFunc:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_485824FE
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -3479,7 +3479,7 @@ loc_485824FE:
 # HelpAPCMENUTitleFunc  (CPU 0x48582502)
 HelpAPCMENUTitleFunc:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_4858253C
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -3503,7 +3503,7 @@ loc_4858253C:
 # HelpTEXTTitleFunc  (CPU 0x48582540)
 HelpTEXTTitleFunc:
     add     -0xc, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_48582571
     mov     (0x1c, sp), a0
     cmp     2, a0
@@ -3525,7 +3525,7 @@ loc_48582571:
 # HelpSwCatchFunc  (CPU 0x48582575)
 HelpSwCatchFunc:
     add     -0x10, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48582594
     mov     (0x20, sp), a0
     cmp     0x17, a0
@@ -3548,7 +3548,7 @@ HelpTtlSwCatchFunc:
     beq     loc_485825B3
     jmp     loc_48582670
 loc_485825B3:
-    cmp     0x50006, d3
+    cmp     EV_SWON, d3
     beq     loc_485825BE
     jmp     loc_485826D9
 loc_485825BE:
@@ -3627,7 +3627,7 @@ loc_48582670:
     and     d2, d0
     cmp     0x12c, d0
     bne     loc_485826D9
-    cmp     0x50006, d3
+    cmp     EV_SWON, d3
     bne     loc_485826D9
     mov     (0x24, sp), a0
     cmp     0x91, a0
@@ -3671,11 +3671,11 @@ CheckHelpDebugWindow:
     mov     (0x5015080c), a0
     cmp     0, a0
     beq     loc_48582716
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_48582702
-    cmp     0x50009, d1
+    cmp     EV_PAINT, d1
     beq     loc_48582702
-    cmp     0x50008, d1
+    cmp     EV_ALLPAINT, d1
     bne     loc_48582716
 loc_48582702:
     mov     (0x24, sp), a0
@@ -3693,9 +3693,9 @@ AcTextBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x600b2, d1
+    cmp     MT_Draw, d1
     beq     loc_48582732
-    cmp     0x600af, d1
+    cmp     MT_GetFont, d1
     beq     loc_4858276B
     bra     loc_48582778
 loc_48582732:
@@ -3707,11 +3707,11 @@ loc_48582732:
     mov     (0x2c, a0), d0
     clr     d1
     mov     d1, (0x10, sp)
-    mov     0x0006003a, d1
+    mov     MT_GetString, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     mov     d0, (0x10, sp)
     mov     d2, d0
-    mov     0x000600b4, d1
+    mov     MT_ParaDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_48582783
@@ -3728,13 +3728,13 @@ loc_48582783:
     ret     [d2], 0x18
 # StringCheck  (CPU 0x48582786)
 StringCheck:
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_48582798
-    cmp     0x50000, d1
+    cmp     EV_NONE, d1
     beq     loc_485827A0
     bra     loc_485827A6
 loc_48582798:
-    mov     0x486b05f4, d0
+    mov     Str_English, d0
     bra     loc_485827A7
 loc_485827A0:
     mov     (0x10, sp), a0
@@ -3747,9 +3747,9 @@ loc_485827A7:
 # HelpTextCheck  (CPU 0x485827aa)
 HelpTextCheck:
     add     -0xc, sp
-    cmp     0x6003a, d1
+    cmp     MT_GetString, d1
     beq     loc_485827BF
-    cmp     0x50000, d1
+    cmp     EV_NONE, d1
     beq     loc_485827CE
     bra     loc_485827D4
 loc_485827BF:
@@ -3771,32 +3771,32 @@ HelpNoEditCheck:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    cmp     0x60044, d1
+    cmp     MT_GetRamString, d1
     beq     loc_48582820
-    cmp     0x6003e, d1
+    cmp     MT_GetLargeStep, d1
     beq     loc_4858283E
-    cmp     0x6003f, d1
+    cmp     MT_GetSmallStep, d1
     beq     loc_48582842
-    cmp     0x60040, d1
+    cmp     MT_GetMax, d1
     beq     loc_48582846
-    cmp     0x60041, d1
+    cmp     MT_GetMin, d1
     beq     loc_4858284A
-    cmp     0x60042, d1
+    cmp     MT_GetRamAddress, d1
     beq     loc_4858284D
-    cmp     0x60043, d1
+    cmp     MT_GetRamSize, d1
     beq     loc_48582855
-    cmp     0x60078, d1
+    cmp     MT_RamData, d1
     beq     loc_48582859
     bra     loc_4858285C
 loc_48582820:
     mov     (0x28, sp), a1
-    mov     0x486b05fc, d0
+    mov     Str_3d, d0
     mov     (0x14, a1), a0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_4858285D
 loc_4858283E:
@@ -3827,7 +3827,7 @@ loc_4858285D:
 # AcHelpNoFuncEditSwProc  (CPU 0x48582860)
 AcHelpNoFuncEditSwProc:
     add     -0x10, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_485828C5
     mov     (0x20, sp), a0
     cmp     0xf, a0
@@ -3872,13 +3872,13 @@ loc_485828C6:
     ret     0, 0x10
 # LangSetMenuCheck2  (CPU 0x485828c9)
 LangSetMenuCheck2:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485828DB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485828E3
     bra     loc_485828E7
 loc_485828DB:
-    mov     0x486b07d0, d0
+    mov     ptrs_486B07D0, d0
     bra     loc_485828E8
 loc_485828E3:
     mov     1, d0
@@ -3891,9 +3891,9 @@ loc_485828E8:
 LangSetChkFunc2:
     movm    [a2], (sp)
     add     -0x14, sp
-    cmp     0x50001, d1
+    cmp     EV_SHOW, d1
     beq     loc_48582903
-    cmp     0x50002, d1
+    cmp     EV_HIDE, d1
     beq     loc_48582918
     jmp     loc_48582985
 loc_48582903:
@@ -3919,12 +3919,12 @@ loc_48582918:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
-    mov     0x0006008f, d1
+    mov     MT_SetNotDrawFlag, d1
     call    PostEvent_entry, [d2,d3], 0x24
     mov     3, d0
     mov     0x48, d1
@@ -3977,11 +3977,11 @@ AcIndexWideToggleProc2:
     add     -0x14, sp
     mov     d0, (0x2c, sp)
     mov     d1, d2
-    cmp     0x50001, d2
+    cmp     EV_SHOW, d2
     beq     loc_48582A05
-    cmp     0x50005, d2
+    cmp     EV_SWIN, d2
     beq     loc_48582A4B
-    cmp     0x50013, d2
+    cmp     EV_INDEXSELECT, d2
     bne     loc_485829EC
     jmp     loc_48582B0D
 loc_485829EC:
@@ -3989,7 +3989,7 @@ loc_485829EC:
     bne     loc_485829F7
     jmp     loc_48582B47
 loc_485829F7:
-    cmp     0x50022, d2
+    cmp     EV_YOUARESELECTED, d2
     bne     loc_48582A02
     jmp     loc_48582B8E
 loc_48582A02:
@@ -4013,7 +4013,7 @@ loc_48582A05:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     -1, d0
-    mov     0x00050022, d1
+    mov     EV_YOUARESELECTED, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -4057,7 +4057,7 @@ loc_48582AA1:
     cmp     -1, d0
     beq     loc_48582AC0
     movhu   (a0), d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4066,7 +4066,7 @@ loc_48582AC0:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movhu   (a2), d1
     mov     (a3), d0
@@ -4077,7 +4077,7 @@ loc_48582AC0:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x000600b2, d1
+    mov     MT_Draw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
@@ -4105,7 +4105,7 @@ loc_48582B0D:
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48582B43:
     clr     d0
@@ -4130,7 +4130,7 @@ loc_48582B65:
     exthu   d3
     mov     a0, (0x10, sp)
     mov     0x000d0024, d0
-    mov     0x00060029, d1
+    mov     MT_MakeEditSwID, d1
     call    SendEvent_entry, [d2,d3], 0x24
     exthu   d0
     cmp     d3, d0
@@ -4170,7 +4170,7 @@ loc_48582B8E:
     cmp     d0, d1
     bne     loc_48582BEE
     movhu   (a1), d0
-    mov     0x00050013, d1
+    mov     EV_INDEXSELECT, d1
     exth    d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4178,7 +4178,7 @@ loc_48582B8E:
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
-    mov     0x0006003b, d1
+    mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48582BEE:
     clr     d0
@@ -4230,7 +4230,7 @@ loc_48582C55:
 # LangSetOKFunc2  (CPU 0x48582c58)
 LangSetOKFunc2:
     add     -0x14, sp
-    cmp     0x50005, d1
+    cmp     EV_SWIN, d1
     bne     loc_48582C88
     mov     3, d0
     mov     0x25, d1
@@ -4248,13 +4248,13 @@ loc_48582C89:
     ret     0, 0x14
 # HelpMenuCheck2  (CPU 0x48582c8c)
 HelpMenuCheck2:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48582C9E
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48582CA6
     bra     loc_48582CAA
 loc_48582C9E:
-    mov     0x486b0d34, d0
+    mov     ptrs_486B0D34, d0
     bra     loc_48582CAB
 loc_48582CA6:
     mov     1, d0
@@ -4347,7 +4347,7 @@ loc_48582D5D:
     bls     loc_48582D68
     jmp     loc_4858315A
 loc_48582D68:
-    mov     0x486b0d78, a1
+    mov     data_486B0D78, a1
     add     0xff8fefe1, d3
     mov     d3, d0
     and     0x7f, d0
@@ -4363,7 +4363,7 @@ loc_48582D68:
     jmp     loc_4858315A
 loc_48582D8A:
     add     8, a0
-    cmp     0x486b1178, a0
+    cmp     data_486B1178, a0
     bcs     loc_48582D95
     mov     a1, a0
 loc_48582D95:
@@ -4417,9 +4417,10 @@ loc_48582DF2:
     jmp     loc_4858315E
 loc_48582DF9:
     asl2    d0
-    mov     0x486b0d48, a0
+    mov     ptrs_486B0D48, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48582E04:
     mov     1, d0
     call    func_485820F9, 0, 0
     mov     0x12d, d0
@@ -4427,35 +4428,46 @@ loc_48582DF9:
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     clr     d0
     ret     [d3,a2,a3], 0x1c
+loc_48582E1A:
     mov     1, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E24:
     mov     0x30, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E2E:
     mov     0x25, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E38:
     mov     0x33, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E42:
     mov     0x13, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E4C:
     mov     0x24, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E56:
     clr     d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E5F:
     clr     d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E68:
     mov     0x44, d0
     call    func_485820E7, 0, 0
     jmp     loc_4858315E
+loc_48582E72:
     mov     0x2b, d0
     call    func_485820E7, 0, 0
+loc_48582E79:
     jmp     loc_4858315E
     mov     0x36, d0
     call    func_485820E7, 0, 0
@@ -4749,7 +4761,7 @@ loc_48583189:
     add     d2, d1
     add     d0, d1
     asl2    d1
-    mov     0x48791948, a0
+    mov     ptrs_48791948, a0
     mov     (d1, a0), a0
     retf    [d2], 4
 
@@ -4781,7 +4793,7 @@ func_4858319A_entry:
     bgt     loc_485831D7
     jmp     loc_4858326D
 loc_485831D7:
-    mov     (0x486bce90), d0
+    mov     (data_486BCE90), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -4864,7 +4876,7 @@ loc_4858326D:
     bgt     loc_4858327C
     jmp     loc_48583312
 loc_4858327C:
-    mov     (0x486bce90), d0
+    mov     (data_486BCE90), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -4947,7 +4959,7 @@ loc_48583312:
     bgt     loc_48583321
     ret     [d2,d3,a2,a3], 0x38
 loc_48583321:
-    mov     (0x486bce90), d0
+    mov     (data_486BCE90), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -5175,7 +5187,7 @@ func_4858347E_entry:
     mov     (0x5009e72c), a0
     asl2    d1
     movbu   (d1, a0), d3
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     mov     d3, d1
     extbu   d1
     inc     a0
@@ -5304,7 +5316,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48795348, d0
+    mov     data_48795348, d0
     mov     d0, (0x28, sp)
     mov     0x284, d0
     mov     a3, a0
@@ -5315,7 +5327,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48795360, d0
+    mov     PCCOM_Events, d0
     mov     d0, (0x28, sp)
     mov     0x285, d0
     mov     a3, a0
@@ -5326,7 +5338,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48795364, d0
+    mov     PCCOM_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x286, d0
     mov     a3, a0
@@ -5337,7 +5349,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48795368, d0
+    mov     PCCOM_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x281, d0
     mov     a3, a0
@@ -5346,7 +5358,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x4879536c, d0
+    mov     data_4879536C, d0
     mov     d0, (0x28, sp)
     mov     0x289, d0
     mov     a3, a0
@@ -5357,7 +5369,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     mov     1, d2
     movhu   d2, (0x24, sp)
-    mov     0x48795370, d0
+    mov     PCCOM_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x282, d0
     mov     a3, a0
@@ -5365,7 +5377,7 @@ InitializeBlock40_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48795378, d0
+    mov     PCCOM_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x28a, d0
     mov     a3, a0
@@ -5376,7 +5388,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     mov     2, d2
     movhu   d2, (0x24, sp)
-    mov     0x48795380, d0
+    mov     PCCOM_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x283, d0
     mov     a3, a0
@@ -5384,7 +5396,7 @@ InitializeBlock40_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x4879538c, d0
+    mov     PCCOM_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x28b, d0
     mov     a3, a0
@@ -5395,7 +5407,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     mov     3, d2
     movhu   d2, (0x24, sp)
-    mov     0x48795398, d0
+    mov     PCCOM_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x280, d0
     mov     a3, a0
@@ -5405,14 +5417,14 @@ InitializeBlock40_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x487953a8, d0
+    mov     PCCOM_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x288, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x28, d0
-    mov     0x486b127c, a0
-    mov     0x486b1286, a1
+    mov     Str_OTB_PCCOM, a0
+    mov     Str_iappccom, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x02800000, d0
     mov     d0, (0x10, sp)
@@ -5420,13 +5432,13 @@ InitializeBlock40_entry:
     mov     d0, (0x14, sp)
     mov     0x12f, d0
     mov     0x02830000, d1
-    mov     0x486b1290, a0
+    mov     Str_TT_PCCOM, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
 func_48583793:
     add     -0x10, sp
-    cmp     0x5000b, d1
+    cmp     EV_ACTIVATE, d1
     bne     loc_4858380E
     mov     (0x20, sp), a0
     cmp     2, a0
@@ -5463,20 +5475,22 @@ loc_485837E3:
 loc_4858380E:
     clr     d0
     ret     0, 0x10
-    cmp     0x5000b, d1
+loc_48583812:
+    cmp     EV_ACTIVATE, d1
     bne     loc_4858381A
 loc_4858381A:
     clr     d0
     retf    0, 0
-    cmp     0x60090, d1
+loc_4858381E:
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48583838
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48583840
-    cmp     0x50000, d1
+    cmp     EV_NONE, d1
     beq     loc_48583844
     bra     loc_4858384A
 loc_48583838:
-    mov     0x486b1538, d0
+    mov     ptrs_486B1538, d0
     bra     loc_4858384B
 loc_48583840:
     mov     1, d0
@@ -5602,7 +5616,7 @@ loc_485838FC:
     mov     -1, d0
     jmp     loc_48583F89
 loc_48583901:
-    movbu   (0x50007dd4), d0
+    movbu   (data_50007DD4), d0
     cmp     d2, d0
     bne     loc_4858390D
     jmp     loc_48583A19
@@ -5617,8 +5631,8 @@ loc_4858391A:
     clr     d0
     call    func_484C2FDA_entry, [d2,d3], 8
     clr     d0
-    movbu   d2, (0x500064e9)
-    movbu   d0, (0x500064ea)
+    movbu   d2, (data_500064E9)
+    movbu   d0, (data_500064EA)
     call    GetModeNow_entry, 0, 0x10
     and     0xffff, d0
     cmp     1, d0
@@ -5627,27 +5641,27 @@ loc_4858391A:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (0x500064e8)
+    movbu   d0, (data_500064E8)
     clr     d0
     jmp     loc_48583F89
 loc_48583955:
-    movbu   d2, (0x500064e8)
+    movbu   d2, (data_500064E8)
     mov     -2, d0
     jmp     loc_48583F89
 loc_48583960:
-    movbu   (0x500064e8), d0
+    movbu   (data_500064E8), d0
     cmp     d2, d0
     bne     loc_4858396C
     jmp     loc_485839FD
 loc_4858396C:
-    movbu   (0x500064ea), d0
+    movbu   (data_500064EA), d0
     cmp     d2, d0
     beq     loc_4858397E
     clr     d0
     mov     d2, d1
     call    SDModuleModeReq_entry, 0, 0xc
 loc_4858397E:
-    movbu   (0x500064e9), d0
+    movbu   (data_500064E9), d0
     cmp     d2, d0
     beq     loc_4858399E
     call    GetSeqPlyPart_entry, 0, 0x10
@@ -5689,9 +5703,9 @@ loc_485839DC:
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
 loc_485839E7:
     clr     d0
-    movbu   d2, (0x500064e8)
-    movbu   d2, (0x500064e9)
-    movbu   d0, (0x500064ea)
+    movbu   d2, (data_500064E8)
+    movbu   d2, (data_500064E9)
+    movbu   d0, (data_500064EA)
     jmp     loc_48583F89
 loc_485839FD:
     mov     -2, d0
@@ -5745,9 +5759,10 @@ loc_48583A5E:
 loc_48583A65:
     add     -1, d0
     asl2    d0
-    mov     0x486b15bc, a0
+    mov     Str_r_XH_XH_XHe_XH_XH_XH_XH_XH_XHx_XHx_XH_XH, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48583A72:
     movbu   (0x50172f4e), d2
     movbu   (0x50172f4f), d1
     movbu   (0x50172f4d), d0
@@ -5758,9 +5773,10 @@ loc_48583A65:
     call    SaveSmf_entry, [d2], 0x10
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583A9A:
     mov     0x50172f57, a2
     mov     a2, a0
-    mov     0x486b1554, a1
+    mov     Str_rb, a1
     call    func_48583F90_entry, [d2,a2,a3], 0x1c
     mov     d0, d2
     exth    d0
@@ -5842,6 +5858,7 @@ loc_48583B70:
     mov     0xc, d0
     call    func_48462E56_entry, 0, 8
     jmp     loc_48583F7A
+loc_48583B85:
     mov     0x50172f57, a3
     mov     a3, a0
     mov     0x5c, d0
@@ -5884,9 +5901,10 @@ loc_48583BDE:
     jmp     loc_48583F7A
 loc_48583BE5:
     asl2    d0
-    mov     0x486b158c, a0
+    mov     ptrs_486B158C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48583BF0:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5894,6 +5912,7 @@ loc_48583BE5:
     call    SaveLsw_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583C0B:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5914,6 +5933,7 @@ loc_48583C31:
     mov     d0, d2
     call    ResetSavePMBankNUM, 0, 0
     jmp     loc_48583F7A
+loc_48583C51:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5921,6 +5941,7 @@ loc_48583C31:
     call    SaveMd_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583C6C:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5928,6 +5949,7 @@ loc_48583C31:
     call    SaveFav_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583C87:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5935,6 +5957,7 @@ loc_48583C31:
     call    SaveHmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583CA2:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5942,6 +5965,7 @@ loc_48583C31:
     call    SaveEfc_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583CBD:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5949,6 +5973,7 @@ loc_48583C31:
     call    SaveSqt_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583CD8:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5956,6 +5981,7 @@ loc_48583C31:
     call    SaveCmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583CF3:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5963,6 +5989,7 @@ loc_48583C31:
     call    SaveMsp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583D0E:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5970,6 +5997,7 @@ loc_48583C31:
     call    SaveTm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583D29:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5977,6 +6005,7 @@ loc_48583C31:
     call    SaveRcm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583D44:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C300D_entry, 0, 0x3c
@@ -5985,6 +6014,7 @@ loc_48583C31:
     call    SaveCst_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583D65:
     mov     0x50172f57, a3
     mov     a3, a0
     mov     0x5c, d0
@@ -6027,21 +6057,25 @@ loc_48583DBE:
     jmp     loc_48583F7A
 loc_48583DC5:
     asl2    d0
-    mov     0x486b1558, a0
+    mov     ptrs_486B1558, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48583DD0:
     mov     a2, a0
     call    LoadLsw_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583DDC:
     mov     a2, a0
     call    LoadPmt_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583DE8:
     mov     a2, a0
     call    LoadMd_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583DF4:
     mov     a2, a0
     call    LoadSqt_HD_entry, 0, 0xc
     mov     d0, d2
@@ -6051,8 +6085,9 @@ loc_48583DC5:
     jmp     loc_48583F7A
 loc_48583E05:
     mov     1, d0
-    movbu   d0, (0x500064e9)
+    movbu   d0, (data_500064E9)
     jmp     loc_48583F7A
+loc_48583E10:
     mov     a2, a0
     call    LoadSqfSeq_HD_entry, 0, 0xc
     mov     d0, d2
@@ -6062,41 +6097,50 @@ loc_48583E05:
     jmp     loc_48583F7A
 loc_48583E21:
     mov     1, d0
-    movbu   d0, (0x500064e9)
+    movbu   d0, (data_500064E9)
     jmp     loc_48583F7A
+loc_48583E2C:
     mov     a2, a0
     call    LoadCmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E38:
     mov     a2, a0
     call    LoadMsp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E44:
     mov     a2, a0
     call    LoadTm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E50:
     mov     a2, a0
     call    LoadEfc_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E5C:
     mov     a2, a0
     call    LoadFav_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E68:
     mov     a2, a0
     call    LoadHmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E74:
     mov     a2, a0
     call    LoadRcm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E80:
     movbu   (0x50172f4d), d0
     exth    d0
     call    LoadCst_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d2
     jmp     loc_48583F7A
+loc_48583E92:
     mov     sp, a0
     add     0x18, a0
     call    func_48552215_entry, [a2], 0x14
@@ -6110,13 +6154,15 @@ loc_48583EA5:
     mov     (0x18, sp), d1
     call    func_484C300D_entry, 0, 0x3c
     mov     1, d0
-    movbu   d0, (0x500064ea)
+    movbu   d0, (data_500064EA)
     jmp     loc_48583F7A
+loc_48583EBB:
     call    func_4855228B_entry, 0, 0x10
     mov     d0, d2
     mov     1, d0
-    movbu   d0, (0x500064ea)
+    movbu   d0, (data_500064EA)
     jmp     loc_48583F7A
+loc_48583ECE:
     mov     sp, a0
     add     0x18, a0
     call    func_48552250_entry, [a2], 0x14
@@ -6130,20 +6176,23 @@ loc_48583EE1:
     mov     (0x18, sp), d1
     call    func_484C300D_entry, 0, 0x3c
     mov     1, d0
-    movbu   d0, (0x500064ea)
+    movbu   d0, (data_500064EA)
     jmp     loc_48583F7A
+loc_48583EF7:
     call    func_485522C2_entry, 0, 0x10
     mov     d0, d2
     mov     1, d0
-    movbu   d0, (0x500064ea)
+    movbu   d0, (data_500064EA)
     bra     loc_48583F7A
+loc_48583F09:
     mov     0x50172f57, a0
     call    func_485522F9_entry, [a2], 0x14
     mov     d0, d2
     call    SdRemountSync_entry, [d2], 0x10
     mov     1, d0
-    movbu   d0, (0x500064ea)
+    movbu   d0, (data_500064EA)
     bra     loc_48583F7A
+loc_48583F28:
     movbu   (0x50172f4d), d0
     mov     -1, d2
     cmp     0, d0
@@ -6284,8 +6333,10 @@ loc_4858409F:
     movhu   (0x5017316c), d0
 loc_485840A5:
     ret     0, 0xc
+loc_485840A8:
     movhu   (0x5017316c), d0
     retf    0, 0
+loc_485840B1:
     clr     d0
     retf    0, 0
 
@@ -6618,6 +6669,7 @@ loc_4858443C:
     movhu   d0, (0x5017316c)
 loc_48584455:
     ret     0, 0xc
+loc_48584458:
     movbu   (0x50173060), d1
     clr     d0
     cmp     d0, d1
@@ -6635,12 +6687,16 @@ loc_4858447B:
     movhu   d1, (0x5017316c)
 loc_48584482:
     retf    0, 0
+loc_48584485:
     mov     0x0fffffff, d0
     retf    0, 0
+loc_4858448E:
     mov     0x50172f57, a0
     retf    0, 0
+loc_48584497:
     mov     0x50172f57, a0
     retf    0, 0
+loc_485844A0:
     mov     0x50172f57, a0
     retf    0, 0
 # InitializeBlock41  (CPU 0x485844a9)
@@ -6656,7 +6712,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487953b8, d0
+    mov     data_487953B8, d0
     mov     d0, (0x28, sp)
     mov     0x294, d0
     mov     a3, a0
@@ -6667,7 +6723,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487953d0, d0
+    mov     DEMORUN_Events, d0
     mov     d0, (0x28, sp)
     mov     0x295, d0
     mov     a3, a0
@@ -6678,7 +6734,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487953d4, d0
+    mov     DEMORUN_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x296, d0
     mov     a3, a0
@@ -6689,7 +6745,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487953d8, d0
+    mov     DEMORUN_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x291, d0
     mov     a3, a0
@@ -6698,7 +6754,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487953dc, d0
+    mov     data_487953DC, d0
     mov     d0, (0x28, sp)
     mov     0x299, d0
     mov     a3, a0
@@ -6709,7 +6765,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     mov     0x9b, d2
     movhu   d2, (0x24, sp)
-    mov     0x487953e0, d0
+    mov     DEMORUN_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x292, d0
     mov     a3, a0
@@ -6717,7 +6773,7 @@ InitializeBlock41_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48795650, d0
+    mov     DEMORUN_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x29a, d0
     mov     a3, a0
@@ -6728,7 +6784,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487958c0, d0
+    mov     DEMORUN_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x293, d0
     mov     a3, a0
@@ -6737,7 +6793,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x487958c4, d0
+    mov     data_487958C4, d0
     mov     d0, (0x28, sp)
     mov     0x29b, d0
     mov     a3, a0
@@ -6748,7 +6804,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     mov     0x183, d2
     movhu   d2, (0x24, sp)
-    mov     0x487958c8, d0
+    mov     DEMORUN_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x290, d0
     mov     a3, a0
@@ -6758,14 +6814,14 @@ InitializeBlock41_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48795ed8, d0
+    mov     DEMORUN_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x298, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x29, d0
-    mov     0x486b62a8, a0
-    mov     0x486b62b4, a1
+    mov     Str_OTB_DEMORUN, a0
+    mov     Str_idemorun, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x02900001, d0
     mov     d0, (0x10, sp)
@@ -6773,19 +6829,19 @@ InitializeBlock41_entry:
     mov     d0, (0x14, sp)
     mov     0x130, d0
     mov     0x00020000, d1
-    mov     0x486b62c0, a0
+    mov     Str_TT_DEMORUN, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
     retf    0, 0
 # FtLangText01  (CPU 0x4858467d)
 FtLangText01:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858468F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584697
     bra     loc_4858469B
 loc_4858468F:
-    mov     0x486b63e4, d0
+    mov     ptrs_486B63E4, d0
     bra     loc_4858469C
 loc_48584697:
     mov     1, d0
@@ -6796,13 +6852,13 @@ loc_4858469C:
     retf    0, 0
 # FtLangText01s  (CPU 0x4858469f)
 FtLangText01s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485846B1
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485846B9
     bra     loc_485846BD
 loc_485846B1:
-    mov     0x486b6410, d0
+    mov     ptrs_486B6410, d0
     bra     loc_485846BE
 loc_485846B9:
     mov     1, d0
@@ -6813,13 +6869,13 @@ loc_485846BE:
     retf    0, 0
 # FtLangText02  (CPU 0x485846c1)
 FtLangText02:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485846D3
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485846DB
     bra     loc_485846DF
 loc_485846D3:
-    mov     0x486b650c, d0
+    mov     ptrs_486B650C, d0
     bra     loc_485846E0
 loc_485846DB:
     mov     1, d0
@@ -6830,13 +6886,13 @@ loc_485846E0:
     retf    0, 0
 # FtLangText03  (CPU 0x485846e3)
 FtLangText03:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485846F5
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485846FD
     bra     loc_48584701
 loc_485846F5:
-    mov     0x486b6648, d0
+    mov     ptrs_486B6648, d0
     bra     loc_48584702
 loc_485846FD:
     mov     1, d0
@@ -6847,13 +6903,13 @@ loc_48584702:
     retf    0, 0
 # FtLangText04  (CPU 0x48584705)
 FtLangText04:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584717
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858471F
     bra     loc_48584723
 loc_48584717:
-    mov     0x486b6784, d0
+    mov     ptrs_486B6784, d0
     bra     loc_48584724
 loc_4858471F:
     mov     1, d0
@@ -6864,13 +6920,13 @@ loc_48584724:
     retf    0, 0
 # FtLangText05  (CPU 0x48584727)
 FtLangText05:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584739
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584741
     bra     loc_48584745
 loc_48584739:
-    mov     0x486b684c, d0
+    mov     ptrs_486B684C, d0
     bra     loc_48584746
 loc_48584741:
     mov     1, d0
@@ -6881,13 +6937,13 @@ loc_48584746:
     retf    0, 0
 # FtLangText06  (CPU 0x48584749)
 FtLangText06:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858475B
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584763
     bra     loc_48584767
 loc_4858475B:
-    mov     0x486b696c, d0
+    mov     ptrs_486B696C, d0
     bra     loc_48584768
 loc_48584763:
     mov     1, d0
@@ -6898,13 +6954,13 @@ loc_48584768:
     retf    0, 0
 # FtLangText07  (CPU 0x4858476b)
 FtLangText07:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858477D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584785
     bra     loc_48584789
 loc_4858477D:
-    mov     0x486b6ac4, d0
+    mov     ptrs_486B6AC4, d0
     bra     loc_4858478A
 loc_48584785:
     mov     1, d0
@@ -6915,13 +6971,13 @@ loc_4858478A:
     retf    0, 0
 # FtLangText08  (CPU 0x4858478d)
 FtLangText08:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858479F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485847A7
     bra     loc_485847AB
 loc_4858479F:
-    mov     0x486b6bfc, d0
+    mov     ptrs_486B6BFC, d0
     bra     loc_485847AC
 loc_485847A7:
     mov     1, d0
@@ -6932,13 +6988,13 @@ loc_485847AC:
     retf    0, 0
 # FtLangText09  (CPU 0x485847af)
 FtLangText09:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485847C1
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485847C9
     bra     loc_485847CD
 loc_485847C1:
-    mov     0x486b6d34, d0
+    mov     ptrs_486B6D34, d0
     bra     loc_485847CE
 loc_485847C9:
     mov     1, d0
@@ -6949,13 +7005,13 @@ loc_485847CE:
     retf    0, 0
 # FtLangText10  (CPU 0x485847d1)
 FtLangText10:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485847E3
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485847EB
     bra     loc_485847EF
 loc_485847E3:
-    mov     0x486b6e68, d0
+    mov     ptrs_486B6E68, d0
     bra     loc_485847F0
 loc_485847EB:
     mov     1, d0
@@ -6966,13 +7022,13 @@ loc_485847F0:
     retf    0, 0
 # FtLangText11  (CPU 0x485847f3)
 FtLangText11:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584805
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858480D
     bra     loc_48584811
 loc_48584805:
-    mov     0x486b6fc4, d0
+    mov     ptrs_486B6FC4, d0
     bra     loc_48584812
 loc_4858480D:
     mov     1, d0
@@ -6983,13 +7039,13 @@ loc_48584812:
     retf    0, 0
 # FtLangText12  (CPU 0x48584815)
 FtLangText12:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584827
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858482F
     bra     loc_48584833
 loc_48584827:
-    mov     0x486b7100, d0
+    mov     ptrs_486B7100, d0
     bra     loc_48584834
 loc_4858482F:
     mov     1, d0
@@ -7000,13 +7056,13 @@ loc_48584834:
     retf    0, 0
 # FtLangText13  (CPU 0x48584837)
 FtLangText13:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584849
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584851
     bra     loc_48584855
 loc_48584849:
-    mov     0x486b7224, d0
+    mov     ptrs_486B7224, d0
     bra     loc_48584856
 loc_48584851:
     mov     1, d0
@@ -7017,13 +7073,13 @@ loc_48584856:
     retf    0, 0
 # FtLangText14  (CPU 0x48584859)
 FtLangText14:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858486B
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584873
     bra     loc_48584877
 loc_4858486B:
-    mov     0x486b72c4, d0
+    mov     ptrs_486B72C4, d0
     bra     loc_48584878
 loc_48584873:
     mov     1, d0
@@ -7034,13 +7090,13 @@ loc_48584878:
     retf    0, 0
 # FtLangText15  (CPU 0x4858487b)
 FtLangText15:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858488D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584895
     bra     loc_48584899
 loc_4858488D:
-    mov     0x486b7390, d0
+    mov     ptrs_486B7390, d0
     bra     loc_4858489A
 loc_48584895:
     mov     1, d0
@@ -7051,13 +7107,13 @@ loc_4858489A:
     retf    0, 0
 # FtLangText16  (CPU 0x4858489d)
 FtLangText16:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485848AF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485848B7
     bra     loc_485848BB
 loc_485848AF:
-    mov     0x486b73c4, d0
+    mov     ptrs_486B73C4, d0
     bra     loc_485848BC
 loc_485848B7:
     mov     1, d0
@@ -7068,13 +7124,13 @@ loc_485848BC:
     retf    0, 0
 # FtLangText17  (CPU 0x485848bf)
 FtLangText17:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485848D1
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485848D9
     bra     loc_485848DD
 loc_485848D1:
-    mov     0x486b7494, d0
+    mov     ptrs_486B7494, d0
     bra     loc_485848DE
 loc_485848D9:
     mov     1, d0
@@ -7085,13 +7141,13 @@ loc_485848DE:
     retf    0, 0
 # FtLangText18  (CPU 0x485848e1)
 FtLangText18:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485848F3
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485848FB
     bra     loc_485848FF
 loc_485848F3:
-    mov     0x486b7628, d0
+    mov     ptrs_486B7628, d0
     bra     loc_48584900
 loc_485848FB:
     mov     1, d0
@@ -7102,13 +7158,13 @@ loc_48584900:
     retf    0, 0
 # FtLangText19  (CPU 0x48584903)
 FtLangText19:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584915
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858491D
     bra     loc_48584921
 loc_48584915:
-    mov     0x486b7724, d0
+    mov     ptrs_486B7724, d0
     bra     loc_48584922
 loc_4858491D:
     mov     1, d0
@@ -7119,13 +7175,13 @@ loc_48584922:
     retf    0, 0
 # FtLangText20  (CPU 0x48584925)
 FtLangText20:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584937
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858493F
     bra     loc_48584943
 loc_48584937:
-    mov     0x486b78dc, d0
+    mov     ptrs_486B78DC, d0
     bra     loc_48584944
 loc_4858493F:
     mov     1, d0
@@ -7136,13 +7192,13 @@ loc_48584944:
     retf    0, 0
 # FtLangText21  (CPU 0x48584947)
 FtLangText21:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584959
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584961
     bra     loc_48584965
 loc_48584959:
-    mov     0x486b799c, d0
+    mov     ptrs_486B799C, d0
     bra     loc_48584966
 loc_48584961:
     mov     1, d0
@@ -7153,13 +7209,13 @@ loc_48584966:
     retf    0, 0
 # FtLangText21s  (CPU 0x48584969)
 FtLangText21s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858497B
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584983
     bra     loc_48584987
 loc_4858497B:
-    mov     0x486b79dc, d0
+    mov     ptrs_486B79DC, d0
     bra     loc_48584988
 loc_48584983:
     mov     1, d0
@@ -7170,13 +7226,13 @@ loc_48584988:
     retf    0, 0
 # FtLangText21g  (CPU 0x4858498b)
 FtLangText21g:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858499D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485849A5
     bra     loc_485849A9
 loc_4858499D:
-    mov     0x486b7a18, d0
+    mov     ptrs_486B7A18, d0
     bra     loc_485849AA
 loc_485849A5:
     mov     1, d0
@@ -7187,13 +7243,13 @@ loc_485849AA:
     retf    0, 0
 # FtLangText21sg  (CPU 0x485849ad)
 FtLangText21sg:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485849BF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485849C7
     bra     loc_485849CB
 loc_485849BF:
-    mov     0x486b7a4c, d0
+    mov     ptrs_486B7A4C, d0
     bra     loc_485849CC
 loc_485849C7:
     mov     1, d0
@@ -7204,13 +7260,13 @@ loc_485849CC:
     retf    0, 0
 # FtLangText22  (CPU 0x485849cf)
 FtLangText22:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485849E1
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485849E9
     bra     loc_485849ED
 loc_485849E1:
-    mov     0x486b7b80, d0
+    mov     Str_hzkH_zkH_zkH_kHz_kH_kH_kHThe_Storage_Med, d0
     bra     loc_485849EE
 loc_485849E9:
     mov     1, d0
@@ -7221,13 +7277,13 @@ loc_485849EE:
     retf    0, 0
 # FtLangText23  (CPU 0x485849f1)
 FtLangText23:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584A03
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584A0B
     bra     loc_48584A0F
 loc_48584A03:
-    mov     0x486b7c30, d0
+    mov     ptrs_486B7C30, d0
     bra     loc_48584A10
 loc_48584A0B:
     mov     1, d0
@@ -7238,13 +7294,13 @@ loc_48584A10:
     retf    0, 0
 # FtLangText24  (CPU 0x48584a13)
 FtLangText24:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584A25
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584A2D
     bra     loc_48584A31
 loc_48584A25:
-    mov     0x486b7d20, d0
+    mov     ptrs_486B7D20, d0
     bra     loc_48584A32
 loc_48584A2D:
     mov     1, d0
@@ -7255,13 +7311,13 @@ loc_48584A32:
     retf    0, 0
 # FtLangText25  (CPU 0x48584a35)
 FtLangText25:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584A47
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584A4F
     bra     loc_48584A53
 loc_48584A47:
-    mov     0x486b7e94, d0
+    mov     ptrs_486B7E94, d0
     bra     loc_48584A54
 loc_48584A4F:
     mov     1, d0
@@ -7272,13 +7328,13 @@ loc_48584A54:
     retf    0, 0
 # FtLangText26  (CPU 0x48584a57)
 FtLangText26:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584A69
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584A71
     bra     loc_48584A75
 loc_48584A69:
-    mov     0x486b7ff0, d0
+    mov     ptrs_486B7FF0, d0
     bra     loc_48584A76
 loc_48584A71:
     mov     1, d0
@@ -7289,13 +7345,13 @@ loc_48584A76:
     retf    0, 0
 # FtLangText27  (CPU 0x48584a79)
 FtLangText27:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584A8B
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584A93
     bra     loc_48584A97
 loc_48584A8B:
-    mov     0x486b8068, d0
+    mov     ptrs_486B8068, d0
     bra     loc_48584A98
 loc_48584A93:
     mov     1, d0
@@ -7306,13 +7362,13 @@ loc_48584A98:
     retf    0, 0
 # FtLangText28  (CPU 0x48584a9b)
 FtLangText28:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584AAD
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584AB5
     bra     loc_48584AB9
 loc_48584AAD:
-    mov     0x486b815c, d0
+    mov     ptrs_486B815C, d0
     bra     loc_48584ABA
 loc_48584AB5:
     mov     1, d0
@@ -7323,13 +7379,13 @@ loc_48584ABA:
     retf    0, 0
 # FtLangText29  (CPU 0x48584abd)
 FtLangText29:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584ACF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584AD7
     bra     loc_48584ADB
 loc_48584ACF:
-    mov     0x486b824c, d0
+    mov     ptrs_486B824C, d0
     bra     loc_48584ADC
 loc_48584AD7:
     mov     1, d0
@@ -7340,13 +7396,13 @@ loc_48584ADC:
     retf    0, 0
 # FtLangText30  (CPU 0x48584adf)
 FtLangText30:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584AF1
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584AF9
     bra     loc_48584AFD
 loc_48584AF1:
-    mov     0x486b83a4, d0
+    mov     ptrs_486B83A4, d0
     bra     loc_48584AFE
 loc_48584AF9:
     mov     1, d0
@@ -7357,13 +7413,13 @@ loc_48584AFE:
     retf    0, 0
 # FtLangText31  (CPU 0x48584b01)
 FtLangText31:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584B13
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584B1B
     bra     loc_48584B1F
 loc_48584B13:
-    mov     0x486b84dc, d0
+    mov     ptrs_486B84DC, d0
     bra     loc_48584B20
 loc_48584B1B:
     mov     1, d0
@@ -7374,13 +7430,13 @@ loc_48584B20:
     retf    0, 0
 # FtLangText32  (CPU 0x48584b23)
 FtLangText32:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584B35
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584B3D
     bra     loc_48584B41
 loc_48584B35:
-    mov     0x486b8690, d0
+    mov     ptrs_486B8690, d0
     bra     loc_48584B42
 loc_48584B3D:
     mov     1, d0
@@ -7391,13 +7447,13 @@ loc_48584B42:
     retf    0, 0
 # FtLangText33  (CPU 0x48584b45)
 FtLangText33:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584B57
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584B5F
     bra     loc_48584B63
 loc_48584B57:
-    mov     0x486b878c, d0
+    mov     ptrs_486B878C, d0
     bra     loc_48584B64
 loc_48584B5F:
     mov     1, d0
@@ -7408,13 +7464,13 @@ loc_48584B64:
     retf    0, 0
 # FtLangText34  (CPU 0x48584b67)
 FtLangText34:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584B79
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584B81
     bra     loc_48584B85
 loc_48584B79:
-    mov     0x486b88dc, d0
+    mov     ptrs_486B88DC, d0
     bra     loc_48584B86
 loc_48584B81:
     mov     1, d0
@@ -7425,13 +7481,13 @@ loc_48584B86:
     retf    0, 0
 # FtLangText35  (CPU 0x48584b89)
 FtLangText35:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584B9B
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584BA3
     bra     loc_48584BA7
 loc_48584B9B:
-    mov     0x486b8970, d0
+    mov     ptrs_486B8970, d0
     bra     loc_48584BA8
 loc_48584BA3:
     mov     1, d0
@@ -7442,13 +7498,13 @@ loc_48584BA8:
     retf    0, 0
 # FtLangText36  (CPU 0x48584bab)
 FtLangText36:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584BBD
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584BC5
     bra     loc_48584BC9
 loc_48584BBD:
-    mov     0x486b8c14, d0
+    mov     ptrs_486B8C14, d0
     bra     loc_48584BCA
 loc_48584BC5:
     mov     1, d0
@@ -7459,13 +7515,13 @@ loc_48584BCA:
     retf    0, 0
 # FtLangText37  (CPU 0x48584bcd)
 FtLangText37:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584BDF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584BE7
     bra     loc_48584BEB
 loc_48584BDF:
-    mov     0x486b8d88, d0
+    mov     ptrs_486B8D88, d0
     bra     loc_48584BEC
 loc_48584BE7:
     mov     1, d0
@@ -7476,13 +7532,13 @@ loc_48584BEC:
     retf    0, 0
 # FtLangText38  (CPU 0x48584bef)
 FtLangText38:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584C01
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584C09
     bra     loc_48584C0D
 loc_48584C01:
-    mov     0x486b8eac, d0
+    mov     ptrs_486B8EAC, d0
     bra     loc_48584C0E
 loc_48584C09:
     mov     1, d0
@@ -7493,13 +7549,13 @@ loc_48584C0E:
     retf    0, 0
 # FtLangText39  (CPU 0x48584c11)
 FtLangText39:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584C23
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584C2B
     bra     loc_48584C2F
 loc_48584C23:
-    mov     0x486b8fcc, d0
+    mov     ptrs_486B8FCC, d0
     bra     loc_48584C30
 loc_48584C2B:
     mov     1, d0
@@ -7510,13 +7566,13 @@ loc_48584C30:
     retf    0, 0
 # FtLangText40  (CPU 0x48584c33)
 FtLangText40:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584C45
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584C4D
     bra     loc_48584C51
 loc_48584C45:
-    mov     0x486b9194, d0
+    mov     ptrs_486B9194, d0
     bra     loc_48584C52
 loc_48584C4D:
     mov     1, d0
@@ -7527,13 +7583,13 @@ loc_48584C52:
     retf    0, 0
 # FtLangText41  (CPU 0x48584c55)
 FtLangText41:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584C67
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584C6F
     bra     loc_48584C73
 loc_48584C67:
-    mov     0x486b9314, d0
+    mov     ptrs_486B9314, d0
     bra     loc_48584C74
 loc_48584C6F:
     mov     1, d0
@@ -7544,13 +7600,13 @@ loc_48584C74:
     retf    0, 0
 # FtLangText42  (CPU 0x48584c77)
 FtLangText42:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584C89
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584C91
     bra     loc_48584C95
 loc_48584C89:
-    mov     0x486b94a4, d0
+    mov     ptrs_486B94A4, d0
     bra     loc_48584C96
 loc_48584C91:
     mov     1, d0
@@ -7561,13 +7617,13 @@ loc_48584C96:
     retf    0, 0
 # FtLangText43  (CPU 0x48584c99)
 FtLangText43:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584CAB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584CB3
     bra     loc_48584CB7
 loc_48584CAB:
-    mov     0x486b972c, d0
+    mov     Str_kHI_kH_kH_kH_kH_kH_kHFurther_Using_Music, d0
     bra     loc_48584CB8
 loc_48584CB3:
     mov     1, d0
@@ -7578,13 +7634,13 @@ loc_48584CB8:
     retf    0, 0
 # FtLangText44  (CPU 0x48584cbb)
 FtLangText44:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584CCD
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584CD5
     bra     loc_48584CD9
 loc_48584CCD:
-    mov     0x486b97ec, d0
+    mov     ptrs_486B97EC, d0
     bra     loc_48584CDA
 loc_48584CD5:
     mov     1, d0
@@ -7595,13 +7651,13 @@ loc_48584CDA:
     retf    0, 0
 # FtLangText45  (CPU 0x48584cdd)
 FtLangText45:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584CEF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584CF7
     bra     loc_48584CFB
 loc_48584CEF:
-    mov     0x486b9aac, d0
+    mov     ptrs_486B9AAC, d0
     bra     loc_48584CFC
 loc_48584CF7:
     mov     1, d0
@@ -7612,13 +7668,13 @@ loc_48584CFC:
     retf    0, 0
 # FtLangText46  (CPU 0x48584cff)
 FtLangText46:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584D11
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584D19
     bra     loc_48584D1D
 loc_48584D11:
-    mov     0x486b9c1c, d0
+    mov     ptrs_486B9C1C, d0
     bra     loc_48584D1E
 loc_48584D19:
     mov     1, d0
@@ -7629,13 +7685,13 @@ loc_48584D1E:
     retf    0, 0
 # FtLangText47  (CPU 0x48584d21)
 FtLangText47:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584D33
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584D3B
     bra     loc_48584D3F
 loc_48584D33:
-    mov     0x486b9d0c, d0
+    mov     ptrs_486B9D0C, d0
     bra     loc_48584D40
 loc_48584D3B:
     mov     1, d0
@@ -7646,13 +7702,13 @@ loc_48584D40:
     retf    0, 0
 # FtLangText48  (CPU 0x48584d43)
 FtLangText48:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584D55
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584D5D
     bra     loc_48584D61
 loc_48584D55:
-    mov     0x486b9f30, d0
+    mov     ptrs_486B9F30, d0
     bra     loc_48584D62
 loc_48584D5D:
     mov     1, d0
@@ -7663,13 +7719,13 @@ loc_48584D62:
     retf    0, 0
 # FtLangText49  (CPU 0x48584d65)
 FtLangText49:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584D77
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584D7F
     bra     loc_48584D83
 loc_48584D77:
-    mov     0x486ba064, d0
+    mov     ptrs_486BA064, d0
     bra     loc_48584D84
 loc_48584D7F:
     mov     1, d0
@@ -7680,13 +7736,13 @@ loc_48584D84:
     retf    0, 0
 # FtLangText50  (CPU 0x48584d87)
 FtLangText50:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584D99
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584DA1
     bra     loc_48584DA5
 loc_48584D99:
-    mov     0x486ba150, d0
+    mov     ptrs_486BA150, d0
     bra     loc_48584DA6
 loc_48584DA1:
     mov     1, d0
@@ -7697,13 +7753,13 @@ loc_48584DA6:
     retf    0, 0
 # FtLangText51  (CPU 0x48584da9)
 FtLangText51:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584DBB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584DC3
     bra     loc_48584DC7
 loc_48584DBB:
-    mov     0x486ba260, d0
+    mov     ptrs_486BA260, d0
     bra     loc_48584DC8
 loc_48584DC3:
     mov     1, d0
@@ -7714,13 +7770,13 @@ loc_48584DC8:
     retf    0, 0
 # FtLangText52  (CPU 0x48584dcb)
 FtLangText52:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584DDD
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584DE5
     bra     loc_48584DE9
 loc_48584DDD:
-    mov     0x486ba42c, d0
+    mov     ptrs_486BA42C, d0
     bra     loc_48584DEA
 loc_48584DE5:
     mov     1, d0
@@ -7731,13 +7787,13 @@ loc_48584DEA:
     retf    0, 0
 # FtLangText53  (CPU 0x48584ded)
 FtLangText53:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584DFF
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584E07
     bra     loc_48584E0B
 loc_48584DFF:
-    mov     0x486ba534, d0
+    mov     ptrs_486BA534, d0
     bra     loc_48584E0C
 loc_48584E07:
     mov     1, d0
@@ -7748,13 +7804,13 @@ loc_48584E0C:
     retf    0, 0
 # FtLangText54  (CPU 0x48584e0f)
 FtLangText54:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584E21
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584E29
     bra     loc_48584E2D
 loc_48584E21:
-    mov     0x486ba604, d0
+    mov     ptrs_486BA604, d0
     bra     loc_48584E2E
 loc_48584E29:
     mov     1, d0
@@ -7765,13 +7821,13 @@ loc_48584E2E:
     retf    0, 0
 # FtLangText55  (CPU 0x48584e31)
 FtLangText55:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584E43
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584E4B
     bra     loc_48584E4F
 loc_48584E43:
-    mov     0x486ba68c, d0
+    mov     Str_kH3_kHS_kHm_kH_kH_kH_kHOne_Simple_Connec, d0
     bra     loc_48584E50
 loc_48584E4B:
     mov     1, d0
@@ -7782,13 +7838,13 @@ loc_48584E50:
     retf    0, 0
 # FtLangText56  (CPU 0x48584e53)
 FtLangText56:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584E65
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584E6D
     bra     loc_48584E71
 loc_48584E65:
-    mov     0x486ba73c, d0
+    mov     ptrs_486BA73C, d0
     bra     loc_48584E72
 loc_48584E6D:
     mov     1, d0
@@ -7799,13 +7855,13 @@ loc_48584E72:
     retf    0, 0
 # FtLangText56s  (CPU 0x48584e75)
 FtLangText56s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584E87
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584E8F
     bra     loc_48584E93
 loc_48584E87:
-    mov     0x486ba818, d0
+    mov     ptrs_486BA818, d0
     bra     loc_48584E94
 loc_48584E8F:
     mov     1, d0
@@ -7816,13 +7872,13 @@ loc_48584E94:
     retf    0, 0
 # FtLangText57  (CPU 0x48584e97)
 FtLangText57:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584EA9
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584EB1
     bra     loc_48584EB5
 loc_48584EA9:
-    mov     0x486ba9ec, d0
+    mov     ptrs_486BA9EC, d0
     bra     loc_48584EB6
 loc_48584EB1:
     mov     1, d0
@@ -7833,13 +7889,13 @@ loc_48584EB6:
     retf    0, 0
 # FtLangText57s  (CPU 0x48584eb9)
 FtLangText57s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584ECB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584ED3
     bra     loc_48584ED7
 loc_48584ECB:
-    mov     0x486baa8c, d0
+    mov     ptrs_486BAA8C, d0
     bra     loc_48584ED8
 loc_48584ED3:
     mov     1, d0
@@ -7850,13 +7906,13 @@ loc_48584ED8:
     retf    0, 0
 # FtLangText58  (CPU 0x48584edb)
 FtLangText58:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584EED
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584EF5
     bra     loc_48584EF9
 loc_48584EED:
-    mov     0x486babdc, d0
+    mov     ptrs_486BABDC, d0
     bra     loc_48584EFA
 loc_48584EF5:
     mov     1, d0
@@ -7867,13 +7923,13 @@ loc_48584EFA:
     retf    0, 0
 # FtLangText59  (CPU 0x48584efd)
 FtLangText59:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584F0F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584F17
     bra     loc_48584F1B
 loc_48584F0F:
-    mov     0x486bad98, d0
+    mov     ptrs_486BAD98, d0
     bra     loc_48584F1C
 loc_48584F17:
     mov     1, d0
@@ -7884,13 +7940,13 @@ loc_48584F1C:
     retf    0, 0
 # FtLangText60  (CPU 0x48584f1f)
 FtLangText60:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584F31
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584F39
     bra     loc_48584F3D
 loc_48584F31:
-    mov     0x486baee8, d0
+    mov     ptrs_486BAEE8, d0
     bra     loc_48584F3E
 loc_48584F39:
     mov     1, d0
@@ -7901,13 +7957,13 @@ loc_48584F3E:
     retf    0, 0
 # FtLangText61  (CPU 0x48584f41)
 FtLangText61:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584F53
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584F5B
     bra     loc_48584F5F
 loc_48584F53:
-    mov     0x486bb0f8, d0
+    mov     ptrs_486BB0F8, d0
     bra     loc_48584F60
 loc_48584F5B:
     mov     1, d0
@@ -7918,13 +7974,13 @@ loc_48584F60:
     retf    0, 0
 # FtLangText62  (CPU 0x48584f63)
 FtLangText62:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584F75
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584F7D
     bra     loc_48584F81
 loc_48584F75:
-    mov     0x486bb1f4, d0
+    mov     ptrs_486BB1F4, d0
     bra     loc_48584F82
 loc_48584F7D:
     mov     1, d0
@@ -7935,13 +7991,13 @@ loc_48584F82:
     retf    0, 0
 # FtLangText63  (CPU 0x48584f85)
 FtLangText63:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584F97
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584F9F
     bra     loc_48584FA3
 loc_48584F97:
-    mov     0x486bb2c8, d0
+    mov     ptrs_486BB2C8, d0
     bra     loc_48584FA4
 loc_48584F9F:
     mov     1, d0
@@ -7952,13 +8008,13 @@ loc_48584FA4:
     retf    0, 0
 # FtLangText64  (CPU 0x48584fa7)
 FtLangText64:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584FB9
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584FC1
     bra     loc_48584FC5
 loc_48584FB9:
-    mov     0x486bb3fc, d0
+    mov     ptrs_486BB3FC, d0
     bra     loc_48584FC6
 loc_48584FC1:
     mov     1, d0
@@ -7969,13 +8025,13 @@ loc_48584FC6:
     retf    0, 0
 # FtLangText65  (CPU 0x48584fc9)
 FtLangText65:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584FDB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48584FE3
     bra     loc_48584FE7
 loc_48584FDB:
-    mov     0x486bb484, d0
+    mov     ptrs_486BB484, d0
     bra     loc_48584FE8
 loc_48584FE3:
     mov     1, d0
@@ -7986,13 +8042,13 @@ loc_48584FE8:
     retf    0, 0
 # FtLangText66  (CPU 0x48584feb)
 FtLangText66:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48584FFD
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585005
     bra     loc_48585009
 loc_48584FFD:
-    mov     0x486bb740, d0
+    mov     ptrs_486BB740, d0
     bra     loc_4858500A
 loc_48585005:
     mov     1, d0
@@ -8003,13 +8059,13 @@ loc_4858500A:
     retf    0, 0
 # FtLangText67  (CPU 0x4858500d)
 FtLangText67:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858501F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585027
     bra     loc_4858502B
 loc_4858501F:
-    mov     0x486bb8a4, d0
+    mov     ptrs_486BB8A4, d0
     bra     loc_4858502C
 loc_48585027:
     mov     1, d0
@@ -8020,13 +8076,13 @@ loc_4858502C:
     retf    0, 0
 # FtLangText68  (CPU 0x4858502f)
 FtLangText68:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585041
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585049
     bra     loc_4858504D
 loc_48585041:
-    mov     0x486bbaa8, d0
+    mov     ptrs_486BBAA8, d0
     bra     loc_4858504E
 loc_48585049:
     mov     1, d0
@@ -8037,13 +8093,13 @@ loc_4858504E:
     retf    0, 0
 # FtLangText69  (CPU 0x48585051)
 FtLangText69:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585063
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858506B
     bra     loc_4858506F
 loc_48585063:
-    mov     0x486bbbb4, d0
+    mov     ptrs_486BBBB4, d0
     bra     loc_48585070
 loc_4858506B:
     mov     1, d0
@@ -8054,13 +8110,13 @@ loc_48585070:
     retf    0, 0
 # FtLangText69s  (CPU 0x48585073)
 FtLangText69s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585085
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858508D
     bra     loc_48585091
 loc_48585085:
-    mov     0x486bbc90, d0
+    mov     ptrs_486BBC90, d0
     bra     loc_48585092
 loc_4858508D:
     mov     1, d0
@@ -8071,13 +8127,13 @@ loc_48585092:
     retf    0, 0
 # FtLangText70  (CPU 0x48585095)
 FtLangText70:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485850A7
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485850AF
     bra     loc_485850B3
 loc_485850A7:
-    mov     0x486bbdac, d0
+    mov     ptrs_486BBDAC, d0
     bra     loc_485850B4
 loc_485850AF:
     mov     1, d0
@@ -8088,13 +8144,13 @@ loc_485850B4:
     retf    0, 0
 # FtLangText70s  (CPU 0x485850b7)
 FtLangText70s:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485850C9
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485850D1
     bra     loc_485850D5
 loc_485850C9:
-    mov     0x486bbe4c, d0
+    mov     Str_kH_kH_kHB_kHD_kHF_kHH_kHHow_Easy_Is_The, d0
     bra     loc_485850D6
 loc_485850D1:
     mov     1, d0
@@ -8105,13 +8161,13 @@ loc_485850D6:
     retf    0, 0
 # FtLangText71  (CPU 0x485850d9)
 FtLangText71:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485850EB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485850F3
     bra     loc_485850F7
 loc_485850EB:
-    mov     0x486bbf00, d0
+    mov     ptrs_486BBF00, d0
     bra     loc_485850F8
 loc_485850F3:
     mov     1, d0
@@ -8122,13 +8178,13 @@ loc_485850F8:
     retf    0, 0
 # FtLangText72  (CPU 0x485850fb)
 FtLangText72:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858510D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585115
     bra     loc_48585119
 loc_4858510D:
-    mov     0x486bc00c, d0
+    mov     ptrs_486BC00C, d0
     bra     loc_4858511A
 loc_48585115:
     mov     1, d0
@@ -8139,13 +8195,13 @@ loc_4858511A:
     retf    0, 0
 # FtLangText73  (CPU 0x4858511d)
 FtLangText73:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858512F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585137
     bra     loc_4858513B
 loc_4858512F:
-    mov     0x486bc1b0, d0
+    mov     ptrs_486BC1B0, d0
     bra     loc_4858513C
 loc_48585137:
     mov     1, d0
@@ -8156,13 +8212,13 @@ loc_4858513C:
     retf    0, 0
 # FtLangText74  (CPU 0x4858513f)
 FtLangText74:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585151
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585159
     bra     loc_4858515D
 loc_48585151:
-    mov     0x486bc2ec, d0
+    mov     ptrs_486BC2EC, d0
     bra     loc_4858515E
 loc_48585159:
     mov     1, d0
@@ -8173,13 +8229,13 @@ loc_4858515E:
     retf    0, 0
 # FtLangText75  (CPU 0x48585161)
 FtLangText75:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585173
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858517B
     bra     loc_4858517F
 loc_48585173:
-    mov     0x486bc4fc, d0
+    mov     ptrs_486BC4FC, d0
     bra     loc_48585180
 loc_4858517B:
     mov     1, d0
@@ -8190,13 +8246,13 @@ loc_48585180:
     retf    0, 0
 # FtLangText76  (CPU 0x48585183)
 FtLangText76:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585195
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858519D
     bra     loc_485851A1
 loc_48585195:
-    mov     0x486bc608, d0
+    mov     ptrs_486BC608, d0
     bra     loc_485851A2
 loc_4858519D:
     mov     1, d0
@@ -8207,13 +8263,13 @@ loc_485851A2:
     retf    0, 0
 # FtLangText77  (CPU 0x485851a5)
 FtLangText77:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485851B7
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485851BF
     bra     loc_485851C3
 loc_485851B7:
-    mov     0x486bc70c, d0
+    mov     ptrs_486BC70C, d0
     bra     loc_485851C4
 loc_485851BF:
     mov     1, d0
@@ -8224,13 +8280,13 @@ loc_485851C4:
     retf    0, 0
 # FtLangText78  (CPU 0x485851c7)
 FtLangText78:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485851D9
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485851E1
     bra     loc_485851E5
 loc_485851D9:
-    mov     0x486bc840, d0
+    mov     ptrs_486BC840, d0
     bra     loc_485851E6
 loc_485851E1:
     mov     1, d0
@@ -8241,13 +8297,13 @@ loc_485851E6:
     retf    0, 0
 # FtLangText79  (CPU 0x485851e9)
 FtLangText79:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485851FB
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585203
     bra     loc_48585207
 loc_485851FB:
-    mov     0x486bc99c, d0
+    mov     ptrs_486BC99C, d0
     bra     loc_48585208
 loc_48585203:
     mov     1, d0
@@ -8258,13 +8314,13 @@ loc_48585208:
     retf    0, 0
 # FtLangText80  (CPU 0x4858520b)
 FtLangText80:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858521D
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585225
     bra     loc_48585229
 loc_4858521D:
-    mov     0x486bcb10, d0
+    mov     ptrs_486BCB10, d0
     bra     loc_4858522A
 loc_48585225:
     mov     1, d0
@@ -8275,13 +8331,13 @@ loc_4858522A:
     retf    0, 0
 # FtLangText81  (CPU 0x4858522d)
 FtLangText81:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_4858523F
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585247
     bra     loc_4858524B
 loc_4858523F:
-    mov     0x486bcc4c, d0
+    mov     ptrs_486BCC4C, d0
     bra     loc_4858524C
 loc_48585247:
     mov     1, d0
@@ -8292,13 +8348,13 @@ loc_4858524C:
     retf    0, 0
 # FtLangText82  (CPU 0x4858524f)
 FtLangText82:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585261
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_48585269
     bra     loc_4858526D
 loc_48585261:
-    mov     0x486bccf0, d0
+    mov     ptrs_486BCCF0, d0
     bra     loc_4858526E
 loc_48585269:
     mov     1, d0
@@ -8309,13 +8365,13 @@ loc_4858526E:
     retf    0, 0
 # FtLangText83  (CPU 0x48585271)
 FtLangText83:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_48585283
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_4858528B
     bra     loc_4858528F
 loc_48585283:
-    mov     0x486bce3c, d0
+    mov     ptrs_486BCE3C, d0
     bra     loc_48585290
 loc_4858528B:
     mov     1, d0
@@ -8326,13 +8382,13 @@ loc_48585290:
     retf    0, 0
 # FtLangText84  (CPU 0x48585293)
 FtLangText84:
-    cmp     0x60090, d1
+    cmp     MT_GetLanguagePtr, d1
     beq     loc_485852A5
-    cmp     0x600b1, d1
+    cmp     MT_IsEucCode, d1
     beq     loc_485852AD
     bra     loc_485852B1
 loc_485852A5:
-    mov     0x486bce68, d0
+    mov     ptrs_486BCE68, d0
     bra     loc_485852B2
 loc_485852AD:
     mov     1, d0
@@ -8343,7 +8399,7 @@ loc_485852B2:
     retf    0, 0
 # DemoJpgDataA1  (CPU 0x485852b5)
 DemoJpgDataA1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485852CC
     mov     (0x48000024), d1
     add     TableRomDirectory, d1
@@ -8355,7 +8411,7 @@ loc_485852CD:
     retf    0, 0
 # DemoJpgDataA2  (CPU 0x485852d0)
 DemoJpgDataA2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485852E7
     mov     (0x48000028), d1
     add     TableRomDirectory, d1
@@ -8367,7 +8423,7 @@ loc_485852E8:
     retf    0, 0
 # DemoJpgDataA3  (CPU 0x485852eb)
 DemoJpgDataA3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585302
     mov     (0x4800002c), d1
     add     TableRomDirectory, d1
@@ -8379,7 +8435,7 @@ loc_48585303:
     retf    0, 0
 # DemoJpgDataA4  (CPU 0x48585306)
 DemoJpgDataA4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858531D
     mov     (0x48000030), d1
     add     TableRomDirectory, d1
@@ -8391,7 +8447,7 @@ loc_4858531E:
     retf    0, 0
 # DemoJpgDataA5  (CPU 0x48585321)
 DemoJpgDataA5:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585338
     mov     (0x48000034), d1
     add     TableRomDirectory, d1
@@ -8403,7 +8459,7 @@ loc_48585339:
     retf    0, 0
 # DemoJpgDataA6  (CPU 0x4858533c)
 DemoJpgDataA6:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585353
     mov     (0x48000038), d1
     add     TableRomDirectory, d1
@@ -8415,7 +8471,7 @@ loc_48585354:
     retf    0, 0
 # DemoJpgDataA7  (CPU 0x48585357)
 DemoJpgDataA7:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858536E
     mov     (0x48000124), d1
     add     TableRomDirectory, d1
@@ -8427,7 +8483,7 @@ loc_4858536F:
     retf    0, 0
 # DemoJpgDataB1  (CPU 0x48585372)
 DemoJpgDataB1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585389
     mov     (0x4800003c), d1
     add     TableRomDirectory, d1
@@ -8439,7 +8495,7 @@ loc_4858538A:
     retf    0, 0
 # DemoJpgDataB2  (CPU 0x4858538d)
 DemoJpgDataB2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485853A4
     mov     (0x48000040), d1
     add     TableRomDirectory, d1
@@ -8451,7 +8507,7 @@ loc_485853A5:
     retf    0, 0
 # DemoJpgDataB3  (CPU 0x485853a8)
 DemoJpgDataB3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485853BF
     mov     (0x48000044), d1
     add     TableRomDirectory, d1
@@ -8463,7 +8519,7 @@ loc_485853C0:
     retf    0, 0
 # DemoJpgDataB4  (CPU 0x485853c3)
 DemoJpgDataB4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485853DA
     mov     (0x48000048), d1
     add     TableRomDirectory, d1
@@ -8475,7 +8531,7 @@ loc_485853DB:
     retf    0, 0
 # DemoJpgDataC1  (CPU 0x485853de)
 DemoJpgDataC1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485853F5
     mov     (0x4800004c), d1
     add     TableRomDirectory, d1
@@ -8487,7 +8543,7 @@ loc_485853F6:
     retf    0, 0
 # DemoJpgDataD1  (CPU 0x485853f9)
 DemoJpgDataD1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585410
     mov     (0x48000050), d1
     add     TableRomDirectory, d1
@@ -8499,7 +8555,7 @@ loc_48585411:
     retf    0, 0
 # DemoJpgDataD2  (CPU 0x48585414)
 DemoJpgDataD2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858542B
     mov     (0x48000054), d1
     add     TableRomDirectory, d1
@@ -8511,7 +8567,7 @@ loc_4858542C:
     retf    0, 0
 # DemoJpgDataD3  (CPU 0x4858542f)
 DemoJpgDataD3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585446
     mov     (0x48000058), d1
     add     TableRomDirectory, d1
@@ -8523,7 +8579,7 @@ loc_48585447:
     retf    0, 0
 # DemoJpgDataD4  (CPU 0x4858544a)
 DemoJpgDataD4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585461
     mov     (0x4800005c), d1
     add     TableRomDirectory, d1
@@ -8535,7 +8591,7 @@ loc_48585462:
     retf    0, 0
 # DemoJpgDataD5  (CPU 0x48585465)
 DemoJpgDataD5:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858547C
     mov     (0x480000f0), d1
     add     TableRomDirectory, d1
@@ -8547,7 +8603,7 @@ loc_4858547D:
     retf    0, 0
 # DemoJpgDataD6  (CPU 0x48585480)
 DemoJpgDataD6:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585497
     mov     (0x48000128), d1
     add     TableRomDirectory, d1
@@ -8559,7 +8615,7 @@ loc_48585498:
     retf    0, 0
 # DemoJpgDataD7  (CPU 0x4858549b)
 DemoJpgDataD7:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485854B2
     mov     (0x4800012c), d1
     add     TableRomDirectory, d1
@@ -8571,7 +8627,7 @@ loc_485854B3:
     retf    0, 0
 # DemoJpgDataD8  (CPU 0x485854b6)
 DemoJpgDataD8:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485854CD
     mov     (0x48000130), d1
     add     TableRomDirectory, d1
@@ -8583,7 +8639,7 @@ loc_485854CE:
     retf    0, 0
 # DemoJpgDataD9  (CPU 0x485854d1)
 DemoJpgDataD9:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485854E8
     mov     (0x48000134), d1
     add     TableRomDirectory, d1
@@ -8595,7 +8651,7 @@ loc_485854E9:
     retf    0, 0
 # DemoJpgDataD10  (CPU 0x485854ec)
 DemoJpgDataD10:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585503
     mov     (0x48000138), d1
     add     TableRomDirectory, d1
@@ -8607,7 +8663,7 @@ loc_48585504:
     retf    0, 0
 # DemoJpgDataD11  (CPU 0x48585507)
 DemoJpgDataD11:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858551E
     mov     (0x4800013c), d1
     add     TableRomDirectory, d1
@@ -8619,7 +8675,7 @@ loc_4858551F:
     retf    0, 0
 # DemoJpgDataD12  (CPU 0x48585522)
 DemoJpgDataD12:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585539
     mov     (0x48000140), d1
     add     TableRomDirectory, d1
@@ -8631,7 +8687,7 @@ loc_4858553A:
     retf    0, 0
 # DemoJpgDataD13  (CPU 0x4858553d)
 DemoJpgDataD13:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585554
     mov     (0x48000144), d1
     add     TableRomDirectory, d1
@@ -8643,7 +8699,7 @@ loc_48585555:
     retf    0, 0
 # DemoJpgDataD14  (CPU 0x48585558)
 DemoJpgDataD14:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858556F
     mov     (0x48000148), d1
     add     TableRomDirectory, d1
@@ -8655,7 +8711,7 @@ loc_48585570:
     retf    0, 0
 # DemoJpgDataE1  (CPU 0x48585573)
 DemoJpgDataE1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858558A
     mov     (0x48000060), d1
     add     TableRomDirectory, d1
@@ -8667,7 +8723,7 @@ loc_4858558B:
     retf    0, 0
 # DemoJpgDataE2  (CPU 0x4858558e)
 DemoJpgDataE2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485855A5
     mov     (0x48000064), d1
     add     TableRomDirectory, d1
@@ -8679,7 +8735,7 @@ loc_485855A6:
     retf    0, 0
 # DemoJpgDataE3  (CPU 0x485855a9)
 DemoJpgDataE3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485855C0
     mov     (0x48000068), d1
     add     TableRomDirectory, d1
@@ -8691,7 +8747,7 @@ loc_485855C1:
     retf    0, 0
 # DemoJpgDataF1  (CPU 0x485855c4)
 DemoJpgDataF1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485855DB
     mov     (0x4800006c), d1
     add     TableRomDirectory, d1
@@ -8703,7 +8759,7 @@ loc_485855DC:
     retf    0, 0
 # DemoJpgDataF2  (CPU 0x485855df)
 DemoJpgDataF2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485855F6
     mov     (0x48000070), d1
     add     TableRomDirectory, d1
@@ -8715,7 +8771,7 @@ loc_485855F7:
     retf    0, 0
 # DemoJpgDataF3  (CPU 0x485855fa)
 DemoJpgDataF3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585611
     mov     (0x48000074), d1
     add     TableRomDirectory, d1
@@ -8727,7 +8783,7 @@ loc_48585612:
     retf    0, 0
 # DemoJpgDataF4  (CPU 0x48585615)
 DemoJpgDataF4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858562C
     mov     (0x48000078), d1
     add     TableRomDirectory, d1
@@ -8739,7 +8795,7 @@ loc_4858562D:
     retf    0, 0
 # DemoJpgDataG1  (CPU 0x48585630)
 DemoJpgDataG1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585647
     mov     (0x4800007c), d1
     add     TableRomDirectory, d1
@@ -8751,7 +8807,7 @@ loc_48585648:
     retf    0, 0
 # DemoJpgDataG2  (CPU 0x4858564b)
 DemoJpgDataG2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585662
     mov     (0x48000080), d1
     add     TableRomDirectory, d1
@@ -8763,7 +8819,7 @@ loc_48585663:
     retf    0, 0
 # DemoJpgDataG3  (CPU 0x48585666)
 DemoJpgDataG3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858567D
     mov     (0x48000084), d1
     add     TableRomDirectory, d1
@@ -8775,7 +8831,7 @@ loc_4858567E:
     retf    0, 0
 # DemoJpgDataG4  (CPU 0x48585681)
 DemoJpgDataG4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585698
     mov     (0x48000088), d1
     add     TableRomDirectory, d1
@@ -8787,7 +8843,7 @@ loc_48585699:
     retf    0, 0
 # DemoJpgDataH1  (CPU 0x4858569c)
 DemoJpgDataH1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485856B3
     mov     (0x4800008c), d1
     add     TableRomDirectory, d1
@@ -8799,7 +8855,7 @@ loc_485856B4:
     retf    0, 0
 # DemoJpgDataH2  (CPU 0x485856b7)
 DemoJpgDataH2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485856CE
     mov     (0x48000090), d1
     add     TableRomDirectory, d1
@@ -8811,7 +8867,7 @@ loc_485856CF:
     retf    0, 0
 # DemoJpgDataI1  (CPU 0x485856d2)
 DemoJpgDataI1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485856E9
     mov     (0x48000094), d1
     add     TableRomDirectory, d1
@@ -8823,7 +8879,7 @@ loc_485856EA:
     retf    0, 0
 # DemoJpgDataI2  (CPU 0x485856ed)
 DemoJpgDataI2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585704
     mov     (0x48000098), d1
     add     TableRomDirectory, d1
@@ -8835,7 +8891,7 @@ loc_48585705:
     retf    0, 0
 # DemoJpgDataI3  (CPU 0x48585708)
 DemoJpgDataI3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858571F
     mov     (0x4800009c), d1
     add     TableRomDirectory, d1
@@ -8847,7 +8903,7 @@ loc_48585720:
     retf    0, 0
 # DemoJpgDataJ2  (CPU 0x48585723)
 DemoJpgDataJ2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858573A
     mov     (0x480000a0), d1
     add     TableRomDirectory, d1
@@ -8859,7 +8915,7 @@ loc_4858573B:
     retf    0, 0
 # DemoJpgDataJ3  (CPU 0x4858573e)
 DemoJpgDataJ3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585755
     mov     (0x480000a4), d1
     add     TableRomDirectory, d1
@@ -8871,7 +8927,7 @@ loc_48585756:
     retf    0, 0
 # DemoJpgDataJ4  (CPU 0x48585759)
 DemoJpgDataJ4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585770
     mov     (0x480000a8), d1
     add     TableRomDirectory, d1
@@ -8883,7 +8939,7 @@ loc_48585771:
     retf    0, 0
 # DemoJpgDataJ5  (CPU 0x48585774)
 DemoJpgDataJ5:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858578B
     mov     (0x480000ac), d1
     add     TableRomDirectory, d1
@@ -8895,7 +8951,7 @@ loc_4858578C:
     retf    0, 0
 # DemoJpgDataC2  (CPU 0x4858578f)
 DemoJpgDataC2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485857A6
     mov     (0x480000b0), d1
     add     TableRomDirectory, d1
@@ -8907,7 +8963,7 @@ loc_485857A7:
     retf    0, 0
 # DemoJpgDataC3  (CPU 0x485857aa)
 DemoJpgDataC3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485857C1
     mov     (0x480000b4), d1
     add     TableRomDirectory, d1
@@ -8919,7 +8975,7 @@ loc_485857C2:
     retf    0, 0
 # DemoJpgDataC4  (CPU 0x485857c5)
 DemoJpgDataC4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485857DC
     mov     (0x480000b8), d1
     add     TableRomDirectory, d1
@@ -8931,7 +8987,7 @@ loc_485857DD:
     retf    0, 0
 # DemoJpgDataK1  (CPU 0x485857e0)
 DemoJpgDataK1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485857F7
     mov     (0x480000bc), d1
     add     TableRomDirectory, d1
@@ -8943,7 +8999,7 @@ loc_485857F8:
     retf    0, 0
 # DemoJpgDataK2  (CPU 0x485857fb)
 DemoJpgDataK2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585812
     mov     (0x480000c0), d1
     add     TableRomDirectory, d1
@@ -8955,7 +9011,7 @@ loc_48585813:
     retf    0, 0
 # DemoJpgDataK3  (CPU 0x48585816)
 DemoJpgDataK3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858582D
     mov     (0x480000c4), d1
     add     TableRomDirectory, d1
@@ -8967,7 +9023,7 @@ loc_4858582E:
     retf    0, 0
 # DemoJpgDataK4  (CPU 0x48585831)
 DemoJpgDataK4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585848
     mov     (0x480000c8), d1
     add     TableRomDirectory, d1
@@ -8979,7 +9035,7 @@ loc_48585849:
     retf    0, 0
 # DemoJpgDataL1  (CPU 0x4858584c)
 DemoJpgDataL1:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585863
     mov     (0x480000cc), d1
     add     TableRomDirectory, d1
@@ -8991,7 +9047,7 @@ loc_48585864:
     retf    0, 0
 # DemoJpgDataL2  (CPU 0x48585867)
 DemoJpgDataL2:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858587E
     mov     (0x480000d0), d1
     add     TableRomDirectory, d1
@@ -9003,7 +9059,7 @@ loc_4858587F:
     retf    0, 0
 # DemoJpgDataL3  (CPU 0x48585882)
 DemoJpgDataL3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585899
     mov     (0x480000d4), d1
     add     TableRomDirectory, d1
@@ -9015,7 +9071,7 @@ loc_4858589A:
     retf    0, 0
 # DemoJpgDataL4  (CPU 0x4858589d)
 DemoJpgDataL4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485858B4
     mov     (0x480000d8), d1
     add     TableRomDirectory, d1
@@ -9027,7 +9083,7 @@ loc_485858B5:
     retf    0, 0
 # DemoJpgDataH3  (CPU 0x485858b8)
 DemoJpgDataH3:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485858CF
     mov     (0x480000f4), d1
     add     TableRomDirectory, d1
@@ -9039,7 +9095,7 @@ loc_485858D0:
     retf    0, 0
 # DemoJpgDataH4  (CPU 0x485858d3)
 DemoJpgDataH4:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_485858EA
     mov     (0x480000f8), d1
     add     TableRomDirectory, d1
@@ -9051,7 +9107,7 @@ loc_485858EB:
     retf    0, 0
 # DemoJpgDataL5  (CPU 0x485858ee)
 DemoJpgDataL5:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585905
     mov     (0x480000fc), d1
     add     TableRomDirectory, d1
@@ -9063,7 +9119,7 @@ loc_48585906:
     retf    0, 0
 # DemoJpgDataL6  (CPU 0x48585909)
 DemoJpgDataL6:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585920
     mov     (0x48000100), d1
     add     TableRomDirectory, d1
@@ -9075,7 +9131,7 @@ loc_48585921:
     retf    0, 0
 # DemoJpgDataL7  (CPU 0x48585924)
 DemoJpgDataL7:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_4858593B
     mov     (0x48000104), d1
     add     TableRomDirectory, d1
@@ -9087,7 +9143,7 @@ loc_4858593C:
     retf    0, 0
 # DemoJpgDataL8  (CPU 0x4858593f)
 DemoJpgDataL8:
-    cmp     0x600e6, d1
+    cmp     MT_GetJpegData, d1
     bne     loc_48585956
     mov     (0x48000108), d1
     add     TableRomDirectory, d1
@@ -9099,77 +9155,8 @@ loc_48585957:
     retf    0, 0
     .space  2, 0xFF                   # padding to the next routine
 
-# ---- data / resources region ----
-.incbin_range "baserom/kn7000_program_b935.rom", 0x18595C, 0x3256D8
-
-# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----
-display_palette:
-    .long 0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00808080   # idx   0
-    .long 0x00303030, 0x000080FF, 0x000048FF, 0x00004080, 0x0038FF68, 0x00000000, 0x00C8C8C8, 0x00808080   # idx   8
-    .long 0x000048FF, 0x000048FF, 0x00000000, 0x0060FFFF, 0x00FFFF90, 0x00FF90FF, 0x0060FF60, 0x00800000   # idx  16
-    .long 0x00808080, 0x0000FFFF, 0x000048FF, 0x0000FFFF, 0x000048FF, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  24
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  32
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  40
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  48
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  56
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  64
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  72
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  80
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  88
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  96
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 104
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 112
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 120
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 128
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 136
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 144
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 152
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 160
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 168
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 176
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 184
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 192
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 200
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 208
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 216
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 224
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 232
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x00808080, 0x00000000, 0x00C0FFC0, 0x00408040   # idx 240
-    .long 0x00585858, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00C8C8C8   # idx 248
-    .long 0x00FF0000, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FFA0A0, 0x00FF6060, 0x00FF6060, 0x00FFA0A0   # idx 256
-    .long 0x00FF0000, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF0000, 0x00FFFFFF, 0x00FF0000, 0x00FF0000   # idx 264
-    .long 0x00FFFFFF, 0x00FF0000, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FF0000   # idx 272
-    .long 0x00FFA0A0, 0x00FFFFFF, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 280
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 288
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 296
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 304
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 312
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 320
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 328
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 336
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 344
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 352
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 360
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 368
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 376
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 384
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 392
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 400
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 408
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 416
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 424
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 432
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 440
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 448
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 456
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 464
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 472
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 480
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 488
-    .long 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF0000, 0x00FF0000, 0x00FF0000   # idx 496
-    .long 0x00FF6060, 0x00FF6060, 0x00FFA0A0, 0x00FFA0A0, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FFFFFF   # idx 504
-.org 0x325ED8
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3256D8 + 0x800, 0x3B7F9C
+# ---- data / resources region: typed source, tools/gen_data_s.py ----
+.include "src/b935/program/data/data.s"
 
 # ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library
 #      image the boot self-loads to 0x4C000000 starts at file offset

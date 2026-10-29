@@ -29,7 +29,7 @@ live in their own folders, each migrated with its full history rewritten to its 
   (MN103002A), so it has its own assembler, `kn7000/tools/kn7asm.py` (Python, no LLVM), and its own
   `kn7000/README.md`. `make kn7000`, and `make gate-kn7000` = `make -C kn7000 verify verify-sp7001
   verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave
-  verify-customdata`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
+  verify-customdata verify-gui-map`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
   regenerates them from the update disks, the private romset and the softlist floppy set beside this
   tree. `verify-cnv` covers the seven Style Convert Disk converters (`kn7000/src/cnv/`, fully
   disassembled from the `scd7000` / `scd6000` softlist disks; names in `kn7000/cnv_manual.sym`).
