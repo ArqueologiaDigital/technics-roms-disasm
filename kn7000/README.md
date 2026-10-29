@@ -85,6 +85,7 @@ make verify-table80    # table build 80 from src/b80/table.s (+ table 83): asser
 make verify-ic18       # the IC18 boot ROM from src/ic18/boot.s: assert 100% byte-match
 make verify-935        # program build 935 (v1.5) from src/b935/: assert 100% byte-match
 make verify-893        # program build 893 (v1.3) from src/b893/: assert 100% byte-match
+make verify-wave       # the 4 wave ROMs from src/wave/main.s + sub.s (notes/wave-roms-2026-10-29.md)
 make symbols-935 program-src-935 ported-names-935 check-names-935   # regenerate / check it (same for 893)
 make ic18-src          # regenerate src/ic18/boot.s (needs unidasm and baserom/kn7000_program.rom)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
