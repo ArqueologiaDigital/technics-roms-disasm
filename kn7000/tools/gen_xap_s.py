@@ -206,6 +206,8 @@ def main():
             o += 16                          # IEEE doubles: left to typed_gap, never read as text
             continue
         n = is_str(o) if (o == chi or d[o - 1] in (0, 0xFF)) else 0
+        if n and a.typed_gaps and o % 4 and ptr_ok(struct.unpack_from("<I", d, o & ~3)[0]):
+            n = 0                            # the tail of a pointer, not text
         if n:
             flush(o)
             D.append(f"    .byte {T.hexbytes(d[o:o + n])}   # \"{T.text(d[o:o + n - 1])}\"")

@@ -141,22 +141,64 @@ census still counts, rather than becoming a wall of anonymous `.byte`.
 
 ## What is still generic, and why
 
-| tree          | entry                                          | bytes   | why                                                                                                 |
-|---------------|------------------------------------------------|---------|-----------------------------------------------------------------------------------------------------|
-| kn7000-table  | `InternalVoiceArchive`, `src/table.s`          | 832,592 | the 'JK' voice archive; structure partly known (below), records not decoded                         |
-| kn7000-sp7001 | the same, `src/sp7001/table.s`                 | 832,592 | the same segment                                                                                    |
-| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                | 33,127  | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded |
-| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                | 4,274   | the same kind                                                                                       |
-| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                | 9,224   | the same kind                                                                                       |
-| kn7000-sp7001 | `BASEEXT.XAP` 0x0167E4..0x01680E               | 42      | a small table of {u8, u8, u16} rows after a pointer, not identified                                 |
-| kn7000-sp7001 | `program/region1_0C.s` x 2, `library_00.s` x 1 | 2.6 MB  | program 942's data region and library head: the program image, not the table (no program lane here) |
+| tree          | entry                                           | bytes   | why                                                                                                 |
+|---------------|-------------------------------------------------|---------|-----------------------------------------------------------------------------------------------------|
+| kn7000-table  | `InternalVoiceArchive`, 1,299 passthroughs      | 637,068 | the 'JK' voice archive: tone bodies, zone lists and four tables not decoded (second pass, below)    |
+| kn7000-sp7001 | the same, `src/sp7001/internal_voice_archive.s` | 637,068 | the same segment                                                                                    |
+| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                 | 33,127  | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded |
+| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                 | 4,274   | the same kind                                                                                       |
+| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                 | 9,224   | the same kind                                                                                       |
+| kn7000-sp7001 | `program/region1_0C.s` x 2, `library_00.s` x 1  | 2.6 MB  | program 942's data region and library head: the program image, not the table (no program lane here) |
 
-**The 'JK' archive** (`VoiceArchiveScanBoot`, the `Voice*LookupInternal` routines;
-`kn7000_manual.sym`, "THE VOICE-LIST INDEX LAYER"). It is little-endian. The header is `"JK"`, 14
-zeros, then u32 1, and u32 0xB2234 at +0x14, which points at a table of offsets. The u32 0xB2288 at
-+0x18 is the sound directory: (bucket table, descriptor) offset pairs for the six hash directories.
-Before them is about 0.7 MB of voice records. Decoding them needs the tone-parameter layout the `Tg*`
-routines read, which is a task of its own.
+## The 'JK' internal voice archive (segment 6), second pass
+
+`tools/gen_table_voices.py` writes it to `src/table/voices/internal_archive.s` (table 83:
+`src/sp7001/internal_voice_archive.s`, identical but for the reference image its passthroughs
+name). All pointers are u32 offsets from the archive's first byte, little-endian.
+
+| offset          | item                                  | typed as                                                      | evidence                                                               |
+|-----------------|---------------------------------------|---------------------------------------------------------------|------------------------------------------------------------------------|
+| `+0x00`         | header: `"JK"`, zeros, 1, T, D, 0     | `.ascii`, `.long` label differences                           | `VoiceArchiveScanBoot` 0x48449EF4 reads `+0x14`; lookups `+0x18`       |
+| `T` (0xB2234)   | bank block, 0x54 bytes                | `.long` label differences                                     | `VoiceArchiveScanBoot`: base, T, T + 0x0C cached                       |
+| `T + 0x0C`      | the bank descriptor (-> 0x5003A5A4)   | +0x04 tone dir, +0x14 voice dir, +0x18 elements, +0x1C params | `VoiceRecFetchBanked`, `VoiceElemRecFetch`, `VoiceParamRecFetchBanked` |
+| `D` (0xB2288)   | sound directory, six table pairs      | `.long` label differences                                     | the six `Voice*Lookup*Internal` routines                               |
+| hash tables     | descriptors, buckets, chain entries   | `{mult, nbuckets[, countA, countB]}`, `.long` links, keys     | the walk; every chain is contiguous (12, 12, 24, 8, 8, 12 bytes)       |
+| tone directory  | 1,293 offsets                         | `.long Tone_<Name> - InternalVoiceArchive`                    | descriptor +0x04                                                       |
+| voice directory | 1,617 offsets                         | `.long Voice_<Name> - InternalVoiceArchive`                   | descriptor +0x14                                                       |
+| voice records   | 13-byte name, 3 bytes, 0x1C-byte subs | `.ascii`, `.byte` rows per sub-record                         | `VoiceSubRecFetch` 0x4844978B: record + 0x10 + n x 0x1C                |
+| tone records    | 16-byte name, then the body           | `.ascii`; **body a passthrough**                              | sizes 0x54 + n x 0x7A (n = 1..5) for 1,241; 52 are 0x1A7 bytes         |
+| param records   | 864 x 0x10                            | `.long` multisample header, zone list (numbers), `.byte`      | descriptor +0x1C                                                       |
+| key maps        | six 128-byte maps at 0x9E4FC          | `.byte` rows                                                  | the first word of every multisample header points at one               |
+
+Still passthroughs (637,068 of 832,592 bytes): the 1,293 tone-record bodies, the block at
+`+0x20..+0x13FBC`, the multisample headers and zone lists (`+0x9E7FC..+0xAFB80` and around), and
+three smaller tables that T points at (+0x3C, +0x40, +0x44, +0x4C, +0x50).
+
+What was found but not typed yet:
+
+- **Zone lists** (the wave-ROM tie). A param record's second word points at a list of zone
+  entries. An entry starts with a page byte (0..0x0F in 4,600 entries), a flag byte (0x04 / 0x08,
+  plus multiples of 0x20 / 0x10), and a u16 whose low 12 bits are a wave directory entry, which
+  is what `TgElemNoteOnStd` reads (`desc + 2 & 0xFFF`) and `TgVoiceRouteFieldSet` (`desc + 0` low
+  byte). For example, the first list (0xA1A84) starts with page 0x08 entries 0x001, 0x002, 0x003
+  ... = `Main_P08_E001`.. / `Sub_P08_E001`... **Entries are 8 bytes in some lists and 6 in
+  others**, and the selector was not found (the param record's last 8 bytes are the candidate).
+  The zone count is the highest index of the multisample header's group map plus one, for 667
+  of the 864 lists; the other 197 are the 6-byte kind.
+- **Multisample header**: a u32 pointer to a key map (key -> group), then one byte per group
+  (group -> zone index). Its length is not fixed by the key map's highest group in every case.
+- **Tone records**: a 0x54-byte head (the first 16 bytes the name) and n elements of 0x7A
+  (`VoiceModRecFetch` 0x4844982A reads `record + 0x54 + unit x 0x7A`). The `desc+..` /
+  `desc2+..` fields the `Tg*` routines read are not yet mapped onto these offsets: which
+  structure each `desc` is needs `TgPartProgramSet` traced.
+
+## BASEEXT.XAP 0x167E4..0x16810
+
+It is now typed: 0xFFFFFFFF, the pointer 0x502AFF88, eight u32 values `0x02F001nn` (nn = 3, 4, 5,
+0x0A, 9, 8, 7, 6), then the pointer 0x502B006C. Neither a code immediate nor a data word
+anywhere in the file points into 0x502B1700..0x502B1840, so nothing reads this by its address.
+It sits among the plug-in's static records and is presumably reached through a structure
+pointer.
 
 ## Measurements
 
@@ -165,12 +207,13 @@ builds: odd-width row pads 393 (bitmaps) and 364 (frames), all 0. Segment 59 has
 whose streams all parse. Segment 4 has 120 pads. TCMP stores 0xCC00 and SumU16BE(0x70, 6912)
 gives 0xCC00. TPAD stores 0xE13D and SumU16BE(0xD0, 936) gives 0xE13D.
 
-`python3 scripts/analysis/data_incbin_census.py` at this lane's last commit:
+`python3 scripts/analysis/data_incbin_census.py` at this lane's last commit (second pass; the
+entry count rose because the archive is now split into labelled items):
 
 | tree          | generated     | media           | opaque | generic n | generic bytes |
 |---------------|---------------|-----------------|--------|-----------|---------------|
-| kn7000-table  | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1         | 832,592       |
-| kn7000-sp7001 | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 8         | 3,478,904     |
+| kn7000-table  | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1299      | 637,068       |
+| kn7000-sp7001 | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1305      | 3,283,338     |
 | kn7000-b80    | 2 / 4,064,860 | 0 / 0           | 0 / 0  | 0         | 0             |
 
 Before: kn7000-table 447 entries / 2,560,580 B, kn7000-sp7001 704 / 5,176,151 B, kn7000-b80 2 /

@@ -16,7 +16,7 @@
 .equ TABLE_ROM_BASE, 0x48000000
 .mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)
 
-# 156 symbols referenced by the plug-in source (CPU addresses)
+# 158 symbols referenced by the plug-in source (CPU addresses)
 .equ XaprHeader, 0x483E8000
 .equ XapSlotDefault, 0x483E803C
 .equ func_483E803E, 0x483E803E
@@ -106,6 +106,7 @@
 .equ func_483ED395_entry, 0x483ED398
 .equ func_483ED43C_entry, 0x483ED43F
 .equ func_483ED48A_entry, 0x483ED48D
+.equ func_483ED4EE, 0x483ED4EE
 .equ func_483ED4EE_entry, 0x483ED4F1
 .equ func_483ED51F, 0x483ED51F
 .equ func_483ED564_entry, 0x483ED567
@@ -118,6 +119,7 @@
 .equ func_483EDA27_entry, 0x483EDA2A
 .equ func_483EDA97_entry, 0x483EDA9A
 .equ func_483EDB13_entry, 0x483EDB16
+.equ func_483EDB4B, 0x483EDB4B
 .equ func_483EDB4B_entry, 0x483EDB4E
 .equ func_483EDB56, 0x483EDB56
 .equ func_483EDB6E, 0x483EDB6E
@@ -16435,9 +16437,10 @@ OpeningFrame05:
 # dir[6], 0xcb450 bytes; unchanged vs build 84.
 # 'JK': the INTERNAL (class 0) voice archive. VoiceArchiveScanBoot puts it in slot 0
 # of the bank-source arrays, and the Voice*LookupInternal routines hash into it
-# (kn7000_manual.sym, the five bank sources).
+# (kn7000_manual.sym, the five bank sources). Typed as far as traced in
+# src/table/voices/ (tools/gen_table_voices.py).
 InternalVoiceArchive:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x06ea98, 0x139ee8
+    .include	"src/sp7001/internal_voice_archive.s"
 
 # dir[7], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
 # The table build number, ASCII digits and a line feed. The boot code parses the
@@ -35557,11 +35560,10 @@ TableRomImageEnd:
     .long 0x483EFFE4
     .long 0x483EFFFC
     .long 0x483F0016
-    .word 0x002F   # UTF-16 "/"
-    .asciz "?HF"
-    .asciz "?H]"
-    .asciz "?H|"
-    .byte 0x3F, 0x48   # data (CPU 0x483F900A)
+    .long 0x483F002F
+    .long 0x483F0046
+    .long 0x483F005D
+    .long 0x483F007C
     .long 0x483F0095
     .long 0x483F00B6
     .long 0x483F00D4

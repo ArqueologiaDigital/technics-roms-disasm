@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
+# Licensed under the terms of the GNU General Public License v3 or later
+"""gen_table_voices.py -- table segment 6, the INTERNAL 'JK' voice archive, as source.
+
+Used by tools/gen_table_s.py.  The archive is the class-0 voice-resource source
+(kn7000_mame notes/sound-bank-classes.md; kn7000_manual.sym, the five sources and the
+voice-list index layer).  Every pointer inside it is a u32 offset from its first byte
+(little-endian).  What the firmware reads, and so what this types:
+
+  +0x14  -> the bank block T.  VoiceArchiveScanBoot (0x48449EF4) caches the archive
+            base in 0x5003A554/68, T in 0x5003A57C/90 and the bank descriptor
+            T + 0x0C in 0x5003A5A4.  VoiceRecDefaultPtr reads T + 4 (the default
+            voice record); the descriptor's +0x04 is the tone-record directory,
+            +0x14 the voice-record directory (VoiceRecFetchBanked 0x484496C9),
+            +0x18 the element table, stride 0x23 (VoiceElemRecFetch 0x4844987C),
+            +0x1C the 0x10-byte parameter records (VoiceParamRecFetchBanked
+            0x48449925).
+  +0x18  -> the sound directory D: six (bucket table, descriptor) pairs of
+            multiplicative-hash tables; a descriptor is {u16 mult, u16 nbuckets,
+            u16 countA, u16 countB}; a chain entry is {u32 next, key, payload}
+            (the Voice*Lookup* routines).
+
+Typed here: the header, T, D, the six hash tables' buckets and chain entries (every
+link symbolic), both record directories, the voice records (name and 0x1C-byte
+sub-records, VoiceSubRecFetch 0x4844978B), the names of the tone records, the
+parameter records, the six 128-key maps.  The bodies of the tone records (0x54-byte
+head + n x 0x7A elements; VoiceModRecFetch 0x4844982A), the multisample headers and
+zone lists, the first data block and the other T tables stay labelled passthroughs:
+their fields are not traced yet (notes/table-semantics-2026-10-29.md).
+"""
+import re
+import struct
+
+HASHES = [  # (D offset of buckets, D offset of descriptor, label, key bytes, payload bytes, reader)
+    (0x08, 0x20, "ParamBank", 4, 4, "VoiceParamBankLookupInternal 0x48570DF8: key (MSB<<16 | LSB<<8 | program), "
+                                    "payload u16 = parameter record index (bit 15 = invalid)"),
+    (0x0C, 0x24, "VoiceBank", 4, 4, "VoiceBankLookupInternal 0x4857150D: key (MSB<<16 | LSB<<8 | program), "
+                                    "payload u16 = voice record index"),
+    (0x28, 0x2C, "ListIndex", 2, 18, "VoiceListIndexLookupInternal 0x485719D5: u16 key (LSB<<8 | program), "
+                                     "the record at entry+6"),
+    (0x30, 0x34, "ListEntry", 2, 2, "VoiceListEntryLookupInternal 0x48571E0C: u16 key = local index B, "
+                                    "the record at entry+6"),
+    (0x38, 0x3C, "ListMap", 2, 2, "VoiceListMapLookupInternal 0x485723A0: u16 key = index A, the record at entry+6"),
+    (0x40, 0x44, "Attr", 4, 4, "VoiceAttrLookupInternal 0x48571178: key (MSB<<16 | LSB<<8 | program), "
+                               "payload u8 at entry+8"),
+]
+
+
+def u32(c, o):
+    return struct.unpack_from("<I", c, o)[0]
+
+
+def u16(c, o):
+    return struct.unpack_from("<H", c, o)[0]
+
+
+def hexrow(bs):
+    return ", ".join(f"0x{b:02x}" for b in bs)
+
+
+def ident(name, used, prefix):
+    base = re.sub(r"[^A-Za-z0-9]", "", name.replace("&", "And").replace("+", "Plus")) or "Unnamed"
+    lab, n = f"{prefix}{base}", 2
+    while lab in used:
+        lab = f"{prefix}{base}_{n}"
+        n += 1
+    used.add(lab)
+    return lab
+
+
+def asc(bs):
+    return '"' + "".join(chr(b) if 0x20 <= b < 0x7F and b not in b'"\\' else f"\\x{b:02x}" for b in bs) + '"'
+
+
+def internal_voice_archive(d, s, e, label, ref):
+    c = d[s:e]
+    L = len(c)
+    if c[:2] != b"JK" or c[2:0x10] != bytes(14) or u32(c, 0x10) != 1 or u32(c, 0x1C) != 0:
+        raise SystemExit(f"{label}: unexpected 'JK' header")
+    T, D = u32(c, 0x14), u32(c, 0x18)
+    items = {}              # offset -> (size, lines)
+    labels = {}             # offset -> label
+
+    def ref_(o):
+        return f"{labels[o]} - {label}" if o in labels else f"0x{o:06x}"
+
+    # ---- the hash tables ----
+    chains = []
+    for bo, do, nm, kb, pb, why in HASHES:
+        b, ds = u32(c, D + bo), u32(c, D + do)
+        mult, nb, ca, cb = (u16(c, ds + 2 * i) for i in range(4))
+        ents = []
+        for i in range(nb):
+            p = u32(c, b + 4 * i)
+            while p:
+                ents.append(p)
+                p = u32(c, p)
+        ents.sort()
+        size = 4 + kb + pb
+        if any(ents[i + 1] - ents[i] != size for i in range(len(ents) - 1)):
+            raise SystemExit(f"{label}: {nm} chain entries are not contiguous")
+        for k, p in enumerate(ents):
+            labels[p] = f"Jk{nm}Ent{k:04d}"
+        labels[b], labels[ds] = f"Jk{nm}Buckets", f"Jk{nm}Desc"
+        chains.append((nm, b, ds, mult, nb, ca, cb, ents, kb, pb, size, why))
+    labels[T], labels[D] = "JkBankBlock", "JkSoundDirectory"
+
+    # ---- the record directories ----
+    td, vd, vend = u32(c, T + 0x10), u32(c, T + 0x20), u32(c, T + 0x48)
+    tone = [u32(c, td + 4 * i) for i in range((vd - td) // 4)]
+    voice = [u32(c, vd + 4 * i) for i in range((vend - vd) // 4)]
+    used = set()
+    for k, o in enumerate(tone):
+        labels[o] = ident(c[o:o + 16].decode("latin-1").strip(), used, "Tone_")
+    for k, o in enumerate(voice):
+        labels[o] = ident(c[o:o + 13].decode("latin-1").strip(), used, "Voice_")
+    labels[td], labels[vd] = "JkToneDirectory", "JkVoiceDirectory"
+    pr = u32(c, T + 0x28)
+    np_ = (u32(c, T + 0x3C) - pr) // 16
+    labels[pr] = "JkParamRecords"
+    keymaps = sorted({u32(c, u32(c, pr + 16 * i)) for i in range(np_)})
+    for k, o in enumerate(keymaps):
+        labels[o] = f"JkKeyMap{k}"
+
+    # ---- items ----
+    def put(o, size, lines):
+        if o in items:
+            raise SystemExit(f"{label}: two items at 0x{o:x}")
+        items[o] = (size, lines)
+
+    put(0, 0x20, ['    .ascii\t"JK"', "    .space\t14, 0x00",
+                  "    .long\t1\t\t# no reader traced",
+                  f"    .long\tJkBankBlock - {label}\t# -> 0x5003A57C (VoiceArchiveScanBoot)",
+                  f"    .long\tJkSoundDirectory - {label}\t# the six hash directories",
+                  "    .long\t0"])
+    Tl = [f"    .long\t{ref_(u32(c, T))}\t# +0x00",
+          f"    .long\t{ref_(u32(c, T + 4))}\t# +0x04 the default voice record (VoiceRecDefaultPtr)",
+          f"    .long\t{ref_(u32(c, T + 8))}\t# +0x08",
+          "JkBankDescriptor:\t\t# T + 0x0C -> 0x5003A5A4",
+          f"    .long\t{u32(c, T + 0xC)}\t\t# +0x00 of the descriptor"]
+    names = {0x10: "+0x04 the tone-record directory", 0x20: "+0x14 the voice-record directory (VoiceRecFetchBanked)",
+             0x24: "+0x18 the element table, stride 0x23 (VoiceElemRecFetch)",
+             0x28: "+0x1C the parameter records, 0x10 each (VoiceParamRecFetchBanked)"}
+    for o in range(0x10, 0x54, 4):
+        v = u32(c, T + o)
+        Tl.append(f"    .long\t{ref_(v) if v else 0}\t# descriptor {names.get(o, f'+0x{o - 0xC:02x}')}")
+    put(T, 0x54, Tl)
+    Dl = []
+    for o in range(0, 0x48, 4):
+        Dl.append(f"    .long\t{ref_(u32(c, D + o))}")
+    Dl.append(f"    .long\t0x{u32(c, D + 0x48):08x}\t# +0x48 [INFERENCE] not a pointer")
+    put(D, 0x4C, Dl)
+    for nm, b, ds, mult, nb, ca, cb, ents, kb, pb, size, why in chains:
+        if b - ds == 8:   # the ListMap descriptor also carries the two counts (VoiceArchiveCountA/B)
+            put(ds, 8, [f"    .word\t{mult}, {nb}, {ca}, {cb}\t# mult, nbuckets, countA, countB"])
+        else:
+            put(ds, 4, [f"    .word\t{mult}, {nb}\t# mult, nbuckets"])
+        rows = []
+        for i in range(nb):
+            v = u32(c, b + 4 * i)
+            rows.append(f"    .long\t{ref_(v) if v else 0}")
+        put(b, 4 * nb, rows)
+        el = [f"# {why}"]
+        for k, p in enumerate(ents):
+            nx = u32(c, p)
+            key = u32(c, p + 4) if kb == 4 else u16(c, p + 4)
+            pay = c[p + 4 + kb:p + size]
+            el.append(f"{labels[p]}:")
+            el.append(f"    .long\t{ref_(nx) if nx else 0}\t# next in the bucket chain")
+            if kb == 4:
+                el.append(f"    .long\t0x{key:06x}\t# key: MSB 0x{key >> 16:02x}, LSB 0x{(key >> 8) & 0xFF:02x}, "
+                          f"program {key & 0xFF}")
+            else:
+                el.append(f"    .word\t0x{key:04x}\t# key")
+            if nm == "ListIndex":
+                el.append(f"    .byte\t{hexrow(pay[:2])}")
+                el.append(f"    .ascii\t{asc(pay[2:14])}")
+                el.append(f"    .byte\t{hexrow(pay[14:])}")
+            else:
+                el.append(f"    .byte\t{hexrow(pay)}")
+        put(ents[0], size * len(ents), el)
+    put(td, 4 * len(tone), [f"    .long\t{ref_(o)}" for o in tone])
+    put(vd, 4 * len(voice), [f"    .long\t{ref_(o)}" for o in voice])
+    vs = sorted(voice)
+    for i, o in enumerate(vs):
+        size = (vs[i + 1] - o) if i + 1 < len(vs) else 0x10 + 0x1C
+        if (size - 0x10) % 0x1C or size > 0x10 + 0x1C * 4:
+            raise SystemExit(f"{label}: voice record 0x{o:x} size {size}")
+        vl = [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 13])}",
+              f"    .byte\t{hexrow(c[o + 13:o + 16])}\t# +0x0D: VoiceSubRecFetch's selector byte"]
+        for k in range((size - 0x10) // 0x1C):
+            r = o + 0x10 + 0x1C * k
+            vl.append(f"    .byte\t{hexrow(c[r:r + 0x1C])}\t# sub-record {k}")
+        put(o, size, vl)
+    for o in tone:
+        size = 16
+        put(o, size, [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 16])}"])
+    pl = []
+    for i in range(np_):
+        r = pr + 16 * i
+        pl.append(f"    .long\t0x{u32(c, r):06x}, 0x{u32(c, r + 4):06x}\t# record {i}: multisample header, zone list")
+        pl.append(f"    .byte\t{hexrow(c[r + 8:r + 16])}")
+    put(pr, 16 * np_, pl)
+    for k, o in enumerate(keymaps):
+        put(o, 128, [f"{labels[o]}:\t\t# key 0..127 -> key group (multisample headers' first word)"] +
+            [f"    .byte\t{hexrow(c[o + i:o + i + 16])}\t# keys {i}-{i + 15}" for i in range(0, 128, 16)])
+
+    # ---- assemble, passthroughs for the gaps ----
+    out = []
+    pos = 0
+    for o in sorted(items):
+        size, lines = items[o]
+        if o < pos:
+            raise SystemExit(f"{label}: item at 0x{o:x} overlaps (pos 0x{pos:x})")
+        if o > pos:
+            what = "the body of the tone record above (0x54-byte head after its name + n x 0x7A elements)" \
+                if out and out[-1].startswith("    .ascii") and any(out[-2].startswith(p) for p in ("Tone_",)) \
+                else "not decoded yet"
+            out.append(f'    .incbin_range\t"{ref}", 0x{s + pos:06x}, 0x{s + o:06x}\t# {what}')
+        if o in labels and not any(ln.startswith(labels[o] + ":") for ln in lines):
+            out.append(f"{labels[o]}:")
+        out += lines
+        pos = o + size
+    if pos < L:
+        out.append(f'    .incbin_range\t"{ref}", 0x{s + pos:06x}, 0x{s + L:06x}\t# not decoded yet')
+    return out

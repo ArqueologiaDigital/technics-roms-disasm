@@ -92,7 +92,7 @@ TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 # into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
 TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
 # The style data's include files (tools/gen_table_styles.py) and their macros.
-TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s)
+TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s src/table/voices/*.s)
 build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
 	@mkdir -p build/table_png
 	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)
@@ -245,7 +245,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
