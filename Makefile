@@ -113,13 +113,13 @@ hdsx3:
 	$(MAKE) -C hdsx3 build
 
 gate-kn2400:
-	$(MAKE) -C kn2400 verify verify-kn2600
+	$(MAKE) -C kn2400 verify verify-kn2600 verify-gui-map
 gate-kn6000:
 	$(MAKE) -C kn6000 verify verify-customdata verify-gui-map
 gate-kn6500:
 	$(MAKE) -C kn6500 verify verify-gui-map
 gate-hdsx3:
-	$(MAKE) -C hdsx3 verify
+	$(MAKE) -C hdsx3 verify verify-gui-map
 
 mn10300-siblings-clean:
 	$(MAKE) -C kn2400 clean

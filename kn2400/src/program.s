@@ -22,7 +22,9 @@ _reset:
 
 _vector_0a:
 	jmp	func_48705624
-.include "src/data/data.s"
+
+.include "src/program/data/data.s"
+
 
 func_485E427C:
 	movbu	d0, (8, sp)
@@ -66596,7 +66598,7 @@ func_486097D6_entry_L27:
 	mov	0x96, d0
 func_486097D6_entry_L32:
 	extbu	d0
-	movbu	(0x4854652b), d1
+	movbu	(data_4854652B), d1
 	mov	data_4854647C, a0
 	movbu	(d0, a0), d0
 	sub	d0, d1
@@ -131914,7 +131916,7 @@ func_4862CC04_entry_L85:
 	ret	[d2,d3,a2,a3], 0x3c
 # func_4862CC04_entry + 0x8f: no traced path reaches what follows (--decode-gaps)
 	extbu	d0
-	mov	0x4841de64, a0
+	mov	data_4841DE64, a0
 	movbu	(d0, a0), d0
 	retf	0, 0
 	retf	0, 0
@@ -158603,7 +158605,7 @@ inflate_fast_entry_L306:
 inflate_fast_entry_L332:
 	retf	[d2,d3,a2,a3], 0x44
 # inflate_fast_entry + 0x335: no traced path reaches what follows (--decode-gaps)
-	mov	0x48431090, a0
+	mov	Str_1_0_4_8, a0
 	retf	0, 0
 	movm	[d2], (sp)
 	add	-0x10, sp
@@ -162860,7 +162862,7 @@ func_4863BEA9_L8:
 	clr	d0
 func_4863BEA9_L1c:
 	extbu	d0
-	mov	0x48431754, a0
+	mov	data_48431754, a0
 	movbu	(d0, a0), d0
 	retf	0, 0
 
@@ -167718,7 +167720,7 @@ func_4863E41C_entry_Lfc:
 	cmp	9, d0
 	bgt	func_4863E41C_entry_L15e
 	asl2	d0
-	mov	0x4843236c, a0
+	mov	data_4843236C, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	movhu	(data_485538CC), d0
@@ -172770,12 +172772,14 @@ CategStyleUpDownFunc_L6b:
 CategStyleUpDownFunc_L7d:
 	clr	d0
 	ret	[d2,d3], 0x24
+
+StyleOutCall:
 	add	-0xc, sp
 	cmp	0x1550001, d1
-	bne	CategStyleUpDownFunc_L95
+	bne	StyleOutCall_L14
 	mov	(0x1c, sp), a0
 	call	func_5015762D_entry, [a2], 0x14
-CategStyleUpDownFunc_L95:
+StyleOutCall_L14:
 	clr	d0
 	ret	0, 0xc
 
@@ -172897,16 +172901,18 @@ func_48641839_entry_L4b:
 	clr	d0
 func_48641839_entry_L4c:
 	ret	[d2], 0x1c
+
+OneTchFUNC:
 	add	-0xc, sp
 	cmp	0x5000b, d1
-	bne	func_48641839_entry_L6d
+	bne	OneTchFUNC_L1e
 	mov	(0x1c, sp), a0
 	cmp	2, a0
-	bne	func_48641839_entry_L6d
+	bne	OneTchFUNC_L1e
 	mov	1, d0
 	call	func_48641839_entry, [d2], 0x1c
 	movhu	d0, (0x500461a4)
-func_48641839_entry_L6d:
+OneTchFUNC_L1e:
 	clr	d0
 	ret	0, 0xc
 
@@ -178574,9 +178580,9 @@ func_48644882:
 	retf	0, 0
 	mov	d0, (data_50006B18)
 	retf	0, 0
-	mov	(0x50006b1c), d0
+	mov	(data_50006B1C), d0
 	retf	0, 0
-	mov	d0, (0x50006b1c)
+	mov	d0, (data_50006B1C)
 	retf	0, 0
 	movhu	(data_50006B24), d0
 	retf	0, 0
@@ -188921,32 +188927,34 @@ IvMpVerWinProc_Lcc:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 IvMpVerWinProc_Ldb:
 	ret	0, 0x18
+
+CaptureLcdCheck:
 	add	-8, sp
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	mov	d1, d0
 	cmp	0x50005, d0
-	bne	IvMpVerWinProc_Lf0
-	bra	IvMpVerWinProc_Lfe
-IvMpVerWinProc_Lf0:
+	bne	CaptureLcdCheck_L12
+	bra	CaptureLcdCheck_L20
+CaptureLcdCheck_L12:
 	mov	(0x14, sp), d0
 	cmp	0x50000, d0
-	bne	IvMpVerWinProc_Lfc
-	bra	IvMpVerWinProc_L108
-IvMpVerWinProc_Lfc:
-	bra	IvMpVerWinProc_L10f
-IvMpVerWinProc_Lfe:
+	bne	CaptureLcdCheck_L1e
+	bra	CaptureLcdCheck_L2a
+CaptureLcdCheck_L1e:
+	bra	CaptureLcdCheck_L31
+CaptureLcdCheck_L20:
 	call	CaptureLcd_entry, [d2], 0x14
 	clr	d0
-	bra	IvMpVerWinProc_L110
-IvMpVerWinProc_L108:
+	bra	CaptureLcdCheck_L32
+CaptureLcdCheck_L2a:
 	mov	(0x10, sp), d0
 	mov	(0x18, sp), d1
 	add	d1, d0
-	bra	IvMpVerWinProc_L110
-IvMpVerWinProc_L10f:
+	bra	CaptureLcdCheck_L32
+CaptureLcdCheck_L31:
 	clr	d0
-IvMpVerWinProc_L110:
+CaptureLcdCheck_L32:
 	ret	0, 8
 
 AcProgVerBoxProc:
@@ -191358,41 +191366,43 @@ IvNamingProc_Ld2:
 GetNamingWindowID:
 	mov	0x00200004, d0
 	ret	0, 0
+
+NamingCheck:
 	add	-0x10, sp
 	mov	d0, (0x18, sp)
 	mov	d1, (0x1c, sp)
 	mov	d1, d0
 	cmp	0x6003a, d0
-	bne	GetNamingWindowID_L1b
-	bra	GetNamingWindowID_L35
-GetNamingWindowID_L1b:
+	bne	NamingCheck_L12
+	bra	NamingCheck_L2c
+NamingCheck_L12:
 	mov	(0x1c, sp), d0
 	cmp	0x260000, d0
-	bne	GetNamingWindowID_L27
-	bra	GetNamingWindowID_L48
-GetNamingWindowID_L27:
+	bne	NamingCheck_L1e
+	bra	NamingCheck_L3f
+NamingCheck_L1e:
 	mov	(0x1c, sp), d0
 	cmp	0x60072, d0
-	bne	GetNamingWindowID_L33
-	bra	GetNamingWindowID_L4b
-GetNamingWindowID_L33:
-	bra	GetNamingWindowID_L5a
-GetNamingWindowID_L35:
+	bne	NamingCheck_L2a
+	bra	NamingCheck_L42
+NamingCheck_L2a:
+	bra	NamingCheck_L51
+NamingCheck_L2c:
 	mov	(0x20, sp), a0
 	mov	Str_We_are_Taian_BOYS, a1
 	call	strcpy_entry, [a2], 4
 	mov	(0x18, sp), d0
-	bra	GetNamingWindowID_L5b
-GetNamingWindowID_L48:
+	bra	NamingCheck_L52
+NamingCheck_L3f:
 	clr	d0
-	bra	GetNamingWindowID_L5b
-GetNamingWindowID_L4b:
+	bra	NamingCheck_L52
+NamingCheck_L42:
 	mov	Str_We_are_Taian_BOYS, a0
 	call	LibStrlen, 0, 0
-	bra	GetNamingWindowID_L5b
-GetNamingWindowID_L5a:
+	bra	NamingCheck_L52
+NamingCheck_L51:
 	clr	d0
-GetNamingWindowID_L5b:
+NamingCheck_L52:
 	ret	0, 0x10
 
 InitializeBlock05:
@@ -191678,29 +191688,29 @@ IvMessageProc_L140:
 IvMessageProc_L14b:
 	ret	[d2,a2], 0x1c
 
-func_4864C015:
+AcPleaseWaitProc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x24, sp
 	mov	d0, d2
 	mov	d1, d3
 	cmp	0x50001, d3
-	beq	func_4864C015_L40
+	beq	AcPleaseWaitProc_L40
 	cmp	0x50002, d3
-	beq	func_4864C015_L57
+	beq	AcPleaseWaitProc_L57
 	cmp	0x600b2, d3
-	beq	func_4864C015_L7f
+	beq	AcPleaseWaitProc_L7f
 	cmp	0x600b4, d3
-	beq	func_4864C015_L9f
+	beq	AcPleaseWaitProc_L9f
 	cmp	0x6003a, d3
-	bne	func_4864C015_L32
-	jmp	func_4864C015_L135
-func_4864C015_L32:
+	bne	AcPleaseWaitProc_L32
+	jmp	AcPleaseWaitProc_L135
+AcPleaseWaitProc_L32:
 	cmp	0x600af, d3
-	bne	func_4864C015_L3d
-	jmp	func_4864C015_L1a9
-func_4864C015_L3d:
-	jmp	func_4864C015_L1b6
-func_4864C015_L40:
+	bne	AcPleaseWaitProc_L3d
+	jmp	AcPleaseWaitProc_L1a9
+AcPleaseWaitProc_L3d:
+	jmp	AcPleaseWaitProc_L1b6
+AcPleaseWaitProc_L40:
 	clr	d0
 	movhu	d0, (0x50051b94)
 	mov	(0x44, sp), a0
@@ -191709,7 +191719,7 @@ func_4864C015_L40:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x34
-func_4864C015_L57:
+AcPleaseWaitProc_L57:
 	mov	d2, d1
 	mov	d2, (0x10, sp)
 	mov	0x000600b4, d0
@@ -191725,7 +191735,7 @@ func_4864C015_L57:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x34
-func_4864C015_L7f:
+AcPleaseWaitProc_L7f:
 	mov	(0x44, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -191736,7 +191746,7 @@ func_4864C015_L7f:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x34
-func_4864C015_L9f:
+AcPleaseWaitProc_L9f:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	a2, a0
@@ -191765,7 +191775,7 @@ func_4864C015_L9f:
 	movhu	(0x50051b94), d0
 	exth	d0
 	cmp	0, d0
-	bne	func_4864C015_L10c
+	bne	AcPleaseWaitProc_L10c
 	mov	d2, (0x10, sp)
 	mov	0x000600b4, d0
 	mov	d0, (0x14, sp)
@@ -191774,8 +191784,8 @@ func_4864C015_L9f:
 	mov	0x32, d0
 	mov	d2, d1
 	call	SetApTimer_entry, [d2,d3,a2,a3], 0x34
-	bra	func_4864C015_L123
-func_4864C015_L10c:
+	bra	AcPleaseWaitProc_L123
+AcPleaseWaitProc_L10c:
 	mov	d2, (0x10, sp)
 	mov	0x000600b4, d0
 	mov	d0, (0x14, sp)
@@ -191784,14 +191794,14 @@ func_4864C015_L10c:
 	mov	0xa, d0
 	mov	d2, d1
 	call	SetApTimer_entry, [d2,d3,a2,a3], 0x34
-func_4864C015_L123:
+AcPleaseWaitProc_L123:
 	movhu	(0x50051b94), d0
 	exth	d0
 	inc	d0
 	movhu	d0, (0x50051b94)
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x34
-func_4864C015_L135:
+AcPleaseWaitProc_L135:
 	movbu	(0x500a05a0), d0
 	mov	(0x44, sp), a2
 	asl2	d0
@@ -191802,7 +191812,7 @@ func_4864C015_L135:
 	exth	d3
 	clr	d0
 	cmp	d0, d3
-	ble	func_4864C015_L15c
+	ble	AcPleaseWaitProc_L15c
 	setlb
 	mov	0x2e, d1
 	movbu	d1, (d0, a2)
@@ -191810,7 +191820,7 @@ func_4864C015_L135:
 	exth	d0
 	cmp	d3, d0
 	llt
-func_4864C015_L15c:
+AcPleaseWaitProc_L15c:
 	clr	d1
 	movbu	d1, (d0, a2)
 	movhu	(0x50051b94), d1
@@ -191822,7 +191832,7 @@ func_4864C015_L15c:
 	mov	mdr, d1
 	exth	d1
 	cmp	d3, d1
-	bge	func_4864C015_L18b
+	bge	AcPleaseWaitProc_L18b
 	movbu	(0x500a05a0), d0
 	sub	d1, d3
 	asl2	d0
@@ -191832,8 +191842,8 @@ func_4864C015_L15c:
 	mov	d2, a1
 	mov	a2, a0
 	call	strncpy_entry, [a2,a3], 8
-	bra	func_4864C015_L1a6
-func_4864C015_L18b:
+	bra	AcPleaseWaitProc_L1a6
+AcPleaseWaitProc_L18b:
 	movbu	(0x500a05a0), d0
 	asl2	d0
 	mov	(d0, a3), a1
@@ -191845,19 +191855,19 @@ func_4864C015_L18b:
 	sub	d3, d1
 	mov	d1, d0
 	call	strncpy_entry, [a2,a3], 8
-func_4864C015_L1a6:
+AcPleaseWaitProc_L1a6:
 	clr	d0
-	bra	func_4864C015_L1c1
-func_4864C015_L1a9:
+	bra	AcPleaseWaitProc_L1c1
+AcPleaseWaitProc_L1a9:
 	mov	(0x44, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-	bra	func_4864C015_L1c1
-func_4864C015_L1b6:
+	bra	AcPleaseWaitProc_L1c1
+AcPleaseWaitProc_L1b6:
 	mov	(0x44, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4864C015_L1c1:
+AcPleaseWaitProc_L1c1:
 	ret	[d2,d3,a2,a3], 0x34
 
 CheckLanguage:
@@ -192473,16 +192483,16 @@ AcWelcomeScreenProc_L110:
 AcWelcomeScreenProc_L11b:
 	ret	[d2,d3], 0x24
 
-func_4864C89A:
+AcMPVerProc:
 	movm	[d2], (sp)
 	add	-0x1c, sp
 	mov	d0, d2
 	cmp	0x50009, d1
-	beq	func_4864C89A_L18
+	beq	AcMPVerProc_L18
 	cmp	0x6003a, d1
-	beq	func_4864C89A_L37
-	bra	func_4864C89A_L68
-func_4864C89A_L18:
+	beq	AcMPVerProc_L37
+	bra	AcMPVerProc_L68
+AcMPVerProc_L18:
 	mov	(0x30, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -192492,8 +192502,8 @@ func_4864C89A_L18:
 	mov	d2, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4864C89A_L73
-func_4864C89A_L37:
+	bra	AcMPVerProc_L73
+AcMPVerProc_L37:
 	call	func_4870576B, 0, 0
 	mov	(0x30, sp), a0
 	mov	Str_s_Ver_1X_1X, d1
@@ -192509,12 +192519,12 @@ func_4864C89A_L37:
 	mov	d0, (0x18, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	func_4864C89A_L73
-func_4864C89A_L68:
+	bra	AcMPVerProc_L73
+AcMPVerProc_L68:
 	mov	(0x30, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4864C89A_L73:
+AcMPVerProc_L73:
 	ret	[d2], 0x20
 
 func_4864C910:
@@ -212719,26 +212729,26 @@ AcRhyCmpVariProc_Lc7:
 AcRhyCmpVariProc_Ld2:
 	ret	[d2,a2], 0x1c
 
-func_48659511:
+TtSvari:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	0, a2
 	cmp	0x600b5, d1
-	beq	func_48659511_L3d
+	beq	TtSvari_L3d
 	cmp	0x6003b, d1
-	beq	func_48659511_L66
+	beq	TtSvari_L66
 	cmp	0x600d8, d1
-	beq	func_48659511_L75
+	beq	TtSvari_L75
 	cmp	0x6008e, d1
-	beq	func_48659511_L79
+	beq	TtSvari_L79
 	cmp	0x660001, d1
-	beq	func_48659511_L7d
+	beq	TtSvari_L7d
 	cmp	0x660002, d1
-	bne	func_48659511_L3a
-	jmp	func_48659511_Lde
-func_48659511_L3a:
-	jmp	func_48659511_Le8
-func_48659511_L3d:
+	bne	TtSvari_L3a
+	jmp	TtSvari_Lde
+TtSvari_L3a:
+	jmp	TtSvari_Le8
+TtSvari_L3d:
 	mov	1, d0
 	mov	d0, (0x50051c10)
 	clr	d0
@@ -212747,19 +212757,19 @@ func_48659511_L3d:
 	mov	d0, (0x50051c1c)
 	mov	d0, (0x50051c20)
 	call	func_48659A93_entry, [d2,a2], 0x2c
-	jmp	func_48659511_Le8
-func_48659511_L66:
+	jmp	TtSvari_Le8
+TtSvari_L66:
 	mov	(0x3c, sp), d0
 	mov	d0, (0x50051c54)
 	call	func_48659A93_entry, [d2,a2], 0x2c
-	bra	func_48659511_Le8
-func_48659511_L75:
+	bra	TtSvari_Le8
+TtSvari_L75:
 	mov	4, a2
-	bra	func_48659511_Le8
-func_48659511_L79:
+	bra	TtSvari_Le8
+TtSvari_L79:
 	mov	0xd, a2
-	bra	func_48659511_Le8
-func_48659511_L7d:
+	bra	TtSvari_Le8
+TtSvari_L7d:
 	mov	0xa, d0
 	movbu	d0, (0x14, sp)
 	clr	d0
@@ -212786,22 +212796,22 @@ func_48659511_L7d:
 	call	func_4860A75C, 0, 0
 	extbu	d0
 	cmp	3, d0
-	bne	func_48659511_Lc9
+	bne	TtSvari_Lc9
 	mov	0x34, d0
 	movbu	d0, (0x14, sp)
-func_48659511_Lc9:
+TtSvari_Lc9:
 	and	0xff000000, d3
 	lsr	24, d3
 	mov	d3, d0
 	extbu	d0
 	mov	a3, a0
 	call	func_5014AC9F_entry, [d2,d3,a2], 0x28
-	bra	func_48659511_Le8
-func_48659511_Lde:
+	bra	TtSvari_Le8
+TtSvari_Lde:
 	mov	(0x3c, sp), d0
 	extbu	d0
 	call	func_5015C595_entry, 0, 8
-func_48659511_Le8:
+TtSvari_Le8:
 	mov	a2, d0
 	ret	[d2,d3,a2,a3], 0x2c
 
@@ -217982,11 +217992,13 @@ AcAbcToggleProc_Lc6:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 AcAbcToggleProc_Ld1:
 	ret	[d2,d3,a2], 0x20
+
+TtSedrawbar:
 	cmp	0x6003b, d1
-	bne	AcAbcToggleProc_Le4
+	bne	TtSedrawbar_L10
 	mov	0xc, d0
 	mov	d0, (0x50051c54)
-AcAbcToggleProc_Le4:
+TtSedrawbar_L10:
 	clr	d0
 	retf	0, 0
 
@@ -218477,18 +218489,18 @@ func_4865CEDD_entry_L129:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-func_4865D00F:
+SVariR12OctaveFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	d1, d2
 	cmp	0x6003e, d2
-	bge	func_4865D00F_L11
-	jmp	func_4865D00F_L12d
-func_4865D00F_L11:
+	bge	SVariR12OctaveFunc_L11
+	jmp	SVariR12OctaveFunc_L12d
+SVariR12OctaveFunc_L11:
 	cmp	0x600be, d2
-	ble	func_4865D00F_L1c
-	jmp	func_4865D00F_L12d
-func_4865D00F_L1c:
+	ble	SVariR12OctaveFunc_L1c
+	jmp	SVariR12OctaveFunc_L12d
+SVariR12OctaveFunc_L1c:
 	mov	data_48474114, a1
 	add	0xfff9ffc3, d2
 	mov	0xf, d0
@@ -218498,21 +218510,21 @@ func_4865D00F_L1c:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	func_4865D00F_L4d
+	beq	SVariR12OctaveFunc_L4d
 	setlb
 	cmp	0, d0
-	bne	func_4865D00F_L3f
-	jmp	func_4865D00F_L12d
-func_4865D00F_L3f:
+	bne	SVariR12OctaveFunc_L3f
+	jmp	SVariR12OctaveFunc_L12d
+SVariR12OctaveFunc_L3f:
 	add	8, a0
 	cmp	Field_AcFavorite_end, a0
-	bcs	func_4865D00F_L4a
+	bcs	SVariR12OctaveFunc_L4a
 	mov	a1, a0
-func_4865D00F_L4a:
+SVariR12OctaveFunc_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-func_4865D00F_L4d:
+SVariR12OctaveFunc_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 	mov	(0x28, sp), a0
@@ -218521,106 +218533,108 @@ func_4865D00F_L4d:
 	and	0xff, d0
 	extbu	d0
 	cmp	0x28, d0
-	beq	func_4865D00F_L72
+	beq	SVariR12OctaveFunc_L72
 	cmp	0x34, d0
-	beq	func_4865D00F_L84
+	beq	SVariR12OctaveFunc_L84
 	cmp	0x40, d0
-	beq	func_4865D00F_L96
+	beq	SVariR12OctaveFunc_L96
 	cmp	0x4c, d0
-	beq	func_4865D00F_La8
+	beq	SVariR12OctaveFunc_La8
 	cmp	0x58, d0
-	beq	func_4865D00F_Lba
-	bra	func_4865D00F_Lcc
-func_4865D00F_L72:
+	beq	SVariR12OctaveFunc_Lba
+	bra	SVariR12OctaveFunc_Lcc
+SVariR12OctaveFunc_L72:
 	mov	(0xc, a0), a0
 	mov	Str_2_29, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4865D00F_Ldc
-func_4865D00F_L84:
+	bra	SVariR12OctaveFunc_Ldc
+SVariR12OctaveFunc_L84:
 	mov	(0xc, a0), a0
 	mov	Str_1_28, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4865D00F_Ldc
-func_4865D00F_L96:
+	bra	SVariR12OctaveFunc_Ldc
+SVariR12OctaveFunc_L96:
 	mov	(0xc, a0), a0
 	mov	Str_0_17, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4865D00F_Ldc
-func_4865D00F_La8:
+	bra	SVariR12OctaveFunc_Ldc
+SVariR12OctaveFunc_La8:
 	mov	(0xc, a0), a0
 	mov	Str_1_27, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4865D00F_Ldc
-func_4865D00F_Lba:
+	bra	SVariR12OctaveFunc_Ldc
+SVariR12OctaveFunc_Lba:
 	mov	(0xc, a0), a0
 	mov	Str_2_28, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4865D00F_Ldc
-func_4865D00F_Lcc:
+	bra	SVariR12OctaveFunc_Ldc
+SVariR12OctaveFunc_Lcc:
 	mov	(0xc, a0), a0
 	mov	Str_0_16, a1
 	call	strcpy_entry, [a2], 4
-func_4865D00F_Ldc:
+SVariR12OctaveFunc_Ldc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0006006e, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	0x00008038, d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	clr	d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	(0x28, sp), a0
 	clr	d0
 	mov	(a0), d1
 	and	0x00ffffff, d1
 	cmp	0x8038, d1
-	bne	func_4865D00F_L12e
+	bne	SVariR12OctaveFunc_L12e
 	mov	1, d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	(0x28, sp), a0
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	0xc, d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	0xc, d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	1, d0
-	bra	func_4865D00F_L12e
+	bra	SVariR12OctaveFunc_L12e
 	mov	0x40, d0
-	bra	func_4865D00F_L12e
-func_4865D00F_L12d:
+	bra	SVariR12OctaveFunc_L12e
+SVariR12OctaveFunc_L12d:
 	clr	d0
-func_4865D00F_L12e:
+SVariR12OctaveFunc_L12e:
 	ret	[d2], 0x18
+
+BitmapDrawsw:
 	cmp	0x60092, d1
-	beq	func_4865D00F_L153
+	beq	BitmapDrawsw_L22
 	cmp	0x60093, d1
-	beq	func_4865D00F_L15b
+	beq	BitmapDrawsw_L2a
 	cmp	0x60094, d1
-	beq	func_4865D00F_L160
+	beq	BitmapDrawsw_L2f
 	cmp	0x600ad, d1
-	beq	func_4865D00F_L164
-	bra	func_4865D00F_L168
-func_4865D00F_L153:
+	beq	BitmapDrawsw_L33
+	bra	BitmapDrawsw_L37
+BitmapDrawsw_L22:
 	mov	data_484738B0, d0
-	bra	func_4865D00F_L169
-func_4865D00F_L15b:
+	bra	BitmapDrawsw_L38
+BitmapDrawsw_L2a:
 	mov	0x126, d0
-	bra	func_4865D00F_L169
-func_4865D00F_L160:
+	bra	BitmapDrawsw_L38
+BitmapDrawsw_L2f:
 	mov	6, d0
-	bra	func_4865D00F_L169
-func_4865D00F_L164:
+	bra	BitmapDrawsw_L38
+BitmapDrawsw_L33:
 	mov	8, d0
-	bra	func_4865D00F_L169
-func_4865D00F_L168:
+	bra	BitmapDrawsw_L38
+BitmapDrawsw_L37:
 	clr	d0
-func_4865D00F_L169:
+BitmapDrawsw_L38:
 	retf	0, 0
 
 InitializeBlock08:
@@ -218801,43 +218815,43 @@ func_4865D371_L4e:
 	clr	d0
 	rets
 
-func_4865D3C2:
+TtFavorite:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 	mov	d0, d3
 	mov	0, a2
 	cmp	0x600b5, d1
-	beq	func_4865D3C2_L60
+	beq	TtFavorite_L60
 	cmp	0x600d8, d1
-	bne	func_4865D3C2_L1b
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L1b:
+	bne	TtFavorite_L1b
+	jmp	TtFavorite_L34e
+TtFavorite_L1b:
 	cmp	0x6008e, d1
-	bne	func_4865D3C2_L26
-	jmp	func_4865D3C2_Lad
-func_4865D3C2_L26:
+	bne	TtFavorite_L26
+	jmp	TtFavorite_Lad
+TtFavorite_L26:
 	cmp	0x50014, d1
-	bne	func_4865D3C2_L31
-	jmp	func_4865D3C2_Lb2
-func_4865D3C2_L31:
+	bne	TtFavorite_L31
+	jmp	TtFavorite_Lb2
+TtFavorite_L31:
 	cmp	0x860003, d1
-	bne	func_4865D3C2_L3c
-	jmp	func_4865D3C2_L107
-func_4865D3C2_L3c:
+	bne	TtFavorite_L3c
+	jmp	TtFavorite_L107
+TtFavorite_L3c:
 	cmp	0x6003b, d1
-	bne	func_4865D3C2_L47
-	jmp	func_4865D3C2_L114
-func_4865D3C2_L47:
+	bne	TtFavorite_L47
+	jmp	TtFavorite_L114
+TtFavorite_L47:
 	cmp	0x5000b, d1
-	bne	func_4865D3C2_L52
-	jmp	func_4865D3C2_L168
-func_4865D3C2_L52:
+	bne	TtFavorite_L52
+	jmp	TtFavorite_L168
+TtFavorite_L52:
 	cmp	0x860002, d1
-	bne	func_4865D3C2_L5d
-	jmp	func_4865D3C2_L18d
-func_4865D3C2_L5d:
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L60:
+	bne	TtFavorite_L5d
+	jmp	TtFavorite_L18d
+TtFavorite_L5d:
+	jmp	TtFavorite_L34e
+TtFavorite_L60:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	6, d0
@@ -218860,27 +218874,27 @@ func_4865D3C2_L60:
 	mov	0x007020ae, d0
 	mov	-0x100, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-	jmp	func_4865D3C2_L34e
-# func_4865D3C2 + 0xaa: no traced path reaches what follows (--decode-gaps)
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_Lad:
+	jmp	TtFavorite_L34e
+# TtFavorite + 0xaa: no traced path reaches what follows (--decode-gaps)
+	jmp	TtFavorite_L34e
+TtFavorite_Lad:
 	mov	0xd, a2
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_Lb2:
+	jmp	TtFavorite_L34e
+TtFavorite_Lb2:
 	mov	(0x3c, sp), a0
 	mov	(a0), d0
 	and	0x00ffffff, d0
 	cmp	0x7020ae, d0
-	beq	func_4865D3C2_Lc6
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_Lc6:
+	beq	TtFavorite_Lc6
+	jmp	TtFavorite_L34e
+TtFavorite_Lc6:
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	func_4865D3C2_Ld4
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_Ld4:
+	beq	TtFavorite_Ld4
+	jmp	TtFavorite_L34e
+TtFavorite_Ld4:
 	call	GetTitleNow_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -218892,21 +218906,21 @@ func_4865D3C2_Ld4:
 	mov	0x0006008b, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	mov	1, a2
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L107:
+	jmp	TtFavorite_L34e
+TtFavorite_L107:
 	mov	(0x3c, sp), d0
 	exthu	d0
 	call	func_48641B3F_entry, [d2,d3], 0x18
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L114:
+	jmp	TtFavorite_L34e
+TtFavorite_L114:
 	mov	(0x3c, sp), a0
 	cmp	1, a0
-	beq	func_4865D3C2_L11d
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L11d:
+	beq	TtFavorite_L11d
+	jmp	TtFavorite_L34e
+TtFavorite_L11d:
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe000d, d0
-	beq	func_4865D3C2_L15b
+	beq	TtFavorite_L15b
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -218920,38 +218934,38 @@ func_4865D3C2_L11d:
 	mov	-1, d0
 	mov	0x0006008f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-func_4865D3C2_L15b:
+TtFavorite_L15b:
 	mov	0x10, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L168:
+	jmp	TtFavorite_L34e
+TtFavorite_L168:
 	mov	(0x3c, sp), a0
 	cmp	2, a0
-	beq	func_4865D3C2_L175
+	beq	TtFavorite_L175
 	cmp	3, a0
-	beq	func_4865D3C2_L181
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L175:
+	beq	TtFavorite_L181
+	jmp	TtFavorite_L34e
+TtFavorite_L175:
 	mov	0xb, d0
 	call	func_5015CE95_entry, 0, 0xc
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L181:
+	jmp	TtFavorite_L34e
+TtFavorite_L181:
 	mov	0xb, d0
 	call	func_5015CF95_entry, 0, 0xc
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L18d:
+	jmp	TtFavorite_L34e
+TtFavorite_L18d:
 	mov	(0x3c, sp), d2
 	cmp	0x25, d2
-	bcc	func_4865D3C2_L196
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L196:
+	bcc	TtFavorite_L196
+	jmp	TtFavorite_L34e
+TtFavorite_L196:
 	cmp	0x5f, d2
-	bls	func_4865D3C2_L19d
-	jmp	func_4865D3C2_L34e
-func_4865D3C2_L19d:
+	bls	TtFavorite_L19d
+	jmp	TtFavorite_L34e
+TtFavorite_L19d:
 	mov	0x25, d1
-	mov	0x48477c54, a0
+	mov	data_48477C54, a0
 	mov	d2, d0
 	sub	d1, d0
 	asl2	d0
@@ -218959,29 +218973,29 @@ func_4865D3C2_L19d:
 	jmp	(a1)
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0006, d0
-	beq	func_4865D3C2_L1c6
+	beq	TtFavorite_L1c6
 	mov	6, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L1c6:
+TtFavorite_L1c6:
 	call	func_486BFC4B_entry, 0, 0x14
-	jmp	func_4865D3C2_L34e
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0006, d0
-	beq	func_4865D3C2_L1e9
+	beq	TtFavorite_L1e9
 	mov	6, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L1e9:
+TtFavorite_L1e9:
 	call	func_486BFC5E_entry, 0, 0x10
-	jmp	func_4865D3C2_L34e
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0006, d0
-	beq	func_4865D3C2_L20c
+	beq	TtFavorite_L20c
 	mov	6, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L20c:
+TtFavorite_L20c:
 	mov	0x18, d0
 	nop
 	nop
@@ -218991,88 +219005,88 @@ func_4865D3C2_L20c:
 	mov	(0xc, a0), d0
 	extbu	d0
 	call	func_486BFC6D_entry, 0, 0xc
-	jmp	func_4865D3C2_L34e
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0006, d0
-	beq	func_4865D3C2_L241
+	beq	TtFavorite_L241
 	mov	6, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L241:
+TtFavorite_L241:
 	call	func_486BFC40_entry, 0, 8
-	jmp	func_4865D3C2_L34e
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L264
+	beq	TtFavorite_L264
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L264:
+TtFavorite_L264:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	func_48710F9A, 0, 0x10
-	jmp	func_4865D3C2_L34e
+	call	SdcLoadTtlJgFunc_entry, 0, 0x10
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L290
+	beq	TtFavorite_L290
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L290:
+TtFavorite_L290:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	func_48711160, 0, 0x10
-	jmp	func_4865D3C2_L34e
+	call	SdcSaveTtlJgFunc_entry, 0, 0x10
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L2bc
+	beq	TtFavorite_L2bc
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L2bc:
+TtFavorite_L2bc:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	SdcFmmModeFunc_entry, 0, 0x10
-	jmp	func_4865D3C2_L34e
+	call	SdcSaveSmfTtlJgFunc_entry, 0, 0x10
+	jmp	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L2e8
+	beq	TtFavorite_L2e8
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L2e8:
+TtFavorite_L2e8:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	SdcFmmLoadTitleFunc_entry, 0, 0x10
-	bra	func_4865D3C2_L34e
+	call	SdcMedleyTtlJgFunc_entry, 0, 0x10
+	bra	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L313
+	beq	TtFavorite_L313
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L313:
+TtFavorite_L313:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	func_4871107C, 0, 0x10
-	bra	func_4865D3C2_L34e
+	call	SdcUtilityTtlJgFunc_entry, 0, 0x10
+	bra	TtFavorite_L34e
 	call	GetModeNow_entry, 0, 0x10
 	cmp	0xe0018, d0
-	beq	func_4865D3C2_L33e
+	beq	TtFavorite_L33e
 	mov	0x18, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_4865D3C2_L33e:
+TtFavorite_L33e:
 	mov	d3, (0x10, sp)
 	mov	0x00050005, d1
 	mov	d3, d0
-	call	SdcFmmFavSetTitleFunc_entry, 0, 0x10
-func_4865D3C2_L34e:
+	call	SdcFavoriteTtlJgFunc_entry, 0, 0x10
+TtFavorite_L34e:
 	mov	a2, d0
 	ret	[d2,d3,a2], 0x2c
 
@@ -221016,22 +221030,24 @@ func_4865EA26_entry_Lc:
 	mov	d0, a1
 	call	strcpy_entry, [a2], 4
 	ret	0, 0x10
+
+TtCtFavorite:
 	add	-0x10, sp
 	cmp	0x600b5, d1
-	beq	func_4865EA26_entry_L89
+	beq	TtCtFavorite_L64
 	cmp	0x6003b, d1
-	beq	func_4865EA26_entry_L4a
+	beq	TtCtFavorite_L25
 	cmp	0x5000b, d1
-	beq	func_4865EA26_entry_L89
+	beq	TtCtFavorite_L64
 	cmp	0x860001, d1
-	beq	func_4865EA26_entry_L59
-	bra	func_4865EA26_entry_L89
-func_4865EA26_entry_L4a:
+	beq	TtCtFavorite_L34
+	bra	TtCtFavorite_L64
+TtCtFavorite_L25:
 	clr	d0
 	mov	d0, (0x50051ccc)
 	mov	d0, (0x50051cc8)
-	bra	func_4865EA26_entry_L89
-func_4865EA26_entry_L59:
+	bra	TtCtFavorite_L64
+TtCtFavorite_L34:
 	call	DirStopAll_entry, [d2], 0x10
 	mov	1, d0
 	call	func_486150D9, 0, 0
@@ -221042,7 +221058,7 @@ func_4865EA26_entry_L59:
 	mov	3, d0
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_4865EA26_entry_L89:
+TtCtFavorite_L64:
 	clr	d0
 	ret	0, 0x10
 
@@ -269968,25 +269984,25 @@ InitializeBlock25_entry:
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_4867D44E:
+AcPmemBankSelProc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x2c, sp
 	mov	d0, d3
 	mov	d1, a3
 	cmp	0x50009, a3
-	beq	func_4867D44E_L31
+	beq	AcPmemBankSelProc_L31
 	cmp	0x50005, a3
-	beq	func_4867D44E_L76
+	beq	AcPmemBankSelProc_L76
 	cmp	0x50014, a3
-	bne	func_4867D44E_L23
-	jmp	func_4867D44E_Lc9
-func_4867D44E_L23:
+	bne	AcPmemBankSelProc_L23
+	jmp	AcPmemBankSelProc_Lc9
+AcPmemBankSelProc_L23:
 	cmp	0x6003a, a3
-	bne	func_4867D44E_L2e
-	jmp	func_4867D44E_L127
-func_4867D44E_L2e:
-	jmp	func_4867D44E_L178
-func_4867D44E_L31:
+	bne	AcPmemBankSelProc_L2e
+	jmp	AcPmemBankSelProc_L127
+AcPmemBankSelProc_L2e:
+	jmp	AcPmemBankSelProc_L178
+AcPmemBankSelProc_L31:
 	call	GetViewInstance, 0, 0
 	mov	a0, a2
 	clr	d0
@@ -269999,16 +270015,16 @@ func_4867D44E_L31:
 	extbu	d2
 	extbu	d0
 	cmp	d0, d2
-	bne	func_4867D44E_L5f
+	bne	AcPmemBankSelProc_L5f
 	mov	(0x34, a2), a0
 	mov	1, d0
 	mov	d0, (a0)
-	bra	func_4867D44E_L64
-func_4867D44E_L5f:
+	bra	AcPmemBankSelProc_L64
+AcPmemBankSelProc_L5f:
 	mov	(0x34, a2), a0
 	clr	d0
 	mov	d0, (a0)
-func_4867D44E_L64:
+AcPmemBankSelProc_L64:
 	mov	(0x4c, sp), a0
 	mov	a3, d1
 	mov	a0, (0x10, sp)
@@ -270016,19 +270032,19 @@ func_4867D44E_L64:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x3c
-func_4867D44E_L76:
+AcPmemBankSelProc_L76:
 	mov	(0x4c, sp), a2
 	mov	0x00060051, d1
 	mov	a2, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	0, d0
-	beq	func_4867D44E_Lba
+	beq	AcPmemBankSelProc_Lba
 	mov	d3, d0
 	call	GetViewInstance, 0, 0
 	mov	(0x30, a0), a0
 	mov	(a0), d0
 	cmp	0, d0
-	beq	func_4867D44E_Lba
+	beq	AcPmemBankSelProc_Lba
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d3, d0
@@ -270037,20 +270053,20 @@ func_4867D44E_L76:
 	mov	d0, d1
 	mov	0x00600008, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-func_4867D44E_Lba:
+AcPmemBankSelProc_Lba:
 	mov	a2, (0x10, sp)
 	mov	a3, d1
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	ret	[d2,d3,a2,a3], 0x3c
-func_4867D44E_Lc9:
+AcPmemBankSelProc_Lc9:
 	mov	(0x4c, sp), a2
 	mov	a2, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	mov	(a2), d0
 	and	0x00ffffff, d0
 	cmp	0x600008, d0
-	bne	func_4867D44E_L124
+	bne	AcPmemBankSelProc_L124
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0006004e, d1
@@ -270061,23 +270077,23 @@ func_4867D44E_Lc9:
 	and	0xff, d1
 	extbu	d1
 	cmp	d0, d1
-	bne	func_4867D44E_L113
+	bne	AcPmemBankSelProc_L113
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0006004a, d1
 	mov	d3, d0
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_4867D44E_L124
-func_4867D44E_L113:
+	bra	AcPmemBankSelProc_L124
+AcPmemBankSelProc_L113:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0006004a, d1
 	mov	d3, d0
 	call	SendEvent_entry, [d2,d3], 0x24
-func_4867D44E_L124:
+AcPmemBankSelProc_L124:
 	clr	d0
-	bra	func_4867D44E_L183
-func_4867D44E_L127:
+	bra	AcPmemBankSelProc_L183
+AcPmemBankSelProc_L127:
 	mov	sp, a3
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -270104,12 +270120,12 @@ func_4867D44E_L127:
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	func_4867D44E_L183
-func_4867D44E_L178:
+	bra	AcPmemBankSelProc_L183
+AcPmemBankSelProc_L178:
 	mov	(0x4c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4867D44E_L183:
+AcPmemBankSelProc_L183:
 	ret	[d2,d3,a2,a3], 0x3c
 
 PmemBankView:
@@ -270191,24 +270207,24 @@ PmemBankView_Lb8:
 PmemBankView_Lb9:
 	ret	[d2,a2,a3], 0x38
 
-func_4867D690:
+AcPmemNameBoxProc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x2c, sp
 	mov	d0, (0x40, sp)
 	cmp	0x50009, d1
-	beq	func_4867D690_L30
+	beq	AcPmemNameBoxProc_L30
 	cmp	0x600b3, d1
-	beq	func_4867D690_L63
+	beq	AcPmemNameBoxProc_L63
 	cmp	0x50014, d1
-	bne	func_4867D690_L22
-	jmp	func_4867D690_L100
-func_4867D690_L22:
+	bne	AcPmemNameBoxProc_L22
+	jmp	AcPmemNameBoxProc_L100
+AcPmemNameBoxProc_L22:
 	cmp	0x6003a, d1
-	bne	func_4867D690_L2d
-	jmp	func_4867D690_L16e
-func_4867D690_L2d:
-	jmp	func_4867D690_L1c0
-func_4867D690_L30:
+	bne	AcPmemNameBoxProc_L2d
+	jmp	AcPmemNameBoxProc_L16e
+AcPmemNameBoxProc_L2d:
+	jmp	AcPmemNameBoxProc_L1c0
+AcPmemNameBoxProc_L30:
 	mov	(0x48, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -270224,14 +270240,14 @@ func_4867D690_L30:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2], 0x38
-func_4867D690_L63:
+AcPmemNameBoxProc_L63:
 	mov	0x80, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	mov	d0, d2
 	extbu	d0
 	cmp	0, d0
-	ble	func_4867D690_Lea
+	ble	AcPmemNameBoxProc_Lea
 	call	func_501506EF, 0, 0
 	mov	d0, d3
 	extbu	d2
@@ -270242,7 +270258,7 @@ func_4867D690_L63:
 	mov	d3, d1
 	extbu	d1
 	cmp	d1, d0
-	bne	func_4867D690_Ld6
+	bne	AcPmemNameBoxProc_Ld6
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
@@ -270255,47 +270271,47 @@ func_4867D690_L63:
 	inc	d2
 	extbu	d0
 	cmp	d0, d2
-	bne	func_4867D690_Lc2
+	bne	AcPmemNameBoxProc_Lc2
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
 	mov	0x0006004b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_4867D690_Lfc
-func_4867D690_Lc2:
+	bra	AcPmemNameBoxProc_Lfc
+AcPmemNameBoxProc_Lc2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
 	mov	0x0006004b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_4867D690_Lfc
-func_4867D690_Ld6:
+	bra	AcPmemNameBoxProc_Lfc
+AcPmemNameBoxProc_Ld6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
 	mov	0x0006004b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_4867D690_Lfc
-func_4867D690_Lea:
+	bra	AcPmemNameBoxProc_Lfc
+AcPmemNameBoxProc_Lea:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
 	mov	0x0006004b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-func_4867D690_Lfc:
+AcPmemNameBoxProc_Lfc:
 	clr	d0
 	ret	[d2,d3,a2], 0x38
-func_4867D690_L100:
+AcPmemNameBoxProc_L100:
 	mov	(0x48, sp), a2
 	mov	a2, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	mov	(a2), d0
 	cmp	0x600008, d0
-	beq	func_4867D690_L11c
+	beq	AcPmemNameBoxProc_L11c
 	cmp	0x80, d0
-	beq	func_4867D690_L144
-	bra	func_4867D690_L16b
-func_4867D690_L11c:
+	beq	AcPmemNameBoxProc_L144
+	bra	AcPmemNameBoxProc_L16b
+AcPmemNameBoxProc_L11c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
@@ -270308,7 +270324,7 @@ func_4867D690_L11c:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2], 0x38
-func_4867D690_L144:
+AcPmemNameBoxProc_L144:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x40, sp), d0
@@ -270320,11 +270336,11 @@ func_4867D690_L144:
 	mov	0x000600b3, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4867D690_L1cb
-func_4867D690_L16b:
+	bra	AcPmemNameBoxProc_L1cb
+AcPmemNameBoxProc_L16b:
 	clr	d0
-	bra	func_4867D690_L1cb
-func_4867D690_L16e:
+	bra	AcPmemNameBoxProc_L1cb
+AcPmemNameBoxProc_L16e:
 	mov	sp, a2
 	add	0x18, a2
 	clr	d0
@@ -270356,12 +270372,12 @@ func_4867D690_L16e:
 	mov	a2, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	func_4867D690_L1cb
-func_4867D690_L1c0:
+	bra	AcPmemNameBoxProc_L1cb
+AcPmemNameBoxProc_L1c0:
 	mov	(0x48, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4867D690_L1cb:
+AcPmemNameBoxProc_L1cb:
 	ret	[d2,d3,a2], 0x38
 
 PmemBankNaming:
@@ -270609,68 +270625,68 @@ PmemBankViewCatch_L1f1:
 PmemBankViewCatch_L1fc:
 	ret	[d2,d3,a2], 0x20
 
-func_4867DAE5:
+PmBkSelTitleFunc:
 	movm	[d2], (sp)
 	add	-0x20, sp
 	clr	d2
 	cmp	0x6003b, d1
-	beq	func_4867DAE5_L2c
+	beq	PmBkSelTitleFunc_L2c
 	cmp	0x5000b, d1
-	beq	func_4867DAE5_L66
+	beq	PmBkSelTitleFunc_L66
 	cmp	0x50014, d1
-	beq	func_4867DAE5_L8b
+	beq	PmBkSelTitleFunc_L8b
 	cmp	0x600b5, d1
-	bne	func_4867DAE5_L29
-	jmp	func_4867DAE5_Ldf
-func_4867DAE5_L29:
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L2c:
+	bne	PmBkSelTitleFunc_L29
+	jmp	PmBkSelTitleFunc_Ldf
+PmBkSelTitleFunc_L29:
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L2c:
 	mov	(0x34, sp), a0
 	cmp	2, a0
-	bne	func_4867DAE5_L4c
+	bne	PmBkSelTitleFunc_L4c
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	0x01900003, d0
 	mov	0x00060075, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L4c:
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L4c:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	0x01900003, d0
 	mov	0x00060075, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L66:
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L66:
 	mov	(0x34, sp), a0
 	cmp	2, a0
-	beq	func_4867DAE5_L73
+	beq	PmBkSelTitleFunc_L73
 	cmp	3, a0
-	beq	func_4867DAE5_L7f
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L73:
+	beq	PmBkSelTitleFunc_L7f
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L73:
 	mov	0xc, d0
 	call	func_5015CE95_entry, 0, 0xc
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L7f:
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L7f:
 	mov	0xc, d0
 	call	func_5015CF95_entry, 0, 0xc
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L8b:
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L8b:
 	mov	(0x34, sp), a0
 	mov	(a0), d0
 	and	0x00ffffff, d0
 	cmp	0x702013, d0
-	beq	func_4867DAE5_L9f
-	jmp	func_4867DAE5_L129
-func_4867DAE5_L9f:
+	beq	PmBkSelTitleFunc_L9f
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_L9f:
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	func_4867DAE5_Lad
-	jmp	func_4867DAE5_L129
-func_4867DAE5_Lad:
+	beq	PmBkSelTitleFunc_Lad
+	jmp	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_Lad:
 	call	GetTitleNow_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -270682,8 +270698,8 @@ func_4867DAE5_Lad:
 	mov	0x0006008b, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	mov	1, d2
-	bra	func_4867DAE5_L129
-func_4867DAE5_Ldf:
+	bra	PmBkSelTitleFunc_L129
+PmBkSelTitleFunc_Ldf:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
 	mov	0xd0, d0
@@ -270706,7 +270722,7 @@ func_4867DAE5_Ldf:
 	mov	0x00702010, d0
 	mov	-0x100, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-func_4867DAE5_L129:
+PmBkSelTitleFunc_L129:
 	mov	d2, d0
 	ret	[d2], 0x24
 
@@ -271051,26 +271067,26 @@ func_4867E112_entry_L31:
 func_4867E112_entry_L33:
 	ret	[d2], 0x14
 
-func_4867E14D:
+MdSoundEdit:
 	movm	[d2,d3], (sp)
 	add	-0x20, sp
 	cmp	0x5000b, d1
-	beq	func_4867E14D_L1b
+	beq	MdSoundEdit_L1b
 	cmp	0x6003b, d1
-	bne	func_4867E14D_L18
-	jmp	func_4867E14D_L132
-func_4867E14D_L18:
-	jmp	func_4867E14D_L2a0
-func_4867E14D_L1b:
+	bne	MdSoundEdit_L18
+	jmp	MdSoundEdit_L132
+MdSoundEdit_L18:
+	jmp	MdSoundEdit_L2a0
+MdSoundEdit_L1b:
 	mov	(0x38, sp), a0
 	cmp	0, a0
-	beq	func_4867E14D_L2b
+	beq	MdSoundEdit_L2b
 	cmp	1, a0
-	bne	func_4867E14D_L28
-	jmp	func_4867E14D_La9
-func_4867E14D_L28:
-	jmp	func_4867E14D_L2a0
-func_4867E14D_L2b:
+	bne	MdSoundEdit_L28
+	jmp	MdSoundEdit_La9
+MdSoundEdit_L28:
+	jmp	MdSoundEdit_L2a0
+MdSoundEdit_L2b:
 	mov	0x4f, d0
 	mov	1, d1
 	call	func_5015B247_entry, [d2], 0xc
@@ -271104,8 +271120,8 @@ func_4867E14D_L2b:
 	mov	3, d0
 	mov	d0, d1
 	call	func_5015E7E7_entry, [d2,d3], 8
-	jmp	func_4867E14D_L2a0
-func_4867E14D_La9:
+	jmp	MdSoundEdit_L2a0
+MdSoundEdit_La9:
 	mov	0x4f, d0
 	clr	d1
 	call	func_5015B247_entry, [d2], 0xc
@@ -271145,8 +271161,8 @@ func_4867E14D_La9:
 	mov	3, d0
 	clr	d1
 	call	func_5015E7E7_entry, [d2,d3], 8
-	jmp	func_4867E14D_L2a0
-func_4867E14D_L132:
+	jmp	MdSoundEdit_L2a0
+MdSoundEdit_L132:
 	clr	d0
 	movbu	d0, (data_50006D56)
 	movbu	d0, (data_50006D5A)
@@ -271172,18 +271188,18 @@ func_4867E14D_L132:
 	lsr	16, d0
 	extbu	d0
 	cmp	0x10, d0
-	bne	func_4867E14D_L19e
+	bne	MdSoundEdit_L19e
 	mov	d3, d1
 	extbu	d1
 	cmp	0, d1
-	bne	func_4867E14D_L19e
+	bne	MdSoundEdit_L19e
 	mov	d2, d1
 	extbu	d1
 	cmp	0x28, d1
-	bge	func_4867E14D_L19e
+	bge	MdSoundEdit_L19e
 	extbu	d2
 	movhu	d2, (data_50006D54)
-func_4867E14D_L19e:
+MdSoundEdit_L19e:
 	extbu	d2
 	mov	d2, (0x10, sp)
 	extbu	d3
@@ -271192,19 +271208,19 @@ func_4867E14D_L19e:
 	movbu	d0, (data_50006D63)
 	extbu	d0
 	cmp	0, d0
-	beq	func_4867E14D_L1cc
+	beq	MdSoundEdit_L1cc
 	cmp	1, d0
-	beq	func_4867E14D_L1f4
+	beq	MdSoundEdit_L1f4
 	cmp	3, d0
-	beq	func_4867E14D_L21b
+	beq	MdSoundEdit_L21b
 	cmp	4, d0
-	beq	func_4867E14D_L21b
+	beq	MdSoundEdit_L21b
 	cmp	5, d0
-	beq	func_4867E14D_L21b
+	beq	MdSoundEdit_L21b
 	cmp	2, d0
-	beq	func_4867E14D_L242
-	jmp	func_4867E14D_L269
-func_4867E14D_L1cc:
+	beq	MdSoundEdit_L242
+	jmp	MdSoundEdit_L269
+MdSoundEdit_L1cc:
 	mov	0x000f0011, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001b, d0
@@ -271213,8 +271229,8 @@ func_4867E14D_L1cc:
 	mov	0x01b30000, d1
 	mov	Str_MD_SOUNDEDIT_5, a0
 	call	RegisterMode_entry, [a2], 4
-	jmp	func_4867E14D_L295
-func_4867E14D_L1f4:
+	jmp	MdSoundEdit_L295
+MdSoundEdit_L1f4:
 	mov	0x000f000e, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001b, d0
@@ -271223,8 +271239,8 @@ func_4867E14D_L1f4:
 	mov	0x01b30000, d1
 	mov	Str_MD_SOUNDEDIT_4, a0
 	call	RegisterMode_entry, [a2], 4
-	bra	func_4867E14D_L295
-func_4867E14D_L21b:
+	bra	MdSoundEdit_L295
+MdSoundEdit_L21b:
 	mov	0x000f0124, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001b, d0
@@ -271233,8 +271249,8 @@ func_4867E14D_L21b:
 	mov	0x01b30000, d1
 	mov	Str_MD_SOUNDEDIT_3, a0
 	call	RegisterMode_entry, [a2], 4
-	bra	func_4867E14D_L295
-func_4867E14D_L242:
+	bra	MdSoundEdit_L295
+MdSoundEdit_L242:
 	mov	0x000f001a, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001b, d0
@@ -271243,8 +271259,8 @@ func_4867E14D_L242:
 	mov	0x01b30000, d1
 	mov	Str_MD_SOUNDEDIT_2, a0
 	call	RegisterMode_entry, [a2], 4
-	bra	func_4867E14D_L295
-func_4867E14D_L269:
+	bra	MdSoundEdit_L295
+MdSoundEdit_L269:
 	mov	0x000f0011, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001b, d0
@@ -271255,10 +271271,10 @@ func_4867E14D_L269:
 	call	RegisterMode_entry, [a2], 4
 	clr	d0
 	movbu	d0, (data_50006D63)
-func_4867E14D_L295:
+MdSoundEdit_L295:
 	call	func_4867E112_entry, [d2], 0x14
 	movbu	d0, (0x500efcec)
-func_4867E14D_L2a0:
+MdSoundEdit_L2a0:
 	clr	d0
 	ret	[d2,d3], 0x28
 
@@ -280959,7 +280975,7 @@ DeffVal4SwSe_L18:
 	cmp	0xc, d0
 	bgt	DeffVal4SwSe_L70
 	asl2	d0
-	mov	0x484a0468, a0
+	mov	data_484A0468, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	(0x20, sp), a0
@@ -280975,14 +280991,14 @@ DeffVal4SwSe_L18:
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal4SwSe_L83
 	mov	(0x20, sp), a1
-	mov	0x4849dee0, d0
+	mov	Str_empty_1054, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal4SwSe_L83
 DeffVal4SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	0x4849dee8, d0
+	mov	Str_empty_1053, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -281011,11 +281027,11 @@ DeffVal5SwSe_L18:
 	cmp	0xc, d0
 	bgt	DeffVal5SwSe_L70
 	asl2	d0
-	mov	0x484a049c, a0
+	mov	data_484A049C, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	(0x20, sp), a0
-	mov	0x4849def0, d0
+	mov	Str_empty_1052, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -281027,14 +281043,14 @@ DeffVal5SwSe_L18:
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal5SwSe_L83
 	mov	(0x20, sp), a1
-	mov	0x4849df00, d0
+	mov	Str_empty_1051, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal5SwSe_L83
 DeffVal5SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	0x4849df08, d0
+	mov	Str_empty_1050, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -281063,7 +281079,7 @@ DeffVal6SwSe_L18:
 	cmp	0xc, d0
 	bgt	DeffVal6SwSe_L70
 	asl2	d0
-	mov	0x484a04d0, a0
+	mov	data_484A04D0, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	(0x20, sp), a0
@@ -281073,7 +281089,7 @@ DeffVal6SwSe_L18:
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal6SwSe_L83
 	mov	(0x20, sp), a0
-	mov	0x4849df18, d0
+	mov	Str_empty_1049, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -281086,7 +281102,7 @@ DeffVal6SwSe_L18:
 	bra	DeffVal6SwSe_L83
 DeffVal6SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	0x4849df28, d0
+	mov	Str_empty_1048, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -341159,7 +341175,7 @@ func_486A8EAB_entry_L290:
 	sub	d1, d2
 	mov	d2, d0
 	asl2	d0
-	mov	0x484a9998, a0
+	mov	data_484A9998, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	0x01700064, a2
@@ -346162,19 +346178,19 @@ AcSndArgGridBoxProc_L8c:
 AcSndArgGridBoxProc_L97:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_486AC453:
+SndArgGridCheck:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x48, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x50000, d2
-	bge	func_486AC453_L12
-	jmp	func_486AC453_L3e3
-func_486AC453_L12:
+	bge	SndArgGridCheck_L12
+	jmp	SndArgGridCheck_L3e3
+SndArgGridCheck_L12:
 	cmp	0x60081, d2
-	ble	func_486AC453_L1d
-	jmp	func_486AC453_L3e3
-func_486AC453_L1d:
+	ble	SndArgGridCheck_L1d
+	jmp	SndArgGridCheck_L3e3
+SndArgGridCheck_L1d:
 	add	0xfffb0001, d2
 	mov	data_484AA59C, a1
 	mov	0xf, d0
@@ -346184,21 +346200,21 @@ func_486AC453_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	func_486AC453_L4e
+	beq	SndArgGridCheck_L4e
 	setlb
 	cmp	0, d0
-	bne	func_486AC453_L40
-	jmp	func_486AC453_L3e3
-func_486AC453_L40:
+	bne	SndArgGridCheck_L40
+	jmp	SndArgGridCheck_L3e3
+SndArgGridCheck_L40:
 	add	8, a0
 	cmp	Field_AcMultiIndexList_end, a0
-	bcs	func_486AC453_L4b
+	bcs	SndArgGridCheck_L4b
 	mov	a1, a0
-func_486AC453_L4b:
+SndArgGridCheck_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-func_486AC453_L4e:
+SndArgGridCheck_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 	mov	0x0000c000, d0
@@ -346223,9 +346239,9 @@ func_486AC453_L4e:
 	movbu	(d1, a2), d1
 	extbu	d0
 	cmp	d1, d0
-	bne	func_486AC453_Lbb
-	jmp	func_486AC453_L137
-func_486AC453_Lbb:
+	bne	SndArgGridCheck_Lbb
+	jmp	SndArgGridCheck_L137
+SndArgGridCheck_Lbb:
 	movhu	(0x22, sp), d0
 	mov	sp, a0
 	exth	d0
@@ -346253,20 +346269,20 @@ func_486AC453_Lbb:
 	call	func_486AC856_entry, [d2], 4
 	extb	d0
 	cmp	0, d0
-	beq	func_486AC453_L111
+	beq	SndArgGridCheck_L111
 	movhu	(0x22, sp), d0
 	exth	d0
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486AC893_entry, 0, 0x14
-	bra	func_486AC453_L11e
-func_486AC453_L111:
+	bra	SndArgGridCheck_L11e
+SndArgGridCheck_L111:
 	movhu	(0x22, sp), d0
 	exth	d0
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486A4A75_entry, 0, 0x14
-func_486AC453_L11e:
+SndArgGridCheck_L11e:
 	movhu	(0x22, sp), d0
 	exth	d0
 	add	-2, d0
@@ -346275,7 +346291,7 @@ func_486AC453_L11e:
 	mov	d0, (0x10, sp)
 	mov	0x00b30000, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-func_486AC453_L137:
+SndArgGridCheck_L137:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x58
 	mov	(0x68, sp), a1
@@ -346283,29 +346299,29 @@ func_486AC453_L137:
 	mov	(a3), d0
 	and	0x00ffffff, d0
 	cmp	0xc000, d0
-	beq	func_486AC453_L16b
+	beq	SndArgGridCheck_L16b
 	cmp	0x8041, d0
-	beq	func_486AC453_L179
+	beq	SndArgGridCheck_L179
 	cmp	0xc00000, d0
-	beq	func_486AC453_L18d
+	beq	SndArgGridCheck_L18d
 	cmp	0xb0005e, d0
-	bne	func_486AC453_L168
-	jmp	func_486AC453_L213
-func_486AC453_L168:
-	jmp	func_486AC453_L297
-func_486AC453_L16b:
+	bne	SndArgGridCheck_L168
+	jmp	SndArgGridCheck_L213
+SndArgGridCheck_L168:
+	jmp	SndArgGridCheck_L297
+SndArgGridCheck_L16b:
 	mov	0xc1, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_486AC453_L297
-func_486AC453_L179:
+	jmp	SndArgGridCheck_L297
+SndArgGridCheck_L179:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050013, d1
 	mov	d3, d0
 	call	ApFuncCall_entry, [d2,d3,a2], 0x24
-	jmp	func_486AC453_L297
-func_486AC453_L18d:
+	jmp	SndArgGridCheck_L297
+SndArgGridCheck_L18d:
 	inc4	a3
 	mov	1, d0
 	movhu	d0, (0x20, sp)
@@ -346318,7 +346334,7 @@ func_486AC453_L18d:
 	setlb
 	movbu	(a2), d0
 	cmp	d0, d1
-	bne	func_486AC453_L20b
+	bne	SndArgGridCheck_L20b
 	mov	2, d0
 	add	d2, d0
 	movhu	d0, (0x22, sp)
@@ -346337,7 +346353,7 @@ func_486AC453_L18d:
 	mov	(a3), d3
 	clr	d0
 	cmp	1, d2
-	bls	func_486AC453_L1f7
+	bls	SndArgGridCheck_L1f7
 	movbu	(a2), d0
 	mov	sp, a0
 	asl	24, d0
@@ -346347,20 +346363,20 @@ func_486AC453_L18d:
 	call	GetM3Em_entry, [d2,d3,a2], 0x24
 	mov	(0x1c, sp), d0
 	and	0xff, d0
-func_486AC453_L1f7:
+SndArgGridCheck_L1f7:
 	extbu	d0
 	mov	d0, (0x10, sp)
 	mov	0x00b30001, d0
 	mov	d3, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	jmp	func_486AC453_L297
-func_486AC453_L20b:
+	jmp	SndArgGridCheck_L297
+SndArgGridCheck_L20b:
 	inc	d2
 	inc	a2
 	cmp	8, d2
 	lcs
-	jmp	func_486AC453_L297
-func_486AC453_L213:
+	jmp	SndArgGridCheck_L297
+SndArgGridCheck_L213:
 	inc4	a3
 	mov	2, d0
 	movhu	d0, (0x20, sp)
@@ -346374,9 +346390,9 @@ func_486AC453_L213:
 	setlb
 	movbu	(a0), d0
 	cmp	d0, d1
-	bne	func_486AC453_L292
+	bne	SndArgGridCheck_L292
 	cmp	2, d2
-	bcs	func_486AC453_L297
+	bcs	SndArgGridCheck_L297
 	add	2, d2
 	movhu	d2, (0x22, sp)
 	call	GetFocusObject_entry, 0, 0x10
@@ -346406,13 +346422,13 @@ func_486AC453_L213:
 	mov	d0, (0x10, sp)
 	mov	0x00b30001, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	bra	func_486AC453_L297
-func_486AC453_L292:
+	bra	SndArgGridCheck_L297
+SndArgGridCheck_L292:
 	inc	d2
 	inc	a0
 	cmp	8, d2
 	lcs
-func_486AC453_L297:
+SndArgGridCheck_L297:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x58
 	mov	(0x68, sp), d0
@@ -346431,13 +346447,13 @@ func_486AC453_L297:
 	add	0x28, a3
 	mov	a3, (0x24, sp)
 	cmp	1, d0
-	beq	func_486AC453_L2ca
+	beq	SndArgGridCheck_L2ca
 	cmp	2, d0
-	bne	func_486AC453_L2c7
-	jmp	func_486AC453_L367
-func_486AC453_L2c7:
-	jmp	func_486AC453_L3dd
-func_486AC453_L2ca:
+	bne	SndArgGridCheck_L2c7
+	jmp	SndArgGridCheck_L367
+SndArgGridCheck_L2c7:
+	jmp	SndArgGridCheck_L3dd
+SndArgGridCheck_L2ca:
 	movhu	(0x22, sp), d0
 	mov	data_484AA588, a0
 	exth	d0
@@ -346468,7 +346484,7 @@ func_486AC453_L2ca:
 	call	func_486AC856_entry, [d2], 4
 	extb	d0
 	cmp	0, d0
-	beq	func_486AC453_L33a
+	beq	SndArgGridCheck_L33a
 	mov	d2, (0x10, sp)
 	mov	a2, d1
 	add	2, a3
@@ -346481,8 +346497,8 @@ func_486AC453_L2ca:
 	movbu	d0, (0x29, sp)
 	clr	d0
 	movbu	d0, (0x3a, sp)
-	bra	func_486AC453_L34b
-func_486AC453_L33a:
+	bra	SndArgGridCheck_L34b
+SndArgGridCheck_L33a:
 	mov	d2, (0x10, sp)
 	mov	a2, d1
 	mov	a3, a0
@@ -346490,7 +346506,7 @@ func_486AC453_L33a:
 	call	func_4860A2D3_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x38, sp)
-func_486AC453_L34b:
+SndArgGridCheck_L34b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x18, sp), a0
 	mov	0x00060080, d1
@@ -346498,12 +346514,12 @@ func_486AC453_L34b:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x58
-func_486AC453_L367:
+SndArgGridCheck_L367:
 	movhu	(0x22, sp), d0
 	exth	d0
 	add	-2, d0
 	cmp	2, d0
-	blt	func_486AC453_L3b4
+	blt	SndArgGridCheck_L3b4
 	movhu	(0x22, sp), d0
 	mov	data_484AA588, a0
 	exth	d0
@@ -346520,32 +346536,32 @@ func_486AC453_L367:
 	and	0xff, d0
 	extbu	d0
 	cmp	0, d0
-	beq	func_486AC453_L3aa
+	beq	SndArgGridCheck_L3aa
 	mov	Str_ON_31, a1
-func_486AC453_L3aa:
+SndArgGridCheck_L3aa:
 	mov	a3, a0
 	call	strcpy_entry, [a2], 4
-	bra	func_486AC453_L3c2
-func_486AC453_L3b4:
+	bra	SndArgGridCheck_L3c2
+SndArgGridCheck_L3b4:
 	mov	Str_empty_794, a1
 	mov	a3, a0
 	call	strcpy_entry, [a2], 4
-func_486AC453_L3c2:
+SndArgGridCheck_L3c2:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x18, sp), a0
 	mov	0x00060080, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_486AC453_L3e4
-func_486AC453_L3dd:
+	bra	SndArgGridCheck_L3e4
+SndArgGridCheck_L3dd:
 	clr	d0
-	bra	func_486AC453_L3e4
+	bra	SndArgGridCheck_L3e4
 	mov	d3, d0
-	bra	func_486AC453_L3e4
-func_486AC453_L3e3:
+	bra	SndArgGridCheck_L3e4
+SndArgGridCheck_L3e3:
 	clr	d0
-func_486AC453_L3e4:
+SndArgGridCheck_L3e4:
 	ret	[d2,d3,a2,a3], 0x58
 
 func_486AC83A:
@@ -364573,11 +364589,11 @@ FE_PadPlaySetLoop_L51:
 	bra	FE_PadPlaySetLoop_La9
 FE_PadPlaySetLoop_L82:
 	call	func_501705E9_entry, 0, 0xc
-	mov	0x484ba038, a1
+	mov	Str_ON_81, a1
 	extbu	d0
 	cmp	0, d0
 	bne	FE_PadPlaySetLoop_L9a
-	mov	0x484ba03c, a1
+	mov	Str_OFF_39, a1
 FE_PadPlaySetLoop_L9a:
 	mov	(0x24, sp), a0
 	call	strcpy_entry, [a2], 4
@@ -391935,7 +391951,7 @@ FmmDiskMedleySelectFunc_entry_L8fe:
 	exthu	d0
 	mov	0xb, d1
 	call	func_486D12BB_entry, [d2], 4
-	mov	0x484c677c, a0
+	mov	data_484C677C, a0
 	extbu	d0
 	cmp	0, d0
 	beq	FmmDiskMedleySelectFunc_entry_L919
@@ -452653,37 +452669,37 @@ func_486EEB3E_entry_L2e:
 func_486EEB3E_entry_L2f:
 	ret	0, 8
 
-func_486EEB73:
+MdDemo:
 	movm	[d2,a2,a3], (sp)
 	add	-0x7c, sp
 	cmp	0x600b5, d1
-	beq	func_486EEB73_L3c
+	beq	MdDemo_L3c
 	cmp	0x5000b, d1
-	bne	func_486EEB73_L18
-	jmp	func_486EEB73_La1
-func_486EEB73_L18:
+	bne	MdDemo_L18
+	jmp	MdDemo_La1
+MdDemo_L18:
 	cmp	0x50014, d1
-	bne	func_486EEB73_L23
-	jmp	func_486EEB73_L14f
-func_486EEB73_L23:
+	bne	MdDemo_L23
+	jmp	MdDemo_L14f
+MdDemo_L23:
 	cmp	0x600e4, d1
-	bne	func_486EEB73_L2e
-	jmp	func_486EEB73_L212
-func_486EEB73_L2e:
+	bne	MdDemo_L2e
+	jmp	MdDemo_L212
+MdDemo_L2e:
 	cmp	0x50000, d1
-	bne	func_486EEB73_L39
+	bne	MdDemo_L39
 	ret	[d2,a2,a3], 0x88
-func_486EEB73_L39:
-	jmp	func_486EEB73_L22b
-func_486EEB73_L3c:
+MdDemo_L39:
+	jmp	MdDemo_L22b
+MdDemo_L3c:
 	call	func_487055C4, 0, 0
 	extbu	d0
 	cmp	1, d0
-	beq	func_486EEB73_L4f
+	beq	MdDemo_L4f
 	cmp	2, d0
-	beq	func_486EEB73_L78
-	jmp	func_486EEB73_L22b
-func_486EEB73_L4f:
+	beq	MdDemo_L78
+	jmp	MdDemo_L22b
+MdDemo_L4f:
 	mov	0x01c0000d, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001c, d0
@@ -452692,8 +452708,8 @@ func_486EEB73_L4f:
 	mov	0x01c30001, d1
 	mov	Str_TT_DEMOMENU_2, a0
 	call	RegisterTitle_entry, [d2,a2], 8
-	jmp	func_486EEB73_L22b
-func_486EEB73_L78:
+	jmp	MdDemo_L22b
+MdDemo_L78:
 	mov	0x01c00010, d0
 	mov	d0, (0x10, sp)
 	mov	0x000c001c, d0
@@ -452702,15 +452718,15 @@ func_486EEB73_L78:
 	mov	0x01c30001, d1
 	mov	Str_TT_DEMOMENU, a0
 	call	RegisterTitle_entry, [d2,a2], 8
-	jmp	func_486EEB73_L22b
-func_486EEB73_La1:
+	jmp	MdDemo_L22b
+MdDemo_La1:
 	mov	(0x98, sp), a0
 	cmp	0, a0
-	beq	func_486EEB73_Lae
+	beq	MdDemo_Lae
 	cmp	1, a0
-	beq	func_486EEB73_L122
-	jmp	func_486EEB73_L22b
-func_486EEB73_Lae:
+	beq	MdDemo_L122
+	jmp	MdDemo_L22b
+MdDemo_Lae:
 	call	func_48725572_entry, 0, 0x10
 	call	func_486E79B6_entry, [d2,d3], 0x1c
 	mov	0xf0, d0
@@ -452739,8 +452755,8 @@ func_486EEB73_Lae:
 	call	func_5015E7E7_entry, [d2,d3], 8
 	clr	d0
 	mov	d0, (0x50067af8)
-	jmp	func_486EEB73_L22b
-func_486EEB73_L122:
+	jmp	MdDemo_L22b
+MdDemo_L122:
 	call	func_486E7B5B_entry, 0, 0xc
 	mov	0xf0, d0
 	clr	d1
@@ -452752,56 +452768,56 @@ func_486EEB73_L122:
 	mov	d0, (0x50067af8)
 	mov	0, a0
 	call	func_486FEC4F, 0, 0
-	jmp	func_486EEB73_L22b
-func_486EEB73_L14f:
+	jmp	MdDemo_L22b
+MdDemo_L14f:
 	mov	(0x98, sp), a0
 	mov	(a0), d0
 	and	0x00ffffff, d0
 	cmp	0x708000, d0
-	beq	func_486EEB73_L163
-	jmp	func_486EEB73_L22b
-func_486EEB73_L163:
+	beq	MdDemo_L163
+	jmp	MdDemo_L22b
+MdDemo_L163:
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	func_486EEB73_L171
-	jmp	func_486EEB73_L22b
-func_486EEB73_L171:
+	beq	MdDemo_L171
+	jmp	MdDemo_L22b
+MdDemo_L171:
 	call	GetTitleNow_entry, 0, 0x10
 	cmp	0xf00cf, d0
-	beq	func_486EEB73_L183
-	jmp	func_486EEB73_L22b
-func_486EEB73_L183:
+	beq	MdDemo_L183
+	jmp	MdDemo_L22b
+MdDemo_L183:
 	call	func_48614EE5, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	func_486EEB73_L192
-	jmp	func_486EEB73_L22b
-func_486EEB73_L192:
+	beq	MdDemo_L192
+	jmp	MdDemo_L22b
+MdDemo_L192:
 	call	func_486E80E2, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_486EEB73_L19f
-	jmp	func_486EEB73_L22b
-func_486EEB73_L19f:
+	beq	MdDemo_L19f
+	jmp	MdDemo_L22b
+MdDemo_L19f:
 	call	func_486E80EB, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_486EEB73_L1ac
-	jmp	func_486EEB73_L22b
-func_486EEB73_L1ac:
+	beq	MdDemo_L1ac
+	jmp	MdDemo_L22b
+MdDemo_L1ac:
 	call	func_486EEB3E_entry, 0, 8
 	exth	d0
 	cmp	0, d0
-	beq	func_486EEB73_L1b9
-	jmp	func_486EEB73_L22b
-func_486EEB73_L1b9:
+	beq	MdDemo_L1b9
+	jmp	MdDemo_L22b
+MdDemo_L1b9:
 	mov	Str_FEATURE_PRE_2, a0
 	call	func_486D1345_entry, [a2], 4
 	extbu	d0
 	cmp	0, d0
-	beq	func_486EEB73_L22b
+	beq	MdDemo_L22b
 	mov	sp, a2
 	add	0x1c, a2
 	mov	sp, a0
@@ -452815,7 +452831,7 @@ func_486EEB73_L1b9:
 	call	FeaturePreLoad_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	blt	func_486EEB73_L22b
+	blt	MdDemo_L22b
 	mov	1, d0
 	mov	a3, a0
 	call	func_486EF26F_entry, [a2,a3], 0x1c
@@ -452823,45 +452839,45 @@ func_486EEB73_L1b9:
 	call	FeatureDemoSqtLoad_entry, [d2,d3], 0x18
 	exth	d0
 	cmp	0, d0
-	blt	func_486EEB73_L209
+	blt	MdDemo_L209
 	mov	d2, a0
 	call	FeatureDemoActLoad_entry, [a2], 0x14
 	exth	d0
 	cmp	0, d0
-	blt	func_486EEB73_L209
+	blt	MdDemo_L209
 	call	func_486EF18F_entry, 0, 0xc
-func_486EEB73_L209:
+MdDemo_L209:
 	clr	d0
 	mov	a3, a0
 	call	func_486EF26F_entry, [a2,a3], 0x1c
-	bra	func_486EEB73_L22b
-func_486EEB73_L212:
+	bra	MdDemo_L22b
+MdDemo_L212:
 	mov	(0x98, sp), a0
 	mov	1, d0
 	mov	d0, (0x50067af4)
 	cmp	0, a0
-	bne	func_486EEB73_L22b
+	bne	MdDemo_L22b
 	clr	d0
 	mov	d0, (0x50067af4)
-	bra	func_486EEB73_L22b
-# func_486EEB73 + 0x229: no traced path reaches what follows (--decode-gaps)
-	bra	func_486EEB73_L22c
-func_486EEB73_L22b:
+	bra	MdDemo_L22b
+# MdDemo + 0x229: no traced path reaches what follows (--decode-gaps)
+	bra	MdDemo_L22c
+MdDemo_L22b:
 	clr	d0
-func_486EEB73_L22c:
+MdDemo_L22c:
 	ret	[d2,a2,a3], 0x88
 
-func_486EEDA2:
+TtDemoMenu:
 	movm	[d2,d3], (sp)
 	add	-0xc, sp
 	mov	d1, d2
 	clr	d3
 	cmp	0x1c60000, d2
-	beq	func_486EEDA2_L19
+	beq	TtDemoMenu_L19
 	cmp	0x50000, d1
-	beq	func_486EEDA2_L32
-	bra	func_486EEDA2_L33
-func_486EEDA2_L19:
+	beq	TtDemoMenu_L32
+	bra	TtDemoMenu_L33
+TtDemoMenu_L19:
 	mov	Str_Demo_Start, a0
 	call	func_486491F4_entry, 0, 0x18
 	mov	(0x24, sp), d0
@@ -452869,20 +452885,20 @@ func_486EEDA2_L19:
 	inc	d0
 	extbu	d0
 	call	func_486E7E3B_entry, 0, 0xc
-	bra	func_486EEDA2_L33
-func_486EEDA2_L32:
+	bra	TtDemoMenu_L33
+TtDemoMenu_L32:
 	mov	d0, d3
-func_486EEDA2_L33:
+TtDemoMenu_L33:
 	mov	d2, d0
 	call	func_486FE081, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	func_486EEDA2_L4b
+	beq	TtDemoMenu_L4b
 	mov	(0x24, sp), a0
 	cmp	0, a0
-	bne	func_486EEDA2_L4b
+	bne	TtDemoMenu_L4b
 	call	func_486E7DDF_entry, 0, 0xc
-func_486EEDA2_L4b:
+TtDemoMenu_L4b:
 	mov	d3, d0
 	ret	[d2,d3], 0x14
 
@@ -453369,26 +453385,26 @@ func_486EF26F_entry_L55:
 func_486EF26F_entry_L67:
 	ret	[a2,a3], 0x1c
 
-func_486EF2DE:
+ImgDemoPR:
 	movm	[d2], (sp)
 	add	-8, sp
 	mov	d1, d2
 	call	func_487055C4, 0, 0
 	extbu	d0
 	cmp	0, d0
-	bne	func_486EF2DE_L22
+	bne	ImgDemoPR_L22
 	cmp	0x60092, d2
-	bne	func_486EF2DE_L32
+	bne	ImgDemoPR_L32
 	mov	Bmp_484E4075, d0
-	bra	func_486EF2DE_L33
-func_486EF2DE_L22:
+	bra	ImgDemoPR_L33
+ImgDemoPR_L22:
 	cmp	0x600e6, d2
-	bne	func_486EF2DE_L32
+	bne	ImgDemoPR_L32
 	mov	Jpeg_484E2408, d0
-	bra	func_486EF2DE_L33
-func_486EF2DE_L32:
+	bra	ImgDemoPR_L33
+ImgDemoPR_L32:
 	clr	d0
-func_486EF2DE_L33:
+ImgDemoPR_L33:
 	ret	[d2], 0xc
 
 func_486EF314:
@@ -453582,72 +453598,72 @@ InitializeBlock32_entry:
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_486EF57C:
+TtContrast:
 	movm	[d2,d3], (sp)
 	add	-0x18, sp
 	clr	d3
 	cmp	0x5000b, d1
-	beq	func_486EF57C_L5b
+	beq	TtContrast_L5b
 	cmp	0x600b5, d1
-	beq	func_486EF57C_L80
+	beq	TtContrast_L80
 	cmp	0x6003b, d1
-	bne	func_486EF57C_L21
-	jmp	func_486EF57C_Lb7
-func_486EF57C_L21:
+	bne	TtContrast_L21
+	jmp	TtContrast_Lb7
+TtContrast_L21:
 	cmp	0x2060001, d1
-	bne	func_486EF57C_L2c
-	jmp	func_486EF57C_Ld0
-func_486EF57C_L2c:
+	bne	TtContrast_L2c
+	jmp	TtContrast_Ld0
+TtContrast_L2c:
 	cmp	0x2060002, d1
-	bne	func_486EF57C_L37
-	jmp	func_486EF57C_L101
-func_486EF57C_L37:
+	bne	TtContrast_L37
+	jmp	TtContrast_L101
+TtContrast_L37:
 	cmp	0x600d8, d1
-	bne	func_486EF57C_L42
-	jmp	func_486EF57C_Lec
-func_486EF57C_L42:
+	bne	TtContrast_L42
+	jmp	TtContrast_Lec
+TtContrast_L42:
 	cmp	0x600d3, d1
-	bne	func_486EF57C_L4d
-	jmp	func_486EF57C_Lf0
-func_486EF57C_L4d:
+	bne	TtContrast_L4d
+	jmp	TtContrast_Lf0
+TtContrast_L4d:
 	cmp	0x600d4, d1
-	bne	func_486EF57C_L58
-	jmp	func_486EF57C_Lf0
-func_486EF57C_L58:
-	jmp	func_486EF57C_L101
-func_486EF57C_L5b:
+	bne	TtContrast_L58
+	jmp	TtContrast_Lf0
+TtContrast_L58:
+	jmp	TtContrast_L101
+TtContrast_L5b:
 	mov	(0x30, sp), a0
 	cmp	2, a0
-	beq	func_486EF57C_L64
-	jmp	func_486EF57C_L101
-func_486EF57C_L64:
+	beq	TtContrast_L64
+	jmp	TtContrast_L101
+TtContrast_L64:
 	movhu	(0x500a05ba), d0
 	mov	0x02060000, d1
 	mov	d0, (0x10, sp)
 	mov	0x02010000, d0
-	call	func_486EF6E8_entry, [d2,d3,a2], 0x20
-	jmp	func_486EF57C_L101
-func_486EF57C_L80:
+	call	AcContrastEditProc_entry, [d2,d3,a2], 0x20
+	jmp	TtContrast_L101
+TtContrast_L80:
 	mov	0xa, d0
 	call	func_501529C4_entry, 0, 0x14
 	movhu	(0x500a05ba), d0
 	mov	0x02060000, d1
 	mov	d0, (0x10, sp)
 	mov	0x02010000, d0
-	call	func_486EF6E8_entry, [d2,d3,a2], 0x20
+	call	AcContrastEditProc_entry, [d2,d3,a2], 0x20
 	movhu	(0x500a05ba), d0
 	movbu	d0, (0x14, sp)
 	movbu	(0x14, sp), d0
 	call	func_48705A00, 0, 0
-	bra	func_486EF57C_L101
-func_486EF57C_Lb7:
+	bra	TtContrast_L101
+TtContrast_Lb7:
 	call	GetTitleNow_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
 	mov	0x0006008b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_486EF57C_L101
-func_486EF57C_Ld0:
+	bra	TtContrast_L101
+TtContrast_Ld0:
 	mov	(0x30, sp), d2
 	mov	d2, d0
 	extbu	d0
@@ -453655,16 +453671,16 @@ func_486EF57C_Ld0:
 	movhu	d2, (0x500a05ba)
 	mov	0xa, d0
 	call	func_5015273E_entry, 0, 0x14
-	bra	func_486EF57C_L101
-func_486EF57C_Lec:
+	bra	TtContrast_L101
+TtContrast_Lec:
 	mov	7, d3
-	bra	func_486EF57C_L101
-func_486EF57C_Lf0:
+	bra	TtContrast_L101
+TtContrast_Lf0:
 	call	GetTitleNow_entry, 0, 0x10
 	cmp	0xf0100, d0
-	bne	func_486EF57C_L101
+	bne	TtContrast_L101
 	mov	1, d3
-func_486EF57C_L101:
+TtContrast_L101:
 	mov	d3, d0
 	ret	[d2,d3], 0x20
 	add	-0x10, sp
@@ -453672,85 +453688,87 @@ func_486EF57C_L101:
 	and	d1, d0
 	extbu	d0
 	cmp	0, d0
-	beq	func_486EF57C_L138
+	beq	TtContrast_L138
 	and	0xff00, d1
 	lsr	8, d1
 	extbu	d1
 	cmp	0x1d, d1
-	bne	func_486EF57C_L138
+	bne	TtContrast_L138
 	call	GetTitleNow_entry, 0, 0x10
 	cmp	0xf0100, d0
-	beq	func_486EF57C_L138
+	beq	TtContrast_L138
 	mov	0x100, d0
 	clr	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_486EF57C_L138:
+TtContrast_L138:
 	clr	d0
 	ret	0, 0x10
+
+ContrastMessage:
 	cmp	0x60090, d1
-	beq	func_486EF57C_L156
+	beq	ContrastMessage_L1a
 	cmp	0x600b1, d1
-	beq	func_486EF57C_L15e
+	beq	ContrastMessage_L22
 	cmp	0x50000, d1
-	beq	func_486EF57C_L162
-	bra	func_486EF57C_L168
-func_486EF57C_L156:
+	beq	ContrastMessage_L26
+	bra	ContrastMessage_L2c
+ContrastMessage_L1a:
 	mov	ptrs_484EA19C, d0
-	bra	func_486EF57C_L169
-func_486EF57C_L15e:
+	bra	ContrastMessage_L2d
+ContrastMessage_L22:
 	mov	1, d0
-	bra	func_486EF57C_L169
-func_486EF57C_L162:
+	bra	ContrastMessage_L2d
+ContrastMessage_L26:
 	mov	(0x10, sp), a0
 	add	a0, d0
-	bra	func_486EF57C_L169
-func_486EF57C_L168:
+	bra	ContrastMessage_L2d
+ContrastMessage_L2c:
 	clr	d0
-func_486EF57C_L169:
+ContrastMessage_L2d:
 	retf	0, 0
 
-func_486EF6E8:
+AcContrastEditProc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_486EF6E8_entry:
+AcContrastEditProc_entry:
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x2060000, d2
-	beq	func_486EF6E8_entry_L57
+	beq	AcContrastEditProc_entry_L57
 	cmp	0x50001, d2
-	beq	func_486EF6E8_entry_L63
+	beq	AcContrastEditProc_entry_L63
 	cmp	0x600b2, d2
-	bne	func_486EF6E8_entry_L1d
-	jmp	func_486EF6E8_entry_Lb4
-func_486EF6E8_entry_L1d:
+	bne	AcContrastEditProc_entry_L1d
+	jmp	AcContrastEditProc_entry_Lb4
+AcContrastEditProc_entry_L1d:
 	cmp	0x6003a, d2
-	bne	func_486EF6E8_entry_L28
-	jmp	func_486EF6E8_entry_Ld4
-func_486EF6E8_entry_L28:
+	bne	AcContrastEditProc_entry_L28
+	jmp	AcContrastEditProc_entry_Ld4
+AcContrastEditProc_entry_L28:
 	cmp	0x6003b, d2
-	bne	func_486EF6E8_entry_L33
-	jmp	func_486EF6E8_entry_Lf3
-func_486EF6E8_entry_L33:
+	bne	AcContrastEditProc_entry_L33
+	jmp	AcContrastEditProc_entry_Lf3
+AcContrastEditProc_entry_L33:
 	cmp	0x50005, d2
-	bne	func_486EF6E8_entry_L3e
-	jmp	func_486EF6E8_entry_L134
-func_486EF6E8_entry_L3e:
+	bne	AcContrastEditProc_entry_L3e
+	jmp	AcContrastEditProc_entry_L134
+AcContrastEditProc_entry_L3e:
 	cmp	0x50028, d2
-	bne	func_486EF6E8_entry_L49
-	jmp	func_486EF6E8_entry_L1a2
-func_486EF6E8_entry_L49:
+	bne	AcContrastEditProc_entry_L49
+	jmp	AcContrastEditProc_entry_L1a2
+AcContrastEditProc_entry_L49:
 	cmp	0x2050000, d2
-	bne	func_486EF6E8_entry_L54
-	jmp	func_486EF6E8_entry_L203
-func_486EF6E8_entry_L54:
-	jmp	func_486EF6E8_entry_L206
-func_486EF6E8_entry_L57:
+	bne	AcContrastEditProc_entry_L54
+	jmp	AcContrastEditProc_entry_L203
+AcContrastEditProc_entry_L54:
+	jmp	AcContrastEditProc_entry_L206
+AcContrastEditProc_entry_L57:
 	mov	(0x30, sp), d0
 	movhu	d0, (0x50067b10)
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_L63:
+AcContrastEditProc_entry_L63:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -453775,7 +453793,7 @@ func_486EF6E8_entry_L63:
 	call	SetDialEnable_entry, [d2], 0x18
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_Lb4:
+AcContrastEditProc_entry_Lb4:
 	mov	(0x30, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -453786,7 +453804,7 @@ func_486EF6E8_entry_Lb4:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_Ld4:
+AcContrastEditProc_entry_Ld4:
 	mov	(0x30, sp), a0
 	mov	Str_3d_8, d0
 	mov	a0, (8, sp)
@@ -453796,11 +453814,11 @@ func_486EF6E8_entry_Ld4:
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_Lf3:
+AcContrastEditProc_entry_Lf3:
 	mov	(0x30, sp), d1
 	movhu	(0x50067b10), d0
 	cmp	d0, d1
-	beq	func_486EF6E8_entry_L130
+	beq	AcContrastEditProc_entry_L130
 	movhu	d1, (0x50067b10)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -453812,39 +453830,39 @@ func_486EF6E8_entry_Lf3:
 	mov	d0, (0x10, sp)
 	mov	0x02030000, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-func_486EF6E8_entry_L130:
+AcContrastEditProc_entry_L130:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_L134:
+AcContrastEditProc_entry_L134:
 	mov	(0x30, sp), a2
 	mov	0x000d0024, d0
 	mov	a2, (0x10, sp)
 	mov	0x00060029, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	5, d0
-	bne	func_486EF6E8_entry_L195
+	bne	AcContrastEditProc_entry_L195
 	movhu	(0x50067b10), d1
 	mov	a2, d0
 	lsr	7, d0
 	and	0x01, d0
 	exthu	d0
 	cmp	0, d0
-	beq	func_486EF6E8_entry_L16d
+	beq	AcContrastEditProc_entry_L16d
 	mov	d1, d0
 	exthu	d0
 	cmp	1, d0
-	ble	func_486EF6E8_entry_L175
+	ble	AcContrastEditProc_entry_L175
 	mov	-1, d1
 	add	d0, d1
-	bra	func_486EF6E8_entry_L175
-func_486EF6E8_entry_L16d:
+	bra	AcContrastEditProc_entry_L175
+AcContrastEditProc_entry_L16d:
 	mov	d1, d0
 	exthu	d0
 	cmp	0x64, d0
-	bge	func_486EF6E8_entry_L175
+	bge	AcContrastEditProc_entry_L175
 	mov	d0, d1
 	inc	d1
-func_486EF6E8_entry_L175:
+AcContrastEditProc_entry_L175:
 	exthu	d1
 	mov	d1, (0x10, sp)
 	mov	d3, d0
@@ -453856,20 +453874,20 @@ func_486EF6E8_entry_L175:
 	call	SetAutoInc_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_486EF6E8_entry_L195:
+AcContrastEditProc_entry_L195:
 	mov	a2, (0x10, sp)
 	mov	d2, d1
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-	bra	func_486EF6E8_entry_L211
-func_486EF6E8_entry_L1a2:
+	bra	AcContrastEditProc_entry_L211
+AcContrastEditProc_entry_L1a2:
 	mov	(0x30, sp), a2
 	mov	0x000d0024, d0
 	mov	a2, (0x10, sp)
 	mov	0x00060029, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	5, d0
-	bne	func_486EF6E8_entry_L1f6
+	bne	AcContrastEditProc_entry_L1f6
 	mov	0x1d, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -453885,20 +453903,20 @@ func_486EF6E8_entry_L1a2:
 	mov	d3, d0
 	mov	0x0006003b, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-func_486EF6E8_entry_L1f6:
+AcContrastEditProc_entry_L1f6:
 	mov	a2, (0x10, sp)
 	mov	d2, d1
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-	bra	func_486EF6E8_entry_L211
-func_486EF6E8_entry_L203:
+	bra	AcContrastEditProc_entry_L211
+AcContrastEditProc_entry_L203:
 	clr	d0
-	bra	func_486EF6E8_entry_L211
-func_486EF6E8_entry_L206:
+	bra	AcContrastEditProc_entry_L211
+AcContrastEditProc_entry_L206:
 	mov	(0x30, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_486EF6E8_entry_L211:
+AcContrastEditProc_entry_L211:
 	ret	[d2,d3,a2], 0x20
 
 InitializeBlock12:
@@ -454154,7 +454172,7 @@ InitializeBlock12_entry:
 	beq	InitializeBlock12_entry_L403
 	bra	InitializeBlock12_entry_L407
 InitializeBlock12_entry_L3f3:
-	mov	0x484edee0, d0
+	mov	data_484EDEE0, d0
 	bra	InitializeBlock12_entry_L408
 InitializeBlock12_entry_L3fb:
 	mov	0x20, d0
@@ -476000,9 +476018,11 @@ SimplePianoSelFunc_La7:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 SimplePianoSelFunc_Lb2:
 	ret	[d2,a2], 0x1c
+
+MainSimplePianoLoad:
 	add	-0x10, sp
 	cmp	0x2560000, d1
-	bne	SimplePianoSelFunc_Ld8
+	bne	MainSimplePianoLoad_L23
 	mov	(0x20, sp), d0
 	extbu	d0
 	call	func_50157C51, 0, 0
@@ -476010,10 +476030,10 @@ SimplePianoSelFunc_Lb2:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SimplePianoSelFunc_Ld9
-SimplePianoSelFunc_Ld8:
+	bra	MainSimplePianoLoad_L24
+MainSimplePianoLoad_L23:
 	clr	d0
-SimplePianoSelFunc_Ld9:
+MainSimplePianoLoad_L24:
 	ret	0, 0x10
 
 InitializeBlock38:
@@ -476164,28 +476184,30 @@ InitializeBlock38_entry:
 	mov	Str_TT_STRDPT, a0
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
+
+MdDynamicAcousticDemo:
 	add	-0x20, sp
 	cmp	0x5000b, d1
-	beq	InitializeBlock38_entry_L237
+	beq	MdDynamicAcousticDemo_L24
 	cmp	0x6003b, d1
-	bne	InitializeBlock38_entry_L229
-	jmp	InitializeBlock38_entry_L45b
-InitializeBlock38_entry_L229:
+	bne	MdDynamicAcousticDemo_L16
+	jmp	MdDynamicAcousticDemo_L248
+MdDynamicAcousticDemo_L16:
 	cmp	0x600b5, d1
-	bne	InitializeBlock38_entry_L234
-	jmp	InitializeBlock38_entry_L438
-InitializeBlock38_entry_L234:
-	jmp	InitializeBlock38_entry_L45b
-InitializeBlock38_entry_L237:
+	bne	MdDynamicAcousticDemo_L21
+	jmp	MdDynamicAcousticDemo_L225
+MdDynamicAcousticDemo_L21:
+	jmp	MdDynamicAcousticDemo_L248
+MdDynamicAcousticDemo_L24:
 	mov	(0x30, sp), a0
 	cmp	0, a0
-	beq	InitializeBlock38_entry_L247
+	beq	MdDynamicAcousticDemo_L34
 	cmp	1, a0
-	bne	InitializeBlock38_entry_L244
-	jmp	InitializeBlock38_entry_L3de
-InitializeBlock38_entry_L244:
-	jmp	InitializeBlock38_entry_L45b
-InitializeBlock38_entry_L247:
+	bne	MdDynamicAcousticDemo_L31
+	jmp	MdDynamicAcousticDemo_L1cb
+MdDynamicAcousticDemo_L31:
+	jmp	MdDynamicAcousticDemo_L248
+MdDynamicAcousticDemo_L34:
 	mov	0xf0, d0
 	mov	1, d1
 	call	func_5015B247_entry, [d2], 0xc
@@ -476280,8 +476302,8 @@ InitializeBlock38_entry_L247:
 	mov	0x00008022, d0
 	clr	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-	jmp	InitializeBlock38_entry_L45b
-InitializeBlock38_entry_L3de:
+	jmp	MdDynamicAcousticDemo_L248
+MdDynamicAcousticDemo_L1cb:
 	mov	0xf0, d0
 	clr	d1
 	call	func_5015B247_entry, [d2], 0xc
@@ -476305,8 +476327,8 @@ InitializeBlock38_entry_L3de:
 	mov	0x2023, d0
 	movbu	(0x50067b90), d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-	bra	InitializeBlock38_entry_L45b
-InitializeBlock38_entry_L438:
+	bra	MdDynamicAcousticDemo_L248
+MdDynamicAcousticDemo_L225:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x17, d0
@@ -476318,27 +476340,27 @@ InitializeBlock38_entry_L438:
 	mov	0x007020b3, d0
 	mov	-0x100, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-InitializeBlock38_entry_L45b:
+MdDynamicAcousticDemo_L248:
 	clr	d0
 	ret	0, 0x20
 
-func_486FD625:
+HssCatch:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	0x60079, d1
-	beq	func_486FD625_L29
+	beq	HssCatch_L29
 	cmp	0x50001, d1
-	beq	func_486FD625_L2e
+	beq	HssCatch_L2e
 	cmp	0x600b2, d1
-	beq	func_486FD625_L62
+	beq	HssCatch_L62
 	cmp	0x50021, d1
-	beq	func_486FD625_L86
-	jmp	func_486FD625_Lb2
-func_486FD625_L29:
+	beq	HssCatch_L86
+	jmp	HssCatch_Lb2
+HssCatch_L29:
 	mov	1, d0
 	ret	[d2,a2], 0x1c
-func_486FD625_L2e:
+HssCatch_L2e:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -476352,8 +476374,8 @@ func_486FD625_L2e:
 	mov	0x00050022, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_486FD625_Lbd
-func_486FD625_L62:
+	bra	HssCatch_Lbd
+HssCatch_L62:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -476363,8 +476385,8 @@ func_486FD625_L62:
 	mov	d2, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_486FD625_Lbd
-func_486FD625_L86:
+	bra	HssCatch_Lbd
+HssCatch_L86:
 	mov	(0x2c, sp), a2
 	mov	a2, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -476373,31 +476395,33 @@ func_486FD625_L86:
 	and	0xffff, d0
 	exthu	d0
 	cmp	1, d0
-	bne	func_486FD625_Laf
+	bne	HssCatch_Laf
 	mov	0x00600007, d0
 	mov	a2, d1
 	exthu	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-func_486FD625_Laf:
+HssCatch_Laf:
 	clr	d0
-	bra	func_486FD625_Lbd
-func_486FD625_Lb2:
+	bra	HssCatch_Lbd
+HssCatch_Lb2:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_486FD625_Lbd:
+HssCatch_Lbd:
 	ret	[d2,a2], 0x1c
+
+HssDepReqFunc:
 	add	-0x10, sp
 	cmp	0x50005, d1
-	bne	func_486FD625_Ld8
+	bne	HssDepReqFunc_L18
 	mov	0x4f, d0
 	clr	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	func_486FD625_Ld9
-func_486FD625_Ld8:
+	bra	HssDepReqFunc_L19
+HssDepReqFunc_L18:
 	clr	d0
-func_486FD625_Ld9:
+HssDepReqFunc_L19:
 	ret	0, 0x10
 
 func_486FD701:
@@ -476445,27 +476469,27 @@ func_486FD701_L73:
 func_486FD701_L75:
 	ret	[d2], 0x14
 
-func_486FD779:
+StrDptTitleFunc:
 	movm	[d2], (sp)
 	add	-0x20, sp
 	clr	d2
 	cmp	0x5000b, d1
-	beq	func_486FD779_L28
+	beq	StrDptTitleFunc_L28
 	cmp	0x600b5, d1
-	beq	func_486FD779_L39
+	beq	StrDptTitleFunc_L39
 	cmp	0x600d3, d1
-	beq	func_486FD779_L5d
+	beq	StrDptTitleFunc_L5d
 	cmp	0x600d4, d1
-	beq	func_486FD779_L5d
-	bra	func_486FD779_L91
-func_486FD779_L28:
+	beq	StrDptTitleFunc_L5d
+	bra	StrDptTitleFunc_L91
+StrDptTitleFunc_L28:
 	mov	(0x34, sp), a0
 	cmp	2, a0
-	bne	func_486FD779_L91
+	bne	StrDptTitleFunc_L91
 	mov	0x40, d0
 	call	SetMmmFilter_entry, [d2], 0x18
-	bra	func_486FD779_L91
-func_486FD779_L39:
+	bra	StrDptTitleFunc_L91
+StrDptTitleFunc_L39:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x4f, d0
@@ -476477,48 +476501,50 @@ func_486FD779_L39:
 	mov	0x00702004, d0
 	mov	0xe, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-	bra	func_486FD779_L91
-func_486FD779_L5d:
+	bra	StrDptTitleFunc_L91
+StrDptTitleFunc_L5d:
 	mov	0x00008040, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	cmp	d2, d0
-	beq	func_486FD779_L7c
+	beq	StrDptTitleFunc_L7c
 	cmp	2, d0
-	beq	func_486FD779_L7c
+	beq	StrDptTitleFunc_L7c
 	cmp	3, d0
-	beq	func_486FD779_L7c
+	beq	StrDptTitleFunc_L7c
 	mov	1, d2
 	cmp	4, d0
-	bne	func_486FD779_L91
-func_486FD779_L7c:
+	bne	StrDptTitleFunc_L91
+StrDptTitleFunc_L7c:
 	mov	0x00008041, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	clr	d2
 	cmp	0x10, d0
-	beq	func_486FD779_L91
+	beq	StrDptTitleFunc_L91
 	mov	1, d2
-func_486FD779_L91:
+StrDptTitleFunc_L91:
 	mov	d2, d0
 	ret	[d2], 0x24
+
+StrDptCheck:
 	add	-0x14, sp
 	cmp	0x600bb, d1
-	beq	func_486FD779_Ld2
+	beq	StrDptCheck_L3d
 	cmp	0x600bc, d1
-	beq	func_486FD779_Lf1
+	beq	StrDptCheck_L5c
 	cmp	0x600bd, d1
-	beq	func_486FD779_Lf5
+	beq	StrDptCheck_L60
 	cmp	0x600ba, d1
-	beq	func_486FD779_Lf8
+	beq	StrDptCheck_L63
 	cmp	0x600be, d1
-	beq	func_486FD779_L10a
+	beq	StrDptCheck_L75
 	cmp	0x6003e, d1
-	beq	func_486FD779_L115
+	beq	StrDptCheck_L80
 	cmp	0x6003f, d1
-	beq	func_486FD779_L119
-	bra	func_486FD779_L11d
-func_486FD779_Ld2:
+	beq	StrDptCheck_L84
+	bra	StrDptCheck_L88
+StrDptCheck_L3d:
 	mov	(0x24, sp), a1
 	mov	Str_2d_3, d0
 	mov	(0xc, a1), a0
@@ -476529,37 +476555,37 @@ func_486FD779_Ld2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	func_486FD779_L11e
-func_486FD779_Lf1:
+	bra	StrDptCheck_L89
+StrDptCheck_L5c:
 	mov	0x40, d0
-	bra	func_486FD779_L11e
-func_486FD779_Lf5:
+	bra	StrDptCheck_L89
+StrDptCheck_L60:
 	clr	d0
-	bra	func_486FD779_L11e
-func_486FD779_Lf8:
+	bra	StrDptCheck_L89
+StrDptCheck_L63:
 	mov	(0x24, sp), a0
 	clr	d0
 	mov	(a0), d1
 	and	0x00ffffff, d1
 	cmp	0x40, d1
-	bne	func_486FD779_L11e
+	bne	StrDptCheck_L89
 	mov	1, d0
-	bra	func_486FD779_L11e
-func_486FD779_L10a:
+	bra	StrDptCheck_L89
+StrDptCheck_L75:
 	mov	(0x24, sp), a0
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
-	bra	func_486FD779_L11e
-func_486FD779_L115:
+	bra	StrDptCheck_L89
+StrDptCheck_L80:
 	mov	4, d0
-	bra	func_486FD779_L11e
-func_486FD779_L119:
+	bra	StrDptCheck_L89
+StrDptCheck_L84:
 	mov	1, d0
-	bra	func_486FD779_L11e
-func_486FD779_L11d:
+	bra	StrDptCheck_L89
+StrDptCheck_L88:
 	clr	d0
-func_486FD779_L11e:
+StrDptCheck_L89:
 	ret	0, 0x14
 
 InitializeBlock35:
@@ -476701,70 +476727,70 @@ InitializeBlock35_entry:
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_486FDA8F:
+TtSswRun:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-func_486FDA8F_entry:
+TtSswRun_entry:
 	clr	d3
 	cmp	0x5000b, d1
-	beq	func_486FDA8F_entry_L35
+	beq	TtSswRun_entry_L35
 	cmp	0x600d4, d1
-	beq	func_486FDA8F_entry_L7a
+	beq	TtSswRun_entry_L7a
 	cmp	0x600d8, d1
-	bne	func_486FDA8F_entry_L1c
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L1c:
+	bne	TtSswRun_entry_L1c
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L1c:
 	cmp	0x6008e, d1
-	bne	func_486FDA8F_entry_L27
-	jmp	func_486FDA8F_entry_L10e
-func_486FDA8F_entry_L27:
+	bne	TtSswRun_entry_L27
+	jmp	TtSswRun_entry_L10e
+TtSswRun_entry_L27:
 	cmp	0x6003b, d1
-	bne	func_486FDA8F_entry_L32
-	jmp	func_486FDA8F_entry_L112
-func_486FDA8F_entry_L32:
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L35:
+	bne	TtSswRun_entry_L32
+	jmp	TtSswRun_entry_L112
+TtSswRun_entry_L32:
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L35:
 	mov	(0x2c, sp), a0
 	cmp	2, a0
-	bne	func_486FDA8F_entry_L3e
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L3e:
+	bne	TtSswRun_entry_L3e
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L3e:
 	cmp	3, a0
-	bne	func_486FDA8F_entry_L45
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L45:
+	bne	TtSswRun_entry_L45
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L45:
 	cmp	4, a0
-	bne	func_486FDA8F_entry_L4c
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L4c:
+	bne	TtSswRun_entry_L4c
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L4c:
 	cmp	5, a0
-	beq	func_486FDA8F_entry_L53
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L53:
+	beq	TtSswRun_entry_L53
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L53:
 	movhu	(data_50006E80), d0
 	cmp	d3, d0
-	bne	func_486FDA8F_entry_L67
+	bne	TtSswRun_entry_L67
 	call	func_50182222, 0, 0
 	exthu	d0
 	cmp	d3, d0
-	beq	func_486FDA8F_entry_L72
-func_486FDA8F_entry_L67:
+	beq	TtSswRun_entry_L72
+TtSswRun_entry_L67:
 	mov	0x7fff, d0
 	call	func_486FDF50_entry, [d2], 0x18
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L72:
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L72:
 	call	func_486FE04A_entry, 0, 0x14
-	jmp	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L7a:
+	jmp	TtSswRun_entry_L12e
+TtSswRun_entry_L7a:
 	call	GetTitleNow_entry, 0, 0x10
 	mov	d0, d2
 	cmp	0xf0001, d2
-	bge	func_486FDA8F_entry_L8d
-	jmp	func_486FDA8F_entry_L108
-func_486FDA8F_entry_L8d:
+	bge	TtSswRun_entry_L8d
+	jmp	TtSswRun_entry_L108
+TtSswRun_entry_L8d:
 	cmp	0xf0129, d2
-	bgt	func_486FDA8F_entry_L108
+	bgt	TtSswRun_entry_L108
 	mov	data_4850DE80, a1
 	add	0xfff10000, d2
 	mov	0xf, d1
@@ -476774,19 +476800,19 @@ func_486FDA8F_entry_L8d:
 	add	a1, a0
 	mov	(a0), d1
 	cmp	d2, d1
-	beq	func_486FDA8F_entry_Lc2
+	beq	TtSswRun_entry_Lc2
 	setlb
 	cmp	d3, d1
-	beq	func_486FDA8F_entry_L108
+	beq	TtSswRun_entry_L108
 	add	8, a0
 	cmp	data_4850DF00, a0
-	bcs	func_486FDA8F_entry_Lbf
+	bcs	TtSswRun_entry_Lbf
 	mov	a1, a0
-func_486FDA8F_entry_Lbf:
+TtSswRun_entry_Lbf:
 	mov	(a0), d1
 	cmp	d2, d1
 	lne
-func_486FDA8F_entry_Lc2:
+TtSswRun_entry_Lc2:
 	mov	(4, a0), a0
 	jmp	(a0)
 	mov	(0x2c, sp), a0
@@ -476795,9 +476821,9 @@ func_486FDA8F_entry_Lc2:
 	mov	0x02350000, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	mov	1, d3
-	bra	func_486FDA8F_entry_L12e
+	bra	TtSswRun_entry_L12e
 	mov	1, d3
-	bra	func_486FDA8F_entry_L12e
+	bra	TtSswRun_entry_L12e
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x000f0003, d0
@@ -476807,27 +476833,27 @@ func_486FDA8F_entry_Lc2:
 	movhu	(0x14, a0), d0
 	exth	d0
 	cmp	0x81, d0
-	beq	func_486FDA8F_entry_L12e
+	beq	TtSswRun_entry_L12e
 	mov	1, d3
-	bra	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L108:
+	bra	TtSswRun_entry_L12e
+TtSswRun_entry_L108:
 	mov	1, d3
-	bra	func_486FDA8F_entry_L12e
-# func_486FDA8F_entry + 0x10c: no traced path reaches what follows (--decode-gaps)
-	bra	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L10e:
+	bra	TtSswRun_entry_L12e
+# TtSswRun_entry + 0x10c: no traced path reaches what follows (--decode-gaps)
+	bra	TtSswRun_entry_L12e
+TtSswRun_entry_L10e:
 	mov	0xd, d3
-	bra	func_486FDA8F_entry_L12e
-func_486FDA8F_entry_L112:
+	bra	TtSswRun_entry_L12e
+TtSswRun_entry_L112:
 	mov	(0x2c, sp), d0
 	cmp	0x7fff, d0
-	beq	func_486FDA8F_entry_L122
+	beq	TtSswRun_entry_L122
 	mov	(0x2c, sp), d0
 	mov	d0, (0x50067b9c)
-func_486FDA8F_entry_L122:
+TtSswRun_entry_L122:
 	mov	(0x50067ba4), d0
 	mov	d0, (0x50067ba0)
-func_486FDA8F_entry_L12e:
+TtSswRun_entry_L12e:
 	mov	d3, d0
 	ret	[d2,d3], 0x1c
 
@@ -477220,7 +477246,7 @@ func_486FDF50_entry_L95:
 	mov	d0, (0x10, sp)
 	mov	0x02330000, d0
 	mov	0x000600d4, d1
-	call	func_486FDA8F_entry, [d2,d3], 0x1c
+	call	TtSswRun_entry, [d2,d3], 0x1c
 	cmp	0, d0
 	bne	func_486FDF50_entry_Lce
 	call	GetTitleNow_entry, 0, 0x10
@@ -477283,55 +477309,55 @@ func_486FE081_Lc:
 func_486FE081_Ld:
 	retf	0, 0
 
-func_486FE091:
+TtSswList:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 
-func_486FE091_entry:
+TtSswList_entry:
 	mov	d1, (0x3c, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
 	cmp	0x600d8, d1
-	beq	func_486FE091_entry_L56
+	beq	TtSswList_entry_L56
 	cmp	0x6008e, d1
-	beq	func_486FE091_entry_L5c
+	beq	TtSswList_entry_L5c
 	cmp	0x6003b, d1
-	beq	func_486FE091_entry_L63
+	beq	TtSswList_entry_L63
 	cmp	0x2350002, d1
-	bne	func_486FE091_entry_L27
-	bra	func_486FE091_entry_L9e
-func_486FE091_entry_L27:
+	bne	TtSswList_entry_L27
+	bra	TtSswList_entry_L9e
+TtSswList_entry_L27:
 	cmp	0x2350003, d1
-	bne	func_486FE091_entry_L32
-	jmp	func_486FE091_entry_L11e
-func_486FE091_entry_L32:
+	bne	TtSswList_entry_L32
+	jmp	TtSswList_entry_L11e
+TtSswList_entry_L32:
 	cmp	0x2360000, d1
-	bne	func_486FE091_entry_L3d
-	jmp	func_486FE091_entry_L142
-func_486FE091_entry_L3d:
+	bne	TtSswList_entry_L3d
+	jmp	TtSswList_entry_L142
+TtSswList_entry_L3d:
 	cmp	0x2360001, d1
-	bne	func_486FE091_entry_L48
-	jmp	func_486FE091_entry_L177
-func_486FE091_entry_L48:
+	bne	TtSswList_entry_L48
+	jmp	TtSswList_entry_L177
+TtSswList_entry_L48:
 	cmp	0x2360002, d1
-	bne	func_486FE091_entry_L53
-	jmp	func_486FE091_entry_L1aa
-func_486FE091_entry_L53:
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_L56:
+	bne	TtSswList_entry_L53
+	jmp	TtSswList_entry_L1aa
+TtSswList_entry_L53:
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_L56:
 	clr	d0
 	mov	d0, (0x18, sp)
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_L5c:
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_L5c:
 	mov	0xd, d0
 	mov	d0, (0x18, sp)
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_L63:
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_L63:
 	mov	(0x40, sp), d0
 	mov	0, a1
 	movhu	d0, (0x50067ba8)
 	mov	0x50067baa, a2
-func_486FE091_entry_L73:
+TtSswList_entry_L73:
 	clr	d0
 	mov	a1, d1
 	asl2	d1
@@ -477357,29 +477383,29 @@ func_486FE091_entry_L73:
 	exth	d0
 	mov	d0, a1
 	cmp	0x1e, d0
-	blt	func_486FE091_entry_L73
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_L9e:
+	blt	TtSswList_entry_L73
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_L9e:
 	mov	(0x40, sp), a2
 	cmp	0x1e, a2
-	bne	func_486FE091_entry_La9
+	bne	TtSswList_entry_La9
 	clr	d2
 	mov	0x1e, d0
-	bra	func_486FE091_entry_Lae
-func_486FE091_entry_La9:
+	bra	TtSswList_entry_Lae
+TtSswList_entry_La9:
 	mov	a2, d2
 	mov	d2, d0
 	exth	d0
 	inc	d0
-func_486FE091_entry_Lae:
+TtSswList_entry_Lae:
 	mov	d2, d3
 	exth	d3
 	exth	d0
 	mov	d0, (0x14, sp)
 	cmp	d0, d3
-	blt	func_486FE091_entry_Lb9
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_Lb9:
+	blt	TtSswList_entry_Lb9
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_Lb9:
 	mov	d2, d0
 	exthu	d0
 	call	SswSlotRecordGet_entry, [d2], 4
@@ -477389,7 +477415,7 @@ func_486FE091_entry_Lb9:
 	mov	a0, a2
 	movbu	d2, (a2)
 	cmp	0, a3
-	beq	func_486FE091_entry_Le7
+	beq	TtSswList_entry_Le7
 	clr	d1
 	setlb
 	mov	4, d0
@@ -477405,12 +477431,12 @@ func_486FE091_entry_Lb9:
 	inc	d1
 	clr	d0
 	movbu	d0, (d1, a2)
-	bra	func_486FE091_entry_Lf5
-func_486FE091_entry_Le7:
+	bra	TtSswList_entry_Lf5
+TtSswList_entry_Le7:
 	inc	a0
 	mov	data_4850DE48, a1
 	call	strcpy_entry, [a2], 4
-func_486FE091_entry_Lf5:
+TtSswList_entry_Lf5:
 	mov	a2, (0x10, sp)
 	mov	(0x3c, sp), d1
 	mov	-1, d0
@@ -477424,9 +477450,9 @@ func_486FE091_entry_Lf5:
 	mov	d3, d2
 	exth	d3
 	cmp	d0, d3
-	blt	func_486FE091_entry_Lb9
-	jmp	func_486FE091_entry_L1b1
-func_486FE091_entry_L11e:
+	blt	TtSswList_entry_Lb9
+	jmp	TtSswList_entry_L1b1
+TtSswList_entry_L11e:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	sp, a1
@@ -477440,14 +477466,14 @@ func_486FE091_entry_L11e:
 	mov	(0x3c, sp), d1
 	mov	-1, d0
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	func_486FE091_entry_L1b1
-func_486FE091_entry_L142:
+	bra	TtSswList_entry_L1b1
+TtSswList_entry_L142:
 	mov	(0x40, sp), a2
 	movbu	(a2), d0
 	exthu	d0
 	call	SswSlotRecordGet_entry, [d2], 4
 	cmp	0, a0
-	beq	func_486FE091_entry_L160
+	beq	TtSswList_entry_L160
 	clr	d1
 	setlb
 	mov	d1, d0
@@ -477460,14 +477486,14 @@ func_486FE091_entry_L142:
 	exth	d1
 	cmp	4, d1
 	llt
-func_486FE091_entry_L160:
+TtSswList_entry_L160:
 	movbu	(a2), d0
 	mov	0x02350002, d1
 	mov	d0, (0x10, sp)
 	mov	0x02330001, d0
-	call	func_486FE091_entry, [d2,d3,a2,a3], 0x30
-	bra	func_486FE091_entry_L1b1
-func_486FE091_entry_L177:
+	call	TtSswList_entry, [d2,d3,a2,a3], 0x30
+	bra	TtSswList_entry_L1b1
+TtSswList_entry_L177:
 	mov	(0x40, sp), a2
 	mov	a2, d0
 	exthu	d0
@@ -477475,32 +477501,32 @@ func_486FE091_entry_L177:
 	mov	a2, (0x10, sp)
 	mov	0x02330001, d0
 	mov	0x02350002, d1
-	call	func_486FE091_entry, [d2,d3,a2,a3], 0x30
+	call	TtSswList_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x02330001, d0
 	mov	0x02350003, d1
-	call	func_486FE091_entry, [d2,d3,a2,a3], 0x30
-	bra	func_486FE091_entry_L1b1
-func_486FE091_entry_L1aa:
+	call	TtSswList_entry, [d2,d3,a2,a3], 0x30
+	bra	TtSswList_entry_L1b1
+TtSswList_entry_L1aa:
 	call	func_486C4D16, 0, 0
-func_486FE091_entry_L1b1:
+TtSswList_entry_L1b1:
 	mov	(0x18, sp), d0
 	ret	[d2,d3,a2,a3], 0x30
 
-func_486FE24C:
+NamingSswImg:
 	movm	[d2,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	0x6003a, d1
-	beq	func_486FE24C_L28
+	beq	NamingSswImg_L28
 	cmp	0x260000, d1
-	beq	func_486FE24C_L66
+	beq	NamingSswImg_L66
 	cmp	0x60072, d1
-	beq	func_486FE24C_L6b
+	beq	NamingSswImg_L6b
 	cmp	0x50005, d1
-	beq	func_486FE24C_L70
-	jmp	func_486FE24C_L113
-func_486FE24C_L28:
+	beq	NamingSswImg_L70
+	jmp	NamingSswImg_L113
+NamingSswImg_L28:
 	movhu	(0x50067ba8), d0
 	mov	0x50067baa, a2
 	exth	d0
@@ -477509,7 +477535,7 @@ func_486FE24C_L28:
 	add	a1, d0
 	movbu	(d0, a2), d0
 	cmp	0, d0
-	beq	func_486FE24C_L53
+	beq	NamingSswImg_L53
 	mov	(0x30, sp), a0
 	mov	a1, d0
 	asl2	d0
@@ -477517,21 +477543,21 @@ func_486FE24C_L28:
 	add	d0, a2
 	mov	a2, a1
 	call	strcpy_entry, [a2], 4
-	bra	func_486FE24C_L62
-func_486FE24C_L53:
+	bra	NamingSswImg_L62
+NamingSswImg_L53:
 	mov	(0x30, sp), a0
 	mov	Str_empty_585, a1
 	call	strcpy_entry, [a2], 4
-func_486FE24C_L62:
+NamingSswImg_L62:
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-func_486FE24C_L66:
+NamingSswImg_L66:
 	mov	1, d0
 	ret	[d2,a2,a3], 0x20
-func_486FE24C_L6b:
+NamingSswImg_L6b:
 	mov	4, d0
 	ret	[d2,a2,a3], 0x20
-func_486FE24C_L70:
+NamingSswImg_L70:
 	call	GetNamingWindowID, 0, 0
 	movhu	(0x50067ba8), d2
 	mov	0x50067baa, a3
@@ -477576,10 +477602,10 @@ func_486FE24C_L70:
 	mov	0x00050001, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_486FE24C_L114
-func_486FE24C_L113:
+	bra	NamingSswImg_L114
+NamingSswImg_L113:
 	clr	d0
-func_486FE24C_L114:
+NamingSswImg_L114:
 	ret	[d2,a2,a3], 0x20
 
 AcSswMemBoxProc:
@@ -485899,16 +485925,18 @@ InitializeBlock40_entry:
 	mov	Str_TT_PCCOM, a0
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
+
+PCComTitleFunc:
 	add	-0x10, sp
 	cmp	0x5000b, d1
-	bne	InitializeBlock40_entry_L247
+	bne	PCComTitleFunc_L7f
 	mov	(0x20, sp), a0
 	cmp	2, a0
-	beq	InitializeBlock40_entry_L1df
+	beq	PCComTitleFunc_L17
 	cmp	3, a0
-	beq	InitializeBlock40_entry_L223
-	bra	InitializeBlock40_entry_L247
-InitializeBlock40_entry_L1df:
+	beq	PCComTitleFunc_L5b
+	bra	PCComTitleFunc_L7f
+PCComTitleFunc_L17:
 	mov	0xf0, d0
 	mov	1, d1
 	call	func_5015B247_entry, [d2], 0xc
@@ -485925,8 +485953,8 @@ InitializeBlock40_entry_L1df:
 	mov	5, d0
 	mov	3, d1
 	call	func_5015E7E7_entry, [d2,d3], 8
-	bra	InitializeBlock40_entry_L247
-InitializeBlock40_entry_L223:
+	bra	PCComTitleFunc_L7f
+PCComTitleFunc_L5b:
 	call	func_486097D6_entry, [a2], 0x14
 	mov	0xf0, d0
 	clr	d1
@@ -485936,29 +485964,31 @@ InitializeBlock40_entry_L223:
 	mov	5, d0
 	clr	d1
 	call	func_5015E7E7_entry, [d2,d3], 8
-InitializeBlock40_entry_L247:
+PCComTitleFunc_L7f:
 	clr	d0
 	ret	0, 0x10
+
+PCCOMWarning:
 	cmp	0x60090, d1
-	beq	InitializeBlock40_entry_L265
+	beq	PCCOMWarning_L1a
 	cmp	0x600b1, d1
-	beq	InitializeBlock40_entry_L26d
+	beq	PCCOMWarning_L22
 	cmp	0x50000, d1
-	beq	InitializeBlock40_entry_L271
-	bra	InitializeBlock40_entry_L277
-InitializeBlock40_entry_L265:
+	beq	PCCOMWarning_L26
+	bra	PCCOMWarning_L2c
+PCCOMWarning_L1a:
 	mov	ptrs_4850ECDC, d0
-	bra	InitializeBlock40_entry_L278
-InitializeBlock40_entry_L26d:
+	bra	PCCOMWarning_L2d
+PCCOMWarning_L22:
 	mov	1, d0
-	bra	InitializeBlock40_entry_L278
-InitializeBlock40_entry_L271:
+	bra	PCCOMWarning_L2d
+PCCOMWarning_L26:
 	mov	(0x10, sp), a0
 	add	a0, d0
-	bra	InitializeBlock40_entry_L278
-InitializeBlock40_entry_L277:
+	bra	PCCOMWarning_L2d
+PCCOMWarning_L2c:
 	clr	d0
-InitializeBlock40_entry_L278:
+PCCOMWarning_L2d:
 	retf	0, 0
 
 InitializeBlock15:
@@ -495182,7 +495212,7 @@ IvWaitProc_L63:
 IvWaitProc_L70:
 	ret	[d2,d3], 0x1c
 
-MainComposerLoadSW:
+MainPleaseWaitWinShow:
 	add	-0x14, sp
 	mov	Str_WaitWin, a0
 	call	func_486491F4_entry, 0, 0x18
@@ -510523,7 +510553,7 @@ func_48710F49_entry:
 	mov	d0, (0x10, sp)
 	clr	d0
 	mov	0x0005000f, d1
-	call	SdcCurFileNameFunc_entry, [d2,d3,a2,a3], 0x24
+	call	SdcFmmSongMedleyListViewFunc_entry, [d2,d3,a2,a3], 0x24
 func_48710F49_entry_L1e:
 	ret	0, 0x14
 
@@ -510555,437 +510585,443 @@ func_48710F6D_entry_L20:
 	mov	d3, d0
 	extbu	d0
 	ret	[d2,d3], 0x14
+
+SdcLoadTtlJgFunc:
 	add	-0x10, sp
 
-func_48710F9A:
+SdcLoadTtlJgFunc_entry:
 	cmp	0x50005, d1
-	beq	func_48710F9A_Lb
-	jmp	func_48710F9A_Ldb
-func_48710F9A_Lb:
+	beq	SdcLoadTtlJgFunc_entry_Lb
+	jmp	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_Lb:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	func_48710F9A_L1c
+	beq	SdcLoadTtlJgFunc_entry_L1c
 	cmp	4, d0
-	beq	func_48710F9A_L1c
-	jmp	func_48710F9A_L9c
-func_48710F9A_L1c:
+	beq	SdcLoadTtlJgFunc_entry_L1c
+	jmp	SdcLoadTtlJgFunc_entry_L9c
+SdcLoadTtlJgFunc_entry_L1c:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_48710F9A_L34
+	bne	SdcLoadTtlJgFunc_entry_L34
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48710F9A_Ldb
-func_48710F9A_L34:
+	jmp	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L34:
 	cmp	2, d0
-	bne	func_48710F9A_L46
+	bne	SdcLoadTtlJgFunc_entry_L46
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48710F9A_Ldb
-func_48710F9A_L46:
+	jmp	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L46:
 	movhu	(0x500a05c4), d0
 	cmp	3, d0
-	bne	func_48710F9A_L74
+	bne	SdcLoadTtlJgFunc_entry_L74
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	1, d0
-	bne	func_48710F9A_L67
+	bne	SdcLoadTtlJgFunc_entry_L67
 	mov	0x105, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_L67:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L67:
 	mov	0x106, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_L74:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L74:
 	cmp	3, d0
-	bge	func_48710F9A_Ldb
+	bge	SdcLoadTtlJgFunc_entry_Ldb
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	2, d0
-	bne	func_48710F9A_L8f
+	bne	SdcLoadTtlJgFunc_entry_L8f
 	mov	0x106, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_L8f:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L8f:
 	mov	0x105, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_L9c:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_L9c:
 	cmp	2, d0
-	beq	func_48710F9A_La4
+	beq	SdcLoadTtlJgFunc_entry_La4
 	cmp	1, d0
-	bne	func_48710F9A_Lcc
-func_48710F9A_La4:
+	bne	SdcLoadTtlJgFunc_entry_Lcc
+SdcLoadTtlJgFunc_entry_La4:
 	movhu	(0x500a05c4), d0
 	cmp	3, d0
-	bne	func_48710F9A_Lbb
+	bne	SdcLoadTtlJgFunc_entry_Lbb
 	mov	0x106, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_Lbb:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_Lbb:
 	cmp	3, d0
-	bge	func_48710F9A_Ldb
+	bge	SdcLoadTtlJgFunc_entry_Ldb
 	mov	0x105, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48710F9A_Ldb
-func_48710F9A_Lcc:
+	bra	SdcLoadTtlJgFunc_entry_Ldb
+SdcLoadTtlJgFunc_entry_Lcc:
 	cmp	0, d0
-	bne	func_48710F9A_Ldb
+	bne	SdcLoadTtlJgFunc_entry_Ldb
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48710F9A_Ldb:
+SdcLoadTtlJgFunc_entry_Ldb:
 	clr	d0
 	ret	0, 0x10
+
+SdcUtilityTtlJgFunc:
 	add	-0x10, sp
 
-func_4871107C:
+SdcUtilityTtlJgFunc_entry:
 	cmp	0x50005, d1
-	beq	func_4871107C_Lb
-	jmp	func_4871107C_Ldd
-func_4871107C_Lb:
+	beq	SdcUtilityTtlJgFunc_entry_Lb
+	jmp	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_Lb:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	func_4871107C_L1e
+	beq	SdcUtilityTtlJgFunc_entry_L1e
 	cmp	4, d0
-	beq	func_4871107C_L1e
-	jmp	func_4871107C_L9e
-func_4871107C_L1e:
+	beq	SdcUtilityTtlJgFunc_entry_L1e
+	jmp	SdcUtilityTtlJgFunc_entry_L9e
+SdcUtilityTtlJgFunc_entry_L1e:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_4871107C_L36
+	bne	SdcUtilityTtlJgFunc_entry_L36
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_4871107C_Ldd
-func_4871107C_L36:
+	jmp	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L36:
 	cmp	2, d0
-	bne	func_4871107C_L48
+	bne	SdcUtilityTtlJgFunc_entry_L48
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_4871107C_Ldd
-func_4871107C_L48:
+	jmp	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L48:
 	movhu	(0x500a05c4), d0
 	cmp	3, d0
-	bne	func_4871107C_L76
+	bne	SdcUtilityTtlJgFunc_entry_L76
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	1, d0
-	bne	func_4871107C_L69
+	bne	SdcUtilityTtlJgFunc_entry_L69
 	mov	0x10b, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_L69:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L69:
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_L76:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L76:
 	cmp	3, d0
-	bge	func_4871107C_Ldd
+	bge	SdcUtilityTtlJgFunc_entry_Ldd
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	2, d0
-	bne	func_4871107C_L91
+	bne	SdcUtilityTtlJgFunc_entry_L91
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_L91:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L91:
 	mov	0x10b, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_L9e:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_L9e:
 	cmp	2, d0
-	beq	func_4871107C_La6
+	beq	SdcUtilityTtlJgFunc_entry_La6
 	cmp	1, d0
-	bne	func_4871107C_Lce
-func_4871107C_La6:
+	bne	SdcUtilityTtlJgFunc_entry_Lce
+SdcUtilityTtlJgFunc_entry_La6:
 	movhu	(0x500a05c4), d0
 	cmp	3, d0
-	bne	func_4871107C_Lbd
+	bne	SdcUtilityTtlJgFunc_entry_Lbd
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_Lbd:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_Lbd:
 	cmp	3, d0
-	bge	func_4871107C_Ldd
+	bge	SdcUtilityTtlJgFunc_entry_Ldd
 	mov	0x10b, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_4871107C_Ldd
-func_4871107C_Lce:
+	bra	SdcUtilityTtlJgFunc_entry_Ldd
+SdcUtilityTtlJgFunc_entry_Lce:
 	cmp	0, d0
-	bne	func_4871107C_Ldd
+	bne	SdcUtilityTtlJgFunc_entry_Ldd
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_4871107C_Ldd:
+SdcUtilityTtlJgFunc_entry_Ldd:
 	clr	d0
 	ret	0, 0x10
+
+SdcSaveTtlJgFunc:
 	add	-0x10, sp
 
-func_48711160:
+SdcSaveTtlJgFunc_entry:
 	cmp	0x50005, d1
-	bne	func_48711160_L71
+	bne	SdcSaveTtlJgFunc_entry_L71
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	func_48711160_L18
+	beq	SdcSaveTtlJgFunc_entry_L18
 	cmp	4, d0
-	bne	func_48711160_L4d
-func_48711160_L18:
+	bne	SdcSaveTtlJgFunc_entry_L4d
+SdcSaveTtlJgFunc_entry_L18:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_48711160_L2f
+	bne	SdcSaveTtlJgFunc_entry_L2f
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711160_L71
-func_48711160_L2f:
+	bra	SdcSaveTtlJgFunc_entry_L71
+SdcSaveTtlJgFunc_entry_L2f:
 	cmp	2, d0
-	bne	func_48711160_L40
+	bne	SdcSaveTtlJgFunc_entry_L40
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711160_L71
-func_48711160_L40:
+	bra	SdcSaveTtlJgFunc_entry_L71
+SdcSaveTtlJgFunc_entry_L40:
 	mov	0x108, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711160_L71
-func_48711160_L4d:
+	bra	SdcSaveTtlJgFunc_entry_L71
+SdcSaveTtlJgFunc_entry_L4d:
 	cmp	2, d0
-	beq	func_48711160_L55
+	beq	SdcSaveTtlJgFunc_entry_L55
 	cmp	1, d0
-	bne	func_48711160_L62
-func_48711160_L55:
+	bne	SdcSaveTtlJgFunc_entry_L62
+SdcSaveTtlJgFunc_entry_L55:
 	mov	0x108, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711160_L71
-func_48711160_L62:
+	bra	SdcSaveTtlJgFunc_entry_L71
+SdcSaveTtlJgFunc_entry_L62:
 	cmp	0, d0
-	bne	func_48711160_L71
+	bne	SdcSaveTtlJgFunc_entry_L71
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48711160_L71:
+SdcSaveTtlJgFunc_entry_L71:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmModeFunc:
+SdcSaveSmfTtlJgFunc:
 	add	-0x10, sp
 
-SdcFmmModeFunc_entry:
+SdcSaveSmfTtlJgFunc_entry:
 	cmp	0x50005, d1
-	bne	SdcFmmModeFunc_entry_L71
+	bne	SdcSaveSmfTtlJgFunc_entry_L71
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	SdcFmmModeFunc_entry_L18
+	beq	SdcSaveSmfTtlJgFunc_entry_L18
 	cmp	4, d0
-	bne	SdcFmmModeFunc_entry_L4d
-SdcFmmModeFunc_entry_L18:
+	bne	SdcSaveSmfTtlJgFunc_entry_L4d
+SdcSaveSmfTtlJgFunc_entry_L18:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcFmmModeFunc_entry_L2f
+	bne	SdcSaveSmfTtlJgFunc_entry_L2f
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmModeFunc_entry_L71
-SdcFmmModeFunc_entry_L2f:
+	bra	SdcSaveSmfTtlJgFunc_entry_L71
+SdcSaveSmfTtlJgFunc_entry_L2f:
 	cmp	2, d0
-	bne	SdcFmmModeFunc_entry_L40
+	bne	SdcSaveSmfTtlJgFunc_entry_L40
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmModeFunc_entry_L71
-SdcFmmModeFunc_entry_L40:
+	bra	SdcSaveSmfTtlJgFunc_entry_L71
+SdcSaveSmfTtlJgFunc_entry_L40:
 	mov	0x109, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmModeFunc_entry_L71
-SdcFmmModeFunc_entry_L4d:
+	bra	SdcSaveSmfTtlJgFunc_entry_L71
+SdcSaveSmfTtlJgFunc_entry_L4d:
 	cmp	2, d0
-	beq	SdcFmmModeFunc_entry_L55
+	beq	SdcSaveSmfTtlJgFunc_entry_L55
 	cmp	1, d0
-	bne	SdcFmmModeFunc_entry_L62
-SdcFmmModeFunc_entry_L55:
+	bne	SdcSaveSmfTtlJgFunc_entry_L62
+SdcSaveSmfTtlJgFunc_entry_L55:
 	mov	0x109, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmModeFunc_entry_L71
-SdcFmmModeFunc_entry_L62:
+	bra	SdcSaveSmfTtlJgFunc_entry_L71
+SdcSaveSmfTtlJgFunc_entry_L62:
 	cmp	0, d0
-	bne	SdcFmmModeFunc_entry_L71
+	bne	SdcSaveSmfTtlJgFunc_entry_L71
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmModeFunc_entry_L71:
+SdcSaveSmfTtlJgFunc_entry_L71:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmLoadTitleFunc:
+SdcMedleyTtlJgFunc:
 	add	-0x10, sp
 
-SdcFmmLoadTitleFunc_entry:
+SdcMedleyTtlJgFunc_entry:
 	cmp	0x50005, d1
-	bne	SdcFmmLoadTitleFunc_entry_L71
+	bne	SdcMedleyTtlJgFunc_entry_L71
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	SdcFmmLoadTitleFunc_entry_L18
+	beq	SdcMedleyTtlJgFunc_entry_L18
 	cmp	4, d0
-	bne	SdcFmmLoadTitleFunc_entry_L4d
-SdcFmmLoadTitleFunc_entry_L18:
+	bne	SdcMedleyTtlJgFunc_entry_L4d
+SdcMedleyTtlJgFunc_entry_L18:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcFmmLoadTitleFunc_entry_L2f
+	bne	SdcMedleyTtlJgFunc_entry_L2f
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmLoadTitleFunc_entry_L71
-SdcFmmLoadTitleFunc_entry_L2f:
+	bra	SdcMedleyTtlJgFunc_entry_L71
+SdcMedleyTtlJgFunc_entry_L2f:
 	cmp	2, d0
-	bne	SdcFmmLoadTitleFunc_entry_L40
+	bne	SdcMedleyTtlJgFunc_entry_L40
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmLoadTitleFunc_entry_L71
-SdcFmmLoadTitleFunc_entry_L40:
+	bra	SdcMedleyTtlJgFunc_entry_L71
+SdcMedleyTtlJgFunc_entry_L40:
 	mov	0x110, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmLoadTitleFunc_entry_L71
-SdcFmmLoadTitleFunc_entry_L4d:
+	bra	SdcMedleyTtlJgFunc_entry_L71
+SdcMedleyTtlJgFunc_entry_L4d:
 	cmp	2, d0
-	beq	SdcFmmLoadTitleFunc_entry_L55
+	beq	SdcMedleyTtlJgFunc_entry_L55
 	cmp	1, d0
-	bne	SdcFmmLoadTitleFunc_entry_L62
-SdcFmmLoadTitleFunc_entry_L55:
+	bne	SdcMedleyTtlJgFunc_entry_L62
+SdcMedleyTtlJgFunc_entry_L55:
 	mov	0x110, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmLoadTitleFunc_entry_L71
-SdcFmmLoadTitleFunc_entry_L62:
+	bra	SdcMedleyTtlJgFunc_entry_L71
+SdcMedleyTtlJgFunc_entry_L62:
 	cmp	0, d0
-	bne	SdcFmmLoadTitleFunc_entry_L71
+	bne	SdcMedleyTtlJgFunc_entry_L71
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmLoadTitleFunc_entry_L71:
+SdcMedleyTtlJgFunc_entry_L71:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmFavSongTitleFunc:
+SdcCustomTtlJgFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFmmFavSetTitleFunc:
+SdcFavoriteTtlJgFunc:
 	add	-0x10, sp
 
-SdcFmmFavSetTitleFunc_entry:
+SdcFavoriteTtlJgFunc_entry:
 	cmp	0x50005, d1
-	bne	SdcFmmFavSetTitleFunc_entry_L71
+	bne	SdcFavoriteTtlJgFunc_entry_L71
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	3, d0
-	beq	SdcFmmFavSetTitleFunc_entry_L18
+	beq	SdcFavoriteTtlJgFunc_entry_L18
 	cmp	4, d0
-	bne	SdcFmmFavSetTitleFunc_entry_L4d
-SdcFmmFavSetTitleFunc_entry_L18:
+	bne	SdcFavoriteTtlJgFunc_entry_L4d
+SdcFavoriteTtlJgFunc_entry_L18:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcFmmFavSetTitleFunc_entry_L2f
+	bne	SdcFavoriteTtlJgFunc_entry_L2f
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmFavSetTitleFunc_entry_L71
-SdcFmmFavSetTitleFunc_entry_L2f:
+	bra	SdcFavoriteTtlJgFunc_entry_L71
+SdcFavoriteTtlJgFunc_entry_L2f:
 	cmp	2, d0
-	bne	SdcFmmFavSetTitleFunc_entry_L40
+	bne	SdcFavoriteTtlJgFunc_entry_L40
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmFavSetTitleFunc_entry_L71
-SdcFmmFavSetTitleFunc_entry_L40:
+	bra	SdcFavoriteTtlJgFunc_entry_L71
+SdcFavoriteTtlJgFunc_entry_L40:
 	mov	0x11f, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmFavSetTitleFunc_entry_L71
-SdcFmmFavSetTitleFunc_entry_L4d:
+	bra	SdcFavoriteTtlJgFunc_entry_L71
+SdcFavoriteTtlJgFunc_entry_L4d:
 	cmp	2, d0
-	beq	SdcFmmFavSetTitleFunc_entry_L55
+	beq	SdcFavoriteTtlJgFunc_entry_L55
 	cmp	1, d0
-	bne	SdcFmmFavSetTitleFunc_entry_L62
-SdcFmmFavSetTitleFunc_entry_L55:
+	bne	SdcFavoriteTtlJgFunc_entry_L62
+SdcFavoriteTtlJgFunc_entry_L55:
 	mov	0x11f, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmFavSetTitleFunc_entry_L71
-SdcFmmFavSetTitleFunc_entry_L62:
+	bra	SdcFavoriteTtlJgFunc_entry_L71
+SdcFavoriteTtlJgFunc_entry_L62:
 	cmp	0, d0
-	bne	SdcFmmFavSetTitleFunc_entry_L71
+	bne	SdcFavoriteTtlJgFunc_entry_L71
 	mov	3, d0
 	mov	0x68, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmFavSetTitleFunc_entry_L71:
+SdcFavoriteTtlJgFunc_entry_L71:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmSaveTitleFunc:
+SdcAudioTtlJgFunc:
 	add	-0x10, sp
 	cmp	0x50005, d1
-	bne	SdcFmmSaveTitleFunc_L16
+	bne	SdcAudioTtlJgFunc_L16
 	mov	0x116, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSaveTitleFunc_L16:
+SdcAudioTtlJgFunc_L16:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmSmfLoadTitleFunc:
+SdcSoundTtlJgFunc:
 	add	-0x10, sp
 	cmp	0x50005, d1
-	bne	SdcFmmSmfLoadTitleFunc_L16
+	bne	SdcSoundTtlJgFunc_L16
 	mov	0x11a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSmfLoadTitleFunc_L16:
+SdcSoundTtlJgFunc_L16:
 	clr	d0
 	ret	0, 0x10
 
-SdcFmmSmfSaveTitleFunc:
+SdcRenameTechScreenJudge:
 	add	-0x14, sp
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmSmfSaveTitleFunc_L23
+	beq	SdcRenameTechScreenJudge_L23
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x021001d2, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcFmmSmfSaveTitleFunc_L23:
+SdcRenameTechScreenJudge_L23:
 	clr	d0
 	ret	0, 0x14
 
-SdcFmmLoadFilterFunc:
+SdcRenameSmfScreenJudge:
 	add	-0x14, sp
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -510995,11 +511031,11 @@ SdcFmmLoadFilterFunc:
 	clr	d0
 	ret	0, 0x14
 
-SdcFmmNumberLoadFunc:
+SdcRenameCstScreenJudge:
 	clr	d0
 	retf	0, 0
 
-SdcFmmCstUtilityTitleFunc:
+SdcPlaylistNameScreenJudge:
 	add	-0x14, sp
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -511009,7 +511045,7 @@ SdcFmmCstUtilityTitleFunc:
 	clr	d0
 	ret	0, 0x14
 
-SdcFmmSmfExportTitleFunc:
+SdcPlaylistNameScreenJudge2:
 	add	-0x14, sp
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -511019,7 +511055,7 @@ SdcFmmSmfExportTitleFunc:
 	clr	d0
 	ret	0, 0x14
 
-SdcFmmUtilityTitleFunc:
+SdcFdCopyTechScreenJudge:
 	add	-0x14, sp
 	mov	5, d0
 	mov	d0, (0x10, sp)
@@ -511029,13 +511065,13 @@ SdcFmmUtilityTitleFunc:
 	call	func_486BF7C3_entry, 0, 0xc
 	exth	d0
 	cmp	5, d0
-	beq	SdcFmmUtilityTitleFunc_L30
+	beq	SdcFdCopyTechScreenJudge_L30
 	cmp	0, d0
-	beq	SdcFmmUtilityTitleFunc_L54
+	beq	SdcFdCopyTechScreenJudge_L54
 	cmp	1, d0
-	beq	SdcFmmUtilityTitleFunc_L78
-	bra	SdcFmmUtilityTitleFunc_La3
-SdcFmmUtilityTitleFunc_L30:
+	beq	SdcFdCopyTechScreenJudge_L78
+	bra	SdcFdCopyTechScreenJudge_La3
+SdcFdCopyTechScreenJudge_L30:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511046,7 +511082,7 @@ SdcFmmUtilityTitleFunc_L30:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	0, 0x14
-SdcFmmUtilityTitleFunc_L54:
+SdcFdCopyTechScreenJudge_L54:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511057,7 +511093,7 @@ SdcFmmUtilityTitleFunc_L54:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	0, 0x14
-SdcFmmUtilityTitleFunc_L78:
+SdcFdCopyTechScreenJudge_L78:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511068,8 +511104,8 @@ SdcFmmUtilityTitleFunc_L78:
 	mov	2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmUtilityTitleFunc_Lfc
-SdcFmmUtilityTitleFunc_La3:
+	bra	SdcFdCopyTechScreenJudge_Lfc
+SdcFdCopyTechScreenJudge_La3:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511078,29 +511114,29 @@ SdcFmmUtilityTitleFunc_La3:
 	call	func_486BF7F8_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	blt	SdcFmmUtilityTitleFunc_Lfb
+	blt	SdcFdCopyTechScreenJudge_Lfb
 	call	func_485E686B_entry, 0, 0x2c
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmUtilityTitleFunc_Le9
+	beq	SdcFdCopyTechScreenJudge_Le9
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x02100156, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	SdcFmmUtilityTitleFunc_Lfb
-SdcFmmUtilityTitleFunc_Le9:
+	bra	SdcFdCopyTechScreenJudge_Lfb
+SdcFdCopyTechScreenJudge_Le9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcFmmUtilityTitleFunc_Lfb:
+SdcFdCopyTechScreenJudge_Lfb:
 	clr	d0
-SdcFmmUtilityTitleFunc_Lfc:
+SdcFdCopyTechScreenJudge_Lfc:
 	ret	0, 0x14
 
-SdcFmmSmfUtilityTitleFunc:
+SdcFdCopySmfScreenJudge:
 	add	-0x14, sp
 	mov	5, d0
 	mov	d0, (0x10, sp)
@@ -511110,13 +511146,13 @@ SdcFmmSmfUtilityTitleFunc:
 	call	func_486BF7C3_entry, 0, 0xc
 	exth	d0
 	cmp	5, d0
-	beq	SdcFmmSmfUtilityTitleFunc_L30
+	beq	SdcFdCopySmfScreenJudge_L30
 	cmp	0, d0
-	beq	SdcFmmSmfUtilityTitleFunc_L54
+	beq	SdcFdCopySmfScreenJudge_L54
 	cmp	1, d0
-	beq	SdcFmmSmfUtilityTitleFunc_L78
-	bra	SdcFmmSmfUtilityTitleFunc_La3
-SdcFmmSmfUtilityTitleFunc_L30:
+	beq	SdcFdCopySmfScreenJudge_L78
+	bra	SdcFdCopySmfScreenJudge_La3
+SdcFdCopySmfScreenJudge_L30:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511127,7 +511163,7 @@ SdcFmmSmfUtilityTitleFunc_L30:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	0, 0x14
-SdcFmmSmfUtilityTitleFunc_L54:
+SdcFdCopySmfScreenJudge_L54:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511138,7 +511174,7 @@ SdcFmmSmfUtilityTitleFunc_L54:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	0, 0x14
-SdcFmmSmfUtilityTitleFunc_L78:
+SdcFdCopySmfScreenJudge_L78:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511149,8 +511185,8 @@ SdcFmmSmfUtilityTitleFunc_L78:
 	mov	2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmSmfUtilityTitleFunc_Lfc
-SdcFmmSmfUtilityTitleFunc_La3:
+	bra	SdcFdCopySmfScreenJudge_Lfc
+SdcFdCopySmfScreenJudge_La3:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511159,59 +511195,61 @@ SdcFmmSmfUtilityTitleFunc_La3:
 	call	func_486BF83A_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	blt	SdcFmmSmfUtilityTitleFunc_Lfb
+	blt	SdcFdCopySmfScreenJudge_Lfb
 	call	func_485E686B_entry, 0, 0x2c
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSmfUtilityTitleFunc_Le9
+	beq	SdcFdCopySmfScreenJudge_Le9
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x02100165, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	SdcFmmSmfUtilityTitleFunc_Lfb
-SdcFmmSmfUtilityTitleFunc_Le9:
+	bra	SdcFdCopySmfScreenJudge_Lfb
+SdcFdCopySmfScreenJudge_Le9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcFmmSmfUtilityTitleFunc_Lfb:
+SdcFdCopySmfScreenJudge_Lfb:
 	clr	d0
-SdcFmmSmfUtilityTitleFunc_Lfc:
+SdcFdCopySmfScreenJudge_Lfc:
 	ret	0, 0x14
+
+SdcFmmModeFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	SdcFmmSmfUtilityTitleFunc_L114
+	beq	SdcFmmModeFunc_L15
 	cmp	0x50014, d1
-	beq	SdcFmmSmfUtilityTitleFunc_L138
-	bra	SdcFmmSmfUtilityTitleFunc_L179
-SdcFmmSmfUtilityTitleFunc_L114:
+	beq	SdcFmmModeFunc_L39
+	bra	SdcFmmModeFunc_L7a
+SdcFmmModeFunc_L15:
 	mov	(0x24, sp), a0
 	cmp	0, a0
-	beq	SdcFmmSmfUtilityTitleFunc_L17c
+	beq	SdcFmmModeFunc_L7d
 	cmp	1, a0
-	bne	SdcFmmSmfUtilityTitleFunc_L17c
+	bne	SdcFmmModeFunc_L7d
 	call	func_5018208E, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmSmfUtilityTitleFunc_L12f
+	beq	SdcFmmModeFunc_L30
 	call	func_487105ED_entry, 0, 8
-SdcFmmSmfUtilityTitleFunc_L12f:
+SdcFmmModeFunc_L30:
 	call	func_486D360E, 0, 0
-	bra	SdcFmmSmfUtilityTitleFunc_L17c
-SdcFmmSmfUtilityTitleFunc_L138:
+	bra	SdcFmmModeFunc_L7d
+SdcFmmModeFunc_L39:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	SdcFmmSmfUtilityTitleFunc_L176
+	bne	SdcFmmModeFunc_L77
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	SdcFmmSmfUtilityTitleFunc_L176
+	bne	SdcFmmModeFunc_L77
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	SdcFmmSmfUtilityTitleFunc_L173
+	bne	SdcFmmModeFunc_L74
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511220,91 +511258,91 @@ SdcFmmSmfUtilityTitleFunc_L138:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSmfUtilityTitleFunc_L173:
+SdcFmmModeFunc_L74:
 	clr	d0
-	bra	SdcFmmSmfUtilityTitleFunc_L17d
-SdcFmmSmfUtilityTitleFunc_L176:
+	bra	SdcFmmModeFunc_L7e
+SdcFmmModeFunc_L77:
 	clr	d0
-	bra	SdcFmmSmfUtilityTitleFunc_L17d
-SdcFmmSmfUtilityTitleFunc_L179:
+	bra	SdcFmmModeFunc_L7e
+SdcFmmModeFunc_L7a:
 	clr	d0
-	bra	SdcFmmSmfUtilityTitleFunc_L17d
-SdcFmmSmfUtilityTitleFunc_L17c:
+	bra	SdcFmmModeFunc_L7e
+SdcFmmModeFunc_L7d:
 	clr	d0
-SdcFmmSmfUtilityTitleFunc_L17d:
+SdcFmmModeFunc_L7e:
 	ret	0, 0x14
 
-func_48711676:
+SdcFmmLoadTitleFunc:
 	movm	[d2], (sp)
 	add	-0x20, sp
 	cmp	0x5000b, d1
-	beq	func_48711676_L47
+	beq	SdcFmmLoadTitleFunc_L47
 	cmp	0x50005, d1
-	bne	func_48711676_L18
-	jmp	func_48711676_L1d9
-func_48711676_L18:
+	bne	SdcFmmLoadTitleFunc_L18
+	jmp	SdcFmmLoadTitleFunc_L1d9
+SdcFmmLoadTitleFunc_L18:
 	cmp	0x600b5, d1
-	bne	func_48711676_L23
-	jmp	func_48711676_L1ee
-func_48711676_L23:
+	bne	SdcFmmLoadTitleFunc_L23
+	jmp	SdcFmmLoadTitleFunc_L1ee
+SdcFmmLoadTitleFunc_L23:
 	cmp	0x2150012, d1
-	bne	func_48711676_L2e
-	jmp	func_48711676_L215
-func_48711676_L2e:
+	bne	SdcFmmLoadTitleFunc_L2e
+	jmp	SdcFmmLoadTitleFunc_L215
+SdcFmmLoadTitleFunc_L2e:
 	cmp	0x600d3, d1
-	bne	func_48711676_L39
-	jmp	func_48711676_L22d
-func_48711676_L39:
+	bne	SdcFmmLoadTitleFunc_L39
+	jmp	SdcFmmLoadTitleFunc_L22d
+SdcFmmLoadTitleFunc_L39:
 	cmp	0x50014, d1
-	bne	func_48711676_L44
-	jmp	func_48711676_L23c
-func_48711676_L44:
-	jmp	func_48711676_L27d
-func_48711676_L47:
+	bne	SdcFmmLoadTitleFunc_L44
+	jmp	SdcFmmLoadTitleFunc_L23c
+SdcFmmLoadTitleFunc_L44:
+	jmp	SdcFmmLoadTitleFunc_L27d
+SdcFmmLoadTitleFunc_L47:
 	mov	(0x34, sp), a0
 	cmp	2, a0
-	beq	func_48711676_L5e
+	beq	SdcFmmLoadTitleFunc_L5e
 	cmp	9, a0
-	bne	func_48711676_L54
-	jmp	func_48711676_L164
-func_48711676_L54:
+	bne	SdcFmmLoadTitleFunc_L54
+	jmp	SdcFmmLoadTitleFunc_L164
+SdcFmmLoadTitleFunc_L54:
 	cmp	3, a0
-	bne	func_48711676_L5b
-	jmp	func_48711676_L194
-func_48711676_L5b:
-	jmp	func_48711676_L1d5
-func_48711676_L5e:
+	bne	SdcFmmLoadTitleFunc_L5b
+	jmp	SdcFmmLoadTitleFunc_L194
+SdcFmmLoadTitleFunc_L5b:
+	jmp	SdcFmmLoadTitleFunc_L1d5
+SdcFmmLoadTitleFunc_L5e:
 	call	func_48633196_entry, 0, 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	3, d0
-	beq	func_48711676_L86
+	beq	SdcFmmLoadTitleFunc_L86
 	call	func_486C815A, 0, 0
 	call	func_486CD222_entry, [d2], 4
 	call	func_486D1056_entry, [d2], 4
-func_48711676_L86:
+SdcFmmLoadTitleFunc_L86:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_48711676_L96
+	beq	SdcFmmLoadTitleFunc_L96
 	cmp	1, d0
-	bne	func_48711676_Lb0
-func_48711676_L96:
+	bne	SdcFmmLoadTitleFunc_Lb0
+SdcFmmLoadTitleFunc_L96:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48711676_L14b
-func_48711676_Lb0:
+	jmp	SdcFmmLoadTitleFunc_L14b
+SdcFmmLoadTitleFunc_Lb0:
 	cmp	3, d0
-	beq	func_48711676_Lb8
+	beq	SdcFmmLoadTitleFunc_Lb8
 	cmp	4, d0
-	bne	func_48711676_L110
-func_48711676_Lb8:
+	bne	SdcFmmLoadTitleFunc_L110
+SdcFmmLoadTitleFunc_Lb8:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_48711676_Lff
+	bne	SdcFmmLoadTitleFunc_Lff
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511321,15 +511359,15 @@ func_48711676_Lb8:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711676_L14b
-func_48711676_Lff:
+	bra	SdcFmmLoadTitleFunc_L14b
+SdcFmmLoadTitleFunc_Lff:
 	cmp	2, d0
-	bne	func_48711676_L14b
+	bne	SdcFmmLoadTitleFunc_L14b
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48711676_L14b
-func_48711676_L110:
+	bra	SdcFmmLoadTitleFunc_L14b
+SdcFmmLoadTitleFunc_L110:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511346,48 +511384,48 @@ func_48711676_L110:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48711676_L14b:
+SdcFmmLoadTitleFunc_L14b:
 	clr	d0
 	clr	d2
-func_48711676_L14d:
+SdcFmmLoadTitleFunc_L14d:
 	extbu	d0
 	call	func_48709F27_entry, [d2], 4
 	inc	d2
 	mov	d2, d0
 	exth	d2
 	cmp	8, d2
-	blt	func_48711676_L14d
+	blt	SdcFmmLoadTitleFunc_L14d
 	clr	d0
 	movhu	d0, (0x500788ba)
 	ret	[d2], 0x24
-func_48711676_L164:
+SdcFmmLoadTitleFunc_L164:
 	movbu	(0x500788c8), d0
 	cmp	0, d0
-	beq	func_48711676_L177
+	beq	SdcFmmLoadTitleFunc_L177
 	clr	d0
 	movbu	d0, (0x500788c8)
-	bra	func_48711676_L190
-func_48711676_L177:
+	bra	SdcFmmLoadTitleFunc_L190
+SdcFmmLoadTitleFunc_L177:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	blt	func_48711676_L190
+	blt	SdcFmmLoadTitleFunc_L190
 	cmp	0x13, d0
-	bge	func_48711676_L190
+	bge	SdcFmmLoadTitleFunc_L190
 	inc	d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
-func_48711676_L190:
+SdcFmmLoadTitleFunc_L190:
 	clr	d0
 	ret	[d2], 0x24
-func_48711676_L194:
+SdcFmmLoadTitleFunc_L194:
 	call	func_486331AC_entry, 0, 0x1c
 	movbu	(0x500788c8), d0
 	cmp	0, d0
-	beq	func_48711676_L1ac
+	beq	SdcFmmLoadTitleFunc_L1ac
 	clr	d0
 	movbu	d0, (0x500788c8)
-func_48711676_L1ac:
+SdcFmmLoadTitleFunc_L1ac:
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
@@ -511399,20 +511437,20 @@ func_48711676_L1ac:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2], 0x24
-func_48711676_L1d5:
+SdcFmmLoadTitleFunc_L1d5:
 	clr	d0
 	ret	[d2], 0x24
-func_48711676_L1d9:
+SdcFmmLoadTitleFunc_L1d9:
 	mov	(0x34, sp), a0
 	cmp	0x17, a0
-	bne	func_48711676_L1ea
+	bne	SdcFmmLoadTitleFunc_L1ea
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_48711676_L1ea:
+SdcFmmLoadTitleFunc_L1ea:
 	clr	d0
 	ret	[d2], 0x24
-func_48711676_L1ee:
+SdcFmmLoadTitleFunc_L1ee:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x105, d0
@@ -511426,35 +511464,35 @@ func_48711676_L1ee:
 	call	RegisterEasySet_entry, [d2,a2], 8
 	clr	d0
 	ret	[d2], 0x24
-func_48711676_L215:
+SdcFmmLoadTitleFunc_L215:
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	2, d0
-	bne	func_48711676_L22a
+	bne	SdcFmmLoadTitleFunc_L22a
 	mov	0x106, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_48711676_L22a:
+SdcFmmLoadTitleFunc_L22a:
 	clr	d0
-	bra	func_48711676_L27e
-func_48711676_L22d:
+	bra	SdcFmmLoadTitleFunc_L27e
+SdcFmmLoadTitleFunc_L22d:
 	call	func_486BF702_entry, 0, 8
 	cmp	0x18, d0
-	beq	func_48711676_L27d
+	beq	SdcFmmLoadTitleFunc_L27d
 	mov	1, d0
-	bra	func_48711676_L27e
-func_48711676_L23c:
+	bra	SdcFmmLoadTitleFunc_L27e
+SdcFmmLoadTitleFunc_L23c:
 	mov	(0x34, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_48711676_L27a
+	bne	SdcFmmLoadTitleFunc_L27a
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_48711676_L27a
+	bne	SdcFmmLoadTitleFunc_L27a
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_48711676_L277
+	bne	SdcFmmLoadTitleFunc_L277
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511463,70 +511501,70 @@ func_48711676_L23c:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_48711676_L277:
+SdcFmmLoadTitleFunc_L277:
 	clr	d0
-	bra	func_48711676_L27e
-func_48711676_L27a:
+	bra	SdcFmmLoadTitleFunc_L27e
+SdcFmmLoadTitleFunc_L27a:
 	clr	d0
-	bra	func_48711676_L27e
-func_48711676_L27d:
+	bra	SdcFmmLoadTitleFunc_L27e
+SdcFmmLoadTitleFunc_L27d:
 	clr	d0
-func_48711676_L27e:
+SdcFmmLoadTitleFunc_L27e:
 	ret	[d2], 0x24
 
-func_487118F7:
+SdcFmmSaveTitleFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_L26
+	beq	SdcFmmSaveTitleFunc_L26
 	cmp	0x50005, d1
-	bne	func_487118F7_L18
-	jmp	func_487118F7_L217
-func_487118F7_L18:
+	bne	SdcFmmSaveTitleFunc_L18
+	jmp	SdcFmmSaveTitleFunc_L217
+SdcFmmSaveTitleFunc_L18:
 	cmp	0x2150006, d1
-	bne	func_487118F7_L23
-	jmp	func_487118F7_L21a
-func_487118F7_L23:
-	jmp	func_487118F7_L233
-func_487118F7_L26:
+	bne	SdcFmmSaveTitleFunc_L23
+	jmp	SdcFmmSaveTitleFunc_L21a
+SdcFmmSaveTitleFunc_L23:
+	jmp	SdcFmmSaveTitleFunc_L233
+SdcFmmSaveTitleFunc_L26:
 	mov	(0x28, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_L3d
+	beq	SdcFmmSaveTitleFunc_L3d
 	cmp	3, a0
-	bne	func_487118F7_L33
-	jmp	func_487118F7_L1ba
-func_487118F7_L33:
+	bne	SdcFmmSaveTitleFunc_L33
+	jmp	SdcFmmSaveTitleFunc_L1ba
+SdcFmmSaveTitleFunc_L33:
 	cmp	4, a0
-	bne	func_487118F7_L3a
-	jmp	func_487118F7_L1e9
-func_487118F7_L3a:
-	jmp	func_487118F7_L214
-func_487118F7_L3d:
+	bne	SdcFmmSaveTitleFunc_L3a
+	jmp	SdcFmmSaveTitleFunc_L1e9
+SdcFmmSaveTitleFunc_L3a:
+	jmp	SdcFmmSaveTitleFunc_L214
+SdcFmmSaveTitleFunc_L3d:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487118F7_L54
+	beq	SdcFmmSaveTitleFunc_L54
 	cmp	1, d0
-	bne	func_487118F7_L69
-func_487118F7_L54:
+	bne	SdcFmmSaveTitleFunc_L69
+SdcFmmSaveTitleFunc_L54:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x02150018, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_487118F7_L13c
-func_487118F7_L69:
+	jmp	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_L69:
 	cmp	3, d0
-	bne	func_487118F7_La8
+	bne	SdcFmmSaveTitleFunc_La8
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x107, d0
-	beq	func_487118F7_L82
+	beq	SdcFmmSaveTitleFunc_L82
 	cmp	6, d0
-	beq	func_487118F7_L82
-	jmp	func_487118F7_L13c
-func_487118F7_L82:
+	beq	SdcFmmSaveTitleFunc_L82
+	jmp	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_L82:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511536,15 +511574,15 @@ func_487118F7_L82:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	func_487118F7_L13c
-func_487118F7_La8:
+	jmp	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_La8:
 	cmp	4, d0
-	beq	func_487118F7_Laf
-	jmp	func_487118F7_L13c
-func_487118F7_Laf:
+	beq	SdcFmmSaveTitleFunc_Laf
+	jmp	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_Laf:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487118F7_Lf6
+	bne	SdcFmmSaveTitleFunc_Lf6
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511561,22 +511599,22 @@ func_487118F7_Laf:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L13c
-func_487118F7_Lf6:
+	bra	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_Lf6:
 	cmp	2, d0
-	bne	func_487118F7_L107
+	bne	SdcFmmSaveTitleFunc_L107
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L13c
-func_487118F7_L107:
+	bra	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_L107:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x107, d0
-	beq	func_487118F7_L119
+	beq	SdcFmmSaveTitleFunc_L119
 	cmp	6, d0
-	bne	func_487118F7_L13c
-func_487118F7_L119:
+	bne	SdcFmmSaveTitleFunc_L13c
+SdcFmmSaveTitleFunc_L119:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511586,32 +511624,32 @@ func_487118F7_L119:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-func_487118F7_L13c:
+SdcFmmSaveTitleFunc_L13c:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x119, d0
-	beq	func_487118F7_L18e
+	beq	SdcFmmSaveTitleFunc_L18e
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x118, d0
-	beq	func_487118F7_L18e
+	beq	SdcFmmSaveTitleFunc_L18e
 	clr	d0
 	clr	d2
-func_487118F7_L15a:
+SdcFmmSaveTitleFunc_L15a:
 	cmp	7, d2
-	bge	func_487118F7_L166
+	bge	SdcFmmSaveTitleFunc_L166
 	extbu	d0
 	call	func_48709FAF_entry, [d2], 4
-	bra	func_487118F7_L16c
-func_487118F7_L166:
+	bra	SdcFmmSaveTitleFunc_L16c
+SdcFmmSaveTitleFunc_L166:
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
-func_487118F7_L16c:
+SdcFmmSaveTitleFunc_L16c:
 	inc	d2
 	mov	d2, d0
 	exth	d2
 	cmp	8, d2
-	blt	func_487118F7_L15a
+	blt	SdcFmmSaveTitleFunc_L15a
 	call	func_4870A012, 0, 0
 	mov	data_48523EF8, a1
 	movbu	(a1), d0
@@ -511619,7 +511657,7 @@ func_487118F7_L16c:
 	movbu	d0, (a0)
 	movbu	(1, a1), d0
 	movbu	d0, (1, a0)
-func_487118F7_L18e:
+SdcFmmSaveTitleFunc_L18e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -511632,7 +511670,7 @@ func_487118F7_L18e:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2], 0x18
-func_487118F7_L1ba:
+SdcFmmSaveTitleFunc_L1ba:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
@@ -511644,94 +511682,96 @@ func_487118F7_L1ba:
 	mov	0x00060075, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
-	bra	func_487118F7_L234
-func_487118F7_L1e9:
+	bra	SdcFmmSaveTitleFunc_L234
+SdcFmmSaveTitleFunc_L1e9:
 	mov	0x021002a9, d0
 	call	func_486BF7A3_entry, [d2], 0x18
 	exth	d0
 	cmp	1, d0
-	bne	func_487118F7_L211
+	bne	SdcFmmSaveTitleFunc_L211
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x021002a9, d0
 	mov	0x00050002, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-func_487118F7_L211:
+SdcFmmSaveTitleFunc_L211:
 	clr	d0
-	bra	func_487118F7_L234
-func_487118F7_L214:
+	bra	SdcFmmSaveTitleFunc_L234
+SdcFmmSaveTitleFunc_L214:
 	clr	d0
-	bra	func_487118F7_L234
-func_487118F7_L217:
+	bra	SdcFmmSaveTitleFunc_L234
+SdcFmmSaveTitleFunc_L217:
 	clr	d0
-	bra	func_487118F7_L234
-func_487118F7_L21a:
+	bra	SdcFmmSaveTitleFunc_L234
+SdcFmmSaveTitleFunc_L21a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0210002e, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
-	bra	func_487118F7_L234
-func_487118F7_L233:
+	bra	SdcFmmSaveTitleFunc_L234
+SdcFmmSaveTitleFunc_L233:
 	clr	d0
-func_487118F7_L234:
+SdcFmmSaveTitleFunc_L234:
 	ret	[d2], 0x18
+
+SdcFmmUtilityTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_L271
+	beq	SdcFmmUtilityTitleFunc_L3a
 	cmp	0x50005, d1
-	bne	func_487118F7_L24d
-	jmp	func_487118F7_L3b0
-func_487118F7_L24d:
+	bne	SdcFmmUtilityTitleFunc_L16
+	jmp	SdcFmmUtilityTitleFunc_L179
+SdcFmmUtilityTitleFunc_L16:
 	cmp	0x2150006, d1
-	bne	func_487118F7_L258
-	jmp	func_487118F7_L3b4
-func_487118F7_L258:
+	bne	SdcFmmUtilityTitleFunc_L21
+	jmp	SdcFmmUtilityTitleFunc_L17d
+SdcFmmUtilityTitleFunc_L21:
 	cmp	0x2150012, d1
-	bne	func_487118F7_L263
-	jmp	func_487118F7_L3cd
-func_487118F7_L263:
+	bne	SdcFmmUtilityTitleFunc_L2c
+	jmp	SdcFmmUtilityTitleFunc_L196
+SdcFmmUtilityTitleFunc_L2c:
 	cmp	0x50014, d1
-	bne	func_487118F7_L26e
-	jmp	func_487118F7_L3e5
-func_487118F7_L26e:
-	jmp	func_487118F7_L417
-func_487118F7_L271:
+	bne	SdcFmmUtilityTitleFunc_L37
+	jmp	SdcFmmUtilityTitleFunc_L1ae
+SdcFmmUtilityTitleFunc_L37:
+	jmp	SdcFmmUtilityTitleFunc_L1e0
+SdcFmmUtilityTitleFunc_L3a:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_L281
+	beq	SdcFmmUtilityTitleFunc_L4a
 	cmp	3, a0
-	bne	func_487118F7_L27e
-	jmp	func_487118F7_L393
-func_487118F7_L27e:
-	jmp	func_487118F7_L3ac
-func_487118F7_L281:
+	bne	SdcFmmUtilityTitleFunc_L47
+	jmp	SdcFmmUtilityTitleFunc_L15c
+SdcFmmUtilityTitleFunc_L47:
+	jmp	SdcFmmUtilityTitleFunc_L175
+SdcFmmUtilityTitleFunc_L4a:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487118F7_L298
+	beq	SdcFmmUtilityTitleFunc_L61
 	cmp	1, d0
-	bne	func_487118F7_L2b2
-func_487118F7_L298:
+	bne	SdcFmmUtilityTitleFunc_L7b
+SdcFmmUtilityTitleFunc_L61:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_487118F7_L38f
-func_487118F7_L2b2:
+	jmp	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_L7b:
 	cmp	3, d0
-	bne	func_487118F7_L2f6
+	bne	SdcFmmUtilityTitleFunc_Lbf
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x104, d0
-	beq	func_487118F7_L2cb
+	beq	SdcFmmUtilityTitleFunc_L94
 	cmp	6, d0
-	beq	func_487118F7_L2cb
-	jmp	func_487118F7_L38f
-func_487118F7_L2cb:
+	beq	SdcFmmUtilityTitleFunc_L94
+	jmp	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_L94:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -511741,15 +511781,15 @@ func_487118F7_L2cb:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	func_487118F7_L38f
-func_487118F7_L2f6:
+	jmp	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_Lbf:
 	cmp	4, d0
-	beq	func_487118F7_L2fd
-	jmp	func_487118F7_L38f
-func_487118F7_L2fd:
+	beq	SdcFmmUtilityTitleFunc_Lc6
+	jmp	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_Lc6:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487118F7_L344
+	bne	SdcFmmUtilityTitleFunc_L10d
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511766,22 +511806,22 @@ func_487118F7_L2fd:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L38f
-func_487118F7_L344:
+	bra	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_L10d:
 	cmp	2, d0
-	bne	func_487118F7_L355
+	bne	SdcFmmUtilityTitleFunc_L11e
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L38f
-func_487118F7_L355:
+	bra	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_L11e:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x104, d0
-	beq	func_487118F7_L367
+	beq	SdcFmmUtilityTitleFunc_L130
 	cmp	6, d0
-	bne	func_487118F7_L38f
-func_487118F7_L367:
+	bne	SdcFmmUtilityTitleFunc_L158
+SdcFmmUtilityTitleFunc_L130:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -511791,10 +511831,10 @@ func_487118F7_L367:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-func_487118F7_L38f:
+SdcFmmUtilityTitleFunc_L158:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L393:
+SdcFmmUtilityTitleFunc_L15c:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
@@ -511802,39 +511842,39 @@ func_487118F7_L393:
 	call	func_487105ED_entry, 0, 8
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L3ac:
+SdcFmmUtilityTitleFunc_L175:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L3b0:
+SdcFmmUtilityTitleFunc_L179:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L3b4:
+SdcFmmUtilityTitleFunc_L17d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x02100011, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
-	bra	func_487118F7_L418
-func_487118F7_L3cd:
+	bra	SdcFmmUtilityTitleFunc_L1e1
+SdcFmmUtilityTitleFunc_L196:
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	2, d0
-	bne	func_487118F7_L3e2
+	bne	SdcFmmUtilityTitleFunc_L1ab
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L3e2:
+SdcFmmUtilityTitleFunc_L1ab:
 	clr	d0
-	bra	func_487118F7_L418
-func_487118F7_L3e5:
+	bra	SdcFmmUtilityTitleFunc_L1e1
+SdcFmmUtilityTitleFunc_L1ae:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x10708000, d0
-	bne	func_487118F7_L414
+	bne	SdcFmmUtilityTitleFunc_L1dd
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487118F7_L414
+	bne	SdcFmmUtilityTitleFunc_L1dd
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511843,65 +511883,69 @@ func_487118F7_L3e5:
 	mov	0x10b, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L414:
+SdcFmmUtilityTitleFunc_L1dd:
 	clr	d0
-	bra	func_487118F7_L418
-func_487118F7_L417:
+	bra	SdcFmmUtilityTitleFunc_L1e1
+SdcFmmUtilityTitleFunc_L1e0:
 	clr	d0
-func_487118F7_L418:
+SdcFmmUtilityTitleFunc_L1e1:
 	ret	0, 0x14
+
+SdcFmmCusLdSvTitleFunc:
 	clr	d0
 	retf	0, 0
+
+SdcFmmSmfLoadTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_L44e
+	beq	SdcFmmSmfLoadTitleFunc_L2f
 	cmp	0x50005, d1
-	bne	func_487118F7_L435
-	jmp	func_487118F7_L557
-func_487118F7_L435:
+	bne	SdcFmmSmfLoadTitleFunc_L16
+	jmp	SdcFmmSmfLoadTitleFunc_L138
+SdcFmmSmfLoadTitleFunc_L16:
 	cmp	0x2150012, d1
-	bne	func_487118F7_L440
-	jmp	func_487118F7_L56b
-func_487118F7_L440:
+	bne	SdcFmmSmfLoadTitleFunc_L21
+	jmp	SdcFmmSmfLoadTitleFunc_L14c
+SdcFmmSmfLoadTitleFunc_L21:
 	cmp	0x50014, d1
-	bne	func_487118F7_L44b
-	jmp	func_487118F7_L583
-func_487118F7_L44b:
-	jmp	func_487118F7_L5c4
-func_487118F7_L44e:
+	bne	SdcFmmSmfLoadTitleFunc_L2c
+	jmp	SdcFmmSmfLoadTitleFunc_L164
+SdcFmmSmfLoadTitleFunc_L2c:
+	jmp	SdcFmmSmfLoadTitleFunc_L1a5
+SdcFmmSmfLoadTitleFunc_L2f:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_L45e
+	beq	SdcFmmSmfLoadTitleFunc_L3f
 	cmp	3, a0
-	bne	func_487118F7_L45b
-	jmp	func_487118F7_L53a
-func_487118F7_L45b:
-	jmp	func_487118F7_L553
-func_487118F7_L45e:
+	bne	SdcFmmSmfLoadTitleFunc_L3c
+	jmp	SdcFmmSmfLoadTitleFunc_L11b
+SdcFmmSmfLoadTitleFunc_L3c:
+	jmp	SdcFmmSmfLoadTitleFunc_L134
+SdcFmmSmfLoadTitleFunc_L3f:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487118F7_L475
+	beq	SdcFmmSmfLoadTitleFunc_L56
 	cmp	1, d0
-	bne	func_487118F7_L48f
-func_487118F7_L475:
+	bne	SdcFmmSmfLoadTitleFunc_L70
+SdcFmmSmfLoadTitleFunc_L56:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_487118F7_L536
-func_487118F7_L48f:
+	jmp	SdcFmmSmfLoadTitleFunc_L117
+SdcFmmSmfLoadTitleFunc_L70:
 	cmp	3, d0
-	beq	func_487118F7_L49a
+	beq	SdcFmmSmfLoadTitleFunc_L7b
 	cmp	4, d0
-	beq	func_487118F7_L49a
-	jmp	func_487118F7_L536
-func_487118F7_L49a:
+	beq	SdcFmmSmfLoadTitleFunc_L7b
+	jmp	SdcFmmSmfLoadTitleFunc_L117
+SdcFmmSmfLoadTitleFunc_L7b:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487118F7_L4e1
+	bne	SdcFmmSmfLoadTitleFunc_Lc2
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511918,17 +511962,17 @@ func_487118F7_L49a:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L536
-func_487118F7_L4e1:
+	bra	SdcFmmSmfLoadTitleFunc_L117
+SdcFmmSmfLoadTitleFunc_Lc2:
 	cmp	2, d0
-	bne	func_487118F7_L4f2
+	bne	SdcFmmSmfLoadTitleFunc_Ld3
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487118F7_L536
-func_487118F7_L4f2:
+	bra	SdcFmmSmfLoadTitleFunc_L117
+SdcFmmSmfLoadTitleFunc_Ld3:
 	btst	0x02, (0x500788c7)
-	beq	func_487118F7_L536
+	beq	SdcFmmSmfLoadTitleFunc_L117
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -511945,10 +511989,10 @@ func_487118F7_L4f2:
 	mov	3, d0
 	mov	0x5c, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L536:
+SdcFmmSmfLoadTitleFunc_L117:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L53a:
+SdcFmmSmfLoadTitleFunc_L11b:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
@@ -511956,42 +512000,42 @@ func_487118F7_L53a:
 	call	func_487105ED_entry, 0, 8
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L553:
+SdcFmmSmfLoadTitleFunc_L134:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L557:
+SdcFmmSmfLoadTitleFunc_L138:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	func_487118F7_L568
+	bne	SdcFmmSmfLoadTitleFunc_L149
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L568:
+SdcFmmSmfLoadTitleFunc_L149:
 	clr	d0
-	bra	func_487118F7_L5c5
-func_487118F7_L56b:
+	bra	SdcFmmSmfLoadTitleFunc_L1a6
+SdcFmmSmfLoadTitleFunc_L14c:
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	1, d0
-	bne	func_487118F7_L580
+	bne	SdcFmmSmfLoadTitleFunc_L161
 	mov	0x105, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L580:
+SdcFmmSmfLoadTitleFunc_L161:
 	clr	d0
-	bra	func_487118F7_L5c5
-func_487118F7_L583:
+	bra	SdcFmmSmfLoadTitleFunc_L1a6
+SdcFmmSmfLoadTitleFunc_L164:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_487118F7_L5c1
+	bne	SdcFmmSmfLoadTitleFunc_L1a2
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487118F7_L5c1
+	bne	SdcFmmSmfLoadTitleFunc_L1a2
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_487118F7_L5be
+	bne	SdcFmmSmfLoadTitleFunc_L19f
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512000,60 +512044,62 @@ func_487118F7_L583:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L5be:
+SdcFmmSmfLoadTitleFunc_L19f:
 	clr	d0
-	bra	func_487118F7_L5c5
-func_487118F7_L5c1:
+	bra	SdcFmmSmfLoadTitleFunc_L1a6
+SdcFmmSmfLoadTitleFunc_L1a2:
 	clr	d0
-	bra	func_487118F7_L5c5
-func_487118F7_L5c4:
+	bra	SdcFmmSmfLoadTitleFunc_L1a6
+SdcFmmSmfLoadTitleFunc_L1a5:
 	clr	d0
-func_487118F7_L5c5:
+SdcFmmSmfLoadTitleFunc_L1a6:
 	ret	0, 0x14
+
+SdcFmmSmfSaveTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_L5d6
-	jmp	func_487118F7_L7d6
-func_487118F7_L5d6:
+	beq	SdcFmmSmfSaveTitleFunc_Le
+	jmp	SdcFmmSmfSaveTitleFunc_L20e
+SdcFmmSmfSaveTitleFunc_Le:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_L5ed
+	beq	SdcFmmSmfSaveTitleFunc_L25
 	cmp	3, a0
-	bne	func_487118F7_L5e3
-	jmp	func_487118F7_L790
-func_487118F7_L5e3:
+	bne	SdcFmmSmfSaveTitleFunc_L1b
+	jmp	SdcFmmSmfSaveTitleFunc_L1c8
+SdcFmmSmfSaveTitleFunc_L1b:
 	cmp	4, a0
-	bne	func_487118F7_L5ea
-	jmp	func_487118F7_L7a8
-func_487118F7_L5ea:
-	jmp	func_487118F7_L7d3
-func_487118F7_L5ed:
+	bne	SdcFmmSmfSaveTitleFunc_L22
+	jmp	SdcFmmSmfSaveTitleFunc_L1e0
+SdcFmmSmfSaveTitleFunc_L22:
+	jmp	SdcFmmSmfSaveTitleFunc_L20b
+SdcFmmSmfSaveTitleFunc_L25:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487118F7_L604
+	beq	SdcFmmSmfSaveTitleFunc_L3c
 	cmp	1, d0
-	bne	func_487118F7_L61e
-func_487118F7_L604:
+	bne	SdcFmmSmfSaveTitleFunc_L56
+SdcFmmSmfSaveTitleFunc_L3c:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_487118F7_L78d
-func_487118F7_L61e:
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_L56:
 	cmp	3, d0
-	beq	func_487118F7_L625
-	jmp	func_487118F7_L6ac
-func_487118F7_L625:
+	beq	SdcFmmSmfSaveTitleFunc_L5d
+	jmp	SdcFmmSmfSaveTitleFunc_Le4
+SdcFmmSmfSaveTitleFunc_L5d:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x107, d0
-	beq	func_487118F7_L637
+	beq	SdcFmmSmfSaveTitleFunc_L6f
 	cmp	6, d0
-	bne	func_487118F7_L662
-func_487118F7_L637:
+	bne	SdcFmmSmfSaveTitleFunc_L9a
+SdcFmmSmfSaveTitleFunc_L6f:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -512063,12 +512109,12 @@ func_487118F7_L637:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	func_487118F7_L78d
-func_487118F7_L662:
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_L9a:
 	btst	0x02, (0x500788c7)
-	bne	func_487118F7_L66e
-	jmp	func_487118F7_L78d
-func_487118F7_L66e:
+	bne	SdcFmmSmfSaveTitleFunc_La6
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_La6:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512085,15 +512131,15 @@ func_487118F7_L66e:
 	mov	3, d0
 	mov	0x5c, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L78d
-func_487118F7_L6ac:
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_Le4:
 	cmp	4, d0
-	beq	func_487118F7_L6b3
-	jmp	func_487118F7_L78d
-func_487118F7_L6b3:
+	beq	SdcFmmSmfSaveTitleFunc_Leb
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_Leb:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487118F7_L6fb
+	bne	SdcFmmSmfSaveTitleFunc_L133
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512110,22 +512156,22 @@ func_487118F7_L6b3:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L78d
-func_487118F7_L6fb:
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_L133:
 	cmp	2, d0
-	bne	func_487118F7_L70d
+	bne	SdcFmmSmfSaveTitleFunc_L145
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L78d
-func_487118F7_L70d:
+	jmp	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_L145:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x107, d0
-	beq	func_487118F7_L71f
+	beq	SdcFmmSmfSaveTitleFunc_L157
 	cmp	6, d0
-	bne	func_487118F7_L749
-func_487118F7_L71f:
+	bne	SdcFmmSmfSaveTitleFunc_L181
+SdcFmmSmfSaveTitleFunc_L157:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -512135,10 +512181,10 @@ func_487118F7_L71f:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	bra	func_487118F7_L78d
-func_487118F7_L749:
+	bra	SdcFmmSmfSaveTitleFunc_L1c5
+SdcFmmSmfSaveTitleFunc_L181:
 	btst	0x02, (0x500788c7)
-	beq	func_487118F7_L78d
+	beq	SdcFmmSmfSaveTitleFunc_L1c5
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512155,90 +512201,92 @@ func_487118F7_L749:
 	mov	3, d0
 	mov	0x5c, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L78d:
+SdcFmmSmfSaveTitleFunc_L1c5:
 	clr	d0
-	bra	func_487118F7_L7d7
-func_487118F7_L790:
+	bra	SdcFmmSmfSaveTitleFunc_L20f
+SdcFmmSmfSaveTitleFunc_L1c8:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	call	func_487105ED_entry, 0, 8
 	clr	d0
-	bra	func_487118F7_L7d7
-func_487118F7_L7a8:
+	bra	SdcFmmSmfSaveTitleFunc_L20f
+SdcFmmSmfSaveTitleFunc_L1e0:
 	mov	0x021002a9, d0
 	call	func_486BF7A3_entry, [d2], 0x18
 	exth	d0
 	cmp	1, d0
-	bne	func_487118F7_L7d0
+	bne	SdcFmmSmfSaveTitleFunc_L208
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x021002a9, d0
 	mov	0x00050002, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-func_487118F7_L7d0:
+SdcFmmSmfSaveTitleFunc_L208:
 	clr	d0
-	bra	func_487118F7_L7d7
-func_487118F7_L7d3:
+	bra	SdcFmmSmfSaveTitleFunc_L20f
+SdcFmmSmfSaveTitleFunc_L20b:
 	clr	d0
-	bra	func_487118F7_L7d7
-func_487118F7_L7d6:
+	bra	SdcFmmSmfSaveTitleFunc_L20f
+SdcFmmSmfSaveTitleFunc_L20e:
 	clr	d0
-func_487118F7_L7d7:
+SdcFmmSmfSaveTitleFunc_L20f:
 	ret	0, 0x14
+
+SdcFmmSmfUtilityTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_L809
+	beq	SdcFmmSmfUtilityTitleFunc_L2f
 	cmp	0x50005, d1
-	bne	func_487118F7_L7f0
-	jmp	func_487118F7_L9da
-func_487118F7_L7f0:
+	bne	SdcFmmSmfUtilityTitleFunc_L16
+	jmp	SdcFmmSmfUtilityTitleFunc_L200
+SdcFmmSmfUtilityTitleFunc_L16:
 	cmp	0x2150012, d1
-	bne	func_487118F7_L7fb
-	jmp	func_487118F7_L9ee
-func_487118F7_L7fb:
+	bne	SdcFmmSmfUtilityTitleFunc_L21
+	jmp	SdcFmmSmfUtilityTitleFunc_L214
+SdcFmmSmfUtilityTitleFunc_L21:
 	cmp	0x50014, d1
-	bne	func_487118F7_L806
-	jmp	func_487118F7_La06
-func_487118F7_L806:
-	jmp	func_487118F7_La38
-func_487118F7_L809:
+	bne	SdcFmmSmfUtilityTitleFunc_L2c
+	jmp	SdcFmmSmfUtilityTitleFunc_L22c
+SdcFmmSmfUtilityTitleFunc_L2c:
+	jmp	SdcFmmSmfUtilityTitleFunc_L25e
+SdcFmmSmfUtilityTitleFunc_L2f:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_L819
+	beq	SdcFmmSmfUtilityTitleFunc_L3f
 	cmp	3, a0
-	bne	func_487118F7_L816
-	jmp	func_487118F7_L9bd
-func_487118F7_L816:
-	jmp	func_487118F7_L9d6
-func_487118F7_L819:
+	bne	SdcFmmSmfUtilityTitleFunc_L3c
+	jmp	SdcFmmSmfUtilityTitleFunc_L1e3
+SdcFmmSmfUtilityTitleFunc_L3c:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1fc
+SdcFmmSmfUtilityTitleFunc_L3f:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487118F7_L830
+	beq	SdcFmmSmfUtilityTitleFunc_L56
 	cmp	1, d0
-	bne	func_487118F7_L84a
-func_487118F7_L830:
+	bne	SdcFmmSmfUtilityTitleFunc_L70
+SdcFmmSmfUtilityTitleFunc_L56:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_487118F7_L9b9
-func_487118F7_L84a:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_L70:
 	cmp	3, d0
-	beq	func_487118F7_L851
-	jmp	func_487118F7_L8d8
-func_487118F7_L851:
+	beq	SdcFmmSmfUtilityTitleFunc_L77
+	jmp	SdcFmmSmfUtilityTitleFunc_Lfe
+SdcFmmSmfUtilityTitleFunc_L77:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x104, d0
-	beq	func_487118F7_L863
+	beq	SdcFmmSmfUtilityTitleFunc_L89
 	cmp	6, d0
-	bne	func_487118F7_L88e
-func_487118F7_L863:
+	bne	SdcFmmSmfUtilityTitleFunc_Lb4
+SdcFmmSmfUtilityTitleFunc_L89:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -512248,12 +512296,12 @@ func_487118F7_L863:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	func_487118F7_L9b9
-func_487118F7_L88e:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_Lb4:
 	btst	0x02, (0x500788c7)
-	bne	func_487118F7_L89a
-	jmp	func_487118F7_L9b9
-func_487118F7_L89a:
+	bne	SdcFmmSmfUtilityTitleFunc_Lc0
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_Lc0:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512270,15 +512318,15 @@ func_487118F7_L89a:
 	mov	3, d0
 	mov	0x5c, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L9b9
-func_487118F7_L8d8:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_Lfe:
 	cmp	4, d0
-	beq	func_487118F7_L8df
-	jmp	func_487118F7_L9b9
-func_487118F7_L8df:
+	beq	SdcFmmSmfUtilityTitleFunc_L105
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_L105:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487118F7_L927
+	bne	SdcFmmSmfUtilityTitleFunc_L14d
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512295,22 +512343,22 @@ func_487118F7_L8df:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L9b9
-func_487118F7_L927:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_L14d:
 	cmp	2, d0
-	bne	func_487118F7_L939
+	bne	SdcFmmSmfUtilityTitleFunc_L15f
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_487118F7_L9b9
-func_487118F7_L939:
+	jmp	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_L15f:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x104, d0
-	beq	func_487118F7_L94b
+	beq	SdcFmmSmfUtilityTitleFunc_L171
 	cmp	6, d0
-	bne	func_487118F7_L975
-func_487118F7_L94b:
+	bne	SdcFmmSmfUtilityTitleFunc_L19b
+SdcFmmSmfUtilityTitleFunc_L171:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -512320,10 +512368,10 @@ func_487118F7_L94b:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	bra	func_487118F7_L9b9
-func_487118F7_L975:
+	bra	SdcFmmSmfUtilityTitleFunc_L1df
+SdcFmmSmfUtilityTitleFunc_L19b:
 	btst	0x02, (0x500788c7)
-	beq	func_487118F7_L9b9
+	beq	SdcFmmSmfUtilityTitleFunc_L1df
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512340,10 +512388,10 @@ func_487118F7_L975:
 	mov	3, d0
 	mov	0x5c, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L9b9:
+SdcFmmSmfUtilityTitleFunc_L1df:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L9bd:
+SdcFmmSmfUtilityTitleFunc_L1e3:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
@@ -512351,38 +512399,38 @@ func_487118F7_L9bd:
 	call	func_487105ED_entry, 0, 8
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L9d6:
+SdcFmmSmfUtilityTitleFunc_L1fc:
 	clr	d0
 	ret	0, 0x14
-func_487118F7_L9da:
+SdcFmmSmfUtilityTitleFunc_L200:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	func_487118F7_L9eb
+	bne	SdcFmmSmfUtilityTitleFunc_L211
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_L9eb:
+SdcFmmSmfUtilityTitleFunc_L211:
 	clr	d0
-	bra	func_487118F7_La39
-func_487118F7_L9ee:
+	bra	SdcFmmSmfUtilityTitleFunc_L25f
+SdcFmmSmfUtilityTitleFunc_L214:
 	call	func_48710F6D_entry, [d2,d3], 0x14
 	extbu	d0
 	cmp	1, d0
-	bne	func_487118F7_La03
+	bne	SdcFmmSmfUtilityTitleFunc_L229
 	mov	0x10b, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_La03:
+SdcFmmSmfUtilityTitleFunc_L229:
 	clr	d0
-	bra	func_487118F7_La39
-func_487118F7_La06:
+	bra	SdcFmmSmfUtilityTitleFunc_L25f
+SdcFmmSmfUtilityTitleFunc_L22c:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x10708000, d0
-	bne	func_487118F7_La35
+	bne	SdcFmmSmfUtilityTitleFunc_L25b
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487118F7_La35
+	bne	SdcFmmSmfUtilityTitleFunc_L25b
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512391,37 +512439,41 @@ func_487118F7_La06:
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_La35:
+SdcFmmSmfUtilityTitleFunc_L25b:
 	clr	d0
-	bra	func_487118F7_La39
-func_487118F7_La38:
+	bra	SdcFmmSmfUtilityTitleFunc_L25f
+SdcFmmSmfUtilityTitleFunc_L25e:
 	clr	d0
-func_487118F7_La39:
+SdcFmmSmfUtilityTitleFunc_L25f:
 	ret	0, 0x14
+
+SdcFmmCstUtilityTitleFunc:
 	clr	d0
 	retf	0, 0
+
+SdcFmmSmfExportTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_La64
+	beq	SdcFmmSmfExportTitleFunc_L24
 	cmp	0x50005, d1
-	bne	func_487118F7_La56
-	jmp	func_487118F7_Lb14
-func_487118F7_La56:
+	bne	SdcFmmSmfExportTitleFunc_L16
+	jmp	SdcFmmSmfExportTitleFunc_Ld4
+SdcFmmSmfExportTitleFunc_L16:
 	cmp	0x50014, d1
-	bne	func_487118F7_La61
-	jmp	func_487118F7_Lb28
-func_487118F7_La61:
-	jmp	func_487118F7_Lb69
-func_487118F7_La64:
+	bne	SdcFmmSmfExportTitleFunc_L21
+	jmp	SdcFmmSmfExportTitleFunc_Le8
+SdcFmmSmfExportTitleFunc_L21:
+	jmp	SdcFmmSmfExportTitleFunc_L129
+SdcFmmSmfExportTitleFunc_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_La74
+	beq	SdcFmmSmfExportTitleFunc_L34
 	cmp	3, a0
-	bne	func_487118F7_La71
-	jmp	func_487118F7_Laf9
-func_487118F7_La71:
-	jmp	func_487118F7_Lb11
-func_487118F7_La74:
+	bne	SdcFmmSmfExportTitleFunc_L31
+	jmp	SdcFmmSmfExportTitleFunc_Lb9
+SdcFmmSmfExportTitleFunc_L31:
+	jmp	SdcFmmSmfExportTitleFunc_Ld1
+SdcFmmSmfExportTitleFunc_L34:
 	call	func_48633196_entry, 0, 0x1c
 	mov	1, d0
 	call	func_487105D7_entry, 0, 0xc
@@ -512433,14 +512485,14 @@ func_487118F7_La74:
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bge	func_487118F7_Lacd
+	bge	SdcFmmSmfExportTitleFunc_L8d
 	call	func_486BF78F_entry, 0, 8
 	call	func_4870A2D2_entry, [d2], 0xc
 	movhu	d0, (0x500788b4)
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_486BF78F_entry, 0, 8
-func_487118F7_Lacd:
+SdcFmmSmfExportTitleFunc_L8d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -512453,39 +512505,39 @@ func_487118F7_Lacd:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	0, 0x14
-func_487118F7_Laf9:
+SdcFmmSmfExportTitleFunc_Lb9:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	call	func_487105ED_entry, 0, 8
 	clr	d0
-	bra	func_487118F7_Lb6a
-func_487118F7_Lb11:
+	bra	SdcFmmSmfExportTitleFunc_L12a
+SdcFmmSmfExportTitleFunc_Ld1:
 	clr	d0
-	bra	func_487118F7_Lb6a
-func_487118F7_Lb14:
+	bra	SdcFmmSmfExportTitleFunc_L12a
+SdcFmmSmfExportTitleFunc_Ld4:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	func_487118F7_Lb25
+	bne	SdcFmmSmfExportTitleFunc_Le5
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_Lb25:
+SdcFmmSmfExportTitleFunc_Le5:
 	clr	d0
-	bra	func_487118F7_Lb6a
-func_487118F7_Lb28:
+	bra	SdcFmmSmfExportTitleFunc_L12a
+SdcFmmSmfExportTitleFunc_Le8:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_487118F7_Lb66
+	bne	SdcFmmSmfExportTitleFunc_L126
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487118F7_Lb66
+	bne	SdcFmmSmfExportTitleFunc_L126
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_487118F7_Lb63
+	bne	SdcFmmSmfExportTitleFunc_L123
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512494,38 +512546,40 @@ func_487118F7_Lb28:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_Lb63:
+SdcFmmSmfExportTitleFunc_L123:
 	clr	d0
-	bra	func_487118F7_Lb6a
-func_487118F7_Lb66:
+	bra	SdcFmmSmfExportTitleFunc_L12a
+SdcFmmSmfExportTitleFunc_L126:
 	clr	d0
-	bra	func_487118F7_Lb6a
-func_487118F7_Lb69:
+	bra	SdcFmmSmfExportTitleFunc_L12a
+SdcFmmSmfExportTitleFunc_L129:
 	clr	d0
-func_487118F7_Lb6a:
+SdcFmmSmfExportTitleFunc_L12a:
 	ret	0, 0x14
+
+SdcFmmSmfImportTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487118F7_Lb91
+	beq	SdcFmmSmfImportTitleFunc_L24
 	cmp	0x50005, d1
-	bne	func_487118F7_Lb83
-	jmp	func_487118F7_Lc46
-func_487118F7_Lb83:
+	bne	SdcFmmSmfImportTitleFunc_L16
+	jmp	SdcFmmSmfImportTitleFunc_Ld9
+SdcFmmSmfImportTitleFunc_L16:
 	cmp	0x50014, d1
-	bne	func_487118F7_Lb8e
-	jmp	func_487118F7_Lc5a
-func_487118F7_Lb8e:
-	jmp	func_487118F7_Lc9b
-func_487118F7_Lb91:
+	bne	SdcFmmSmfImportTitleFunc_L21
+	jmp	SdcFmmSmfImportTitleFunc_Led
+SdcFmmSmfImportTitleFunc_L21:
+	jmp	SdcFmmSmfImportTitleFunc_L12e
+SdcFmmSmfImportTitleFunc_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	func_487118F7_Lba1
+	beq	SdcFmmSmfImportTitleFunc_L34
 	cmp	3, a0
-	bne	func_487118F7_Lb9e
-	jmp	func_487118F7_Lc2b
-func_487118F7_Lb9e:
-	jmp	func_487118F7_Lc43
-func_487118F7_Lba1:
+	bne	SdcFmmSmfImportTitleFunc_L31
+	jmp	SdcFmmSmfImportTitleFunc_Lbe
+SdcFmmSmfImportTitleFunc_L31:
+	jmp	SdcFmmSmfImportTitleFunc_Ld6
+SdcFmmSmfImportTitleFunc_L34:
 	call	func_48633196_entry, 0, 0x1c
 	mov	1, d0
 	call	func_487105D7_entry, 0, 0xc
@@ -512538,14 +512592,14 @@ func_487118F7_Lba1:
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bge	func_487118F7_Lbff
+	bge	SdcFmmSmfImportTitleFunc_L92
 	call	func_486BF78F_entry, 0, 8
 	call	func_4870A2D2_entry, [d2], 0xc
 	movhu	d0, (0x500788b4)
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_486BF78F_entry, 0, 8
-func_487118F7_Lbff:
+SdcFmmSmfImportTitleFunc_L92:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -512558,39 +512612,39 @@ func_487118F7_Lbff:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	0, 0x14
-func_487118F7_Lc2b:
+SdcFmmSmfImportTitleFunc_Lbe:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	call	func_487105ED_entry, 0, 8
 	clr	d0
-	bra	func_487118F7_Lc9c
-func_487118F7_Lc43:
+	bra	SdcFmmSmfImportTitleFunc_L12f
+SdcFmmSmfImportTitleFunc_Ld6:
 	clr	d0
-	bra	func_487118F7_Lc9c
-func_487118F7_Lc46:
+	bra	SdcFmmSmfImportTitleFunc_L12f
+SdcFmmSmfImportTitleFunc_Ld9:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	func_487118F7_Lc57
+	bne	SdcFmmSmfImportTitleFunc_Lea
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_Lc57:
+SdcFmmSmfImportTitleFunc_Lea:
 	clr	d0
-	bra	func_487118F7_Lc9c
-func_487118F7_Lc5a:
+	bra	SdcFmmSmfImportTitleFunc_L12f
+SdcFmmSmfImportTitleFunc_Led:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_487118F7_Lc98
+	bne	SdcFmmSmfImportTitleFunc_L12b
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487118F7_Lc98
+	bne	SdcFmmSmfImportTitleFunc_L12b
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_487118F7_Lc95
+	bne	SdcFmmSmfImportTitleFunc_L128
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512599,33 +512653,33 @@ func_487118F7_Lc5a:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487118F7_Lc95:
+SdcFmmSmfImportTitleFunc_L128:
 	clr	d0
-	bra	func_487118F7_Lc9c
-func_487118F7_Lc98:
+	bra	SdcFmmSmfImportTitleFunc_L12f
+SdcFmmSmfImportTitleFunc_L12b:
 	clr	d0
-	bra	func_487118F7_Lc9c
-func_487118F7_Lc9b:
+	bra	SdcFmmSmfImportTitleFunc_L12f
+SdcFmmSmfImportTitleFunc_L12e:
 	clr	d0
-func_487118F7_Lc9c:
+SdcFmmSmfImportTitleFunc_L12f:
 	ret	0, 0x14
 
-func_48712596:
+SdcFormatFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_48712596_L18
+	beq	SdcFormatFunc_L18
 	cmp	0x50005, d1
-	beq	func_48712596_L62
-	jmp	func_48712596_L257
-func_48712596_L18:
+	beq	SdcFormatFunc_L62
+	jmp	SdcFormatFunc_L257
+SdcFormatFunc_L18:
 	mov	(0x28, sp), a0
 	cmp	2, a0
-	beq	func_48712596_L24
+	beq	SdcFormatFunc_L24
 	cmp	3, a0
-	beq	func_48712596_L4b
-	bra	func_48712596_L5e
-func_48712596_L24:
+	beq	SdcFormatFunc_L4b
+	bra	SdcFormatFunc_L5e
+SdcFormatFunc_L24:
 	call	GetTitleOld_entry, 0, 0x10
 	movhu	d0, (0x500778c8)
 	clr	d0
@@ -512635,36 +512689,36 @@ func_48712596_L24:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2], 0x18
-func_48712596_L4b:
+SdcFormatFunc_L4b:
 	clr	d0
 	movbu	d0, (0x500778ca)
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	clr	d0
 	ret	[d2], 0x18
-func_48712596_L5e:
+SdcFormatFunc_L5e:
 	clr	d0
 	ret	[d2], 0x18
-func_48712596_L62:
+SdcFormatFunc_L62:
 	mov	(0x28, sp), a0
 	cmp	0x12, a0
-	beq	func_48712596_L79
+	beq	SdcFormatFunc_L79
 	cmp	0x13, a0
-	bne	func_48712596_L6f
-	jmp	func_48712596_L20a
-func_48712596_L6f:
+	bne	SdcFormatFunc_L6f
+	jmp	SdcFormatFunc_L20a
+SdcFormatFunc_L6f:
 	cmp	0x17, a0
-	bne	func_48712596_L76
-	jmp	func_48712596_L21b
-func_48712596_L76:
-	jmp	func_48712596_L254
-func_48712596_L79:
+	bne	SdcFormatFunc_L76
+	jmp	SdcFormatFunc_L21b
+SdcFormatFunc_L76:
+	jmp	SdcFormatFunc_L254
+SdcFormatFunc_L79:
 	movbu	(0x500778ca), d0
 	cmp	0, d0
-	beq	func_48712596_L87
+	beq	SdcFormatFunc_L87
 	clr	d0
 	ret	[d2], 0x18
-func_48712596_L87:
+SdcFormatFunc_L87:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -512687,20 +512741,20 @@ func_48712596_L87:
 	movbu	d1, (0x500788c6)
 	exth	d0
 	cmp	0, d0
-	bge	func_48712596_Lf0
+	bge	SdcFormatFunc_Lf0
 	mov	2, d0
 	movbu	d0, (0x500788c6)
 	mov	-6, d2
-func_48712596_Lf0:
+SdcFormatFunc_Lf0:
 	exth	d2
 	cmp	0, d2
-	blt	func_48712596_Lf8
-	jmp	func_48712596_L19e
-func_48712596_Lf8:
+	blt	SdcFormatFunc_Lf8
+	jmp	SdcFormatFunc_L19e
+SdcFormatFunc_Lf8:
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	beq	func_48712596_L135
+	beq	SdcFormatFunc_L135
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512714,8 +512768,8 @@ func_48712596_Lf8:
 	mov	-1, d0
 	mov	0x0006008f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	func_48712596_L171
-func_48712596_L135:
+	bra	SdcFormatFunc_L171
+SdcFormatFunc_L135:
 	mov	0x104, d0
 	movhu	d0, (0x500778c8)
 	mov	1, d0
@@ -512731,29 +512785,29 @@ func_48712596_L135:
 	mov	-1, d0
 	mov	0x0006008f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-func_48712596_L171:
+SdcFormatFunc_L171:
 	cmp	-0xb, d2
-	bne	func_48712596_L181
+	bne	SdcFormatFunc_L181
 	mov	0x61, d1
 	mov	d2, d0
 	call	func_4870FD81_entry, [d2,d3], 8
 	mov	d0, d1
 	extbu	d1
-	bra	func_48712596_L18b
-func_48712596_L181:
+	bra	SdcFormatFunc_L18b
+SdcFormatFunc_L181:
 	mov	0x63, d1
 	mov	d2, d0
 	call	func_4870FD81_entry, [d2,d3], 8
 	mov	d0, d1
 	extbu	d1
-func_48712596_L18b:
+SdcFormatFunc_L18b:
 	mov	3, d0
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	movbu	d0, (0x500778ca)
-	bra	func_48712596_L202
-func_48712596_L19e:
+	bra	SdcFormatFunc_L202
+SdcFormatFunc_L19e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x021001d7, d0
@@ -512779,108 +512833,108 @@ func_48712596_L19e:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	mov	1, d0
 	movbu	d0, (0x500778ca)
-func_48712596_L202:
+SdcFormatFunc_L202:
 	call	func_487105ED_entry, 0, 8
 	clr	d0
-	bra	func_48712596_L258
-func_48712596_L20a:
+	bra	SdcFormatFunc_L258
+SdcFormatFunc_L20a:
 	movhu	(0x500778c8), d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	func_48712596_L258
-func_48712596_L21b:
+	bra	SdcFormatFunc_L258
+SdcFormatFunc_L21b:
 	movbu	(0x500778ca), d0
 	cmp	0, d0
-	beq	func_48712596_L228
+	beq	SdcFormatFunc_L228
 	clr	d0
-	bra	func_48712596_L258
-func_48712596_L228:
+	bra	SdcFormatFunc_L258
+SdcFormatFunc_L228:
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_48712596_L241
+	bne	SdcFormatFunc_L241
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48712596_L24b
-func_48712596_L241:
+	bra	SdcFormatFunc_L24b
+SdcFormatFunc_L241:
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_48712596_L24b:
+SdcFormatFunc_L24b:
 	clr	d0
 	movbu	d0, (0x500778ca)
-	bra	func_48712596_L258
-func_48712596_L254:
+	bra	SdcFormatFunc_L258
+SdcFormatFunc_L254:
 	clr	d0
-	bra	func_48712596_L258
-func_48712596_L257:
+	bra	SdcFormatFunc_L258
+SdcFormatFunc_L257:
 	clr	d0
-func_48712596_L258:
+SdcFormatFunc_L258:
 	ret	[d2], 0x18
 
-func_487127F1:
+SdcFmmFavSongTitleFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_487127F1_L3c
+	beq	SdcFmmFavSongTitleFunc_L3c
 	cmp	0x50005, d1
-	bne	func_487127F1_L18
-	jmp	func_487127F1_L155
-func_487127F1_L18:
+	bne	SdcFmmFavSongTitleFunc_L18
+	jmp	SdcFmmFavSongTitleFunc_L155
+SdcFmmFavSongTitleFunc_L18:
 	cmp	0x600b5, d1
-	bne	func_487127F1_L23
-	jmp	func_487127F1_L158
-func_487127F1_L23:
+	bne	SdcFmmFavSongTitleFunc_L23
+	jmp	SdcFmmFavSongTitleFunc_L158
+SdcFmmFavSongTitleFunc_L23:
 	cmp	0x600d3, d1
-	bne	func_487127F1_L2e
-	jmp	func_487127F1_L19c
-func_487127F1_L2e:
+	bne	SdcFmmFavSongTitleFunc_L2e
+	jmp	SdcFmmFavSongTitleFunc_L19c
+SdcFmmFavSongTitleFunc_L2e:
 	cmp	0x50014, d1
-	bne	func_487127F1_L39
-	jmp	func_487127F1_L15b
-func_487127F1_L39:
-	jmp	func_487127F1_L19c
-func_487127F1_L3c:
+	bne	SdcFmmFavSongTitleFunc_L39
+	jmp	SdcFmmFavSongTitleFunc_L15b
+SdcFmmFavSongTitleFunc_L39:
+	jmp	SdcFmmFavSongTitleFunc_L19c
+SdcFmmFavSongTitleFunc_L3c:
 	mov	(0x28, sp), a0
 	cmp	2, a0
-	beq	func_487127F1_L53
+	beq	SdcFmmFavSongTitleFunc_L53
 	cmp	9, a0
-	bne	func_487127F1_L49
-	jmp	func_487127F1_L120
-func_487127F1_L49:
+	bne	SdcFmmFavSongTitleFunc_L49
+	jmp	SdcFmmFavSongTitleFunc_L120
+SdcFmmFavSongTitleFunc_L49:
 	cmp	3, a0
-	bne	func_487127F1_L50
-	jmp	func_487127F1_L124
-func_487127F1_L50:
-	jmp	func_487127F1_L152
-func_487127F1_L53:
+	bne	SdcFmmFavSongTitleFunc_L50
+	jmp	SdcFmmFavSongTitleFunc_L124
+SdcFmmFavSongTitleFunc_L50:
+	jmp	SdcFmmFavSongTitleFunc_L152
+SdcFmmFavSongTitleFunc_L53:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_486CD222_entry, [d2], 4
 	call	func_486D1056_entry, [d2], 4
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_487127F1_L78
+	beq	SdcFmmFavSongTitleFunc_L78
 	cmp	1, d0
-	bne	func_487127F1_L91
-func_487127F1_L78:
+	bne	SdcFmmFavSongTitleFunc_L91
+SdcFmmFavSongTitleFunc_L78:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	func_487127F1_Lef
-func_487127F1_L91:
+	bra	SdcFmmFavSongTitleFunc_Lef
+SdcFmmFavSongTitleFunc_L91:
 	cmp	3, d0
-	beq	func_487127F1_L99
+	beq	SdcFmmFavSongTitleFunc_L99
 	cmp	4, d0
-	bne	func_487127F1_Lef
-func_487127F1_L99:
+	bne	SdcFmmFavSongTitleFunc_Lef
+SdcFmmFavSongTitleFunc_L99:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_487127F1_Le0
+	bne	SdcFmmFavSongTitleFunc_Le0
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512897,24 +512951,24 @@ func_487127F1_L99:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_487127F1_Lef
-func_487127F1_Le0:
+	bra	SdcFmmFavSongTitleFunc_Lef
+SdcFmmFavSongTitleFunc_Le0:
 	cmp	2, d0
-	bne	func_487127F1_Lef
+	bne	SdcFmmFavSongTitleFunc_Lef
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487127F1_Lef:
+SdcFmmFavSongTitleFunc_Lef:
 	clr	d0
 	clr	d2
-func_487127F1_Lf1:
+SdcFmmFavSongTitleFunc_Lf1:
 	extbu	d0
 	call	func_48709F27_entry, [d2], 4
 	inc	d2
 	mov	d2, d0
 	exth	d2
 	cmp	8, d2
-	blt	func_487127F1_Lf1
+	blt	SdcFmmFavSongTitleFunc_Lf1
 	clr	d0
 	movhu	d0, (0x500788ba)
 	mov	d0, (0x10, sp)
@@ -512923,10 +512977,10 @@ func_487127F1_Lf1:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2], 0x18
-func_487127F1_L120:
+SdcFmmFavSongTitleFunc_L120:
 	clr	d0
 	ret	[d2], 0x18
-func_487127F1_L124:
+SdcFmmFavSongTitleFunc_L124:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
@@ -512938,28 +512992,28 @@ func_487127F1_L124:
 	mov	0x02160003, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L152:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L152:
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L155:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L155:
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L158:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L158:
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L15b:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L15b:
 	mov	(0x28, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_487127F1_L199
+	bne	SdcFmmFavSongTitleFunc_L199
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_487127F1_L199
+	bne	SdcFmmFavSongTitleFunc_L199
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_487127F1_L196
+	bne	SdcFmmFavSongTitleFunc_L196
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -512968,80 +513022,80 @@ func_487127F1_L15b:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_487127F1_L196:
+SdcFmmFavSongTitleFunc_L196:
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L199:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L199:
 	clr	d0
-	bra	func_487127F1_L19d
-func_487127F1_L19c:
+	bra	SdcFmmFavSongTitleFunc_L19d
+SdcFmmFavSongTitleFunc_L19c:
 	clr	d0
-func_487127F1_L19d:
+SdcFmmFavSongTitleFunc_L19d:
 	ret	[d2], 0x18
 
-func_48712991:
+SdcFmmFavSetTitleFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	func_48712991_L47
+	beq	SdcFmmFavSetTitleFunc_L47
 	cmp	0x50005, d1
-	bne	func_48712991_L18
-	jmp	func_48712991_L1c3
-func_48712991_L18:
+	bne	SdcFmmFavSetTitleFunc_L18
+	jmp	SdcFmmFavSetTitleFunc_L1c3
+SdcFmmFavSetTitleFunc_L18:
 	cmp	0x2160002, d1
-	bne	func_48712991_L23
-	jmp	func_48712991_L2df
-func_48712991_L23:
+	bne	SdcFmmFavSetTitleFunc_L23
+	jmp	SdcFmmFavSetTitleFunc_L2df
+SdcFmmFavSetTitleFunc_L23:
 	cmp	0x600b5, d1
-	bne	func_48712991_L2e
-	jmp	func_48712991_L348
-func_48712991_L2e:
+	bne	SdcFmmFavSetTitleFunc_L2e
+	jmp	SdcFmmFavSetTitleFunc_L348
+SdcFmmFavSetTitleFunc_L2e:
 	cmp	0x600d3, d1
-	bne	func_48712991_L39
-	jmp	func_48712991_L38c
-func_48712991_L39:
+	bne	SdcFmmFavSetTitleFunc_L39
+	jmp	SdcFmmFavSetTitleFunc_L38c
+SdcFmmFavSetTitleFunc_L39:
 	cmp	0x50014, d1
-	bne	func_48712991_L44
-	jmp	func_48712991_L34b
-func_48712991_L44:
-	jmp	func_48712991_L38c
-func_48712991_L47:
+	bne	SdcFmmFavSetTitleFunc_L44
+	jmp	SdcFmmFavSetTitleFunc_L34b
+SdcFmmFavSetTitleFunc_L44:
+	jmp	SdcFmmFavSetTitleFunc_L38c
+SdcFmmFavSetTitleFunc_L47:
 	mov	(0x28, sp), a0
 	cmp	2, a0
-	beq	func_48712991_L5e
+	beq	SdcFmmFavSetTitleFunc_L5e
 	cmp	9, a0
-	bne	func_48712991_L54
-	jmp	func_48712991_L17e
-func_48712991_L54:
+	bne	SdcFmmFavSetTitleFunc_L54
+	jmp	SdcFmmFavSetTitleFunc_L17e
+SdcFmmFavSetTitleFunc_L54:
 	cmp	3, a0
-	bne	func_48712991_L5b
-	jmp	func_48712991_L182
-func_48712991_L5b:
-	jmp	func_48712991_L1bf
-func_48712991_L5e:
+	bne	SdcFmmFavSetTitleFunc_L5b
+	jmp	SdcFmmFavSetTitleFunc_L182
+SdcFmmFavSetTitleFunc_L5b:
+	jmp	SdcFmmFavSetTitleFunc_L1bf
+SdcFmmFavSetTitleFunc_L5e:
 	call	func_48633196_entry, 0, 0x1c
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_48712991_L75
+	beq	SdcFmmFavSetTitleFunc_L75
 	cmp	1, d0
-	bne	func_48712991_L8f
-func_48712991_L75:
+	bne	SdcFmmFavSetTitleFunc_L8f
+SdcFmmFavSetTitleFunc_L75:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48712991_L164
-func_48712991_L8f:
+	jmp	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_L8f:
 	cmp	3, d0
-	bne	func_48712991_Lcf
+	bne	SdcFmmFavSetTitleFunc_Lcf
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x11f, d0
-	beq	func_48712991_La4
-	jmp	func_48712991_L164
-func_48712991_La4:
+	beq	SdcFmmFavSetTitleFunc_La4
+	jmp	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_La4:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -513051,15 +513105,15 @@ func_48712991_La4:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	func_48712991_L164
-func_48712991_Lcf:
+	jmp	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_Lcf:
 	cmp	4, d0
-	beq	func_48712991_Ld6
-	jmp	func_48712991_L164
-func_48712991_Ld6:
+	beq	SdcFmmFavSetTitleFunc_Ld6
+	jmp	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_Ld6:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	func_48712991_L11d
+	bne	SdcFmmFavSetTitleFunc_L11d
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513076,19 +513130,19 @@ func_48712991_Ld6:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48712991_L164
-func_48712991_L11d:
+	bra	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_L11d:
 	cmp	2, d0
-	bne	func_48712991_L12e
+	bne	SdcFmmFavSetTitleFunc_L12e
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48712991_L164
-func_48712991_L12e:
+	bra	SdcFmmFavSetTitleFunc_L164
+SdcFmmFavSetTitleFunc_L12e:
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x11f, d0
-	bne	func_48712991_L164
+	bne	SdcFmmFavSetTitleFunc_L164
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
@@ -513098,7 +513152,7 @@ func_48712991_L12e:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-func_48712991_L164:
+SdcFmmFavSetTitleFunc_L164:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0210021e, d0
@@ -513106,10 +513160,10 @@ func_48712991_L164:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2], 0x18
-func_48712991_L17e:
+SdcFmmFavSetTitleFunc_L17e:
 	clr	d0
 	ret	[d2], 0x18
-func_48712991_L182:
+SdcFmmFavSetTitleFunc_L182:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0210021e, d0
@@ -513118,25 +513172,25 @@ func_48712991_L182:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x11f, d0
-	beq	func_48712991_L1bb
+	beq	SdcFmmFavSetTitleFunc_L1bb
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	call	func_487105ED_entry, 0, 8
-func_48712991_L1bb:
+SdcFmmFavSetTitleFunc_L1bb:
 	clr	d0
 	ret	[d2], 0x18
-func_48712991_L1bf:
+SdcFmmFavSetTitleFunc_L1bf:
 	clr	d0
 	ret	[d2], 0x18
-func_48712991_L1c3:
+SdcFmmFavSetTitleFunc_L1c3:
 	mov	(0x28, sp), a0
 	cmp	0x17, a0
-	bne	func_48712991_L21f
+	bne	SdcFmmFavSetTitleFunc_L21f
 	movbu	(0x500788c4), d0
 	cmp	0, d0
-	beq	func_48712991_L211
+	beq	SdcFmmFavSetTitleFunc_L211
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513153,17 +513207,17 @@ func_48712991_L1c3:
 	mov	3, d0
 	mov	0x48, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48712991_L2db
-func_48712991_L211:
+	jmp	SdcFmmFavSetTitleFunc_L2db
+SdcFmmFavSetTitleFunc_L211:
 	mov	0x11f, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48712991_L2db
-func_48712991_L21f:
+	jmp	SdcFmmFavSetTitleFunc_L2db
+SdcFmmFavSetTitleFunc_L21f:
 	cmp	0x12, a0
-	beq	func_48712991_L226
-	jmp	func_48712991_L2db
-func_48712991_L226:
+	beq	SdcFmmFavSetTitleFunc_L226
+	jmp	SdcFmmFavSetTitleFunc_L2db
+SdcFmmFavSetTitleFunc_L226:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -513180,10 +513234,10 @@ func_48712991_L226:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x23, d0
-	bne	func_48712991_L25f
+	bne	SdcFmmFavSetTitleFunc_L25f
 	clr	d0
 	movbu	d0, (0x500788c4)
-func_48712991_L25f:
+SdcFmmFavSetTitleFunc_L25f:
 	call	func_487091C0, 0, 0
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_486BF78F_entry, 0, 8
@@ -513214,15 +513268,15 @@ func_48712991_L25f:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48712991_L2db:
+SdcFmmFavSetTitleFunc_L2db:
 	clr	d0
 	ret	[d2], 0x18
-func_48712991_L2df:
+SdcFmmFavSetTitleFunc_L2df:
 	mov	(0x28, sp), a0
 	cmp	1, a0
-	bcs	func_48712991_L345
+	bcs	SdcFmmFavSetTitleFunc_L345
 	cmp	9, a0
-	bhi	func_48712991_L345
+	bhi	SdcFmmFavSetTitleFunc_L345
 	mov	a0, d2
 	mov	d2, d0
 	extbu	d0
@@ -513231,7 +513285,7 @@ func_48712991_L2df:
 	call	func_4870C255_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48712991_L324
+	beq	SdcFmmFavSetTitleFunc_L324
 	extbu	d2
 	add	-1, d2
 	mov	d2, d0
@@ -513244,8 +513298,8 @@ func_48712991_L2df:
 	mov	0x021001f7, d0
 	mov	0x00050009, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	func_48712991_L345
-func_48712991_L324:
+	bra	SdcFmmFavSetTitleFunc_L345
+SdcFmmFavSetTitleFunc_L324:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0210021e, d0
@@ -513254,24 +513308,24 @@ func_48712991_L324:
 	mov	3, d0
 	mov	0x5f, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48712991_L345:
+SdcFmmFavSetTitleFunc_L345:
 	clr	d0
-	bra	func_48712991_L38d
-func_48712991_L348:
+	bra	SdcFmmFavSetTitleFunc_L38d
+SdcFmmFavSetTitleFunc_L348:
 	clr	d0
-	bra	func_48712991_L38d
-func_48712991_L34b:
+	bra	SdcFmmFavSetTitleFunc_L38d
+SdcFmmFavSetTitleFunc_L34b:
 	mov	(0x28, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	func_48712991_L389
+	bne	SdcFmmFavSetTitleFunc_L389
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	func_48712991_L389
+	bne	SdcFmmFavSetTitleFunc_L389
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	bne	func_48712991_L386
+	bne	SdcFmmFavSetTitleFunc_L386
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513280,25 +513334,25 @@ func_48712991_L34b:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-func_48712991_L386:
+SdcFmmFavSetTitleFunc_L386:
 	clr	d0
-	bra	func_48712991_L38d
-func_48712991_L389:
+	bra	SdcFmmFavSetTitleFunc_L38d
+SdcFmmFavSetTitleFunc_L389:
 	clr	d0
-	bra	func_48712991_L38d
-func_48712991_L38c:
+	bra	SdcFmmFavSetTitleFunc_L38d
+SdcFmmFavSetTitleFunc_L38c:
 	clr	d0
-func_48712991_L38d:
+SdcFmmFavSetTitleFunc_L38d:
 	ret	[d2], 0x18
 
-SdcFmmPrivateSmfFileViewFunc:
+SdcSetupFlashFunc:
 	add	-0x10, sp
 	cmp	0x146000a, d1
-	beq	SdcFmmPrivateSmfFileViewFunc_L15
+	beq	SdcSetupFlashFunc_L15
 	cmp	0x146000b, d1
-	beq	SdcFmmPrivateSmfFileViewFunc_L37
-	bra	SdcFmmPrivateSmfFileViewFunc_L43
-SdcFmmPrivateSmfFileViewFunc_L15:
+	beq	SdcSetupFlashFunc_L37
+	bra	SdcSetupFlashFunc_L43
+SdcSetupFlashFunc_L15:
 	mov	3, d0
 	mov	0x25, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
@@ -513308,65 +513362,65 @@ SdcFmmPrivateSmfFileViewFunc_L15:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmPrivateSmfFileViewFunc_L44
-SdcFmmPrivateSmfFileViewFunc_L37:
+	bra	SdcSetupFlashFunc_L44
+SdcSetupFlashFunc_L37:
 	mov	0x16, d0
 	call	func_501529C4_entry, 0, 0x14
 	clr	d0
-	bra	SdcFmmPrivateSmfFileViewFunc_L44
-SdcFmmPrivateSmfFileViewFunc_L43:
+	bra	SdcSetupFlashFunc_L44
+SdcSetupFlashFunc_L43:
 	clr	d0
-SdcFmmPrivateSmfFileViewFunc_L44:
+SdcSetupFlashFunc_L44:
 	ret	0, 0x10
 
-SdcFmmSmfImportTitleFunc:
+SdcFmmFolderNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-SdcFmmSmfImportTitleFunc_entry:
+SdcFmmFolderNameFunc_entry:
 	mov	d1, a2
 	cmp	0x2160000, a2
-	beq	SdcFmmSmfImportTitleFunc_entry_L44
+	beq	SdcFmmFolderNameFunc_entry_L44
 	cmp	0x50009, d1
-	bne	SdcFmmSmfImportTitleFunc_entry_L15
-	jmp	SdcFmmSmfImportTitleFunc_entry_L99
-SdcFmmSmfImportTitleFunc_entry_L15:
+	bne	SdcFmmFolderNameFunc_entry_L15
+	jmp	SdcFmmFolderNameFunc_entry_L99
+SdcFmmFolderNameFunc_entry_L15:
 	cmp	0x5000f, d1
-	bne	SdcFmmSmfImportTitleFunc_entry_L20
-	jmp	SdcFmmSmfImportTitleFunc_entry_Lca
-SdcFmmSmfImportTitleFunc_entry_L20:
+	bne	SdcFmmFolderNameFunc_entry_L20
+	jmp	SdcFmmFolderNameFunc_entry_Lca
+SdcFmmFolderNameFunc_entry_L20:
 	cmp	0x50010, d1
-	bne	SdcFmmSmfImportTitleFunc_entry_L2b
-	jmp	SdcFmmSmfImportTitleFunc_entry_Lca
-SdcFmmSmfImportTitleFunc_entry_L2b:
+	bne	SdcFmmFolderNameFunc_entry_L2b
+	jmp	SdcFmmFolderNameFunc_entry_Lca
+SdcFmmFolderNameFunc_entry_L2b:
 	cmp	0x1460000, d1
-	bne	SdcFmmSmfImportTitleFunc_entry_L36
-	jmp	SdcFmmSmfImportTitleFunc_entry_L230
-SdcFmmSmfImportTitleFunc_entry_L36:
+	bne	SdcFmmFolderNameFunc_entry_L36
+	jmp	SdcFmmFolderNameFunc_entry_L230
+SdcFmmFolderNameFunc_entry_L36:
 	cmp	0x2160005, a2
-	bne	SdcFmmSmfImportTitleFunc_entry_L41
-	jmp	SdcFmmSmfImportTitleFunc_entry_L239
-SdcFmmSmfImportTitleFunc_entry_L41:
-	jmp	SdcFmmSmfImportTitleFunc_entry_L244
-SdcFmmSmfImportTitleFunc_entry_L44:
+	bne	SdcFmmFolderNameFunc_entry_L41
+	jmp	SdcFmmFolderNameFunc_entry_L239
+SdcFmmFolderNameFunc_entry_L41:
+	jmp	SdcFmmFolderNameFunc_entry_L244
+SdcFmmFolderNameFunc_entry_L44:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSmfImportTitleFunc_entry_L54
+	beq	SdcFmmFolderNameFunc_entry_L54
 	cmp	1, d0
-	bne	SdcFmmSmfImportTitleFunc_entry_L58
-SdcFmmSmfImportTitleFunc_entry_L54:
+	bne	SdcFmmFolderNameFunc_entry_L58
+SdcFmmFolderNameFunc_entry_L54:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcFmmSmfImportTitleFunc_entry_L58:
+SdcFmmFolderNameFunc_entry_L58:
 	call	func_487096B0_entry, 0, 0xc
 	movhu	d0, (0x500778d4)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmSmfImportTitleFunc_entry_L71
+	bge	SdcFmmFolderNameFunc_entry_L71
 	clr	d0
 	movhu	d0, (0x500778d4)
-SdcFmmSmfImportTitleFunc_entry_L71:
+SdcFmmFolderNameFunc_entry_L71:
 	movhu	(0x500778d4), d1
 	movbu	(data_50005E74), d0
 	exth	d1
@@ -513379,17 +513433,17 @@ SdcFmmSmfImportTitleFunc_entry_L71:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcFmmSmfImportTitleFunc_entry_L99:
+SdcFmmFolderNameFunc_entry_L99:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSmfImportTitleFunc_entry_La9
+	beq	SdcFmmFolderNameFunc_entry_La9
 	cmp	1, d0
-	bne	SdcFmmSmfImportTitleFunc_entry_Lad
-SdcFmmSmfImportTitleFunc_entry_La9:
+	bne	SdcFmmFolderNameFunc_entry_Lad
+SdcFmmFolderNameFunc_entry_La9:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcFmmSmfImportTitleFunc_entry_Lad:
+SdcFmmFolderNameFunc_entry_Lad:
 	clr	d0
 	movbu	d0, (0x500778d9)
 	movhu	(0x500778d4), d0
@@ -513398,73 +513452,73 @@ SdcFmmSmfImportTitleFunc_entry_Lad:
 	call	func_4870FEA0_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcFmmSmfImportTitleFunc_entry_Lca:
+SdcFmmFolderNameFunc_entry_Lca:
 	movbu	(0x500778d9), d0
 	cmp	0, d0
-	beq	SdcFmmSmfImportTitleFunc_entry_Ld8
+	beq	SdcFmmFolderNameFunc_entry_Ld8
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcFmmSmfImportTitleFunc_entry_Ld8:
+SdcFmmFolderNameFunc_entry_Ld8:
 	movhu	(0x500778d4), d3
 	call	func_4870952B, 0, 0
 	mov	(0x34, sp), a3
 	mov	d0, d2
 	extbu	d2
 	cmp	2, a3
-	bhi	SdcFmmSmfImportTitleFunc_entry_L11b
+	bhi	SdcFmmFolderNameFunc_entry_L11b
 	cmp	0x5000f, a2
-	bne	SdcFmmSmfImportTitleFunc_entry_L109
+	bne	SdcFmmFolderNameFunc_entry_L109
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0215000d, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSmfImportTitleFunc_entry_L11b
-SdcFmmSmfImportTitleFunc_entry_L109:
+	bra	SdcFmmFolderNameFunc_entry_L11b
+SdcFmmFolderNameFunc_entry_L109:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0215000e, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSmfImportTitleFunc_entry_L11b:
+SdcFmmFolderNameFunc_entry_L11b:
 	cmp	0, a3
-	bne	SdcFmmSmfImportTitleFunc_entry_L16a
+	bne	SdcFmmFolderNameFunc_entry_L16a
 	cmp	0x5000f, a2
-	bne	SdcFmmSmfImportTitleFunc_entry_L13d
+	bne	SdcFmmFolderNameFunc_entry_L13d
 	movhu	(0x500778d4), d0
 	exth	d2
 	exth	d0
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	bge	SdcFmmSmfImportTitleFunc_entry_L158
+	bge	SdcFmmFolderNameFunc_entry_L158
 	inc	d0
 	movhu	d0, (0x500778d4)
-	bra	SdcFmmSmfImportTitleFunc_entry_L158
-SdcFmmSmfImportTitleFunc_entry_L13d:
+	bra	SdcFmmFolderNameFunc_entry_L158
+SdcFmmFolderNameFunc_entry_L13d:
 	cmp	0x50010, a2
-	bne	SdcFmmSmfImportTitleFunc_entry_L158
+	bne	SdcFmmFolderNameFunc_entry_L158
 	movhu	(0x500778d4), d0
 	exth	d0
 	cmp	0, d0
-	ble	SdcFmmSmfImportTitleFunc_entry_L158
+	ble	SdcFmmFolderNameFunc_entry_L158
 	add	-1, d0
 	movhu	d0, (0x500778d4)
-SdcFmmSmfImportTitleFunc_entry_L158:
+SdcFmmFolderNameFunc_entry_L158:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x02150013, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSmfImportTitleFunc_entry_L16a:
+SdcFmmFolderNameFunc_entry_L16a:
 	movhu	(0x500778d4), d0
 	exthu	d3
 	mov	d3, a3
 	exth	d0
 	cmp	d3, d0
-	bne	SdcFmmSmfImportTitleFunc_entry_L17a
-	jmp	SdcFmmSmfImportTitleFunc_entry_L22d
-SdcFmmSmfImportTitleFunc_entry_L17a:
+	bne	SdcFmmFolderNameFunc_entry_L17a
+	jmp	SdcFmmFolderNameFunc_entry_L22d
+SdcFmmFolderNameFunc_entry_L17a:
 	movhu	(0x500778d4), d0
 	extbu	d0
 	call	func_48709696_entry, [d2], 0x10
@@ -513489,12 +513543,12 @@ SdcFmmSmfImportTitleFunc_entry_L17a:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	beq	SdcFmmSmfImportTitleFunc_entry_L1db
+	beq	SdcFmmFolderNameFunc_entry_L1db
 	mov	a2, d0
 	mov	d2, d1
 	call	func_4870FEA0_entry, [d2,d3,a2,a3], 0x30
-	bra	SdcFmmSmfImportTitleFunc_entry_L22d
-SdcFmmSmfImportTitleFunc_entry_L1db:
+	bra	SdcFmmFolderNameFunc_entry_L22d
+SdcFmmFolderNameFunc_entry_L1db:
 	mov	a3, d0
 	ext	d0
 	div	d2, d0
@@ -513525,36 +513579,36 @@ SdcFmmSmfImportTitleFunc_entry_L1db:
 	mov	-1, d0
 	mov	0x02150001, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSmfImportTitleFunc_entry_L22d:
+SdcFmmFolderNameFunc_entry_L22d:
 	clr	d0
-	bra	SdcFmmSmfImportTitleFunc_entry_L245
-SdcFmmSmfImportTitleFunc_entry_L230:
+	bra	SdcFmmFolderNameFunc_entry_L245
+SdcFmmFolderNameFunc_entry_L230:
 	clr	d0
 	call	func_487101F4_entry, [d2], 0x18
 	clr	d0
-	bra	SdcFmmSmfImportTitleFunc_entry_L245
-SdcFmmSmfImportTitleFunc_entry_L239:
+	bra	SdcFmmFolderNameFunc_entry_L245
+SdcFmmFolderNameFunc_entry_L239:
 	mov	(0x34, sp), d0
 	movbu	d0, (0x500778d9)
 	clr	d0
-	bra	SdcFmmSmfImportTitleFunc_entry_L245
-SdcFmmSmfImportTitleFunc_entry_L244:
+	bra	SdcFmmFolderNameFunc_entry_L245
+SdcFmmFolderNameFunc_entry_L244:
 	clr	d0
-SdcFmmSmfImportTitleFunc_entry_L245:
+SdcFmmFolderNameFunc_entry_L245:
 	ret	[d2,d3,a2,a3], 0x24
 
-SdcFmmCusLdSvTitleFunc:
+SdcFmmFileNameFunc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	mov	d1, d2
 	cmp	0x50009, d2
-	bge	SdcFmmCusLdSvTitleFunc_L11
-	jmp	SdcFmmCusLdSvTitleFunc_L7d8
-SdcFmmCusLdSvTitleFunc_L11:
+	bge	SdcFmmFileNameFunc_L11
+	jmp	SdcFmmFileNameFunc_L7d8
+SdcFmmFileNameFunc_L11:
 	cmp	0x2160005, d2
-	ble	SdcFmmCusLdSvTitleFunc_L1c
-	jmp	SdcFmmCusLdSvTitleFunc_L7d8
-SdcFmmCusLdSvTitleFunc_L1c:
+	ble	SdcFmmFileNameFunc_L1c
+	jmp	SdcFmmFileNameFunc_L7d8
+SdcFmmFileNameFunc_L1c:
 	mov	data_485244D0, a1
 	mov	0xf, d0
 	mov	0xfffafff8, d1
@@ -513565,50 +513619,50 @@ SdcFmmCusLdSvTitleFunc_L1c:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d1, d0
-	beq	SdcFmmCusLdSvTitleFunc_L4e
+	beq	SdcFmmFileNameFunc_L4e
 	setlb
 	cmp	0, d0
-	bne	SdcFmmCusLdSvTitleFunc_L40
-	jmp	SdcFmmCusLdSvTitleFunc_L7d8
-SdcFmmCusLdSvTitleFunc_L40:
+	bne	SdcFmmFileNameFunc_L40
+	jmp	SdcFmmFileNameFunc_L7d8
+SdcFmmFileNameFunc_L40:
 	add	8, a0
 	cmp	Str_SOB, a0
-	bcs	SdcFmmCusLdSvTitleFunc_L4b
+	bcs	SdcFmmFileNameFunc_L4b
 	mov	a1, a0
-SdcFmmCusLdSvTitleFunc_L4b:
+SdcFmmFileNameFunc_L4b:
 	mov	(a0), d0
 	cmp	d1, d0
 	lne
-SdcFmmCusLdSvTitleFunc_L4e:
+SdcFmmFileNameFunc_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmCusLdSvTitleFunc_L63
+	beq	SdcFmmFileNameFunc_L63
 	cmp	1, d0
-	bne	SdcFmmCusLdSvTitleFunc_L67
-SdcFmmCusLdSvTitleFunc_L63:
+	bne	SdcFmmFileNameFunc_L67
+SdcFmmFileNameFunc_L63:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L67:
+SdcFmmFileNameFunc_L67:
 	call	GetTitleNow_entry, 0, 0x10
 	mov	4, d1
 	movbu	d1, (data_50005E78)
 	exthu	d0
 	cmp	0x120, d0
-	beq	SdcFmmCusLdSvTitleFunc_L85
+	beq	SdcFmmFileNameFunc_L85
 	mov	8, d0
 	movbu	d0, (data_50005E78)
-SdcFmmCusLdSvTitleFunc_L85:
+SdcFmmFileNameFunc_L85:
 	call	func_48709676_entry, 0, 0xc
 	movhu	d0, (0x500778de)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmCusLdSvTitleFunc_L9e
+	bge	SdcFmmFileNameFunc_L9e
 	clr	d0
 	movhu	d0, (0x500778de)
-SdcFmmCusLdSvTitleFunc_L9e:
+SdcFmmFileNameFunc_L9e:
 	movhu	(0x500778de), d1
 	movbu	(data_50005E78), d0
 	exth	d1
@@ -513624,13 +513678,13 @@ SdcFmmCusLdSvTitleFunc_L9e:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmCusLdSvTitleFunc_Ld6
+	beq	SdcFmmFileNameFunc_Ld6
 	cmp	1, d0
-	bne	SdcFmmCusLdSvTitleFunc_Lda
-SdcFmmCusLdSvTitleFunc_Ld6:
+	bne	SdcFmmFileNameFunc_Lda
+SdcFmmFileNameFunc_Ld6:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_Lda:
+SdcFmmFileNameFunc_Lda:
 	clr	d0
 	movbu	d0, (0x500778e1)
 	call	func_487096B0_entry, 0, 0xc
@@ -513644,78 +513698,78 @@ SdcFmmCusLdSvTitleFunc_Lda:
 	ret	[d2,d3,a2], 0x20
 	movbu	(0x500778e1), d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L10f
+	beq	SdcFmmFileNameFunc_L10f
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L10f:
+SdcFmmFileNameFunc_L10f:
 	movhu	(0x500778de), d3
 	call	func_4870952B, 0, 0
 	mov	(0x30, sp), a2
 	cmp	3, a2
-	bcs	SdcFmmCusLdSvTitleFunc_L156
+	bcs	SdcFmmFileNameFunc_L156
 	cmp	5, a2
-	bhi	SdcFmmCusLdSvTitleFunc_L156
+	bhi	SdcFmmFileNameFunc_L156
 	cmp	0x5000f, d2
-	bne	SdcFmmCusLdSvTitleFunc_L143
+	bne	SdcFmmFileNameFunc_L143
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0215000d, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmCusLdSvTitleFunc_L156
-SdcFmmCusLdSvTitleFunc_L143:
+	bra	SdcFmmFileNameFunc_L156
+SdcFmmFileNameFunc_L143:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0215000e, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L156:
+SdcFmmFileNameFunc_L156:
 	cmp	3, a2
-	bne	SdcFmmCusLdSvTitleFunc_L1a2
+	bne	SdcFmmFileNameFunc_L1a2
 	mov	d2, a0
 	cmp	0x50010, a0
-	bne	SdcFmmCusLdSvTitleFunc_L17e
+	bne	SdcFmmFileNameFunc_L17e
 	movhu	(0x500778de), d0
 	exth	d0
 	mov	d0, d1
 	inc	d1
 	cmp	0x14, d1
-	blt	SdcFmmCusLdSvTitleFunc_L174
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L174:
+	blt	SdcFmmFileNameFunc_L174
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L174:
 	inc	d0
 	movhu	d0, (0x500778de)
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L17e:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L17e:
 	cmp	0x5000f, a0
-	beq	SdcFmmCusLdSvTitleFunc_L189
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L189:
+	beq	SdcFmmFileNameFunc_L189
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L189:
 	movhu	(0x500778de), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmCusLdSvTitleFunc_L197
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L197:
+	bgt	SdcFmmFileNameFunc_L197
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L197:
 	add	-1, d0
 	movhu	d0, (0x500778de)
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L1a2:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L1a2:
 	cmp	4, a2
-	bne	SdcFmmCusLdSvTitleFunc_L1c4
+	bne	SdcFmmFileNameFunc_L1c4
 	movhu	(0x500778de), d0
 	movbu	(data_50005E78), d1
 	exth	d0
 	cmp	d1, d0
-	bge	SdcFmmCusLdSvTitleFunc_L1b9
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L1b9:
+	bge	SdcFmmFileNameFunc_L1b9
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L1b9:
 	sub	d1, d0
 	movhu	d0, (0x500778de)
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L1c4:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L1c4:
 	cmp	5, a2
-	bne	SdcFmmCusLdSvTitleFunc_L1f0
+	bne	SdcFmmFileNameFunc_L1f0
 	movbu	(data_50005E78), d0
 	movhu	(0x500778de), d2
 	mov	d0, d1
@@ -513724,17 +513778,17 @@ SdcFmmCusLdSvTitleFunc_L1c4:
 	movhu	d1, (0x500778de)
 	add	d0, d2
 	cmp	0x14, d2
-	bge	SdcFmmCusLdSvTitleFunc_L1e5
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L1e5:
+	bge	SdcFmmFileNameFunc_L1e5
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L1e5:
 	mov	0x13, d0
 	movhu	d0, (0x500778de)
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L1f0:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L1f0:
 	cmp	0xa, a2
-	beq	SdcFmmCusLdSvTitleFunc_L1f7
-	jmp	SdcFmmCusLdSvTitleFunc_L2d5
-SdcFmmCusLdSvTitleFunc_L1f7:
+	beq	SdcFmmFileNameFunc_L1f7
+	jmp	SdcFmmFileNameFunc_L2d5
+SdcFmmFileNameFunc_L1f7:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -513765,36 +513819,36 @@ SdcFmmCusLdSvTitleFunc_L1f7:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L2a5
+	beq	SdcFmmFileNameFunc_L2a5
 	mov	2, d0
 	call	func_48709EE8_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L2a5
+	beq	SdcFmmFileNameFunc_L2a5
 	mov	2, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	bne	SdcFmmCusLdSvTitleFunc_L299
+	bne	SdcFmmFileNameFunc_L299
 	mov	0xb, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L2a5
-SdcFmmCusLdSvTitleFunc_L299:
+	beq	SdcFmmFileNameFunc_L2a5
+SdcFmmFileNameFunc_L299:
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmCusLdSvTitleFunc_L2b5
-SdcFmmCusLdSvTitleFunc_L2a5:
+	bra	SdcFmmFileNameFunc_L2b5
+SdcFmmFileNameFunc_L2a5:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x5f, d0
-	beq	SdcFmmCusLdSvTitleFunc_L2b5
+	beq	SdcFmmFileNameFunc_L2b5
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L2b5:
+SdcFmmFileNameFunc_L2b5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513804,44 +513858,44 @@ SdcFmmCusLdSvTitleFunc_L2b5:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L2d5:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L2d5:
 	cmp	0xb, a2
-	beq	SdcFmmCusLdSvTitleFunc_L2dc
-	jmp	SdcFmmCusLdSvTitleFunc_L403
-SdcFmmCusLdSvTitleFunc_L2dc:
+	beq	SdcFmmFileNameFunc_L2dc
+	jmp	SdcFmmFileNameFunc_L403
+SdcFmmFileNameFunc_L2dc:
 	clr	d0
 	movbu	d0, (0x500778e0)
 	call	func_4871ADD4_entry, [d2,d3], 0x14
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L307
+	beq	SdcFmmFileNameFunc_L307
 	movbu	(0x500788ca), d0
 	mov	0x01450006, d1
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L307:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L307:
 	mov	2, d0
 	call	func_48709F70_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L32b
+	beq	SdcFmmFileNameFunc_L32b
 	mov	0x4c, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0005000f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L32b:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L32b:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L36d
+	beq	SdcFmmFileNameFunc_L36d
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L36d
+	beq	SdcFmmFileNameFunc_L36d
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513852,8 +513906,8 @@ SdcFmmCusLdSvTitleFunc_L32b:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L36d:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L36d:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -513893,28 +513947,28 @@ SdcFmmCusLdSvTitleFunc_L36d:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L403:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L403:
 	cmp	0x4b, a2
-	beq	SdcFmmCusLdSvTitleFunc_L40e
+	beq	SdcFmmFileNameFunc_L40e
 	cmp	0x4c, a2
-	beq	SdcFmmCusLdSvTitleFunc_L40e
-	jmp	SdcFmmCusLdSvTitleFunc_L511
-SdcFmmCusLdSvTitleFunc_L40e:
+	beq	SdcFmmFileNameFunc_L40e
+	jmp	SdcFmmFileNameFunc_L511
+SdcFmmFileNameFunc_L40e:
 	mov	1, d0
 	movbu	d0, (0x500778e0)
 	cmp	0x4b, a2
-	beq	SdcFmmCusLdSvTitleFunc_L421
+	beq	SdcFmmFileNameFunc_L421
 	clr	d0
 	movbu	d0, (0x500778e0)
-SdcFmmCusLdSvTitleFunc_L421:
+SdcFmmFileNameFunc_L421:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L463
+	beq	SdcFmmFileNameFunc_L463
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L463
+	beq	SdcFmmFileNameFunc_L463
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -513925,8 +513979,8 @@ SdcFmmCusLdSvTitleFunc_L421:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L463:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L463:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -513936,11 +513990,11 @@ SdcFmmCusLdSvTitleFunc_L463:
 	call	func_487105D7_entry, 0, 0xc
 	movbu	(0x500778e0), d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L498
+	beq	SdcFmmFileNameFunc_L498
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x500778e0)
-SdcFmmCusLdSvTitleFunc_L498:
+SdcFmmFileNameFunc_L498:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	call	func_4870CAE5_entry, [d2,d3,a2,a3], 0xe0
@@ -513973,12 +514027,12 @@ SdcFmmCusLdSvTitleFunc_L498:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L511:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L511:
 	cmp	0x32, a2
-	beq	SdcFmmCusLdSvTitleFunc_L518
-	jmp	SdcFmmCusLdSvTitleFunc_L5c6
-SdcFmmCusLdSvTitleFunc_L518:
+	beq	SdcFmmFileNameFunc_L518
+	jmp	SdcFmmFileNameFunc_L5c6
+SdcFmmFileNameFunc_L518:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -513988,11 +514042,11 @@ SdcFmmCusLdSvTitleFunc_L518:
 	call	func_487105D7_entry, 0, 0xc
 	movbu	(0x500778e0), d0
 	cmp	0, d0
-	beq	SdcFmmCusLdSvTitleFunc_L54d
+	beq	SdcFmmFileNameFunc_L54d
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x500778e0)
-SdcFmmCusLdSvTitleFunc_L54d:
+SdcFmmFileNameFunc_L54d:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	call	func_4870CAE5_entry, [d2,d3,a2,a3], 0xe0
@@ -514025,10 +514079,10 @@ SdcFmmCusLdSvTitleFunc_L54d:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L5c6:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L5c6:
 	cmp	0xf, a2
-	bne	SdcFmmCusLdSvTitleFunc_L5f6
+	bne	SdcFmmFileNameFunc_L5f6
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -514039,12 +514093,12 @@ SdcFmmCusLdSvTitleFunc_L5c6:
 	mov	0x021002b1, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L5f6:
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L5f6:
 	cmp	0x33, a2
-	beq	SdcFmmCusLdSvTitleFunc_L5fd
-	jmp	SdcFmmCusLdSvTitleFunc_L674
-SdcFmmCusLdSvTitleFunc_L5fd:
+	beq	SdcFmmFileNameFunc_L5fd
+	jmp	SdcFmmFileNameFunc_L674
+SdcFmmFileNameFunc_L5fd:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -514074,15 +514128,15 @@ SdcFmmCusLdSvTitleFunc_L5fd:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L674:
+SdcFmmFileNameFunc_L674:
 	movhu	(0x500778de), d0
 	exthu	d3
 	mov	d3, a2
 	exth	d0
 	cmp	d3, d0
-	bne	SdcFmmCusLdSvTitleFunc_L684
-	jmp	SdcFmmCusLdSvTitleFunc_L752
-SdcFmmCusLdSvTitleFunc_L684:
+	bne	SdcFmmFileNameFunc_L684
+	jmp	SdcFmmFileNameFunc_L752
+SdcFmmFileNameFunc_L684:
 	movhu	(0x500778de), d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -514106,7 +514160,7 @@ SdcFmmCusLdSvTitleFunc_L684:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	beq	SdcFmmCusLdSvTitleFunc_L6f7
+	beq	SdcFmmFileNameFunc_L6f7
 	call	func_487096B0_entry, 0, 0xc
 	movbu	(data_50005E78), d1
 	exth	d0
@@ -514114,8 +514168,8 @@ SdcFmmCusLdSvTitleFunc_L684:
 	movhu	(0x500778de), d1
 	exth	d1
 	call	func_4870FDE7_entry, [d2,d3,a2,a3], 0x34
-	bra	SdcFmmCusLdSvTitleFunc_L74b
-SdcFmmCusLdSvTitleFunc_L6f7:
+	bra	SdcFmmFileNameFunc_L74b
+SdcFmmFileNameFunc_L6f7:
 	mov	a2, d1
 	ext	d1
 	div	d3, d1
@@ -514146,10 +514200,10 @@ SdcFmmCusLdSvTitleFunc_L6f7:
 	mov	-1, d0
 	mov	0x02150002, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmCusLdSvTitleFunc_L74b:
+SdcFmmFileNameFunc_L74b:
 	mov	1, d0
 	call	func_487101F4_entry, [d2], 0x18
-SdcFmmCusLdSvTitleFunc_L752:
+SdcFmmFileNameFunc_L752:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 	clr	d0
@@ -514162,11 +514216,11 @@ SdcFmmCusLdSvTitleFunc_L752:
 	mov	(0x30, sp), d0
 	movhu	d0, (0x500778de)
 	clr	d0
-	bra	SdcFmmCusLdSvTitleFunc_L7d9
+	bra	SdcFmmFileNameFunc_L7d9
 	mov	(0x30, sp), d0
 	movbu	d0, (0x500778e1)
 	clr	d0
-	bra	SdcFmmCusLdSvTitleFunc_L7d9
+	bra	SdcFmmFileNameFunc_L7d9
 	clr	d0
 	movhu	d0, (0x500778de)
 	call	func_4870965C_entry, [d2], 0x10
@@ -514190,75 +514244,75 @@ SdcFmmCusLdSvTitleFunc_L752:
 	mov	1, d0
 	call	func_487101F4_entry, [d2], 0x18
 	clr	d0
-	bra	SdcFmmCusLdSvTitleFunc_L7d9
-SdcFmmCusLdSvTitleFunc_L7d8:
+	bra	SdcFmmFileNameFunc_L7d9
+SdcFmmFileNameFunc_L7d8:
 	clr	d0
-SdcFmmCusLdSvTitleFunc_L7d9:
+SdcFmmFileNameFunc_L7d9:
 	ret	[d2,d3,a2], 0x20
 
-func_48713791:
+SdcFmmNumberLoadFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 	cmp	0x1460002, d1
-	beq	func_48713791_L3c
+	beq	SdcFmmNumberLoadFunc_L3c
 	cmp	0x50009, d1
-	bne	func_48713791_L18
-	jmp	func_48713791_L146
-func_48713791_L18:
+	bne	SdcFmmNumberLoadFunc_L18
+	jmp	SdcFmmNumberLoadFunc_L146
+SdcFmmNumberLoadFunc_L18:
 	cmp	0x5000f, d1
-	bne	func_48713791_L23
-	jmp	func_48713791_L258
-func_48713791_L23:
+	bne	SdcFmmNumberLoadFunc_L23
+	jmp	SdcFmmNumberLoadFunc_L258
+SdcFmmNumberLoadFunc_L23:
 	cmp	0x50010, d1
-	bne	func_48713791_L2e
-	jmp	func_48713791_L258
-func_48713791_L2e:
+	bne	SdcFmmNumberLoadFunc_L2e
+	jmp	SdcFmmNumberLoadFunc_L258
+SdcFmmNumberLoadFunc_L2e:
 	cmp	0x1460000, d1
-	bne	func_48713791_L39
-	jmp	func_48713791_L7a4
-func_48713791_L39:
-	jmp	func_48713791_L7d4
-func_48713791_L3c:
+	bne	SdcFmmNumberLoadFunc_L39
+	jmp	SdcFmmNumberLoadFunc_L7a4
+SdcFmmNumberLoadFunc_L39:
+	jmp	SdcFmmNumberLoadFunc_L7d4
+SdcFmmNumberLoadFunc_L3c:
 	movhu	(0x500788ba), d0
 	exth	d0
 	cmp	0, d0
-	bne	func_48713791_L4a
-	jmp	func_48713791_Lfd
-func_48713791_L4a:
+	bne	SdcFmmNumberLoadFunc_L4a
+	jmp	SdcFmmNumberLoadFunc_Lfd
+SdcFmmNumberLoadFunc_L4a:
 	call	func_487096B0_entry, 0, 0xc
 	movbu	d0, (0x500778e4)
 	extb	d0
 	cmp	0, d0
-	bge	func_48713791_L64
+	bge	SdcFmmNumberLoadFunc_L64
 	mov	-1, d0
 	movbu	d0, (0x500778e4)
-func_48713791_L64:
+SdcFmmNumberLoadFunc_L64:
 	call	func_48709676_entry, 0, 0xc
 	movbu	d0, (0x500778e5)
 	extb	d0
 	cmp	0, d0
-	bge	func_48713791_L84
+	bge	SdcFmmNumberLoadFunc_L84
 	mov	-1, d0
 	movbu	d0, (0x500778e5)
 	movbu	d0, (0x500778e4)
-func_48713791_L84:
+SdcFmmNumberLoadFunc_L84:
 	movbu	(0x500778e4), d0
 	extb	d0
 	cmp	0, d0
-	blt	func_48713791_L9a
+	blt	SdcFmmNumberLoadFunc_L9a
 	movbu	(0x500778e5), d1
 	extb	d1
 	cmp	0, d1
-	bge	func_48713791_Lc2
-func_48713791_L9a:
+	bge	SdcFmmNumberLoadFunc_Lc2
+SdcFmmNumberLoadFunc_L9a:
 	mov	0x500778e9, a0
 	mov	Str_empty_414, a1
 	call	func_486D0DF2, 0, 0
 	mov	0x500778e6, a0
 	mov	Str_empty_413, a1
 	call	func_486D0DF2, 0, 0
-	bra	func_48713791_L131
-func_48713791_Lc2:
+	bra	SdcFmmNumberLoadFunc_L131
+SdcFmmNumberLoadFunc_Lc2:
 	inc	d0
 	exthu	d0
 	mov	2, d1
@@ -514275,8 +514329,8 @@ func_48713791_Lc2:
 	mov	a0, a1
 	mov	0x500778e9, a0
 	call	func_486D0DF2, 0, 0
-	bra	func_48713791_L131
-func_48713791_Lfd:
+	bra	SdcFmmNumberLoadFunc_L131
+SdcFmmNumberLoadFunc_Lfd:
 	mov	-1, d0
 	movbu	d0, (0x500778e4)
 	movbu	d0, (0x500778e5)
@@ -514286,75 +514340,75 @@ func_48713791_Lfd:
 	mov	0x500778e9, a0
 	mov	Str_empty_411, a1
 	call	func_486D0DF2, 0, 0
-func_48713791_L131:
+SdcFmmNumberLoadFunc_L131:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-func_48713791_L146:
+SdcFmmNumberLoadFunc_L146:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_48713791_L156
+	beq	SdcFmmNumberLoadFunc_L156
 	cmp	1, d0
-	bne	func_48713791_L15a
-func_48713791_L156:
+	bne	SdcFmmNumberLoadFunc_L15a
+SdcFmmNumberLoadFunc_L156:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-func_48713791_L15a:
+SdcFmmNumberLoadFunc_L15a:
 	movbu	(0x500778e4), d0
 	extb	d0
 	cmp	0, d0
-	blt	func_48713791_L191
+	blt	SdcFmmNumberLoadFunc_L191
 	call	func_487094E2_entry, [d2,a2], 0x1c
 	mov	a0, a1
 	cmp	0, a1
-	beq	func_48713791_L181
+	beq	SdcFmmNumberLoadFunc_L181
 	mov	0x50077f74, a3
 	mov	0x10, d0
 	mov	a3, a0
 	call	func_4871038C_entry, [d2,d3,a2,a3], 0x10
-	bra	func_48713791_L19f
-func_48713791_L181:
+	bra	SdcFmmNumberLoadFunc_L19f
+SdcFmmNumberLoadFunc_L181:
 	mov	0x50077f74, a3
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	func_48713791_L19f
-func_48713791_L191:
+	bra	SdcFmmNumberLoadFunc_L19f
+SdcFmmNumberLoadFunc_L191:
 	mov	0x50077f74, a3
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-func_48713791_L19f:
+SdcFmmNumberLoadFunc_L19f:
 	movbu	(0x500778e5), d1
 	clr	d0
 	movbu	d0, (0x50077f8c)
 	extb	d1
 	cmp	d0, d1
-	blt	func_48713791_L1e1
+	blt	SdcFmmNumberLoadFunc_L1e1
 	movbu	(0x500778e4), d0
 	extbu	d0
 	call	func_48709488_entry, [d2,d3,a2], 0x20
 	mov	a0, a1
 	cmp	0, a1
-	beq	func_48713791_L1d2
+	beq	SdcFmmNumberLoadFunc_L1d2
 	mov	0x10, d0
 	mov	0x50077f8d, a0
 	call	func_4871038C_entry, [d2,d3,a2,a3], 0x10
-	bra	func_48713791_L1ee
-func_48713791_L1d2:
+	bra	SdcFmmNumberLoadFunc_L1ee
+SdcFmmNumberLoadFunc_L1d2:
 	mov	0x50077f8d, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	func_48713791_L1ee
-func_48713791_L1e1:
+	bra	SdcFmmNumberLoadFunc_L1ee
+SdcFmmNumberLoadFunc_L1e1:
 	mov	0x50077f8d, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-func_48713791_L1ee:
+SdcFmmNumberLoadFunc_L1ee:
 	mov	0x500778e6, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100285, d0
@@ -514376,23 +514430,23 @@ func_48713791_L1ee:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-func_48713791_L258:
+SdcFmmNumberLoadFunc_L258:
 	mov	(0x38, sp), a1
 	cmp	4, a1
-	bls	func_48713791_L261
-	jmp	func_48713791_L5c3
-func_48713791_L261:
+	bls	SdcFmmNumberLoadFunc_L261
+	jmp	SdcFmmNumberLoadFunc_L5c3
+SdcFmmNumberLoadFunc_L261:
 	cmp	0x50010, d1
-	bne	func_48713791_L26e
+	bne	SdcFmmNumberLoadFunc_L26e
 	mov	a1, a0
 	add	5, a0
 	mov	a0, (0x38, sp)
-func_48713791_L26e:
+SdcFmmNumberLoadFunc_L26e:
 	movbu	(0x500778e6), d0
 	mov	0x500778e6, a3
 	extb	d0
 	cmp	0x5f, d0
-	bne	func_48713791_L2a2
+	bne	SdcFmmNumberLoadFunc_L2a2
 	mov	(0x38, sp), d0
 	mov	0x000600b4, d1
 	extbu	d0
@@ -514401,27 +514455,27 @@ func_48713791_L26e:
 	mov	a3, (0x10, sp)
 	mov	0x02100285, d0
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48713791_L4ab
-func_48713791_L2a2:
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L2a2:
 	movbu	(0x500778e7), d0
 	extb	d0
 	cmp	0x5f, d0
-	bne	func_48713791_L313
+	bne	SdcFmmNumberLoadFunc_L313
 	mov	(0x38, sp), a0
 	cmp	0, a0
-	bne	func_48713791_L2cf
+	bne	SdcFmmNumberLoadFunc_L2cf
 	movbu	(0x500778e6), d0
 	extb	d0
 	cmp	0x30, d0
-	bgt	func_48713791_L2c1
-	jmp	func_48713791_L4ab
-func_48713791_L2c1:
+	bgt	SdcFmmNumberLoadFunc_L2c1
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L2c1:
 	movbu	(0x500778e6), d0
 	extb	d0
 	cmp	0x39, d0
-	ble	func_48713791_L2cf
-	jmp	func_48713791_L4ab
-func_48713791_L2cf:
+	ble	SdcFmmNumberLoadFunc_L2cf
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L2cf:
 	mov	a0, d1
 	mov	d1, d0
 	extbu	d0
@@ -514444,18 +514498,18 @@ func_48713791_L2cf:
 	mov	0x02100285, d0
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48713791_L4ab
-func_48713791_L313:
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L313:
 	movbu	(0x500778e9), d0
 	mov	0x500778e9, d3
 	extb	d0
 	cmp	0x5f, d0
-	bne	func_48713791_L350
+	bne	SdcFmmNumberLoadFunc_L350
 	mov	(0x38, sp), a0
 	cmp	3, a0
-	bcs	func_48713791_L32d
-	jmp	func_48713791_L4ab
-func_48713791_L32d:
+	bcs	SdcFmmNumberLoadFunc_L32d
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L32d:
 	mov	a0, d0
 	extbu	d0
 	add	0x30, d0
@@ -514464,35 +514518,35 @@ func_48713791_L32d:
 	mov	0x02100286, d0
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48713791_L4ab
-func_48713791_L350:
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L350:
 	movbu	(0x500778ea), d0
 	extb	d0
 	cmp	0x5f, d0
-	bne	func_48713791_L3d2
+	bne	SdcFmmNumberLoadFunc_L3d2
 	movbu	(0x500778e9), d0
 	extb	d0
 	cmp	0x32, d0
-	bne	func_48713791_L36c
+	bne	SdcFmmNumberLoadFunc_L36c
 	mov	(0x38, sp), a0
 	cmp	0, a0
-	beq	func_48713791_L38e
-func_48713791_L36c:
+	beq	SdcFmmNumberLoadFunc_L38e
+SdcFmmNumberLoadFunc_L36c:
 	movbu	(0x500778e9), d0
 	extb	d0
 	cmp	0x31, d0
-	beq	func_48713791_L38e
+	beq	SdcFmmNumberLoadFunc_L38e
 	movbu	(0x500778e9), d0
 	extb	d0
 	cmp	0x30, d0
-	beq	func_48713791_L385
-	jmp	func_48713791_L4ab
-func_48713791_L385:
+	beq	SdcFmmNumberLoadFunc_L385
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L385:
 	mov	(0x38, sp), a0
 	cmp	0, a0
-	bhi	func_48713791_L38e
-	jmp	func_48713791_L4ab
-func_48713791_L38e:
+	bhi	SdcFmmNumberLoadFunc_L38e
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L38e:
 	mov	(0x38, sp), d2
 	mov	d2, d0
 	extbu	d0
@@ -514515,8 +514569,8 @@ func_48713791_L38e:
 	mov	0x02100286, d0
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48713791_L4ab
-func_48713791_L3d2:
+	jmp	SdcFmmNumberLoadFunc_L4ab
+SdcFmmNumberLoadFunc_L3d2:
 	mov	d3, a0
 	mov	-1, d0
 	movbu	d0, (0x500778e4)
@@ -514557,7 +514611,7 @@ func_48713791_L3d2:
 	movbu	(0x500778e6), d0
 	extb	d0
 	cmp	0x5f, d0
-	bne	func_48713791_L4ab
+	bne	SdcFmmNumberLoadFunc_L4ab
 	mov	(0x38, sp), d0
 	mov	0x000600b4, d1
 	extbu	d0
@@ -514566,37 +514620,37 @@ func_48713791_L3d2:
 	mov	a3, (0x10, sp)
 	mov	0x02100285, d0
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-func_48713791_L4ab:
+SdcFmmNumberLoadFunc_L4ab:
 	movbu	(0x500778e4), d0
 	extb	d0
 	cmp	0, d0
-	blt	func_48713791_L4f5
+	blt	SdcFmmNumberLoadFunc_L4f5
 	call	func_487094E2_entry, [d2,a2], 0x1c
 	mov	a0, a1
 	cmp	0, a1
-	beq	func_48713791_L4d2
+	beq	SdcFmmNumberLoadFunc_L4d2
 	mov	0x50077f74, a2
 	mov	0x10, d0
 	mov	a2, a0
 	call	func_4871038C_entry, [d2,d3,a2,a3], 0x10
-	bra	func_48713791_L4e0
-func_48713791_L4d2:
+	bra	SdcFmmNumberLoadFunc_L4e0
+SdcFmmNumberLoadFunc_L4d2:
 	mov	0x50077f74, a2
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-func_48713791_L4e0:
+SdcFmmNumberLoadFunc_L4e0:
 	mov	a2, (0x10, sp)
 	mov	0x02100284, d0
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-func_48713791_L4f5:
+SdcFmmNumberLoadFunc_L4f5:
 	movbu	(0x500778e5), d0
 	extb	d0
 	cmp	0, d0
-	bge	func_48713791_L503
-	jmp	func_48713791_L5bf
-func_48713791_L503:
+	bge	SdcFmmNumberLoadFunc_L503
+	jmp	SdcFmmNumberLoadFunc_L5bf
+SdcFmmNumberLoadFunc_L503:
 	mov	1, d0
 	movhu	d0, (0x500788ba)
 	movbu	(0x500778e4), d0
@@ -514616,7 +514670,7 @@ func_48713791_L503:
 	call	func_48709DD1_entry, [d2,d3], 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	func_48713791_L590
+	beq	SdcFmmNumberLoadFunc_L590
 	movbu	(0x500778e4), d0
 	movbu	d0, (0x14, sp)
 	movbu	(0x500778e5), d1
@@ -514625,35 +514679,35 @@ func_48713791_L503:
 	call	func_48709488_entry, [d2,d3,a2], 0x20
 	mov	a0, a1
 	cmp	0, a1
-	beq	func_48713791_L581
+	beq	SdcFmmNumberLoadFunc_L581
 	mov	0x10, d0
 	mov	0x50077f8d, a0
 	call	func_4871038C_entry, [d2,d3,a2,a3], 0x10
-	bra	func_48713791_L5a3
-func_48713791_L581:
+	bra	SdcFmmNumberLoadFunc_L5a3
+SdcFmmNumberLoadFunc_L581:
 	mov	0x50077f8d, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	func_48713791_L5a3
-func_48713791_L590:
+	bra	SdcFmmNumberLoadFunc_L5a3
+SdcFmmNumberLoadFunc_L590:
 	mov	0x50077f8d, a0
 	mov	Str_NO_SONG, a1
 	call	func_486D0DF2, 0, 0
-func_48713791_L5a3:
+SdcFmmNumberLoadFunc_L5a3:
 	mov	1, d0
 	call	func_487101F4_entry, [d2], 0x18
 	mov	a3, (0x10, sp)
 	mov	0x02100287, d0
 	mov	0x0145000d, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-func_48713791_L5bf:
+SdcFmmNumberLoadFunc_L5bf:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-func_48713791_L5c3:
+SdcFmmNumberLoadFunc_L5c3:
 	cmp	0x5a, a1
-	beq	func_48713791_L5ca
-	jmp	func_48713791_L69a
-func_48713791_L5ca:
+	beq	SdcFmmNumberLoadFunc_L5ca
+	jmp	SdcFmmNumberLoadFunc_L69a
+SdcFmmNumberLoadFunc_L5ca:
 	mov	-1, d0
 	movbu	d0, (0x500778e4)
 	movbu	d0, (0x500778e5)
@@ -514700,23 +514754,23 @@ func_48713791_L5ca:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-func_48713791_L69a:
+SdcFmmNumberLoadFunc_L69a:
 	cmp	0xa, a1
-	beq	func_48713791_L6a1
-	jmp	func_48713791_L7a1
-func_48713791_L6a1:
+	beq	SdcFmmNumberLoadFunc_L6a1
+	jmp	SdcFmmNumberLoadFunc_L7a1
+SdcFmmNumberLoadFunc_L6a1:
 	movbu	(0x500778e4), d0
 	extb	d0
 	cmp	0, d0
-	bge	func_48713791_L6af
-	jmp	func_48713791_L79e
-func_48713791_L6af:
+	bge	SdcFmmNumberLoadFunc_L6af
+	jmp	SdcFmmNumberLoadFunc_L79e
+SdcFmmNumberLoadFunc_L6af:
 	movbu	(0x500778e5), d0
 	extb	d0
 	cmp	0, d0
-	bge	func_48713791_L6bd
-	jmp	func_48713791_L79e
-func_48713791_L6bd:
+	bge	SdcFmmNumberLoadFunc_L6bd
+	jmp	SdcFmmNumberLoadFunc_L79e
+SdcFmmNumberLoadFunc_L6bd:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -514748,36 +514802,36 @@ func_48713791_L6bd:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	func_48713791_L771
+	beq	SdcFmmNumberLoadFunc_L771
 	mov	2, d0
 	call	func_48709EE8_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48713791_L771
+	beq	SdcFmmNumberLoadFunc_L771
 	mov	2, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	bne	func_48713791_L765
+	bne	SdcFmmNumberLoadFunc_L765
 	mov	0xb, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	func_48713791_L771
-func_48713791_L765:
+	beq	SdcFmmNumberLoadFunc_L771
+SdcFmmNumberLoadFunc_L765:
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	func_48713791_L781
-func_48713791_L771:
+	bra	SdcFmmNumberLoadFunc_L781
+SdcFmmNumberLoadFunc_L771:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x5f, d0
-	beq	func_48713791_L781
+	beq	SdcFmmNumberLoadFunc_L781
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_48713791_L781:
+SdcFmmNumberLoadFunc_L781:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -514787,74 +514841,74 @@ func_48713791_L781:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48713791_L79e:
+SdcFmmNumberLoadFunc_L79e:
 	clr	d0
-	bra	func_48713791_L7d5
-func_48713791_L7a1:
+	bra	SdcFmmNumberLoadFunc_L7d5
+SdcFmmNumberLoadFunc_L7a1:
 	clr	d0
-	bra	func_48713791_L7d5
-func_48713791_L7a4:
+	bra	SdcFmmNumberLoadFunc_L7d5
+SdcFmmNumberLoadFunc_L7a4:
 	movbu	(0x500778e4), d0
 	extb	d0
 	cmp	0, d0
-	blt	func_48713791_L7c2
+	blt	SdcFmmNumberLoadFunc_L7c2
 	movbu	(0x500778e5), d0
 	extb	d0
 	cmp	0, d0
-	blt	func_48713791_L7c2
+	blt	SdcFmmNumberLoadFunc_L7c2
 	clr	d0
 	call	func_487101F4_entry, [d2], 0x18
-	bra	func_48713791_L7d4
-func_48713791_L7c2:
+	bra	SdcFmmNumberLoadFunc_L7d4
+SdcFmmNumberLoadFunc_L7c2:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x01450008, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-func_48713791_L7d4:
+SdcFmmNumberLoadFunc_L7d4:
 	clr	d0
-func_48713791_L7d5:
+SdcFmmNumberLoadFunc_L7d5:
 	ret	[d2,d3,a2,a3], 0x28
 
-SdcSaveTtlJgFunc:
+SdcCurFileNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	cmp	0x50009, d1
-	beq	SdcSaveTtlJgFunc_L10
-	jmp	SdcSaveTtlJgFunc_L93
-SdcSaveTtlJgFunc_L10:
+	beq	SdcCurFileNameFunc_L10
+	jmp	SdcCurFileNameFunc_L93
+SdcCurFileNameFunc_L10:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSaveTtlJgFunc_L20
+	beq	SdcCurFileNameFunc_L20
 	cmp	1, d0
-	bne	SdcSaveTtlJgFunc_L24
-SdcSaveTtlJgFunc_L20:
+	bne	SdcCurFileNameFunc_L24
+SdcCurFileNameFunc_L20:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcSaveTtlJgFunc_L24:
+SdcCurFileNameFunc_L24:
 	call	func_487096B0_entry, 0, 0xc
 	mov	d0, d2
 	mov	d2, d1
 	exth	d1
 	cmp	0, d1
-	bge	SdcSaveTtlJgFunc_L41
+	bge	SdcCurFileNameFunc_L41
 	mov	0x50077f8c, a2
 	clr	d0
 	movbu	d0, (0x50077f8c)
-	bra	SdcSaveTtlJgFunc_L7f
-SdcSaveTtlJgFunc_L41:
+	bra	SdcCurFileNameFunc_L7f
+SdcCurFileNameFunc_L41:
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d1
 	mov	d1, d3
 	exth	d3
 	cmp	0, d3
-	bge	SdcSaveTtlJgFunc_L5e
+	bge	SdcCurFileNameFunc_L5e
 	mov	0x50077f8c, a2
 	clr	d0
 	movbu	d0, (0x50077f8c)
-	bra	SdcSaveTtlJgFunc_L7f
-SdcSaveTtlJgFunc_L5e:
+	bra	SdcCurFileNameFunc_L7f
+SdcCurFileNameFunc_L5e:
 	mov	d2, d0
 	extbu	d0
 	extbu	d1
@@ -514869,55 +514923,55 @@ SdcSaveTtlJgFunc_L5e:
 	mov	d3, d0
 	mov	a2, a0
 	call	func_486D0F3D_entry, [d2,d3,a2,a3], 0x20
-SdcSaveTtlJgFunc_L7f:
+SdcCurFileNameFunc_L7f:
 	mov	a2, (0x10, sp)
 	mov	(0x3c, sp), d0
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcSaveTtlJgFunc_L94
-SdcSaveTtlJgFunc_L93:
+	bra	SdcCurFileNameFunc_L94
+SdcCurFileNameFunc_L93:
 	clr	d0
-SdcSaveTtlJgFunc_L94:
+SdcCurFileNameFunc_L94:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcNewPlaylistInfoFunc:
+SdcFolderRenameFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	cmp	0x6003a, d1
-	beq	SdcNewPlaylistInfoFunc_L1b
+	beq	SdcFolderRenameFunc_L1b
 	cmp	0x6007a, d1
-	bne	SdcNewPlaylistInfoFunc_L18
-	jmp	SdcNewPlaylistInfoFunc_Lb7
-SdcNewPlaylistInfoFunc_L18:
-	jmp	SdcNewPlaylistInfoFunc_L176
-SdcNewPlaylistInfoFunc_L1b:
+	bne	SdcFolderRenameFunc_L18
+	jmp	SdcFolderRenameFunc_Lb7
+SdcFolderRenameFunc_L18:
+	jmp	SdcFolderRenameFunc_L176
+SdcFolderRenameFunc_L1b:
 	call	func_487096B0_entry, 0, 0xc
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcNewPlaylistInfoFunc_L87
+	blt	SdcFolderRenameFunc_L87
 	extbu	d0
 	call	func_487094E2_entry, [d2,a2], 0x1c
 	mov	a0, a1
 	cmp	0, a1
-	bne	SdcNewPlaylistInfoFunc_L4b
+	bne	SdcFolderRenameFunc_L4b
 	mov	0x50077f2c, a2
 	mov	a2, a0
 	mov	Str_empty_406, a1
 	call	func_486D0DF2, 0, 0
-	bra	SdcNewPlaylistInfoFunc_L9b
-SdcNewPlaylistInfoFunc_L4b:
+	bra	SdcFolderRenameFunc_L9b
+SdcFolderRenameFunc_L4b:
 	movbu	(a1), d0
 	extb	d0
 	cmp	0, d0
-	bne	SdcNewPlaylistInfoFunc_L68
+	bne	SdcFolderRenameFunc_L68
 	mov	0x50077f2c, a2
 	mov	a2, a0
 	mov	Str_empty_405, a1
 	call	func_486D0DF2, 0, 0
-	bra	SdcNewPlaylistInfoFunc_L9b
-SdcNewPlaylistInfoFunc_L68:
+	bra	SdcFolderRenameFunc_L9b
+SdcFolderRenameFunc_L68:
 	mov	0x50077f2c, a2
 	mov	a2, a0
 	call	func_486D0DF2, 0, 0
@@ -514926,13 +514980,13 @@ SdcNewPlaylistInfoFunc_L68:
 	call	func_487104C0_entry, [d2,d3,a2], 0x18
 	clr	d0
 	movbu	d0, (0x50077f3c)
-	bra	SdcNewPlaylistInfoFunc_L9b
-SdcNewPlaylistInfoFunc_L87:
+	bra	SdcFolderRenameFunc_L9b
+SdcFolderRenameFunc_L87:
 	mov	0x50077f2c, a2
 	mov	a2, a0
 	mov	Str_empty_404, a1
 	call	func_486D0DF2, 0, 0
-SdcNewPlaylistInfoFunc_L9b:
+SdcFolderRenameFunc_L9b:
 	mov	0x500778ec, a0
 	mov	a2, a1
 	call	func_486D0DF2, 0, 0
@@ -514941,7 +514995,7 @@ SdcNewPlaylistInfoFunc_L9b:
 	call	func_486D0DF2, 0, 0
 	clr	d0
 	ret	[d2,a2], 0x1c
-SdcNewPlaylistInfoFunc_Lb7:
+SdcFolderRenameFunc_Lb7:
 	mov	0x50077f2c, a2
 	mov	(0x2c, sp), a1
 	mov	a2, a0
@@ -514951,10 +515005,10 @@ SdcNewPlaylistInfoFunc_Lb7:
 	call	func_486D0E67, 0, 0
 	exth	d0
 	cmp	0, d0
-	bne	SdcNewPlaylistInfoFunc_Lde
+	bne	SdcFolderRenameFunc_Lde
 	clr	d0
 	ret	[d2,a2], 0x1c
-SdcNewPlaylistInfoFunc_Lde:
+SdcFolderRenameFunc_Lde:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -514970,7 +515024,7 @@ SdcNewPlaylistInfoFunc_Lde:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcNewPlaylistInfoFunc_L152
+	blt	SdcFolderRenameFunc_L152
 	extbu	d0
 	call	func_4870D201_entry, [d2,a2], 0x4c
 	exth	d0
@@ -514981,7 +515035,7 @@ SdcNewPlaylistInfoFunc_Lde:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x23, d0
-	bne	SdcNewPlaylistInfoFunc_L152
+	bne	SdcFolderRenameFunc_L152
 	call	func_487091C0, 0, 0
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_4870C7E5_entry, [d2], 0xc
@@ -514991,7 +515045,7 @@ SdcNewPlaylistInfoFunc_Lde:
 	mov	d0, d2
 	extbu	d2
 	call	func_486BF78F_entry, 0, 8
-SdcNewPlaylistInfoFunc_L152:
+SdcFolderRenameFunc_L152:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -515002,57 +515056,57 @@ SdcNewPlaylistInfoFunc_L152:
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcNewPlaylistInfoFunc_L177
-SdcNewPlaylistInfoFunc_L176:
+	bra	SdcFolderRenameFunc_L177
+SdcFolderRenameFunc_L176:
 	clr	d0
-SdcNewPlaylistInfoFunc_L177:
+SdcFolderRenameFunc_L177:
 	ret	[d2,a2], 0x1c
 
-SdcFmmSmfPlaylistNameFunc:
+SdcSongRenameFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	cmp	0x6003a, d1
-	beq	SdcFmmSmfPlaylistNameFunc_L1b
+	beq	SdcSongRenameFunc_L1b
 	cmp	0x6007a, d1
-	bne	SdcFmmSmfPlaylistNameFunc_L18
-	jmp	SdcFmmSmfPlaylistNameFunc_Lb5
-SdcFmmSmfPlaylistNameFunc_L18:
-	jmp	SdcFmmSmfPlaylistNameFunc_L183
-SdcFmmSmfPlaylistNameFunc_L1b:
+	bne	SdcSongRenameFunc_L18
+	jmp	SdcSongRenameFunc_Lb5
+SdcSongRenameFunc_L18:
+	jmp	SdcSongRenameFunc_L183
+SdcSongRenameFunc_L1b:
 	call	func_487096B0_entry, 0, 0xc
 	mov	d0, d2
 	mov	d2, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcFmmSmfPlaylistNameFunc_L8b
+	blt	SdcSongRenameFunc_L8b
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d1
 	exth	d0
 	cmp	0, d0
-	blt	SdcFmmSmfPlaylistNameFunc_L8b
+	blt	SdcSongRenameFunc_L8b
 	mov	d2, d0
 	extbu	d0
 	extbu	d1
 	call	func_48709488_entry, [d2,d3,a2], 0x20
 	mov	a0, a1
 	cmp	0, a1
-	bne	SdcFmmSmfPlaylistNameFunc_L55
+	bne	SdcSongRenameFunc_L55
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcFmmSmfPlaylistNameFunc_L99
-SdcFmmSmfPlaylistNameFunc_L55:
+	bra	SdcSongRenameFunc_L99
+SdcSongRenameFunc_L55:
 	movbu	(a1), d0
 	extb	d0
 	cmp	0, d0
-	bne	SdcFmmSmfPlaylistNameFunc_L6c
+	bne	SdcSongRenameFunc_L6c
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcFmmSmfPlaylistNameFunc_L99
-SdcFmmSmfPlaylistNameFunc_L6c:
+	bra	SdcSongRenameFunc_L99
+SdcSongRenameFunc_L6c:
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	call	func_486D0DF2, 0, 0
@@ -515061,13 +515115,13 @@ SdcFmmSmfPlaylistNameFunc_L6c:
 	call	func_487104C0_entry, [d2,d3,a2], 0x18
 	clr	d0
 	movbu	d0, (0x50077f9c)
-	bra	SdcFmmSmfPlaylistNameFunc_L99
-SdcFmmSmfPlaylistNameFunc_L8b:
+	bra	SdcSongRenameFunc_L99
+SdcSongRenameFunc_L8b:
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-SdcFmmSmfPlaylistNameFunc_L99:
+SdcSongRenameFunc_L99:
 	mov	0x5007790c, a0
 	mov	a2, a1
 	call	func_486D0DF2, 0, 0
@@ -515076,13 +515130,13 @@ SdcFmmSmfPlaylistNameFunc_L99:
 	call	func_486D0DF2, 0, 0
 	clr	d0
 	ret	[d2,a2], 0x1c
-SdcFmmSmfPlaylistNameFunc_Lb5:
+SdcSongRenameFunc_Lb5:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	bne	SdcFmmSmfPlaylistNameFunc_Lc4
-	jmp	SdcFmmSmfPlaylistNameFunc_L180
-SdcFmmSmfPlaylistNameFunc_Lc4:
+	bne	SdcSongRenameFunc_Lc4
+	jmp	SdcSongRenameFunc_L180
+SdcSongRenameFunc_Lc4:
 	mov	0x50077f8c, a2
 	mov	(0x2c, sp), a1
 	mov	a2, a0
@@ -515092,10 +515146,10 @@ SdcFmmSmfPlaylistNameFunc_Lc4:
 	call	func_486D0E67, 0, 0
 	exth	d0
 	cmp	0, d0
-	bne	SdcFmmSmfPlaylistNameFunc_Leb
+	bne	SdcSongRenameFunc_Leb
 	clr	d0
 	ret	[d2,a2], 0x1c
-SdcFmmSmfPlaylistNameFunc_Leb:
+SdcSongRenameFunc_Leb:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -515111,7 +515165,7 @@ SdcFmmSmfPlaylistNameFunc_Leb:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcFmmSmfPlaylistNameFunc_L15f
+	blt	SdcSongRenameFunc_L15f
 	extbu	d0
 	call	func_4870D201_entry, [d2,a2], 0x4c
 	exth	d0
@@ -515122,7 +515176,7 @@ SdcFmmSmfPlaylistNameFunc_Leb:
 	mov	d2, d1
 	exthu	d1
 	cmp	0x23, d1
-	bne	SdcFmmSmfPlaylistNameFunc_L15f
+	bne	SdcSongRenameFunc_L15f
 	call	func_487091C0, 0, 0
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_4870C7E5_entry, [d2], 0xc
@@ -515132,7 +515186,7 @@ SdcFmmSmfPlaylistNameFunc_Leb:
 	mov	d0, d2
 	extbu	d2
 	call	func_486BF78F_entry, 0, 8
-SdcFmmSmfPlaylistNameFunc_L15f:
+SdcSongRenameFunc_L15f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -515142,25 +515196,25 @@ SdcFmmSmfPlaylistNameFunc_L15f:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSmfPlaylistNameFunc_L180:
+SdcSongRenameFunc_L180:
 	clr	d0
-	bra	SdcFmmSmfPlaylistNameFunc_L184
-SdcFmmSmfPlaylistNameFunc_L183:
+	bra	SdcSongRenameFunc_L184
+SdcSongRenameFunc_L183:
 	clr	d0
-SdcFmmSmfPlaylistNameFunc_L184:
+SdcSongRenameFunc_L184:
 	ret	[d2,a2], 0x1c
 
-SdcMedleyTtlJgFunc:
+SdcSaveFileNameFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcMedleyTtlJgFunc_L20
+	beq	SdcSaveFileNameFunc_L20
 	cmp	0x6003a, d1
-	beq	SdcMedleyTtlJgFunc_L52
+	beq	SdcSaveFileNameFunc_L52
 	cmp	0x6007a, d1
-	beq	SdcMedleyTtlJgFunc_L84
-	jmp	SdcMedleyTtlJgFunc_L9f
-SdcMedleyTtlJgFunc_L20:
+	beq	SdcSaveFileNameFunc_L84
+	jmp	SdcSaveFileNameFunc_L9f
+SdcSaveFileNameFunc_L20:
 	mov	0x50077f44, a2
 	call	func_487095CA, 0, 0
 	mov	a0, a1
@@ -515173,8 +515227,8 @@ SdcMedleyTtlJgFunc_L20:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcMedleyTtlJgFunc_La0
-SdcMedleyTtlJgFunc_L52:
+	bra	SdcSaveFileNameFunc_La0
+SdcSaveFileNameFunc_L52:
 	mov	0x50077f44, a2
 	call	func_487095CA, 0, 0
 	mov	a0, a1
@@ -515188,8 +515242,8 @@ SdcMedleyTtlJgFunc_L52:
 	mov	a2, a1
 	call	func_486D0DF2, 0, 0
 	clr	d0
-	bra	SdcMedleyTtlJgFunc_La0
-SdcMedleyTtlJgFunc_L84:
+	bra	SdcSaveFileNameFunc_La0
+SdcSaveFileNameFunc_L84:
 	mov	0x50077f44, a2
 	mov	(0x28, sp), a1
 	mov	a2, a0
@@ -515197,33 +515251,33 @@ SdcMedleyTtlJgFunc_L84:
 	mov	a2, a0
 	call	func_487095D3_entry, [a2], 0x18
 	clr	d0
-	bra	SdcMedleyTtlJgFunc_La0
-SdcMedleyTtlJgFunc_L9f:
+	bra	SdcSaveFileNameFunc_La0
+SdcSaveFileNameFunc_L9f:
 	clr	d0
-SdcMedleyTtlJgFunc_La0:
+SdcSaveFileNameFunc_La0:
 	ret	[a2], 0x18
 
-SdcFmmSortNameFunc:
+SdcFdFileViewFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x1c, sp
 	cmp	0x1460002, d1
-	beq	SdcFmmSortNameFunc_L1f
+	beq	SdcFdFileViewFunc_L1f
 	cmp	0x50009, d1
-	beq	SdcFmmSortNameFunc_L33
+	beq	SdcFdFileViewFunc_L33
 	cmp	0x1460001, d1
-	beq	SdcFmmSortNameFunc_L7a
-	bra	SdcFmmSortNameFunc_L7e
-SdcFmmSortNameFunc_L1f:
+	beq	SdcFdFileViewFunc_L7a
+	bra	SdcFdFileViewFunc_L7e
+SdcFdFileViewFunc_L1f:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmSortNameFunc_L7f
-SdcFmmSortNameFunc_L33:
+	bra	SdcFdFileViewFunc_L7f
+SdcFdFileViewFunc_L33:
 	clr	d0
 	clr	d2
-SdcFmmSortNameFunc_L35:
+SdcFdFileViewFunc_L35:
 	mov	d0, d1
 	extbu	d1
 	asl	5, d1
@@ -515251,15 +515305,15 @@ SdcFmmSortNameFunc_L35:
 	mov	d2, d0
 	extbu	d2
 	cmp	0x14, d2
-	blt	SdcFmmSortNameFunc_L35
+	blt	SdcFdFileViewFunc_L35
 	clr	d0
-	bra	SdcFmmSortNameFunc_L7f
-SdcFmmSortNameFunc_L7a:
+	bra	SdcFdFileViewFunc_L7f
+SdcFdFileViewFunc_L7a:
 	mov	-1, d0
-	bra	SdcFmmSortNameFunc_L7f
-SdcFmmSortNameFunc_L7e:
+	bra	SdcFdFileViewFunc_L7f
+SdcFdFileViewFunc_L7e:
 	clr	d0
-SdcFmmSortNameFunc_L7f:
+SdcFdFileViewFunc_L7f:
 	ret	[d2,a2,a3], 0x28
 
 func_48714426:
@@ -515352,50 +515406,50 @@ func_4871446A_entry_L39:
 func_4871446A_entry_L3a:
 	ret	[d2,d3], 0x10
 
-SdcFmmMedleyEditTitleFunc:
+SdcTechFolderCopyFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFormatFunc:
+SdcTechFileCopyFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	d1, a2
 	cmp	0x2160000, a2
-	beq	SdcFormatFunc_L54
+	beq	SdcTechFileCopyFunc_L54
 	cmp	0x50009, d1
-	bne	SdcFormatFunc_L1a
-	jmp	SdcFormatFunc_Ld8
-SdcFormatFunc_L1a:
+	bne	SdcTechFileCopyFunc_L1a
+	jmp	SdcTechFileCopyFunc_Ld8
+SdcTechFileCopyFunc_L1a:
 	cmp	0x5000f, d1
-	bne	SdcFormatFunc_L25
-	jmp	SdcFormatFunc_L115
-SdcFormatFunc_L25:
+	bne	SdcTechFileCopyFunc_L25
+	jmp	SdcTechFileCopyFunc_L115
+SdcTechFileCopyFunc_L25:
 	cmp	0x50010, d1
-	bne	SdcFormatFunc_L30
-	jmp	SdcFormatFunc_L115
-SdcFormatFunc_L30:
+	bne	SdcTechFileCopyFunc_L30
+	jmp	SdcTechFileCopyFunc_L115
+SdcTechFileCopyFunc_L30:
 	cmp	0x1460001, d1
-	bne	SdcFormatFunc_L3b
-	jmp	SdcFormatFunc_L5a2
-SdcFormatFunc_L3b:
+	bne	SdcTechFileCopyFunc_L3b
+	jmp	SdcTechFileCopyFunc_L5a2
+SdcTechFileCopyFunc_L3b:
 	cmp	0x2160001, d1
-	bne	SdcFormatFunc_L46
-	jmp	SdcFormatFunc_L5ab
-SdcFormatFunc_L46:
+	bne	SdcTechFileCopyFunc_L46
+	jmp	SdcTechFileCopyFunc_L5ab
+SdcTechFileCopyFunc_L46:
 	cmp	0x6003b, a2
-	bne	SdcFormatFunc_L51
-	jmp	SdcFormatFunc_L5b4
-SdcFormatFunc_L51:
-	jmp	SdcFormatFunc_L5bf
-SdcFormatFunc_L54:
+	bne	SdcTechFileCopyFunc_L51
+	jmp	SdcTechFileCopyFunc_L5b4
+SdcTechFileCopyFunc_L51:
+	jmp	SdcTechFileCopyFunc_L5bf
+SdcTechFileCopyFunc_L54:
 	call	func_487096B0_entry, 0, 0xc
 	movhu	d0, (0x5007792c)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFormatFunc_L6d
+	bge	SdcTechFileCopyFunc_L6d
 	clr	d0
 	movhu	d0, (0x5007792c)
-SdcFormatFunc_L6d:
+SdcTechFileCopyFunc_L6d:
 	movhu	(0x5007792c), d0
 	mov	4, d2
 	exth	d0
@@ -515412,16 +515466,16 @@ SdcFormatFunc_L6d:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcFormatFunc_Lb6
+	blt	SdcTechFileCopyFunc_Lb6
 	exth	d0
 	mov	d0, d1
 	inc	d1
 	movhu	d1, (0x5007792e)
 	cmp	0x13, d0
-	blt	SdcFormatFunc_Lb6
+	blt	SdcTechFileCopyFunc_Lb6
 	add	-1, d0
 	movhu	d0, (0x5007792e)
-SdcFormatFunc_Lb6:
+SdcTechFileCopyFunc_Lb6:
 	movhu	(0x5007792e), d0
 	mov	0x02150004, d1
 	exth	d0
@@ -515433,17 +515487,17 @@ SdcFormatFunc_Lb6:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFormatFunc_Ld8:
+SdcTechFileCopyFunc_Ld8:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFormatFunc_Le8
+	beq	SdcTechFileCopyFunc_Le8
 	cmp	1, d0
-	bne	SdcFormatFunc_Lec
-SdcFormatFunc_Le8:
+	bne	SdcTechFileCopyFunc_Lec
+SdcTechFileCopyFunc_Le8:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFormatFunc_Lec:
+SdcTechFileCopyFunc_Lec:
 	movhu	(0x5007792c), d0
 	mov	1, d1
 	exth	d0
@@ -515457,7 +515511,7 @@ SdcFormatFunc_Lec:
 	call	func_4870FDE7_entry, [d2,d3,a2,a3], 0x34
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFormatFunc_L115:
+SdcTechFileCopyFunc_L115:
 	movhu	(0x5007792c), d0
 	movhu	d0, (0x18, sp)
 	movhu	(0x5007792e), d0
@@ -515467,50 +515521,50 @@ SdcFormatFunc_L115:
 	mov	d0, d2
 	extbu	d2
 	cmp	0, a0
-	bne	SdcFormatFunc_L17c
+	bne	SdcTechFileCopyFunc_L17c
 	cmp	0x5000f, a2
-	bne	SdcFormatFunc_L158
+	bne	SdcTechFileCopyFunc_L158
 	movhu	(0x5007792c), d0
 	exth	d2
 	exth	d0
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	blt	SdcFormatFunc_L14e
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L14e:
+	blt	SdcTechFileCopyFunc_L14e
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L14e:
 	inc	d0
 	movhu	d0, (0x5007792c)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L158:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L158:
 	cmp	0x50010, a2
-	beq	SdcFormatFunc_L163
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L163:
+	beq	SdcTechFileCopyFunc_L163
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L163:
 	movhu	(0x5007792c), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFormatFunc_L171
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L171:
+	bgt	SdcTechFileCopyFunc_L171
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L171:
 	add	-1, d0
 	movhu	d0, (0x5007792c)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L17c:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L17c:
 	cmp	1, a0
-	bne	SdcFormatFunc_L199
+	bne	SdcTechFileCopyFunc_L199
 	movhu	(0x5007792c), d0
 	exth	d0
 	cmp	4, d0
-	bge	SdcFormatFunc_L18e
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L18e:
+	bge	SdcTechFileCopyFunc_L18e
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L18e:
 	add	-4, d0
 	movhu	d0, (0x5007792c)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L199:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L199:
 	cmp	2, a0
-	bne	SdcFormatFunc_L1f1
+	bne	SdcTechFileCopyFunc_L1f1
 	movhu	(0x5007792c), d0
 	exth	d2
 	exth	d0
@@ -515518,11 +515572,11 @@ SdcFormatFunc_L199:
 	mov	4, d1
 	add	d0, d1
 	cmp	d2, d1
-	bge	SdcFormatFunc_L1b8
+	bge	SdcTechFileCopyFunc_L1b8
 	add	4, d0
 	movhu	d0, (0x5007792c)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L1b8:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L1b8:
 	mov	4, d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
@@ -515532,26 +515586,26 @@ SdcFormatFunc_L1b8:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	blt	SdcFormatFunc_L1d5
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L1d5:
+	blt	SdcTechFileCopyFunc_L1d5
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L1d5:
 	mov	a2, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFormatFunc_L1e4
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L1e4:
+	bne	SdcTechFileCopyFunc_L1e4
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L1e4:
 	mov	-1, d0
 	add	a2, d0
 	movhu	d0, (0x5007792c)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L1f1:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L1f1:
 	cmp	3, a0
-	bne	SdcFormatFunc_L245
+	bne	SdcTechFileCopyFunc_L245
 	cmp	0x50010, a2
-	bne	SdcFormatFunc_L21b
+	bne	SdcTechFileCopyFunc_L21b
 	movhu	(0x5007792c), d0
 	movhu	(0x5007792e), d1
 	exth	d0
@@ -515560,12 +515614,12 @@ SdcFormatFunc_L1f1:
 	exth	d1
 	call	func_48714426_entry, [d2,d3], 0x10
 	movhu	d0, (0x5007792e)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L21b:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L21b:
 	cmp	0x5000f, a2
-	beq	SdcFormatFunc_L226
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L226:
+	beq	SdcTechFileCopyFunc_L226
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L226:
 	movhu	(0x5007792c), d0
 	movhu	(0x5007792e), d1
 	exth	d0
@@ -515574,51 +515628,51 @@ SdcFormatFunc_L226:
 	exth	d1
 	call	func_4871446A_entry, [d2,d3], 0x10
 	movhu	d0, (0x5007792e)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L245:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L245:
 	cmp	4, a0
-	bne	SdcFormatFunc_L26f
+	bne	SdcTechFileCopyFunc_L26f
 	movhu	(0x5007792e), d1
 	exth	d1
 	cmp	4, d1
-	bge	SdcFormatFunc_L257
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L257:
+	bge	SdcTechFileCopyFunc_L257
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L257:
 	movhu	(0x5007792c), d0
 	add	-4, d1
 	exth	d0
 	exth	d1
 	call	func_4871446A_entry, [d2,d3], 0x10
 	movhu	d0, (0x5007792e)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L26f:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L26f:
 	cmp	5, a0
-	bne	SdcFormatFunc_L2b0
+	bne	SdcTechFileCopyFunc_L2b0
 	movhu	(0x5007792e), d1
 	mov	4, d0
 	exth	d1
 	add	d1, d0
 	cmp	0x14, d0
-	bge	SdcFormatFunc_L299
+	bge	SdcTechFileCopyFunc_L299
 	movhu	(0x5007792c), d0
 	add	4, d1
 	exth	d0
 	exth	d1
 	call	func_48714426_entry, [d2,d3], 0x10
 	movhu	d0, (0x5007792e)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L299:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L299:
 	movhu	(0x5007792c), d0
 	mov	0x13, d1
 	exth	d0
 	call	func_48714426_entry, [d2,d3], 0x10
 	movhu	d0, (0x5007792e)
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L2b0:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L2b0:
 	cmp	8, a0
-	beq	SdcFormatFunc_L2b7
-	jmp	SdcFormatFunc_L3bc
-SdcFormatFunc_L2b7:
+	beq	SdcTechFileCopyFunc_L2b7
+	jmp	SdcTechFileCopyFunc_L3bc
+SdcTechFileCopyFunc_L2b7:
 	movhu	(0x5007792c), d0
 	movhu	(0x5007792e), d1
 	extbu	d0
@@ -515627,7 +515681,7 @@ SdcFormatFunc_L2b7:
 	call	func_48709DD1_entry, [d2,d3], 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFormatFunc_L302
+	beq	SdcTechFileCopyFunc_L302
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -515638,8 +515692,8 @@ SdcFormatFunc_L2b7:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L302:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L302:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -515686,12 +515740,12 @@ SdcFormatFunc_L302:
 	exthu	d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L3bc:
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L3bc:
 	cmp	0x32, a0
-	beq	SdcFormatFunc_L3c3
-	jmp	SdcFormatFunc_L47a
-SdcFormatFunc_L3c3:
+	beq	SdcTechFileCopyFunc_L3c3
+	jmp	SdcTechFileCopyFunc_L47a
+SdcTechFileCopyFunc_L3c3:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -515738,12 +515792,12 @@ SdcFormatFunc_L3c3:
 	exthu	d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFormatFunc_L47a:
+SdcTechFileCopyFunc_L47a:
 	movhu	(0x18, sp), d0
 	movhu	(0x5007792c), d1
 	exth	d1
 	cmp	d0, d1
-	beq	SdcFormatFunc_L4f4
+	beq	SdcTechFileCopyFunc_L4f4
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -515775,16 +515829,16 @@ SdcFormatFunc_L47a:
 	exth	d0
 	exth	d1
 	call	func_4870FDE7_entry, [d2,d3,a2,a3], 0x34
-	jmp	SdcFormatFunc_L59f
-SdcFormatFunc_L4f4:
+	jmp	SdcTechFileCopyFunc_L59f
+SdcTechFileCopyFunc_L4f4:
 	movhu	(0x1a, sp), d1
 	movhu	(0x5007792e), d0
 	mov	d1, a3
 	exth	d0
 	cmp	d1, d0
-	bne	SdcFormatFunc_L506
-	jmp	SdcFormatFunc_L59f
-SdcFormatFunc_L506:
+	bne	SdcTechFileCopyFunc_L506
+	jmp	SdcTechFileCopyFunc_L59f
+SdcTechFileCopyFunc_L506:
 	ext	d0
 	mov	4, d3
 	div	d3, d0
@@ -515803,14 +515857,14 @@ SdcFormatFunc_L506:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	beq	SdcFormatFunc_L550
+	beq	SdcTechFileCopyFunc_L550
 	mov	d3, (0x10, sp)
 	movhu	(0x5007792c), d0
 	mov	a2, d1
 	exth	d0
 	call	func_4870FDE7_entry, [d2,d3,a2,a3], 0x34
-	bra	SdcFormatFunc_L59f
-SdcFormatFunc_L550:
+	bra	SdcTechFileCopyFunc_L59f
+SdcTechFileCopyFunc_L550:
 	mov	a3, d0
 	ext	d0
 	div	d3, d0
@@ -515841,52 +515895,52 @@ SdcFormatFunc_L550:
 	mov	-1, d0
 	mov	0x02150002, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFormatFunc_L59f:
+SdcTechFileCopyFunc_L59f:
 	clr	d0
-	bra	SdcFormatFunc_L5c0
-SdcFormatFunc_L5a2:
+	bra	SdcTechFileCopyFunc_L5c0
+SdcTechFileCopyFunc_L5a2:
 	movhu	(0x5007792e), d0
 	exth	d0
-	bra	SdcFormatFunc_L5c0
-SdcFormatFunc_L5ab:
+	bra	SdcTechFileCopyFunc_L5c0
+SdcTechFileCopyFunc_L5ab:
 	movhu	(0x5007792c), d0
 	exth	d0
-	bra	SdcFormatFunc_L5c0
-SdcFormatFunc_L5b4:
+	bra	SdcTechFileCopyFunc_L5c0
+SdcTechFileCopyFunc_L5b4:
 	mov	(0x3c, sp), d0
 	movhu	d0, (0x5007792e)
 	clr	d0
-	bra	SdcFormatFunc_L5c0
-SdcFormatFunc_L5bf:
+	bra	SdcTechFileCopyFunc_L5c0
+SdcTechFileCopyFunc_L5bf:
 	clr	d0
-SdcFormatFunc_L5c0:
+SdcTechFileCopyFunc_L5c0:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcSaveSmfTtlJgFunc:
+SdcCurFolderNameFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x1c, sp
 	cmp	0x50009, d1
-	bne	SdcSaveSmfTtlJgFunc_L6f
+	bne	SdcCurFolderNameFunc_L6f
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSaveSmfTtlJgFunc_L1d
+	beq	SdcCurFolderNameFunc_L1d
 	cmp	1, d0
-	bne	SdcSaveSmfTtlJgFunc_L20
-SdcSaveSmfTtlJgFunc_L1d:
+	bne	SdcCurFolderNameFunc_L20
+SdcCurFolderNameFunc_L1d:
 	clr	d0
-	bra	SdcSaveSmfTtlJgFunc_L70
-SdcSaveSmfTtlJgFunc_L20:
+	bra	SdcCurFolderNameFunc_L70
+SdcCurFolderNameFunc_L20:
 	call	func_487096B0_entry, 0, 0xc
 	mov	d0, d2
 	exth	d2
 	cmp	0, d2
-	bge	SdcSaveSmfTtlJgFunc_L3c
+	bge	SdcCurFolderNameFunc_L3c
 	mov	0x50077f74, a2
 	clr	d0
 	movbu	d0, (0x50077f74)
-	bra	SdcSaveSmfTtlJgFunc_L5b
-SdcSaveSmfTtlJgFunc_L3c:
+	bra	SdcCurFolderNameFunc_L5b
+SdcCurFolderNameFunc_L3c:
 	extbu	d0
 	call	func_487094E2_entry, [d2,a2], 0x1c
 	mov	a0, a1
@@ -515899,16 +515953,16 @@ SdcSaveSmfTtlJgFunc_L3c:
 	mov	0x10, d1
 	mov	a2, a0
 	call	func_486D0F3D_entry, [d2,d3,a2,a3], 0x20
-SdcSaveSmfTtlJgFunc_L5b:
+SdcCurFolderNameFunc_L5b:
 	mov	a2, (0x10, sp)
 	mov	(0x38, sp), d0
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcSaveSmfTtlJgFunc_L70
-SdcSaveSmfTtlJgFunc_L6f:
+	bra	SdcCurFolderNameFunc_L70
+SdcCurFolderNameFunc_L6f:
 	clr	d0
-SdcSaveSmfTtlJgFunc_L70:
+SdcCurFolderNameFunc_L70:
 	ret	[d2,a2,a3], 0x28
 
 func_48714AE6:
@@ -515996,31 +516050,31 @@ func_48714AE6_entry_Lce:
 func_48714AE6_entry_Ldc:
 	ret	[d2,a2], 0x18
 
-func_48714BCA:
+SdcFmmLoadFilterFunc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	func_48714BCA_L20
+	beq	SdcFmmLoadFilterFunc_L20
 	cmp	0x5000f, d1
-	beq	func_48714BCA_L6b
+	beq	SdcFmmLoadFilterFunc_L6b
 	cmp	0x50010, d1
-	beq	func_48714BCA_L6b
-	jmp	func_48714BCA_L1c2
-func_48714BCA_L20:
+	beq	SdcFmmLoadFilterFunc_L6b
+	jmp	SdcFmmLoadFilterFunc_L1c2
+SdcFmmLoadFilterFunc_L20:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	func_48714BCA_L30
+	beq	SdcFmmLoadFilterFunc_L30
 	cmp	1, d0
-	bne	func_48714BCA_L34
-func_48714BCA_L30:
+	bne	SdcFmmLoadFilterFunc_L34
+SdcFmmLoadFilterFunc_L30:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_48714BCA_L34:
+SdcFmmLoadFilterFunc_L34:
 	clr	d0
 	clr	d2
 	mov	0x50077930, d3
-func_48714BCA_L3c:
+SdcFmmLoadFilterFunc_L3c:
 	mov	d2, d1
 	asl	4, d1
 	add	d3, d1
@@ -516039,26 +516093,26 @@ func_48714BCA_L3c:
 	mov	d2, d0
 	exth	d2
 	cmp	8, d2
-	blt	func_48714BCA_L3c
+	blt	SdcFmmLoadFilterFunc_L3c
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_48714BCA_L6b:
+SdcFmmLoadFilterFunc_L6b:
 	mov	(0x30, sp), a1
 	cmp	8, a1
-	bcc	func_48714BCA_Lc0
+	bcc	SdcFmmLoadFilterFunc_Lc0
 	cmp	0x5000f, d1
-	bne	func_48714BCA_L86
+	bne	SdcFmmLoadFilterFunc_L86
 	mov	a1, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709F27_entry, [d2], 4
-	bra	func_48714BCA_L91
-func_48714BCA_L86:
+	bra	SdcFmmLoadFilterFunc_L91
+SdcFmmLoadFilterFunc_L86:
 	mov	a1, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709F45_entry, [d2], 4
-func_48714BCA_L91:
+SdcFmmLoadFilterFunc_L91:
 	mov	0x50077930, a2
 	mov	d2, d0
 	extbu	d0
@@ -516075,24 +516129,24 @@ func_48714BCA_L91:
 	mov	-1, d0
 	mov	0x0145000a, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48714BCA_L1c2
-func_48714BCA_Lc0:
+	jmp	SdcFmmLoadFilterFunc_L1c2
+SdcFmmLoadFilterFunc_Lc0:
 	cmp	0xe, a1
-	beq	func_48714BCA_Lc7
-	jmp	func_48714BCA_L1c2
-func_48714BCA_Lc7:
+	beq	SdcFmmLoadFilterFunc_Lc7
+	jmp	SdcFmmLoadFilterFunc_L1c2
+SdcFmmLoadFilterFunc_Lc7:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	bne	func_48714BCA_Ld6
-	jmp	func_48714BCA_L1c2
-func_48714BCA_Ld6:
+	bne	SdcFmmLoadFilterFunc_Ld6
+	jmp	SdcFmmLoadFilterFunc_L1c2
+SdcFmmLoadFilterFunc_Ld6:
 	call	func_48709EDF, 0, 0
 	exthu	d0
 	cmp	0, d0
-	bne	func_48714BCA_Le5
-	jmp	func_48714BCA_L1c2
-func_48714BCA_Le5:
+	bne	SdcFmmLoadFilterFunc_Le5
+	jmp	SdcFmmLoadFilterFunc_L1c2
+SdcFmmLoadFilterFunc_Le5:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -516123,36 +516177,36 @@ func_48714BCA_Le5:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	func_48714BCA_L195
+	beq	SdcFmmLoadFilterFunc_L195
 	mov	2, d0
 	call	func_48709EE8_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714BCA_L195
+	beq	SdcFmmLoadFilterFunc_L195
 	mov	2, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	bne	func_48714BCA_L189
+	bne	SdcFmmLoadFilterFunc_L189
 	mov	0xb, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714BCA_L195
-func_48714BCA_L189:
+	beq	SdcFmmLoadFilterFunc_L195
+SdcFmmLoadFilterFunc_L189:
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	func_48714BCA_L1a5
-func_48714BCA_L195:
+	bra	SdcFmmLoadFilterFunc_L1a5
+SdcFmmLoadFilterFunc_L195:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x5f, d0
-	beq	func_48714BCA_L1a5
+	beq	SdcFmmLoadFilterFunc_L1a5
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-func_48714BCA_L1a5:
+SdcFmmLoadFilterFunc_L1a5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -516162,7 +516216,7 @@ func_48714BCA_L1a5:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-func_48714BCA_L1c2:
+SdcFmmLoadFilterFunc_L1c2:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
@@ -516208,23 +516262,23 @@ func_48714D90_entry_L53:
 func_48714D90_entry_L61:
 	ret	[d2,a2], 0x18
 
-func_48714DF9:
+SdcFmmSaveFilterFunc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_48714DF9_entry:
+SdcFmmSaveFilterFunc_entry:
 	cmp	0x50009, d1
-	beq	func_48714DF9_entry_L1b
+	beq	SdcFmmSaveFilterFunc_entry_L1b
 	cmp	0x5000f, d1
-	beq	func_48714DF9_entry_L51
+	beq	SdcFmmSaveFilterFunc_entry_L51
 	cmp	0x50010, d1
-	beq	func_48714DF9_entry_L51
-	jmp	func_48714DF9_entry_L50e
-func_48714DF9_entry_L1b:
+	beq	SdcFmmSaveFilterFunc_entry_L51
+	jmp	SdcFmmSaveFilterFunc_entry_L50e
+SdcFmmSaveFilterFunc_entry_L1b:
 	clr	d0
 	clr	d2
 	mov	0x500779b1, d3
-func_48714DF9_entry_L23:
+SdcFmmSaveFilterFunc_entry_L23:
 	mov	d2, d1
 	asl	4, d1
 	add	d3, d1
@@ -516242,70 +516296,70 @@ func_48714DF9_entry_L23:
 	mov	d2, d0
 	exth	d2
 	cmp	8, d2
-	blt	func_48714DF9_entry_L23
+	blt	SdcFmmSaveFilterFunc_entry_L23
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-func_48714DF9_entry_L51:
+SdcFmmSaveFilterFunc_entry_L51:
 	mov	(0x30, sp), a2
 	cmp	8, a2
-	bcs	func_48714DF9_entry_L5a
-	jmp	func_48714DF9_entry_L114
-func_48714DF9_entry_L5a:
+	bcs	SdcFmmSaveFilterFunc_entry_L5a
+	jmp	SdcFmmSaveFilterFunc_entry_L114
+SdcFmmSaveFilterFunc_entry_L5a:
 	cmp	1, a2
-	bne	func_48714DF9_entry_Lc6
+	bne	SdcFmmSaveFilterFunc_entry_Lc6
 	cmp	0x5000f, d1
-	bne	func_48714DF9_entry_L96
+	bne	SdcFmmSaveFilterFunc_entry_L96
 	mov	a2, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709F70_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L8b
+	beq	SdcFmmSaveFilterFunc_entry_L8b
 	call	func_48709FEF, 0, 0
 	extbu	d0
 	cmp	0, d0
-	bne	func_48714DF9_entry_Le6
+	bne	SdcFmmSaveFilterFunc_entry_Le6
 	call	func_4870A012, 0, 0
-	bra	func_48714DF9_entry_Le6
-func_48714DF9_entry_L8b:
+	bra	SdcFmmSaveFilterFunc_entry_Le6
+SdcFmmSaveFilterFunc_entry_L8b:
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FAF_entry, [d2], 4
-	bra	func_48714DF9_entry_Le6
-func_48714DF9_entry_L96:
+	bra	SdcFmmSaveFilterFunc_entry_Le6
+SdcFmmSaveFilterFunc_entry_L96:
 	mov	a2, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709F70_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_Le6
+	beq	SdcFmmSaveFilterFunc_entry_Le6
 	call	func_48709FEF, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_Lbb
+	beq	SdcFmmSaveFilterFunc_entry_Lbb
 	call	func_4870A01D, 0, 0
-	bra	func_48714DF9_entry_Le6
-func_48714DF9_entry_Lbb:
+	bra	SdcFmmSaveFilterFunc_entry_Le6
+SdcFmmSaveFilterFunc_entry_Lbb:
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
-	bra	func_48714DF9_entry_Le6
-func_48714DF9_entry_Lc6:
+	bra	SdcFmmSaveFilterFunc_entry_Le6
+SdcFmmSaveFilterFunc_entry_Lc6:
 	cmp	0x5000f, d1
-	bne	func_48714DF9_entry_Ldb
+	bne	SdcFmmSaveFilterFunc_entry_Ldb
 	mov	a2, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FAF_entry, [d2], 4
-	bra	func_48714DF9_entry_Le6
-func_48714DF9_entry_Ldb:
+	bra	SdcFmmSaveFilterFunc_entry_Le6
+SdcFmmSaveFilterFunc_entry_Ldb:
 	mov	a2, d2
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
-func_48714DF9_entry_Le6:
+SdcFmmSaveFilterFunc_entry_Le6:
 	mov	0x500779b1, d3
 	mov	d2, d1
 	extbu	d1
@@ -516322,26 +516376,26 @@ func_48714DF9_entry_Le6:
 	mov	-1, d0
 	mov	0x0145000a, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L114:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L114:
 	cmp	0xd, a2
-	bne	func_48714DF9_entry_L16f
+	bne	SdcFmmSaveFilterFunc_entry_L16f
 	call	func_4870A012, 0, 0
 	clr	d2
 	clr	d3
 	mov	0x500779b1, a2
-func_48714DF9_entry_L127:
+SdcFmmSaveFilterFunc_entry_L127:
 	cmp	7, d3
-	bge	func_48714DF9_entry_L136
+	bge	SdcFmmSaveFilterFunc_entry_L136
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FAF_entry, [d2], 4
-	bra	func_48714DF9_entry_L13f
-func_48714DF9_entry_L136:
+	bra	SdcFmmSaveFilterFunc_entry_L13f
+SdcFmmSaveFilterFunc_entry_L136:
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
-func_48714DF9_entry_L13f:
+SdcFmmSaveFilterFunc_entry_L13f:
 	mov	d3, d1
 	asl	4, d1
 	mov	a2, a0
@@ -516361,26 +516415,26 @@ func_48714DF9_entry_L13f:
 	mov	d3, d2
 	exth	d3
 	cmp	8, d3
-	blt	func_48714DF9_entry_L127
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L16f:
+	blt	SdcFmmSaveFilterFunc_entry_L127
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L16f:
 	cmp	0xb, a2
-	bne	func_48714DF9_entry_L1c3
+	bne	SdcFmmSaveFilterFunc_entry_L1c3
 	clr	d2
 	clr	d3
 	mov	0x500779b1, a2
-func_48714DF9_entry_L17b:
+SdcFmmSaveFilterFunc_entry_L17b:
 	cmp	7, d3
-	bge	func_48714DF9_entry_L18a
+	bge	SdcFmmSaveFilterFunc_entry_L18a
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
-	bra	func_48714DF9_entry_L193
-func_48714DF9_entry_L18a:
+	bra	SdcFmmSaveFilterFunc_entry_L193
+SdcFmmSaveFilterFunc_entry_L18a:
 	mov	d2, d0
 	extbu	d0
 	call	func_48709FAF_entry, [d2], 4
-func_48714DF9_entry_L193:
+SdcFmmSaveFilterFunc_entry_L193:
 	mov	d3, d1
 	asl	4, d1
 	mov	a2, a0
@@ -516400,51 +516454,51 @@ func_48714DF9_entry_L193:
 	mov	d3, d2
 	exth	d3
 	cmp	8, d3
-	blt	func_48714DF9_entry_L17b
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L1c3:
+	blt	SdcFmmSaveFilterFunc_entry_L17b
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L1c3:
 	cmp	0xe, a2
-	beq	func_48714DF9_entry_L1ca
-	jmp	func_48714DF9_entry_L302
-func_48714DF9_entry_L1ca:
+	beq	SdcFmmSaveFilterFunc_entry_L1ca
+	jmp	SdcFmmSaveFilterFunc_entry_L302
+SdcFmmSaveFilterFunc_entry_L1ca:
 	call	func_48709F67, 0, 0
 	exthu	d0
 	cmp	0, d0
-	bne	func_48714DF9_entry_L1d9
-	jmp	func_48714DF9_entry_L302
-func_48714DF9_entry_L1d9:
+	bne	SdcFmmSaveFilterFunc_entry_L1d9
+	jmp	SdcFmmSaveFilterFunc_entry_L302
+SdcFmmSaveFilterFunc_entry_L1d9:
 	clr	d0
 	movbu	d0, (0x500779b0)
 	call	func_4871ADD4_entry, [d2,d3], 0x14
 	exthu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L204
+	beq	SdcFmmSaveFilterFunc_entry_L204
 	movbu	(0x500788ca), d0
 	mov	0x01450006, d1
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L204:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L204:
 	mov	2, d0
 	call	func_48709F70_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L228
+	beq	SdcFmmSaveFilterFunc_entry_L228
 	mov	0x4c, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0005000f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L228:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L228:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L26a
+	beq	SdcFmmSaveFilterFunc_entry_L26a
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L26a
+	beq	SdcFmmSaveFilterFunc_entry_L26a
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -516455,8 +516509,8 @@ func_48714DF9_entry_L228:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L26a:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L26a:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -516496,28 +516550,28 @@ func_48714DF9_entry_L26a:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L302:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L302:
 	cmp	0x4b, a2
-	beq	func_48714DF9_entry_L30d
+	beq	SdcFmmSaveFilterFunc_entry_L30d
 	cmp	0x4c, a2
-	beq	func_48714DF9_entry_L30d
-	jmp	func_48714DF9_entry_L412
-func_48714DF9_entry_L30d:
+	beq	SdcFmmSaveFilterFunc_entry_L30d
+	jmp	SdcFmmSaveFilterFunc_entry_L412
+SdcFmmSaveFilterFunc_entry_L30d:
 	mov	1, d0
 	movbu	d0, (0x500779b0)
 	cmp	0x4b, a2
-	beq	func_48714DF9_entry_L320
+	beq	SdcFmmSaveFilterFunc_entry_L320
 	clr	d0
 	movbu	d0, (0x500779b0)
-func_48714DF9_entry_L320:
+SdcFmmSaveFilterFunc_entry_L320:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L362
+	beq	SdcFmmSaveFilterFunc_entry_L362
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L362
+	beq	SdcFmmSaveFilterFunc_entry_L362
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -516528,8 +516582,8 @@ func_48714DF9_entry_L320:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L362:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L362:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -516541,11 +516595,11 @@ func_48714DF9_entry_L362:
 	call	func_486D3618, 0, 0
 	movbu	(0x500779b0), d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L3a0
+	beq	SdcFmmSaveFilterFunc_entry_L3a0
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x500779b0)
-func_48714DF9_entry_L3a0:
+SdcFmmSaveFilterFunc_entry_L3a0:
 	call	func_4870CAE5_entry, [d2,d3,a2,a3], 0xe0
 	exth	d0
 	mov	0x60, d1
@@ -516576,12 +516630,12 @@ func_48714DF9_entry_L3a0:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	func_48714DF9_entry_L50b
-func_48714DF9_entry_L412:
+	jmp	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L412:
 	cmp	0x32, a2
-	beq	func_48714DF9_entry_L419
-	jmp	func_48714DF9_entry_L4c8
-func_48714DF9_entry_L419:
+	beq	SdcFmmSaveFilterFunc_entry_L419
+	jmp	SdcFmmSaveFilterFunc_entry_L4c8
+SdcFmmSaveFilterFunc_entry_L419:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -516591,11 +516645,11 @@ func_48714DF9_entry_L419:
 	call	func_487105D7_entry, 0, 0xc
 	movbu	(0x500779b0), d0
 	cmp	0, d0
-	beq	func_48714DF9_entry_L44e
+	beq	SdcFmmSaveFilterFunc_entry_L44e
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x500779b0)
-func_48714DF9_entry_L44e:
+SdcFmmSaveFilterFunc_entry_L44e:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	call	func_4870CAE5_entry, [d2,d3,a2,a3], 0xe0
@@ -516628,14 +516682,14 @@ func_48714DF9_entry_L44e:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	func_48714DF9_entry_L50b
-func_48714DF9_entry_L4c8:
+	bra	SdcFmmSaveFilterFunc_entry_L50b
+SdcFmmSaveFilterFunc_entry_L4c8:
 	cmp	0xc, a2
-	bne	func_48714DF9_entry_L50b
+	bne	SdcFmmSaveFilterFunc_entry_L50b
 	clr	d0
 	clr	d3
 	mov	0x500779b1, a2
-func_48714DF9_entry_L4d4:
+SdcFmmSaveFilterFunc_entry_L4d4:
 	mov	d0, d2
 	extbu	d0
 	call	func_48709FCD_entry, [d2], 4
@@ -516658,13 +516712,13 @@ func_48714DF9_entry_L4d4:
 	mov	d3, d0
 	exth	d3
 	cmp	8, d3
-	blt	func_48714DF9_entry_L4d4
-func_48714DF9_entry_L50b:
+	blt	SdcFmmSaveFilterFunc_entry_L4d4
+SdcFmmSaveFilterFunc_entry_L50b:
 	clr	d0
-	bra	func_48714DF9_entry_L50f
-func_48714DF9_entry_L50e:
+	bra	SdcFmmSaveFilterFunc_entry_L50f
+SdcFmmSaveFilterFunc_entry_L50e:
 	clr	d0
-func_48714DF9_entry_L50f:
+SdcFmmSaveFilterFunc_entry_L50f:
 	ret	[d2,d3,a2], 0x20
 
 func_48715310:
@@ -516947,47 +517001,47 @@ func_4871539B_entry_L18d:
 func_4871539B_entry_L1f1:
 	ret	[d2,d3,a2,a3], 0x30
 
-SdcFmmSaveFilterFunc:
+SdcFmmSortNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 	cmp	0x1460002, d1
-	beq	SdcFmmSaveFilterFunc_L52
+	beq	SdcFmmSortNameFunc_L52
 	cmp	0x50009, d1
-	bne	SdcFmmSaveFilterFunc_L18
-	jmp	SdcFmmSaveFilterFunc_L184
-SdcFmmSaveFilterFunc_L18:
+	bne	SdcFmmSortNameFunc_L18
+	jmp	SdcFmmSortNameFunc_L184
+SdcFmmSortNameFunc_L18:
 	cmp	0x5000f, d1
-	bne	SdcFmmSaveFilterFunc_L23
-	jmp	SdcFmmSaveFilterFunc_L1d8
-SdcFmmSaveFilterFunc_L23:
+	bne	SdcFmmSortNameFunc_L23
+	jmp	SdcFmmSortNameFunc_L1d8
+SdcFmmSortNameFunc_L23:
 	cmp	0x50010, d1
-	bne	SdcFmmSaveFilterFunc_L2e
-	jmp	SdcFmmSaveFilterFunc_L1d8
-SdcFmmSaveFilterFunc_L2e:
+	bne	SdcFmmSortNameFunc_L2e
+	jmp	SdcFmmSortNameFunc_L1d8
+SdcFmmSortNameFunc_L2e:
 	cmp	0x1460000, d1
-	bne	SdcFmmSaveFilterFunc_L39
-	jmp	SdcFmmSaveFilterFunc_L647
-SdcFmmSaveFilterFunc_L39:
+	bne	SdcFmmSortNameFunc_L39
+	jmp	SdcFmmSortNameFunc_L647
+SdcFmmSortNameFunc_L39:
 	cmp	0x1460001, d1
-	bne	SdcFmmSaveFilterFunc_L44
-	jmp	SdcFmmSaveFilterFunc_L66e
-SdcFmmSaveFilterFunc_L44:
+	bne	SdcFmmSortNameFunc_L44
+	jmp	SdcFmmSortNameFunc_L66e
+SdcFmmSortNameFunc_L44:
 	cmp	0x6003b, d1
-	bne	SdcFmmSaveFilterFunc_L4f
-	jmp	SdcFmmSaveFilterFunc_L677
-SdcFmmSaveFilterFunc_L4f:
-	jmp	SdcFmmSaveFilterFunc_L682
-SdcFmmSaveFilterFunc_L52:
+	bne	SdcFmmSortNameFunc_L4f
+	jmp	SdcFmmSortNameFunc_L677
+SdcFmmSortNameFunc_L4f:
+	jmp	SdcFmmSortNameFunc_L682
+SdcFmmSortNameFunc_L52:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSaveFilterFunc_L62
+	beq	SdcFmmSortNameFunc_L62
 	cmp	1, d0
-	bne	SdcFmmSaveFilterFunc_L66
-SdcFmmSaveFilterFunc_L62:
+	bne	SdcFmmSortNameFunc_L66
+SdcFmmSortNameFunc_L62:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmSaveFilterFunc_L66:
+SdcFmmSortNameFunc_L66:
 	clr	d0
 	movhu	d0, (0x50077a3a)
 	movhu	d0, (0x50077a38)
@@ -516996,7 +517050,7 @@ SdcFmmSaveFilterFunc_L66:
 	mov	d2, d1
 	extb	d1
 	cmp	0, d1
-	beq	SdcFmmSaveFilterFunc_Ld2
+	beq	SdcFmmSortNameFunc_Ld2
 	extb	d2
 	mov	d2, d0
 	call	func_48715310_entry, [d2], 4
@@ -517004,13 +517058,13 @@ SdcFmmSaveFilterFunc_L66:
 	movhu	d0, (0x50077a38)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmSaveFilterFunc_La9
+	bge	SdcFmmSortNameFunc_La9
 	clr	d0
 	movhu	d0, (0x50077a38)
 	movhu	d0, (0x50077a3c)
 	movhu	d0, (0x50077a3a)
-	bra	SdcFmmSaveFilterFunc_Lf0
-SdcFmmSaveFilterFunc_La9:
+	bra	SdcFmmSortNameFunc_Lf0
+SdcFmmSortNameFunc_La9:
 	mov	d2, d0
 	call	func_4870BF86_entry, [d2,d3,a2,a3], 0x24
 	movhu	d0, (0x50077a3c)
@@ -517018,11 +517072,11 @@ SdcFmmSaveFilterFunc_La9:
 	movhu	d0, (0x50077a3a)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmSaveFilterFunc_Lf0
+	bge	SdcFmmSortNameFunc_Lf0
 	clr	d0
 	movhu	d0, (0x50077a3a)
-	bra	SdcFmmSaveFilterFunc_Lf0
-SdcFmmSaveFilterFunc_Ld2:
+	bra	SdcFmmSortNameFunc_Lf0
+SdcFmmSortNameFunc_Ld2:
 	clr	d0
 	movhu	d0, (0x50077a38)
 	mov	0x41, d2
@@ -517031,37 +517085,37 @@ SdcFmmSaveFilterFunc_Ld2:
 	movhu	d0, (0x50077a3c)
 	clr	d0
 	movhu	d0, (0x50077a3a)
-SdcFmmSaveFilterFunc_Lf0:
+SdcFmmSortNameFunc_Lf0:
 	movhu	(0x50077a3c), d1
 	cmp	0, d1
-	ble	SdcFmmSaveFilterFunc_L169
+	ble	SdcFmmSortNameFunc_L169
 	movhu	(0x50077a3a), d1
 	mov	d2, d0
 	exthu	d1
 	call	func_4870C01E_entry, [d2,d3,a2], 0x24
 	mov	a0, d2
 	cmp	0, d2
-	beq	SdcFmmSaveFilterFunc_L180
+	beq	SdcFmmSortNameFunc_L180
 	call	func_487096B0_entry, 0, 0xc
 	mov	0x18, a1
 	add	d2, a1
 	movbu	(a1), d1
 	exth	d0
 	cmp	d0, d1
-	beq	SdcFmmSaveFilterFunc_L129
+	beq	SdcFmmSortNameFunc_L129
 	movbu	(a1), d0
 	call	func_48709696_entry, [d2], 0x10
-SdcFmmSaveFilterFunc_L129:
+SdcFmmSortNameFunc_L129:
 	call	func_48709676_entry, 0, 0xc
 	mov	0x19, a0
 	add	d2, a0
 	movbu	(a0), d1
 	exth	d0
 	cmp	d0, d1
-	beq	SdcFmmSaveFilterFunc_L143
+	beq	SdcFmmSortNameFunc_L143
 	movbu	(a0), d0
 	call	func_4870965C_entry, [d2], 0x10
-SdcFmmSaveFilterFunc_L143:
+SdcFmmSortNameFunc_L143:
 	movhu	(0x50077a3a), d0
 	mov	8, d1
 	exth	d0
@@ -517072,27 +517126,27 @@ SdcFmmSaveFilterFunc_L143:
 	mov	0x02100245, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSaveFilterFunc_L180
-SdcFmmSaveFilterFunc_L169:
+	bra	SdcFmmSortNameFunc_L180
+SdcFmmSortNameFunc_L169:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100245, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L180:
+SdcFmmSortNameFunc_L180:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmSaveFilterFunc_L184:
+SdcFmmSortNameFunc_L184:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSaveFilterFunc_L194
+	beq	SdcFmmSortNameFunc_L194
 	cmp	1, d0
-	bne	SdcFmmSaveFilterFunc_L198
-SdcFmmSaveFilterFunc_L194:
+	bne	SdcFmmSortNameFunc_L198
+SdcFmmSortNameFunc_L194:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmSaveFilterFunc_L198:
+SdcFmmSortNameFunc_L198:
 	movhu	(0x50077a38), d0
 	mov	Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a2
 	exth	d0
@@ -517115,57 +517169,57 @@ SdcFmmSaveFilterFunc_L198:
 	call	func_4871539B_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmSaveFilterFunc_L1d8:
+SdcFmmSortNameFunc_L1d8:
 	mov	(0x40, sp), a1
 	movhu	(0x50077a3a), d0
 	cmp	0, a1
 	movhu	d0, (0x1c, sp)
 	movhu	(0x50077a38), d0
 	mov	d0, a3
-	bne	SdcFmmSaveFilterFunc_L23a
+	bne	SdcFmmSortNameFunc_L23a
 	cmp	0x50010, d1
-	bne	SdcFmmSaveFilterFunc_L216
+	bne	SdcFmmSortNameFunc_L216
 	movhu	(0x50077a3a), d1
 	movhu	(0x50077a3c), d2
 	exth	d1
 	mov	d1, d0
 	inc	d0
 	cmp	d2, d0
-	blt	SdcFmmSaveFilterFunc_L20c
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L20c:
+	blt	SdcFmmSortNameFunc_L20c
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L20c:
 	inc	d1
 	movhu	d1, (0x50077a3a)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L216:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L216:
 	cmp	0x5000f, d1
-	beq	SdcFmmSaveFilterFunc_L221
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L221:
+	beq	SdcFmmSortNameFunc_L221
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L221:
 	movhu	(0x50077a3a), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmSaveFilterFunc_L22f
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L22f:
+	bgt	SdcFmmSortNameFunc_L22f
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L22f:
 	add	-1, d0
 	movhu	d0, (0x50077a3a)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L23a:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L23a:
 	cmp	1, a1
-	bne	SdcFmmSaveFilterFunc_L257
+	bne	SdcFmmSortNameFunc_L257
 	movhu	(0x50077a3a), d0
 	exth	d0
 	cmp	8, d0
-	bge	SdcFmmSaveFilterFunc_L24c
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L24c:
+	bge	SdcFmmSortNameFunc_L24c
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L24c:
 	add	-8, d0
 	movhu	d0, (0x50077a3a)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L257:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L257:
 	cmp	2, a1
-	bne	SdcFmmSaveFilterFunc_L2b5
+	bne	SdcFmmSortNameFunc_L2b5
 	movhu	(0x50077a3a), d0
 	movhu	(0x50077a3c), d1
 	exth	d0
@@ -517173,11 +517227,11 @@ SdcFmmSaveFilterFunc_L257:
 	mov	8, d1
 	add	d0, d1
 	cmp	a2, d1
-	bge	SdcFmmSaveFilterFunc_L27c
+	bge	SdcFmmSortNameFunc_L27c
 	add	8, d0
 	movhu	d0, (0x50077a3a)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L27c:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L27c:
 	mov	8, d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
@@ -517187,61 +517241,61 @@ SdcFmmSaveFilterFunc_L27c:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	blt	SdcFmmSaveFilterFunc_L299
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L299:
+	blt	SdcFmmSortNameFunc_L299
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L299:
 	mov	a2, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFmmSaveFilterFunc_L2a8
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2a8:
+	bne	SdcFmmSortNameFunc_L2a8
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2a8:
 	mov	-1, d0
 	add	a2, d0
 	movhu	d0, (0x50077a3a)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2b5:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2b5:
 	cmp	5, a1
-	bne	SdcFmmSaveFilterFunc_L300
+	bne	SdcFmmSortNameFunc_L300
 	cmp	0x50010, d1
-	bne	SdcFmmSaveFilterFunc_L2dc
+	bne	SdcFmmSortNameFunc_L2dc
 	movhu	(0x50077a38), d0
 	exth	d0
 	mov	d0, a0
 	inc	a0
 	cmp	0x60, a0
-	bcs	SdcFmmSaveFilterFunc_L2d2
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2d2:
+	bcs	SdcFmmSortNameFunc_L2d2
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2d2:
 	inc	d0
 	movhu	d0, (0x50077a38)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2dc:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2dc:
 	cmp	0x5000f, d1
-	beq	SdcFmmSaveFilterFunc_L2e7
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2e7:
+	beq	SdcFmmSortNameFunc_L2e7
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2e7:
 	movhu	(0x50077a38), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmSaveFilterFunc_L2f5
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L2f5:
+	bgt	SdcFmmSortNameFunc_L2f5
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L2f5:
 	add	-1, d0
 	movhu	d0, (0x50077a38)
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L300:
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L300:
 	cmp	0xa, a1
-	beq	SdcFmmSaveFilterFunc_L307
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L307:
+	beq	SdcFmmSortNameFunc_L307
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L307:
 	movhu	(0x50077a3c), d0
 	cmp	0, d0
-	bgt	SdcFmmSaveFilterFunc_L314
-	jmp	SdcFmmSaveFilterFunc_L3f1
-SdcFmmSaveFilterFunc_L314:
+	bgt	SdcFmmSortNameFunc_L314
+	jmp	SdcFmmSortNameFunc_L3f1
+SdcFmmSortNameFunc_L314:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -517272,36 +517326,36 @@ SdcFmmSaveFilterFunc_L314:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFmmSaveFilterFunc_L3c4
+	beq	SdcFmmSortNameFunc_L3c4
 	mov	2, d0
 	call	func_48709EE8_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSaveFilterFunc_L3c4
+	beq	SdcFmmSortNameFunc_L3c4
 	mov	2, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	bne	SdcFmmSaveFilterFunc_L3b8
+	bne	SdcFmmSortNameFunc_L3b8
 	mov	0xb, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSaveFilterFunc_L3c4
-SdcFmmSaveFilterFunc_L3b8:
+	beq	SdcFmmSortNameFunc_L3c4
+SdcFmmSortNameFunc_L3b8:
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSaveFilterFunc_L3d4
-SdcFmmSaveFilterFunc_L3c4:
+	bra	SdcFmmSortNameFunc_L3d4
+SdcFmmSortNameFunc_L3c4:
 	mov	d2, d0
 	exthu	d0
 	cmp	0x5f, d0
-	beq	SdcFmmSaveFilterFunc_L3d4
+	beq	SdcFmmSortNameFunc_L3d4
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L3d4:
+SdcFmmSortNameFunc_L3d4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -517311,15 +517365,15 @@ SdcFmmSaveFilterFunc_L3d4:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L3f1:
+SdcFmmSortNameFunc_L3f1:
 	movhu	(0x50077a38), d1
 	mov	a3, d0
 	exth	d1
 	exth	d0
 	cmp	d1, d0
-	bne	SdcFmmSaveFilterFunc_L401
-	jmp	SdcFmmSaveFilterFunc_L538
-SdcFmmSaveFilterFunc_L401:
+	bne	SdcFmmSortNameFunc_L401
+	jmp	SdcFmmSortNameFunc_L538
+SdcFmmSortNameFunc_L401:
 	clr	d0
 	movhu	d0, (0x50077a3a)
 	mov	Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a3
@@ -517329,9 +517383,9 @@ SdcFmmSaveFilterFunc_L401:
 	movhu	d0, (0x50077a3c)
 	movhu	(0x50077a3c), d0
 	cmp	0, d0
-	bgt	SdcFmmSaveFilterFunc_L42b
-	jmp	SdcFmmSaveFilterFunc_L4d6
-SdcFmmSaveFilterFunc_L42b:
+	bgt	SdcFmmSortNameFunc_L42b
+	jmp	SdcFmmSortNameFunc_L4d6
+SdcFmmSortNameFunc_L42b:
 	movhu	(0x50077a3a), d0
 	mov	8, d3
 	exth	d0
@@ -517380,15 +517434,15 @@ SdcFmmSaveFilterFunc_L42b:
 	call	func_4870C01E_entry, [d2,d3,a2], 0x24
 	mov	a0, a2
 	cmp	0, a2
-	beq	SdcFmmSaveFilterFunc_L4ff
+	beq	SdcFmmSortNameFunc_L4ff
 	movbu	(0x18, a2), d0
 	call	func_48709696_entry, [d2], 0x10
 	movbu	(0x19, a2), d0
 	call	func_4870965C_entry, [d2], 0x10
 	mov	1, d0
 	call	func_487101F4_entry, [d2], 0x18
-	bra	SdcFmmSaveFilterFunc_L4ff
-SdcFmmSaveFilterFunc_L4d6:
+	bra	SdcFmmSortNameFunc_L4ff
+SdcFmmSortNameFunc_L4d6:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100245, d0
@@ -517399,7 +517453,7 @@ SdcFmmSaveFilterFunc_L4d6:
 	mov	-1, d0
 	mov	0x01450008, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L4ff:
+SdcFmmSortNameFunc_L4ff:
 	movhu	(0x50077a38), d0
 	exth	d0
 	movbu	(d0, a3), d0
@@ -517419,17 +517473,17 @@ SdcFmmSaveFilterFunc_L4ff:
 	mov	-1, d0
 	exth	d1
 	call	func_4871539B_entry, [d2,d3,a2,a3], 0x30
-	jmp	SdcFmmSaveFilterFunc_L644
-SdcFmmSaveFilterFunc_L538:
+	jmp	SdcFmmSortNameFunc_L644
+SdcFmmSortNameFunc_L538:
 	movhu	(0x1c, sp), d0
 	exth	d0
 	mov	d0, a3
 	movhu	(0x50077a3a), d0
 	exth	d0
 	cmp	d0, a3
-	bne	SdcFmmSaveFilterFunc_L54c
-	jmp	SdcFmmSaveFilterFunc_L644
-SdcFmmSaveFilterFunc_L54c:
+	bne	SdcFmmSortNameFunc_L54c
+	jmp	SdcFmmSortNameFunc_L644
+SdcFmmSortNameFunc_L54c:
 	ext	d0
 	mov	8, d1
 	div	d1, d0
@@ -517448,7 +517502,7 @@ SdcFmmSaveFilterFunc_L54c:
 	mov	8, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	beq	SdcFmmSaveFilterFunc_L5b1
+	beq	SdcFmmSortNameFunc_L5b1
 	mov	d2, (0x10, sp)
 	movhu	(0x50077a38), d0
 	mov	Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a0
@@ -517462,8 +517516,8 @@ SdcFmmSaveFilterFunc_L54c:
 	mov	-1, d0
 	exth	d1
 	call	func_4871539B_entry, [d2,d3,a2,a3], 0x30
-	bra	SdcFmmSaveFilterFunc_L606
-SdcFmmSaveFilterFunc_L5b1:
+	bra	SdcFmmSortNameFunc_L606
+SdcFmmSortNameFunc_L5b1:
 	mov	a3, d1
 	ext	d1
 	mov	0x50077b6c, d2
@@ -517496,7 +517550,7 @@ SdcFmmSaveFilterFunc_L5b1:
 	mov	-1, d0
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L606:
+SdcFmmSortNameFunc_L606:
 	movhu	(0x50077a38), d0
 	mov	Str_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTt, a0
 	exth	d0
@@ -517507,121 +517561,121 @@ SdcFmmSaveFilterFunc_L606:
 	call	func_4870C01E_entry, [d2,d3,a2], 0x24
 	mov	a0, a2
 	cmp	0, a2
-	beq	SdcFmmSaveFilterFunc_L644
+	beq	SdcFmmSortNameFunc_L644
 	movbu	(0x18, a2), d0
 	call	func_48709696_entry, [d2], 0x10
 	movbu	(0x19, a2), d0
 	call	func_4870965C_entry, [d2], 0x10
 	mov	1, d0
 	call	func_487101F4_entry, [d2], 0x18
-SdcFmmSaveFilterFunc_L644:
+SdcFmmSortNameFunc_L644:
 	clr	d0
-	bra	SdcFmmSaveFilterFunc_L683
-SdcFmmSaveFilterFunc_L647:
+	bra	SdcFmmSortNameFunc_L683
+SdcFmmSortNameFunc_L647:
 	movhu	(0x50077a3c), d0
 	cmp	0, d0
-	ble	SdcFmmSaveFilterFunc_L659
+	ble	SdcFmmSortNameFunc_L659
 	clr	d0
 	call	func_487101F4_entry, [d2], 0x18
-	bra	SdcFmmSaveFilterFunc_L66b
-SdcFmmSaveFilterFunc_L659:
+	bra	SdcFmmSortNameFunc_L66b
+SdcFmmSortNameFunc_L659:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x01450008, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFmmSaveFilterFunc_L66b:
+SdcFmmSortNameFunc_L66b:
 	clr	d0
-	bra	SdcFmmSaveFilterFunc_L683
-SdcFmmSaveFilterFunc_L66e:
+	bra	SdcFmmSortNameFunc_L683
+SdcFmmSortNameFunc_L66e:
 	movhu	(0x50077a3a), d0
 	exth	d0
-	bra	SdcFmmSaveFilterFunc_L683
-SdcFmmSaveFilterFunc_L677:
+	bra	SdcFmmSortNameFunc_L683
+SdcFmmSortNameFunc_L677:
 	mov	(0x40, sp), d0
 	movhu	d0, (0x50077a3a)
 	clr	d0
-	bra	SdcFmmSaveFilterFunc_L683
-SdcFmmSaveFilterFunc_L682:
+	bra	SdcFmmSortNameFunc_L683
+SdcFmmSortNameFunc_L682:
 	clr	d0
-SdcFmmSaveFilterFunc_L683:
+SdcFmmSortNameFunc_L683:
 	ret	[d2,d3,a2,a3], 0x30
 
-SDCardNameFunc:
+SdcFmmSongMedleyFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 	mov	d1, a2
 	cmp	0x1460002, a2
-	beq	SDCardNameFunc_L49
+	beq	SdcFmmSongMedleyFunc_L49
 	cmp	0x50009, d1
-	bne	SDCardNameFunc_L1a
-	jmp	SDCardNameFunc_La5
-SDCardNameFunc_L1a:
+	bne	SdcFmmSongMedleyFunc_L1a
+	jmp	SdcFmmSongMedleyFunc_La5
+SdcFmmSongMedleyFunc_L1a:
 	cmp	0x5000f, d1
-	bne	SDCardNameFunc_L25
-	jmp	SDCardNameFunc_Lcb
-SDCardNameFunc_L25:
+	bne	SdcFmmSongMedleyFunc_L25
+	jmp	SdcFmmSongMedleyFunc_Lcb
+SdcFmmSongMedleyFunc_L25:
 	cmp	0x50010, d1
-	bne	SDCardNameFunc_L30
-	jmp	SDCardNameFunc_Lcb
-SDCardNameFunc_L30:
+	bne	SdcFmmSongMedleyFunc_L30
+	jmp	SdcFmmSongMedleyFunc_Lcb
+SdcFmmSongMedleyFunc_L30:
 	cmp	0x1460001, d1
-	bne	SDCardNameFunc_L3b
-	jmp	SDCardNameFunc_L30b
-SDCardNameFunc_L3b:
+	bne	SdcFmmSongMedleyFunc_L3b
+	jmp	SdcFmmSongMedleyFunc_L30b
+SdcFmmSongMedleyFunc_L3b:
 	cmp	0x6003b, a2
-	bne	SDCardNameFunc_L46
-	jmp	SDCardNameFunc_L314
-SDCardNameFunc_L46:
-	jmp	SDCardNameFunc_L31f
-SDCardNameFunc_L49:
+	bne	SdcFmmSongMedleyFunc_L46
+	jmp	SdcFmmSongMedleyFunc_L314
+SdcFmmSongMedleyFunc_L46:
+	jmp	SdcFmmSongMedleyFunc_L31f
+SdcFmmSongMedleyFunc_L49:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	cmp	2, d0
-	bgt	SDCardNameFunc_L90
+	bgt	SdcFmmSongMedleyFunc_L90
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_4870B667, 0, 0
 	movhu	d0, (0x50077a40)
 	exth	d0
 	cmp	0, d0
-	bge	SDCardNameFunc_L76
+	bge	SdcFmmSongMedleyFunc_L76
 	clr	d0
 	movhu	d0, (0x50077a40)
-SDCardNameFunc_L76:
+SdcFmmSongMedleyFunc_L76:
 	movhu	(0x50077a40), d0
 	mov	0x0145000b, d1
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SDCardNameFunc_La1
-SDCardNameFunc_L90:
+	bra	SdcFmmSongMedleyFunc_La1
+SdcFmmSongMedleyFunc_L90:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SDCardNameFunc_La1:
+SdcFmmSongMedleyFunc_La1:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SDCardNameFunc_La5:
+SdcFmmSongMedleyFunc_La5:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SDCardNameFunc_Lb5
+	beq	SdcFmmSongMedleyFunc_Lb5
 	cmp	1, d0
-	bne	SDCardNameFunc_Lb9
-SDCardNameFunc_Lb5:
+	bne	SdcFmmSongMedleyFunc_Lb9
+SdcFmmSongMedleyFunc_Lb5:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SDCardNameFunc_Lb9:
+SdcFmmSongMedleyFunc_Lb9:
 	movhu	(0x50077a40), d0
 	mov	0xa, d1
 	exth	d0
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SDCardNameFunc_Lcb:
+SdcFmmSongMedleyFunc_Lcb:
 	movhu	(0x50077a40), d3
 	call	func_4870B600, 0, 0
 	extbu	d0
@@ -517629,7 +517683,7 @@ SDCardNameFunc_Lcb:
 	mov	(0x38, sp), a0
 	mov	d0, d1
 	cmp	0x43, a0
-	bne	SDCardNameFunc_L107
+	bne	SdcFmmSongMedleyFunc_L107
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_4870B90B_entry, [d2,d3,a2,a3], 0x18
@@ -517637,12 +517691,12 @@ SDCardNameFunc_Lcb:
 	mov	0xa, d1
 	exth	d0
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L107:
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L107:
 	cmp	0x3c, a0
-	bne	SDCardNameFunc_L15b
+	bne	SdcFmmSongMedleyFunc_L15b
 	cmp	0x50010, a2
-	bne	SDCardNameFunc_L137
+	bne	SdcFmmSongMedleyFunc_L137
 	movhu	(0x50077a40), d2
 	exth	d1
 	exth	d2
@@ -517650,35 +517704,35 @@ SDCardNameFunc_L107:
 	mov	d2, d0
 	inc	d0
 	cmp	d1, d0
-	blt	SDCardNameFunc_L124
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L124:
+	blt	SdcFmmSongMedleyFunc_L124
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L124:
 	mov	d2, d0
 	inc	d0
 	cmp	0x14, d0
-	blt	SDCardNameFunc_L12d
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L12d:
+	blt	SdcFmmSongMedleyFunc_L12d
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L12d:
 	inc	d2
 	movhu	d2, (0x50077a40)
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L137:
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L137:
 	cmp	0x5000f, a2
-	beq	SDCardNameFunc_L142
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L142:
+	beq	SdcFmmSongMedleyFunc_L142
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L142:
 	movhu	(0x50077a40), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SDCardNameFunc_L150
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L150:
+	bgt	SdcFmmSongMedleyFunc_L150
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L150:
 	add	-1, d0
 	movhu	d0, (0x50077a40)
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L15b:
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L15b:
 	cmp	0x3e, a0
-	bne	SDCardNameFunc_L17f
+	bne	SdcFmmSongMedleyFunc_L17f
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_4870BA00_entry, [d2,d3], 0x10
@@ -517686,18 +517740,18 @@ SDCardNameFunc_L15b:
 	mov	0xa, d1
 	exth	d0
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L17f:
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L17f:
 	cmp	0x46, a0
-	beq	SDCardNameFunc_L186
-	jmp	SDCardNameFunc_L244
-SDCardNameFunc_L186:
+	beq	SdcFmmSongMedleyFunc_L186
+	jmp	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L186:
 	call	func_4870B6A2, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SDCardNameFunc_L195
-	jmp	SDCardNameFunc_L232
-SDCardNameFunc_L195:
+	beq	SdcFmmSongMedleyFunc_L195
+	jmp	SdcFmmSongMedleyFunc_L232
+SdcFmmSongMedleyFunc_L195:
 	call	func_4870B6E2_entry, 0, 0x14
 	clr	d0
 	call	func_487105D7_entry, 0, 0xc
@@ -517737,21 +517791,21 @@ SDCardNameFunc_L195:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SDCardNameFunc_L244
-SDCardNameFunc_L232:
+	bra	SdcFmmSongMedleyFunc_L244
+SdcFmmSongMedleyFunc_L232:
 	call	func_4870B6AB, 0, 0
 	mov	0x110, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SDCardNameFunc_L244:
+SdcFmmSongMedleyFunc_L244:
 	movhu	(0x50077a40), d0
 	exth	d3
 	mov	d3, a3
 	exth	d0
 	cmp	d0, d3
-	bne	SDCardNameFunc_L254
-	jmp	SDCardNameFunc_L308
-SDCardNameFunc_L254:
+	bne	SdcFmmSongMedleyFunc_L254
+	jmp	SdcFmmSongMedleyFunc_L308
+SdcFmmSongMedleyFunc_L254:
 	call	func_4870B600, 0, 0
 	movhu	(0x50077a40), d1
 	extbu	d0
@@ -517778,12 +517832,12 @@ SDCardNameFunc_L254:
 	mov	0xa, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	beq	SDCardNameFunc_L2b9
+	beq	SdcFmmSongMedleyFunc_L2b9
 	mov	0xa, d1
 	mov	d3, d0
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
-	bra	SDCardNameFunc_L308
-SDCardNameFunc_L2b9:
+	bra	SdcFmmSongMedleyFunc_L308
+SdcFmmSongMedleyFunc_L2b9:
 	mov	a3, d0
 	ext	d0
 	mov	0x50077fd4, d2
@@ -517814,47 +517868,47 @@ SDCardNameFunc_L2b9:
 	mov	-1, d0
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SDCardNameFunc_L308:
+SdcFmmSongMedleyFunc_L308:
 	clr	d0
-	bra	SDCardNameFunc_L320
-SDCardNameFunc_L30b:
+	bra	SdcFmmSongMedleyFunc_L320
+SdcFmmSongMedleyFunc_L30b:
 	movhu	(0x50077a40), d0
 	exth	d0
-	bra	SDCardNameFunc_L320
-SDCardNameFunc_L314:
+	bra	SdcFmmSongMedleyFunc_L320
+SdcFmmSongMedleyFunc_L314:
 	mov	(0x38, sp), d0
 	movhu	d0, (0x50077a40)
 	clr	d0
-	bra	SDCardNameFunc_L320
-SDCardNameFunc_L31f:
+	bra	SdcFmmSongMedleyFunc_L320
+SdcFmmSongMedleyFunc_L31f:
 	clr	d0
-SDCardNameFunc_L320:
+SdcFmmSongMedleyFunc_L320:
 	ret	[d2,d3,a2,a3], 0x28
 
-SDCardInfoFunc:
+SdcFmmMedleyListFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 
-SDCardInfoFunc_entry:
+SdcFmmMedleyListFunc_entry:
 	cmp	0x50009, d1
-	beq	SDCardInfoFunc_entry_Lb
-	jmp	SDCardInfoFunc_entry_Lec
-SDCardInfoFunc_entry_Lb:
+	beq	SdcFmmMedleyListFunc_entry_Lb
+	jmp	SdcFmmMedleyListFunc_entry_Lec
+SdcFmmMedleyListFunc_entry_Lb:
 	call	func_4870B600, 0, 0
 	mov	d0, d2
 	extbu	d0
 	cmp	0, d0
-	beq	SDCardInfoFunc_entry_L2b
+	beq	SdcFmmMedleyListFunc_entry_L2b
 	cmp	1, d0
-	beq	SDCardInfoFunc_entry_L2b
+	beq	SdcFmmMedleyListFunc_entry_L2b
 	cmp	2, d0
-	beq	SDCardInfoFunc_entry_L2b
+	beq	SdcFmmMedleyListFunc_entry_L2b
 	cmp	3, d0
-	beq	SDCardInfoFunc_entry_L58
+	beq	SdcFmmMedleyListFunc_entry_L58
 	cmp	4, d0
-	beq	SDCardInfoFunc_entry_L8a
-	jmp	SDCardInfoFunc_entry_Lca
-SDCardInfoFunc_entry_L2b:
+	beq	SdcFmmMedleyListFunc_entry_L8a
+	jmp	SdcFmmMedleyListFunc_entry_Lca
+SdcFmmMedleyListFunc_entry_L2b:
 	mov	0x50077a44, a2
 	mov	a2, a0
 	mov	Str_USER_LIST, a1
@@ -517868,8 +517922,8 @@ SDCardInfoFunc_entry_L2b:
 	mov	a0, a1
 	mov	a2, a0
 	call	func_486D0E3E, 0, 0
-	jmp	SDCardInfoFunc_entry_Ld8
-SDCardInfoFunc_entry_L58:
+	jmp	SdcFmmMedleyListFunc_entry_Ld8
+SdcFmmMedleyListFunc_entry_L58:
 	mov	0x50077a44, a2
 	mov	a2, a0
 	mov	Str_FOLDER_21, a1
@@ -517883,8 +517937,8 @@ SDCardInfoFunc_entry_L58:
 	mov	a0, a1
 	mov	a2, a0
 	call	func_486D0E3E, 0, 0
-	bra	SDCardInfoFunc_entry_Ld8
-SDCardInfoFunc_entry_L8a:
+	bra	SdcFmmMedleyListFunc_entry_Ld8
+SdcFmmMedleyListFunc_entry_L8a:
 	mov	0x50077a44, a2
 	mov	a2, a0
 	mov	Str_ALL_SONG_FOLDER, a1
@@ -517901,22 +517955,22 @@ SDCardInfoFunc_entry_L8a:
 	mov	a2, a0
 	mov	Str_empty_402, a1
 	call	func_486D0E3E, 0, 0
-	bra	SDCardInfoFunc_entry_Ld8
-SDCardInfoFunc_entry_Lca:
+	bra	SdcFmmMedleyListFunc_entry_Ld8
+SdcFmmMedleyListFunc_entry_Lca:
 	mov	0x50077a44, a2
 	mov	a2, a0
 	mov	0xc, d0
 	call	func_4870FD69_entry, [d2], 4
-SDCardInfoFunc_entry_Ld8:
+SdcFmmMedleyListFunc_entry_Ld8:
 	mov	a2, (0x10, sp)
 	mov	-1, d0
 	mov	0x0145000f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
-	bra	SDCardInfoFunc_entry_Led
-SDCardInfoFunc_entry_Lec:
+	bra	SdcFmmMedleyListFunc_entry_Led
+SdcFmmMedleyListFunc_entry_Lec:
 	clr	d0
-SDCardInfoFunc_entry_Led:
+SdcFmmMedleyListFunc_entry_Led:
 	ret	[d2,a2], 0x1c
 
 func_48716032:
@@ -517992,7 +518046,7 @@ func_48716032_entry_L6d:
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00050009, d1
-	call	SDCardInfoFunc_entry, [d2,a2], 0x1c
+	call	SdcFmmMedleyListFunc_entry, [d2,a2], 0x1c
 	mov	a3, d0
 	exth	d0
 	cmp	0xa, d0
@@ -518458,60 +518512,60 @@ func_487164C2_entry_L50:
 	mov	a2, d0
 	ret	[d2,d3,a2,a3], 0x28
 
-SdcCurFileNameFunc:
+SdcFmmSongMedleyListViewFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-SdcCurFileNameFunc_entry:
+SdcFmmSongMedleyListViewFunc_entry:
 	mov	d0, (0x2c, sp)
 	mov	d1, d3
 	clr	d2
 	mov	0, a3
 	cmp	0x5000b, d3
-	beq	SdcCurFileNameFunc_entry_L3d
+	beq	SdcFmmSongMedleyListViewFunc_entry_L3d
 	cmp	0x1460002, d1
-	bne	SdcCurFileNameFunc_entry_L19
-	jmp	SdcCurFileNameFunc_entry_L537
-SdcCurFileNameFunc_entry_L19:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L19
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L537
+SdcFmmSongMedleyListViewFunc_entry_L19:
 	cmp	0x50009, d1
-	bne	SdcCurFileNameFunc_entry_L24
-	jmp	SdcCurFileNameFunc_entry_L54c
-SdcCurFileNameFunc_entry_L24:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L24
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L54c
+SdcFmmSongMedleyListViewFunc_entry_L24:
 	cmp	0x5000f, d1
-	bne	SdcCurFileNameFunc_entry_L2f
-	jmp	SdcCurFileNameFunc_entry_L57e
-SdcCurFileNameFunc_entry_L2f:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L2f
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L57e
+SdcFmmSongMedleyListViewFunc_entry_L2f:
 	cmp	0x50010, d1
-	bne	SdcCurFileNameFunc_entry_L3a
-	jmp	SdcCurFileNameFunc_entry_L57e
-SdcCurFileNameFunc_entry_L3a:
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L3d:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L3a
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L57e
+SdcFmmSongMedleyListViewFunc_entry_L3a:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L3d:
 	mov	(0x34, sp), a2
 	cmp	2, a2
-	beq	SdcCurFileNameFunc_entry_L4d
+	beq	SdcFmmSongMedleyListViewFunc_entry_L4d
 	cmp	3, a2
-	bne	SdcCurFileNameFunc_entry_L4a
-	jmp	SdcCurFileNameFunc_entry_L4e6
-SdcCurFileNameFunc_entry_L4a:
-	jmp	SdcCurFileNameFunc_entry_L533
-SdcCurFileNameFunc_entry_L4d:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L4a
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L4e6
+SdcFmmSongMedleyListViewFunc_entry_L4a:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L533
+SdcFmmSongMedleyListViewFunc_entry_L4d:
 	mov	1, d0
 	call	func_487105D7_entry, 0, 0xc
 	call	func_48633196_entry, 0, 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x123, d0
-	bne	SdcCurFileNameFunc_entry_L6c
-	jmp	SdcCurFileNameFunc_entry_L156
-SdcCurFileNameFunc_entry_L6c:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L6c
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L156
+SdcFmmSongMedleyListViewFunc_entry_L6c:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcCurFileNameFunc_entry_L7c
+	beq	SdcFmmSongMedleyListViewFunc_entry_L7c
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_La3
-SdcCurFileNameFunc_entry_L7c:
+	bne	SdcFmmSongMedleyListViewFunc_entry_La3
+SdcFmmSongMedleyListViewFunc_entry_L7c:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
@@ -518520,16 +518574,16 @@ SdcCurFileNameFunc_entry_L7c:
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcCurFileNameFunc_entry_L121
-SdcCurFileNameFunc_entry_La3:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L121
+SdcFmmSongMedleyListViewFunc_entry_La3:
 	cmp	3, d0
-	beq	SdcCurFileNameFunc_entry_Lab
+	beq	SdcFmmSongMedleyListViewFunc_entry_Lab
 	cmp	4, d0
-	bne	SdcCurFileNameFunc_entry_L121
-SdcCurFileNameFunc_entry_Lab:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L121
+SdcFmmSongMedleyListViewFunc_entry_Lab:
 	movbu	(0x500788c6), d0
 	cmp	d2, d0
-	bne	SdcCurFileNameFunc_entry_Lf1
+	bne	SdcFmmSongMedleyListViewFunc_entry_Lf1
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -518546,15 +518600,15 @@ SdcCurFileNameFunc_entry_Lab:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcCurFileNameFunc_entry_L121
-SdcCurFileNameFunc_entry_Lf1:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L121
+SdcFmmSongMedleyListViewFunc_entry_Lf1:
 	cmp	2, d0
-	bne	SdcCurFileNameFunc_entry_L102
+	bne	SdcFmmSongMedleyListViewFunc_entry_L102
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcCurFileNameFunc_entry_L121
-SdcCurFileNameFunc_entry_L102:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L121
+SdcFmmSongMedleyListViewFunc_entry_L102:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
@@ -518563,7 +518617,7 @@ SdcCurFileNameFunc_entry_L102:
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcCurFileNameFunc_entry_L121:
+SdcFmmSongMedleyListViewFunc_entry_L121:
 	clr	d0
 	movbu	d2, (0x500788c1)
 	movbu	d0, (0x50077a64)
@@ -518572,26 +518626,26 @@ SdcCurFileNameFunc_entry_L121:
 	movbu	d0, (0x50077a65)
 	extbu	d0
 	cmp	d2, d0
-	bge	SdcCurFileNameFunc_entry_L14c
+	bge	SdcFmmSongMedleyListViewFunc_entry_L14c
 	clr	d0
 	movbu	d0, (0x50077a65)
-SdcCurFileNameFunc_entry_L14c:
+SdcFmmSongMedleyListViewFunc_entry_L14c:
 	call	func_48622DC9_entry, 0, 0xc
-	jmp	SdcCurFileNameFunc_entry_L4e2
-SdcCurFileNameFunc_entry_L156:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L4e2
+SdcFmmSongMedleyListViewFunc_entry_L156:
 	call	func_48622856, 0, 0
 	extbu	d0
 	cmp	1, d0
-	beq	SdcCurFileNameFunc_entry_L165
-	jmp	SdcCurFileNameFunc_entry_L488
-SdcCurFileNameFunc_entry_L165:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L165
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L488
+SdcFmmSongMedleyListViewFunc_entry_L165:
 	mov	a2, (0x10, sp)
 	mov	(0x2c, sp), d0
 	mov	d3, d1
 	call	func_48716234_entry, [d2,d3,a2], 0x18
 	extbu	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L1a6
+	bne	SdcFmmSongMedleyListViewFunc_entry_L1a6
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -518605,19 +518659,19 @@ SdcCurFileNameFunc_entry_L165:
 	mov	0x123, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcCurFileNameFunc_entry_L4e2
-SdcCurFileNameFunc_entry_L1a6:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L4e2
+SdcFmmSongMedleyListViewFunc_entry_L1a6:
 	cmp	2, d0
-	beq	SdcCurFileNameFunc_entry_L1ad
-	jmp	SdcCurFileNameFunc_entry_L4e2
-SdcCurFileNameFunc_entry_L1ad:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L1ad
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L4e2
+SdcFmmSongMedleyListViewFunc_entry_L1ad:
 	call	func_4870B600, 0, 0
 	mov	d0, d1
 	extbu	d1
 	cmp	2, d1
-	ble	SdcCurFileNameFunc_entry_L1bd
-	jmp	SdcCurFileNameFunc_entry_L25b
-SdcCurFileNameFunc_entry_L1bd:
+	ble	SdcFmmSongMedleyListViewFunc_entry_L1bd
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L25b
+SdcFmmSongMedleyListViewFunc_entry_L1bd:
 	extbu	d0
 	mov	d0, a2
 	call	func_4870B891_entry, [d2,d3], 0x10
@@ -518629,25 +518683,25 @@ SdcCurFileNameFunc_entry_L1bd:
 	inc	d1
 	clr	d3
 	cmp	d0, d1
-	blt	SdcCurFileNameFunc_entry_L1ff
+	blt	SdcFmmSongMedleyListViewFunc_entry_L1ff
 	movbu	(0x500788c2), d1
 	clr	d0
 	movbu	d0, (0x50077a64)
 	mov	1, a3
 	movbu	(0x500788c1), d0
 	and	d0, d1
-	bne	SdcCurFileNameFunc_entry_L1ff
+	bne	SdcFmmSongMedleyListViewFunc_entry_L1ff
 	mov	0, a3
 	clr	d0
 	movbu	d0, (data_50005E7C)
 	mov	1, d3
-SdcCurFileNameFunc_entry_L1ff:
+SdcFmmSongMedleyListViewFunc_entry_L1ff:
 	mov	d3, d0
 	exth	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L208
-	jmp	SdcCurFileNameFunc_entry_L3d6
-SdcCurFileNameFunc_entry_L208:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L208
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L3d6
+SdcFmmSongMedleyListViewFunc_entry_L208:
 	movbu	(0x50077a64), d0
 	mov	0xa, d1
 	ext	d0
@@ -518659,27 +518713,27 @@ SdcCurFileNameFunc_entry_L208:
 	call	ApPostEvent_entry, [d2], 0x1c
 	movbu	(0x50077a64), d0
 	cmp	0xa, d0
-	blt	SdcCurFileNameFunc_entry_L23a
+	blt	SdcFmmSongMedleyListViewFunc_entry_L23a
 	mov	0x14, d1
 	call	func_487100A3_entry, [d2,d3,a2,a3], 0x38
-	bra	SdcCurFileNameFunc_entry_L241
-SdcCurFileNameFunc_entry_L23a:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L241
+SdcFmmSongMedleyListViewFunc_entry_L23a:
 	mov	0x14, d1
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
-SdcCurFileNameFunc_entry_L241:
+SdcFmmSongMedleyListViewFunc_entry_L241:
 	mov	0x64, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
 	mov	a2, d0
 	movbu	(0x50077a64), d1
 	call	func_4871617B_entry, [d2,d3,a2], 0x20
 	mov	d0, d3
-	jmp	SdcCurFileNameFunc_entry_L3d6
-SdcCurFileNameFunc_entry_L25b:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L3d6
+SdcFmmSongMedleyListViewFunc_entry_L25b:
 	extbu	d0
 	cmp	3, d0
-	beq	SdcCurFileNameFunc_entry_L263
-	jmp	SdcCurFileNameFunc_entry_L2f1
-SdcCurFileNameFunc_entry_L263:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L263
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L2f1
+SdcFmmSongMedleyListViewFunc_entry_L263:
 	movbu	(0x50077a64), d1
 	clr	d3
 	inc	d1
@@ -518688,30 +518742,30 @@ SdcCurFileNameFunc_entry_L263:
 	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
 	exth	d0
 	cmp	d3, d0
-	bge	SdcCurFileNameFunc_entry_L2a1
+	bge	SdcFmmSongMedleyListViewFunc_entry_L2a1
 	movbu	(0x500788c2), d1
 	clr	d0
 	movbu	d0, (0x50077a64)
 	mov	1, a3
 	movbu	(0x500788c1), d0
 	and	d0, d1
-	bne	SdcCurFileNameFunc_entry_L2ae
+	bne	SdcFmmSongMedleyListViewFunc_entry_L2ae
 	mov	0, a3
 	clr	d0
 	movbu	d0, (data_50005E7C)
 	mov	1, d3
-	bra	SdcCurFileNameFunc_entry_L2ae
-SdcCurFileNameFunc_entry_L2a1:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L2ae
+SdcFmmSongMedleyListViewFunc_entry_L2a1:
 	movbu	(0x50077a64), d0
 	inc	d0
 	movbu	d0, (0x50077a64)
-SdcCurFileNameFunc_entry_L2ae:
+SdcFmmSongMedleyListViewFunc_entry_L2ae:
 	mov	d3, d0
 	exth	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L2b7
-	jmp	SdcCurFileNameFunc_entry_L3d6
-SdcCurFileNameFunc_entry_L2b7:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L2b7
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L3d6
+SdcFmmSongMedleyListViewFunc_entry_L2b7:
 	movbu	(0x50077a65), d0
 	movbu	(0x50077a64), d1
 	call	func_48716464_entry, [d2,d3,a2,a3], 0x28
@@ -518727,20 +518781,20 @@ SdcCurFileNameFunc_entry_L2b7:
 	movbu	(0x50077a64), d0
 	call	func_48716032_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, d3
-	jmp	SdcCurFileNameFunc_entry_L3d6
-SdcCurFileNameFunc_entry_L2f1:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L3d6
+SdcFmmSongMedleyListViewFunc_entry_L2f1:
 	movbu	(0x50077a65), d0
 	clr	d3
 	cmp	0x63, d0
-	bge	SdcCurFileNameFunc_entry_L35b
-SdcCurFileNameFunc_entry_L2fc:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L35b
+SdcFmmSongMedleyListViewFunc_entry_L2fc:
 	movbu	(0x50077a64), d1
 	inc	d1
 	extbu	d1
 	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
 	exth	d0
 	cmp	d3, d0
-	bge	SdcCurFileNameFunc_entry_L335
+	bge	SdcFmmSongMedleyListViewFunc_entry_L335
 	clr	d0
 	movbu	d0, (0x50077a64)
 	movbu	(0x50077a65), d0
@@ -518750,46 +518804,46 @@ SdcCurFileNameFunc_entry_L2fc:
 	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
 	exth	d0
 	cmp	d3, d0
-	blt	SdcCurFileNameFunc_entry_L344
+	blt	SdcFmmSongMedleyListViewFunc_entry_L344
 	movbu	(0x50077a65), d0
 	inc	d0
 	movbu	d0, (0x50077a65)
-	bra	SdcCurFileNameFunc_entry_L35b
-SdcCurFileNameFunc_entry_L335:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L35b
+SdcFmmSongMedleyListViewFunc_entry_L335:
 	movbu	(0x50077a64), d0
 	inc	d0
 	movbu	d0, (0x50077a64)
-	bra	SdcCurFileNameFunc_entry_L35b
-SdcCurFileNameFunc_entry_L344:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L35b
+SdcFmmSongMedleyListViewFunc_entry_L344:
 	movbu	(0x50077a65), d0
 	inc	d0
 	movbu	d0, (0x50077a65)
 	movbu	(0x50077a65), d0
 	cmp	0x63, d0
-	blt	SdcCurFileNameFunc_entry_L2fc
-SdcCurFileNameFunc_entry_L35b:
+	blt	SdcFmmSongMedleyListViewFunc_entry_L2fc
+SdcFmmSongMedleyListViewFunc_entry_L35b:
 	movbu	(0x50077a65), d0
 	cmp	0x63, d0
-	bne	SdcCurFileNameFunc_entry_L392
+	bne	SdcFmmSongMedleyListViewFunc_entry_L392
 	movbu	(0x50077a64), d0
 	cmp	d3, d0
-	bne	SdcCurFileNameFunc_entry_L392
+	bne	SdcFmmSongMedleyListViewFunc_entry_L392
 	movbu	(0x500788c2), d1
 	clr	d0
 	movbu	d0, (0x50077a65)
 	mov	1, a3
 	movbu	(0x500788c1), d0
 	and	d0, d1
-	bne	SdcCurFileNameFunc_entry_L392
+	bne	SdcFmmSongMedleyListViewFunc_entry_L392
 	mov	0, a3
 	clr	d0
 	movbu	d0, (data_50005E7C)
 	mov	1, d3
-SdcCurFileNameFunc_entry_L392:
+SdcFmmSongMedleyListViewFunc_entry_L392:
 	mov	d3, d0
 	exth	d0
 	cmp	1, d0
-	beq	SdcCurFileNameFunc_entry_L3d6
+	beq	SdcFmmSongMedleyListViewFunc_entry_L3d6
 	movbu	(0x50077a65), d0
 	movbu	(0x50077a64), d1
 	call	func_48716464_entry, [d2,d3,a2,a3], 0x28
@@ -518807,10 +518861,10 @@ SdcCurFileNameFunc_entry_L392:
 	movbu	(0x50077a64), d1
 	call	func_48716163_entry, [d2], 0x10
 	mov	d0, d3
-SdcCurFileNameFunc_entry_L3d6:
+SdcFmmSongMedleyListViewFunc_entry_L3d6:
 	exth	d3
 	cmp	0, d3
-	bne	SdcCurFileNameFunc_entry_L442
+	bne	SdcFmmSongMedleyListViewFunc_entry_L442
 	mov	0xd, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -518818,13 +518872,13 @@ SdcCurFileNameFunc_entry_L3d6:
 	call	func_48716234_entry, [d2,d3,a2], 0x18
 	extbu	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L43a
+	bne	SdcFmmSongMedleyListViewFunc_entry_L43a
 	movbu	(0x500788c1), d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L403
+	bne	SdcFmmSongMedleyListViewFunc_entry_L403
 	mov	1, d0
 	movbu	d0, (0x500788c1)
-SdcCurFileNameFunc_entry_L403:
+SdcFmmSongMedleyListViewFunc_entry_L403:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	clr	d1
@@ -518840,14 +518894,14 @@ SdcCurFileNameFunc_entry_L403:
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L43a:
+SdcFmmSongMedleyListViewFunc_entry_L43a:
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L47c
+	bne	SdcFmmSongMedleyListViewFunc_entry_L47c
 	mov	1, a3
-	bra	SdcCurFileNameFunc_entry_L47c
-SdcCurFileNameFunc_entry_L442:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L47c
+SdcFmmSongMedleyListViewFunc_entry_L442:
 	cmp	0, d3
-	bge	SdcCurFileNameFunc_entry_L47c
+	bge	SdcFmmSongMedleyListViewFunc_entry_L47c
 	clr	d0
 	movbu	d0, (0x50077a65)
 	movbu	d0, (0x50077a64)
@@ -518865,19 +518919,19 @@ SdcCurFileNameFunc_entry_L442:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L47c:
+SdcFmmSongMedleyListViewFunc_entry_L47c:
 	mov	a3, d0
 	exth	d0
 	cmp	0, d0
-	beq	SdcCurFileNameFunc_entry_L4e2
-	jmp	SdcCurFileNameFunc_entry_L1ad
-# SdcCurFileNameFunc_entry + 0x486: no traced path reaches what follows (--decode-gaps)
-	bra	SdcCurFileNameFunc_entry_L4e2
-SdcCurFileNameFunc_entry_L488:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L4e2
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L1ad
+# SdcFmmSongMedleyListViewFunc_entry + 0x486: no traced path reaches what follows (--decode-gaps)
+	bra	SdcFmmSongMedleyListViewFunc_entry_L4e2
+SdcFmmSongMedleyListViewFunc_entry_L488:
 	call	func_48622856, 0, 0
 	extbu	d0
 	cmp	d2, d0
-	bne	SdcCurFileNameFunc_entry_L4bf
+	bne	SdcFmmSongMedleyListViewFunc_entry_L4bf
 	clr	d0
 	movbu	d2, (data_50005E7C)
 	mov	d0, (0x10, sp)
@@ -518889,8 +518943,8 @@ SdcCurFileNameFunc_entry_L488:
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	SdcCurFileNameFunc_entry_L4e2
-SdcCurFileNameFunc_entry_L4bf:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L4e2
+SdcFmmSongMedleyListViewFunc_entry_L4bf:
 	clr	d0
 	movbu	d2, (data_50005E7C)
 	mov	d0, (0x10, sp)
@@ -518900,19 +518954,19 @@ SdcCurFileNameFunc_entry_L4bf:
 	mov	3, d0
 	mov	0xe, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcCurFileNameFunc_entry_L4e2:
+SdcFmmSongMedleyListViewFunc_entry_L4e2:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L4e6:
+SdcFmmSongMedleyListViewFunc_entry_L4e6:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x123, d0
-	beq	SdcCurFileNameFunc_entry_L509
+	beq	SdcFmmSongMedleyListViewFunc_entry_L509
 	clr	d0
 	movbu	d0, (data_50005E7C)
 	call	func_48622EB6_entry, 0, 0xc
 	call	func_486D360E, 0, 0
-SdcCurFileNameFunc_entry_L509:
+SdcFmmSongMedleyListViewFunc_entry_L509:
 	call	func_486331AC_entry, 0, 0x1c
 	clr	d0
 	mov	d2, d1
@@ -518924,52 +518978,52 @@ SdcCurFileNameFunc_entry_L509:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L533:
+SdcFmmSongMedleyListViewFunc_entry_L533:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L537:
+SdcFmmSongMedleyListViewFunc_entry_L537:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L54c:
+SdcFmmSongMedleyListViewFunc_entry_L54c:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcCurFileNameFunc_entry_L55c
+	beq	SdcFmmSongMedleyListViewFunc_entry_L55c
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L560
-SdcCurFileNameFunc_entry_L55c:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L560
+SdcFmmSongMedleyListViewFunc_entry_L55c:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L560:
+SdcFmmSongMedleyListViewFunc_entry_L560:
 	movbu	(0x50077a64), d0
 	cmp	0xa, d0
-	blt	SdcCurFileNameFunc_entry_L573
+	blt	SdcFmmSongMedleyListViewFunc_entry_L573
 	mov	0x14, d1
 	call	func_487100A3_entry, [d2,d3,a2,a3], 0x38
-	bra	SdcCurFileNameFunc_entry_L57a
-SdcCurFileNameFunc_entry_L573:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L57a
+SdcFmmSongMedleyListViewFunc_entry_L573:
 	mov	0x14, d1
 	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
-SdcCurFileNameFunc_entry_L57a:
+SdcFmmSongMedleyListViewFunc_entry_L57a:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L57e:
+SdcFmmSongMedleyListViewFunc_entry_L57e:
 	mov	(0x34, sp), a0
 	cmp	0x3d, a0
-	beq	SdcCurFileNameFunc_entry_L587
-	jmp	SdcCurFileNameFunc_entry_L842
-SdcCurFileNameFunc_entry_L587:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L587
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L842
+SdcFmmSongMedleyListViewFunc_entry_L587:
 	call	func_4870B600, 0, 0
 	mov	d0, d1
 	extbu	d1
 	cmp	2, d1
-	ble	SdcCurFileNameFunc_entry_L597
-	jmp	SdcCurFileNameFunc_entry_L653
-SdcCurFileNameFunc_entry_L597:
+	ble	SdcFmmSongMedleyListViewFunc_entry_L597
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L653
+SdcFmmSongMedleyListViewFunc_entry_L597:
 	extbu	d0
 	mov	d0, a2
 	call	func_4870B891_entry, [d2,d3], 0x10
@@ -518977,23 +519031,23 @@ SdcCurFileNameFunc_entry_L597:
 	mov	d3, d1
 	exth	d1
 	cmp	d2, d1
-	bge	SdcCurFileNameFunc_entry_L5aa
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L5aa:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L5aa
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L5aa:
 	clr	d0
 	movbu	d0, (0x50077a64)
 	clr	d1
 	exth	d3
 	cmp	d0, d3
-	bgt	SdcCurFileNameFunc_entry_L5b9
-	jmp	SdcCurFileNameFunc_entry_L649
-SdcCurFileNameFunc_entry_L5b9:
+	bgt	SdcFmmSongMedleyListViewFunc_entry_L5b9
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L649
+SdcFmmSongMedleyListViewFunc_entry_L5b9:
 	mov	a2, d0
 	call	func_4871617B_entry, [d2,d3,a2], 0x20
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L62c
+	bne	SdcFmmSongMedleyListViewFunc_entry_L62c
 	mov	0xd, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -519001,17 +519055,17 @@ SdcCurFileNameFunc_entry_L5b9:
 	call	func_48716234_entry, [d2,d3,a2], 0x18
 	extbu	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L630
+	bne	SdcFmmSongMedleyListViewFunc_entry_L630
 	movbu	(0x500788c1), d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L5ee
+	bne	SdcFmmSongMedleyListViewFunc_entry_L5ee
 	mov	1, d0
 	movbu	d0, (0x500788c1)
-SdcCurFileNameFunc_entry_L5ee:
+SdcFmmSongMedleyListViewFunc_entry_L5ee:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	clr	d1
-	mov	0x485240b0, a0
+	mov	Str_empty_478, a0
 	call	func_486D35DF_entry, 0, 0x14
 	mov	a3, (0x10, sp)
 	mov	-1, d0
@@ -519024,45 +519078,45 @@ SdcCurFileNameFunc_entry_L5ee:
 	movbu	d0, (data_50005E7C)
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L62c:
+SdcFmmSongMedleyListViewFunc_entry_L62c:
 	cmp	0, d0
-	blt	SdcCurFileNameFunc_entry_L649
-SdcCurFileNameFunc_entry_L630:
+	blt	SdcFmmSongMedleyListViewFunc_entry_L649
+SdcFmmSongMedleyListViewFunc_entry_L630:
 	movbu	(0x50077a64), d0
 	inc	d0
 	movbu	d0, (0x50077a64)
 	movbu	(0x50077a64), d1
 	cmp	d3, d1
-	bge	SdcCurFileNameFunc_entry_L649
-	jmp	SdcCurFileNameFunc_entry_L5b9
-SdcCurFileNameFunc_entry_L649:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L649
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L5b9
+SdcFmmSongMedleyListViewFunc_entry_L649:
 	clr	d0
 	movbu	d0, (0x500788c1)
-	jmp	SdcCurFileNameFunc_entry_L804
-SdcCurFileNameFunc_entry_L653:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L804
+SdcFmmSongMedleyListViewFunc_entry_L653:
 	extbu	d0
 	cmp	3, d0
-	beq	SdcCurFileNameFunc_entry_L65b
-	jmp	SdcCurFileNameFunc_entry_L717
-SdcCurFileNameFunc_entry_L65b:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L65b
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L717
+SdcFmmSongMedleyListViewFunc_entry_L65b:
 	clr	d0
 	movbu	d0, (0x50077a64)
 	clr	d1
-SdcCurFileNameFunc_entry_L663:
+SdcFmmSongMedleyListViewFunc_entry_L663:
 	movbu	(0x50077a65), d0
 	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bge	SdcCurFileNameFunc_entry_L678
+	bge	SdcFmmSongMedleyListViewFunc_entry_L678
 	mov	1, d2
-	jmp	SdcCurFileNameFunc_entry_L70d
-SdcCurFileNameFunc_entry_L678:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L70d
+SdcFmmSongMedleyListViewFunc_entry_L678:
 	movbu	(0x50077a64), d0
 	call	func_48716032_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L6ef
+	bne	SdcFmmSongMedleyListViewFunc_entry_L6ef
 	mov	0xd, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -519070,17 +519124,17 @@ SdcCurFileNameFunc_entry_L678:
 	call	func_48716234_entry, [d2,d3,a2], 0x18
 	extbu	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L6f3
+	bne	SdcFmmSongMedleyListViewFunc_entry_L6f3
 	movbu	(0x500788c1), d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L6b1
+	bne	SdcFmmSongMedleyListViewFunc_entry_L6b1
 	mov	1, d0
 	movbu	d0, (0x500788c1)
-SdcCurFileNameFunc_entry_L6b1:
+SdcFmmSongMedleyListViewFunc_entry_L6b1:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	clr	d1
-	mov	0x485240b8, a0
+	mov	Str_empty_477, a0
 	call	func_486D35DF_entry, 0, 0x14
 	mov	a3, (0x10, sp)
 	mov	-1, d0
@@ -519093,48 +519147,48 @@ SdcCurFileNameFunc_entry_L6b1:
 	movbu	d0, (data_50005E7C)
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L6ef:
+SdcFmmSongMedleyListViewFunc_entry_L6ef:
 	cmp	0, d0
-	blt	SdcCurFileNameFunc_entry_L70d
-SdcCurFileNameFunc_entry_L6f3:
+	blt	SdcFmmSongMedleyListViewFunc_entry_L70d
+SdcFmmSongMedleyListViewFunc_entry_L6f3:
 	movbu	(0x50077a64), d0
 	inc	d0
 	movbu	d0, (0x50077a64)
 	movbu	(0x50077a64), d1
 	cmp	0x14, d1
-	bge	SdcCurFileNameFunc_entry_L70d
-	jmp	SdcCurFileNameFunc_entry_L663
-SdcCurFileNameFunc_entry_L70d:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L70d
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L663
+SdcFmmSongMedleyListViewFunc_entry_L70d:
 	clr	d0
 	movbu	d0, (0x500788c1)
-	jmp	SdcCurFileNameFunc_entry_L804
-SdcCurFileNameFunc_entry_L717:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L804
+SdcFmmSongMedleyListViewFunc_entry_L717:
 	cmp	4, d0
-	beq	SdcCurFileNameFunc_entry_L71e
-	jmp	SdcCurFileNameFunc_entry_L804
-SdcCurFileNameFunc_entry_L71e:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L71e
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L804
+SdcFmmSongMedleyListViewFunc_entry_L71e:
 	clr	d0
 	movbu	d0, (0x50077a65)
-SdcCurFileNameFunc_entry_L725:
+SdcFmmSongMedleyListViewFunc_entry_L725:
 	clr	d0
 	movbu	d0, (0x50077a64)
 	clr	d1
-SdcCurFileNameFunc_entry_L72d:
+SdcFmmSongMedleyListViewFunc_entry_L72d:
 	movbu	(0x50077a65), d0
 	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bge	SdcCurFileNameFunc_entry_L742
+	bge	SdcFmmSongMedleyListViewFunc_entry_L742
 	mov	1, d2
-	jmp	SdcCurFileNameFunc_entry_L7dd
-SdcCurFileNameFunc_entry_L742:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L7dd
+SdcFmmSongMedleyListViewFunc_entry_L742:
 	movbu	(0x50077a65), d0
 	movbu	(0x50077a64), d1
 	call	func_48716163_entry, [d2], 0x10
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L7bf
+	bne	SdcFmmSongMedleyListViewFunc_entry_L7bf
 	mov	0xd, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -519142,17 +519196,17 @@ SdcCurFileNameFunc_entry_L742:
 	call	func_48716234_entry, [d2,d3,a2], 0x18
 	extbu	d0
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_L7c3
+	bne	SdcFmmSongMedleyListViewFunc_entry_L7c3
 	movbu	(0x500788c1), d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_L781
+	bne	SdcFmmSongMedleyListViewFunc_entry_L781
 	mov	1, d0
 	movbu	d0, (0x500788c1)
-SdcCurFileNameFunc_entry_L781:
+SdcFmmSongMedleyListViewFunc_entry_L781:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	clr	d1
-	mov	0x485240c0, a0
+	mov	Str_empty_476, a0
 	call	func_486D35DF_entry, 0, 0x14
 	mov	a3, (0x10, sp)
 	mov	-1, d0
@@ -519165,38 +519219,38 @@ SdcCurFileNameFunc_entry_L781:
 	movbu	d0, (data_50005E7C)
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L7bf:
+SdcFmmSongMedleyListViewFunc_entry_L7bf:
 	cmp	0, d0
-	blt	SdcCurFileNameFunc_entry_L7dd
-SdcCurFileNameFunc_entry_L7c3:
+	blt	SdcFmmSongMedleyListViewFunc_entry_L7dd
+SdcFmmSongMedleyListViewFunc_entry_L7c3:
 	movbu	(0x50077a64), d0
 	inc	d0
 	movbu	d0, (0x50077a64)
 	movbu	(0x50077a64), d1
 	cmp	0x14, d1
-	bge	SdcCurFileNameFunc_entry_L7dd
-	jmp	SdcCurFileNameFunc_entry_L72d
-SdcCurFileNameFunc_entry_L7dd:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L7dd
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L72d
+SdcFmmSongMedleyListViewFunc_entry_L7dd:
 	mov	d2, d0
 	exth	d0
 	cmp	0, d0
-	blt	SdcCurFileNameFunc_entry_L7fd
+	blt	SdcFmmSongMedleyListViewFunc_entry_L7fd
 	movbu	(0x50077a65), d0
 	inc	d0
 	movbu	d0, (0x50077a65)
 	movbu	(0x50077a65), d0
 	cmp	0x63, d0
-	bge	SdcCurFileNameFunc_entry_L7fd
-	jmp	SdcCurFileNameFunc_entry_L725
-SdcCurFileNameFunc_entry_L7fd:
+	bge	SdcFmmSongMedleyListViewFunc_entry_L7fd
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L725
+SdcFmmSongMedleyListViewFunc_entry_L7fd:
 	clr	d0
 	movbu	d0, (0x500788c1)
-SdcCurFileNameFunc_entry_L804:
+SdcFmmSongMedleyListViewFunc_entry_L804:
 	exth	d2
 	cmp	a3, d2
-	blt	SdcCurFileNameFunc_entry_L80c
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L80c:
+	blt	SdcFmmSongMedleyListViewFunc_entry_L80c
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L80c:
 	clr	d0
 	movbu	d0, (0x50077a65)
 	movbu	d0, (0x50077a64)
@@ -519214,50 +519268,50 @@ SdcCurFileNameFunc_entry_L80c:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L842:
+SdcFmmSongMedleyListViewFunc_entry_L842:
 	cmp	0x3f, a0
-	beq	SdcCurFileNameFunc_entry_L84d
+	beq	SdcFmmSongMedleyListViewFunc_entry_L84d
 	cmp	0x40, a0
-	beq	SdcCurFileNameFunc_entry_L84d
-	jmp	SdcCurFileNameFunc_entry_L8d6
-SdcCurFileNameFunc_entry_L84d:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L84d
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L8d6
+SdcFmmSongMedleyListViewFunc_entry_L84d:
 	movbu	(data_50005E7C), d0
 	cmp	d2, d0
-	beq	SdcCurFileNameFunc_entry_L85a
+	beq	SdcFmmSongMedleyListViewFunc_entry_L85a
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L85a:
+SdcFmmSongMedleyListViewFunc_entry_L85a:
 	cmp	0x3f, a0
-	bne	SdcCurFileNameFunc_entry_L868
+	bne	SdcFmmSongMedleyListViewFunc_entry_L868
 	clr	d0
 	call	func_4870B57B_entry, [d2,d3], 0x10
-	bra	SdcCurFileNameFunc_entry_L871
-SdcCurFileNameFunc_entry_L868:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L871
+SdcFmmSongMedleyListViewFunc_entry_L868:
 	mov	1, d0
 	call	func_4870B57B_entry, [d2,d3], 0x10
-SdcCurFileNameFunc_entry_L871:
+SdcFmmSongMedleyListViewFunc_entry_L871:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	cmp	4, d0
-	beq	SdcCurFileNameFunc_entry_L889
+	beq	SdcFmmSongMedleyListViewFunc_entry_L889
 	call	func_4870B600, 0, 0
 	extbu	d0
 	cmp	3, d0
-	bne	SdcCurFileNameFunc_entry_L89c
-SdcCurFileNameFunc_entry_L889:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L89c
+SdcFmmSongMedleyListViewFunc_entry_L889:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcCurFileNameFunc_entry_L8b4
-SdcCurFileNameFunc_entry_L89c:
+	bra	SdcFmmSongMedleyListViewFunc_entry_L8b4
+SdcFmmSongMedleyListViewFunc_entry_L89c:
 	clr	d0
 	movbu	d0, (0x50077a64)
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcCurFileNameFunc_entry_L8b4:
+SdcFmmSongMedleyListViewFunc_entry_L8b4:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
@@ -519266,67 +519320,67 @@ SdcCurFileNameFunc_entry_L8b4:
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L8d6:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L8d6:
 	cmp	0x41, a0
-	bne	SdcCurFileNameFunc_entry_L904
+	bne	SdcFmmSongMedleyListViewFunc_entry_L904
 	movbu	(data_50005E7C), d0
 	cmp	d2, d0
-	beq	SdcCurFileNameFunc_entry_L8e7
+	beq	SdcFmmSongMedleyListViewFunc_entry_L8e7
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L8e7:
+SdcFmmSongMedleyListViewFunc_entry_L8e7:
 	mov	1, d0
 	movbu	d0, (0x500788c2)
 	cmp	0x5000f, d3
-	bne	SdcCurFileNameFunc_entry_L8fa
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L8fa:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L8fa
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L8fa:
 	clr	d0
 	movbu	d0, (0x500788c2)
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L904:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L904:
 	cmp	0x42, a0
-	bne	SdcCurFileNameFunc_entry_L932
+	bne	SdcFmmSongMedleyListViewFunc_entry_L932
 	movbu	(data_50005E7C), d0
 	cmp	d2, d0
-	beq	SdcCurFileNameFunc_entry_L915
+	beq	SdcFmmSongMedleyListViewFunc_entry_L915
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L915:
+SdcFmmSongMedleyListViewFunc_entry_L915:
 	mov	1, d0
 	movbu	d0, (0x500788c3)
 	cmp	0x5000f, d3
-	bne	SdcCurFileNameFunc_entry_L928
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L928:
+	bne	SdcFmmSongMedleyListViewFunc_entry_L928
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L928:
 	clr	d0
 	movbu	d0, (0x500788c3)
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L932:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L932:
 	cmp	0x45, a0
-	beq	SdcCurFileNameFunc_entry_L939
-	jmp	SdcCurFileNameFunc_entry_L9b8
-SdcCurFileNameFunc_entry_L939:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L939
+	jmp	SdcFmmSongMedleyListViewFunc_entry_L9b8
+SdcFmmSongMedleyListViewFunc_entry_L939:
 	movbu	(data_50005E7C), d0
 	cmp	d2, d0
-	beq	SdcCurFileNameFunc_entry_L946
+	beq	SdcFmmSongMedleyListViewFunc_entry_L946
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcCurFileNameFunc_entry_L946:
+SdcFmmSongMedleyListViewFunc_entry_L946:
 	call	func_487096B0_entry, 0, 0xc
 	movbu	d0, (0x50077a65)
 	extbu	d0
 	cmp	d2, d0
-	bge	SdcCurFileNameFunc_entry_L95e
+	bge	SdcFmmSongMedleyListViewFunc_entry_L95e
 	clr	d0
 	movbu	d0, (0x50077a65)
-SdcCurFileNameFunc_entry_L95e:
+SdcFmmSongMedleyListViewFunc_entry_L95e:
 	movbu	(0x50077a65), d1
 	mov	d1, d0
 	inc	d0
 	cmp	0x63, d0
-	bge	SdcCurFileNameFunc_entry_L9a3
+	bge	SdcFmmSongMedleyListViewFunc_entry_L9a3
 	inc	d1
 	movbu	d1, (0x50077a65)
 	movbu	(0x50077a65), d0
@@ -519341,35 +519395,35 @@ SdcCurFileNameFunc_entry_L95e:
 	mov	-1, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcCurFileNameFunc_entry_L9a3:
+SdcFmmSongMedleyListViewFunc_entry_L9a3:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L9b8:
+	jmp	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L9b8:
 	cmp	0x44, a0
-	beq	SdcCurFileNameFunc_entry_L9be
-	bra	SdcCurFileNameFunc_entry_La37
-SdcCurFileNameFunc_entry_L9be:
+	beq	SdcFmmSongMedleyListViewFunc_entry_L9be
+	bra	SdcFmmSongMedleyListViewFunc_entry_La37
+SdcFmmSongMedleyListViewFunc_entry_L9be:
 	movbu	(data_50005E7C), d0
 	cmp	d2, d0
-	beq	SdcCurFileNameFunc_entry_L9ca
+	beq	SdcFmmSongMedleyListViewFunc_entry_L9ca
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_La38
-SdcCurFileNameFunc_entry_L9ca:
+	bra	SdcFmmSongMedleyListViewFunc_entry_La38
+SdcFmmSongMedleyListViewFunc_entry_L9ca:
 	call	func_487096B0_entry, 0, 0xc
 	movbu	d0, (0x50077a65)
 	extbu	d0
 	cmp	d2, d0
-	bge	SdcCurFileNameFunc_entry_L9e2
+	bge	SdcFmmSongMedleyListViewFunc_entry_L9e2
 	clr	d0
 	movbu	d0, (0x50077a65)
-SdcCurFileNameFunc_entry_L9e2:
+SdcFmmSongMedleyListViewFunc_entry_L9e2:
 	movbu	(0x50077a65), d0
 	cmp	d2, d0
-	ble	SdcCurFileNameFunc_entry_La25
+	ble	SdcFmmSongMedleyListViewFunc_entry_La25
 	add	-1, d0
 	movbu	d0, (0x50077a65)
 	movbu	(0x50077a65), d0
@@ -519384,45 +519438,47 @@ SdcCurFileNameFunc_entry_L9e2:
 	mov	-1, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcCurFileNameFunc_entry_La25:
+SdcFmmSongMedleyListViewFunc_entry_La25:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcCurFileNameFunc_entry_La37:
+SdcFmmSongMedleyListViewFunc_entry_La37:
 	clr	d0
-SdcCurFileNameFunc_entry_La38:
+SdcFmmSongMedleyListViewFunc_entry_La38:
 	ret	[d2,d3,a2,a3], 0x24
+
+SdcFmmMedleyEditTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	SdcCurFileNameFunc_entry_La54
+	beq	SdcFmmMedleyEditTitleFunc_L19
 	cmp	0x50005, d1
-	bne	SdcCurFileNameFunc_entry_La51
-	jmp	SdcCurFileNameFunc_entry_Lbd1
-SdcCurFileNameFunc_entry_La51:
-	jmp	SdcCurFileNameFunc_entry_Lbf8
-SdcCurFileNameFunc_entry_La54:
+	bne	SdcFmmMedleyEditTitleFunc_L16
+	jmp	SdcFmmMedleyEditTitleFunc_L196
+SdcFmmMedleyEditTitleFunc_L16:
+	jmp	SdcFmmMedleyEditTitleFunc_L1bd
+SdcFmmMedleyEditTitleFunc_L19:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	SdcCurFileNameFunc_entry_La6b
+	beq	SdcFmmMedleyEditTitleFunc_L30
 	cmp	8, a0
-	bne	SdcCurFileNameFunc_entry_La61
-	jmp	SdcCurFileNameFunc_entry_Lbb8
-SdcCurFileNameFunc_entry_La61:
+	bne	SdcFmmMedleyEditTitleFunc_L26
+	jmp	SdcFmmMedleyEditTitleFunc_L17d
+SdcFmmMedleyEditTitleFunc_L26:
 	cmp	3, a0
-	bne	SdcCurFileNameFunc_entry_La68
-	jmp	SdcCurFileNameFunc_entry_Lbbb
-SdcCurFileNameFunc_entry_La68:
-	jmp	SdcCurFileNameFunc_entry_Lbce
-SdcCurFileNameFunc_entry_La6b:
+	bne	SdcFmmMedleyEditTitleFunc_L2d
+	jmp	SdcFmmMedleyEditTitleFunc_L180
+SdcFmmMedleyEditTitleFunc_L2d:
+	jmp	SdcFmmMedleyEditTitleFunc_L193
+SdcFmmMedleyEditTitleFunc_L30:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcCurFileNameFunc_entry_La7b
+	beq	SdcFmmMedleyEditTitleFunc_L40
 	cmp	1, d0
-	bne	SdcCurFileNameFunc_entry_Laa2
-SdcCurFileNameFunc_entry_La7b:
+	bne	SdcFmmMedleyEditTitleFunc_L67
+SdcFmmMedleyEditTitleFunc_L40:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
@@ -519431,19 +519487,19 @@ SdcCurFileNameFunc_entry_La7b:
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Laa2:
+	jmp	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_L67:
 	cmp	3, d0
-	bne	SdcCurFileNameFunc_entry_Lb01
+	bne	SdcFmmMedleyEditTitleFunc_Lc6
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x110, d0
-	beq	SdcCurFileNameFunc_entry_Lac4
-	jmp	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Lac4:
+	beq	SdcFmmMedleyEditTitleFunc_L89
+	jmp	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_L89:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -519458,15 +519514,15 @@ SdcCurFileNameFunc_entry_Lac4:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-	jmp	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Lb01:
+	jmp	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_Lc6:
 	cmp	4, d0
-	beq	SdcCurFileNameFunc_entry_Lb08
-	jmp	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Lb08:
+	beq	SdcFmmMedleyEditTitleFunc_Lcd
+	jmp	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_Lcd:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcCurFileNameFunc_entry_Lb4f
+	bne	SdcFmmMedleyEditTitleFunc_L114
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -519483,22 +519539,22 @@ SdcCurFileNameFunc_entry_Lb08:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Lb4f:
+	bra	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_L114:
 	cmp	2, d0
-	bne	SdcCurFileNameFunc_entry_Lb60
+	bne	SdcFmmMedleyEditTitleFunc_L125
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcCurFileNameFunc_entry_Lbb5
-SdcCurFileNameFunc_entry_Lb60:
+	bra	SdcFmmMedleyEditTitleFunc_L17a
+SdcFmmMedleyEditTitleFunc_L125:
 	call	func_4870B600, 0, 0
 	extbu	d0
 	call	func_487163B8_entry, [d2,d3], 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	0x110, d0
-	bne	SdcCurFileNameFunc_entry_Lbb5
+	bne	SdcFmmMedleyEditTitleFunc_L17a
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -519513,118 +519569,118 @@ SdcCurFileNameFunc_entry_Lb60:
 	call	func_4870902D, 0, 0
 	mov	1, d0
 	movbu	d0, (0x500788c5)
-SdcCurFileNameFunc_entry_Lbb5:
+SdcFmmMedleyEditTitleFunc_L17a:
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_Lbf9
-SdcCurFileNameFunc_entry_Lbb8:
+	bra	SdcFmmMedleyEditTitleFunc_L1be
+SdcFmmMedleyEditTitleFunc_L17d:
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_Lbf9
-SdcCurFileNameFunc_entry_Lbbb:
+	bra	SdcFmmMedleyEditTitleFunc_L1be
+SdcFmmMedleyEditTitleFunc_L180:
 	call	func_4870B6AB, 0, 0
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_Lbf9
-SdcCurFileNameFunc_entry_Lbce:
+	bra	SdcFmmMedleyEditTitleFunc_L1be
+SdcFmmMedleyEditTitleFunc_L193:
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_Lbf9
-SdcCurFileNameFunc_entry_Lbd1:
+	bra	SdcFmmMedleyEditTitleFunc_L1be
+SdcFmmMedleyEditTitleFunc_L196:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	SdcCurFileNameFunc_entry_Lbf5
+	bne	SdcFmmMedleyEditTitleFunc_L1ba
 	call	func_4870B6A2, 0, 0
 	mov	0x000f0110, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0005000d, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-SdcCurFileNameFunc_entry_Lbf5:
+SdcFmmMedleyEditTitleFunc_L1ba:
 	clr	d0
-	bra	SdcCurFileNameFunc_entry_Lbf9
-SdcCurFileNameFunc_entry_Lbf8:
+	bra	SdcFmmMedleyEditTitleFunc_L1be
+SdcFmmMedleyEditTitleFunc_L1bd:
 	clr	d0
-SdcCurFileNameFunc_entry_Lbf9:
+SdcFmmMedleyEditTitleFunc_L1be:
 	ret	0, 0x14
 
-SdcCurFolderNameFunc:
+SdcCusLoadSaveSrcDstFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFmmMedleyListFunc:
+SdcSendIndexCustomSaveFunc:
 	clr	d0
 	retf	0, 0
 
-SdcSmfSeqToSongNumFunc:
+SdcSaveFileNameCstFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFmmFolderNameFunc:
+SdcFmmCstFileNameFunc:
 	clr	d0
 	retf	0, 0
 
-SdcSmfLoadAsFunc:
+SdcCstSongRenameFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFavoriteTtlJgFunc:
+SdcFmmSmfFileNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	d0, d2
 	mov	d1, a3
 	cmp	0x1460002, a3
-	beq	SdcFavoriteTtlJgFunc_L3f
+	beq	SdcFmmSmfFileNameFunc_L3f
 	cmp	0x50009, d1
-	bne	SdcFavoriteTtlJgFunc_L1b
-	jmp	SdcFavoriteTtlJgFunc_L1df
-SdcFavoriteTtlJgFunc_L1b:
+	bne	SdcFmmSmfFileNameFunc_L1b
+	jmp	SdcFmmSmfFileNameFunc_L1df
+SdcFmmSmfFileNameFunc_L1b:
 	cmp	0x5000f, d1
-	bne	SdcFavoriteTtlJgFunc_L26
-	jmp	SdcFavoriteTtlJgFunc_L26e
-SdcFavoriteTtlJgFunc_L26:
+	bne	SdcFmmSmfFileNameFunc_L26
+	jmp	SdcFmmSmfFileNameFunc_L26e
+SdcFmmSmfFileNameFunc_L26:
 	cmp	0x50010, d1
-	bne	SdcFavoriteTtlJgFunc_L31
-	jmp	SdcFavoriteTtlJgFunc_L26e
-SdcFavoriteTtlJgFunc_L31:
+	bne	SdcFmmSmfFileNameFunc_L31
+	jmp	SdcFmmSmfFileNameFunc_L26e
+SdcFmmSmfFileNameFunc_L31:
 	cmp	0x2160005, a3
-	bne	SdcFavoriteTtlJgFunc_L3c
-	jmp	SdcFavoriteTtlJgFunc_Le89
-SdcFavoriteTtlJgFunc_L3c:
-	jmp	SdcFavoriteTtlJgFunc_Le94
-SdcFavoriteTtlJgFunc_L3f:
+	bne	SdcFmmSmfFileNameFunc_L3c
+	jmp	SdcFmmSmfFileNameFunc_Le89
+SdcFmmSmfFileNameFunc_L3c:
+	jmp	SdcFmmSmfFileNameFunc_Le94
+SdcFmmSmfFileNameFunc_L3f:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFavoriteTtlJgFunc_L4f
+	beq	SdcFmmSmfFileNameFunc_L4f
 	cmp	1, d0
-	bne	SdcFavoriteTtlJgFunc_L53
-SdcFavoriteTtlJgFunc_L4f:
+	bne	SdcFmmSmfFileNameFunc_L53
+SdcFmmSmfFileNameFunc_L4f:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFavoriteTtlJgFunc_L53:
+SdcFmmSmfFileNameFunc_L53:
 	call	func_4870B02F_entry, 0, 0xc
 	movhu	d0, (0x50077a6a)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFavoriteTtlJgFunc_L6c
+	bge	SdcFmmSmfFileNameFunc_L6c
 	clr	d0
 	movhu	d0, (0x50077a6a)
-SdcFavoriteTtlJgFunc_L6c:
+SdcFmmSmfFileNameFunc_L6c:
 	call	GetTitleNow_entry, 0, 0x10
 	mov	4, d1
 	movbu	d1, (data_50005E80)
 	exthu	d0
 	cmp	0x120, d0
-	beq	SdcFavoriteTtlJgFunc_L8a
+	beq	SdcFmmSmfFileNameFunc_L8a
 	mov	8, d0
 	movbu	d0, (data_50005E80)
-SdcFavoriteTtlJgFunc_L8a:
+SdcFmmSmfFileNameFunc_L8a:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	bne	SdcFavoriteTtlJgFunc_L9b
-	jmp	SdcFavoriteTtlJgFunc_L148
-SdcFavoriteTtlJgFunc_L9b:
+	bne	SdcFmmSmfFileNameFunc_L9b
+	jmp	SdcFmmSmfFileNameFunc_L148
+SdcFmmSmfFileNameFunc_L9b:
 	movhu	(0x50077a6a), d0
 	exthu	d0
 	call	func_4870AFD4_entry, 0, 0xc
@@ -519632,40 +519688,40 @@ SdcFavoriteTtlJgFunc_L9b:
 	movhu	(0x50077a68), d0
 	exth	d0
 	cmp	0, d0
-	bge	SdcFavoriteTtlJgFunc_Lc1
+	bge	SdcFmmSmfFileNameFunc_Lc1
 	clr	d0
 	movhu	d0, (0x50077a68)
-SdcFavoriteTtlJgFunc_Lc1:
+SdcFmmSmfFileNameFunc_Lc1:
 	call	func_4870B04F_entry, 0, 0xc
 	movhu	d0, (0x50077a6c)
 	exth	d0
 	cmp	0, d0
-	bge	SdcFavoriteTtlJgFunc_Le3
+	bge	SdcFmmSmfFileNameFunc_Le3
 	clr	d0
 	movhu	d0, (0x50077a6c)
 	call	func_4870B015_entry, [d2], 0x10
-	bra	SdcFavoriteTtlJgFunc_L102
-SdcFavoriteTtlJgFunc_Le3:
+	bra	SdcFmmSmfFileNameFunc_L102
+SdcFmmSmfFileNameFunc_Le3:
 	movhu	(0x50077a6c), d1
 	movhu	(0x50077a68), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	blt	SdcFavoriteTtlJgFunc_L102
+	blt	SdcFmmSmfFileNameFunc_L102
 	clr	d0
 	movhu	d0, (0x50077a6c)
 	call	func_4870B015_entry, [d2], 0x10
-SdcFavoriteTtlJgFunc_L102:
+SdcFmmSmfFileNameFunc_L102:
 	movhu	(0x50077a68), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFavoriteTtlJgFunc_L121
+	bgt	SdcFmmSmfFileNameFunc_L121
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_L1db
-SdcFavoriteTtlJgFunc_L121:
+	jmp	SdcFmmSmfFileNameFunc_L1db
+SdcFmmSmfFileNameFunc_L121:
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d1
 	exth	d0
@@ -519676,16 +519732,16 @@ SdcFavoriteTtlJgFunc_L121:
 	mov	-1, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_L1db
-SdcFavoriteTtlJgFunc_L148:
+	jmp	SdcFmmSmfFileNameFunc_L1db
+SdcFmmSmfFileNameFunc_L148:
 	movhu	(0x50077a6a), d0
 	exth	d0
 	cmp	0, d0
-	beq	SdcFavoriteTtlJgFunc_L161
+	beq	SdcFmmSmfFileNameFunc_L161
 	clr	d0
 	movhu	d0, (0x50077a6a)
 	call	func_4870AFFB_entry, [d2], 0x10
-SdcFavoriteTtlJgFunc_L161:
+SdcFmmSmfFileNameFunc_L161:
 	movhu	(0x50077a6a), d0
 	exthu	d0
 	call	func_4870AFD4_entry, 0, 0xc
@@ -519693,20 +519749,20 @@ SdcFavoriteTtlJgFunc_L161:
 	movhu	(0x50077a68), d0
 	exth	d0
 	cmp	0, d0
-	bge	SdcFavoriteTtlJgFunc_L187
+	bge	SdcFmmSmfFileNameFunc_L187
 	clr	d0
 	movhu	d0, (0x50077a68)
-SdcFavoriteTtlJgFunc_L187:
+SdcFmmSmfFileNameFunc_L187:
 	movhu	(0x50077a68), d1
 	mov	-1, d0
 	exth	d1
 	add	d1, d0
 	movhu	d0, (0x50077a6c)
 	cmp	0x3e7, d1
-	bge	SdcFavoriteTtlJgFunc_L1a9
+	bge	SdcFmmSmfFileNameFunc_L1a9
 	movhu	(0x50077a68), d0
 	movhu	d0, (0x50077a6c)
-SdcFavoriteTtlJgFunc_L1a9:
+SdcFmmSmfFileNameFunc_L1a9:
 	movhu	(0x50077a6c), d0
 	exth	d0
 	call	func_4870B015_entry, [d2], 0x10
@@ -519720,26 +519776,26 @@ SdcFavoriteTtlJgFunc_L1a9:
 	mov	-1, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFavoriteTtlJgFunc_L1db:
+SdcFmmSmfFileNameFunc_L1db:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFavoriteTtlJgFunc_L1df:
+SdcFmmSmfFileNameFunc_L1df:
 	clr	d0
 	movbu	d0, (0x50077a6e)
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFavoriteTtlJgFunc_L1f6
+	beq	SdcFmmSmfFileNameFunc_L1f6
 	cmp	1, d0
-	bne	SdcFavoriteTtlJgFunc_L1fa
-SdcFavoriteTtlJgFunc_L1f6:
+	bne	SdcFmmSmfFileNameFunc_L1fa
+SdcFmmSmfFileNameFunc_L1f6:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFavoriteTtlJgFunc_L1fa:
+SdcFmmSmfFileNameFunc_L1fa:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	beq	SdcFavoriteTtlJgFunc_L229
+	beq	SdcFmmSmfFileNameFunc_L229
 	movhu	(0x50077a6c), d0
 	exth	d0
 	mov	d0, (0x10, sp)
@@ -519749,12 +519805,12 @@ SdcFavoriteTtlJgFunc_L1fa:
 	mov	a3, d0
 	exth	d1
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-	bra	SdcFavoriteTtlJgFunc_L26a
-SdcFavoriteTtlJgFunc_L229:
+	bra	SdcFmmSmfFileNameFunc_L26a
+SdcFmmSmfFileNameFunc_L229:
 	movhu	(0x50077a68), d1
 	exth	d1
 	cmp	0x3e7, d1
-	blt	SdcFavoriteTtlJgFunc_L250
+	blt	SdcFmmSmfFileNameFunc_L250
 	movhu	(0x50077a6c), d0
 	exth	d0
 	mov	d0, (0x10, sp)
@@ -519762,8 +519818,8 @@ SdcFavoriteTtlJgFunc_L229:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-	bra	SdcFavoriteTtlJgFunc_L26a
-SdcFavoriteTtlJgFunc_L250:
+	bra	SdcFmmSmfFileNameFunc_L26a
+SdcFmmSmfFileNameFunc_L250:
 	movhu	(0x50077a6c), d0
 	inc	d1
 	exth	d0
@@ -519773,31 +519829,31 @@ SdcFavoriteTtlJgFunc_L250:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-SdcFavoriteTtlJgFunc_L26a:
+SdcFmmSmfFileNameFunc_L26a:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFavoriteTtlJgFunc_L26e:
+SdcFmmSmfFileNameFunc_L26e:
 	movbu	(0x50077a6e), d0
 	cmp	0, d0
-	beq	SdcFavoriteTtlJgFunc_L27c
+	beq	SdcFmmSmfFileNameFunc_L27c
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcFavoriteTtlJgFunc_L27c:
+SdcFmmSmfFileNameFunc_L27c:
 	mov	(0x3c, sp), a0
 	movhu	(0x50077a6c), d0
 	cmp	0, a0
 	movhu	d0, (0x1a, sp)
 	movhu	(0x50077a6a), d0
 	movhu	d0, (0x18, sp)
-	beq	SdcFavoriteTtlJgFunc_L297
-	jmp	SdcFavoriteTtlJgFunc_L312
-SdcFavoriteTtlJgFunc_L297:
+	beq	SdcFmmSmfFileNameFunc_L297
+	jmp	SdcFmmSmfFileNameFunc_L312
+SdcFmmSmfFileNameFunc_L297:
 	cmp	0x50010, a3
-	bne	SdcFavoriteTtlJgFunc_L2f9
+	bne	SdcFmmSmfFileNameFunc_L2f9
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	beq	SdcFavoriteTtlJgFunc_L2cd
+	beq	SdcFmmSmfFileNameFunc_L2cd
 	movhu	(0x50077a6c), d0
 	movhu	(0x50077a68), d2
 	exth	d0
@@ -519805,13 +519861,13 @@ SdcFavoriteTtlJgFunc_L297:
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	blt	SdcFavoriteTtlJgFunc_L2c3
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L2c3:
+	blt	SdcFmmSmfFileNameFunc_L2c3
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L2c3:
 	inc	d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L2cd:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L2cd:
 	movhu	(0x50077a6c), d0
 	movhu	(0x50077a68), d2
 	exth	d0
@@ -519820,50 +519876,50 @@ SdcFavoriteTtlJgFunc_L2cd:
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	blt	SdcFavoriteTtlJgFunc_L2e4
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L2e4:
+	blt	SdcFmmSmfFileNameFunc_L2e4
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L2e4:
 	mov	d0, d1
 	inc	d1
 	cmp	0x3e7, d1
-	blt	SdcFavoriteTtlJgFunc_L2ef
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L2ef:
+	blt	SdcFmmSmfFileNameFunc_L2ef
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L2ef:
 	inc	d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L2f9:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L2f9:
 	movhu	(0x50077a6c), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFavoriteTtlJgFunc_L307
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L307:
+	bgt	SdcFmmSmfFileNameFunc_L307
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L307:
 	add	-1, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L312:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L312:
 	cmp	1, a0
-	bne	SdcFavoriteTtlJgFunc_L334
+	bne	SdcFmmSmfFileNameFunc_L334
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d1
 	exth	d0
 	cmp	d1, d0
-	bge	SdcFavoriteTtlJgFunc_L329
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L329:
+	bge	SdcFmmSmfFileNameFunc_L329
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L329:
 	sub	d1, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L334:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L334:
 	cmp	2, a0
-	beq	SdcFavoriteTtlJgFunc_L33b
-	jmp	SdcFavoriteTtlJgFunc_L440
-SdcFavoriteTtlJgFunc_L33b:
+	beq	SdcFmmSmfFileNameFunc_L33b
+	jmp	SdcFmmSmfFileNameFunc_L440
+SdcFmmSmfFileNameFunc_L33b:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	beq	SdcFavoriteTtlJgFunc_L3a1
+	beq	SdcFmmSmfFileNameFunc_L3a1
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d2
 	movhu	(0x50077a68), d3
@@ -519872,11 +519928,11 @@ SdcFavoriteTtlJgFunc_L33b:
 	mov	d2, d1
 	add	d0, d1
 	cmp	d3, d1
-	bge	SdcFavoriteTtlJgFunc_L36c
+	bge	SdcFmmSmfFileNameFunc_L36c
 	add	d2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L36c:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L36c:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, a2
@@ -519885,21 +519941,21 @@ SdcFavoriteTtlJgFunc_L36c:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, a2
-	blt	SdcFavoriteTtlJgFunc_L388
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L388:
+	blt	SdcFmmSmfFileNameFunc_L388
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L388:
 	mov	d3, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L396
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L396:
+	bne	SdcFmmSmfFileNameFunc_L396
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L396:
 	add	-1, d3
 	movhu	d3, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L3a1:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L3a1:
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d3
 	movhu	(0x50077a68), d1
@@ -519910,17 +519966,17 @@ SdcFavoriteTtlJgFunc_L3a1:
 	add	d0, d2
 	inc	d1
 	cmp	d1, d2
-	bge	SdcFavoriteTtlJgFunc_L3cf
+	bge	SdcFmmSmfFileNameFunc_L3cf
 	mov	d3, d1
 	add	d0, d1
 	cmp	0x3e7, d1
-	bge	SdcFavoriteTtlJgFunc_L3cf
+	bge	SdcFmmSmfFileNameFunc_L3cf
 	add	d3, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L3cf:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L3cf:
 	cmp	0x3e7, a2
-	blt	SdcFavoriteTtlJgFunc_L40c
+	blt	SdcFmmSmfFileNameFunc_L40c
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	mov	d0, d2
@@ -519929,22 +519985,22 @@ SdcFavoriteTtlJgFunc_L3cf:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	blt	SdcFavoriteTtlJgFunc_L3f0
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L3f0:
+	blt	SdcFmmSmfFileNameFunc_L3f0
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L3f0:
 	mov	a2, d0
 	ext	d0
 	div	d3, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L3ff
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L3ff:
+	bne	SdcFmmSmfFileNameFunc_L3ff
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L3ff:
 	mov	-1, d0
 	add	a2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L40c:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L40c:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	mov	d0, d2
@@ -519952,32 +520008,32 @@ SdcFavoriteTtlJgFunc_L40c:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	blt	SdcFavoriteTtlJgFunc_L425
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L425:
+	blt	SdcFmmSmfFileNameFunc_L425
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L425:
 	mov	a2, d0
 	inc	d0
 	ext	d0
 	div	d3, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L435
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L435:
+	bne	SdcFmmSmfFileNameFunc_L435
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L435:
 	mov	a2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L440:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L440:
 	cmp	3, a0
-	bne	SdcFavoriteTtlJgFunc_L497
+	bne	SdcFmmSmfFileNameFunc_L497
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	bne	SdcFavoriteTtlJgFunc_L455
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L455:
+	bne	SdcFmmSmfFileNameFunc_L455
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L455:
 	cmp	0x5000f, a3
-	bne	SdcFavoriteTtlJgFunc_L47e
+	bne	SdcFmmSmfFileNameFunc_L47e
 	call	func_4870AFC1_entry, 0, 8
 	movhu	(0x50077a6a), d2
 	exth	d0
@@ -519985,44 +520041,44 @@ SdcFavoriteTtlJgFunc_L455:
 	mov	d2, d1
 	inc	d1
 	cmp	d0, d1
-	blt	SdcFavoriteTtlJgFunc_L474
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L474:
+	blt	SdcFmmSmfFileNameFunc_L474
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L474:
 	inc	d2
 	movhu	d2, (0x50077a6a)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L47e:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L47e:
 	movhu	(0x50077a6a), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFavoriteTtlJgFunc_L48c
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L48c:
+	bgt	SdcFmmSmfFileNameFunc_L48c
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L48c:
 	add	-1, d0
 	movhu	d0, (0x50077a6a)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L497:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L497:
 	cmp	4, a0
-	bne	SdcFavoriteTtlJgFunc_L4b9
+	bne	SdcFmmSmfFileNameFunc_L4b9
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d1
 	exth	d0
 	cmp	d1, d0
-	bge	SdcFavoriteTtlJgFunc_L4ae
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L4ae:
+	bge	SdcFmmSmfFileNameFunc_L4ae
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L4ae:
 	sub	d1, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L4b9:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L4b9:
 	cmp	5, a0
-	beq	SdcFavoriteTtlJgFunc_L4c0
-	jmp	SdcFavoriteTtlJgFunc_L5c5
-SdcFavoriteTtlJgFunc_L4c0:
+	beq	SdcFmmSmfFileNameFunc_L4c0
+	jmp	SdcFmmSmfFileNameFunc_L5c5
+SdcFmmSmfFileNameFunc_L4c0:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	beq	SdcFavoriteTtlJgFunc_L526
+	beq	SdcFmmSmfFileNameFunc_L526
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d2
 	movhu	(0x50077a68), d3
@@ -520031,11 +520087,11 @@ SdcFavoriteTtlJgFunc_L4c0:
 	mov	d2, d1
 	add	d0, d1
 	cmp	d3, d1
-	bge	SdcFavoriteTtlJgFunc_L4f1
+	bge	SdcFmmSmfFileNameFunc_L4f1
 	add	d2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L4f1:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L4f1:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, a2
@@ -520044,21 +520100,21 @@ SdcFavoriteTtlJgFunc_L4f1:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, a2
-	blt	SdcFavoriteTtlJgFunc_L50d
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L50d:
+	blt	SdcFmmSmfFileNameFunc_L50d
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L50d:
 	mov	d3, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L51b
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L51b:
+	bne	SdcFmmSmfFileNameFunc_L51b
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L51b:
 	add	-1, d3
 	movhu	d3, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L526:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L526:
 	movhu	(0x50077a6c), d0
 	movbu	(data_50005E80), d3
 	movhu	(0x50077a68), d1
@@ -520069,17 +520125,17 @@ SdcFavoriteTtlJgFunc_L526:
 	add	d0, d2
 	inc	d1
 	cmp	d1, d2
-	bge	SdcFavoriteTtlJgFunc_L554
+	bge	SdcFmmSmfFileNameFunc_L554
 	mov	d3, d1
 	add	d0, d1
 	cmp	0x3e7, d1
-	bge	SdcFavoriteTtlJgFunc_L554
+	bge	SdcFmmSmfFileNameFunc_L554
 	add	d3, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L554:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L554:
 	cmp	0x3e7, a2
-	blt	SdcFavoriteTtlJgFunc_L591
+	blt	SdcFmmSmfFileNameFunc_L591
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	mov	d0, d2
@@ -520088,22 +520144,22 @@ SdcFavoriteTtlJgFunc_L554:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	blt	SdcFavoriteTtlJgFunc_L575
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L575:
+	blt	SdcFmmSmfFileNameFunc_L575
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L575:
 	mov	a2, d0
 	ext	d0
 	div	d3, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L584
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L584:
+	bne	SdcFmmSmfFileNameFunc_L584
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L584:
 	mov	-1, d0
 	add	a2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L591:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L591:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	mov	d0, d2
@@ -520111,26 +520167,26 @@ SdcFavoriteTtlJgFunc_L591:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	blt	SdcFavoriteTtlJgFunc_L5aa
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L5aa:
+	blt	SdcFmmSmfFileNameFunc_L5aa
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L5aa:
 	mov	a2, d0
 	inc	d0
 	ext	d0
 	div	d3, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L5ba
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L5ba:
+	bne	SdcFmmSmfFileNameFunc_L5ba
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L5ba:
 	mov	a2, d0
 	movhu	d0, (0x50077a6c)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L5c5:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L5c5:
 	cmp	0xa, a0
-	beq	SdcFavoriteTtlJgFunc_L5cc
-	jmp	SdcFavoriteTtlJgFunc_L689
-SdcFavoriteTtlJgFunc_L5cc:
+	beq	SdcFmmSmfFileNameFunc_L5cc
+	jmp	SdcFmmSmfFileNameFunc_L689
+SdcFmmSmfFileNameFunc_L5cc:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -520164,16 +520220,16 @@ SdcFavoriteTtlJgFunc_L5cc:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFavoriteTtlJgFunc_L65f
+	beq	SdcFmmSmfFileNameFunc_L65f
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcFavoriteTtlJgFunc_L669
-SdcFavoriteTtlJgFunc_L65f:
+	bra	SdcFmmSmfFileNameFunc_L669
+SdcFmmSmfFileNameFunc_L65f:
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcFavoriteTtlJgFunc_L669:
+SdcFmmSmfFileNameFunc_L669:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -520183,12 +520239,12 @@ SdcFavoriteTtlJgFunc_L669:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L689:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L689:
 	cmp	0xb, a0
-	beq	SdcFavoriteTtlJgFunc_L690
-	jmp	SdcFavoriteTtlJgFunc_L7a6
-SdcFavoriteTtlJgFunc_L690:
+	beq	SdcFmmSmfFileNameFunc_L690
+	jmp	SdcFmmSmfFileNameFunc_L7a6
+SdcFmmSmfFileNameFunc_L690:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -520199,7 +520255,7 @@ SdcFavoriteTtlJgFunc_L690:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	SdcFavoriteTtlJgFunc_L6fa
+	bge	SdcFmmSmfFileNameFunc_L6fa
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -520215,8 +520271,8 @@ SdcFavoriteTtlJgFunc_L690:
 	mov	0x021002e1, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L6fa:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L6fa:
 	clr	d0
 	call	func_487105D7_entry, 0, 0xc
 	mov	1, d0
@@ -520260,14 +520316,14 @@ SdcFavoriteTtlJgFunc_L6fa:
 	exthu	d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L7a6:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L7a6:
 	cmp	0x10, a0
-	bne	SdcFavoriteTtlJgFunc_L7fa
+	bne	SdcFmmSmfFileNameFunc_L7fa
 	movhu	(0x50077a6a), d0
 	exth	d0
 	cmp	0, d0
-	bne	SdcFavoriteTtlJgFunc_L7e1
+	bne	SdcFmmSmfFileNameFunc_L7e1
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -520278,19 +520334,19 @@ SdcFavoriteTtlJgFunc_L7a6:
 	mov	0x021002f8, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L7e1:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L7e1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x0210022a, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L7fa:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L7fa:
 	cmp	0x32, a0
-	beq	SdcFavoriteTtlJgFunc_L801
-	jmp	SdcFavoriteTtlJgFunc_L8c4
-SdcFavoriteTtlJgFunc_L801:
+	beq	SdcFmmSmfFileNameFunc_L801
+	jmp	SdcFmmSmfFileNameFunc_L8c4
+SdcFmmSmfFileNameFunc_L801:
 	clr	d0
 	call	func_487105D7_entry, 0, 0xc
 	mov	1, d0
@@ -520339,15 +520395,15 @@ SdcFavoriteTtlJgFunc_L801:
 	mov	d2, d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L8c4:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L8c4:
 	cmp	0x37, a0
-	beq	SdcFavoriteTtlJgFunc_L8cb
-	jmp	SdcFavoriteTtlJgFunc_L9c4
-SdcFavoriteTtlJgFunc_L8cb:
+	beq	SdcFmmSmfFileNameFunc_L8cb
+	jmp	SdcFmmSmfFileNameFunc_L9c4
+SdcFmmSmfFileNameFunc_L8cb:
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	SdcFavoriteTtlJgFunc_L901
+	beq	SdcFmmSmfFileNameFunc_L901
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -520358,8 +520414,8 @@ SdcFavoriteTtlJgFunc_L8cb:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L901:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L901:
 	clr	d0
 	call	func_487105D7_entry, 0, 0xc
 	mov	1, d0
@@ -520408,12 +520464,12 @@ SdcFavoriteTtlJgFunc_L901:
 	mov	d2, d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_L9c4:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_L9c4:
 	cmp	0x38, a0
-	beq	SdcFavoriteTtlJgFunc_L9cb
-	jmp	SdcFavoriteTtlJgFunc_La8e
-SdcFavoriteTtlJgFunc_L9cb:
+	beq	SdcFmmSmfFileNameFunc_L9cb
+	jmp	SdcFmmSmfFileNameFunc_La8e
+SdcFmmSmfFileNameFunc_L9cb:
 	clr	d0
 	call	func_487105D7_entry, 0, 0xc
 	mov	1, d0
@@ -520462,10 +520518,10 @@ SdcFavoriteTtlJgFunc_L9cb:
 	mov	d2, d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_La8e:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_La8e:
 	cmp	0x3a, a0
-	bne	SdcFavoriteTtlJgFunc_Lb09
+	bne	SdcFmmSmfFileNameFunc_Lb09
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -520494,161 +520550,161 @@ SdcFavoriteTtlJgFunc_La8e:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb09:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb09:
 	cmp	0x15, a0
-	bne	SdcFavoriteTtlJgFunc_Lb4a
+	bne	SdcFmmSmfFileNameFunc_Lb4a
 	movbu	(0x500788bc), d1
 	mov	d1, d0
 	inc	d0
 	cmp	4, d0
-	bge	SdcFavoriteTtlJgFunc_Lb32
+	bge	SdcFmmSmfFileNameFunc_Lb32
 	inc	d1
 	movbu	d1, (0x500788bc)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcRenameCstScreenJudge_entry, 0, 0x14
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb32:
+	call	SdcSmfLoadAsFunc_entry, 0, 0x14
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb32:
 	clr	d0
 	movbu	d0, (0x500788bc)
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcRenameCstScreenJudge_entry, 0, 0x14
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb4a:
+	call	SdcSmfLoadAsFunc_entry, 0, 0x14
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb4a:
 	cmp	0x16, a0
-	bne	SdcFavoriteTtlJgFunc_Lb6b
+	bne	SdcFmmSmfFileNameFunc_Lb6b
 	mov	1, d0
 	movbu	d0, (0x500788bf)
 	cmp	0x5000f, a3
-	bne	SdcFavoriteTtlJgFunc_Lb61
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb61:
+	bne	SdcFmmSmfFileNameFunc_Lb61
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb61:
 	clr	d0
 	movbu	d0, (0x500788bf)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb6b:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb6b:
 	cmp	0x17, a0
-	bne	SdcFavoriteTtlJgFunc_Lb8c
+	bne	SdcFmmSmfFileNameFunc_Lb8c
 	mov	1, d0
 	movbu	d0, (0x500788c0)
 	cmp	0x5000f, a3
-	bne	SdcFavoriteTtlJgFunc_Lb82
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb82:
+	bne	SdcFmmSmfFileNameFunc_Lb82
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb82:
 	clr	d0
 	movbu	d0, (0x500788c0)
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lb8c:
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lb8c:
 	cmp	0x18, a0
-	bne	SdcFavoriteTtlJgFunc_Lbcd
+	bne	SdcFmmSmfFileNameFunc_Lbcd
 	movbu	(0x500788bd), d1
 	mov	d1, d0
 	inc	d0
 	cmp	3, d0
-	bge	SdcFavoriteTtlJgFunc_Lbb5
+	bge	SdcFmmSmfFileNameFunc_Lbb5
 	inc	d1
 	movbu	d1, (0x500788bd)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcFdCopyTechScreenJudge_entry, 0, 0x14
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lbb5:
+	call	SdcSmfSaveAsFunc_entry, 0, 0x14
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lbb5:
 	clr	d0
 	movbu	d0, (0x500788bd)
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcFdCopyTechScreenJudge_entry, 0, 0x14
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lbcd:
+	call	SdcSmfSaveAsFunc_entry, 0, 0x14
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lbcd:
 	cmp	0x1e, a0
-	bne	SdcFavoriteTtlJgFunc_Lc2b
+	bne	SdcFmmSmfFileNameFunc_Lc2b
 	movbu	(0x500788be), d1
 	mov	d1, d0
 	inc	d0
 	cmp	0xa, d0
-	bge	SdcFavoriteTtlJgFunc_Lc05
+	bge	SdcFmmSmfFileNameFunc_Lc05
 	inc	d1
 	movbu	d1, (0x500788be)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	mov	0x00050009, d1
-	call	SdcFdCopySmfScreenJudge_entry, [a2], 0x18
+	call	SdcSmfSeqToSongNumFunc_entry, [a2], 0x18
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcPlaylistNameScreenJudge2_entry, 0, 0x14
-	jmp	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lc05:
+	call	SdcSmfSeqSongNameFunc_entry, 0, 0x14
+	jmp	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lc05:
 	clr	d0
 	movbu	d0, (0x500788be)
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	mov	0x00050009, d1
-	call	SdcFdCopySmfScreenJudge_entry, [a2], 0x18
+	call	SdcSmfSeqToSongNumFunc_entry, [a2], 0x18
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcPlaylistNameScreenJudge2_entry, 0, 0x14
-	bra	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lc2b:
+	call	SdcSmfSeqSongNameFunc_entry, 0, 0x14
+	bra	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lc2b:
 	cmp	0x1f, a0
-	bne	SdcFavoriteTtlJgFunc_Lc86
+	bne	SdcFmmSmfFileNameFunc_Lc86
 	movbu	(0x500788be), d1
 	mov	d1, d0
 	inc	d0
 	cmp	0xa, d0
-	bge	SdcFavoriteTtlJgFunc_Lc62
+	bge	SdcFmmSmfFileNameFunc_Lc62
 	inc	d1
 	movbu	d1, (0x500788be)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	mov	0x00050009, d1
-	call	SdcPlaylistNameScreenJudge_entry, [a2], 0x18
+	call	SdcSmfSeqFromSongNumFunc_entry, [a2], 0x18
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcPlaylistNameScreenJudge2_entry, 0, 0x14
-	bra	SdcFavoriteTtlJgFunc_Lc86
-SdcFavoriteTtlJgFunc_Lc62:
+	call	SdcSmfSeqSongNameFunc_entry, 0, 0x14
+	bra	SdcFmmSmfFileNameFunc_Lc86
+SdcFmmSmfFileNameFunc_Lc62:
 	clr	d0
 	movbu	d0, (0x500788be)
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	mov	0x00050009, d1
-	call	SdcPlaylistNameScreenJudge_entry, [a2], 0x18
+	call	SdcSmfSeqFromSongNumFunc_entry, [a2], 0x18
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00050009, d1
 	mov	d2, d0
-	call	SdcPlaylistNameScreenJudge2_entry, 0, 0x14
-SdcFavoriteTtlJgFunc_Lc86:
+	call	SdcSmfSeqSongNameFunc_entry, 0, 0x14
+SdcFmmSmfFileNameFunc_Lc86:
 	movhu	(0x18, sp), d1
 	movhu	(0x50077a6a), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bne	SdcFavoriteTtlJgFunc_Lc97
-	jmp	SdcFavoriteTtlJgFunc_Ld60
-SdcFavoriteTtlJgFunc_Lc97:
+	bne	SdcFmmSmfFileNameFunc_Lc97
+	jmp	SdcFmmSmfFileNameFunc_Ld60
+SdcFmmSmfFileNameFunc_Lc97:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	bne	SdcFavoriteTtlJgFunc_Lca8
-	jmp	SdcFavoriteTtlJgFunc_Ld60
-SdcFavoriteTtlJgFunc_Lca8:
+	bne	SdcFmmSmfFileNameFunc_Lca8
+	jmp	SdcFmmSmfFileNameFunc_Ld60
+SdcFmmSmfFileNameFunc_Lca8:
 	clr	d0
 	movhu	d0, (0x50077a6c)
 	call	func_4870B015_entry, [d2], 0x10
@@ -520659,20 +520715,20 @@ SdcFavoriteTtlJgFunc_Lca8:
 	movhu	(0x50077a68), d0
 	exth	d0
 	cmp	0, d0
-	bge	SdcFavoriteTtlJgFunc_Lcdc
+	bge	SdcFmmSmfFileNameFunc_Lcdc
 	clr	d0
 	movhu	d0, (0x50077a68)
-SdcFavoriteTtlJgFunc_Lcdc:
+SdcFmmSmfFileNameFunc_Lcdc:
 	movhu	(0x50077a68), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFavoriteTtlJgFunc_Lcfa
+	bgt	SdcFmmSmfFileNameFunc_Lcfa
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFavoriteTtlJgFunc_Ld1e
-SdcFavoriteTtlJgFunc_Lcfa:
+	bra	SdcFmmSmfFileNameFunc_Ld1e
+SdcFmmSmfFileNameFunc_Lcfa:
 	movhu	(0x50077a6c), d1
 	movbu	(data_50005E80), d0
 	exth	d1
@@ -520683,7 +520739,7 @@ SdcFavoriteTtlJgFunc_Lcfa:
 	mov	-1, d0
 	mov	0x0145000b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFavoriteTtlJgFunc_Ld1e:
+SdcFmmSmfFileNameFunc_Ld1e:
 	movhu	(0x50077a6a), d0
 	exth	d0
 	call	func_4870AFFB_entry, [d2], 0x10
@@ -520701,17 +520757,17 @@ SdcFavoriteTtlJgFunc_Ld1e:
 	mov	a3, d0
 	exth	d1
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-	jmp	SdcFavoriteTtlJgFunc_Le86
-SdcFavoriteTtlJgFunc_Ld60:
+	jmp	SdcFmmSmfFileNameFunc_Le86
+SdcFmmSmfFileNameFunc_Ld60:
 	movhu	(0x1a, sp), d0
 	exth	d0
 	mov	d0, a2
 	movhu	(0x50077a6c), d0
 	exth	d0
 	cmp	d0, a2
-	bne	SdcFavoriteTtlJgFunc_Ld74
-	jmp	SdcFavoriteTtlJgFunc_Le86
-SdcFavoriteTtlJgFunc_Ld74:
+	bne	SdcFmmSmfFileNameFunc_Ld74
+	jmp	SdcFmmSmfFileNameFunc_Le86
+SdcFmmSmfFileNameFunc_Ld74:
 	call	func_4870B015_entry, [d2], 0x10
 	movhu	(0x50077a6c), d1
 	movbu	(data_50005E80), d0
@@ -520733,7 +520789,7 @@ SdcFavoriteTtlJgFunc_Ld74:
 	exth	d0
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	bne	SdcFavoriteTtlJgFunc_Le16
+	bne	SdcFmmSmfFileNameFunc_Le16
 	mov	a2, d0
 	ext	d0
 	div	d2, d0
@@ -520764,12 +520820,12 @@ SdcFavoriteTtlJgFunc_Ld74:
 	mov	-1, d0
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFavoriteTtlJgFunc_Le86
-SdcFavoriteTtlJgFunc_Le16:
+	bra	SdcFmmSmfFileNameFunc_Le86
+SdcFmmSmfFileNameFunc_Le16:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	beq	SdcFavoriteTtlJgFunc_Le45
+	beq	SdcFmmSmfFileNameFunc_Le45
 	movhu	(0x50077a6c), d0
 	exth	d0
 	mov	d0, (0x10, sp)
@@ -520779,12 +520835,12 @@ SdcFavoriteTtlJgFunc_Le16:
 	mov	a3, d0
 	exth	d1
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-	bra	SdcFavoriteTtlJgFunc_Le86
-SdcFavoriteTtlJgFunc_Le45:
+	bra	SdcFmmSmfFileNameFunc_Le86
+SdcFmmSmfFileNameFunc_Le45:
 	movhu	(0x50077a68), d1
 	exth	d1
 	cmp	0x3e7, d1
-	blt	SdcFavoriteTtlJgFunc_Le6c
+	blt	SdcFmmSmfFileNameFunc_Le6c
 	movhu	(0x50077a6c), d0
 	exth	d0
 	mov	d0, (0x10, sp)
@@ -520792,8 +520848,8 @@ SdcFavoriteTtlJgFunc_Le45:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-	bra	SdcFavoriteTtlJgFunc_Le86
-SdcFavoriteTtlJgFunc_Le6c:
+	bra	SdcFmmSmfFileNameFunc_Le86
+SdcFmmSmfFileNameFunc_Le6c:
 	movhu	(0x50077a6c), d0
 	inc	d1
 	exth	d0
@@ -520803,26 +520859,26 @@ SdcFavoriteTtlJgFunc_Le6c:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	call	func_487103F8_entry, [d2,d3,a2,a3], 0x58
-SdcFavoriteTtlJgFunc_Le86:
+SdcFmmSmfFileNameFunc_Le86:
 	clr	d0
-	bra	SdcFavoriteTtlJgFunc_Le95
-SdcFavoriteTtlJgFunc_Le89:
+	bra	SdcFmmSmfFileNameFunc_Le95
+SdcFmmSmfFileNameFunc_Le89:
 	mov	(0x3c, sp), d0
 	movbu	d0, (0x50077a6e)
 	clr	d0
-	bra	SdcFavoriteTtlJgFunc_Le95
-SdcFavoriteTtlJgFunc_Le94:
+	bra	SdcFmmSmfFileNameFunc_Le95
+SdcFmmSmfFileNameFunc_Le94:
 	clr	d0
-SdcFavoriteTtlJgFunc_Le95:
+SdcFmmSmfFileNameFunc_Le95:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcFdCopySmfScreenJudge:
+SdcSmfSeqToSongNumFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 
-SdcFdCopySmfScreenJudge_entry:
+SdcSmfSeqToSongNumFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcFdCopySmfScreenJudge_entry_L4e
+	bne	SdcSmfSeqToSongNumFunc_entry_L4e
 	mov	0x50077a70, a2
 	mov	a2, a0
 	mov	Str_TO_SONG, a1
@@ -520840,18 +520896,18 @@ SdcFdCopySmfScreenJudge_entry:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFdCopySmfScreenJudge_entry_L4f
-SdcFdCopySmfScreenJudge_entry_L4e:
+	bra	SdcSmfSeqToSongNumFunc_entry_L4f
+SdcSmfSeqToSongNumFunc_entry_L4e:
 	clr	d0
-SdcFdCopySmfScreenJudge_entry_L4f:
+SdcSmfSeqToSongNumFunc_entry_L4f:
 	ret	[a2], 0x18
 
-SdcRenameCstScreenJudge:
+SdcSmfLoadAsFunc:
 	add	-0x14, sp
 
-SdcRenameCstScreenJudge_entry:
+SdcSmfLoadAsFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcRenameCstScreenJudge_entry_L2f
+	bne	SdcSmfLoadAsFunc_entry_L2f
 	movbu	(0x500788bc), d0
 	mov	ptrs_4852410C, a0
 	asl2	d0
@@ -520861,23 +520917,23 @@ SdcRenameCstScreenJudge_entry:
 	mov	0x02100059, d0
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcRenameCstScreenJudge_entry_L30
-SdcRenameCstScreenJudge_entry_L2f:
+	bra	SdcSmfLoadAsFunc_entry_L30
+SdcSmfLoadAsFunc_entry_L2f:
 	clr	d0
-SdcRenameCstScreenJudge_entry_L30:
+SdcSmfLoadAsFunc_entry_L30:
 	ret	0, 0x14
 
-SdcCustomTtlJgFunc:
+SdcSmfSaveSongNameFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcCustomTtlJgFunc_L20
+	beq	SdcSmfSaveSongNameFunc_L20
 	cmp	0x6003a, d1
-	beq	SdcCustomTtlJgFunc_L52
+	beq	SdcSmfSaveSongNameFunc_L52
 	cmp	0x6007a, d1
-	beq	SdcCustomTtlJgFunc_L84
-	jmp	SdcCustomTtlJgFunc_L9f
-SdcCustomTtlJgFunc_L20:
+	beq	SdcSmfSaveSongNameFunc_L84
+	jmp	SdcSmfSaveSongNameFunc_L9f
+SdcSmfSaveSongNameFunc_L20:
 	mov	0x50077f44, a2
 	call	func_4870AF77, 0, 0
 	mov	a0, a1
@@ -520890,8 +520946,8 @@ SdcCustomTtlJgFunc_L20:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcCustomTtlJgFunc_La0
-SdcCustomTtlJgFunc_L52:
+	bra	SdcSmfSaveSongNameFunc_La0
+SdcSmfSaveSongNameFunc_L52:
 	mov	0x50077f44, a2
 	call	func_4870AF77, 0, 0
 	mov	a0, a1
@@ -520905,8 +520961,8 @@ SdcCustomTtlJgFunc_L52:
 	mov	a2, a1
 	call	func_486D0DF2, 0, 0
 	clr	d0
-	bra	SdcCustomTtlJgFunc_La0
-SdcCustomTtlJgFunc_L84:
+	bra	SdcSmfSaveSongNameFunc_La0
+SdcSmfSaveSongNameFunc_L84:
 	mov	0x50077f44, a2
 	mov	(0x28, sp), a1
 	mov	a2, a0
@@ -520914,19 +520970,19 @@ SdcCustomTtlJgFunc_L84:
 	mov	a2, a0
 	call	func_4870AF58_entry, [a2], 0x18
 	clr	d0
-	bra	SdcCustomTtlJgFunc_La0
-SdcCustomTtlJgFunc_L9f:
+	bra	SdcSmfSaveSongNameFunc_La0
+SdcSmfSaveSongNameFunc_L9f:
 	clr	d0
-SdcCustomTtlJgFunc_La0:
+SdcSmfSaveSongNameFunc_La0:
 	ret	[a2], 0x18
 
-SdcPlaylistNameScreenJudge:
+SdcSmfSeqFromSongNumFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 
-SdcPlaylistNameScreenJudge_entry:
+SdcSmfSeqFromSongNumFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcPlaylistNameScreenJudge_entry_L4e
+	bne	SdcSmfSeqFromSongNumFunc_entry_L4e
 	mov	0x50077ab0, a2
 	mov	a2, a0
 	mov	Str_FROM_SONG, a1
@@ -520944,22 +521000,22 @@ SdcPlaylistNameScreenJudge_entry:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcPlaylistNameScreenJudge_entry_L4f
-SdcPlaylistNameScreenJudge_entry_L4e:
+	bra	SdcSmfSeqFromSongNumFunc_entry_L4f
+SdcSmfSeqFromSongNumFunc_entry_L4e:
 	clr	d0
-SdcPlaylistNameScreenJudge_entry_L4f:
+SdcSmfSeqFromSongNumFunc_entry_L4f:
 	ret	[a2], 0x18
 
-SdcPlaylistNameScreenJudge2:
+SdcSmfSeqSongNameFunc:
 	add	-0x14, sp
 
-SdcPlaylistNameScreenJudge2_entry:
+SdcSmfSeqSongNameFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcPlaylistNameScreenJudge2_entry_L77
+	bne	SdcSmfSeqSongNameFunc_entry_L77
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x106, d0
-	bne	SdcPlaylistNameScreenJudge2_entry_L3f
+	bne	SdcSmfSeqSongNameFunc_entry_L3f
 	clr	d0
 	mov	d0, (0x10, sp)
 	movbu	(0x500788be), d0
@@ -520970,12 +521026,12 @@ SdcPlaylistNameScreenJudge2_entry:
 	mov	0x02100058, d0
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcPlaylistNameScreenJudge2_entry_L74
-SdcPlaylistNameScreenJudge2_entry_L3f:
+	bra	SdcSmfSeqSongNameFunc_entry_L74
+SdcSmfSeqSongNameFunc_entry_L3f:
 	call	GetTitleNow_entry, 0, 0x10
 	exthu	d0
 	cmp	0x109, d0
-	bne	SdcPlaylistNameScreenJudge2_entry_L74
+	bne	SdcSmfSeqSongNameFunc_entry_L74
 	clr	d0
 	mov	d0, (0x10, sp)
 	movbu	(0x500788be), d0
@@ -520986,20 +521042,20 @@ SdcPlaylistNameScreenJudge2_entry_L3f:
 	mov	0x0210004c, d0
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcPlaylistNameScreenJudge2_entry_L74:
+SdcSmfSeqSongNameFunc_entry_L74:
 	clr	d0
-	bra	SdcPlaylistNameScreenJudge2_entry_L78
-SdcPlaylistNameScreenJudge2_entry_L77:
+	bra	SdcSmfSeqSongNameFunc_entry_L78
+SdcSmfSeqSongNameFunc_entry_L77:
 	clr	d0
-SdcPlaylistNameScreenJudge2_entry_L78:
+SdcSmfSeqSongNameFunc_entry_L78:
 	ret	0, 0x14
 
-SdcFdCopyTechScreenJudge:
+SdcSmfSaveAsFunc:
 	add	-0x14, sp
 
-SdcFdCopyTechScreenJudge_entry:
+SdcSmfSaveAsFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcFdCopyTechScreenJudge_entry_L2f
+	bne	SdcSmfSaveAsFunc_entry_L2f
 	movbu	(0x500788bd), d0
 	mov	ptrs_48524138, a0
 	asl2	d0
@@ -521009,34 +521065,34 @@ SdcFdCopyTechScreenJudge_entry:
 	mov	0x02100041, d0
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFdCopyTechScreenJudge_entry_L30
-SdcFdCopyTechScreenJudge_entry_L2f:
+	bra	SdcSmfSaveAsFunc_entry_L30
+SdcSmfSaveAsFunc_entry_L2f:
 	clr	d0
-SdcFdCopyTechScreenJudge_entry_L30:
+SdcSmfSaveAsFunc_entry_L30:
 	ret	0, 0x14
 
-SdcSmfSaveAsFunc:
+SdcSmfTrkNumAndNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcSmfSaveAsFunc_L26
+	beq	SdcSmfTrkNumAndNameFunc_L26
 	cmp	0x5000f, d1
-	bne	SdcSmfSaveAsFunc_L18
-	jmp	SdcSmfSaveAsFunc_Lf1
-SdcSmfSaveAsFunc_L18:
+	bne	SdcSmfTrkNumAndNameFunc_L18
+	jmp	SdcSmfTrkNumAndNameFunc_Lf1
+SdcSmfTrkNumAndNameFunc_L18:
 	cmp	0x50010, d1
-	bne	SdcSmfSaveAsFunc_L23
-	jmp	SdcSmfSaveAsFunc_Lf1
-SdcSmfSaveAsFunc_L23:
-	jmp	SdcSmfSaveAsFunc_L1b4
-SdcSmfSaveAsFunc_L26:
+	bne	SdcSmfTrkNumAndNameFunc_L23
+	jmp	SdcSmfTrkNumAndNameFunc_Lf1
+SdcSmfTrkNumAndNameFunc_L23:
+	jmp	SdcSmfTrkNumAndNameFunc_L1b4
+SdcSmfTrkNumAndNameFunc_L26:
 	call	SdUiMountGateCheck_entry, [d2], 0x18
 	extbu	d0
 	cmp	0, d0
-	beq	SdcSmfSaveAsFunc_L34
+	beq	SdcSmfTrkNumAndNameFunc_L34
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcSmfSaveAsFunc_L34:
+SdcSmfTrkNumAndNameFunc_L34:
 	call	func_4870B02F_entry, 0, 0xc
 	mov	d0, d3
 	call	func_4870B04F_entry, 0, 0xc
@@ -521044,7 +521100,7 @@ SdcSmfSaveAsFunc_L34:
 	mov	d3, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcSmfSaveAsFunc_Lbe
+	blt	SdcSmfTrkNumAndNameFunc_Lbe
 	mov	d3, d0
 	extbu	d0
 	mov	a3, d1
@@ -521056,13 +521112,13 @@ SdcSmfSaveAsFunc_L34:
 	mov	d2, d1
 	exth	d1
 	cmp	0, d1
-	bge	SdcSmfSaveAsFunc_L74
+	bge	SdcSmfTrkNumAndNameFunc_L74
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	data_48524144, a1
 	call	func_486D0DF2, 0, 0
-	bra	SdcSmfSaveAsFunc_Ld2
-SdcSmfSaveAsFunc_L74:
+	bra	SdcSmfTrkNumAndNameFunc_Ld2
+SdcSmfTrkNumAndNameFunc_L74:
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	Str_TR, a1
@@ -521083,13 +521139,13 @@ SdcSmfSaveAsFunc_L74:
 	exthu	d1
 	mov	d3, d0
 	call	func_4870B06F_entry, [a2], 0x18
-	bra	SdcSmfSaveAsFunc_Ld2
-SdcSmfSaveAsFunc_Lbe:
+	bra	SdcSmfTrkNumAndNameFunc_Ld2
+SdcSmfTrkNumAndNameFunc_Lbe:
 	mov	0x50077f8c, a2
 	mov	a2, a0
 	mov	data_48524150, a1
 	call	func_486D0DF2, 0, 0
-SdcSmfSaveAsFunc_Ld2:
+SdcSmfTrkNumAndNameFunc_Ld2:
 	mov	a2, a0
 	mov	0x18, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -521099,12 +521155,12 @@ SdcSmfSaveAsFunc_Ld2:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-SdcSmfSaveAsFunc_Lf1:
+SdcSmfTrkNumAndNameFunc_Lf1:
 	mov	(0x34, sp), a0
 	cmp	0xa, a0
-	beq	SdcSmfSaveAsFunc_Lfa
-	jmp	SdcSmfSaveAsFunc_L1a2
-SdcSmfSaveAsFunc_Lfa:
+	beq	SdcSmfTrkNumAndNameFunc_Lfa
+	jmp	SdcSmfTrkNumAndNameFunc_L1a2
+SdcSmfTrkNumAndNameFunc_Lfa:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -521146,19 +521202,19 @@ SdcSmfSaveAsFunc_Lfa:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSaveAsFunc_L1b1
-SdcSmfSaveAsFunc_L1a2:
+	bra	SdcSmfTrkNumAndNameFunc_L1b1
+SdcSmfTrkNumAndNameFunc_L1a2:
 	cmp	0xb, a0
-	bne	SdcSmfSaveAsFunc_L1b1
+	bne	SdcSmfTrkNumAndNameFunc_L1b1
 	mov	0x10c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcSmfSaveAsFunc_L1b1:
+SdcSmfTrkNumAndNameFunc_L1b1:
 	clr	d0
-	bra	SdcSmfSaveAsFunc_L1b5
-SdcSmfSaveAsFunc_L1b4:
+	bra	SdcSmfTrkNumAndNameFunc_L1b5
+SdcSmfTrkNumAndNameFunc_L1b4:
 	clr	d0
-SdcSmfSaveAsFunc_L1b5:
+SdcSmfTrkNumAndNameFunc_L1b5:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_487183BC:
@@ -521325,40 +521381,40 @@ func_487183BC_entry_L11b:
 func_487183BC_entry_L13e:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcRenameTechScreenJudge:
+SdcFmmSmfPlaylistNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	d1, d2
 	cmp	0x2160000, d2
-	beq	SdcRenameTechScreenJudge_L3d
+	beq	SdcFmmSmfPlaylistNameFunc_L3d
 	cmp	0x50009, d1
-	bne	SdcRenameTechScreenJudge_L19
-	jmp	SdcRenameTechScreenJudge_L103
-SdcRenameTechScreenJudge_L19:
+	bne	SdcFmmSmfPlaylistNameFunc_L19
+	jmp	SdcFmmSmfPlaylistNameFunc_L103
+SdcFmmSmfPlaylistNameFunc_L19:
 	cmp	0x5000f, d1
-	bne	SdcRenameTechScreenJudge_L24
-	jmp	SdcRenameTechScreenJudge_L13b
-SdcRenameTechScreenJudge_L24:
+	bne	SdcFmmSmfPlaylistNameFunc_L24
+	jmp	SdcFmmSmfPlaylistNameFunc_L13b
+SdcFmmSmfPlaylistNameFunc_L24:
 	cmp	0x50010, d1
-	bne	SdcRenameTechScreenJudge_L2f
-	jmp	SdcRenameTechScreenJudge_L13b
-SdcRenameTechScreenJudge_L2f:
+	bne	SdcFmmSmfPlaylistNameFunc_L2f
+	jmp	SdcFmmSmfPlaylistNameFunc_L13b
+SdcFmmSmfPlaylistNameFunc_L2f:
 	cmp	0x1460001, d2
-	bne	SdcRenameTechScreenJudge_L3a
-	jmp	SdcRenameTechScreenJudge_L2db
-SdcRenameTechScreenJudge_L3a:
-	jmp	SdcRenameTechScreenJudge_L2e4
-SdcRenameTechScreenJudge_L3d:
+	bne	SdcFmmSmfPlaylistNameFunc_L3a
+	jmp	SdcFmmSmfPlaylistNameFunc_L2db
+SdcFmmSmfPlaylistNameFunc_L3a:
+	jmp	SdcFmmSmfPlaylistNameFunc_L2e4
+SdcFmmSmfPlaylistNameFunc_L3d:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcRenameTechScreenJudge_L4d
+	beq	SdcFmmSmfPlaylistNameFunc_L4d
 	cmp	1, d0
-	bne	SdcRenameTechScreenJudge_L51
-SdcRenameTechScreenJudge_L4d:
+	bne	SdcFmmSmfPlaylistNameFunc_L51
+SdcFmmSmfPlaylistNameFunc_L4d:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcRenameTechScreenJudge_L51:
+SdcFmmSmfPlaylistNameFunc_L51:
 	mov	0xa, d0
 	movhu	d0, (data_50005E84)
 	call	func_4870AFC1_entry, 0, 8
@@ -521367,7 +521423,7 @@ SdcRenameTechScreenJudge_L51:
 	movhu	d0, (0x50077af2)
 	exth	d0
 	cmp	0, d0
-	bgt	SdcRenameTechScreenJudge_L8f
+	bgt	SdcFmmSmfPlaylistNameFunc_L8f
 	clr	d0
 	movhu	d0, (0x50077af0)
 	call	func_4870B015_entry, [d2], 0x10
@@ -521375,13 +521431,13 @@ SdcRenameTechScreenJudge_L51:
 	mov	d0, (0x10, sp)
 	mov	0x02150004, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcRenameTechScreenJudge_Lff
-SdcRenameTechScreenJudge_L8f:
+	bra	SdcFmmSmfPlaylistNameFunc_Lff
+SdcFmmSmfPlaylistNameFunc_L8f:
 	call	func_4870B02F_entry, 0, 0xc
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bgt	SdcRenameTechScreenJudge_Ld2
+	bgt	SdcFmmSmfPlaylistNameFunc_Ld2
 	clr	d0
 	movhu	d0, (0x50077af0)
 	mov	1, d0
@@ -521396,8 +521452,8 @@ SdcRenameTechScreenJudge_L8f:
 	mov	-1, d0
 	mov	0x02150004, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcRenameTechScreenJudge_Lff
-SdcRenameTechScreenJudge_Ld2:
+	bra	SdcFmmSmfPlaylistNameFunc_Lff
+SdcFmmSmfPlaylistNameFunc_Ld2:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x50077af0)
@@ -521411,20 +521467,20 @@ SdcRenameTechScreenJudge_Ld2:
 	mov	-1, d0
 	mov	0x02150004, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcRenameTechScreenJudge_Lff:
+SdcFmmSmfPlaylistNameFunc_Lff:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcRenameTechScreenJudge_L103:
+SdcFmmSmfPlaylistNameFunc_L103:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcRenameTechScreenJudge_L113
+	beq	SdcFmmSmfPlaylistNameFunc_L113
 	cmp	1, d0
-	bne	SdcRenameTechScreenJudge_L117
-SdcRenameTechScreenJudge_L113:
+	bne	SdcFmmSmfPlaylistNameFunc_L117
+SdcFmmSmfPlaylistNameFunc_L113:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcRenameTechScreenJudge_L117:
+SdcFmmSmfPlaylistNameFunc_L117:
 	movhu	(0x50077af0), d0
 	exth	d0
 	mov	d0, (0x10, sp)
@@ -521435,14 +521491,14 @@ SdcRenameTechScreenJudge_L117:
 	mov	0x02150002, d0
 	exth	d1
 	call	func_487183BC_entry, [d2,d3,a2,a3], 0x2c
-SdcRenameTechScreenJudge_L13b:
+SdcFmmSmfPlaylistNameFunc_L13b:
 	mov	(0x3c, sp), a1
 	movhu	(0x50077af0), d0
 	cmp	3, a1
 	mov	d0, a3
-	bne	SdcRenameTechScreenJudge_L191
+	bne	SdcFmmSmfPlaylistNameFunc_L191
 	cmp	0x50010, d2
-	bne	SdcRenameTechScreenJudge_L171
+	bne	SdcFmmSmfPlaylistNameFunc_L171
 	movhu	(0x50077af0), d1
 	movhu	(0x50077af2), d2
 	exth	d1
@@ -521450,38 +521506,38 @@ SdcRenameTechScreenJudge_L13b:
 	mov	d1, d0
 	inc	d0
 	cmp	d2, d0
-	blt	SdcRenameTechScreenJudge_L167
-	jmp	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L167:
+	blt	SdcFmmSmfPlaylistNameFunc_L167
+	jmp	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L167:
 	inc	d1
 	movhu	d1, (0x50077af0)
-	jmp	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L171:
+	jmp	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L171:
 	cmp	0x5000f, d2
-	beq	SdcRenameTechScreenJudge_L17c
-	jmp	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L17c:
+	beq	SdcFmmSmfPlaylistNameFunc_L17c
+	jmp	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L17c:
 	movhu	(0x50077af0), d0
 	exth	d0
 	cmp	0, d0
-	ble	SdcRenameTechScreenJudge_L1ff
+	ble	SdcFmmSmfPlaylistNameFunc_L1ff
 	add	-1, d0
 	movhu	d0, (0x50077af0)
-	bra	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L191:
+	bra	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L191:
 	cmp	4, a1
-	bne	SdcRenameTechScreenJudge_L1af
+	bne	SdcFmmSmfPlaylistNameFunc_L1af
 	movhu	(0x50077af0), d0
 	movhu	(data_50005E84), d1
 	exth	d0
 	cmp	d1, d0
-	blt	SdcRenameTechScreenJudge_L1ff
+	blt	SdcFmmSmfPlaylistNameFunc_L1ff
 	sub	d1, d0
 	movhu	d0, (0x50077af0)
-	bra	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L1af:
+	bra	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L1af:
 	cmp	5, a1
-	bne	SdcRenameTechScreenJudge_L1ff
+	bne	SdcFmmSmfPlaylistNameFunc_L1ff
 	movhu	(0x50077af0), d0
 	movhu	(data_50005E84), d2
 	movhu	(0x50077af2), d3
@@ -521490,11 +521546,11 @@ SdcRenameTechScreenJudge_L1af:
 	mov	d2, d1
 	add	d0, d1
 	cmp	d3, d1
-	bge	SdcRenameTechScreenJudge_L1d5
+	bge	SdcFmmSmfPlaylistNameFunc_L1d5
 	add	d2, d0
 	movhu	d0, (0x50077af0)
-	bra	SdcRenameTechScreenJudge_L1ff
-SdcRenameTechScreenJudge_L1d5:
+	bra	SdcFmmSmfPlaylistNameFunc_L1ff
+SdcFmmSmfPlaylistNameFunc_L1d5:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, a2
@@ -521502,25 +521558,25 @@ SdcRenameTechScreenJudge_L1d5:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, a2
-	bge	SdcRenameTechScreenJudge_L1ff
+	bge	SdcFmmSmfPlaylistNameFunc_L1ff
 	mov	d3, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	beq	SdcRenameTechScreenJudge_L1ff
+	beq	SdcFmmSmfPlaylistNameFunc_L1ff
 	add	-1, d3
 	movhu	d3, (0x50077af0)
-SdcRenameTechScreenJudge_L1ff:
+SdcFmmSmfPlaylistNameFunc_L1ff:
 	movhu	(0x50077af0), d1
 	mov	a3, d0
 	exth	d1
 	exth	d0
 	mov	d0, a3
 	cmp	d0, d1
-	bne	SdcRenameTechScreenJudge_L211
-	jmp	SdcRenameTechScreenJudge_L2d8
-SdcRenameTechScreenJudge_L211:
+	bne	SdcFmmSmfPlaylistNameFunc_L211
+	jmp	SdcFmmSmfPlaylistNameFunc_L2d8
+SdcFmmSmfPlaylistNameFunc_L211:
 	movhu	(data_50005E84), d0
 	ext	d1
 	div	d0, d1
@@ -521545,7 +521601,7 @@ SdcRenameTechScreenJudge_L211:
 	mov	d3, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	beq	SdcRenameTechScreenJudge_L287
+	beq	SdcFmmSmfPlaylistNameFunc_L287
 	mov	a2, (0x10, sp)
 	movhu	(data_50005E84), d0
 	movbu	d0, (0x18, sp)
@@ -521555,8 +521611,8 @@ SdcRenameTechScreenJudge_L211:
 	mov	0x02150002, d0
 	exth	d1
 	call	func_487183BC_entry, [d2,d3,a2,a3], 0x2c
-	bra	SdcRenameTechScreenJudge_L2d8
-SdcRenameTechScreenJudge_L287:
+	bra	SdcFmmSmfPlaylistNameFunc_L2d8
+SdcFmmSmfPlaylistNameFunc_L287:
 	mov	a3, d1
 	ext	d1
 	div	d3, d1
@@ -521586,48 +521642,48 @@ SdcRenameTechScreenJudge_L287:
 	mov	-1, d0
 	mov	0x02150002, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcRenameTechScreenJudge_L2d8:
+SdcFmmSmfPlaylistNameFunc_L2d8:
 	clr	d0
-	bra	SdcRenameTechScreenJudge_L2e5
-SdcRenameTechScreenJudge_L2db:
+	bra	SdcFmmSmfPlaylistNameFunc_L2e5
+SdcFmmSmfPlaylistNameFunc_L2db:
 	movhu	(0x50077af0), d0
 	exth	d0
-	bra	SdcRenameTechScreenJudge_L2e5
-SdcRenameTechScreenJudge_L2e4:
+	bra	SdcFmmSmfPlaylistNameFunc_L2e5
+SdcFmmSmfPlaylistNameFunc_L2e4:
 	clr	d0
-SdcRenameTechScreenJudge_L2e5:
+SdcFmmSmfPlaylistNameFunc_L2e5:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcRenameSmfScreenJudge:
+SdcFmmSmfCurPlaylistFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcRenameSmfScreenJudge_L10
-	jmp	SdcRenameSmfScreenJudge_Lb6
-SdcRenameSmfScreenJudge_L10:
+	beq	SdcFmmSmfCurPlaylistFunc_L10
+	jmp	SdcFmmSmfCurPlaylistFunc_Lb6
+SdcFmmSmfCurPlaylistFunc_L10:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcRenameSmfScreenJudge_L20
+	beq	SdcFmmSmfCurPlaylistFunc_L20
 	cmp	1, d0
-	bne	SdcRenameSmfScreenJudge_L24
-SdcRenameSmfScreenJudge_L20:
+	bne	SdcFmmSmfCurPlaylistFunc_L24
+SdcFmmSmfCurPlaylistFunc_L20:
 	clr	d0
 	ret	[d2,a2], 0x1c
-SdcRenameSmfScreenJudge_L24:
+SdcFmmSmfCurPlaylistFunc_L24:
 	call	func_4870B02F_entry, 0, 0xc
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
-	bne	SdcRenameSmfScreenJudge_L47
+	bne	SdcFmmSmfCurPlaylistFunc_L47
 	mov	0x50077f74, a2
 	mov	a2, a0
 	mov	Str_Default_Playlist_2, a1
 	call	func_486D0DF2, 0, 0
-	bra	SdcRenameSmfScreenJudge_L98
-SdcRenameSmfScreenJudge_L47:
+	bra	SdcFmmSmfCurPlaylistFunc_L98
+SdcFmmSmfCurPlaylistFunc_L47:
 	cmp	0, d0
-	ble	SdcRenameSmfScreenJudge_L84
+	ble	SdcFmmSmfCurPlaylistFunc_L84
 	mov	0x50077f74, a2
 	mov	d2, d0
 	exthu	d0
@@ -521643,13 +521699,13 @@ SdcRenameSmfScreenJudge_L47:
 	mov	d2, d0
 	extbu	d0
 	call	func_4870B09B_entry, [a2], 0x18
-	bra	SdcRenameSmfScreenJudge_L98
-SdcRenameSmfScreenJudge_L84:
+	bra	SdcFmmSmfCurPlaylistFunc_L98
+SdcFmmSmfCurPlaylistFunc_L84:
 	mov	0x50077f74, a2
 	mov	a2, a0
 	mov	data_4852418C, a1
 	call	func_486D0DF2, 0, 0
-SdcRenameSmfScreenJudge_L98:
+SdcFmmSmfCurPlaylistFunc_L98:
 	mov	a2, a0
 	mov	0x14, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -521658,33 +521714,33 @@ SdcRenameSmfScreenJudge_L98:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcRenameSmfScreenJudge_Lb7
-SdcRenameSmfScreenJudge_Lb6:
+	bra	SdcFmmSmfCurPlaylistFunc_Lb7
+SdcFmmSmfCurPlaylistFunc_Lb6:
 	clr	d0
-SdcRenameSmfScreenJudge_Lb7:
+SdcFmmSmfCurPlaylistFunc_Lb7:
 	ret	[d2,a2], 0x1c
 
-SdcTechFileCopyFunc:
+SdcFmmFdSmfFileViewFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	cmp	0x1460002, d1
-	beq	SdcTechFileCopyFunc_L39
+	beq	SdcFmmFdSmfFileViewFunc_L39
 	cmp	0x50009, d1
-	beq	SdcTechFileCopyFunc_L71
+	beq	SdcFmmFdSmfFileViewFunc_L71
 	cmp	0x5000f, d1
-	bne	SdcTechFileCopyFunc_L20
-	jmp	SdcTechFileCopyFunc_Le0
-SdcTechFileCopyFunc_L20:
+	bne	SdcFmmFdSmfFileViewFunc_L20
+	jmp	SdcFmmFdSmfFileViewFunc_Le0
+SdcFmmFdSmfFileViewFunc_L20:
 	cmp	0x50010, d1
-	bne	SdcTechFileCopyFunc_L2b
-	jmp	SdcTechFileCopyFunc_Le0
-SdcTechFileCopyFunc_L2b:
+	bne	SdcFmmFdSmfFileViewFunc_L2b
+	jmp	SdcFmmFdSmfFileViewFunc_Le0
+SdcFmmFdSmfFileViewFunc_L2b:
 	cmp	0x1460001, d1
-	bne	SdcTechFileCopyFunc_L36
-	jmp	SdcTechFileCopyFunc_L2ad
-SdcTechFileCopyFunc_L36:
-	jmp	SdcTechFileCopyFunc_L2b1
-SdcTechFileCopyFunc_L39:
+	bne	SdcFmmFdSmfFileViewFunc_L36
+	jmp	SdcFmmFdSmfFileViewFunc_L2ad
+SdcFmmFdSmfFileViewFunc_L36:
+	jmp	SdcFmmFdSmfFileViewFunc_L2b1
+SdcFmmFdSmfFileViewFunc_L39:
 	clr	d0
 	movhu	d0, (0x50077af4)
 	mov	-1, d0
@@ -521698,11 +521754,11 @@ SdcTechFileCopyFunc_L39:
 	call	func_4870B2C3_entry, [d2], 4
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcTechFileCopyFunc_L71:
+SdcFmmFdSmfFileViewFunc_L71:
 	clr	d0
 	clr	d2
 	mov	0x50078734, a3
-SdcTechFileCopyFunc_L79:
+SdcFmmFdSmfFileViewFunc_L79:
 	mov	d2, d1
 	asl	5, d1
 	movbu	d0, (d1, a3)
@@ -521747,53 +521803,53 @@ SdcTechFileCopyFunc_L79:
 	mov	d2, d0
 	exth	d2
 	cmp	0xa, d2
-	blt	SdcTechFileCopyFunc_L79
+	blt	SdcFmmFdSmfFileViewFunc_L79
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcTechFileCopyFunc_Le0:
+SdcFmmFdSmfFileViewFunc_Le0:
 	mov	(0x3c, sp), a0
 	movhu	(0x50077af4), d3
 	cmp	1, a0
-	bne	SdcTechFileCopyFunc_L105
+	bne	SdcFmmFdSmfFileViewFunc_L105
 	movhu	(0x50077af4), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcTechFileCopyFunc_Lfa
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_Lfa:
+	bgt	SdcFmmFdSmfFileViewFunc_Lfa
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_Lfa:
 	add	-1, d0
 	movhu	d0, (0x50077af4)
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_L105:
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_L105:
 	cmp	2, a0
-	bne	SdcTechFileCopyFunc_L139
+	bne	SdcFmmFdSmfFileViewFunc_L139
 	movhu	(0x50077af6), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcTechFileCopyFunc_L117
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_L117:
+	bgt	SdcFmmFdSmfFileViewFunc_L117
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_L117:
 	movhu	(0x50077af4), d2
 	add	-1, d0
 	exth	d2
 	mov	0xa, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	blt	SdcTechFileCopyFunc_L12f
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_L12f:
+	blt	SdcFmmFdSmfFileViewFunc_L12f
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_L12f:
 	inc	d2
 	movhu	d2, (0x50077af4)
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_L139:
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_L139:
 	cmp	8, a0
-	beq	SdcTechFileCopyFunc_L140
-	jmp	SdcTechFileCopyFunc_L226
-SdcTechFileCopyFunc_L140:
+	beq	SdcFmmFdSmfFileViewFunc_L140
+	jmp	SdcFmmFdSmfFileViewFunc_L226
+SdcFmmFdSmfFileViewFunc_L140:
 	movhu	(0x50077af6), d0
 	exth	d0
 	cmp	0x63, d0
-	ble	SdcTechFileCopyFunc_L18a
+	ble	SdcFmmFdSmfFileViewFunc_L18a
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -521812,7 +521868,7 @@ SdcTechFileCopyFunc_L140:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcTechFileCopyFunc_L18a:
+SdcFmmFdSmfFileViewFunc_L18a:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -521853,12 +521909,12 @@ SdcTechFileCopyFunc_L18a:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcTechFileCopyFunc_L226:
+SdcFmmFdSmfFileViewFunc_L226:
 	movhu	(0x50077af4), d0
 	exth	d3
 	exth	d0
 	cmp	d0, d3
-	beq	SdcTechFileCopyFunc_L2aa
+	beq	SdcFmmFdSmfFileViewFunc_L2aa
 	mov	0xa, d1
 	nop
 	nop
@@ -521868,7 +521924,7 @@ SdcTechFileCopyFunc_L226:
 	clr	d1
 	clr	d2
 	mov	0x50078734, a3
-SdcTechFileCopyFunc_L247:
+SdcFmmFdSmfFileViewFunc_L247:
 	mov	d2, d0
 	asl	5, d0
 	movbu	d1, (d0, a3)
@@ -521913,40 +521969,40 @@ SdcTechFileCopyFunc_L247:
 	mov	d2, d1
 	exth	d2
 	cmp	0xa, d2
-	blt	SdcTechFileCopyFunc_L247
-SdcTechFileCopyFunc_L2aa:
+	blt	SdcFmmFdSmfFileViewFunc_L247
+SdcFmmFdSmfFileViewFunc_L2aa:
 	clr	d0
-	bra	SdcTechFileCopyFunc_L2b2
-SdcTechFileCopyFunc_L2ad:
+	bra	SdcFmmFdSmfFileViewFunc_L2b2
+SdcFmmFdSmfFileViewFunc_L2ad:
 	mov	-1, d0
-	bra	SdcTechFileCopyFunc_L2b2
-SdcTechFileCopyFunc_L2b1:
+	bra	SdcFmmFdSmfFileViewFunc_L2b2
+SdcFmmFdSmfFileViewFunc_L2b1:
 	clr	d0
-SdcTechFileCopyFunc_L2b2:
+SdcFmmFdSmfFileViewFunc_L2b2:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcFmmSmfCurPlaylistFunc:
+SdcSmfSongRenameFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	0x6003a, d1
-	beq	SdcFmmSmfCurPlaylistFunc_L1b
+	beq	SdcSmfSongRenameFunc_L1b
 	cmp	0x6007a, d1
-	bne	SdcFmmSmfCurPlaylistFunc_L18
-	jmp	SdcFmmSmfCurPlaylistFunc_L9e
-SdcFmmSmfCurPlaylistFunc_L18:
-	jmp	SdcFmmSmfCurPlaylistFunc_L141
-SdcFmmSmfCurPlaylistFunc_L1b:
+	bne	SdcSmfSongRenameFunc_L18
+	jmp	SdcSmfSongRenameFunc_L9e
+SdcSmfSongRenameFunc_L18:
+	jmp	SdcSmfSongRenameFunc_L141
+SdcSmfSongRenameFunc_L1b:
 	call	func_4870B02F_entry, 0, 0xc
 	mov	d0, d2
 	mov	d2, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcFmmSmfCurPlaylistFunc_L72
+	blt	SdcSmfSongRenameFunc_L72
 	call	func_4870B04F_entry, 0, 0xc
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	SdcFmmSmfCurPlaylistFunc_L72
+	blt	SdcSmfSongRenameFunc_L72
 	extbu	d2
 	mov	d0, d1
 	exthu	d1
@@ -521957,24 +522013,24 @@ SdcFmmSmfCurPlaylistFunc_L1b:
 	movbu	(0x50077f8c), d0
 	extb	d0
 	cmp	0, d0
-	bne	SdcFmmSmfCurPlaylistFunc_L5f
+	bne	SdcSmfSongRenameFunc_L5f
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcFmmSmfCurPlaylistFunc_L82
-SdcFmmSmfCurPlaylistFunc_L5f:
+	bra	SdcSmfSongRenameFunc_L82
+SdcSmfSongRenameFunc_L5f:
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_487104C0_entry, [d2,d3,a2], 0x18
 	clr	d0
 	movbu	d0, (0x50077f9c)
-	bra	SdcFmmSmfCurPlaylistFunc_L82
-SdcFmmSmfCurPlaylistFunc_L72:
+	bra	SdcSmfSongRenameFunc_L82
+SdcSmfSongRenameFunc_L72:
 	mov	0x50077f8c, a3
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-SdcFmmSmfCurPlaylistFunc_L82:
+SdcSmfSongRenameFunc_L82:
 	mov	0x50077af8, a0
 	mov	a3, a1
 	call	func_486D0DF2, 0, 0
@@ -521983,7 +522039,7 @@ SdcFmmSmfCurPlaylistFunc_L82:
 	call	func_486D0DF2, 0, 0
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcFmmSmfCurPlaylistFunc_L9e:
+SdcSmfSongRenameFunc_L9e:
 	mov	0x50077f8c, a2
 	mov	(0x30, sp), a1
 	mov	a2, a0
@@ -521993,10 +522049,10 @@ SdcFmmSmfCurPlaylistFunc_L9e:
 	call	func_486D0E67, 0, 0
 	exth	d0
 	cmp	0, d0
-	bne	SdcFmmSmfCurPlaylistFunc_Lc5
+	bne	SdcSmfSongRenameFunc_Lc5
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcFmmSmfCurPlaylistFunc_Lc5:
+SdcSmfSongRenameFunc_Lc5:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522027,17 +522083,17 @@ SdcFmmSmfCurPlaylistFunc_Lc5:
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmSmfCurPlaylistFunc_L142
-SdcFmmSmfCurPlaylistFunc_L141:
+	bra	SdcSmfSongRenameFunc_L142
+SdcSmfSongRenameFunc_L141:
 	clr	d0
-SdcFmmSmfCurPlaylistFunc_L142:
+SdcSmfSongRenameFunc_L142:
 	ret	[d2,a2,a3], 0x20
 
-SdcSoundTtlJgFunc:
+SdcNewPlaylistInfoFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	bne	SdcSoundTtlJgFunc_L3f
+	bne	SdcNewPlaylistInfoFunc_L3f
 	mov	0x50077f5c, a2
 	call	func_4870AF9F, 0, 0
 	mov	a0, a1
@@ -522050,23 +522106,23 @@ SdcSoundTtlJgFunc:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcSoundTtlJgFunc_L40
-SdcSoundTtlJgFunc_L3f:
+	bra	SdcNewPlaylistInfoFunc_L40
+SdcNewPlaylistInfoFunc_L3f:
 	clr	d0
-SdcSoundTtlJgFunc_L40:
+SdcNewPlaylistInfoFunc_L40:
 	ret	[a2], 0x18
 
-SdcAudioTtlJgFunc:
+SdcPlistNamingFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcAudioTtlJgFunc_L20
+	beq	SdcPlistNamingFunc_L20
 	cmp	0x6003a, d1
-	beq	SdcAudioTtlJgFunc_L52
+	beq	SdcPlistNamingFunc_L52
 	cmp	0x6007a, d1
-	beq	SdcAudioTtlJgFunc_L84
-	jmp	SdcAudioTtlJgFunc_L9f
-SdcAudioTtlJgFunc_L20:
+	beq	SdcPlistNamingFunc_L84
+	jmp	SdcPlistNamingFunc_L9f
+SdcPlistNamingFunc_L20:
 	mov	0x50077f5c, a2
 	call	func_4870AF9F, 0, 0
 	mov	a0, a1
@@ -522079,8 +522135,8 @@ SdcAudioTtlJgFunc_L20:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcAudioTtlJgFunc_La0
-SdcAudioTtlJgFunc_L52:
+	bra	SdcPlistNamingFunc_La0
+SdcPlistNamingFunc_L52:
 	mov	0x50077f5c, a2
 	call	func_4870AF9F, 0, 0
 	mov	a0, a1
@@ -522094,8 +522150,8 @@ SdcAudioTtlJgFunc_L52:
 	mov	a2, a1
 	call	func_486D0DF2, 0, 0
 	clr	d0
-	bra	SdcAudioTtlJgFunc_La0
-SdcAudioTtlJgFunc_L84:
+	bra	SdcPlistNamingFunc_La0
+SdcPlistNamingFunc_L84:
 	mov	0x50077f5c, a2
 	mov	(0x28, sp), a1
 	mov	a2, a0
@@ -522103,66 +522159,66 @@ SdcAudioTtlJgFunc_L84:
 	mov	a2, a0
 	call	func_4870AF80_entry, [a2], 0x18
 	clr	d0
-	bra	SdcAudioTtlJgFunc_La0
-SdcAudioTtlJgFunc_L9f:
+	bra	SdcPlistNamingFunc_La0
+SdcPlistNamingFunc_L9f:
 	clr	d0
-SdcAudioTtlJgFunc_La0:
+SdcPlistNamingFunc_La0:
 	ret	[a2], 0x18
 
-SdcFmmFileNameFunc:
+SdcFmmPrivateSmfFileViewFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 	cmp	0x1460002, d1
-	beq	SdcFmmFileNameFunc_L3c
+	beq	SdcFmmPrivateSmfFileViewFunc_L3c
 	cmp	0x50009, d1
-	bne	SdcFmmFileNameFunc_L18
-	jmp	SdcFmmFileNameFunc_L93
-SdcFmmFileNameFunc_L18:
+	bne	SdcFmmPrivateSmfFileViewFunc_L18
+	jmp	SdcFmmPrivateSmfFileViewFunc_L93
+SdcFmmPrivateSmfFileViewFunc_L18:
 	cmp	0x5000f, d1
-	bne	SdcFmmFileNameFunc_L23
-	jmp	SdcFmmFileNameFunc_Lfb
-SdcFmmFileNameFunc_L23:
+	bne	SdcFmmPrivateSmfFileViewFunc_L23
+	jmp	SdcFmmPrivateSmfFileViewFunc_Lfb
+SdcFmmPrivateSmfFileViewFunc_L23:
 	cmp	0x50010, d1
-	bne	SdcFmmFileNameFunc_L2e
-	jmp	SdcFmmFileNameFunc_Lfb
-SdcFmmFileNameFunc_L2e:
+	bne	SdcFmmPrivateSmfFileViewFunc_L2e
+	jmp	SdcFmmPrivateSmfFileViewFunc_Lfb
+SdcFmmPrivateSmfFileViewFunc_L2e:
 	cmp	0x1460001, d1
-	bne	SdcFmmFileNameFunc_L39
-	jmp	SdcFmmFileNameFunc_L550
-SdcFmmFileNameFunc_L39:
-	jmp	SdcFmmFileNameFunc_L554
-SdcFmmFileNameFunc_L3c:
+	bne	SdcFmmPrivateSmfFileViewFunc_L39
+	jmp	SdcFmmPrivateSmfFileViewFunc_L550
+SdcFmmPrivateSmfFileViewFunc_L39:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L554
+SdcFmmPrivateSmfFileViewFunc_L3c:
 	clr	d0
 	call	func_4870A154_entry, [d2,d3], 0x18
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmFileNameFunc_L58
+	bge	SdcFmmPrivateSmfFileViewFunc_L58
 	clr	d0
 	movhu	d0, (0x50077b18)
-	bra	SdcFmmFileNameFunc_L7e
-SdcFmmFileNameFunc_L58:
+	bra	SdcFmmPrivateSmfFileViewFunc_L7e
+SdcFmmPrivateSmfFileViewFunc_L58:
 	call	func_4870A133_entry, 0, 0xc
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	SdcFmmFileNameFunc_L6e
+	bge	SdcFmmPrivateSmfFileViewFunc_L6e
 	clr	d0
 	movhu	d0, (0x50077b18)
-	bra	SdcFmmFileNameFunc_L7e
-SdcFmmFileNameFunc_L6e:
+	bra	SdcFmmPrivateSmfFileViewFunc_L7e
+SdcFmmPrivateSmfFileViewFunc_L6e:
 	exth	d0
 	mov	8, d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x50077b18)
-SdcFmmFileNameFunc_L7e:
+SdcFmmPrivateSmfFileViewFunc_L7e:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x0145000c, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmFileNameFunc_L93:
+SdcFmmPrivateSmfFileViewFunc_L93:
 	movhu	(0x50077b18), d0
 	clr	d1
 	exth	d0
@@ -522173,7 +522229,7 @@ SdcFmmFileNameFunc_L93:
 	mov	d0, (0x1c, sp)
 	clr	d2
 	mov	0x500784b4, a3
-SdcFmmFileNameFunc_Laa:
+SdcFmmPrivateSmfFileViewFunc_Laa:
 	mov	d2, d0
 	asl	5, d0
 	movbu	d1, (d0, a3)
@@ -522208,27 +522264,27 @@ SdcFmmFileNameFunc_Laa:
 	mov	d2, d1
 	exth	d2
 	cmp	8, d2
-	blt	SdcFmmFileNameFunc_Laa
+	blt	SdcFmmPrivateSmfFileViewFunc_Laa
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x30
-SdcFmmFileNameFunc_Lfb:
+SdcFmmPrivateSmfFileViewFunc_Lfb:
 	mov	(0x40, sp), a0
 	movhu	(0x50077b18), d0
 	cmp	0x28, a0
 	mov	d0, a3
-	bne	SdcFmmFileNameFunc_L122
+	bne	SdcFmmPrivateSmfFileViewFunc_L122
 	movhu	(0x50077b18), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmFileNameFunc_L117
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L117:
+	bgt	SdcFmmPrivateSmfFileViewFunc_L117
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L117:
 	add	-1, d0
 	movhu	d0, (0x50077b18)
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L122:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L122:
 	cmp	0x29, a0
-	bne	SdcFmmFileNameFunc_L163
+	bne	SdcFmmPrivateSmfFileViewFunc_L163
 	movhu	(0x50077b18), d0
 	movhu	(0x500788b4), d3
 	exth	d0
@@ -522241,54 +522297,54 @@ SdcFmmFileNameFunc_L122:
 	mov	a2, d1
 	inc	d1
 	cmp	d0, d1
-	ble	SdcFmmFileNameFunc_L14a
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L14a:
+	ble	SdcFmmPrivateSmfFileViewFunc_L14a
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L14a:
 	ext	d3
 	div	d2, d3
 	mov	mdr, d3
 	cmp	0, d3
-	bne	SdcFmmFileNameFunc_L157
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L157:
+	bne	SdcFmmPrivateSmfFileViewFunc_L157
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L157:
 	mov	a2, d0
 	inc	d0
 	movhu	d0, (0x50077b18)
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L163:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L163:
 	cmp	0x2a, a0
-	beq	SdcFmmFileNameFunc_L16a
-	jmp	SdcFmmFileNameFunc_L334
-SdcFmmFileNameFunc_L16a:
+	beq	SdcFmmPrivateSmfFileViewFunc_L16a
+	jmp	SdcFmmPrivateSmfFileViewFunc_L334
+SdcFmmPrivateSmfFileViewFunc_L16a:
 	call	func_4870AFC1_entry, 0, 8
 	exth	d0
 	add	-1, d0
 	cmp	0, d0
-	bgt	SdcFmmFileNameFunc_L186
+	bgt	SdcFmmPrivateSmfFileViewFunc_L186
 	mov	3, d0
 	mov	0x5f, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L186:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L186:
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmFileNameFunc_L194
-	jmp	SdcFmmFileNameFunc_L28a
-SdcFmmFileNameFunc_L194:
+	bgt	SdcFmmPrivateSmfFileViewFunc_L194
+	jmp	SdcFmmPrivateSmfFileViewFunc_L28a
+SdcFmmPrivateSmfFileViewFunc_L194:
 	call	func_4870B0DB_entry, [d2,d3,a2,a3], 0x4c
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	SdcFmmFileNameFunc_L1af
+	bge	SdcFmmPrivateSmfFileViewFunc_L1af
 	mov	3, d0
 	mov	0x5f, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L1af:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L1af:
 	exth	d0
 	cmp	0, d0
-	ble	SdcFmmFileNameFunc_L1e0
+	ble	SdcFmmPrivateSmfFileViewFunc_L1e0
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -522299,8 +522355,8 @@ SdcFmmFileNameFunc_L1af:
 	mov	0x021002b9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L1e0:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L1e0:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522342,8 +522398,8 @@ SdcFmmFileNameFunc_L1e0:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L28a:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L28a:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522385,12 +522441,12 @@ SdcFmmFileNameFunc_L28a:
 	exthu	d2
 	mov	d2, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L334:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L334:
 	cmp	0x34, a0
-	beq	SdcFmmFileNameFunc_L33b
-	jmp	SdcFmmFileNameFunc_L3e5
-SdcFmmFileNameFunc_L33b:
+	beq	SdcFmmPrivateSmfFileViewFunc_L33b
+	jmp	SdcFmmPrivateSmfFileViewFunc_L3e5
+SdcFmmPrivateSmfFileViewFunc_L33b:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522432,16 +522488,16 @@ SdcFmmFileNameFunc_L33b:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L3e5:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L3e5:
 	cmp	0x2b, a0
-	bne	SdcFmmFileNameFunc_L423
+	bne	SdcFmmPrivateSmfFileViewFunc_L423
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcFmmFileNameFunc_L3f7
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L3f7:
+	bgt	SdcFmmPrivateSmfFileViewFunc_L3f7
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L3f7:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -522452,12 +522508,12 @@ SdcFmmFileNameFunc_L3f7:
 	mov	0x021002b1, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L423:
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L423:
 	cmp	0x33, a0
-	beq	SdcFmmFileNameFunc_L42a
-	jmp	SdcFmmFileNameFunc_L4d1
-SdcFmmFileNameFunc_L42a:
+	beq	SdcFmmPrivateSmfFileViewFunc_L42a
+	jmp	SdcFmmPrivateSmfFileViewFunc_L4d1
+SdcFmmPrivateSmfFileViewFunc_L42a:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522499,13 +522555,13 @@ SdcFmmFileNameFunc_L42a:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmFileNameFunc_L4d1:
+SdcFmmPrivateSmfFileViewFunc_L4d1:
 	movhu	(0x50077b18), d0
 	mov	a3, d1
 	exth	d0
 	exth	d1
 	cmp	d0, d1
-	beq	SdcFmmFileNameFunc_L54d
+	beq	SdcFmmPrivateSmfFileViewFunc_L54d
 	asl	3, d0
 	exthu	d0
 	call	func_4870A154_entry, [d2,d3], 0x18
@@ -522519,7 +522575,7 @@ SdcFmmFileNameFunc_L4d1:
 	mov	d0, a3
 	clr	d3
 	mov	0x500784b4, a2
-SdcFmmFileNameFunc_L501:
+SdcFmmPrivateSmfFileViewFunc_L501:
 	mov	d3, d1
 	asl	5, d1
 	movbu	d2, (d1, a2)
@@ -522553,16 +522609,16 @@ SdcFmmFileNameFunc_L501:
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	cmp	8, d3
-	blt	SdcFmmFileNameFunc_L501
-SdcFmmFileNameFunc_L54d:
+	blt	SdcFmmPrivateSmfFileViewFunc_L501
+SdcFmmPrivateSmfFileViewFunc_L54d:
 	clr	d0
-	bra	SdcFmmFileNameFunc_L555
-SdcFmmFileNameFunc_L550:
+	bra	SdcFmmPrivateSmfFileViewFunc_L555
+SdcFmmPrivateSmfFileViewFunc_L550:
 	mov	-1, d0
-	bra	SdcFmmFileNameFunc_L555
-SdcFmmFileNameFunc_L554:
+	bra	SdcFmmPrivateSmfFileViewFunc_L555
+SdcFmmPrivateSmfFileViewFunc_L554:
 	clr	d0
-SdcFmmFileNameFunc_L555:
+SdcFmmPrivateSmfFileViewFunc_L555:
 	ret	[d2,d3,a2,a3], 0x30
 
 func_487192DC:
@@ -522703,27 +522759,27 @@ func_487192DC_entry_Ldb:
 func_487192DC_entry_L118:
 	ret	[d2,d3,a2,a3], 0x3c
 
-SdcTechFolderCopyFunc:
+SdcFmmPrivateSmfFileNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 	cmp	0x50001, d1
-	beq	SdcTechFolderCopyFunc_L28
+	beq	SdcFmmPrivateSmfFileNameFunc_L28
 	cmp	0x50009, d1
-	beq	SdcTechFolderCopyFunc_L65
+	beq	SdcFmmPrivateSmfFileNameFunc_L65
 	cmp	0x5000f, d1
-	beq	SdcTechFolderCopyFunc_L7b
+	beq	SdcFmmPrivateSmfFileNameFunc_L7b
 	cmp	0x50010, d1
-	beq	SdcTechFolderCopyFunc_L7b
-	jmp	SdcTechFolderCopyFunc_L398
-SdcTechFolderCopyFunc_L28:
+	beq	SdcFmmPrivateSmfFileNameFunc_L7b
+	jmp	SdcFmmPrivateSmfFileNameFunc_L398
+SdcFmmPrivateSmfFileNameFunc_L28:
 	call	func_4870A133_entry, 0, 0xc
 	movhu	d0, (0x50077b1c)
 	exth	d0
 	cmp	0, d0
-	bge	SdcTechFolderCopyFunc_L41
+	bge	SdcFmmPrivateSmfFileNameFunc_L41
 	clr	d0
 	movhu	d0, (0x50077b1c)
-SdcTechFolderCopyFunc_L41:
+SdcFmmPrivateSmfFileNameFunc_L41:
 	movhu	(0x50077b1c), d0
 	mov	8, d1
 	exth	d0
@@ -522736,7 +522792,7 @@ SdcTechFolderCopyFunc_L41:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SdcTechFolderCopyFunc_L65:
+SdcFmmPrivateSmfFileNameFunc_L65:
 	mov	8, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x50077b1c), d1
@@ -522745,14 +522801,14 @@ SdcTechFolderCopyFunc_L65:
 	call	func_487192DC_entry, [d2,d3,a2,a3], 0x3c
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SdcTechFolderCopyFunc_L7b:
+SdcFmmPrivateSmfFileNameFunc_L7b:
 	mov	(0x38, sp), a1
 	movhu	(0x50077b1c), d0
 	cmp	0, a1
 	mov	d0, a3
-	bne	SdcTechFolderCopyFunc_Ld5
+	bne	SdcFmmPrivateSmfFileNameFunc_Ld5
 	cmp	0x50010, d1
-	bne	SdcTechFolderCopyFunc_Lb1
+	bne	SdcFmmPrivateSmfFileNameFunc_Lb1
 	movhu	(0x50077b1c), d0
 	movhu	(0x500788b4), d2
 	exth	d0
@@ -522760,41 +522816,41 @@ SdcTechFolderCopyFunc_L7b:
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	blt	SdcTechFolderCopyFunc_La7
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_La7:
+	blt	SdcFmmPrivateSmfFileNameFunc_La7
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_La7:
 	inc	d0
 	movhu	d0, (0x50077b1c)
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Lb1:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Lb1:
 	cmp	0x5000f, d1
-	beq	SdcTechFolderCopyFunc_Lbc
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Lbc:
+	beq	SdcFmmPrivateSmfFileNameFunc_Lbc
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Lbc:
 	movhu	(0x50077b1c), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcTechFolderCopyFunc_Lca
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Lca:
+	bgt	SdcFmmPrivateSmfFileNameFunc_Lca
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Lca:
 	add	-1, d0
 	movhu	d0, (0x50077b1c)
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Ld5:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Ld5:
 	cmp	1, a1
-	bne	SdcTechFolderCopyFunc_Lf2
+	bne	SdcFmmPrivateSmfFileNameFunc_Lf2
 	movhu	(0x50077b1c), d0
 	exth	d0
 	cmp	8, d0
-	bge	SdcTechFolderCopyFunc_Le7
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Le7:
+	bge	SdcFmmPrivateSmfFileNameFunc_Le7
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Le7:
 	add	-8, d0
 	movhu	d0, (0x50077b1c)
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_Lf2:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_Lf2:
 	cmp	2, a1
-	bne	SdcTechFolderCopyFunc_L151
+	bne	SdcFmmPrivateSmfFileNameFunc_L151
 	movhu	(0x50077b1c), d0
 	movhu	(0x500788b4), d1
 	exth	d0
@@ -522803,11 +522859,11 @@ SdcTechFolderCopyFunc_Lf2:
 	mov	8, d1
 	add	d0, d1
 	cmp	a2, d1
-	bge	SdcTechFolderCopyFunc_L118
+	bge	SdcFmmPrivateSmfFileNameFunc_L118
 	add	8, d0
 	movhu	d0, (0x50077b1c)
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L118:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L118:
 	mov	8, d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
@@ -522817,30 +522873,30 @@ SdcTechFolderCopyFunc_L118:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	cmp	d0, d3
-	blt	SdcTechFolderCopyFunc_L135
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L135:
+	blt	SdcFmmPrivateSmfFileNameFunc_L135
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L135:
 	mov	a2, d0
 	ext	d0
 	div	d2, d0
 	mov	mdr, d0
 	cmp	0, d0
-	bne	SdcTechFolderCopyFunc_L144
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L144:
+	bne	SdcFmmPrivateSmfFileNameFunc_L144
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L144:
 	mov	-1, d0
 	add	a2, d0
 	movhu	d0, (0x50077b1c)
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L151:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L151:
 	cmp	0xc, a1
-	bne	SdcTechFolderCopyFunc_L1ca
+	bne	SdcFmmPrivateSmfFileNameFunc_L1ca
 	movhu	(0x50077b1c), d0
 	extbu	d0
 	call	func_4870B1B8_entry, [d2], 4
 	extbu	d0
 	cmp	0, d0
-	beq	SdcTechFolderCopyFunc_L191
+	beq	SdcFmmPrivateSmfFileNameFunc_L191
 	movhu	(0x50077b1c), d0
 	clr	d1
 	movbu	d0, (0x14, sp)
@@ -522852,14 +522908,14 @@ SdcTechFolderCopyFunc_L151:
 	mov	-1, d0
 	exthu	d1
 	call	func_487192DC_entry, [d2,d3,a2,a3], 0x3c
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L191:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L191:
 	call	func_4870B1DB_entry, [d2], 4
 	exthu	d0
 	cmp	0x63, d0
-	blt	SdcTechFolderCopyFunc_L1a0
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L1a0:
+	blt	SdcFmmPrivateSmfFileNameFunc_L1a0
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L1a0:
 	movhu	(0x50077b1c), d0
 	mov	1, d1
 	movbu	d0, (0x14, sp)
@@ -522871,32 +522927,32 @@ SdcTechFolderCopyFunc_L1a0:
 	mov	-1, d0
 	exthu	d1
 	call	func_487192DC_entry, [d2,d3,a2,a3], 0x3c
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L1ca:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L1ca:
 	cmp	0xd, a1
-	bne	SdcTechFolderCopyFunc_L225
+	bne	SdcFmmPrivateSmfFileNameFunc_L225
 	movhu	(0x500788b4), d0
 	exth	d0
 	cmp	0, d0
-	bgt	SdcTechFolderCopyFunc_L1dc
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L1dc:
+	bgt	SdcFmmPrivateSmfFileNameFunc_L1dc
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L1dc:
 	mov	d0, a2
 	cmp	0x63, a2
-	blt	SdcTechFolderCopyFunc_L1e4
+	blt	SdcFmmPrivateSmfFileNameFunc_L1e4
 	mov	0x63, a2
-SdcTechFolderCopyFunc_L1e4:
+SdcFmmPrivateSmfFileNameFunc_L1e4:
 	mov	a2, d3
 	call	func_4870B1DB_entry, [d2], 4
 	exth	d3
 	exthu	d0
 	cmp	d3, d0
-	bge	SdcTechFolderCopyFunc_L209
+	bge	SdcFmmPrivateSmfFileNameFunc_L209
 	clr	d0
 	clr	d2
 	cmp	d0, d3
-	ble	SdcTechFolderCopyFunc_L210
-SdcTechFolderCopyFunc_L1f7:
+	ble	SdcFmmPrivateSmfFileNameFunc_L210
+SdcFmmPrivateSmfFileNameFunc_L1f7:
 	extbu	d0
 	mov	1, d1
 	call	func_4870B180_entry, [d2], 4
@@ -522904,32 +522960,32 @@ SdcTechFolderCopyFunc_L1f7:
 	mov	d2, d0
 	exth	d2
 	cmp	d3, d2
-	blt	SdcTechFolderCopyFunc_L1f7
-	bra	SdcTechFolderCopyFunc_L210
-SdcTechFolderCopyFunc_L209:
+	blt	SdcFmmPrivateSmfFileNameFunc_L1f7
+	bra	SdcFmmPrivateSmfFileNameFunc_L210
+SdcFmmPrivateSmfFileNameFunc_L209:
 	call	func_4870B2C3_entry, [d2], 4
-SdcTechFolderCopyFunc_L210:
+SdcFmmPrivateSmfFileNameFunc_L210:
 	mov	8, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x50077b1c), d1
 	mov	-1, d0
 	exthu	d1
 	call	func_487192DC_entry, [d2,d3,a2,a3], 0x3c
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L225:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L225:
 	cmp	8, a1
-	beq	SdcTechFolderCopyFunc_L22c
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L22c:
+	beq	SdcFmmPrivateSmfFileNameFunc_L22c
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L22c:
 	call	func_4870B1DB_entry, [d2], 4
 	exthu	d0
 	cmp	0, d0
-	bne	SdcTechFolderCopyFunc_L246
+	bne	SdcFmmPrivateSmfFileNameFunc_L246
 	mov	3, d0
 	mov	0x5f, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcTechFolderCopyFunc_L2e0
-SdcTechFolderCopyFunc_L246:
+	jmp	SdcFmmPrivateSmfFileNameFunc_L2e0
+SdcFmmPrivateSmfFileNameFunc_L246:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -522969,16 +523025,16 @@ SdcTechFolderCopyFunc_L246:
 	mov	d2, d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcTechFolderCopyFunc_L2e0:
+SdcFmmPrivateSmfFileNameFunc_L2e0:
 	mov	a3, d0
 	exth	d0
 	mov	d0, a3
 	movhu	(0x50077b1c), d0
 	exth	d0
 	cmp	d0, a3
-	bne	SdcTechFolderCopyFunc_L2f3
-	jmp	SdcTechFolderCopyFunc_L395
-SdcTechFolderCopyFunc_L2f3:
+	bne	SdcFmmPrivateSmfFileNameFunc_L2f3
+	jmp	SdcFmmPrivateSmfFileNameFunc_L395
+SdcFmmPrivateSmfFileNameFunc_L2f3:
 	movhu	(0x50077b1c), d0
 	mov	8, d3
 	exthu	d0
@@ -523001,7 +523057,7 @@ SdcTechFolderCopyFunc_L2f3:
 	exth	d0
 	call	LibDiv32, 0, 0
 	cmp	d0, d2
-	bne	SdcTechFolderCopyFunc_L385
+	bne	SdcFmmPrivateSmfFileNameFunc_L385
 	mov	a3, d0
 	ext	d0
 	div	d3, d0
@@ -523024,19 +523080,19 @@ SdcTechFolderCopyFunc_L2f3:
 	mov	d2, (0x10, sp)
 	mov	-1, d0
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	SdcTechFolderCopyFunc_L395
-SdcTechFolderCopyFunc_L385:
+	bra	SdcFmmPrivateSmfFileNameFunc_L395
+SdcFmmPrivateSmfFileNameFunc_L385:
 	mov	d3, (0x10, sp)
 	movhu	(0x50077b1c), d1
 	mov	-1, d0
 	exthu	d1
 	call	func_487192DC_entry, [d2,d3,a2,a3], 0x3c
-SdcTechFolderCopyFunc_L395:
+SdcFmmPrivateSmfFileNameFunc_L395:
 	clr	d0
-	bra	SdcTechFolderCopyFunc_L399
-SdcTechFolderCopyFunc_L398:
+	bra	SdcFmmPrivateSmfFileNameFunc_L399
+SdcFmmPrivateSmfFileNameFunc_L398:
 	clr	d0
-SdcTechFolderCopyFunc_L399:
+SdcFmmPrivateSmfFileNameFunc_L399:
 	ret	[d2,d3,a2,a3], 0x28
 
 func_48719798:
@@ -523328,51 +523384,51 @@ func_48719830_entry_L1f6:
 func_48719830_entry_L240:
 	ret	[d2,d3,a2,a3], 0x28
 
-SdcSmfSaveSongNameFunc:
+SdcFavoriteStrFunc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcSmfSaveSongNameFunc_L28
+	beq	SdcFavoriteStrFunc_L28
 	cmp	0x50005, d1
-	beq	SdcSmfSaveSongNameFunc_L54
+	beq	SdcFavoriteStrFunc_L54
 	cmp	0x5000f, d1
-	beq	SdcSmfSaveSongNameFunc_L54
+	beq	SdcFavoriteStrFunc_L54
 	cmp	0x50010, d1
-	beq	SdcSmfSaveSongNameFunc_L54
-	jmp	SdcSmfSaveSongNameFunc_L283
-SdcSmfSaveSongNameFunc_L28:
+	beq	SdcFavoriteStrFunc_L54
+	jmp	SdcFavoriteStrFunc_L283
+SdcFavoriteStrFunc_L28:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSmfSaveSongNameFunc_L38
+	beq	SdcFavoriteStrFunc_L38
 	cmp	1, d0
-	bne	SdcSmfSaveSongNameFunc_L3c
-SdcSmfSaveSongNameFunc_L38:
+	bne	SdcFavoriteStrFunc_L3c
+SdcFavoriteStrFunc_L38:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-SdcSmfSaveSongNameFunc_L3c:
+SdcFavoriteStrFunc_L3c:
 	mov	(0x30, sp), a0
 	cmp	0x51, a0
-	bcs	SdcSmfSaveSongNameFunc_L50
+	bcs	SdcFavoriteStrFunc_L50
 	cmp	0x59, a0
-	bhi	SdcSmfSaveSongNameFunc_L50
+	bhi	SdcFavoriteStrFunc_L50
 	mov	-1, d0
 	mov	a0, d1
 	extbu	d1
 	call	func_48719830_entry, [d2,d3,a2,a3], 0x28
-SdcSmfSaveSongNameFunc_L50:
+SdcFavoriteStrFunc_L50:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-SdcSmfSaveSongNameFunc_L54:
+SdcFavoriteStrFunc_L54:
 	mov	(0x30, sp), a2
 	cmp	0x51, a2
-	bcc	SdcSmfSaveSongNameFunc_L5d
-	jmp	SdcSmfSaveSongNameFunc_L283
-SdcSmfSaveSongNameFunc_L5d:
+	bcc	SdcFavoriteStrFunc_L5d
+	jmp	SdcFavoriteStrFunc_L283
+SdcFavoriteStrFunc_L5d:
 	cmp	0x59, a2
-	bls	SdcSmfSaveSongNameFunc_L64
-	jmp	SdcSmfSaveSongNameFunc_L283
-SdcSmfSaveSongNameFunc_L64:
+	bls	SdcFavoriteStrFunc_L64
+	jmp	SdcFavoriteStrFunc_L283
+SdcFavoriteStrFunc_L64:
 	call	func_4870C0BD, 0, 0
 	extbu	d0
 	mov	a2, d1
@@ -523383,13 +523439,13 @@ SdcSmfSaveSongNameFunc_L64:
 	exthu	d0
 	mov	0x5f, d3
 	cmp	0, d0
-	bne	SdcSmfSaveSongNameFunc_L83
-	jmp	SdcSmfSaveSongNameFunc_L278
-SdcSmfSaveSongNameFunc_L83:
+	bne	SdcFavoriteStrFunc_L83
+	jmp	SdcFavoriteStrFunc_L278
+SdcFavoriteStrFunc_L83:
 	btst	0x8000, d0
-	bne	SdcSmfSaveSongNameFunc_L8c
-	jmp	SdcSmfSaveSongNameFunc_L16f
-SdcSmfSaveSongNameFunc_L8c:
+	bne	SdcFavoriteStrFunc_L8c
+	jmp	SdcFavoriteStrFunc_L16f
+SdcFavoriteStrFunc_L8c:
 	and	0x7fff, d0
 	mov	d0, d2
 	exthu	d2
@@ -523400,9 +523456,9 @@ SdcSmfSaveSongNameFunc_L8c:
 	call	func_4870B0C4_entry, 0, 0x10
 	exth	d0
 	cmp	0, d0
-	bgt	SdcSmfSaveSongNameFunc_La6
-	jmp	SdcSmfSaveSongNameFunc_L278
-SdcSmfSaveSongNameFunc_La6:
+	bgt	SdcFavoriteStrFunc_La6
+	jmp	SdcFavoriteStrFunc_L278
+SdcFavoriteStrFunc_La6:
 	add	-1, d2
 	exth	d2
 	clr	d0
@@ -523442,37 +523498,37 @@ SdcSmfSaveSongNameFunc_La6:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcSmfSaveSongNameFunc_L150
+	beq	SdcFavoriteStrFunc_L150
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSaveSongNameFunc_L15a
-SdcSmfSaveSongNameFunc_L150:
+	bra	SdcFavoriteStrFunc_L15a
+SdcFavoriteStrFunc_L150:
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcSmfSaveSongNameFunc_L15a:
+SdcFavoriteStrFunc_L15a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0006008f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcSmfSaveSongNameFunc_L278
-SdcSmfSaveSongNameFunc_L16f:
+	jmp	SdcFavoriteStrFunc_L278
+SdcFavoriteStrFunc_L16f:
 	mov	d0, d3
 	and	0x7f, d3
 	asr	8, d0
 	and	0x7f, d0
 	exthu	d0
 	cmp	0, d0
-	bgt	SdcSmfSaveSongNameFunc_L181
-	jmp	SdcSmfSaveSongNameFunc_L276
-SdcSmfSaveSongNameFunc_L181:
+	bgt	SdcFavoriteStrFunc_L181
+	jmp	SdcFavoriteStrFunc_L276
+SdcFavoriteStrFunc_L181:
 	exthu	d3
 	cmp	0, d3
-	bgt	SdcSmfSaveSongNameFunc_L189
-	jmp	SdcSmfSaveSongNameFunc_L276
-SdcSmfSaveSongNameFunc_L189:
+	bgt	SdcFavoriteStrFunc_L189
+	jmp	SdcFavoriteStrFunc_L276
+SdcFavoriteStrFunc_L189:
 	add	-1, d0
 	extbu	d0
 	call	func_48709696_entry, [d2], 0x10
@@ -523510,101 +523566,101 @@ SdcSmfSaveSongNameFunc_L189:
 	call	func_48614DAA_entry, 0, 0x10
 	exthu	d0
 	cmp	0, d0
-	beq	SdcSmfSaveSongNameFunc_L252
+	beq	SdcFavoriteStrFunc_L252
 	mov	2, d0
 	call	func_48709EE8_entry, [d2], 0x14
 	extbu	d0
 	cmp	0, d0
-	beq	SdcSmfSaveSongNameFunc_L252
+	beq	SdcFavoriteStrFunc_L252
 	mov	2, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	bne	SdcSmfSaveSongNameFunc_L246
+	bne	SdcFavoriteStrFunc_L246
 	mov	0xb, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	SdcSmfSaveSongNameFunc_L252
-SdcSmfSaveSongNameFunc_L246:
+	beq	SdcFavoriteStrFunc_L252
+SdcFavoriteStrFunc_L246:
 	mov	0xc, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSaveSongNameFunc_L262
-SdcSmfSaveSongNameFunc_L252:
+	bra	SdcFavoriteStrFunc_L262
+SdcFavoriteStrFunc_L252:
 	mov	d3, d0
 	exthu	d0
 	cmp	0x5f, d0
-	beq	SdcSmfSaveSongNameFunc_L262
+	beq	SdcFavoriteStrFunc_L262
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcSmfSaveSongNameFunc_L262:
+SdcFavoriteStrFunc_L262:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x0006008f, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	SdcSmfSaveSongNameFunc_L278
-SdcSmfSaveSongNameFunc_L276:
+	bra	SdcFavoriteStrFunc_L278
+SdcFavoriteStrFunc_L276:
 	mov	0x5f, d3
-SdcSmfSaveSongNameFunc_L278:
+SdcFavoriteStrFunc_L278:
 	mov	3, d0
 	exthu	d3
 	mov	d3, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcSmfSaveSongNameFunc_L283:
+SdcFavoriteStrFunc_L283:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcFmmSmfFileNameFunc:
+SdcFavoriteStrPreviewFunc:
 	add	-0x10, sp
 	cmp	0x50009, d1
-	bne	SdcFmmSmfFileNameFunc_L39
+	bne	SdcFavoriteStrPreviewFunc_L39
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSmfFileNameFunc_L1b
+	beq	SdcFavoriteStrPreviewFunc_L1b
 	cmp	1, d0
-	bne	SdcFmmSmfFileNameFunc_L1e
-SdcFmmSmfFileNameFunc_L1b:
+	bne	SdcFavoriteStrPreviewFunc_L1e
+SdcFavoriteStrPreviewFunc_L1b:
 	clr	d0
-	bra	SdcFmmSmfFileNameFunc_L3a
-SdcFmmSmfFileNameFunc_L1e:
+	bra	SdcFavoriteStrPreviewFunc_L3a
+SdcFavoriteStrPreviewFunc_L1e:
 	mov	(0x20, sp), a0
 	cmp	0x51, a0
-	bcs	SdcFmmSmfFileNameFunc_L36
+	bcs	SdcFavoriteStrPreviewFunc_L36
 	cmp	0x59, a0
-	bhi	SdcFmmSmfFileNameFunc_L36
+	bhi	SdcFavoriteStrPreviewFunc_L36
 	mov	0x021001f7, d0
 	mov	a0, d1
 	extbu	d1
 	call	func_48719830_entry, [d2,d3,a2,a3], 0x28
-SdcFmmSmfFileNameFunc_L36:
+SdcFavoriteStrPreviewFunc_L36:
 	clr	d0
-	bra	SdcFmmSmfFileNameFunc_L3a
-SdcFmmSmfFileNameFunc_L39:
+	bra	SdcFavoriteStrPreviewFunc_L3a
+SdcFavoriteStrPreviewFunc_L39:
 	clr	d0
-SdcFmmSmfFileNameFunc_L3a:
+SdcFavoriteStrPreviewFunc_L3a:
 	ret	0, 0x10
 
-SdcSaveFileNameFunc:
+SdcFavoriteSongsBankFunc:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	0x1460002, d1
-	beq	SdcSaveFileNameFunc_L33
+	beq	SdcFavoriteSongsBankFunc_L33
 	cmp	0x50009, d1
-	beq	SdcSaveFileNameFunc_L56
+	beq	SdcFavoriteSongsBankFunc_L56
 	cmp	0x5000f, d1
-	beq	SdcSaveFileNameFunc_L7b
+	beq	SdcFavoriteSongsBankFunc_L7b
 	cmp	0x50010, d1
-	beq	SdcSaveFileNameFunc_L7b
+	beq	SdcFavoriteSongsBankFunc_L7b
 	cmp	0x1460006, d1
-	bne	SdcSaveFileNameFunc_L30
-	jmp	SdcSaveFileNameFunc_L171
-SdcSaveFileNameFunc_L30:
-	jmp	SdcSaveFileNameFunc_L18d
-SdcSaveFileNameFunc_L33:
+	bne	SdcFavoriteSongsBankFunc_L30
+	jmp	SdcFavoriteSongsBankFunc_L171
+SdcFavoriteSongsBankFunc_L30:
+	jmp	SdcFavoriteSongsBankFunc_L18d
+SdcFavoriteSongsBankFunc_L33:
 	call	func_4870C0BD, 0, 0
 	movbu	d0, (0x50077b20)
 	clr	d0
@@ -523614,75 +523670,75 @@ SdcSaveFileNameFunc_L33:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2], 0x18
-SdcSaveFileNameFunc_L56:
+SdcFavoriteSongsBankFunc_L56:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSaveFileNameFunc_L66
+	beq	SdcFavoriteSongsBankFunc_L66
 	cmp	1, d0
-	bne	SdcSaveFileNameFunc_L6a
-SdcSaveFileNameFunc_L66:
+	bne	SdcFavoriteSongsBankFunc_L6a
+SdcFavoriteSongsBankFunc_L66:
 	clr	d0
 	ret	[d2], 0x18
-SdcSaveFileNameFunc_L6a:
+SdcFavoriteSongsBankFunc_L6a:
 	movbu	(0x50077b20), d0
 	mov	1, d1
 	call	func_48719798_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2], 0x18
-SdcSaveFileNameFunc_L7b:
+SdcFavoriteSongsBankFunc_L7b:
 	mov	(0x28, sp), a1
 	movbu	(0x50077b20), d2
 	cmp	0, a1
-	bne	SdcSaveFileNameFunc_Lc0
+	bne	SdcFavoriteSongsBankFunc_Lc0
 	cmp	0x5000f, d1
-	bne	SdcSaveFileNameFunc_La4
+	bne	SdcFavoriteSongsBankFunc_La4
 	movbu	(0x50077b20), d0
 	mov	d0, d1
 	inc	d1
 	cmp	0x28, d1
-	bge	SdcSaveFileNameFunc_L101
+	bge	SdcFavoriteSongsBankFunc_L101
 	inc	d0
 	movbu	d0, (0x50077b20)
-	bra	SdcSaveFileNameFunc_L101
-SdcSaveFileNameFunc_La4:
+	bra	SdcFavoriteSongsBankFunc_L101
+SdcFavoriteSongsBankFunc_La4:
 	cmp	0x50010, d1
-	bne	SdcSaveFileNameFunc_L101
+	bne	SdcFavoriteSongsBankFunc_L101
 	movbu	(0x50077b20), d0
 	cmp	0, d0
-	ble	SdcSaveFileNameFunc_L101
+	ble	SdcFavoriteSongsBankFunc_L101
 	add	-1, d0
 	movbu	d0, (0x50077b20)
-	bra	SdcSaveFileNameFunc_L101
-SdcSaveFileNameFunc_Lc0:
+	bra	SdcFavoriteSongsBankFunc_L101
+SdcFavoriteSongsBankFunc_Lc0:
 	cmp	0x2e, a1
-	bne	SdcSaveFileNameFunc_Le0
+	bne	SdcFavoriteSongsBankFunc_Le0
 	movbu	(0x50077b20), d1
 	mov	-0xa, d0
 	add	d1, d0
 	movbu	d0, (0x50077b20)
 	cmp	0xa, d1
-	bge	SdcSaveFileNameFunc_L101
+	bge	SdcFavoriteSongsBankFunc_L101
 	clr	d0
 	movbu	d0, (0x50077b20)
-	bra	SdcSaveFileNameFunc_L101
-SdcSaveFileNameFunc_Le0:
+	bra	SdcFavoriteSongsBankFunc_L101
+SdcFavoriteSongsBankFunc_Le0:
 	cmp	0x2f, a1
-	bne	SdcSaveFileNameFunc_L101
+	bne	SdcFavoriteSongsBankFunc_L101
 	movbu	(0x50077b20), d0
 	mov	0xa, d1
 	add	d0, d1
 	movbu	d1, (0x50077b20)
 	add	0xa, d0
 	cmp	0x28, d0
-	blt	SdcSaveFileNameFunc_L101
+	blt	SdcFavoriteSongsBankFunc_L101
 	mov	0x27, d0
 	movbu	d0, (0x50077b20)
-SdcSaveFileNameFunc_L101:
+SdcFavoriteSongsBankFunc_L101:
 	movbu	(0x50077b20), d0
 	extbu	d2
 	cmp	d0, d2
-	beq	SdcSaveFileNameFunc_L16e
+	beq	SdcFavoriteSongsBankFunc_L16e
 	call	func_4870C0C6, 0, 0
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -523691,11 +523747,11 @@ SdcSaveFileNameFunc_L101:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	movbu	(0x50077b20), d0
 	cmp	d2, d0
-	beq	SdcSaveFileNameFunc_L136
+	beq	SdcFavoriteSongsBankFunc_L136
 	mov	1, d1
 	call	func_48719798_entry, [d2,d3,a2,a3], 0x30
-	bra	SdcSaveFileNameFunc_L15e
-SdcSaveFileNameFunc_L136:
+	bra	SdcFavoriteSongsBankFunc_L15e
+SdcFavoriteSongsBankFunc_L136:
 	mov	0x50078734, d2
 	mov	d2, (0x10, sp)
 	mov	-1, d0
@@ -523705,50 +523761,50 @@ SdcSaveFileNameFunc_L136:
 	mov	-1, d0
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcSaveFileNameFunc_L15e:
+SdcFavoriteSongsBankFunc_L15e:
 	mov	0x51, d2
-SdcSaveFileNameFunc_L160:
+SdcFavoriteSongsBankFunc_L160:
 	mov	-1, d0
 	mov	d2, d1
 	call	func_48719830_entry, [d2,d3,a2,a3], 0x28
 	inc	d2
 	extbu	d2
 	cmp	0x59, d2
-	ble	SdcSaveFileNameFunc_L160
-SdcSaveFileNameFunc_L16e:
+	ble	SdcFavoriteSongsBankFunc_L160
+SdcFavoriteSongsBankFunc_L16e:
 	clr	d0
-	bra	SdcSaveFileNameFunc_L18e
-SdcSaveFileNameFunc_L171:
+	bra	SdcFavoriteSongsBankFunc_L18e
+SdcFavoriteSongsBankFunc_L171:
 	mov	(0x28, sp), a0
 	cmp	1, a0
-	bne	SdcSaveFileNameFunc_L182
+	bne	SdcFavoriteSongsBankFunc_L182
 	mov	1, d0
 	call	func_4870C1DF, 0, 0
-	bra	SdcSaveFileNameFunc_L18a
-SdcSaveFileNameFunc_L182:
+	bra	SdcFavoriteSongsBankFunc_L18a
+SdcFavoriteSongsBankFunc_L182:
 	clr	d0
 	call	func_4870C1DF, 0, 0
-SdcSaveFileNameFunc_L18a:
+SdcFavoriteSongsBankFunc_L18a:
 	clr	d0
-	bra	SdcSaveFileNameFunc_L18e
-SdcSaveFileNameFunc_L18d:
+	bra	SdcFavoriteSongsBankFunc_L18e
+SdcFavoriteSongsBankFunc_L18d:
 	clr	d0
-SdcSaveFileNameFunc_L18e:
+SdcFavoriteSongsBankFunc_L18e:
 	ret	[d2], 0x18
 
-SdcPlistNamingFunc:
+SdcFavBankNameFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x1c, sp
 	cmp	0x50009, d1
-	beq	SdcPlistNamingFunc_L23
+	beq	SdcFavBankNameFunc_L23
 	cmp	0x6003a, d1
-	beq	SdcPlistNamingFunc_L8f
+	beq	SdcFavBankNameFunc_L8f
 	cmp	0x6007a, d1
-	bne	SdcPlistNamingFunc_L20
-	jmp	SdcPlistNamingFunc_L101
-SdcPlistNamingFunc_L20:
-	jmp	SdcPlistNamingFunc_L142
-SdcPlistNamingFunc_L23:
+	bne	SdcFavBankNameFunc_L20
+	jmp	SdcFavBankNameFunc_L101
+SdcFavBankNameFunc_L20:
+	jmp	SdcFavBankNameFunc_L142
+SdcFavBankNameFunc_L23:
 	call	func_4870C0BD, 0, 0
 	mov	d0, d2
 	extbu	d2
@@ -523756,23 +523812,23 @@ SdcPlistNamingFunc_L23:
 	call	func_4870C0D5, 0, 0
 	mov	a0, a1
 	cmp	0, a1
-	bne	SdcPlistNamingFunc_L4b
+	bne	SdcFavBankNameFunc_L4b
 	mov	0x500782bc, a2
 	mov	a2, a0
 	mov	0x14, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcPlistNamingFunc_L7a
-SdcPlistNamingFunc_L4b:
+	bra	SdcFavBankNameFunc_L7a
+SdcFavBankNameFunc_L4b:
 	movbu	(a1), d0
 	extb	d0
 	cmp	0, d0
-	bne	SdcPlistNamingFunc_L64
+	bne	SdcFavBankNameFunc_L64
 	mov	0x500782bc, a2
 	mov	a2, a0
 	mov	0x14, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcPlistNamingFunc_L7a
-SdcPlistNamingFunc_L64:
+	bra	SdcFavBankNameFunc_L7a
+SdcFavBankNameFunc_L64:
 	mov	0x500782bc, a2
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -523782,43 +523838,43 @@ SdcPlistNamingFunc_L64:
 	mov	0x10, d1
 	mov	a2, a0
 	call	func_486D0F3D_entry, [d2,d3,a2,a3], 0x20
-SdcPlistNamingFunc_L7a:
+SdcFavBankNameFunc_L7a:
 	mov	a2, (0x10, sp)
 	mov	(0x38, sp), d0
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,a2,a3], 0x28
-SdcPlistNamingFunc_L8f:
+SdcFavBankNameFunc_L8f:
 	call	func_4870C0BD, 0, 0
 	extbu	d0
 	call	func_4870C0D5, 0, 0
 	mov	a0, a1
 	cmp	0, a1
-	bne	SdcPlistNamingFunc_Lb5
+	bne	SdcFavBankNameFunc_Lb5
 	mov	0x500782a4, a3
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcPlistNamingFunc_Le6
-SdcPlistNamingFunc_Lb5:
+	bra	SdcFavBankNameFunc_Le6
+SdcFavBankNameFunc_Lb5:
 	movbu	(a1), d0
 	extb	d0
 	cmp	0, d0
-	bne	SdcPlistNamingFunc_Lce
+	bne	SdcFavBankNameFunc_Lce
 	mov	0x500782a4, a3
 	mov	a3, a0
 	mov	0x10, d0
 	call	func_4870FD69_entry, [d2], 4
-	bra	SdcPlistNamingFunc_Le6
-SdcPlistNamingFunc_Lce:
+	bra	SdcFavBankNameFunc_Le6
+SdcFavBankNameFunc_Lce:
 	mov	0x500782a4, a3
 	mov	0x10, d0
 	mov	a3, a0
 	call	func_486D0E0C, 0, 0
 	mov	a3, a0
 	call	func_486D1030, 0, 0
-SdcPlistNamingFunc_Le6:
+SdcFavBankNameFunc_Le6:
 	mov	0x50077b24, a0
 	mov	a3, a1
 	call	func_486D0DF2, 0, 0
@@ -523826,8 +523882,8 @@ SdcPlistNamingFunc_Le6:
 	mov	(0x38, sp), a0
 	call	func_486D0DF2, 0, 0
 	clr	d0
-	bra	SdcPlistNamingFunc_L143
-SdcPlistNamingFunc_L101:
+	bra	SdcFavBankNameFunc_L143
+SdcFavBankNameFunc_L101:
 	mov	0x500782a4, a2
 	mov	(0x38, sp), a1
 	mov	a2, a0
@@ -523837,10 +523893,10 @@ SdcPlistNamingFunc_L101:
 	call	func_486D0E67, 0, 0
 	exth	d0
 	cmp	0, d0
-	bne	SdcPlistNamingFunc_L127
+	bne	SdcFavBankNameFunc_L127
 	clr	d0
-	bra	SdcPlistNamingFunc_L143
-SdcPlistNamingFunc_L127:
+	bra	SdcFavBankNameFunc_L143
+SdcFavBankNameFunc_L127:
 	call	func_4870C0BD, 0, 0
 	extbu	d0
 	mov	a2, a0
@@ -523848,51 +523904,51 @@ SdcPlistNamingFunc_L127:
 	mov	1, d0
 	movbu	d0, (0x500788c4)
 	clr	d0
-	bra	SdcPlistNamingFunc_L143
-SdcPlistNamingFunc_L142:
+	bra	SdcFavBankNameFunc_L143
+SdcFavBankNameFunc_L142:
 	clr	d0
-SdcPlistNamingFunc_L143:
+SdcFavBankNameFunc_L143:
 	ret	[d2,a2,a3], 0x28
-# SdcPlistNamingFunc + 0x146: no traced path reaches what follows (--decode-gaps)
+# SdcFavBankNameFunc + 0x146: no traced path reaches what follows (--decode-gaps)
 	mov	-1, d0
 	retf	0, 0
 	add	-8, sp
 	call	func_486C4D16_L3, 0, 0
 	ret	0, 8
 
-SdcFmmFdSmfFileViewFunc:
+SdcFmmPictureDirectryFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFmmPrivateSmfFileNameFunc:
+SdcFmmPictureLoadFunc:
 	clr	d0
 	retf	0, 0
 
-SdcUtilityTtlJgFunc:
+SDCardInfoFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	clr	d0
 	movbu	d0, (0x18, sp)
 	cmp	0x50009, d1
-	beq	SdcUtilityTtlJgFunc_L14
-	jmp	SdcUtilityTtlJgFunc_L1aa
-SdcUtilityTtlJgFunc_L14:
+	beq	SDCardInfoFunc_L14
+	jmp	SDCardInfoFunc_L1aa
+SDCardInfoFunc_L14:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcUtilityTtlJgFunc_L24
+	beq	SDCardInfoFunc_L24
 	cmp	1, d0
-	bne	SdcUtilityTtlJgFunc_L28
-SdcUtilityTtlJgFunc_L24:
+	bne	SDCardInfoFunc_L28
+SDCardInfoFunc_L24:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcUtilityTtlJgFunc_L28:
+SDCardInfoFunc_L28:
 	movbu	(0x500788c6), d0
 	cmp	1, d0
-	beq	SdcUtilityTtlJgFunc_L36
+	beq	SDCardInfoFunc_L36
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
-SdcUtilityTtlJgFunc_L36:
+SDCardInfoFunc_L36:
 	call	func_48709265, 0, 0
 	mov	d0, a3
 	call	func_4870926E, 0, 0
@@ -523900,7 +523956,7 @@ SdcUtilityTtlJgFunc_L36:
 	clr	d0
 	mov	d0, (0x14, sp)
 	cmp	d0, d2
-	bls	SdcUtilityTtlJgFunc_L79
+	bls	SDCardInfoFunc_L79
 	mov	d2, d0
 	sub	a3, d0
 	call	func_501236D5, 0, 0
@@ -523914,7 +523970,7 @@ SdcUtilityTtlJgFunc_L36:
 	mov	0x42c80000, d0
 	call	func_501232FA_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x14, sp)
-SdcUtilityTtlJgFunc_L79:
+SDCardInfoFunc_L79:
 	mov	a3, d3
 	lsr	10, d3
 	mov	0x000f4240, d2
@@ -523923,7 +523979,7 @@ SdcUtilityTtlJgFunc_L79:
 	mov	d3, d0
 	divu	d2, d0
 	cmp	0, d0
-	bls	SdcUtilityTtlJgFunc_Lb7
+	bls	SDCardInfoFunc_Lb7
 	mov	0x50077fbc, a2
 	exthu	d0
 	mov	1, d1
@@ -523934,13 +523990,13 @@ SdcUtilityTtlJgFunc_L79:
 	mov	a2, a0
 	mov	Str_empty_394, a1
 	call	func_486D0E3E, 0, 0
-	bra	SdcUtilityTtlJgFunc_Lcb
-SdcUtilityTtlJgFunc_Lb7:
+	bra	SDCardInfoFunc_Lcb
+SDCardInfoFunc_Lb7:
 	mov	0x50077fbc, a2
 	mov	a2, a0
 	mov	Str_empty_393, a1
 	call	func_486D0DF2, 0, 0
-SdcUtilityTtlJgFunc_Lcb:
+SDCardInfoFunc_Lcb:
 	clr	d0
 	mov	d0, mdr
 	divu	d2, d3
@@ -523950,7 +524006,7 @@ SdcUtilityTtlJgFunc_Lcb:
 	mov	d3, d0
 	divu	d2, d0
 	cmp	0, d0
-	bls	SdcUtilityTtlJgFunc_L101
+	bls	SDCardInfoFunc_L101
 	exthu	d0
 	mov	3, d1
 	call	func_486C0064_entry, [d2], 0x18
@@ -523960,12 +524016,12 @@ SdcUtilityTtlJgFunc_Lcb:
 	mov	a2, a0
 	mov	Str_empty_392, a1
 	call	func_486D0E3E, 0, 0
-	bra	SdcUtilityTtlJgFunc_L10f
-SdcUtilityTtlJgFunc_L101:
+	bra	SDCardInfoFunc_L10f
+SDCardInfoFunc_L101:
 	mov	a2, a0
 	mov	Str_empty_391, a1
 	call	func_486D0DF2, 0, 0
-SdcUtilityTtlJgFunc_L10f:
+SDCardInfoFunc_L10f:
 	clr	d0
 	mov	3, d1
 	mov	d0, mdr
@@ -523980,35 +524036,35 @@ SdcUtilityTtlJgFunc_L10f:
 	movbu	(a0), d0
 	extb	d0
 	cmp	0, d0
-	beq	SdcUtilityTtlJgFunc_L160
+	beq	SDCardInfoFunc_L160
 	setlb
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x20, d0
-	bne	SdcUtilityTtlJgFunc_L146
+	bne	SDCardInfoFunc_L146
 	movbu	(0x18, sp), d0
 	cmp	1, d0
-	bne	SdcUtilityTtlJgFunc_L146
+	bne	SDCardInfoFunc_L146
 	mov	0x30, d0
 	movbu	d0, (a0)
-	bra	SdcUtilityTtlJgFunc_L159
-SdcUtilityTtlJgFunc_L146:
+	bra	SDCardInfoFunc_L159
+SDCardInfoFunc_L146:
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x20, d0
-	beq	SdcUtilityTtlJgFunc_L159
+	beq	SDCardInfoFunc_L159
 	movbu	(0x18, sp), d0
 	cmp	0, d0
-	bne	SdcUtilityTtlJgFunc_L159
+	bne	SDCardInfoFunc_L159
 	mov	1, d0
 	movbu	d0, (0x18, sp)
-SdcUtilityTtlJgFunc_L159:
+SDCardInfoFunc_L159:
 	inc	a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0, d0
 	lne
-SdcUtilityTtlJgFunc_L160:
+SDCardInfoFunc_L160:
 	mov	a2, a0
 	mov	Str_KB_free, a1
 	call	func_486D0E3E, 0, 0
@@ -524028,42 +524084,42 @@ SdcUtilityTtlJgFunc_L160:
 	mov	0x0145000f, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-SdcUtilityTtlJgFunc_L1aa:
+SDCardInfoFunc_L1aa:
 	ret	[d2,d3,a2,a3], 0x2c
 
-SdcLoadTtlJgFunc:
+SDCardNameFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	0x50009, d1
-	beq	SdcLoadTtlJgFunc_L2e
+	beq	SDCardNameFunc_L2e
 	cmp	0x6003a, d1
-	beq	SdcLoadTtlJgFunc_L82
+	beq	SDCardNameFunc_L82
 	cmp	0x1460011, d1
-	bne	SdcLoadTtlJgFunc_L20
-	jmp	SdcLoadTtlJgFunc_Leb
-SdcLoadTtlJgFunc_L20:
+	bne	SDCardNameFunc_L20
+	jmp	SDCardNameFunc_Leb
+SDCardNameFunc_L20:
 	cmp	0x6007a, d1
-	bne	SdcLoadTtlJgFunc_L2b
-	jmp	SdcLoadTtlJgFunc_L14c
-SdcLoadTtlJgFunc_L2b:
-	jmp	SdcLoadTtlJgFunc_L1a7
-SdcLoadTtlJgFunc_L2e:
+	bne	SDCardNameFunc_L2b
+	jmp	SDCardNameFunc_L14c
+SDCardNameFunc_L2b:
+	jmp	SDCardNameFunc_L1a7
+SDCardNameFunc_L2e:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcLoadTtlJgFunc_L3e
+	beq	SDCardNameFunc_L3e
 	cmp	1, d0
-	bne	SdcLoadTtlJgFunc_L42
-SdcLoadTtlJgFunc_L3e:
+	bne	SDCardNameFunc_L42
+SDCardNameFunc_L3e:
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcLoadTtlJgFunc_L42:
+SDCardNameFunc_L42:
 	movbu	(0x500788c6), d0
 	cmp	1, d0
-	beq	SdcLoadTtlJgFunc_L50
+	beq	SDCardNameFunc_L50
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcLoadTtlJgFunc_L50:
+SDCardNameFunc_L50:
 	mov	0x50077fa4, a2
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	mov	a0, a1
@@ -524077,7 +524133,7 @@ SdcLoadTtlJgFunc_L50:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcLoadTtlJgFunc_L82:
+SDCardNameFunc_L82:
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	mov	a0, a1
 	mov	0x50077fa4, a2
@@ -524087,7 +524143,7 @@ SdcLoadTtlJgFunc_L82:
 	clr	d1
 	extb	d0
 	cmp	d1, d0
-	beq	SdcLoadTtlJgFunc_Lc1
+	beq	SDCardNameFunc_Lc1
 	mov	(data_4852886C), a0
 	inc	a0
 	setlb
@@ -524095,21 +524151,21 @@ SdcLoadTtlJgFunc_L82:
 	extb	d0
 	movbu	(d0, a0), d0
 	btst	0x07, d0
-	bne	SdcLoadTtlJgFunc_Lb5
+	bne	SDCardNameFunc_Lb5
 	mov	0x5f, d0
 	movbu	d0, (d1, a2)
-SdcLoadTtlJgFunc_Lb5:
+SDCardNameFunc_Lb5:
 	inc	d1
 	exth	d1
 	cmp	0xb, d1
-	bge	SdcLoadTtlJgFunc_Lc1
+	bge	SDCardNameFunc_Lc1
 	movbu	(d1, a2), d0
 	extb	d0
 	cmp	0, d0
 	lne
-SdcLoadTtlJgFunc_Lc1:
+SDCardNameFunc_Lc1:
 	cmp	0xb, d1
-	bge	SdcLoadTtlJgFunc_Lcf
+	bge	SDCardNameFunc_Lcf
 	setlb
 	mov	0x5f, d0
 	movbu	d0, (d1, a2)
@@ -524117,7 +524173,7 @@ SdcLoadTtlJgFunc_Lc1:
 	exth	d1
 	cmp	0xb, d1
 	llt
-SdcLoadTtlJgFunc_Lcf:
+SDCardNameFunc_Lcf:
 	clr	d0
 	movbu	d0, (0x50077faf)
 	mov	a2, (0x10, sp)
@@ -524126,7 +524182,7 @@ SdcLoadTtlJgFunc_Lcf:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	ret	[d2,a2,a3], 0x20
-SdcLoadTtlJgFunc_Leb:
+SDCardNameFunc_Leb:
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	mov	a0, a1
 	mov	0x50077fa4, a3
@@ -524136,7 +524192,7 @@ SdcLoadTtlJgFunc_Leb:
 	clr	d1
 	extb	d0
 	cmp	d1, d0
-	beq	SdcLoadTtlJgFunc_L12a
+	beq	SDCardNameFunc_L12a
 	mov	(data_4852886C), a0
 	inc	a0
 	setlb
@@ -524144,21 +524200,21 @@ SdcLoadTtlJgFunc_Leb:
 	extb	d0
 	movbu	(d0, a0), d0
 	btst	0x07, d0
-	bne	SdcLoadTtlJgFunc_L11e
+	bne	SDCardNameFunc_L11e
 	mov	0x5f, d0
 	movbu	d0, (d1, a3)
-SdcLoadTtlJgFunc_L11e:
+SDCardNameFunc_L11e:
 	inc	d1
 	exth	d1
 	cmp	0xb, d1
-	bge	SdcLoadTtlJgFunc_L12a
+	bge	SDCardNameFunc_L12a
 	movbu	(d1, a3), d0
 	extb	d0
 	cmp	0, d0
 	lne
-SdcLoadTtlJgFunc_L12a:
+SDCardNameFunc_L12a:
 	cmp	0xb, d1
-	bge	SdcLoadTtlJgFunc_L138
+	bge	SDCardNameFunc_L138
 	setlb
 	mov	0x5f, d0
 	movbu	d0, (d1, a3)
@@ -524166,15 +524222,15 @@ SdcLoadTtlJgFunc_L12a:
 	exth	d1
 	cmp	0xb, d1
 	llt
-SdcLoadTtlJgFunc_L138:
+SDCardNameFunc_L138:
 	clr	d0
 	movbu	d0, (0x50077faf)
 	mov	a3, a1
 	mov	(0x30, sp), a0
 	call	func_486D0DF2, 0, 0
 	clr	d0
-	bra	SdcLoadTtlJgFunc_L1a8
-SdcLoadTtlJgFunc_L14c:
+	bra	SDCardNameFunc_L1a8
+SDCardNameFunc_L14c:
 	mov	0x50077fa4, a2
 	mov	(0x30, sp), a1
 	mov	a2, a0
@@ -524189,21 +524245,21 @@ SdcLoadTtlJgFunc_L14c:
 	call	GetModeNow_entry, 0, 0x10
 	extbu	d0
 	cmp	0x18, d0
-	beq	SdcLoadTtlJgFunc_L199
+	beq	SDCardNameFunc_L199
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-	bra	SdcLoadTtlJgFunc_L1a4
-SdcLoadTtlJgFunc_L199:
+	bra	SDCardNameFunc_L1a4
+SDCardNameFunc_L199:
 	mov	0x104, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcLoadTtlJgFunc_L1a4:
+SDCardNameFunc_L1a4:
 	clr	d0
-	bra	SdcLoadTtlJgFunc_L1a8
-SdcLoadTtlJgFunc_L1a7:
+	bra	SDCardNameFunc_L1a8
+SDCardNameFunc_L1a7:
 	clr	d0
-SdcLoadTtlJgFunc_L1a8:
+SDCardNameFunc_L1a8:
 	ret	[d2,a2,a3], 0x20
 
 func_4871A385:
@@ -524225,22 +524281,22 @@ func_4871A385_Le:
 func_4871A385_L19:
 	retf	0, 0
 
-SdcSmfSeqFromSongNumFunc:
+SdcSingleLoadModeFunc:
 	add	-0x14, sp
 
-SdcSmfSeqFromSongNumFunc_entry:
+SdcSingleLoadModeFunc_entry:
 	cmp	0x50009, d1
-	bne	SdcSmfSeqFromSongNumFunc_entry_L27
+	bne	SdcSingleLoadModeFunc_entry_L27
 	call	func_486C90BE, 0, 0
 	mov	a0, (0x10, sp)
 	mov	0x021000a4, d0
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcSmfSeqFromSongNumFunc_entry_L28
-SdcSmfSeqFromSongNumFunc_entry_L27:
+	bra	SdcSingleLoadModeFunc_entry_L28
+SdcSingleLoadModeFunc_entry_L27:
 	clr	d0
-SdcSmfSeqFromSongNumFunc_entry_L28:
+SdcSingleLoadModeFunc_entry_L28:
 	ret	0, 0x14
 
 func_4871A3CF:
@@ -524315,35 +524371,35 @@ func_4871A459_entry_L27:
 func_4871A459_entry_L28:
 	ret	0, 0x14
 
-SdcSmfSeqSongNameFunc:
+SdcSingleLoadSrcDstFunc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 	mov	d0, (0x30, sp)
 	mov	d1, a3
 	cmp	0x50001, a3
-	beq	SdcSmfSeqSongNameFunc_L4b
+	beq	SdcSingleLoadSrcDstFunc_L4b
 	cmp	0x50009, a3
-	bne	SdcSmfSeqSongNameFunc_L1c
-	jmp	SdcSmfSeqSongNameFunc_L122
-SdcSmfSeqSongNameFunc_L1c:
+	bne	SdcSingleLoadSrcDstFunc_L1c
+	jmp	SdcSingleLoadSrcDstFunc_L122
+SdcSingleLoadSrcDstFunc_L1c:
 	cmp	0x600b4, a3
-	bne	SdcSmfSeqSongNameFunc_L27
-	jmp	SdcSmfSeqSongNameFunc_L17c
-SdcSmfSeqSongNameFunc_L27:
+	bne	SdcSingleLoadSrcDstFunc_L27
+	jmp	SdcSingleLoadSrcDstFunc_L17c
+SdcSingleLoadSrcDstFunc_L27:
 	cmp	0x5000f, a3
-	bne	SdcSmfSeqSongNameFunc_L32
-	jmp	SdcSmfSeqSongNameFunc_L18b
-SdcSmfSeqSongNameFunc_L32:
+	bne	SdcSingleLoadSrcDstFunc_L32
+	jmp	SdcSingleLoadSrcDstFunc_L18b
+SdcSingleLoadSrcDstFunc_L32:
 	cmp	0x50010, a3
-	bne	SdcSmfSeqSongNameFunc_L3d
-	jmp	SdcSmfSeqSongNameFunc_L18b
-SdcSmfSeqSongNameFunc_L3d:
+	bne	SdcSingleLoadSrcDstFunc_L3d
+	jmp	SdcSingleLoadSrcDstFunc_L18b
+SdcSingleLoadSrcDstFunc_L3d:
 	cmp	0x1460001, a3
-	bne	SdcSmfSeqSongNameFunc_L48
-	jmp	SdcSmfSeqSongNameFunc_L347
-SdcSmfSeqSongNameFunc_L48:
-	jmp	SdcSmfSeqSongNameFunc_L34b
-SdcSmfSeqSongNameFunc_L4b:
+	bne	SdcSingleLoadSrcDstFunc_L48
+	jmp	SdcSingleLoadSrcDstFunc_L347
+SdcSingleLoadSrcDstFunc_L48:
+	jmp	SdcSingleLoadSrcDstFunc_L34b
+SdcSingleLoadSrcDstFunc_L4b:
 	call	func_487096B0_entry, 0, 0xc
 	mov	d0, d3
 	call	func_48709676_entry, 0, 0xc
@@ -524358,7 +524414,7 @@ SdcSmfSeqSongNameFunc_L4b:
 	call	func_4870A05F, 0, 0
 	exth	d0
 	cmp	-1, d0
-	bne	SdcSmfSeqSongNameFunc_L99
+	bne	SdcSingleLoadSrcDstFunc_L99
 	mov	0x50077b44, a0
 	extbu	d3
 	mov	a2, d1
@@ -524369,11 +524425,11 @@ SdcSmfSeqSongNameFunc_L4b:
 	mov	d2, d0
 	call	func_4870A068, 0, 0
 	call	func_486BF8FD_entry, 0, 0xc
-	bra	SdcSmfSeqSongNameFunc_Lbe
-SdcSmfSeqSongNameFunc_L99:
+	bra	SdcSingleLoadSrcDstFunc_Lbe
+SdcSingleLoadSrcDstFunc_L99:
 	exth	d2
 	cmp	d0, d2
-	beq	SdcSmfSeqSongNameFunc_Lbe
+	beq	SdcSingleLoadSrcDstFunc_Lbe
 	mov	0x50077b44, a0
 	mov	d3, d0
 	extbu	d0
@@ -524383,7 +524439,7 @@ SdcSmfSeqSongNameFunc_L99:
 	mov	d2, d0
 	call	func_4870A068, 0, 0
 	call	func_486BF8FD_entry, 0, 0xc
-SdcSmfSeqSongNameFunc_Lbe:
+SdcSingleLoadSrcDstFunc_Lbe:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	call	func_487096B0_entry, 0, 0xc
@@ -524391,7 +524447,7 @@ SdcSmfSeqSongNameFunc_Lbe:
 	call	func_4870E4C4_entry, [d2,a2], 0x58
 	exth	d0
 	cmp	0, d0
-	blt	SdcSmfSeqSongNameFunc_L110
+	blt	SdcSingleLoadSrcDstFunc_L110
 	call	func_48709D7E_entry, 0, 8
 	mov	d0, d1
 	exthu	d1
@@ -524405,19 +524461,19 @@ SdcSmfSeqSongNameFunc_Lbe:
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	call	func_486D360E, 0, 0
 	call	func_486BF772_entry, 0, 0xc
-SdcSmfSeqSongNameFunc_L110:
+SdcSingleLoadSrcDstFunc_L110:
 	call	func_4870E4FC_entry, 0, 0xc
 	call	func_486D3627, 0, 0
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SdcSmfSeqSongNameFunc_L122:
+SdcSingleLoadSrcDstFunc_L122:
 	mov	(0x38, sp), a2
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	mov	a2, (0x10, sp)
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
-	call	SdcSmfSeqFromSongNumFunc_entry, 0, 0x14
+	call	SdcSingleLoadModeFunc_entry, 0, 0x14
 	mov	a2, (0x10, sp)
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
@@ -524436,16 +524492,16 @@ SdcSmfSeqSongNameFunc_L122:
 	call	func_4871A459_entry, 0, 0x14
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SdcSmfSeqSongNameFunc_L17c:
+SdcSingleLoadSrcDstFunc_L17c:
 	mov	(0x38, sp), a0
 	mov	a0, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x28
-SdcSmfSeqSongNameFunc_L18b:
+SdcSingleLoadSrcDstFunc_L18b:
 	mov	(0x38, sp), a2
 	cmp	3, a2
-	bne	SdcSmfSeqSongNameFunc_L1bd
+	bne	SdcSingleLoadSrcDstFunc_L1bd
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	clr	d0
@@ -524458,12 +524514,12 @@ SdcSmfSeqSongNameFunc_L18b:
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
 	call	func_4871A3FD_entry, 0, 0x14
-	jmp	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L1bd:
+	jmp	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L1bd:
 	cmp	4, a2
-	beq	SdcSmfSeqSongNameFunc_L1c4
-	jmp	SdcSmfSeqSongNameFunc_L28f
-SdcSmfSeqSongNameFunc_L1c4:
+	beq	SdcSingleLoadSrcDstFunc_L1c4
+	jmp	SdcSingleLoadSrcDstFunc_L28f
+SdcSingleLoadSrcDstFunc_L1c4:
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d2
 	mov	1, d0
@@ -524473,7 +524529,7 @@ SdcSmfSeqSongNameFunc_L1c4:
 	call	func_4870E4C4_entry, [d2,a2], 0x58
 	exth	d0
 	cmp	0, d0
-	blt	SdcSmfSeqSongNameFunc_L224
+	blt	SdcSingleLoadSrcDstFunc_L224
 	clr	d0
 	call	func_486BF735_entry, [d2], 0xc
 	call	func_48709D7E_entry, 0, 8
@@ -524489,17 +524545,17 @@ SdcSmfSeqSongNameFunc_L1c4:
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	call	func_486D360E, 0, 0
 	call	func_486BF772_entry, 0, 0xc
-SdcSmfSeqSongNameFunc_L224:
+SdcSingleLoadSrcDstFunc_L224:
 	call	func_4870E4FC_entry, 0, 0xc
 	call	func_486D3627, 0, 0
 	mov	a2, (0x10, sp)
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
-	call	SdcSmfSeqFromSongNumFunc_entry, 0, 0x14
+	call	SdcSingleLoadModeFunc_entry, 0, 0x14
 	mov	a2, (0x10, sp)
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
-	call	SdcSmfSeqFromSongNumFunc_entry, 0, 0x14
+	call	SdcSingleLoadModeFunc_entry, 0, 0x14
 	mov	a2, (0x10, sp)
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
@@ -524516,10 +524572,10 @@ SdcSmfSeqSongNameFunc_L224:
 	mov	(0x30, sp), d0
 	mov	0x00050009, d1
 	call	func_4871A459_entry, 0, 0x14
-	jmp	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L28f:
+	jmp	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L28f:
 	cmp	0xa, a2
-	bne	SdcSmfSeqSongNameFunc_L2fb
+	bne	SdcSingleLoadSrcDstFunc_L2fb
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d2
 	mov	1, d0
@@ -524529,7 +524585,7 @@ SdcSmfSeqSongNameFunc_L28f:
 	call	func_4870E4C4_entry, [d2,a2], 0x58
 	exth	d0
 	cmp	0, d0
-	blt	SdcSmfSeqSongNameFunc_L2eb
+	blt	SdcSingleLoadSrcDstFunc_L2eb
 	call	func_48709D7E_entry, 0, 8
 	mov	d0, d1
 	exth	d2
@@ -524543,69 +524599,69 @@ SdcSmfSeqSongNameFunc_L28f:
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
 	call	func_486D360E, 0, 0
 	call	func_486BF772_entry, 0, 0xc
-SdcSmfSeqSongNameFunc_L2eb:
+SdcSingleLoadSrcDstFunc_L2eb:
 	call	func_4870E4FC_entry, 0, 0xc
 	call	func_486D3627, 0, 0
-	bra	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L2fb:
+	bra	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L2fb:
 	cmp	5, a2
-	bne	SdcSmfSeqSongNameFunc_L30a
+	bne	SdcSingleLoadSrcDstFunc_L30a
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L30a:
+	bra	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L30a:
 	cmp	6, a2
-	bne	SdcSmfSeqSongNameFunc_L319
+	bne	SdcSingleLoadSrcDstFunc_L319
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L319:
+	bra	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L319:
 	cmp	7, a2
-	bne	SdcSmfSeqSongNameFunc_L328
+	bne	SdcSingleLoadSrcDstFunc_L328
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L328:
+	bra	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L328:
 	cmp	8, a2
-	bne	SdcSmfSeqSongNameFunc_L337
+	bne	SdcSingleLoadSrcDstFunc_L337
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
-	bra	SdcSmfSeqSongNameFunc_L344
-SdcSmfSeqSongNameFunc_L337:
+	bra	SdcSingleLoadSrcDstFunc_L344
+SdcSingleLoadSrcDstFunc_L337:
 	cmp	0x28, a2
-	bne	SdcSmfSeqSongNameFunc_L344
+	bne	SdcSingleLoadSrcDstFunc_L344
 	mov	a2, (0x10, sp)
 	call	SingleLoadSrcDstFunc_entry, [d2,d3,a2], 0x20
-SdcSmfSeqSongNameFunc_L344:
+SdcSingleLoadSrcDstFunc_L344:
 	clr	d0
-	bra	SdcSmfSeqSongNameFunc_L34c
-SdcSmfSeqSongNameFunc_L347:
+	bra	SdcSingleLoadSrcDstFunc_L34c
+SdcSingleLoadSrcDstFunc_L347:
 	mov	-1, d0
-	bra	SdcSmfSeqSongNameFunc_L34c
-SdcSmfSeqSongNameFunc_L34b:
+	bra	SdcSingleLoadSrcDstFunc_L34c
+SdcSingleLoadSrcDstFunc_L34b:
 	clr	d0
-SdcSmfSeqSongNameFunc_L34c:
+SdcSingleLoadSrcDstFunc_L34c:
 	ret	[d2,d3,a2,a3], 0x28
 
-SdcFmmCstFileNameFunc:
+SdcCmpSnglLdOptionFunc:
 	clr	d0
 	retf	0, 0
 
-SdcFdFileViewFunc:
+SdcFmmSeqSongNameFunc:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-SdcFdFileViewFunc_entry:
+SdcFmmSeqSongNameFunc_entry:
 	cmp	0x1460002, d1
-	beq	SdcFdFileViewFunc_entry_L23
+	beq	SdcFmmSeqSongNameFunc_entry_L23
 	cmp	0x50009, d1
-	beq	SdcFdFileViewFunc_entry_L3f
+	beq	SdcFmmSeqSongNameFunc_entry_L3f
 	cmp	0x5000f, d1
-	beq	SdcFdFileViewFunc_entry_L6b
+	beq	SdcFmmSeqSongNameFunc_entry_L6b
 	cmp	0x50010, d1
-	beq	SdcFdFileViewFunc_entry_L6b
-	jmp	SdcFdFileViewFunc_entry_L411
-SdcFdFileViewFunc_entry_L23:
+	beq	SdcFmmSeqSongNameFunc_entry_L6b
+	jmp	SdcFmmSeqSongNameFunc_entry_L411
+SdcFmmSeqSongNameFunc_entry_L23:
 	clr	d0
 	movhu	d0, (0x50077b4e)
 	mov	d0, (0x10, sp)
@@ -524614,10 +524670,10 @@ SdcFdFileViewFunc_entry_L23:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcFdFileViewFunc_entry_L3f:
+SdcFmmSeqSongNameFunc_entry_L3f:
 	clr	d1
 	clr	d2
-SdcFdFileViewFunc_entry_L41:
+SdcFmmSeqSongNameFunc_entry_L41:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	d1, d0
@@ -524632,90 +524688,90 @@ SdcFdFileViewFunc_entry_L41:
 	mov	d2, d1
 	exth	d2
 	cmp	0xa, d2
-	blt	SdcFdFileViewFunc_entry_L41
+	blt	SdcFmmSeqSongNameFunc_entry_L41
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcFdFileViewFunc_entry_L6b:
+SdcFmmSeqSongNameFunc_entry_L6b:
 	mov	(0x2c, sp), a1
 	movhu	(0x50077b4e), d3
 	cmp	0, a1
-	bne	SdcFdFileViewFunc_entry_Lb9
+	bne	SdcFmmSeqSongNameFunc_entry_Lb9
 	cmp	0x50010, d1
-	bne	SdcFdFileViewFunc_entry_L96
+	bne	SdcFmmSeqSongNameFunc_entry_L96
 	movhu	(0x50077b4e), d0
 	cmp	9, d0
-	blt	SdcFdFileViewFunc_entry_L8c
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L8c:
+	blt	SdcFmmSeqSongNameFunc_entry_L8c
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L8c:
 	inc	d0
 	movhu	d0, (0x50077b4e)
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L96:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L96:
 	cmp	0x5000f, d1
-	beq	SdcFdFileViewFunc_entry_La1
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_La1:
+	beq	SdcFmmSeqSongNameFunc_entry_La1
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_La1:
 	movhu	(0x50077b4e), d0
 	cmp	0, d0
-	bgt	SdcFdFileViewFunc_entry_Lae
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Lae:
+	bgt	SdcFmmSeqSongNameFunc_entry_Lae
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Lae:
 	add	-1, d0
 	movhu	d0, (0x50077b4e)
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Lb9:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Lb9:
 	cmp	1, a1
-	bne	SdcFdFileViewFunc_entry_Ld5
+	bne	SdcFmmSeqSongNameFunc_entry_Ld5
 	movhu	(0x50077b4e), d0
 	cmp	5, d0
-	bge	SdcFdFileViewFunc_entry_Lca
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Lca:
+	bge	SdcFmmSeqSongNameFunc_entry_Lca
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Lca:
 	add	-5, d0
 	movhu	d0, (0x50077b4e)
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Ld5:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Ld5:
 	cmp	2, a1
-	bne	SdcFdFileViewFunc_entry_Lf4
+	bne	SdcFmmSeqSongNameFunc_entry_Lf4
 	movhu	(0x50077b4e), d1
 	mov	5, d0
 	add	d1, d0
 	cmp	0xa, d0
-	blt	SdcFdFileViewFunc_entry_Le9
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Le9:
+	blt	SdcFmmSeqSongNameFunc_entry_Le9
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Le9:
 	add	5, d1
 	movhu	d1, (0x50077b4e)
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_Lf4:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_Lf4:
 	cmp	4, a1
-	beq	SdcFdFileViewFunc_entry_Lfb
-	jmp	SdcFdFileViewFunc_entry_L203
-SdcFdFileViewFunc_entry_Lfb:
+	beq	SdcFmmSeqSongNameFunc_entry_Lfb
+	jmp	SdcFmmSeqSongNameFunc_entry_L203
+SdcFmmSeqSongNameFunc_entry_Lfb:
 	clr	d0
 	movbu	d0, (0x50077b4c)
 	movhu	(0x50077b4e), d0
 	call	func_486D3E30_entry, 0, 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L139
+	beq	SdcFmmSeqSongNameFunc_entry_L139
 	btst	0x80, (0x500788cb)
-	bne	SdcFdFileViewFunc_entry_L139
+	bne	SdcFmmSeqSongNameFunc_entry_L139
 	mov	1, d0
 	movbu	d0, (0x500788ca)
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x01450006, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L139:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L139:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L17b
+	beq	SdcFmmSeqSongNameFunc_entry_L17b
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L17b
+	beq	SdcFmmSeqSongNameFunc_entry_L17b
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -524726,8 +524782,8 @@ SdcFdFileViewFunc_entry_L139:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L17b:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L17b:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -524758,28 +524814,28 @@ SdcFdFileViewFunc_entry_L17b:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L203:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L203:
 	cmp	0x4b, a1
-	beq	SdcFdFileViewFunc_entry_L20e
+	beq	SdcFmmSeqSongNameFunc_entry_L20e
 	cmp	0x4c, a1
-	beq	SdcFdFileViewFunc_entry_L20e
-	jmp	SdcFdFileViewFunc_entry_L303
-SdcFdFileViewFunc_entry_L20e:
+	beq	SdcFmmSeqSongNameFunc_entry_L20e
+	jmp	SdcFmmSeqSongNameFunc_entry_L303
+SdcFmmSeqSongNameFunc_entry_L20e:
 	mov	1, d0
 	movbu	d0, (0x50077b4c)
 	cmp	0x4b, a1
-	beq	SdcFdFileViewFunc_entry_L221
+	beq	SdcFmmSeqSongNameFunc_entry_L221
 	clr	d0
 	movbu	d0, (0x50077b4c)
-SdcFdFileViewFunc_entry_L221:
+SdcFmmSeqSongNameFunc_entry_L221:
 	call	func_48709D7E_entry, 0, 8
 	exthu	d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L263
+	beq	SdcFmmSeqSongNameFunc_entry_L263
 	movhu	(0x500a05a6), d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L263
+	beq	SdcFmmSeqSongNameFunc_entry_L263
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -524790,8 +524846,8 @@ SdcFdFileViewFunc_entry_L221:
 	mov	0x021002a9, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L263:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L263:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -524801,11 +524857,11 @@ SdcFdFileViewFunc_entry_L263:
 	call	func_487105D7_entry, 0, 0xc
 	movbu	(0x50077b4c), d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L29a
+	beq	SdcFmmSeqSongNameFunc_entry_L29a
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x50077b4c)
-SdcFdFileViewFunc_entry_L29a:
+SdcFmmSeqSongNameFunc_entry_L29a:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	movhu	(0x50077b4e), d0
@@ -524829,12 +524885,12 @@ SdcFdFileViewFunc_entry_L29a:
 	extbu	d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L303:
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L303:
 	cmp	0x32, a1
-	beq	SdcFdFileViewFunc_entry_L30a
-	jmp	SdcFdFileViewFunc_entry_L3a7
-SdcFdFileViewFunc_entry_L30a:
+	beq	SdcFmmSeqSongNameFunc_entry_L30a
+	jmp	SdcFmmSeqSongNameFunc_entry_L3a7
+SdcFmmSeqSongNameFunc_entry_L30a:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x0140000a, d0
@@ -524844,11 +524900,11 @@ SdcFdFileViewFunc_entry_L30a:
 	call	func_487105D7_entry, 0, 0xc
 	movbu	(0x50077b4c), d0
 	cmp	0, d0
-	beq	SdcFdFileViewFunc_entry_L341
+	beq	SdcFmmSeqSongNameFunc_entry_L341
 	call	func_486FE913_entry, 0, 0xc
 	clr	d0
 	movbu	d0, (0x50077b4c)
-SdcFdFileViewFunc_entry_L341:
+SdcFmmSeqSongNameFunc_entry_L341:
 	mov	1, d0
 	call	func_486D3618, 0, 0
 	movhu	(0x50077b4e), d0
@@ -524872,11 +524928,11 @@ SdcFdFileViewFunc_entry_L341:
 	mov	d2, d1
 	exthu	d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFdFileViewFunc_entry_L3a7:
+SdcFmmSeqSongNameFunc_entry_L3a7:
 	movhu	(0x50077b4e), d0
 	exthu	d3
 	cmp	d0, d3
-	beq	SdcFdFileViewFunc_entry_L40e
+	beq	SdcFmmSeqSongNameFunc_entry_L40e
 	movhu	(0x50077b4e), d0
 	mov	0x0145000b, d1
 	mov	d0, (0x10, sp)
@@ -524900,46 +524956,46 @@ SdcFdFileViewFunc_entry_L3a7:
 	mov	-1, d0
 	mov	0x01450009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFdFileViewFunc_entry_L40e:
+SdcFmmSeqSongNameFunc_entry_L40e:
 	clr	d0
-	bra	SdcFdFileViewFunc_entry_L412
-SdcFdFileViewFunc_entry_L411:
+	bra	SdcFmmSeqSongNameFunc_entry_L412
+SdcFmmSeqSongNameFunc_entry_L411:
 	clr	d0
-SdcFdFileViewFunc_entry_L412:
+SdcFmmSeqSongNameFunc_entry_L412:
 	ret	[d2,d3], 0x1c
 
-SdcFmmSongMedleyFunc:
+SdcFmmPasswordFunc:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	mov	d0, d3
 	cmp	0x146000d, d1
-	beq	SdcFmmSongMedleyFunc_L27
+	beq	SdcFmmPasswordFunc_L27
 	cmp	0x146000e, d1
-	bne	SdcFmmSongMedleyFunc_L19
-	jmp	SdcFmmSongMedleyFunc_Le7
-SdcFmmSongMedleyFunc_L19:
+	bne	SdcFmmPasswordFunc_L19
+	jmp	SdcFmmPasswordFunc_Le7
+SdcFmmPasswordFunc_L19:
 	cmp	0x146000f, d1
-	bne	SdcFmmSongMedleyFunc_L24
-	jmp	SdcFmmSongMedleyFunc_L1a6
-SdcFmmSongMedleyFunc_L24:
-	jmp	SdcFmmSongMedleyFunc_L1dc
-SdcFmmSongMedleyFunc_L27:
+	bne	SdcFmmPasswordFunc_L24
+	jmp	SdcFmmPasswordFunc_L1a6
+SdcFmmPasswordFunc_L24:
+	jmp	SdcFmmPasswordFunc_L1dc
+SdcFmmPasswordFunc_L27:
 	movbu	(0x500788ca), d0
 	cmp	3, d0
-	bne	SdcFmmSongMedleyFunc_L74
+	bne	SdcFmmPasswordFunc_L74
 	mov	(0x2c, sp), d2
 	mov	d2, d0
 	exthu	d0
 	call	func_486D3EA9_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L74
+	beq	SdcFmmPasswordFunc_L74
 	exthu	d2
 	mov	d2, d0
 	call	func_486D3EF8_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L74
+	beq	SdcFmmPasswordFunc_L74
 	movbu	(0x500788cb), d0
 	mov	0x0005000f, d1
 	or	0x80, d0
@@ -524949,66 +525005,66 @@ SdcFmmSongMedleyFunc_L27:
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
 	mov	d3, d0
-	call	SdcFmmSmfImportTitleFunc_entry, [d2,d3,a2,a3], 0x24
-	bra	SdcFmmSongMedleyFunc_Le3
-SdcFmmSongMedleyFunc_L74:
+	call	SdcFmmFolderNameFunc_entry, [d2,d3,a2,a3], 0x24
+	bra	SdcFmmPasswordFunc_Le3
+SdcFmmPasswordFunc_L74:
 	movbu	(0x500788ca), d0
 	cmp	1, d0
-	bne	SdcFmmSongMedleyFunc_La6
+	bne	SdcFmmPasswordFunc_La6
 	mov	(0x2c, sp), d0
 	exthu	d0
 	call	func_486D3EA9_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_La6
+	beq	SdcFmmPasswordFunc_La6
 	bset	0x80, (0x500788cb)
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
 	mov	0x0005000f, d1
 	mov	d3, d0
-	call	SdcFmmSmfImportTitleFunc_entry, [d2,d3,a2,a3], 0x24
-	bra	SdcFmmSongMedleyFunc_Le3
-SdcFmmSongMedleyFunc_La6:
+	call	SdcFmmFolderNameFunc_entry, [d2,d3,a2,a3], 0x24
+	bra	SdcFmmPasswordFunc_Le3
+SdcFmmPasswordFunc_La6:
 	movbu	(0x500788ca), d0
 	cmp	2, d0
-	bne	SdcFmmSongMedleyFunc_Ld8
+	bne	SdcFmmPasswordFunc_Ld8
 	mov	(0x2c, sp), d0
 	exthu	d0
 	call	func_486D3EF8_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_Ld8
+	beq	SdcFmmPasswordFunc_Ld8
 	bset	0x40, (0x500788cb)
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
 	mov	0x0005000f, d1
 	mov	d3, d0
-	call	SdcFmmSmfImportTitleFunc_entry, [d2,d3,a2,a3], 0x24
-	bra	SdcFmmSongMedleyFunc_Le3
-SdcFmmSongMedleyFunc_Ld8:
+	call	SdcFmmFolderNameFunc_entry, [d2,d3,a2,a3], 0x24
+	bra	SdcFmmPasswordFunc_Le3
+SdcFmmPasswordFunc_Ld8:
 	mov	3, d0
 	mov	0xb, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSongMedleyFunc_Le3:
+SdcFmmPasswordFunc_Le3:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcFmmSongMedleyFunc_Le7:
+SdcFmmPasswordFunc_Le7:
 	movbu	(0x500788ca), d0
 	cmp	3, d0
-	bne	SdcFmmSongMedleyFunc_L134
+	bne	SdcFmmPasswordFunc_L134
 	mov	(0x2c, sp), d2
 	mov	d2, d0
 	exthu	d0
 	call	func_486D3EA9_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L134
+	beq	SdcFmmPasswordFunc_L134
 	exthu	d2
 	mov	d2, d0
 	call	func_486D3EF8_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L134
+	beq	SdcFmmPasswordFunc_L134
 	movbu	(0x500788cb), d0
 	mov	0x0005000f, d1
 	or	0x80, d0
@@ -525018,73 +525074,73 @@ SdcFmmSongMedleyFunc_Le7:
 	mov	0xe, d0
 	mov	d0, (0x10, sp)
 	mov	d3, d0
-	call	func_48714DF9_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSongMedleyFunc_L1a3
-SdcFmmSongMedleyFunc_L134:
+	call	SdcFmmSaveFilterFunc_entry, [d2,d3,a2], 0x20
+	bra	SdcFmmPasswordFunc_L1a3
+SdcFmmPasswordFunc_L134:
 	movbu	(0x500788ca), d0
 	cmp	1, d0
-	bne	SdcFmmSongMedleyFunc_L166
+	bne	SdcFmmPasswordFunc_L166
 	mov	(0x2c, sp), d0
 	exthu	d0
 	call	func_486D3EA9_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L166
+	beq	SdcFmmPasswordFunc_L166
 	bset	0x80, (0x500788cb)
 	mov	0xe, d0
 	mov	d0, (0x10, sp)
 	mov	0x0005000f, d1
 	mov	d3, d0
-	call	func_48714DF9_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSongMedleyFunc_L1a3
-SdcFmmSongMedleyFunc_L166:
+	call	SdcFmmSaveFilterFunc_entry, [d2,d3,a2], 0x20
+	bra	SdcFmmPasswordFunc_L1a3
+SdcFmmPasswordFunc_L166:
 	movbu	(0x500788ca), d0
 	cmp	2, d0
-	bne	SdcFmmSongMedleyFunc_L198
+	bne	SdcFmmPasswordFunc_L198
 	mov	(0x2c, sp), d0
 	exthu	d0
 	call	func_486D3EF8_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L198
+	beq	SdcFmmPasswordFunc_L198
 	bset	0x40, (0x500788cb)
 	mov	0xe, d0
 	mov	d0, (0x10, sp)
 	mov	0x0005000f, d1
 	mov	d3, d0
-	call	func_48714DF9_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSongMedleyFunc_L1a3
-SdcFmmSongMedleyFunc_L198:
+	call	SdcFmmSaveFilterFunc_entry, [d2,d3,a2], 0x20
+	bra	SdcFmmPasswordFunc_L1a3
+SdcFmmPasswordFunc_L198:
 	mov	3, d0
 	mov	0xb, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSongMedleyFunc_L1a3:
+SdcFmmPasswordFunc_L1a3:
 	clr	d0
-	bra	SdcFmmSongMedleyFunc_L1dd
-SdcFmmSongMedleyFunc_L1a6:
+	bra	SdcFmmPasswordFunc_L1dd
+SdcFmmPasswordFunc_L1a6:
 	mov	(0x2c, sp), d0
 	exthu	d0
 	call	func_486D3EA9_entry, [d2,d3], 0x10
 	extbu	d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyFunc_L1ce
+	beq	SdcFmmPasswordFunc_L1ce
 	bset	0x80, (0x500788cb)
 	mov	4, d0
 	mov	d0, (0x10, sp)
 	mov	0x0005000f, d1
 	mov	d3, d0
-	call	SdcFdFileViewFunc_entry, [d2,d3], 0x1c
-	bra	SdcFmmSongMedleyFunc_L1d9
-SdcFmmSongMedleyFunc_L1ce:
+	call	SdcFmmSeqSongNameFunc_entry, [d2,d3], 0x1c
+	bra	SdcFmmPasswordFunc_L1d9
+SdcFmmPasswordFunc_L1ce:
 	mov	3, d0
 	mov	0xb, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSongMedleyFunc_L1d9:
+SdcFmmPasswordFunc_L1d9:
 	clr	d0
-	bra	SdcFmmSongMedleyFunc_L1dd
-SdcFmmSongMedleyFunc_L1dc:
+	bra	SdcFmmPasswordFunc_L1dd
+SdcFmmPasswordFunc_L1dc:
 	clr	d0
-SdcFmmSongMedleyFunc_L1dd:
+SdcFmmPasswordFunc_L1dd:
 	ret	[d2,d3], 0x1c
 
 func_4871ADD4:
@@ -525293,64 +525349,64 @@ func_4871AE81_entry_Lce:
 func_4871AE81_entry_Lf2:
 	ret	[d2,d3,a2,a3], 0x3c
 
-SdcFmmSongMedleyListViewFunc:
+SdcFmmComposerLoadTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	SdcFmmSongMedleyListViewFunc_L24
+	beq	SdcFmmComposerLoadTitleFunc_L24
 	cmp	0x50005, d1
-	bne	SdcFmmSongMedleyListViewFunc_L16
-	jmp	SdcFmmSongMedleyListViewFunc_L1b0
-SdcFmmSongMedleyListViewFunc_L16:
+	bne	SdcFmmComposerLoadTitleFunc_L16
+	jmp	SdcFmmComposerLoadTitleFunc_L1b0
+SdcFmmComposerLoadTitleFunc_L16:
 	cmp	0x50014, d1
-	bne	SdcFmmSongMedleyListViewFunc_L21
-	jmp	SdcFmmSongMedleyListViewFunc_L1c3
-SdcFmmSongMedleyListViewFunc_L21:
-	jmp	SdcFmmSongMedleyListViewFunc_L1f7
-SdcFmmSongMedleyListViewFunc_L24:
+	bne	SdcFmmComposerLoadTitleFunc_L21
+	jmp	SdcFmmComposerLoadTitleFunc_L1c3
+SdcFmmComposerLoadTitleFunc_L21:
+	jmp	SdcFmmComposerLoadTitleFunc_L1f7
+SdcFmmComposerLoadTitleFunc_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	SdcFmmSongMedleyListViewFunc_L3b
+	beq	SdcFmmComposerLoadTitleFunc_L3b
 	cmp	9, a0
-	bne	SdcFmmSongMedleyListViewFunc_L31
-	jmp	SdcFmmSongMedleyListViewFunc_L152
-SdcFmmSongMedleyListViewFunc_L31:
+	bne	SdcFmmComposerLoadTitleFunc_L31
+	jmp	SdcFmmComposerLoadTitleFunc_L152
+SdcFmmComposerLoadTitleFunc_L31:
 	cmp	3, a0
-	bne	SdcFmmSongMedleyListViewFunc_L38
-	jmp	SdcFmmSongMedleyListViewFunc_L182
-SdcFmmSongMedleyListViewFunc_L38:
-	jmp	SdcFmmSongMedleyListViewFunc_L1ad
-SdcFmmSongMedleyListViewFunc_L3b:
+	bne	SdcFmmComposerLoadTitleFunc_L38
+	jmp	SdcFmmComposerLoadTitleFunc_L182
+SdcFmmComposerLoadTitleFunc_L38:
+	jmp	SdcFmmComposerLoadTitleFunc_L1ad
+SdcFmmComposerLoadTitleFunc_L3b:
 	call	func_48633196_entry, 0, 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	3, d0
-	beq	SdcFmmSongMedleyListViewFunc_L63
+	beq	SdcFmmComposerLoadTitleFunc_L63
 	call	func_486C815A, 0, 0
 	call	func_486CD222_entry, [d2], 4
 	call	func_486D1056_entry, [d2], 4
-SdcFmmSongMedleyListViewFunc_L63:
+SdcFmmComposerLoadTitleFunc_L63:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcFmmSongMedleyListViewFunc_L73
+	beq	SdcFmmComposerLoadTitleFunc_L73
 	cmp	1, d0
-	bne	SdcFmmSongMedleyListViewFunc_L8d
-SdcFmmSongMedleyListViewFunc_L73:
+	bne	SdcFmmComposerLoadTitleFunc_L8d
+SdcFmmComposerLoadTitleFunc_L73:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcFmmSongMedleyListViewFunc_L126
-SdcFmmSongMedleyListViewFunc_L8d:
+	jmp	SdcFmmComposerLoadTitleFunc_L126
+SdcFmmComposerLoadTitleFunc_L8d:
 	cmp	3, d0
-	beq	SdcFmmSongMedleyListViewFunc_L95
+	beq	SdcFmmComposerLoadTitleFunc_L95
 	cmp	4, d0
-	bne	SdcFmmSongMedleyListViewFunc_Lec
-SdcFmmSongMedleyListViewFunc_L95:
+	bne	SdcFmmComposerLoadTitleFunc_Lec
+SdcFmmComposerLoadTitleFunc_L95:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcFmmSongMedleyListViewFunc_Ldb
+	bne	SdcFmmComposerLoadTitleFunc_Ldb
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -525367,15 +525423,15 @@ SdcFmmSongMedleyListViewFunc_L95:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSongMedleyListViewFunc_L126
-SdcFmmSongMedleyListViewFunc_Ldb:
+	bra	SdcFmmComposerLoadTitleFunc_L126
+SdcFmmComposerLoadTitleFunc_Ldb:
 	cmp	2, d0
-	bne	SdcFmmSongMedleyListViewFunc_L126
+	bne	SdcFmmComposerLoadTitleFunc_L126
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcFmmSongMedleyListViewFunc_L126
-SdcFmmSongMedleyListViewFunc_Lec:
+	bra	SdcFmmComposerLoadTitleFunc_L126
+SdcFmmComposerLoadTitleFunc_Lec:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -525392,78 +525448,78 @@ SdcFmmSongMedleyListViewFunc_Lec:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcFmmSongMedleyListViewFunc_L126:
+SdcFmmComposerLoadTitleFunc_L126:
 	call	func_487096B0_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmSongMedleyListViewFunc_L13a
+	bge	SdcFmmComposerLoadTitleFunc_L13a
 	clr	d0
 	call	func_48709696_entry, [d2], 0x10
-SdcFmmSongMedleyListViewFunc_L13a:
+SdcFmmComposerLoadTitleFunc_L13a:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bge	SdcFmmSongMedleyListViewFunc_L14e
+	bge	SdcFmmComposerLoadTitleFunc_L14e
 	clr	d0
 	call	func_4870965C_entry, [d2], 0x10
-SdcFmmSongMedleyListViewFunc_L14e:
+SdcFmmComposerLoadTitleFunc_L14e:
 	clr	d0
 	ret	0, 0x14
-SdcFmmSongMedleyListViewFunc_L152:
+SdcFmmComposerLoadTitleFunc_L152:
 	movbu	(0x500788c8), d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyListViewFunc_L165
+	beq	SdcFmmComposerLoadTitleFunc_L165
 	clr	d0
 	movbu	d0, (0x500788c8)
-	bra	SdcFmmSongMedleyListViewFunc_L17e
-SdcFmmSongMedleyListViewFunc_L165:
+	bra	SdcFmmComposerLoadTitleFunc_L17e
+SdcFmmComposerLoadTitleFunc_L165:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	blt	SdcFmmSongMedleyListViewFunc_L17e
+	blt	SdcFmmComposerLoadTitleFunc_L17e
 	cmp	0x13, d0
-	bge	SdcFmmSongMedleyListViewFunc_L17e
+	bge	SdcFmmComposerLoadTitleFunc_L17e
 	inc	d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
-SdcFmmSongMedleyListViewFunc_L17e:
+SdcFmmComposerLoadTitleFunc_L17e:
 	clr	d0
 	ret	0, 0x14
-SdcFmmSongMedleyListViewFunc_L182:
+SdcFmmComposerLoadTitleFunc_L182:
 	call	func_486331AC_entry, 0, 0x1c
 	movbu	(0x500788c8), d0
 	cmp	0, d0
-	beq	SdcFmmSongMedleyListViewFunc_L19a
+	beq	SdcFmmComposerLoadTitleFunc_L19a
 	clr	d0
 	movbu	d0, (0x500788c8)
-SdcFmmSongMedleyListViewFunc_L19a:
+SdcFmmComposerLoadTitleFunc_L19a:
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
 	call	func_487105ED_entry, 0, 8
 	clr	d0
-	bra	SdcFmmSongMedleyListViewFunc_L1f8
-SdcFmmSongMedleyListViewFunc_L1ad:
+	bra	SdcFmmComposerLoadTitleFunc_L1f8
+SdcFmmComposerLoadTitleFunc_L1ad:
 	clr	d0
-	bra	SdcFmmSongMedleyListViewFunc_L1f8
-SdcFmmSongMedleyListViewFunc_L1b0:
+	bra	SdcFmmComposerLoadTitleFunc_L1f8
+SdcFmmComposerLoadTitleFunc_L1b0:
 	mov	(0x24, sp), a0
 	cmp	0x17, a0
-	bne	SdcFmmSongMedleyListViewFunc_L1c0
+	bne	SdcFmmComposerLoadTitleFunc_L1c0
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
-SdcFmmSongMedleyListViewFunc_L1c0:
+SdcFmmComposerLoadTitleFunc_L1c0:
 	clr	d0
-	bra	SdcFmmSongMedleyListViewFunc_L1f8
-SdcFmmSongMedleyListViewFunc_L1c3:
+	bra	SdcFmmComposerLoadTitleFunc_L1f8
+SdcFmmComposerLoadTitleFunc_L1c3:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	SdcFmmSongMedleyListViewFunc_L1f4
+	bne	SdcFmmComposerLoadTitleFunc_L1f4
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	SdcFmmSongMedleyListViewFunc_L1f4
+	bne	SdcFmmComposerLoadTitleFunc_L1f4
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -525473,48 +525529,48 @@ SdcFmmSongMedleyListViewFunc_L1c3:
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcFmmSongMedleyListViewFunc_L1f8
-SdcFmmSongMedleyListViewFunc_L1f4:
+	bra	SdcFmmComposerLoadTitleFunc_L1f8
+SdcFmmComposerLoadTitleFunc_L1f4:
 	clr	d0
-	bra	SdcFmmSongMedleyListViewFunc_L1f8
-SdcFmmSongMedleyListViewFunc_L1f7:
+	bra	SdcFmmComposerLoadTitleFunc_L1f8
+SdcFmmComposerLoadTitleFunc_L1f7:
 	clr	d0
-SdcFmmSongMedleyListViewFunc_L1f8:
+SdcFmmComposerLoadTitleFunc_L1f8:
 	ret	0, 0x14
 
-SdcCusLoadSaveSrcDstFunc:
+SdcFmmComposerLoadFunc:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	0x2160000, d1
-	beq	SdcCusLoadSaveSrcDstFunc_L3c
+	beq	SdcFmmComposerLoadFunc_L3c
 	cmp	0x50009, d1
-	bne	SdcCusLoadSaveSrcDstFunc_L18
-	jmp	SdcCusLoadSaveSrcDstFunc_L9e
-SdcCusLoadSaveSrcDstFunc_L18:
+	bne	SdcFmmComposerLoadFunc_L18
+	jmp	SdcFmmComposerLoadFunc_L9e
+SdcFmmComposerLoadFunc_L18:
 	cmp	0x2150014, d1
-	bne	SdcCusLoadSaveSrcDstFunc_L23
-	jmp	SdcCusLoadSaveSrcDstFunc_L14a
-SdcCusLoadSaveSrcDstFunc_L23:
+	bne	SdcFmmComposerLoadFunc_L23
+	jmp	SdcFmmComposerLoadFunc_L14a
+SdcFmmComposerLoadFunc_L23:
 	cmp	0x2150015, d1
-	bne	SdcCusLoadSaveSrcDstFunc_L2e
-	jmp	SdcCusLoadSaveSrcDstFunc_L188
-SdcCusLoadSaveSrcDstFunc_L2e:
+	bne	SdcFmmComposerLoadFunc_L2e
+	jmp	SdcFmmComposerLoadFunc_L188
+SdcFmmComposerLoadFunc_L2e:
 	cmp	0x2150016, d1
-	bne	SdcCusLoadSaveSrcDstFunc_L39
-	jmp	SdcCusLoadSaveSrcDstFunc_L20a
-SdcCusLoadSaveSrcDstFunc_L39:
-	jmp	SdcCusLoadSaveSrcDstFunc_L2a0
-SdcCusLoadSaveSrcDstFunc_L3c:
+	bne	SdcFmmComposerLoadFunc_L39
+	jmp	SdcFmmComposerLoadFunc_L20a
+SdcFmmComposerLoadFunc_L39:
+	jmp	SdcFmmComposerLoadFunc_L2a0
+SdcFmmComposerLoadFunc_L3c:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcCusLoadSaveSrcDstFunc_L4c
+	beq	SdcFmmComposerLoadFunc_L4c
 	cmp	1, d0
-	bne	SdcCusLoadSaveSrcDstFunc_L50
-SdcCusLoadSaveSrcDstFunc_L4c:
+	bne	SdcFmmComposerLoadFunc_L50
+SdcFmmComposerLoadFunc_L4c:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_L50:
+SdcFmmComposerLoadFunc_L50:
 	call	func_487096B0_entry, 0, 0xc
 	exth	d0
 	movbu	(data_50005E88), d1
@@ -525537,17 +525593,17 @@ SdcCusLoadSaveSrcDstFunc_L50:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_L9e:
+SdcFmmComposerLoadFunc_L9e:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcCusLoadSaveSrcDstFunc_Lae
+	beq	SdcFmmComposerLoadFunc_Lae
 	cmp	1, d0
-	bne	SdcCusLoadSaveSrcDstFunc_Lb2
-SdcCusLoadSaveSrcDstFunc_Lae:
+	bne	SdcFmmComposerLoadFunc_Lb2
+SdcFmmComposerLoadFunc_Lae:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_Lb2:
+SdcFmmComposerLoadFunc_Lb2:
 	call	func_487096B0_entry, 0, 0xc
 	exth	d0
 	mov	1, d1
@@ -525572,8 +525628,8 @@ SdcCusLoadSaveSrcDstFunc_Lb2:
 	movbu	(data_50005E88), d0
 	clr	d1
 	cmp	d1, d0
-	ble	SdcCusLoadSaveSrcDstFunc_L146
-SdcCusLoadSaveSrcDstFunc_L10b:
+	ble	SdcFmmComposerLoadFunc_L146
+SdcFmmComposerLoadFunc_L10b:
 	mov	0x18, d0
 	nop
 	nop
@@ -525591,11 +525647,11 @@ SdcCusLoadSaveSrcDstFunc_L10b:
 	movbu	(data_50005E88), d0
 	exth	d1
 	cmp	d0, d1
-	blt	SdcCusLoadSaveSrcDstFunc_L10b
-SdcCusLoadSaveSrcDstFunc_L146:
+	blt	SdcFmmComposerLoadFunc_L10b
+SdcFmmComposerLoadFunc_L146:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_L14a:
+SdcFmmComposerLoadFunc_L14a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -525612,7 +525668,7 @@ SdcCusLoadSaveSrcDstFunc_L14a:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_L188:
+SdcFmmComposerLoadFunc_L188:
 	call	func_48709676_entry, 0, 0xc
 	exth	d0
 	movbu	(data_50005E88), d1
@@ -525656,7 +525712,7 @@ SdcCusLoadSaveSrcDstFunc_L188:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcCusLoadSaveSrcDstFunc_L20a:
+SdcFmmComposerLoadFunc_L20a:
 	call	func_48709676_entry, 0, 0xc
 	movbu	(data_50005E88), d1
 	exth	d0
@@ -525682,8 +525738,8 @@ SdcCusLoadSaveSrcDstFunc_L20a:
 	movbu	(data_50005E88), d0
 	clr	d1
 	cmp	d1, d0
-	ble	SdcCusLoadSaveSrcDstFunc_L29d
-SdcCusLoadSaveSrcDstFunc_L260:
+	ble	SdcFmmComposerLoadFunc_L29d
+SdcFmmComposerLoadFunc_L260:
 	mov	0x18, d0
 	nop
 	nop
@@ -525702,13 +525758,13 @@ SdcCusLoadSaveSrcDstFunc_L260:
 	movbu	(data_50005E88), d0
 	exth	d1
 	cmp	d0, d1
-	blt	SdcCusLoadSaveSrcDstFunc_L260
-SdcCusLoadSaveSrcDstFunc_L29d:
+	blt	SdcFmmComposerLoadFunc_L260
+SdcFmmComposerLoadFunc_L29d:
 	clr	d0
-	bra	SdcCusLoadSaveSrcDstFunc_L2a1
-SdcCusLoadSaveSrcDstFunc_L2a0:
+	bra	SdcFmmComposerLoadFunc_L2a1
+SdcFmmComposerLoadFunc_L2a0:
 	clr	d0
-SdcCusLoadSaveSrcDstFunc_L2a1:
+SdcFmmComposerLoadFunc_L2a1:
 	ret	[d2,d3], 0x1c
 
 ApFolderNumberChangeSW:
@@ -525742,7 +525798,7 @@ ApFolderNumberChangeSW:
 	clr	d0
 	ret	[d2,a2], 0x1c
 
-SdcFavoriteSongsBankFunc:
+MainFolderNumberChangeSW:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	mov	d1, d2
@@ -525751,28 +525807,28 @@ SdcFavoriteSongsBankFunc:
 	call	func_4870952B, 0, 0
 	extbu	d0
 	cmp	0x50005, d2
-	bne	SdcFavoriteSongsBankFunc_L3a
+	bne	MainFolderNumberChangeSW_L3a
 	mov	(0x2c, sp), d1
 	and	0x80, d1
-	beq	SdcFavoriteSongsBankFunc_L31
+	beq	MainFolderNumberChangeSW_L31
 	mov	d3, d2
 	exth	d2
 	exth	d0
 	mov	d2, d1
 	inc	d1
 	cmp	d0, d1
-	bge	SdcFavoriteSongsBankFunc_L3a
+	bge	MainFolderNumberChangeSW_L3a
 	mov	d2, d3
 	inc	d3
-	bra	SdcFavoriteSongsBankFunc_L3a
-SdcFavoriteSongsBankFunc_L31:
+	bra	MainFolderNumberChangeSW_L3a
+MainFolderNumberChangeSW_L31:
 	mov	d3, d0
 	exth	d0
 	cmp	0, d0
-	ble	SdcFavoriteSongsBankFunc_L3a
+	ble	MainFolderNumberChangeSW_L3a
 	mov	-1, d3
 	add	d0, d3
-SdcFavoriteSongsBankFunc_L3a:
+MainFolderNumberChangeSW_L3a:
 	extbu	d3
 	mov	d3, d0
 	call	func_48709696_entry, [d2], 0x10
@@ -525822,7 +525878,7 @@ ApFileNumberChangeSW:
 	clr	d0
 	ret	[d2,a2], 0x1c
 
-SdcFavoriteStrFunc:
+MainFileNumberChangeSW:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	mov	d1, a2
@@ -525830,27 +525886,27 @@ SdcFavoriteStrFunc:
 	mov	d0, d2
 	mov	d2, a3
 	cmp	0x50005, a2
-	bne	SdcFavoriteStrFunc_L35
+	bne	MainFileNumberChangeSW_L35
 	mov	(0x34, sp), d0
 	btst	0x80, d0
-	beq	SdcFavoriteStrFunc_L2c
+	beq	MainFileNumberChangeSW_L2c
 	mov	d2, d1
 	exth	d1
 	mov	d1, d0
 	inc	d0
 	cmp	0x14, d0
-	bge	SdcFavoriteStrFunc_L35
+	bge	MainFileNumberChangeSW_L35
 	mov	d1, d2
 	inc	d2
-	bra	SdcFavoriteStrFunc_L35
-SdcFavoriteStrFunc_L2c:
+	bra	MainFileNumberChangeSW_L35
+MainFileNumberChangeSW_L2c:
 	mov	d2, d0
 	exth	d0
 	cmp	0, d0
-	ble	SdcFavoriteStrFunc_L35
+	ble	MainFileNumberChangeSW_L35
 	mov	-1, d2
 	add	d0, d2
-SdcFavoriteStrFunc_L35:
+MainFileNumberChangeSW_L35:
 	mov	d2, d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -525865,21 +525921,21 @@ SdcFavoriteStrFunc_L35:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	cmp	d0, a2
-	beq	SdcFavoriteStrFunc_L73
+	beq	MainFileNumberChangeSW_L73
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x02150016, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	SdcFavoriteStrFunc_L87
-SdcFavoriteStrFunc_L73:
+	bra	MainFileNumberChangeSW_L87
+MainFileNumberChangeSW_L73:
 	mov	a3, d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x02150015, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcFavoriteStrFunc_L87:
+MainFileNumberChangeSW_L87:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
 
@@ -525910,21 +525966,21 @@ ApFileNumberChangePrevSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcFavoriteStrPreviewFunc:
+MainFileNumberChangePrevSW:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	mov	d1, d3
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d2
 	cmp	0x50005, d3
-	bne	SdcFavoriteStrPreviewFunc_L23
+	bne	MainFileNumberChangePrevSW_L23
 	movbu	(data_50005E90), d1
 	exth	d0
 	cmp	d1, d0
-	blt	SdcFavoriteStrPreviewFunc_L23
+	blt	MainFileNumberChangePrevSW_L23
 	mov	d0, d2
 	sub	d1, d2
-SdcFavoriteStrPreviewFunc_L23:
+MainFileNumberChangePrevSW_L23:
 	mov	d2, d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -525963,14 +526019,14 @@ ApFileNumberChangeNextSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcFavBankNameFunc:
+MainFileNumberChangeNextSW:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	d1, d2
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d1
 	cmp	0x50005, d2
-	bne	SdcFavBankNameFunc_L27
+	bne	MainFileNumberChangeNextSW_L27
 	mov	d0, d2
 	movbu	(data_50005E94), d0
 	exth	d2
@@ -525978,9 +526034,9 @@ SdcFavBankNameFunc:
 	add	d2, d1
 	add	d0, d2
 	cmp	0x14, d2
-	blt	SdcFavBankNameFunc_L27
+	blt	MainFileNumberChangeNextSW_L27
 	mov	0x13, d1
-SdcFavBankNameFunc_L27:
+MainFileNumberChangeNextSW_L27:
 	extbu	d1
 	mov	d1, d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -526001,7 +526057,7 @@ ApComposerLoadSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcFolderRenameFunc:
+MainComposerLoadSW:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	5, d0
@@ -526010,13 +526066,13 @@ SdcFolderRenameFunc:
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d2
-SdcFolderRenameFunc_L1d:
+MainComposerLoadSW_L1d:
 	mov	d2, d0
 	call	func_48709F45_entry, [d2], 4
 	inc	d2
 	extbu	d2
 	cmp	8, d2
-	blt	SdcFolderRenameFunc_L1d
+	blt	MainComposerLoadSW_L1d
 	mov	3, d0
 	call	func_48709F27_entry, [d2], 4
 	clr	d0
@@ -526080,56 +526136,56 @@ func_4871B812_L1c:
 func_4871B812_L2b:
 	retf	0, 0
 
-SdcSongRenameFunc:
+SdcFmmLoadSingleComposerTitleFunc:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	SdcSongRenameFunc_L19
+	beq	SdcFmmLoadSingleComposerTitleFunc_L19
 	cmp	0x50014, d1
-	bne	SdcSongRenameFunc_L16
-	jmp	SdcSongRenameFunc_L1ac
-SdcSongRenameFunc_L16:
-	jmp	SdcSongRenameFunc_L1cc
-SdcSongRenameFunc_L19:
+	bne	SdcFmmLoadSingleComposerTitleFunc_L16
+	jmp	SdcFmmLoadSingleComposerTitleFunc_L1ac
+SdcFmmLoadSingleComposerTitleFunc_L16:
+	jmp	SdcFmmLoadSingleComposerTitleFunc_L1cc
+SdcFmmLoadSingleComposerTitleFunc_L19:
 	mov	(0x24, sp), a0
 	cmp	2, a0
-	beq	SdcSongRenameFunc_L29
+	beq	SdcFmmLoadSingleComposerTitleFunc_L29
 	cmp	3, a0
-	bne	SdcSongRenameFunc_L26
-	jmp	SdcSongRenameFunc_L159
-SdcSongRenameFunc_L26:
-	jmp	SdcSongRenameFunc_L1a9
-SdcSongRenameFunc_L29:
+	bne	SdcFmmLoadSingleComposerTitleFunc_L26
+	jmp	SdcFmmLoadSingleComposerTitleFunc_L159
+SdcFmmLoadSingleComposerTitleFunc_L26:
+	jmp	SdcFmmLoadSingleComposerTitleFunc_L1a9
+SdcFmmLoadSingleComposerTitleFunc_L29:
 	call	func_48633196_entry, 0, 0x1c
 	call	GetTitleOld_entry, 0, 0x10
 	exthu	d0
 	cmp	3, d0
-	beq	SdcSongRenameFunc_L51
+	beq	SdcFmmLoadSingleComposerTitleFunc_L51
 	call	func_486C815A, 0, 0
 	call	func_486CD222_entry, [d2], 4
 	call	func_486D1056_entry, [d2], 4
-SdcSongRenameFunc_L51:
+SdcFmmLoadSingleComposerTitleFunc_L51:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSongRenameFunc_L61
+	beq	SdcFmmLoadSingleComposerTitleFunc_L61
 	cmp	1, d0
-	bne	SdcSongRenameFunc_L7b
-SdcSongRenameFunc_L61:
+	bne	SdcFmmLoadSingleComposerTitleFunc_L7b
+SdcFmmLoadSingleComposerTitleFunc_L61:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	0x02100300, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	SdcSongRenameFunc_L116
-SdcSongRenameFunc_L7b:
+	jmp	SdcFmmLoadSingleComposerTitleFunc_L116
+SdcFmmLoadSingleComposerTitleFunc_L7b:
 	cmp	3, d0
-	beq	SdcSongRenameFunc_L83
+	beq	SdcFmmLoadSingleComposerTitleFunc_L83
 	cmp	4, d0
-	bne	SdcSongRenameFunc_Ldb
-SdcSongRenameFunc_L83:
+	bne	SdcFmmLoadSingleComposerTitleFunc_Ldb
+SdcFmmLoadSingleComposerTitleFunc_L83:
 	movbu	(0x500788c6), d0
 	cmp	0, d0
-	bne	SdcSongRenameFunc_Lca
+	bne	SdcFmmLoadSingleComposerTitleFunc_Lca
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -526146,15 +526202,15 @@ SdcSongRenameFunc_L83:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcSongRenameFunc_L116
-SdcSongRenameFunc_Lca:
+	bra	SdcFmmLoadSingleComposerTitleFunc_L116
+SdcFmmLoadSingleComposerTitleFunc_Lca:
 	cmp	2, d0
-	bne	SdcSongRenameFunc_L116
+	bne	SdcFmmLoadSingleComposerTitleFunc_L116
 	mov	0x10a, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	SdcSongRenameFunc_L116
-SdcSongRenameFunc_Ldb:
+	bra	SdcFmmLoadSingleComposerTitleFunc_L116
+SdcFmmLoadSingleComposerTitleFunc_Ldb:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -526171,17 +526227,17 @@ SdcSongRenameFunc_Ldb:
 	mov	3, d0
 	mov	0x5e, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-SdcSongRenameFunc_L116:
+SdcFmmLoadSingleComposerTitleFunc_L116:
 	mov	5, d0
 	movbu	d0, (0x50078992)
 	mov	3, d0
 	call	func_48709E16_entry, [d2], 0xc
 	extbu	d0
 	cmp	0, d0
-	beq	SdcSongRenameFunc_L134
+	beq	SdcFmmLoadSingleComposerTitleFunc_L134
 	mov	2, d0
 	movbu	d0, (0x50078992)
-SdcSongRenameFunc_L134:
+SdcFmmLoadSingleComposerTitleFunc_L134:
 	call	func_4870A05F, 0, 0
 	movhu	d0, (0x50078990)
 	clr	d0
@@ -526190,14 +526246,14 @@ SdcSongRenameFunc_L134:
 	call	func_486BF8FD_entry, 0, 0xc
 	clr	d0
 	ret	0, 0x14
-SdcSongRenameFunc_L159:
+SdcFmmLoadSingleComposerTitleFunc_L159:
 	call	func_486331AC_entry, 0, 0x1c
 	movbu	(0x500788c8), d0
 	cmp	0, d0
-	beq	SdcSongRenameFunc_L171
+	beq	SdcFmmLoadSingleComposerTitleFunc_L171
 	clr	d0
 	movbu	d0, (0x500788c8)
-SdcSongRenameFunc_L171:
+SdcFmmLoadSingleComposerTitleFunc_L171:
 	clr	d0
 	mov	d0, d1
 	call	SDModuleModeReq_entry, 0, 0xc
@@ -526211,27 +526267,27 @@ SdcSongRenameFunc_L171:
 	exth	d0
 	call	func_4870A068, 0, 0
 	clr	d0
-	bra	SdcSongRenameFunc_L1cd
-SdcSongRenameFunc_L1a9:
+	bra	SdcFmmLoadSingleComposerTitleFunc_L1cd
+SdcFmmLoadSingleComposerTitleFunc_L1a9:
 	clr	d0
-	bra	SdcSongRenameFunc_L1cd
-SdcSongRenameFunc_L1ac:
+	bra	SdcFmmLoadSingleComposerTitleFunc_L1cd
+SdcFmmLoadSingleComposerTitleFunc_L1ac:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x107020bb, d0
-	bne	SdcSongRenameFunc_L1c9
+	bne	SdcFmmLoadSingleComposerTitleFunc_L1c9
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	SdcSongRenameFunc_L1c9
+	bne	SdcFmmLoadSingleComposerTitleFunc_L1c9
 	mov	0xb0, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-SdcSongRenameFunc_L1c9:
+SdcFmmLoadSingleComposerTitleFunc_L1c9:
 	clr	d0
-	bra	SdcSongRenameFunc_L1cd
-SdcSongRenameFunc_L1cc:
+	bra	SdcFmmLoadSingleComposerTitleFunc_L1cd
+SdcFmmLoadSingleComposerTitleFunc_L1cc:
 	clr	d0
-SdcSongRenameFunc_L1cd:
+SdcFmmLoadSingleComposerTitleFunc_L1cd:
 	ret	0, 0x14
 
 func_4871BA10:
@@ -526364,35 +526420,35 @@ func_4871BA10_entry_L199:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcSmfSongRenameFunc:
+SdcFmmLoadSingleComposerFunc:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	mov	d0, (0x24, sp)
 	mov	d1, d3
 	cmp	0x2160000, d3
-	beq	SdcSmfSongRenameFunc_L31
+	beq	SdcFmmLoadSingleComposerFunc_L31
 	cmp	0x50009, d1
-	beq	SdcSmfSongRenameFunc_L79
+	beq	SdcFmmLoadSingleComposerFunc_L79
 	cmp	0x2150014, d1
-	bne	SdcSmfSongRenameFunc_L23
-	jmp	SdcSmfSongRenameFunc_L169
-SdcSmfSongRenameFunc_L23:
+	bne	SdcFmmLoadSingleComposerFunc_L23
+	jmp	SdcFmmLoadSingleComposerFunc_L169
+SdcFmmLoadSingleComposerFunc_L23:
 	cmp	0x2150015, d1
-	bne	SdcSmfSongRenameFunc_L2e
-	jmp	SdcSmfSongRenameFunc_L1a7
-SdcSmfSongRenameFunc_L2e:
-	jmp	SdcSmfSongRenameFunc_L276
-SdcSmfSongRenameFunc_L31:
+	bne	SdcFmmLoadSingleComposerFunc_L2e
+	jmp	SdcFmmLoadSingleComposerFunc_L1a7
+SdcFmmLoadSingleComposerFunc_L2e:
+	jmp	SdcFmmLoadSingleComposerFunc_L276
+SdcFmmLoadSingleComposerFunc_L31:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSmfSongRenameFunc_L41
+	beq	SdcFmmLoadSingleComposerFunc_L41
 	cmp	1, d0
-	bne	SdcSmfSongRenameFunc_L45
-SdcSmfSongRenameFunc_L41:
+	bne	SdcFmmLoadSingleComposerFunc_L45
+SdcFmmLoadSingleComposerFunc_L41:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcSmfSongRenameFunc_L45:
+SdcFmmLoadSingleComposerFunc_L45:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -526410,17 +526466,17 @@ SdcSmfSongRenameFunc_L45:
 	call	func_4871BA10_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcSmfSongRenameFunc_L79:
+SdcFmmLoadSingleComposerFunc_L79:
 	call	func_48709036, 0, 0
 	extbu	d0
 	cmp	2, d0
-	beq	SdcSmfSongRenameFunc_L89
+	beq	SdcFmmLoadSingleComposerFunc_L89
 	cmp	1, d0
-	bne	SdcSmfSongRenameFunc_L8d
-SdcSmfSongRenameFunc_L89:
+	bne	SdcFmmLoadSingleComposerFunc_L8d
+SdcFmmLoadSingleComposerFunc_L89:
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcSmfSongRenameFunc_L8d:
+SdcFmmLoadSingleComposerFunc_L8d:
 	call	func_487096B0_entry, 0, 0xc
 	exth	d0
 	mov	1, d1
@@ -526472,7 +526528,7 @@ SdcSmfSongRenameFunc_L8d:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcSmfSongRenameFunc_L169:
+SdcFmmLoadSingleComposerFunc_L169:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -526489,7 +526545,7 @@ SdcSmfSongRenameFunc_L169:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,d3], 0x1c
-SdcSmfSongRenameFunc_L1a7:
+SdcFmmLoadSingleComposerFunc_L1a7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -526541,10 +526597,10 @@ SdcSmfSongRenameFunc_L1a7:
 	mov	0x000600b4, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	SdcSmfSongRenameFunc_L277
-SdcSmfSongRenameFunc_L276:
+	bra	SdcFmmLoadSingleComposerFunc_L277
+SdcFmmLoadSingleComposerFunc_L276:
 	clr	d0
-SdcSmfSongRenameFunc_L277:
+SdcFmmLoadSingleComposerFunc_L277:
 	ret	[d2,d3], 0x1c
 
 func_4871BE3A:
@@ -526643,7 +526699,7 @@ func_4871BEE9_entry:
 func_4871BEE9_entry_L36:
 	ret	[a2,a3], 0x28
 
-SdcFmmPictureDirectryFunc:
+SdcSingleLoadCmpSrcBankNameFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078994), d0
@@ -526652,12 +526708,12 @@ SdcFmmPictureDirectryFunc:
 	mov	d0, d2
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	SdcFmmPictureDirectryFunc_L32
+	beq	SdcSingleLoadCmpSrcBankNameFunc_L32
 	mov	0x500788e9, a2
 	clr	d0
 	movbu	d0, (0x500788e9)
-	bra	SdcFmmPictureDirectryFunc_L6f
-SdcFmmPictureDirectryFunc_L32:
+	bra	SdcSingleLoadCmpSrcBankNameFunc_L6f
+SdcSingleLoadCmpSrcBankNameFunc_L32:
 	movbu	(0x50078992), d0
 	extbu	d2
 	asl2	d0
@@ -526674,7 +526730,7 @@ SdcFmmPictureDirectryFunc_L32:
 	mov	(d2, a0), a1
 	mov	a2, a0
 	call	func_486D0E3E, 0, 0
-SdcFmmPictureDirectryFunc_L6f:
+SdcSingleLoadCmpSrcBankNameFunc_L6f:
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -526685,20 +526741,20 @@ SdcFmmPictureDirectryFunc_L6f:
 	clr	d0
 	ret	[d2,a2], 0x1c
 
-SdcFmmSeqSongNameFunc:
+SdcSingleLoadCmpSrcBankFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	SdcFmmSeqSongNameFunc_L28
+	beq	SdcSingleLoadCmpSrcBankFunc_L28
 	mov	0x500788fe, a2
 	clr	d0
 	movbu	d0, (0x500788fe)
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
-	bra	SdcFmmSeqSongNameFunc_L50
-SdcFmmSeqSongNameFunc_L28:
+	bra	SdcSingleLoadCmpSrcBankFunc_L50
+SdcSingleLoadCmpSrcBankFunc_L28:
 	mov	0x500788fe, a2
 	movbu	(0x50078994), d0
 	movbu	(data_50005E98), d1
@@ -526708,7 +526764,7 @@ SdcFmmSeqSongNameFunc_L28:
 	mov	a0, a1
 	mov	a2, a0
 	call	func_486D0DF2, 0, 0
-SdcFmmSeqSongNameFunc_L50:
+SdcSingleLoadCmpSrcBankFunc_L50:
 	mov	a2, (0x10, sp)
 	mov	(0x28, sp), d0
 	mov	0x02160006, d1
@@ -526716,17 +526772,17 @@ SdcFmmSeqSongNameFunc_L50:
 	clr	d0
 	ret	[a2], 0x18
 
-SdcFmmPasswordFunc:
+SdcSingleLoadCmpSrcMemNameFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	SdcFmmPasswordFunc_L1e
+	beq	SdcSingleLoadCmpSrcMemNameFunc_L1e
 	mov	0x50078913, a2
 	clr	d0
 	movbu	d0, (0x50078913)
-	bra	SdcFmmPasswordFunc_L49
-SdcFmmPasswordFunc_L1e:
+	bra	SdcSingleLoadCmpSrcMemNameFunc_L49
+SdcSingleLoadCmpSrcMemNameFunc_L1e:
 	movbu	(0x50078992), d0
 	mov	0x50078913, a2
 	asl2	d0
@@ -526737,7 +526793,7 @@ SdcFmmPasswordFunc_L1e:
 	mov	a2, a0
 	mov	Str_empty_387, a1
 	call	func_486D0E3E, 0, 0
-SdcFmmPasswordFunc_L49:
+SdcSingleLoadCmpSrcMemNameFunc_L49:
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -526748,7 +526804,7 @@ SdcFmmPasswordFunc_L49:
 	clr	d0
 	ret	[a2], 0x18
 
-SdcSendIndexCustomSaveFunc:
+SdcSingleLoadCmpSrcMemFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078994), d0
@@ -526758,31 +526814,31 @@ SdcSendIndexCustomSaveFunc:
 	movbu	(0x50078992), d1
 	mov	mdr, d0
 	cmp	2, d1
-	beq	SdcSendIndexCustomSaveFunc_L3a
+	beq	SdcSingleLoadCmpSrcMemFunc_L3a
 	mov	0x50078928, a2
 	clr	d0
 	movbu	d0, (0x50078928)
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
-	bra	SdcSendIndexCustomSaveFunc_L6f
-SdcSendIndexCustomSaveFunc_L3a:
+	bra	SdcSingleLoadCmpSrcMemFunc_L6f
+SdcSingleLoadCmpSrcMemFunc_L3a:
 	movbu	(0x50078993), d1
 	cmp	0, d1
-	beq	SdcSendIndexCustomSaveFunc_L5a
+	beq	SdcSingleLoadCmpSrcMemFunc_L5a
 	mov	0x50078928, a2
 	mov	a2, a0
 	mov	Str_ALL_8, a1
 	call	func_486D0DF2, 0, 0
-	bra	SdcSendIndexCustomSaveFunc_L6f
-SdcSendIndexCustomSaveFunc_L5a:
+	bra	SdcSingleLoadCmpSrcMemFunc_L6f
+SdcSingleLoadCmpSrcMemFunc_L5a:
 	mov	0x50078928, a2
 	extbu	d0
 	call	func_4871BED4, 0, 0
 	mov	a0, a1
 	mov	a2, a0
 	call	func_486D0DF2, 0, 0
-SdcSendIndexCustomSaveFunc_L6f:
+SdcSingleLoadCmpSrcMemFunc_L6f:
 	mov	a2, (0x10, sp)
 	mov	(0x28, sp), d0
 	mov	0x02160006, d1
@@ -526790,7 +526846,7 @@ SdcSendIndexCustomSaveFunc_L6f:
 	clr	d0
 	ret	[a2], 0x18
 
-SdcFmmComposerLoadTitleFunc:
+SdcSingleLoadCmpDstBankNameFunc:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078995), d0
@@ -526799,12 +526855,12 @@ SdcFmmComposerLoadTitleFunc:
 	mov	d0, d2
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	SdcFmmComposerLoadTitleFunc_L32
+	beq	SdcSingleLoadCmpDstBankNameFunc_L32
 	mov	0x5007893d, a2
 	clr	d0
 	movbu	d0, (0x5007893d)
-	bra	SdcFmmComposerLoadTitleFunc_L6f
-SdcFmmComposerLoadTitleFunc_L32:
+	bra	SdcSingleLoadCmpDstBankNameFunc_L6f
+SdcSingleLoadCmpDstBankNameFunc_L32:
 	movbu	(0x50078992), d0
 	extbu	d2
 	asl2	d0
@@ -526821,7 +526877,7 @@ SdcFmmComposerLoadTitleFunc_L32:
 	mov	(d2, a0), a1
 	mov	a2, a0
 	call	func_486D0E3E, 0, 0
-SdcFmmComposerLoadTitleFunc_L6f:
+SdcSingleLoadCmpDstBankNameFunc_L6f:
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -526832,19 +526888,19 @@ SdcFmmComposerLoadTitleFunc_L6f:
 	clr	d0
 	ret	[d2,a2], 0x1c
 
-SdcFmmComposerLoadFunc:
+SdcSingleLoadCmpDstBankFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	SdcFmmComposerLoadFunc_L27
+	beq	SdcSingleLoadCmpDstBankFunc_L27
 	clr	d0
 	movbu	d0, (0x50078952)
 	mov	0x50078952, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
-	bra	SdcFmmComposerLoadFunc_L48
-SdcFmmComposerLoadFunc_L27:
+	bra	SdcSingleLoadCmpDstBankFunc_L48
+SdcSingleLoadCmpDstBankFunc_L27:
 	movbu	(0x50078995), d0
 	movbu	(data_50005E98), d1
 	call	LibDiv32, 0, 0
@@ -526852,7 +526908,7 @@ SdcFmmComposerLoadFunc_L27:
 	mov	5, d1
 	mov	0x50078951, a0
 	call	func_4871BEE9_entry, [a2,a3], 0x28
-SdcFmmComposerLoadFunc_L48:
+SdcSingleLoadCmpDstBankFunc_L48:
 	mov	0x50078952, d1
 	mov	d1, (0x10, sp)
 	mov	(0x28, sp), d0
@@ -526861,17 +526917,17 @@ SdcFmmComposerLoadFunc_L48:
 	clr	d0
 	ret	[a2], 0x18
 
-MainFolderNumberChangeSW:
+SdcSingleLoadCmpDstMemNameFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078992), d0
 	cmp	2, d0
-	beq	MainFolderNumberChangeSW_L1e
+	beq	SdcSingleLoadCmpDstMemNameFunc_L1e
 	mov	0x50078967, a2
 	clr	d0
 	movbu	d0, (0x50078967)
-	bra	MainFolderNumberChangeSW_L49
-MainFolderNumberChangeSW_L1e:
+	bra	SdcSingleLoadCmpDstMemNameFunc_L49
+SdcSingleLoadCmpDstMemNameFunc_L1e:
 	movbu	(0x50078992), d0
 	mov	0x50078967, a2
 	asl2	d0
@@ -526882,7 +526938,7 @@ MainFolderNumberChangeSW_L1e:
 	mov	a2, a0
 	mov	Str_empty_385, a1
 	call	func_486D0E3E, 0, 0
-MainFolderNumberChangeSW_L49:
+SdcSingleLoadCmpDstMemNameFunc_L49:
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
@@ -526893,7 +526949,7 @@ MainFolderNumberChangeSW_L49:
 	clr	d0
 	ret	[a2], 0x18
 
-MainFileNumberChangeSW:
+SdcSingleLoadCmpDstMemFunc:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078995), d0
@@ -526903,31 +526959,31 @@ MainFileNumberChangeSW:
 	movbu	(0x50078992), d1
 	mov	mdr, d0
 	cmp	2, d1
-	beq	MainFileNumberChangeSW_L3a
+	beq	SdcSingleLoadCmpDstMemFunc_L3a
 	mov	0x5007897c, a2
 	clr	d0
 	movbu	d0, (0x5007897c)
 	mov	a2, a0
 	mov	0x10, d0
 	call	func_486C4050_entry, [d2,d3], 8
-	bra	MainFileNumberChangeSW_L6f
-MainFileNumberChangeSW_L3a:
+	bra	SdcSingleLoadCmpDstMemFunc_L6f
+SdcSingleLoadCmpDstMemFunc_L3a:
 	movbu	(0x50078993), d1
 	cmp	0, d1
-	beq	MainFileNumberChangeSW_L5a
+	beq	SdcSingleLoadCmpDstMemFunc_L5a
 	mov	0x5007897c, a2
 	mov	a2, a0
 	mov	Str_ALL_7, a1
 	call	func_486D0DF2, 0, 0
-	bra	MainFileNumberChangeSW_L6f
-MainFileNumberChangeSW_L5a:
+	bra	SdcSingleLoadCmpDstMemFunc_L6f
+SdcSingleLoadCmpDstMemFunc_L5a:
 	mov	0x5007897c, a2
 	extbu	d0
 	call	func_4871BED4, 0, 0
 	mov	a0, a1
 	mov	a2, a0
 	call	func_486D0DF2, 0, 0
-MainFileNumberChangeSW_L6f:
+SdcSingleLoadCmpDstMemFunc_L6f:
 	mov	a2, (0x10, sp)
 	mov	(0x28, sp), d0
 	mov	0x02160006, d1
@@ -526971,34 +527027,34 @@ ApSrcBankChangeSW_L69:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcSingleLoadSrcDstFunc:
+MainSrcBankChangeSW:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	0x50005, d1
-	bne	SdcSingleLoadSrcDstFunc_L50
+	bne	MainSrcBankChangeSW_L50
 	mov	(0x2c, sp), d2
 	btst	0x80, d2
-	beq	SdcSingleLoadSrcDstFunc_L2d
+	beq	MainSrcBankChangeSW_L2d
 	movbu	(0x50078994), d0
 	movbu	(data_50005E98), d1
 	cmp	d1, d0
-	blt	SdcSingleLoadSrcDstFunc_L2d
+	blt	MainSrcBankChangeSW_L2d
 	sub	d1, d0
 	movbu	d0, (0x50078994)
-	bra	SdcSingleLoadSrcDstFunc_L50
-SdcSingleLoadSrcDstFunc_L2d:
+	bra	MainSrcBankChangeSW_L50
+MainSrcBankChangeSW_L2d:
 	btst	0x80, d2
-	bne	SdcSingleLoadSrcDstFunc_L50
+	bne	MainSrcBankChangeSW_L50
 	movbu	(0x50078994), d3
 	movbu	(data_50005E98), d1
 	movbu	(data_50005E99), d0
 	mov	d1, d2
 	add	d3, d2
 	cmp	d0, d2
-	bge	SdcSingleLoadSrcDstFunc_L50
+	bge	MainSrcBankChangeSW_L50
 	add	d1, d3
 	movbu	d3, (0x50078994)
-SdcSingleLoadSrcDstFunc_L50:
+MainSrcBankChangeSW_L50:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -527043,42 +527099,42 @@ ApSrcMemChangeSW_L69:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcCmpSnglLdOptionFunc:
+MainSrcMemChangeSW:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078993), d0
 	cmp	0, d0
-	beq	SdcCmpSnglLdOptionFunc_L13
+	beq	MainSrcMemChangeSW_L13
 	clr	d0
 	ret	[d2], 0x18
-SdcCmpSnglLdOptionFunc_L13:
+MainSrcMemChangeSW_L13:
 	cmp	0x50005, d1
-	bne	SdcCmpSnglLdOptionFunc_L75
+	bne	MainSrcMemChangeSW_L75
 	mov	(0x28, sp), d1
 	btst	0x80, d1
-	beq	SdcCmpSnglLdOptionFunc_L47
+	beq	MainSrcMemChangeSW_L47
 	movbu	(0x50078994), d0
 	cmp	0, d0
-	ble	SdcCmpSnglLdOptionFunc_L47
+	ble	MainSrcMemChangeSW_L47
 	movbu	(data_50005E98), d1
 	mov	d0, d2
 	ext	d2
 	div	d1, d2
 	mov	mdr, d1
 	cmp	0, d1
-	ble	SdcCmpSnglLdOptionFunc_L75
+	ble	MainSrcMemChangeSW_L75
 	add	-1, d0
 	movbu	d0, (0x50078994)
-	bra	SdcCmpSnglLdOptionFunc_L75
-SdcCmpSnglLdOptionFunc_L47:
+	bra	MainSrcMemChangeSW_L75
+MainSrcMemChangeSW_L47:
 	btst	0x80, d1
-	bne	SdcCmpSnglLdOptionFunc_L75
+	bne	MainSrcMemChangeSW_L75
 	movbu	(0x50078994), d2
 	movbu	(data_50005E99), d1
 	mov	d2, d0
 	inc	d0
 	cmp	d1, d0
-	bge	SdcCmpSnglLdOptionFunc_L75
+	bge	MainSrcMemChangeSW_L75
 	movbu	(data_50005E98), d1
 	mov	d2, d0
 	ext	d0
@@ -527086,10 +527142,10 @@ SdcCmpSnglLdOptionFunc_L47:
 	mov	mdr, d0
 	inc	d0
 	cmp	d1, d0
-	bge	SdcCmpSnglLdOptionFunc_L75
+	bge	MainSrcMemChangeSW_L75
 	inc	d2
 	movbu	d2, (0x50078994)
-SdcCmpSnglLdOptionFunc_L75:
+MainSrcMemChangeSW_L75:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -527134,34 +527190,34 @@ ApDstBankChangeSW_L69:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcSetupFlashFunc:
+MainDstBankChangeSW:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	0x50005, d1
-	bne	SdcSetupFlashFunc_L50
+	bne	MainDstBankChangeSW_L50
 	mov	(0x2c, sp), d2
 	btst	0x80, d2
-	beq	SdcSetupFlashFunc_L2d
+	beq	MainDstBankChangeSW_L2d
 	movbu	(0x50078995), d0
 	movbu	(data_50005E98), d1
 	cmp	d1, d0
-	blt	SdcSetupFlashFunc_L2d
+	blt	MainDstBankChangeSW_L2d
 	sub	d1, d0
 	movbu	d0, (0x50078995)
-	bra	SdcSetupFlashFunc_L50
-SdcSetupFlashFunc_L2d:
+	bra	MainDstBankChangeSW_L50
+MainDstBankChangeSW_L2d:
 	btst	0x80, d2
-	bne	SdcSetupFlashFunc_L50
+	bne	MainDstBankChangeSW_L50
 	movbu	(0x50078995), d3
 	movbu	(data_50005E98), d1
 	movbu	(data_50005E99), d0
 	mov	d1, d2
 	add	d3, d2
 	cmp	d0, d2
-	bge	SdcSetupFlashFunc_L50
+	bge	MainDstBankChangeSW_L50
 	add	d1, d3
 	movbu	d3, (0x50078995)
-SdcSetupFlashFunc_L50:
+MainDstBankChangeSW_L50:
 	mov	5, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -527206,42 +527262,42 @@ ApDstMemChangeSW_L69:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-SdcFmmPictureLoadFunc:
+MainDstMemChangeSW:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	movbu	(0x50078993), d0
 	cmp	0, d0
-	beq	SdcFmmPictureLoadFunc_L13
+	beq	MainDstMemChangeSW_L13
 	clr	d0
 	ret	[d2], 0x18
-SdcFmmPictureLoadFunc_L13:
+MainDstMemChangeSW_L13:
 	cmp	0x50005, d1
-	bne	SdcFmmPictureLoadFunc_L75
+	bne	MainDstMemChangeSW_L75
 	mov	(0x28, sp), d1
 	btst	0x80, d1
-	beq	SdcFmmPictureLoadFunc_L47
+	beq	MainDstMemChangeSW_L47
 	movbu	(0x50078995), d0
 	cmp	0, d0
-	ble	SdcFmmPictureLoadFunc_L47
+	ble	MainDstMemChangeSW_L47
 	movbu	(data_50005E98), d1
 	mov	d0, d2
 	ext	d2
 	div	d1, d2
 	mov	mdr, d1
 	cmp	0, d1
-	ble	SdcFmmPictureLoadFunc_L75
+	ble	MainDstMemChangeSW_L75
 	add	-1, d0
 	movbu	d0, (0x50078995)
-	bra	SdcFmmPictureLoadFunc_L75
-SdcFmmPictureLoadFunc_L47:
+	bra	MainDstMemChangeSW_L75
+MainDstMemChangeSW_L47:
 	btst	0x80, d1
-	bne	SdcFmmPictureLoadFunc_L75
+	bne	MainDstMemChangeSW_L75
 	movbu	(0x50078995), d2
 	movbu	(data_50005E99), d1
 	mov	d2, d0
 	inc	d0
 	cmp	d1, d0
-	bge	SdcFmmPictureLoadFunc_L75
+	bge	MainDstMemChangeSW_L75
 	movbu	(data_50005E98), d1
 	mov	d2, d0
 	ext	d0
@@ -527249,10 +527305,10 @@ SdcFmmPictureLoadFunc_L47:
 	mov	mdr, d0
 	inc	d0
 	cmp	d1, d0
-	bge	SdcFmmPictureLoadFunc_L75
+	bge	MainDstMemChangeSW_L75
 	inc	d2
 	movbu	d2, (0x50078995)
-SdcFmmPictureLoadFunc_L75:
+MainDstMemChangeSW_L75:
 	mov	7, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -527270,18 +527326,18 @@ ApSingleLoadSW:
 	clr	d0
 	ret	0, 0x14
 
-MainFileNumberChangePrevSW:
+MainSingleLoadSW:
 	movm	[d2,d3,a2], (sp)
 	add	-0x24, sp
 	cmp	0x50005, d1
-	beq	MainFileNumberChangePrevSW_L10
-	jmp	MainFileNumberChangePrevSW_L131
-MainFileNumberChangePrevSW_L10:
+	beq	MainSingleLoadSW_L10
+	jmp	MainSingleLoadSW_L131
+MainSingleLoadSW_L10:
 	movbu	(0x50078992), d0
 	cmp	5, d0
-	bne	MainFileNumberChangePrevSW_L1d
-	jmp	MainFileNumberChangePrevSW_L131
-MainFileNumberChangePrevSW_L1d:
+	bne	MainSingleLoadSW_L1d
+	jmp	MainSingleLoadSW_L131
+MainSingleLoadSW_L1d:
 	call	func_48709676_entry, 0, 0xc
 	mov	d0, d2
 	mov	1, d0
@@ -527291,9 +527347,9 @@ MainFileNumberChangePrevSW_L1d:
 	call	func_4870E4C4_entry, [d2,a2], 0x58
 	exth	d0
 	cmp	0, d0
-	bge	MainFileNumberChangePrevSW_L45
-	jmp	MainFileNumberChangePrevSW_L123
-MainFileNumberChangePrevSW_L45:
+	bge	MainSingleLoadSW_L45
+	jmp	MainSingleLoadSW_L123
+MainSingleLoadSW_L45:
 	exth	d2
 	call	func_48709D7E_entry, 0, 8
 	mov	d0, d1
@@ -527316,7 +527372,7 @@ MainFileNumberChangePrevSW_L45:
 	movbu	d0, (0x21, sp)
 	movbu	(0x50078993), d0
 	cmp	0, d0
-	beq	MainFileNumberChangePrevSW_Lc8
+	beq	MainSingleLoadSW_Lc8
 	mov	0x14, d0
 	mov	d0, (0x10, sp)
 	movbu	(0x20, sp), d0
@@ -527332,8 +527388,8 @@ MainFileNumberChangePrevSW_L45:
 	mov	1, d1
 	call	func_4870FD81_entry, [d2,d3], 8
 	extbu	d0
-	bra	MainFileNumberChangePrevSW_L10a
-MainFileNumberChangePrevSW_Lc8:
+	bra	MainSingleLoadSW_L10a
+MainSingleLoadSW_Lc8:
 	mov	data_48524200, a0
 	mov	a2, d0
 	ext	d0
@@ -527359,17 +527415,17 @@ MainFileNumberChangePrevSW_Lc8:
 	mov	1, d1
 	call	func_4870FD81_entry, [d2,d3], 8
 	extbu	d0
-MainFileNumberChangePrevSW_L10a:
+MainSingleLoadSW_L10a:
 	mov	d0, d1
 	exthu	d1
 	mov	3, d0
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	call	func_486D360E, 0, 0
 	call	func_486BF772_entry, 0, 0xc
-MainFileNumberChangePrevSW_L123:
+MainSingleLoadSW_L123:
 	call	func_4870E4FC_entry, 0, 0xc
 	call	func_486D3627, 0, 0
-MainFileNumberChangePrevSW_L131:
+MainSingleLoadSW_L131:
 	clr	d0
 	ret	[d2,d3,a2], 0x30
 
@@ -527382,18 +527438,18 @@ ApSingleBankChangeSW:
 	clr	d0
 	ret	0, 0x14
 
-MainFileNumberChangeNextSW:
+MainSingleBankChangeSW:
 	add	-0x14, sp
 	cmp	0x6003b, d1
-	bne	MainFileNumberChangeNextSW_L65
+	bne	MainSingleBankChangeSW_L65
 	mov	(0x24, sp), a0
 	mov	1, d0
 	movbu	d0, (0x50078993)
 	cmp	1, a0
-	beq	MainFileNumberChangeNextSW_L20
+	beq	MainSingleBankChangeSW_L20
 	clr	d0
 	movbu	d0, (0x50078993)
-MainFileNumberChangeNextSW_L20:
+MainSingleBankChangeSW_L20:
 	call	func_4871B812, 0, 0
 	mov	a0, (0x10, sp)
 	mov	0x0210030d, d0
@@ -527408,7 +527464,7 @@ MainFileNumberChangeNextSW_L20:
 	mov	d0, (0x10, sp)
 	mov	0x02150017, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-MainFileNumberChangeNextSW_L65:
+MainSingleBankChangeSW_L65:
 	clr	d0
 	ret	0, 0x14
 
@@ -527421,7 +527477,7 @@ ApFolderNumberChangeUpSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcCstSongRenameFunc:
+MainFolderNumberChangeUpSW:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d1, a2
@@ -527430,13 +527486,13 @@ SdcCstSongRenameFunc:
 	call	func_4870952B, 0, 0
 	extbu	d0
 	cmp	0x50005, a2
-	bne	SdcCstSongRenameFunc_L5c
+	bne	MainFolderNumberChangeUpSW_L5c
 	exth	d2
 	exth	d0
 	mov	d2, d1
 	inc	d1
 	cmp	d0, d1
-	bge	SdcCstSongRenameFunc_L5c
+	bge	MainFolderNumberChangeUpSW_L5c
 	inc	d2
 	mov	d2, d0
 	extbu	d0
@@ -527453,7 +527509,7 @@ SdcCstSongRenameFunc:
 	mov	-1, d0
 	mov	0x02150015, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcCstSongRenameFunc_L5c:
+MainFolderNumberChangeUpSW_L5c:
 	clr	d0
 	ret	[d2,a2], 0x1c
 
@@ -527466,16 +527522,16 @@ ApFolderNumberChangeDownSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcSmfTrkNumAndNameFunc:
+MainFolderNumberChangeDownSW:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	mov	d1, a2
 	call	func_487096B0_entry, 0, 0xc
 	cmp	0x50005, a2
-	bne	SdcSmfTrkNumAndNameFunc_L51
+	bne	MainFolderNumberChangeDownSW_L51
 	exth	d0
 	cmp	0, d0
-	ble	SdcSmfTrkNumAndNameFunc_L51
+	ble	MainFolderNumberChangeDownSW_L51
 	add	-1, d0
 	extbu	d0
 	call	func_48709696_entry, [d2], 0x10
@@ -527491,7 +527547,7 @@ SdcSmfTrkNumAndNameFunc:
 	mov	-1, d0
 	mov	0x02150015, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcSmfTrkNumAndNameFunc_L51:
+MainFolderNumberChangeDownSW_L51:
 	clr	d0
 	ret	[a2], 0x18
 
@@ -527504,18 +527560,18 @@ ApFileNumberChangeUpSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcSaveFileNameCstFunc:
+MainFileNumberChangeUpSW:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	mov	d1, a2
 	call	func_48709676_entry, 0, 0xc
 	cmp	0x50005, a2
-	bne	SdcSaveFileNameCstFunc_L38
+	bne	MainFileNumberChangeUpSW_L38
 	exth	d0
 	mov	d0, d1
 	inc	d1
 	cmp	0x14, d1
-	bge	SdcSaveFileNameCstFunc_L38
+	bge	MainFileNumberChangeUpSW_L38
 	inc	d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -527524,7 +527580,7 @@ SdcSaveFileNameCstFunc:
 	mov	-1, d0
 	mov	0x02150015, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcSaveFileNameCstFunc_L38:
+MainFileNumberChangeUpSW_L38:
 	clr	d0
 	ret	[a2], 0x18
 
@@ -527537,16 +527593,16 @@ ApFileNumberChangeDownSW:
 	clr	d0
 	ret	0, 0x14
 
-SdcSingleLoadModeFunc:
+MainFileNumberChangeDownSW:
 	movm	[a2], (sp)
 	add	-0x14, sp
 	mov	d1, a2
 	call	func_48709676_entry, 0, 0xc
 	cmp	0x50005, a2
-	bne	SdcSingleLoadModeFunc_L37
+	bne	MainFileNumberChangeDownSW_L37
 	exth	d0
 	cmp	0, d0
-	ble	SdcSingleLoadModeFunc_L37
+	ble	MainFileNumberChangeDownSW_L37
 	add	-1, d0
 	extbu	d0
 	call	func_4870965C_entry, [d2], 0x10
@@ -527555,10 +527611,10 @@ SdcSingleLoadModeFunc:
 	mov	-1, d0
 	mov	0x02150015, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-SdcSingleLoadModeFunc_L37:
+MainFileNumberChangeDownSW_L37:
 	clr	d0
 	ret	[a2], 0x18
-# SdcSingleLoadModeFunc + 0x3b: no traced path reaches what follows (--decode-gaps)
+# MainFileNumberChangeDownSW + 0x3b: no traced path reaches what follows (--decode-gaps)
 	movbu	(0x50078998), d0
 	retf	0, 0
 	add	-0x14, sp
@@ -556112,19 +556168,19 @@ func_50123F57_L33:
 	movhu	d0, (0x500830d8)
 	movbu	d0, (0x50006eb8)
 	mov	4, d0
-	mov	0x484003a0, a0
+	mov	data_484003A0, a0
 	call	cre_tsk, 0, 0
 	mov	4, d0
 	clr	d1
 	call	func_5018D990, 0, 0
 	mov	7, d0
-	mov	0x484003b4, a0
+	mov	data_484003B4, a0
 	call	func_5018C994, 0, 0
 	mov	8, d0
-	mov	0x484003c0, a0
+	mov	data_484003C0, a0
 	call	func_5018C994, 0, 0
 	mov	0xb, d0
-	mov	0x484003cc, a0
+	mov	data_484003CC, a0
 	call	func_5018C994, 0, 0
 	call	func_5013DF45_entry, [d2,d3,a2,a3], 0x24
 	call	func_487055C4, 0, 0
@@ -647022,7 +647078,7 @@ func_5015350E_entry_Lb62:
 	and	0x3f, d0
 	asl	3, d0
 	mov	d0, a0
-	mov	0x48407208, a1
+	mov	Str_empty_1233, a1
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
@@ -657096,7 +657152,7 @@ func_5015A3AE_entry:
 	asr	1, d0
 	movbu	d0, (8, sp)
 	movbu	(8, sp), d0
-	mov	0x48408534, a0
+	mov	data_48408534, a0
 	movbu	(d0, a0), d1
 	movbu	d1, (8, sp)
 	extbu	d1
@@ -657116,7 +657172,7 @@ func_5015A3AE_entry_L8e:
 	movbu	d0, (8, sp)
 	movbu	d0, (0x500213ea)
 	movbu	(8, sp), d0
-	mov	0x484085b4, a0
+	mov	data_484085B4, a0
 	movbu	(d0, a0), d1
 	movbu	d1, (8, sp)
 	extbu	d1
@@ -657140,7 +657196,7 @@ func_5015A3AE_entry_Lc8:
 	movbu	(8, sp), d0
 	movbu	d0, (0x500213e6)
 	movbu	(8, sp), d0
-	mov	0x484086b4, a0
+	mov	data_484086B4, a0
 	movbu	(d0, a0), d1
 	movbu	d1, (8, sp)
 	extbu	d1
@@ -657163,7 +657219,7 @@ func_5015A3AE_entry_L10d:
 	asr	1, d0
 	movbu	d0, (8, sp)
 	movbu	(8, sp), d0
-	mov	0x484087b4, a0
+	mov	data_484087B4, a0
 	movbu	(d0, a0), d1
 	movbu	d1, (8, sp)
 	extbu	d1
@@ -657190,7 +657246,7 @@ func_5015A3AE_entry_L150:
 	asr	1, d0
 	movbu	d0, (8, sp)
 	movbu	(8, sp), d0
-	mov	0x48408834, a0
+	mov	data_48408834, a0
 	movbu	(d0, a0), d1
 	movbu	d1, (8, sp)
 	extbu	d1
@@ -683455,7 +683511,7 @@ func_501680F4_L174:
 	mov	(0x4c, sp), a0
 	mov	(0x14, sp), d0
 	add	d0, a0
-	mov	0x484097dc, a1
+	mov	data_484097DC, a1
 	mov	0x16, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	(0x14, sp), d1
@@ -701199,7 +701255,7 @@ StyleNameModuleBoot_entry:
 	exth	d0
 	cmp	0, d0
 	bge	StyleNameModuleBoot_entry_L28
-	mov	Str_Technics_Rhythms, a0
+	mov	0x4852bd9c, a0
 	mov	a0, (data_5000610C)
 	call	StyleBuiltinNameTableInit_entry, [d2,a2,a3], 0x20
 StyleNameModuleBoot_entry_L28:

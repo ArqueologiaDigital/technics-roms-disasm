@@ -2960,7 +2960,7 @@ Str_DPCT:	.asciz "DPCT"
 	.align	4, 0xFF
 Str_WiCt:	.asciz "WiCt"
 	.align	4, 0xFF
-Str_empty_748:	.asciz "             "
+Str_empty_768:	.asciz "             "
 Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
 Str_PANEL_MEMORY_9:	.asciz "PANEL MEMORY "
 Str_SEQUENCER_12:	.asciz "SEQUENCER    "
@@ -2972,7 +2972,7 @@ Str_MIDI_FAVORITE:	.asciz "MIDI&FAVORITE"
 	.align	4, 0xFF
 
 ptrs_484C5C3C:
-	.long	Str_empty_748
+	.long	Str_empty_768
 	.long	Str_CURRENT_PANEL_5
 	.long	Str_PANEL_MEMORY_9
 	.long	Str_SEQUENCER_12
@@ -2983,7 +2983,7 @@ ptrs_484C5C3C:
 	.long	Str_MIDI_FAVORITE
 
 Str_NEXT_PAGE:	.asciz "   NEXT PAGE    "
-Str_empty_747:	.asciz "   ---------    "
+Str_empty_767:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
@@ -2991,7 +2991,7 @@ Str_message:	.asciz "    message.    "
 
 ptrs_484C5CB8:
 	.long	Str_NEXT_PAGE
-	.long	Str_empty_747
+	.long	Str_empty_767
 	.long	Str_This_is
 	.long	Str_temporary
 	.long	Str_message
@@ -3016,8 +3016,8 @@ data_484C5F64:
 .incbin_range "baserom/kn2400_program.rom", 0x0C5F64, 0x0C5FE4
 data_484C5FE4:
 .incbin_range "baserom/kn2400_program.rom", 0x0C5FE4, 0x0C5FE9
-Str_empty_746:	.asciz "---"
-Str_empty_745:	.asciz "---"
+Str_empty_766:	.asciz "---"
+Str_empty_748:	.asciz "---"
 Str_2DD_2:	.asciz "2DD"
 Str_2HD:	.asciz "2HD"
 Str_2DD:	.asciz "2DD"
@@ -3027,8 +3027,8 @@ Str_DOC_2:	.asciz "DOC"
 	.align	4, 0xFF
 
 ptrs_484C600C:
-	.long	Str_empty_746
-	.long	Str_empty_745
+	.long	Str_empty_766
+	.long	Str_empty_748
 	.long	Str_2DD_2
 	.long	Str_2HD
 	.long	Str_2DD
@@ -3041,7 +3041,7 @@ Str_SEQUENCER_11:	.asciz "  SEQUENCER  "
 Str_COMPOSER_10:	.asciz "  COMPOSER   "
 Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY "
 Str_EFFECT_MEMORY_5:	.asciz "EFFECT MEMORY"
-Str_empty_744:	.asciz "             "
+Str_empty_747:	.asciz "             "
 
 ptrs_484C6080:
 	.long	Str_PANEL_MEMORY_8
@@ -3049,23 +3049,23 @@ ptrs_484C6080:
 	.long	Str_COMPOSER_10
 	.long	Str_SOUND_MEMORY_5
 	.long	Str_EFFECT_MEMORY_5
-	.long	Str_empty_744
+	.long	Str_empty_747
 
 Str_BANK_28:	.asciz "BANK"
-Str_empty_743:	.asciz "----"
+Str_empty_746:	.asciz "----"
 Str_BANK_27:	.asciz "BANK"
 Str_BANK_26:	.asciz "BANK"
 Str_BANK_25:	.asciz "BANK"
-Str_empty_742:	.asciz "----"
+Str_empty_745:	.asciz "----"
 	.align	4, 0xFF
 
 ptrs_484C60B8:
 	.long	Str_BANK_28
-	.long	Str_empty_743
+	.long	Str_empty_746
 	.long	Str_BANK_27
 	.long	Str_BANK_26
 	.long	Str_BANK_25
-	.long	Str_empty_742
+	.long	Str_empty_745
 
 Str_MEMORY_26:	.asciz " MEMORY "
 Str_SONG_29:	.asciz "  SONG  "
@@ -3167,13 +3167,13 @@ Str_GM2_3:	.asciz "GM2"
 Str_NX_3:	.asciz " NX "
 	.space	4, 0x00
 Str_PREV_TEC_2:	.asciz "PREV.TEC"
-Str_empty_734:	.asciz "        "
+Str_empty_744:	.asciz "        "
 
 ptrs_484C62C4:
 	.long	Str_GM2_3
 	.long	Str_NX_3
 	.long	Str_PREV_TEC_2
-	.long	Str_empty_734
+	.long	Str_empty_744
 
 Str_MID_12:	.asciz "________.MID"
 	.align	4, 0xFF
@@ -3373,7 +3373,9 @@ ptrs_484C6760:
 	.long	func_486C7A95
 	.long	func_486C80C0
 data_484C6778:
-.incbin_range "baserom/kn2400_program.rom", 0x0C6778, 0x0C6780
+.incbin_range "baserom/kn2400_program.rom", 0x0C6778, 0x0C677C
+data_484C677C:
+.incbin_range "baserom/kn2400_program.rom", 0x0C677C, 0x0C6780
 data_484C6780:
 .incbin_range "baserom/kn2400_program.rom", 0x0C6780, 0x0C67AC
 data_484C67AC:
@@ -9783,15 +9785,18 @@ Str_PART_16_4:	.asciz " PART 16 "
 Str_RIGHT1_3:	.asciz " RIGHT1  "
 Str_RIGHT2_4:	.asciz " RIGHT2  "
 Str_LEFT_7:	.asciz " LEFT    "
+Str_empty_743:	.asciz "         "
+Str_empty_742:	.asciz "         "
+Str_empty_734:	.asciz "         "
 Str_empty_709:	.asciz "         "
 Str_empty_708:	.asciz "         "
 Str_empty_707:	.asciz "         "
 Str_empty_706:	.asciz "         "
 Str_empty_705:	.asciz "         "
+Str_CHORD_8:	.asciz " CHORD   "
 Str_empty_704:	.asciz "         "
 Str_empty_703:	.asciz "         "
 Str_empty_702:	.asciz "         "
-Str_CHORD_8:	.asciz " CHORD   "
 Str_empty_701:	.asciz "         "
 Str_empty_700:	.asciz "         "
 Str_empty_699:	.asciz "         "
@@ -9825,9 +9830,6 @@ Str_empty_672:	.asciz "         "
 Str_empty_671:	.asciz "         "
 Str_empty_670:	.asciz "         "
 Str_empty_669:	.asciz "         "
-Str_empty_668:	.asciz "         "
-Str_empty_667:	.asciz "         "
-Str_empty_666:	.asciz "         "
 Str_APC_8:	.asciz " APC     "
 Str_CONTROL_7:	.asciz " CONTROL "
 Str_RHYTHM_14:	.asciz " RHYTHM  "
@@ -9853,15 +9855,18 @@ ptrs_484DA1A4:
 	.long	Str_RIGHT1_3
 	.long	Str_RIGHT2_4
 	.long	Str_LEFT_7
+	.long	Str_empty_743
+	.long	Str_empty_742
+	.long	Str_empty_734
 	.long	Str_empty_709
 	.long	Str_empty_708
 	.long	Str_empty_707
 	.long	Str_empty_706
 	.long	Str_empty_705
+	.long	Str_CHORD_8
 	.long	Str_empty_704
 	.long	Str_empty_703
 	.long	Str_empty_702
-	.long	Str_CHORD_8
 	.long	Str_empty_701
 	.long	Str_empty_700
 	.long	Str_empty_699
@@ -9895,9 +9900,6 @@ ptrs_484DA1A4:
 	.long	Str_empty_671
 	.long	Str_empty_670
 	.long	Str_empty_669
-	.long	Str_empty_668
-	.long	Str_empty_667
-	.long	Str_empty_666
 	.long	Str_APC_8
 	.long	Str_CONTROL_7
 	.long	Str_RHYTHM_14
@@ -9923,15 +9925,18 @@ data_484DA330:
 data_484DA338:
 .incbin_range "baserom/kn2400_program.rom", 0x0DA338, 0x0DA340
 Str_LEFT_6:	.asciz " LEFT  "
+Str_empty_668:	.asciz "       "
+Str_empty_667:	.asciz "       "
+Str_empty_666:	.asciz "       "
 Str_empty_665:	.asciz "       "
 Str_empty_664:	.asciz "       "
 Str_empty_663:	.asciz "       "
 Str_empty_662:	.asciz "       "
 Str_empty_661:	.asciz "       "
+Str_CHORD_7:	.asciz " CHORD "
 Str_empty_660:	.asciz "       "
 Str_empty_659:	.asciz "       "
 Str_empty_658:	.asciz "       "
-Str_CHORD_7:	.asciz " CHORD "
 Str_empty_657:	.asciz "       "
 Str_empty_656:	.asciz "       "
 Str_empty_655:	.asciz "       "
@@ -9965,9 +9970,6 @@ Str_empty_628:	.asciz "       "
 Str_empty_627:	.asciz "       "
 Str_empty_626:	.asciz "       "
 Str_empty_625:	.asciz "       "
-Str_empty_624:	.asciz "       "
-Str_empty_623:	.asciz "       "
-Str_empty_622:	.asciz "       "
 Str_APC_7:	.asciz "  APC  "
 Str_CONTROL_6:	.asciz "CONTROL"
 Str_RHYTHM_13:	.asciz "RHYTHM "
@@ -9992,15 +9994,18 @@ ptrs_484DA4C8:
 	.long	data_484DA330
 	.long	data_484DA338
 	.long	Str_LEFT_6
+	.long	Str_empty_668
+	.long	Str_empty_667
+	.long	Str_empty_666
 	.long	Str_empty_665
 	.long	Str_empty_664
 	.long	Str_empty_663
 	.long	Str_empty_662
 	.long	Str_empty_661
+	.long	Str_CHORD_7
 	.long	Str_empty_660
 	.long	Str_empty_659
 	.long	Str_empty_658
-	.long	Str_CHORD_7
 	.long	Str_empty_657
 	.long	Str_empty_656
 	.long	Str_empty_655
@@ -10034,9 +10039,6 @@ ptrs_484DA4C8:
 	.long	Str_empty_627
 	.long	Str_empty_626
 	.long	Str_empty_625
-	.long	Str_empty_624
-	.long	Str_empty_623
-	.long	Str_empty_622
 	.long	Str_APC_7
 	.long	Str_CONTROL_6
 	.long	Str_RHYTHM_13
@@ -10116,14 +10118,14 @@ Str_Dieser_Song_ist_zu_lang_um_im_SMF_Format:	.asciz "Dieser Song ist zu lang, u
 Str_Ce_morceau_est_trop_long_pour_pouvoir_tr:	.asciz "Ce morceau est trop long pour pouvoir \xEAtre charg\xE9 en format SMF. Utilisez le format TECHNICS."
 Str_Esta_canci_n_es_demasiado_larga_para_car:	.asciz "Esta canci\xF3n es demasiado larga para cargar en el formato SMF. Utilice el formato TECHNICS."
 	.align	4, 0xFF
-Str_empty_621:	.asciz "    "
+Str_empty_624:	.asciz "    "
 Str_PLAY_5:	.asciz "PLAY"
 Str_REC_7:	.asciz "REC"
 Str_PUNCH:	.asciz "PUNCH"
 Str_CLR_6:	.asciz "CLR"
 
 ptrs_484DB9BC:
-	.long	Str_empty_621
+	.long	Str_empty_624
 	.long	Str_PLAY_5
 	.long	Str_REC_7
 	.long	Str_PUNCH
@@ -10909,60 +10911,60 @@ FnName_TtDemoMenu:	.asciz "TtDemoMenu"
 Str_DEMONSTRATION:	.asciz "DEMONSTRATION"
 	.align	4, 0xFF
 
-	AcDemoScreen	TtDemoMenu, sub=TtDemoMenu_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtDemoMenu_window, title=Str_DEMONSTRATION, icon=169	# title "DEMONSTRATION"
-		IvExitMode	TtDemoMenu_ExitMode1, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const|VF_InvisibleBox, X=100, Y=0, W=16, H=32, mode=MD_NORMAL
+	AcDemoScreen	DEMO_TtDemoMenu, sub=DEMO_TtDemoMenu_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=DEMO_TtDemoMenu_window, title=Str_DEMONSTRATION, icon=169	# title "DEMONSTRATION"
+		IvExitMode	DEMO_TtDemoMenu_ExitMode1, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const|VF_InvisibleBox, X=100, Y=0, W=16, H=32, mode=MD_NORMAL
 
 Str_OVERTURE:	.asciz "OVERTURE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_OVERTURE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SD_CARD, prev=TtDemoMenu_ExitMode1, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left1, selected=TtDemoMenu_DemoSelect_OVERTURE_selected, str=Str_OVERTURE	# str "OVERTURE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_OVERTURE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SD_CARD, prev=DEMO_TtDemoMenu_ExitMode1, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left1, selected=DEMO_TtDemoMenu_DemoSelect_OVERTURE_selected, str=Str_OVERTURE	# str "OVERTURE"
 
 Str_SD_CARD:	.asciz "SD CARD"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SD_CARD, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_VINTAGE_ORGAN, prev=TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left2, selected=TtDemoMenu_DemoSelect_SD_CARD_selected, tag=1, str=Str_SD_CARD	# str "SD CARD"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SD_CARD, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, prev=DEMO_TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left2, selected=DEMO_TtDemoMenu_DemoSelect_SD_CARD_selected, tag=1, str=Str_SD_CARD	# str "SD CARD"
 
 Str_VINTAGE_ORGAN:	.asciz "VINTAGE ORGAN"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_VINTAGE_ORGAN, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, prev=TtDemoMenu_DemoSelect_SD_CARD, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left3, selected=TtDemoMenu_DemoSelect_VINTAGE_ORGAN_selected, tag=2, str=Str_VINTAGE_ORGAN	# str "VINTAGE ORGAN"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, prev=DEMO_TtDemoMenu_DemoSelect_SD_CARD, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left3, selected=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN_selected, tag=2, str=Str_VINTAGE_ORGAN	# str "VINTAGE ORGAN"
 
 Str_SOUND_EXCELLENCE:	.asciz "SOUND EXCELLENCE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_RHYTHM_STYLE, prev=TtDemoMenu_DemoSelect_VINTAGE_ORGAN, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left4, selected=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE_selected, tag=3, str=Str_SOUND_EXCELLENCE	# str "SOUND EXCELLENCE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, prev=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left4, selected=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE_selected, tag=3, str=Str_SOUND_EXCELLENCE	# str "SOUND EXCELLENCE"
 
 Str_RHYTHM_STYLE:	.asciz "RHYTHM&STYLE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_RHYTHM_STYLE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_MULTI_MEDIA, prev=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, flag=VF_Const, X=12, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left5, selected=TtDemoMenu_DemoSelect_RHYTHM_STYLE_selected, tag=4, str=Str_RHYTHM_STYLE	# str "RHYTHM&STYLE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, prev=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, flag=VF_Const, X=12, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left5, selected=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE_selected, tag=4, str=Str_RHYTHM_STYLE	# str "RHYTHM&STYLE"
 
 Str_MULTI_MEDIA:	.asciz "MULTI MEDIA"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_MULTI_MEDIA, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SEQUENCER, prev=TtDemoMenu_DemoSelect_RHYTHM_STYLE, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right1, selected=TtDemoMenu_DemoSelect_MULTI_MEDIA_selected, tag=5, str=Str_MULTI_MEDIA	# str "MULTI MEDIA"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SEQUENCER, prev=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right1, selected=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA_selected, tag=5, str=Str_MULTI_MEDIA	# str "MULTI MEDIA"
 
 Str_SEQUENCER_7:	.asciz "SEQUENCER"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SEQUENCER, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_NETWORKING, prev=TtDemoMenu_DemoSelect_MULTI_MEDIA, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=TtDemoMenu_DemoSelect_SEQUENCER_selected, tag=6, str=Str_SEQUENCER_7	# str "SEQUENCER"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SEQUENCER, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_NETWORKING, prev=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=DEMO_TtDemoMenu_DemoSelect_SEQUENCER_selected, tag=6, str=Str_SEQUENCER_7	# str "SEQUENCER"
 
 Str_NETWORKING:	.asciz "NETWORKING"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_NETWORKING, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_EASE_OF_USE, prev=TtDemoMenu_DemoSelect_SEQUENCER, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right3, selected=TtDemoMenu_DemoSelect_NETWORKING_selected, tag=7, str=Str_NETWORKING	# str "NETWORKING"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_NETWORKING, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, prev=DEMO_TtDemoMenu_DemoSelect_SEQUENCER, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right3, selected=DEMO_TtDemoMenu_DemoSelect_NETWORKING_selected, tag=7, str=Str_NETWORKING	# str "NETWORKING"
 
 Str_EASE_OF_USE:	.asciz "EASE OF USE"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_EASE_OF_USE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_CUSTOMIZE, prev=TtDemoMenu_DemoSelect_NETWORKING, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=TtDemoMenu_DemoSelect_EASE_OF_USE_selected, tag=8, str=Str_EASE_OF_USE	# str "EASE OF USE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, prev=DEMO_TtDemoMenu_DemoSelect_NETWORKING, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE_selected, tag=8, str=Str_EASE_OF_USE	# str "EASE OF USE"
 
 Str_CUSTOMIZE_3:	.asciz "CUSTOMIZE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_CUSTOMIZE, super=TtDemoMenu, next=TtDemoMenu_DemoFdSelect_External_Demo_Song, prev=TtDemoMenu_DemoSelect_EASE_OF_USE, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right5, selected=TtDemoMenu_DemoSelect_CUSTOMIZE_selected, tag=9, str=Str_CUSTOMIZE_3	# str "CUSTOMIZE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song, prev=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right5, selected=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE_selected, tag=9, str=Str_CUSTOMIZE_3	# str "CUSTOMIZE"
 
 Str_External_Demo_Song:	.asciz "External Demo Song"
 	.align	4, 0xFF
 
-		AcDemoFdSelect	TtDemoMenu_DemoFdSelect_External_Demo_Song, super=TtDemoMenu, prev=TtDemoMenu_DemoSelect_CUSTOMIZE, flag=VF_Const, X=134, Y=221, W=154, H=19, color=CL_WallPattern, fontcolor=CL_White, editsw=ES_Bottom8, selected=TtDemoMenu_DemoFdSelect_External_Demo_Song_selected, tag=12, str=Str_External_Demo_Song	# str "External Demo Song"
+		AcDemoFdSelect	DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song, super=DEMO_TtDemoMenu, prev=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, flag=VF_Const, X=134, Y=221, W=154, H=19, color=CL_WallPattern, fontcolor=CL_White, editsw=ES_Bottom8, selected=DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song_selected, tag=12, str=Str_External_Demo_Song	# str "External Demo Song"
 
 Str_DEMONSTRATION_2:	.asciz "DEMONSTRATION"
 	.align	4, 0xFF
@@ -11312,9 +11314,9 @@ ptrs_484E23CC:
 	.long	Str_SSW_ACT_V01_ACTION_ACTION
 
 Jpeg_484E2408:	# a JPG file, 7277 bytes, 240 x 200
-	.incbin	"src/data/media/Jpeg_484E2408.jpg"
+	.incbin	"src/program/data/media/Jpeg_484E2408.jpg"
 Bmp_484E4075:	# a BMP file, 24070 bytes, 240 x 200, 4 bpp
-	.incbin	"src/data/media/Bmp_484E4075.bmp"
+	.incbin	"src/program/data/media/Bmp_484E4075.bmp"
 	.align	4, 0xFF
 
 Field_AcContrastEdit_end:	.asciz ""
@@ -11337,19 +11339,19 @@ FnName_ContrastMessage:	.asciz "ContrastMessage"
 FnName_TtContrast:	.asciz "TtContrast"
 	.align	4, 0x00
 
-	IvScreen	TtContrast, sub=TtContrast_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtContrast_window
-		VwBox	TtContrast_Box1, super=TtContrast, sub=TtContrast_Box2, next=TtContrast_EditSwBox1, flag=VF_Const, X=0, Y=0, W=320, H=240, color=CL_WallPattern, index=0xFFFF
-			VwBox	TtContrast_Box2, super=TtContrast_Box1, sub=TtContrast_ContrastEdit_CONTRAST, flag=VF_Const, X=76, Y=90, W=168, H=28, color=CL_WallPattern, index=0xFFFF
+	IvScreen	CONTRAST_TtContrast, sub=CONTRAST_TtContrast_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CONTRAST_TtContrast_window
+		VwBox	CONTRAST_TtContrast_Box1, super=CONTRAST_TtContrast, sub=CONTRAST_TtContrast_Box2, next=CONTRAST_TtContrast_EditSwBox1, flag=VF_Const, X=0, Y=0, W=320, H=240, color=CL_WallPattern, index=0xFFFF
+			VwBox	CONTRAST_TtContrast_Box2, super=CONTRAST_TtContrast_Box1, sub=CONTRAST_TtContrast_ContrastEdit_CONTRAST, flag=VF_Const, X=76, Y=90, W=168, H=28, color=CL_WallPattern, index=0xFFFF
 
 Str_CONTRAST_3:	.asciz "CONTRAST :"
 	.align	4, 0xFF
 
-				AcContrastEdit	TtContrast_ContrastEdit_CONTRAST, super=TtContrast_Box2, flag=VF_Const, X=77, Y=91, W=166, H=26, color=CL_SilverB, border=BD_3D_UP2, index=1, caption=Str_CONTRAST_3, font=4, fontcolor=CL_BlackW, align=1, length=4, editsw=ES_None, dial=1, selected=TtContrast_ContrastEdit_CONTRAST_selected	# caption "CONTRAST :"
+				AcContrastEdit	CONTRAST_TtContrast_ContrastEdit_CONTRAST, super=CONTRAST_TtContrast_Box2, flag=VF_Const, X=77, Y=91, W=166, H=26, color=CL_SilverB, border=BD_3D_UP2, index=1, caption=Str_CONTRAST_3, font=4, fontcolor=CL_BlackW, align=1, length=4, editsw=ES_None, dial=1, selected=CONTRAST_TtContrast_ContrastEdit_CONTRAST_selected	# caption "CONTRAST :"
 
 Str_empty_281:	.asciz ""
 	.align	4, 0xFF
 
-		VwEditSwBox	TtContrast_EditSwBox1, super=TtContrast, prev=TtContrast_Box1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, str=Str_empty_281	# str ""
+		VwEditSwBox	CONTRAST_TtContrast_EditSwBox1, super=CONTRAST_TtContrast, prev=CONTRAST_TtContrast_Box1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, str=Str_empty_281	# str ""
 
 RN_TtContrast:	.asciz "TtContrast"
 RN_empty_4622:	.asciz ""
@@ -12427,7 +12429,9 @@ Str_TT_FXDSPSEL:	.asciz "TT_FXDSPSEL"
 Str_TT_FXEQSEL:	.asciz "TT_FXEQSEL"
 	.align	4, 0xFF
 Str_TT_FXMIC:	.asciz "TT_FXMIC"
-.incbin_range "baserom/kn2400_program.rom", 0x0EDEDD, 0x0EDFA0
+	.align	4, 0xFF
+data_484EDEE0:
+.incbin_range "baserom/kn2400_program.rom", 0x0EDEE0, 0x0EDFA0
 	.space	64, 0xF9
 .incbin_range "baserom/kn2400_program.rom", 0x0EDFE0, 0x0EE0A0
 data_484EE0A0:
@@ -14154,43 +14158,43 @@ FnName_TtSswRun:	.asciz "TtSswRun"
 FnName_TtSswList:	.asciz "TtSswList"
 	.align	4, 0x00
 
-	AcSswScreen	TtSswRun, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswRun_window
+	AcSswScreen	SLIDESHOW_TtSswRun, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SLIDESHOW_TtSswRun_window
 
 Str_PICTURE_LIST:	.asciz "PICTURE LIST"
 	.align	4, 0xFF
 
-	TtlScreen	TtSswList, sub=TtSswList_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswList_window, title=Str_PICTURE_LIST, icon=228	# title "PICTURE LIST"
-		AcIndexWideES	TtSswList_IndexWideES1, super=TtSswList, next=TtSswList_IndexWideES2, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
-		AcIndexWideES	TtSswList_IndexWideES2, super=TtSswList, next=TtSswList_IndexWideES3, prev=TtSswList_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=15
-		AcIndexWideES	TtSswList_IndexWideES3, super=TtSswList, next=TtSswList_IndexEditSw1, prev=TtSswList_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
-		AcIndexEditSw	TtSswList_IndexEditSw1, super=TtSswList, sub=TtSswList_Label_DEL, next=TtSswList_SswImgLoad_PICTURE_LOAD, prev=TtSswList_IndexWideES3, flag=VF_Const, X=8, Y=36, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, fontcolor=CL_Black, editsw=ES_Left1
+	TtlScreen	SLIDESHOW_TtSswList, sub=SLIDESHOW_TtSswList_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SLIDESHOW_TtSswList_window, title=Str_PICTURE_LIST, icon=228	# title "PICTURE LIST"
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexWideES2, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES2, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexWideES3, prev=SLIDESHOW_TtSswList_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=15
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES3, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexEditSw1, prev=SLIDESHOW_TtSswList_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
+		AcIndexEditSw	SLIDESHOW_TtSswList_IndexEditSw1, super=SLIDESHOW_TtSswList, sub=SLIDESHOW_TtSswList_Label_DEL, next=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, prev=SLIDESHOW_TtSswList_IndexWideES3, flag=VF_Const, X=8, Y=36, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, fontcolor=CL_Black, editsw=ES_Left1
 
 Str_DEL_14:	.asciz "DEL"
 
-			VwLabel	TtSswList_Label_DEL, super=TtSswList_IndexEditSw1, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_DEL_14, fontcolor=CL_BlackW	# str "DEL"
+			VwLabel	SLIDESHOW_TtSswList_Label_DEL, super=SLIDESHOW_TtSswList_IndexEditSw1, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_DEL_14, fontcolor=CL_BlackW	# str "DEL"
 
 Str_PICTURE_LOAD_3:	.asciz "PICTURE LOAD"
 	.align	4, 0xFF
 
-		AcSswImgLoad	TtSswList_SswImgLoad_PICTURE_LOAD, super=TtSswList, next=TtSswList_Label_User_Picture, prev=TtSswList_IndexEditSw1, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=TtSswList_SswImgLoad_PICTURE_LOAD_selected, str=Str_PICTURE_LOAD_3, title=TT_PS	# str "PICTURE LOAD"
+		AcSswImgLoad	SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_Label_User_Picture, prev=SLIDESHOW_TtSswList_IndexEditSw1, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD_selected, str=Str_PICTURE_LOAD_3, title=TT_PS	# str "PICTURE LOAD"
 
 Str_User_Picture:	.asciz "User Picture#"
 	.align	4, 0xFF
 
-		VwLabel	TtSswList_Label_User_Picture, super=TtSswList, next=TtSswList_SswMemBox1, prev=TtSswList_SswImgLoad_PICTURE_LOAD, flag=VF_Const, X=22, Y=94, W=108, H=19, str=Str_User_Picture, fontcolor=CL_White	# str "User Picture#"
-		AcSswMemBox	TtSswList_SswMemBox1, super=TtSswList, next=TtSswList_SswImgList1, prev=TtSswList_Label_User_Picture, flag=VF_Const, X=220, Y=70, W=196, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
-		AcSswImgList	TtSswList_SswImgList1, super=TtSswList, next=TtSswList_SswImgRename_RENAME, prev=TtSswList_SswMemBox1, flag=VF_Const, X=20, Y=110, W=600, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+		VwLabel	SLIDESHOW_TtSswList_Label_User_Picture, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswMemBox1, prev=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, flag=VF_Const, X=22, Y=94, W=108, H=19, str=Str_User_Picture, fontcolor=CL_White	# str "User Picture#"
+		AcSswMemBox	SLIDESHOW_TtSswList_SswMemBox1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswImgList1, prev=SLIDESHOW_TtSswList_Label_User_Picture, flag=VF_Const, X=220, Y=70, W=196, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
+		AcSswImgList	SLIDESHOW_TtSswList_SswImgList1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswImgRename_RENAME, prev=SLIDESHOW_TtSswList_SswMemBox1, flag=VF_Const, X=20, Y=110, W=600, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
 
 Str_RENAME_6:	.asciz "RENAME"
 	.align	4, 0xFF
 
-		AcSswImgRename	TtSswList_SswImgRename_RENAME, super=TtSswList, prev=TtSswList_SswImgList1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=TtSswList_SswImgRename_RENAME_selected, str=Str_RENAME_6, screen=TtSswListRename_id	# str "RENAME"
+		AcSswImgRename	SLIDESHOW_TtSswList_SswImgRename_RENAME, super=SLIDESHOW_TtSswList, prev=SLIDESHOW_TtSswList_SswImgList1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=SLIDESHOW_TtSswList_SswImgRename_RENAME_selected, str=Str_RENAME_6, screen=TtSswListRename_id	# str "RENAME"
 
 Str_PICTURE_RENAME:	.asciz "PICTURE RENAME"
 	.align	4, 0xFF
 
 	TtlScreen	TtSswListRename, sub=TtSswListRename_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswListRename_window, title=Str_PICTURE_RENAME, icon=228	# title "PICTURE RENAME"
-		IvExitScreen	TtSswListRename_ExitScreen1, super=TtSswListRename, next=TtSswListRename_Naming1, flag=VF_Const|VF_InvisibleBox, X=316, Y=0, W=32, H=32, screen=TtSswList_id
+		IvExitScreen	TtSswListRename_ExitScreen1, super=TtSswListRename, next=TtSswListRename_Naming1, flag=VF_Const|VF_InvisibleBox, X=316, Y=0, W=32, H=32, screen=SLIDESHOW_TtSswList_id
 		IvNaming	TtSswListRename_Naming1, super=TtSswListRename, next=TtSswListRename_FuncEditSw1, prev=TtSswListRename_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=352, Y=0, W=32, H=32, func=FN_NamingSswImg
 		AcFuncEditSw	TtSswListRename_FuncEditSw1, super=TtSswListRename, prev=TtSswListRename_Naming1, flag=VF_Const, X=601, Y=165, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_NamingSswImg
 
@@ -15719,9 +15723,9 @@ Str_Technics_Sound_Quality_Sets_The_Standard:	.asciz "Technics Sound Quality Set
 Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab:	.asciz "TECHNICS-Klangqualit\xE4t setzt den Ma\xDFstab, nach dem sich andere richten"
 Str_La_qualit_sonore_TECHNICS_tablit_la_norm:	.asciz "La qualit\xE9 sonore TECHNICS \xE9tablit la norme que les autres suivent"
 Str_La_calidad_de_sonido_TECHNICS_es_la_norm:	.asciz "La calidad de sonido TECHNICS es la norma adoptada por los dem\xE1s"
-Str_empty_580:	.asciz "="
-Str_empty_579:	.asciz "="
-Str_empty_578:	.asciz "="
+Str_empty_623:	.asciz "="
+Str_empty_622:	.asciz "="
+Str_empty_621:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513338:
@@ -15729,17 +15733,17 @@ ptrs_48513338:
 	.long	Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab
 	.long	Str_La_qualit_sonore_TECHNICS_tablit_la_norm
 	.long	Str_La_calidad_de_sonido_TECHNICS_es_la_norm
-	.long	Str_empty_580
-	.long	Str_empty_579
-	.long	Str_empty_578
+	.long	Str_empty_623
+	.long	Str_empty_622
+	.long	Str_empty_621
 
 Str_Bring_Your_Favourite_Songs_To_Life:	.asciz "Bring Your Favourite Songs To Life!"
 Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb:	.asciz "Erwecken Sie Ihre Lieblingssongs zum Leben!"
 Str_Donnez_vie_vos_morceaux_favoris:	.asciz "Donnez vie \xE0 vos morceaux favoris!"
 Str_D_vida_a_sus_canciones_favoritas:	.asciz "\xA1D\xE9 vida a sus canciones favoritas!"
-Str_empty_577:	.asciz "="
-Str_empty_576:	.asciz "="
-Str_empty_575:	.asciz "="
+Str_empty_580:	.asciz "="
+Str_empty_579:	.asciz "="
+Str_empty_578:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485133F4:
@@ -15747,34 +15751,34 @@ ptrs_485133F4:
 	.long	Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb
 	.long	Str_Donnez_vie_vos_morceaux_favoris
 	.long	Str_D_vida_a_sus_canciones_favoritas
-	.long	Str_empty_577
-	.long	Str_empty_576
-	.long	Str_empty_575
+	.long	Str_empty_580
+	.long	Str_empty_579
+	.long	Str_empty_578
 
 Str_The_KN_s_Digital_Drawbars_Give_You_True:	.asciz "The KN's Digital Drawbars Give You True Tonewheel Sound!"
 Str_Die_digitalen_Registerz_ge_des_KN_geben:	.asciz "Die digitalen Registerz\xFCge des KN geben Ihnen echten Tonradklang!"
 Str_Les_drawbars_num_riques_du_KN_vous_offre:	.asciz "Les drawbars num\xE9riques du KN vous offrent les sonorit\xE9s naturelles authentiques!"
 Str_Las_barras_de_tiro_digital_de_KN_dan_un:	.asciz "\xA1Las barras de tiro digital de KN dan un sonido de verdadera rueda de tonos!"
-Str_empty_574:	.asciz "="
-Str_empty_573:	.asciz "="
-Str_empty_572:	.asciz "="
+Str_empty_577:	.asciz "="
+Str_empty_576:	.asciz "="
+Str_empty_575:	.asciz "="
 
 ptrs_48513530:
 	.long	Str_The_KN_s_Digital_Drawbars_Give_You_True
 	.long	Str_Die_digitalen_Registerz_ge_des_KN_geben
 	.long	Str_Les_drawbars_num_riques_du_KN_vous_offre
 	.long	Str_Las_barras_de_tiro_digital_de_KN_dan_un
-	.long	Str_empty_574
-	.long	Str_empty_573
-	.long	Str_empty_572
+	.long	Str_empty_577
+	.long	Str_empty_576
+	.long	Str_empty_575
 
 Str_Great_For_Gospel:	.asciz "Great For Gospel!"
 Str_Ausgezeichnet_f_r_Gospel:	.asciz "Ausgezeichnet f\xFCr Gospel!"
 Str_Id_al_pour_le_Gospel:	.asciz "Id\xE9al pour le Gospel!"
 Str_Ideal_para_coros_de_iglesial:	.asciz "\xA1Ideal para coros de iglesial!"
-Str_empty_571:	.asciz "="
-Str_empty_570:	.asciz "="
-Str_empty_569:	.asciz "="
+Str_empty_574:	.asciz "="
+Str_empty_573:	.asciz "="
+Str_empty_572:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485135B4:
@@ -15782,17 +15786,17 @@ ptrs_485135B4:
 	.long	Str_Ausgezeichnet_f_r_Gospel
 	.long	Str_Id_al_pour_le_Gospel
 	.long	Str_Ideal_para_coros_de_iglesial
-	.long	Str_empty_571
-	.long	Str_empty_570
-	.long	Str_empty_569
+	.long	Str_empty_574
+	.long	Str_empty_573
+	.long	Str_empty_572
 
 Str_Re_Live_The_Sixties:	.asciz "Re-Live The Sixties!"
 Str_Erleben_Sie_die_Sechziger_noch_einmal:	.asciz "Erleben Sie die Sechziger noch einmal!"
 Str_Revivez_les_Ann_es_Soixante:	.asciz "Revivez les Ann\xE9es Soixante!"
 Str_Vuelva_a_vivir_los_a_os_sesenta:	.asciz "\xA1Vuelva a vivir los a\xF1os sesenta!"
-Str_empty_568:	.asciz "="
-Str_empty_567:	.asciz "="
-Str_empty_566:	.asciz "="
+Str_empty_571:	.asciz "="
+Str_empty_570:	.asciz "="
+Str_empty_569:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513654:
@@ -15800,17 +15804,17 @@ ptrs_48513654:
 	.long	Str_Erleben_Sie_die_Sechziger_noch_einmal
 	.long	Str_Revivez_les_Ann_es_Soixante
 	.long	Str_Vuelva_a_vivir_los_a_os_sesenta
-	.long	Str_empty_568
-	.long	Str_empty_567
-	.long	Str_empty_566
+	.long	Str_empty_571
+	.long	Str_empty_570
+	.long	Str_empty_569
 
 Str_Or_Try_Heavy_Rock:	.asciz "Or Try Heavy Rock"
 Str_Oder_probieren_Sie_Heavy_Rock:	.asciz "Oder probieren Sie Heavy Rock"
 Str_Ou_essayez_le_Heavy_Rock:	.asciz "Ou essayez le Heavy Rock"
 Str_O_pruebe_el_Rock_pesado:	.asciz "O pruebe el Rock pesado"
-Str_empty_565:	.asciz "="
-Str_empty_564:	.asciz "="
-Str_empty_563:	.asciz "="
+Str_empty_568:	.asciz "="
+Str_empty_567:	.asciz "="
+Str_empty_566:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485136D8:
@@ -15818,51 +15822,51 @@ ptrs_485136D8:
 	.long	Str_Oder_probieren_Sie_Heavy_Rock
 	.long	Str_Ou_essayez_le_Heavy_Rock
 	.long	Str_O_pruebe_el_Rock_pesado
-	.long	Str_empty_565
-	.long	Str_empty_564
-	.long	Str_empty_563
+	.long	Str_empty_568
+	.long	Str_empty_567
+	.long	Str_empty_566
 
 Str_Or_Try_Brass_Rock:	.asciz "Or Try Brass Rock"
 Str_Oder_probieren_Sie_Brass_Rock:	.asciz "Oder probieren Sie Brass Rock"
 Str_Ou_essayez_le_Brass_Rock:	.asciz "Ou essayez le Brass Rock"
 Str_O_Brass_Rock:	.asciz "O Brass Rock"
-Str_empty_562:	.asciz "="
-Str_empty_561:	.asciz "="
-Str_empty_560:	.asciz "="
+Str_empty_565:	.asciz "="
+Str_empty_564:	.asciz "="
+Str_empty_563:	.asciz "="
 
 ptrs_48513750:
 	.long	Str_Or_Try_Brass_Rock
 	.long	Str_Oder_probieren_Sie_Brass_Rock
 	.long	Str_Ou_essayez_le_Brass_Rock
 	.long	Str_O_Brass_Rock
-	.long	Str_empty_562
-	.long	Str_empty_561
-	.long	Str_empty_560
+	.long	Str_empty_565
+	.long	Str_empty_564
+	.long	Str_empty_563
 
 Str_For_True_Drawbar_Performance_It_Doesn_t:	.asciz "For True Drawbar Performance It Doesn't Get Any More Real Than This!"
 Str_Die_Registerzugdarbietung_ist_so_echt_ec:	.asciz "Die Registerzugdarbietung ist so echt, echter geht's nicht!"
 Str_Pour_une_vraie_performance_de_drawbar_im:	.asciz "Pour une vraie performance de drawbar, impossible de faire plus r\xE9el que ceci!"
 Str_Para_una_verdadera_ejecuci_n_de_Barra_de:	.asciz "Para una verdadera ejecuci\xF3n de Barra de Tiro \xA1no puede ser m\xE1s real!"
-Str_empty_559:	.asciz "="
-Str_empty_558:	.asciz "="
-Str_empty_557:	.asciz "="
+Str_empty_562:	.asciz "="
+Str_empty_561:	.asciz "="
+Str_empty_560:	.asciz "="
 
 ptrs_48513888:
 	.long	Str_For_True_Drawbar_Performance_It_Doesn_t
 	.long	Str_Die_Registerzugdarbietung_ist_so_echt_ec
 	.long	Str_Pour_une_vraie_performance_de_drawbar_im
 	.long	Str_Para_una_verdadera_ejecuci_n_de_Barra_de
-	.long	Str_empty_559
-	.long	Str_empty_558
-	.long	Str_empty_557
+	.long	Str_empty_562
+	.long	Str_empty_561
+	.long	Str_empty_560
 
 Str_The_KN_Joins_The_Creative_Network:	.asciz "The KN Joins The Creative Network!"
 Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw:	.asciz "Das KN schlie\xDFt sich dem kreativen Netzwerk an!"
 Str_Le_KN_rejoint_le_r_seau_cr_atif:	.asciz "Le KN rejoint le r\xE9seau cr\xE9atif!"
 Str_El_KN_se_integra_a_la_red_creativa:	.asciz "\xA1El KN se integra a la red creativa!"
-Str_empty_556:	.asciz "="
-Str_empty_555:	.asciz "="
-Str_empty_554:	.asciz "="
+Str_empty_559:	.asciz "="
+Str_empty_558:	.asciz "="
+Str_empty_557:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513944:
@@ -15870,17 +15874,17 @@ ptrs_48513944:
 	.long	Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw
 	.long	Str_Le_KN_rejoint_le_r_seau_cr_atif
 	.long	Str_El_KN_se_integra_a_la_red_creativa
-	.long	Str_empty_556
-	.long	Str_empty_555
-	.long	Str_empty_554
+	.long	Str_empty_559
+	.long	Str_empty_558
+	.long	Str_empty_557
 
 Str_No_Complex_Wiring:	.asciz "No Complex Wiring!"
 Str_Keine_komplizierte_Verdrahtung:	.asciz "Keine komplizierte Verdrahtung!"
 Str_Pas_de_c_blage_compliqu:	.asciz "Pas de c\xE2blage compliqu\xE9!"
 Str_Sin_cables_complejos:	.asciz "\xA1Sin cables complejos!"
-Str_empty_553:	.asciz "="
-Str_empty_552:	.asciz "="
-Str_empty_551:	.asciz "="
+Str_empty_556:	.asciz "="
+Str_empty_555:	.asciz "="
+Str_empty_554:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485139CC:
@@ -15888,17 +15892,17 @@ ptrs_485139CC:
 	.long	Str_Keine_komplizierte_Verdrahtung
 	.long	Str_Pas_de_c_blage_compliqu
 	.long	Str_Sin_cables_complejos
-	.long	Str_empty_553
-	.long	Str_empty_552
-	.long	Str_empty_551
+	.long	Str_empty_556
+	.long	Str_empty_555
+	.long	Str_empty_554
 
 Str_One_Simple_Connection_Does_It_All:	.asciz "One Simple Connection Does It All!"
 Str_Ein_einfacher_Anschluss_erledigt_alles:	.asciz "Ein einfacher Anschluss erledigt alles!"
 Str_Une_seule_connexion_suffit:	.asciz "Une seule connexion suffit!"
 Str_Una_simple_conexi_n_lo_puede_todo:	.asciz "\xA1Una simple conexi\xF3n lo puede todo!"
-Str_empty_550:	.asciz "="
-Str_empty_549:	.asciz "="
-Str_empty_548:	.asciz "="
+Str_empty_553:	.asciz "="
+Str_empty_552:	.asciz "="
+Str_empty_551:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513A7C:
@@ -15906,68 +15910,68 @@ ptrs_48513A7C:
 	.long	Str_Ein_einfacher_Anschluss_erledigt_alles
 	.long	Str_Une_seule_connexion_suffit
 	.long	Str_Una_simple_conexi_n_lo_puede_todo
-	.long	Str_empty_550
-	.long	Str_empty_549
-	.long	Str_empty_548
+	.long	Str_empty_553
+	.long	Str_empty_552
+	.long	Str_empty_551
 
 Str_File_And_Compile_Hundreds_Of_Performance:	.asciz "File And Compile Hundreds Of Performance Files Using the Included Song Manager Software"
 Str_Mit_der_mitgelieferten_Song_Manager_Soft:	.asciz "Mit der mitgelieferten Song Manager-Software k\xF6nnen Sie Hunderte von Darbietungsdateien archivieren und kompilieren"
 Str_Classez_et_compilez_des_centaines_de_fic:	.asciz "Classez et compilez des centaines de fichiers d'interpr\xE9tations en utilisant le logiciel Gestionnaire de morceaux inclus"
 Str_Archive_y_compile_cientos_de_archivos_de:	.asciz "Archive y compile cientos de archivos de ejecuciones con el software de administraci\xF3n de canciones incluido"
-Str_empty_547:	.asciz "="
-Str_empty_546:	.asciz "="
-Str_empty_545:	.asciz "="
+Str_empty_550:	.asciz "="
+Str_empty_549:	.asciz "="
+Str_empty_548:	.asciz "="
 
 ptrs_48513C50:
 	.long	Str_File_And_Compile_Hundreds_Of_Performance
 	.long	Str_Mit_der_mitgelieferten_Song_Manager_Soft
 	.long	Str_Classez_et_compilez_des_centaines_de_fic
 	.long	Str_Archive_y_compile_cientos_de_archivos_de
-	.long	Str_empty_547
-	.long	Str_empty_546
-	.long	Str_empty_545
+	.long	Str_empty_550
+	.long	Str_empty_549
+	.long	Str_empty_548
 
 Str_Connect_Directly_To_A_PC_And_Use_Any_MID:	.asciz "Connect Directly To A PC And Use Any MIDI Sequencing Software"
 Str_Direkter_Anschluss_an_einen_PC_und_Verwe:	.asciz "Direkter Anschluss an einen PC und Verwendung jeder MIDI-Sequencing-Software"
 Str_Connectez_directement_un_PC_et_utilisez:	.asciz "Connectez directement \xE0 un PC et utilisez n'importe quel logiciel de s\xE9quence MIDI"
 Str_Conecte_directamente_a_un_PC_y_utilice_c:	.asciz "Conecte directamente a un PC y utilice cualquier software de secuencia MIDI"
-Str_empty_544:	.asciz "="
-Str_empty_543:	.asciz "="
-Str_empty_542:	.asciz "="
+Str_empty_547:	.asciz "="
+Str_empty_546:	.asciz "="
+Str_empty_545:	.asciz "="
 
 ptrs_48513D9C:
 	.long	Str_Connect_Directly_To_A_PC_And_Use_Any_MID
 	.long	Str_Direkter_Anschluss_an_einen_PC_und_Verwe
 	.long	Str_Connectez_directement_un_PC_et_utilisez
 	.long	Str_Conecte_directamente_a_un_PC_y_utilice_c
-	.long	Str_empty_544
-	.long	Str_empty_543
-	.long	Str_empty_542
+	.long	Str_empty_547
+	.long	Str_empty_546
+	.long	Str_empty_545
 
 Str_Record_Digital_Audio_Into_the_Included_A:	.asciz "Record Digital Audio Into the Included Audio Recorder or Your Favourite Recording Software!"
 Str_Nehmen_Sie_digitale_Audiosignale_mit_dem:	.asciz "Nehmen Sie digitale Audiosignale mit dem mitgelieferten Audio Recorder oder Ihrer bevorzugten Aufnahme-Software auf!"
 Str_Enregistrez_des_donn_es_audio_num_riques:	.asciz "Enregistrez des donn\xE9es audio num\xE9riques dans le magn\xE9tophone audio inclus ou dans votre logiciel d'enregistrement favori!"
 Str_Grabe_el_audio_digital_en_el_grabador_de:	.asciz "\xA1Grabe el audio digital en el grabador de audio incluido o su software de grabaci\xF3n favorito!"
-Str_empty_541:	.asciz "="
-Str_empty_540:	.asciz "="
-Str_empty_539:	.asciz "="
+Str_empty_544:	.asciz "="
+Str_empty_543:	.asciz "="
+Str_empty_542:	.asciz "="
 
 ptrs_48513F68:
 	.long	Str_Record_Digital_Audio_Into_the_Included_A
 	.long	Str_Nehmen_Sie_digitale_Audiosignale_mit_dem
 	.long	Str_Enregistrez_des_donn_es_audio_num_riques
 	.long	Str_Grabe_el_audio_digital_en_el_grabador_de
-	.long	Str_empty_541
-	.long	Str_empty_540
-	.long	Str_empty_539
+	.long	Str_empty_544
+	.long	Str_empty_543
+	.long	Str_empty_542
 
 Str_Mix_the_Line_In_Microphone_Inputs_of_the:	.asciz "Mix the Line In & Microphone Inputs of the KN With Your Recording"
 Str_Mischen_Sie_den_Line_In_und_Mikrofoneing:	.asciz "Mischen Sie den Line In und Mikrofoneingang des KN mit Ihrer Aufnahme"
 Str_Mixez_les_entr_es_Line_In_et_Microphone:	.asciz "Mixez les entr\xE9es Line In et Microphone du KN avec votre enregistrement"
 Str_Mezcle_la_entrada_de_l_nea_y_las_entrada:	.asciz "Mezcle la entrada de l\xEDnea y las entradas de micr\xF3fono del KN con su grabaci\xF3n"
-Str_empty_538:	.asciz "="
-Str_empty_537:	.asciz "="
-Str_empty_536:	.asciz "="
+Str_empty_541:	.asciz "="
+Str_empty_540:	.asciz "="
+Str_empty_539:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485140AC:
@@ -15975,17 +15979,17 @@ ptrs_485140AC:
 	.long	Str_Mischen_Sie_den_Line_In_und_Mikrofoneing
 	.long	Str_Mixez_les_entr_es_Line_In_et_Microphone
 	.long	Str_Mezcle_la_entrada_de_l_nea_y_las_entrada
-	.long	Str_empty_538
-	.long	Str_empty_537
-	.long	Str_empty_536
+	.long	Str_empty_541
+	.long	Str_empty_540
+	.long	Str_empty_539
 
 Str_Save_as_a_WAVE_file_or_convert_to_MP3_or:	.asciz "Save as a WAVE file or convert to MP3 or WMA, The Most Suitable Formats To Send By Email!"
 Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o:	.asciz "Speichern Sie die Daten als WAVE-Datei oder konvertieren Sie sie zu MP3 oder WMA, den am besten geeigneten Formaten f\xFCr die Versendung per E-Mail!"
 Str_Sauvegardez_comme_fichier_WAVE_ou_conver:	.asciz "Sauvegardez comme fichier WAVE ou convertissez en formats MP3 ou WMA, les mieux adapt\xE9s \xE0 l'envoi par e-mail!"
 Str_Memorice_un_archivo_WAVE_o_convierta_a_M:	.asciz "Memorice un archivo WAVE o convierta a MP3 o WMA, \xA1los formatos m\xE1s adecuados para enviar sus correos electr\xF3nicos!"
-Str_empty_535:	.asciz "="
-Str_empty_534:	.asciz "="
-Str_empty_533:	.asciz "="
+Str_empty_538:	.asciz "="
+Str_empty_537:	.asciz "="
+Str_empty_536:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485142A0:
@@ -15993,17 +15997,17 @@ ptrs_485142A0:
 	.long	Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o
 	.long	Str_Sauvegardez_comme_fichier_WAVE_ou_conver
 	.long	Str_Memorice_un_archivo_WAVE_o_convierta_a_M
-	.long	Str_empty_535
-	.long	Str_empty_534
-	.long	Str_empty_533
+	.long	Str_empty_538
+	.long	Str_empty_537
+	.long	Str_empty_536
 
 Str_Burn_An_Audio_CD_Of_Your_Final_Mix_On_Yo:	.asciz "Burn An Audio CD Of Your Final Mix On Your PC!"
 Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm:	.asciz "Brennen Sie eine Audio-CD von Ihrer Endmischung auf Ihrem PC!"
 Str_Gravez_un_CD_audio_de_votre_mixage_final:	.asciz "Gravez un CD audio de votre mixage final sur votre PC!"
 Str_Grabe_un_CD_de_audio_de_su_mezcla_final:	.asciz "\xA1Grabe un CD de audio de su mezcla final en su PC!"
-Str_empty_532:	.asciz "="
-Str_empty_531:	.asciz "="
-Str_empty_530:	.asciz "="
+Str_empty_535:	.asciz "="
+Str_empty_534:	.asciz "="
+Str_empty_533:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_4851439C:
@@ -16011,17 +16015,17 @@ ptrs_4851439C:
 	.long	Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm
 	.long	Str_Gravez_un_CD_audio_de_votre_mixage_final
 	.long	Str_Grabe_un_CD_de_audio_de_su_mezcla_final
-	.long	Str_empty_532
-	.long	Str_empty_531
-	.long	Str_empty_530
+	.long	Str_empty_535
+	.long	Str_empty_534
+	.long	Str_empty_533
 
 Str_The_KN_Is_Your_Guide_To_Decades_Of_Pop_M:	.asciz "The KN Is Your Guide To Decades Of Pop Music!"
 Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P:	.asciz "Das KN erschlie\xDFt Ihnen Jahrzehnte der Popmusik!"
 Str_Le_KN_est_votre_guide_pour_des_d_cades_d:	.asciz "Le KN est votre guide pour des d\xE9cades de musique pop!"
 Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s:	.asciz "\xA1El KN es su gu\xEDa para las d\xE9cadas de m\xFAsica Pop!"
-Str_empty_529:	.asciz "="
-Str_empty_528:	.asciz "="
-Str_empty_527:	.asciz "="
+Str_empty_532:	.asciz "="
+Str_empty_531:	.asciz "="
+Str_empty_530:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514488:
@@ -16029,17 +16033,17 @@ ptrs_48514488:
 	.long	Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P
 	.long	Str_Le_KN_est_votre_guide_pour_des_d_cades_d
 	.long	Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s
-	.long	Str_empty_529
-	.long	Str_empty_528
-	.long	Str_empty_527
+	.long	Str_empty_532
+	.long	Str_empty_531
+	.long	Str_empty_530
 
 Str_The_KN_s_Music_Stylist_Will_Even_Set_A_S:	.asciz "The KN's Music Stylist Will Even Set A Suitable Tempo, Sounds, TechniChord, Balance, Pad Banks...."
 Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e:	.asciz "Der MUSIC STYLIST des KN liefert sogar ein geeignetes Tempo, Kl\xE4nge, TECHNICHORD, Balance, Pad Banks...."
 Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t:	.asciz "Le MUSIC STYLIST du KN r\xE8glera m\xEAme le tempo appropri\xE9, les sonorit\xE9s, le TECHNICHORD, la balance, les banques de pads..."
 Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo:	.asciz "El MUSIC STYLIST de KN ajusta un tiempo, sonido adecuados, TECHNICHORD, Balance, Bancos de teclas...."
-Str_empty_526:	.asciz "="
-Str_empty_525:	.asciz "="
-Str_empty_524:	.asciz "="
+Str_empty_529:	.asciz "="
+Str_empty_528:	.asciz "="
+Str_empty_527:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514658:
@@ -16047,17 +16051,17 @@ ptrs_48514658:
 	.long	Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e
 	.long	Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t
 	.long	Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo
-	.long	Str_empty_526
-	.long	Str_empty_525
-	.long	Str_empty_524
+	.long	Str_empty_529
+	.long	Str_empty_528
+	.long	Str_empty_527
 
 Str_In_Fact_Everything_You_Need_For_A_Profes:	.asciz "In Fact Everything You Need For A Professional Performance!"
 Str_In_der_Tat_alles_was_Sie_f_r_eine_profes:	.asciz "In der Tat, alles, was Sie f\xFCr eine professionelle Darbietung brauchen!"
 Str_En_fait_tout_ce_dont_vous_avez_besoin_po:	.asciz "En fait, tout ce dont vous avez besoin pour une interpr\xE9tation professionnelle!"
 Str_De_hecho_todo_lo_que_necesita_para_una_e:	.asciz "De hecho \xA1todo lo que necesita para una ejecuci\xF3n profesional!"
-Str_empty_523:	.asciz "="
-Str_empty_522:	.asciz "="
-Str_empty_521:	.asciz "="
+Str_empty_526:	.asciz "="
+Str_empty_525:	.asciz "="
+Str_empty_524:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514790:
@@ -16065,17 +16069,17 @@ ptrs_48514790:
 	.long	Str_In_der_Tat_alles_was_Sie_f_r_eine_profes
 	.long	Str_En_fait_tout_ce_dont_vous_avez_besoin_po
 	.long	Str_De_hecho_todo_lo_que_necesita_para_una_e
-	.long	Str_empty_523
-	.long	Str_empty_522
-	.long	Str_empty_521
+	.long	Str_empty_526
+	.long	Str_empty_525
+	.long	Str_empty_524
 
 Str_Choose_From_a_huge_range_of_Music_Styles:	.asciz "Choose From a huge range of Music Styles, Produced for You by Top Musicians"
 Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC:	.asciz "W\xE4hlen Sie aus einer Vielzahl von MUSIC STYLES, die von Spitzenmusikern f\xFCr Sie produziert wurden"
 Str_Choisissez_parmi_une_vari_t_incroyable_d:	.asciz "Choisissez parmi une vari\xE9t\xE9 incroyable de MUSIC STYLES, cr\xE9\xE9s pour vous par des musiciens du plus haut niveau"
 Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL:	.asciz "Elija entre la enorme gama de MUSIC STYLES, producidos para usted por los mejores m\xFAsicos"
-Str_empty_520:	.asciz "="
-Str_empty_519:	.asciz "="
-Str_empty_518:	.asciz "="
+Str_empty_523:	.asciz "="
+Str_empty_522:	.asciz "="
+Str_empty_521:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_4851492C:
@@ -16083,17 +16087,17 @@ ptrs_4851492C:
 	.long	Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC
 	.long	Str_Choisissez_parmi_une_vari_t_incroyable_d
 	.long	Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL
-	.long	Str_empty_520
-	.long	Str_empty_519
-	.long	Str_empty_518
+	.long	Str_empty_523
+	.long	Str_empty_522
+	.long	Str_empty_521
 
 Str_Ready_to_create_your_own_song:	.asciz "Ready to create your own song?"
 Str_Sind_Sie_bereit_zu_musizieren:	.asciz "Sind Sie bereit zu musizieren?"
 Str_Pr_t_composer:	.asciz "Pr\xEAt \xE0 composer ?"
 Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
-Str_empty_517:	.asciz "="
-Str_empty_516:	.asciz "="
-Str_empty_515:	.asciz "="
+Str_empty_520:	.asciz "="
+Str_empty_519:	.asciz "="
+Str_empty_518:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485149BC:
@@ -16101,17 +16105,17 @@ ptrs_485149BC:
 	.long	Str_Sind_Sie_bereit_zu_musizieren
 	.long	Str_Pr_t_composer
 	.long	Str_Listo_para_crear_la_m_sica
-	.long	Str_empty_517
-	.long	Str_empty_516
-	.long	Str_empty_515
+	.long	Str_empty_520
+	.long	Str_empty_519
+	.long	Str_empty_518
 
 Str_Create_8_Part_Accompaniment_Patterns_Wit:	.asciz "Create 8 Part Accompaniment Patterns With The Composer"
 Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste:	.asciz "Erzeugen Sie 8-stimmige Begleitungsmuster mit dem COMPOSER"
 Str_Cr_ez_des_motifs_d_accompagnement_8_part:	.asciz "Cr\xE9ez des motifs d'accompagnement \xE0 8 parties avec le COMPOSER"
 Str_Cree_8_patrones_de_acompa_amiento_de_par:	.asciz "Cree 8 patrones de acompa\xF1amiento de partes con el COMPOSER"
-Str_empty_514:	.asciz "="
-Str_empty_513:	.asciz "="
-Str_empty_512:	.asciz "="
+Str_empty_517:	.asciz "="
+Str_empty_516:	.asciz "="
+Str_empty_515:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514ACC:
@@ -16119,51 +16123,51 @@ ptrs_48514ACC:
 	.long	Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste
 	.long	Str_Cr_ez_des_motifs_d_accompagnement_8_part
 	.long	Str_Cree_8_patrones_de_acompa_amiento_de_par
-	.long	Str_empty_514
-	.long	Str_empty_513
-	.long	Str_empty_512
+	.long	Str_empty_517
+	.long	Str_empty_516
+	.long	Str_empty_515
 
 Str_Create_Your_Own_Full_Orchestra_With_The:	.asciz "Create Your Own Full Orchestra With The Built In 16 Track Sequencer!"
 Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste:	.asciz "Erzeugen Sie Ihr eigenes volles Orchester mit dem eingebauten 16-Spur-SEQUENCER"
 Str_Cr_ez_votre_propre_orchestre_complet_ave:	.asciz "Cr\xE9ez votre propre orchestre complet avec le SEQUENCER \xE0 16 pistes incorpor\xE9!"
 Str_Cree_su_propia_orquesta_completa_con_el:	.asciz "\xA1Cree su propia orquesta completa con el SEQUENCER integrado de 16 pistas!"
-Str_empty_511:	.asciz "="
-Str_empty_510:	.asciz "="
-Str_empty_509:	.asciz "="
+Str_empty_514:	.asciz "="
+Str_empty_513:	.asciz "="
+Str_empty_512:	.asciz "="
 
 ptrs_48514C1C:
 	.long	Str_Create_Your_Own_Full_Orchestra_With_The
 	.long	Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste
 	.long	Str_Cr_ez_votre_propre_orchestre_complet_ave
 	.long	Str_Cree_su_propia_orquesta_completa_con_el
-	.long	Str_empty_511
-	.long	Str_empty_510
-	.long	Str_empty_509
+	.long	Str_empty_514
+	.long	Str_empty_513
+	.long	Str_empty_512
 
 Str_Use_The_Full_Sound_Edit_Functions_To_Cre:	.asciz "Use The Full Sound Edit Functions To Create Your Own Sounds From The Huge Wave ROM!"
 Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk:	.asciz "Verwenden Sie die vollen SOUND EDIT-Funktionen, um Ihre eigenen Sounds vom enormen Wave-ROM zu erzeugen!"
 Str_Utilisez_les_fonctions_SOUND_EDIT_compl:	.asciz "Utilisez les fonctions SOUND EDIT compl\xE8tes pour cr\xE9er vos propres sonorit\xE9s \xE0 partir du ROM de Wave \xE9norme!"
 Str_Utilice_las_funciones_del_SOUND_EDIT_tot:	.asciz "\xA1Utilice las funciones del SOUND EDIT total para crear sus propios sonidos del ROM de gran ola!"
-Str_empty_508:	.asciz "="
-Str_empty_507:	.asciz "="
-Str_empty_506:	.asciz "="
+Str_empty_511:	.asciz "="
+Str_empty_510:	.asciz "="
+Str_empty_509:	.asciz "="
 
 ptrs_48514DC8:
 	.long	Str_Use_The_Full_Sound_Edit_Functions_To_Cre
 	.long	Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk
 	.long	Str_Utilisez_les_fonctions_SOUND_EDIT_compl
 	.long	Str_Utilice_las_funciones_del_SOUND_EDIT_tot
-	.long	Str_empty_508
-	.long	Str_empty_507
-	.long	Str_empty_506
+	.long	Str_empty_511
+	.long	Str_empty_510
+	.long	Str_empty_509
 
 Str_Sing_Along_To_Any_Standard_Midi_File_Son:	.asciz "Sing Along To Any Standard Midi File Songs With Lyrics!"
 Str_Singen_Sie_zu_allen_Standard_MIDI_Datei:	.asciz "Singen Sie zu allen Standard-MIDI-Datei-Songs mit Texten mit!"
 Str_Chantez_sur_n_importe_quel_morceau_fichi:	.asciz "Chantez sur n'importe quel morceau \xE0 fichier midi standard avec paroles affich\xE9es!"
 Str_Cante_con_la_letra_de_canciones_de_archi:	.asciz "\xA1Cante con la letra de canciones de archivo Midi normales!"
-Str_empty_505:	.asciz "="
-Str_empty_504:	.asciz "="
-Str_empty_503:	.asciz "="
+Str_empty_508:	.asciz "="
+Str_empty_507:	.asciz "="
+Str_empty_506:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514EF0:
@@ -16171,34 +16175,34 @@ ptrs_48514EF0:
 	.long	Str_Singen_Sie_zu_allen_Standard_MIDI_Datei
 	.long	Str_Chantez_sur_n_importe_quel_morceau_fichi
 	.long	Str_Cante_con_la_letra_de_canciones_de_archi
-	.long	Str_empty_505
-	.long	Str_empty_504
-	.long	Str_empty_503
+	.long	Str_empty_508
+	.long	Str_empty_507
+	.long	Str_empty_506
 
 Str_Load_Data_from_other_Technics_Instrument:	.asciz "Load Data from other Technics Instruments With Great Compatibility of NX-sound"
 Str_Laden_Sie_Daten_anderer_Technics_Keyboar:	.asciz "Laden Sie Daten anderer Technics Keyboards dank gro\xDFer Kompatibilit\xE4t"
 Str_Vous_pouvez_utiliser_des_disquettes_enre:	.asciz "Vous pouvez utiliser des disquettes enregistr\xE9es sur d'autres instruments Technics"
 Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros instrumentos Technics altamente compatibles"
-Str_empty_502:	.asciz "="
-Str_empty_501:	.asciz "="
-Str_empty_500:	.asciz "="
+Str_empty_505:	.asciz "="
+Str_empty_504:	.asciz "="
+Str_empty_503:	.asciz "="
 
 ptrs_4851503C:
 	.long	Str_Load_Data_from_other_Technics_Instrument
 	.long	Str_Laden_Sie_Daten_anderer_Technics_Keyboar
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_enre
 	.long	Str_Cargue_datos_de_otros_instrumentos_Techn
-	.long	Str_empty_502
-	.long	Str_empty_501
-	.long	Str_empty_500
+	.long	Str_empty_505
+	.long	Str_empty_504
+	.long	Str_empty_503
 
 Str_NX_Sound_Is_Also_Compatible_with_GM_Leve:	.asciz "NX Sound Is Also Compatible with GM Level 2 Standard Midi Files And More!"
 Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM:	.asciz "NX Sounds sind ebenso kompatibel mit GM Level 2 Standard-MIDI-Files und mehr!"
 Str_des_instruments_compatibles_GM_niveau_2:	.asciz "des instruments compatibles GM niveau 2, des s\xE9quences SMF et bien d'autres encore!"
 Str_El_sonido_NX_es_tambi_n_compatible_con_l:	.asciz "El sonido NX es tambi\xE9n compatible con los archivos MIDI est\xE1ndar GM nivel 2..~0d \xA1y otros m\xE1s!"
-Str_empty_499:	.asciz "="
-Str_empty_498:	.asciz "="
-Str_empty_497:	.asciz "="
+Str_empty_502:	.asciz "="
+Str_empty_501:	.asciz "="
+Str_empty_500:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485151AC:
@@ -16206,17 +16210,17 @@ ptrs_485151AC:
 	.long	Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM
 	.long	Str_des_instruments_compatibles_GM_niveau_2
 	.long	Str_El_sonido_NX_es_tambi_n_compatible_con_l
-	.long	Str_empty_499
-	.long	Str_empty_498
-	.long	Str_empty_497
+	.long	Str_empty_502
+	.long	Str_empty_501
+	.long	Str_empty_500
 
 Str_SD_is_The_Perfect_Solution_For_The_KN260:	.asciz "SD is The Perfect Solution For The KN2600 !"
 Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260:	.asciz "SD ist die perfekte L\xF6sung f\xFCr das KN2600!"
 Str_Le_SD_est_la_solution_parfaite_pour_le_K:	.asciz "Le SD est la solution parfaite pour le KN2600!"
 Str_El_SD_es_la_soluci_n_perfecta_para_el_KN:	.asciz "\xA1El SD es la soluci\xF3n perfecta para el KN2600!"
-Str_empty_496:	.asciz "="
-Str_empty_495:	.asciz "="
-Str_empty_494:	.asciz "="
+Str_empty_499:	.asciz "="
+Str_empty_498:	.asciz "="
+Str_empty_497:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515284:
@@ -16224,34 +16228,34 @@ ptrs_48515284:
 	.long	Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260
 	.long	Str_Le_SD_est_la_solution_parfaite_pour_le_K
 	.long	Str_El_SD_es_la_soluci_n_perfecta_para_el_KN
-	.long	Str_empty_496
-	.long	Str_empty_495
-	.long	Str_empty_494
+	.long	Str_empty_499
+	.long	Str_empty_498
+	.long	Str_empty_497
 
 Str_Store_Sort_Hundreds_Of_Files_On_One_Card:	.asciz "Store&Sort Hundreds Of Files On One Card, No Bigger Than A Postage Stamp!"
 Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine:	.asciz "Sie k\xF6nnen Hunderte von Dateien auf einer Karte speichern und sortieren, die nicht gr\xF6\xDFer als eine Briefmarke ist!"
 Str_M_morisez_et_triez_des_centaines_de_fich:	.asciz "M\xE9morisez et triez des centaines de fichiers sur une seule carte grande comme un timbre-poste!"
 Str_Guarda_y_clasifica_cientos_de_archivos_e:	.asciz "\xA1Guarda y clasifica cientos de archivos en una tarjeta del tama\xF1o de sello de correo!"
-Str_empty_493:	.asciz "="
-Str_empty_492:	.asciz "="
-Str_empty_491:	.asciz "="
+Str_empty_496:	.asciz "="
+Str_empty_495:	.asciz "="
+Str_empty_494:	.asciz "="
 
 ptrs_48515418:
 	.long	Str_Store_Sort_Hundreds_Of_Files_On_One_Card
 	.long	Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine
 	.long	Str_M_morisez_et_triez_des_centaines_de_fich
 	.long	Str_Guarda_y_clasifica_cientos_de_archivos_e
-	.long	Str_empty_493
-	.long	Str_empty_492
-	.long	Str_empty_491
+	.long	Str_empty_496
+	.long	Str_empty_495
+	.long	Str_empty_494
 
 Str_Huge_Capacity_Quick_Loading_Shock_Proof:	.asciz "Huge Capacity!  /  Quick Loading!  /  Shock Proof!"
 Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe:	.asciz "Riesige Kapazit\xE4t!  /  Schnelles Laden!  /  Sto\xDFfest!"
 Str_Capacit_norme_Chargement_rapide_Antichoc:	.asciz "Capacit\xE9 \xE9norme! / Chargement rapide! / Antichocs!"
 Str_Capacidad_gigante_R_pida_carga_A_prueba:	.asciz "\xA1Capacidad gigante! / \xA1R\xE1pida carga! / \xA1A prueba de choques!"
-Str_empty_490:	.asciz "="
-Str_empty_489:	.asciz "="
-Str_empty_488:	.asciz "="
+Str_empty_493:	.asciz "="
+Str_empty_492:	.asciz "="
+Str_empty_491:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515514:
@@ -16259,17 +16263,17 @@ ptrs_48515514:
 	.long	Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe
 	.long	Str_Capacit_norme_Chargement_rapide_Antichoc
 	.long	Str_Capacidad_gigante_R_pida_carga_A_prueba
-	.long	Str_empty_490
-	.long	Str_empty_489
-	.long	Str_empty_488
+	.long	Str_empty_493
+	.long	Str_empty_492
+	.long	Str_empty_491
 
 Str_Never_Lose_A_Song_File_Again:	.asciz "Never Lose A Song File Again!"
 Str_Sie_brauchen_nie_wieder_eine_Songdatei_z:	.asciz "Sie brauchen nie wieder eine Songdatei zu verlieren!"
 Str_Ne_perdez_plus_jamais_un_fichier_de_morc:	.asciz "Ne perdez plus jamais un fichier de morceaux!"
 Str_Ya_no_tendr_que_perder_archivos_de_canci:	.asciz "\xA1Ya no tendr\xE1 que perder archivos de canciones!"
-Str_empty_487:	.asciz "="
-Str_empty_486:	.asciz "="
-Str_empty_485:	.asciz "="
+Str_empty_490:	.asciz "="
+Str_empty_489:	.asciz "="
+Str_empty_488:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485155E8:
@@ -16277,51 +16281,51 @@ ptrs_485155E8:
 	.long	Str_Sie_brauchen_nie_wieder_eine_Songdatei_z
 	.long	Str_Ne_perdez_plus_jamais_un_fichier_de_morc
 	.long	Str_Ya_no_tendr_que_perder_archivos_de_canci
-	.long	Str_empty_487
-	.long	Str_empty_486
-	.long	Str_empty_485
+	.long	Str_empty_490
+	.long	Str_empty_489
+	.long	Str_empty_488
 
 Str_The_KN2600_Brings_You_The_New_SD_Sound_S:	.asciz "The KN2600 Brings You The New SD Sound (SMF) Format!"
 Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN:	.asciz "Das KN2600 bringt Ihnen das neue SD SOUND (SMF)-Format!"
 Str_Le_KN2600_vous_offre_le_nouveau_format_S:	.asciz "Le KN2600 vous offre le nouveau format SD SOUND (SMF)!"
 Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN:	.asciz "\xA1El KN2600 le da el nuevo formato SD SOUND (SMF)!"
-Str_empty_484:	.asciz "="
-Str_empty_483:	.asciz "="
-Str_empty_482:	.asciz "="
+Str_empty_487:	.asciz "="
+Str_empty_486:	.asciz "="
+Str_empty_485:	.asciz "="
 
 ptrs_485156E0:
 	.long	Str_The_KN2600_Brings_You_The_New_SD_Sound_S
 	.long	Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN
 	.long	Str_Le_KN2600_vous_offre_le_nouveau_format_S
 	.long	Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN
-	.long	Str_empty_484
-	.long	Str_empty_483
-	.long	Str_empty_482
+	.long	Str_empty_487
+	.long	Str_empty_486
+	.long	Str_empty_485
 
 Str_Play_Along_With_SD_Audio_Tracks:	.asciz "Play Along With SD Audio Tracks!"
 Str_Spielen_Sie_zusammen_mit_SD_Audiospuren:	.asciz "Spielen Sie zusammen mit SD-Audiospuren!"
 Str_Jouez_simultan_ment_avec_les_pistes_SD_A:	.asciz "Jouez simultan\xE9ment avec les pistes SD Audio!"
 Str_Ejecute_con_las_pistas_SD_Audio:	.asciz "\xA1Ejecute con las pistas SD Audio!"
-Str_empty_481:	.asciz "="
-Str_empty_480:	.asciz "="
-Str_empty_479:	.asciz "="
+Str_empty_484:	.asciz "="
+Str_empty_483:	.asciz "="
+Str_empty_482:	.asciz "="
 
 ptrs_4851579C:
 	.long	Str_Play_Along_With_SD_Audio_Tracks
 	.long	Str_Spielen_Sie_zusammen_mit_SD_Audiospuren
 	.long	Str_Jouez_simultan_ment_avec_les_pistes_SD_A
 	.long	Str_Ejecute_con_las_pistas_SD_Audio
-	.long	Str_empty_481
-	.long	Str_empty_480
-	.long	Str_empty_479
+	.long	Str_empty_484
+	.long	Str_empty_483
+	.long	Str_empty_482
 
 Str_The_Storage_Medium_Of_The_Future:	.asciz "The Storage Medium Of The Future! "
 Str_Das_Speichermedium_der_Zukunft:	.asciz "Das Speichermedium der Zukunft! "
 Str_Le_support_de_stockage_de_l_avenir:	.asciz "Le support de stockage de l'avenir! "
 Str_El_medio_de_memorizaci_n_del_futuro:	.asciz "\xA1El medio de memorizaci\xF3n del futuro! "
-Str_empty_478:	.asciz "="
-Str_empty_477:	.asciz "="
-Str_empty_476:	.asciz "="
+Str_empty_481:	.asciz "="
+Str_empty_480:	.asciz "="
+Str_empty_479:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515850:
@@ -16329,9 +16333,9 @@ ptrs_48515850:
 	.long	Str_Das_Speichermedium_der_Zukunft
 	.long	Str_Le_support_de_stockage_de_l_avenir
 	.long	Str_El_medio_de_memorizaci_n_del_futuro
-	.long	Str_empty_478
-	.long	Str_empty_477
-	.long	Str_empty_476
+	.long	Str_empty_481
+	.long	Str_empty_480
+	.long	Str_empty_479
 data_4851586C:
 .incbin_range "baserom/kn2400_program.rom", 0x11586C, 0x115934
 
@@ -20181,7 +20185,13 @@ Str_ALL_SONG_FOLDER:	.asciz "ALL SONG <FOLDER "
 Str_empty_402:	.asciz "> "
 	.align	4, 0xFF
 Str_empty_401:	.asciz "      "
-.incbin_range "baserom/kn2400_program.rom", 0x1240AF, 0x1240C8
+	.align	4, 0xFF
+Str_empty_478:	.asciz "      "
+	.align	4, 0xFF
+Str_empty_477:	.asciz "      "
+	.align	4, 0xFF
+Str_empty_476:	.asciz "      "
+	.align	4, 0xFF
 Str_TO_SONG:	.asciz "TO SONG : "
 	.align	4, 0xFF
 Str_GM_GM2_8dGM2:	.asciz "GM/GM2~8dGM2 "
@@ -21734,40 +21744,6178 @@ Str_clear_2:	.asciz "     clear      "
 	.align	4, 0x00
 data_4852BD50:
 .incbin_range "baserom/kn2400_program.rom", 0x12BD50, 0x12BD9C
-Str_Technics_Rhythms:	.asciz "Technics Rhythms ."
-.incbin_range "baserom/kn2400_program.rom", 0x12BDAF, 0x12D0D7
-Str_l_8:	.asciz "^\x92<`l"
-.incbin_range "baserom/kn2400_program.rom", 0x12D0DD, 0x12E21A
-Str_CjF:	.asciz "\x93CjF"
-.incbin_range "baserom/kn2400_program.rom", 0x12E21F, 0x13008D
-Str_P_cC:	.asciz "P\x93@cC"
-Str_P_7_D:	.asciz "P\x937_D"
-Str_P_7_s:	.asciz "P\x947\\s"
-.incbin_range "baserom/kn2400_program.rom", 0x13009F, 0x130105
-Str_P_7_N:	.asciz "P\x927]N"
-Str_P_cD:	.asciz "P\x92@cD"
-.incbin_range "baserom/kn2400_program.rom", 0x130111, 0x1301BC
-Str_P_0IB:	.asciz "P\x940IB"
-.incbin_range "baserom/kn2400_program.rom", 0x1301C2, 0x1303C7
-Str_P_0EZ:	.asciz "P\x940EZ"
-.incbin_range "baserom/kn2400_program.rom", 0x1303CD, 0x1303FF
-Str_P_Y:	.asciz "P\x92<\\Y"
-Str_P_X:	.asciz "P\x92@_X"
-Str_P_JD:	.asciz "P\x94$JD"
-.incbin_range "baserom/kn2400_program.rom", 0x130411, 0x130474
-Str_P_bH:	.asciz "P\x93<bH"
-Str_P_7hH:	.asciz "P\x937hH"
-Str_P_JN:	.asciz "P\x94$JN"
-.incbin_range "baserom/kn2400_program.rom", 0x130486, 0x13062D
-Str_C_u:	.asciz "\x92C[u"
-.incbin_range "baserom/kn2400_program.rom", 0x130632, 0x13064A
-Str_P_JN_2:	.asciz "P\x94$JN"
-.incbin_range "baserom/kn2400_program.rom", 0x130650, 0x1306DF
-Str_P_ZZ:	.asciz "P\x93@ZZ"
-Str_P_Z:	.asciz "P\x93<[Z"
-.incbin_range "baserom/kn2400_program.rom", 0x1306EB, 0x131A81
-Str_Ec:	.asciz "<\\\x95Ec/"
-.incbin_range "baserom/kn2400_program.rom", 0x131A88, 0x132260
+
+# ---- the program's own "Technics Rhythms" resource (IC18's format: notes/ic18-rhythm-rom.md;
+#      the macros are src/ic18/rhythm.s's, in rhythm_macros.inc).  One style, the fallback the
+#      firmware binds when IC18 does not answer (StyleResourceVerify / StyleBuiltinNameTableInit).
+TechnicsRhythmsResource:
+	.ascii	"Technics Rhythms"
+	.be16	0x202e			# SumU16BE of the halfwords below (StyleResourceVerify)
+	.be24	0x000018			# checksum start, from TechnicsRhythmsResource
+	.be24	0x003256			# checksum length in halfwords
+	.be24	TechnicsRhythmsResource_CountBlock - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_StyleIndex - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_StyleTable - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountInTable - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_Style_8Beat1 - TechnicsRhythmsResource	# the fallback style
+TechnicsRhythmsResource_CountBlock:
+	.be16	0, 1, 96	# 0, the rhythm count, ticks a beat
+	.byte	13, 8, 4, 2, 2, 2
+.equ TechnicsRhythmsResource_SNo0, 0
+TechnicsRhythmsResource_StyleIndex:	# 2048 entries (StyleBuiltinNameResolve): style n, 0x8000 + alias, 0x4000 + table-ROM style
+	sidx_alias	0x45a		# id 0x000 -> id 0x85a
+	sidx_alias	0x45a		# id 0x001 -> id 0x85a
+	sidx_alias	0x45a		# id 0x002 -> id 0x85a
+	sidx_alias	0x45a		# id 0x003 -> id 0x85a
+	sidx_alias	0x45a		# id 0x004 -> id 0x85a
+	sidx_alias	0x45a		# id 0x005 -> id 0x85a
+	sidx_alias	0x45a		# id 0x006 -> id 0x85a
+	sidx_alias	0x45a		# id 0x007 -> id 0x85a
+	sidx_alias	0x45a		# id 0x008 -> id 0x85a
+	sidx_alias	0x45a		# id 0x009 -> id 0x85a
+	sidx_alias	0x45a		# id 0x00a -> id 0x85a
+	sidx_alias	0x45a		# id 0x00b -> id 0x85a
+	sidx_alias	0x45a		# id 0x00c -> id 0x85a
+	sidx_alias	0x45a		# id 0x00d -> id 0x85a
+	sidx_alias	0x45a		# id 0x00e -> id 0x85a
+	sidx_alias	0x45a		# id 0x00f -> id 0x85a
+	sidx_alias	0x45a		# id 0x010 -> id 0x85a
+	sidx_alias	0x45a		# id 0x011 -> id 0x85a
+	sidx_alias	0x45a		# id 0x012 -> id 0x85a
+	sidx_alias	0x45a		# id 0x013 -> id 0x85a
+	sidx_alias	0x45a		# id 0x014 -> id 0x85a
+	sidx_alias	0x45a		# id 0x015 -> id 0x85a
+	sidx_alias	0x45a		# id 0x016 -> id 0x85a
+	sidx_alias	0x45a		# id 0x017 -> id 0x85a
+	sidx_alias	0x45a		# id 0x018 -> id 0x85a
+	sidx_alias	0x45a		# id 0x019 -> id 0x85a
+	sidx_alias	0x45a		# id 0x01a -> id 0x85a
+	sidx_alias	0x45a		# id 0x01b -> id 0x85a
+	sidx_alias	0x45a		# id 0x01c -> id 0x85a
+	sidx_alias	0x45a		# id 0x01d -> id 0x85a
+	sidx_alias	0x45a		# id 0x01e -> id 0x85a
+	sidx_alias	0x45a		# id 0x01f -> id 0x85a
+	sidx_alias	0x45a		# id 0x020 -> id 0x85a
+	sidx_alias	0x45a		# id 0x021 -> id 0x85a
+	sidx_alias	0x45a		# id 0x022 -> id 0x85a
+	sidx_alias	0x45a		# id 0x023 -> id 0x85a
+	sidx_alias	0x45a		# id 0x024 -> id 0x85a
+	sidx_alias	0x45a		# id 0x025 -> id 0x85a
+	sidx_alias	0x45a		# id 0x026 -> id 0x85a
+	sidx_alias	0x45a		# id 0x027 -> id 0x85a
+	sidx_alias	0x45a		# id 0x028 -> id 0x85a
+	sidx_alias	0x45a		# id 0x029 -> id 0x85a
+	sidx_alias	0x45a		# id 0x02a -> id 0x85a
+	sidx_alias	0x45a		# id 0x02b -> id 0x85a
+	sidx_alias	0x45a		# id 0x02c -> id 0x85a
+	sidx_alias	0x45a		# id 0x02d -> id 0x85a
+	sidx_alias	0x45a		# id 0x02e -> id 0x85a
+	sidx_alias	0x45a		# id 0x02f -> id 0x85a
+	sidx_alias	0x45a		# id 0x030 -> id 0x85a
+	sidx_alias	0x45a		# id 0x031 -> id 0x85a
+	sidx_alias	0x45a		# id 0x032 -> id 0x85a
+	sidx_alias	0x45a		# id 0x033 -> id 0x85a
+	sidx_alias	0x45a		# id 0x034 -> id 0x85a
+	sidx_alias	0x45a		# id 0x035 -> id 0x85a
+	sidx_alias	0x45a		# id 0x036 -> id 0x85a
+	sidx_alias	0x45a		# id 0x037 -> id 0x85a
+	sidx_alias	0x45a		# id 0x038 -> id 0x85a
+	sidx_alias	0x45a		# id 0x039 -> id 0x85a
+	sidx_alias	0x45a		# id 0x03a -> id 0x85a
+	sidx_alias	0x45a		# id 0x03b -> id 0x85a
+	sidx_alias	0x45a		# id 0x03c -> id 0x85a
+	sidx_alias	0x45a		# id 0x03d -> id 0x85a
+	sidx_alias	0x45a		# id 0x03e -> id 0x85a
+	sidx_alias	0x45a		# id 0x03f -> id 0x85a
+	sidx_alias	0x45a		# id 0x040 -> id 0x85a
+	sidx_alias	0x45a		# id 0x041 -> id 0x85a
+	sidx_alias	0x45a		# id 0x042 -> id 0x85a
+	sidx_alias	0x45a		# id 0x043 -> id 0x85a
+	sidx_alias	0x45a		# id 0x044 -> id 0x85a
+	sidx_alias	0x45a		# id 0x045 -> id 0x85a
+	sidx_alias	0x45a		# id 0x046 -> id 0x85a
+	sidx_alias	0x45a		# id 0x047 -> id 0x85a
+	sidx_alias	0x45a		# id 0x048 -> id 0x85a
+	sidx_alias	0x45a		# id 0x049 -> id 0x85a
+	sidx_alias	0x45a		# id 0x04a -> id 0x85a
+	sidx_alias	0x45a		# id 0x04b -> id 0x85a
+	sidx_alias	0x45a		# id 0x04c -> id 0x85a
+	sidx_alias	0x45a		# id 0x04d -> id 0x85a
+	sidx_alias	0x45a		# id 0x04e -> id 0x85a
+	sidx_alias	0x45a		# id 0x04f -> id 0x85a
+	sidx_alias	0x45a		# id 0x050 -> id 0x85a
+	sidx_alias	0x45a		# id 0x051 -> id 0x85a
+	sidx_alias	0x45a		# id 0x052 -> id 0x85a
+	sidx_alias	0x45a		# id 0x053 -> id 0x85a
+	sidx_alias	0x45a		# id 0x054 -> id 0x85a
+	sidx_alias	0x45a		# id 0x055 -> id 0x85a
+	sidx_alias	0x45a		# id 0x056 -> id 0x85a
+	sidx_alias	0x45a		# id 0x057 -> id 0x85a
+	sidx_alias	0x45a		# id 0x058 -> id 0x85a
+	sidx_alias	0x45a		# id 0x059 -> id 0x85a
+	sidx_alias	0x45a		# id 0x05a -> id 0x85a
+	sidx_alias	0x45a		# id 0x05b -> id 0x85a
+	sidx_alias	0x45a		# id 0x05c -> id 0x85a
+	sidx_alias	0x45a		# id 0x05d -> id 0x85a
+	sidx_alias	0x45a		# id 0x05e -> id 0x85a
+	sidx_alias	0x45a		# id 0x05f -> id 0x85a
+	sidx_alias	0x45a		# id 0x060 -> id 0x85a
+	sidx_alias	0x45a		# id 0x061 -> id 0x85a
+	sidx_alias	0x45a		# id 0x062 -> id 0x85a
+	sidx_alias	0x45a		# id 0x063 -> id 0x85a
+	sidx_alias	0x45a		# id 0x064 -> id 0x85a
+	sidx_alias	0x45a		# id 0x065 -> id 0x85a
+	sidx_alias	0x45a		# id 0x066 -> id 0x85a
+	sidx_alias	0x45a		# id 0x067 -> id 0x85a
+	sidx_alias	0x45a		# id 0x068 -> id 0x85a
+	sidx_alias	0x45a		# id 0x069 -> id 0x85a
+	sidx_alias	0x45a		# id 0x06a -> id 0x85a
+	sidx_alias	0x45a		# id 0x06b -> id 0x85a
+	sidx_alias	0x45a		# id 0x06c -> id 0x85a
+	sidx_alias	0x45a		# id 0x06d -> id 0x85a
+	sidx_alias	0x45a		# id 0x06e -> id 0x85a
+	sidx_alias	0x45a		# id 0x06f -> id 0x85a
+	sidx_alias	0x45a		# id 0x070 -> id 0x85a
+	sidx_alias	0x45a		# id 0x071 -> id 0x85a
+	sidx_alias	0x45a		# id 0x072 -> id 0x85a
+	sidx_alias	0x45a		# id 0x073 -> id 0x85a
+	sidx_alias	0x45a		# id 0x074 -> id 0x85a
+	sidx_alias	0x45a		# id 0x075 -> id 0x85a
+	sidx_alias	0x45a		# id 0x076 -> id 0x85a
+	sidx_alias	0x45a		# id 0x077 -> id 0x85a
+	sidx_alias	0x45a		# id 0x078 -> id 0x85a
+	sidx_alias	0x45a		# id 0x079 -> id 0x85a
+	sidx_alias	0x45a		# id 0x07a -> id 0x85a
+	sidx_alias	0x45a		# id 0x07b -> id 0x85a
+	sidx_alias	0x45a		# id 0x07c -> id 0x85a
+	sidx_alias	0x45a		# id 0x07d -> id 0x85a
+	sidx_alias	0x45a		# id 0x07e -> id 0x85a
+	sidx_alias	0x45a		# id 0x07f -> id 0x85a
+	sidx_alias	0x45a		# id 0x100 -> id 0x85a
+	sidx_alias	0x45a		# id 0x101 -> id 0x85a
+	sidx_alias	0x45a		# id 0x102 -> id 0x85a
+	sidx_alias	0x45a		# id 0x103 -> id 0x85a
+	sidx_alias	0x45a		# id 0x104 -> id 0x85a
+	sidx_alias	0x45a		# id 0x105 -> id 0x85a
+	sidx_alias	0x45a		# id 0x106 -> id 0x85a
+	sidx_alias	0x45a		# id 0x107 -> id 0x85a
+	sidx_alias	0x45a		# id 0x108 -> id 0x85a
+	sidx_alias	0x45a		# id 0x109 -> id 0x85a
+	sidx_alias	0x45a		# id 0x10a -> id 0x85a
+	sidx_alias	0x45a		# id 0x10b -> id 0x85a
+	sidx_alias	0x45a		# id 0x10c -> id 0x85a
+	sidx_alias	0x45a		# id 0x10d -> id 0x85a
+	sidx_alias	0x45a		# id 0x10e -> id 0x85a
+	sidx_alias	0x45a		# id 0x10f -> id 0x85a
+	sidx_alias	0x45a		# id 0x110 -> id 0x85a
+	sidx_alias	0x45a		# id 0x111 -> id 0x85a
+	sidx_alias	0x45a		# id 0x112 -> id 0x85a
+	sidx_alias	0x45a		# id 0x113 -> id 0x85a
+	sidx_alias	0x45a		# id 0x114 -> id 0x85a
+	sidx_alias	0x45a		# id 0x115 -> id 0x85a
+	sidx_alias	0x45a		# id 0x116 -> id 0x85a
+	sidx_alias	0x45a		# id 0x117 -> id 0x85a
+	sidx_alias	0x45a		# id 0x118 -> id 0x85a
+	sidx_alias	0x45a		# id 0x119 -> id 0x85a
+	sidx_alias	0x45a		# id 0x11a -> id 0x85a
+	sidx_alias	0x45a		# id 0x11b -> id 0x85a
+	sidx_alias	0x45a		# id 0x11c -> id 0x85a
+	sidx_alias	0x45a		# id 0x11d -> id 0x85a
+	sidx_alias	0x45a		# id 0x11e -> id 0x85a
+	sidx_alias	0x45a		# id 0x11f -> id 0x85a
+	sidx_alias	0x45a		# id 0x120 -> id 0x85a
+	sidx_alias	0x45a		# id 0x121 -> id 0x85a
+	sidx_alias	0x45a		# id 0x122 -> id 0x85a
+	sidx_alias	0x45a		# id 0x123 -> id 0x85a
+	sidx_alias	0x45a		# id 0x124 -> id 0x85a
+	sidx_alias	0x45a		# id 0x125 -> id 0x85a
+	sidx_alias	0x45a		# id 0x126 -> id 0x85a
+	sidx_alias	0x45a		# id 0x127 -> id 0x85a
+	sidx_alias	0x45a		# id 0x128 -> id 0x85a
+	sidx_alias	0x45a		# id 0x129 -> id 0x85a
+	sidx_alias	0x45a		# id 0x12a -> id 0x85a
+	sidx_alias	0x45a		# id 0x12b -> id 0x85a
+	sidx_alias	0x45a		# id 0x12c -> id 0x85a
+	sidx_alias	0x45a		# id 0x12d -> id 0x85a
+	sidx_alias	0x45a		# id 0x12e -> id 0x85a
+	sidx_alias	0x45a		# id 0x12f -> id 0x85a
+	sidx_alias	0x45a		# id 0x130 -> id 0x85a
+	sidx_alias	0x45a		# id 0x131 -> id 0x85a
+	sidx_alias	0x45a		# id 0x132 -> id 0x85a
+	sidx_alias	0x45a		# id 0x133 -> id 0x85a
+	sidx_alias	0x45a		# id 0x134 -> id 0x85a
+	sidx_alias	0x45a		# id 0x135 -> id 0x85a
+	sidx_alias	0x45a		# id 0x136 -> id 0x85a
+	sidx_alias	0x45a		# id 0x137 -> id 0x85a
+	sidx_alias	0x45a		# id 0x138 -> id 0x85a
+	sidx_alias	0x45a		# id 0x139 -> id 0x85a
+	sidx_alias	0x45a		# id 0x13a -> id 0x85a
+	sidx_alias	0x45a		# id 0x13b -> id 0x85a
+	sidx_alias	0x45a		# id 0x13c -> id 0x85a
+	sidx_alias	0x45a		# id 0x13d -> id 0x85a
+	sidx_alias	0x45a		# id 0x13e -> id 0x85a
+	sidx_alias	0x45a		# id 0x13f -> id 0x85a
+	sidx_alias	0x45a		# id 0x140 -> id 0x85a
+	sidx_alias	0x45a		# id 0x141 -> id 0x85a
+	sidx_alias	0x45a		# id 0x142 -> id 0x85a
+	sidx_alias	0x45a		# id 0x143 -> id 0x85a
+	sidx_alias	0x45a		# id 0x144 -> id 0x85a
+	sidx_alias	0x45a		# id 0x145 -> id 0x85a
+	sidx_alias	0x45a		# id 0x146 -> id 0x85a
+	sidx_alias	0x45a		# id 0x147 -> id 0x85a
+	sidx_alias	0x45a		# id 0x148 -> id 0x85a
+	sidx_alias	0x45a		# id 0x149 -> id 0x85a
+	sidx_alias	0x45a		# id 0x14a -> id 0x85a
+	sidx_alias	0x45a		# id 0x14b -> id 0x85a
+	sidx_alias	0x45a		# id 0x14c -> id 0x85a
+	sidx_alias	0x45a		# id 0x14d -> id 0x85a
+	sidx_alias	0x45a		# id 0x14e -> id 0x85a
+	sidx_alias	0x45a		# id 0x14f -> id 0x85a
+	sidx_alias	0x45a		# id 0x150 -> id 0x85a
+	sidx_alias	0x45a		# id 0x151 -> id 0x85a
+	sidx_alias	0x45a		# id 0x152 -> id 0x85a
+	sidx_alias	0x45a		# id 0x153 -> id 0x85a
+	sidx_alias	0x45a		# id 0x154 -> id 0x85a
+	sidx_alias	0x45a		# id 0x155 -> id 0x85a
+	sidx_alias	0x45a		# id 0x156 -> id 0x85a
+	sidx_alias	0x45a		# id 0x157 -> id 0x85a
+	sidx_alias	0x45a		# id 0x158 -> id 0x85a
+	sidx_alias	0x45a		# id 0x159 -> id 0x85a
+	sidx_alias	0x45a		# id 0x15a -> id 0x85a
+	sidx_alias	0x45a		# id 0x15b -> id 0x85a
+	sidx_alias	0x45a		# id 0x15c -> id 0x85a
+	sidx_alias	0x45a		# id 0x15d -> id 0x85a
+	sidx_alias	0x45a		# id 0x15e -> id 0x85a
+	sidx_alias	0x45a		# id 0x15f -> id 0x85a
+	sidx_alias	0x45a		# id 0x160 -> id 0x85a
+	sidx_alias	0x45a		# id 0x161 -> id 0x85a
+	sidx_alias	0x45a		# id 0x162 -> id 0x85a
+	sidx_alias	0x45a		# id 0x163 -> id 0x85a
+	sidx_alias	0x45a		# id 0x164 -> id 0x85a
+	sidx_alias	0x45a		# id 0x165 -> id 0x85a
+	sidx_alias	0x45a		# id 0x166 -> id 0x85a
+	sidx_alias	0x45a		# id 0x167 -> id 0x85a
+	sidx_alias	0x45a		# id 0x168 -> id 0x85a
+	sidx_alias	0x45a		# id 0x169 -> id 0x85a
+	sidx_alias	0x45a		# id 0x16a -> id 0x85a
+	sidx_alias	0x45a		# id 0x16b -> id 0x85a
+	sidx_alias	0x45a		# id 0x16c -> id 0x85a
+	sidx_alias	0x45a		# id 0x16d -> id 0x85a
+	sidx_alias	0x45a		# id 0x16e -> id 0x85a
+	sidx_alias	0x45a		# id 0x16f -> id 0x85a
+	sidx_alias	0x45a		# id 0x170 -> id 0x85a
+	sidx_alias	0x45a		# id 0x171 -> id 0x85a
+	sidx_alias	0x45a		# id 0x172 -> id 0x85a
+	sidx_alias	0x45a		# id 0x173 -> id 0x85a
+	sidx_alias	0x45a		# id 0x174 -> id 0x85a
+	sidx_alias	0x45a		# id 0x175 -> id 0x85a
+	sidx_alias	0x45a		# id 0x176 -> id 0x85a
+	sidx_alias	0x45a		# id 0x177 -> id 0x85a
+	sidx_alias	0x45a		# id 0x178 -> id 0x85a
+	sidx_alias	0x45a		# id 0x179 -> id 0x85a
+	sidx_alias	0x45a		# id 0x17a -> id 0x85a
+	sidx_alias	0x45a		# id 0x17b -> id 0x85a
+	sidx_alias	0x45a		# id 0x17c -> id 0x85a
+	sidx_alias	0x45a		# id 0x17d -> id 0x85a
+	sidx_alias	0x45a		# id 0x17e -> id 0x85a
+	sidx_alias	0x45a		# id 0x17f -> id 0x85a
+	sidx_alias	0x45a		# id 0x200 -> id 0x85a
+	sidx_alias	0x45a		# id 0x201 -> id 0x85a
+	sidx_alias	0x45a		# id 0x202 -> id 0x85a
+	sidx_alias	0x45a		# id 0x203 -> id 0x85a
+	sidx_alias	0x45a		# id 0x204 -> id 0x85a
+	sidx_alias	0x45a		# id 0x205 -> id 0x85a
+	sidx_alias	0x45a		# id 0x206 -> id 0x85a
+	sidx_alias	0x45a		# id 0x207 -> id 0x85a
+	sidx_alias	0x45a		# id 0x208 -> id 0x85a
+	sidx_alias	0x45a		# id 0x209 -> id 0x85a
+	sidx_alias	0x45a		# id 0x20a -> id 0x85a
+	sidx_alias	0x45a		# id 0x20b -> id 0x85a
+	sidx_alias	0x45a		# id 0x20c -> id 0x85a
+	sidx_alias	0x45a		# id 0x20d -> id 0x85a
+	sidx_alias	0x45a		# id 0x20e -> id 0x85a
+	sidx_alias	0x45a		# id 0x20f -> id 0x85a
+	sidx_alias	0x45a		# id 0x210 -> id 0x85a
+	sidx_alias	0x45a		# id 0x211 -> id 0x85a
+	sidx_alias	0x45a		# id 0x212 -> id 0x85a
+	sidx_alias	0x45a		# id 0x213 -> id 0x85a
+	sidx_alias	0x45a		# id 0x214 -> id 0x85a
+	sidx_alias	0x45a		# id 0x215 -> id 0x85a
+	sidx_alias	0x45a		# id 0x216 -> id 0x85a
+	sidx_alias	0x45a		# id 0x217 -> id 0x85a
+	sidx_alias	0x45a		# id 0x218 -> id 0x85a
+	sidx_alias	0x45a		# id 0x219 -> id 0x85a
+	sidx_alias	0x45a		# id 0x21a -> id 0x85a
+	sidx_alias	0x45a		# id 0x21b -> id 0x85a
+	sidx_alias	0x45a		# id 0x21c -> id 0x85a
+	sidx_alias	0x45a		# id 0x21d -> id 0x85a
+	sidx_alias	0x45a		# id 0x21e -> id 0x85a
+	sidx_alias	0x45a		# id 0x21f -> id 0x85a
+	sidx_alias	0x45a		# id 0x220 -> id 0x85a
+	sidx_alias	0x45a		# id 0x221 -> id 0x85a
+	sidx_alias	0x45a		# id 0x222 -> id 0x85a
+	sidx_alias	0x45a		# id 0x223 -> id 0x85a
+	sidx_alias	0x45a		# id 0x224 -> id 0x85a
+	sidx_alias	0x45a		# id 0x225 -> id 0x85a
+	sidx_alias	0x45a		# id 0x226 -> id 0x85a
+	sidx_alias	0x45a		# id 0x227 -> id 0x85a
+	sidx_alias	0x45a		# id 0x228 -> id 0x85a
+	sidx_alias	0x45a		# id 0x229 -> id 0x85a
+	sidx_alias	0x45a		# id 0x22a -> id 0x85a
+	sidx_alias	0x45a		# id 0x22b -> id 0x85a
+	sidx_alias	0x45a		# id 0x22c -> id 0x85a
+	sidx_alias	0x45a		# id 0x22d -> id 0x85a
+	sidx_alias	0x45a		# id 0x22e -> id 0x85a
+	sidx_alias	0x45a		# id 0x22f -> id 0x85a
+	sidx_alias	0x45a		# id 0x230 -> id 0x85a
+	sidx_alias	0x45a		# id 0x231 -> id 0x85a
+	sidx_alias	0x45a		# id 0x232 -> id 0x85a
+	sidx_alias	0x45a		# id 0x233 -> id 0x85a
+	sidx_alias	0x45a		# id 0x234 -> id 0x85a
+	sidx_alias	0x45a		# id 0x235 -> id 0x85a
+	sidx_alias	0x45a		# id 0x236 -> id 0x85a
+	sidx_alias	0x45a		# id 0x237 -> id 0x85a
+	sidx_alias	0x45a		# id 0x238 -> id 0x85a
+	sidx_alias	0x45a		# id 0x239 -> id 0x85a
+	sidx_alias	0x45a		# id 0x23a -> id 0x85a
+	sidx_alias	0x45a		# id 0x23b -> id 0x85a
+	sidx_alias	0x45a		# id 0x23c -> id 0x85a
+	sidx_alias	0x45a		# id 0x23d -> id 0x85a
+	sidx_alias	0x45a		# id 0x23e -> id 0x85a
+	sidx_alias	0x45a		# id 0x23f -> id 0x85a
+	sidx_alias	0x45a		# id 0x240 -> id 0x85a
+	sidx_alias	0x45a		# id 0x241 -> id 0x85a
+	sidx_alias	0x45a		# id 0x242 -> id 0x85a
+	sidx_alias	0x45a		# id 0x243 -> id 0x85a
+	sidx_alias	0x45a		# id 0x244 -> id 0x85a
+	sidx_alias	0x45a		# id 0x245 -> id 0x85a
+	sidx_alias	0x45a		# id 0x246 -> id 0x85a
+	sidx_alias	0x45a		# id 0x247 -> id 0x85a
+	sidx_alias	0x45a		# id 0x248 -> id 0x85a
+	sidx_alias	0x45a		# id 0x249 -> id 0x85a
+	sidx_alias	0x45a		# id 0x24a -> id 0x85a
+	sidx_alias	0x45a		# id 0x24b -> id 0x85a
+	sidx_alias	0x45a		# id 0x24c -> id 0x85a
+	sidx_alias	0x45a		# id 0x24d -> id 0x85a
+	sidx_alias	0x45a		# id 0x24e -> id 0x85a
+	sidx_alias	0x45a		# id 0x24f -> id 0x85a
+	sidx_alias	0x45a		# id 0x250 -> id 0x85a
+	sidx_alias	0x45a		# id 0x251 -> id 0x85a
+	sidx_alias	0x45a		# id 0x252 -> id 0x85a
+	sidx_alias	0x45a		# id 0x253 -> id 0x85a
+	sidx_alias	0x45a		# id 0x254 -> id 0x85a
+	sidx_alias	0x45a		# id 0x255 -> id 0x85a
+	sidx_alias	0x45a		# id 0x256 -> id 0x85a
+	sidx_alias	0x45a		# id 0x257 -> id 0x85a
+	sidx_alias	0x45a		# id 0x258 -> id 0x85a
+	sidx_alias	0x45a		# id 0x259 -> id 0x85a
+	sidx_alias	0x45a		# id 0x25a -> id 0x85a
+	sidx_alias	0x45a		# id 0x25b -> id 0x85a
+	sidx_alias	0x45a		# id 0x25c -> id 0x85a
+	sidx_alias	0x45a		# id 0x25d -> id 0x85a
+	sidx_alias	0x45a		# id 0x25e -> id 0x85a
+	sidx_alias	0x45a		# id 0x25f -> id 0x85a
+	sidx_alias	0x45a		# id 0x260 -> id 0x85a
+	sidx_alias	0x45a		# id 0x261 -> id 0x85a
+	sidx_alias	0x45a		# id 0x262 -> id 0x85a
+	sidx_alias	0x45a		# id 0x263 -> id 0x85a
+	sidx_alias	0x45a		# id 0x264 -> id 0x85a
+	sidx_alias	0x45a		# id 0x265 -> id 0x85a
+	sidx_alias	0x45a		# id 0x266 -> id 0x85a
+	sidx_alias	0x45a		# id 0x267 -> id 0x85a
+	sidx_alias	0x45a		# id 0x268 -> id 0x85a
+	sidx_alias	0x45a		# id 0x269 -> id 0x85a
+	sidx_alias	0x45a		# id 0x26a -> id 0x85a
+	sidx_alias	0x45a		# id 0x26b -> id 0x85a
+	sidx_alias	0x45a		# id 0x26c -> id 0x85a
+	sidx_alias	0x45a		# id 0x26d -> id 0x85a
+	sidx_alias	0x45a		# id 0x26e -> id 0x85a
+	sidx_alias	0x45a		# id 0x26f -> id 0x85a
+	sidx_alias	0x45a		# id 0x270 -> id 0x85a
+	sidx_alias	0x45a		# id 0x271 -> id 0x85a
+	sidx_alias	0x45a		# id 0x272 -> id 0x85a
+	sidx_alias	0x45a		# id 0x273 -> id 0x85a
+	sidx_alias	0x45a		# id 0x274 -> id 0x85a
+	sidx_alias	0x45a		# id 0x275 -> id 0x85a
+	sidx_alias	0x45a		# id 0x276 -> id 0x85a
+	sidx_alias	0x45a		# id 0x277 -> id 0x85a
+	sidx_alias	0x45a		# id 0x278 -> id 0x85a
+	sidx_alias	0x45a		# id 0x279 -> id 0x85a
+	sidx_alias	0x45a		# id 0x27a -> id 0x85a
+	sidx_alias	0x45a		# id 0x27b -> id 0x85a
+	sidx_alias	0x45a		# id 0x27c -> id 0x85a
+	sidx_alias	0x45a		# id 0x27d -> id 0x85a
+	sidx_alias	0x45a		# id 0x27e -> id 0x85a
+	sidx_alias	0x45a		# id 0x27f -> id 0x85a
+	sidx_alias	0x45a		# id 0x300 -> id 0x85a
+	sidx_alias	0x45a		# id 0x301 -> id 0x85a
+	sidx_alias	0x45a		# id 0x302 -> id 0x85a
+	sidx_alias	0x45a		# id 0x303 -> id 0x85a
+	sidx_alias	0x45a		# id 0x304 -> id 0x85a
+	sidx_alias	0x45a		# id 0x305 -> id 0x85a
+	sidx_alias	0x45a		# id 0x306 -> id 0x85a
+	sidx_alias	0x45a		# id 0x307 -> id 0x85a
+	sidx_alias	0x45a		# id 0x308 -> id 0x85a
+	sidx_alias	0x45a		# id 0x309 -> id 0x85a
+	sidx_alias	0x45a		# id 0x30a -> id 0x85a
+	sidx_alias	0x45a		# id 0x30b -> id 0x85a
+	sidx_alias	0x45a		# id 0x30c -> id 0x85a
+	sidx_alias	0x45a		# id 0x30d -> id 0x85a
+	sidx_alias	0x45a		# id 0x30e -> id 0x85a
+	sidx_alias	0x45a		# id 0x30f -> id 0x85a
+	sidx_alias	0x45a		# id 0x310 -> id 0x85a
+	sidx_alias	0x45a		# id 0x311 -> id 0x85a
+	sidx_alias	0x45a		# id 0x312 -> id 0x85a
+	sidx_alias	0x45a		# id 0x313 -> id 0x85a
+	sidx_alias	0x45a		# id 0x314 -> id 0x85a
+	sidx_alias	0x45a		# id 0x315 -> id 0x85a
+	sidx_alias	0x45a		# id 0x316 -> id 0x85a
+	sidx_alias	0x45a		# id 0x317 -> id 0x85a
+	sidx_alias	0x45a		# id 0x318 -> id 0x85a
+	sidx_alias	0x45a		# id 0x319 -> id 0x85a
+	sidx_alias	0x45a		# id 0x31a -> id 0x85a
+	sidx_alias	0x45a		# id 0x31b -> id 0x85a
+	sidx_alias	0x45a		# id 0x31c -> id 0x85a
+	sidx_alias	0x45a		# id 0x31d -> id 0x85a
+	sidx_alias	0x45a		# id 0x31e -> id 0x85a
+	sidx_alias	0x45a		# id 0x31f -> id 0x85a
+	sidx_alias	0x45a		# id 0x320 -> id 0x85a
+	sidx_alias	0x45a		# id 0x321 -> id 0x85a
+	sidx_alias	0x45a		# id 0x322 -> id 0x85a
+	sidx_alias	0x45a		# id 0x323 -> id 0x85a
+	sidx_alias	0x45a		# id 0x324 -> id 0x85a
+	sidx_alias	0x45a		# id 0x325 -> id 0x85a
+	sidx_alias	0x45a		# id 0x326 -> id 0x85a
+	sidx_alias	0x45a		# id 0x327 -> id 0x85a
+	sidx_alias	0x45a		# id 0x328 -> id 0x85a
+	sidx_alias	0x45a		# id 0x329 -> id 0x85a
+	sidx_alias	0x45a		# id 0x32a -> id 0x85a
+	sidx_alias	0x45a		# id 0x32b -> id 0x85a
+	sidx_alias	0x45a		# id 0x32c -> id 0x85a
+	sidx_alias	0x45a		# id 0x32d -> id 0x85a
+	sidx_alias	0x45a		# id 0x32e -> id 0x85a
+	sidx_alias	0x45a		# id 0x32f -> id 0x85a
+	sidx_alias	0x45a		# id 0x330 -> id 0x85a
+	sidx_alias	0x45a		# id 0x331 -> id 0x85a
+	sidx_alias	0x45a		# id 0x332 -> id 0x85a
+	sidx_alias	0x45a		# id 0x333 -> id 0x85a
+	sidx_alias	0x45a		# id 0x334 -> id 0x85a
+	sidx_alias	0x45a		# id 0x335 -> id 0x85a
+	sidx_alias	0x45a		# id 0x336 -> id 0x85a
+	sidx_alias	0x45a		# id 0x337 -> id 0x85a
+	sidx_alias	0x45a		# id 0x338 -> id 0x85a
+	sidx_alias	0x45a		# id 0x339 -> id 0x85a
+	sidx_alias	0x45a		# id 0x33a -> id 0x85a
+	sidx_alias	0x45a		# id 0x33b -> id 0x85a
+	sidx_alias	0x45a		# id 0x33c -> id 0x85a
+	sidx_alias	0x45a		# id 0x33d -> id 0x85a
+	sidx_alias	0x45a		# id 0x33e -> id 0x85a
+	sidx_alias	0x45a		# id 0x33f -> id 0x85a
+	sidx_alias	0x45a		# id 0x340 -> id 0x85a
+	sidx_alias	0x45a		# id 0x341 -> id 0x85a
+	sidx_alias	0x45a		# id 0x342 -> id 0x85a
+	sidx_alias	0x45a		# id 0x343 -> id 0x85a
+	sidx_alias	0x45a		# id 0x344 -> id 0x85a
+	sidx_alias	0x45a		# id 0x345 -> id 0x85a
+	sidx_alias	0x45a		# id 0x346 -> id 0x85a
+	sidx_alias	0x45a		# id 0x347 -> id 0x85a
+	sidx_alias	0x45a		# id 0x348 -> id 0x85a
+	sidx_alias	0x45a		# id 0x349 -> id 0x85a
+	sidx_alias	0x45a		# id 0x34a -> id 0x85a
+	sidx_alias	0x45a		# id 0x34b -> id 0x85a
+	sidx_alias	0x45a		# id 0x34c -> id 0x85a
+	sidx_alias	0x45a		# id 0x34d -> id 0x85a
+	sidx_alias	0x45a		# id 0x34e -> id 0x85a
+	sidx_alias	0x45a		# id 0x34f -> id 0x85a
+	sidx_alias	0x45a		# id 0x350 -> id 0x85a
+	sidx_alias	0x45a		# id 0x351 -> id 0x85a
+	sidx_alias	0x45a		# id 0x352 -> id 0x85a
+	sidx_alias	0x45a		# id 0x353 -> id 0x85a
+	sidx_alias	0x45a		# id 0x354 -> id 0x85a
+	sidx_alias	0x45a		# id 0x355 -> id 0x85a
+	sidx_alias	0x45a		# id 0x356 -> id 0x85a
+	sidx_alias	0x45a		# id 0x357 -> id 0x85a
+	sidx_alias	0x45a		# id 0x358 -> id 0x85a
+	sidx_alias	0x45a		# id 0x359 -> id 0x85a
+	sidx_alias	0x45a		# id 0x35a -> id 0x85a
+	sidx_alias	0x45a		# id 0x35b -> id 0x85a
+	sidx_alias	0x45a		# id 0x35c -> id 0x85a
+	sidx_alias	0x45a		# id 0x35d -> id 0x85a
+	sidx_alias	0x45a		# id 0x35e -> id 0x85a
+	sidx_alias	0x45a		# id 0x35f -> id 0x85a
+	sidx_alias	0x45a		# id 0x360 -> id 0x85a
+	sidx_alias	0x45a		# id 0x361 -> id 0x85a
+	sidx_alias	0x45a		# id 0x362 -> id 0x85a
+	sidx_alias	0x45a		# id 0x363 -> id 0x85a
+	sidx_alias	0x45a		# id 0x364 -> id 0x85a
+	sidx_alias	0x45a		# id 0x365 -> id 0x85a
+	sidx_alias	0x45a		# id 0x366 -> id 0x85a
+	sidx_alias	0x45a		# id 0x367 -> id 0x85a
+	sidx_alias	0x45a		# id 0x368 -> id 0x85a
+	sidx_alias	0x45a		# id 0x369 -> id 0x85a
+	sidx_alias	0x45a		# id 0x36a -> id 0x85a
+	sidx_alias	0x45a		# id 0x36b -> id 0x85a
+	sidx_alias	0x45a		# id 0x36c -> id 0x85a
+	sidx_alias	0x45a		# id 0x36d -> id 0x85a
+	sidx_alias	0x45a		# id 0x36e -> id 0x85a
+	sidx_alias	0x45a		# id 0x36f -> id 0x85a
+	sidx_alias	0x45a		# id 0x370 -> id 0x85a
+	sidx_alias	0x45a		# id 0x371 -> id 0x85a
+	sidx_alias	0x45a		# id 0x372 -> id 0x85a
+	sidx_alias	0x45a		# id 0x373 -> id 0x85a
+	sidx_alias	0x45a		# id 0x374 -> id 0x85a
+	sidx_alias	0x45a		# id 0x375 -> id 0x85a
+	sidx_alias	0x45a		# id 0x376 -> id 0x85a
+	sidx_alias	0x45a		# id 0x377 -> id 0x85a
+	sidx_alias	0x45a		# id 0x378 -> id 0x85a
+	sidx_alias	0x45a		# id 0x379 -> id 0x85a
+	sidx_alias	0x45a		# id 0x37a -> id 0x85a
+	sidx_alias	0x45a		# id 0x37b -> id 0x85a
+	sidx_alias	0x45a		# id 0x37c -> id 0x85a
+	sidx_alias	0x45a		# id 0x37d -> id 0x85a
+	sidx_alias	0x45a		# id 0x37e -> id 0x85a
+	sidx_alias	0x45a		# id 0x37f -> id 0x85a
+	sidx_alias	0x45a		# id 0x400 -> id 0x85a
+	sidx_alias	0x45a		# id 0x401 -> id 0x85a
+	sidx_alias	0x45a		# id 0x402 -> id 0x85a
+	sidx_alias	0x45a		# id 0x403 -> id 0x85a
+	sidx_alias	0x45a		# id 0x404 -> id 0x85a
+	sidx_alias	0x45a		# id 0x405 -> id 0x85a
+	sidx_alias	0x45a		# id 0x406 -> id 0x85a
+	sidx_alias	0x45a		# id 0x407 -> id 0x85a
+	sidx_alias	0x45a		# id 0x408 -> id 0x85a
+	sidx_alias	0x45a		# id 0x409 -> id 0x85a
+	sidx_alias	0x45a		# id 0x40a -> id 0x85a
+	sidx_alias	0x45a		# id 0x40b -> id 0x85a
+	sidx_alias	0x45a		# id 0x40c -> id 0x85a
+	sidx_alias	0x45a		# id 0x40d -> id 0x85a
+	sidx_alias	0x45a		# id 0x40e -> id 0x85a
+	sidx_alias	0x45a		# id 0x40f -> id 0x85a
+	sidx_alias	0x45a		# id 0x410 -> id 0x85a
+	sidx_alias	0x45a		# id 0x411 -> id 0x85a
+	sidx_alias	0x45a		# id 0x412 -> id 0x85a
+	sidx_alias	0x45a		# id 0x413 -> id 0x85a
+	sidx_alias	0x45a		# id 0x414 -> id 0x85a
+	sidx_alias	0x45a		# id 0x415 -> id 0x85a
+	sidx_alias	0x45a		# id 0x416 -> id 0x85a
+	sidx_alias	0x45a		# id 0x417 -> id 0x85a
+	sidx_alias	0x45a		# id 0x418 -> id 0x85a
+	sidx_alias	0x45a		# id 0x419 -> id 0x85a
+	sidx_alias	0x45a		# id 0x41a -> id 0x85a
+	sidx_alias	0x45a		# id 0x41b -> id 0x85a
+	sidx_alias	0x45a		# id 0x41c -> id 0x85a
+	sidx_alias	0x45a		# id 0x41d -> id 0x85a
+	sidx_alias	0x45a		# id 0x41e -> id 0x85a
+	sidx_alias	0x45a		# id 0x41f -> id 0x85a
+	sidx_alias	0x45a		# id 0x420 -> id 0x85a
+	sidx_alias	0x45a		# id 0x421 -> id 0x85a
+	sidx_alias	0x45a		# id 0x422 -> id 0x85a
+	sidx_alias	0x45a		# id 0x423 -> id 0x85a
+	sidx_alias	0x45a		# id 0x424 -> id 0x85a
+	sidx_alias	0x45a		# id 0x425 -> id 0x85a
+	sidx_alias	0x45a		# id 0x426 -> id 0x85a
+	sidx_alias	0x45a		# id 0x427 -> id 0x85a
+	sidx_alias	0x45a		# id 0x428 -> id 0x85a
+	sidx_alias	0x45a		# id 0x429 -> id 0x85a
+	sidx_alias	0x45a		# id 0x42a -> id 0x85a
+	sidx_alias	0x45a		# id 0x42b -> id 0x85a
+	sidx_alias	0x45a		# id 0x42c -> id 0x85a
+	sidx_alias	0x45a		# id 0x42d -> id 0x85a
+	sidx_alias	0x45a		# id 0x42e -> id 0x85a
+	sidx_alias	0x45a		# id 0x42f -> id 0x85a
+	sidx_alias	0x45a		# id 0x430 -> id 0x85a
+	sidx_alias	0x45a		# id 0x431 -> id 0x85a
+	sidx_alias	0x45a		# id 0x432 -> id 0x85a
+	sidx_alias	0x45a		# id 0x433 -> id 0x85a
+	sidx_alias	0x45a		# id 0x434 -> id 0x85a
+	sidx_alias	0x45a		# id 0x435 -> id 0x85a
+	sidx_alias	0x45a		# id 0x436 -> id 0x85a
+	sidx_alias	0x45a		# id 0x437 -> id 0x85a
+	sidx_alias	0x45a		# id 0x438 -> id 0x85a
+	sidx_alias	0x45a		# id 0x439 -> id 0x85a
+	sidx_alias	0x45a		# id 0x43a -> id 0x85a
+	sidx_alias	0x45a		# id 0x43b -> id 0x85a
+	sidx_alias	0x45a		# id 0x43c -> id 0x85a
+	sidx_alias	0x45a		# id 0x43d -> id 0x85a
+	sidx_alias	0x45a		# id 0x43e -> id 0x85a
+	sidx_alias	0x45a		# id 0x43f -> id 0x85a
+	sidx_alias	0x45a		# id 0x440 -> id 0x85a
+	sidx_alias	0x45a		# id 0x441 -> id 0x85a
+	sidx_alias	0x45a		# id 0x442 -> id 0x85a
+	sidx_alias	0x45a		# id 0x443 -> id 0x85a
+	sidx_alias	0x45a		# id 0x444 -> id 0x85a
+	sidx_alias	0x45a		# id 0x445 -> id 0x85a
+	sidx_alias	0x45a		# id 0x446 -> id 0x85a
+	sidx_alias	0x45a		# id 0x447 -> id 0x85a
+	sidx_alias	0x45a		# id 0x448 -> id 0x85a
+	sidx_alias	0x45a		# id 0x449 -> id 0x85a
+	sidx_alias	0x45a		# id 0x44a -> id 0x85a
+	sidx_alias	0x45a		# id 0x44b -> id 0x85a
+	sidx_alias	0x45a		# id 0x44c -> id 0x85a
+	sidx_alias	0x45a		# id 0x44d -> id 0x85a
+	sidx_alias	0x45a		# id 0x44e -> id 0x85a
+	sidx_alias	0x45a		# id 0x44f -> id 0x85a
+	sidx_alias	0x45a		# id 0x450 -> id 0x85a
+	sidx_alias	0x45a		# id 0x451 -> id 0x85a
+	sidx_alias	0x45a		# id 0x452 -> id 0x85a
+	sidx_alias	0x45a		# id 0x453 -> id 0x85a
+	sidx_alias	0x45a		# id 0x454 -> id 0x85a
+	sidx_alias	0x45a		# id 0x455 -> id 0x85a
+	sidx_alias	0x45a		# id 0x456 -> id 0x85a
+	sidx_alias	0x45a		# id 0x457 -> id 0x85a
+	sidx_alias	0x45a		# id 0x458 -> id 0x85a
+	sidx_alias	0x45a		# id 0x459 -> id 0x85a
+	sidx_alias	0x45a		# id 0x45a -> id 0x85a
+	sidx_alias	0x45a		# id 0x45b -> id 0x85a
+	sidx_alias	0x45a		# id 0x45c -> id 0x85a
+	sidx_alias	0x45a		# id 0x45d -> id 0x85a
+	sidx_alias	0x45a		# id 0x45e -> id 0x85a
+	sidx_alias	0x45a		# id 0x45f -> id 0x85a
+	sidx_alias	0x45a		# id 0x460 -> id 0x85a
+	sidx_alias	0x45a		# id 0x461 -> id 0x85a
+	sidx_alias	0x45a		# id 0x462 -> id 0x85a
+	sidx_alias	0x45a		# id 0x463 -> id 0x85a
+	sidx_alias	0x45a		# id 0x464 -> id 0x85a
+	sidx_alias	0x45a		# id 0x465 -> id 0x85a
+	sidx_alias	0x45a		# id 0x466 -> id 0x85a
+	sidx_alias	0x45a		# id 0x467 -> id 0x85a
+	sidx_alias	0x45a		# id 0x468 -> id 0x85a
+	sidx_alias	0x45a		# id 0x469 -> id 0x85a
+	sidx_alias	0x45a		# id 0x46a -> id 0x85a
+	sidx_alias	0x45a		# id 0x46b -> id 0x85a
+	sidx_alias	0x45a		# id 0x46c -> id 0x85a
+	sidx_alias	0x45a		# id 0x46d -> id 0x85a
+	sidx_alias	0x45a		# id 0x46e -> id 0x85a
+	sidx_alias	0x45a		# id 0x46f -> id 0x85a
+	sidx_alias	0x45a		# id 0x470 -> id 0x85a
+	sidx_alias	0x45a		# id 0x471 -> id 0x85a
+	sidx_alias	0x45a		# id 0x472 -> id 0x85a
+	sidx_alias	0x45a		# id 0x473 -> id 0x85a
+	sidx_alias	0x45a		# id 0x474 -> id 0x85a
+	sidx_alias	0x45a		# id 0x475 -> id 0x85a
+	sidx_alias	0x45a		# id 0x476 -> id 0x85a
+	sidx_alias	0x45a		# id 0x477 -> id 0x85a
+	sidx_alias	0x45a		# id 0x478 -> id 0x85a
+	sidx_alias	0x45a		# id 0x479 -> id 0x85a
+	sidx_alias	0x45a		# id 0x47a -> id 0x85a
+	sidx_alias	0x45a		# id 0x47b -> id 0x85a
+	sidx_alias	0x45a		# id 0x47c -> id 0x85a
+	sidx_alias	0x45a		# id 0x47d -> id 0x85a
+	sidx_alias	0x45a		# id 0x47e -> id 0x85a
+	sidx_alias	0x45a		# id 0x47f -> id 0x85a
+	sidx_alias	0x45a		# id 0x500 -> id 0x85a
+	sidx_alias	0x45a		# id 0x501 -> id 0x85a
+	sidx_alias	0x45a		# id 0x502 -> id 0x85a
+	sidx_alias	0x45a		# id 0x503 -> id 0x85a
+	sidx_alias	0x45a		# id 0x504 -> id 0x85a
+	sidx_alias	0x45a		# id 0x505 -> id 0x85a
+	sidx_alias	0x45a		# id 0x506 -> id 0x85a
+	sidx_alias	0x45a		# id 0x507 -> id 0x85a
+	sidx_alias	0x45a		# id 0x508 -> id 0x85a
+	sidx_alias	0x45a		# id 0x509 -> id 0x85a
+	sidx_alias	0x45a		# id 0x50a -> id 0x85a
+	sidx_alias	0x45a		# id 0x50b -> id 0x85a
+	sidx_alias	0x45a		# id 0x50c -> id 0x85a
+	sidx_alias	0x45a		# id 0x50d -> id 0x85a
+	sidx_alias	0x45a		# id 0x50e -> id 0x85a
+	sidx_alias	0x45a		# id 0x50f -> id 0x85a
+	sidx_alias	0x45a		# id 0x510 -> id 0x85a
+	sidx_alias	0x45a		# id 0x511 -> id 0x85a
+	sidx_alias	0x45a		# id 0x512 -> id 0x85a
+	sidx_alias	0x45a		# id 0x513 -> id 0x85a
+	sidx_alias	0x45a		# id 0x514 -> id 0x85a
+	sidx_alias	0x45a		# id 0x515 -> id 0x85a
+	sidx_alias	0x45a		# id 0x516 -> id 0x85a
+	sidx_alias	0x45a		# id 0x517 -> id 0x85a
+	sidx_alias	0x45a		# id 0x518 -> id 0x85a
+	sidx_alias	0x45a		# id 0x519 -> id 0x85a
+	sidx_alias	0x45a		# id 0x51a -> id 0x85a
+	sidx_alias	0x45a		# id 0x51b -> id 0x85a
+	sidx_alias	0x45a		# id 0x51c -> id 0x85a
+	sidx_alias	0x45a		# id 0x51d -> id 0x85a
+	sidx_alias	0x45a		# id 0x51e -> id 0x85a
+	sidx_alias	0x45a		# id 0x51f -> id 0x85a
+	sidx_alias	0x45a		# id 0x520 -> id 0x85a
+	sidx_alias	0x45a		# id 0x521 -> id 0x85a
+	sidx_alias	0x45a		# id 0x522 -> id 0x85a
+	sidx_alias	0x45a		# id 0x523 -> id 0x85a
+	sidx_alias	0x45a		# id 0x524 -> id 0x85a
+	sidx_alias	0x45a		# id 0x525 -> id 0x85a
+	sidx_alias	0x45a		# id 0x526 -> id 0x85a
+	sidx_alias	0x45a		# id 0x527 -> id 0x85a
+	sidx_alias	0x45a		# id 0x528 -> id 0x85a
+	sidx_alias	0x45a		# id 0x529 -> id 0x85a
+	sidx_alias	0x45a		# id 0x52a -> id 0x85a
+	sidx_alias	0x45a		# id 0x52b -> id 0x85a
+	sidx_alias	0x45a		# id 0x52c -> id 0x85a
+	sidx_alias	0x45a		# id 0x52d -> id 0x85a
+	sidx_alias	0x45a		# id 0x52e -> id 0x85a
+	sidx_alias	0x45a		# id 0x52f -> id 0x85a
+	sidx_alias	0x45a		# id 0x530 -> id 0x85a
+	sidx_alias	0x45a		# id 0x531 -> id 0x85a
+	sidx_alias	0x45a		# id 0x532 -> id 0x85a
+	sidx_alias	0x45a		# id 0x533 -> id 0x85a
+	sidx_alias	0x45a		# id 0x534 -> id 0x85a
+	sidx_alias	0x45a		# id 0x535 -> id 0x85a
+	sidx_alias	0x45a		# id 0x536 -> id 0x85a
+	sidx_alias	0x45a		# id 0x537 -> id 0x85a
+	sidx_alias	0x45a		# id 0x538 -> id 0x85a
+	sidx_alias	0x45a		# id 0x539 -> id 0x85a
+	sidx_alias	0x45a		# id 0x53a -> id 0x85a
+	sidx_alias	0x45a		# id 0x53b -> id 0x85a
+	sidx_alias	0x45a		# id 0x53c -> id 0x85a
+	sidx_alias	0x45a		# id 0x53d -> id 0x85a
+	sidx_alias	0x45a		# id 0x53e -> id 0x85a
+	sidx_alias	0x45a		# id 0x53f -> id 0x85a
+	sidx_alias	0x45a		# id 0x540 -> id 0x85a
+	sidx_alias	0x45a		# id 0x541 -> id 0x85a
+	sidx_alias	0x45a		# id 0x542 -> id 0x85a
+	sidx_alias	0x45a		# id 0x543 -> id 0x85a
+	sidx_alias	0x45a		# id 0x544 -> id 0x85a
+	sidx_alias	0x45a		# id 0x545 -> id 0x85a
+	sidx_alias	0x45a		# id 0x546 -> id 0x85a
+	sidx_alias	0x45a		# id 0x547 -> id 0x85a
+	sidx_alias	0x45a		# id 0x548 -> id 0x85a
+	sidx_alias	0x45a		# id 0x549 -> id 0x85a
+	sidx_alias	0x45a		# id 0x54a -> id 0x85a
+	sidx_alias	0x45a		# id 0x54b -> id 0x85a
+	sidx_alias	0x45a		# id 0x54c -> id 0x85a
+	sidx_alias	0x45a		# id 0x54d -> id 0x85a
+	sidx_alias	0x45a		# id 0x54e -> id 0x85a
+	sidx_alias	0x45a		# id 0x54f -> id 0x85a
+	sidx_alias	0x45a		# id 0x550 -> id 0x85a
+	sidx_alias	0x45a		# id 0x551 -> id 0x85a
+	sidx_alias	0x45a		# id 0x552 -> id 0x85a
+	sidx_alias	0x45a		# id 0x553 -> id 0x85a
+	sidx_alias	0x45a		# id 0x554 -> id 0x85a
+	sidx_alias	0x45a		# id 0x555 -> id 0x85a
+	sidx_alias	0x45a		# id 0x556 -> id 0x85a
+	sidx_alias	0x45a		# id 0x557 -> id 0x85a
+	sidx_alias	0x45a		# id 0x558 -> id 0x85a
+	sidx_alias	0x45a		# id 0x559 -> id 0x85a
+	sidx_alias	0x45a		# id 0x55a -> id 0x85a
+	sidx_alias	0x45a		# id 0x55b -> id 0x85a
+	sidx_alias	0x45a		# id 0x55c -> id 0x85a
+	sidx_alias	0x45a		# id 0x55d -> id 0x85a
+	sidx_alias	0x45a		# id 0x55e -> id 0x85a
+	sidx_alias	0x45a		# id 0x55f -> id 0x85a
+	sidx_alias	0x45a		# id 0x560 -> id 0x85a
+	sidx_alias	0x45a		# id 0x561 -> id 0x85a
+	sidx_alias	0x45a		# id 0x562 -> id 0x85a
+	sidx_alias	0x45a		# id 0x563 -> id 0x85a
+	sidx_alias	0x45a		# id 0x564 -> id 0x85a
+	sidx_alias	0x45a		# id 0x565 -> id 0x85a
+	sidx_alias	0x45a		# id 0x566 -> id 0x85a
+	sidx_alias	0x45a		# id 0x567 -> id 0x85a
+	sidx_alias	0x45a		# id 0x568 -> id 0x85a
+	sidx_alias	0x45a		# id 0x569 -> id 0x85a
+	sidx_alias	0x45a		# id 0x56a -> id 0x85a
+	sidx_alias	0x45a		# id 0x56b -> id 0x85a
+	sidx_alias	0x45a		# id 0x56c -> id 0x85a
+	sidx_alias	0x45a		# id 0x56d -> id 0x85a
+	sidx_alias	0x45a		# id 0x56e -> id 0x85a
+	sidx_alias	0x45a		# id 0x56f -> id 0x85a
+	sidx_alias	0x45a		# id 0x570 -> id 0x85a
+	sidx_alias	0x45a		# id 0x571 -> id 0x85a
+	sidx_alias	0x45a		# id 0x572 -> id 0x85a
+	sidx_alias	0x45a		# id 0x573 -> id 0x85a
+	sidx_alias	0x45a		# id 0x574 -> id 0x85a
+	sidx_alias	0x45a		# id 0x575 -> id 0x85a
+	sidx_alias	0x45a		# id 0x576 -> id 0x85a
+	sidx_alias	0x45a		# id 0x577 -> id 0x85a
+	sidx_alias	0x45a		# id 0x578 -> id 0x85a
+	sidx_alias	0x45a		# id 0x579 -> id 0x85a
+	sidx_alias	0x45a		# id 0x57a -> id 0x85a
+	sidx_alias	0x45a		# id 0x57b -> id 0x85a
+	sidx_alias	0x45a		# id 0x57c -> id 0x85a
+	sidx_alias	0x45a		# id 0x57d -> id 0x85a
+	sidx_alias	0x45a		# id 0x57e -> id 0x85a
+	sidx_alias	0x45a		# id 0x57f -> id 0x85a
+	sidx_alias	0x45a		# id 0x600 -> id 0x85a
+	sidx_alias	0x45a		# id 0x601 -> id 0x85a
+	sidx_alias	0x45a		# id 0x602 -> id 0x85a
+	sidx_alias	0x45a		# id 0x603 -> id 0x85a
+	sidx_alias	0x45a		# id 0x604 -> id 0x85a
+	sidx_alias	0x45a		# id 0x605 -> id 0x85a
+	sidx_alias	0x45a		# id 0x606 -> id 0x85a
+	sidx_alias	0x45a		# id 0x607 -> id 0x85a
+	sidx_alias	0x45a		# id 0x608 -> id 0x85a
+	sidx_alias	0x45a		# id 0x609 -> id 0x85a
+	sidx_alias	0x45a		# id 0x60a -> id 0x85a
+	sidx_alias	0x45a		# id 0x60b -> id 0x85a
+	sidx_alias	0x45a		# id 0x60c -> id 0x85a
+	sidx_alias	0x45a		# id 0x60d -> id 0x85a
+	sidx_alias	0x45a		# id 0x60e -> id 0x85a
+	sidx_alias	0x45a		# id 0x60f -> id 0x85a
+	sidx_alias	0x45a		# id 0x610 -> id 0x85a
+	sidx_alias	0x45a		# id 0x611 -> id 0x85a
+	sidx_alias	0x45a		# id 0x612 -> id 0x85a
+	sidx_alias	0x45a		# id 0x613 -> id 0x85a
+	sidx_alias	0x45a		# id 0x614 -> id 0x85a
+	sidx_alias	0x45a		# id 0x615 -> id 0x85a
+	sidx_alias	0x45a		# id 0x616 -> id 0x85a
+	sidx_alias	0x45a		# id 0x617 -> id 0x85a
+	sidx_alias	0x45a		# id 0x618 -> id 0x85a
+	sidx_alias	0x45a		# id 0x619 -> id 0x85a
+	sidx_alias	0x45a		# id 0x61a -> id 0x85a
+	sidx_alias	0x45a		# id 0x61b -> id 0x85a
+	sidx_alias	0x45a		# id 0x61c -> id 0x85a
+	sidx_alias	0x45a		# id 0x61d -> id 0x85a
+	sidx_alias	0x45a		# id 0x61e -> id 0x85a
+	sidx_alias	0x45a		# id 0x61f -> id 0x85a
+	sidx_alias	0x45a		# id 0x620 -> id 0x85a
+	sidx_alias	0x45a		# id 0x621 -> id 0x85a
+	sidx_alias	0x45a		# id 0x622 -> id 0x85a
+	sidx_alias	0x45a		# id 0x623 -> id 0x85a
+	sidx_alias	0x45a		# id 0x624 -> id 0x85a
+	sidx_alias	0x45a		# id 0x625 -> id 0x85a
+	sidx_alias	0x45a		# id 0x626 -> id 0x85a
+	sidx_alias	0x45a		# id 0x627 -> id 0x85a
+	sidx_alias	0x45a		# id 0x628 -> id 0x85a
+	sidx_alias	0x45a		# id 0x629 -> id 0x85a
+	sidx_alias	0x45a		# id 0x62a -> id 0x85a
+	sidx_alias	0x45a		# id 0x62b -> id 0x85a
+	sidx_alias	0x45a		# id 0x62c -> id 0x85a
+	sidx_alias	0x45a		# id 0x62d -> id 0x85a
+	sidx_alias	0x45a		# id 0x62e -> id 0x85a
+	sidx_alias	0x45a		# id 0x62f -> id 0x85a
+	sidx_alias	0x45a		# id 0x630 -> id 0x85a
+	sidx_alias	0x45a		# id 0x631 -> id 0x85a
+	sidx_alias	0x45a		# id 0x632 -> id 0x85a
+	sidx_alias	0x45a		# id 0x633 -> id 0x85a
+	sidx_alias	0x45a		# id 0x634 -> id 0x85a
+	sidx_alias	0x45a		# id 0x635 -> id 0x85a
+	sidx_alias	0x45a		# id 0x636 -> id 0x85a
+	sidx_alias	0x45a		# id 0x637 -> id 0x85a
+	sidx_alias	0x45a		# id 0x638 -> id 0x85a
+	sidx_alias	0x45a		# id 0x639 -> id 0x85a
+	sidx_alias	0x45a		# id 0x63a -> id 0x85a
+	sidx_alias	0x45a		# id 0x63b -> id 0x85a
+	sidx_alias	0x45a		# id 0x63c -> id 0x85a
+	sidx_alias	0x45a		# id 0x63d -> id 0x85a
+	sidx_alias	0x45a		# id 0x63e -> id 0x85a
+	sidx_alias	0x45a		# id 0x63f -> id 0x85a
+	sidx_alias	0x45a		# id 0x640 -> id 0x85a
+	sidx_alias	0x45a		# id 0x641 -> id 0x85a
+	sidx_alias	0x45a		# id 0x642 -> id 0x85a
+	sidx_alias	0x45a		# id 0x643 -> id 0x85a
+	sidx_alias	0x45a		# id 0x644 -> id 0x85a
+	sidx_alias	0x45a		# id 0x645 -> id 0x85a
+	sidx_alias	0x45a		# id 0x646 -> id 0x85a
+	sidx_alias	0x45a		# id 0x647 -> id 0x85a
+	sidx_alias	0x45a		# id 0x648 -> id 0x85a
+	sidx_alias	0x45a		# id 0x649 -> id 0x85a
+	sidx_alias	0x45a		# id 0x64a -> id 0x85a
+	sidx_alias	0x45a		# id 0x64b -> id 0x85a
+	sidx_alias	0x45a		# id 0x64c -> id 0x85a
+	sidx_alias	0x45a		# id 0x64d -> id 0x85a
+	sidx_alias	0x45a		# id 0x64e -> id 0x85a
+	sidx_alias	0x45a		# id 0x64f -> id 0x85a
+	sidx_alias	0x45a		# id 0x650 -> id 0x85a
+	sidx_alias	0x45a		# id 0x651 -> id 0x85a
+	sidx_alias	0x45a		# id 0x652 -> id 0x85a
+	sidx_alias	0x45a		# id 0x653 -> id 0x85a
+	sidx_alias	0x45a		# id 0x654 -> id 0x85a
+	sidx_alias	0x45a		# id 0x655 -> id 0x85a
+	sidx_alias	0x45a		# id 0x656 -> id 0x85a
+	sidx_alias	0x45a		# id 0x657 -> id 0x85a
+	sidx_alias	0x45a		# id 0x658 -> id 0x85a
+	sidx_alias	0x45a		# id 0x659 -> id 0x85a
+	sidx_alias	0x45a		# id 0x65a -> id 0x85a
+	sidx_alias	0x45a		# id 0x65b -> id 0x85a
+	sidx_alias	0x45a		# id 0x65c -> id 0x85a
+	sidx_alias	0x45a		# id 0x65d -> id 0x85a
+	sidx_alias	0x45a		# id 0x65e -> id 0x85a
+	sidx_alias	0x45a		# id 0x65f -> id 0x85a
+	sidx_alias	0x45a		# id 0x660 -> id 0x85a
+	sidx_alias	0x45a		# id 0x661 -> id 0x85a
+	sidx_alias	0x45a		# id 0x662 -> id 0x85a
+	sidx_alias	0x45a		# id 0x663 -> id 0x85a
+	sidx_alias	0x45a		# id 0x664 -> id 0x85a
+	sidx_alias	0x45a		# id 0x665 -> id 0x85a
+	sidx_alias	0x45a		# id 0x666 -> id 0x85a
+	sidx_alias	0x45a		# id 0x667 -> id 0x85a
+	sidx_alias	0x45a		# id 0x668 -> id 0x85a
+	sidx_alias	0x45a		# id 0x669 -> id 0x85a
+	sidx_alias	0x45a		# id 0x66a -> id 0x85a
+	sidx_alias	0x45a		# id 0x66b -> id 0x85a
+	sidx_alias	0x45a		# id 0x66c -> id 0x85a
+	sidx_alias	0x45a		# id 0x66d -> id 0x85a
+	sidx_alias	0x45a		# id 0x66e -> id 0x85a
+	sidx_alias	0x45a		# id 0x66f -> id 0x85a
+	sidx_alias	0x45a		# id 0x670 -> id 0x85a
+	sidx_alias	0x45a		# id 0x671 -> id 0x85a
+	sidx_alias	0x45a		# id 0x672 -> id 0x85a
+	sidx_alias	0x45a		# id 0x673 -> id 0x85a
+	sidx_alias	0x45a		# id 0x674 -> id 0x85a
+	sidx_alias	0x45a		# id 0x675 -> id 0x85a
+	sidx_alias	0x45a		# id 0x676 -> id 0x85a
+	sidx_alias	0x45a		# id 0x677 -> id 0x85a
+	sidx_alias	0x45a		# id 0x678 -> id 0x85a
+	sidx_alias	0x45a		# id 0x679 -> id 0x85a
+	sidx_alias	0x45a		# id 0x67a -> id 0x85a
+	sidx_alias	0x45a		# id 0x67b -> id 0x85a
+	sidx_alias	0x45a		# id 0x67c -> id 0x85a
+	sidx_alias	0x45a		# id 0x67d -> id 0x85a
+	sidx_alias	0x45a		# id 0x67e -> id 0x85a
+	sidx_alias	0x45a		# id 0x67f -> id 0x85a
+	sidx_alias	0x45a		# id 0x700 -> id 0x85a
+	sidx_alias	0x45a		# id 0x701 -> id 0x85a
+	sidx_alias	0x45a		# id 0x702 -> id 0x85a
+	sidx_alias	0x45a		# id 0x703 -> id 0x85a
+	sidx_alias	0x45a		# id 0x704 -> id 0x85a
+	sidx_alias	0x45a		# id 0x705 -> id 0x85a
+	sidx_alias	0x45a		# id 0x706 -> id 0x85a
+	sidx_alias	0x45a		# id 0x707 -> id 0x85a
+	sidx_alias	0x45a		# id 0x708 -> id 0x85a
+	sidx_alias	0x45a		# id 0x709 -> id 0x85a
+	sidx_alias	0x45a		# id 0x70a -> id 0x85a
+	sidx_alias	0x45a		# id 0x70b -> id 0x85a
+	sidx_alias	0x45a		# id 0x70c -> id 0x85a
+	sidx_alias	0x45a		# id 0x70d -> id 0x85a
+	sidx_alias	0x45a		# id 0x70e -> id 0x85a
+	sidx_alias	0x45a		# id 0x70f -> id 0x85a
+	sidx_alias	0x45a		# id 0x710 -> id 0x85a
+	sidx_alias	0x45a		# id 0x711 -> id 0x85a
+	sidx_alias	0x45a		# id 0x712 -> id 0x85a
+	sidx_alias	0x45a		# id 0x713 -> id 0x85a
+	sidx_alias	0x45a		# id 0x714 -> id 0x85a
+	sidx_alias	0x45a		# id 0x715 -> id 0x85a
+	sidx_alias	0x45a		# id 0x716 -> id 0x85a
+	sidx_alias	0x45a		# id 0x717 -> id 0x85a
+	sidx_alias	0x45a		# id 0x718 -> id 0x85a
+	sidx_alias	0x45a		# id 0x719 -> id 0x85a
+	sidx_alias	0x45a		# id 0x71a -> id 0x85a
+	sidx_alias	0x45a		# id 0x71b -> id 0x85a
+	sidx_alias	0x45a		# id 0x71c -> id 0x85a
+	sidx_alias	0x45a		# id 0x71d -> id 0x85a
+	sidx_alias	0x45a		# id 0x71e -> id 0x85a
+	sidx_alias	0x45a		# id 0x71f -> id 0x85a
+	sidx_alias	0x45a		# id 0x720 -> id 0x85a
+	sidx_alias	0x45a		# id 0x721 -> id 0x85a
+	sidx_alias	0x45a		# id 0x722 -> id 0x85a
+	sidx_alias	0x45a		# id 0x723 -> id 0x85a
+	sidx_alias	0x45a		# id 0x724 -> id 0x85a
+	sidx_alias	0x45a		# id 0x725 -> id 0x85a
+	sidx_alias	0x45a		# id 0x726 -> id 0x85a
+	sidx_alias	0x45a		# id 0x727 -> id 0x85a
+	sidx_alias	0x45a		# id 0x728 -> id 0x85a
+	sidx_alias	0x45a		# id 0x729 -> id 0x85a
+	sidx_alias	0x45a		# id 0x72a -> id 0x85a
+	sidx_alias	0x45a		# id 0x72b -> id 0x85a
+	sidx_alias	0x45a		# id 0x72c -> id 0x85a
+	sidx_alias	0x45a		# id 0x72d -> id 0x85a
+	sidx_alias	0x45a		# id 0x72e -> id 0x85a
+	sidx_alias	0x45a		# id 0x72f -> id 0x85a
+	sidx_alias	0x45a		# id 0x730 -> id 0x85a
+	sidx_alias	0x45a		# id 0x731 -> id 0x85a
+	sidx_alias	0x45a		# id 0x732 -> id 0x85a
+	sidx_alias	0x45a		# id 0x733 -> id 0x85a
+	sidx_alias	0x45a		# id 0x734 -> id 0x85a
+	sidx_alias	0x45a		# id 0x735 -> id 0x85a
+	sidx_alias	0x45a		# id 0x736 -> id 0x85a
+	sidx_alias	0x45a		# id 0x737 -> id 0x85a
+	sidx_alias	0x45a		# id 0x738 -> id 0x85a
+	sidx_alias	0x45a		# id 0x739 -> id 0x85a
+	sidx_alias	0x45a		# id 0x73a -> id 0x85a
+	sidx_alias	0x45a		# id 0x73b -> id 0x85a
+	sidx_alias	0x45a		# id 0x73c -> id 0x85a
+	sidx_alias	0x45a		# id 0x73d -> id 0x85a
+	sidx_alias	0x45a		# id 0x73e -> id 0x85a
+	sidx_alias	0x45a		# id 0x73f -> id 0x85a
+	sidx_alias	0x45a		# id 0x740 -> id 0x85a
+	sidx_alias	0x45a		# id 0x741 -> id 0x85a
+	sidx_alias	0x45a		# id 0x742 -> id 0x85a
+	sidx_alias	0x45a		# id 0x743 -> id 0x85a
+	sidx_alias	0x45a		# id 0x744 -> id 0x85a
+	sidx_alias	0x45a		# id 0x745 -> id 0x85a
+	sidx_alias	0x45a		# id 0x746 -> id 0x85a
+	sidx_alias	0x45a		# id 0x747 -> id 0x85a
+	sidx_alias	0x45a		# id 0x748 -> id 0x85a
+	sidx_alias	0x45a		# id 0x749 -> id 0x85a
+	sidx_alias	0x45a		# id 0x74a -> id 0x85a
+	sidx_alias	0x45a		# id 0x74b -> id 0x85a
+	sidx_alias	0x45a		# id 0x74c -> id 0x85a
+	sidx_alias	0x45a		# id 0x74d -> id 0x85a
+	sidx_alias	0x45a		# id 0x74e -> id 0x85a
+	sidx_alias	0x45a		# id 0x74f -> id 0x85a
+	sidx_alias	0x45a		# id 0x750 -> id 0x85a
+	sidx_alias	0x45a		# id 0x751 -> id 0x85a
+	sidx_alias	0x45a		# id 0x752 -> id 0x85a
+	sidx_alias	0x45a		# id 0x753 -> id 0x85a
+	sidx_alias	0x45a		# id 0x754 -> id 0x85a
+	sidx_alias	0x45a		# id 0x755 -> id 0x85a
+	sidx_alias	0x45a		# id 0x756 -> id 0x85a
+	sidx_alias	0x45a		# id 0x757 -> id 0x85a
+	sidx_alias	0x45a		# id 0x758 -> id 0x85a
+	sidx_alias	0x45a		# id 0x759 -> id 0x85a
+	sidx_alias	0x45a		# id 0x75a -> id 0x85a
+	sidx_alias	0x45a		# id 0x75b -> id 0x85a
+	sidx_alias	0x45a		# id 0x75c -> id 0x85a
+	sidx_alias	0x45a		# id 0x75d -> id 0x85a
+	sidx_alias	0x45a		# id 0x75e -> id 0x85a
+	sidx_alias	0x45a		# id 0x75f -> id 0x85a
+	sidx_alias	0x45a		# id 0x760 -> id 0x85a
+	sidx_alias	0x45a		# id 0x761 -> id 0x85a
+	sidx_alias	0x45a		# id 0x762 -> id 0x85a
+	sidx_alias	0x45a		# id 0x763 -> id 0x85a
+	sidx_alias	0x45a		# id 0x764 -> id 0x85a
+	sidx_alias	0x45a		# id 0x765 -> id 0x85a
+	sidx_alias	0x45a		# id 0x766 -> id 0x85a
+	sidx_alias	0x45a		# id 0x767 -> id 0x85a
+	sidx_alias	0x45a		# id 0x768 -> id 0x85a
+	sidx_alias	0x45a		# id 0x769 -> id 0x85a
+	sidx_alias	0x45a		# id 0x76a -> id 0x85a
+	sidx_alias	0x45a		# id 0x76b -> id 0x85a
+	sidx_alias	0x45a		# id 0x76c -> id 0x85a
+	sidx_alias	0x45a		# id 0x76d -> id 0x85a
+	sidx_alias	0x45a		# id 0x76e -> id 0x85a
+	sidx_alias	0x45a		# id 0x76f -> id 0x85a
+	sidx_alias	0x45a		# id 0x770 -> id 0x85a
+	sidx_alias	0x45a		# id 0x771 -> id 0x85a
+	sidx_alias	0x45a		# id 0x772 -> id 0x85a
+	sidx_alias	0x45a		# id 0x773 -> id 0x85a
+	sidx_alias	0x45a		# id 0x774 -> id 0x85a
+	sidx_alias	0x45a		# id 0x775 -> id 0x85a
+	sidx_alias	0x45a		# id 0x776 -> id 0x85a
+	sidx_alias	0x45a		# id 0x777 -> id 0x85a
+	sidx_alias	0x45a		# id 0x778 -> id 0x85a
+	sidx_alias	0x45a		# id 0x779 -> id 0x85a
+	sidx_alias	0x45a		# id 0x77a -> id 0x85a
+	sidx_alias	0x45a		# id 0x77b -> id 0x85a
+	sidx_alias	0x45a		# id 0x77c -> id 0x85a
+	sidx_alias	0x45a		# id 0x77d -> id 0x85a
+	sidx_alias	0x45a		# id 0x77e -> id 0x85a
+	sidx_alias	0x45a		# id 0x77f -> id 0x85a
+	sidx_alias	0x45a		# id 0x800 -> id 0x85a
+	sidx_alias	0x45a		# id 0x801 -> id 0x85a
+	sidx_alias	0x45a		# id 0x802 -> id 0x85a
+	sidx_alias	0x45a		# id 0x803 -> id 0x85a
+	sidx_alias	0x45a		# id 0x804 -> id 0x85a
+	sidx_alias	0x45a		# id 0x805 -> id 0x85a
+	sidx_alias	0x45a		# id 0x806 -> id 0x85a
+	sidx_alias	0x45a		# id 0x807 -> id 0x85a
+	sidx_alias	0x45a		# id 0x808 -> id 0x85a
+	sidx_alias	0x45a		# id 0x809 -> id 0x85a
+	sidx_alias	0x45a		# id 0x80a -> id 0x85a
+	sidx_alias	0x45a		# id 0x80b -> id 0x85a
+	sidx_alias	0x45a		# id 0x80c -> id 0x85a
+	sidx_alias	0x45a		# id 0x80d -> id 0x85a
+	sidx_alias	0x45a		# id 0x80e -> id 0x85a
+	sidx_alias	0x45a		# id 0x80f -> id 0x85a
+	sidx_alias	0x45a		# id 0x810 -> id 0x85a
+	sidx_alias	0x45a		# id 0x811 -> id 0x85a
+	sidx_alias	0x45a		# id 0x812 -> id 0x85a
+	sidx_alias	0x45a		# id 0x813 -> id 0x85a
+	sidx_alias	0x45a		# id 0x814 -> id 0x85a
+	sidx_alias	0x45a		# id 0x815 -> id 0x85a
+	sidx_alias	0x45a		# id 0x816 -> id 0x85a
+	sidx_alias	0x45a		# id 0x817 -> id 0x85a
+	sidx_alias	0x45a		# id 0x818 -> id 0x85a
+	sidx_alias	0x45a		# id 0x819 -> id 0x85a
+	sidx_alias	0x45a		# id 0x81a -> id 0x85a
+	sidx_alias	0x45a		# id 0x81b -> id 0x85a
+	sidx_alias	0x45a		# id 0x81c -> id 0x85a
+	sidx_alias	0x45a		# id 0x81d -> id 0x85a
+	sidx_alias	0x45a		# id 0x81e -> id 0x85a
+	sidx_alias	0x45a		# id 0x81f -> id 0x85a
+	sidx_alias	0x45a		# id 0x820 -> id 0x85a
+	sidx_alias	0x45a		# id 0x821 -> id 0x85a
+	sidx_alias	0x45a		# id 0x822 -> id 0x85a
+	sidx_alias	0x45a		# id 0x823 -> id 0x85a
+	sidx_alias	0x45a		# id 0x824 -> id 0x85a
+	sidx_alias	0x45a		# id 0x825 -> id 0x85a
+	sidx_alias	0x45a		# id 0x826 -> id 0x85a
+	sidx_alias	0x45a		# id 0x827 -> id 0x85a
+	sidx_alias	0x45a		# id 0x828 -> id 0x85a
+	sidx_alias	0x45a		# id 0x829 -> id 0x85a
+	sidx_alias	0x45a		# id 0x82a -> id 0x85a
+	sidx_alias	0x45a		# id 0x82b -> id 0x85a
+	sidx_alias	0x45a		# id 0x82c -> id 0x85a
+	sidx_alias	0x45a		# id 0x82d -> id 0x85a
+	sidx_alias	0x45a		# id 0x82e -> id 0x85a
+	sidx_alias	0x45a		# id 0x82f -> id 0x85a
+	sidx_alias	0x45a		# id 0x830 -> id 0x85a
+	sidx_alias	0x45a		# id 0x831 -> id 0x85a
+	sidx_alias	0x45a		# id 0x832 -> id 0x85a
+	sidx_alias	0x45a		# id 0x833 -> id 0x85a
+	sidx_alias	0x45a		# id 0x834 -> id 0x85a
+	sidx_alias	0x45a		# id 0x835 -> id 0x85a
+	sidx_alias	0x45a		# id 0x836 -> id 0x85a
+	sidx_alias	0x45a		# id 0x837 -> id 0x85a
+	sidx_alias	0x45a		# id 0x838 -> id 0x85a
+	sidx_alias	0x45a		# id 0x839 -> id 0x85a
+	sidx_alias	0x45a		# id 0x83a -> id 0x85a
+	sidx_alias	0x45a		# id 0x83b -> id 0x85a
+	sidx_alias	0x45a		# id 0x83c -> id 0x85a
+	sidx_alias	0x45a		# id 0x83d -> id 0x85a
+	sidx_alias	0x45a		# id 0x83e -> id 0x85a
+	sidx_alias	0x45a		# id 0x83f -> id 0x85a
+	sidx_alias	0x45a		# id 0x840 -> id 0x85a
+	sidx_alias	0x45a		# id 0x841 -> id 0x85a
+	sidx_alias	0x45a		# id 0x842 -> id 0x85a
+	sidx_alias	0x45a		# id 0x843 -> id 0x85a
+	sidx_alias	0x45a		# id 0x844 -> id 0x85a
+	sidx_alias	0x45a		# id 0x845 -> id 0x85a
+	sidx_alias	0x45a		# id 0x846 -> id 0x85a
+	sidx_alias	0x45a		# id 0x847 -> id 0x85a
+	sidx_alias	0x45a		# id 0x848 -> id 0x85a
+	sidx_alias	0x45a		# id 0x849 -> id 0x85a
+	sidx_alias	0x45a		# id 0x84a -> id 0x85a
+	sidx_alias	0x45a		# id 0x84b -> id 0x85a
+	sidx_alias	0x45a		# id 0x84c -> id 0x85a
+	sidx_alias	0x45a		# id 0x84d -> id 0x85a
+	sidx_alias	0x45a		# id 0x84e -> id 0x85a
+	sidx_alias	0x45a		# id 0x84f -> id 0x85a
+	sidx_alias	0x45a		# id 0x850 -> id 0x85a
+	sidx_alias	0x45a		# id 0x851 -> id 0x85a
+	sidx_alias	0x45a		# id 0x852 -> id 0x85a
+	sidx_alias	0x45a		# id 0x853 -> id 0x85a
+	sidx_alias	0x45a		# id 0x854 -> id 0x85a
+	sidx_alias	0x45a		# id 0x855 -> id 0x85a
+	sidx_alias	0x45a		# id 0x856 -> id 0x85a
+	sidx_alias	0x45a		# id 0x857 -> id 0x85a
+	sidx_alias	0x45a		# id 0x858 -> id 0x85a
+	sidx_alias	0x45a		# id 0x859 -> id 0x85a
+	sidx_style	TechnicsRhythmsResource_SNo0	# id 0x85a
+	sidx_alias	0x45a		# id 0x85b -> id 0x85a
+	sidx_alias	0x45a		# id 0x85c -> id 0x85a
+	sidx_alias	0x45a		# id 0x85d -> id 0x85a
+	sidx_alias	0x45a		# id 0x85e -> id 0x85a
+	sidx_alias	0x45a		# id 0x85f -> id 0x85a
+	sidx_alias	0x45a		# id 0x860 -> id 0x85a
+	sidx_alias	0x45a		# id 0x861 -> id 0x85a
+	sidx_alias	0x45a		# id 0x862 -> id 0x85a
+	sidx_alias	0x45a		# id 0x863 -> id 0x85a
+	sidx_alias	0x45a		# id 0x864 -> id 0x85a
+	sidx_alias	0x45a		# id 0x865 -> id 0x85a
+	sidx_alias	0x45a		# id 0x866 -> id 0x85a
+	sidx_alias	0x45a		# id 0x867 -> id 0x85a
+	sidx_alias	0x45a		# id 0x868 -> id 0x85a
+	sidx_alias	0x45a		# id 0x869 -> id 0x85a
+	sidx_alias	0x45a		# id 0x86a -> id 0x85a
+	sidx_alias	0x45a		# id 0x86b -> id 0x85a
+	sidx_alias	0x45a		# id 0x86c -> id 0x85a
+	sidx_alias	0x45a		# id 0x86d -> id 0x85a
+	sidx_alias	0x45a		# id 0x86e -> id 0x85a
+	sidx_alias	0x45a		# id 0x86f -> id 0x85a
+	sidx_alias	0x45a		# id 0x870 -> id 0x85a
+	sidx_alias	0x45a		# id 0x871 -> id 0x85a
+	sidx_alias	0x45a		# id 0x872 -> id 0x85a
+	sidx_alias	0x45a		# id 0x873 -> id 0x85a
+	sidx_alias	0x45a		# id 0x874 -> id 0x85a
+	sidx_alias	0x45a		# id 0x875 -> id 0x85a
+	sidx_alias	0x45a		# id 0x876 -> id 0x85a
+	sidx_alias	0x45a		# id 0x877 -> id 0x85a
+	sidx_alias	0x45a		# id 0x878 -> id 0x85a
+	sidx_alias	0x45a		# id 0x879 -> id 0x85a
+	sidx_alias	0x45a		# id 0x87a -> id 0x85a
+	sidx_alias	0x45a		# id 0x87b -> id 0x85a
+	sidx_alias	0x45a		# id 0x87c -> id 0x85a
+	sidx_alias	0x45a		# id 0x87d -> id 0x85a
+	sidx_alias	0x45a		# id 0x87e -> id 0x85a
+	sidx_alias	0x45a		# id 0x87f -> id 0x85a
+	sidx_alias	0x45a		# id 0x900 -> id 0x85a
+	sidx_alias	0x45a		# id 0x901 -> id 0x85a
+	sidx_alias	0x45a		# id 0x902 -> id 0x85a
+	sidx_alias	0x45a		# id 0x903 -> id 0x85a
+	sidx_alias	0x45a		# id 0x904 -> id 0x85a
+	sidx_alias	0x45a		# id 0x905 -> id 0x85a
+	sidx_alias	0x45a		# id 0x906 -> id 0x85a
+	sidx_alias	0x45a		# id 0x907 -> id 0x85a
+	sidx_alias	0x45a		# id 0x908 -> id 0x85a
+	sidx_alias	0x45a		# id 0x909 -> id 0x85a
+	sidx_alias	0x45a		# id 0x90a -> id 0x85a
+	sidx_alias	0x45a		# id 0x90b -> id 0x85a
+	sidx_alias	0x45a		# id 0x90c -> id 0x85a
+	sidx_alias	0x45a		# id 0x90d -> id 0x85a
+	sidx_alias	0x45a		# id 0x90e -> id 0x85a
+	sidx_alias	0x45a		# id 0x90f -> id 0x85a
+	sidx_alias	0x45a		# id 0x910 -> id 0x85a
+	sidx_alias	0x45a		# id 0x911 -> id 0x85a
+	sidx_alias	0x45a		# id 0x912 -> id 0x85a
+	sidx_alias	0x45a		# id 0x913 -> id 0x85a
+	sidx_alias	0x45a		# id 0x914 -> id 0x85a
+	sidx_alias	0x45a		# id 0x915 -> id 0x85a
+	sidx_alias	0x45a		# id 0x916 -> id 0x85a
+	sidx_alias	0x45a		# id 0x917 -> id 0x85a
+	sidx_alias	0x45a		# id 0x918 -> id 0x85a
+	sidx_alias	0x45a		# id 0x919 -> id 0x85a
+	sidx_alias	0x45a		# id 0x91a -> id 0x85a
+	sidx_alias	0x45a		# id 0x91b -> id 0x85a
+	sidx_alias	0x45a		# id 0x91c -> id 0x85a
+	sidx_alias	0x45a		# id 0x91d -> id 0x85a
+	sidx_alias	0x45a		# id 0x91e -> id 0x85a
+	sidx_alias	0x45a		# id 0x91f -> id 0x85a
+	sidx_alias	0x45a		# id 0x920 -> id 0x85a
+	sidx_alias	0x45a		# id 0x921 -> id 0x85a
+	sidx_alias	0x45a		# id 0x922 -> id 0x85a
+	sidx_alias	0x45a		# id 0x923 -> id 0x85a
+	sidx_alias	0x45a		# id 0x924 -> id 0x85a
+	sidx_alias	0x45a		# id 0x925 -> id 0x85a
+	sidx_alias	0x45a		# id 0x926 -> id 0x85a
+	sidx_alias	0x45a		# id 0x927 -> id 0x85a
+	sidx_alias	0x45a		# id 0x928 -> id 0x85a
+	sidx_alias	0x45a		# id 0x929 -> id 0x85a
+	sidx_alias	0x45a		# id 0x92a -> id 0x85a
+	sidx_alias	0x45a		# id 0x92b -> id 0x85a
+	sidx_alias	0x45a		# id 0x92c -> id 0x85a
+	sidx_alias	0x45a		# id 0x92d -> id 0x85a
+	sidx_alias	0x45a		# id 0x92e -> id 0x85a
+	sidx_alias	0x45a		# id 0x92f -> id 0x85a
+	sidx_alias	0x45a		# id 0x930 -> id 0x85a
+	sidx_alias	0x45a		# id 0x931 -> id 0x85a
+	sidx_alias	0x45a		# id 0x932 -> id 0x85a
+	sidx_alias	0x45a		# id 0x933 -> id 0x85a
+	sidx_alias	0x45a		# id 0x934 -> id 0x85a
+	sidx_alias	0x45a		# id 0x935 -> id 0x85a
+	sidx_alias	0x45a		# id 0x936 -> id 0x85a
+	sidx_alias	0x45a		# id 0x937 -> id 0x85a
+	sidx_alias	0x45a		# id 0x938 -> id 0x85a
+	sidx_alias	0x45a		# id 0x939 -> id 0x85a
+	sidx_alias	0x45a		# id 0x93a -> id 0x85a
+	sidx_alias	0x45a		# id 0x93b -> id 0x85a
+	sidx_alias	0x45a		# id 0x93c -> id 0x85a
+	sidx_alias	0x45a		# id 0x93d -> id 0x85a
+	sidx_alias	0x45a		# id 0x93e -> id 0x85a
+	sidx_alias	0x45a		# id 0x93f -> id 0x85a
+	sidx_alias	0x45a		# id 0x940 -> id 0x85a
+	sidx_alias	0x45a		# id 0x941 -> id 0x85a
+	sidx_alias	0x45a		# id 0x942 -> id 0x85a
+	sidx_alias	0x45a		# id 0x943 -> id 0x85a
+	sidx_alias	0x45a		# id 0x944 -> id 0x85a
+	sidx_alias	0x45a		# id 0x945 -> id 0x85a
+	sidx_alias	0x45a		# id 0x946 -> id 0x85a
+	sidx_alias	0x45a		# id 0x947 -> id 0x85a
+	sidx_alias	0x45a		# id 0x948 -> id 0x85a
+	sidx_alias	0x45a		# id 0x949 -> id 0x85a
+	sidx_alias	0x45a		# id 0x94a -> id 0x85a
+	sidx_alias	0x45a		# id 0x94b -> id 0x85a
+	sidx_alias	0x45a		# id 0x94c -> id 0x85a
+	sidx_alias	0x45a		# id 0x94d -> id 0x85a
+	sidx_alias	0x45a		# id 0x94e -> id 0x85a
+	sidx_alias	0x45a		# id 0x94f -> id 0x85a
+	sidx_alias	0x45a		# id 0x950 -> id 0x85a
+	sidx_alias	0x45a		# id 0x951 -> id 0x85a
+	sidx_alias	0x45a		# id 0x952 -> id 0x85a
+	sidx_alias	0x45a		# id 0x953 -> id 0x85a
+	sidx_alias	0x45a		# id 0x954 -> id 0x85a
+	sidx_alias	0x45a		# id 0x955 -> id 0x85a
+	sidx_alias	0x45a		# id 0x956 -> id 0x85a
+	sidx_alias	0x45a		# id 0x957 -> id 0x85a
+	sidx_alias	0x45a		# id 0x958 -> id 0x85a
+	sidx_alias	0x45a		# id 0x959 -> id 0x85a
+	sidx_alias	0x45a		# id 0x95a -> id 0x85a
+	sidx_alias	0x45a		# id 0x95b -> id 0x85a
+	sidx_alias	0x45a		# id 0x95c -> id 0x85a
+	sidx_alias	0x45a		# id 0x95d -> id 0x85a
+	sidx_alias	0x45a		# id 0x95e -> id 0x85a
+	sidx_alias	0x45a		# id 0x95f -> id 0x85a
+	sidx_alias	0x45a		# id 0x960 -> id 0x85a
+	sidx_alias	0x45a		# id 0x961 -> id 0x85a
+	sidx_alias	0x45a		# id 0x962 -> id 0x85a
+	sidx_alias	0x45a		# id 0x963 -> id 0x85a
+	sidx_alias	0x45a		# id 0x964 -> id 0x85a
+	sidx_alias	0x45a		# id 0x965 -> id 0x85a
+	sidx_alias	0x45a		# id 0x966 -> id 0x85a
+	sidx_alias	0x45a		# id 0x967 -> id 0x85a
+	sidx_alias	0x45a		# id 0x968 -> id 0x85a
+	sidx_alias	0x45a		# id 0x969 -> id 0x85a
+	sidx_alias	0x45a		# id 0x96a -> id 0x85a
+	sidx_alias	0x45a		# id 0x96b -> id 0x85a
+	sidx_alias	0x45a		# id 0x96c -> id 0x85a
+	sidx_alias	0x45a		# id 0x96d -> id 0x85a
+	sidx_alias	0x45a		# id 0x96e -> id 0x85a
+	sidx_alias	0x45a		# id 0x96f -> id 0x85a
+	sidx_alias	0x45a		# id 0x970 -> id 0x85a
+	sidx_alias	0x45a		# id 0x971 -> id 0x85a
+	sidx_alias	0x45a		# id 0x972 -> id 0x85a
+	sidx_alias	0x45a		# id 0x973 -> id 0x85a
+	sidx_alias	0x45a		# id 0x974 -> id 0x85a
+	sidx_alias	0x45a		# id 0x975 -> id 0x85a
+	sidx_alias	0x45a		# id 0x976 -> id 0x85a
+	sidx_alias	0x45a		# id 0x977 -> id 0x85a
+	sidx_alias	0x45a		# id 0x978 -> id 0x85a
+	sidx_alias	0x45a		# id 0x979 -> id 0x85a
+	sidx_alias	0x45a		# id 0x97a -> id 0x85a
+	sidx_alias	0x45a		# id 0x97b -> id 0x85a
+	sidx_alias	0x45a		# id 0x97c -> id 0x85a
+	sidx_alias	0x45a		# id 0x97d -> id 0x85a
+	sidx_alias	0x45a		# id 0x97e -> id 0x85a
+	sidx_alias	0x45a		# id 0x97f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xa70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xa7f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xb70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xb7f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xc70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xc7f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xd70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xd7f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xe70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xe7f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf00 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf01 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf02 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf03 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf04 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf05 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf06 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf07 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf08 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf09 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf0f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf10 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf11 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf12 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf13 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf14 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf15 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf16 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf17 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf18 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf19 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf1f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf20 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf21 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf22 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf23 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf24 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf25 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf26 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf27 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf28 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf29 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf2f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf30 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf31 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf32 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf33 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf34 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf35 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf36 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf37 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf38 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf39 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf3f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf40 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf41 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf42 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf43 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf44 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf45 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf46 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf47 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf48 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf49 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf4f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf50 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf51 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf52 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf53 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf54 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf55 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf56 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf57 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf58 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf59 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf5f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf60 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf61 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf62 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf63 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf64 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf65 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf66 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf67 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf68 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf69 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf6f -> id 0x85a
+	sidx_alias	0x45a		# id 0xf70 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf71 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf72 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf73 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf74 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf75 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf76 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf77 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf78 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf79 -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7a -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7b -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7c -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7d -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7e -> id 0x85a
+	sidx_alias	0x45a		# id 0xf7f -> id 0x85a
+TechnicsRhythmsResource_StyleTable:
+	.be24	TechnicsRhythmsResource_Style_8Beat1 - TechnicsRhythmsResource
+TechnicsRhythmsResource_CountInTable:
+	.be24	TechnicsRhythmsResource_CountIn_1Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_2Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_3Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_4Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_5Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_6Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_7Beats - TechnicsRhythmsResource
+	.be24	TechnicsRhythmsResource_CountIn_8Beats - TechnicsRhythmsResource
+TechnicsRhythmsResource_CountIn_1Beats:	# 1 bars of 1 beats
+	var_head	TechnicsRhythmsResource_CountIn_1Beats, 1, 1, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_1Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_1Beats
+TechnicsRhythmsResource_CountIn_2Beats:	# 1 bars of 2 beats
+	var_head	TechnicsRhythmsResource_CountIn_2Beats, 1, 2, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_2Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_2Beats
+TechnicsRhythmsResource_CountIn_3Beats:	# 1 bars of 3 beats
+	var_head	TechnicsRhythmsResource_CountIn_3Beats, 1, 3, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_3Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_3Beats
+TechnicsRhythmsResource_CountIn_4Beats:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_CountIn_4Beats, 1, 4, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_4Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_4Beats
+TechnicsRhythmsResource_CountIn_5Beats:	# 1 bars of 5 beats
+	var_head	TechnicsRhythmsResource_CountIn_5Beats, 1, 5, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_5Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_5Beats
+TechnicsRhythmsResource_CountIn_6Beats:	# 1 bars of 6 beats
+	var_head	TechnicsRhythmsResource_CountIn_6Beats, 1, 6, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_6Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_6Beats
+TechnicsRhythmsResource_CountIn_7Beats:	# 1 bars of 7 beats
+	var_head	TechnicsRhythmsResource_CountIn_7Beats, 1, 7, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_7Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_7Beats
+TechnicsRhythmsResource_CountIn_8Beats:	# 1 bars of 8 beats
+	var_head	TechnicsRhythmsResource_CountIn_8Beats, 1, 8, 0xff, 0xff
+	pc 0,0x00,0x00,0x26
+	var_events	TechnicsRhythmsResource_CountIn_8Beats
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	beat
+	n 0,SSTICK,64,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_CountIn_8Beats
+# Style 0: "8 Beat 1"
+TechnicsRhythmsResource_Style_8Beat1:
+	.ascii	"  8 Beat 1   "
+	style_units	0x20, 0x80, 0x10, 0x00
+	style_part	0x00, 98, 0x03, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Drum
+	style_part	0x03, 74, 0x21, 0x40, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Bass
+	style_part	0x08, 69, 0x1c, 0x20, 0x20, 64, 18, 0, 64, 12, 28, 48, 108, 88, 0	# Acc1
+	style_part	0x08, 124, 0x1c, 0x01, 0x20, 64, 15, 0, 125, 12, 68, 40, 108, 64, 0	# Acc2
+	style_part	0x08, 76, 0x01, 0x00, 0x20, 64, 25, 0, 1, 12, 28, 64, 108, 64, 0	# Acc3
+	style_part	0x08, 71, 0x3f, 0x00, 0x20, 64, 40, 0, 0, 12, 28, 64, 108, 70, 0	# Acc4
+	style_part	0x08, 60, 0x30, 0x10, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 88, 0	# Acc5
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	.byte	1			# TODO: 1 in every style; no reader found
+	style_slots	TechnicsRhythmsResource_Style_8Beat1
+TechnicsRhythmsResource_Style_8Beat1_Intro1A:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Intro1A, 4, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,94
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Intro1A
+	beat
+	n 0,18,112,28,0,0
+	n 0,BD1,118,40,0,0
+	n 1,36,100,27,0,1
+	n 3,48,88,23,0,1
+	n 4,55,93,41,2,1
+	n 4,60,98,49,2,1
+	n 4,64,97,52,2,1
+	n 4,36,93,73,5,1
+	@n 43,2,48,66,73,0,1
+	@n 48,0,18,38,16,0,0
+	n 1,36,100,26,0,1
+	n 3,48,80,19,0,1
+	@n 94,2,52,71,64,1,1
+	@sus 95,2,127
+	beat
+	n 0,18,112,22,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,26,0,1
+	n 3,48,93,22,0,1
+	@n 48,0,BD1,110,18,0,0
+	n 0,18,59,17,0,0
+	n 1,36,100,26,0,1
+	n 2,48,63,68,0,1
+	n 3,48,72,16,0,1
+	@sus 90,2,0
+	@n 94,2,60,96,108,0,1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,25,0,1
+	n 3,48,85,19,0,1
+	@sus 20,2,127
+	@sus 41,4,127
+	@n 48,0,18,46,15,0,0
+	n 1,36,100,25,0,1
+	n 2,48,56,17,0,1
+	n 3,48,75,17,0,1
+	@n 93,2,55,75,19,0,1
+	beat
+	n 0,18,112,19,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,23,0,1
+	n 3,48,87,18,0,1
+	@n 32,2,48,75,95,0,1
+	@n 42,2,53,75,2,1,1
+	@n 48,0,18,76,18,0,0
+	n 0,BD1,118,19,0,0
+	n 1,36,100,27,0,1
+	n 3,48,72,15,0,1
+	@sus 56,2,0
+	@n 60,2,57,81,110,0,1
+	@n 76,2,60,67,104,0,1
+	@n 90,2,65,100,83,0,1
+	@sus 91,4,0
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,24,0,1
+	n 3,48,72,12,0,1
+	n 4,65,93,78,0,1
+	n 4,57,95,76,0,1
+	n 4,60,99,76,0,1
+	@sus 30,2,127
+	@sus 44,4,127
+	@n 48,0,18,48,14,0,0
+	n 1,36,100,29,0,1
+	n 3,55,87,27,0,1
+	n 3,60,82,29,0,1
+	n 3,48,80,22,0,1
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,29,0,0
+	n 1,36,100,22,0,1
+	n 3,48,73,16,0,1
+	@n 4,2,48,69,46,0,1
+	@sus 39,2,0
+	@sus 41,4,0
+	@n 43,2,59,85,100,0,1
+	@n 47,2,62,92,96,0,1
+	@n 48,0,BD1,112,18,0,0
+	n 0,18,68,16,0,0
+	n 1,36,100,28,0,1
+	n 3,48,74,15,0,1
+	n 4,67,96,64,0,1
+	n 4,59,96,65,0,1
+	n 4,62,102,58,0,1
+	@n 52,2,67,95,19,1,1
+	@sus 85,2,127
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,31,0,0
+	n 1,36,100,25,0,1
+	n 3,60,81,35,0,1
+	n 3,55,89,32,0,1
+	n 3,48,76,22,0,1
+	@sus 4,4,127
+	@n 48,0,18,44,14,0,0
+	n 1,36,100,27,0,1
+	n 3,48,69,18,0,1
+	@n 50,2,48,74,53,0,1
+	@sus 89,2,0
+	@n 95,2,55,72,40,0,1
+	n 2,62,82,45,0,1
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,18,112,22,0,0
+	n 1,36,100,25,0,1
+	n 3,48,78,20,0,1
+	n 4,55,94,43,0,1
+	n 4,59,106,44,0,1
+	n 4,62,108,44,0,1
+	@sus 3,4,0
+	@sus 28,2,127
+	@sus 33,4,127
+	@n 48,0,CRASH1,98,14,0,0
+	n 0,18,47,15,0,0
+	n 0,BD1,108,20,0,0
+	n 1,36,100,25,0,1
+	n 2,48,80,76,1,1
+	n 3,48,75,18,0,1
+	n 4,48,93,35,2,1
+	n 5,62,90,33,0,1
+	n 5,71,97,37,0,1
+	n 5,67,94,37,0,1
+	@n 61,2,52,72,64,2,1
+	@n 72,2,55,79,92,1,1
+	@sus 75,2,0
+	@n 84,2,60,74,86,1,1
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,36,0,0
+	n 0,CRASH1,101,13,0,0
+	n 1,36,100,25,0,1
+	n 3,48,82,19,0,1
+	n 4,60,99,113,1,1
+	n 4,55,93,112,1,1
+	n 4,64,96,114,1,1
+	n 4,36,99,69,1,1
+	n 5,72,93,45,0,1
+	n 5,67,93,45,0,1
+	n 5,64,90,44,0,1
+	@n 2,2,64,102,64,1,1
+	sus 4,0
+	@n 48,0,18,44,15,0,0
+	n 1,36,100,25,0,1
+	n 3,48,78,18,0,1
+	@sus 60,4,127
+	beat
+	n 0,18,112,20,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,24,0,1
+	n 3,48,87,19,0,1
+	@sus 15,2,127
+	@n 48,0,18,88,16,0,0
+	n 0,BD1,118,18,0,0
+	n 1,36,100,26,0,1
+	n 3,48,84,19,0,1
+	beat
+	n 0,18,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,36,100,25,0,1
+	n 3,48,84,19,0,1
+	@n 4,2,48,72,99,0,1
+	@sus 47,2,0
+	@n 48,0,18,48,17,0,0
+	n 1,36,100,28,0,1
+	n 3,48,84,19,0,1
+	n 4,36,91,111,0,1
+	@n 50,2,60,112,101,0,1
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,18,110,20,0,0
+	n 1,36,100,27,0,1
+	sus 2,127
+	n 3,48,84,18,0,1
+	n 4,55,96,31,0,1
+	@n 1,2,55,92,41,0,1
+	@sus 19,2,0
+	@n 44,2,48,78,107,0,1
+	@n 48,0,BD1,111,19,0,0
+	n 0,18,72,18,0,0
+	n 1,36,100,32,0,1
+	n 3,48,74,16,0,1
+	n 4,43,78,39,0,1
+	@n 55,2,53,74,11,1,1
+	@n 73,2,57,70,119,0,1
+	@n 86,2,60,62,105,0,1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,28,0,1
+	n 3,48,72,15,0,1
+	n 4,65,94,91,0,1
+	n 4,57,103,38,0,1
+	n 4,60,105,55,0,1
+	n 4,48,97,39,0,1
+	n 4,36,86,29,0,1
+	n 5,48,44,10,0,1
+	@n 2,2,65,105,91,0,1
+	@sus 4,4,0
+	@n 24,5,53,48,9,0,1
+	@n 36,4,36,81,28,0,1
+	@sus 46,4,127
+	@n 48,0,18,52,15,0,0
+	n 1,36,100,30,0,1
+	n 3,60,87,36,0,1
+	n 3,55,90,38,0,1
+	n 3,48,75,22,0,1
+	n 4,57,68,39,0,1
+	pan 5,1
+	n 5,55,52,11,0,1
+	@sus 58,2,127
+	@pan 72,5,10
+	n 5,60,56,13,0,1
+	@pan 94,5,19
+	@n 95,2,48,78,52,0,1
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,27,0,1
+	n 3,48,72,18,0,1
+	n 4,60,65,11,0,1
+	n 4,36,76,13,0,1
+	n 5,55,60,10,0,1
+	@sus 8,2,0
+	@pan 22,5,28
+	@n 24,5,60,65,13,0,1
+	@n 40,2,55,67,103,1,1
+	@n 44,2,59,90,98,1,1
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,32,0,1
+	n 2,62,90,92,1,1
+	n 3,48,78,17,0,1
+	sus 4,0
+	n 4,59,108,69,0,1
+	n 4,67,100,65,0,1
+	n 4,62,114,65,0,1
+	n 4,36,105,61,0,1
+	pan 5,38
+	n 5,65,69,11,0,1
+	@n 54,2,67,94,89,1,1
+	@pan 72,5,47
+	n 5,67,73,11,0,1
+	@sus 92,4,127
+	beat
+	n 0,18,112,24,0,0
+	n 0,BD1,118,55,0,0
+	n 1,36,100,43,0,1
+	n 3,60,85,34,0,1
+	n 3,55,87,34,0,1
+	n 3,48,78,23,0,1
+	pan 5,56
+	n 5,60,77,11,0,1
+	@pan 10,5,60
+	@n 12,5,65,79,11,0,1
+	@pan 24,5,65
+	n 5,67,81,9,0,1
+	@pan 36,5,70
+	n 5,72,83,10,0,1
+	@n 48,0,18,56,13,0,0
+	n 1,31,100,47,0,1
+	n 3,48,73,18,0,1
+	n 4,36,79,56,0,1
+	pan 5,74
+	n 5,67,85,10,0,1
+	@pan 60,5,79
+	n 5,72,87,8,0,1
+	@pan 70,5,83
+	@n 72,0,SD1,100,10,0,0
+	n 5,77,89,8,0,1
+	@pan 84,5,88
+	n 5,79,91,8,0,1
+	@sus 91,4,0
+	@pan 94,5,92
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,18,112,25,0,0
+	n 1,33,100,47,0,1
+	n 3,48,76,19,0,1
+	n 4,55,96,82,0,1
+	n 4,59,104,82,0,1
+	n 4,62,102,84,0,1
+	n 5,72,93,12,0,1
+	@pan 12,5,97
+	n 5,77,95,11,0,1
+	@pan 24,5,102
+	n 5,79,97,10,0,1
+	@pan 36,5,106
+	n 5,84,99,9,0,1
+	@n 48,0,BD1,94,18,0,0
+	n 0,18,64,17,0,0
+	n 0,SD1,100,10,0,0
+	n 1,31,100,39,0,1
+	n 3,48,84,19,0,1
+	pan 5,111
+	n 5,79,101,9,0,1
+	@pan 58,5,115
+	@n 60,5,84,103,8,0,1
+	@n 72,0,SD1,100,13,0,0
+	pan 5,120
+	n 5,89,105,7,0,1
+	@pan 82,5,124
+	@n 83,5,91,108,17,0,1
+	@pan 90,5,127
+	@n 94,5,96,109,32,0,1
+	@n 95,0,CRASH1,110,17,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Intro1A
+TechnicsRhythmsResource_Style_8Beat1_Intro1B:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Intro1B, 4, 4, 0xff, 0x02
+	vol 2,66
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,100
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	vol 4,74
+	vol 6,74
+	pan 6,100
+	pc 6,0x35,0x00,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Intro1B
+	beat
+	n 0,18,112,28,0,0
+	n 0,BD1,118,40,0,0
+	n 1,36,100,27,0,1
+	n 2,48,83,23,5,1
+	n 3,48,102,14,0,1
+	n 4,36,94,105,0,1
+	@n 2,6,63,114,15,0,1
+	@n 3,6,67,114,13,0,1
+	@sus 24,4,127
+	@n 48,0,18,38,16,0,0
+	n 1,36,100,26,0,1
+	n 2,55,74,105,4,1
+	n 3,48,92,12,0,1
+	n 4,48,63,51,0,1
+	@n 49,6,63,111,13,0,1
+	n 6,67,102,13,0,1
+	beat
+	n 0,18,112,22,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,25,0,1
+	n 2,62,114,53,0,1
+	n 3,48,91,13,0,1
+	n 4,60,97,45,0,1
+	n 4,55,93,45,0,1
+	n 4,63,101,45,0,1
+	sus 4,0
+	@n 1,6,62,113,17,0,1
+	n 6,65,114,15,0,1
+	@n 48,0,BD1,110,18,0,0
+	n 0,18,59,17,0,0
+	n 1,36,100,27,0,1
+	n 2,63,105,10,4,1
+	n 3,48,93,12,0,1
+	n 4,36,75,94,0,1
+	@n 49,6,63,107,13,0,1
+	n 6,60,109,22,0,1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 6,67,111,14,0,1
+	n 1,36,100,25,0,1
+	n 3,48,87,11,0,1
+	n 4,48,69,48,0,1
+	@n 3,6,63,112,15,0,1
+	@sus 13,4,127
+	@n 48,0,18,46,15,0,0
+	n 6,67,108,14,0,1
+	n 1,36,100,29,0,1
+	n 2,70,112,50,3,1
+	n 3,48,90,10,0,1
+	n 4,55,96,82,0,1
+	n 4,60,100,85,0,1
+	n 4,63,98,85,0,1
+	@n 51,6,63,109,15,0,1
+	@sus 62,4,0
+	@sus 90,4,127
+	beat
+	n 0,18,112,19,0,0
+	n 0,SD1,100,25,0,0
+	n 6,65,112,15,0,1
+	n 1,36,100,25,0,1
+	n 3,48,93,11,0,1
+	n 4,48,76,40,0,1
+	@n 3,6,62,110,17,0,1
+	@n 47,6,63,112,15,0,1
+	@n 48,0,18,76,18,0,0
+	n 0,BD1,118,19,0,0
+	n 1,36,100,27,0,1
+	n 3,48,90,11,0,1
+	n 4,36,75,66,0,1
+	@n 49,6,60,103,21,0,1
+	@sus 75,4,0
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,26,0,1
+	n 3,48,91,11,0,1
+	n 4,55,93,53,0,1
+	n 4,60,99,57,0,1
+	n 4,63,100,60,0,1
+	@n 1,6,67,114,13,0,1
+	@n 2,6,63,111,15,0,1
+	@sus 33,4,127
+	@n 48,0,18,48,14,0,0
+	n 6,67,114,15,0,1
+	n 1,36,100,28,0,1
+	n 3,48,87,12,0,1
+	n 4,48,75,48,0,1
+	@n 49,6,63,112,18,0,1
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,29,0,0
+	n 6,62,110,19,0,1
+	n 1,36,100,24,0,1
+	n 3,48,92,12,0,1
+	n 4,36,75,40,0,1
+	@n 1,6,65,112,14,0,1
+	@sus 35,4,0
+	@n 48,0,BD1,112,18,0,0
+	n 0,18,68,16,0,0
+	n 6,60,109,23,0,1
+	n 6,63,108,14,0,1
+	n 1,36,100,86,0,1
+	n 3,48,96,15,0,1
+	n 4,55,102,82,0,1
+	n 4,62,108,85,0,1
+	n 4,65,95,94,0,1
+	@sus 93,4,127
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,31,0,0
+	@sus 46,2,127
+	@n 48,0,18,44,14,0,0
+	n 1,36,100,44,0,1
+	n 3,48,96,13,0,1
+	n 4,48,82,55,0,1
+	@n 49,6,63,104,12,0,1
+	n 6,60,105,21,0,1
+	@sus 81,4,0
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,18,112,22,0,0
+	n 1,36,100,49,0,1
+	n 3,48,97,14,0,1
+	n 4,63,108,94,0,1
+	n 4,55,99,95,0,1
+	n 4,60,105,96,0,1
+	@n 1,6,65,107,16,0,1
+	@n 2,6,62,104,20,0,1
+	@sus 38,4,127
+	@sus 40,2,0
+	@n 48,0,CRASH1,98,14,0,0
+	n 0,18,47,15,0,0
+	n 0,BD1,108,20,0,0
+	n 1,31,100,48,0,1
+	n 3,43,90,15,0,1
+	n 4,48,85,39,0,1
+	@n 49,6,63,107,11,0,1
+	@n 51,6,60,89,19,0,1
+	@sus 82,4,0
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,36,0,0
+	n 0,CRASH1,101,13,0,0
+	n 1,32,100,41,0,1
+	n 2,48,45,43,0,1
+	n 3,44,101,13,0,1
+	n 4,44,89,103,0,1
+	@n 2,6,67,116,13,0,1
+	@n 3,6,63,107,15,0,1
+	@n 48,0,18,44,15,0,0
+	n 1,32,100,29,0,1
+	n 2,55,72,53,0,1
+	n 3,44,102,14,0,1
+	n 4,56,57,9,0,1
+	@n 50,6,67,114,13,0,1
+	@n 51,6,63,109,15,0,1
+	@sus 56,4,127
+	@sus 91,4,0
+	beat
+	n 0,18,112,20,0,0
+	n 0,SD1,100,25,0,0
+	n 1,32,100,31,0,1
+	n 2,62,105,50,0,1
+	n 3,44,101,13,0,1
+	n 4,56,101,58,0,1
+	n 4,63,104,93,0,1
+	n 4,60,109,84,0,1
+	@n 3,6,65,109,14,0,1
+	n 6,62,105,16,0,1
+	@sus 37,4,127
+	@n 48,0,18,88,16,0,0
+	n 0,BD1,118,18,0,0
+	n 6,60,104,20,0,1
+	n 1,32,100,32,0,1
+	n 2,63,98,87,4,1
+	n 3,44,93,12,0,1
+	n 4,44,84,21,0,1
+	@n 49,6,63,107,13,0,1
+	@n 95,6,63,109,15,0,1
+	beat
+	n 0,18,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,32,100,37,0,1
+	n 3,44,96,14,0,1
+	n 4,44,71,50,0,1
+	@n 1,6,67,116,13,0,1
+	@sus 45,4,0
+	@n 47,6,63,107,16,0,1
+	@n 48,0,18,48,17,0,0
+	n 1,32,100,34,0,1
+	n 2,70,118,3,2,1
+	n 3,44,94,14,0,1
+	n 4,56,94,67,0,1
+	n 4,63,102,99,0,1
+	n 4,60,93,78,0,1
+	@n 49,6,67,114,14,0,1
+	@sus 78,4,127
+	@n 95,6,62,105,18,0,1
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,18,110,20,0,0
+	n 1,32,100,37,0,1
+	n 3,44,93,14,0,1
+	n 4,44,95,14,0,1
+	@n 2,6,65,111,14,0,1
+	@n 47,6,60,103,21,0,1
+	@n 48,0,BD1,111,19,0,0
+	n 0,18,72,18,0,0
+	n 6,63,112,14,0,1
+	n 1,31,100,34,0,1
+	n 3,43,96,14,0,1
+	n 4,44,93,44,0,1
+	@sus 57,4,0
+	@n 95,6,63,111,16,0,1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,29,100,38,0,1
+	n 2,67,93,104,2,1
+	n 3,41,100,17,0,1
+	n 4,41,90,106,0,1
+	n 4,56,98,94,0,1
+	n 4,60,84,49,0,1
+	n 4,63,100,58,0,1
+	n 5,48,44,10,0,1
+	@n 2,6,67,117,13,0,1
+	@n 24,5,53,48,9,0,1
+	@n 47,6,63,109,18,0,1
+	@n 48,0,18,52,15,0,0
+	n 1,29,100,34,0,1
+	n 3,41,93,16,0,1
+	n 4,53,44,27,0,1
+	pan 5,1
+	n 5,55,52,11,0,1
+	@n 50,6,67,114,14,0,1
+	@sus 61,4,127
+	@pan 72,5,10
+	n 5,60,56,13,0,1
+	@pan 94,5,19
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,29,100,26,0,1
+	n 3,41,96,15,0,1
+	n 4,53,69,21,0,1
+	n 4,60,71,18,0,1
+	n 5,55,60,10,0,1
+	@n 1,6,62,107,19,0,1
+	@n 2,6,65,106,15,0,1
+	@pan 22,5,28
+	@n 24,5,60,65,13,0,1
+	@sus 43,4,0
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,34,100,86,0,1
+	n 3,46,94,15,0,1
+	n 4,58,91,98,0,1
+	n 4,62,95,96,0,1
+	n 4,65,93,100,0,1
+	n 4,46,95,81,0,1
+	pan 5,38
+	n 5,65,69,11,0,1
+	@n 49,6,60,108,21,0,1
+	n 6,63,105,14,0,1
+	@pan 72,5,47
+	n 5,67,73,11,0,1
+	beat
+	n 0,18,112,24,0,0
+	n 0,BD1,118,55,0,0
+	n 3,46,52,9,0,1
+	pan 5,56
+	n 5,60,77,11,0,1
+	@pan 10,5,60
+	@n 12,5,65,79,11,0,1
+	@pan 24,5,65
+	n 5,67,81,9,0,1
+	@pan 36,5,70
+	n 5,72,83,10,0,1
+	@n 48,0,18,56,13,0,0
+	n 6,63,110,13,0,1
+	n 1,34,100,34,0,1
+	n 3,46,89,14,0,1
+	n 4,46,86,59,0,1
+	pan 5,74
+	n 5,67,85,10,0,1
+	@n 50,6,60,113,18,0,1
+	@pan 60,5,79
+	n 5,72,87,8,0,1
+	@pan 70,5,83
+	@n 72,0,SD1,100,10,0,0
+	n 5,77,89,8,0,1
+	@pan 84,5,88
+	n 5,79,91,8,0,1
+	@pan 94,5,92
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,18,112,25,0,0
+	n 1,34,100,36,0,1
+	n 3,46,95,13,0,1
+	n 4,58,101,82,0,1
+	n 4,62,98,82,0,1
+	n 4,65,96,86,0,1
+	n 5,72,93,12,0,1
+	@n 1,6,65,109,16,0,1
+	@n 2,6,62,108,15,0,1
+	@pan 12,5,97
+	n 5,77,95,11,0,1
+	@pan 24,5,102
+	n 5,79,97,10,0,1
+	@pan 36,5,106
+	n 5,84,99,9,0,1
+	@n 48,0,BD1,94,18,0,0
+	n 0,18,64,17,0,0
+	n 0,SD1,100,10,0,0
+	n 1,34,100,35,0,1
+	n 3,43,90,13,0,1
+	n 4,46,94,35,0,1
+	pan 5,111
+	n 5,79,101,9,0,1
+	@pan 58,5,115
+	@n 60,5,84,103,8,0,1
+	@n 72,0,SD1,100,13,0,0
+	pan 5,120
+	n 5,89,105,7,0,1
+	@pan 82,5,124
+	@n 83,5,91,108,17,0,1
+	@pan 90,5,127
+	@n 94,5,96,109,32,0,1
+	@n 95,0,CRASH1,110,17,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Intro1B
+TechnicsRhythmsResource_Style_8Beat1_Ending1A:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Ending1A, 4, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,74
+	pan 3,0
+	rev 3,0
+	cc 3,92,105
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,64
+	cc 5,81,88
+	vol 6,82
+	pc 6,0x30,0x08,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Ending1A
+	beat
+	n 0,21,112,21,0,0
+	n 1,36,100,46,0,1
+	@n 48,0,21,45,11,0,0
+	n 1,36,100,27,0,1
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,27,0,0
+	n 3,72,91,63,0,1
+	n 3,67,99,66,0,1
+	n 3,64,96,68,0,1
+	@n 1,6,83,102,16,0,1
+	n 2,63,112,8,0,1
+	@n 2,6,59,87,14,0,1
+	n 2,54,96,8,0,1
+	@n 4,2,59,82,12,0,1
+	@n 9,2,64,78,78,0,1
+	@n 10,6,84,107,34,0,1
+	n 2,55,90,81,0,1
+	@n 11,6,60,114,35,0,1
+	@n 15,2,60,87,77,0,1
+	@sus 16,3,127
+	@n 48,0,21,44,11,0,0
+	@n 72,3,67,106,3,0,1
+	n 3,64,100,4,0,1
+	@sus 75,3,0
+	beat
+	n 0,21,112,20,0,0
+	@n 1,2,55,97,5,0,1
+	@n 48,0,21,46,12,0,0
+	n 3,67,90,7,0,1
+	n 3,72,92,10,0,1
+	n 3,64,105,9,0,1
+	@n 51,2,55,102,9,0,1
+	@n 53,2,60,99,43,0,1
+	n 2,64,97,42,0,1
+	@sus 55,3,127
+	@sus 73,3,0
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,24,0,0
+	n 3,64,83,5,0,1
+	@n 4,2,55,104,5,0,1
+	@n 48,0,21,34,15,0,0
+	n 3,62,90,4,0,1
+	@n 50,2,53,114,20,0,1
+	@n 51,2,58,102,20,0,1
+	@n 53,2,62,93,20,0,1
+	@sus 59,2,127
+	beat
+	n 0,21,112,22,0,0
+	n 3,62,83,4,0,1
+	@n 48,0,21,34,12,0,0
+	n 1,29,100,46,0,1
+	n 3,62,97,5,0,1
+	sus 3,127
+	n 4,41,107,50,0,1
+	n 4,29,93,47,0,1
+	@sus 54,2,0
+	@n 55,2,48,108,47,0,1
+	n 2,53,127,43,0,1
+	@sus 70,3,0
+	@sus 93,3,127
+	@n 95,2,50,87,47,0,1
+	beat
+	n 0,21,112,21,0,0
+	n 0,BD1,118,25,0,0
+	n 1,31,100,45,0,1
+	n 3,72,82,24,0,1
+	n 3,70,93,20,0,1
+	n 3,65,96,22,0,1
+	n 3,62,96,21,0,1
+	n 4,31,88,44,0,1
+	n 4,43,78,48,0,1
+	@n 5,2,55,72,45,0,1
+	@n 24,3,62,79,13,0,1
+	n 3,65,57,11,0,1
+	@sus 35,3,0
+	@n 48,0,21,29,12,0,0
+	n 1,34,100,45,0,1
+	n 3,65,48,14,0,1
+	n 3,70,26,13,0,1
+	n 3,62,66,16,0,1
+	n 4,34,82,43,0,1
+	n 4,46,89,47,0,1
+	@n 50,2,53,100,15,0,1
+	n 2,58,101,13,0,1
+	@sus 55,3,127
+	@sus 69,3,0
+	@n 72,3,62,87,16,0,1
+	n 3,65,97,16,0,1
+	@sus 92,3,127
+	@n 94,2,53,79,13,0,1
+	@n 95,2,58,122,18,0,1
+	beat
+	n 0,21,112,22,0,0
+	n 1,36,100,55,0,1
+	n 3,62,83,16,0,1
+	n 3,65,80,16,0,1
+	n 3,70,86,16,0,1
+	n 3,72,78,18,0,1
+	n 4,36,102,52,0,1
+	n 4,48,83,52,0,1
+	@n 8,2,55,107,47,0,1
+	@n 15,2,60,80,36,0,1
+	@sus 22,3,0
+	@n 24,3,65,71,14,0,1
+	n 3,62,68,14,0,1
+	@sus 31,3,127
+	@n 48,0,21,40,10,0,0
+	n 1,34,100,45,0,1
+	n 3,62,93,11,0,1
+	n 3,65,88,10,0,1
+	n 3,70,86,11,0,1
+	n 3,72,78,12,0,1
+	n 4,46,90,41,0,1
+	n 4,34,82,45,0,1
+	@n 52,2,58,83,44,0,1
+	n 2,53,89,47,0,1
+	@sus 77,3,0
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,31,100,50,0,1
+	n 3,62,87,5,0,1
+	n 4,43,89,49,0,1
+	n 4,31,83,48,0,1
+	@n 2,2,50,96,46,0,1
+	@n 4,2,55,111,41,0,1
+	@n 48,0,21,41,14,0,0
+	n 1,34,100,43,0,1
+	n 3,62,81,4,0,1
+	n 4,46,89,23,0,1
+	n 4,34,86,24,0,1
+	@n 50,2,53,110,19,0,1
+	@n 52,2,58,110,18,0,1
+	beat
+	n 0,21,112,22,0,0
+	n 1,36,100,40,0,1
+	n 3,62,73,4,0,1
+	n 5,64,95,36,0,1
+	n 5,67,102,37,0,1
+	n 5,72,102,37,0,1
+	@n 48,0,21,46,14,0,0
+	n 1,36,100,27,0,1
+	n 3,62,75,3,0,1
+	n 3,70,72,4,0,1
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,26,0,0
+	n 3,67,106,70,0,1
+	n 3,72,87,68,0,1
+	n 3,64,105,71,0,1
+	@n 1,6,83,103,15,0,1
+	n 6,59,98,15,0,1
+	@n 2,2,55,107,42,0,1
+	@n 3,2,60,108,41,0,1
+	@n 5,2,64,99,40,0,1
+	@sus 7,2,127
+	@n 9,6,84,100,37,0,1
+	n 6,60,96,36,0,1
+	@n 48,0,21,15,13,0,0
+	sus 3,127
+	@n 49,2,55,88,5,0,1
+	@sus 51,2,0
+	@n 72,3,67,107,6,0,1
+	n 3,64,98,9,0,1
+	@sus 84,3,0
+	beat
+	n 0,21,112,21,0,0
+	n 3,64,45,6,0,1
+	n 3,67,63,13,0,1
+	@n 2,2,55,96,5,0,1
+	@n 24,3,64,64,6,0,1
+	n 3,67,54,7,0,1
+	@sus 44,3,127
+	@bend 47,1,0,54
+	@n 48,0,21,19,13,0,0
+	n 1,40,100,47,0,1
+	n 3,67,97,11,0,1
+	n 3,72,91,17,0,1
+	n 3,64,92,13,0,1
+	@bend 49,1,0,55
+	@n 51,2,55,114,44,0,1
+	n 2,60,108,42,0,1
+	@n 52,2,64,99,40,0,1
+	@bend 56,1,0,55
+	@bend 58,1,0,57
+	@bend 63,1,0,64
+	@bend 66,1,0,63
+	@bend 74,1,0,64
+	@sus 76,3,0
+	beat
+	n 0,BD1,118,17,0,0
+	n 0,21,112,21,0,0
+	n 1,41,100,44,0,1
+	n 3,64,68,3,0,1
+	@n 1,2,60,98,6,0,1
+	@n 3,2,55,95,6,0,1
+	@n 48,0,21,15,14,0,0
+	n 1,43,100,92,0,1
+	@n 50,2,55,110,29,0,1
+	n 2,58,116,33,0,1
+	@n 51,2,65,99,32,0,1
+	@sus 61,2,127
+	@n 64,0,18,47,5,0,0
+	@n 77,0,18,47,10,0,0
+	beat
+	@n 1,0,HHO,122,8,0,0
+	@n 48,1,31,100,64,0,1
+	n 3,62,102,42,0,1
+	n 3,72,82,61,0,1
+	n 3,64,93,15,0,1
+	@n 49,2,53,126,45,0,1
+	@n 50,2,48,110,50,0,1
+	@sus 54,2,0
+	@n 72,0,BD1,109,10,0,0
+	n 3,65,75,21,0,1
+	@sus 92,3,127
+	@n 95,2,50,80,45,0,1
+	beat
+	n 3,65,93,21,0,1
+	n 3,62,87,23,0,1
+	@n 2,0,HTOM1,127,53,0,0
+	@n 4,2,55,47,46,0,1
+	@n 6,0,HTOM2,127,32,0,0
+	@n 10,0,HTOM2,127,43,0,0
+	@n 24,3,72,54,8,0,1
+	n 3,62,86,16,0,1
+	n 3,65,93,17,0,1
+	@sus 45,3,0
+	@n 48,1,31,100,45,0,1
+	n 3,62,89,6,0,1
+	n 3,65,93,5,0,1
+	@n 49,2,53,98,10,0,1
+	@n 50,2,58,92,9,0,1
+	@n 72,0,BD1,112,10,0,0
+	beat
+	n 1,34,100,45,0,1
+	n 3,62,97,45,0,1
+	n 3,65,99,42,0,1
+	n 3,72,94,44,0,1
+	@n 1,2,53,93,15,0,1
+	n 2,58,125,20,0,1
+	@sus 2,3,127
+	@n 3,0,MTOM1,127,47,0,0
+	@n 8,0,MTOM2,127,43,0,0
+	@n 11,2,55,93,38,0,1
+	@n 20,2,60,60,36,0,1
+	@n 48,1,31,100,47,0,1
+	@n 51,2,53,78,41,0,1
+	@n 52,2,58,50,44,0,1
+	@n 72,0,BD1,114,9,0,0
+	beat
+	n 1,34,100,42,0,1
+	n 3,62,99,48,0,1
+	n 3,72,93,46,0,1
+	n 3,65,100,47,0,1
+	@n 1,0,LTOM1,127,38,0,0
+	n 2,50,89,64,0,1
+	@n 4,2,55,99,61,0,1
+	@n 5,0,LTOM2,127,33,0,0
+	@sus 7,3,0
+	@n 48,0,SD1,100,11,0,0
+	n 1,31,100,32,0,1
+	n 3,62,95,2,0,1
+	@n 72,0,SD1,100,9,0,0
+	@n 95,0,CRASH1,114,13,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Ending1A
+TechnicsRhythmsResource_Style_8Beat1_Ending1B:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Ending1B, 4, 4, 0xff, 0x02
+	pc 1,0x21,0x00,0x20
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,100
+	pan 3,0
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	pan 5,37
+	pc 5,0x54,0x42,0x20
+	vol 6,82
+	pc 6,0x30,0x08,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Ending1B
+	beat
+	n 0,21,112,21,0,0
+	n 1,36,102,41,0,1
+	n 5,72,85,9,0,1
+	@n 1,4,75,77,25,2,1
+	@n 2,4,72,82,23,2,1
+	n 4,67,75,27,2,1
+	n 4,79,75,23,2,1
+	@n 24,5,72,72,17,0,1
+	@n 48,0,21,45,11,0,0
+	n 1,36,102,39,0,1
+	n 5,67,84,18,0,1
+	@n 95,6,71,93,15,0,1
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,27,0,0
+	n 5,70,96,12,0,1
+	@n 1,6,83,114,18,0,1
+	@n 2,3,67,103,39,0,1
+	n 3,72,93,39,0,1
+	@n 3,3,63,102,32,0,1
+	@n 10,6,72,105,30,0,1
+	@n 11,6,84,87,30,0,1
+	@sus 13,3,127
+	@sus 36,3,0
+	@n 45,3,63,83,4,0,1
+	@n 48,0,21,44,11,0,0
+	n 5,67,72,9,0,1
+	@n 72,5,67,66,16,0,1
+	beat
+	n 0,21,112,20,0,0
+	n 5,72,86,11,0,1
+	@n 3,3,63,69,3,0,1
+	@n 24,5,72,75,16,0,1
+	@n 47,3,67,104,40,0,1
+	n 3,72,93,44,0,1
+	@n 48,0,21,46,12,0,0
+	n 3,63,104,32,0,1
+	n 5,67,78,15,0,1
+	@sus 87,4,127
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,24,0,0
+	@n 1,3,63,68,2,0,1
+	@sus 40,4,0
+	@n 48,0,21,34,15,0,0
+	n 3,70,101,68,1,1
+	n 5,67,57,10,0,1
+	@n 49,3,65,100,85,0,1
+	n 4,70,83,94,2,1
+	n 4,67,76,94,2,1
+	n 4,74,90,95,2,1
+	n 4,77,78,95,2,1
+	@n 50,3,62,96,83,0,1
+	@sus 65,3,127
+	beat
+	n 0,21,112,22,0,0
+	n 5,72,83,12,0,1
+	@n 24,5,72,66,14,0,1
+	@n 48,0,21,34,12,0,0
+	n 5,67,78,16,0,1
+	@sus 87,3,0
+	beat
+	n 0,21,112,21,0,0
+	n 0,BD1,118,25,0,0
+	n 5,70,86,13,0,1
+	@n 4,3,62,85,6,0,1
+	@n 48,0,21,29,12,0,0
+	n 5,67,69,10,0,1
+	@n 52,3,62,83,6,0,1
+	@n 72,5,67,62,14,0,1
+	beat
+	n 0,21,112,22,0,0
+	n 1,31,90,36,0,1
+	n 5,72,83,11,0,1
+	@n 1,3,60,93,15,0,1
+	@n 3,3,65,107,15,0,1
+	@n 5,3,64,80,2,0,1
+	@n 13,3,62,85,40,0,1
+	@n 15,3,67,73,35,0,1
+	@sus 17,4,127
+	@n 24,5,72,76,15,0,1
+	@n 48,0,21,40,10,0,0
+	n 1,31,96,49,0,1
+	n 5,67,81,16,0,1
+	@n 52,3,65,96,45,0,1
+	@n 53,3,70,95,46,0,1
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,34,94,44,0,1
+	@n 3,3,67,90,46,0,1
+	@n 5,3,62,81,40,0,1
+	@n 48,0,21,41,14,0,0
+	n 1,35,85,46,0,1
+	n 5,67,70,11,0,1
+	@n 49,3,65,72,32,0,1
+	@n 50,3,70,56,29,0,1
+	@sus 77,4,0
+	beat
+	n 0,21,112,22,0,0
+	n 1,36,99,42,0,1
+	n 5,72,90,12,0,1
+	@n 1,4,72,87,82,1,1
+	n 4,75,88,83,1,1
+	@n 3,2,48,93,84,2,1
+	@n 4,4,67,75,82,1,1
+	@n 5,4,79,58,75,1,1
+	@n 24,5,72,75,15,0,1
+	@n 48,0,21,46,14,0,0
+	n 1,36,106,33,0,1
+	n 5,67,72,15,0,1
+	@n 94,2,63,104,117,1,1
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,26,0,0
+	n 5,70,91,12,0,1
+	@n 3,3,67,107,37,0,1
+	@n 4,3,63,105,34,0,1
+	@n 5,3,72,99,35,0,1
+	@sus 15,4,127
+	@n 48,0,21,15,13,0,0
+	n 5,67,66,9,0,1
+	@n 49,2,55,85,47,1,1
+	@n 72,5,67,66,15,0,1
+	beat
+	n 0,21,112,21,0,0
+	n 5,72,87,13,0,1
+	@n 24,5,72,79,16,0,1
+	@n 46,2,60,86,101,0,1
+	@n 48,0,21,19,13,0,0
+	n 5,67,86,17,0,1
+	@n 49,3,70,108,24,0,1
+	@n 50,3,75,110,25,0,1
+	n 3,67,105,25,0,1
+	beat
+	n 0,BD1,118,17,0,0
+	n 0,21,112,21,0,0
+	@n 4,3,67,96,6,0,1
+	@sus 37,4,0
+	@n 47,2,62,84,25,3,1
+	n 4,74,97,109,0,1
+	n 4,70,89,108,0,1
+	n 4,77,82,106,0,1
+	@n 48,0,21,15,14,0,0
+	n 1,31,91,96,0,1
+	n 4,67,83,115,0,1
+	n 5,67,54,7,0,1
+	@n 49,2,58,87,23,3,1
+	n 3,70,112,13,0,1
+	n 3,65,109,12,0,1
+	@n 50,2,53,86,21,3,1
+	n 3,74,93,13,0,1
+	@sus 55,3,127
+	@n 64,0,18,47,5,0,0
+	@n 77,0,18,47,10,0,0
+	@sus 95,4,127
+	beat
+	n 5,72,85,10,0,1
+	@n 1,0,HHO,122,8,0,0
+	@n 24,5,72,90,18,0,1
+	@n 48,1,31,105,41,0,1
+	n 5,67,83,16,0,1
+	@n 72,0,BD1,109,10,0,0
+	@bend 95,1,0,54
+	beat
+	n 1,34,90,38,0,1
+	n 5,70,98,14,0,1
+	@n 2,0,HTOM1,127,53,0,0
+	@n 6,0,HTOM2,127,32,0,0
+	@n 10,0,HTOM2,127,43,0,0
+	@bend 16,1,0,64
+	@n 48,1,41,93,42,0,1
+	n 5,67,70,9,0,1
+	@n 72,0,BD1,112,10,0,0
+	n 5,67,69,15,0,1
+	@sus 75,4,0
+	@sus 95,3,0
+	beat
+	n 1,41,93,44,0,1
+	n 4,69,99,41,0,1
+	n 4,65,96,69,0,1
+	n 4,72,104,39,0,1
+	n 5,72,93,13,0,1
+	@n 2,3,60,92,46,0,1
+	n 3,65,106,49,0,1
+	@n 3,0,MTOM1,127,47,0,0
+	n 3,57,95,47,0,1
+	@n 8,0,MTOM2,127,43,0,0
+	@n 24,5,72,80,17,0,1
+	@n 46,3,58,94,49,0,1
+	@n 48,1,41,99,45,0,1
+	n 3,62,61,51,0,1
+	n 4,70,80,27,0,1
+	n 4,74,72,29,0,1
+	n 5,67,87,15,0,1
+	@n 49,3,67,75,87,0,1
+	@n 72,0,BD1,114,9,0,0
+	@bend 90,1,0,54
+	beat
+	n 1,43,106,81,0,1
+	n 4,65,102,36,0,1
+	n 4,70,112,33,0,1
+	n 4,74,104,37,0,1
+	@n 1,0,LTOM1,127,38,0,0
+	@n 4,3,58,108,32,0,1
+	@n 5,0,LTOM2,127,33,0,0
+	bend 1,0,55
+	n 3,62,114,34,0,1
+	@bend 8,1,0,57
+	@bend 10,1,0,58
+	@bend 12,1,0,60
+	@bend 15,1,0,62
+	bend 1,0,64
+	@n 48,0,SD1,100,11,0,0
+	@n 72,0,SD1,100,9,0,0
+	@n 95,0,CRASH1,114,13,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Ending1B
+TechnicsRhythmsResource_Style_8Beat1_Var1:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var1, 4, 4, 0xff, 0xff
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var1
+	beat
+	n 0,18,112,28,0,0
+	n 0,BD1,118,40,0,0
+	n 1,36,100,31,0,16
+	n 2,48,51,12,0,16
+	n 3,48,88,23,0,16
+	n 4,55,83,126,8,80
+	n 4,64,90,1,9,80
+	n 4,60,88,0,9,80
+	n 4,36,78,1,9,16
+	@n 48,0,18,38,16,0,0
+	n 1,36,100,30,0,16
+	n 2,48,62,12,0,16
+	n 3,48,80,19,0,16
+	beat
+	n 0,18,112,22,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,28,0,16
+	n 2,48,99,20,0,16
+	n 3,48,93,22,0,16
+	@n 48,0,BD1,110,18,0,0
+	n 0,18,59,17,0,0
+	n 1,36,100,29,0,16
+	n 2,48,45,8,0,16
+	n 3,48,72,16,0,16
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,27,0,16
+	n 2,48,66,13,0,16
+	n 3,48,85,19,0,16
+	@n 48,0,18,46,15,0,0
+	n 1,36,100,29,0,16
+	n 2,48,54,9,0,16
+	n 3,48,75,17,0,16
+	beat
+	n 0,18,112,19,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,26,0,16
+	n 2,48,98,17,0,16
+	n 3,48,87,18,0,16
+	@n 48,0,18,76,18,0,0
+	n 0,BD1,118,19,0,0
+	n 1,36,100,30,0,16
+	n 2,48,48,11,0,16
+	n 3,48,72,15,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 2,48,45,9,0,16
+	n 3,48,72,12,0,16
+	@n 48,0,18,48,14,0,0
+	n 1,36,100,31,0,16
+	n 2,48,58,9,0,16
+	n 3,55,87,27,0,16
+	n 3,60,82,29,0,16
+	n 3,48,80,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,29,0,0
+	n 1,36,100,30,0,16
+	n 2,48,99,17,0,16
+	n 3,48,73,16,0,16
+	@n 48,0,BD1,112,18,0,0
+	n 0,18,68,16,0,0
+	n 1,36,100,28,0,16
+	n 2,48,59,11,0,16
+	n 3,48,74,15,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,31,0,0
+	n 1,36,100,29,0,16
+	n 2,48,43,6,0,16
+	n 3,60,81,35,0,16
+	n 3,55,89,32,0,16
+	n 3,48,76,22,0,16
+	@n 48,0,18,44,14,0,0
+	n 1,36,100,33,0,16
+	n 2,48,86,11,0,16
+	n 3,48,69,18,0,16
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,18,112,22,0,0
+	n 1,36,100,29,0,16
+	n 2,48,95,14,0,16
+	n 3,48,78,20,0,16
+	@n 48,0,18,47,15,0,0
+	n 1,36,100,30,0,16
+	n 2,48,86,15,0,16
+	n 3,48,75,18,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,36,0,0
+	n 1,36,100,29,0,16
+	n 2,48,56,8,0,16
+	n 3,48,82,19,0,16
+	@n 48,0,18,44,15,0,0
+	n 1,36,100,28,0,16
+	n 2,48,69,11,0,16
+	n 3,48,78,18,0,16
+	beat
+	n 0,18,112,20,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,29,0,16
+	n 2,48,92,18,0,16
+	n 3,48,87,19,0,16
+	@n 48,0,18,88,16,0,0
+	n 0,BD1,118,18,0,0
+	n 1,36,100,32,0,16
+	n 2,48,61,12,0,16
+	n 3,48,84,19,0,16
+	beat
+	n 0,18,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,36,100,29,0,16
+	n 2,48,66,13,0,16
+	n 3,48,84,19,0,16
+	@n 48,0,18,48,17,0,0
+	n 1,36,100,33,0,16
+	n 2,48,54,7,0,16
+	n 3,48,84,19,0,16
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,18,110,20,0,0
+	n 1,36,100,35,0,16
+	n 2,48,88,19,0,16
+	n 3,48,84,18,0,16
+	@n 48,0,BD1,111,19,0,0
+	n 0,18,72,18,0,0
+	n 1,36,100,34,0,16
+	n 2,48,45,9,0,16
+	n 3,48,74,16,0,16
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 2,48,57,11,0,16
+	n 3,48,72,15,0,16
+	@n 48,0,18,52,15,0,0
+	n 1,36,100,33,0,16
+	n 2,48,57,11,0,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,29,0,16
+	n 2,48,93,18,0,16
+	n 3,48,72,18,0,16
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,30,0,16
+	n 2,48,62,13,0,16
+	n 3,48,78,17,0,16
+	beat
+	n 0,18,112,24,0,0
+	n 0,BD1,118,55,0,0
+	n 1,36,100,30,0,16
+	n 2,48,80,13,0,16
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 48,0,18,56,13,0,0
+	n 1,36,100,33,0,16
+	n 2,48,72,11,0,16
+	n 3,48,73,18,0,16
+	@n 72,2,48,85,11,0,16
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,18,112,25,0,0
+	n 1,36,100,31,0,16
+	n 2,51,89,13,0,16
+	n 3,48,76,19,0,16
+	@n 48,0,BD1,94,18,0,0
+	n 0,18,64,17,0,0
+	n 1,36,100,31,0,16
+	n 2,52,93,16,0,16
+	n 3,48,84,19,0,16
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var1
+TechnicsRhythmsResource_Style_8Beat1_Var1Fill1:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var1Fill1, 1, 4, 0xff, 0xff
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var1Fill1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 2,48,57,11,0,16
+	n 3,48,72,15,0,16
+	@n 48,0,18,52,15,0,0
+	n 1,36,100,33,0,16
+	n 2,48,57,11,0,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,29,0,16
+	n 2,48,93,18,0,16
+	n 3,48,72,18,0,16
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,30,0,16
+	n 2,48,62,13,0,16
+	n 3,48,78,17,0,16
+	beat
+	n 0,SD1,100,24,0,0
+	n 1,36,100,30,0,16
+	n 2,48,80,13,0,16
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 7,0,SD1,100,24,0,0
+	@n 48,0,BD1,112,29,0,0
+	n 1,36,100,33,0,16
+	n 2,48,72,11,0,16
+	n 3,48,73,18,0,16
+	@n 72,2,48,85,11,0,16
+	beat
+	n 0,SD1,100,28,0,0
+	n 1,36,100,31,0,16
+	n 2,51,89,13,0,16
+	n 3,48,76,19,0,16
+	@n 7,0,SD1,100,33,0,0
+	@n 48,0,SD1,100,18,0,0
+	n 1,36,100,31,0,16
+	n 2,52,93,16,0,16
+	n 3,48,84,19,0,16
+	@n 72,0,SD1,100,24,0,0
+	@n 95,0,CRASH1,111,17,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var1Fill1
+TechnicsRhythmsResource_Style_8Beat1_Var1Fill2:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var1Fill2, 1, 4, 0xff, 0xff
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var1Fill2
+	beat
+	n 0,18,101,16,0,0
+	n 0,BD1,104,20,0,0
+	n 1,36,100,29,0,16
+	n 2,48,57,11,0,16
+	n 3,48,72,15,0,16
+	@n 47,0,CHINA,101,18,0,0
+	@n 48,0,SD1,100,14,0,0
+	n 1,36,100,33,0,16
+	n 2,48,57,11,0,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	beat
+	n 0,SD1,100,16,0,0
+	n 1,36,100,29,0,16
+	n 2,48,93,18,0,16
+	n 3,48,72,18,0,16
+	@n 3,0,CHINA,105,19,0,0
+	@n 48,0,SD1,73,9,0,0
+	n 1,36,100,30,0,16
+	n 2,48,62,13,0,16
+	n 3,48,78,17,0,16
+	@n 60,0,SD1,74,10,0,0
+	@n 72,0,SD1,66,8,0,0
+	@n 84,0,SD1,78,13,0,0
+	beat
+	n 0,SD1,100,15,0,0
+	n 1,36,100,30,0,16
+	n 2,48,80,13,0,16
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 24,0,SD1,78,14,0,0
+	@n 48,0,SD1,94,11,0,0
+	n 1,36,100,33,0,16
+	n 2,48,72,11,0,16
+	n 3,48,73,18,0,16
+	@n 72,0,SD1,99,10,0,0
+	n 2,48,85,11,0,16
+	beat
+	n 0,LTOM1,120,17,0,0
+	n 0,MTOM2,127,12,0,0
+	n 1,36,100,31,0,16
+	n 2,51,89,13,0,16
+	n 3,48,76,19,0,16
+	@n 48,0,LTOM1,127,8,0,0
+	n 0,LTOM2,127,10,0,0
+	n 1,36,100,31,0,16
+	n 2,52,93,16,0,16
+	n 3,48,84,19,0,16
+	@n 72,0,LTOM1,125,12,0,0
+	n 0,LTOM2,125,13,0,0
+	@n 95,0,CRASH1,108,17,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var1Fill2
+TechnicsRhythmsResource_Style_8Beat1_Var2:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var2, 4, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,94
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var2
+	beat
+	n 0,18,112,28,0,0
+	n 0,BD1,118,40,0,0
+	n 1,36,100,31,0,16
+	n 2,48,89,122,5,16
+	n 3,48,88,23,0,16
+	n 4,55,89,101,5,80
+	n 4,64,96,100,5,80
+	n 4,60,96,102,5,80
+	@n 48,0,18,38,16,0,0
+	n 1,36,100,30,0,16
+	n 2,64,101,99,0,80
+	n 3,48,80,19,0,16
+	beat
+	n 0,18,112,22,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,28,0,16
+	n 2,60,84,101,0,80
+	n 3,48,93,22,0,16
+	@n 48,0,BD1,110,18,0,0
+	n 0,18,59,17,0,0
+	n 1,36,100,29,0,16
+	n 2,55,66,111,0,80
+	n 3,48,72,16,0,16
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,27,0,16
+	n 2,64,101,58,4,80
+	n 3,48,85,19,0,16
+	@n 48,0,18,46,15,0,0
+	n 1,36,100,29,0,16
+	n 2,60,66,13,4,80
+	n 3,48,75,17,0,16
+	beat
+	n 0,18,112,19,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,26,0,16
+	n 2,55,81,93,3,80
+	n 3,48,87,18,0,16
+	@n 48,0,18,76,18,0,0
+	n 0,BD1,118,19,0,0
+	n 1,36,100,30,0,16
+	n 3,48,72,15,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 3,48,72,12,0,16
+	@n 48,0,18,48,14,0,0
+	n 1,36,100,31,0,16
+	n 3,55,87,27,0,16
+	n 3,60,82,29,0,16
+	n 3,48,80,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,29,0,0
+	n 1,36,100,30,0,16
+	n 3,48,73,16,0,16
+	@n 48,0,BD1,112,18,0,0
+	n 0,18,68,16,0,0
+	n 1,36,100,28,0,16
+	n 3,48,74,15,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,31,0,0
+	n 1,36,100,29,0,16
+	n 3,60,81,35,0,16
+	n 3,55,89,32,0,16
+	n 3,48,76,22,0,16
+	@n 48,0,18,44,14,0,0
+	n 1,36,100,33,0,16
+	n 3,48,69,18,0,16
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,18,112,22,0,0
+	n 1,36,100,29,0,16
+	n 3,48,78,20,0,16
+	@n 48,0,18,47,15,0,0
+	n 1,36,100,30,0,16
+	n 3,48,75,18,0,16
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,36,0,0
+	n 1,36,100,29,0,16
+	n 2,48,78,112,5,16
+	n 3,48,82,19,0,16
+	n 4,55,78,88,2,80
+	n 4,64,92,90,2,80
+	n 4,60,84,91,2,80
+	@n 48,0,18,44,15,0,0
+	n 1,36,100,28,0,16
+	n 2,64,99,95,0,80
+	n 3,48,78,18,0,16
+	beat
+	n 0,18,112,20,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,29,0,16
+	n 2,60,80,105,0,80
+	n 3,48,87,19,0,16
+	@sus 10,2,127
+	@n 48,0,18,88,16,0,0
+	n 0,BD1,118,18,0,0
+	n 1,36,100,32,0,16
+	n 2,55,66,107,0,80
+	n 3,48,84,19,0,16
+	@sus 92,2,0
+	beat
+	n 0,18,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,36,100,29,0,16
+	n 2,64,100,51,4,80
+	n 3,48,84,19,0,16
+	@n 48,0,18,48,17,0,0
+	n 1,36,100,33,0,16
+	n 2,60,71,127,3,80
+	n 3,48,84,19,0,16
+	@sus 49,2,127
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,18,110,20,0,0
+	n 1,36,100,35,0,16
+	n 2,55,76,76,3,80
+	n 3,48,84,18,0,16
+	@sus 37,2,0
+	@n 48,0,BD1,111,19,0,0
+	n 0,18,72,18,0,0
+	n 1,36,100,34,0,16
+	n 2,67,90,30,3,80
+	n 3,48,74,16,0,16
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 3,48,72,15,0,16
+	n 4,55,89,45,0,80
+	n 4,64,96,47,0,80
+	n 4,60,93,47,0,80
+	@n 48,0,18,52,15,0,0
+	n 1,36,100,33,0,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,29,0,16
+	n 3,48,72,18,0,16
+	n 4,64,90,37,0,80
+	n 4,55,84,36,0,80
+	n 4,60,87,37,0,80
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,30,0,16
+	n 3,48,78,17,0,16
+	beat
+	n 0,18,112,24,0,0
+	n 0,BD1,118,55,0,0
+	n 1,36,100,30,0,16
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 48,0,18,56,13,0,0
+	n 1,36,100,33,0,16
+	n 3,48,73,18,0,16
+	n 4,64,90,38,0,80
+	n 4,55,83,38,0,80
+	n 4,60,89,38,0,80
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,18,112,25,0,0
+	n 1,36,100,31,0,16
+	n 3,48,76,19,0,16
+	@n 48,0,BD1,94,18,0,0
+	n 0,18,64,17,0,0
+	n 1,36,100,31,0,16
+	n 3,48,84,19,0,16
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var2
+TechnicsRhythmsResource_Style_8Beat1_Var2Fill1:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var2Fill1, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,94
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var2Fill1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,29,0,16
+	n 3,48,72,15,0,16
+	n 4,55,89,45,0,80
+	n 4,64,96,47,0,80
+	n 4,60,93,47,0,80
+	@n 48,0,SD1,100,21,0,0
+	n 0,18,52,15,0,0
+	n 1,36,100,33,0,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,29,0,16
+	n 3,48,72,18,0,16
+	n 4,64,90,37,0,80
+	n 4,55,84,36,0,80
+	n 4,60,87,37,0,80
+	@n 48,0,18,56,14,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,30,0,16
+	n 3,48,78,17,0,16
+	beat
+	n 0,18,112,24,0,0
+	n 0,BD1,118,55,0,0
+	n 0,SD1,100,20,0,0
+	n 1,36,100,30,0,16
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 48,0,SD1,100,20,0,0
+	n 0,18,56,13,0,0
+	n 1,36,100,33,0,16
+	n 3,48,73,18,0,16
+	n 4,64,90,38,0,80
+	n 4,55,83,38,0,80
+	n 4,60,89,38,0,80
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,18,112,25,0,0
+	n 1,36,100,31,0,16
+	n 3,48,76,19,0,16
+	@n 48,0,BD1,94,18,0,0
+	n 0,SD1,100,13,0,0
+	n 0,18,64,17,0,0
+	n 1,36,100,31,0,16
+	n 3,48,84,19,0,16
+	@n 72,0,SD1,100,18,0,0
+	@n 95,0,CRASH1,116,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var2Fill1
+TechnicsRhythmsResource_Style_8Beat1_Var2Fill2:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var2Fill2, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,94
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var2Fill2
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 3,48,72,15,0,16
+	n 4,55,89,45,0,80
+	n 4,64,96,47,0,80
+	n 4,60,93,47,0,80
+	@n 4,1,36,100,41,0,16
+	@n 48,0,HTOM2,97,12,0,0
+	n 0,MTOM1,95,15,0,0
+	n 2,48,58,74,2,16
+	n 3,60,87,36,0,16
+	n 3,55,90,38,0,16
+	n 3,48,75,22,0,16
+	@n 51,1,36,100,43,0,16
+	beat
+	n 0,HTOM2,117,13,0,0
+	n 0,MTOM1,110,14,0,0
+	n 3,48,72,18,0,16
+	n 4,64,90,37,0,80
+	n 4,55,84,36,0,80
+	n 4,60,87,37,0,80
+	@n 1,2,55,64,44,0,80
+	@n 6,2,60,83,37,0,80
+	@n 7,1,36,100,41,0,16
+	@n 10,2,64,87,30,0,80
+	@n 48,0,HTOM2,127,14,0,0
+	n 0,MTOM1,120,15,0,0
+	n 3,48,78,17,0,16
+	@n 54,1,36,100,39,0,16
+	beat
+	n 0,MTOM1,127,14,0,0
+	n 0,MTOM2,122,15,0,0
+	bend 1,0,54
+	n 3,60,85,34,0,16
+	n 3,55,87,34,0,16
+	n 3,48,78,23,0,16
+	@n 5,1,40,100,39,0,16
+	@bend 17,1,0,56
+	@bend 19,1,0,58
+	bend 1,0,60
+	@bend 21,1,0,62
+	@bend 23,1,0,63
+	@bend 26,1,0,64
+	@n 48,0,MTOM1,127,14,0,0
+	n 0,MTOM2,120,16,0,0
+	n 2,55,67,12,1,80
+	n 3,48,73,18,0,16
+	n 4,64,90,38,0,80
+	n 4,55,83,38,0,80
+	n 4,60,89,38,0,80
+	@n 49,1,43,100,46,0,16
+	@n 50,2,60,86,9,1,80
+	@n 51,2,64,93,8,1,80
+	beat
+	n 0,LTOM1,119,15,0,0
+	n 0,MTOM2,127,14,0,0
+	n 3,48,76,19,0,16
+	@n 4,1,45,100,44,0,16
+	@n 48,0,LTOM1,120,16,0,0
+	n 3,48,84,19,0,16
+	@n 50,1,43,100,38,0,16
+	@n 95,0,CRASH1,116,16,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var2Fill2
+TechnicsRhythmsResource_Style_8Beat1_Var3:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var3, 4, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,62
+	pan 3,80
+	rev 3,0
+	cc 3,82,28
+	cc 3,83,64
+	pc 3,0x1c,0x20,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	cc 6,81,64
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var3
+	beat
+	n 0,21,112,18,0,0
+	n 0,BD1,118,40,0,0
+	n 6,67,80,0,6,80
+	n 6,52,80,0,6,80
+	n 6,60,80,0,6,80
+	n 1,36,100,41,0,16
+	n 2,48,76,29,1,80
+	n 3,48,102,21,0,16
+	n 4,55,98,82,0,16
+	n 4,60,99,81,0,16
+	n 4,64,102,84,0,16
+	n 4,36,99,27,1,16
+	@sus 45,4,127
+	@n 48,0,21,47,13,0,0
+	n 1,36,100,42,0,16
+	n 2,55,63,20,1,80
+	n 3,48,95,23,0,16
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,21,112,19,0,0
+	n 1,36,100,40,0,16
+	n 2,64,112,67,1,80
+	n 3,48,99,20,0,16
+	n 4,55,92,115,0,16
+	n 4,60,94,117,0,16
+	n 4,64,93,121,0,16
+	@n 48,0,BD1,110,18,0,0
+	n 0,21,62,13,0,0
+	n 1,36,100,42,0,16
+	n 2,60,81,96,4,80
+	n 3,48,80,21,0,16
+	beat
+	n 0,BD1,118,32,0,0
+	n 0,21,112,20,0,0
+	n 1,36,100,40,0,16
+	n 2,48,74,41,0,80
+	n 3,48,96,18,0,16
+	n 4,36,76,60,0,16
+	@n 48,0,21,59,14,0,0
+	n 1,36,100,45,0,16
+	n 2,55,93,124,3,80
+	n 3,48,93,19,0,16
+	n 4,55,78,49,0,16
+	n 4,64,67,49,0,16
+	n 4,60,78,49,0,16
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,21,110,21,0,0
+	n 1,36,100,42,0,16
+	n 3,48,98,19,0,16
+	n 4,36,76,29,0,16
+	@n 48,0,BD1,118,19,0,0
+	n 0,21,57,14,0,0
+	n 1,36,100,41,0,16
+	n 2,64,69,14,0,80
+	n 3,48,96,18,0,16
+	n 4,48,85,112,0,16
+	@sus 85,4,0
+	beat
+	n 0,BD1,118,32,0,0
+	n 0,21,110,21,0,0
+	n 1,36,100,41,0,16
+	n 3,48,96,19,0,16
+	n 4,60,93,89,0,16
+	n 4,55,92,90,0,16
+	n 4,64,96,91,0,16
+	@sus 26,4,127
+	@n 48,0,21,50,13,0,0
+	n 1,36,100,44,0,16
+	n 3,48,94,19,0,16
+	beat
+	n 0,SD1,100,29,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,42,0,16
+	n 3,48,95,18,0,16
+	n 4,48,73,66,0,16
+	@sus 39,4,0
+	@n 48,0,21,50,12,0,0
+	n 0,BD1,112,18,0,0
+	n 1,36,100,43,0,16
+	n 3,48,96,19,0,16
+	n 4,55,93,51,0,16
+	n 4,60,96,52,0,16
+	n 4,64,96,53,0,16
+	@sus 67,4,127
+	beat
+	n 0,BD1,118,31,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,40,0,16
+	n 3,48,95,18,0,16
+	n 4,48,67,62,0,16
+	@n 48,0,21,50,14,0,0
+	n 1,36,100,45,0,16
+	n 3,48,96,18,0,16
+	n 4,64,96,63,1,16
+	n 4,55,89,30,0,16
+	n 4,60,92,42,0,16
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,42,0,16
+	n 3,48,93,18,0,16
+	n 4,55,63,13,1,16
+	n 4,48,78,97,0,16
+	@n 48,0,21,50,15,0,0
+	n 1,36,100,41,0,16
+	n 3,48,98,19,0,16
+	n 4,60,60,98,0,16
+	@sus 80,4,0
+	beat
+	n 0,BD1,118,36,0,0
+	n 0,21,112,23,0,0
+	n 6,55,80,0,6,80
+	n 6,64,80,0,6,80
+	n 6,72,80,0,6,80
+	n 1,36,100,43,0,16
+	n 3,48,100,19,0,16
+	n 4,36,93,121,1,16
+	@sus 47,4,127
+	@n 48,0,21,50,15,0,0
+	n 1,36,100,46,0,16
+	n 2,48,83,125,1,80
+	n 3,48,98,19,0,16
+	n 4,48,75,61,0,16
+	@sus 93,4,0
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,41,0,16
+	n 2,55,85,49,1,80
+	n 3,48,100,19,0,16
+	n 4,55,91,53,0,16
+	n 4,60,98,53,0,16
+	n 4,64,98,56,0,16
+	@sus 23,4,127
+	@n 48,0,21,50,13,0,0
+	n 0,BD1,118,18,0,0
+	n 1,36,100,41,0,16
+	n 2,64,111,22,1,80
+	n 3,48,95,21,0,16
+	n 4,48,56,59,0,16
+	beat
+	n 0,BD1,118,27,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,43,0,16
+	n 3,48,100,19,0,16
+	n 4,55,87,69,0,16
+	n 4,60,93,94,0,16
+	n 4,64,96,15,1,16
+	@sus 27,4,0
+	@sus 41,4,127
+	@n 48,0,21,50,14,0,0
+	n 1,36,100,44,0,16
+	n 2,60,89,3,4,80
+	n 3,48,96,20,0,16
+	n 4,48,69,90,0,16
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,41,0,16
+	n 2,55,79,79,3,80
+	n 3,48,96,18,0,16
+	n 4,55,79,43,0,16
+	@n 48,0,21,50,14,0,0
+	n 0,BD1,111,19,0,0
+	n 1,36,100,39,0,16
+	n 2,67,99,36,3,80
+	n 3,48,95,19,0,16
+	n 4,36,74,68,0,16
+	@sus 87,4,0
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,39,0,16
+	n 3,48,99,20,0,16
+	n 4,55,90,64,0,16
+	n 4,60,95,65,0,16
+	n 4,64,96,69,0,16
+	@sus 28,4,127
+	@n 48,0,21,50,14,0,0
+	n 1,36,100,42,0,16
+	n 3,48,100,19,0,16
+	n 4,48,61,126,0,16
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,40,0,16
+	n 3,48,102,20,0,16
+	n 4,36,74,78,0,16
+	@sus 27,4,0
+	@n 48,0,21,50,13,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	n 4,55,89,90,0,16
+	n 4,60,91,92,0,16
+	n 4,64,93,90,0,16
+	@sus 71,4,127
+	beat
+	n 0,BD1,118,55,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,45,0,16
+	n 3,48,99,20,0,16
+	n 5,76,99,51,0,97
+	@n 48,0,21,50,15,0,0
+	n 1,36,100,40,0,16
+	n 3,48,99,20,0,16
+	n 4,36,74,44,0,16
+	n 5,74,87,50,0,97
+	@sus 89,4,0
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,43,0,16
+	n 3,48,98,20,0,16
+	n 4,48,90,92,0,16
+	n 4,55,87,91,0,16
+	n 4,64,92,92,0,16
+	n 4,60,90,91,0,16
+	n 5,72,90,43,0,97
+	@n 48,0,BD1,94,18,0,0
+	n 0,21,50,16,0,0
+	n 1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	n 5,67,84,45,0,97
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var3
+TechnicsRhythmsResource_Style_8Beat1_Var3Fill1:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var3Fill1, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,62
+	pan 3,80
+	rev 3,0
+	cc 3,82,28
+	cc 3,83,64
+	pc 3,0x1c,0x20,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	cc 6,81,64
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var3Fill1
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 6,64,80,101,2,80
+	n 6,55,80,102,2,80
+	n 6,60,80,101,2,80
+	n 1,36,100,39,0,16
+	n 3,48,99,20,0,16
+	n 4,55,90,64,0,16
+	n 4,60,95,65,0,16
+	n 4,64,96,69,0,16
+	@sus 28,4,127
+	@n 48,0,21,50,14,0,0
+	n 1,36,100,42,0,16
+	n 3,48,100,19,0,16
+	n 4,48,61,126,0,16
+	@n 49,2,55,74,79,2,18
+	beat
+	n 0,21,112,23,0,0
+	n 0,SD1,100,28,0,0
+	n 1,36,100,40,0,16
+	n 3,48,102,20,0,16
+	n 4,36,74,78,0,16
+	@n 2,2,65,107,45,0,18
+	@sus 27,4,0
+	@n 48,0,21,50,13,0,0
+	n 0,BD1,106,16,0,0
+	n 1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	n 4,55,89,90,0,16
+	n 4,60,91,92,0,16
+	n 4,64,93,90,0,16
+	@n 49,2,64,99,110,1,18
+	@sus 71,4,127
+	beat
+	n 0,BD1,118,55,0,0
+	n 0,SD1,100,17,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,45,0,16
+	n 3,48,99,20,0,16
+	@n 48,0,21,50,15,0,0
+	n 1,36,100,40,0,16
+	n 3,48,99,20,0,16
+	n 4,36,74,44,0,16
+	@n 50,2,60,88,13,1,18
+	@n 72,0,SD1,100,14,0,0
+	@sus 89,4,0
+	beat
+	n 0,SD1,100,30,0,0
+	n 0,21,112,22,0,0
+	n 1,36,100,43,0,16
+	n 3,48,98,20,0,16
+	n 4,48,90,92,0,16
+	n 4,55,87,91,0,16
+	n 4,64,92,92,0,16
+	n 4,60,90,91,0,16
+	@n 48,0,BD1,94,18,0,0
+	n 0,SD1,100,17,0,0
+	n 0,21,50,16,0,0
+	n 1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	@n 95,0,CRASH1,110,13,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var3Fill1
+TechnicsRhythmsResource_Style_8Beat1_Var3Fill2:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var3Fill2, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,62
+	pan 3,80
+	rev 3,0
+	cc 3,82,28
+	cc 3,83,64
+	pc 3,0x1c,0x20,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	cc 6,81,64
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var3Fill2
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 6,64,80,101,2,80
+	n 6,55,80,102,2,80
+	n 6,60,80,101,2,80
+	n 1,36,100,39,0,16
+	n 3,48,99,20,0,16
+	n 4,55,90,64,0,16
+	n 4,60,95,65,0,16
+	n 4,64,96,69,0,16
+	@sus 28,4,127
+	@n 48,0,HTOM2,127,5,0,0
+	n 1,36,100,42,0,16
+	n 3,48,100,19,0,16
+	n 4,48,61,126,0,16
+	@n 56,0,HTOM2,127,25,0,0
+	beat
+	n 1,36,100,40,0,16
+	n 3,48,102,20,0,16
+	n 4,36,74,78,0,16
+	@n 24,0,MTOM1,127,22,0,0
+	@sus 27,4,0
+	@n 47,2,55,64,17,0,16
+	@n 48,1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	n 4,55,89,90,0,16
+	n 4,60,91,92,0,16
+	n 4,64,93,90,0,16
+	@n 57,2,56,68,10,0,16
+	@n 67,2,57,72,10,0,16
+	@sus 71,4,127
+	@n 77,2,58,76,11,0,16
+	@n 86,2,59,79,14,0,16
+	beat
+	n 0,MTOM2,127,20,0,0
+	n 1,36,100,45,0,16
+	n 3,48,99,20,0,16
+	@n 2,2,60,103,46,1,16
+	@n 48,0,BD1,117,12,0,0
+	n 1,36,100,40,0,16
+	n 3,48,99,20,0,16
+	n 4,36,74,44,0,16
+	@n 72,0,BD1,123,14,0,0
+	@sus 89,4,0
+	beat
+	n 0,SD1,100,37,0,0
+	n 1,36,100,43,0,16
+	n 3,48,98,20,0,16
+	n 4,48,90,92,0,16
+	n 4,55,87,91,0,16
+	n 4,64,92,92,0,16
+	n 4,60,90,91,0,16
+	@n 7,0,SD1,100,37,0,0
+	@n 48,0,SD1,100,10,0,0
+	n 1,36,100,42,0,16
+	n 3,48,96,19,0,16
+	@n 72,0,SD1,100,16,0,0
+	@n 95,0,CRASH1,110,13,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var3Fill2
+TechnicsRhythmsResource_Style_8Beat1_Var4:	# 4 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var4, 4, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,74
+	pan 3,0
+	rev 3,0
+	cc 3,92,105
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var4
+	beat
+	n 0,BD1,118,17,0,0
+	n 0,21,112,18,0,0
+	n 6,67,80,0,6,80
+	n 6,52,80,0,6,80
+	n 6,60,80,0,6,80
+	n 1,36,100,85,0,16
+	n 4,44,51,3,0,16
+	n 4,55,98,82,0,16
+	n 4,60,99,81,0,16
+	n 4,64,102,84,0,16
+	n 4,36,99,27,1,16
+	@sus 45,4,127
+	@n 48,0,21,47,13,0,0
+	beat
+	n 0,21,112,19,0,0
+	n 0,SD1,100,17,0,0
+	n 0,TAMB,127,18,0,0
+	n 1,36,100,6,0,16
+	n 3,60,96,67,0,80
+	n 3,64,99,67,0,80
+	n 3,55,95,68,0,80
+	n 4,55,92,115,0,16
+	n 4,60,94,117,0,16
+	n 4,64,93,121,0,16
+	@sus 18,3,127
+	@n 48,0,21,62,13,0,0
+	@n 72,0,BD1,87,11,0,0
+	n 1,36,100,17,0,16
+	n 3,60,111,3,0,80
+	n 3,55,108,5,0,80
+	@sus 77,3,0
+	beat
+	n 0,21,112,20,0,0
+	n 0,BD1,118,20,0,0
+	n 1,36,100,37,0,16
+	n 4,36,76,60,0,16
+	@n 48,0,BD1,116,19,0,0
+	n 0,21,59,14,0,0
+	n 1,36,100,30,0,16
+	n 2,60,97,68,0,80
+	n 2,55,93,78,0,80
+	n 2,64,99,68,0,80
+	n 4,55,78,49,0,16
+	n 4,64,67,49,0,16
+	n 4,60,78,49,0,16
+	@sus 76,2,127
+	beat
+	n 0,SD1,100,20,0,0
+	n 0,21,110,21,0,0
+	n 0,TAMB,127,21,0,0
+	n 4,36,76,29,0,16
+	@n 48,0,BD1,93,14,0,0
+	n 0,21,57,14,0,0
+	n 1,31,100,42,0,16
+	n 4,48,85,112,0,16
+	@sus 85,4,0
+	beat
+	n 0,BD1,118,22,0,0
+	n 0,21,110,21,0,0
+	n 1,36,100,78,0,16
+	n 4,60,93,89,0,16
+	n 4,55,92,90,0,16
+	n 4,64,96,91,0,16
+	@sus 26,4,127
+	@n 48,0,21,50,13,0,0
+	n 3,55,82,6,0,80
+	@sus 52,2,0
+	beat
+	n 0,21,112,22,0,0
+	n 0,SD1,100,17,0,0
+	n 0,TAMB,127,19,0,0
+	n 3,64,98,42,0,80
+	n 3,60,102,43,0,80
+	n 3,55,97,49,0,80
+	n 4,48,73,66,0,16
+	@sus 7,3,127
+	@sus 39,4,0
+	@n 48,0,21,50,12,0,0
+	n 4,55,93,51,0,16
+	n 4,60,96,52,0,16
+	n 4,64,96,53,0,16
+	@sus 67,4,127
+	@n 72,0,BD1,87,11,0,0
+	n 1,36,100,16,0,16
+	n 3,60,89,7,0,80
+	n 3,64,95,8,0,80
+	n 3,55,97,6,0,80
+	@sus 77,3,0
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,20,0,0
+	n 1,36,100,44,0,16
+	n 4,48,67,62,0,16
+	@n 24,3,55,75,7,0,80
+	@sus 47,3,127
+	@n 48,0,BD1,118,20,0,0
+	n 0,21,50,14,0,0
+	n 1,36,100,43,0,16
+	n 2,55,85,56,1,80
+	n 3,60,57,3,0,80
+	n 3,55,78,5,0,80
+	n 4,64,96,63,1,16
+	n 4,55,89,30,0,16
+	n 4,60,92,42,0,16
+	@sus 57,3,0
+	beat
+	n 0,SD1,100,15,0,0
+	n 0,21,112,23,0,0
+	n 0,TAMB,127,19,0,0
+	n 2,67,85,6,1,80
+	n 2,64,99,4,1,80
+	n 4,55,63,13,1,16
+	n 4,48,78,97,0,16
+	@sus 41,2,127
+	@n 48,0,BD1,102,16,0,0
+	n 0,21,50,15,0,0
+	n 1,31,100,21,0,16
+	n 4,60,60,98,0,16
+	@n 72,1,33,100,15,0,16
+	@sus 80,4,0
+	beat
+	n 0,BD1,118,18,0,0
+	n 0,21,112,23,0,0
+	n 6,55,80,0,6,80
+	n 6,64,80,0,6,80
+	n 6,72,80,0,6,80
+	n 1,36,100,94,0,16
+	n 4,36,93,121,1,16
+	@sus 47,4,127
+	@n 48,0,21,50,15,0,0
+	n 3,55,78,4,0,80
+	n 4,48,75,61,0,16
+	@sus 86,2,0
+	@sus 93,4,0
+	beat
+	n 0,SD1,100,17,0,0
+	n 0,21,112,23,0,0
+	n 0,TAMB,127,20,0,0
+	n 3,64,99,23,0,80
+	n 3,60,99,24,0,80
+	n 3,55,102,25,0,80
+	n 4,55,91,53,0,16
+	n 4,60,98,53,0,16
+	n 4,64,98,56,0,16
+	@sus 2,3,127
+	@sus 23,4,127
+	@n 48,0,21,50,13,0,0
+	n 4,48,56,59,0,16
+	@n 72,0,BD1,99,11,0,0
+	n 1,36,100,16,0,16
+	n 3,64,93,6,0,80
+	n 3,55,95,8,0,80
+	n 3,60,98,7,0,80
+	@sus 79,3,0
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,17,0,0
+	n 1,36,100,38,0,16
+	n 4,55,87,69,0,16
+	n 4,60,93,94,0,16
+	n 4,64,96,15,1,16
+	@sus 27,4,0
+	@sus 41,4,127
+	@n 48,0,21,50,14,0,0
+	n 0,BD1,118,18,0,0
+	n 1,36,100,29,0,16
+	n 2,60,70,8,0,80
+	n 2,55,81,8,0,80
+	n 3,55,93,4,0,80
+	n 4,48,69,90,0,16
+	beat
+	n 0,SD1,100,15,0,0
+	n 0,21,112,22,0,0
+	n 0,TAMB,127,19,0,0
+	n 4,55,79,43,0,16
+	@n 48,0,BD1,108,14,0,0
+	n 0,21,50,14,0,0
+	n 1,31,100,41,0,16
+	n 2,55,92,87,0,80
+	n 2,60,92,89,0,80
+	n 2,64,95,88,0,80
+	n 4,36,74,68,0,16
+	@sus 87,4,0
+	beat
+	n 0,BD1,118,19,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,95,0,16
+	n 4,55,90,64,0,16
+	n 4,60,95,65,0,16
+	n 4,64,96,69,0,16
+	@sus 10,2,127
+	@sus 28,4,127
+	@n 48,0,21,50,14,0,0
+	n 3,60,74,4,0,80
+	n 3,55,90,5,0,80
+	n 4,48,61,126,0,16
+	beat
+	n 0,SD1,100,15,0,0
+	n 0,21,112,23,0,0
+	n 0,TAMB,127,17,0,0
+	n 3,64,102,73,0,80
+	n 3,60,98,72,0,80
+	n 3,55,104,72,0,80
+	n 4,36,74,78,0,16
+	@sus 4,3,127
+	@sus 12,2,0
+	@sus 27,4,0
+	@n 48,0,21,50,13,0,0
+	n 4,55,89,90,0,16
+	n 4,60,91,92,0,16
+	n 4,64,93,90,0,16
+	@sus 71,4,127
+	@n 72,0,BD1,96,11,0,0
+	n 1,31,100,15,0,16
+	n 3,60,95,2,0,80
+	n 3,55,102,4,0,80
+	@sus 78,3,0
+	@bend 88,1,0,54
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,117,18,0,0
+	n 1,36,100,41,0,16
+	n 5,76,99,51,0,97
+	@bend 13,1,0,59
+	@bend 15,1,0,64
+	@bend 22,1,0,63
+	@bend 24,1,0,64
+	@n 48,0,BD1,114,20,0,0
+	n 0,21,50,15,0,0
+	n 1,36,100,87,0,16
+	n 2,52,93,53,0,16
+	n 3,55,93,5,0,80
+	n 3,60,84,7,0,80
+	n 4,36,74,44,0,16
+	n 5,74,87,50,0,97
+	@sus 51,3,127
+	@sus 64,3,0
+	@sus 89,4,0
+	beat
+	n 0,SD1,100,14,0,0
+	n 0,21,112,22,0,0
+	n 0,TAMB,127,17,0,0
+	n 2,62,105,51,0,16
+	n 2,67,87,91,0,16
+	n 4,48,90,92,0,16
+	n 4,55,87,91,0,16
+	n 4,64,92,92,0,16
+	n 4,60,90,91,0,16
+	n 5,79,90,43,0,97
+	@n 48,0,BD1,110,16,0,0
+	n 0,21,50,16,0,0
+	n 1,31,100,46,0,16
+	n 2,64,83,37,0,16
+	n 5,76,84,45,0,97
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var4
+TechnicsRhythmsResource_Style_8Beat1_Var4Fill1:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var4Fill1, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,74
+	pan 3,0
+	rev 3,0
+	cc 3,92,105
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var4Fill1
+	beat
+	n 0,BD1,118,19,0,0
+	n 0,21,112,23,0,0
+	n 1,36,100,95,0,16
+	n 4,55,90,64,0,16
+	n 4,60,95,65,0,16
+	n 4,64,96,69,0,16
+	@sus 28,4,127
+	@n 48,0,SD1,100,9,0,0
+	n 2,55,85,66,1,80
+	n 4,48,61,126,0,16
+	@n 55,0,SD1,100,39,0,0
+	@n 95,0,18,80,15,0,0
+	beat
+	n 0,SD1,100,14,0,0
+	n 0,TAMB,127,17,0,0
+	n 2,67,91,117,0,80
+	n 2,60,90,26,2,80
+	n 3,55,98,45,0,80
+	n 3,60,99,44,0,80
+	n 3,64,89,44,0,80
+	n 4,36,74,78,0,16
+	@sus 23,3,127
+	@n 24,0,SD1,86,19,0,0
+	@sus 27,4,0
+	@n 48,0,BD1,88,10,0,0
+	n 4,55,89,90,0,16
+	n 4,60,91,92,0,16
+	n 4,64,93,90,0,16
+	@sus 71,4,127
+	@n 72,0,BD1,99,14,0,0
+	n 1,31,100,15,0,16
+	n 3,55,99,6,0,80
+	n 3,60,96,6,0,80
+	n 3,64,97,7,0,80
+	@sus 74,3,0
+	@bend 90,1,0,54
+	@n 95,0,18,76,16,0,0
+	beat
+	n 0,SD1,100,15,0,0
+	n 1,36,100,41,0,16
+	@bend 13,1,0,59
+	@bend 15,1,0,64
+	@n 24,0,SD1,74,12,0,0
+	@n 48,0,SD1,74,10,0,0
+	n 1,36,100,87,0,16
+	n 2,64,102,12,1,80
+	n 3,55,92,80,0,80
+	n 3,64,90,90,0,80
+	n 3,60,91,90,0,80
+	n 4,36,74,44,0,16
+	@n 72,0,SD1,100,19,0,0
+	@sus 89,4,0
+	beat
+	n 0,MTOM2,127,11,0,0
+	n 0,TAMB,127,17,0,0
+	n 4,48,90,92,0,16
+	n 4,55,87,91,0,16
+	n 4,64,92,92,0,16
+	n 4,60,90,91,0,16
+	@n 1,0,18,79,14,0,0
+	@n 24,0,LTOM1,126,13,0,0
+	@n 48,0,LTOM1,127,14,0,0
+	n 1,31,100,46,0,16
+	@n 95,0,CRASH1,111,13,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var4Fill1
+TechnicsRhythmsResource_Style_8Beat1_Var4Fill2:	# 1 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Var4Fill2, 1, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,74
+	pan 3,0
+	rev 3,0
+	cc 3,92,105
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	rev 4,40
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x58,0x30,0x20
+	vol 6,48
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Var4Fill2
+	beat
+	n 0,SD1,100,16,0,0
+	n 1,36,114,54,0,16
+	n 2,67,124,41,0,80
+	n 2,64,121,43,0,80
+	n 3,60,111,38,0,80
+	n 3,64,111,38,0,80
+	n 4,55,90,37,0,16
+	n 4,60,95,39,0,16
+	n 4,64,98,40,0,16
+	n 4,36,108,42,0,16
+	@n 8,0,SD1,100,27,0,0
+	beat
+	n 0,SD1,100,19,0,0
+	n 1,36,111,40,0,16
+	n 2,67,123,43,0,80
+	n 2,64,123,43,0,80
+	n 3,60,110,35,0,16
+	n 3,64,111,37,0,16
+	n 4,55,95,40,0,16
+	n 4,60,98,42,0,16
+	n 4,64,100,43,0,16
+	n 4,36,112,43,0,16
+	@n 49,3,48,90,9,0,16
+	@n 70,3,48,107,13,0,16
+	@n 72,1,36,116,8,0,16
+	@bend 90,1,0,54
+	@n 94,3,50,123,16,0,16
+	beat
+	n 1,40,103,48,0,16
+	@n 5,3,51,75,2,0,16
+	@n 10,3,52,89,34,0,16
+	@bend 13,1,0,64
+	@bend 22,1,0,63
+	@bend 24,1,0,64
+	@n 48,1,43,84,47,0,16
+	n 3,55,112,44,0,16
+	beat
+	n 1,45,92,47,0,16
+	n 3,57,108,44,0,16
+	@n 45,3,55,90,31,0,16
+	@n 48,1,43,86,40,0,16
+	@n 95,0,CRASH1,112,21,0,0
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Var4Fill2
+TechnicsRhythmsResource_Style_8Beat1_Intro2A:	# 5 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Intro2A, 5, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,94
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	pan 5,37
+	pc 5,0x58,0x30,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Intro2A
+	beat
+	n 0,18,112,28,0,0
+	n 0,BD1,118,40,0,0
+	expr 6,127
+	n 1,36,100,29,0,1
+	expr 2,127
+	n 3,48,79,13,0,1
+	n 4,36,106,104,3,1
+	n 4,55,94,34,3,1
+	n 4,64,91,32,3,1
+	n 4,60,94,27,3,1
+	n 5,76,104,126,2,1
+	@n 2,2,48,65,98,2,1
+	@n 6,6,64,90,60,4,1
+	@n 7,6,60,87,60,4,1
+	n 6,55,84,122,5,1
+	@n 48,0,18,38,16,0,0
+	n 1,36,100,33,0,1
+	n 3,48,84,13,0,1
+	@n 50,2,64,105,55,0,1
+	beat
+	n 0,18,112,22,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,29,0,1
+	n 3,48,96,18,0,1
+	@n 1,2,59,76,50,0,1
+	@n 48,0,BD1,110,18,0,0
+	n 0,18,59,17,0,0
+	n 1,36,100,30,0,1
+	n 3,48,80,15,0,1
+	@n 49,2,60,66,96,0,1
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,28,0,1
+	n 3,48,85,16,0,1
+	@n 4,2,67,94,94,0,1
+	@n 48,0,18,46,15,0,0
+	n 1,36,100,29,0,1
+	n 3,48,80,15,0,1
+	@n 54,2,59,62,50,0,1
+	beat
+	n 0,18,112,19,0,0
+	n 0,SD1,100,25,0,0
+	n 1,36,100,28,0,1
+	n 3,48,98,19,0,1
+	@n 3,2,60,65,63,1,1
+	@sus 23,4,127
+	@n 48,0,18,76,18,0,0
+	n 0,BD1,118,19,0,0
+	n 1,36,100,27,0,1
+	n 3,48,78,17,0,1
+	@n 51,2,64,87,43,3,1
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,32,0,0
+	n 1,36,100,28,0,1
+	n 3,48,76,16,0,1
+	@n 48,0,18,48,14,0,0
+	n 1,36,100,28,0,1
+	n 3,48,83,14,0,1
+	@n 50,2,48,73,100,0,1
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,29,0,0
+	n 1,36,100,25,0,1
+	n 3,48,99,17,0,1
+	n 4,55,93,46,0,1
+	n 4,60,104,45,0,1
+	n 4,64,104,45,0,1
+	n 5,79,109,77,0,1
+	@sus 1,4,0
+	@n 5,2,55,75,12,1,1
+	@sus 31,4,127
+	@n 48,0,BD1,112,18,0,0
+	n 0,18,68,16,0,0
+	n 1,36,100,27,0,1
+	n 3,48,88,17,0,1
+	@n 52,2,60,84,97,0,1
+	@n 93,6,59,84,73,1,1
+	n 6,62,81,67,1,1
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,31,0,0
+	n 1,35,100,29,0,1
+	n 3,47,87,17,0,1
+	n 4,55,93,119,0,1
+	n 4,62,105,119,0,1
+	n 4,59,102,120,0,1
+	n 4,47,107,59,1,1
+	n 5,74,102,81,0,1
+	@sus 1,4,0
+	@sus 42,4,127
+	@n 48,0,18,44,14,0,0
+	n 1,35,100,30,0,1
+	n 3,47,80,14,0,1
+	@n 49,2,47,76,109,0,1
+	beat
+	n 0,SD1,100,28,0,0
+	n 0,18,112,22,0,0
+	n 1,35,100,30,0,1
+	n 3,47,102,19,0,1
+	n 4,67,107,25,0,1
+	n 5,79,104,72,0,1
+	@n 1,2,55,69,16,1,1
+	@n 48,0,18,47,15,0,0
+	n 0,BD1,108,20,0,0
+	n 1,35,100,36,0,1
+	n 2,60,66,103,0,1
+	n 3,47,87,18,0,1
+	@sus 90,4,0
+	@n 95,6,52,76,2,3,1
+	n 6,57,62,83,5,1
+	beat
+	n 0,18,112,23,0,0
+	n 0,BD1,118,36,0,0
+	n 1,33,100,35,0,1
+	n 3,45,83,17,0,1
+	n 4,52,96,13,2,1
+	n 4,57,102,26,2,1
+	n 4,60,102,29,2,1
+	n 4,45,96,28,2,1
+	n 5,72,99,18,4,1
+	@n 1,6,60,69,120,8,1
+	n 2,45,75,51,4,1
+	@n 48,0,18,44,15,0,0
+	n 1,33,100,35,0,1
+	n 3,45,84,15,0,1
+	@n 49,2,64,99,93,0,1
+	@n 95,2,59,72,53,0,1
+	beat
+	n 0,18,112,20,0,0
+	n 0,SD1,100,25,0,0
+	n 1,33,100,32,0,1
+	n 3,45,97,19,0,1
+	@n 46,2,60,76,95,0,1
+	@n 48,0,18,88,16,0,0
+	n 0,BD1,118,18,0,0
+	n 1,33,100,33,0,1
+	n 3,45,83,17,0,1
+	beat
+	n 0,18,112,22,0,0
+	n 0,BD1,118,27,0,0
+	n 1,33,100,29,0,1
+	n 2,67,90,8,1,1
+	n 3,45,95,19,0,1
+	@sus 12,4,127
+	@n 48,0,18,48,17,0,0
+	n 1,33,100,30,0,1
+	n 3,45,78,18,0,1
+	@n 49,2,59,73,83,0,1
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,18,110,20,0,0
+	n 1,33,100,33,0,1
+	n 3,45,90,18,0,1
+	@n 2,2,60,70,15,1,1
+	@n 48,0,BD1,111,19,0,0
+	n 0,18,72,18,0,0
+	n 1,31,100,35,0,1
+	n 3,45,89,17,0,1
+	@n 49,2,64,79,25,1,1
+	@sus 95,4,0
+	beat
+	n 0,18,112,25,0,0
+	n 0,BD1,118,32,0,0
+	n 1,29,100,38,0,1
+	n 3,53,90,21,0,1
+	n 4,41,86,104,0,1
+	n 4,53,91,92,0,1
+	n 4,57,99,91,0,1
+	n 4,60,96,94,0,1
+	@n 1,6,53,93,79,2,1
+	@n 46,2,55,71,63,0,1
+	@n 48,0,18,52,15,0,0
+	n 0,SD1,100,16,0,0
+	n 1,29,100,46,0,1
+	n 3,53,76,20,0,1
+	@sus 52,4,127
+	beat
+	n 0,18,112,21,0,0
+	n 0,SD1,100,28,0,0
+	n 1,29,100,38,0,1
+	n 3,53,78,17,0,1
+	@n 1,2,60,62,41,0,1
+	@sus 26,4,0
+	@n 46,2,57,90,36,0,1
+	@n 48,1,31,100,38,0,1
+	n 2,60,84,32,0,1
+	n 3,55,87,21,0,1
+	n 4,53,98,21,0,1
+	n 4,60,103,29,0,1
+	n 4,57,104,23,0,1
+	n 4,43,93,27,0,1
+	@n 49,0,MTOM2,127,7,0,0
+	@n 50,2,65,94,28,0,1
+	@n 57,0,MTOM2,127,29,0,0
+	beat
+	@n 46,0,LTOM1,127,16,0,0
+	@n 48,1,31,100,38,0,1
+	n 3,50,87,21,0,1
+	n 4,65,97,31,0,1
+	n 4,43,88,32,0,1
+	n 4,57,97,31,0,1
+	n 4,60,97,34,0,1
+	@n 49,2,53,69,35,0,1
+	@n 51,2,57,86,30,0,1
+	@n 53,2,60,90,30,0,1
+	beat
+	@n 45,6,52,65,42,3,1
+	n 6,55,65,43,3,1
+	@n 48,0,CRASH1,122,23,0,0
+	n 0,BD1,127,34,0,0
+	n 1,36,100,51,3,1
+	n 2,52,75,46,3,1
+	n 3,48,82,27,3,1
+	n 4,55,96,42,3,1
+	n 4,64,102,43,3,1
+	n 4,36,97,43,3,1
+	n 4,67,93,46,3,1
+	n 4,60,100,44,3,1
+	n 5,84,104,26,2,1
+	@n 51,2,55,95,42,3,1
+	@n 53,2,60,98,40,3,1
+	@n 62,2,64,74,33,3,1
+	beat
+	beat
+	@expr 54,6,127
+	@expr 62,6,126
+	@expr 68,6,125
+	@expr 74,6,124
+	@expr 80,6,123
+	@expr 86,6,122
+	@expr 92,6,121
+	beat
+	@expr 2,6,120
+	@expr 8,6,119
+	@expr 14,6,118
+	@expr 20,6,117
+	@expr 26,6,116
+	@expr 32,6,115
+	@expr 38,6,114
+	@expr 44,6,113
+	expr 2,126
+	@expr 46,2,126
+	@expr 50,6,112
+	expr 2,125
+	@expr 56,6,111
+	@expr 58,2,124
+	@expr 64,6,110
+	expr 2,123
+	@expr 70,6,109
+	expr 2,122
+	@expr 76,6,108
+	@expr 78,2,121
+	@expr 82,6,107
+	@expr 84,2,120
+	@expr 88,6,106
+	@expr 90,2,119
+	@expr 94,6,105
+	beat
+	@expr 2,2,118
+	@expr 4,6,104
+	@expr 8,2,117
+	@expr 10,6,103
+	@expr 14,2,116
+	@expr 16,6,102
+	@expr 22,6,101
+	expr 2,115
+	@expr 28,6,100
+	expr 2,114
+	@expr 34,6,99
+	expr 2,113
+	@expr 40,6,98
+	@expr 42,2,112
+	@expr 46,6,97
+	@expr 48,2,111
+	@expr 52,6,96
+	@expr 54,2,110
+	@expr 58,6,95
+	@expr 62,2,109
+	@expr 64,6,94
+	@expr 68,2,108
+	@expr 72,6,93
+	@expr 76,2,107
+	@expr 78,6,92
+	@expr 82,2,106
+	@expr 84,6,91
+	@expr 88,2,105
+	@expr 90,6,90
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Intro2A
+TechnicsRhythmsResource_Style_8Beat1_Intro2B:	# 5 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Intro2B, 5, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,110
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,100
+	pan 3,64
+	pc 3,0x1c,0x20,0x20
+	vol 4,74
+	pan 5,64
+	vol 6,74
+	pan 6,100
+	pc 6,0x35,0x00,0x20
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Intro2B
+	beat
+	n 0,BD1,118,25,0,0
+	n 0,21,118,20,0,0
+	n 6,67,114,13,0,1
+	n 1,36,100,41,0,1
+	n 2,48,90,114,1,1
+	n 3,48,97,20,0,1
+	n 4,36,90,87,0,1
+	@n 48,0,BD1,76,16,0,0
+	n 0,21,41,19,0,0
+	n 6,67,102,13,0,1
+	n 1,36,100,39,0,1
+	n 2,62,108,45,0,1
+	n 3,48,90,20,0,1
+	n 4,48,74,43,0,1
+	beat
+	n 0,SD1,100,27,0,0
+	n 0,21,112,23,0,0
+	n 6,65,114,15,0,1
+	n 1,36,100,36,0,1
+	n 2,63,96,32,5,1
+	n 3,48,94,21,0,1
+	n 4,55,96,82,0,1
+	n 4,60,103,85,0,1
+	n 4,63,102,87,0,1
+	n 5,67,85,88,0,1
+	n 5,72,103,88,0,1
+	n 5,70,95,88,0,1
+	n 5,75,94,90,0,1
+	@mod 3,5,38
+	@mod 5,5,59
+	@mod 8,5,73
+	@mod 10,5,83
+	mod 5,94
+	@mod 13,5,104
+	@sus 14,4,127
+	@mod 15,5,115
+	@mod 17,5,125
+	@mod 19,5,127
+	@n 48,0,21,50,16,0,0
+	n 6,63,107,13,0,1
+	n 1,36,100,40,0,1
+	n 2,70,107,76,5,1
+	n 3,48,91,22,0,1
+	n 4,36,82,81,0,1
+	@sus 49,4,0
+	@sus 79,4,127
+	beat
+	n 0,BD1,118,60,0,0
+	n 0,21,114,23,0,0
+	n 6,67,111,14,0,1
+	n 1,36,100,37,0,1
+	n 3,48,93,21,0,1
+	n 4,48,81,35,0,1
+	@sus 27,4,0
+	@n 48,0,21,43,15,0,0
+	n 6,67,108,14,0,1
+	n 1,36,100,43,0,1
+	n 2,60,90,86,2,1
+	n 3,48,93,19,0,1
+	n 4,55,102,44,0,1
+	n 4,62,111,44,0,1
+	n 4,65,98,45,0,1
+	beat
+	n 0,SD1,100,25,0,0
+	n 0,21,114,25,0,0
+	n 6,65,112,15,0,1
+	n 1,36,100,37,0,1
+	n 3,48,93,19,0,1
+	n 4,36,75,49,0,1
+	@n 48,0,21,41,17,0,0
+	n 6,63,112,15,0,1
+	n 1,36,100,43,0,1
+	n 3,48,93,20,0,1
+	n 4,63,104,99,0,1
+	n 4,60,105,60,0,1
+	n 4,55,97,50,0,1
+	beat
+	n 0,BD1,114,14,0,0
+	n 0,21,116,24,0,0
+	n 6,67,114,13,0,1
+	n 1,36,100,40,0,1
+	n 3,48,94,17,0,1
+	n 4,36,81,31,0,1
+	sus 4,127
+	@mod 15,5,0
+	@n 48,0,BD1,118,20,0,0
+	n 0,21,54,17,0,0
+	n 6,67,114,15,0,1
+	n 1,36,100,43,0,1
+	n 3,48,94,18,0,1
+	n 4,55,83,91,0,1
+	@sus 91,4,0
+	@n 93,0,SD1,100,21,0,0
+	beat
+	n 0,SD1,100,23,0,0
+	n 6,65,112,14,0,1
+	n 1,36,100,43,0,1
+	n 3,48,95,22,0,1
+	n 4,63,108,37,0,1
+	n 4,60,111,41,0,1
+	n 4,36,95,41,0,1
+	@n 48,0,MTOM2,127,15,0,0
+	n 6,63,108,14,0,1
+	n 1,38,100,41,0,1
+	n 3,50,93,23,0,1
+	n 4,38,102,45,0,1
+	@n 49,0,MTOM1,124,10,0,0
+	n 0,LTOM1,127,15,0,0
+	@n 95,0,LTOM1,127,17,0,0
+	n 0,MTOM2,127,15,0,0
+	beat
+	n 1,39,100,44,0,1
+	n 3,51,100,26,0,1
+	n 4,39,101,48,0,1
+	n 5,65,90,34,0,1
+	n 5,70,90,38,0,1
+	n 5,74,91,44,0,1
+	@n 48,0,LTOM2,127,18,0,0
+	n 6,63,104,12,0,1
+	n 1,31,100,92,0,1
+	n 3,43,99,26,0,1
+	n 4,43,103,80,0,1
+	n 4,55,93,74,0,1
+	n 4,60,99,67,0,1
+	n 4,63,98,71,0,1
+	n 5,67,90,33,0,1
+	n 5,75,102,32,0,1
+	n 5,70,83,35,0,1
+	@n 49,0,LTOM1,127,16,0,0
+	beat
+	n 0,BD1,95,5,0,0
+	n 0,21,81,11,0,0
+	n 6,65,107,16,0,1
+	n 3,43,69,16,0,1
+	@n 48,0,BD1,118,18,0,0
+	n 6,63,107,11,0,1
+	n 1,32,100,87,0,1
+	n 3,44,102,29,0,1
+	n 4,63,101,94,0,1
+	n 4,60,104,95,0,1
+	n 4,56,101,94,0,1
+	n 4,44,101,81,0,1
+	@n 49,0,SPLASH,120,18,0,0
+	@n 50,0,CHINA,126,14,0,0
+	beat
+	n 6,67,116,13,0,1
+	n 2,48,83,40,0,1
+	n 3,44,64,19,0,1
+	@sus 2,4,127
+	@n 48,0,BD1,81,11,0,0
+	n 0,21,35,8,0,0
+	n 6,67,114,13,0,1
+	n 1,32,100,43,0,1
+	n 2,62,110,84,0,1
+	n 3,44,75,17,0,1
+	n 4,44,66,53,0,1
+	@sus 83,4,0
+	beat
+	n 0,SD1,100,24,0,0
+	n 0,21,105,22,0,0
+	n 6,65,109,14,0,1
+	n 1,32,100,38,0,1
+	n 2,63,102,51,3,1
+	n 3,44,98,16,0,1
+	n 4,56,102,51,0,1
+	n 4,63,101,106,0,1
+	n 4,60,106,106,0,1
+	n 5,72,96,80,0,1
+	n 5,63,96,78,0,1
+	n 5,68,102,78,0,1
+	@sus 27,4,127
+	@mod 35,5,21
+	@mod 37,5,41
+	@mod 40,5,59
+	mod 5,73
+	@mod 42,5,82
+	@mod 44,5,90
+	@mod 47,5,98
+	@n 48,0,21,39,14,0,0
+	n 6,63,107,13,0,1
+	n 1,32,100,38,0,1
+	n 2,70,87,8,3,1
+	n 3,44,84,15,0,1
+	n 4,44,74,94,0,1
+	@mod 49,5,105
+	mod 5,112
+	@mod 51,5,119
+	@mod 54,5,127
+	beat
+	n 0,BD1,118,24,0,0
+	n 0,21,108,25,0,0
+	n 6,67,116,13,0,1
+	n 1,32,100,41,0,1
+	n 3,44,91,16,0,1
+	n 4,56,33,13,0,1
+	@sus 40,4,0
+	@n 48,0,BD1,110,15,0,0
+	n 0,21,45,13,0,0
+	n 6,67,114,14,0,1
+	n 1,32,100,45,0,1
+	n 3,44,84,18,0,1
+	n 4,56,101,55,0,1
+	n 4,60,106,59,0,1
+	n 4,65,96,60,0,1
+	@mod 51,5,0
+	@sus 85,4,127
+	beat
+	n 0,SD1,100,22,0,0
+	n 0,21,116,24,0,0
+	n 6,65,111,14,0,1
+	n 1,32,100,37,0,1
+	n 3,44,92,17,0,1
+	n 4,44,76,39,0,1
+	@sus 24,4,0
+	@n 48,0,21,40,14,0,0
+	n 6,63,112,14,0,1
+	n 1,31,100,44,0,1
+	n 3,43,86,17,0,1
+	n 4,56,101,81,0,1
+	n 4,63,101,109,0,1
+	n 4,60,106,106,0,1
+	beat
+	n 0,BD1,118,17,0,0
+	n 0,21,112,24,0,0
+	n 6,67,117,13,0,1
+	n 1,29,100,42,0,1
+	n 3,41,90,20,0,1
+	n 4,41,90,82,0,1
+	@n 48,0,BD1,96,14,0,0
+	n 0,21,36,14,0,0
+	n 6,67,114,14,0,1
+	n 1,29,100,43,0,1
+	n 3,41,87,20,0,1
+	n 4,56,52,36,0,1
+	beat
+	n 0,SD1,100,22,0,0
+	n 0,21,102,24,0,0
+	n 6,65,106,15,0,1
+	n 1,29,100,39,0,1
+	n 3,41,87,16,0,1
+	n 4,60,100,58,0,1
+	n 4,56,95,34,0,1
+	n 4,63,91,60,0,1
+	n 5,75,59,45,0,1
+	n 5,63,84,44,0,1
+	@n 48,0,BD1,99,13,0,0
+	n 6,63,105,14,0,1
+	n 1,29,100,44,0,1
+	n 3,41,82,14,0,1
+	n 4,56,50,36,0,1
+	n 5,77,90,41,0,1
+	n 5,65,87,45,0,1
+	beat
+	n 0,BD1,116,16,0,0
+	n 0,21,80,13,0,0
+	n 1,31,100,42,0,1
+	n 3,43,95,20,0,1
+	n 4,53,84,23,0,1
+	n 5,79,93,40,0,1
+	n 5,67,110,48,0,1
+	@n 48,6,63,110,13,0,1
+	n 1,34,100,40,0,1
+	n 2,62,96,34,0,1
+	n 2,65,99,35,0,1
+	n 2,58,105,30,0,1
+	n 3,46,105,18,0,1
+	n 4,53,95,41,0,1
+	n 4,62,98,37,0,1
+	n 4,58,112,42,0,1
+	n 4,46,107,34,0,1
+	n 5,82,107,38,0,1
+	n 5,70,110,38,0,1
+	@n 50,0,SD1,100,16,0,0
+	@n 58,0,SD1,100,22,0,0
+	beat
+	n 6,65,109,16,0,1
+	@n 48,0,BD1,118,26,0,0
+	n 0,21,127,22,0,0
+	n 1,36,100,45,0,1
+	n 2,67,96,40,0,1
+	n 2,63,105,38,0,1
+	n 3,48,105,20,0,1
+	n 4,48,102,60,0,1
+	n 4,60,107,64,0,1
+	n 4,55,96,64,0,1
+	n 4,63,107,65,0,1
+	n 5,84,121,63,0,1
+	n 5,72,105,60,0,1
+	beat
+	@n 48,0,SD1,100,16,0,0
+	@n 59,0,SD1,100,23,0,0
+	beat
+	n 0,BD1,114,22,0,0
+	@n 48,0,CRASH1,107,88,0,0
+	n 0,BD1,114,89,0,0
+	n 1,36,110,112,1,1
+	n 2,72,99,111,1,1
+	n 2,67,102,112,1,1
+	n 2,63,93,114,1,1
+	n 3,48,103,106,1,1
+	n 4,55,96,109,1,1
+	n 4,60,100,110,1,1
+	n 4,63,100,110,1,1
+	n 4,36,102,111,1,1
+	beat
+	beat
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Intro2B
+TechnicsRhythmsResource_Style_8Beat1_Ending2A:	# 6 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Ending2A, 6, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,40
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,74
+	pan 3,0
+	rev 3,0
+	cc 3,92,105
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	rev 4,40
+	vol 5,84
+	pan 5,37
+	cc 5,81,88
+	pc 5,0x41,0x08,0x20
+	vol 6,48
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Ending2A
+	beat
+	n 0,BD1,114,33,0,0
+	n 0,CHINA,120,28,0,0
+	n 1,36,114,63,0,1
+	@n 63,1,35,66,11,0,1
+	@n 72,1,34,63,9,0,1
+	@n 81,1,33,61,9,0,1
+	@n 90,1,32,59,10,0,1
+	beat
+	n 0,21,118,32,0,0
+	n 0,SD1,100,25,0,0
+	@n 5,1,31,56,11,0,1
+	@n 15,1,30,54,11,0,1
+	@n 26,1,29,51,5,0,1
+	beat
+	n 0,21,55,16,0,0
+	@n 48,0,BD1,93,18,0,0
+	beat
+	n 0,21,119,25,0,0
+	n 0,SD1,100,25,0,0
+	beat
+	n 0,21,118,18,0,0
+	n 0,BD1,113,20,0,0
+	@n 48,0,BD1,96,15,0,0
+	beat
+	n 0,21,117,15,0,0
+	n 0,SD1,100,21,0,0
+	@n 48,0,21,58,11,0,0
+	beat
+	n 0,21,118,19,0,0
+	n 0,LTOM1,127,21,0,0
+	n 0,LTOM2,127,25,0,0
+	@n 48,0,21,60,12,0,0
+	@n 72,0,LTOM1,116,7,0,0
+	beat
+	n 0,LTOM1,127,23,0,0
+	@n 48,0,LTOM2,127,21,0,0
+	beat
+	n 0,BD1,118,17,0,0
+	n 0,21,112,18,0,0
+	n 1,36,100,85,0,1
+	n 4,55,88,52,0,1
+	n 4,60,96,52,0,1
+	n 4,64,98,54,0,1
+	n 4,36,99,112,0,1
+	@n 7,6,52,94,120,5,1
+	n 6,60,86,120,2,1
+	n 6,67,97,122,5,1
+	@sus 37,4,127
+	@n 46,2,52,81,32,2,1
+	@n 48,0,21,47,13,0,0
+	beat
+	n 0,21,112,19,0,0
+	n 0,SD1,100,17,0,0
+	n 0,TAMB,127,18,0,0
+	n 1,36,100,6,0,1
+	n 4,55,91,49,0,1
+	n 4,60,96,51,0,1
+	n 4,64,98,53,0,1
+	@sus 2,4,0
+	@n 5,2,64,114,95,0,1
+	@sus 32,4,127
+	@n 48,0,21,62,13,0,0
+	n 2,55,80,109,2,1
+	n 4,36,82,23,0,1
+	@n 50,5,67,87,6,0,1
+	@n 72,0,BD1,87,11,0,0
+	n 1,36,100,17,0,1
+	n 4,64,93,15,0,1
+	n 4,55,85,12,0,1
+	n 4,60,87,13,0,1
+	@sus 74,4,0
+	@bend 91,5,0,54
+	@n 93,6,84,120,69,1,1
+	@sus 94,4,127
+	n 5,76,114,52,0,1
+	beat
+	n 0,21,112,20,0,0
+	n 0,BD1,118,20,0,0
+	n 1,36,100,37,0,1
+	n 4,36,88,99,0,1
+	@n 2,2,60,72,10,1,1
+	@bend 9,5,0,56
+	@sus 12,2,127
+	bend 5,0,57
+	@bend 14,5,0,59
+	@bend 16,5,0,61
+	@bend 19,5,0,62
+	bend 5,0,63
+	@bend 21,5,0,64
+	@n 48,0,BD1,116,19,0,0
+	n 0,21,59,14,0,0
+	n 1,36,100,30,0,1
+	n 4,55,94,98,0,1
+	n 4,60,100,99,0,1
+	n 4,64,102,105,0,1
+	n 5,77,100,46,0,1
+	@n 49,2,67,96,72,1,1
+	sus 2,0
+	beat
+	n 0,SD1,100,20,0,0
+	n 0,21,110,21,0,0
+	n 0,TAMB,127,21,0,0
+	n 4,48,96,58,0,1
+	@n 1,5,76,90,41,0,1
+	@n 45,5,74,98,20,1,1
+	@n 47,2,62,98,112,1,1
+	@n 48,0,BD1,93,14,0,0
+	n 0,21,57,14,0,0
+	n 1,38,100,42,0,1
+	n 4,36,86,40,0,1
+	@sus 77,4,0
+	@n 93,6,59,86,1,3,1
+	@n 95,6,83,96,127,2,1
+	beat
+	n 0,BD1,118,22,0,0
+	n 0,21,110,21,0,0
+	n 1,40,100,78,0,1
+	n 4,55,92,63,0,1
+	n 4,40,103,14,1,1
+	n 4,67,95,54,0,1
+	n 4,59,100,50,0,1
+	n 4,62,102,50,0,1
+	@sus 39,4,127
+	@n 47,2,52,85,77,0,1
+	@n 48,0,21,50,13,0,0
+	@n 93,2,67,95,45,3,1
+	beat
+	n 0,21,112,22,0,0
+	n 0,SD1,100,17,0,0
+	n 0,TAMB,127,19,0,0
+	n 4,55,97,46,0,1
+	n 4,62,106,78,0,1
+	n 4,59,103,52,0,1
+	n 4,67,93,95,0,1
+	@sus 1,4,0
+	@sus 29,4,127
+	@n 47,2,52,83,123,0,1
+	@n 48,0,21,50,12,0,0
+	n 4,52,89,48,0,1
+	n 5,67,99,13,0,1
+	@n 72,0,BD1,87,11,0,0
+	n 1,40,100,16,0,1
+	n 5,67,96,7,0,1
+	@n 95,2,55,83,8,1,1
+	bend 5,0,61
+	beat
+	n 0,21,112,23,0,0
+	n 0,BD1,118,20,0,0
+	n 1,40,100,44,0,1
+	n 4,40,90,95,0,1
+	n 5,74,118,45,0,1
+	bend 5,0,59
+	@bend 2,5,0,57
+	@bend 5,5,0,55
+	@bend 7,5,0,54
+	@bend 14,5,0,56
+	@bend 16,5,0,58
+	@bend 18,5,0,60
+	@bend 21,5,0,61
+	@bend 23,5,0,63
+	bend 5,0,64
+	@sus 45,4,0
+	@n 48,0,BD1,118,20,0,0
+	n 0,21,50,14,0,0
+	n 1,40,100,43,0,1
+	n 4,55,100,101,0,1
+	n 4,62,109,105,0,1
+	n 4,59,108,103,0,1
+	n 4,67,97,96,0,1
+	n 5,76,100,42,0,1
+	@n 50,2,62,97,88,0,1
+	@sus 77,4,127
+	beat
+	n 0,SD1,100,15,0,0
+	n 0,21,112,23,0,0
+	n 0,TAMB,127,19,0,0
+	n 4,52,95,41,0,1
+	@n 3,5,74,109,41,0,1
+	@n 5,2,52,74,43,0,1
+	@n 46,2,60,80,97,0,1
+	@n 48,0,BD1,102,16,0,0
+	n 0,21,50,15,0,0
+	n 1,38,100,21,0,1
+	n 4,40,92,16,0,1
+	n 5,72,107,16,1,1
+	@n 72,1,40,100,15,0,1
+	@sus 84,4,0
+	@n 94,6,69,78,9,1,1
+	beat
+	n 0,BD1,118,18,0,0
+	n 0,21,112,23,0,0
+	n 6,81,100,116,1,1
+	n 6,53,85,3,1,1
+	n 6,60,78,10,1,1
+	n 1,41,100,94,0,1
+	n 4,57,102,50,0,1
+	n 4,41,100,114,0,1
+	n 4,65,96,52,0,1
+	n 4,60,105,50,0,1
+	@sus 30,4,127
+	@n 48,0,21,50,15,0,0
+	n 2,53,84,82,0,1
+	beat
+	n 0,SD1,100,17,0,0
+	n 0,21,112,23,0,0
+	n 0,TAMB,127,20,0,0
+	n 4,57,103,38,0,1
+	n 4,65,98,37,0,1
+	n 4,60,108,39,0,1
+	@sus 1,4,0
+	n 5,69,94,21,0,1
+	@n 2,2,60,80,44,0,1
+	@n 22,5,67,78,16,0,1
+	@sus 27,4,127
+	@n 48,0,21,50,13,0,0
+	n 2,53,63,14,0,1
+	n 4,41,79,18,0,1
+	@n 72,0,BD1,99,11,0,0
+	@sus 87,4,0
+	@bend 91,5,0,60
+	@n 92,5,69,99,47,0,1
+	@bend 93,5,0,60
+	beat
+	n 0,21,112,22,0,0
+	n 0,BD1,118,17,0,0
+	n 6,69,92,47,0,1
+	n 6,60,93,48,0,1
+	n 6,53,96,50,0,1
+	n 1,41,100,41,0,1
+	n 4,53,90,40,0,1
+	n 4,57,96,31,0,1
+	n 4,69,93,28,0,1
+	n 4,65,102,35,0,1
+	@n 1,2,57,96,51,0,1
+	@bend 4,5,0,61
+	@bend 7,5,0,62
+	@bend 11,5,0,63
+	@bend 16,5,0,64
+	@n 47,5,67,65,46,0,1
+	@n 48,0,21,50,14,0,0
+	n 0,BD1,118,18,0,0
+	n 6,52,84,48,0,1
+	n 6,67,85,48,0,1
+	n 6,79,108,49,0,1
+	n 1,40,100,48,0,1
+	n 4,55,91,14,0,1
+	n 4,67,84,18,0,1
+	n 4,52,96,18,0,1
+	@n 50,6,59,85,48,0,1
+	@n 53,2,55,54,40,0,1
+	beat
+	n 0,SD1,100,15,0,0
+	n 0,21,112,22,0,0
+	n 0,TAMB,127,19,0,0
+	n 6,65,99,48,0,1
+	n 6,50,90,51,0,1
+	n 6,77,93,56,0,1
+	n 1,38,100,40,0,1
+	n 4,50,96,15,0,1
+	n 4,65,93,14,0,1
+	n 4,53,94,14,0,1
+	@n 1,2,53,83,43,0,1
+	@n 2,6,57,99,48,0,1
+	@n 45,2,52,71,116,2,1
+	@n 47,2,60,83,115,2,1
+	n 2,55,87,113,2,1
+	n 5,67,84,85,2,1
+	@n 48,0,BD1,115,14,0,0
+	n 0,CRASH1,106,14,0,0
+	n 6,48,86,96,2,1
+	n 1,36,100,99,2,1
+	n 4,48,96,17,3,1
+	n 4,52,102,19,3,1
+	n 4,64,100,21,3,1
+	n 4,55,107,19,3,1
+	@n 49,6,64,84,95,2,1
+	@n 52,6,55,78,92,2,1
+	n 6,76,79,91,2,1
+	beat
+	beat
+	beat
+	beat
+	@n 4,5,65,51,10,0,1
+	@n 13,5,64,43,10,0,1
+	@n 24,5,62,34,10,0,1
+	@n 34,5,60,28,5,0,1
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Ending2A
+TechnicsRhythmsResource_Style_8Beat1_Ending2B:	# 6 bars of 4 beats
+	var_head	TechnicsRhythmsResource_Style_8Beat1_Ending2B, 6, 4, 0xff, 0x02
+	vol 2,74
+	pan 2,104
+	rev 2,65
+	cc 2,83,64
+	cc 2,92,38
+	pc 2,0x1c,0x01,0x20
+	vol 3,100
+	pan 3,0
+	pc 3,0x1b,0x21,0x20
+	vol 4,74
+	pan 5,37
+	pc 5,0x54,0x42,0x20
+	vol 6,82
+	rev 7,40
+	var_events	TechnicsRhythmsResource_Style_8Beat1_Ending2B
+	beat
+	n 0,BD1,114,21,0,0
+	n 0,21,112,21,0,0
+	expr 6,127
+	n 1,36,100,40,0,1
+	n 5,72,85,9,0,1
+	@n 1,4,75,77,25,2,1
+	@n 2,4,72,82,23,2,1
+	n 4,67,75,27,2,1
+	n 4,79,75,23,2,1
+	@n 24,5,72,72,17,0,1
+	@n 48,0,21,45,11,0,0
+	n 1,36,100,36,0,1
+	n 5,67,84,18,0,1
+	@n 95,6,71,93,15,0,1
+	beat
+	n 0,SD1,100,18,0,0
+	n 0,21,112,23,0,0
+	n 5,70,96,12,0,1
+	@n 1,6,83,114,18,0,1
+	@n 2,3,67,103,39,0,1
+	n 3,72,93,39,0,1
+	@n 3,3,63,102,32,0,1
+	@n 10,6,72,105,30,0,1
+	@n 11,6,84,87,30,0,1
+	@sus 13,3,127
+	@sus 36,3,0
+	@n 45,3,63,83,4,0,1
+	@n 48,0,21,44,11,0,0
+	n 5,67,72,9,0,1
+	@n 72,5,67,66,16,0,1
+	beat
+	n 0,BD1,114,26,0,0
+	n 0,21,112,20,0,0
+	n 5,72,86,11,0,1
+	@n 3,3,63,69,3,0,1
+	@n 24,5,72,75,16,0,1
+	@n 46,2,55,82,25,0,1
+	@n 47,3,67,104,40,0,1
+	n 3,72,93,44,0,1
+	@n 48,0,21,46,12,0,0
+	n 1,29,100,22,0,1
+	n 3,63,104,32,0,1
+	n 5,67,78,15,0,1
+	@n 49,2,60,93,21,0,1
+	@n 52,2,63,98,15,0,1
+	@sus 87,4,127
+	beat
+	n 0,SD1,100,19,0,0
+	n 0,21,112,22,0,0
+	@n 1,3,63,68,2,0,1
+	@sus 40,4,0
+	@n 45,2,55,73,118,2,1
+	@n 48,0,21,34,15,0,0
+	n 1,31,100,57,1,1
+	n 2,58,86,122,2,1
+	n 3,70,101,68,1,1
+	n 5,67,57,10,0,1
+	@n 49,3,65,100,85,0,1
+	n 4,70,83,94,2,1
+	n 4,67,76,94,2,1
+	n 4,74,90,95,2,1
+	n 4,77,78,95,2,1
+	@n 50,3,62,96,83,0,1
+	@n 51,2,62,93,123,2,1
+	@n 54,2,65,88,124,2,1
+	@sus 65,3,127
+	beat
+	n 0,BD1,114,22,0,0
+	n 0,21,112,22,0,0
+	n 5,72,83,12,0,1
+	@n 24,5,72,66,14,0,1
+	@n 48,0,21,34,12,0,0
+	n 5,67,78,16,0,1
+	@sus 87,3,0
+	beat
+	n 0,SD1,100,18,0,0
+	n 0,21,112,21,0,0
+	n 5,70,86,13,0,1
+	@n 4,3,62,85,6,0,1
+	@n 48,0,BD1,114,17,0,0
+	n 0,21,29,12,0,0
+	n 5,67,69,10,0,1
+	@n 52,3,62,83,6,0,1
+	@n 72,5,67,62,14,0,1
+	beat
+	n 0,BD1,114,22,0,0
+	n 0,21,112,22,0,0
+	n 1,34,100,41,0,1
+	n 5,72,83,11,0,1
+	@n 1,3,60,93,15,0,1
+	@n 3,3,65,107,15,0,1
+	@n 5,3,64,80,2,0,1
+	@n 13,3,62,85,40,0,1
+	@n 15,3,67,73,35,0,1
+	@sus 17,4,127
+	@n 24,5,72,76,15,0,1
+	@n 48,0,21,40,10,0,0
+	n 1,31,100,43,0,1
+	n 5,67,81,16,0,1
+	@sus 51,2,127
+	@n 52,3,65,96,45,0,1
+	@n 53,3,70,95,46,0,1
+	beat
+	n 0,SD1,100,18,0,0
+	n 0,21,112,22,0,0
+	n 1,29,100,43,0,1
+	@n 3,3,67,90,46,0,1
+	@n 5,3,62,81,40,0,1
+	@n 48,0,21,58,7,0,0
+	n 1,31,100,47,0,1
+	n 5,67,70,11,0,1
+	@n 49,3,65,72,32,0,1
+	@n 50,3,70,56,29,0,1
+	@n 51,2,44,75,42,1,1
+	@n 60,0,21,68,8,0,0
+	@n 61,2,51,32,29,1,1
+	@sus 63,2,0
+	@n 67,2,55,67,32,1,1
+	@n 72,0,21,79,5,0,0
+	@n 81,2,60,81,12,1,1
+	@n 83,3,56,62,96,1,1
+	@n 84,0,21,89,9,0,0
+	expr 6,74
+	@expr 86,6,76
+	@expr 88,6,77
+	@n 89,2,63,72,2,1,1
+	n 3,60,82,86,1,1
+	@expr 92,6,78
+	@n 95,6,44,60,106,1,1
+	n 6,60,69,52,1,1
+	n 6,67,70,106,1,1
+	beat
+	n 0,BD1,114,17,0,0
+	n 0,HHO,127,7,0,0
+	expr 6,79
+	n 6,63,62,106,1,1
+	n 1,32,100,88,1,1
+	n 3,63,77,72,1,1
+	@expr 2,6,80
+	@expr 6,6,81
+	n 4,63,90,125,0,1
+	n 4,60,90,124,0,1
+	@n 7,2,67,99,121,0,1
+	sus 4,0
+	n 4,67,86,124,0,1
+	@n 8,4,44,91,123,0,1
+	@expr 10,6,82
+	n 3,67,87,66,1,1
+	@expr 14,6,83
+	@expr 16,6,84
+	@expr 20,6,85
+	@expr 24,6,86
+	@expr 26,6,87
+	@expr 30,6,88
+	@expr 34,6,89
+	@expr 36,6,90
+	@expr 40,6,91
+	@expr 44,6,92
+	@expr 46,6,93
+	@expr 50,6,94
+	@expr 54,6,95
+	@expr 56,6,96
+	@expr 60,6,97
+	@expr 64,6,98
+	sus 2,127
+	@expr 68,6,99
+	@expr 70,6,100
+	@expr 74,6,101
+	@expr 78,6,102
+	@expr 80,6,103
+	@expr 84,6,104
+	@expr 88,6,105
+	@expr 90,6,106
+	@expr 94,6,107
+	beat
+	@expr 2,6,108
+	@sus 3,4,127
+	@expr 4,6,109
+	@expr 8,6,110
+	@expr 12,6,111
+	@expr 14,6,112
+	@expr 18,6,113
+	@expr 22,6,114
+	@expr 26,6,115
+	@expr 28,6,116
+	@expr 32,6,117
+	@expr 36,6,118
+	@expr 38,6,119
+	@expr 42,6,120
+	@expr 46,6,121
+	@expr 48,6,122
+	@expr 52,6,123
+	@expr 56,6,124
+	@expr 58,6,125
+	@expr 62,6,126
+	@expr 66,6,127
+	@n 69,0,SPLASH,39,8,0,0
+	@n 83,0,SPLASH,47,9,0,0
+	@n 95,0,SPLASH,55,8,0,0
+	beat
+	@n 2,2,43,60,38,0,1
+	@n 12,0,SPLASH,62,10,0,0
+	@n 17,2,50,71,7,1,1
+	@sus 19,2,0
+	@n 22,3,58,70,125,1,1
+	@n 24,1,31,100,40,2,1
+	@n 25,0,SPLASH,70,8,0,0
+	n 2,53,63,99,1,1
+	@n 35,2,58,83,93,1,1
+	@n 37,6,43,81,32,2,1
+	n 6,62,65,124,7,1
+	@n 38,6,65,76,38,2,1
+	n 6,58,52,123,7,1
+	n 3,62,85,98,1,1
+	@n 39,0,SPLASH,78,10,0,0
+	@n 41,4,65,81,36,1,1
+	n 4,62,90,36,1,1
+	@n 42,4,58,90,32,1,1
+	@n 43,4,43,81,31,1,1
+	@n 46,2,62,85,90,1,1
+	@n 50,3,65,87,100,1,1
+	@sus 52,4,0
+	@n 53,0,SPLASH,87,17,0,0
+	@n 60,2,65,96,79,1,1
+	beat
+	@sus 25,2,127
+	@sus 67,4,127
+	beat
+	@n 54,0,SPLASH,44,11,0,0
+	@n 68,2,48,54,34,0,1
+	@n 70,0,SPLASH,52,10,0,0
+	@sus 76,2,0
+	@n 77,2,51,54,23,6,1
+	@n 84,0,SPLASH,59,9,0,0
+	@n 89,3,60,58,52,0,1
+	@n 91,2,55,66,8,6,1
+	beat
+	@n 2,0,SPLASH,66,8,0,0
+	@n 4,2,58,64,0,6,1
+	@n 6,3,62,62,20,0,1
+	@n 14,0,SPLASH,73,9,0,0
+	@n 18,2,62,70,114,5,1
+	n 3,63,86,112,5,1
+	@n 27,0,SPLASH,79,10,0,0
+	@n 30,4,48,78,101,5,1
+	@n 31,2,67,89,100,5,1
+	n 3,67,72,99,5,1
+	n 4,58,80,100,5,1
+	@n 32,4,63,86,100,5,1
+	n 4,55,71,99,5,1
+	@sus 33,4,0
+	@n 38,6,63,53,91,5,1
+	@n 39,6,36,75,90,5,1
+	@n 40,1,36,100,88,5,1
+	@n 41,0,SPLASH,87,20,0,0
+	n 6,67,54,88,5,1
+	@n 50,3,72,90,80,5,1
+	beat
+	@expr 48,6,123
+	@expr 72,6,119
+	beat
+	expr 6,116
+	@sus 5,4,127
+	@n 10,4,74,22,19,0,1
+	@expr 24,6,112
+	@n 42,4,75,45,15,0,1
+	@expr 48,6,108
+	@expr 72,6,104
+	@n 81,4,79,49,20,0,1
+	beat
+	expr 6,100
+	@n 18,4,82,29,13,0,1
+	@expr 24,6,96
+	@expr 48,6,93
+	@n 55,4,89,59,25,0,1
+	@expr 72,6,89
+	beat
+	expr 6,85
+	n 4,87,41,22,0,1
+	@expr 24,6,81
+	@expr 48,6,77
+	@n 56,4,86,39,28,0,1
+	@expr 72,6,73
+	beat
+	expr 6,70
+	@expr 24,6,66
+	@expr 48,6,62
+	@expr 72,6,58
+	beat
+	expr 6,54
+	@expr 24,6,50
+	@expr 48,6,46
+	@expr 72,6,43
+	beat
+	expr 6,39
+	@expr 24,6,35
+	beat
+	@sus 67,4,0
+	beat
+	beat
+	end
+	var_end	TechnicsRhythmsResource_Style_8Beat1_Ending2B
+
 Str_Technics_Pads:	.asciz "Technics Pads   "
 .incbin_range "baserom/kn2400_program.rom", 0x132271, 0x132D84
 Str_4K:	.asciz "_\x904K\\"
@@ -24758,7 +30906,9 @@ data_4854643E:
 data_48546440:
 .incbin_range "baserom/kn2400_program.rom", 0x146440, 0x14647C
 data_4854647C:
-.incbin_range "baserom/kn2400_program.rom", 0x14647C, 0x14657C
+.incbin_range "baserom/kn2400_program.rom", 0x14647C, 0x14652B
+data_4854652B:
+.incbin_range "baserom/kn2400_program.rom", 0x14652B, 0x14657C
 data_4854657C:
 .incbin_range "baserom/kn2400_program.rom", 0x14657C, 0x14657D
 	.space	95, 0x02
@@ -33856,6153 +40006,3 @@ APSTYLE_Events:
 	.space	4, 0x00
 APSTYLE_Methods:
 	.space	4, 0x00
-
-# 15 Function procedures; a function id is (0x151 << 16) | its index (the names are the parallel table at slot 0x159)
-APSTYLE_Functions:
-	IDNAME	FN_AcStyleNameProc, AcStyleNameProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCategoryListBoxProc, AcCategoryListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCategoryStrBoxProc, AcCategoryStrBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcSubCategoryListBoxProc, AcSubCategoryListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCtgStyleListBoxProc, AcCtgStyleListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcEraListBoxProc, AcEraListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcEraStyleListBoxProc, AcEraStyleListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcAlphabetListBoxProc, AcAlphabetListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcAlpStyleListBoxProc, AcAlpStyleListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCustomListBoxProc, AcCustomListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCustomStyleListBoxProc, AcCustomStyleListBoxProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcEraTitleMenuProc, AcEraTitleMenuProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_IvEditSwForEraPageProc, IvEditSwForEraPageProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcCtgOrgTitleMenuProc, AcCtgOrgTitleMenuProc, APSTYLE_Functions, 0x151
-	IDNAME	FN_AcDialFuncEditSwProc, AcDialFuncEditSwProc, APSTYLE_Functions, 0x151
-	.space	4, 0x00
-
-APSTYLE_FunctionNames:
-	.long	FnName_AcStyleNameProc
-	.long	FnName_AcCategoryListBoxProc
-	.long	FnName_AcCategoryStrBoxProc
-	.long	FnName_AcSubCategoryListBoxProc
-	.long	FnName_AcCtgStyleListBoxProc
-	.long	FnName_AcEraListBoxProc
-	.long	FnName_AcEraStyleListBoxProc
-	.long	FnName_AcAlphabetListBoxProc
-	.long	FnName_AcAlpStyleListBoxProc
-	.long	FnName_AcCustomListBoxProc
-	.long	FnName_AcCustomStyleListBoxProc
-	.long	FnName_AcEraTitleMenuProc
-	.long	FnName_IvEditSwForEraPageProc
-	.long	FnName_AcCtgOrgTitleMenuProc
-	.long	FnName_AcDialFuncEditSwProc
-.incbin_range "baserom/kn2400_program.rom", 0x16CD8C, 0x16CD90
-
-# 5 ApFunction procedures; a function id is (0x152 << 16) | its index (the names are the parallel table at slot 0x15a)
-APSTYLE_ApFunctions:
-	IDNAME	FN_MusicStylistJpgData, MusicStylistJpgData, APSTYLE_ApFunctions, 0x152
-	IDNAME	FN_AcOtpRamBoxProc, AcOtpRamBoxProc, APSTYLE_ApFunctions, 0x152
-	IDNAME	FN_MssNameFunc, MssNameFunc, APSTYLE_ApFunctions, 0x152
-	IDNAME	FN_MoreStyleFunc, MoreStyleFunc, APSTYLE_ApFunctions, 0x152
-	IDNAME	FN_CategStyleUpDownFunc, CategStyleUpDownFunc, APSTYLE_ApFunctions, 0x152
-	.space	4, 0x00
-
-APSTYLE_ApFunctionNames:
-	.long	FnName_MusicStylistJpgData
-	.long	FnName_AcOtpRamBoxProc
-	.long	FnName_MssNameFunc
-	.long	FnName_MoreStyleFunc
-	.long	FnName_CategStyleUpDownFunc
-.incbin_range "baserom/kn2400_program.rom", 0x16CDBC, 0x16CDC0
-
-# 2 MainFunction procedures; a function id is (0x153 << 16) | its index (the names are the parallel table at slot 0x15b)
-APSTYLE_MainFunctions:
-	IDNAME	FN_OneTchFUNC, 0x4864188D, APSTYLE_MainFunctions, 0x153
-	IDNAME	FN_StyleOutCall, 0x486417A3, APSTYLE_MainFunctions, 0x153
-	.space	4, 0x00
-
-APSTYLE_MainFunctionNames:
-	.long	FnName_OneTchFUNC
-	.long	FnName_StyleOutCall
-.incbin_range "baserom/kn2400_program.rom", 0x16CDD4, 0x16CDD8
-
-# 79 objects of block APSTYLE; object <name> is index <name>_ix, id <name>_id = (0x150 << 16) | <name>_ix
-APSTYLE_Viewables:
-	OBJ	OneTouchPlay, APSTYLE_Viewables, 0x150
-	OBJ	OneTouchPlay_OtpRamBox1, APSTYLE_Viewables, 0x150
-	OBJ	OneTouchPlay_ExitMode1, APSTYLE_Viewables, 0x150
-	OBJ	OneTouchPlay_TempoBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu_TitleMenu_MUSICAL_ERA, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu_ExitMode1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistMenu_TempoBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_TitleMenu_ALPHABET, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_IndexWideES1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_IndexWideES2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_Box1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_SubCategoryListBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_SubCategoryListBox2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_CtgStyleListBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_CtgStyleListBox2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_Label_SKIP, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_Label_STYLE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_Label_CATEGORY, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_StrRadioBox_CATEGORY, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_EraTitleMenu_ERA, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_CategoryStrBox_CtgStr, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_TempoBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCategory_DialFuncEditSw1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_IndexWideES1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_IndexWideES2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_Box1, APSTYLE_Viewables, 0x150
-	OBJ	AlphabetBox, APSTYLE_Viewables, 0x150
-	OBJ	AlphabetStyle, APSTYLE_Viewables, 0x150
-	OBJ	AbcMore, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_CtgOrgTitleMenu_CATEGORY, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_StrRadioBox_ALPHABET, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_Label_SKIP, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_Label_MORE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_Label_STYLE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_EraTitleMenu_ERA, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistAlphabetical_TempoBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_TitleMenu_ALPHABET, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_IndexWideES1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_IndexWideES2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_Box1, APSTYLE_Viewables, 0x150
-	OBJ	EraBox, APSTYLE_Viewables, 0x150
-	OBJ	EraStyleBox, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_EditSwForEraPage1, APSTYLE_Viewables, 0x150
-	OBJ	EraMore, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_StrRadioBox_ERA, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_Label_SKIP, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_CtgOrgTitleMenu_CATEGORY, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_Label_MORE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_Label_STYLE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistEra_TempoBox1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_IndexWideES1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_Label_SKIP, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_IndexWideES2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_Label_STYLE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_StyleName1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_Label_STYLE2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistCustom_Box1, APSTYLE_Viewables, 0x150
-	OBJ	CustomBox, APSTYLE_Viewables, 0x150
-	OBJ	CustomStyleBox, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_StyleName1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_Label_STYLE, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_TitleMenu_ALPHABET, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_EraTitleMenu_ERA, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_IndexWideES1, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_Label_SKIP, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_IndexWideES2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_Label_STYLE2, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_Box1, APSTYLE_Viewables, 0x150
-	OBJ	OrgStyleList, APSTYLE_Viewables, 0x150
-	OBJ	OrgSubCtgList, APSTYLE_Viewables, 0x150
-	OBJ	MusicStylistOrgan_StrRadioBox_ORGAN, APSTYLE_Viewables, 0x150
-	.space	4, 0x00
-
-APSTYLE_ResNames:
-	.long	RN_OneTouchPlay	# OneTouchPlay
-	.long	RN_empty_3508	# OneTouchPlay_OtpRamBox1
-	.long	RN_empty_3509	# OneTouchPlay_ExitMode1
-	.long	RN_empty_3510	# OneTouchPlay_TempoBox1
-	.long	RN_MusicStylistMenu	# MusicStylistMenu
-	.long	RN_empty_3511	# MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY
-	.long	RN_empty_3512	# MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST
-	.long	RN_empty_3513	# MusicStylistMenu_TitleMenu_MUSICAL_ERA
-	.long	RN_empty_3514	# MusicStylistMenu_ExitMode1
-	.long	RN_empty_3515	# MusicStylistMenu_TempoBox1
-	.long	RN_MusicStylistCategory	# MusicStylistCategory
-	.long	RN_empty_3516	# MusicStylistCategory_TitleMenu_ALPHABET
-	.long	RN_empty_3517	# MusicStylistCategory_IndexWideES1
-	.long	RN_empty_3518	# MusicStylistCategory_IndexWideES2
-	.long	RN_empty_3519	# MusicStylistCategory_Box1
-	.long	RN_empty_3520	# MusicStylistCategory_SubCategoryListBox1
-	.long	RN_empty_3521	# MusicStylistCategory_SubCategoryListBox2
-	.long	RN_empty_3522	# MusicStylistCategory_CtgStyleListBox1
-	.long	RN_empty_3523	# MusicStylistCategory_CtgStyleListBox2
-	.long	RN_empty_3524	# MusicStylistCategory_Label_SKIP
-	.long	RN_empty_3525	# MusicStylistCategory_Label_STYLE
-	.long	RN_empty_3526	# MusicStylistCategory_Label_CATEGORY
-	.long	RN_empty_3527	# MusicStylistCategory_StrRadioBox_CATEGORY
-	.long	RN_empty_3528	# MusicStylistCategory_EraTitleMenu_ERA
-	.long	RN_empty_3529	# MusicStylistCategory_CategoryStrBox_CtgStr
-	.long	RN_empty_3530	# MusicStylistCategory_TempoBox1
-	.long	RN_empty_3531	# MusicStylistCategory_DialFuncEditSw1
-	.long	RN_MusicStylistAlphabetical	# MusicStylistAlphabetical
-	.long	RN_empty_3532	# MusicStylistAlphabetical_IndexWideES1
-	.long	RN_empty_3533	# MusicStylistAlphabetical_IndexWideES2
-	.long	RN_empty_3534	# MusicStylistAlphabetical_Box1
-	.long	RN_AlphabetBox	# AlphabetBox
-	.long	RN_AlphabetStyle	# AlphabetStyle
-	.long	RN_AbcMore	# AbcMore
-	.long	RN_empty_3535	# MusicStylistAlphabetical_CtgOrgTitleMenu_CATEGORY
-	.long	RN_empty_3536	# MusicStylistAlphabetical_StrRadioBox_ALPHABET
-	.long	RN_empty_3537	# MusicStylistAlphabetical_Label_SKIP
-	.long	RN_empty_3538	# MusicStylistAlphabetical_Label_MORE
-	.long	RN_empty_3539	# MusicStylistAlphabetical_Label_STYLE
-	.long	RN_empty_3540	# MusicStylistAlphabetical_EraTitleMenu_ERA
-	.long	RN_empty_3541	# MusicStylistAlphabetical_TempoBox1
-	.long	RN_MusicStylistEra	# MusicStylistEra
-	.long	RN_empty_3542	# MusicStylistEra_TitleMenu_ALPHABET
-	.long	RN_empty_3543	# MusicStylistEra_IndexWideES1
-	.long	RN_empty_3544	# MusicStylistEra_IndexWideES2
-	.long	RN_empty_3545	# MusicStylistEra_Box1
-	.long	RN_EraBox	# EraBox
-	.long	RN_EraStyleBox	# EraStyleBox
-	.long	RN_empty_3546	# MusicStylistEra_EditSwForEraPage1
-	.long	RN_EraMore	# EraMore
-	.long	RN_empty_3547	# MusicStylistEra_StrRadioBox_ERA
-	.long	RN_empty_3548	# MusicStylistEra_Label_SKIP
-	.long	RN_empty_3549	# MusicStylistEra_CtgOrgTitleMenu_CATEGORY
-	.long	RN_empty_3550	# MusicStylistEra_Label_MORE
-	.long	RN_empty_3551	# MusicStylistEra_Label_STYLE
-	.long	RN_empty_3552	# MusicStylistEra_TempoBox1
-	.long	RN_MusicStylistCustom	# MusicStylistCustom
-	.long	RN_empty_3553	# MusicStylistCustom_IndexWideES1
-	.long	RN_empty_3554	# MusicStylistCustom_Label_SKIP
-	.long	RN_empty_3555	# MusicStylistCustom_IndexWideES2
-	.long	RN_empty_3556	# MusicStylistCustom_Label_STYLE
-	.long	RN_empty_3557	# MusicStylistCustom_StyleName1
-	.long	RN_empty_3558	# MusicStylistCustom_Label_STYLE2
-	.long	RN_empty_3559	# MusicStylistCustom_Box1
-	.long	RN_CustomBox	# CustomBox
-	.long	RN_CustomStyleBox	# CustomStyleBox
-	.long	RN_MusicStylistOrgan	# MusicStylistOrgan
-	.long	RN_empty_3560	# MusicStylistOrgan_StyleName1
-	.long	RN_empty_3561	# MusicStylistOrgan_Label_STYLE
-	.long	RN_empty_3562	# MusicStylistOrgan_TitleMenu_ALPHABET
-	.long	RN_empty_3563	# MusicStylistOrgan_EraTitleMenu_ERA
-	.long	RN_empty_3564	# MusicStylistOrgan_IndexWideES1
-	.long	RN_empty_3565	# MusicStylistOrgan_Label_SKIP
-	.long	RN_empty_3566	# MusicStylistOrgan_IndexWideES2
-	.long	RN_empty_3567	# MusicStylistOrgan_Label_STYLE2
-	.long	RN_empty_3568	# MusicStylistOrgan_Box1
-	.long	RN_OrgStyleList	# OrgStyleList
-	.long	RN_OrgSubCtgList	# OrgSubCtgList
-	.long	RN_empty_3569	# MusicStylistOrgan_StrRadioBox_ORGAN
-.incbin_range "baserom/kn2400_program.rom", 0x16D054, 0x16D058
-
-Jpeg_4856D058:	# a JPG file, 9399 bytes, 300 x 190
-	.incbin	"src/data/media/Jpeg_4856D058.jpg"
-	.align	4, 0xFF
-
-ptrs_4856F510:
-	.long	func_48645921
-	.long	func_48645A34
-	.long	func_48645921
-	.long	func_48645921
-	.long	func_48645921
-	.long	func_48645921
-	.long	func_48645921
-data_4856F52C:
-.incbin_range "baserom/kn2400_program.rom", 0x16F52C, 0x16F540
-
-Str_JFIF:	.asciz "JFIF"
-.incbin_range "baserom/kn2400_program.rom", 0x16F545, 0x16F550
-data_4856F550:
-.incbin_range "baserom/kn2400_program.rom", 0x16F550, 0x16F555
-data_4856F555:
-.incbin_range "baserom/kn2400_program.rom", 0x16F555, 0x16F569
-data_4856F569:
-.incbin_range "baserom/kn2400_program.rom", 0x16F569, 0x16F57D
-data_4856F57D:
-.incbin_range "baserom/kn2400_program.rom", 0x16F57D, 0x16F591
-data_4856F591:
-.incbin_range "baserom/kn2400_program.rom", 0x16F591, 0x16F5A8
-data_4856F5A8:
-.incbin_range "baserom/kn2400_program.rom", 0x16F5A8, 0x16F5B4
-data_4856F5B4:
-.incbin_range "baserom/kn2400_program.rom", 0x16F5B4, 0x16F5E4
-data_4856F5E4:
-.incbin_range "baserom/kn2400_program.rom", 0x16F5E4, 0x16FB84
-data_4856FB84:
-.incbin_range "baserom/kn2400_program.rom", 0x16FB84, 0x16FB8E
-data_4856FB8E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FB8E, 0x16FB98
-data_4856FB98:
-.incbin_range "baserom/kn2400_program.rom", 0x16FB98, 0x16FBA2
-data_4856FBA2:
-.incbin_range "baserom/kn2400_program.rom", 0x16FBA2, 0x16FBAC
-data_4856FBAC:
-.incbin_range "baserom/kn2400_program.rom", 0x16FBAC, 0x16FBB6
-data_4856FBB6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FBB6, 0x16FBC0
-data_4856FBC0:
-.incbin_range "baserom/kn2400_program.rom", 0x16FBC0, 0x16FBCA
-Str_empty_360:	.asciz " "
-.incbin_range "baserom/kn2400_program.rom", 0x16FBCC, 0x16FBD4
-Str_empty_359:	.asciz "("
-.incbin_range "baserom/kn2400_program.rom", 0x16FBD6, 0x16FBDE
-Str_empty_358:	.asciz ","
-.incbin_range "baserom/kn2400_program.rom", 0x16FBE0, 0x16FBE8
-Str_0_10:	.asciz "0"
-.incbin_range "baserom/kn2400_program.rom", 0x16FBEA, 0x16FBF2
-Str_empty_357:	.asciz "<"
-.incbin_range "baserom/kn2400_program.rom", 0x16FBF4, 0x16FBFC
-Str_D_4:	.asciz "D"
-.incbin_range "baserom/kn2400_program.rom", 0x16FBFE, 0x16FC06
-Str_H_4:	.asciz "H"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC08, 0x16FC10
-Str_L_4:	.asciz "L"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC12, 0x16FC1A
-Str_P_12:	.asciz "P"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC1C, 0x16FC24
-Str_T_4:	.asciz "T"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC26, 0x16FC2E
-Str_X_3:	.asciz "X"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC30, 0x16FC38
-Str_empty_356:	.asciz "\\"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC3A, 0x16FC42
-Str_empty_355:	.asciz "`"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC44, 0x16FC4C
-Str_d_5:	.asciz "d"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC4E, 0x16FC56
-Str_h_2:	.asciz "h"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC58, 0x16FC60
-Str_l_4:	.asciz "l"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC62, 0x16FC6A
-Str_p_3:	.asciz "p"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC6C, 0x16FC74
-Str_empty_354:	.asciz "|"
-.incbin_range "baserom/kn2400_program.rom", 0x16FC76, 0x16FC7E
-data_4856FC7E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FC7E, 0x16FC88
-data_4856FC88:
-.incbin_range "baserom/kn2400_program.rom", 0x16FC88, 0x16FC92
-data_4856FC92:
-.incbin_range "baserom/kn2400_program.rom", 0x16FC92, 0x16FC9C
-data_4856FC9C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FC9C, 0x16FCA6
-data_4856FCA6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCA6, 0x16FCB0
-data_4856FCB0:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCB0, 0x16FCBA
-data_4856FCBA:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCBA, 0x16FCC4
-data_4856FCC4:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCC4, 0x16FCCE
-data_4856FCCE:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCCE, 0x16FCD8
-data_4856FCD8:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCD8, 0x16FCE2
-data_4856FCE2:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCE2, 0x16FCEC
-data_4856FCEC:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCEC, 0x16FCF6
-data_4856FCF6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FCF6, 0x16FD00
-data_4856FD00:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD00, 0x16FD0A
-data_4856FD0A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD0A, 0x16FD14
-data_4856FD14:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD14, 0x16FD1E
-data_4856FD1E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD1E, 0x16FD28
-data_4856FD28:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD28, 0x16FD32
-data_4856FD32:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD32, 0x16FD3C
-data_4856FD3C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD3C, 0x16FD46
-data_4856FD46:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD46, 0x16FD50
-data_4856FD50:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD50, 0x16FD5A
-data_4856FD5A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD5A, 0x16FD64
-data_4856FD64:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD64, 0x16FD6E
-data_4856FD6E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD6E, 0x16FD78
-data_4856FD78:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD78, 0x16FD82
-data_4856FD82:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD82, 0x16FD8C
-data_4856FD8C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD8C, 0x16FD96
-data_4856FD96:
-.incbin_range "baserom/kn2400_program.rom", 0x16FD96, 0x16FDA0
-data_4856FDA0:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDA0, 0x16FDAA
-data_4856FDAA:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDAA, 0x16FDB4
-data_4856FDB4:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDB4, 0x16FDBE
-data_4856FDBE:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDBE, 0x16FDC8
-data_4856FDC8:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDC8, 0x16FDD2
-data_4856FDD2:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDD2, 0x16FDDC
-data_4856FDDC:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDDC, 0x16FDE6
-data_4856FDE6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FDE6, 0x16FDF0
-Str_4_21:	.asciz "4"
-.incbin_range "baserom/kn2400_program.rom", 0x16FDF2, 0x16FDFA
-Str_empty_353:	.asciz "@"
-.incbin_range "baserom/kn2400_program.rom", 0x16FDFC, 0x16FE04
-Str_t_2:	.asciz "t"
-.incbin_range "baserom/kn2400_program.rom", 0x16FE06, 0x16FE0E
-Str_x_4:	.asciz "x"
-.incbin_range "baserom/kn2400_program.rom", 0x16FE10, 0x16FE18
-data_4856FE18:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE18, 0x16FE22
-data_4856FE22:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE22, 0x16FE2C
-data_4856FE2C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE2C, 0x16FE36
-data_4856FE36:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE36, 0x16FE40
-data_4856FE40:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE40, 0x16FE4A
-data_4856FE4A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE4A, 0x16FE54
-data_4856FE54:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE54, 0x16FE5E
-data_4856FE5E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE5E, 0x16FE68
-Str_empty_352:	.asciz "$"
-.incbin_range "baserom/kn2400_program.rom", 0x16FE6A, 0x16FE72
-data_4856FE72:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE72, 0x16FE7C
-data_4856FE7C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE7C, 0x16FE86
-data_4856FE86:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE86, 0x16FE90
-data_4856FE90:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE90, 0x16FE9A
-data_4856FE9A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FE9A, 0x16FEA4
-data_4856FEA4:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEA4, 0x16FEAE
-data_4856FEAE:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEAE, 0x16FEB8
-Str_8_5:	.asciz "8"
-.incbin_range "baserom/kn2400_program.rom", 0x16FEBA, 0x16FEC2
-data_4856FEC2:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEC2, 0x16FECC
-data_4856FECC:
-.incbin_range "baserom/kn2400_program.rom", 0x16FECC, 0x16FED6
-data_4856FED6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FED6, 0x16FEE0
-data_4856FEE0:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEE0, 0x16FEEA
-data_4856FEEA:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEEA, 0x16FEF4
-data_4856FEF4:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEF4, 0x16FEFE
-data_4856FEFE:
-.incbin_range "baserom/kn2400_program.rom", 0x16FEFE, 0x16FF08
-data_4856FF08:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF08, 0x16FF12
-data_4856FF12:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF12, 0x16FF1C
-data_4856FF1C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF1C, 0x16FF26
-data_4856FF26:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF26, 0x16FF30
-data_4856FF30:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF30, 0x16FF3A
-data_4856FF3A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF3A, 0x16FF44
-data_4856FF44:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF44, 0x16FF4E
-data_4856FF4E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF4E, 0x16FF58
-data_4856FF58:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF58, 0x16FF62
-data_4856FF62:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF62, 0x16FF6C
-data_4856FF6C:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF6C, 0x16FF76
-data_4856FF76:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF76, 0x16FF80
-data_4856FF80:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF80, 0x16FF8A
-data_4856FF8A:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF8A, 0x16FF94
-data_4856FF94:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF94, 0x16FF9E
-data_4856FF9E:
-.incbin_range "baserom/kn2400_program.rom", 0x16FF9E, 0x16FFA8
-data_4856FFA8:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFA8, 0x16FFB2
-data_4856FFB2:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFB2, 0x16FFBC
-data_4856FFBC:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFBC, 0x16FFC6
-data_4856FFC6:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFC6, 0x16FFD0
-data_4856FFD0:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFD0, 0x16FFDA
-data_4856FFDA:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFDA, 0x16FFE4
-data_4856FFE4:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFE4, 0x16FFEE
-data_4856FFEE:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFEE, 0x16FFF8
-data_4856FFF8:
-.incbin_range "baserom/kn2400_program.rom", 0x16FFF8, 0x170002
-data_48570002:
-.incbin_range "baserom/kn2400_program.rom", 0x170002, 0x17000C
-data_4857000C:
-.incbin_range "baserom/kn2400_program.rom", 0x17000C, 0x170016
-data_48570016:
-.incbin_range "baserom/kn2400_program.rom", 0x170016, 0x170020
-data_48570020:
-.incbin_range "baserom/kn2400_program.rom", 0x170020, 0x17002A
-data_4857002A:
-.incbin_range "baserom/kn2400_program.rom", 0x17002A, 0x170034
-data_48570034:
-.incbin_range "baserom/kn2400_program.rom", 0x170034, 0x17003E
-data_4857003E:
-.incbin_range "baserom/kn2400_program.rom", 0x17003E, 0x170048
-data_48570048:
-.incbin_range "baserom/kn2400_program.rom", 0x170048, 0x170052
-data_48570052:
-.incbin_range "baserom/kn2400_program.rom", 0x170052, 0x17005C
-data_4857005C:
-.incbin_range "baserom/kn2400_program.rom", 0x17005C, 0x170066
-data_48570066:
-.incbin_range "baserom/kn2400_program.rom", 0x170066, 0x170070
-data_48570070:
-.incbin_range "baserom/kn2400_program.rom", 0x170070, 0x17007A
-data_4857007A:
-.incbin_range "baserom/kn2400_program.rom", 0x17007A, 0x170084
-data_48570084:
-.incbin_range "baserom/kn2400_program.rom", 0x170084, 0x17008E
-data_4857008E:
-.incbin_range "baserom/kn2400_program.rom", 0x17008E, 0x170098
-data_48570098:
-.incbin_range "baserom/kn2400_program.rom", 0x170098, 0x1700A2
-data_485700A2:
-.incbin_range "baserom/kn2400_program.rom", 0x1700A2, 0x1700AC
-data_485700AC:
-.incbin_range "baserom/kn2400_program.rom", 0x1700AC, 0x1700B6
-data_485700B6:
-.incbin_range "baserom/kn2400_program.rom", 0x1700B6, 0x1700C0
-data_485700C0:
-.incbin_range "baserom/kn2400_program.rom", 0x1700C0, 0x1700CA
-data_485700CA:
-.incbin_range "baserom/kn2400_program.rom", 0x1700CA, 0x1700D4
-data_485700D4:
-.incbin_range "baserom/kn2400_program.rom", 0x1700D4, 0x1700DE
-data_485700DE:
-.incbin_range "baserom/kn2400_program.rom", 0x1700DE, 0x1700E8
-data_485700E8:
-.incbin_range "baserom/kn2400_program.rom", 0x1700E8, 0x1700F2
-data_485700F2:
-.incbin_range "baserom/kn2400_program.rom", 0x1700F2, 0x1700FC
-data_485700FC:
-.incbin_range "baserom/kn2400_program.rom", 0x1700FC, 0x170106
-data_48570106:
-.incbin_range "baserom/kn2400_program.rom", 0x170106, 0x170110
-data_48570110:
-.incbin_range "baserom/kn2400_program.rom", 0x170110, 0x17011A
-data_4857011A:
-.incbin_range "baserom/kn2400_program.rom", 0x17011A, 0x170124
-data_48570124:
-.incbin_range "baserom/kn2400_program.rom", 0x170124, 0x17012E
-data_4857012E:
-.incbin_range "baserom/kn2400_program.rom", 0x17012E, 0x170138
-data_48570138:
-.incbin_range "baserom/kn2400_program.rom", 0x170138, 0x170142
-data_48570142:
-.incbin_range "baserom/kn2400_program.rom", 0x170142, 0x17014C
-data_4857014C:
-.incbin_range "baserom/kn2400_program.rom", 0x17014C, 0x170156
-data_48570156:
-.incbin_range "baserom/kn2400_program.rom", 0x170156, 0x170160
-data_48570160:
-.incbin_range "baserom/kn2400_program.rom", 0x170160, 0x17016A
-data_4857016A:
-.incbin_range "baserom/kn2400_program.rom", 0x17016A, 0x170174
-data_48570174:
-.incbin_range "baserom/kn2400_program.rom", 0x170174, 0x17017E
-data_4857017E:
-.incbin_range "baserom/kn2400_program.rom", 0x17017E, 0x170188
-data_48570188:
-.incbin_range "baserom/kn2400_program.rom", 0x170188, 0x170192
-data_48570192:
-.incbin_range "baserom/kn2400_program.rom", 0x170192, 0x17019C
-data_4857019C:
-.incbin_range "baserom/kn2400_program.rom", 0x17019C, 0x1701A6
-data_485701A6:
-.incbin_range "baserom/kn2400_program.rom", 0x1701A6, 0x1701B0
-data_485701B0:
-.incbin_range "baserom/kn2400_program.rom", 0x1701B0, 0x1701BA
-data_485701BA:
-.incbin_range "baserom/kn2400_program.rom", 0x1701BA, 0x1701C4
-data_485701C4:
-.incbin_range "baserom/kn2400_program.rom", 0x1701C4, 0x1701CE
-data_485701CE:
-.incbin_range "baserom/kn2400_program.rom", 0x1701CE, 0x1701D8
-data_485701D8:
-.incbin_range "baserom/kn2400_program.rom", 0x1701D8, 0x1701E2
-data_485701E2:
-.incbin_range "baserom/kn2400_program.rom", 0x1701E2, 0x1701EC
-data_485701EC:
-.incbin_range "baserom/kn2400_program.rom", 0x1701EC, 0x1701F6
-data_485701F6:
-.incbin_range "baserom/kn2400_program.rom", 0x1701F6, 0x170200
-data_48570200:
-.incbin_range "baserom/kn2400_program.rom", 0x170200, 0x17020A
-data_4857020A:
-.incbin_range "baserom/kn2400_program.rom", 0x17020A, 0x170214
-data_48570214:
-.incbin_range "baserom/kn2400_program.rom", 0x170214, 0x17021E
-data_4857021E:
-.incbin_range "baserom/kn2400_program.rom", 0x17021E, 0x170228
-data_48570228:
-.incbin_range "baserom/kn2400_program.rom", 0x170228, 0x170232
-data_48570232:
-.incbin_range "baserom/kn2400_program.rom", 0x170232, 0x17023C
-data_4857023C:
-.incbin_range "baserom/kn2400_program.rom", 0x17023C, 0x170246
-data_48570246:
-.incbin_range "baserom/kn2400_program.rom", 0x170246, 0x170250
-data_48570250:
-.incbin_range "baserom/kn2400_program.rom", 0x170250, 0x17025A
-data_4857025A:
-.incbin_range "baserom/kn2400_program.rom", 0x17025A, 0x170264
-data_48570264:
-.incbin_range "baserom/kn2400_program.rom", 0x170264, 0x17026E
-data_4857026E:
-.incbin_range "baserom/kn2400_program.rom", 0x17026E, 0x170278
-data_48570278:
-.incbin_range "baserom/kn2400_program.rom", 0x170278, 0x170282
-data_48570282:
-.incbin_range "baserom/kn2400_program.rom", 0x170282, 0x17028C
-
-ptrs_4857028C:
-	.long	Str_Pie_For_USA_2
-	.long	data_4856FB84
-	.long	Str_B_Jean_Pop_2
-	.long	data_4856FB8E
-	.long	Str_Complicated_Rock_2
-	.long	data_4856FB98
-	.long	Str_Love_Is_Deep_2
-	.long	data_4856FBA2
-	.long	Str_Lose_Water_Pop_2
-	.long	data_4856FBAC
-	.long	Str_Livin_La_Latin_2
-	.long	data_4856FBB6
-	.long	Str_Hero_s_Ballad_2
-	.long	data_4856FBC0
-	.long	Str_60s_PopOrchestra_2
-	.long	Str_empty_360
-	.long	Str_Mersey_Ballad_2
-	.long	Str_empty_359
-	.long	Str_Dance_Superstar_2
-	.long	Str_empty_358
-	.long	Str_60s_Soul_2
-	.long	Str_0_10
-	.long	Str_For_Your_Ballad_2
-	.long	Str_empty_357
-	.long	Str_West_Coast_Hotel_2
-	.long	Str_D_4
-	.long	Str_Rose_And_A_Rock_2
-	.long	Str_H_4
-	.long	Str_RemindMe_To_Rock_2
-	.long	Str_L_4
-	.long	Str_Spiritual_Pop_2
-	.long	Str_P_12
-	.long	Str_Do_Do_Do_Rock_2
-	.long	Str_T_4
-	.long	Str_Smoke_On_The_Rock_2
-	.long	Str_X_3
-	.long	Str_TheWay_It_s_Liked_2
-	.long	Str_empty_356
-	.long	Str_He_s_The_Man_2
-	.long	Str_empty_355
-	.long	Str_12_Bar_Rock_2
-	.long	Str_d_5
-	.long	Str_Folk_Rock_2
-	.long	Str_h_2
-	.long	Str_King_s_Rock_2
-	.long	Str_l_4
-	.long	Str_UK_Piano_Legend_2
-	.long	Str_p_3
-	.long	Str_Organ_RockBallad_2
-	.long	Str_empty_354
-	.long	Str_Rock_Status_2
-	.long	data_4856FC7E
-	.long	Str_Heavy_Shuffle_2
-	.long	data_4856FC88
-	.long	Str_Rock_Gig_2
-	.long	data_4856FC92
-	.long	Str_Revival_Rock_2
-	.long	data_4856FC9C
-	.long	Str_High_Tide_Pop_2
-	.long	data_4856FCA6
-	.long	Str_Choreographic_2
-	.long	data_4856FCB0
-	.long	Str_Chart_Reggae_2
-	.long	data_4856FCBA
-	.long	Str_Unplugged_2
-	.long	data_4856FCC4
-	.long	Str_Ballad_By_Itself_2
-	.long	data_4856FCCE
-	.long	Str_Dream_Teen_2
-	.long	data_4856FCD8
-	.long	Str_Pop_Ballad_Boys_2
-	.long	data_4856FCE2
-	.long	Str_Pop_Imagination_2
-	.long	data_4856FCEC
-	.long	Str_EpicMovie_Ballad_2
-	.long	data_4856FCF6
-	.long	Str_EvergreenBallads_2
-	.long	data_4856FD00
-	.long	Str_Manchester_Pop_2
-	.long	data_4856FD0A
-	.long	Str_80s_Movie_Ballad_2
-	.long	data_4856FD14
-	.long	Str_Blues_For_Ray_2
-	.long	data_4856FD1E
-	.long	Str_SupergroupBallad_2
-	.long	data_4856FD28
-	.long	Str_Ageless_8_Beat_2
-	.long	data_4856FD32
-	.long	Str_Straight_8_Beat_2
-	.long	data_4856FD3C
-	.long	Str_Evergreen_16_2
-	.long	data_4856FD46
-	.long	Str_EZ_16_Beat_2
-	.long	data_4856FD50
-	.long	Str_Chart_16_2
-	.long	data_4856FD5A
-	.long	Str_Party_Shuffle_2
-	.long	data_4856FD64
-	.long	Str_Studio_Pop_2
-	.long	data_4856FD6E
-	.long	Str_Bourbon_Street_2
-	.long	data_4856FD78
-	.long	Str_Jazzy_Grooves_2
-	.long	data_4856FD82
-	.long	Str_West_Indies_Cool_2
-	.long	data_4856FD8C
-	.long	Str_Unplugged_Ballad
-	.long	data_4856FD96
-	.long	Str_Slow_Swing_Pop
-	.long	data_4856FDA0
-	.long	Str_Swing_Rock_Groove
-	.long	data_4856FDAA
-	.long	Str_ShuffleRock_Roll
-	.long	data_4856FDB4
-	.long	Str_Rock_Steady
-	.long	data_4856FDBE
-	.long	Str_Easy_Listening
-	.long	data_4856FDC8
-	.long	Str_Cool_Dance_Groove
-	.long	data_4856FDD2
-	.long	Str_Simplest_Ballad
-	.long	data_4856FDDC
-	.space	8, 0x00
-ptrs_4857047C:
-	.long	Str_Mistaken_Pop_2
-	.long	data_4856FDE6
-	.long	Str_70s_Detroit_Pop_2
-	.long	Str_4_21
-	.long	Str_Cool_Groovy_2
-	.long	Str_empty_353
-	.long	Str_West_Coast_Funk_2
-	.long	Str_t_2
-	.long	Str_Steamy_Funk_2
-	.long	Str_x_4
-	.long	Str_Funky_R_B_2
-	.long	data_4856FE18
-	.long	Str_Party_R_B_2
-	.long	data_4856FE22
-	.long	Str_Pop_Soul_2
-	.long	data_4856FE2C
-	.long	Str_Sweet_Soul_2
-	.long	data_4856FE36
-	.long	Str_Modern_Spirit_2
-	.long	data_4856FE40
-	.long	Str_Pop_Spiritual_2
-	.long	data_4856FE4A
-	.long	Str_70s_Revival_2
-	.long	data_4856FE54
-	.long	Str_Sunday_Morning_2
-	.long	data_4856FE5E
-	.space	8, 0x00
-ptrs_485704EC:
-	.long	Str_Ribbon_Of_Yellow_2
-	.long	Str_empty_352
-	.long	Str_Foxtrot_Country_2
-	.long	data_4856FE72
-	.long	Str_Country_Festival_2
-	.long	data_4856FE7C
-	.long	Str_Southern_Shuffle_2
-	.long	data_4856FE86
-	.long	Str_Barn_Dance_2
-	.long	data_4856FE90
-	.long	Str_KentuckyLoveSong_2
-	.long	data_4856FE9A
-	.long	Str_70s_Folk_2
-	.long	data_4856FEA4
-	.long	Str_Nashville_Blues_2
-	.long	data_4856FEAE
-	.space	8, 0x00
-ptrs_48570534:
-	.long	Str_90_s_Boy_Groups_2
-	.long	Str_8_5
-	.long	Str_Share_Believing_2
-	.long	data_4856FEC2
-	.long	Str_Schoolgirl_Rock_2
-	.long	data_4856FECC
-	.long	Str_Mad_On_A_Song_2
-	.long	data_4856FED6
-	.long	Str_Diva_Superstar_2
-	.long	data_4856FEE0
-	.long	Str_Rock_Feeling_2
-	.long	data_4856FEEA
-	.long	Str_Latin_Pop_Star_2
-	.long	data_4856FEF4
-	.long	Str_HispanicSuperstar_2
-	.long	data_4856FEFE
-	.long	Str_Retro_Disco_2
-	.long	data_4856FF08
-	.long	Str_Samba_Nights_2
-	.long	data_4856FF12
-	.long	Str_Dance_Latin_2
-	.long	data_4856FF1C
-	.long	Str_Disco_Orchestra_2
-	.long	data_4856FF26
-	.long	Str_The_Big_Hit_2
-	.long	data_4856FF30
-	.long	Str_Club_Reggae_2
-	.long	data_4856FF3A
-	.long	Str_Ibiza_Evening_2
-	.long	data_4856FF44
-	.long	Str_Garage_2
-	.long	data_4856FF4E
-	.long	Str_Electro_Techno_2
-	.long	data_4856FF58
-	.long	Str_Trance_2
-	.long	data_4856FF62
-	.long	Str_Acid_Jazz_2
-	.long	data_4856FF6C
-	.long	Str_Big_Beat_2
-	.long	data_4856FF76
-	.long	Str_US_House_4
-	.long	data_4856FF80
-	.long	Str_Hip_Hop_3
-	.long	data_4856FF8A
-	.long	Str_Hip_Club_Mixes_2
-	.long	data_4856FF94
-	.long	Str_Ibiza_Morning_2
-	.long	data_4856FF9E
-	.space	8, 0x00
-ptrs_485705FC:
-	.long	Str_It_s_Fun_To_Stay_2
-	.long	data_4856FFA8
-	.long	Str_A_Bit_Of_A_Mambo_2
-	.long	data_4856FFB2
-	.long	Str_Party_Highlights_2
-	.long	data_4856FFBC
-	.long	Str_German_Holiday_2
-	.long	data_4856FFC6
-	.long	Str_Ballermann_2
-	.long	data_4856FFD0
-	.space	8, 0x00
-ptrs_4857062C:
-	.long	Str_Cartoon_Ballad_2
-	.long	data_4856FFDA
-	.long	Str_Legendary_Ballad_2
-	.long	data_4856FFE4
-	.long	Str_Movie_Melodrama_2
-	.long	data_4856FFEE
-	.long	Str_Modern_Musical_2
-	.long	data_4856FFF8
-	.long	Str_Ballroom_Waltz_2
-	.long	data_48570002
-	.long	Str_Slow_Waltzing_2
-	.long	data_4857000C
-	.long	Str_Breakfast_Waltz_2
-	.long	data_48570016
-	.long	Str_Ballroom_Dance_2
-	.long	data_48570020
-	.long	Str_60s_Foxtrot_2
-	.long	data_4857002A
-	.long	Str_Euro_Tango_2
-	.long	data_48570034
-	.long	Str_Spy_Superstar_2
-	.long	data_4857003E
-	.long	Str_Vegas_Cabaret_2
-	.long	data_48570048
-	.long	Str_Fast_Ballroom_2
-	.long	data_48570052
-	.long	Str_Swinging_Bert_2
-	.long	data_4857005C
-	.long	Str_Quickstep_Combo
-	.long	data_48570066
-	.long	Str_Simplest_Waltz
-	.long	data_48570070
-	.space	8, 0x00
-ptrs_485706B4:
-	.long	Str_Sweet_Pop_2
-	.long	data_4857007A
-	.long	Str_Cool_Waltz_2
-	.long	data_48570084
-	.long	Str_Fifties_Smooch_2
-	.long	data_4857008E
-	.long	Str_Hollywood_Charm_2
-	.long	data_48570098
-	.long	Str_Ballad_Producer_2
-	.long	data_485700A2
-	.long	Str_Song_Contest_2
-	.long	data_485700AC
-	.long	Str_Ballad_Orchestra_2
-	.long	data_485700B6
-	.long	Str_16_Beat_Grooves_2
-	.long	data_485700C0
-	.long	Str_Easy_16_Ballad_2
-	.long	data_485700CA
-	.long	Str_Yesteryear_2
-	.long	data_485700D4
-	.long	Str_Slow_Easy_2
-	.long	data_485700DE
-	.long	Str_Easy_Swing_Pop_2
-	.long	data_485700E8
-	.long	Str_Slow_Oldies_2
-	.long	data_485700F2
-	.space	8, 0x00
-ptrs_48570724:
-	.long	Str_Island_Dreams_2
-	.long	data_485700FC
-	.long	Str_Marching_Band_2
-	.long	data_48570106
-	.long	Str_Stadium_Events_2
-	.long	data_48570110
-	.long	Str_OktoberFest_2
-	.long	data_4857011A
-	.long	Str_Mountain_Music_2
-	.long	data_48570124
-	.long	Str_Standard_Waltz_2
-	.long	data_4857012E
-	.long	Str_Parisian_Dance_2
-	.long	data_48570138
-	.space	8, 0x00
-ptrs_48570764:
-	.long	Str_Jazz_Club_2
-	.long	data_48570142
-	.long	Str_Blue_Notes_2
-	.long	data_4857014C
-	.long	Str_Steady_Swing_2
-	.long	data_48570156
-	.long	Str_Cocktail_Jazz_2
-	.long	data_48570160
-	.long	Str_Acapella_Group_2
-	.long	data_4857016A
-	.long	Str_Manhattan_Voices_2
-	.long	data_48570174
-	.long	Str_Big_Band_Stomp_2
-	.long	data_4857017E
-	.long	Str_Swing_Counting_2
-	.long	data_48570188
-	.long	Str_Big_Band_Dance_2
-	.long	data_48570192
-	.long	Str_Big_Band_Smooch_2
-	.long	data_4857019C
-	.long	Str_Moonlight_Band_2
-	.long	data_485701A6
-	.long	Str_12_Bar_Blues_2
-	.long	data_485701B0
-	.long	Str_West_Coast_Jazz_2
-	.long	data_485701BA
-	.long	Str_NightClubCabaret_2
-	.long	data_485701C4
-	.long	Str_Waltz_For_Jazzy_2
-	.long	data_485701CE
-	.long	Str_I_Got_The_Blues_2
-	.long	data_485701D8
-	.long	Str_Jazz_Harmonicity_2
-	.long	data_485701E2
-	.long	Str_Casino_Show_2
-	.long	data_485701EC
-	.space	8, 0x00
-ptrs_485707FC:
-	.long	Str_Latin_Dance_Band_2
-	.long	data_485701F6
-	.long	Str_Latin_Tango_2
-	.long	data_48570200
-	.long	Str_Uptown_Cha_Cha_2
-	.long	data_4857020A
-	.long	Str_Smooth_Latin_2
-	.long	data_48570214
-	.long	Str_Acoustic_Bossa_2
-	.long	data_4857021E
-	.long	Str_Samba_Holiday_2
-	.long	data_48570228
-	.long	Str_Ballroom_Beguine_2
-	.long	data_48570232
-	.long	Str_Rhumba_Party_2
-	.long	data_4857023C
-	.long	Str_Amigo_Beats_2
-	.long	data_48570246
-	.long	Str_Middle_East_Pop_2
-	.long	data_48570250
-	.long	Str_Dangdut_Pop_2
-	.long	data_4857025A
-	.long	Str_Dangdut_2
-	.long	data_48570264
-	.long	Str_Ballroom_Samba_2
-	.long	data_4857026E
-	.long	Str_Mexicana_2
-	.long	data_48570278
-	.long	Str_Romantic_Waltz_2
-	.long	data_48570282
-	.space	8, 0x00
-ptrs_4857087C:
-	.long	Str_Rock_Pop_2
-	.long	ptrs_4857028C
-	.long	Str_Soul_Gospel_2
-	.long	ptrs_4857047C
-	.long	Str_Country_2
-	.long	ptrs_485704EC
-	.long	Str_Dance_Pop_2
-	.long	ptrs_48570534
-	.long	Str_Party_Music_2
-	.long	ptrs_485705FC
-	.long	Str_Show_Ballroom_2
-	.long	ptrs_4857062C
-	.long	Str_EZ_Listening_2
-	.long	ptrs_485706B4
-	.long	Str_Trad_Folk_2
-	.long	ptrs_48570724
-	.long	Str_Jazz_Swing_2
-	.long	ptrs_48570764
-	.long	Str_Latin_World_2
-	.long	ptrs_485707FC
-	.space	8, 0x00
-data_485708D4:
-.incbin_range "baserom/kn2400_program.rom", 0x1708D4, 0x1708DA
-data_485708DA:
-.incbin_range "baserom/kn2400_program.rom", 0x1708DA, 0x1708E0
-data_485708E0:
-.incbin_range "baserom/kn2400_program.rom", 0x1708E0, 0x1708E4
-data_485708E4:
-.incbin_range "baserom/kn2400_program.rom", 0x1708E4, 0x1708E8
-data_485708E8:
-.incbin_range "baserom/kn2400_program.rom", 0x1708E8, 0x1708EC
-
-Str_r_2:	.asciz "r"
-.incbin_range "baserom/kn2400_program.rom", 0x1708EE, 0x170904
-data_48570904:
-.incbin_range "baserom/kn2400_program.rom", 0x170904, 0x170916
-data_48570916:
-.incbin_range "baserom/kn2400_program.rom", 0x170916, 0x17091C
-data_4857091C:
-.incbin_range "baserom/kn2400_program.rom", 0x17091C, 0x17094A
-Str_l_3:	.asciz "l"
-.incbin_range "baserom/kn2400_program.rom", 0x17094C, 0x1709D8
-data_485709D8:
-.incbin_range "baserom/kn2400_program.rom", 0x1709D8, 0x170A38
-data_48570A38:
-.incbin_range "baserom/kn2400_program.rom", 0x170A38, 0x170A7C
-data_48570A7C:
-.incbin_range "baserom/kn2400_program.rom", 0x170A7C, 0x170A9A
-Str_empty_351:	.asciz "("
-.incbin_range "baserom/kn2400_program.rom", 0x170A9C, 0x170AD8
-data_48570AD8:
-.incbin_range "baserom/kn2400_program.rom", 0x170AD8, 0x170AFE
-data_48570AFE:
-.incbin_range "baserom/kn2400_program.rom", 0x170AFE, 0x170B60
-data_48570B60:
-.incbin_range "baserom/kn2400_program.rom", 0x170B60, 0x170B68
-data_48570B68:
-.incbin_range "baserom/kn2400_program.rom", 0x170B68, 0x170B8A
-data_48570B8A:
-.incbin_range "baserom/kn2400_program.rom", 0x170B8A, 0x170B9A
-data_48570B9A:
-.incbin_range "baserom/kn2400_program.rom", 0x170B9A, 0x170BE6
-data_48570BE6:
-.incbin_range "baserom/kn2400_program.rom", 0x170BE6, 0x170C2E
-data_48570C2E:
-.incbin_range "baserom/kn2400_program.rom", 0x170C2E, 0x170C46
-data_48570C46:
-.incbin_range "baserom/kn2400_program.rom", 0x170C46, 0x170C70
-Str_w_2:	.asciz "w"
-.incbin_range "baserom/kn2400_program.rom", 0x170C72, 0x170CD4
-data_48570CD4:
-.incbin_range "baserom/kn2400_program.rom", 0x170CD4, 0x170CD8
-data_48570CD8:
-.incbin_range "baserom/kn2400_program.rom", 0x170CD8, 0x170D20
-data_48570D20:
-.incbin_range "baserom/kn2400_program.rom", 0x170D20, 0x170E10
-Str_empty_350:	.asciz ":"
-.incbin_range "baserom/kn2400_program.rom", 0x170E12, 0x170E5A
-data_48570E5A:
-.incbin_range "baserom/kn2400_program.rom", 0x170E5A, 0x170E6E
-data_48570E6E:
-.incbin_range "baserom/kn2400_program.rom", 0x170E6E, 0x170E78
-data_48570E78:
-.incbin_range "baserom/kn2400_program.rom", 0x170E78, 0x170EA6
-data_48570EA6:
-.incbin_range "baserom/kn2400_program.rom", 0x170EA6, 0x170EB0
-data_48570EB0:
-.incbin_range "baserom/kn2400_program.rom", 0x170EB0, 0x170EB8
-
-ptrs_48570EB8:
-	.long	Str_1_21
-	.long	data_485708D4
-	.long	Str_2_22
-	.long	data_485708DA
-	.long	Str_3_19
-	.long	data_485708E0
-	.long	Str_5_12
-	.long	data_485708E4
-	.long	Str_6_12
-	.long	data_485708E8
-	.long	Str_7_3
-	.long	Str_r_2
-	.long	Str_8_4
-	.long	data_48570904
-	.long	Str_9_3
-	.long	data_48570916
-	.long	Str_A_5
-	.long	data_4857091C
-	.long	Str_B_4
-	.long	Str_l_3
-	.long	Str_C_5
-	.long	data_485709D8
-	.long	Str_D_3
-	.long	data_48570A38
-	.long	Str_E_2
-	.long	data_48570A7C
-	.long	Str_F_3
-	.long	Str_empty_351
-	.long	Str_G_2
-	.long	data_48570AD8
-	.long	Str_H_3
-	.long	data_48570AFE
-	.long	Str_I_2
-	.long	data_48570B60
-	.long	Str_J_2
-	.long	data_48570B68
-	.long	Str_K_2
-	.long	data_48570B8A
-	.long	Str_L_3
-	.long	data_48570B9A
-	.long	Str_M_2
-	.long	data_48570BE6
-	.long	Str_N_2
-	.long	data_48570C2E
-	.long	Str_O_2
-	.long	data_48570C46
-	.long	Str_P_11
-	.long	Str_w_2
-	.long	Str_Q_3
-	.long	data_48570CD4
-	.long	Str_R_2
-	.long	data_48570CD8
-	.long	Str_S_2
-	.long	data_48570D20
-	.long	Str_T_3
-	.long	Str_empty_350
-	.long	Str_U_4
-	.long	data_48570E5A
-	.long	Str_V_2
-	.long	data_48570E6E
-	.long	Str_W_2
-	.long	data_48570E78
-	.long	Str_Y_2
-	.long	data_48570EA6
-	.long	Str_Z_2
-	.long	data_48570EB0
-.incbin_range "baserom/kn2400_program.rom", 0x170FC0, 0x17151E
-data_4857151E:
-.incbin_range "baserom/kn2400_program.rom", 0x17151E, 0x171564
-ptrs_48571564:
-	.long	data_4859129C
-	.long	Str_Hippie_Piano_2
-.incbin_range "baserom/kn2400_program.rom", 0x17156C, 0x1758E4
-ptrs_485758E4:
-	.long	Str_Pre1930s_2
-	.long	data_4857151E
-.incbin_range "baserom/kn2400_program.rom", 0x1758EC, 0x17595C
-data_4857595C:
-.incbin_range "baserom/kn2400_program.rom", 0x17595C, 0x175EAC
-data_48575EAC:
-.incbin_range "baserom/kn2400_program.rom", 0x175EAC, 0x175EB6
-data_48575EB6:
-.incbin_range "baserom/kn2400_program.rom", 0x175EB6, 0x175EC0
-data_48575EC0:
-.incbin_range "baserom/kn2400_program.rom", 0x175EC0, 0x175ECA
-data_48575ECA:
-.incbin_range "baserom/kn2400_program.rom", 0x175ECA, 0x175ED4
-data_48575ED4:
-.incbin_range "baserom/kn2400_program.rom", 0x175ED4, 0x175EDE
-data_48575EDE:
-.incbin_range "baserom/kn2400_program.rom", 0x175EDE, 0x175EE8
-data_48575EE8:
-.incbin_range "baserom/kn2400_program.rom", 0x175EE8, 0x175EF2
-
-Str_empty_349:	.asciz " "
-.incbin_range "baserom/kn2400_program.rom", 0x175EF4, 0x175EFC
-Str_empty_348:	.asciz "("
-.incbin_range "baserom/kn2400_program.rom", 0x175EFE, 0x175F06
-Str_empty_347:	.asciz ","
-.incbin_range "baserom/kn2400_program.rom", 0x175F08, 0x175F10
-Str_0_9:	.asciz "0"
-.incbin_range "baserom/kn2400_program.rom", 0x175F12, 0x175F1A
-Str_empty_346:	.asciz "<"
-.incbin_range "baserom/kn2400_program.rom", 0x175F1C, 0x175F24
-Str_D_2:	.asciz "D"
-.incbin_range "baserom/kn2400_program.rom", 0x175F26, 0x175F2E
-Str_H_2:	.asciz "H"
-.incbin_range "baserom/kn2400_program.rom", 0x175F30, 0x175F38
-Str_L_2:	.asciz "L"
-.incbin_range "baserom/kn2400_program.rom", 0x175F3A, 0x175F42
-Str_P_10:	.asciz "P"
-.incbin_range "baserom/kn2400_program.rom", 0x175F44, 0x175F4C
-Str_T_2:	.asciz "T"
-.incbin_range "baserom/kn2400_program.rom", 0x175F4E, 0x175F56
-Str_X_2:	.asciz "X"
-.incbin_range "baserom/kn2400_program.rom", 0x175F58, 0x175F60
-Str_empty_345:	.asciz "\\"
-.incbin_range "baserom/kn2400_program.rom", 0x175F62, 0x175F6A
-Str_empty_344:	.asciz "`"
-.incbin_range "baserom/kn2400_program.rom", 0x175F6C, 0x175F74
-Str_d_4:	.asciz "d"
-.incbin_range "baserom/kn2400_program.rom", 0x175F76, 0x175F7E
-Str_h:	.asciz "h"
-.incbin_range "baserom/kn2400_program.rom", 0x175F80, 0x175F88
-Str_l_2:	.asciz "l"
-.incbin_range "baserom/kn2400_program.rom", 0x175F8A, 0x175F92
-Str_p_2:	.asciz "p"
-.incbin_range "baserom/kn2400_program.rom", 0x175F94, 0x175F9C
-Str_empty_343:	.asciz "|"
-.incbin_range "baserom/kn2400_program.rom", 0x175F9E, 0x175FA6
-data_48575FA6:
-.incbin_range "baserom/kn2400_program.rom", 0x175FA6, 0x175FB0
-data_48575FB0:
-.incbin_range "baserom/kn2400_program.rom", 0x175FB0, 0x175FBA
-data_48575FBA:
-.incbin_range "baserom/kn2400_program.rom", 0x175FBA, 0x175FC4
-data_48575FC4:
-.incbin_range "baserom/kn2400_program.rom", 0x175FC4, 0x175FCE
-data_48575FCE:
-.incbin_range "baserom/kn2400_program.rom", 0x175FCE, 0x175FD8
-data_48575FD8:
-.incbin_range "baserom/kn2400_program.rom", 0x175FD8, 0x175FE2
-data_48575FE2:
-.incbin_range "baserom/kn2400_program.rom", 0x175FE2, 0x175FEC
-data_48575FEC:
-.incbin_range "baserom/kn2400_program.rom", 0x175FEC, 0x175FF6
-data_48575FF6:
-.incbin_range "baserom/kn2400_program.rom", 0x175FF6, 0x176000
-data_48576000:
-.incbin_range "baserom/kn2400_program.rom", 0x176000, 0x17600A
-data_4857600A:
-.incbin_range "baserom/kn2400_program.rom", 0x17600A, 0x176014
-data_48576014:
-.incbin_range "baserom/kn2400_program.rom", 0x176014, 0x17601E
-data_4857601E:
-.incbin_range "baserom/kn2400_program.rom", 0x17601E, 0x176028
-data_48576028:
-.incbin_range "baserom/kn2400_program.rom", 0x176028, 0x176032
-data_48576032:
-.incbin_range "baserom/kn2400_program.rom", 0x176032, 0x17603C
-data_4857603C:
-.incbin_range "baserom/kn2400_program.rom", 0x17603C, 0x176046
-data_48576046:
-.incbin_range "baserom/kn2400_program.rom", 0x176046, 0x176050
-data_48576050:
-.incbin_range "baserom/kn2400_program.rom", 0x176050, 0x17605A
-data_4857605A:
-.incbin_range "baserom/kn2400_program.rom", 0x17605A, 0x176064
-data_48576064:
-.incbin_range "baserom/kn2400_program.rom", 0x176064, 0x17606E
-data_4857606E:
-.incbin_range "baserom/kn2400_program.rom", 0x17606E, 0x176078
-data_48576078:
-.incbin_range "baserom/kn2400_program.rom", 0x176078, 0x176082
-data_48576082:
-.incbin_range "baserom/kn2400_program.rom", 0x176082, 0x17608C
-data_4857608C:
-.incbin_range "baserom/kn2400_program.rom", 0x17608C, 0x176096
-data_48576096:
-.incbin_range "baserom/kn2400_program.rom", 0x176096, 0x1760A0
-data_485760A0:
-.incbin_range "baserom/kn2400_program.rom", 0x1760A0, 0x1760AA
-data_485760AA:
-.incbin_range "baserom/kn2400_program.rom", 0x1760AA, 0x1760B4
-data_485760B4:
-.incbin_range "baserom/kn2400_program.rom", 0x1760B4, 0x1760BE
-data_485760BE:
-.incbin_range "baserom/kn2400_program.rom", 0x1760BE, 0x1760C8
-Str_4_20:	.asciz "4"
-.incbin_range "baserom/kn2400_program.rom", 0x1760CA, 0x1760D2
-Str_empty_342:	.asciz "@"
-.incbin_range "baserom/kn2400_program.rom", 0x1760D4, 0x1760DC
-Str_t:	.asciz "t"
-.incbin_range "baserom/kn2400_program.rom", 0x1760DE, 0x1760E6
-Str_x_3:	.asciz "x"
-.incbin_range "baserom/kn2400_program.rom", 0x1760E8, 0x1760F0
-data_485760F0:
-.incbin_range "baserom/kn2400_program.rom", 0x1760F0, 0x1760FA
-data_485760FA:
-.incbin_range "baserom/kn2400_program.rom", 0x1760FA, 0x176104
-data_48576104:
-.incbin_range "baserom/kn2400_program.rom", 0x176104, 0x17610E
-data_4857610E:
-.incbin_range "baserom/kn2400_program.rom", 0x17610E, 0x176118
-data_48576118:
-.incbin_range "baserom/kn2400_program.rom", 0x176118, 0x176122
-data_48576122:
-.incbin_range "baserom/kn2400_program.rom", 0x176122, 0x17612C
-data_4857612C:
-.incbin_range "baserom/kn2400_program.rom", 0x17612C, 0x176136
-data_48576136:
-.incbin_range "baserom/kn2400_program.rom", 0x176136, 0x176140
-Str_empty_341:	.asciz "$"
-.incbin_range "baserom/kn2400_program.rom", 0x176142, 0x17614A
-data_4857614A:
-.incbin_range "baserom/kn2400_program.rom", 0x17614A, 0x176154
-data_48576154:
-.incbin_range "baserom/kn2400_program.rom", 0x176154, 0x17615E
-data_4857615E:
-.incbin_range "baserom/kn2400_program.rom", 0x17615E, 0x176168
-data_48576168:
-.incbin_range "baserom/kn2400_program.rom", 0x176168, 0x176172
-data_48576172:
-.incbin_range "baserom/kn2400_program.rom", 0x176172, 0x17617C
-data_4857617C:
-.incbin_range "baserom/kn2400_program.rom", 0x17617C, 0x176186
-data_48576186:
-.incbin_range "baserom/kn2400_program.rom", 0x176186, 0x176190
-Str_8_3:	.asciz "8"
-.incbin_range "baserom/kn2400_program.rom", 0x176192, 0x17619A
-data_4857619A:
-.incbin_range "baserom/kn2400_program.rom", 0x17619A, 0x1761A4
-data_485761A4:
-.incbin_range "baserom/kn2400_program.rom", 0x1761A4, 0x1761AE
-data_485761AE:
-.incbin_range "baserom/kn2400_program.rom", 0x1761AE, 0x1761B8
-data_485761B8:
-.incbin_range "baserom/kn2400_program.rom", 0x1761B8, 0x1761C2
-data_485761C2:
-.incbin_range "baserom/kn2400_program.rom", 0x1761C2, 0x1761CC
-data_485761CC:
-.incbin_range "baserom/kn2400_program.rom", 0x1761CC, 0x1761D6
-data_485761D6:
-.incbin_range "baserom/kn2400_program.rom", 0x1761D6, 0x1761E0
-data_485761E0:
-.incbin_range "baserom/kn2400_program.rom", 0x1761E0, 0x1761EA
-data_485761EA:
-.incbin_range "baserom/kn2400_program.rom", 0x1761EA, 0x1761F4
-data_485761F4:
-.incbin_range "baserom/kn2400_program.rom", 0x1761F4, 0x1761FE
-data_485761FE:
-.incbin_range "baserom/kn2400_program.rom", 0x1761FE, 0x176208
-data_48576208:
-.incbin_range "baserom/kn2400_program.rom", 0x176208, 0x176212
-data_48576212:
-.incbin_range "baserom/kn2400_program.rom", 0x176212, 0x17621C
-data_4857621C:
-.incbin_range "baserom/kn2400_program.rom", 0x17621C, 0x176226
-data_48576226:
-.incbin_range "baserom/kn2400_program.rom", 0x176226, 0x176230
-data_48576230:
-.incbin_range "baserom/kn2400_program.rom", 0x176230, 0x17623A
-data_4857623A:
-.incbin_range "baserom/kn2400_program.rom", 0x17623A, 0x176244
-data_48576244:
-.incbin_range "baserom/kn2400_program.rom", 0x176244, 0x17624E
-data_4857624E:
-.incbin_range "baserom/kn2400_program.rom", 0x17624E, 0x176258
-data_48576258:
-.incbin_range "baserom/kn2400_program.rom", 0x176258, 0x176262
-data_48576262:
-.incbin_range "baserom/kn2400_program.rom", 0x176262, 0x17626C
-data_4857626C:
-.incbin_range "baserom/kn2400_program.rom", 0x17626C, 0x176276
-data_48576276:
-.incbin_range "baserom/kn2400_program.rom", 0x176276, 0x176280
-data_48576280:
-.incbin_range "baserom/kn2400_program.rom", 0x176280, 0x17628A
-data_4857628A:
-.incbin_range "baserom/kn2400_program.rom", 0x17628A, 0x176294
-data_48576294:
-.incbin_range "baserom/kn2400_program.rom", 0x176294, 0x17629E
-data_4857629E:
-.incbin_range "baserom/kn2400_program.rom", 0x17629E, 0x1762A8
-data_485762A8:
-.incbin_range "baserom/kn2400_program.rom", 0x1762A8, 0x1762B2
-data_485762B2:
-.incbin_range "baserom/kn2400_program.rom", 0x1762B2, 0x1762BC
-data_485762BC:
-.incbin_range "baserom/kn2400_program.rom", 0x1762BC, 0x1762C6
-data_485762C6:
-.incbin_range "baserom/kn2400_program.rom", 0x1762C6, 0x1762D0
-data_485762D0:
-.incbin_range "baserom/kn2400_program.rom", 0x1762D0, 0x1762DA
-data_485762DA:
-.incbin_range "baserom/kn2400_program.rom", 0x1762DA, 0x1762E4
-data_485762E4:
-.incbin_range "baserom/kn2400_program.rom", 0x1762E4, 0x1762EE
-data_485762EE:
-.incbin_range "baserom/kn2400_program.rom", 0x1762EE, 0x1762F8
-data_485762F8:
-.incbin_range "baserom/kn2400_program.rom", 0x1762F8, 0x176302
-data_48576302:
-.incbin_range "baserom/kn2400_program.rom", 0x176302, 0x17630C
-data_4857630C:
-.incbin_range "baserom/kn2400_program.rom", 0x17630C, 0x176316
-data_48576316:
-.incbin_range "baserom/kn2400_program.rom", 0x176316, 0x176320
-data_48576320:
-.incbin_range "baserom/kn2400_program.rom", 0x176320, 0x17632A
-data_4857632A:
-.incbin_range "baserom/kn2400_program.rom", 0x17632A, 0x176334
-data_48576334:
-.incbin_range "baserom/kn2400_program.rom", 0x176334, 0x17633E
-data_4857633E:
-.incbin_range "baserom/kn2400_program.rom", 0x17633E, 0x176348
-data_48576348:
-.incbin_range "baserom/kn2400_program.rom", 0x176348, 0x176352
-data_48576352:
-.incbin_range "baserom/kn2400_program.rom", 0x176352, 0x17635C
-data_4857635C:
-.incbin_range "baserom/kn2400_program.rom", 0x17635C, 0x176366
-data_48576366:
-.incbin_range "baserom/kn2400_program.rom", 0x176366, 0x176370
-data_48576370:
-.incbin_range "baserom/kn2400_program.rom", 0x176370, 0x17637A
-data_4857637A:
-.incbin_range "baserom/kn2400_program.rom", 0x17637A, 0x176384
-data_48576384:
-.incbin_range "baserom/kn2400_program.rom", 0x176384, 0x17638E
-data_4857638E:
-.incbin_range "baserom/kn2400_program.rom", 0x17638E, 0x176398
-data_48576398:
-.incbin_range "baserom/kn2400_program.rom", 0x176398, 0x1763A2
-data_485763A2:
-.incbin_range "baserom/kn2400_program.rom", 0x1763A2, 0x1763AC
-data_485763AC:
-.incbin_range "baserom/kn2400_program.rom", 0x1763AC, 0x1763B6
-data_485763B6:
-.incbin_range "baserom/kn2400_program.rom", 0x1763B6, 0x1763C0
-data_485763C0:
-.incbin_range "baserom/kn2400_program.rom", 0x1763C0, 0x1763CA
-data_485763CA:
-.incbin_range "baserom/kn2400_program.rom", 0x1763CA, 0x1763D4
-data_485763D4:
-.incbin_range "baserom/kn2400_program.rom", 0x1763D4, 0x1763DE
-data_485763DE:
-.incbin_range "baserom/kn2400_program.rom", 0x1763DE, 0x1763E8
-data_485763E8:
-.incbin_range "baserom/kn2400_program.rom", 0x1763E8, 0x1763F2
-data_485763F2:
-.incbin_range "baserom/kn2400_program.rom", 0x1763F2, 0x1763FC
-data_485763FC:
-.incbin_range "baserom/kn2400_program.rom", 0x1763FC, 0x176406
-data_48576406:
-.incbin_range "baserom/kn2400_program.rom", 0x176406, 0x176410
-data_48576410:
-.incbin_range "baserom/kn2400_program.rom", 0x176410, 0x17641A
-data_4857641A:
-.incbin_range "baserom/kn2400_program.rom", 0x17641A, 0x176424
-data_48576424:
-.incbin_range "baserom/kn2400_program.rom", 0x176424, 0x17642E
-data_4857642E:
-.incbin_range "baserom/kn2400_program.rom", 0x17642E, 0x176438
-data_48576438:
-.incbin_range "baserom/kn2400_program.rom", 0x176438, 0x176442
-data_48576442:
-.incbin_range "baserom/kn2400_program.rom", 0x176442, 0x17644C
-data_4857644C:
-.incbin_range "baserom/kn2400_program.rom", 0x17644C, 0x176456
-data_48576456:
-.incbin_range "baserom/kn2400_program.rom", 0x176456, 0x176460
-data_48576460:
-.incbin_range "baserom/kn2400_program.rom", 0x176460, 0x17646A
-data_4857646A:
-.incbin_range "baserom/kn2400_program.rom", 0x17646A, 0x176474
-data_48576474:
-.incbin_range "baserom/kn2400_program.rom", 0x176474, 0x17647E
-data_4857647E:
-.incbin_range "baserom/kn2400_program.rom", 0x17647E, 0x176488
-data_48576488:
-.incbin_range "baserom/kn2400_program.rom", 0x176488, 0x176492
-data_48576492:
-.incbin_range "baserom/kn2400_program.rom", 0x176492, 0x17649C
-data_4857649C:
-.incbin_range "baserom/kn2400_program.rom", 0x17649C, 0x1764A6
-data_485764A6:
-.incbin_range "baserom/kn2400_program.rom", 0x1764A6, 0x1764B0
-data_485764B0:
-.incbin_range "baserom/kn2400_program.rom", 0x1764B0, 0x1764BA
-data_485764BA:
-.incbin_range "baserom/kn2400_program.rom", 0x1764BA, 0x1764C4
-data_485764C4:
-.incbin_range "baserom/kn2400_program.rom", 0x1764C4, 0x1764CE
-data_485764CE:
-.incbin_range "baserom/kn2400_program.rom", 0x1764CE, 0x1764D8
-data_485764D8:
-.incbin_range "baserom/kn2400_program.rom", 0x1764D8, 0x1764E2
-data_485764E2:
-.incbin_range "baserom/kn2400_program.rom", 0x1764E2, 0x1764EC
-data_485764EC:
-.incbin_range "baserom/kn2400_program.rom", 0x1764EC, 0x1764F6
-data_485764F6:
-.incbin_range "baserom/kn2400_program.rom", 0x1764F6, 0x176500
-data_48576500:
-.incbin_range "baserom/kn2400_program.rom", 0x176500, 0x17650A
-data_4857650A:
-.incbin_range "baserom/kn2400_program.rom", 0x17650A, 0x176514
-data_48576514:
-.incbin_range "baserom/kn2400_program.rom", 0x176514, 0x17651E
-data_4857651E:
-.incbin_range "baserom/kn2400_program.rom", 0x17651E, 0x176528
-data_48576528:
-.incbin_range "baserom/kn2400_program.rom", 0x176528, 0x176532
-data_48576532:
-.incbin_range "baserom/kn2400_program.rom", 0x176532, 0x17653C
-data_4857653C:
-.incbin_range "baserom/kn2400_program.rom", 0x17653C, 0x176546
-data_48576546:
-.incbin_range "baserom/kn2400_program.rom", 0x176546, 0x176550
-
-ptrs_48576550:
-	.long	Str_Pie_For_USA
-	.long	data_48575EAC
-	.long	Str_B_Jean_Pop
-	.long	data_48575EB6
-	.long	Str_Complicated_Rock
-	.long	data_48575EC0
-	.long	Str_Love_Is_Deep
-	.long	data_48575ECA
-	.long	Str_Lose_Water_Pop
-	.long	data_48575ED4
-	.long	Str_Livin_La_Latin
-	.long	data_48575EDE
-	.long	Str_Hero_s_Ballad
-	.long	data_48575EE8
-	.long	Str_60s_PopOrchestra
-	.long	Str_empty_349
-	.long	Str_Mersey_Ballad
-	.long	Str_empty_348
-	.long	Str_Dance_Superstar
-	.long	Str_empty_347
-	.long	Str_60s_Soul
-	.long	Str_0_9
-	.long	Str_For_Your_Ballad
-	.long	Str_empty_346
-	.long	Str_West_Coast_Hotel
-	.long	Str_D_2
-	.long	Str_Rose_And_A_Rock
-	.long	Str_H_2
-	.long	Str_RemindMe_To_Rock
-	.long	Str_L_2
-	.long	Str_Spiritual_Pop
-	.long	Str_P_10
-	.long	Str_Do_Do_Do_Rock
-	.long	Str_T_2
-	.long	Str_Smoke_On_The_Rock
-	.long	Str_X_2
-	.long	Str_TheWay_It_s_Liked
-	.long	Str_empty_345
-	.long	Str_He_s_The_Man
-	.long	Str_empty_344
-	.long	Str_12_Bar_Rock
-	.long	Str_d_4
-	.long	Str_Folk_Rock
-	.long	Str_h
-	.long	Str_King_s_Rock
-	.long	Str_l_2
-	.long	Str_UK_Piano_Legend
-	.long	Str_p_2
-	.long	Str_Organ_RockBallad
-	.long	Str_empty_343
-	.long	Str_Rock_Status
-	.long	data_48575FA6
-	.long	Str_Heavy_Shuffle
-	.long	data_48575FB0
-	.long	Str_Rock_Gig
-	.long	data_48575FBA
-	.long	Str_Revival_Rock
-	.long	data_48575FC4
-	.long	Str_High_Tide_Pop
-	.long	data_48575FCE
-	.long	Str_Choreographic
-	.long	data_48575FD8
-	.long	Str_Chart_Reggae
-	.long	data_48575FE2
-	.long	Str_Unplugged
-	.long	data_48575FEC
-	.long	Str_Ballad_By_Itself
-	.long	data_48575FF6
-	.long	Str_Dream_Teen
-	.long	data_48576000
-	.long	Str_Pop_Ballad_Boys
-	.long	data_4857600A
-	.long	Str_Pop_Imagination
-	.long	data_48576014
-	.long	Str_EpicMovie_Ballad
-	.long	data_4857601E
-	.long	Str_EvergreenBallads
-	.long	data_48576028
-	.long	Str_Manchester_Pop
-	.long	data_48576032
-	.long	Str_80s_Movie_Ballad
-	.long	data_4857603C
-	.long	Str_Blues_For_Ray
-	.long	data_48576046
-	.long	Str_SupergroupBallad
-	.long	data_48576050
-	.long	Str_Ageless_8_Beat
-	.long	data_4857605A
-	.long	Str_Straight_8_Beat
-	.long	data_48576064
-	.long	Str_Evergreen_16
-	.long	data_4857606E
-	.long	Str_EZ_16_Beat
-	.long	data_48576078
-	.long	Str_Chart_16
-	.long	data_48576082
-	.long	Str_Party_Shuffle
-	.long	data_4857608C
-	.long	Str_Studio_Pop
-	.long	data_48576096
-	.long	Str_Bourbon_Street
-	.long	data_485760A0
-	.long	Str_Jazzy_Grooves
-	.long	data_485760AA
-	.long	Str_West_Indies_Cool
-	.long	data_485760B4
-	.space	8, 0x00
-ptrs_48576700:
-	.long	Str_Mistaken_Pop
-	.long	data_485760BE
-	.long	Str_70s_Detroit_Pop
-	.long	Str_4_20
-	.long	Str_Cool_Groovy
-	.long	Str_empty_342
-	.long	Str_West_Coast_Funk
-	.long	Str_t
-	.long	Str_Steamy_Funk
-	.long	Str_x_3
-	.long	Str_Funky_R_B
-	.long	data_485760F0
-	.long	Str_Party_R_B
-	.long	data_485760FA
-	.long	Str_Pop_Soul
-	.long	data_48576104
-	.long	Str_Sweet_Soul
-	.long	data_4857610E
-	.long	Str_Modern_Spirit
-	.long	data_48576118
-	.long	Str_Pop_Spiritual
-	.long	data_48576122
-	.long	Str_70s_Revival
-	.long	data_4857612C
-	.long	Str_Sunday_Morning
-	.long	data_48576136
-	.space	8, 0x00
-ptrs_48576770:
-	.long	Str_Ribbon_Of_Yellow
-	.long	Str_empty_341
-	.long	Str_Foxtrot_Country
-	.long	data_4857614A
-	.long	Str_Country_Festival
-	.long	data_48576154
-	.long	Str_Southern_Shuffle
-	.long	data_4857615E
-	.long	Str_Barn_Dance
-	.long	data_48576168
-	.long	Str_KentuckyLoveSong
-	.long	data_48576172
-	.long	Str_70s_Folk
-	.long	data_4857617C
-	.long	Str_Nashville_Blues
-	.long	data_48576186
-	.space	8, 0x00
-ptrs_485767B8:
-	.long	Str_90_s_Boy_Groups
-	.long	Str_8_3
-	.long	Str_Share_Believing
-	.long	data_4857619A
-	.long	Str_Schoolgirl_Rock
-	.long	data_485761A4
-	.long	Str_Mad_On_A_Song
-	.long	data_485761AE
-	.long	Str_Diva_Superstar
-	.long	data_485761B8
-	.long	Str_Rock_Feeling
-	.long	data_485761C2
-	.long	Str_Latin_Pop_Star
-	.long	data_485761CC
-	.long	Str_HispanicSuperstar
-	.long	data_485761D6
-	.long	Str_Retro_Disco
-	.long	data_485761E0
-	.long	Str_Samba_Nights
-	.long	data_485761EA
-	.long	Str_Dance_Latin
-	.long	data_485761F4
-	.long	Str_Disco_Orchestra
-	.long	data_485761FE
-	.long	Str_The_Big_Hit
-	.long	data_48576208
-	.long	Str_Club_Reggae
-	.long	data_48576212
-	.long	Str_Ibiza_Evening
-	.long	data_4857621C
-	.long	Str_Garage
-	.long	data_48576226
-	.long	Str_Electro_Techno
-	.long	data_48576230
-	.long	Str_Trance
-	.long	data_4857623A
-	.long	Str_Acid_Jazz
-	.long	data_48576244
-	.long	Str_Big_Beat
-	.long	data_4857624E
-	.long	Str_US_House_3
-	.long	data_48576258
-	.long	Str_Hip_Hop_2
-	.long	data_48576262
-	.long	Str_Hip_Club_Mixes
-	.long	data_4857626C
-	.long	Str_Ibiza_Morning
-	.long	data_48576276
-	.space	8, 0x00
-ptrs_48576880:
-	.long	Str_It_s_Fun_To_Stay
-	.long	data_48576280
-	.long	Str_A_Bit_Of_A_Mambo
-	.long	data_4857628A
-	.long	Str_Party_Highlights
-	.long	data_48576294
-	.long	Str_German_Holiday
-	.long	data_4857629E
-	.long	Str_Ballermann
-	.long	data_485762A8
-	.space	8, 0x00
-ptrs_485768B0:
-	.long	Str_Cartoon_Ballad
-	.long	data_485762B2
-	.long	Str_Legendary_Ballad
-	.long	data_485762BC
-	.long	Str_Movie_Melodrama
-	.long	data_485762C6
-	.long	Str_Modern_Musical
-	.long	data_485762D0
-	.long	Str_Ballroom_Waltz
-	.long	data_485762DA
-	.long	Str_Slow_Waltzing
-	.long	data_485762E4
-	.long	Str_Breakfast_Waltz
-	.long	data_485762EE
-	.long	Str_Ballroom_Dance
-	.long	data_485762F8
-	.long	Str_60s_Foxtrot
-	.long	data_48576302
-	.long	Str_Euro_Tango
-	.long	data_4857630C
-	.long	Str_Spy_Superstar
-	.long	data_48576316
-	.long	Str_Vegas_Cabaret
-	.long	data_48576320
-	.long	Str_Fast_Ballroom
-	.long	data_4857632A
-	.long	Str_Swinging_Bert
-	.long	data_48576334
-	.space	8, 0x00
-ptrs_48576928:
-	.long	Str_Sweet_Pop
-	.long	data_4857633E
-	.long	Str_Cool_Waltz
-	.long	data_48576348
-	.long	Str_Fifties_Smooch
-	.long	data_48576352
-	.long	Str_Hollywood_Charm
-	.long	data_4857635C
-	.long	Str_Ballad_Producer
-	.long	data_48576366
-	.long	Str_Song_Contest
-	.long	data_48576370
-	.long	Str_Ballad_Orchestra
-	.long	data_4857637A
-	.long	Str_16_Beat_Grooves
-	.long	data_48576384
-	.long	Str_Easy_16_Ballad
-	.long	data_4857638E
-	.long	Str_Yesteryear
-	.long	data_48576398
-	.long	Str_Slow_Easy
-	.long	data_485763A2
-	.long	Str_Easy_Swing_Pop
-	.long	data_485763AC
-	.long	Str_Slow_Oldies
-	.long	data_485763B6
-	.space	8, 0x00
-ptrs_48576998:
-	.long	Str_Island_Dreams
-	.long	data_485763C0
-	.long	Str_Marching_Band
-	.long	data_485763CA
-	.long	Str_Stadium_Events
-	.long	data_485763D4
-	.long	Str_OktoberFest
-	.long	data_485763DE
-	.long	Str_Mountain_Music
-	.long	data_485763E8
-	.long	Str_Standard_Waltz
-	.long	data_485763F2
-	.long	Str_Parisian_Dance
-	.long	data_485763FC
-	.space	8, 0x00
-ptrs_485769D8:
-	.long	Str_Jazz_Club
-	.long	data_48576406
-	.long	Str_Blue_Notes
-	.long	data_48576410
-	.long	Str_Steady_Swing
-	.long	data_4857641A
-	.long	Str_Cocktail_Jazz
-	.long	data_48576424
-	.long	Str_Acapella_Group
-	.long	data_4857642E
-	.long	Str_Manhattan_Voices
-	.long	data_48576438
-	.long	Str_Big_Band_Stomp
-	.long	data_48576442
-	.long	Str_Swing_Counting
-	.long	data_4857644C
-	.long	Str_Big_Band_Dance
-	.long	data_48576456
-	.long	Str_Big_Band_Smooch
-	.long	data_48576460
-	.long	Str_Moonlight_Band
-	.long	data_4857646A
-	.long	Str_12_Bar_Blues
-	.long	data_48576474
-	.long	Str_West_Coast_Jazz
-	.long	data_4857647E
-	.long	Str_NightClubCabaret
-	.long	data_48576488
-	.long	Str_Waltz_For_Jazzy
-	.long	data_48576492
-	.long	Str_I_Got_The_Blues
-	.long	data_4857649C
-	.long	Str_Jazz_Harmonicity
-	.long	data_485764A6
-	.long	Str_Casino_Show
-	.long	data_485764B0
-	.space	8, 0x00
-ptrs_48576A70:
-	.long	Str_Latin_Dance_Band
-	.long	data_485764BA
-	.long	Str_Latin_Tango
-	.long	data_485764C4
-	.long	Str_Uptown_Cha_Cha
-	.long	data_485764CE
-	.long	Str_Smooth_Latin
-	.long	data_485764D8
-	.long	Str_Acoustic_Bossa
-	.long	data_485764E2
-	.long	Str_Samba_Holiday
-	.long	data_485764EC
-	.long	Str_Ballroom_Beguine
-	.long	data_485764F6
-	.long	Str_Rhumba_Party
-	.long	data_48576500
-	.long	Str_Amigo_Beats
-	.long	data_4857650A
-	.long	Str_Middle_East_Pop
-	.long	data_48576514
-	.long	Str_Dangdut_Pop
-	.long	data_4857651E
-	.long	Str_Dangdut
-	.long	data_48576528
-	.long	Str_Ballroom_Samba
-	.long	data_48576532
-	.long	Str_Mexicana
-	.long	data_4857653C
-	.long	Str_Romantic_Waltz
-	.long	data_48576546
-	.space	8, 0x00
-ptrs_48576AF0:
-	.long	Str_Rock_Pop
-	.long	ptrs_48576550
-	.long	Str_Soul_Gospel
-	.long	ptrs_48576700
-	.long	Str_Country
-	.long	ptrs_48576770
-	.long	Str_Dance_Pop
-	.long	ptrs_485767B8
-	.long	Str_Party_Music
-	.long	ptrs_48576880
-	.long	Str_Show_Ballroom
-	.long	ptrs_485768B0
-	.long	Str_EZ_Listening
-	.long	ptrs_48576928
-	.long	Str_Trad_Folk
-	.long	ptrs_48576998
-	.long	Str_Jazz_Swing
-	.long	ptrs_485769D8
-	.long	Str_Latin_World
-	.long	ptrs_48576A70
-	.space	8, 0x00
-data_48576B48:
-.incbin_range "baserom/kn2400_program.rom", 0x176B48, 0x176B4E
-data_48576B4E:
-.incbin_range "baserom/kn2400_program.rom", 0x176B4E, 0x176B54
-data_48576B54:
-.incbin_range "baserom/kn2400_program.rom", 0x176B54, 0x176B58
-data_48576B58:
-.incbin_range "baserom/kn2400_program.rom", 0x176B58, 0x176B5C
-data_48576B5C:
-.incbin_range "baserom/kn2400_program.rom", 0x176B5C, 0x176B60
-
-Str_r:	.asciz "r"
-.incbin_range "baserom/kn2400_program.rom", 0x176B62, 0x176B78
-data_48576B78:
-.incbin_range "baserom/kn2400_program.rom", 0x176B78, 0x176B8A
-data_48576B8A:
-.incbin_range "baserom/kn2400_program.rom", 0x176B8A, 0x176B90
-data_48576B90:
-.incbin_range "baserom/kn2400_program.rom", 0x176B90, 0x176BBC
-Str_l:	.asciz "l"
-.incbin_range "baserom/kn2400_program.rom", 0x176BBE, 0x176C40
-data_48576C40:
-.incbin_range "baserom/kn2400_program.rom", 0x176C40, 0x176C9C
-data_48576C9C:
-.incbin_range "baserom/kn2400_program.rom", 0x176C9C, 0x176CE0
-data_48576CE0:
-.incbin_range "baserom/kn2400_program.rom", 0x176CE0, 0x176CF8
-Str_empty_340:	.asciz "("
-.incbin_range "baserom/kn2400_program.rom", 0x176CFA, 0x176D34
-data_48576D34:
-.incbin_range "baserom/kn2400_program.rom", 0x176D34, 0x176D5A
-data_48576D5A:
-.incbin_range "baserom/kn2400_program.rom", 0x176D5A, 0x176DB2
-data_48576DB2:
-.incbin_range "baserom/kn2400_program.rom", 0x176DB2, 0x176DBA
-data_48576DBA:
-.incbin_range "baserom/kn2400_program.rom", 0x176DBA, 0x176DD8
-data_48576DD8:
-.incbin_range "baserom/kn2400_program.rom", 0x176DD8, 0x176DE8
-data_48576DE8:
-.incbin_range "baserom/kn2400_program.rom", 0x176DE8, 0x176E32
-data_48576E32:
-.incbin_range "baserom/kn2400_program.rom", 0x176E32, 0x176E74
-data_48576E74:
-.incbin_range "baserom/kn2400_program.rom", 0x176E74, 0x176E8C
-data_48576E8C:
-.incbin_range "baserom/kn2400_program.rom", 0x176E8C, 0x176EAE
-Str_w:	.asciz "w"
-.incbin_range "baserom/kn2400_program.rom", 0x176EB0, 0x176F0A
-data_48576F0A:
-.incbin_range "baserom/kn2400_program.rom", 0x176F0A, 0x176F0E
-data_48576F0E:
-.incbin_range "baserom/kn2400_program.rom", 0x176F0E, 0x176F52
-data_48576F52:
-.incbin_range "baserom/kn2400_program.rom", 0x176F52, 0x177034
-Str_empty_339:	.asciz ":"
-.incbin_range "baserom/kn2400_program.rom", 0x177036, 0x17707E
-data_4857707E:
-.incbin_range "baserom/kn2400_program.rom", 0x17707E, 0x177092
-data_48577092:
-.incbin_range "baserom/kn2400_program.rom", 0x177092, 0x17709C
-data_4857709C:
-.incbin_range "baserom/kn2400_program.rom", 0x17709C, 0x1770CA
-data_485770CA:
-.incbin_range "baserom/kn2400_program.rom", 0x1770CA, 0x1770D4
-data_485770D4:
-.incbin_range "baserom/kn2400_program.rom", 0x1770D4, 0x1770DC
-
-ptrs_485770DC:
-	.long	Str_1_20
-	.long	data_48576B48
-	.long	Str_2_21
-	.long	data_48576B4E
-	.long	Str_3_18
-	.long	data_48576B54
-	.long	Str_5_11
-	.long	data_48576B58
-	.long	Str_6_11
-	.long	data_48576B5C
-	.long	Str_7_2
-	.long	Str_r
-	.long	Str_8_2
-	.long	data_48576B78
-	.long	Str_9_2
-	.long	data_48576B8A
-	.long	Str_A_4
-	.long	data_48576B90
-	.long	Str_B_3
-	.long	Str_l
-	.long	Str_C_4
-	.long	data_48576C40
-	.long	Str_D
-	.long	data_48576C9C
-	.long	Str_E
-	.long	data_48576CE0
-	.long	Str_F_2
-	.long	Str_empty_340
-	.long	Str_G
-	.long	data_48576D34
-	.long	Str_H
-	.long	data_48576D5A
-	.long	Str_I
-	.long	data_48576DB2
-	.long	Str_J
-	.long	data_48576DBA
-	.long	Str_K
-	.long	data_48576DD8
-	.long	Str_L
-	.long	data_48576DE8
-	.long	Str_M
-	.long	data_48576E32
-	.long	Str_N
-	.long	data_48576E74
-	.long	Str_O
-	.long	data_48576E8C
-	.long	Str_P
-	.long	Str_w
-	.long	Str_Q_2
-	.long	data_48576F0A
-	.long	Str_R
-	.long	data_48576F0E
-	.long	Str_S
-	.long	data_48576F52
-	.long	Str_T
-	.long	Str_empty_339
-	.long	Str_U_3
-	.long	data_4857707E
-	.long	Str_V
-	.long	data_48577092
-	.long	Str_W
-	.long	data_4857709C
-	.long	Str_Y
-	.long	data_485770CA
-	.long	Str_Z
-	.long	data_485770D4
-.incbin_range "baserom/kn2400_program.rom", 0x1771E4, 0x1776F2
-data_485776F2:
-.incbin_range "baserom/kn2400_program.rom", 0x1776F2, 0x177738
-ptrs_48577738:
-	.long	data_4859129C
-	.long	Str_Hippie_Piano
-.incbin_range "baserom/kn2400_program.rom", 0x177740, 0x17B6F8
-ptrs_4857B6F8:
-	.long	Str_Pre1930s
-	.long	data_485776F2
-.incbin_range "baserom/kn2400_program.rom", 0x17B700, 0x17B770
-
-# 12 classes; a class id is (0x14 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ DEBUG_Classes_SLOT, 0x14
-DEBUG_Classes:
-	CLASS	Class_DbMemo, CLASS_DbMemo, DEBUG_Classes, proc=DbMemoProc, parent=CLASS_Viewable, allsize=24, selfsize=0, cname=ClassName_DbMemo, sig=ClassSig_DbMemo, fields=ClassFields_DbMemo
-	CLASS	Class_DbMemoryDump, CLASS_DbMemoryDump, DEBUG_Classes, proc=DbMemoryDumpProc, parent=CLASS_Viewable, allsize=28, selfsize=4, cname=ClassName_DbMemoryDump, sig=ClassSig_DbMemoryDump, fields=ClassFields_DbMemoryDump	# adr:r
-	CLASS	Class_DbColorList, CLASS_DbColorList, DEBUG_Classes, proc=DbColorListProc, parent=CLASS_Viewable, allsize=24, selfsize=0, cname=ClassName_DbColorList, sig=ClassSig_DbColorList, fields=ClassFields_DbColorList
-	CLASS	Class_DbColorRGB, CLASS_DbColorRGB, DEBUG_Classes, proc=DbColorRGBProc, parent=CLASS_Viewable, allsize=28, selfsize=2, cname=ClassName_DbColorRGB, sig=ClassSig_DbColorRGB, fields=ClassFields_DbColorRGB	# index:A
-	CLASS	Class_IvMpVerWin, CLASS_IvMpVerWin, DEBUG_Classes, proc=IvMpVerWinProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvMpVerWin, sig=ClassSig_IvMpVerWin, fields=ClassFields_IvMpVerWin	# eq_ff:s not_ff:s
-	CLASS	Class_AcProgVerBox, CLASS_AcProgVerBox, DEBUG_Classes, proc=AcProgVerBoxProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcProgVerBox, sig=ClassSig_AcProgVerBox, fields=ClassFields_AcProgVerBox
-	CLASS	Class_AcTableVerBox, CLASS_AcTableVerBox, DEBUG_Classes, proc=AcTableVerBoxProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcTableVerBox, sig=ClassSig_AcTableVerBox, fields=ClassFields_AcTableVerBox
-	CLASS	Class_AcRhythmVerBox, CLASS_AcRhythmVerBox, DEBUG_Classes, proc=AcRhythmVerBoxProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRhythmVerBox, sig=ClassSig_AcRhythmVerBox, fields=ClassFields_AcRhythmVerBox
-	CLASS	Class_DbModeEditBox, CLASS_DbModeEditBox, DEBUG_Classes, proc=DbModeEditBoxProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_DbModeEditBox, sig=ClassSig_DbModeEditBox, fields=ClassFields_DbModeEditBox
-	CLASS	Class_DbBitmapFile, CLASS_DbBitmapFile, DEBUG_Classes, proc=DbBitmapFileProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_DbBitmapFile, sig=ClassSig_DbBitmapFile, fields=ClassFields_DbBitmapFile
-	CLASS	Class_DbBitmapLoad, CLASS_DbBitmapLoad, DEBUG_Classes, proc=DbBitmapLoadProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_DbBitmapLoad, sig=ClassSig_DbBitmapLoad, fields=ClassFields_DbBitmapLoad
-	CLASS	Class_DbVariableMenu, CLASS_DbVariableMenu, DEBUG_Classes, proc=DbVariableMenuProc, parent=CLASS_PsMenuBox, allsize=52, selfsize=4, cname=ClassName_DbVariableMenu, sig=ClassSig_DbVariableMenu, fields=ClassFields_DbVariableMenu	# no:r
-	.space	24, 0x00
-DEBUG_Events:
-	.space	4, 0x00
-
-# 1 Method names; an method id is (0x16 << 16) | its index
-DEBUG_Methods:
-	IDNAME	MT_DrawMemo, Str_MT_DrawMemo, DEBUG_Methods, 0x16
-	.space	4, 0x00
-
-# 13 Function procedures; a function id is (0x11 << 16) | its index (the names are the parallel table at slot 0x19)
-DEBUG_Functions:
-	IDNAME	FN_DbMemoProc, DbMemoProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbMemoryDumpProc, DbMemoryDumpProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbColorListProc, DbColorListProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbColorRGBProc, DbColorRGBProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbModeEditBoxProc, DbModeEditBoxProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbBitmapFileProc, DbBitmapFileProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbBitmapLoadProc, DbBitmapLoadProc, DEBUG_Functions, 0x11
-	IDNAME	FN_IvMpVerWinProc, IvMpVerWinProc, DEBUG_Functions, 0x11
-	IDNAME	FN_AcProgVerBoxProc, AcProgVerBoxProc, DEBUG_Functions, 0x11
-	IDNAME	FN_AcTableVerBoxProc, AcTableVerBoxProc, DEBUG_Functions, 0x11
-	IDNAME	FN_AcRhythmVerBoxProc, AcRhythmVerBoxProc, DEBUG_Functions, 0x11
-	IDNAME	FN_DbVariableMenuProc, DbVariableMenuProc, DEBUG_Functions, 0x11
-	IDNAME	FN_GetTtSoftverID, GetTtSoftverID, DEBUG_Functions, 0x11
-	.space	4, 0x00
-
-DEBUG_FunctionNames:
-	.long	FnName_DbMemoProc
-	.long	FnName_DbMemoryDumpProc
-	.long	FnName_DbColorListProc
-	.long	FnName_DbColorRGBProc
-	.long	FnName_DbModeEditBoxProc
-	.long	FnName_DbBitmapFileProc
-	.long	FnName_DbBitmapLoadProc
-	.long	FnName_IvMpVerWinProc
-	.long	FnName_AcProgVerBoxProc
-	.long	FnName_AcTableVerBoxProc
-	.long	FnName_AcRhythmVerBoxProc
-	.long	FnName_DbVariableMenuProc
-	.long	FnName_GetTtSoftverID
-.incbin_range "baserom/kn2400_program.rom", 0x17B920, 0x17B924
-
-# 1 ApFunction procedures; a function id is (0x12 << 16) | its index (the names are the parallel table at slot 0x1a)
-DEBUG_ApFunctions:
-	IDNAME	FN_CaptureLcdCheck, 0x4864A1BE, DEBUG_ApFunctions, 0x12
-	.space	4, 0x00
-
-DEBUG_ApFunctionNames:
-	.long	FnName_CaptureLcdCheck
-.incbin_range "baserom/kn2400_program.rom", 0x17B930, 0x17B934
-DEBUG_MainFunctions:
-	.space	4, 0x00
-data_4857B938:
-.incbin_range "baserom/kn2400_program.rom", 0x17B938, 0x17B93C
-
-# 57 objects of block DEBUG; object <name> is index <name>_ix, id <name>_id = (0x10 << 16) | <name>_ix
-DEBUG_Viewables:
-	OBJ	TtSoftver, DEBUG_Viewables, 0x10
-	OBJ	TtSoftver_Box1, DEBUG_Viewables, 0x10
-	OBJ	TtSoftver_ProgVerBox1, DEBUG_Viewables, 0x10
-	OBJ	TtSoftver_TableVerBox1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ScreenMenu_MEMO_LOG, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ScreenMenu_ICON_LIST, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ScreenMenu_COLOR_LIST, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_IndexWideES1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_DbModeEditBox_DEBUG_MODE, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ExitMode1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_TitleMenu_MEMORY_DUMP, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_Box1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_Label_SOFTWARE_VERSION, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ProgVerBox1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_TableVerBox1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_RhythmVerBox1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_DbVariableMenu1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_IndexEditSw1, DEBUG_Viewables, 0x10
-	OBJ	TtDebug_ScreenMenu_BITMAP_LOAD, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_IndexToggle_ON, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_Label_FULLTIME, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_DbMemoryDump1, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox1, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox2, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox3, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox4, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox5, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox6, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox7, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox8, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_EditSwBox9, DEBUG_Viewables, 0x10
-	OBJ	TtMemoryDump_Label_JUMP, DEBUG_Viewables, 0x10
-	OBJ	MemoLog, DEBUG_Viewables, 0x10
-	OBJ	MemoLog_DbMemo1, DEBUG_Viewables, 0x10
-	OBJ	MemoLog_ExitScreen1, DEBUG_Viewables, 0x10
-	OBJ	IconList, DEBUG_Viewables, 0x10
-	OBJ	IconList_IconList1, DEBUG_Viewables, 0x10
-	OBJ	IconList_IndexWideES1, DEBUG_Viewables, 0x10
-	OBJ	IconList_ExitScreen1, DEBUG_Viewables, 0x10
-	OBJ	IconList_Label_ICON_NO, DEBUG_Viewables, 0x10
-	OBJ	ColorList, DEBUG_Viewables, 0x10
-	OBJ	ColorList_DbColorRGB1, DEBUG_Viewables, 0x10
-	OBJ	ColorList_IndexEditSw1, DEBUG_Viewables, 0x10
-	OBJ	ColorList_IndexEditSw2, DEBUG_Viewables, 0x10
-	OBJ	ColorList_IndexEditSw3, DEBUG_Viewables, 0x10
-	OBJ	ColorList_ExitScreen1, DEBUG_Viewables, 0x10
-	OBJ	ColorList_DbColorList1, DEBUG_Viewables, 0x10
-	OBJ	BitmapDisp, DEBUG_Viewables, 0x10
-	OBJ	BitmapDisp_ExitScreen1, DEBUG_Viewables, 0x10
-	OBJ	BitmapDisp_DbBitmapLoad1, DEBUG_Viewables, 0x10
-	OBJ	BitmapLoad, DEBUG_Viewables, 0x10
-	OBJ	BitmapLoad_ExitScreen1, DEBUG_Viewables, 0x10
-	OBJ	BitmapLoad_ScreenMenu_LOAD, DEBUG_Viewables, 0x10
-	OBJ	BitmapLoad_DbBitmapFile_BITMAP_FILE, DEBUG_Viewables, 0x10
-	OBJ	BitmapLoad_IndexWideES1, DEBUG_Viewables, 0x10
-	.space	4, 0x00
-
-DEBUG_ResNames:
-	.long	RN_TtSoftver	# TtSoftver
-	.long	RN_empty_15	# TtSoftver_Box1
-	.long	RN_empty_16	# TtSoftver_ProgVerBox1
-	.long	RN_empty_17	# TtSoftver_TableVerBox1
-	.long	RN_TtDebug	# TtDebug
-	.long	RN_empty_18	# TtDebug_ScreenMenu_MEMO_LOG
-	.long	RN_empty_19	# TtDebug_ScreenMenu_ICON_LIST
-	.long	RN_empty_20	# TtDebug_ScreenMenu_COLOR_LIST
-	.long	RN_empty_21	# TtDebug_IndexWideES1
-	.long	RN_empty_22	# TtDebug_DbModeEditBox_DEBUG_MODE
-	.long	RN_empty_23	# TtDebug_ExitMode1
-	.long	RN_empty_24	# TtDebug_TitleMenu_MEMORY_DUMP
-	.long	RN_empty_25	# TtDebug_Box1
-	.long	RN_empty_26	# TtDebug_Label_SOFTWARE_VERSION
-	.long	RN_empty_27	# TtDebug_ProgVerBox1
-	.long	RN_empty_28	# TtDebug_TableVerBox1
-	.long	RN_empty_29	# TtDebug_RhythmVerBox1
-	.long	RN_empty_30	# TtDebug_DbVariableMenu1
-	.long	RN_empty_31	# TtDebug_IndexEditSw1
-	.long	RN_empty_32	# TtDebug_ScreenMenu_BITMAP_LOAD
-	.long	RN_TtMemoryDump	# TtMemoryDump
-	.long	RN_empty_33	# TtMemoryDump_IndexToggle_ON
-	.long	RN_empty_34	# TtMemoryDump_Label_FULLTIME
-	.long	RN_empty_35	# TtMemoryDump_DbMemoryDump1
-	.long	RN_empty_36	# TtMemoryDump_EditSwBox1
-	.long	RN_empty_37	# TtMemoryDump_EditSwBox2
-	.long	RN_empty_38	# TtMemoryDump_EditSwBox3
-	.long	RN_empty_39	# TtMemoryDump_EditSwBox4
-	.long	RN_empty_40	# TtMemoryDump_EditSwBox5
-	.long	RN_empty_41	# TtMemoryDump_EditSwBox6
-	.long	RN_empty_42	# TtMemoryDump_EditSwBox7
-	.long	RN_empty_43	# TtMemoryDump_EditSwBox8
-	.long	RN_empty_44	# TtMemoryDump_EditSwBox9
-	.long	RN_empty_45	# TtMemoryDump_Label_JUMP
-	.long	RN_MemoLog	# MemoLog
-	.long	RN_empty_46	# MemoLog_DbMemo1
-	.long	RN_empty_47	# MemoLog_ExitScreen1
-	.long	RN_IconList	# IconList
-	.long	RN_empty_48	# IconList_IconList1
-	.long	RN_empty_49	# IconList_IndexWideES1
-	.long	RN_empty_50	# IconList_ExitScreen1
-	.long	RN_empty_51	# IconList_Label_ICON_NO
-	.long	RN_ColorList	# ColorList
-	.long	RN_empty_52	# ColorList_DbColorRGB1
-	.long	RN_empty_53	# ColorList_IndexEditSw1
-	.long	RN_empty_54	# ColorList_IndexEditSw2
-	.long	RN_empty_55	# ColorList_IndexEditSw3
-	.long	RN_empty_56	# ColorList_ExitScreen1
-	.long	RN_empty_57	# ColorList_DbColorList1
-	.long	RN_BitmapDisp	# BitmapDisp
-	.long	RN_empty_58	# BitmapDisp_ExitScreen1
-	.long	RN_empty_59	# BitmapDisp_DbBitmapLoad1
-	.long	RN_BitmapLoad	# BitmapLoad
-	.long	RN_empty_60	# BitmapLoad_ExitScreen1
-	.long	RN_empty_61	# BitmapLoad_ScreenMenu_LOAD
-	.long	RN_empty_62	# BitmapLoad_DbBitmapFile_BITMAP_FILE
-	.long	RN_empty_63	# BitmapLoad_IndexWideES1
-.incbin_range "baserom/kn2400_program.rom", 0x17BB08, 0x17BB0C
-
-# 3 classes; a class id is (0x24 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ NAMING_Classes_SLOT, 0x24
-NAMING_Classes:
-	CLASS	Class_AcNamingWindow, CLASS_AcNamingWindow, NAMING_Classes, proc=AcNamingWindowProc, parent=CLASS_Window, allsize=44, selfsize=0, cname=ClassName_AcNamingWindow, sig=ClassSig_AcNamingWindow, fields=ClassFields_AcNamingWindow
-	CLASS	Class_IvNaming, CLASS_IvNaming, NAMING_Classes, proc=IvNamingProc, parent=CLASS_PsInvisibleBox, allsize=28, selfsize=4, cname=ClassName_IvNaming, sig=ClassSig_IvNaming, fields=ClassFields_IvNaming	# func:j
-	CLASS	Class_AcNamingEditSw, CLASS_AcNamingEditSw, NAMING_Classes, proc=AcNamingEditSwProc, parent=CLASS_PsEditSwBox, allsize=52, selfsize=8, cname=ClassName_AcNamingEditSw, sig=ClassSig_AcNamingEditSw, fields=ClassFields_AcNamingEditSw	# sign:G page:r
-	.space	24, 0x00
-
-# 2 Event names; an event id is (0x25 << 16) | its index
-NAMING_Events:
-	IDNAME	EV_NAMINGPAGE, Str_EV_NAMINGPAGE, NAMING_Events, 0x25
-	IDNAME	EV_NAMINGCHARA, Str_EV_NAMINGCHARA, NAMING_Events, 0x25
-	.space	4, 0x00
-
-# 1 Method names; an method id is (0x26 << 16) | its index
-NAMING_Methods:
-	IDNAME	MT_GetNamingMode, Str_MT_GetNamingMode, NAMING_Methods, 0x26
-	.space	4, 0x00
-
-# 4 Function procedures; a function id is (0x21 << 16) | its index (the names are the parallel table at slot 0x29)
-NAMING_Functions:
-	IDNAME	FN_AcNamingWindowProc, AcNamingWindowProc, NAMING_Functions, 0x21
-	IDNAME	FN_IvNamingProc, IvNamingProc, NAMING_Functions, 0x21
-	IDNAME	FN_AcNamingEditSwProc, AcNamingEditSwProc, NAMING_Functions, 0x21
-	IDNAME	FN_GetNamingWindowID, GetNamingWindowID, NAMING_Functions, 0x21
-	.space	4, 0x00
-
-NAMING_FunctionNames:
-	.long	FnName_AcNamingWindowProc
-	.long	FnName_IvNamingProc
-	.long	FnName_AcNamingEditSwProc
-	.long	FnName_GetNamingWindowID
-.incbin_range "baserom/kn2400_program.rom", 0x17BBA4, 0x17BBA8
-
-# 1 ApFunction procedures; a function id is (0x22 << 16) | its index (the names are the parallel table at slot 0x2a)
-NAMING_ApFunctions:
-	IDNAME	FN_NamingCheck, 0x4864BC4E, NAMING_ApFunctions, 0x22
-	.space	4, 0x00
-
-NAMING_ApFunctionNames:
-	.long	FnName_NamingCheck
-.incbin_range "baserom/kn2400_program.rom", 0x17BBB4, 0x17BBB8
-NAMING_MainFunctions:
-	.space	4, 0x00
-data_4857BBBC:
-.incbin_range "baserom/kn2400_program.rom", 0x17BBBC, 0x17BBC0
-
-# 24 objects of block NAMING; object <name> is index <name>_ix, id <name>_id = (0x20 << 16) | <name>_ix
-NAMING_Viewables:
-	OBJ	NAMING_NamingWindow1, NAMING_Viewables, 0x20
-	OBJ	NAMING_NamingWindow2, NAMING_Viewables, 0x20
-	OBJ	TtNaming, NAMING_Viewables, 0x20
-	OBJ	TtNaming_Naming1, NAMING_Viewables, 0x20
-	OBJ	NamingWindow, NAMING_Viewables, 0x20
-	OBJ	NamingCursorBox, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw1, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_Label_INS, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw2, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_Label_DEL, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw3, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_Label_CLR, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw4, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_Label_8d_8b, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw5, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw6, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_Label_POSITION, NAMING_Viewables, 0x20
-	OBJ	NamingABC, NAMING_Viewables, 0x20
-	OBJ	Namingabc, NAMING_Viewables, 0x20
-	OBJ	NamingSymbol, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw7, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw8, NAMING_Viewables, 0x20
-	OBJ	NamingWindow_IndexEditSw9, NAMING_Viewables, 0x20
-	OBJ	NamingLabel, NAMING_Viewables, 0x20
-	.space	4, 0x00
-
-NAMING_ResNames:
-	.long	RN_empty_64	# NAMING_NamingWindow1
-	.long	RN_empty_65	# NAMING_NamingWindow2
-	.long	RN_TtNaming	# TtNaming
-	.long	RN_empty_66	# TtNaming_Naming1
-	.long	RN_NamingWindow	# NamingWindow
-	.long	RN_NamingCursorBox	# NamingCursorBox
-	.long	RN_empty_67	# NamingWindow_IndexEditSw1
-	.long	RN_empty_68	# NamingWindow_Label_INS
-	.long	RN_empty_69	# NamingWindow_IndexEditSw2
-	.long	RN_empty_70	# NamingWindow_Label_DEL
-	.long	RN_empty_71	# NamingWindow_IndexEditSw3
-	.long	RN_empty_72	# NamingWindow_Label_CLR
-	.long	RN_empty_73	# NamingWindow_IndexEditSw4
-	.long	RN_empty_74	# NamingWindow_Label_8d_8b
-	.long	RN_empty_75	# NamingWindow_IndexEditSw5
-	.long	RN_empty_76	# NamingWindow_IndexEditSw6
-	.long	RN_empty_77	# NamingWindow_Label_POSITION
-	.long	RN_NamingABC	# NamingABC
-	.long	RN_Namingabc	# Namingabc
-	.long	RN_NamingSymbol	# NamingSymbol
-	.long	RN_empty_78	# NamingWindow_IndexEditSw7
-	.long	RN_empty_79	# NamingWindow_IndexEditSw8
-	.long	RN_empty_80	# NamingWindow_IndexEditSw9
-	.long	RN_NamingLabel	# NamingLabel
-.incbin_range "baserom/kn2400_program.rom", 0x17BC84, 0x17BC88
-
-# 2 classes; a class id is (0x54 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ MESSAGE_Classes_SLOT, 0x54
-MESSAGE_Classes:
-	CLASS	Class_IvMessage, CLASS_IvMessage, MESSAGE_Classes, proc=IvMessageProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_IvMessage, sig=ClassSig_IvMessage, fields=ClassFields_IvMessage
-	CLASS	Class_AcPleaseWait, CLASS_AcPleaseWait, MESSAGE_Classes, proc=func_4864C015, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPleaseWait, sig=ClassSig_AcPleaseWait, fields=ClassFields_AcPleaseWait
-	.space	24, 0x00
-MESSAGE_Events:
-	.space	4, 0x00
-MESSAGE_Methods:
-	.space	4, 0x00
-
-# 2 Function procedures; a function id is (0x51 << 16) | its index (the names are the parallel table at slot 0x59)
-MESSAGE_Functions:
-	IDNAME	FN_IvMessageProc, IvMessageProc, MESSAGE_Functions, 0x51
-	IDNAME	FN_AcPleaseWaitProc, func_4864C015, MESSAGE_Functions, 0x51
-	.space	4, 0x00
-
-MESSAGE_FunctionNames:
-	.long	FnName_IvMessageProc
-	.long	FnName_AcPleaseWaitProc
-.incbin_range "baserom/kn2400_program.rom", 0x17BCEC, 0x17BCF0
-
-# 4 ApFunction procedures; a function id is (0x52 << 16) | its index (the names are the parallel table at slot 0x5a)
-MESSAGE_ApFunctions:
-	IDNAME	FN_CheckLanguage, CheckLanguage, MESSAGE_ApFunctions, 0x52
-	IDNAME	FN_CheckMessage, CheckMessage, MESSAGE_ApFunctions, 0x52
-	IDNAME	FN_MessageText, MessageText, MESSAGE_ApFunctions, 0x52
-	IDNAME	FN_MessageHeader, MessageHeader, MESSAGE_ApFunctions, 0x52
-	.space	4, 0x00
-
-MESSAGE_ApFunctionNames:
-	.long	FnName_CheckLanguage
-	.long	FnName_CheckMessage
-	.long	FnName_MessageText
-	.long	FnName_MessageHeader
-.incbin_range "baserom/kn2400_program.rom", 0x17BD14, 0x17BD18
-
-# 1 MainFunction procedures; a function id is (0x53 << 16) | its index (the names are the parallel table at slot 0x5b)
-MESSAGE_MainFunctions:
-	IDNAME	FN_TtMessage, TtMessage, MESSAGE_MainFunctions, 0x53
-	.space	4, 0x00
-
-MESSAGE_MainFunctionNames:
-	.long	FnName_TtMessage
-.incbin_range "baserom/kn2400_program.rom", 0x17BD24, 0x17BD28
-
-# 29 objects of block MESSAGE; object <name> is index <name>_ix, id <name>_id = (0x50 << 16) | <name>_ix
-MESSAGE_Viewables:
-	OBJ	MESSAGE_TtMessage, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_TtMessage_Message1, MESSAGE_Viewables, 0x50
-	OBJ	NoMessage, MESSAGE_Viewables, 0x50
-	OBJ	NoMessage_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	Completed, MESSAGE_Viewables, 0x50
-	OBJ	Completed_Box1, MESSAGE_Viewables, 0x50
-	OBJ	Completed_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	Reminder, MESSAGE_Viewables, 0x50
-	OBJ	Reminder_Box1, MESSAGE_Viewables, 0x50
-	OBJ	Reminder_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	Reminder_LanguageText2, MESSAGE_Viewables, 0x50
-	OBJ	Error, MESSAGE_Viewables, 0x50
-	OBJ	Error_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	Error_LanguageText2, MESSAGE_Viewables, 0x50
-	OBJ	Other, MESSAGE_Viewables, 0x50
-	OBJ	Other_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	PleaseWait, MESSAGE_Viewables, 0x50
-	OBJ	PleaseWait_PleaseWait1, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_RamEditBox1, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_RamEditBox_Language, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_FuncEditSw1, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_Label_81, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_FuncEditSw2, MESSAGE_Viewables, 0x50
-	OBJ	MESSAGE_CheckMessage_Label_812, MESSAGE_Viewables, 0x50
-	OBJ	Completed2, MESSAGE_Viewables, 0x50
-	OBJ	Completed2_Box1, MESSAGE_Viewables, 0x50
-	OBJ	Completed2_LanguageText1, MESSAGE_Viewables, 0x50
-	OBJ	Completed2_LanguageText2, MESSAGE_Viewables, 0x50
-	.space	4, 0x00
-
-MESSAGE_ResNames:
-	.long	RN_TtMessage	# MESSAGE_TtMessage
-	.long	RN_empty_154	# MESSAGE_TtMessage_Message1
-	.long	RN_NoMessage	# NoMessage
-	.long	RN_empty_155	# NoMessage_LanguageText1
-	.long	RN_Completed	# Completed
-	.long	RN_empty_156	# Completed_Box1
-	.long	RN_empty_157	# Completed_LanguageText1
-	.long	RN_Reminder	# Reminder
-	.long	RN_empty_158	# Reminder_Box1
-	.long	RN_empty_159	# Reminder_LanguageText1
-	.long	RN_empty_160	# Reminder_LanguageText2
-	.long	RN_Error	# Error
-	.long	RN_empty_161	# Error_LanguageText1
-	.long	RN_empty_162	# Error_LanguageText2
-	.long	RN_Other	# Other
-	.long	RN_empty_163	# Other_LanguageText1
-	.long	RN_PleaseWait	# PleaseWait
-	.long	RN_empty_164	# PleaseWait_PleaseWait1
-	.long	RN_CheckMessage	# MESSAGE_CheckMessage
-	.long	RN_empty_165	# MESSAGE_CheckMessage_RamEditBox1
-	.long	RN_empty_166	# MESSAGE_CheckMessage_RamEditBox_Language
-	.long	RN_empty_167	# MESSAGE_CheckMessage_FuncEditSw1
-	.long	RN_empty_168	# MESSAGE_CheckMessage_Label_81
-	.long	RN_empty_169	# MESSAGE_CheckMessage_FuncEditSw2
-	.long	RN_empty_170	# MESSAGE_CheckMessage_Label_812
-	.long	RN_Completed2	# Completed2
-	.long	RN_empty_171	# Completed2_Box1
-	.long	RN_empty_172	# Completed2_LanguageText1
-	.long	RN_empty_173	# Completed2_LanguageText2
-.incbin_range "baserom/kn2400_program.rom", 0x17BE14, 0x17BE18
-
-# 2 classes; a class id is (0x44 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ WELCOME_Classes_SLOT, 0x44
-WELCOME_Classes:
-	CLASS	Class_AcWelcomeScreen, CLASS_AcWelcomeScreen, WELCOME_Classes, proc=AcWelcomeScreenProc, parent=CLASS_Screen, allsize=40, selfsize=0, cname=ClassName_AcWelcomeScreen, sig=ClassSig_AcWelcomeScreen, fields=ClassFields_AcWelcomeScreen
-	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=func_4864C89A, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
-	.space	24, 0x00
-WELCOME_Events:
-	.space	4, 0x00
-WELCOME_Methods:
-	.space	4, 0x00
-
-# 2 Function procedures; a function id is (0x41 << 16) | its index (the names are the parallel table at slot 0x49)
-WELCOME_Functions:
-	IDNAME	FN_AcWelcomeScreenProc, AcWelcomeScreenProc, WELCOME_Functions, 0x41
-	IDNAME	FN_AcMPVerProc, func_4864C89A, WELCOME_Functions, 0x41
-	.space	4, 0x00
-
-WELCOME_FunctionNames:
-	.long	FnName_AcWelcomeScreenProc
-	.long	FnName_AcMPVerProc
-.incbin_range "baserom/kn2400_program.rom", 0x17BE7C, 0x17BE80
-WELCOME_ApFunctions:
-	.space	4, 0x00
-data_4857BE84:
-.incbin_range "baserom/kn2400_program.rom", 0x17BE84, 0x17BE88
-
-# 1 MainFunction procedures; a function id is (0x43 << 16) | its index (the names are the parallel table at slot 0x4b)
-WELCOME_MainFunctions:
-	IDNAME	FN_TtWelcome, TtWelcome, WELCOME_MainFunctions, 0x43
-	.space	4, 0x00
-
-WELCOME_MainFunctionNames:
-	.long	FnName_TtWelcome
-.incbin_range "baserom/kn2400_program.rom", 0x17BE94, 0x17BE98
-
-# 7 objects of block WELCOME; object <name> is index <name>_ix, id <name>_id = (0x40 << 16) | <name>_ix
-WELCOME_Viewables:
-	OBJ	WELCOME_TtWelcome, WELCOME_Viewables, 0x40
-	OBJ	AllInitial, WELCOME_Viewables, 0x40
-	OBJ	AllInitial_Label_ALL_INITIAL_SETTING, WELCOME_Viewables, 0x40
-	OBJ	FactoryInitial, WELCOME_Viewables, 0x40
-	OBJ	FactoryInitial_Label_FACTORY_INITIAL_COMP, WELCOME_Viewables, 0x40
-	OBJ	MPVersion, WELCOME_Viewables, 0x40
-	OBJ	MPVersion_MPVer1, WELCOME_Viewables, 0x40
-	.space	4, 0x00
-
-WELCOME_ResNames:
-	.long	RN_TtWelcome	# WELCOME_TtWelcome
-	.long	RN_AllInitial	# AllInitial
-	.long	RN_empty_151	# AllInitial_Label_ALL_INITIAL_SETTING
-	.long	RN_FactoryInitial	# FactoryInitial
-	.long	RN_empty_152	# FactoryInitial_Label_FACTORY_INITIAL_COMP
-	.long	RN_MPVersion	# MPVersion
-	.long	RN_empty_153	# MPVersion_MPVer1
-.incbin_range "baserom/kn2400_program.rom", 0x17BED4, 0x17BED8
-
-# 29 classes; a class id is (0x74 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ SOUND_Classes_SLOT, 0x74
-SOUND_Classes:
-	CLASS	Class_AcTechniChord, CLASS_AcTechniChord, SOUND_Classes, proc=AcTechniChordProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_AcTechniChord, sig=ClassSig_AcTechniChord, fields=ClassFields_AcTechniChord	# font:c fontcolor:] type:m
-	CLASS	Class_AcTcdImage, CLASS_AcTcdImage, SOUND_Classes, proc=AcTcdImageProc, parent=CLASS_Viewable, allsize=24, selfsize=0, cname=ClassName_AcTcdImage, sig=ClassSig_AcTcdImage, fields=ClassFields_AcTcdImage
-	CLASS	Class_IvSdpart, CLASS_IvSdpart, SOUND_Classes, proc=IvSdpartProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_IvSdpart, sig=ClassSig_IvSdpart, fields=ClassFields_IvSdpart
-	CLASS	Class_AcResetPage, CLASS_AcResetPage, SOUND_Classes, proc=AcResetPageProc, parent=CLASS_AcWindowPage, allsize=40, selfsize=0, cname=ClassName_AcResetPage, sig=ClassSig_AcResetPage, fields=ClassFields_AcResetPage
-	CLASS	Class_AcSpsPart, CLASS_AcSpsPart, SOUND_Classes, proc=AcSpsPartProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSpsPart, sig=ClassSig_AcSpsPart, fields=ClassFields_AcSpsPart
-	CLASS	Class_AcSpsSoundName, CLASS_AcSpsSoundName, SOUND_Classes, proc=AcSpsSoundNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSpsSoundName, sig=ClassSig_AcSpsSoundName, fields=ClassFields_AcSpsSoundName
-	CLASS	Class_AcSpsMmmEdit, CLASS_AcSpsMmmEdit, SOUND_Classes, proc=AcSpsMmmEditProc, parent=CLASS_PsEditBox, allsize=60, selfsize=4, cname=ClassName_AcSpsMmmEdit, sig=ClassSig_AcSpsMmmEdit, fields=ClassFields_AcSpsMmmEdit	# data:m
-	CLASS	Class_AcSpsVolEdit, CLASS_AcSpsVolEdit, SOUND_Classes, proc=AcSpsVolEditProc, parent=CLASS_AcSpsMmmEdit, allsize=60, selfsize=0, cname=ClassName_AcSpsVolEdit, sig=ClassSig_AcSpsVolEdit, fields=ClassFields_AcSpsVolEdit
-	CLASS	Class_AcSpsPan, CLASS_AcSpsPan, SOUND_Classes, proc=AcSpsPanProc, parent=CLASS_AcSpsMmmEdit, allsize=60, selfsize=0, cname=ClassName_AcSpsPan, sig=ClassSig_AcSpsPan, fields=ClassFields_AcSpsPan
-	CLASS	Class_AcSpsKsclEdit, CLASS_AcSpsKsclEdit, SOUND_Classes, proc=AcSpsKsclEditProc, parent=CLASS_AcSpsMmmEdit, allsize=60, selfsize=0, cname=ClassName_AcSpsKsclEdit, sig=ClassSig_AcSpsKsclEdit, fields=ClassFields_AcSpsKsclEdit
-	CLASS	Class_AcSpsKsclPart, CLASS_AcSpsKsclPart, SOUND_Classes, proc=AcSpsKsclPartProc, parent=CLASS_PsEditBox, allsize=60, selfsize=4, cname=ClassName_AcSpsKsclPart, sig=ClassSig_AcSpsKsclPart, fields=ClassFields_AcSpsKsclPart	# part:m
-	CLASS	Class_IvSdkeyscl, CLASS_IvSdkeyscl, SOUND_Classes, proc=IvSdkeysclProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_IvSdkeyscl, sig=ClassSig_IvSdkeyscl, fields=ClassFields_IvSdkeyscl
-	CLASS	Class_AcKsclTypeEdit, CLASS_AcKsclTypeEdit, SOUND_Classes, proc=AcKsclTypeEditProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_AcKsclTypeEdit, sig=ClassSig_AcKsclTypeEdit, fields=ClassFields_AcKsclTypeEdit
-	CLASS	Class_AcKsclShiftEdit, CLASS_AcKsclShiftEdit, SOUND_Classes, proc=AcKsclShiftEditProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_AcKsclShiftEdit, sig=ClassSig_AcKsclShiftEdit, fields=ClassFields_AcKsclShiftEdit
-	CLASS	Class_AcKsclCopyEdit, CLASS_AcKsclCopyEdit, SOUND_Classes, proc=AcKsclCopyEditProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_AcKsclCopyEdit, sig=ClassSig_AcKsclCopyEdit, fields=ClassFields_AcKsclCopyEdit
-	CLASS	Class_AcKsclKeyEdit, CLASS_AcKsclKeyEdit, SOUND_Classes, proc=AcKsclKeyEditProc, parent=CLASS_PsEditBox, allsize=60, selfsize=2, cname=ClassName_AcKsclKeyEdit, sig=ClassSig_AcKsclKeyEdit, fields=ClassFields_AcKsclKeyEdit	# tuneindex:A
-	CLASS	Class_AcKsclShift, CLASS_AcKsclShift, SOUND_Classes, proc=AcKsclShiftProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcKsclShift, sig=ClassSig_AcKsclShift, fields=ClassFields_AcKsclShift
-	CLASS	Class_IvOtherPart, CLASS_IvOtherPart, SOUND_Classes, proc=IvOtherPartProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvOtherPart, sig=ClassSig_IvOtherPart, fields=ClassFields_IvOtherPart	# page:m pagemin:A pagemax:A
-	CLASS	Class_IvSdmixer, CLASS_IvSdmixer, SOUND_Classes, proc=IvSdmixerProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_IvSdmixer, sig=ClassSig_IvSdmixer, fields=ClassFields_IvSdmixer
-	CLASS	Class_AcMixer, CLASS_AcMixer, SOUND_Classes, proc=AcMixerProc, parent=CLASS_Viewable, allsize=28, selfsize=2, cname=ClassName_AcMixer, sig=ClassSig_AcMixer, fields=ClassFields_AcMixer	# editsw:e
-	CLASS	Class_AcMixerCase, CLASS_AcMixerCase, SOUND_Classes, proc=AcMixerCaseProc, parent=CLASS_Viewable, allsize=36, selfsize=12, cname=ClassName_AcMixerCase, sig=ClassSig_AcMixerCase, fields=ClassFields_AcMixerCase	# color:] leftsw:e rightsw:e selected:m
-	CLASS	Class_AcMixPartSound, CLASS_AcMixPartSound, SOUND_Classes, proc=AcMixPartSoundProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMixPartSound, sig=ClassSig_AcMixPartSound, fields=ClassFields_AcMixPartSound
-	CLASS	Class_IvMixPageCtrl, CLASS_IvMixPageCtrl, SOUND_Classes, proc=IvMixPageCtrlProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvMixPageCtrl, sig=ClassSig_IvMixPageCtrl, fields=ClassFields_IvMixPageCtrl	# page:A window:s
-	CLASS	Class_AcMixPage, CLASS_AcMixPage, SOUND_Classes, proc=AcMixPageProc, parent=CLASS_PsPageBox, allsize=36, selfsize=0, cname=ClassName_AcMixPage, sig=ClassSig_AcMixPage, fields=ClassFields_AcMixPage
-	CLASS	Class_AcMixerExMenu, CLASS_AcMixerExMenu, SOUND_Classes, proc=AcMixerExMenuProc, parent=CLASS_VwMenuBox, allsize=56, selfsize=0, cname=ClassName_AcMixerExMenu, sig=ClassSig_AcMixerExMenu, fields=ClassFields_AcMixerExMenu
-	CLASS	Class_IvExitMixer, CLASS_IvExitMixer, SOUND_Classes, proc=IvExitMixerProc, parent=CLASS_IvExit, allsize=24, selfsize=0, cname=ClassName_IvExitMixer, sig=ClassSig_IvExitMixer, fields=ClassFields_IvExitMixer
-	CLASS	Class_AcMixerScreen, CLASS_AcMixerScreen, SOUND_Classes, proc=AcMixerScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_AcMixerScreen, sig=ClassSig_AcMixerScreen, fields=ClassFields_AcMixerScreen
-	CLASS	Class_IvMixOtherPart, CLASS_IvMixOtherPart, SOUND_Classes, proc=IvMixOtherPartProc, parent=CLASS_IvOtherPart, allsize=32, selfsize=0, cname=ClassName_IvMixOtherPart, sig=ClassSig_IvMixOtherPart, fields=ClassFields_IvMixOtherPart
-	CLASS	Class_AcMonImage, CLASS_AcMonImage, SOUND_Classes, proc=AcMonImageProc, parent=CLASS_Viewable, allsize=28, selfsize=4, cname=ClassName_AcMonImage, sig=ClassSig_AcMonImage, fields=ClassFields_AcMonImage	# onoff:l
-	.space	24, 0x00
-
-# 6 Event names; an event id is (0x75 << 16) | its index
-SOUND_Events:
-	IDNAME	EV_SPSPART, Str_EV_SPSPART, SOUND_Events, 0x75
-	IDNAME	EV_KSCLSHIFT, Str_EV_KSCLSHIFT, SOUND_Events, 0x75
-	IDNAME	EV_PAGECHANGEOT_SOUND, Str_EV_PAGECHANGEOT_2, SOUND_Events, 0x75
-	IDNAME	EV_SETPAGEOTHERPART_SOUND, Str_EV_SETPAGEOTHERPART_2, SOUND_Events, 0x75
-	IDNAME	EV_CHANGEKSCLKEY, Str_EV_CHANGEKSCLKEY, SOUND_Events, 0x75
-	IDNAME	EV_SEQVOLCHANGE, Str_EV_SEQVOLCHANGE, SOUND_Events, 0x75
-	.space	4, 0x00
-
-# 12 Method names; an method id is (0x76 << 16) | its index
-SOUND_Methods:
-	IDNAME	MT_CheckPart, Str_MT_CheckPart, SOUND_Methods, 0x76
-	IDNAME	MT_GetSpsItem, Str_MT_GetSpsItem, SOUND_Methods, 0x76
-	IDNAME	MT_GetPart, Str_MT_GetPart, SOUND_Methods, 0x76
-	IDNAME	MT_RefreshParam_SOUND, Str_MT_RefreshParam_2, SOUND_Methods, 0x76
-	IDNAME	MT_OctTuneTemplate, Str_MT_OctTuneTemplate, SOUND_Methods, 0x76
-	IDNAME	MT_SetTecdDial, Str_MT_SetTecdDial, SOUND_Methods, 0x76
-	IDNAME	MT_SetSpsPart, Str_MT_SetSpsPart, SOUND_Methods, 0x76
-	IDNAME	MT_SetMixerRect, Str_MT_SetMixerRect, SOUND_Methods, 0x76
-	IDNAME	MT_SetMixerMmmFilter, Str_MT_SetMixerMmmFilter, SOUND_Methods, 0x76
-	IDNAME	MT_GetMmmPart, Str_MT_GetMmmPart, SOUND_Methods, 0x76
-	IDNAME	MT_GetMmmSubParam1, Str_MT_GetMmmSubParam1, SOUND_Methods, 0x76
-	IDNAME	MT_GetMmmSubData, Str_MT_GetMmmSubData, SOUND_Methods, 0x76
-	.space	4, 0x00
-
-# 29 Function procedures; a function id is (0x71 << 16) | its index (the names are the parallel table at slot 0x79)
-SOUND_Functions:
-	IDNAME	FN_AcTechniChordProc, AcTechniChordProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcTcdImageProc, AcTcdImageProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvSdpartProc, IvSdpartProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcResetPageProc, AcResetPageProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsPartProc, AcSpsPartProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsSoundNameProc, AcSpsSoundNameProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsMmmEditProc, AcSpsMmmEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsVolEditProc, AcSpsVolEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsPanProc, AcSpsPanProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsKsclEditProc, AcSpsKsclEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcSpsKsclPartProc, AcSpsKsclPartProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvSdkeysclProc, IvSdkeysclProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcKsclTypeEditProc, AcKsclTypeEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcKsclShiftEditProc, AcKsclShiftEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcKsclCopyEditProc, AcKsclCopyEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcKsclKeyEditProc, AcKsclKeyEditProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcKsclShiftProc, AcKsclShiftProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvOtherPartProc, IvOtherPartProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvSdmixerProc, IvSdmixerProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixerProc, AcMixerProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixerCaseProc, AcMixerCaseProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixPartSoundProc, AcMixPartSoundProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvMixPageCtrlProc, IvMixPageCtrlProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixPageProc, AcMixPageProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixerExMenuProc, AcMixerExMenuProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvExitMixerProc, IvExitMixerProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMixerScreenProc, AcMixerScreenProc, SOUND_Functions, 0x71
-	IDNAME	FN_IvMixOtherPartProc, IvMixOtherPartProc, SOUND_Functions, 0x71
-	IDNAME	FN_AcMonImageProc, AcMonImageProc, SOUND_Functions, 0x71
-	.space	4, 0x00
-
-SOUND_FunctionNames:
-	.long	FnName_AcTechniChordProc
-	.long	FnName_AcTcdImageProc
-	.long	FnName_IvSdpartProc
-	.long	FnName_AcResetPageProc
-	.long	FnName_AcSpsPartProc
-	.long	FnName_AcSpsSoundNameProc
-	.long	FnName_AcSpsMmmEditProc
-	.long	FnName_AcSpsVolEditProc
-	.long	FnName_AcSpsPanProc
-	.long	FnName_AcSpsKsclEditProc
-	.long	FnName_AcSpsKsclPartProc
-	.long	FnName_IvSdkeysclProc
-	.long	FnName_AcKsclTypeEditProc
-	.long	FnName_AcKsclShiftEditProc
-	.long	FnName_AcKsclCopyEditProc
-	.long	FnName_AcKsclKeyEditProc
-	.long	FnName_AcKsclShiftProc
-	.long	FnName_IvOtherPartProc
-	.long	FnName_IvSdmixerProc
-	.long	FnName_AcMixerProc
-	.long	FnName_AcMixerCaseProc
-	.long	FnName_AcMixPartSoundProc
-	.long	FnName_IvMixPageCtrlProc
-	.long	FnName_AcMixPageProc
-	.long	FnName_AcMixerExMenuProc
-	.long	FnName_IvExitMixerProc
-	.long	FnName_AcMixerScreenProc
-	.long	FnName_IvMixOtherPartProc
-	.long	FnName_AcMonImageProc
-.incbin_range "baserom/kn2400_program.rom", 0x17C2E4, 0x17C2E8
-
-# 15 ApFunction procedures; a function id is (0x72 << 16) | its index (the names are the parallel table at slot 0x7a)
-SOUND_ApFunctions:
-	IDNAME	FN_MmmMtune, MmmMtune, SOUND_ApFunctions, 0x72
-	IDNAME	FN_MmmOrchestrator, MmmOrchestrator, SOUND_ApFunctions, 0x72
-	IDNAME	FN_BitmapMonback, BitmapMonback, SOUND_ApFunctions, 0x72
-	IDNAME	FN_BitmapMonvol, BitmapMonvol, SOUND_ApFunctions, 0x72
-	IDNAME	FN_BitmapMonon, BitmapMonon, SOUND_ApFunctions, 0x72
-	IDNAME	FN_BitmapMonoff, BitmapMonoff, SOUND_ApFunctions, 0x72
-	IDNAME	FN_SeparateOutProc, SeparateOutProc, SOUND_ApFunctions, 0x72
-	IDNAME	FN_SpPartStereo, SpPartStereo, SOUND_ApFunctions, 0x72
-	IDNAME	FN_SpPartMono, SpPartMono, SOUND_ApFunctions, 0x72
-	IDNAME	FN_ApcRevFunc, ApcRevFunc, SOUND_ApFunctions, 0x72
-	IDNAME	FN_ApcRevCheck, ApcRevCheck, SOUND_ApFunctions, 0x72
-	IDNAME	FN_TsRight1Func, TsRight1Func, SOUND_ApFunctions, 0x72
-	IDNAME	FN_TsPart1Func, TsPart1Func, SOUND_ApFunctions, 0x72
-	IDNAME	FN_TsPart9Func, TsPart9Func, SOUND_ApFunctions, 0x72
-	IDNAME	FN_TsAccomp1Func, TsAccomp1Func, SOUND_ApFunctions, 0x72
-	.space	4, 0x00
-
-SOUND_ApFunctionNames:
-	.long	FnName_MmmMtune
-	.long	FnName_MmmOrchestrator
-	.long	FnName_BitmapMonback
-	.long	FnName_BitmapMonvol
-	.long	FnName_BitmapMonon
-	.long	FnName_BitmapMonoff
-	.long	FnName_SeparateOutProc
-	.long	FnName_SpPartStereo
-	.long	FnName_SpPartMono
-	.long	FnName_ApcRevFunc
-	.long	FnName_ApcRevCheck
-	.long	FnName_TsRight1Func
-	.long	FnName_TsPart1Func
-	.long	FnName_TsPart9Func
-	.long	FnName_TsAccomp1Func
-.incbin_range "baserom/kn2400_program.rom", 0x17C364, 0x17C368
-
-# 7 MainFunction procedures; a function id is (0x73 << 16) | its index (the names are the parallel table at slot 0x7b)
-SOUND_MainFunctions:
-	IDNAME	FN_TtSdtecd, TtSdtecd, SOUND_MainFunctions, 0x73
-	IDNAME	FN_TtSdkeyscl, TtSdkeyscl, SOUND_MainFunctions, 0x73
-	IDNAME	FN_TtSdmixer, TtSdmixer, SOUND_MainFunctions, 0x73
-	IDNAME	FN_TtSqmixer, TtSqmixer, SOUND_MainFunctions, 0x73
-	IDNAME	FN_TtSdpart, TtSdpart, SOUND_MainFunctions, 0x73
-	IDNAME	FN_MainSoundAdd, MainSoundAdd, SOUND_MainFunctions, 0x73
-	IDNAME	FN_TtSdapcrev, TtSdapcrev, SOUND_MainFunctions, 0x73
-	.space	4, 0x00
-
-SOUND_MainFunctionNames:
-	.long	FnName_TtSdtecd
-	.long	FnName_TtSdkeyscl
-	.long	FnName_TtSdmixer
-	.long	FnName_TtSqmixer
-	.long	FnName_TtSdpart
-	.long	FnName_MainSoundAdd
-	.long	FnName_TtSdapcrev
-.incbin_range "baserom/kn2400_program.rom", 0x17C3A4, 0x17C3A8
-
-# 309 objects of block SOUND; object <name> is index <name>_ix, id <name>_id = (0x70 << 16) | <name>_ix
-SOUND_Viewables:
-	OBJ	TtSdmenu, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_ExitMode1, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_PART_SETTING, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_KEY_SCALING, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_TECHNI_CHORD, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_SOUND_LOAD_OPTION, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_MIXER, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_MASTER_TUNING, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_TitleMenu_APC_REVERB_SETTING, SOUND_Viewables, 0x70
-	OBJ	TtSdmenu_ModeMenu_SOUND_ARRANGER, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_IndexEditSw2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Label_PART_SELECT, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Line1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Line2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Line3, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Line4, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_Sdpart1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_SpsPart1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdpart_ResetPage1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_PAN, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_SOUND, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit_PAN, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsVolEdit_VOLUME, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit_SUS_LENGTH, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit_KEY_SHIFT, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit_TUNING, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Line1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsPan1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_LEFT_CENTER_RIGHT, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit_SUSTAIN, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES3, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES4, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES5, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES6, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_SUSTAIN, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_KEY, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_TUNE, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Line2, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_SpsMmmEdit1, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_PR6041, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_IndexWideES7, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Label_VOL, SOUND_Viewables, 0x70
-	OBJ	SpsPage1_Line3, SOUND_Viewables, 0x70
-	OBJ	SpsPage2, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_CHORUS, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_REVERB_DEPTH, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_MULTI, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_DEPTH, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_DIG_EFFECT, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit_DEPTH2, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Line1, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_SpsMmmEdit1, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Label_REVERB, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexEditSw2, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexEditSw3, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexEditSw4, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Label_CHORUS, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Label_MULTI, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Label_DIG_EFFECT, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Line2, SOUND_Viewables, 0x70
-	OBJ	SpsPage2_Line3, SOUND_Viewables, 0x70
-	OBJ	SpsPage5, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_MONO_POLY, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_PORTAMENTO, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_TIME, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_MSB, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Line1, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_MODULATION_SENS, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_LSB, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit_BEND_RANGE, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_MSB_LSB, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES3, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES4, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_MONO_POLY, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_MOD_SENS, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_PORTAMENTO, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES5, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_SpsMmmEdit1, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_IndexWideES6, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Label_BEND_RANGE, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Line2, SOUND_Viewables, 0x70
-	OBJ	SpsPage5_Line3, SOUND_Viewables, 0x70
-	OBJ	SpsPage3, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_LOW_FC, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_LOW_GAIN, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_HI_FC, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_HI_GAIN, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_EQUALIZER, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_Hz, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_dB, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_dB2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_Hz2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_GLIDE_PEDAL, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_ORIG_TUNING, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_SUS_PEDAL, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit_P_EXP_PEDAL, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_ORIG, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexEditSw2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexEditSw3, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexEditSw4, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_EQ_LOW, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_FC_GAIN, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_EQ_HI, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_FC_GAIN2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Line1, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Line2, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_SpsMmmEdit1, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Line3, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexWideES3, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_SUST, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_IndexWideES4, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_P_EXP, SOUND_Viewables, 0x70
-	OBJ	SpsPage3_Label_GLIDE, SOUND_Viewables, 0x70
-	OBJ	SpsPage4, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit1, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_RESONANCE, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_BRIGHTNESS, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_ATTACK_TIME, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_DECAY_TIME, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_RELEASE_TIME, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Line1, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_RATE, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_DEPTH, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit_DELAY, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_FILTER, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES3, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES4, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES5, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES6, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES7, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_RESO, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_BRI, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_ATT, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_DEC, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_REL, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_RATE, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_DEP, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_DEL, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_SpsMmmEdit2, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_IndexWideES8, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Label_VIBRATO, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Line2, SOUND_Viewables, 0x70
-	OBJ	SpsPage4_Line3, SOUND_Viewables, 0x70
-	OBJ	TtSdmtune, SOUND_Viewables, 0x70
-	OBJ	TtSdmtune_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	TtSdmtune_MmmEditBox_MASTER_TUNING, SOUND_Viewables, 0x70
-	OBJ	TtSdmtune_Label_Hz, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdkeyscl, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdkeyscl_FixWin1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplate, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplate_FixWin1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplate_ExitScreen1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexEditSw2, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Line1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Line2, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Line3, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_PART_SELECT, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_SpsKsclPart1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Line4, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_ORIG_TUNING, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_ScreenMenu_OCTAVE_TUNING_TEMPLA, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexEditSw3, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_ALL_PARTS_INITIAL, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_OCTAVE_TUNING, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Sdkeyscl1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box1, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditTuning, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box2, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditH, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box3, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditA, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box4, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditB, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box5, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditG, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box6, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditGis, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box7, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditF, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box8, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditFis, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box9, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditE, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box10, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditD, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box11, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditEs, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_OCTAVE_TUNING2, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box12, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditC, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Box13, SOUND_Viewables, 0x70
-	OBJ	SpsKsclEditCis, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexEditSw4, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexEditSw5, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_OCTAVE_TUNING3, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_KEY_SELECT, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_Label_TUNING, SOUND_Viewables, 0x70
-	OBJ	KeyScalingWin_KsclKeyEdit1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Sdkeyscl1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Box1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Label_TYPE, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_KsclTypeEdit1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_KsclShift1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Label_SHIFT, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_KsclShiftEdit1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Label_PART, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Line1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Line2, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Line3, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_KsclCopyEdit1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_Label_SET, SOUND_Viewables, 0x70
-	OBJ	OctTunTemplateWin_IndexWideES3, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixPartSound1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer3, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer4, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer5, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer6, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer7, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Mixer8, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixerCase1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixPage1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixOtherPart1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixPartSound2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixerCase2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_MixPageCtrl1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_ExitMixer1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdmixer_Sdmixer1, SOUND_Viewables, 0x70
-	OBJ	ExMixerMenu, SOUND_Viewables, 0x70
-	OBJ	ExMixerMenu_MixerExMenu_EDIT_MIXER, SOUND_Viewables, 0x70
-	OBJ	PartMixerEdit, SOUND_Viewables, 0x70
-	OBJ	PartMixerEdit_ExitScreen1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_MmmEditBox1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_IndexEditSw1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_IndexEditSw2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_TechniChord1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_Label_TYPE, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdtecd_Label_ORCHESTRATOR, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSqmixer, SOUND_Viewables, 0x70
-	OBJ	TtSdmonitor, SOUND_Viewables, 0x70
-	OBJ	Sdmonitoron, SOUND_Viewables, 0x70
-	OBJ	Sdmonitoroff, SOUND_Viewables, 0x70
-	OBJ	TtSdmonitor_Box1, SOUND_Viewables, 0x70
-	OBJ	TtSdmonitor_UserBitmap1, SOUND_Viewables, 0x70
-	OBJ	TtSdmonitor_TextBox_MONITOR, SOUND_Viewables, 0x70
-	OBJ	TtSdmonitor_MonImage1, SOUND_Viewables, 0x70
-	OBJ	TtSdseparate, SOUND_Viewables, 0x70
-	OBJ	Sdspoff, SOUND_Viewables, 0x70
-	OBJ	Sdspstereo, SOUND_Viewables, 0x70
-	OBJ	Sdspmono, SOUND_Viewables, 0x70
-	OBJ	TtSdseparate_Line1, SOUND_Viewables, 0x70
-	OBJ	TtSdseparate_Label_MODE, SOUND_Viewables, 0x70
-	OBJ	TtSdseparate_Line2, SOUND_Viewables, 0x70
-	OBJ	TtSdseparate_CatchEvent1, SOUND_Viewables, 0x70
-	OBJ	Sdspwinmono, SOUND_Viewables, 0x70
-	OBJ	Sdspwinmono_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	Sdsppartmono, SOUND_Viewables, 0x70
-	OBJ	Sdspwinmono_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	Sdspwinstereo, SOUND_Viewables, 0x70
-	OBJ	Sdspwinstereo_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	Sdspwinstereo_Box1, SOUND_Viewables, 0x70
-	OBJ	Sdspwinstereo_Label_PART_ASSIGN, SOUND_Viewables, 0x70
-	OBJ	Sdsppartstereo, SOUND_Viewables, 0x70
-	OBJ	Sdspwinstereo_Line1, SOUND_Viewables, 0x70
-	OBJ	Sdspwinetc, SOUND_Viewables, 0x70
-	OBJ	Sdspwinetc_Label_EXPRESSION_PEDAL, SOUND_Viewables, 0x70
-	OBJ	Sdspwinetc_Label_with_MAIN_OUT, SOUND_Viewables, 0x70
-	OBJ	Sdspmainout, SOUND_Viewables, 0x70
-	OBJ	Sdspexpression, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdapcrev, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdapcrev_GridBox1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdapcrev_IndexWideES1, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdapcrev_IndexWideES2, SOUND_Viewables, 0x70
-	OBJ	SOUND_TtSdapcrev_PR6041, SOUND_Viewables, 0x70
-	OBJ	ApcRevChkWin, SOUND_Viewables, 0x70
-	OBJ	ApcRevChkWin_GridBox1, SOUND_Viewables, 0x70
-	.space	4, 0x00
-
-SOUND_ResNames:
-	.long	RN_TtSdmenu	# TtSdmenu
-	.long	RN_empty_332	# TtSdmenu_ExitMode1
-	.long	RN_empty_333	# TtSdmenu_TitleMenu_PART_SETTING
-	.long	RN_empty_334	# TtSdmenu_TitleMenu_KEY_SCALING
-	.long	RN_empty_335	# TtSdmenu_TitleMenu_TECHNI_CHORD
-	.long	RN_empty_336	# TtSdmenu_TitleMenu_SOUND_LOAD_OPTION
-	.long	RN_empty_337	# TtSdmenu_TitleMenu_MIXER
-	.long	RN_empty_338	# TtSdmenu_TitleMenu_MASTER_TUNING
-	.long	RN_empty_339	# TtSdmenu_TitleMenu_APC_REVERB_SETTING
-	.long	RN_empty_340	# TtSdmenu_ModeMenu_SOUND_ARRANGER
-	.long	RN_TtSdpart	# SOUND_TtSdpart
-	.long	RN_empty_341	# SOUND_TtSdpart_IndexEditSw1
-	.long	RN_empty_342	# SOUND_TtSdpart_IndexEditSw2
-	.long	RN_empty_343	# SOUND_TtSdpart_Label_PART_SELECT
-	.long	RN_empty_344	# SOUND_TtSdpart_Line1
-	.long	RN_empty_345	# SOUND_TtSdpart_Line2
-	.long	RN_empty_346	# SOUND_TtSdpart_Line3
-	.long	RN_empty_347	# SOUND_TtSdpart_Line4
-	.long	RN_empty_348	# SOUND_TtSdpart_Sdpart1
-	.long	RN_empty_349	# SOUND_TtSdpart_SpsPart1
-	.long	RN_empty_350	# SOUND_TtSdpart_ResetPage1
-	.long	RN_SpsPage1	# SpsPage1
-	.long	RN_empty_351	# SpsPage1_IndexWideES1
-	.long	RN_empty_352	# SpsPage1_Label_PAN
-	.long	RN_empty_353	# SpsPage1_IndexWideES2
-	.long	RN_empty_354	# SpsPage1_Label_SOUND
-	.long	RN_empty_355	# SpsPage1_Box1
-	.long	RN_empty_356	# SpsPage1_SpsMmmEdit_PAN
-	.long	RN_empty_357	# SpsPage1_SpsVolEdit_VOLUME
-	.long	RN_empty_358	# SpsPage1_SpsMmmEdit_SUS_LENGTH
-	.long	RN_empty_359	# SpsPage1_SpsMmmEdit_KEY_SHIFT
-	.long	RN_empty_360	# SpsPage1_SpsMmmEdit_TUNING
-	.long	RN_empty_361	# SpsPage1_Line1
-	.long	RN_empty_362	# SpsPage1_SpsPan1
-	.long	RN_empty_363	# SpsPage1_Label_LEFT_CENTER_RIGHT
-	.long	RN_empty_364	# SpsPage1_SpsMmmEdit_SUSTAIN
-	.long	RN_empty_365	# SpsPage1_IndexWideES3
-	.long	RN_empty_366	# SpsPage1_IndexWideES4
-	.long	RN_empty_367	# SpsPage1_IndexWideES5
-	.long	RN_empty_368	# SpsPage1_IndexWideES6
-	.long	RN_empty_369	# SpsPage1_Label_SUSTAIN
-	.long	RN_empty_370	# SpsPage1_Label_KEY
-	.long	RN_empty_371	# SpsPage1_Label_TUNE
-	.long	RN_empty_372	# SpsPage1_Line2
-	.long	RN_empty_373	# SpsPage1_SpsMmmEdit1
-	.long	RN_empty_374	# SpsPage1_PR6041
-	.long	RN_empty_375	# SpsPage1_IndexWideES7
-	.long	RN_empty_376	# SpsPage1_Label_VOL
-	.long	RN_empty_377	# SpsPage1_Line3
-	.long	RN_SpsPage2	# SpsPage2
-	.long	RN_empty_378	# SpsPage2_Box1
-	.long	RN_empty_379	# SpsPage2_SpsMmmEdit_CHORUS
-	.long	RN_empty_380	# SpsPage2_SpsMmmEdit_REVERB_DEPTH
-	.long	RN_empty_381	# SpsPage2_SpsMmmEdit_MULTI
-	.long	RN_empty_382	# SpsPage2_SpsMmmEdit_DEPTH
-	.long	RN_empty_383	# SpsPage2_SpsMmmEdit_DIG_EFFECT
-	.long	RN_empty_384	# SpsPage2_SpsMmmEdit_DEPTH2
-	.long	RN_empty_385	# SpsPage2_Line1
-	.long	RN_empty_386	# SpsPage2_SpsMmmEdit1
-	.long	RN_empty_387	# SpsPage2_IndexWideES1
-	.long	RN_empty_388	# SpsPage2_Label_REVERB
-	.long	RN_empty_389	# SpsPage2_IndexEditSw1
-	.long	RN_empty_390	# SpsPage2_IndexEditSw2
-	.long	RN_empty_391	# SpsPage2_IndexEditSw3
-	.long	RN_empty_392	# SpsPage2_IndexEditSw4
-	.long	RN_empty_393	# SpsPage2_Label_CHORUS
-	.long	RN_empty_394	# SpsPage2_Label_MULTI
-	.long	RN_empty_395	# SpsPage2_IndexWideES2
-	.long	RN_empty_396	# SpsPage2_Label_DIG_EFFECT
-	.long	RN_empty_397	# SpsPage2_Line2
-	.long	RN_empty_398	# SpsPage2_Line3
-	.long	RN_SpsPage5	# SpsPage5
-	.long	RN_empty_399	# SpsPage5_Box1
-	.long	RN_empty_400	# SpsPage5_SpsMmmEdit_MONO_POLY
-	.long	RN_empty_401	# SpsPage5_SpsMmmEdit_PORTAMENTO
-	.long	RN_empty_402	# SpsPage5_SpsMmmEdit_TIME
-	.long	RN_empty_403	# SpsPage5_SpsMmmEdit_MSB
-	.long	RN_empty_404	# SpsPage5_Line1
-	.long	RN_empty_405	# SpsPage5_Label_MODULATION_SENS
-	.long	RN_empty_406	# SpsPage5_SpsMmmEdit_LSB
-	.long	RN_empty_407	# SpsPage5_SpsMmmEdit_BEND_RANGE
-	.long	RN_empty_408	# SpsPage5_Label_MSB_LSB
-	.long	RN_empty_409	# SpsPage5_IndexWideES1
-	.long	RN_empty_410	# SpsPage5_IndexWideES2
-	.long	RN_empty_411	# SpsPage5_IndexWideES3
-	.long	RN_empty_412	# SpsPage5_IndexWideES4
-	.long	RN_empty_413	# SpsPage5_Label_MONO_POLY
-	.long	RN_empty_414	# SpsPage5_Label_MOD_SENS
-	.long	RN_empty_415	# SpsPage5_Label_PORTAMENTO
-	.long	RN_empty_416	# SpsPage5_IndexWideES5
-	.long	RN_empty_417	# SpsPage5_SpsMmmEdit1
-	.long	RN_empty_418	# SpsPage5_IndexWideES6
-	.long	RN_empty_419	# SpsPage5_Label_BEND_RANGE
-	.long	RN_empty_420	# SpsPage5_Line2
-	.long	RN_empty_421	# SpsPage5_Line3
-	.long	RN_SpsPage3	# SpsPage3
-	.long	RN_empty_422	# SpsPage3_Box1
-	.long	RN_empty_423	# SpsPage3_SpsMmmEdit_LOW_FC
-	.long	RN_empty_424	# SpsPage3_SpsMmmEdit_LOW_GAIN
-	.long	RN_empty_425	# SpsPage3_SpsMmmEdit_HI_FC
-	.long	RN_empty_426	# SpsPage3_SpsMmmEdit_HI_GAIN
-	.long	RN_empty_427	# SpsPage3_Label_EQUALIZER
-	.long	RN_empty_428	# SpsPage3_Label_Hz
-	.long	RN_empty_429	# SpsPage3_Label_dB
-	.long	RN_empty_430	# SpsPage3_Label_dB2
-	.long	RN_empty_431	# SpsPage3_Label_Hz2
-	.long	RN_empty_432	# SpsPage3_SpsMmmEdit_GLIDE_PEDAL
-	.long	RN_empty_433	# SpsPage3_SpsMmmEdit_ORIG_TUNING
-	.long	RN_empty_434	# SpsPage3_SpsMmmEdit_SUS_PEDAL
-	.long	RN_empty_435	# SpsPage3_SpsMmmEdit_P_EXP_PEDAL
-	.long	RN_empty_436	# SpsPage3_IndexWideES1
-	.long	RN_empty_437	# SpsPage3_IndexWideES2
-	.long	RN_empty_438	# SpsPage3_Label_ORIG
-	.long	RN_empty_439	# SpsPage3_IndexEditSw1
-	.long	RN_empty_440	# SpsPage3_IndexEditSw2
-	.long	RN_empty_441	# SpsPage3_IndexEditSw3
-	.long	RN_empty_442	# SpsPage3_IndexEditSw4
-	.long	RN_empty_443	# SpsPage3_Label_EQ_LOW
-	.long	RN_empty_444	# SpsPage3_Label_FC_GAIN
-	.long	RN_empty_445	# SpsPage3_Label_EQ_HI
-	.long	RN_empty_446	# SpsPage3_Label_FC_GAIN2
-	.long	RN_empty_447	# SpsPage3_Line1
-	.long	RN_empty_448	# SpsPage3_Line2
-	.long	RN_empty_449	# SpsPage3_SpsMmmEdit1
-	.long	RN_empty_450	# SpsPage3_Line3
-	.long	RN_empty_451	# SpsPage3_IndexWideES3
-	.long	RN_empty_452	# SpsPage3_Label_SUST
-	.long	RN_empty_453	# SpsPage3_IndexWideES4
-	.long	RN_empty_454	# SpsPage3_Label_P_EXP
-	.long	RN_empty_455	# SpsPage3_Label_GLIDE
-	.long	RN_SpsPage4	# SpsPage4
-	.long	RN_empty_456	# SpsPage4_Box1
-	.long	RN_empty_457	# SpsPage4_SpsMmmEdit1
-	.long	RN_empty_458	# SpsPage4_Label_RESONANCE
-	.long	RN_empty_459	# SpsPage4_SpsMmmEdit_BRIGHTNESS
-	.long	RN_empty_460	# SpsPage4_SpsMmmEdit_ATTACK_TIME
-	.long	RN_empty_461	# SpsPage4_SpsMmmEdit_DECAY_TIME
-	.long	RN_empty_462	# SpsPage4_SpsMmmEdit_RELEASE_TIME
-	.long	RN_empty_463	# SpsPage4_Line1
-	.long	RN_empty_464	# SpsPage4_SpsMmmEdit_RATE
-	.long	RN_empty_465	# SpsPage4_SpsMmmEdit_DEPTH
-	.long	RN_empty_466	# SpsPage4_SpsMmmEdit_DELAY
-	.long	RN_empty_467	# SpsPage4_Label_FILTER
-	.long	RN_empty_468	# SpsPage4_IndexWideES1
-	.long	RN_empty_469	# SpsPage4_IndexWideES2
-	.long	RN_empty_470	# SpsPage4_IndexWideES3
-	.long	RN_empty_471	# SpsPage4_IndexWideES4
-	.long	RN_empty_472	# SpsPage4_IndexWideES5
-	.long	RN_empty_473	# SpsPage4_IndexWideES6
-	.long	RN_empty_474	# SpsPage4_IndexWideES7
-	.long	RN_empty_475	# SpsPage4_Label_RESO
-	.long	RN_empty_476	# SpsPage4_Label_BRI
-	.long	RN_empty_477	# SpsPage4_Label_ATT
-	.long	RN_empty_478	# SpsPage4_Label_DEC
-	.long	RN_empty_479	# SpsPage4_Label_REL
-	.long	RN_empty_480	# SpsPage4_Label_RATE
-	.long	RN_empty_481	# SpsPage4_Label_DEP
-	.long	RN_empty_482	# SpsPage4_Label_DEL
-	.long	RN_empty_483	# SpsPage4_SpsMmmEdit2
-	.long	RN_empty_484	# SpsPage4_IndexWideES8
-	.long	RN_empty_485	# SpsPage4_Label_VIBRATO
-	.long	RN_empty_486	# SpsPage4_Line2
-	.long	RN_empty_487	# SpsPage4_Line3
-	.long	RN_TtSdmtune	# TtSdmtune
-	.long	RN_empty_488	# TtSdmtune_IndexWideES1
-	.long	RN_empty_489	# TtSdmtune_MmmEditBox_MASTER_TUNING
-	.long	RN_empty_490	# TtSdmtune_Label_Hz
-	.long	RN_TtSdkeyscl	# SOUND_TtSdkeyscl
-	.long	RN_empty_491	# SOUND_TtSdkeyscl_FixWin1
-	.long	RN_OctTunTemplate	# OctTunTemplate
-	.long	RN_empty_492	# OctTunTemplate_FixWin1
-	.long	RN_empty_493	# OctTunTemplate_ExitScreen1
-	.long	RN_KeyScalingWin	# KeyScalingWin
-	.long	RN_empty_494	# KeyScalingWin_IndexEditSw1
-	.long	RN_empty_495	# KeyScalingWin_IndexEditSw2
-	.long	RN_empty_496	# KeyScalingWin_Line1
-	.long	RN_empty_497	# KeyScalingWin_Line2
-	.long	RN_empty_498	# KeyScalingWin_Line3
-	.long	RN_empty_499	# KeyScalingWin_Label_PART_SELECT
-	.long	RN_empty_500	# KeyScalingWin_SpsKsclPart1
-	.long	RN_empty_501	# KeyScalingWin_Line4
-	.long	RN_empty_502	# KeyScalingWin_Label_ORIG_TUNING
-	.long	RN_empty_503	# KeyScalingWin_ScreenMenu_OCTAVE_TUNING_TEMPLA
-	.long	RN_empty_504	# KeyScalingWin_IndexEditSw3
-	.long	RN_empty_505	# KeyScalingWin_Label_ALL_PARTS_INITIAL
-	.long	RN_empty_506	# KeyScalingWin_Label_OCTAVE_TUNING
-	.long	RN_empty_507	# KeyScalingWin_Sdkeyscl1
-	.long	RN_empty_508	# KeyScalingWin_IndexWideES1
-	.long	RN_empty_509	# KeyScalingWin_Box1
-	.long	RN_SpsKsclEditTuning	# SpsKsclEditTuning
-	.long	RN_empty_510	# KeyScalingWin_Box2
-	.long	RN_SpsKsclEditH	# SpsKsclEditH
-	.long	RN_empty_511	# KeyScalingWin_Box3
-	.long	RN_SpsKsclEditA	# SpsKsclEditA
-	.long	RN_empty_512	# KeyScalingWin_Box4
-	.long	RN_SpsKsclEditB	# SpsKsclEditB
-	.long	RN_empty_513	# KeyScalingWin_Box5
-	.long	RN_SpsKsclEditG	# SpsKsclEditG
-	.long	RN_empty_514	# KeyScalingWin_Box6
-	.long	RN_SpsKsclEditGis	# SpsKsclEditGis
-	.long	RN_empty_515	# KeyScalingWin_Box7
-	.long	RN_SpsKsclEditF	# SpsKsclEditF
-	.long	RN_empty_516	# KeyScalingWin_Box8
-	.long	RN_SpsKsclEditFis	# SpsKsclEditFis
-	.long	RN_empty_517	# KeyScalingWin_Box9
-	.long	RN_SpsKsclEditE	# SpsKsclEditE
-	.long	RN_empty_518	# KeyScalingWin_Box10
-	.long	RN_SpsKsclEditD	# SpsKsclEditD
-	.long	RN_empty_519	# KeyScalingWin_Box11
-	.long	RN_SpsKsclEditEs	# SpsKsclEditEs
-	.long	RN_empty_520	# KeyScalingWin_Label_OCTAVE_TUNING2
-	.long	RN_empty_521	# KeyScalingWin_Box12
-	.long	RN_SpsKsclEditC	# SpsKsclEditC
-	.long	RN_empty_522	# KeyScalingWin_Box13
-	.long	RN_SpsKsclEditCis	# SpsKsclEditCis
-	.long	RN_empty_523	# KeyScalingWin_IndexEditSw4
-	.long	RN_empty_524	# KeyScalingWin_IndexEditSw5
-	.long	RN_empty_525	# KeyScalingWin_IndexWideES2
-	.long	RN_empty_526	# KeyScalingWin_Label_OCTAVE_TUNING3
-	.long	RN_empty_527	# KeyScalingWin_Label_KEY_SELECT
-	.long	RN_empty_528	# KeyScalingWin_Label_TUNING
-	.long	RN_empty_529	# KeyScalingWin_KsclKeyEdit1
-	.long	RN_OctTunTemplateWin	# OctTunTemplateWin
-	.long	RN_empty_530	# OctTunTemplateWin_Sdkeyscl1
-	.long	RN_empty_531	# OctTunTemplateWin_Box1
-	.long	RN_empty_532	# OctTunTemplateWin_Label_TYPE
-	.long	RN_empty_533	# OctTunTemplateWin_KsclTypeEdit1
-	.long	RN_empty_534	# OctTunTemplateWin_KsclShift1
-	.long	RN_empty_535	# OctTunTemplateWin_Label_SHIFT
-	.long	RN_empty_536	# OctTunTemplateWin_KsclShiftEdit1
-	.long	RN_empty_537	# OctTunTemplateWin_Label_PART
-	.long	RN_empty_538	# OctTunTemplateWin_Line1
-	.long	RN_empty_539	# OctTunTemplateWin_Line2
-	.long	RN_empty_540	# OctTunTemplateWin_Line3
-	.long	RN_empty_541	# OctTunTemplateWin_KsclCopyEdit1
-	.long	RN_empty_542	# OctTunTemplateWin_IndexWideES1
-	.long	RN_empty_543	# OctTunTemplateWin_IndexWideES2
-	.long	RN_empty_544	# OctTunTemplateWin_IndexEditSw1
-	.long	RN_empty_545	# OctTunTemplateWin_Label_SET
-	.long	RN_empty_546	# OctTunTemplateWin_IndexWideES3
-	.long	RN_TtSdmixer	# SOUND_TtSdmixer
-	.long	RN_empty_547	# SOUND_TtSdmixer_MixPartSound1
-	.long	RN_empty_548	# SOUND_TtSdmixer_Mixer1
-	.long	RN_empty_549	# SOUND_TtSdmixer_Mixer2
-	.long	RN_empty_550	# SOUND_TtSdmixer_Mixer3
-	.long	RN_empty_551	# SOUND_TtSdmixer_Mixer4
-	.long	RN_empty_552	# SOUND_TtSdmixer_Mixer5
-	.long	RN_empty_553	# SOUND_TtSdmixer_Mixer6
-	.long	RN_empty_554	# SOUND_TtSdmixer_Mixer7
-	.long	RN_empty_555	# SOUND_TtSdmixer_Mixer8
-	.long	RN_empty_556	# SOUND_TtSdmixer_MixerCase1
-	.long	RN_empty_557	# SOUND_TtSdmixer_MixPage1
-	.long	RN_empty_558	# SOUND_TtSdmixer_MixOtherPart1
-	.long	RN_empty_559	# SOUND_TtSdmixer_MixPartSound2
-	.long	RN_empty_560	# SOUND_TtSdmixer_MixerCase2
-	.long	RN_empty_561	# SOUND_TtSdmixer_MixPageCtrl1
-	.long	RN_empty_562	# SOUND_TtSdmixer_ExitMixer1
-	.long	RN_empty_563	# SOUND_TtSdmixer_Sdmixer1
-	.long	RN_ExMixerMenu	# ExMixerMenu
-	.long	RN_empty_564	# ExMixerMenu_MixerExMenu_EDIT_MIXER
-	.long	RN_PartMixerEdit	# PartMixerEdit
-	.long	RN_empty_565	# PartMixerEdit_ExitScreen1
-	.long	RN_TtSdtecd	# SOUND_TtSdtecd
-	.long	RN_empty_566	# SOUND_TtSdtecd_IndexWideES1
-	.long	RN_empty_567	# SOUND_TtSdtecd_MmmEditBox1
-	.long	RN_empty_568	# SOUND_TtSdtecd_IndexEditSw1
-	.long	RN_empty_569	# SOUND_TtSdtecd_IndexEditSw2
-	.long	RN_empty_570	# SOUND_TtSdtecd_IndexWideES2
-	.long	RN_empty_571	# SOUND_TtSdtecd_TechniChord1
-	.long	RN_empty_572	# SOUND_TtSdtecd_Label_TYPE
-	.long	RN_empty_573	# SOUND_TtSdtecd_Label_ORCHESTRATOR
-	.long	RN_TtSqmixer	# SOUND_TtSqmixer
-	.long	RN_TtSdmonitor	# TtSdmonitor
-	.long	RN_Sdmonitoron	# Sdmonitoron
-	.long	RN_Sdmonitoroff	# Sdmonitoroff
-	.long	RN_empty_574	# TtSdmonitor_Box1
-	.long	RN_empty_575	# TtSdmonitor_UserBitmap1
-	.long	RN_empty_576	# TtSdmonitor_TextBox_MONITOR
-	.long	RN_empty_577	# TtSdmonitor_MonImage1
-	.long	RN_TtSdseparate	# TtSdseparate
-	.long	RN_Sdspoff	# Sdspoff
-	.long	RN_Sdspstereo	# Sdspstereo
-	.long	RN_Sdspmono	# Sdspmono
-	.long	RN_empty_578	# TtSdseparate_Line1
-	.long	RN_empty_579	# TtSdseparate_Label_MODE
-	.long	RN_empty_580	# TtSdseparate_Line2
-	.long	RN_empty_581	# TtSdseparate_CatchEvent1
-	.long	RN_Sdspwinmono	# Sdspwinmono
-	.long	RN_empty_582	# Sdspwinmono_IndexWideES1
-	.long	RN_Sdsppartmono	# Sdsppartmono
-	.long	RN_empty_583	# Sdspwinmono_IndexWideES2
-	.long	RN_Sdspwinstereo	# Sdspwinstereo
-	.long	RN_empty_584	# Sdspwinstereo_IndexWideES1
-	.long	RN_empty_585	# Sdspwinstereo_Box1
-	.long	RN_empty_586	# Sdspwinstereo_Label_PART_ASSIGN
-	.long	RN_Sdsppartstereo	# Sdsppartstereo
-	.long	RN_empty_587	# Sdspwinstereo_Line1
-	.long	RN_Sdspwinetc	# Sdspwinetc
-	.long	RN_empty_588	# Sdspwinetc_Label_EXPRESSION_PEDAL
-	.long	RN_empty_589	# Sdspwinetc_Label_with_MAIN_OUT
-	.long	RN_Sdspmainout	# Sdspmainout
-	.long	RN_Sdspexpression	# Sdspexpression
-	.long	RN_TtSdapcrev	# SOUND_TtSdapcrev
-	.long	RN_empty_590	# SOUND_TtSdapcrev_GridBox1
-	.long	RN_empty_591	# SOUND_TtSdapcrev_IndexWideES1
-	.long	RN_empty_592	# SOUND_TtSdapcrev_IndexWideES2
-	.long	RN_empty_593	# SOUND_TtSdapcrev_PR6041
-	.long	RN_ApcRevChkWin	# ApcRevChkWin
-	.long	RN_empty_594	# ApcRevChkWin_GridBox1
-.incbin_range "baserom/kn2400_program.rom", 0x17CD54, 0x17CD58
-
-# 30 classes; a class id is (0x34 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ HOMEPAGE_Classes_SLOT, 0x34
-HOMEPAGE_Classes:
-	CLASS	Class_IvPageControlOW, CLASS_IvPageControlOW, HOMEPAGE_Classes, proc=IvPageControlOWProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvPageControlOW, sig=ClassSig_IvPageControlOW, fields=ClassFields_IvPageControlOW	# page:A window:s
-	CLASS	Class_AcSplitBox, CLASS_AcSplitBox, HOMEPAGE_Classes, proc=AcSplitBoxProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSplitBox, sig=ClassSig_AcSplitBox, fields=ClassFields_AcSplitBox
-	CLASS	Class_AcFadeBox, CLASS_AcFadeBox, HOMEPAGE_Classes, proc=AcFadeBoxProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcFadeBox, sig=ClassSig_AcFadeBox, fields=ClassFields_AcFadeBox
-	CLASS	Class_AcPadRun, CLASS_AcPadRun, HOMEPAGE_Classes, proc=AcPadRunProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPadRun, sig=ClassSig_AcPadRun, fields=ClassFields_AcPadRun
-	CLASS	Class_AcRhyRun, CLASS_AcRhyRun, HOMEPAGE_Classes, proc=AcRhyRunProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRhyRun, sig=ClassSig_AcRhyRun, fields=ClassFields_AcRhyRun
-	CLASS	Class_AcMixerVolS, CLASS_AcMixerVolS, HOMEPAGE_Classes, proc=AcMixerVolSProc, parent=CLASS_AcMixerVol, allsize=36, selfsize=0, cname=ClassName_AcMixerVolS, sig=ClassSig_AcMixerVolS, fields=ClassFields_AcMixerVolS
-	CLASS	Class_AcMixerVolWS, CLASS_AcMixerVolWS, HOMEPAGE_Classes, proc=AcMixerVolSProc, parent=CLASS_AcMixerVolWide, allsize=40, selfsize=0, cname=ClassName_AcMixerVolWS, sig=ClassSig_AcMixerVolWS, fields=ClassFields_AcMixerVolWS
-	CLASS	Class_AcTrackVol, CLASS_AcTrackVol, HOMEPAGE_Classes, proc=AcTrackVolProc, parent=CLASS_AcMixerVol, allsize=40, selfsize=2, cname=ClassName_AcTrackVol, sig=ClassSig_AcTrackVol, fields=ClassFields_AcTrackVol	# track:u
-	CLASS	Class_AcSeqRun, CLASS_AcSeqRun, HOMEPAGE_Classes, proc=AcSeqRunProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSeqRun, sig=ClassSig_AcSeqRun, fields=ClassFields_AcSeqRun
-	CLASS	Class_AcSeqCurSngName, CLASS_AcSeqCurSngName, HOMEPAGE_Classes, proc=AcSeqCurSngNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSeqCurSngName, sig=ClassSig_AcSeqCurSngName, fields=ClassFields_AcSeqCurSngName
-	CLASS	Class_AcFavBankName, CLASS_AcFavBankName, HOMEPAGE_Classes, proc=AcFavBankNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcFavBankName, sig=ClassSig_AcFavBankName, fields=ClassFields_AcFavBankName
-	CLASS	Class_AcRightOct, CLASS_AcRightOct, HOMEPAGE_Classes, proc=AcRightOctProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRightOct, sig=ClassSig_AcRightOct, fields=ClassFields_AcRightOct
-	CLASS	Class_AcSndCtrlX, CLASS_AcSndCtrlX, HOMEPAGE_Classes, proc=AcSndCtrlXProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSndCtrlX, sig=ClassSig_AcSndCtrlX, fields=ClassFields_AcSndCtrlX
-	CLASS	Class_AcSndCtrlY, CLASS_AcSndCtrlY, HOMEPAGE_Classes, proc=AcSndCtrlYProc, parent=CLASS_AcSndCtrlX, allsize=40, selfsize=0, cname=ClassName_AcSndCtrlY, sig=ClassSig_AcSndCtrlY, fields=ClassFields_AcSndCtrlY
-	CLASS	Class_AcPmemBankName, CLASS_AcPmemBankName, HOMEPAGE_Classes, proc=AcPmemBankNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPmemBankName, sig=ClassSig_AcPmemBankName, fields=ClassFields_AcPmemBankName
-	CLASS	Class_AcPmemXName, CLASS_AcPmemXName, HOMEPAGE_Classes, proc=AcPmemXNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPmemXName, sig=ClassSig_AcPmemXName, fields=ClassFields_AcPmemXName
-	CLASS	Class_AcFootSw, CLASS_AcFootSw, HOMEPAGE_Classes, proc=AcFootSwProc, parent=CLASS_PsParaBox, allsize=44, selfsize=2, cname=ClassName_AcFootSw, sig=ClassSig_AcFootSw, fields=ClassFields_AcFootSw	# sw:A
-	CLASS	Class_AcPadBank, CLASS_AcPadBank, HOMEPAGE_Classes, proc=AcPadBankProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPadBank, sig=ClassSig_AcPadBank, fields=ClassFields_AcPadBank
-	CLASS	Class_AcPadName, CLASS_AcPadName, HOMEPAGE_Classes, proc=AcPadNameProc, parent=CLASS_PsParaBox, allsize=44, selfsize=2, cname=ClassName_AcPadName, sig=ClassSig_AcPadName, fields=ClassFields_AcPadName	# pad:A
-	CLASS	Class_AcSndLdOpt, CLASS_AcSndLdOpt, HOMEPAGE_Classes, proc=AcSndLdOptProc, parent=CLASS_PsParaBox, allsize=44, selfsize=2, cname=ClassName_AcSndLdOpt, sig=ClassSig_AcSndLdOpt, fields=ClassFields_AcSndLdOpt	# item:A
-	CLASS	Class_AcSndDspAlloc, CLASS_AcSndDspAlloc, HOMEPAGE_Classes, proc=AcSndDspAllocProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSndDspAlloc, sig=ClassSig_AcSndDspAlloc, fields=ClassFields_AcSndDspAlloc
-	CLASS	Class_AcEffectType, CLASS_AcEffectType, HOMEPAGE_Classes, proc=AcEffectTypeProc, parent=CLASS_PsParaBox, allsize=44, selfsize=2, cname=ClassName_AcEffectType, sig=ClassSig_AcEffectType, fields=ClassFields_AcEffectType	# eff:A
-	CLASS	Class_IvRstOtherPart, CLASS_IvRstOtherPart, HOMEPAGE_Classes, proc=IvRstOtherPartProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvRstOtherPart, sig=ClassSig_IvRstOtherPart, fields=ClassFields_IvRstOtherPart	# page:m pagemin:A pagemax:A
-	CLASS	Class_AcHpScreen, CLASS_AcHpScreen, HOMEPAGE_Classes, proc=AcHpScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_AcHpScreen, sig=ClassSig_AcHpScreen, fields=ClassFields_AcHpScreen
-	CLASS	Class_AcVolBox, CLASS_AcVolBox, HOMEPAGE_Classes, proc=AcVolBoxProc, parent=CLASS_PsParaBox, allsize=44, selfsize=2, cname=ClassName_AcVolBox, sig=ClassSig_AcVolBox, fields=ClassFields_AcVolBox	# part:t
-	CLASS	Class_AcMonitorOn, CLASS_AcMonitorOn, HOMEPAGE_Classes, proc=AcMonitorOnProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMonitorOn, sig=ClassSig_AcMonitorOn, fields=ClassFields_AcMonitorOn
-	CLASS	Class_AcRcVolume, CLASS_AcRcVolume, HOMEPAGE_Classes, proc=AcRcVolumeProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRcVolume, sig=ClassSig_AcRcVolume, fields=ClassFields_AcRcVolume
-	CLASS	Class_AcMonRcv, CLASS_AcMonRcv, HOMEPAGE_Classes, proc=AcMonRcvProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMonRcv, sig=ClassSig_AcMonRcv, fields=ClassFields_AcMonRcv
-	CLASS	Class_IvPageKNPR, CLASS_IvPageKNPR, HOMEPAGE_Classes, proc=IvPageKNPRProc, parent=CLASS_PsInvisibleBox, allsize=40, selfsize=16, cname=ClassName_IvPageKNPR, sig=ClassSig_IvPageKNPR, fields=ClassFields_IvPageKNPR	# page:A KN2600:s KN2400:s PR54:s
-	CLASS	Class_AcSeqMixerVol, CLASS_AcSeqMixerVol, HOMEPAGE_Classes, proc=AcSeqMixerVolProc, parent=CLASS_VwBox, allsize=36, selfsize=4, cname=ClassName_AcSeqMixerVol, sig=ClassSig_AcSeqMixerVol, fields=ClassFields_AcSeqMixerVol	# part:t editsw:e
-	.space	24, 0x00
-
-# 10 Event names; an event id is (0x35 << 16) | its index
-HOMEPAGE_Events:
-	IDNAME	EV_DISPPADRUN, Str_EV_DISPPADRUN, HOMEPAGE_Events, 0x35
-	IDNAME	EV_DISPRHYRUN, Str_EV_DISPRHYRUN, HOMEPAGE_Events, 0x35
-	IDNAME	EV_SETZEROPOINT, Str_EV_SETZEROPOINT, HOMEPAGE_Events, 0x35
-	IDNAME	EV_DISPSEQRUN, Str_EV_DISPSEQRUN, HOMEPAGE_Events, 0x35
-	IDNAME	EV_SEQSONGNAME, Str_EV_SEQSONGNAME, HOMEPAGE_Events, 0x35
-	IDNAME	EV_PADBANKNAME, Str_EV_PADBANKNAME, HOMEPAGE_Events, 0x35
-	IDNAME	EV_PADNAME, Str_EV_PADNAME, HOMEPAGE_Events, 0x35
-	IDNAME	EV_PAGECHANGEOT, Str_EV_PAGECHANGEOT, HOMEPAGE_Events, 0x35
-	IDNAME	EV_SETPAGEOTHERPART, Str_EV_SETPAGEOTHERPART, HOMEPAGE_Events, 0x35
-	IDNAME	EV_SEQPARTCHANGE, Str_EV_SEQPARTCHANGE, HOMEPAGE_Events, 0x35
-	.space	4, 0x00
-
-# 10 Method names; an method id is (0x36 << 16) | its index
-HOMEPAGE_Methods:
-	IDNAME	MT_GetPadRun, Str_MT_GetPadRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_SetPadRun, Str_MT_SetPadRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_GetRhyRun, Str_MT_GetRhyRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_SetRhyRun, Str_MT_SetRhyRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_GetSeqRun, Str_MT_GetSeqRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_SetSeqRun, Str_MT_SetSeqRun, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_GetSeqSongName, Str_MT_GetSeqSongName, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_GetPadBankName, Str_MT_GetPadBankName, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_GetPadName, Str_MT_GetPadName, HOMEPAGE_Methods, 0x36
-	IDNAME	MT_CheckMute, Str_MT_CheckMute, HOMEPAGE_Methods, 0x36
-	.space	4, 0x00
-
-# 29 Function procedures; a function id is (0x31 << 16) | its index (the names are the parallel table at slot 0x39)
-HOMEPAGE_Functions:
-	IDNAME	FN_IvPageControlOWProc, IvPageControlOWProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSplitBoxProc, AcSplitBoxProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcFadeBoxProc, AcFadeBoxProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcPadRunProc, AcPadRunProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcRhyRunProc, AcRhyRunProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcMixerVolSProc, AcMixerVolSProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcTrackVolProc, AcTrackVolProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSeqRunProc, AcSeqRunProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSeqCurSngNameProc, AcSeqCurSngNameProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcFavBankNameProc, AcFavBankNameProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcRightOctProc, AcRightOctProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSndCtrlXProc, AcSndCtrlXProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSndCtrlYProc, AcSndCtrlYProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcPmemBankNameProc, AcPmemBankNameProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcPmemXNameProc, AcPmemXNameProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcFootSwProc, AcFootSwProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcPadBankProc, AcPadBankProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcPadNameProc, AcPadNameProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSndLdOptProc, AcSndLdOptProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSndDspAllocProc, AcSndDspAllocProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcEffectTypeProc, AcEffectTypeProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_IvRstOtherPartProc, IvRstOtherPartProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcHpScreenProc, AcHpScreenProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcVolBoxProc, AcVolBoxProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcMonitorOnProc, AcMonitorOnProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcRcVolumeProc, AcRcVolumeProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcMonRcvProc, AcMonRcvProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_IvPageKNPRProc, IvPageKNPRProc, HOMEPAGE_Functions, 0x31
-	IDNAME	FN_AcSeqMixerVolProc, AcSeqMixerVolProc, HOMEPAGE_Functions, 0x31
-	.space	4, 0x00
-
-HOMEPAGE_FunctionNames:
-	.long	FnName_IvPageControlOWProc
-	.long	FnName_AcSplitBoxProc
-	.long	FnName_AcFadeBoxProc
-	.long	FnName_AcPadRunProc
-	.long	FnName_AcRhyRunProc
-	.long	FnName_AcMixerVolSProc
-	.long	FnName_AcTrackVolProc
-	.long	FnName_AcSeqRunProc
-	.long	FnName_AcSeqCurSngNameProc
-	.long	FnName_AcFavBankNameProc
-	.long	FnName_AcRightOctProc
-	.long	FnName_AcSndCtrlXProc
-	.long	FnName_AcSndCtrlYProc
-	.long	FnName_AcPmemBankNameProc
-	.long	FnName_AcPmemXNameProc
-	.long	FnName_AcFootSwProc
-	.long	FnName_AcPadBankProc
-	.long	FnName_AcPadNameProc
-	.long	FnName_AcSndLdOptProc
-	.long	FnName_AcSndDspAllocProc
-	.long	FnName_AcEffectTypeProc
-	.long	FnName_IvRstOtherPartProc
-	.long	FnName_AcHpScreenProc
-	.long	FnName_AcVolBoxProc
-	.long	FnName_AcMonitorOnProc
-	.long	FnName_AcRcVolumeProc
-	.long	FnName_AcMonRcvProc
-	.long	FnName_IvPageKNPRProc
-	.long	FnName_AcSeqMixerVolProc
-.incbin_range "baserom/kn2400_program.rom", 0x17D184, 0x17D188
-HOMEPAGE_ApFunctions:
-	.space	4, 0x00
-data_4857D18C:
-.incbin_range "baserom/kn2400_program.rom", 0x17D18C, 0x17D190
-
-# 5 MainFunction procedures; a function id is (0x33 << 16) | its index (the names are the parallel table at slot 0x3b)
-HOMEPAGE_MainFunctions:
-	IDNAME	FN_MdNormal, MdNormal, HOMEPAGE_MainFunctions, 0x33
-	IDNAME	FN_TtNormal, TtNormal, HOMEPAGE_MainFunctions, 0x33
-	IDNAME	FN_MainPadRun, MainPadRun, HOMEPAGE_MainFunctions, 0x33
-	IDNAME	FN_MainRhyRun, MainRhyRun, HOMEPAGE_MainFunctions, 0x33
-	IDNAME	FN_MainSeqRun, MainSeqRun, HOMEPAGE_MainFunctions, 0x33
-	.space	4, 0x00
-
-HOMEPAGE_MainFunctionNames:
-	.long	FnName_MdNormal
-	.long	FnName_TtNormal
-	.long	FnName_MainPadRun
-	.long	FnName_MainRhyRun
-	.long	FnName_MainSeqRun
-.incbin_range "baserom/kn2400_program.rom", 0x17D1BC, 0x17D1C0
-
-# 76 objects of block HOMEPAGE; object <name> is index <name>_ix, id <name>_id = (0x30 << 16) | <name>_ix
-HOMEPAGE_Viewables:
-	OBJ	TtHomepage, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_StrBox_RHYTHM, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_StrBox_RIGHT1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_StrBox_RIGHT2, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_StrBox_LEFT, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_SoundName1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_SoundName2, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_SoundName3, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_RhythmName1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_TempoBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_TransposeBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_ChordBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PmemName1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_SplitBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PadRun1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_FadeBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_RstOtherPart1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PageControlOW1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PageControlOW2, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PageControlOW3, HOMEPAGE_Viewables, 0x30
-	OBJ	TtHomepage_PageControlOW4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_Box1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox5, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox6, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox7, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_VolBox8, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol5, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_MixerVol6, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol1_SeqMixerVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol5, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol6, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol7, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol2_MixerVol8, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol5, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol6, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol7, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol3_MixerVol8, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol1, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol2, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol3, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol4, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol5, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol6, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol7, HOMEPAGE_Viewables, 0x30
-	OBJ	NormVol4_MixerVol8, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_SOUND, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_REVERB_EFFECT, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_CONTROL, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_CUSTOMIZE, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_SEQUENCER, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_COMPOSER, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_SOUND_EDIT, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ExitMode1, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_PERFORMANCE_PADS, HOMEPAGE_Viewables, 0x30
-	OBJ	TtProgram_ModeMenu_MIDI, HOMEPAGE_Viewables, 0x30
-	.space	4, 0x00
-
-HOMEPAGE_ResNames:
-	.long	RN_TtHomepage	# TtHomepage
-	.long	RN_empty_81	# TtHomepage_StrBox_RHYTHM
-	.long	RN_empty_82	# TtHomepage_StrBox_RIGHT1
-	.long	RN_empty_83	# TtHomepage_StrBox_RIGHT2
-	.long	RN_empty_84	# TtHomepage_StrBox_LEFT
-	.long	RN_empty_85	# TtHomepage_SoundName1
-	.long	RN_empty_86	# TtHomepage_SoundName2
-	.long	RN_empty_87	# TtHomepage_SoundName3
-	.long	RN_empty_88	# TtHomepage_RhythmName1
-	.long	RN_empty_89	# TtHomepage_TempoBox1
-	.long	RN_empty_90	# TtHomepage_TransposeBox1
-	.long	RN_empty_91	# TtHomepage_ChordBox1
-	.long	RN_empty_92	# TtHomepage_PmemName1
-	.long	RN_empty_93	# TtHomepage_SplitBox1
-	.long	RN_empty_94	# TtHomepage_PadRun1
-	.long	RN_empty_95	# TtHomepage_FadeBox1
-	.long	RN_empty_96	# TtHomepage_RstOtherPart1
-	.long	RN_empty_97	# TtHomepage_PageControlOW1
-	.long	RN_empty_98	# TtHomepage_PageControlOW2
-	.long	RN_empty_99	# TtHomepage_PageControlOW3
-	.long	RN_empty_100	# TtHomepage_PageControlOW4
-	.long	RN_NormVol1	# NormVol1
-	.long	RN_empty_101	# NormVol1_Box1
-	.long	RN_empty_102	# NormVol1_VolBox1
-	.long	RN_empty_103	# NormVol1_VolBox2
-	.long	RN_empty_104	# NormVol1_VolBox3
-	.long	RN_empty_105	# NormVol1_VolBox4
-	.long	RN_empty_106	# NormVol1_VolBox5
-	.long	RN_empty_107	# NormVol1_VolBox6
-	.long	RN_empty_108	# NormVol1_VolBox7
-	.long	RN_empty_109	# NormVol1_VolBox8
-	.long	RN_empty_110	# NormVol1_MixerVol1
-	.long	RN_empty_111	# NormVol1_MixerVol2
-	.long	RN_empty_112	# NormVol1_MixerVol3
-	.long	RN_empty_113	# NormVol1_MixerVol4
-	.long	RN_empty_114	# NormVol1_MixerVol5
-	.long	RN_empty_115	# NormVol1_MixerVol6
-	.long	RN_empty_116	# NormVol1_SeqMixerVol1
-	.long	RN_NormVol2	# NormVol2
-	.long	RN_empty_117	# NormVol2_MixerVol1
-	.long	RN_empty_118	# NormVol2_MixerVol2
-	.long	RN_empty_119	# NormVol2_MixerVol3
-	.long	RN_empty_120	# NormVol2_MixerVol4
-	.long	RN_empty_121	# NormVol2_MixerVol5
-	.long	RN_empty_122	# NormVol2_MixerVol6
-	.long	RN_empty_123	# NormVol2_MixerVol7
-	.long	RN_empty_124	# NormVol2_MixerVol8
-	.long	RN_NormVol3	# NormVol3
-	.long	RN_empty_125	# NormVol3_MixerVol1
-	.long	RN_empty_126	# NormVol3_MixerVol2
-	.long	RN_empty_127	# NormVol3_MixerVol3
-	.long	RN_empty_128	# NormVol3_MixerVol4
-	.long	RN_empty_129	# NormVol3_MixerVol5
-	.long	RN_empty_130	# NormVol3_MixerVol6
-	.long	RN_empty_131	# NormVol3_MixerVol7
-	.long	RN_empty_132	# NormVol3_MixerVol8
-	.long	RN_NormVol4	# NormVol4
-	.long	RN_empty_133	# NormVol4_MixerVol1
-	.long	RN_empty_134	# NormVol4_MixerVol2
-	.long	RN_empty_135	# NormVol4_MixerVol3
-	.long	RN_empty_136	# NormVol4_MixerVol4
-	.long	RN_empty_137	# NormVol4_MixerVol5
-	.long	RN_empty_138	# NormVol4_MixerVol6
-	.long	RN_empty_139	# NormVol4_MixerVol7
-	.long	RN_empty_140	# NormVol4_MixerVol8
-	.long	RN_TtProgram	# TtProgram
-	.long	RN_empty_141	# TtProgram_ModeMenu_SOUND
-	.long	RN_empty_142	# TtProgram_ModeMenu_REVERB_EFFECT
-	.long	RN_empty_143	# TtProgram_ModeMenu_CONTROL
-	.long	RN_empty_144	# TtProgram_ModeMenu_CUSTOMIZE
-	.long	RN_empty_145	# TtProgram_ModeMenu_SEQUENCER
-	.long	RN_empty_146	# TtProgram_ModeMenu_COMPOSER
-	.long	RN_empty_147	# TtProgram_ModeMenu_SOUND_EDIT
-	.long	RN_empty_148	# TtProgram_ExitMode1
-	.long	RN_empty_149	# TtProgram_ModeMenu_PERFORMANCE_PADS
-	.long	RN_empty_150	# TtProgram_ModeMenu_MIDI
-.incbin_range "baserom/kn2400_program.rom", 0x17D424, 0x17D428
-
-# 31 classes; a class id is (0x64 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ SNDRHY_Classes_SLOT, 0x64
-SNDRHY_Classes:
-	CLASS	Class_AcRvariScreen, CLASS_AcRvariScreen, SNDRHY_Classes, proc=AcRvariScreenProc, parent=CLASS_TtlScreen, allsize=60, selfsize=12, cname=ClassName_AcRvariScreen, sig=ClassSig_AcRvariScreen, fields=ClassFields_AcRvariScreen	# normal:s custom:s memory:s
-	CLASS	Class_AcRhyVari, CLASS_AcRhyVari, SNDRHY_Classes, proc=AcRhyVariProc, parent=CLASS_PsVariSelect, allsize=60, selfsize=4, cname=ClassName_AcRhyVari, sig=ClassSig_AcRhyVari, fields=ClassFields_AcRhyVari	# param2:r
-	CLASS	Class_AcRhyPage, CLASS_AcRhyPage, SNDRHY_Classes, proc=AcRhyPageProc, parent=CLASS_PsPageBox, allsize=36, selfsize=0, cname=ClassName_AcRhyPage, sig=ClassSig_AcRhyPage, fields=ClassFields_AcRhyPage
-	CLASS	Class_AcRhyGroup, CLASS_AcRhyGroup, SNDRHY_Classes, proc=AcRhyGroupProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRhyGroup, sig=ClassSig_AcRhyGroup, fields=ClassFields_AcRhyGroup
-	CLASS	Class_AcRhyCmpVari, CLASS_AcRhyCmpVari, SNDRHY_Classes, proc=AcRhyCmpVariProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcRhyCmpVari, sig=ClassSig_AcRhyCmpVari, fields=ClassFields_AcRhyCmpVari
-	CLASS	Class_AcSvariScreen, CLASS_AcSvariScreen, SNDRHY_Classes, proc=AcSvariScreenProc, parent=CLASS_TtlScreen, allsize=88, selfsize=40, cname=ClassName_AcSvariScreen, sig=ClassSig_AcSvariScreen, fields=ClassFields_AcSvariScreen	# normal:s explorer:s memory:s accordion:s drawbar:s organ:s expew:s normaloct:s exploreroct:s memoryoct:s
-	CLASS	Class_AcSndVari, CLASS_AcSndVari, SNDRHY_Classes, proc=AcSndVariProc, parent=CLASS_PsVariSelect, allsize=60, selfsize=4, cname=ClassName_AcSndVari, sig=ClassSig_AcSndVari, fields=ClassFields_AcSndVari	# swvari:r
-	CLASS	Class_AcSndPage, CLASS_AcSndPage, SNDRHY_Classes, proc=AcSndPageProc, parent=CLASS_PsPageBox, allsize=36, selfsize=0, cname=ClassName_AcSndPage, sig=ClassSig_AcSndPage, fields=ClassFields_AcSndPage
-	CLASS	Class_AcSndGroup, CLASS_AcSndGroup, SNDRHY_Classes, proc=AcSndGroupProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcSndGroup, sig=ClassSig_AcSndGroup, fields=ClassFields_AcSndGroup
-	CLASS	Class_AcSndImage, CLASS_AcSndImage, SNDRHY_Classes, proc=AcSndImageProc, parent=CLASS_Viewable, allsize=24, selfsize=0, cname=ClassName_AcSndImage, sig=ClassSig_AcSndImage, fields=ClassFields_AcSndImage
-	CLASS	Class_AcPartSelect, CLASS_AcPartSelect, SNDRHY_Classes, proc=AcPartSelectProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPartSelect, sig=ClassSig_AcPartSelect, fields=ClassFields_AcPartSelect
-	CLASS	Class_AcAcdnTypeSw, CLASS_AcAcdnTypeSw, SNDRHY_Classes, proc=AcAcdnTypeSwProc, parent=CLASS_PsEditSwBox, allsize=48, selfsize=1, cname=ClassName_AcAcdnTypeSw, sig=ClassSig_AcAcdnTypeSw, fields=ClassFields_AcAcdnTypeSw	# style:f
-	CLASS	Class_AcAcdnTab, CLASS_AcAcdnTab, SNDRHY_Classes, proc=AcAcdnTabProc, parent=CLASS_PsVariSelect, allsize=60, selfsize=4, cname=ClassName_AcAcdnTab, sig=ClassSig_AcAcdnTab, fields=ClassFields_AcAcdnTab	# swvari:r
-	CLASS	Class_AcAcdnType, CLASS_AcAcdnType, SNDRHY_Classes, proc=AcAcdnTypeProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcAcdnType, sig=ClassSig_AcAcdnType, fields=ClassFields_AcAcdnType
-	CLASS	Class_AcDrawbarScreen, CLASS_AcDrawbarScreen, SNDRHY_Classes, proc=AcDrawbarScreenProc, parent=CLASS_TtlScreen, allsize=56, selfsize=8, cname=ClassName_AcDrawbarScreen, sig=ClassSig_AcDrawbarScreen, fields=ClassFields_AcDrawbarScreen	# drawbar:s write:s
-	CLASS	Class_AcDrawbar, CLASS_AcDrawbar, SNDRHY_Classes, proc=AcDrawbarProc, parent=CLASS_VwBox, allsize=36, selfsize=2, cname=ClassName_AcDrawbar, sig=ClassSig_AcDrawbar, fields=ClassFields_AcDrawbar	# editsw:e
-	CLASS	Class_AcTremolo, CLASS_AcTremolo, SNDRHY_Classes, proc=AcTremoloProc, parent=CLASS_PsToggleBox, allsize=44, selfsize=0, cname=ClassName_AcTremolo, sig=ClassSig_AcTremolo, fields=ClassFields_AcTremolo
-	CLASS	Class_AcPerc223, CLASS_AcPerc223, SNDRHY_Classes, proc=AcPerc223Proc, parent=CLASS_PsToggleBox, allsize=44, selfsize=0, cname=ClassName_AcPerc223, sig=ClassSig_AcPerc223, fields=ClassFields_AcPerc223
-	CLASS	Class_AcPerc4, CLASS_AcPerc4, SNDRHY_Classes, proc=AcPerc4Proc, parent=CLASS_PsToggleBox, allsize=44, selfsize=0, cname=ClassName_AcPerc4, sig=ClassSig_AcPerc4, fields=ClassFields_AcPerc4
-	CLASS	Class_AcDrawSet, CLASS_AcDrawSet, SNDRHY_Classes, proc=AcDrawSetProc, parent=CLASS_PsToggleBox, allsize=52, selfsize=8, cname=ClassName_AcDrawSet, sig=ClassSig_AcDrawSet, fields=ClassFields_AcDrawSet	# drawbar:s setting:s
-	CLASS	Class_PsDrawEdit, CLASS_PsDrawEdit, SNDRHY_Classes, proc=PsDrawEditProc, parent=CLASS_PsEditBox, allsize=60, selfsize=4, cname=ClassName_PsDrawEdit, sig=ClassSig_PsDrawEdit, fields=ClassFields_PsDrawEdit	# data:m
-	CLASS	Class_AcDrawAttack, CLASS_AcDrawAttack, SNDRHY_Classes, proc=AcDrawAttackProc, parent=CLASS_PsDrawEdit, allsize=60, selfsize=0, cname=ClassName_AcDrawAttack, sig=ClassSig_AcDrawAttack, fields=ClassFields_AcDrawAttack
-	CLASS	Class_AcDrawRelease, CLASS_AcDrawRelease, SNDRHY_Classes, proc=AcDrawReleaseProc, parent=CLASS_PsDrawEdit, allsize=60, selfsize=0, cname=ClassName_AcDrawRelease, sig=ClassSig_AcDrawRelease, fields=ClassFields_AcDrawRelease
-	CLASS	Class_AcPercDecay, CLASS_AcPercDecay, SNDRHY_Classes, proc=AcPercDecayProc, parent=CLASS_PsDrawEdit, allsize=60, selfsize=0, cname=ClassName_AcPercDecay, sig=ClassSig_AcPercDecay, fields=ClassFields_AcPercDecay
-	CLASS	Class_AcPercLevel, CLASS_AcPercLevel, SNDRHY_Classes, proc=AcPercLevelProc, parent=CLASS_PsDrawEdit, allsize=60, selfsize=0, cname=ClassName_AcPercLevel, sig=ClassSig_AcPercLevel, fields=ClassFields_AcPercLevel
-	CLASS	Class_AcDrawVari, CLASS_AcDrawVari, SNDRHY_Classes, proc=AcDrawVariProc, parent=CLASS_PsVariSelect, allsize=60, selfsize=4, cname=ClassName_AcDrawVari, sig=ClassSig_AcDrawVari, fields=ClassFields_AcDrawVari	# swvari:r
-	CLASS	Class_AcSndExpGroup, CLASS_AcSndExpGroup, SNDRHY_Classes, proc=AcSndExpGroupProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_AcSndExpGroup, sig=ClassSig_AcSndExpGroup, fields=ClassFields_AcSndExpGroup
-	CLASS	Class_AcSndExpVari, CLASS_AcSndExpVari, SNDRHY_Classes, proc=AcSndExpVariProc, parent=CLASS_AcSndVari, allsize=60, selfsize=0, cname=ClassName_AcSndExpVari, sig=ClassSig_AcSndExpVari, fields=ClassFields_AcSndExpVari
-	CLASS	Class_AcExpToggle, CLASS_AcExpToggle, SNDRHY_Classes, proc=AcExpToggleProc, parent=CLASS_PsWideToggle, allsize=52, selfsize=4, cname=ClassName_AcExpToggle, sig=ClassSig_AcExpToggle, fields=ClassFields_AcExpToggle	# index:A tag:A
-	CLASS	Class_AcSndExpWideES, CLASS_AcSndExpWideES, SNDRHY_Classes, proc=AcSndExpWideESProc, parent=CLASS_AcIndexWideES, allsize=52, selfsize=0, cname=ClassName_AcSndExpWideES, sig=ClassSig_AcSndExpWideES, fields=ClassFields_AcSndExpWideES
-	CLASS	Class_AcAbcToggle, CLASS_AcAbcToggle, SNDRHY_Classes, proc=AcAbcToggleProc, parent=CLASS_PsWideToggle, allsize=48, selfsize=0, cname=ClassName_AcAbcToggle, sig=ClassSig_AcAbcToggle, fields=ClassFields_AcAbcToggle
-	.space	24, 0x00
-
-# 4 Event names; an event id is (0x65 << 16) | its index
-SNDRHY_Events:
-	IDNAME	EV_WHOSELECTED, Str_EV_WHOSELECTED, SNDRHY_Events, 0x65
-	IDNAME	EV_ALLPAINTSNDEXP, Str_EV_ALLPAINTSNDEXP, SNDRHY_Events, 0x65
-	IDNAME	EV_SWOFFSNDEXP, Str_EV_SWOFFSNDEXP, SNDRHY_Events, 0x65
-	IDNAME	EV_SNDSELSWVARI, Str_EV_SNDSELSWVARI, SNDRHY_Events, 0x65
-	.space	4, 0x00
-
-# 3 Method names; an method id is (0x66 << 16) | its index
-SNDRHY_Methods:
-	IDNAME	MT_RefreshParam, Str_MT_RefreshParam, SNDRHY_Methods, 0x66
-	IDNAME	MT_PartVariPut, Str_MT_PartVariPut, SNDRHY_Methods, 0x66
-	IDNAME	MT_SndExpLedDisp, Str_MT_SndExpLedDisp, SNDRHY_Methods, 0x66
-	.space	4, 0x00
-
-# 31 Function procedures; a function id is (0x61 << 16) | its index (the names are the parallel table at slot 0x69)
-SNDRHY_Functions:
-	IDNAME	FN_AcRvariScreenProc, AcRvariScreenProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcRhyVariProc, AcRhyVariProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcRhyPageProc, AcRhyPageProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcRhyGroupProc, AcRhyGroupProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcRhyCmpVariProc, AcRhyCmpVariProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSvariScreenProc, AcSvariScreenProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndVariProc, AcSndVariProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndPageProc, AcSndPageProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndGroupProc, AcSndGroupProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndImageProc, AcSndImageProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcPartSelectProc, AcPartSelectProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcAcdnTypeSwProc, AcAcdnTypeSwProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcAcdnTabProc, AcAcdnTabProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcAcdnTypeProc, AcAcdnTypeProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawbarScreenProc, AcDrawbarScreenProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawbarProc, AcDrawbarProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcTremoloProc, AcTremoloProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcPerc223Proc, AcPerc223Proc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcPerc4Proc, AcPerc4Proc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawSetProc, AcDrawSetProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_PsDrawEditProc, PsDrawEditProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawAttackProc, AcDrawAttackProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawReleaseProc, AcDrawReleaseProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcPercDecayProc, AcPercDecayProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcPercLevelProc, AcPercLevelProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcDrawVariProc, AcDrawVariProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndExpGroupProc, AcSndExpGroupProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndExpVariProc, AcSndExpVariProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcExpToggleProc, AcExpToggleProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcSndExpWideESProc, AcSndExpWideESProc, SNDRHY_Functions, 0x61
-	IDNAME	FN_AcAbcToggleProc, AcAbcToggleProc, SNDRHY_Functions, 0x61
-	.space	4, 0x00
-
-SNDRHY_FunctionNames:
-	.long	FnName_AcRvariScreenProc
-	.long	FnName_AcRhyVariProc
-	.long	FnName_AcRhyPageProc
-	.long	FnName_AcRhyGroupProc
-	.long	FnName_AcRhyCmpVariProc
-	.long	FnName_AcSvariScreenProc
-	.long	FnName_AcSndVariProc
-	.long	FnName_AcSndPageProc
-	.long	FnName_AcSndGroupProc
-	.long	FnName_AcSndImageProc
-	.long	FnName_AcPartSelectProc
-	.long	FnName_AcAcdnTypeSwProc
-	.long	FnName_AcAcdnTabProc
-	.long	FnName_AcAcdnTypeProc
-	.long	FnName_AcDrawbarScreenProc
-	.long	FnName_AcDrawbarProc
-	.long	FnName_AcTremoloProc
-	.long	FnName_AcPerc223Proc
-	.long	FnName_AcPerc4Proc
-	.long	FnName_AcDrawSetProc
-	.long	FnName_PsDrawEditProc
-	.long	FnName_AcDrawAttackProc
-	.long	FnName_AcDrawReleaseProc
-	.long	FnName_AcPercDecayProc
-	.long	FnName_AcPercLevelProc
-	.long	FnName_AcDrawVariProc
-	.long	FnName_AcSndExpGroupProc
-	.long	FnName_AcSndExpVariProc
-	.long	FnName_AcExpToggleProc
-	.long	FnName_AcSndExpWideESProc
-	.long	FnName_AcAbcToggleProc
-.incbin_range "baserom/kn2400_program.rom", 0x17D848, 0x17D84C
-
-# 2 ApFunction procedures; a function id is (0x62 << 16) | its index (the names are the parallel table at slot 0x6a)
-SNDRHY_ApFunctions:
-	IDNAME	FN_SVariR12OctaveFunc, func_4865D00F, SNDRHY_ApFunctions, 0x62
-	IDNAME	FN_BitmapDrawsw, 0x4865D140, SNDRHY_ApFunctions, 0x62
-	.space	4, 0x00
-
-SNDRHY_ApFunctionNames:
-	.long	FnName_SVariR12OctaveFunc
-	.long	FnName_BitmapDrawsw
-.incbin_range "baserom/kn2400_program.rom", 0x17D860, 0x17D864
-
-# 3 MainFunction procedures; a function id is (0x63 << 16) | its index (the names are the parallel table at slot 0x6b)
-SNDRHY_MainFunctions:
-	IDNAME	FN_TtRvari, TtRvari, SNDRHY_MainFunctions, 0x63
-	IDNAME	FN_TtSvari, func_48659511, SNDRHY_MainFunctions, 0x63
-	IDNAME	FN_TtSedrawbar, 0x4865CAF2, SNDRHY_MainFunctions, 0x63
-	.space	4, 0x00
-
-SNDRHY_MainFunctionNames:
-	.long	FnName_TtRvari
-	.long	FnName_TtSvari
-	.long	FnName_TtSedrawbar
-.incbin_range "baserom/kn2400_program.rom", 0x17D880, 0x17D884
-
-# 177 objects of block SNDRHY; object <name> is index <name>_ix, id <name>_id = (0x60 << 16) | <name>_ix
-SNDRHY_Viewables:
-	OBJ	TtSvari, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_SndPage1, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_PartSelect1, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_SndGroup1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormal_SndVari10, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Drawbar1, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Box1, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Label_16_5_8_4_2_2_1_1_1, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Label_2_3, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Label_3_5, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_UserBitmap1, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Label_1_3, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawbar_Label_1_32, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_DrawRelease_RELEASE_TIME, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_PercDecay_DECAY, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_PercLevel_LEVEL, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_DrawAttack_ATTACK_TIME, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_IndexWideES1, SNDRHY_Viewables, 0x60
-	OBJ	SvariDrawSet_DrawVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Tremolo_FAST, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Perc223_2, SNDRHY_Viewables, 0x60
-	OBJ	Black223, SNDRHY_Viewables, 0x60
-	OBJ	White223, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Perc4_4, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Label_PERCUSSIVE, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Label_TONE, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_Label_TREMOLO, SNDRHY_Viewables, 0x60
-	OBJ	SvariPercTone_DrawSet_DRAWBAR_SETTING, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTypeSw1, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTypeSw2, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_Label_TYPE, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab1, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab2, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab3, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab4, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab5, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab6, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab7, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab8, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab9, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnTab10, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_AcdnType1, SNDRHY_Viewables, 0x60
-	OBJ	SvariAccordion_SndImage1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpVari10, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpWideES1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_Box1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_SndExpGroup1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_StrBox_GRP, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorer_AbcToggle_ALP, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemory_SndVari10, SNDRHY_Viewables, 0x60
-	OBJ	DrawbarWrite, SNDRHY_Viewables, 0x60
-	OBJ	DrawbarWrite_TitleMenu_WRITE, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari1, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari2, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari3, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari4, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari5, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari6, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari7, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari8, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari9, SNDRHY_Viewables, 0x60
-	OBJ	RvariNormal_RhyVari10, SNDRHY_Viewables, 0x60
-	OBJ	SNDRHY_TtRvari, SNDRHY_Viewables, 0x60
-	OBJ	SNDRHY_TtRvari_RhyPage1, SNDRHY_Viewables, 0x60
-	OBJ	SNDRHY_TtRvari_RhyGroup1, SNDRHY_Viewables, 0x60
-	OBJ	SNDRHY_TtRvari_TempoBox1, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari1, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari2, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari3, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari4, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari5, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari6, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari7, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari8, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari9, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyVari10, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyCmpVari1, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyCmpVari2, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyCmpVari3, SNDRHY_Viewables, 0x60
-	OBJ	RvariCustom_RhyCmpVari4, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyVari1, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyVari2, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyVari3, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyCmpVari1, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyCmpVari2, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyCmpVari3, SNDRHY_Viewables, 0x60
-	OBJ	RvariMemory_RhyCmpVari4, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar_ExitMode1, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar_FixWin1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_SndVari10, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_Box1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_MmmEditBox1, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_StrBox_OCTAVE, SNDRHY_Viewables, 0x60
-	OBJ	SvariNormalOct_IndexEditSw1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpVari10, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpWideES1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_Box1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_SndExpGroup1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_StrBox_GRP, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_AbcToggle_ALP, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_Box2, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_MmmEditBox1, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_StrBox_OCTAVE, SNDRHY_Viewables, 0x60
-	OBJ	SvariExplorerOct_IndexEditSw1, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari1, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari2, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari3, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari4, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari5, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari6, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari7, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari8, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari9, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_SndVari10, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_Box1, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_MmmEditBox1, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_StrBox_OCTAVE, SNDRHY_Viewables, 0x60
-	OBJ	SvariMemoryOct_IndexEditSw1, SNDRHY_Viewables, 0x60
-	.space	4, 0x00
-
-SNDRHY_ResNames:
-	.long	RN_TtSvari	# TtSvari
-	.long	RN_empty_174	# TtSvari_SndPage1
-	.long	RN_empty_175	# TtSvari_PartSelect1
-	.long	RN_empty_176	# TtSvari_SndGroup1
-	.long	RN_SvariNormal	# SvariNormal
-	.long	RN_empty_177	# SvariNormal_SndVari1
-	.long	RN_empty_178	# SvariNormal_SndVari2
-	.long	RN_empty_179	# SvariNormal_SndVari3
-	.long	RN_empty_180	# SvariNormal_SndVari4
-	.long	RN_empty_181	# SvariNormal_SndVari5
-	.long	RN_empty_182	# SvariNormal_SndVari6
-	.long	RN_empty_183	# SvariNormal_SndVari7
-	.long	RN_empty_184	# SvariNormal_SndVari8
-	.long	RN_empty_185	# SvariNormal_SndVari9
-	.long	RN_empty_186	# SvariNormal_SndVari10
-	.long	RN_SvariDrawbar	# SvariDrawbar
-	.long	RN_empty_187	# SvariDrawbar_Drawbar1
-	.long	RN_empty_188	# SvariDrawbar_Box1
-	.long	RN_empty_189	# SvariDrawbar_Label_16_5_8_4_2_2_1_1_1
-	.long	RN_empty_190	# SvariDrawbar_Label_2_3
-	.long	RN_empty_191	# SvariDrawbar_Label_3_5
-	.long	RN_empty_192	# SvariDrawbar_UserBitmap1
-	.long	RN_empty_193	# SvariDrawbar_Label_1_3
-	.long	RN_empty_194	# SvariDrawbar_Label_1_32
-	.long	RN_SvariDrawSet	# SvariDrawSet
-	.long	RN_empty_195	# SvariDrawSet_DrawRelease_RELEASE_TIME
-	.long	RN_empty_196	# SvariDrawSet_PercDecay_DECAY
-	.long	RN_empty_197	# SvariDrawSet_PercLevel_LEVEL
-	.long	RN_empty_198	# SvariDrawSet_DrawAttack_ATTACK_TIME
-	.long	RN_empty_199	# SvariDrawSet_IndexWideES1
-	.long	RN_empty_200	# SvariDrawSet_DrawVari1
-	.long	RN_SvariPercTone	# SvariPercTone
-	.long	RN_empty_201	# SvariPercTone_Tremolo_FAST
-	.long	RN_empty_202	# SvariPercTone_Perc223_2
-	.long	RN_Black223	# Black223
-	.long	RN_White223	# White223
-	.long	RN_empty_203	# SvariPercTone_Perc4_4
-	.long	RN_empty_204	# SvariPercTone_Label_PERCUSSIVE
-	.long	RN_empty_205	# SvariPercTone_Label_TONE
-	.long	RN_empty_206	# SvariPercTone_Label_TREMOLO
-	.long	RN_empty_207	# SvariPercTone_DrawSet_DRAWBAR_SETTING
-	.long	RN_SvariAccordion	# SvariAccordion
-	.long	RN_empty_208	# SvariAccordion_AcdnTypeSw1
-	.long	RN_empty_209	# SvariAccordion_AcdnTypeSw2
-	.long	RN_empty_210	# SvariAccordion_Label_TYPE
-	.long	RN_empty_211	# SvariAccordion_AcdnTab1
-	.long	RN_empty_212	# SvariAccordion_AcdnTab2
-	.long	RN_empty_213	# SvariAccordion_AcdnTab3
-	.long	RN_empty_214	# SvariAccordion_AcdnTab4
-	.long	RN_empty_215	# SvariAccordion_AcdnTab5
-	.long	RN_empty_216	# SvariAccordion_AcdnTab6
-	.long	RN_empty_217	# SvariAccordion_AcdnTab7
-	.long	RN_empty_218	# SvariAccordion_AcdnTab8
-	.long	RN_empty_219	# SvariAccordion_AcdnTab9
-	.long	RN_empty_220	# SvariAccordion_AcdnTab10
-	.long	RN_empty_221	# SvariAccordion_AcdnType1
-	.long	RN_empty_222	# SvariAccordion_SndImage1
-	.long	RN_SvariExplorer	# SvariExplorer
-	.long	RN_empty_223	# SvariExplorer_SndExpVari1
-	.long	RN_empty_224	# SvariExplorer_SndExpVari2
-	.long	RN_empty_225	# SvariExplorer_SndExpVari3
-	.long	RN_empty_226	# SvariExplorer_SndExpVari4
-	.long	RN_empty_227	# SvariExplorer_SndExpVari5
-	.long	RN_empty_228	# SvariExplorer_SndExpVari6
-	.long	RN_empty_229	# SvariExplorer_SndExpVari7
-	.long	RN_empty_230	# SvariExplorer_SndExpVari8
-	.long	RN_empty_231	# SvariExplorer_SndExpVari9
-	.long	RN_empty_232	# SvariExplorer_SndExpVari10
-	.long	RN_empty_233	# SvariExplorer_SndExpWideES1
-	.long	RN_empty_234	# SvariExplorer_Box1
-	.long	RN_empty_235	# SvariExplorer_SndExpGroup1
-	.long	RN_empty_236	# SvariExplorer_StrBox_GRP
-	.long	RN_empty_237	# SvariExplorer_AbcToggle_ALP
-	.long	RN_SvariMemory	# SvariMemory
-	.long	RN_empty_238	# SvariMemory_SndVari1
-	.long	RN_empty_239	# SvariMemory_SndVari2
-	.long	RN_empty_240	# SvariMemory_SndVari3
-	.long	RN_empty_241	# SvariMemory_SndVari4
-	.long	RN_empty_242	# SvariMemory_SndVari5
-	.long	RN_empty_243	# SvariMemory_SndVari6
-	.long	RN_empty_244	# SvariMemory_SndVari7
-	.long	RN_empty_245	# SvariMemory_SndVari8
-	.long	RN_empty_246	# SvariMemory_SndVari9
-	.long	RN_empty_247	# SvariMemory_SndVari10
-	.long	RN_DrawbarWrite	# DrawbarWrite
-	.long	RN_empty_248	# DrawbarWrite_TitleMenu_WRITE
-	.long	RN_RvariNormal	# RvariNormal
-	.long	RN_empty_249	# RvariNormal_RhyVari1
-	.long	RN_empty_250	# RvariNormal_RhyVari2
-	.long	RN_empty_251	# RvariNormal_RhyVari3
-	.long	RN_empty_252	# RvariNormal_RhyVari4
-	.long	RN_empty_253	# RvariNormal_RhyVari5
-	.long	RN_empty_254	# RvariNormal_RhyVari6
-	.long	RN_empty_255	# RvariNormal_RhyVari7
-	.long	RN_empty_256	# RvariNormal_RhyVari8
-	.long	RN_empty_257	# RvariNormal_RhyVari9
-	.long	RN_empty_258	# RvariNormal_RhyVari10
-	.long	RN_TtRvari	# SNDRHY_TtRvari
-	.long	RN_empty_259	# SNDRHY_TtRvari_RhyPage1
-	.long	RN_empty_260	# SNDRHY_TtRvari_RhyGroup1
-	.long	RN_empty_261	# SNDRHY_TtRvari_TempoBox1
-	.long	RN_RvariCustom	# RvariCustom
-	.long	RN_empty_262	# RvariCustom_RhyVari1
-	.long	RN_empty_263	# RvariCustom_RhyVari2
-	.long	RN_empty_264	# RvariCustom_RhyVari3
-	.long	RN_empty_265	# RvariCustom_RhyVari4
-	.long	RN_empty_266	# RvariCustom_RhyVari5
-	.long	RN_empty_267	# RvariCustom_RhyVari6
-	.long	RN_empty_268	# RvariCustom_RhyVari7
-	.long	RN_empty_269	# RvariCustom_RhyVari8
-	.long	RN_empty_270	# RvariCustom_RhyVari9
-	.long	RN_empty_271	# RvariCustom_RhyVari10
-	.long	RN_empty_272	# RvariCustom_RhyCmpVari1
-	.long	RN_empty_273	# RvariCustom_RhyCmpVari2
-	.long	RN_empty_274	# RvariCustom_RhyCmpVari3
-	.long	RN_empty_275	# RvariCustom_RhyCmpVari4
-	.long	RN_RvariMemory	# RvariMemory
-	.long	RN_empty_276	# RvariMemory_RhyVari1
-	.long	RN_empty_277	# RvariMemory_RhyVari2
-	.long	RN_empty_278	# RvariMemory_RhyVari3
-	.long	RN_empty_279	# RvariMemory_RhyCmpVari1
-	.long	RN_empty_280	# RvariMemory_RhyCmpVari2
-	.long	RN_empty_281	# RvariMemory_RhyCmpVari3
-	.long	RN_empty_282	# RvariMemory_RhyCmpVari4
-	.long	RN_TtSedrawbar	# TtSedrawbar
-	.long	RN_empty_283	# TtSedrawbar_ExitMode1
-	.long	RN_empty_284	# TtSedrawbar_FixWin1
-	.long	RN_SvariNormalOct	# SvariNormalOct
-	.long	RN_empty_285	# SvariNormalOct_SndVari1
-	.long	RN_empty_286	# SvariNormalOct_SndVari2
-	.long	RN_empty_287	# SvariNormalOct_SndVari3
-	.long	RN_empty_288	# SvariNormalOct_SndVari4
-	.long	RN_empty_289	# SvariNormalOct_SndVari5
-	.long	RN_empty_290	# SvariNormalOct_SndVari6
-	.long	RN_empty_291	# SvariNormalOct_SndVari7
-	.long	RN_empty_292	# SvariNormalOct_SndVari8
-	.long	RN_empty_293	# SvariNormalOct_SndVari9
-	.long	RN_empty_294	# SvariNormalOct_SndVari10
-	.long	RN_empty_295	# SvariNormalOct_Box1
-	.long	RN_empty_296	# SvariNormalOct_MmmEditBox1
-	.long	RN_empty_297	# SvariNormalOct_StrBox_OCTAVE
-	.long	RN_empty_298	# SvariNormalOct_IndexEditSw1
-	.long	RN_SvariExplorerOct	# SvariExplorerOct
-	.long	RN_empty_299	# SvariExplorerOct_SndExpVari1
-	.long	RN_empty_300	# SvariExplorerOct_SndExpVari2
-	.long	RN_empty_301	# SvariExplorerOct_SndExpVari3
-	.long	RN_empty_302	# SvariExplorerOct_SndExpVari4
-	.long	RN_empty_303	# SvariExplorerOct_SndExpVari5
-	.long	RN_empty_304	# SvariExplorerOct_SndExpVari6
-	.long	RN_empty_305	# SvariExplorerOct_SndExpVari7
-	.long	RN_empty_306	# SvariExplorerOct_SndExpVari8
-	.long	RN_empty_307	# SvariExplorerOct_SndExpVari9
-	.long	RN_empty_308	# SvariExplorerOct_SndExpVari10
-	.long	RN_empty_309	# SvariExplorerOct_SndExpWideES1
-	.long	RN_empty_310	# SvariExplorerOct_Box1
-	.long	RN_empty_311	# SvariExplorerOct_SndExpGroup1
-	.long	RN_empty_312	# SvariExplorerOct_StrBox_GRP
-	.long	RN_empty_313	# SvariExplorerOct_AbcToggle_ALP
-	.long	RN_empty_314	# SvariExplorerOct_Box2
-	.long	RN_empty_315	# SvariExplorerOct_MmmEditBox1
-	.long	RN_empty_316	# SvariExplorerOct_StrBox_OCTAVE
-	.long	RN_empty_317	# SvariExplorerOct_IndexEditSw1
-	.long	RN_SvariMemoryOct	# SvariMemoryOct
-	.long	RN_empty_318	# SvariMemoryOct_SndVari1
-	.long	RN_empty_319	# SvariMemoryOct_SndVari2
-	.long	RN_empty_320	# SvariMemoryOct_SndVari3
-	.long	RN_empty_321	# SvariMemoryOct_SndVari4
-	.long	RN_empty_322	# SvariMemoryOct_SndVari5
-	.long	RN_empty_323	# SvariMemoryOct_SndVari6
-	.long	RN_empty_324	# SvariMemoryOct_SndVari7
-	.long	RN_empty_325	# SvariMemoryOct_SndVari8
-	.long	RN_empty_326	# SvariMemoryOct_SndVari9
-	.long	RN_empty_327	# SvariMemoryOct_SndVari10
-	.long	RN_empty_328	# SvariMemoryOct_Box1
-	.long	RN_empty_329	# SvariMemoryOct_MmmEditBox1
-	.long	RN_empty_330	# SvariMemoryOct_StrBox_OCTAVE
-	.long	RN_empty_331	# SvariMemoryOct_IndexEditSw1
-.incbin_range "baserom/kn2400_program.rom", 0x17DE10, 0x17DE14
-
-# 5 classes; a class id is (0x84 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ FAVORITE_Classes_SLOT, 0x84
-FAVORITE_Classes:
-	CLASS	Class_AcFavorite, CLASS_AcFavorite, FAVORITE_Classes, proc=AcFavoriteProc, parent=CLASS_PsMenuBox, allsize=48, selfsize=0, cname=ClassName_AcFavorite, sig=ClassSig_AcFavorite, fields=ClassFields_AcFavorite
-	CLASS	Class_AcFavBank, CLASS_AcFavBank, FAVORITE_Classes, proc=AcFavBankProc, parent=CLASS_PsListBox, allsize=48, selfsize=0, cname=ClassName_AcFavBank, sig=ClassSig_AcFavBank, fields=ClassFields_AcFavBank
-	CLASS	Class_AcFavCategory, CLASS_AcFavCategory, FAVORITE_Classes, proc=AcFavCategoryProc, parent=CLASS_PsListBox, allsize=48, selfsize=0, cname=ClassName_AcFavCategory, sig=ClassSig_AcFavCategory, fields=ClassFields_AcFavCategory
-	CLASS	Class_AcFavItem, CLASS_AcFavItem, FAVORITE_Classes, proc=AcFavItemProc, parent=CLASS_PsListBox, allsize=48, selfsize=0, cname=ClassName_AcFavItem, sig=ClassSig_AcFavItem, fields=ClassFields_AcFavItem
-	CLASS	Class_AcFavScreen, CLASS_AcFavScreen, FAVORITE_Classes, proc=AcFavScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_AcFavScreen, sig=ClassSig_AcFavScreen, fields=ClassFields_AcFavScreen
-	.space	24, 0x00
-
-# 2 Event names; an event id is (0x85 << 16) | its index
-FAVORITE_Events:
-	IDNAME	EV_FAVBANK, Str_EV_FAVBANK, FAVORITE_Events, 0x85
-	IDNAME	EV_FAVCATEGORY, Str_EV_FAVCATEGORY, FAVORITE_Events, 0x85
-	.space	4, 0x00
-
-# 6 Method names; an method id is (0x86 << 16) | its index
-FAVORITE_Methods:
-	IDNAME	MT_GetFavParam, Str_MT_GetFavParam, FAVORITE_Methods, 0x86
-	IDNAME	MT_StoreFavMem, Str_MT_StoreFavMem, FAVORITE_Methods, 0x86
-	IDNAME	MT_FavMenuMain, Str_MT_FavMenuMain, FAVORITE_Methods, 0x86
-	IDNAME	MT_StyleOut, Str_MT_StyleOut, FAVORITE_Methods, 0x86
-	IDNAME	MT_GetItemString, Str_MT_GetItemString, FAVORITE_Methods, 0x86
-	IDNAME	MT_GetFavFunc, Str_MT_GetFavFunc, FAVORITE_Methods, 0x86
-	.space	4, 0x00
-
-# 5 Function procedures; a function id is (0x81 << 16) | its index (the names are the parallel table at slot 0x89)
-FAVORITE_Functions:
-	IDNAME	FN_AcFavoriteProc, AcFavoriteProc, FAVORITE_Functions, 0x81
-	IDNAME	FN_AcFavBankProc, AcFavBankProc, FAVORITE_Functions, 0x81
-	IDNAME	FN_AcFavCategoryProc, AcFavCategoryProc, FAVORITE_Functions, 0x81
-	IDNAME	FN_AcFavItemProc, AcFavItemProc, FAVORITE_Functions, 0x81
-	IDNAME	FN_AcFavScreenProc, AcFavScreenProc, FAVORITE_Functions, 0x81
-	.space	4, 0x00
-
-FAVORITE_FunctionNames:
-	.long	FnName_AcFavoriteProc
-	.long	FnName_AcFavBankProc
-	.long	FnName_AcFavCategoryProc
-	.long	FnName_AcFavItemProc
-	.long	FnName_AcFavScreenProc
-.incbin_range "baserom/kn2400_program.rom", 0x17DEF8, 0x17DEFC
-
-# 4 ApFunction procedures; a function id is (0x82 << 16) | its index (the names are the parallel table at slot 0x8a)
-FAVORITE_ApFunctions:
-	IDNAME	FN_FavSetFunc, FavSetFunc, FAVORITE_ApFunctions, 0x82
-	IDNAME	FN_FavBankNamingFunc, FavBankNamingFunc, FAVORITE_ApFunctions, 0x82
-	IDNAME	FN_FavSetText, FavSetText, FAVORITE_ApFunctions, 0x82
-	IDNAME	FN_FavSetText2, FavSetText2, FAVORITE_ApFunctions, 0x82
-	.space	4, 0x00
-
-FAVORITE_ApFunctionNames:
-	.long	FnName_FavSetFunc
-	.long	FnName_FavBankNamingFunc
-	.long	FnName_FavSetText
-	.long	FnName_FavSetText2
-.incbin_range "baserom/kn2400_program.rom", 0x17DF20, 0x17DF24
-
-# 2 MainFunction procedures; a function id is (0x83 << 16) | its index (the names are the parallel table at slot 0x8b)
-FAVORITE_MainFunctions:
-	IDNAME	FN_TtFavorite, func_4865D3C2, FAVORITE_MainFunctions, 0x83
-	IDNAME	FN_TtCtFavorite, 0x4865EA4E, FAVORITE_MainFunctions, 0x83
-	.space	4, 0x00
-
-FAVORITE_MainFunctionNames:
-	.long	FnName_TtFavorite
-	.long	FnName_TtCtFavorite
-.incbin_range "baserom/kn2400_program.rom", 0x17DF38, 0x17DF3C
-
-# 87 objects of block FAVORITE; object <name> is index <name>_ix, id <name>_id = (0x80 << 16) | <name>_ix
-FAVORITE_Viewables:
-	OBJ	TtFavorite, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite5, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite6, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite7, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite8, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite9, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite10, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_FavBank1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavBank1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_3, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_4, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_ScreenMenu_BANK_NAMING, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FuncEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FuncEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_SET, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexWideES1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexWideES2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavCategory1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavItem1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_CATEGORY, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_ITEM, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Box1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexPushSw1, FAVORITE_Viewables, 0x80
-	OBJ	FavBankNaming, FAVORITE_Viewables, 0x80
-	OBJ	FavBankNaming_Naming1, FAVORITE_Viewables, 0x80
-	OBJ	FavBankNaming_FuncEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	FavBankNaming_FuncEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite1, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite2, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite3, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite4, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite5, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite6, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite7, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite8, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_IndexPushSw1, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Label_SET, FAVORITE_Viewables, 0x80
-	OBJ	FavPreview_Favorite9, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_FuncEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_FuncEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_IndexWideES1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_FavCategory1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Label_CATEGORY, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Label_ITEM, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Box1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_LanguageText1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_IndexPushSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Label_SET, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_IndexWideES2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Label_1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_LanguageText2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_Label_2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavoritePR_FavItem1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite5, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite6, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite7, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite8, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite9, FAVORITE_Viewables, 0x80
-	OBJ	TtFavoritePR_Favorite10, FAVORITE_Viewables, 0x80
-	.space	4, 0x00
-
-FAVORITE_ResNames:
-	.long	RN_TtFavorite	# TtFavorite
-	.long	RN_empty_595	# TtFavorite_Favorite1
-	.long	RN_empty_596	# TtFavorite_Favorite2
-	.long	RN_empty_597	# TtFavorite_Favorite3
-	.long	RN_empty_598	# TtFavorite_Favorite4
-	.long	RN_empty_599	# TtFavorite_Favorite5
-	.long	RN_empty_600	# TtFavorite_Favorite6
-	.long	RN_empty_601	# TtFavorite_Favorite7
-	.long	RN_empty_602	# TtFavorite_Favorite8
-	.long	RN_empty_603	# TtFavorite_Favorite9
-	.long	RN_empty_604	# TtFavorite_Favorite10
-	.long	RN_empty_605	# TtFavorite_IndexEditSw1
-	.long	RN_empty_606	# TtFavorite_Label_1
-	.long	RN_empty_607	# TtFavorite_IndexEditSw2
-	.long	RN_empty_608	# TtFavorite_Label_2
-	.long	RN_empty_609	# TtFavorite_IndexEditSw3
-	.long	RN_empty_610	# TtFavorite_Label_3
-	.long	RN_empty_611	# TtFavorite_IndexEditSw4
-	.long	RN_empty_612	# TtFavorite_Label_4
-	.long	RN_empty_613	# TtFavorite_FavBank1
-	.long	RN_empty_614	# TtFavorite_Label_BANK
-	.long	RN_TtCtFavorite	# TtCtFavorite
-	.long	RN_empty_615	# TtCtFavorite_FavBank1
-	.long	RN_empty_616	# TtCtFavorite_IndexEditSw1
-	.long	RN_empty_617	# TtCtFavorite_Label_1
-	.long	RN_empty_618	# TtCtFavorite_IndexEditSw2
-	.long	RN_empty_619	# TtCtFavorite_Label_2
-	.long	RN_empty_620	# TtCtFavorite_IndexEditSw3
-	.long	RN_empty_621	# TtCtFavorite_Label_3
-	.long	RN_empty_622	# TtCtFavorite_IndexEditSw4
-	.long	RN_empty_623	# TtCtFavorite_Label_4
-	.long	RN_empty_624	# TtCtFavorite_ScreenMenu_BANK_NAMING
-	.long	RN_empty_625	# TtCtFavorite_Label_BANK
-	.long	RN_empty_626	# TtCtFavorite_FuncEditSw1
-	.long	RN_empty_627	# TtCtFavorite_FuncEditSw2
-	.long	RN_empty_628	# TtCtFavorite_Label_SET
-	.long	RN_empty_629	# TtCtFavorite_IndexWideES1
-	.long	RN_empty_630	# TtCtFavorite_IndexWideES2
-	.long	RN_empty_631	# TtCtFavorite_FavCategory1
-	.long	RN_empty_632	# TtCtFavorite_FavItem1
-	.long	RN_empty_633	# TtCtFavorite_Label_CATEGORY
-	.long	RN_empty_634	# TtCtFavorite_Label_ITEM
-	.long	RN_empty_635	# TtCtFavorite_Box1
-	.long	RN_empty_636	# TtCtFavorite_IndexPushSw1
-	.long	RN_FavBankNaming	# FavBankNaming
-	.long	RN_empty_637	# FavBankNaming_Naming1
-	.long	RN_empty_638	# FavBankNaming_FuncEditSw1
-	.long	RN_empty_639	# FavBankNaming_FuncEditSw2
-	.long	RN_FavPreview	# FavPreview
-	.long	RN_empty_640	# FavPreview_Favorite1
-	.long	RN_empty_641	# FavPreview_Favorite2
-	.long	RN_empty_642	# FavPreview_Favorite3
-	.long	RN_empty_643	# FavPreview_Favorite4
-	.long	RN_empty_644	# FavPreview_Favorite5
-	.long	RN_empty_645	# FavPreview_Favorite6
-	.long	RN_empty_646	# FavPreview_Favorite7
-	.long	RN_empty_647	# FavPreview_Favorite8
-	.long	RN_empty_648	# FavPreview_IndexPushSw1
-	.long	RN_empty_649	# FavPreview_Label_SET
-	.long	RN_empty_650	# FavPreview_Favorite9
-	.long	RN_TtCtFavoritePR	# TtCtFavoritePR
-	.long	RN_empty_651	# TtCtFavoritePR_FuncEditSw1
-	.long	RN_empty_652	# TtCtFavoritePR_FuncEditSw2
-	.long	RN_empty_653	# TtCtFavoritePR_IndexWideES1
-	.long	RN_empty_654	# TtCtFavoritePR_FavCategory1
-	.long	RN_empty_655	# TtCtFavoritePR_Label_CATEGORY
-	.long	RN_empty_656	# TtCtFavoritePR_Label_ITEM
-	.long	RN_empty_657	# TtCtFavoritePR_Box1
-	.long	RN_empty_658	# TtCtFavoritePR_LanguageText1
-	.long	RN_empty_659	# TtCtFavoritePR_IndexPushSw1
-	.long	RN_empty_660	# TtCtFavoritePR_Label_SET
-	.long	RN_empty_661	# TtCtFavoritePR_IndexWideES2
-	.long	RN_empty_662	# TtCtFavoritePR_Label_1
-	.long	RN_empty_663	# TtCtFavoritePR_LanguageText2
-	.long	RN_empty_664	# TtCtFavoritePR_Label_2
-	.long	RN_empty_665	# TtCtFavoritePR_FavItem1
-	.long	RN_TtFavoritePR	# TtFavoritePR
-	.long	RN_empty_666	# TtFavoritePR_Favorite1
-	.long	RN_empty_667	# TtFavoritePR_Favorite2
-	.long	RN_empty_668	# TtFavoritePR_Favorite3
-	.long	RN_empty_669	# TtFavoritePR_Favorite4
-	.long	RN_empty_670	# TtFavoritePR_Favorite5
-	.long	RN_empty_671	# TtFavoritePR_Favorite6
-	.long	RN_empty_672	# TtFavoritePR_Favorite7
-	.long	RN_empty_673	# TtFavoritePR_Favorite8
-	.long	RN_empty_674	# TtFavoritePR_Favorite9
-	.long	RN_empty_675	# TtFavoritePR_Favorite10
-.incbin_range "baserom/kn2400_program.rom", 0x17E1F8, 0x17E1FC
-
-# 10 classes; a class id is (0x104 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ DIAG_Classes_SLOT, 0x104
-DIAG_Classes:
-	CLASS	Class_StestWindow, CLASS_StestWindow, DIAG_Classes, proc=StestWindowProc, parent=CLASS_Window, allsize=44, selfsize=0, cname=ClassName_StestWindow, sig=ClassSig_StestWindow, fields=ClassFields_StestWindow
-	CLASS	Class_SineWaveWindow, CLASS_SineWaveWindow, DIAG_Classes, proc=SineWaveWindowProc, parent=CLASS_StestWindow, allsize=64, selfsize=20, cname=ClassName_SineWaveWindow, sig=ClassSig_SineWaveWindow, fields=ClassFields_SineWaveWindow	# func:k font:c fontcolor:] nowswno:m oldswno:m
-	CLASS	Class_AcItimatuWindow, CLASS_AcItimatuWindow, DIAG_Classes, proc=AcItimatuWindowProc, parent=CLASS_StestWindow, allsize=44, selfsize=0, cname=ClassName_AcItimatuWindow, sig=ClassSig_AcItimatuWindow, fields=ClassFields_AcItimatuWindow
-	CLASS	Class_AcTestMenuPage, CLASS_AcTestMenuPage, DIAG_Classes, proc=AcTestMenuPageProc, parent=CLASS_PsPageBox, allsize=40, selfsize=4, cname=ClassName_AcTestMenuPage, sig=ClassSig_AcTestMenuPage, fields=ClassFields_AcTestMenuPage	# pagemin:A pagemax:A
-	CLASS	Class_InOutTestWindow, CLASS_InOutTestWindow, DIAG_Classes, proc=InOutTestWindowProc, parent=CLASS_StestWindow, allsize=64, selfsize=20, cname=ClassName_InOutTestWindow, sig=ClassSig_InOutTestWindow, fields=ClassFields_InOutTestWindow	# func:k font:c fontcolor:] nowswno:m oldswno:m
-	CLASS	Class_OKNGParaBox, CLASS_OKNGParaBox, DIAG_Classes, proc=OKNGParaBoxProc, parent=CLASS_PsParaBox, allsize=44, selfsize=4, cname=ClassName_OKNGParaBox, sig=ClassSig_OKNGParaBox, fields=ClassFields_OKNGParaBox	# okng:r
-	CLASS	Class_AllOKNGParaBox, CLASS_AllOKNGParaBox, DIAG_Classes, proc=AllOKNGParaBoxProc, parent=CLASS_OKNGParaBox, allsize=44, selfsize=0, cname=ClassName_AllOKNGParaBox, sig=ClassSig_AllOKNGParaBox, fields=ClassFields_AllOKNGParaBox
-	CLASS	Class_AcFuncWideToggle, CLASS_AcFuncWideToggle, DIAG_Classes, proc=AcFuncWideToggleProc, parent=CLASS_PsWideToggle, allsize=56, selfsize=8, cname=ClassName_AcFuncWideToggle, sig=ClassSig_AcFuncWideToggle, fields=ClassFields_AcFuncWideToggle	# index:A tag:A func:j
-	CLASS	Class_SineWaveTextBox, CLASS_SineWaveTextBox, DIAG_Classes, proc=SineWaveTextBoxProc, parent=CLASS_VwTextBox, allsize=52, selfsize=2, cname=ClassName_SineWaveTextBox, sig=ClassSig_SineWaveTextBox, fields=ClassFields_SineWaveTextBox	# swindex:A
-	CLASS	Class_AcSelfContrastEdit, CLASS_AcSelfContrastEdit, DIAG_Classes, proc=AcSelfContrastEditProc, parent=CLASS_PsEditBox, allsize=56, selfsize=0, cname=ClassName_AcSelfContrastEdit, sig=ClassSig_AcSelfContrastEdit, fields=ClassFields_AcSelfContrastEdit
-	.space	24, 0x00
-
-# 5 Event names; an event id is (0x105 << 16) | its index
-DIAG_Events:
-	IDNAME	EV_DSPCHECK, Str_EV_DSPCHECK, DIAG_Events, 0x105
-	IDNAME	EV_TESTDISK, Str_EV_TESTDISK, DIAG_Events, 0x105
-	IDNAME	EV_TESTSD, Str_EV_TESTSD, DIAG_Events, 0x105
-	IDNAME	EV_SetSineWave, Str_EV_SetSineWave, DIAG_Events, 0x105
-	IDNAME	EV_WRITESHOW, Str_EV_WRITESHOW, DIAG_Events, 0x105
-	.space	4, 0x00
-
-# 36 Method names; an method id is (0x106 << 16) | its index
-DIAG_Methods:
-	IDNAME	MT_RomDev_ExeSwIn, Str_MT_RomDev_ExeSwIn, DIAG_Methods, 0x106
-	IDNAME	MT_RamDev_ExeSwIn, Str_MT_RamDev_ExeSwIn, DIAG_Methods, 0x106
-	IDNAME	MT_OthDev_ExeSwIn, Str_MT_OthDev_ExeSwIn, DIAG_Methods, 0x106
-	IDNAME	MT_FdCheckStart, Str_MT_FdCheckStart, DIAG_Methods, 0x106
-	IDNAME	MT_FdCheckStop, Str_MT_FdCheckStop, DIAG_Methods, 0x106
-	IDNAME	MT_CpParaInit, Str_MT_CpParaInit, DIAG_Methods, 0x106
-	IDNAME	MT_Rgbwb, Str_MT_Rgbwb, DIAG_Methods, 0x106
-	IDNAME	MT_Crosstalk, Str_MT_Crosstalk, DIAG_Methods, 0x106
-	IDNAME	MT_Sample, Str_MT_Sample, DIAG_Methods, 0x106
-	IDNAME	MT_Contrast, Str_MT_Contrast, DIAG_Methods, 0x106
-	IDNAME	MT_VideoOut, Str_MT_VideoOut, DIAG_Methods, 0x106
-	IDNAME	MT_VideoOutWrite, Str_MT_VideoOutWrite, DIAG_Methods, 0x106
-	IDNAME	MT_SvariIni, Str_MT_SvariIni, DIAG_Methods, 0x106
-	IDNAME	MT_SvariSet, Str_MT_SvariSet, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO, Str_MT_KEYINFO, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO1, Str_MT_KEYINFO1, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO2, Str_MT_KEYINFO2, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO3, Str_MT_KEYINFO3, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO4, Str_MT_KEYINFO4, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO5, Str_MT_KEYINFO5, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO6, Str_MT_KEYINFO6, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO7, Str_MT_KEYINFO7, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO8, Str_MT_KEYINFO8, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO9, Str_MT_KEYINFO9, DIAG_Methods, 0x106
-	IDNAME	MT_KEYINFO10, Str_MT_KEYINFO10, DIAG_Methods, 0x106
-	IDNAME	MT_MICCK, Str_MT_MICCK, DIAG_Methods, 0x106
-	IDNAME	MT_NOTEOFF, Str_MT_NOTEOFF, DIAG_Methods, 0x106
-	IDNAME	MT_MD8INI, Str_MT_MD8INI, DIAG_Methods, 0x106
-	IDNAME	MT_SDInit, Str_MT_SDInit, DIAG_Methods, 0x106
-	IDNAME	MT_SDStart, Str_MT_SDStart, DIAG_Methods, 0x106
-	IDNAME	MT_SDStop, Str_MT_SDStop, DIAG_Methods, 0x106
-	IDNAME	MT_SDAudioTest, Str_MT_SDAudioTest, DIAG_Methods, 0x106
-	IDNAME	MT_SetOKNG, Str_MT_SetOKNG, DIAG_Methods, 0x106
-	IDNAME	MT_InitContrast, Str_MT_InitContrast, DIAG_Methods, 0x106
-	IDNAME	MT_SetContrast, Str_MT_SetContrast, DIAG_Methods, 0x106
-	IDNAME	MT_WriteContrast, Str_MT_WriteContrast, DIAG_Methods, 0x106
-	.space	4, 0x00
-
-# 10 Function procedures; a function id is (0x101 << 16) | its index (the names are the parallel table at slot 0x109)
-DIAG_Functions:
-	IDNAME	FN_InOutTestWindowProc, InOutTestWindowProc, DIAG_Functions, 0x101
-	IDNAME	FN_StestWindowProc, StestWindowProc, DIAG_Functions, 0x101
-	IDNAME	FN_SineWaveWindowProc, SineWaveWindowProc, DIAG_Functions, 0x101
-	IDNAME	FN_AcItimatuWindowProc, AcItimatuWindowProc, DIAG_Functions, 0x101
-	IDNAME	FN_AcTestMenuPageProc, AcTestMenuPageProc, DIAG_Functions, 0x101
-	IDNAME	FN_OKNGParaBoxProc, OKNGParaBoxProc, DIAG_Functions, 0x101
-	IDNAME	FN_AllOKNGParaBoxProc, AllOKNGParaBoxProc, DIAG_Functions, 0x101
-	IDNAME	FN_AcFuncWideToggleProc, AcFuncWideToggleProc, DIAG_Functions, 0x101
-	IDNAME	FN_SineWaveTextBoxProc, SineWaveTextBoxProc, DIAG_Functions, 0x101
-	IDNAME	FN_AcSelfContrastEditProc, AcSelfContrastEditProc, DIAG_Functions, 0x101
-	.space	4, 0x00
-
-DIAG_FunctionNames:
-	.long	FnName_InOutTestWindowProc
-	.long	FnName_StestWindowProc
-	.long	FnName_SineWaveWindowProc
-	.long	FnName_AcItimatuWindowProc
-	.long	FnName_AcTestMenuPageProc
-	.long	FnName_OKNGParaBoxProc
-	.long	FnName_AllOKNGParaBoxProc
-	.long	FnName_AcFuncWideToggleProc
-	.long	FnName_SineWaveTextBoxProc
-	.long	FnName_AcSelfContrastEditProc
-.incbin_range "baserom/kn2400_program.rom", 0x17E404, 0x17E408
-
-# 29 ApFunction procedures; a function id is (0x102 << 16) | its index (the names are the parallel table at slot 0x10a)
-DIAG_ApFunctions:
-	IDNAME	FN_RomTestRunFunc, RomTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_RamTestRunFunc, RamTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_OthDeviceTestRunFunc, OthDeviceTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_DspTestFunc, DspTestFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_DspShowHideFunc, DspShowHideFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_FdTestRunFunc, FdTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_FdTestStopFunc, FdTestStopFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_FdIoFunc, FdIoFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_CpRamEditCheck, CpRamEditCheck, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestRgbwbRunFunc, TestRgbwbRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestCrosstarlRunFunc, TestCrosstarlRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestSampleRunFunc, TestSampleRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestContrastRunFunc, TestContrastRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestVideoOutRunFunc, TestVideoOutRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestVideoOutCatch, TestVideoOutCatch, DIAG_ApFunctions, 0x102
-	IDNAME	FN_BassPedalSw, BassPedalSw, DIAG_ApFunctions, 0x102
-	IDNAME	FN_MidiIoCatch, MidiIoCatch, DIAG_ApFunctions, 0x102
-	IDNAME	FN_WaveRomTestRunFunc, WaveRomTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_FDCstopBitmapCheck, FDCstopBitmapCheck, DIAG_ApFunctions, 0x102
-	IDNAME	FN_SineWaveFilter, SineWaveFilter, DIAG_ApFunctions, 0x102
-	IDNAME	FN_InOutTestFilter, InOutTestFilter, DIAG_ApFunctions, 0x102
-	IDNAME	FN_LEDHideOffFunc, LEDHideOffFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_SDTestStartFunc, SDTestStartFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_SDTestStopFunc, SDTestStopFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_TestSDAudioCatch, TestSDAudioCatch, DIAG_ApFunctions, 0x102
-	IDNAME	FN_SdCover, SdCover, DIAG_ApFunctions, 0x102
-	IDNAME	FN_SdTestFilter, SdTestFilter, DIAG_ApFunctions, 0x102
-	IDNAME	FN_ApSineSweepTestRunFunc, ApSineSweepTestRunFunc, DIAG_ApFunctions, 0x102
-	IDNAME	FN_ContrastSwFlagCheck, ContrastSwFlagCheck, DIAG_ApFunctions, 0x102
-	.space	4, 0x00
-
-DIAG_ApFunctionNames:
-	.long	FnName_RomTestRunFunc
-	.long	FnName_RamTestRunFunc
-	.long	FnName_OthDeviceTestRunFunc
-	.long	FnName_DspTestFunc
-	.long	FnName_DspShowHideFunc
-	.long	FnName_FdTestRunFunc
-	.long	FnName_FdTestStopFunc
-	.long	FnName_FdIoFunc
-	.long	FnName_CpRamEditCheck
-	.long	FnName_TestRgbwbRunFunc
-	.long	FnName_TestCrosstarlRunFunc
-	.long	FnName_TestSampleRunFunc
-	.long	FnName_TestContrastRunFunc
-	.long	FnName_TestVideoOutRunFunc
-	.long	FnName_TestVideoOutCatch
-	.long	FnName_BassPedalSw
-	.long	FnName_MidiIoCatch
-	.long	FnName_WaveRomTestRunFunc
-	.long	FnName_FDCstopBitmapCheck
-	.long	FnName_SineWaveFilter
-	.long	FnName_InOutTestFilter
-	.long	FnName_LEDHideOffFunc
-	.long	FnName_SDTestStartFunc
-	.long	FnName_SDTestStopFunc
-	.long	FnName_TestSDAudioCatch
-	.long	FnName_SdCover
-	.long	FnName_SdTestFilter
-	.long	FnName_ApSineSweepTestRunFunc
-	.long	FnName_ContrastSwFlagCheck
-.incbin_range "baserom/kn2400_program.rom", 0x17E4F4, 0x17E4F8
-
-# 24 MainFunction procedures; a function id is (0x103 << 16) | its index (the names are the parallel table at slot 0x10b)
-DIAG_MainFunctions:
-	IDNAME	FN_MainRomTestFunc, MainRomTestFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainRamTestFunc, MainRamTestFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainDeviceTestFunc, MainDeviceTestFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainDspCheck, MainDspCheck, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestDiskFunc, TestDiskFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestRgbwbFunc, TestRgbwbFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestCrosstalkFunc, TestCrosstalkFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestSampleFunc, TestSampleFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestContrastFunc, TestContrastFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestVideoOutFunc, TestVideoOutFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestMICFunc, TestMICFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainWaveRomTestFunc, MainWaveRomTestFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainSvariIni, MainSvariIni, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainSvariSet, MainSvariSet, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test2Func, Test2Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test3Func, Test3Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test4Func, Test4Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test5Func, Test5Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test6Func, Test6Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_Test7Func, Test7Func, DIAG_MainFunctions, 0x103
-	IDNAME	FN_TestModeFunc, TestModeFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainCpCheck, MainCpCheck, DIAG_MainFunctions, 0x103
-	IDNAME	FN_SineSweepTestRunFunc, SineSweepTestRunFunc, DIAG_MainFunctions, 0x103
-	IDNAME	FN_MainSDTestFunc, MainSDTestFunc, DIAG_MainFunctions, 0x103
-	.space	4, 0x00
-
-DIAG_MainFunctionNames:
-	.long	FnName_MainRomTestFunc
-	.long	FnName_MainRamTestFunc
-	.long	FnName_MainDeviceTestFunc
-	.long	FnName_MainDspCheck
-	.long	FnName_TestDiskFunc
-	.long	FnName_TestRgbwbFunc
-	.long	FnName_TestCrosstalkFunc
-	.long	FnName_TestSampleFunc
-	.long	FnName_TestContrastFunc
-	.long	FnName_TestVideoOutFunc
-	.long	FnName_TestMICFunc
-	.long	FnName_MainWaveRomTestFunc
-	.long	FnName_MainSvariIni
-	.long	FnName_MainSvariSet
-	.long	FnName_Test2Func
-	.long	FnName_Test3Func
-	.long	FnName_Test4Func
-	.long	FnName_Test5Func
-	.long	FnName_Test6Func
-	.long	FnName_Test7Func
-	.long	FnName_TestModeFunc
-	.long	FnName_MainCpCheck
-	.long	FnName_SineSweepTestRunFunc
-	.long	FnName_MainSDTestFunc
-.incbin_range "baserom/kn2400_program.rom", 0x17E5BC, 0x17E5C0
-
-# 346 objects of block DIAG; object <name> is index <name>_ix, id <name>_id = (0x100 << 16) | <name>_ix
-DIAG_Viewables:
-	OBJ	stest1, DIAG_Viewables, 0x100
-	OBJ	test1_ram, DIAG_Viewables, 0x100
-	OBJ	test1_ram_Label_BACKUP_MEMORY_SRAM, DIAG_Viewables, 0x100
-	OBJ	test1_ram_Label_may_be_broken, DIAG_Viewables, 0x100
-	OBJ	test1_rhyrom, DIAG_Viewables, 0x100
-	OBJ	test1_rhyrom_Label_RHYTHM_PATTERN_ROM, DIAG_Viewables, 0x100
-	OBJ	test1_rhyrom_Label_may_be_broken, DIAG_Viewables, 0x100
-	OBJ	test1_cpu, DIAG_Viewables, 0x100
-	OBJ	test1_cpu_Label_ERROR_in_CPU_data, DIAG_Viewables, 0x100
-	OBJ	test1_cpu_Label_transmission, DIAG_Viewables, 0x100
-	OBJ	stest2, DIAG_Viewables, 0x100
-	OBJ	stest2_TextBox_Please_check_by_the, DIAG_Viewables, 0x100
-	OBJ	stest2_Label_CPU_of_CPL, DIAG_Viewables, 0x100
-	OBJ	stest2_Label_it_is_better_to_chec, DIAG_Viewables, 0x100
-	OBJ	stest2_Label_If_both_CPU_are_NO, DIAG_Viewables, 0x100
-	OBJ	stest2_Label_RESULT_CPU_of_CPR, DIAG_Viewables, 0x100
-	OBJ	TEST2OKOK, DIAG_Viewables, 0x100
-	OBJ	TEST2OKOK_Label_OK, DIAG_Viewables, 0x100
-	OBJ	TEST2OKOK_Label_OK2, DIAG_Viewables, 0x100
-	OBJ	TEST2NGNG, DIAG_Viewables, 0x100
-	OBJ	TEST2NGNG_Label_NG, DIAG_Viewables, 0x100
-	OBJ	TEST2NGNG_Label_NG2, DIAG_Viewables, 0x100
-	OBJ	TEST2OKNG, DIAG_Viewables, 0x100
-	OBJ	TEST2OKNG_Label_OK, DIAG_Viewables, 0x100
-	OBJ	TEST2OKNG_Label_NG, DIAG_Viewables, 0x100
-	OBJ	TEST2NGOK, DIAG_Viewables, 0x100
-	OBJ	TEST2NGOK_Label_NG, DIAG_Viewables, 0x100
-	OBJ	TEST2NGOK_Label_OK, DIAG_Viewables, 0x100
-	OBJ	DIAG_TtlScreen_CHECK_by_SINE_WAVE, DIAG_Viewables, 0x100
-	OBJ	stest3, DIAG_Viewables, 0x100
-	OBJ	stest3_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	stest3_FixWin1, DIAG_Viewables, 0x100
-	OBJ	sinewavetest, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_FuncEditSw1, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_Label_AUTO, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_1_SINE_WAVE_at_FULLl, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_2_GENERATOR_LSI_PAN, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_3_HIGH_SOUND_check_2, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_4_LOW_SOUND_check_2, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_5_NORMAL_SOUND_check, DIAG_Viewables, 0x100
-	OBJ	sinewavetest_SineWaveTextBox_6_SINE_WAVE_at_16dB, DIAG_Viewables, 0x100
-	OBJ	stest4, DIAG_Viewables, 0x100
-	OBJ	stest4_TextBox_Push_each_button_and, DIAG_Viewables, 0x100
-	OBJ	stest4_RamEditBox_CPL, DIAG_Viewables, 0x100
-	OBJ	stest4_RamEditBox_CPC, DIAG_Viewables, 0x100
-	OBJ	stest4_RamEditBox_CPR, DIAG_Viewables, 0x100
-	OBJ	stest4_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	CP_AllOKNG2, DIAG_Viewables, 0x100
-	OBJ	stest5, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl1, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl2, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl3, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl4, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl5, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl6, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl7, DIAG_Viewables, 0x100
-	OBJ	stest5_PageControl8, DIAG_Viewables, 0x100
-	OBJ	TEST5_Red, DIAG_Viewables, 0x100
-	OBJ	TEST5_Red_Label_LCD_PANEL_TEST, DIAG_Viewables, 0x100
-	OBJ	TEST5_Blue, DIAG_Viewables, 0x100
-	OBJ	TEST5_Blue_Label_LCD_PANEL_TEST, DIAG_Viewables, 0x100
-	OBJ	TEST5_Green, DIAG_Viewables, 0x100
-	OBJ	TEST5_Green_Label_LCD_PANEL_TEST, DIAG_Viewables, 0x100
-	OBJ	TEST5_White, DIAG_Viewables, 0x100
-	OBJ	TEST5_White_Label_LCD_PANEL_TEST, DIAG_Viewables, 0x100
-	OBJ	TEST5_Black, DIAG_Viewables, 0x100
-	OBJ	TEST5_Black_Label_LCD_PANEL_TEST, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame1, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H2, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H3, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H4, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame2, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H5, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H6, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH2, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H7, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H8, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame3, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H9, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H10, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH3, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H11, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H12, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame4, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H13, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H14, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH4, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H15, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H16, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame5, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H17, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H18, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH5, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H19, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H20, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame6, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H21, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H22, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH6, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H23, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H24, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame7, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H25, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H26, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH7, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H27, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H28, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame8, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H29, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H30, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH8, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H31, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H32, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame9, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H33, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H34, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH9, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H35, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H36, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Frame10, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H37, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H38, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_HHHHHH10, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H39, DIAG_Viewables, 0x100
-	OBJ	TEST5_TP_Label_H_H40, DIAG_Viewables, 0x100
-	OBJ	TEST5_Itimatu, DIAG_Viewables, 0x100
-	OBJ	stest6, DIAG_Viewables, 0x100
-	OBJ	stest6_Label_1_FLOPPY_DISK_CONTRO, DIAG_Viewables, 0x100
-	OBJ	stest6_Label_2_DIGITAL_SIGNAL_PRO, DIAG_Viewables, 0x100
-	OBJ	stest6_Label_FDC, DIAG_Viewables, 0x100
-	OBJ	stest6_Label_DSP, DIAG_Viewables, 0x100
-	OBJ	TEST6_OK, DIAG_Viewables, 0x100
-	OBJ	TEST6_OK_Label_may_be_OK, DIAG_Viewables, 0x100
-	OBJ	TEST6_NO, DIAG_Viewables, 0x100
-	OBJ	TEST6_NO_Label_NO, DIAG_Viewables, 0x100
-	OBJ	TEST6DSP_OK, DIAG_Viewables, 0x100
-	OBJ	TEST6DSP_OK_Label_may_be_OK, DIAG_Viewables, 0x100
-	OBJ	TEST6DSP_NO, DIAG_Viewables, 0x100
-	OBJ	TEST6DSP_NO_Label_NO, DIAG_Viewables, 0x100
-	OBJ	stest7, DIAG_Viewables, 0x100
-	OBJ	stest7_Label_RUNNING_TEST, DIAG_Viewables, 0x100
-	OBJ	stest7_WideESBox1, DIAG_Viewables, 0x100
-	OBJ	stest7_Bitmap1, DIAG_Viewables, 0x100
-	OBJ	stest7_WideESBox2, DIAG_Viewables, 0x100
-	OBJ	T7_TOTAL, DIAG_Viewables, 0x100
-	OBJ	T7_OK, DIAG_Viewables, 0x100
-	OBJ	T7_NG, DIAG_Viewables, 0x100
-	OBJ	test_ext, DIAG_Viewables, 0x100
-	OBJ	test_ext_PageControl1, DIAG_Viewables, 0x100
-	OBJ	test_ext_PageControl2, DIAG_Viewables, 0x100
-	OBJ	test_ext_PageControl3, DIAG_Viewables, 0x100
-	OBJ	test_ext_PageControl4, DIAG_Viewables, 0x100
-	OBJ	test_ext_PageControl5, DIAG_Viewables, 0x100
-	OBJ	DIAG_TtlScreen1, DIAG_Viewables, 0x100
-	OBJ	Testmenu7, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_Label_IN_OUT_INTERFACE_TES, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	INOUT_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_StrBox_KEYBOARD_NOTE, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_StrBox_VELOCITY, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_MAIN_VOLUME_VALUE, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_MODULATION_WHEEL_VAL, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_MIC_TERMINAL_STATE, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_FOOT_SWITCH_STATE, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_EXPRESSION_PEDAL_VAL, DIAG_Viewables, 0x100
-	OBJ	Testmenu7_TextBox_PITCHBEND_WHEEL_VALU, DIAG_Viewables, 0x100
-	OBJ	Testmenu1, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_ROM_DEVICE_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_PROGRAM_ROM_IC12, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_RHYTHM_ROM_IC14, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_SEEPROM_IC23, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_IC13, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_Label_EXECUTE, DIAG_Viewables, 0x100
-	OBJ	ProgramROM_OKNG2, DIAG_Viewables, 0x100
-	OBJ	ProgramROM_OKNG1, DIAG_Viewables, 0x100
-	OBJ	RhythmROM_OKNG, DIAG_Viewables, 0x100
-	OBJ	SEEPROM_OKNG, DIAG_Viewables, 0x100
-	OBJ	ROM_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu1_PageControl1, DIAG_Viewables, 0x100
-	OBJ	Testmenu2, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_Label_RAM_DEVICE_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_Label_WORK_RAM_IC16, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_Label_IC17, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_PageControl1, DIAG_Viewables, 0x100
-	OBJ	WorkRAM_OKNG1, DIAG_Viewables, 0x100
-	OBJ	WorkRAM_OKNG2, DIAG_Viewables, 0x100
-	OBJ	RAM_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	Testmenu2_Label_EXECUTE, DIAG_Viewables, 0x100
-	OBJ	Testmenu3, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_Label_OTHER_DEVICE_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_Label_PANEL_CPU_IC1_CPL, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_Label_FLOPPY_DISK_CONTROLL, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_Label_CPR, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_PageControl1, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	PanelCPL_OKNG, DIAG_Viewables, 0x100
-	OBJ	PanelCPR_OKNG, DIAG_Viewables, 0x100
-	OBJ	Fdc_OKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_FuncWideToggle_DSP, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_FuncWideToggle_DSP_RAM, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_FuncWideToggle_OFF, DIAG_Viewables, 0x100
-	OBJ	OTHER_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	Testmenu3_Label_EXECUTE, DIAG_Viewables, 0x100
-	OBJ	Testmenu5, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_Label_PANEL_SW_LED_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_TextBox_Push_each_button_and, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_RamEditBox_CPL, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_RamEditBox_CPC, DIAG_Viewables, 0x100
-	OBJ	Testmenu5_RamEditBox_CPR, DIAG_Viewables, 0x100
-	OBJ	CP_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu6, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_Label_LCD_MODULE_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_FuncEditSw1, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_FuncEditSw2, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_Label_CROSSTALK, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_FuncEditSw3, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_Label_SAMPLE, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_FuncEditSw4, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_Label_CONTRAST, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_Label_WHITE_BLACK, DIAG_Viewables, 0x100
-	OBJ	Testmenu6_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	Testmenu8, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_Label_MIDI_IN_OUT_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_Label_MIDI_IN_OUT_TERMINAL, DIAG_Viewables, 0x100
-	OBJ	MIDIIO_OKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_Label_Connect_MIDI_IN_and, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_IndexWideTgl_INTERFACE, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_IndexWideTgl_NORMAL, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_Label_PC_CONECTION, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_CatchEvent1, DIAG_Viewables, 0x100
-	OBJ	Testmenu8_Label_by_MIDI_cable_and_hi, DIAG_Viewables, 0x100
-	OBJ	Testmenu9, DIAG_Viewables, 0x100
-	OBJ	Testmenu9_Label_WAVE_ROM_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu9_Label_BANK_0_7_ROM_IC302, DIAG_Viewables, 0x100
-	OBJ	MasterTG_OKNG2, DIAG_Viewables, 0x100
-	OBJ	WAVE_AllOKNG, DIAG_Viewables, 0x100
-	OBJ	Testmenu9_Label_IC303, DIAG_Viewables, 0x100
-	OBJ	Testmenu9_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	Testmenu9_Label_EXECUTE, DIAG_Viewables, 0x100
-	OBJ	MasterTG_OKNG1, DIAG_Viewables, 0x100
-	OBJ	Testmenu10, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_Label_SOUND_SYSTEM_TEST, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_ShowHide2, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_FuncEditSw1, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_Label_AUTO, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_1_SINE_WAVE_at_FULLl, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_3_HIGH_SOUND_check_2, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_6_SINE_WAVE_at_16dB, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_4_LOW_SOUND_check_2, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_5_NORMAL_SOUND_check, DIAG_Viewables, 0x100
-	OBJ	Testmenu10_SineWaveTextBox_2_GENERATOR_LSI_PAN, DIAG_Viewables, 0x100
-	OBJ	Testmenu4, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_Label_STOP, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_FuncWideES2, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_Label_START, DIAG_Viewables, 0x100
-	OBJ	TM_FD_TOTAL, DIAG_Viewables, 0x100
-	OBJ	TM_FD_OK, DIAG_Viewables, 0x100
-	OBJ	TM_FD_NG, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_Label_Insert_2HD_2DD_disk, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_Label_FLOPPY_DISK_SAVE_LOA, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_MmmBox1, DIAG_Viewables, 0x100
-	OBJ	Testmenu4_Label_FD, DIAG_Viewables, 0x100
-	OBJ	DIAG_Screen1, DIAG_Viewables, 0x100
-	OBJ	DIAG_ExitMode1, DIAG_Viewables, 0x100
-	OBJ	DIAG_Bitmap1, DIAG_Viewables, 0x100
-	OBJ	DIAG_Label_Panel_Simulator_for, DIAG_Viewables, 0x100
-	OBJ	DIAG_TitleMenu_DEBUG_TOOLS, DIAG_Viewables, 0x100
-	OBJ	TM_MIDI_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_MIDI_WAIT_Label_Please_wait, DIAG_Viewables, 0x100
-	OBJ	TM_ROM_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_ROM_WAIT_Label_Please_wait, DIAG_Viewables, 0x100
-	OBJ	TM_RAM_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_RAM_WAIT_Label_Please_wait, DIAG_Viewables, 0x100
-	OBJ	TM_DEVICE_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_DEVICE_WAIT_Label_Please_wait, DIAG_Viewables, 0x100
-	OBJ	LCDB_OK, DIAG_Viewables, 0x100
-	OBJ	LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK, DIAG_Viewables, 0x100
-	OBJ	LOWB_OK, DIAG_Viewables, 0x100
-	OBJ	LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O, DIAG_Viewables, 0x100
-	OBJ	M1_ALLSW_OK, DIAG_Viewables, 0x100
-	OBJ	M1_ALLSW_OK_Label_ALL_SW_OK, DIAG_Viewables, 0x100
-	OBJ	TestMenu2, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_TestMenuPage1, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl1, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl2, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl3, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl4, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl5, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl6, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl7, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl8, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl9, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl10, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl11, DIAG_Viewables, 0x100
-	OBJ	TestMenu2_PageControl12, DIAG_Viewables, 0x100
-	OBJ	TM_EXP_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_EXP_WAIT_Label_Please_wait_for_seco, DIAG_Viewables, 0x100
-	OBJ	TM_SD_WAIT, DIAG_Viewables, 0x100
-	OBJ	TM_SD_WAIT_Label_Please_wait_for_20_s, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_IndexWideTgl_PAL, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_IndexWideTgl_NTSC, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box1, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_CatchEvent1, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box2, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box3, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box4, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box5, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box6, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box7, DIAG_Viewables, 0x100
-	OBJ	TEST5_VIDEOOUT_Box8, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_Insert_SD_card_befor, DIAG_Viewables, 0x100
-	OBJ	SDTotalBox, DIAG_Viewables, 0x100
-	OBJ	SDOKBox, DIAG_Viewables, 0x100
-	OBJ	SDNGBox, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_SD_COVER, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_MmmBox1, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_FuncWideES1, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_START, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_LOAD_SAVE_TEST, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_IndexWideTgl_START, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_FuncWideES2, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_STOP, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_IndexWideTgl_STOP, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_AUDIO_TEST, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_Label_SD_SAVE_LOAD_TEST, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_ShowHide1, DIAG_Viewables, 0x100
-	OBJ	TestmenuSD_CatchEvent1, DIAG_Viewables, 0x100
-	OBJ	Test4FDorSD, DIAG_Viewables, 0x100
-	OBJ	Test4FDorSD_KNPRWin1, DIAG_Viewables, 0x100
-	OBJ	TEST6_NATHING, DIAG_Viewables, 0x100
-	OBJ	TEST6_NATHING_Label1, DIAG_Viewables, 0x100
-	OBJ	Contrast_Itimatu, DIAG_Viewables, 0x100
-	OBJ	Contrast_Itimatu_SelfContrastEdit_CONTRAST, DIAG_Viewables, 0x100
-	OBJ	Contrast_Itimatu_IndexEditSw1, DIAG_Viewables, 0x100
-	OBJ	Contrast_Itimatu_ShowHide1, DIAG_Viewables, 0x100
-	.space	4, 0x00
-
-DIAG_ResNames:
-	.long	RN_stest1	# stest1
-	.long	RN_test1_ram	# test1_ram
-	.long	RN_empty_2924	# test1_ram_Label_BACKUP_MEMORY_SRAM
-	.long	RN_empty_2925	# test1_ram_Label_may_be_broken
-	.long	RN_test1_rhyrom	# test1_rhyrom
-	.long	RN_empty_2926	# test1_rhyrom_Label_RHYTHM_PATTERN_ROM
-	.long	RN_empty_2927	# test1_rhyrom_Label_may_be_broken
-	.long	RN_test1_cpu	# test1_cpu
-	.long	RN_empty_2928	# test1_cpu_Label_ERROR_in_CPU_data
-	.long	RN_empty_2929	# test1_cpu_Label_transmission
-	.long	RN_stest2	# stest2
-	.long	RN_empty_2930	# stest2_TextBox_Please_check_by_the
-	.long	RN_empty_2931	# stest2_Label_CPU_of_CPL
-	.long	RN_empty_2932	# stest2_Label_it_is_better_to_chec
-	.long	RN_empty_2933	# stest2_Label_If_both_CPU_are_NO
-	.long	RN_empty_2934	# stest2_Label_RESULT_CPU_of_CPR
-	.long	RN_TEST2OKOK	# TEST2OKOK
-	.long	RN_empty_2935	# TEST2OKOK_Label_OK
-	.long	RN_empty_2936	# TEST2OKOK_Label_OK2
-	.long	RN_TEST2NGNG	# TEST2NGNG
-	.long	RN_empty_2937	# TEST2NGNG_Label_NG
-	.long	RN_empty_2938	# TEST2NGNG_Label_NG2
-	.long	RN_TEST2OKNG	# TEST2OKNG
-	.long	RN_empty_2939	# TEST2OKNG_Label_OK
-	.long	RN_empty_2940	# TEST2OKNG_Label_NG
-	.long	RN_TEST2NGOK	# TEST2NGOK
-	.long	RN_empty_2941	# TEST2NGOK_Label_NG
-	.long	RN_empty_2942	# TEST2NGOK_Label_OK
-	.long	RN_empty_2943	# DIAG_TtlScreen_CHECK_by_SINE_WAVE
-	.long	RN_stest3	# stest3
-	.long	RN_empty_2944	# stest3_ShowHide1
-	.long	RN_empty_2945	# stest3_FixWin1
-	.long	RN_sinewavetest	# sinewavetest
-	.long	RN_empty_2946	# sinewavetest_FuncEditSw1
-	.long	RN_empty_2947	# sinewavetest_Label_AUTO
-	.long	RN_empty_2948	# sinewavetest_SineWaveTextBox_1_SINE_WAVE_at_FULLl
-	.long	RN_empty_2949	# sinewavetest_SineWaveTextBox_2_GENERATOR_LSI_PAN
-	.long	RN_empty_2950	# sinewavetest_SineWaveTextBox_3_HIGH_SOUND_check_2
-	.long	RN_empty_2951	# sinewavetest_SineWaveTextBox_4_LOW_SOUND_check_2
-	.long	RN_empty_2952	# sinewavetest_SineWaveTextBox_5_NORMAL_SOUND_check
-	.long	RN_empty_2953	# sinewavetest_SineWaveTextBox_6_SINE_WAVE_at_16dB
-	.long	RN_stest4	# stest4
-	.long	RN_empty_2954	# stest4_TextBox_Push_each_button_and
-	.long	RN_empty_2955	# stest4_RamEditBox_CPL
-	.long	RN_empty_2956	# stest4_RamEditBox_CPC
-	.long	RN_empty_2957	# stest4_RamEditBox_CPR
-	.long	RN_empty_2958	# stest4_ShowHide1
-	.long	RN_CP_AllOKNG2	# CP_AllOKNG2
-	.long	RN_stest5	# stest5
-	.long	RN_empty_2959	# stest5_PageControl1
-	.long	RN_empty_2960	# stest5_PageControl2
-	.long	RN_empty_2961	# stest5_PageControl3
-	.long	RN_empty_2962	# stest5_PageControl4
-	.long	RN_empty_2963	# stest5_PageControl5
-	.long	RN_empty_2964	# stest5_PageControl6
-	.long	RN_empty_2965	# stest5_PageControl7
-	.long	RN_empty_2966	# stest5_PageControl8
-	.long	RN_TEST5_Red	# TEST5_Red
-	.long	RN_empty_2967	# TEST5_Red_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Blue	# TEST5_Blue
-	.long	RN_empty_2968	# TEST5_Blue_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Green	# TEST5_Green
-	.long	RN_empty_2969	# TEST5_Green_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_White	# TEST5_White
-	.long	RN_empty_2970	# TEST5_White_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Black	# TEST5_Black
-	.long	RN_empty_2971	# TEST5_Black_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_TP	# TEST5_TP
-	.long	RN_empty_2972	# TEST5_TP_Frame1
-	.long	RN_empty_2973	# TEST5_TP_Label_H_H
-	.long	RN_empty_2974	# TEST5_TP_Label_H_H2
-	.long	RN_empty_2975	# TEST5_TP_Label_HHHHHH
-	.long	RN_empty_2976	# TEST5_TP_Label_H_H3
-	.long	RN_empty_2977	# TEST5_TP_Label_H_H4
-	.long	RN_empty_2978	# TEST5_TP_Frame2
-	.long	RN_empty_2979	# TEST5_TP_Label_H_H5
-	.long	RN_empty_2980	# TEST5_TP_Label_H_H6
-	.long	RN_empty_2981	# TEST5_TP_Label_HHHHHH2
-	.long	RN_empty_2982	# TEST5_TP_Label_H_H7
-	.long	RN_empty_2983	# TEST5_TP_Label_H_H8
-	.long	RN_empty_2984	# TEST5_TP_Frame3
-	.long	RN_empty_2985	# TEST5_TP_Label_H_H9
-	.long	RN_empty_2986	# TEST5_TP_Label_H_H10
-	.long	RN_empty_2987	# TEST5_TP_Label_HHHHHH3
-	.long	RN_empty_2988	# TEST5_TP_Label_H_H11
-	.long	RN_empty_2989	# TEST5_TP_Label_H_H12
-	.long	RN_empty_2990	# TEST5_TP_Frame4
-	.long	RN_empty_2991	# TEST5_TP_Label_H_H13
-	.long	RN_empty_2992	# TEST5_TP_Label_H_H14
-	.long	RN_empty_2993	# TEST5_TP_Label_HHHHHH4
-	.long	RN_empty_2994	# TEST5_TP_Label_H_H15
-	.long	RN_empty_2995	# TEST5_TP_Label_H_H16
-	.long	RN_empty_2996	# TEST5_TP_Frame5
-	.long	RN_empty_2997	# TEST5_TP_Label_H_H17
-	.long	RN_empty_2998	# TEST5_TP_Label_H_H18
-	.long	RN_empty_2999	# TEST5_TP_Label_HHHHHH5
-	.long	RN_empty_3000	# TEST5_TP_Label_H_H19
-	.long	RN_empty_3001	# TEST5_TP_Label_H_H20
-	.long	RN_empty_3002	# TEST5_TP_Frame6
-	.long	RN_empty_3003	# TEST5_TP_Label_H_H21
-	.long	RN_empty_3004	# TEST5_TP_Label_H_H22
-	.long	RN_empty_3005	# TEST5_TP_Label_HHHHHH6
-	.long	RN_empty_3006	# TEST5_TP_Label_H_H23
-	.long	RN_empty_3007	# TEST5_TP_Label_H_H24
-	.long	RN_empty_3008	# TEST5_TP_Frame7
-	.long	RN_empty_3009	# TEST5_TP_Label_H_H25
-	.long	RN_empty_3010	# TEST5_TP_Label_H_H26
-	.long	RN_empty_3011	# TEST5_TP_Label_HHHHHH7
-	.long	RN_empty_3012	# TEST5_TP_Label_H_H27
-	.long	RN_empty_3013	# TEST5_TP_Label_H_H28
-	.long	RN_empty_3014	# TEST5_TP_Frame8
-	.long	RN_empty_3015	# TEST5_TP_Label_H_H29
-	.long	RN_empty_3016	# TEST5_TP_Label_H_H30
-	.long	RN_empty_3017	# TEST5_TP_Label_HHHHHH8
-	.long	RN_empty_3018	# TEST5_TP_Label_H_H31
-	.long	RN_empty_3019	# TEST5_TP_Label_H_H32
-	.long	RN_empty_3020	# TEST5_TP_Frame9
-	.long	RN_empty_3021	# TEST5_TP_Label_H_H33
-	.long	RN_empty_3022	# TEST5_TP_Label_H_H34
-	.long	RN_empty_3023	# TEST5_TP_Label_HHHHHH9
-	.long	RN_empty_3024	# TEST5_TP_Label_H_H35
-	.long	RN_empty_3025	# TEST5_TP_Label_H_H36
-	.long	RN_empty_3026	# TEST5_TP_Frame10
-	.long	RN_empty_3027	# TEST5_TP_Label_H_H37
-	.long	RN_empty_3028	# TEST5_TP_Label_H_H38
-	.long	RN_empty_3029	# TEST5_TP_Label_HHHHHH10
-	.long	RN_empty_3030	# TEST5_TP_Label_H_H39
-	.long	RN_empty_3031	# TEST5_TP_Label_H_H40
-	.long	RN_TEST5_Itimatu	# TEST5_Itimatu
-	.long	RN_stest6	# stest6
-	.long	RN_empty_3032	# stest6_Label_1_FLOPPY_DISK_CONTRO
-	.long	RN_empty_3033	# stest6_Label_2_DIGITAL_SIGNAL_PRO
-	.long	RN_empty_3034	# stest6_Label_FDC
-	.long	RN_empty_3035	# stest6_Label_DSP
-	.long	RN_TEST6_OK	# TEST6_OK
-	.long	RN_empty_3036	# TEST6_OK_Label_may_be_OK
-	.long	RN_TEST6_NO	# TEST6_NO
-	.long	RN_empty_3037	# TEST6_NO_Label_NO
-	.long	RN_TEST6DSP_OK	# TEST6DSP_OK
-	.long	RN_empty_3038	# TEST6DSP_OK_Label_may_be_OK
-	.long	RN_TEST6DSP_NO	# TEST6DSP_NO
-	.long	RN_empty_3039	# TEST6DSP_NO_Label_NO
-	.long	RN_stest7	# stest7
-	.long	RN_empty_3040	# stest7_Label_RUNNING_TEST
-	.long	RN_empty_3041	# stest7_WideESBox1
-	.long	RN_empty_3042	# stest7_Bitmap1
-	.long	RN_empty_3043	# stest7_WideESBox2
-	.long	RN_T7_TOTAL	# T7_TOTAL
-	.long	RN_T7_OK	# T7_OK
-	.long	RN_T7_NG	# T7_NG
-	.long	RN_test_ext	# test_ext
-	.long	RN_empty_3044	# test_ext_PageControl1
-	.long	RN_empty_3045	# test_ext_PageControl2
-	.long	RN_empty_3046	# test_ext_PageControl3
-	.long	RN_empty_3047	# test_ext_PageControl4
-	.long	RN_empty_3048	# test_ext_PageControl5
-	.long	RN_empty_3049	# DIAG_TtlScreen1
-	.long	RN_Testmenu7	# Testmenu7
-	.long	RN_empty_3050	# Testmenu7_Label_IN_OUT_INTERFACE_TES
-	.long	RN_empty_3051	# Testmenu7_ShowHide1
-	.long	RN_INOUT_AllOKNG	# INOUT_AllOKNG
-	.long	RN_empty_3052	# Testmenu7_StrBox_KEYBOARD_NOTE
-	.long	RN_empty_3053	# Testmenu7_StrBox_VELOCITY
-	.long	RN_empty_3054	# Testmenu7_TextBox_MAIN_VOLUME_VALUE
-	.long	RN_empty_3055	# Testmenu7_TextBox_MODULATION_WHEEL_VAL
-	.long	RN_empty_3056	# Testmenu7_TextBox_MIC_TERMINAL_STATE
-	.long	RN_empty_3057	# Testmenu7_TextBox_FOOT_SWITCH_STATE
-	.long	RN_empty_3058	# Testmenu7_TextBox_EXPRESSION_PEDAL_VAL
-	.long	RN_empty_3059	# Testmenu7_TextBox_PITCHBEND_WHEEL_VALU
-	.long	RN_Testmenu1	# Testmenu1
-	.long	RN_empty_3060	# Testmenu1_Label_ROM_DEVICE_TEST
-	.long	RN_empty_3061	# Testmenu1_Label_PROGRAM_ROM_IC12
-	.long	RN_empty_3062	# Testmenu1_Label_RHYTHM_ROM_IC14
-	.long	RN_empty_3063	# Testmenu1_Label_SEEPROM_IC23
-	.long	RN_empty_3064	# Testmenu1_Label_IC13
-	.long	RN_empty_3065	# Testmenu1_FuncWideES1
-	.long	RN_empty_3066	# Testmenu1_Label_EXECUTE
-	.long	RN_ProgramROM_OKNG2	# ProgramROM_OKNG2
-	.long	RN_ProgramROM_OKNG1	# ProgramROM_OKNG1
-	.long	RN_RhythmROM_OKNG	# RhythmROM_OKNG
-	.long	RN_SEEPROM_OKNG	# SEEPROM_OKNG
-	.long	RN_ROM_AllOKNG	# ROM_AllOKNG
-	.long	RN_empty_3067	# Testmenu1_PageControl1
-	.long	RN_Testmenu2	# Testmenu2
-	.long	RN_empty_3068	# Testmenu2_Label_RAM_DEVICE_TEST
-	.long	RN_empty_3069	# Testmenu2_Label_WORK_RAM_IC16
-	.long	RN_empty_3070	# Testmenu2_Label_IC17
-	.long	RN_empty_3071	# Testmenu2_PageControl1
-	.long	RN_WorkRAM_OKNG1	# WorkRAM_OKNG1
-	.long	RN_WorkRAM_OKNG2	# WorkRAM_OKNG2
-	.long	RN_RAM_AllOKNG	# RAM_AllOKNG
-	.long	RN_empty_3072	# Testmenu2_FuncWideES1
-	.long	RN_empty_3073	# Testmenu2_Label_EXECUTE
-	.long	RN_Testmenu3	# Testmenu3
-	.long	RN_empty_3074	# Testmenu3_Label_OTHER_DEVICE_TEST
-	.long	RN_empty_3075	# Testmenu3_Label_PANEL_CPU_IC1_CPL
-	.long	RN_empty_3076	# Testmenu3_Label_FLOPPY_DISK_CONTROLL
-	.long	RN_empty_3077	# Testmenu3_Label_CPR
-	.long	RN_empty_3078	# Testmenu3_PageControl1
-	.long	RN_empty_3079	# Testmenu3_ShowHide1
-	.long	RN_PanelCPL_OKNG	# PanelCPL_OKNG
-	.long	RN_PanelCPR_OKNG	# PanelCPR_OKNG
-	.long	RN_Fdc_OKNG	# Fdc_OKNG
-	.long	RN_empty_3080	# Testmenu3_FuncWideToggle_DSP
-	.long	RN_empty_3081	# Testmenu3_FuncWideToggle_DSP_RAM
-	.long	RN_empty_3082	# Testmenu3_FuncWideToggle_OFF
-	.long	RN_OTHER_AllOKNG	# OTHER_AllOKNG
-	.long	RN_empty_3083	# Testmenu3_FuncWideES1
-	.long	RN_empty_3084	# Testmenu3_Label_EXECUTE
-	.long	RN_Testmenu5	# Testmenu5
-	.long	RN_empty_3085	# Testmenu5_Label_PANEL_SW_LED_TEST
-	.long	RN_empty_3086	# Testmenu5_ShowHide1
-	.long	RN_empty_3087	# Testmenu5_TextBox_Push_each_button_and
-	.long	RN_empty_3088	# Testmenu5_RamEditBox_CPL
-	.long	RN_empty_3089	# Testmenu5_RamEditBox_CPC
-	.long	RN_empty_3090	# Testmenu5_RamEditBox_CPR
-	.long	RN_CP_AllOKNG	# CP_AllOKNG
-	.long	RN_Testmenu6	# Testmenu6
-	.long	RN_empty_3091	# Testmenu6_Label_LCD_MODULE_TEST
-	.long	RN_empty_3092	# Testmenu6_FuncEditSw1
-	.long	RN_empty_3093	# Testmenu6_FuncEditSw2
-	.long	RN_empty_3094	# Testmenu6_Label_CROSSTALK
-	.long	RN_empty_3095	# Testmenu6_FuncEditSw3
-	.long	RN_empty_3096	# Testmenu6_Label_SAMPLE
-	.long	RN_empty_3097	# Testmenu6_FuncEditSw4
-	.long	RN_empty_3098	# Testmenu6_Label_CONTRAST
-	.long	RN_empty_3099	# Testmenu6_Label_WHITE_BLACK
-	.long	RN_empty_3100	# Testmenu6_ShowHide1
-	.long	RN_Testmenu8	# Testmenu8
-	.long	RN_empty_3101	# Testmenu8_Label_MIDI_IN_OUT_TEST
-	.long	RN_empty_3102	# Testmenu8_Label_MIDI_IN_OUT_TERMINAL
-	.long	RN_MIDIIO_OKNG	# MIDIIO_OKNG
-	.long	RN_empty_3103	# Testmenu8_Label_Connect_MIDI_IN_and
-	.long	RN_empty_3104	# Testmenu8_IndexWideTgl_INTERFACE
-	.long	RN_empty_3105	# Testmenu8_IndexWideTgl_NORMAL
-	.long	RN_empty_3106	# Testmenu8_Label_PC_CONECTION
-	.long	RN_empty_3107	# Testmenu8_CatchEvent1
-	.long	RN_empty_3108	# Testmenu8_Label_by_MIDI_cable_and_hi
-	.long	RN_Testmenu9	# Testmenu9
-	.long	RN_empty_3109	# Testmenu9_Label_WAVE_ROM_TEST
-	.long	RN_empty_3110	# Testmenu9_Label_BANK_0_7_ROM_IC302
-	.long	RN_MasterTG_OKNG2	# MasterTG_OKNG2
-	.long	RN_WAVE_AllOKNG	# WAVE_AllOKNG
-	.long	RN_empty_3111	# Testmenu9_Label_IC303
-	.long	RN_empty_3112	# Testmenu9_FuncWideES1
-	.long	RN_empty_3113	# Testmenu9_Label_EXECUTE
-	.long	RN_MasterTG_OKNG1	# MasterTG_OKNG1
-	.long	RN_Testmenu10	# Testmenu10
-	.long	RN_empty_3114	# Testmenu10_ShowHide1
-	.long	RN_empty_3115	# Testmenu10_Label_SOUND_SYSTEM_TEST
-	.long	RN_empty_3116	# Testmenu10_ShowHide2
-	.long	RN_empty_3117	# Testmenu10_FuncEditSw1
-	.long	RN_empty_3118	# Testmenu10_Label_AUTO
-	.long	RN_empty_3119	# Testmenu10_SineWaveTextBox_1_SINE_WAVE_at_FULLl
-	.long	RN_empty_3120	# Testmenu10_SineWaveTextBox_3_HIGH_SOUND_check_2
-	.long	RN_empty_3121	# Testmenu10_SineWaveTextBox_6_SINE_WAVE_at_16dB
-	.long	RN_empty_3122	# Testmenu10_SineWaveTextBox_4_LOW_SOUND_check_2
-	.long	RN_empty_3123	# Testmenu10_SineWaveTextBox_5_NORMAL_SOUND_check
-	.long	RN_empty_3124	# Testmenu10_SineWaveTextBox_2_GENERATOR_LSI_PAN
-	.long	RN_Testmenu4	# Testmenu4
-	.long	RN_empty_3125	# Testmenu4_FuncWideES1
-	.long	RN_empty_3126	# Testmenu4_Label_STOP
-	.long	RN_empty_3127	# Testmenu4_FuncWideES2
-	.long	RN_empty_3128	# Testmenu4_Label_START
-	.long	RN_TM_FD_TOTAL	# TM_FD_TOTAL
-	.long	RN_TM_FD_OK	# TM_FD_OK
-	.long	RN_TM_FD_NG	# TM_FD_NG
-	.long	RN_empty_3129	# Testmenu4_Label_Insert_2HD_2DD_disk
-	.long	RN_empty_3130	# Testmenu4_Label_FLOPPY_DISK_SAVE_LOA
-	.long	RN_empty_3131	# Testmenu4_MmmBox1
-	.long	RN_empty_3132	# Testmenu4_Label_FD
-	.long	RN_empty_3133	# DIAG_Screen1
-	.long	RN_empty_3134	# DIAG_ExitMode1
-	.long	RN_empty_3135	# DIAG_Bitmap1
-	.long	RN_empty_3136	# DIAG_Label_Panel_Simulator_for
-	.long	RN_empty_3137	# DIAG_TitleMenu_DEBUG_TOOLS
-	.long	RN_TM_MIDI_WAIT	# TM_MIDI_WAIT
-	.long	RN_empty_3138	# TM_MIDI_WAIT_Label_Please_wait
-	.long	RN_TM_ROM_WAIT	# TM_ROM_WAIT
-	.long	RN_empty_3139	# TM_ROM_WAIT_Label_Please_wait
-	.long	RN_TM_RAM_WAIT	# TM_RAM_WAIT
-	.long	RN_empty_3140	# TM_RAM_WAIT_Label_Please_wait
-	.long	RN_TM_DEVICE_WAIT	# TM_DEVICE_WAIT
-	.long	RN_empty_3141	# TM_DEVICE_WAIT_Label_Please_wait
-	.long	RN_LCDB_OK	# LCDB_OK
-	.long	RN_empty_3142	# LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK
-	.long	RN_LOWB_OK	# LOWB_OK
-	.long	RN_empty_3143	# LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O
-	.long	RN_M1_ALLSW_OK	# M1_ALLSW_OK
-	.long	RN_empty_3144	# M1_ALLSW_OK_Label_ALL_SW_OK
-	.long	RN_TestMenu2	# TestMenu2
-	.long	RN_empty_3145	# TestMenu2_TestMenuPage1
-	.long	RN_empty_3146	# TestMenu2_PageControl1
-	.long	RN_empty_3147	# TestMenu2_PageControl2
-	.long	RN_empty_3148	# TestMenu2_PageControl3
-	.long	RN_empty_3149	# TestMenu2_PageControl4
-	.long	RN_empty_3150	# TestMenu2_PageControl5
-	.long	RN_empty_3151	# TestMenu2_PageControl6
-	.long	RN_empty_3152	# TestMenu2_PageControl7
-	.long	RN_empty_3153	# TestMenu2_PageControl8
-	.long	RN_empty_3154	# TestMenu2_PageControl9
-	.long	RN_empty_3155	# TestMenu2_PageControl10
-	.long	RN_empty_3156	# TestMenu2_PageControl11
-	.long	RN_empty_3157	# TestMenu2_PageControl12
-	.long	RN_TM_EXP_WAIT	# TM_EXP_WAIT
-	.long	RN_empty_3158	# TM_EXP_WAIT_Label_Please_wait_for_seco
-	.long	RN_TM_SD_WAIT	# TM_SD_WAIT
-	.long	RN_empty_3159	# TM_SD_WAIT_Label_Please_wait_for_20_s
-	.long	RN_TEST5_VIDEOOUT	# TEST5_VIDEOOUT
-	.long	RN_empty_3160	# TEST5_VIDEOOUT_IndexWideTgl_PAL
-	.long	RN_empty_3161	# TEST5_VIDEOOUT_IndexWideTgl_NTSC
-	.long	RN_empty_3162	# TEST5_VIDEOOUT_Box1
-	.long	RN_empty_3163	# TEST5_VIDEOOUT_CatchEvent1
-	.long	RN_empty_3164	# TEST5_VIDEOOUT_Box2
-	.long	RN_empty_3165	# TEST5_VIDEOOUT_Box3
-	.long	RN_empty_3166	# TEST5_VIDEOOUT_Box4
-	.long	RN_empty_3167	# TEST5_VIDEOOUT_Box5
-	.long	RN_empty_3168	# TEST5_VIDEOOUT_Box6
-	.long	RN_empty_3169	# TEST5_VIDEOOUT_Box7
-	.long	RN_empty_3170	# TEST5_VIDEOOUT_Box8
-	.long	RN_TestmenuSD	# TestmenuSD
-	.long	RN_empty_3171	# TestmenuSD_Label_Insert_SD_card_befor
-	.long	RN_SDTotalBox	# SDTotalBox
-	.long	RN_SDOKBox	# SDOKBox
-	.long	RN_SDNGBox	# SDNGBox
-	.long	RN_empty_3172	# TestmenuSD_Label_SD_COVER
-	.long	RN_empty_3173	# TestmenuSD_MmmBox1
-	.long	RN_empty_3174	# TestmenuSD_FuncWideES1
-	.long	RN_empty_3175	# TestmenuSD_Label_START
-	.long	RN_empty_3176	# TestmenuSD_Label_LOAD_SAVE_TEST
-	.long	RN_empty_3177	# TestmenuSD_IndexWideTgl_START
-	.long	RN_empty_3178	# TestmenuSD_FuncWideES2
-	.long	RN_empty_3179	# TestmenuSD_Label_STOP
-	.long	RN_empty_3180	# TestmenuSD_IndexWideTgl_STOP
-	.long	RN_empty_3181	# TestmenuSD_Label_AUDIO_TEST
-	.long	RN_empty_3182	# TestmenuSD_Label_SD_SAVE_LOAD_TEST
-	.long	RN_empty_3183	# TestmenuSD_ShowHide1
-	.long	RN_empty_3184	# TestmenuSD_CatchEvent1
-	.long	RN_Test4FDorSD	# Test4FDorSD
-	.long	RN_empty_3185	# Test4FDorSD_KNPRWin1
-	.long	RN_TEST6_NATHING	# TEST6_NATHING
-	.long	RN_empty_3186	# TEST6_NATHING_Label1
-	.long	RN_Contrast_Itimatu	# Contrast_Itimatu
-	.long	RN_empty_3187	# Contrast_Itimatu_SelfContrastEdit_CONTRAST
-	.long	RN_empty_3188	# Contrast_Itimatu_IndexEditSw1
-	.long	RN_empty_3189	# Contrast_Itimatu_ShowHide1
-.incbin_range "baserom/kn2400_program.rom", 0x17F094, 0x17F098
-
-# 6 classes; a class id is (0x124 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ CUSTOM_Classes_SLOT, 0x124
-CUSTOM_Classes:
-	CLASS	Class_AcDispTimeSetGridBox, CLASS_AcDispTimeSetGridBox, CUSTOM_Classes, proc=AcDispTimeSetGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcDispTimeSetGridBox, sig=ClassSig_AcDispTimeSetGridBox, fields=ClassFields_AcDispTimeSetGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcParaLoadOptGridBox, CLASS_AcParaLoadOptGridBox, CUSTOM_Classes, proc=AcParaLoadOptGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcParaLoadOptGridBox, sig=ClassSig_AcParaLoadOptGridBox, fields=ClassFields_AcParaLoadOptGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcIndexWideToggle, CLASS_AcIndexWideToggle, CUSTOM_Classes, proc=AcIndexWideToggleProc, parent=CLASS_PsWideToggle, allsize=56, selfsize=8, cname=ClassName_AcIndexWideToggle, sig=ClassSig_AcIndexWideToggle, fields=ClassFields_AcIndexWideToggle	# index:A tag:A func:j
-	CLASS	Class_CusMemModeBox, CLASS_CusMemModeBox, CUSTOM_Classes, proc=CusMemModeBoxProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_CusMemModeBox, sig=ClassSig_CusMemModeBox, fields=ClassFields_CusMemModeBox	# func:k font:c fontcolo:]
-	CLASS	Class_SonicModeBox, CLASS_SonicModeBox, CUSTOM_Classes, proc=SonicModeBoxProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_SonicModeBox, sig=ClassSig_SonicModeBox, fields=ClassFields_SonicModeBox	# func:k font:c fontcolo:]
-	CLASS	Class_RSpSelect, CLASS_RSpSelect, CUSTOM_Classes, proc=RSpSelectProc, parent=CLASS_AcStrRadioBox, allsize=56, selfsize=0, cname=ClassName_RSpSelect, sig=ClassSig_RSpSelect, fields=ClassFields_RSpSelect
-	.space	24, 0x00
-CUSTOM_Events:
-	.space	4, 0x00
-
-# 8 Method names; an method id is (0x126 << 16) | its index
-CUSTOM_Methods:
-	IDNAME	MT_FLASHWRITE_CUSTOM, Str_MT_FLASHWRITE_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_FLASHLOAD_CUSTOM, Str_MT_FLASHLOAD_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_WALLINI, Str_MT_WALLINI, CUSTOM_Methods, 0x126
-	IDNAME	MT_SetLang_CUSTOM, Str_MT_SetLang_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_GetLang_CUSTOM, Str_MT_GetLang_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_ChkLang_CUSTOM, Str_MT_ChkLang_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_ChkToggleEditSw_CUSTOM, Str_MT_ChkToggleEditSw_2, CUSTOM_Methods, 0x126
-	IDNAME	MT_RSpSet, Str_MT_RSpSet, CUSTOM_Methods, 0x126
-	.space	4, 0x00
-
-# 6 Function procedures; a function id is (0x121 << 16) | its index (the names are the parallel table at slot 0x129)
-CUSTOM_Functions:
-	IDNAME	FN_AcDispTimeSetGridBoxProc, AcDispTimeSetGridBoxProc, CUSTOM_Functions, 0x121
-	IDNAME	FN_AcParaLoadOptGridBoxProc, AcParaLoadOptGridBoxProc, CUSTOM_Functions, 0x121
-	IDNAME	FN_AcIndexWideToggleProc, AcIndexWideToggleProc, CUSTOM_Functions, 0x121
-	IDNAME	FN_CusMemModeBoxProc, CusMemModeBoxProc, CUSTOM_Functions, 0x121
-	IDNAME	FN_SonicModeBoxProc, SonicModeBoxProc, CUSTOM_Functions, 0x121
-	IDNAME	FN_RSpSelectProc, RSpSelectProc, CUSTOM_Functions, 0x121
-	.space	4, 0x00
-
-CUSTOM_FunctionNames:
-	.long	FnName_AcDispTimeSetGridBoxProc
-	.long	FnName_AcParaLoadOptGridBoxProc
-	.long	FnName_AcIndexWideToggleProc
-	.long	FnName_CusMemModeBoxProc
-	.long	FnName_SonicModeBoxProc
-	.long	FnName_RSpSelectProc
-.incbin_range "baserom/kn2400_program.rom", 0x17F19C, 0x17F1A0
-
-# 30 ApFunction procedures; a function id is (0x122 << 16) | its index (the names are the parallel table at slot 0x12a)
-CUSTOM_ApFunctions:
-	IDNAME	FN_DispTimeSetGridCheck, DispTimeSetGridCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_DispTimeSetOKFunc, DispTimeSetOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallHomeEditCheck, WallHomeEditCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallMenuEditCheck, WallMenuEditCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallOthEditCheck, WallOthEditCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallSetOKFunc, WallSetOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallPresetCheck, WallPresetCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallSetBitmapCheck, WallSetBitmapCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_ParaLoadOptGridCheck, ParaLoadOptGridCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_ParaLoadOptOKFunc, ParaLoadOptOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_DataProtectGridCheck, DataProtectGridCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_DataProtect604GridCheck, DataProtect604GridCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_DataProtectOKFunc, DataProtectOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_LangSetOKFunc, LangSetOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_LangSetMenuCheck, LangSetMenuCheck, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_AcIndexWideToggleFunc, AcIndexWideToggleFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_CusMemOKFunc, CusMemOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_WallSetHideFunc, WallSetHideFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_DataPrtHideFunc, DataPrtHideFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_LangSetHideFunc, LangSetHideFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_CusPanModeHideFunc, CusPanModeHideFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicOKFunc, SonicOKFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_RSpOkFunc, RSpOkFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicModeHideFunc, SonicModeHideFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_RearBalanceEditFunc, RearBalanceEditFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicPartEditFunc, SonicPartEditFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicPartONOFFFunc, SonicPartONOFFFunc, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicATCheck1, SonicATCheck1, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicATCheck2, SonicATCheck2, CUSTOM_ApFunctions, 0x122
-	IDNAME	FN_SonicATCheck3, SonicATCheck3, CUSTOM_ApFunctions, 0x122
-	.space	4, 0x00
-
-CUSTOM_ApFunctionNames:
-	.long	FnName_DispTimeSetGridCheck
-	.long	FnName_DispTimeSetOKFunc
-	.long	FnName_WallHomeEditCheck
-	.long	FnName_WallMenuEditCheck
-	.long	FnName_WallOthEditCheck
-	.long	FnName_WallSetOKFunc
-	.long	FnName_WallPresetCheck
-	.long	FnName_WallSetBitmapCheck
-	.long	FnName_ParaLoadOptGridCheck
-	.long	FnName_ParaLoadOptOKFunc
-	.long	FnName_DataProtectGridCheck
-	.long	FnName_DataProtect604GridCheck
-	.long	FnName_DataProtectOKFunc
-	.long	FnName_LangSetOKFunc
-	.long	FnName_LangSetMenuCheck
-	.long	FnName_AcIndexWideToggleFunc
-	.long	FnName_CusMemOKFunc
-	.long	FnName_WallSetHideFunc
-	.long	FnName_DataPrtHideFunc
-	.long	FnName_LangSetHideFunc
-	.long	FnName_CusPanModeHideFunc
-	.long	FnName_SonicOKFunc
-	.long	FnName_RSpOkFunc
-	.long	FnName_SonicModeHideFunc
-	.long	FnName_RearBalanceEditFunc
-	.long	FnName_SonicPartEditFunc
-	.long	FnName_SonicPartONOFFFunc
-	.long	FnName_SonicATCheck1
-	.long	FnName_SonicATCheck2
-	.long	FnName_SonicATCheck3
-.incbin_range "baserom/kn2400_program.rom", 0x17F294, 0x17F298
-
-# 11 MainFunction procedures; a function id is (0x123 << 16) | its index (the names are the parallel table at slot 0x12b)
-CUSTOM_MainFunctions:
-	IDNAME	FN_CustRhyStopFunc, CustRhyStopFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_MainTimeFlashFunc, MainTimeFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_MainWallSetFlashFunc, MainWallSetFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_MainFlashFunc, MainFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_MainDtPrtFlashFunc, MainDtPrtFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_LangSetFlashFunc, LangSetFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_LangSetChkMain, LangSetChkMain, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_CustomPanelFlashFunc, CustomPanelFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_TSONICTitleFunc, TSONICTitleFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_SonicFlashFunc, SonicFlashFunc, CUSTOM_MainFunctions, 0x123
-	IDNAME	FN_MdCustom, MdCustom, CUSTOM_MainFunctions, 0x123
-	.space	4, 0x00
-
-CUSTOM_MainFunctionNames:
-	.long	FnName_CustRhyStopFunc
-	.long	FnName_MainTimeFlashFunc
-	.long	FnName_MainWallSetFlashFunc
-	.long	FnName_MainFlashFunc
-	.long	FnName_MainDtPrtFlashFunc
-	.long	FnName_LangSetFlashFunc
-	.long	FnName_LangSetChkMain
-	.long	FnName_CustomPanelFlashFunc
-	.long	FnName_TSONICTitleFunc
-	.long	FnName_SonicFlashFunc
-	.long	FnName_MdCustom
-.incbin_range "baserom/kn2400_program.rom", 0x17F2F4, 0x17F2F8
-
-# 96 objects of block CUSTOM; object <name> is index <name>_ix, id <name>_id = (0x120 << 16) | <name>_ix
-CUSTOM_Viewables:
-	OBJ	writeprt, CUSTOM_Viewables, 0x120
-	OBJ	writeprt_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	writeprt_ShowHide1, CUSTOM_Viewables, 0x120
-	OBJ	writeprt_SpecWin1, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_ExitMode1, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_TitleMenu_LANGUAGE_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_TitleMenu_FAVORITES_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_TitleMenu_DISPLAY_TIME_OUT, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_TitleMenu_DATA_PROTECTION, CUSTOM_Viewables, 0x120
-	OBJ	cusmenu_KNPRWin1, CUSTOM_Viewables, 0x120
-	OBJ	custommem, CUSTOM_Viewables, 0x120
-	OBJ	custommem_CusMemModeBox1, CUSTOM_Viewables, 0x120
-	OBJ	custommem_MenuBox_PANEL_MEMORY, CUSTOM_Viewables, 0x120
-	OBJ	custommem_MenuBox_ALL_PANEL, CUSTOM_Viewables, 0x120
-	OBJ	custommem_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	custommem_ShowHide1, CUSTOM_Viewables, 0x120
-	OBJ	distim, CUSTOM_Viewables, 0x120
-	OBJ	distim_DispTimeSetGridBox1, CUSTOM_Viewables, 0x120
-	OBJ	distim_Label_DISPLAY_TYPE, CUSTOM_Viewables, 0x120
-	OBJ	distim_Label_TIME, CUSTOM_Viewables, 0x120
-	OBJ	distim_IndexWideES1, CUSTOM_Viewables, 0x120
-	OBJ	distim_IndexWideES2, CUSTOM_Viewables, 0x120
-	OBJ	distim_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_RamEditBox_PRESET, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_IndexEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_IndexWideES1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_IndexEditSw2, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_Label_PRESET, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_Label_VALUE, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_RamEditBox1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_Label_SOUND_RHYTHM_SELECT, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_Label_HOME_PAGE, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_RamEditBox_MENU_PAGE, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_RamEditBox_OTHER, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_WallPreview1, CUSTOM_Viewables, 0x120
-	OBJ	wallpaper_ShowHide1, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_ParaLoadOptGridBox1, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_Label_Load_MIDI_Parameters, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_Label_Use_these_setting_wh, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_IndexWideES1, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_IndexWideES2, CUSTOM_Viewables, 0x120
-	OBJ	MIDIset_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	langset, CUSTOM_Viewables, 0x120
-	OBJ	LangMenu, CUSTOM_Viewables, 0x120
-	OBJ	langset_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	langset_IndexWideToggle_ENGLISH, CUSTOM_Viewables, 0x120
-	OBJ	langset_IndexWideToggle_GERMAN, CUSTOM_Viewables, 0x120
-	OBJ	langset_IndexWideToggle_FRENCH, CUSTOM_Viewables, 0x120
-	OBJ	langset_IndexWideToggle_SPANISH, CUSTOM_Viewables, 0x120
-	OBJ	langset_ShowHide1, CUSTOM_Viewables, 0x120
-	OBJ	LangSetWin, CUSTOM_Viewables, 0x120
-	OBJ	LangSetWin_IndexWideToggle_ENGLISH, CUSTOM_Viewables, 0x120
-	OBJ	LangSetWin_IndexWideToggle_GERMAN, CUSTOM_Viewables, 0x120
-	OBJ	LangSetWin_IndexWideToggle_FRENCH, CUSTOM_Viewables, 0x120
-	OBJ	LangSetWin_IndexWideToggle_SPANISH, CUSTOM_Viewables, 0x120
-	OBJ	diskpre, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_DISK_PREFERENCES, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_Box1, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_LANGUAGE_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_MIDI_SETTING_LOAD_OP, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_FAVORITES_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_DISPLAY_TIME_OUT, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_DATA_PROTECTION, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_THEATRE_SONIC_MODE, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage1_TitleMenu_VIDEO_OUT_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage2, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage2_TitleMenu_FOOT_SETTING, CUSTOM_Viewables, 0x120
-	OBJ	CustumMenuPage2_TitleMenu_THEATRE_SONIC_MODE, CUSTOM_Viewables, 0x120
-	OBJ	theatresonic, CUSTOM_Viewables, 0x120
-	OBJ	theatresonic_FuncEditSw1, CUSTOM_Viewables, 0x120
-	OBJ	theatresonic_LanguageText1, CUSTOM_Viewables, 0x120
-	OBJ	theatresonic_LanguageText2, CUSTOM_Viewables, 0x120
-	OBJ	theatresonic_LanguageText3, CUSTOM_Viewables, 0x120
-	OBJ	VREAR, CUSTOM_Viewables, 0x120
-	OBJ	AREAR, CUSTOM_Viewables, 0x120
-	OBJ	CUSTMenuWindow, CUSTOM_Viewables, 0x120
-	OBJ	CUSTMenuWindow_TitleMenu_THEATRE_SONIC_SPEAKE, CUSTOM_Viewables, 0x120
-	OBJ	CUSTMenuWindow_TitleMenu_VIDEO_OUT_MODE_SETTI, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow804, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow804_GridBox1, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow804_IndexWideES1, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow804_IndexWideES2, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow604, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow604_IndexWideES1, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow604_IndexWideES2, CUSTOM_Viewables, 0x120
-	OBJ	DataProtectWindow604_GridBox1, CUSTOM_Viewables, 0x120
-	OBJ	CustomMenu2400Win, CUSTOM_Viewables, 0x120
-	OBJ	CustomMenu2400Win_TitleMenu_DISK_PREFERENCES, CUSTOM_Viewables, 0x120
-	OBJ	CustomMenu2600Win, CUSTOM_Viewables, 0x120
-	OBJ	CustomMenu2600Win_TitleMenu_SD_PREFERENCE, CUSTOM_Viewables, 0x120
-	.space	4, 0x00
-
-CUSTOM_ResNames:
-	.long	RN_writeprt	# writeprt
-	.long	RN_empty_3292	# writeprt_FuncEditSw1
-	.long	RN_empty_3293	# writeprt_ShowHide1
-	.long	RN_empty_3294	# writeprt_SpecWin1
-	.long	RN_cusmenu	# cusmenu
-	.long	RN_empty_3295	# cusmenu_ExitMode1
-	.long	RN_empty_3296	# cusmenu_TitleMenu_LANGUAGE_SETTING
-	.long	RN_empty_3297	# cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP
-	.long	RN_empty_3298	# cusmenu_TitleMenu_FAVORITES_SETTING
-	.long	RN_empty_3299	# cusmenu_TitleMenu_DISPLAY_TIME_OUT
-	.long	RN_empty_3300	# cusmenu_TitleMenu_DATA_PROTECTION
-	.long	RN_empty_3301	# cusmenu_KNPRWin1
-	.long	RN_custommem	# custommem
-	.long	RN_empty_3302	# custommem_CusMemModeBox1
-	.long	RN_empty_3303	# custommem_MenuBox_PANEL_MEMORY
-	.long	RN_empty_3304	# custommem_MenuBox_ALL_PANEL
-	.long	RN_empty_3305	# custommem_FuncEditSw1
-	.long	RN_empty_3306	# custommem_ShowHide1
-	.long	RN_distim	# distim
-	.long	RN_empty_3307	# distim_DispTimeSetGridBox1
-	.long	RN_empty_3308	# distim_Label_DISPLAY_TYPE
-	.long	RN_empty_3309	# distim_Label_TIME
-	.long	RN_empty_3310	# distim_IndexWideES1
-	.long	RN_empty_3311	# distim_IndexWideES2
-	.long	RN_empty_3312	# distim_FuncEditSw1
-	.long	RN_wallpaper	# wallpaper
-	.long	RN_empty_3313	# wallpaper_RamEditBox_PRESET
-	.long	RN_empty_3314	# wallpaper_IndexEditSw1
-	.long	RN_empty_3315	# wallpaper_IndexWideES1
-	.long	RN_empty_3316	# wallpaper_IndexEditSw2
-	.long	RN_empty_3317	# wallpaper_FuncEditSw1
-	.long	RN_empty_3318	# wallpaper_Label_PRESET
-	.long	RN_empty_3319	# wallpaper_Label_VALUE
-	.long	RN_empty_3320	# wallpaper_RamEditBox1
-	.long	RN_empty_3321	# wallpaper_Label_SOUND_RHYTHM_SELECT
-	.long	RN_empty_3322	# wallpaper_Label_HOME_PAGE
-	.long	RN_empty_3323	# wallpaper_RamEditBox_MENU_PAGE
-	.long	RN_empty_3324	# wallpaper_RamEditBox_OTHER
-	.long	RN_empty_3325	# wallpaper_WallPreview1
-	.long	RN_empty_3326	# wallpaper_ShowHide1
-	.long	RN_MIDIset	# MIDIset
-	.long	RN_empty_3327	# MIDIset_ParaLoadOptGridBox1
-	.long	RN_empty_3328	# MIDIset_Label_Load_MIDI_Parameters
-	.long	RN_empty_3329	# MIDIset_Label_Use_these_setting_wh
-	.long	RN_empty_3330	# MIDIset_IndexWideES1
-	.long	RN_empty_3331	# MIDIset_IndexWideES2
-	.long	RN_empty_3332	# MIDIset_FuncEditSw1
-	.long	RN_langset	# langset
-	.long	RN_LangMenu	# LangMenu
-	.long	RN_empty_3333	# langset_FuncEditSw1
-	.long	RN_empty_3334	# langset_IndexWideToggle_ENGLISH
-	.long	RN_empty_3335	# langset_IndexWideToggle_GERMAN
-	.long	RN_empty_3336	# langset_IndexWideToggle_FRENCH
-	.long	RN_empty_3337	# langset_IndexWideToggle_SPANISH
-	.long	RN_empty_3338	# langset_ShowHide1
-	.long	RN_LangSetWin	# LangSetWin
-	.long	RN_empty_3339	# LangSetWin_IndexWideToggle_ENGLISH
-	.long	RN_empty_3340	# LangSetWin_IndexWideToggle_GERMAN
-	.long	RN_empty_3341	# LangSetWin_IndexWideToggle_FRENCH
-	.long	RN_empty_3342	# LangSetWin_IndexWideToggle_SPANISH
-	.long	RN_diskpre	# diskpre
-	.long	RN_CustumMenuPage1	# CustumMenuPage1
-	.long	RN_empty_3343	# CustumMenuPage1_TitleMenu_DISK_PREFERENCES
-	.long	RN_empty_3344	# CustumMenuPage1_Box1
-	.long	RN_empty_3345	# CustumMenuPage1_TitleMenu_LANGUAGE_SETTING
-	.long	RN_empty_3346	# CustumMenuPage1_TitleMenu_MIDI_SETTING_LOAD_OP
-	.long	RN_empty_3347	# CustumMenuPage1_TitleMenu_FAVORITES_SETTING
-	.long	RN_empty_3348	# CustumMenuPage1_TitleMenu_DISPLAY_TIME_OUT
-	.long	RN_empty_3349	# CustumMenuPage1_TitleMenu_DATA_PROTECTION
-	.long	RN_empty_3350	# CustumMenuPage1_TitleMenu_THEATRE_SONIC_MODE
-	.long	RN_empty_3351	# CustumMenuPage1_TitleMenu_VIDEO_OUT_SETTING
-	.long	RN_CustumMenuPage2	# CustumMenuPage2
-	.long	RN_empty_3352	# CustumMenuPage2_TitleMenu_FOOT_SETTING
-	.long	RN_empty_3353	# CustumMenuPage2_TitleMenu_THEATRE_SONIC_MODE
-	.long	RN_theatresonic	# theatresonic
-	.long	RN_empty_3354	# theatresonic_FuncEditSw1
-	.long	RN_empty_3355	# theatresonic_LanguageText1
-	.long	RN_empty_3356	# theatresonic_LanguageText2
-	.long	RN_empty_3357	# theatresonic_LanguageText3
-	.long	RN_VREAR	# VREAR
-	.long	RN_AREAR	# AREAR
-	.long	RN_CUSTMenuWindow	# CUSTMenuWindow
-	.long	RN_empty_3358	# CUSTMenuWindow_TitleMenu_THEATRE_SONIC_SPEAKE
-	.long	RN_empty_3359	# CUSTMenuWindow_TitleMenu_VIDEO_OUT_MODE_SETTI
-	.long	RN_DataProtectWindow804	# DataProtectWindow804
-	.long	RN_empty_3360	# DataProtectWindow804_GridBox1
-	.long	RN_empty_3361	# DataProtectWindow804_IndexWideES1
-	.long	RN_empty_3362	# DataProtectWindow804_IndexWideES2
-	.long	RN_DataProtectWindow604	# DataProtectWindow604
-	.long	RN_empty_3363	# DataProtectWindow604_IndexWideES1
-	.long	RN_empty_3364	# DataProtectWindow604_IndexWideES2
-	.long	RN_empty_3365	# DataProtectWindow604_GridBox1
-	.long	RN_CustomMenu2400Win	# CustomMenu2400Win
-	.long	RN_empty_3366	# CustomMenu2400Win_TitleMenu_DISK_PREFERENCES
-	.long	RN_CustomMenu2600Win	# CustomMenu2600Win
-	.long	RN_empty_3367	# CustomMenu2600Win_TitleMenu_SD_PREFERENCE
-.incbin_range "baserom/kn2400_program.rom", 0x17F5FC, 0x17F600
-data_4857F600:
-.incbin_range "baserom/kn2400_program.rom", 0x17F600, 0x17F604
-data_4857F604:
-.incbin_range "baserom/kn2400_program.rom", 0x17F604, 0x17F608
-
-# 7 classes; a class id is (0x114 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ CONTROL_Classes_SLOT, 0x114
-CONTROL_Classes:
-	CLASS	Class_AcFSWAssGridBox, CLASS_AcFSWAssGridBox, CONTROL_Classes, proc=AcFSWAssGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcFSWAssGridBox, sig=ClassSig_AcFSWAssGridBox, fields=ClassFields_AcFSWAssGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_PmemModeBox, CLASS_PmemModeBox, CONTROL_Classes, proc=PmemModeBoxProc, parent=CLASS_VwBox, allsize=52, selfsize=20, cname=ClassName_PmemModeBox, sig=ClassSig_PmemModeBox, fields=ClassFields_PmemModeBox	# func:k font:c fontcolo:] newpmemmode:m oldpmemmode:m
-	CLASS	Class_MSAModeBox, CLASS_MSAModeBox, CONTROL_Classes, proc=MSAModeBoxProc, parent=CLASS_VwBox, allsize=52, selfsize=20, cname=ClassName_MSAModeBox, sig=ClassSig_MSAModeBox, fields=ClassFields_MSAModeBox	# func:k font:c fontcolo:] newmsamode:m oldmsamode:m
-	CLASS	Class_AcPmExpFilterGridBox, CLASS_AcPmExpFilterGridBox, CONTROL_Classes, proc=AcPmExpFilterGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcPmExpFilterGridBox, sig=ClassSig_AcPmExpFilterGridBox, fields=ClassFields_AcPmExpFilterGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcFadeSetGridBox, CLASS_AcFadeSetGridBox, CONTROL_Classes, proc=AcFadeSetGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcFadeSetGridBox, sig=ClassSig_AcFadeSetGridBox, fields=ClassFields_AcFadeSetGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcTchSensGridBox, CLASS_AcTchSensGridBox, CONTROL_Classes, proc=AcTchSensGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcTchSensGridBox, sig=ClassSig_AcTchSensGridBox, fields=ClassFields_AcTchSensGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcWindowPageInit, CLASS_AcWindowPageInit, CONTROL_Classes, proc=AcWindowPageInitProc, parent=CLASS_PsPageBox, allsize=40, selfsize=4, cname=ClassName_AcWindowPageInit, sig=ClassSig_AcWindowPageInit, fields=ClassFields_AcWindowPageInit	# pagemin:A pagemax:A
-	.space	24, 0x00
-CONTROL_Events:
-	.space	4, 0x00
-
-# 2 Method names; an method id is (0x116 << 16) | its index
-CONTROL_Methods:
-	IDNAME	MT_NOTEOFF_CONTROL, Str_MT_NOTEOFF_2, CONTROL_Methods, 0x116
-	IDNAME	MT_SYSINI, Str_MT_SYSINI, CONTROL_Methods, 0x116
-	.space	4, 0x00
-
-# 7 Function procedures; a function id is (0x111 << 16) | its index (the names are the parallel table at slot 0x119)
-CONTROL_Functions:
-	IDNAME	FN_AcFSWAssGridBoxProc, AcFSWAssGridBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_PmemModeBoxProc, PmemModeBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_MSAModeBoxProc, MSAModeBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_AcPmExpFilterGridBoxProc, AcPmExpFilterGridBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_AcFadeSetGridBoxProc, AcFadeSetGridBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_AcTchSensGridBoxProc, AcTchSensGridBoxProc, CONTROL_Functions, 0x111
-	IDNAME	FN_AcWindowPageInitProc, AcWindowPageInitProc, CONTROL_Functions, 0x111
-	.space	4, 0x00
-
-CONTROL_FunctionNames:
-	.long	FnName_AcFSWAssGridBoxProc
-	.long	FnName_PmemModeBoxProc
-	.long	FnName_MSAModeBoxProc
-	.long	FnName_AcPmExpFilterGridBoxProc
-	.long	FnName_AcFadeSetGridBoxProc
-	.long	FnName_AcTchSensGridBoxProc
-	.long	FnName_AcWindowPageInitProc
-.incbin_range "baserom/kn2400_program.rom", 0x17F714, 0x17F718
-
-# 31 ApFunction procedures; a function id is (0x112 << 16) | its index (the names are the parallel table at slot 0x11a)
-CONTROL_ApFunctions:
-	IDNAME	FN_SystemInitOkFunc, SystemInitOkFunc, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_SystemInitMDFunc, SystemInitMDFunc, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_AttnLngCheck, AttnLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_SysSureLngCheck, SysSureLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_SureLngCheck, SureLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_SysIniNoFunc, SysIniNoFunc, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_SysIniYesFunc, SysIniYesFunc, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_CtlIniLngCheck, CtlIniLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_MinRngEditCheck, MinRngEditCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_TchSnsEditCheck, TchSnsEditCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_TouchFilter, TouchFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_TchSensGridCheck, TchSensGridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_MSAFilter, MSAFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmemNormLngCheck, PmemNormLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmemExpLngCheck, PmemExpLngCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExpFilter1GridCheck, PmExpFilter1GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExpFilter2GridCheck, PmExpFilter2GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExpFilter54_1GridCheck, PmExpFilter54_1GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExpFilter54_2GridCheck, PmExpFilter54_2GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExpFilter, PmExpFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExp1Filter, PmExp1Filter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmExp2Filter, PmExp2Filter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_PmemModeFilter, PmemModeFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FadeSetGridCheck, FadeSetGridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FadeIOFilter, FadeIOFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FSWAssGridCheck, FSWAssGridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FSWAss804GridCheck, FSWAss804GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FSWAss604GridCheck, FSWAss604GridCheck, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FSWAssGridFilter, FSWAssGridFilter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_FSWAssGridPR54Filter, FSWAssGridPR54Filter, CONTROL_ApFunctions, 0x112
-	IDNAME	FN_InitShowHideFunc, InitShowHideFunc, CONTROL_ApFunctions, 0x112
-	.space	4, 0x00
-
-CONTROL_ApFunctionNames:
-	.long	FnName_SystemInitOkFunc
-	.long	FnName_SystemInitMDFunc
-	.long	FnName_AttnLngCheck
-	.long	FnName_SysSureLngCheck
-	.long	FnName_SureLngCheck
-	.long	FnName_SysIniNoFunc
-	.long	FnName_SysIniYesFunc
-	.long	FnName_CtlIniLngCheck
-	.long	FnName_MinRngEditCheck
-	.long	FnName_TchSnsEditCheck
-	.long	FnName_TouchFilter
-	.long	FnName_TchSensGridCheck
-	.long	FnName_MSAFilter
-	.long	FnName_PmemNormLngCheck
-	.long	FnName_PmemExpLngCheck
-	.long	FnName_PmExpFilter1GridCheck
-	.long	FnName_PmExpFilter2GridCheck
-	.long	FnName_PmExpFilter54_1GridCheck
-	.long	FnName_PmExpFilter54_2GridCheck
-	.long	FnName_PmExpFilter
-	.long	FnName_PmExp1Filter
-	.long	FnName_PmExp2Filter
-	.long	FnName_PmemModeFilter
-	.long	FnName_FadeSetGridCheck
-	.long	FnName_FadeIOFilter
-	.long	FnName_FSWAssGridCheck
-	.long	FnName_FSWAss804GridCheck
-	.long	FnName_FSWAss604GridCheck
-	.long	FnName_FSWAssGridFilter
-	.long	FnName_FSWAssGridPR54Filter
-	.long	FnName_InitShowHideFunc
-.incbin_range "baserom/kn2400_program.rom", 0x17F814, 0x17F818
-
-# 5 MainFunction procedures; a function id is (0x113 << 16) | its index (the names are the parallel table at slot 0x11b)
-CONTROL_MainFunctions:
-	IDNAME	FN_CtrlRhyStopFunc, CtrlRhyStopFunc, CONTROL_MainFunctions, 0x113
-	IDNAME	FN_MainSysControl, MainSysControl, CONTROL_MainFunctions, 0x113
-	IDNAME	FN_FadeInOutTitleFunc, FadeInOutTitleFunc, CONTROL_MainFunctions, 0x113
-	IDNAME	FN_MSATitleFunc, MSATitleFunc, CONTROL_MainFunctions, 0x113
-	IDNAME	FN_PmemModeTitleFunc, PmemModeTitleFunc, CONTROL_MainFunctions, 0x113
-	.space	4, 0x00
-
-CONTROL_MainFunctionNames:
-	.long	FnName_CtrlRhyStopFunc
-	.long	FnName_MainSysControl
-	.long	FnName_FadeInOutTitleFunc
-	.long	FnName_MSATitleFunc
-	.long	FnName_PmemModeTitleFunc
-.incbin_range "baserom/kn2400_program.rom", 0x17F844, 0x17F848
-
-# 128 objects of block CONTROL; object <name> is index <name>_ix, id <name>_id = (0x110 << 16) | <name>_ix
-CONTROL_Viewables:
-	OBJ	controlmenu, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_INITIAL, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_FOOT_CONTROLLERS, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_FADE_IN_OUT_SETTING, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_ExitMode1, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, CONTROL_Viewables, 0x110
-	OBJ	controlmenu_TitleMenu_PANEL_MEMORY_MODE, CONTROL_Viewables, 0x110
-	OBJ	initial, CONTROL_Viewables, 0x110
-	OBJ	initial_LanguageText1, CONTROL_Viewables, 0x110
-	OBJ	initial_FuncEditSw1, CONTROL_Viewables, 0x110
-	OBJ	initial_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	initial_KNPRWin1, CONTROL_Viewables, 0x110
-	OBJ	InitSelPR604, CONTROL_Viewables, 0x110
-	OBJ	InitKINDPR604, CONTROL_Viewables, 0x110
-	OBJ	InitKINDPR604_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	InitSelPR804, CONTROL_Viewables, 0x110
-	OBJ	InitKINDPR804, CONTROL_Viewables, 0x110
-	OBJ	InitSelPR804_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_Box1, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_LanguageText1, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_LanguageText2, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_LanguageText3, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_FuncEditSw1, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_FuncEditSw2, CONTROL_Viewables, 0x110
-	OBJ	SYSINISURE_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	fswcon, CONTROL_Viewables, 0x110
-	OBJ	fswcon_KNPRWin1, CONTROL_Viewables, 0x110
-	OBJ	tssen, CONTROL_Viewables, 0x110
-	OBJ	tssen_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	tssen_MmmEditBox_MINIMUM_RANGE, CONTROL_Viewables, 0x110
-	OBJ	tssen_MmmEditBox_TOUCH_SENSITIVITY, CONTROL_Viewables, 0x110
-	OBJ	tssen_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	msamode, CONTROL_Viewables, 0x110
-	OBJ	msamode_MenuBox_RHYTHM, CONTROL_Viewables, 0x110
-	OBJ	msamode_MenuBox_SOUND_RHYTHM, CONTROL_Viewables, 0x110
-	OBJ	msamode_MenuBox_PANEL_MEMORY, CONTROL_Viewables, 0x110
-	OBJ	msamode_MSAModeBox1, CONTROL_Viewables, 0x110
-	OBJ	msamode_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	MSAsanple, CONTROL_Viewables, 0x110
-	OBJ	MSAsanple_EditBox_RHYTHM, CONTROL_Viewables, 0x110
-	OBJ	MSAsanple_EditBox_SOUND_RHYTHM, CONTROL_Viewables, 0x110
-	OBJ	MSAsanple_EditBox_PANEL_MEMORY, CONTROL_Viewables, 0x110
-	OBJ	MSAsanple_Frame1, CONTROL_Viewables, 0x110
-	OBJ	pmmdscreen, CONTROL_Viewables, 0x110
-	OBJ	pmmdscreen_PageControl1, CONTROL_Viewables, 0x110
-	OBJ	pmmdscreen_PageControl2, CONTROL_Viewables, 0x110
-	OBJ	pmmdscreen_PageControl3, CONTROL_Viewables, 0x110
-	OBJ	pmmdscreen_WindowPageInit1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_LanguageText1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_LanguageText2, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_PmemModeBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_MenuBox_NORMAL, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_MenuBox_EXPAND, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page1_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_GridBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_Box1, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_Label_EXPAND_MODE_FILTER, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_GridBox2, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_IndexWideES3, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_IndexWideES4, CONTROL_Viewables, 0x110
-	OBJ	PMEM_page2_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	fadeinout, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_FadeSetGridBox1, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_Label_FADE_IN, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_Label_FADE_OUT, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	fadeinout_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_GridBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_Box1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_Label_EXPAND_MODE_FILTER, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_GridBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_Box1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_Label_EXPAND_MODE_FILTER, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX_KNPRWin1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelKN2400, CONTROL_Viewables, 0x110
-	OBJ	FSWSelKN2400_FSWAssGridBox1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelKN2400_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelKN2400_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	FSWSelKN2400_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelPR54, CONTROL_Viewables, 0x110
-	OBJ	FSWSelPR54_FSWAssGridBox1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelPR54_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	FSWSelPR54_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	FSWSelPR54_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX_page3, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX_page3_KNPRWin1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_GridBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_Box1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX804_page3_Label_EXPAND_MODE_FILTER, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_GridBox1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_IndexWideES2, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_Box1, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_Label_EXPAND_MODE_FILTER, CONTROL_Viewables, 0x110
-	OBJ	PMEMEX604_page3_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	KNTchSens, CONTROL_Viewables, 0x110
-	OBJ	kntssen, CONTROL_Viewables, 0x110
-	OBJ	kntssen_TchSensGridBox1, CONTROL_Viewables, 0x110
-	OBJ	kntssen_IndexWideES1, CONTROL_Viewables, 0x110
-	OBJ	kntssen_Label_INITIAL_TOUCH, CONTROL_Viewables, 0x110
-	OBJ	kntssen_ShowHide1, CONTROL_Viewables, 0x110
-	OBJ	CONTROL_TtlScreen_PANEL_MEMORY_MODE, CONTROL_Viewables, 0x110
-	OBJ	PR54pmmdscreen, CONTROL_Viewables, 0x110
-	OBJ	PR54pmmdscreen_WindowPageInit1, CONTROL_Viewables, 0x110
-	OBJ	PR54pmmdscreen_PageControl1, CONTROL_Viewables, 0x110
-	OBJ	PR54pmmdscreen_PageControl2, CONTROL_Viewables, 0x110
-	OBJ	PR54pmmdscreen_PageControl3, CONTROL_Viewables, 0x110
-	.space	4, 0x00
-
-CONTROL_ResNames:
-	.long	RN_controlmenu	# controlmenu
-	.long	RN_empty_3190	# controlmenu_TitleMenu_INITIAL
-	.long	RN_empty_3191	# controlmenu_TitleMenu_FOOT_CONTROLLERS
-	.long	RN_empty_3192	# controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER
-	.long	RN_empty_3193	# controlmenu_TitleMenu_FADE_IN_OUT_SETTING
-	.long	RN_empty_3194	# controlmenu_ExitMode1
-	.long	RN_empty_3195	# controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT
-	.long	RN_empty_3196	# controlmenu_TitleMenu_PANEL_MEMORY_MODE
-	.long	RN_initial	# initial
-	.long	RN_empty_3197	# initial_LanguageText1
-	.long	RN_empty_3198	# initial_FuncEditSw1
-	.long	RN_empty_3199	# initial_ShowHide1
-	.long	RN_empty_3200	# initial_KNPRWin1
-	.long	RN_InitSelPR604	# InitSelPR604
-	.long	RN_InitKINDPR604	# InitKINDPR604
-	.long	RN_empty_3201	# InitKINDPR604_IndexWideES1
-	.long	RN_InitSelPR804	# InitSelPR804
-	.long	RN_InitKINDPR804	# InitKINDPR804
-	.long	RN_empty_3202	# InitSelPR804_IndexWideES1
-	.long	RN_SYSINISURE	# SYSINISURE
-	.long	RN_empty_3203	# SYSINISURE_Box1
-	.long	RN_empty_3204	# SYSINISURE_LanguageText1
-	.long	RN_empty_3205	# SYSINISURE_LanguageText2
-	.long	RN_empty_3206	# SYSINISURE_LanguageText3
-	.long	RN_empty_3207	# SYSINISURE_FuncEditSw1
-	.long	RN_empty_3208	# SYSINISURE_FuncEditSw2
-	.long	RN_empty_3209	# SYSINISURE_ShowHide1
-	.long	RN_fswcon	# fswcon
-	.long	RN_empty_3210	# fswcon_KNPRWin1
-	.long	RN_tssen	# tssen
-	.long	RN_empty_3211	# tssen_ShowHide1
-	.long	RN_empty_3212	# tssen_MmmEditBox_MINIMUM_RANGE
-	.long	RN_empty_3213	# tssen_MmmEditBox_TOUCH_SENSITIVITY
-	.long	RN_empty_3214	# tssen_IndexWideES1
-	.long	RN_msamode	# msamode
-	.long	RN_empty_3215	# msamode_MenuBox_RHYTHM
-	.long	RN_empty_3216	# msamode_MenuBox_SOUND_RHYTHM
-	.long	RN_empty_3217	# msamode_MenuBox_PANEL_MEMORY
-	.long	RN_empty_3218	# msamode_MSAModeBox1
-	.long	RN_empty_3219	# msamode_ShowHide1
-	.long	RN_MSAsanple	# MSAsanple
-	.long	RN_empty_3220	# MSAsanple_EditBox_RHYTHM
-	.long	RN_empty_3221	# MSAsanple_EditBox_SOUND_RHYTHM
-	.long	RN_empty_3222	# MSAsanple_EditBox_PANEL_MEMORY
-	.long	RN_empty_3223	# MSAsanple_Frame1
-	.long	RN_pmmdscreen	# pmmdscreen
-	.long	RN_empty_3224	# pmmdscreen_PageControl1
-	.long	RN_empty_3225	# pmmdscreen_PageControl2
-	.long	RN_empty_3226	# pmmdscreen_PageControl3
-	.long	RN_empty_3227	# pmmdscreen_WindowPageInit1
-	.long	RN_PMEM_page1	# PMEM_page1
-	.long	RN_empty_3228	# PMEM_page1_LanguageText1
-	.long	RN_empty_3229	# PMEM_page1_LanguageText2
-	.long	RN_empty_3230	# PMEM_page1_PmemModeBox1
-	.long	RN_empty_3231	# PMEM_page1_MenuBox_NORMAL
-	.long	RN_empty_3232	# PMEM_page1_MenuBox_EXPAND
-	.long	RN_empty_3233	# PMEM_page1_ShowHide1
-	.long	RN_PMEM_page2	# PMEM_page2
-	.long	RN_empty_3234	# PMEM_page2_GridBox1
-	.long	RN_empty_3235	# PMEM_page2_IndexWideES1
-	.long	RN_empty_3236	# PMEM_page2_IndexWideES2
-	.long	RN_empty_3237	# PMEM_page2_Box1
-	.long	RN_empty_3238	# PMEM_page2_Label_EXPAND_MODE_FILTER
-	.long	RN_empty_3239	# PMEM_page2_GridBox2
-	.long	RN_empty_3240	# PMEM_page2_IndexWideES3
-	.long	RN_empty_3241	# PMEM_page2_IndexWideES4
-	.long	RN_empty_3242	# PMEM_page2_ShowHide1
-	.long	RN_fadeinout	# fadeinout
-	.long	RN_empty_3243	# fadeinout_FadeSetGridBox1
-	.long	RN_empty_3244	# fadeinout_Label_FADE_IN
-	.long	RN_empty_3245	# fadeinout_Label_FADE_OUT
-	.long	RN_empty_3246	# fadeinout_IndexWideES1
-	.long	RN_empty_3247	# fadeinout_IndexWideES2
-	.long	RN_empty_3248	# fadeinout_ShowHide1
-	.long	RN_PMEMEX804	# PMEMEX804
-	.long	RN_empty_3249	# PMEMEX804_ShowHide1
-	.long	RN_empty_3250	# PMEMEX804_GridBox1
-	.long	RN_empty_3251	# PMEMEX804_IndexWideES1
-	.long	RN_empty_3252	# PMEMEX804_IndexWideES2
-	.long	RN_empty_3253	# PMEMEX804_Box1
-	.long	RN_empty_3254	# PMEMEX804_Label_EXPAND_MODE_FILTER
-	.long	RN_PMEMEX604	# PMEMEX604
-	.long	RN_empty_3255	# PMEMEX604_GridBox1
-	.long	RN_empty_3256	# PMEMEX604_IndexWideES1
-	.long	RN_empty_3257	# PMEMEX604_IndexWideES2
-	.long	RN_empty_3258	# PMEMEX604_ShowHide1
-	.long	RN_empty_3259	# PMEMEX604_Box1
-	.long	RN_empty_3260	# PMEMEX604_Label_EXPAND_MODE_FILTER
-	.long	RN_PMEMEX	# PMEMEX
-	.long	RN_empty_3261	# PMEMEX_KNPRWin1
-	.long	RN_FSWSelKN2400	# FSWSelKN2400
-	.long	RN_empty_3262	# FSWSelKN2400_FSWAssGridBox1
-	.long	RN_empty_3263	# FSWSelKN2400_IndexWideES1
-	.long	RN_empty_3264	# FSWSelKN2400_IndexWideES2
-	.long	RN_empty_3265	# FSWSelKN2400_ShowHide1
-	.long	RN_FSWSelPR54	# FSWSelPR54
-	.long	RN_empty_3266	# FSWSelPR54_FSWAssGridBox1
-	.long	RN_empty_3267	# FSWSelPR54_IndexWideES1
-	.long	RN_empty_3268	# FSWSelPR54_IndexWideES2
-	.long	RN_empty_3269	# FSWSelPR54_ShowHide1
-	.long	RN_PMEMEX_page3	# PMEMEX_page3
-	.long	RN_empty_3270	# PMEMEX_page3_KNPRWin1
-	.long	RN_PMEMEX804_page3	# PMEMEX804_page3
-	.long	RN_empty_3271	# PMEMEX804_page3_GridBox1
-	.long	RN_empty_3272	# PMEMEX804_page3_IndexWideES1
-	.long	RN_empty_3273	# PMEMEX804_page3_IndexWideES2
-	.long	RN_empty_3274	# PMEMEX804_page3_ShowHide1
-	.long	RN_empty_3275	# PMEMEX804_page3_Box1
-	.long	RN_empty_3276	# PMEMEX804_page3_Label_EXPAND_MODE_FILTER
-	.long	RN_PMEMEX604_page3	# PMEMEX604_page3
-	.long	RN_empty_3277	# PMEMEX604_page3_GridBox1
-	.long	RN_empty_3278	# PMEMEX604_page3_IndexWideES1
-	.long	RN_empty_3279	# PMEMEX604_page3_IndexWideES2
-	.long	RN_empty_3280	# PMEMEX604_page3_Box1
-	.long	RN_empty_3281	# PMEMEX604_page3_Label_EXPAND_MODE_FILTER
-	.long	RN_empty_3282	# PMEMEX604_page3_ShowHide1
-	.long	RN_KNTchSens	# KNTchSens
-	.long	RN_kntssen	# kntssen
-	.long	RN_empty_3283	# kntssen_TchSensGridBox1
-	.long	RN_empty_3284	# kntssen_IndexWideES1
-	.long	RN_empty_3285	# kntssen_Label_INITIAL_TOUCH
-	.long	RN_empty_3286	# kntssen_ShowHide1
-	.long	RN_empty_3287	# CONTROL_TtlScreen_PANEL_MEMORY_MODE
-	.long	RN_PR54pmmdscreen	# PR54pmmdscreen
-	.long	RN_empty_3288	# PR54pmmdscreen_WindowPageInit1
-	.long	RN_empty_3289	# PR54pmmdscreen_PageControl1
-	.long	RN_empty_3290	# PR54pmmdscreen_PageControl2
-	.long	RN_empty_3291	# PR54pmmdscreen_PageControl3
-.incbin_range "baserom/kn2400_program.rom", 0x17FC4C, 0x17FC50
-data_4857FC50:
-.incbin_range "baserom/kn2400_program.rom", 0x17FC50, 0x17FC52
-data_4857FC52:
-.incbin_range "baserom/kn2400_program.rom", 0x17FC52, 0x17FC58
-data_4857FC58:
-.incbin_range "baserom/kn2400_program.rom", 0x17FC58, 0x17FC82
-data_4857FC82:
-.incbin_range "baserom/kn2400_program.rom", 0x17FC82, 0x17FCAA
-data_4857FCAA:
-.incbin_range "baserom/kn2400_program.rom", 0x17FCAA, 0x17FCCC
-
-# 9 classes; a class id is (0x184 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
-.equ MIDI_Classes_SLOT, 0x184
-MIDI_Classes:
-	CLASS	Class_AcMidiPartGridBox, CLASS_AcMidiPartGridBox, MIDI_Classes, proc=AcMidiPartGridBoxProc, parent=CLASS_PsGridBox, allsize=84, selfsize=16, cname=ClassName_AcMidiPartGridBox, sig=ClassSig_AcMidiPartGridBox, fields=ClassFields_AcMidiPartGridBox	# fixedcol:X fixedrow:X func:j page:m
-	CLASS	Class_AcMidiControlGridBox, CLASS_AcMidiControlGridBox, MIDI_Classes, proc=AcMidiControlGridBoxProc, parent=CLASS_PsGridBox, allsize=84, selfsize=16, cname=ClassName_AcMidiControlGridBox, sig=ClassSig_AcMidiControlGridBox, fields=ClassFields_AcMidiControlGridBox	# fixedcol:X fixedrow:X func:j page:m
-	CLASS	Class_AcMidiInputGridBox, CLASS_AcMidiInputGridBox, MIDI_Classes, proc=AcMidiInputGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcMidiInputGridBox, sig=ClassSig_AcMidiInputGridBox, fields=ClassFields_AcMidiInputGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_IvMpstPageControl, CLASS_IvMpstPageControl, MIDI_Classes, proc=IvMpstPageControlProc, parent=CLASS_PsInvisibleBox, allsize=36, selfsize=12, cname=ClassName_IvMpstPageControl, sig=ClassSig_IvMpstPageControl, fields=ClassFields_IvMpstPageControl	# page:A window1:s window2:s
-	CLASS	Class_AcTGModeSel, CLASS_AcTGModeSel, MIDI_Classes, proc=AcTGModeSelProc, parent=CLASS_PsVariSelect, allsize=56, selfsize=0, cname=ClassName_AcTGModeSel, sig=ClassSig_AcTGModeSel, fields=ClassFields_AcTGModeSel
-	CLASS	Class_AcMidiPcgOutGridBox, CLASS_AcMidiPcgOutGridBox, MIDI_Classes, proc=AcMidiPcgOutGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcMidiPcgOutGridBox, sig=ClassSig_AcMidiPcgOutGridBox, fields=ClassFields_AcMidiPcgOutGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcMidiPcgOutSendEditSw, CLASS_AcMidiPcgOutSendEditSw, MIDI_Classes, proc=AcMidiPcgOutSendEditSwProc, parent=CLASS_PsEditSwBox, allsize=60, selfsize=16, cname=ClassName_AcMidiPcgOutSendEditSw, sig=ClassSig_AcMidiPcgOutSendEditSw, fields=ClassFields_AcMidiPcgOutSendEditSw	# style:f func:j str:X onoff:m
-	CLASS	Class_AcMidiPmemOutLGridBox, CLASS_AcMidiPmemOutLGridBox, MIDI_Classes, proc=AcMidiPmemOutLGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcMidiPmemOutLGridBox, sig=ClassSig_AcMidiPmemOutLGridBox, fields=ClassFields_AcMidiPmemOutLGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcMidiPmemOutRGridBox, CLASS_AcMidiPmemOutRGridBox, MIDI_Classes, proc=AcMidiPmemOutRGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcMidiPmemOutRGridBox, sig=ClassSig_AcMidiPmemOutRGridBox, fields=ClassFields_AcMidiPmemOutRGridBox	# fixedcol:X fixedrow:X func:j
-	.space	24, 0x00
-
-# 2 Event names; an event id is (0x185 << 16) | its index
-MIDI_Events:
-	IDNAME	EV_MODE_SEL, Str_EV_MODE_SEL, MIDI_Events, 0x185
-	IDNAME	EV_MODE_OK, Str_EV_MODE_OK, MIDI_Events, 0x185
-	.space	4, 0x00
-
-# 3 Method names; an method id is (0x186 << 16) | its index
-MIDI_Methods:
-	IDNAME	MT_MpstLoad, Str_MT_MpstLoad, MIDI_Methods, 0x186
-	IDNAME	MT_MpstWrite, Str_MT_MpstWrite, MIDI_Methods, 0x186
-	IDNAME	MT_PcgSend, Str_MT_PcgSend, MIDI_Methods, 0x186
-	.space	4, 0x00
-
-# 9 Function procedures; a function id is (0x181 << 16) | its index (the names are the parallel table at slot 0x189)
-MIDI_Functions:
-	IDNAME	FN_AcMidiPartGridBoxProc, AcMidiPartGridBoxProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiControlGridBoxProc, AcMidiControlGridBoxProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiInputGridBoxProc, AcMidiInputGridBoxProc, MIDI_Functions, 0x181
-	IDNAME	FN_IvMpstPageControlProc, IvMpstPageControlProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcTGModeSelProc, AcTGModeSelProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiPcgOutGridBoxProc, AcMidiPcgOutGridBoxProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiPcgOutSendEditSwProc, AcMidiPcgOutSendEditSwProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiPmemOutLGridBoxProc, AcMidiPmemOutLGridBoxProc, MIDI_Functions, 0x181
-	IDNAME	FN_AcMidiPmemOutRGridBoxProc, AcMidiPmemOutRGridBoxProc, MIDI_Functions, 0x181
-	.space	4, 0x00
-
-MIDI_FunctionNames:
-	.long	FnName_AcMidiPartGridBoxProc
-	.long	FnName_AcMidiControlGridBoxProc
-	.long	FnName_AcMidiInputGridBoxProc
-	.long	FnName_IvMpstPageControlProc
-	.long	FnName_AcTGModeSelProc
-	.long	FnName_AcMidiPcgOutGridBoxProc
-	.long	FnName_AcMidiPcgOutSendEditSwProc
-	.long	FnName_AcMidiPmemOutLGridBoxProc
-	.long	FnName_AcMidiPmemOutRGridBoxProc
-.incbin_range "baserom/kn2400_program.rom", 0x17FE24, 0x17FE28
-
-# 31 ApFunction procedures; a function id is (0x182 << 16) | its index (the names are the parallel table at slot 0x18a)
-MIDI_ApFunctions:
-	IDNAME	FN_TMidiPart, TMidiPart, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPartGrid, MidiPartGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiControl, TMidiControl, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiControlGrid, MidiControlGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiRealtime, TMidiRealtime, MIDI_ApFunctions, 0x182
-	IDNAME	FN_RealtimeCommands, RealtimeCommands, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiClock, MidiClock, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiCommon, TMidiCommon, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiCommonGrid, MidiCommonGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiInput, TMidiInput, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiInputGrid, MidiInputGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiPreset, TMidiPreset, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPresetSw, MidiPresetSw, MIDI_ApFunctions, 0x182
-	IDNAME	FN_BitmapKn2400, BitmapKn2400, MIDI_ApFunctions, 0x182
-	IDNAME	FN_AttentionCheck, AttentionCheck, MIDI_ApFunctions, 0x182
-	IDNAME	FN_AreYouSureCheck, AreYouSureCheck, MIDI_ApFunctions, 0x182
-	IDNAME	FN_GMCheck, GMCheck, MIDI_ApFunctions, 0x182
-	IDNAME	FN_NxCheck, NxCheck, MIDI_ApFunctions, 0x182
-	IDNAME	FN_ModeSetYes, ModeSetYes, MIDI_ApFunctions, 0x182
-	IDNAME	FN_ModeSetNo, ModeSetNo, MIDI_ApFunctions, 0x182
-	IDNAME	FN_ModeSetShowHide, ModeSetShowHide, MIDI_ApFunctions, 0x182
-	IDNAME	FN_BitmapNx, BitmapNx, MIDI_ApFunctions, 0x182
-	IDNAME	FN_BitmapGm2, BitmapGm2, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiPcgOut, TMidiPcgOut, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPcgOutGrid, MidiPcgOutGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiPmemOut, TMidiPmemOut, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPcgOutSend, MidiPcgOutSend, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPmemOutLGrid, MidiPmemOutLGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_MidiPmemOutRGrid, MidiPmemOutRGrid, MIDI_ApFunctions, 0x182
-	IDNAME	FN_TMidiComputer, TMidiComputer, MIDI_ApFunctions, 0x182
-	IDNAME	FN_ComputerConnection, ComputerConnection, MIDI_ApFunctions, 0x182
-	.space	4, 0x00
-
-MIDI_ApFunctionNames:
-	.long	FnName_TMidiPart
-	.long	FnName_MidiPartGrid
-	.long	FnName_TMidiControl
-	.long	FnName_MidiControlGrid
-	.long	FnName_TMidiRealtime
-	.long	FnName_RealtimeCommands
-	.long	FnName_MidiClock
-	.long	FnName_TMidiCommon
-	.long	FnName_MidiCommonGrid
-	.long	FnName_TMidiInput
-	.long	FnName_MidiInputGrid
-	.long	FnName_TMidiPreset
-	.long	FnName_MidiPresetSw
-	.long	FnName_BitmapKn2400
-	.long	FnName_AttentionCheck
-	.long	FnName_AreYouSureCheck
-	.long	FnName_GMCheck
-	.long	FnName_NxCheck
-	.long	FnName_ModeSetYes
-	.long	FnName_ModeSetNo
-	.long	FnName_ModeSetShowHide
-	.long	FnName_BitmapNx
-	.long	FnName_BitmapGm2
-	.long	FnName_TMidiPcgOut
-	.long	FnName_MidiPcgOutGrid
-	.long	FnName_TMidiPmemOut
-	.long	FnName_MidiPcgOutSend
-	.long	FnName_MidiPmemOutLGrid
-	.long	FnName_MidiPmemOutRGrid
-	.long	FnName_TMidiComputer
-	.long	FnName_ComputerConnection
-.incbin_range "baserom/kn2400_program.rom", 0x17FF24, 0x17FF28

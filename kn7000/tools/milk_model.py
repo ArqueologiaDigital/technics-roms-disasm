@@ -123,12 +123,14 @@ SIGMAP_NAKA = {"]": "\\", "^": "]", "_": "^", "m": "l", "n": "m", "r": "q", "s":
 SIGMAP = {}
 
 
-def configure(base=None, sig_size=None, scheme=None, sigmap=None):
+def configure(base=None, sig_size=None, scheme=None, sigmap=None, host_calls=None):
     """Bind the module to another MILK image: its link base, the byte sizes of
     the propdata type characters that differ from the KN7000's (a dict of
     overrides), its registry scheme (SCHEMES) and the translation of its type
     characters to the KN7000's (SIGMAP_NAKA)."""
-    global BASE, SCHEME, SIGMAP
+    global BASE, SCHEME, SIGMAP, HOST_CALLS
+    if host_calls is not None:
+        HOST_CALLS = dict(host_calls)
     if base is not None:
         BASE = base
     if sig_size:
@@ -189,6 +191,13 @@ def read_syms(paths):
 
 
 REG_CALLS = ("RegisterObjectTable", "RegisterOTBlock", "RegisterTitle", "RegisterMode")
+# A plug-in (an XAPR image the host firmware runs) calls the host's routines through
+# the host's registered Function table: `mov (HOST_REGISTRY), aN / mov (0x100C, aN),
+# aN / mov (OFF, aN), aM / calls (aM)` reads entry OFF / 4 of the table at registry
+# slot 0x100 (the registry is 16-byte records, +0xC the table) -- HD-SX3 / HD-SX6:
+# OFF 0xEC = RegisterObjectTable, 0x278 = RegisterTitle of the SX-KN6000.  HOST_CALLS
+# maps OFF to the host routine's name (configure(host_calls=...)).
+HOST_CALLS = {}
 
 
 def parse_calls(src_glob, by_name, mem=None):
@@ -221,7 +230,7 @@ def parse_calls(src_glob, by_name, mem=None):
                 regval[m.group(1)] = ("sp", 0)
                 continue
             m = re.match(r"\s+add\s+(-?0x[0-9a-fA-F]+|-?\d+), ([ad]\d)$", l)
-            if m and isinstance(regval.get(m.group(2)), tuple):
+            if m and isinstance(regval.get(m.group(2)), tuple) and regval[m.group(2)][0] == "sp":
                 regval[m.group(2)] = ("sp", regval[m.group(2)][1] + int(m.group(1), 0))
                 continue
             # (KN6000) a count loaded from the halfword the table's module keeps
@@ -237,6 +246,18 @@ def parse_calls(src_glob, by_name, mem=None):
             m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), sp\), ([ad]\d)$", l)
             if m:
                 regval[m.group(2)] = stack.get(int(m.group(1), 0))
+                continue
+            # (a plug-in) a host routine loaded from the host's Function table
+            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), a\d\), (a\d)$", l) if HOST_CALLS else None
+            if m:
+                regval[m.group(2)] = ("host", HOST_CALLS.get(int(m.group(1), 0)))
+                continue
+            m = re.match(r"\s+calls\s+\((a\d)\)$", l) if HOST_CALLS else None
+            if m and isinstance(regval.get(m.group(1)), tuple) and regval[m.group(1)][0] == "host" \
+                    and regval[m.group(1)][1] in REG_CALLS:
+                calls.append(dict(call=regval[m.group(1)][1], d0=regval.get("d0"), d1=regval.get("d1"),
+                                  a0=regval.get("a0"), a1=regval.get("a1"), stack=dict(stack),
+                                  func=func, file=os.path.relpath(f, KN7), line=i + 1))
                 continue
             m = re.match(r"\s+mov\s+(\S+), (d\d|a\d)$", l)
             if m:
@@ -298,11 +319,15 @@ class Obj:
 
     def __init__(self, block, index, addr, klass, name):
         self.block, self.index, self.addr, self.klass, self.name = block, index, addr, klass, name
-        self.values = {}     # field name -> value
+        self.values = {}     # field name -> value (the first field of that name)
+        self.fvalues = {}    # field offset -> value (every field)
 
 
 class Model:
-    def __init__(self, rom_path=None, src_glob=None, sym_paths=None, label_paths=None):
+    def __init__(self, rom_path=None, src_glob=None, sym_paths=None, label_paths=None, host=None):
+        # host: the Model of the firmware a plug-in runs on; the plug-in's records
+        # use the host's classes (and its own, which derive from them)
+        self.host = host
         rom_path = rom_path or os.path.join(KN7, "baserom", "kn7000_program.rom")
         self.rom = open(rom_path, "rb").read()
         self.end = BASE + len(self.rom)
@@ -406,10 +431,15 @@ class Model:
         # class id names entry 4 of itself)
         # (NAKA scheme: the root class table is at slot 0x160 and its id 0x01600004
         # names entry 4 of itself in the same way)
-        c = next((r for s, r in sorted(self.by_slot.items()) if r["cls"] >> 16 == s), None)
-        if c is None:
-            sys.exit("milk_model: no class table registered at the slot its own class id names")
-        self.CLASS_ID = c["cls"]
+        if self.host is not None:
+            # a plug-in registers its class tables with the host's Class class
+            self.classes = dict(self.host.classes)
+            self.CLASS_ID = self.host.CLASS_ID
+        else:
+            c = next((r for s, r in sorted(self.by_slot.items()) if r["cls"] >> 16 == s), None)
+            if c is None:
+                sys.exit("milk_model: no class table registered at the slot its own class id names")
+            self.CLASS_ID = c["cls"]
         for slot, r in sorted(self.by_slot.items()):
             if r["cls"] != self.CLASS_ID:
                 continue
@@ -495,7 +525,11 @@ class Model:
                 o = Obj(slot, i, p, k, names[i] if i < len(names) else None)
                 if k is not None and self.layout.get(cid):
                     for f in self.layout[cid]:
-                        o.values[f.name] = int.from_bytes(self.bytes_at(p + f.off, f.size), "little")
+                        v = int.from_bytes(self.bytes_at(p + f.off, f.size), "little")
+                        # a field name a subclass declares again (HD-SX3 KssNamingWindow's
+                        # second `index`): `values` keeps the first, `fvalues` every field
+                        o.values.setdefault(f.name, v)
+                        o.fvalues[f.off] = v
                 objs.append(o)
             self.blocks[slot] = dict(slot=slot, viewable=r, resname=names_r, objects=objs,
                                      init=r["func"])

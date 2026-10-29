@@ -63,7 +63,15 @@ Str_Infinity:	.asciz "Infinity"
 data_48400384:
 .incbin_range "baserom/kn2400_program.rom", 0x000384, 0x000398
 data_48400398:
-.incbin_range "baserom/kn2400_program.rom", 0x000398, 0x0003FC
+	.space	8, 0x00
+data_484003A0:
+.incbin_range "baserom/kn2400_program.rom", 0x0003A0, 0x0003B4
+data_484003B4:
+.incbin_range "baserom/kn2400_program.rom", 0x0003B4, 0x0003C0
+data_484003C0:
+	.space	12, 0x00
+data_484003CC:
+.incbin_range "baserom/kn2400_program.rom", 0x0003CC, 0x0003FC
 data_484003FC:
 .incbin_range "baserom/kn2400_program.rom", 0x0003FC, 0x00040C
 data_4840040C:
@@ -215,33 +223,33 @@ data_48401A94:
 .incbin_range "baserom/kn2400_program.rom", 0x001A94, 0x001AA4
 data_48401AA4:
 .incbin_range "baserom/kn2400_program.rom", 0x001AA4, 0x001AB4
-Str_empty_1227:	.asciz "\x10 "
+Str_empty_1238:	.asciz "\x10 "
 .incbin_range "baserom/kn2400_program.rom", 0x001AB7, 0x001AC4
-Str_empty_1233:	.asciz "\x11 "
+Str_empty_1244:	.asciz "\x11 "
 .incbin_range "baserom/kn2400_program.rom", 0x001AC7, 0x001AD4
-Str_empty_1228:	.asciz "\x12 "
+Str_empty_1239:	.asciz "\x12 "
 .incbin_range "baserom/kn2400_program.rom", 0x001AD7, 0x001AE4
-Str_empty_1234:	.asciz "\x13 "
+Str_empty_1245:	.asciz "\x13 "
 .incbin_range "baserom/kn2400_program.rom", 0x001AE7, 0x001AF4
-Str_empty_1232:	.asciz "\x14 "
+Str_empty_1243:	.asciz "\x14 "
 .incbin_range "baserom/kn2400_program.rom", 0x001AF7, 0x001B04
-Str_empty_1237:	.asciz "  "
+Str_empty_1248:	.asciz "  "
 .incbin_range "baserom/kn2400_program.rom", 0x001B07, 0x001B14
-Str_empty_1238:	.asciz "! "
+Str_empty_1249:	.asciz "! "
 .incbin_range "baserom/kn2400_program.rom", 0x001B17, 0x001B24
-Str_empty_1236:	.asciz "\" "
+Str_empty_1247:	.asciz "\" "
 .incbin_range "baserom/kn2400_program.rom", 0x001B27, 0x001B34
-Str_empty_1235:	.asciz "# "
+Str_empty_1246:	.asciz "# "
 .incbin_range "baserom/kn2400_program.rom", 0x001B37, 0x001B44
-Str_empty_1229:	.asciz "% "
+Str_empty_1240:	.asciz "% "
 .incbin_range "baserom/kn2400_program.rom", 0x001B47, 0x001B54
-Str_empty_1230:	.asciz "@ "
+Str_empty_1241:	.asciz "@ "
 .incbin_range "baserom/kn2400_program.rom", 0x001B57, 0x001B64
 Str_C_41:	.asciz "C "
 .incbin_range "baserom/kn2400_program.rom", 0x001B67, 0x001B74
 Str_A_43:	.asciz "A "
 .incbin_range "baserom/kn2400_program.rom", 0x001B77, 0x001C64
-Str_empty_1231:	.asciz "\x8F "
+Str_empty_1242:	.asciz "\x8F "
 .incbin_range "baserom/kn2400_program.rom", 0x001C67, 0x001EE4
 data_48401EE4:
 .incbin_range "baserom/kn2400_program.rom", 0x001EE4, 0x001EF4
@@ -259,13 +267,13 @@ data_4840210C:
 .incbin_range "baserom/kn2400_program.rom", 0x00210C, 0x00211C
 data_4840211C:
 .incbin_range "baserom/kn2400_program.rom", 0x00211C, 0x002194
-Str_empty_1226:	.asciz "(\x80"
+Str_empty_1237:	.asciz "(\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x002197, 0x0021A4
-Str_empty_1225:	.asciz ")\x80"
+Str_empty_1236:	.asciz ")\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x0021A7, 0x0021C8
-Str_empty_1224:	.asciz ",\x80"
+Str_empty_1235:	.asciz ",\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x0021CB, 0x0021E0
-Str_empty_1223:	.asciz "-\x80"
+Str_empty_1234:	.asciz "-\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x0021E3, 0x0021F0
 Str_0_29:	.asciz "0\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x0021F3, 0x002200
@@ -275,7 +283,7 @@ Str_2_40:	.asciz "2\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x002217, 0x002248
 Str_empty_1262:	.asciz "@\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x00224B, 0x002280
-Str_empty_1245:	.asciz "`\x80"
+Str_empty_1273:	.asciz "`\x80"
 .incbin_range "baserom/kn2400_program.rom", 0x002283, 0x0022A0
 data_484022A0:
 .incbin_range "baserom/kn2400_program.rom", 0x0022A0, 0x0024CC
@@ -323,17 +331,17 @@ Str_8_15:	.asciz "8\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x00277B, 0x002788
 Str_9_12:	.asciz "9\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x00278B, 0x002798
-Str_empty_1244:	.asciz ":\xE0"
+Str_empty_1272:	.asciz ":\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x00279B, 0x0027A8
-Str_empty_1243:	.asciz ";\xE0"
+Str_empty_1271:	.asciz ";\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x0027AB, 0x0027B8
-Str_empty_1242:	.asciz "<\xE0"
+Str_empty_1255:	.asciz "<\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x0027BB, 0x0027C8
-Str_empty_1241:	.asciz "=\xE0"
+Str_empty_1253:	.asciz "=\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x0027CB, 0x0027D8
-Str_empty_1240:	.asciz ">\xE0"
+Str_empty_1252:	.asciz ">\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x0027DB, 0x0027E8
-Str_empty_1239:	.asciz "?\xE0"
+Str_empty_1250:	.asciz "?\xE0"
 .incbin_range "baserom/kn2400_program.rom", 0x0027EB, 0x002834
 data_48402834:
 .incbin_range "baserom/kn2400_program.rom", 0x002834, 0x002854
@@ -343,19 +351,19 @@ data_48402864:
 .incbin_range "baserom/kn2400_program.rom", 0x002864, 0x002894
 Str_empty_1259:	.asciz "_"
 .incbin_range "baserom/kn2400_program.rom", 0x002896, 0x002B80
-Str_empty_1255:	.asciz "\x80@ "
+Str_empty_1281:	.asciz "\x80@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002B84, 0x002B90
-Str_empty_1253:	.asciz "\x81@ "
+Str_empty_1280:	.asciz "\x81@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002B94, 0x002BA0
-Str_empty_1248:	.asciz "\x82@ "
+Str_empty_1276:	.asciz "\x82@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002BA4, 0x002BB0
-Str_empty_1246:	.asciz "\x83@ "
+Str_empty_1274:	.asciz "\x83@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002BB4, 0x002BC0
-Str_empty_1252:	.asciz "\x84@ "
+Str_empty_1279:	.asciz "\x84@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002BC4, 0x002BD0
-Str_empty_1249:	.asciz "\x85@ "
+Str_empty_1277:	.asciz "\x85@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002BD4, 0x002BE0
-Str_empty_1247:	.asciz "\x86@ "
+Str_empty_1275:	.asciz "\x86@ "
 .incbin_range "baserom/kn2400_program.rom", 0x002BE4, 0x002D98
 Str_p_48:	.asciz "\x14 p"
 .incbin_range "baserom/kn2400_program.rom", 0x002D9C, 0x002DA4
@@ -405,7 +413,7 @@ Str_empty_1251:	.asciz "^"
 .incbin_range "baserom/kn2400_program.rom", 0x00321A, 0x003228
 Str_empty_1256:	.asciz "_"
 .incbin_range "baserom/kn2400_program.rom", 0x00322A, 0x003258
-Str_empty_1250:	.asciz "~"
+Str_empty_1278:	.asciz "~"
 .incbin_range "baserom/kn2400_program.rom", 0x00325A, 0x0032B8
 data_484032B8:
 .incbin_range "baserom/kn2400_program.rom", 0x0032B8, 0x0032CC
@@ -435,19 +443,19 @@ ptrs_48404EF8:
 	.long	data_48402834
 	.space	4, 0x00
 ptrs_48404F04:
-	.long	Str_empty_1255
+	.long	Str_empty_1281
 	.long	Str_empty_1254
-	.long	Str_empty_1253
-	.long	Str_empty_1252
+	.long	Str_empty_1280
+	.long	Str_empty_1279
 	.long	Str_empty_1251
-	.long	Str_empty_1250
+	.long	Str_empty_1278
 	.space	4, 0x00
 ptrs_48404F20:
-	.long	Str_empty_1249
+	.long	Str_empty_1277
 	.long	data_48402854
-	.long	Str_empty_1248
-	.long	Str_empty_1247
-	.long	Str_empty_1246
+	.long	Str_empty_1276
+	.long	Str_empty_1275
+	.long	Str_empty_1274
 	.space	4, 0x00
 data_48404F38:
 .incbin_range "baserom/kn2400_program.rom", 0x004F38, 0x005118
@@ -473,7 +481,7 @@ data_48405170:
 data_48405178:
 .incbin_range "baserom/kn2400_program.rom", 0x005178, 0x005188
 ptrs_48405188:
-	.long	Str_empty_1245
+	.long	Str_empty_1273
 	.long	Str_0_29
 	.space	4, 0x00
 data_48405194:
@@ -513,27 +521,27 @@ ptrs_484051F8:
 	.space	4, 0x00
 ptrs_48405204:
 	.long	Str_2_39
-	.long	Str_empty_1244
+	.long	Str_empty_1272
 	.space	4, 0x00
 ptrs_48405210:
 	.long	Str_3_33
-	.long	Str_empty_1243
+	.long	Str_empty_1271
 	.space	4, 0x00
 ptrs_4840521C:
 	.long	Str_4_32
-	.long	Str_empty_1242
+	.long	Str_empty_1255
 	.space	4, 0x00
 ptrs_48405228:
 	.long	Str_5_26
-	.long	Str_empty_1241
+	.long	Str_empty_1253
 	.space	4, 0x00
 ptrs_48405234:
 	.long	Str_6_24
-	.long	Str_empty_1240
+	.long	Str_empty_1252
 	.space	4, 0x00
 ptrs_48405240:
 	.long	Str_7_15
-	.long	Str_empty_1239
+	.long	Str_empty_1250
 .incbin_range "baserom/kn2400_program.rom", 0x005248, 0x005258
 ptrs_48405258:
 	.long	data_48402640
@@ -542,28 +550,28 @@ ptrs_48405258:
 data_48405264:
 .incbin_range "baserom/kn2400_program.rom", 0x005264, 0x00526C
 ptrs_4840526C:
-	.long	Str_empty_1238
-	.long	Str_empty_1237
-	.long	Str_empty_1236
-	.long	Str_empty_1235
-	.long	Str_empty_1234
-	.long	Str_empty_1233
-	.long	Str_empty_1232
+	.long	Str_empty_1249
+	.long	Str_empty_1248
+	.long	Str_empty_1247
+	.long	Str_empty_1246
+	.long	Str_empty_1245
+	.long	Str_empty_1244
+	.long	Str_empty_1243
 	.space	4, 0x00
 ptrs_4840528C:
-	.long	Str_empty_1231
-	.long	Str_empty_1230
+	.long	Str_empty_1242
+	.long	Str_empty_1241
 	.space	4, 0x00
 ptrs_48405298:
 	.long	Str_C_41
 	.long	Str_A_43
-	.long	Str_empty_1229
+	.long	Str_empty_1240
 	.space	4, 0x00
 ptrs_484052A8:
 	.long	data_48401A94
 	.long	data_48401AA4
-	.long	Str_empty_1228
-	.long	Str_empty_1227
+	.long	Str_empty_1239
+	.long	Str_empty_1238
 .incbin_range "baserom/kn2400_program.rom", 0x0052B8, 0x005338
 data_48405338:
 	.space	4, 0x00
@@ -572,14 +580,14 @@ data_4840533C:
 data_48405340:
 .incbin_range "baserom/kn2400_program.rom", 0x005340, 0x005378
 ptrs_48405378:
-	.long	Str_empty_1226
-	.long	Str_empty_1225
+	.long	Str_empty_1237
+	.long	Str_empty_1236
 	.space	4, 0x00
 data_48405384:
 .incbin_range "baserom/kn2400_program.rom", 0x005384, 0x00538C
 ptrs_4840538C:
-	.long	Str_empty_1224
-	.long	Str_empty_1223
+	.long	Str_empty_1235
+	.long	Str_empty_1234
 	.space	4, 0x00
 data_48405398:
 .incbin_range "baserom/kn2400_program.rom", 0x005398, 0x0053A0
@@ -989,7 +997,9 @@ data_484070F4:
 data_48407150:
 .incbin_range "baserom/kn2400_program.rom", 0x007150, 0x0071AC
 data_484071AC:
-.incbin_range "baserom/kn2400_program.rom", 0x0071AC, 0x007408
+.incbin_range "baserom/kn2400_program.rom", 0x0071AC, 0x007208
+Str_empty_1233:	.asciz "@"
+.incbin_range "baserom/kn2400_program.rom", 0x00720A, 0x007408
 data_48407408:
 .incbin_range "baserom/kn2400_program.rom", 0x007408, 0x007458
 data_48407458:
@@ -1055,7 +1065,17 @@ data_48408420:
 data_48408434:
 .incbin_range "baserom/kn2400_program.rom", 0x008434, 0x0084B4
 data_484084B4:
-.incbin_range "baserom/kn2400_program.rom", 0x0084B4, 0x0088B4
+.incbin_range "baserom/kn2400_program.rom", 0x0084B4, 0x008534
+data_48408534:
+.incbin_range "baserom/kn2400_program.rom", 0x008534, 0x0085B4
+data_484085B4:
+.incbin_range "baserom/kn2400_program.rom", 0x0085B4, 0x0086B4
+data_484086B4:
+.incbin_range "baserom/kn2400_program.rom", 0x0086B4, 0x0087B4
+data_484087B4:
+.incbin_range "baserom/kn2400_program.rom", 0x0087B4, 0x008834
+data_48408834:
+.incbin_range "baserom/kn2400_program.rom", 0x008834, 0x0088B4
 data_484088B4:
 .incbin_range "baserom/kn2400_program.rom", 0x0088B4, 0x0088C0
 data_484088C0:
@@ -1347,7 +1367,9 @@ data_48409780:
 data_484097A4:
 .incbin_range "baserom/kn2400_program.rom", 0x0097A4, 0x0097C8
 data_484097C8:
-.incbin_range "baserom/kn2400_program.rom", 0x0097C8, 0x0097F4
+.incbin_range "baserom/kn2400_program.rom", 0x0097C8, 0x0097DC
+data_484097DC:
+.incbin_range "baserom/kn2400_program.rom", 0x0097DC, 0x0097F4
 data_484097F4:
 .incbin_range "baserom/kn2400_program.rom", 0x0097F4, 0x009814
 data_48409814:
@@ -2273,10 +2295,10 @@ data_4840E3E4:
 .incbin_range "baserom/kn2400_program.rom", 0x00E3E4, 0x00E624
 
 Bmp_4840E624:	# a BMP file, 246 bytes, 26 x 46, 1 bpp
-	.incbin	"src/data/media/Bmp_4840E624.bmp"
+	.incbin	"src/program/data/media/Bmp_4840E624.bmp"
 	.align	4, 0xFF
 Jpeg_4840E71C:	# a JPG file, 2183 bytes, 120 x 50
-	.incbin	"src/data/media/Jpeg_4840E71C.jpg"
+	.incbin	"src/program/data/media/Jpeg_4840E71C.jpg"
 	.align	4, 0xFF
 
 Str_a8_3d:	.asciz "~a8=%3d"
@@ -2305,12 +2327,12 @@ ptrs_4840F0A4:
 	.long	Str_PASSIVE
 	.long	Str_ACTIVE
 
-Str_OFF_160:	.asciz "OFF"
-Str_ON_119:	.asciz "ON "
+Str_OFF_161:	.asciz "OFF"
+Str_ON_120:	.asciz "ON "
 
 ptrs_4840F0B4:
-	.long	Str_OFF_160
-	.long	Str_ON_119
+	.long	Str_OFF_161
+	.long	Str_ON_120
 
 Str_empty_1214:	.asciz "%"
 	.align	4, 0xFF
@@ -2382,7 +2404,7 @@ Str_Show:	.asciz "Show"
 	.align	4, 0xFF
 data_4840F1AC:
 .incbin_range "baserom/kn2400_program.rom", 0x00F1AC, 0x00F1BC
-Str_empty_1211:	.asciz " -"
+Str_empty_1232:	.asciz " -"
 Str_A_42:	.asciz " A"
 Str_B_22:	.asciz " B"
 Str_C_40:	.asciz " C"
@@ -2399,7 +2421,7 @@ Str_10_6:	.asciz "10"
 	.align	4, 0xFF
 
 ptrs_4840F1E8:
-	.long	Str_empty_1211
+	.long	Str_empty_1232
 	.long	Str_A_42
 	.long	Str_B_22
 	.long	Str_C_40
@@ -3150,7 +3172,7 @@ Str_A_80:	.asciz "<A ~80>"
 Str_B_a0_80:	.asciz "<B~a0~80>"
 Str_B_80:	.asciz "<B ~80>"
 Str_C_80:	.asciz "<C ~80>"
-Str_empty_1207:	.asciz "     "
+Str_empty_1231:	.asciz "     "
 
 ptrs_484112B0:
 	.long	Str_7fC
@@ -3178,7 +3200,7 @@ ptrs_484112B0:
 	.long	Str_B_a0_80
 	.long	Str_B_80
 	.long	Str_C_80
-	.long	Str_empty_1207
+	.long	Str_empty_1231
 data_48411318:
 .incbin_range "baserom/kn2400_program.rom", 0x011318, 0x011518
 data_48411518:
@@ -7838,7 +7860,9 @@ data_4841DE1C:
 data_4841DE34:
 .incbin_range "baserom/kn2400_program.rom", 0x01DE34, 0x01DE50
 data_4841DE50:
-.incbin_range "baserom/kn2400_program.rom", 0x01DE50, 0x01DE74
+.incbin_range "baserom/kn2400_program.rom", 0x01DE50, 0x01DE64
+data_4841DE64:
+.incbin_range "baserom/kn2400_program.rom", 0x01DE64, 0x01DE74
 data_4841DE74:
 .incbin_range "baserom/kn2400_program.rom", 0x01DE74, 0x01DF74
 data_4841DF74:
@@ -8084,7 +8108,9 @@ Str_insufficient_memory:	.asciz "insufficient memory"
 Str_buffer_error:	.asciz "buffer error"
 Str_incompatible_version:	.asciz "incompatible version"
 data_4843108D:
-.incbin_range "baserom/kn2400_program.rom", 0x03108D, 0x031098
+.incbin_range "baserom/kn2400_program.rom", 0x03108D, 0x031090
+Str_1_0_4_8:	.asciz "1.0.4"
+	.align	4, 0xFF
 data_48431098:
 .incbin_range "baserom/kn2400_program.rom", 0x031098, 0x0310AC
 data_484310AC:
@@ -8124,7 +8150,9 @@ data_484315D4:
 data_48431654:
 .incbin_range "baserom/kn2400_program.rom", 0x031654, 0x0316D4
 data_484316D4:
-.incbin_range "baserom/kn2400_program.rom", 0x0316D4, 0x0317D4
+.incbin_range "baserom/kn2400_program.rom", 0x0316D4, 0x031754
+data_48431754:
+.incbin_range "baserom/kn2400_program.rom", 0x031754, 0x0317D4
 data_484317D4:
 .incbin_range "baserom/kn2400_program.rom", 0x0317D4, 0x031854
 data_48431854:
@@ -8225,7 +8253,9 @@ data_48432274:
 data_484322B0:
 .incbin_range "baserom/kn2400_program.rom", 0x0322B0, 0x0322EC
 data_484322EC:
-.incbin_range "baserom/kn2400_program.rom", 0x0322EC, 0x0323A0
+.incbin_range "baserom/kn2400_program.rom", 0x0322EC, 0x03236C
+data_4843236C:
+.incbin_range "baserom/kn2400_program.rom", 0x03236C, 0x0323A0
 Str_Room1:	.asciz "     Room1      "
 .incbin_range "baserom/kn2400_program.rom", 0x0323B1, 0x0323CC
 Str_Room2:	.asciz "     Room2      "
@@ -13664,12 +13694,12 @@ Str_04X_04X:	.asciz "%04X%04X  "
 Str_02X_02X_02X_02X_02X_02X_02X_02X:	.asciz "%02X %02X %02X %02X %02X %02X %02X %02X"
 Str_RGB_01X_01X_01X:	.asciz "RGB=%01X:%01X:%01X"
 	.align	4, 0xFF
-Str_OFF_157:	.asciz "OFF"
-Str_ON_116:	.asciz "ON "
+Str_OFF_160:	.asciz "OFF"
+Str_ON_119:	.asciz "ON "
 
 ptrs_4844F2DC:
-	.long	Str_OFF_157
-	.long	Str_ON_116
+	.long	Str_OFF_160
+	.long	Str_ON_119
 
 Str_02d_s_3:	.asciz "%02d:%s"
 data_4844F2EC:
@@ -13815,13 +13845,13 @@ Str_TT_NAMING:	.asciz "TT_NAMING"
 	.align	4, 0xFF
 Str_ABC_123:	.asciz "ABC...123..."
 Str_abc_123:	.asciz "abc...123..."
-Str_empty_1175:	.asciz " !#$%&?.... "
+Str_empty_1230:	.asciz " !#$%&?.... "
 	.align	4, 0xFF
 
 ptrs_4844F8B4:
 	.long	Str_ABC_123
 	.long	Str_abc_123
-	.long	Str_empty_1175
+	.long	Str_empty_1230
 
 Str_A_35:	.asciz "A"
 Str_B_20:	.asciz "B"
@@ -13849,7 +13879,7 @@ Str_W_5:	.asciz "W"
 Str_X_7:	.asciz "X"
 Str_Y_6:	.asciz "Y"
 Str_Z_5:	.asciz "Z"
-Str_empty_1174:	.asciz "_"
+Str_empty_1229:	.asciz "_"
 Str_0_27:	.asciz "0"
 Str_1_37:	.asciz "1"
 Str_2_37:	.asciz "2"
@@ -13891,7 +13921,7 @@ ptrs_4844F910:
 	.long	Str_X_7
 	.long	Str_Y_6
 	.long	Str_Z_5
-	.long	Str_empty_1174
+	.long	Str_empty_1229
 	.long	Str_0_27
 	.long	Str_1_37
 	.long	Str_2_37
@@ -13931,7 +13961,7 @@ Str_w_4:	.asciz "w"
 Str_x_7:	.asciz "x"
 Str_y_3:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_1173:	.asciz "_"
+Str_empty_1228:	.asciz "_"
 Str_0_26:	.asciz "0"
 Str_1_36:	.asciz "1"
 Str_2_36:	.asciz "2"
@@ -13973,7 +14003,7 @@ ptrs_4844F9FC:
 	.long	Str_x_7
 	.long	Str_y_3
 	.long	Str_z_2
-	.long	Str_empty_1173
+	.long	Str_empty_1228
 	.long	Str_0_26
 	.long	Str_1_36
 	.long	Str_2_36
@@ -13987,54 +14017,66 @@ ptrs_4844F9FC:
 	.long	Str_SPC
 	.long	data_4844F9FA
 
-Str_empty_1172:	.asciz "!"
-Str_empty_1171:	.asciz "#"
-Str_empty_1170:	.asciz "$"
-Str_empty_1169:	.asciz "%"
-Str_empty_1168:	.asciz "&"
-Str_empty_1167:	.asciz "?"
+Str_empty_1227:	.asciz "!"
+Str_empty_1226:	.asciz "#"
+Str_empty_1225:	.asciz "$"
+Str_empty_1224:	.asciz "%"
+Str_empty_1223:	.asciz "&"
+Str_empty_1211:	.asciz "?"
 Str_40_3:	.asciz "~40"
 Str_5c_2:	.asciz "~5c"
-Str_empty_1166:	.asciz "^"
-Str_empty_1165:	.asciz "|"
+Str_empty_1207:	.asciz "^"
+Str_empty_1175:	.asciz "|"
 Str_22_2:	.asciz "~22"
 Str_27_2:	.asciz "~27"
-Str_empty_1164:	.asciz "`"
-Str_empty_1163:	.asciz ","
-Str_empty_1162:	.asciz "."
-Str_empty_1161:	.asciz ":"
-Str_empty_1160:	.asciz ";"
-Str_empty_1159:	.asciz "+"
-Str_empty_1158:	.asciz "-"
-Str_empty_1157:	.asciz "*"
-Str_empty_1156:	.asciz "/"
-Str_empty_1155:	.asciz "="
+Str_empty_1174:	.asciz "`"
+Str_empty_1173:	.asciz ","
+Str_empty_1172:	.asciz "."
+Str_empty_1171:	.asciz ":"
+Str_empty_1170:	.asciz ";"
+Str_empty_1169:	.asciz "+"
+Str_empty_1168:	.asciz "-"
+Str_empty_1167:	.asciz "*"
+Str_empty_1166:	.asciz "/"
+Str_empty_1165:	.asciz "="
 Str_8b_2:	.asciz "~8b"
 Str_8d_2:	.asciz "~8d"
-Str_empty_1154:	.asciz "("
-Str_empty_1153:	.asciz ")"
-Str_empty_1152:	.asciz "<"
-Str_empty_1151:	.asciz ">"
-Str_empty_1150:	.asciz "["
-Str_empty_1149:	.asciz "]"
-Str_empty_1148:	.asciz "{"
-Str_empty_1147:	.asciz "}"
+Str_empty_1164:	.asciz "("
+Str_empty_1163:	.asciz ")"
+Str_empty_1162:	.asciz "<"
+Str_empty_1161:	.asciz ">"
+Str_empty_1160:	.asciz "["
+Str_empty_1159:	.asciz "]"
+Str_empty_1158:	.asciz "{"
+Str_empty_1157:	.asciz "}"
 data_4844FAE4:
 .incbin_range "baserom/kn2400_program.rom", 0x04FAE4, 0x04FAE8
 
 ptrs_4844FAE8:
+	.long	Str_empty_1227
+	.long	Str_empty_1226
+	.long	Str_empty_1225
+	.long	Str_empty_1224
+	.long	Str_empty_1223
+	.long	Str_empty_1211
+	.long	Str_40_3
+	.long	Str_5c_2
+	.long	Str_empty_1207
+	.long	Str_empty_1175
+	.long	Str_22_2
+	.long	Str_27_2
+	.long	Str_empty_1174
+	.long	Str_empty_1173
 	.long	Str_empty_1172
 	.long	Str_empty_1171
 	.long	Str_empty_1170
 	.long	Str_empty_1169
 	.long	Str_empty_1168
 	.long	Str_empty_1167
-	.long	Str_40_3
-	.long	Str_5c_2
 	.long	Str_empty_1166
 	.long	Str_empty_1165
-	.long	Str_22_2
-	.long	Str_27_2
+	.long	Str_8b_2
+	.long	Str_8d_2
 	.long	Str_empty_1164
 	.long	Str_empty_1163
 	.long	Str_empty_1162
@@ -14043,18 +14085,6 @@ ptrs_4844FAE8:
 	.long	Str_empty_1159
 	.long	Str_empty_1158
 	.long	Str_empty_1157
-	.long	Str_empty_1156
-	.long	Str_empty_1155
-	.long	Str_8b_2
-	.long	Str_8d_2
-	.long	Str_empty_1154
-	.long	Str_empty_1153
-	.long	Str_empty_1152
-	.long	Str_empty_1151
-	.long	Str_empty_1150
-	.long	Str_empty_1149
-	.long	Str_empty_1148
-	.long	Str_empty_1147
 	.long	data_4844FAE4
 ptrs_4844FB6C:
 	.long	ptrs_4844F910
@@ -14063,12 +14093,12 @@ ptrs_4844FB6C:
 
 Str_empty_1146:	.asciz "%"
 .incbin_range "baserom/kn2400_program.rom", 0x04FB7A, 0x04FB84
-Str_empty_1145:	.asciz " "
-Str_empty_1144:	.asciz "_"
+Str_empty_1156:	.asciz " "
+Str_empty_1155:	.asciz "_"
 
 ptrs_4844FB88:
-	.long	Str_empty_1145
-	.long	Str_empty_1144
+	.long	Str_empty_1156
+	.long	Str_empty_1155
 
 Str_a_2:	.asciz "a"
 Str_b_2:	.asciz "b"
@@ -14263,7 +14293,7 @@ data_4844FD70:
 data_4844FD71:
 	.space	1, 0x00
 
-Str_empty_1115:	.asciz "_"
+Str_empty_1125:	.asciz "_"
 Str_0_24:	.asciz "0"
 Str_1_34:	.asciz "1"
 Str_2_34:	.asciz "2"
@@ -14292,7 +14322,7 @@ ptrs_4844FD8C:
 	.long	data_4844FD6F
 	.long	data_4844FD70
 	.long	data_4844FD71
-	.long	Str_empty_1115
+	.long	Str_empty_1125
 	.long	Str_0_24
 	.long	Str_1_34
 	.long	Str_2_34
@@ -14305,22 +14335,22 @@ ptrs_4844FD8C:
 	.long	Str_9_7
 	.long	data_4844FD88
 
-Str_empty_1143:	.asciz "!"
-Str_empty_1142:	.asciz "#"
-Str_empty_1141:	.asciz "$"
-Str_empty_1140:	.asciz "%"
-Str_empty_1139:	.asciz "&"
-Str_empty_1138:	.asciz "?"
+Str_empty_1154:	.asciz "!"
+Str_empty_1153:	.asciz "#"
+Str_empty_1152:	.asciz "$"
+Str_empty_1151:	.asciz "%"
+Str_empty_1150:	.asciz "&"
+Str_empty_1149:	.asciz "?"
 Str_40_2:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_1137:	.asciz "^"
+Str_empty_1148:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_1136:	.asciz "`"
+Str_empty_1147:	.asciz "`"
 data_4844FE14:
 	.space	1, 0x00
-Str_empty_1135:	.asciz " "
-Str_empty_1134:	.asciz "_"
+Str_empty_1145:	.asciz " "
+Str_empty_1144:	.asciz "_"
 Str_0_25:	.asciz "0"
 Str_1_35:	.asciz "1"
 Str_2_35:	.asciz "2"
@@ -14337,21 +14367,21 @@ data_4844FE2E:
 .incbin_range "baserom/kn2400_program.rom", 0x04FE2E, 0x04FE30
 
 ptrs_4844FE30:
-	.long	Str_empty_1143
-	.long	Str_empty_1142
-	.long	Str_empty_1141
-	.long	Str_empty_1140
-	.long	Str_empty_1139
-	.long	Str_empty_1138
+	.long	Str_empty_1154
+	.long	Str_empty_1153
+	.long	Str_empty_1152
+	.long	Str_empty_1151
+	.long	Str_empty_1150
+	.long	Str_empty_1149
 	.long	Str_40_2
 	.long	Str_5c
-	.long	Str_empty_1137
+	.long	Str_empty_1148
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_1136
+	.long	Str_empty_1147
 	.long	data_4844FE14
-	.long	Str_empty_1135
-	.long	Str_empty_1134
+	.long	Str_empty_1145
+	.long	Str_empty_1144
 	.long	Str_0_25
 	.long	Str_1_35
 	.long	Str_2_35
@@ -14365,15 +14395,15 @@ ptrs_4844FE30:
 	.long	data_4844FE2D
 	.long	data_4844FE2E
 
-Str_empty_1133:	.asciz "("
-Str_empty_1132:	.asciz ")"
-Str_empty_1131:	.asciz "<"
-Str_empty_1130:	.asciz ">"
-Str_empty_1129:	.asciz "["
-Str_empty_1128:	.asciz "]"
-Str_empty_1127:	.asciz "{"
-Str_empty_1126:	.asciz "}"
-Str_empty_1125:	.asciz "|"
+Str_empty_1143:	.asciz "("
+Str_empty_1142:	.asciz ")"
+Str_empty_1141:	.asciz "<"
+Str_empty_1140:	.asciz ">"
+Str_empty_1139:	.asciz "["
+Str_empty_1138:	.asciz "]"
+Str_empty_1137:	.asciz "{"
+Str_empty_1136:	.asciz "}"
+Str_empty_1135:	.asciz "|"
 data_4844FEAE:
 	.space	1, 0x00
 data_4844FEAF:
@@ -14382,15 +14412,15 @@ data_4844FEB0:
 	.space	1, 0x00
 data_4844FEB1:
 	.space	1, 0x00
-Str_empty_1124:	.asciz ","
-Str_empty_1123:	.asciz "."
-Str_empty_1122:	.asciz ":"
-Str_empty_1121:	.asciz ";"
-Str_empty_1120:	.asciz "+"
-Str_empty_1119:	.asciz "-"
-Str_empty_1118:	.asciz "*"
-Str_empty_1117:	.asciz "/"
-Str_empty_1116:	.asciz "="
+Str_empty_1134:	.asciz ","
+Str_empty_1133:	.asciz "."
+Str_empty_1132:	.asciz ":"
+Str_empty_1131:	.asciz ";"
+Str_empty_1130:	.asciz "+"
+Str_empty_1129:	.asciz "-"
+Str_empty_1128:	.asciz "*"
+Str_empty_1127:	.asciz "/"
+Str_empty_1126:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_4844FECC:
@@ -14399,6 +14429,20 @@ data_4844FECD:
 .incbin_range "baserom/kn2400_program.rom", 0x04FECD, 0x04FED0
 
 ptrs_4844FED0:
+	.long	Str_empty_1143
+	.long	Str_empty_1142
+	.long	Str_empty_1141
+	.long	Str_empty_1140
+	.long	Str_empty_1139
+	.long	Str_empty_1138
+	.long	Str_empty_1137
+	.long	Str_empty_1136
+	.long	Str_empty_1135
+	.long	data_4844FEAE
+	.long	data_4844FEAF
+	.long	data_4844FEB0
+	.long	data_4844FEB1
+	.long	Str_empty_1134
 	.long	Str_empty_1133
 	.long	Str_empty_1132
 	.long	Str_empty_1131
@@ -14407,20 +14451,6 @@ ptrs_4844FED0:
 	.long	Str_empty_1128
 	.long	Str_empty_1127
 	.long	Str_empty_1126
-	.long	Str_empty_1125
-	.long	data_4844FEAE
-	.long	data_4844FEAF
-	.long	data_4844FEB0
-	.long	data_4844FEB1
-	.long	Str_empty_1124
-	.long	Str_empty_1123
-	.long	Str_empty_1122
-	.long	Str_empty_1121
-	.long	Str_empty_1120
-	.long	Str_empty_1119
-	.long	Str_empty_1118
-	.long	Str_empty_1117
-	.long	Str_empty_1116
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_4844FECC
@@ -17086,7 +17116,7 @@ Str_10k:	.asciz "  10k"
 Str_12_5k:	.asciz "12.5k"
 Str_16k:	.asciz "  16k"
 Str_20k:	.asciz "  20k"
-Str_empty_1105:	.asciz "     "
+Str_empty_1124:	.asciz "     "
 
 ptrs_48464490:
 	.long	Str_20
@@ -17120,7 +17150,7 @@ ptrs_48464490:
 	.long	Str_12_5k
 	.long	Str_16k
 	.long	Str_20k
-	.long	Str_empty_1105
+	.long	Str_empty_1124
 
 Str_empty_1104:	.asciz "  -- "
 	.align	4, 0xFF
@@ -17568,7 +17598,7 @@ Str_ATTACK_TIME_5:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_5:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn2400_program.rom", 0x06532E, 0x065330
-Str_empty_1099:	.asciz "%"
+Str_empty_1123:	.asciz "%"
 .incbin_range "baserom/kn2400_program.rom", 0x065332, 0x06538D
 Str_RFH:	.asciz "RFH\""
 .incbin_range "baserom/kn2400_program.rom", 0x065392, 0x0653CC
@@ -17581,14 +17611,14 @@ Str_ATTACK_TIME_6:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn2400_program.rom", 0x06543A, 0x06543C
-Str_empty_1098:	.asciz "%"
+Str_empty_1122:	.asciz "%"
 .incbin_range "baserom/kn2400_program.rom", 0x06543E, 0x0654DC
 
 ptrs_484654DC:
 	.long	data_48464ED0
-	.long	Str_empty_1099
+	.long	Str_empty_1123
 	.long	data_48465134
-	.long	Str_empty_1098
+	.long	Str_empty_1122
 data_484654EC:
 .incbin_range "baserom/kn2400_program.rom", 0x0654EC, 0x06556C
 ptrs_4846556C:
@@ -17991,13 +18021,13 @@ Str_ACCOMP_1_5:	.asciz "ACCOMP 1-5"
 Str_BASS_13:	.asciz "   BASS   "
 Str_DRUM_1_2_3:	.asciz " DRUM 1&2 "
 Str_DRUM_1_2_2:	.asciz " DRUM 1&2 "
-Str_empty_1096:	.asciz "          "
-Str_empty_1095:	.asciz "          "
+Str_empty_1121:	.asciz "          "
+Str_empty_1120:	.asciz "          "
 Str_PADS_16:	.asciz "   PADS   "
 Str_PADS_15:	.asciz "   PADS   "
 Str_BASS_PEDAL_3:	.asciz "BASS PEDAL"
 Str_METRONOME_2:	.asciz "METRONOME "
-Str_empty_1094:	.asciz "          "
+Str_empty_1119:	.asciz "          "
 	.align	4, 0xFF
 
 ptrs_484683D0:
@@ -18028,13 +18058,13 @@ ptrs_484683D0:
 	.long	Str_BASS_13
 	.long	Str_DRUM_1_2_3
 	.long	Str_DRUM_1_2_2
-	.long	Str_empty_1096
-	.long	Str_empty_1095
+	.long	Str_empty_1121
+	.long	Str_empty_1120
 	.long	Str_PADS_16
 	.long	Str_PADS_15
 	.long	Str_BASS_PEDAL_3
 	.long	Str_METRONOME_2
-	.long	Str_empty_1094
+	.long	Str_empty_1119
 
 Str_PRESET_IN_RHYTHM:	.asciz "PRESET IN RHYTHM"
 	.align	4, 0xFF
@@ -18733,13 +18763,13 @@ Str_SPLIT_C3:	.asciz "SPLIT:C3"
 	.align	4, 0xFF
 Str_SPLIT_G3:	.asciz "SPLIT:G3"
 	.align	4, 0xFF
-Str_empty_1093:	.asciz "        "
+Str_empty_1118:	.asciz "        "
 Str_FADE_IN_6:	.asciz "FADE IN "
 Str_FADE_OUT_6:	.asciz "FADE OUT"
 	.align	4, 0xFF
 
 ptrs_4846A874:
-	.long	Str_empty_1093
+	.long	Str_empty_1118
 	.long	Str_FADE_IN_6
 	.long	Str_FADE_OUT_6
 
@@ -18853,7 +18883,7 @@ ptrs_4846AAFC:
 Str_BANK_s_s:	.asciz "BANK %s: %s"
 Str_1d_s_2:	.asciz "%1d : %s"
 	.align	4, 0xFF
-Str_OFF_161:	.asciz "      OFF       "
+Str_OFF_162:	.asciz "      OFF       "
 Str_SOFT_PEDAL_4:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL_4:	.asciz "SOSTENUTO PEDAL "
 Str_P_MEM_INCREMENT_6:	.asciz "P.MEM INCREMENT "
@@ -18908,12 +18938,12 @@ Str_BANK_s:	.asciz "BANK: %s"
 	.align	4, 0xFF
 Str_1d_s:	.asciz "%1d : %s"
 	.align	4, 0xFF
-Str_OFF_144:	.asciz "OFF"
-Str_ON_104:	.asciz "ON "
+Str_OFF_157:	.asciz "OFF"
+Str_ON_116:	.asciz "ON "
 
 ptrs_4846B00C:
-	.long	Str_OFF_144
-	.long	Str_ON_104
+	.long	Str_OFF_157
+	.long	Str_ON_116
 .incbin_range "baserom/kn2400_program.rom", 0x06B014, 0x06B026
 
 Str_SOLO_LOAD:	.asciz "SOLO LOAD        "
@@ -19479,10 +19509,10 @@ FnName_TtSedrawbar:	.asciz "TtSedrawbar"
 Str_SOUND_2:	.asciz "SOUND"
 	.align	4, 0xFF
 
-	AcSvariScreen	TtSvari, sub=TtSvari_SndPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single1, index=0xFFFF, exit=TT_PS, window=TtSvari_window, title=Str_SOUND_2, icon=140, normal=SvariNormal_id, explorer=SvariExplorer_id, memory=SvariMemory_id, accordion=SvariAccordion_id, drawbar=SvariPercTone_id, organ=0xFFFFFFFF, expew=0xFFFFFFFF, normaloct=SvariNormalOct_id, exploreroct=SvariExplorerOct_id, memoryoct=SvariMemoryOct_id	# title "SOUND"
-		AcSndPage	TtSvari_SndPage1, super=TtSvari, next=TtSvari_PartSelect1, flag=VF_Const, X=240, Y=5, W=80, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=TtSvari_SndPage1_page
-		AcPartSelect	TtSvari_PartSelect1, super=TtSvari, next=TtSvari_SndGroup1, prev=TtSvari_SndPage1, flag=VF_Const, X=92, Y=2, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
-		AcSndGroup	TtSvari_SndGroup1, super=TtSvari, prev=TtSvari_PartSelect1, flag=VF_Const, X=92, Y=14, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
+	AcSvariScreen	SNDRHY_TtSvari, sub=SNDRHY_TtSvari_SndPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single1, index=0xFFFF, exit=TT_PS, window=SNDRHY_TtSvari_window, title=Str_SOUND_2, icon=140, normal=SvariNormal_id, explorer=SvariExplorer_id, memory=SvariMemory_id, accordion=SvariAccordion_id, drawbar=SvariPercTone_id, organ=0xFFFFFFFF, expew=0xFFFFFFFF, normaloct=SvariNormalOct_id, exploreroct=SvariExplorerOct_id, memoryoct=SvariMemoryOct_id	# title "SOUND"
+		AcSndPage	SNDRHY_TtSvari_SndPage1, super=SNDRHY_TtSvari, next=SNDRHY_TtSvari_PartSelect1, flag=VF_Const, X=240, Y=5, W=80, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=SNDRHY_TtSvari_SndPage1_page
+		AcPartSelect	SNDRHY_TtSvari_PartSelect1, super=SNDRHY_TtSvari, next=SNDRHY_TtSvari_SndGroup1, prev=SNDRHY_TtSvari_SndPage1, flag=VF_Const, X=92, Y=2, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
+		AcSndGroup	SNDRHY_TtSvari_SndGroup1, super=SNDRHY_TtSvari, prev=SNDRHY_TtSvari_PartSelect1, flag=VF_Const, X=92, Y=14, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
 
 	Window	SvariNormal, sub=SvariNormal_SndVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariNormal_parent, child=SvariNormal_child
 		AcSndVari	SvariNormal_SndVari1, super=SvariNormal, next=SvariNormal_SndVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari1_caption, visible=SvariNormal_SndVari1_visible, selected=SvariNormal_SndVari1_selected, swvari=SvariNormal_SndVari1_swvari
@@ -19708,9 +19738,9 @@ Str_RHYTHM_2:	.asciz "RHYTHM"
 Str_DRAWBAR_EDIT:	.asciz "DRAWBAR EDIT"
 	.align	4, 0xFF
 
-	AcDrawbarScreen	TtSedrawbar, sub=TtSedrawbar_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSedrawbar_window, title=Str_DRAWBAR_EDIT, icon=111, drawbar=SvariDrawbar_id, write=DrawbarWrite_id	# title "DRAWBAR EDIT"
-		IvExitMode	TtSedrawbar_ExitMode1, super=TtSedrawbar, next=TtSedrawbar_FixWin1, flag=VF_Const|VF_InvisibleBox, X=180, Y=0, W=16, H=32, mode=MD_PROGRAM
-		IvFixWin	TtSedrawbar_FixWin1, super=TtSedrawbar, prev=TtSedrawbar_ExitMode1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, window=SvariPercTone_id
+	AcDrawbarScreen	SNDRHY_TtSedrawbar, sub=SNDRHY_TtSedrawbar_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SNDRHY_TtSedrawbar_window, title=Str_DRAWBAR_EDIT, icon=111, drawbar=SvariDrawbar_id, write=DrawbarWrite_id	# title "DRAWBAR EDIT"
+		IvExitMode	SNDRHY_TtSedrawbar_ExitMode1, super=SNDRHY_TtSedrawbar, next=SNDRHY_TtSedrawbar_FixWin1, flag=VF_Const|VF_InvisibleBox, X=180, Y=0, W=16, H=32, mode=MD_PROGRAM
+		IvFixWin	SNDRHY_TtSedrawbar_FixWin1, super=SNDRHY_TtSedrawbar, prev=SNDRHY_TtSedrawbar_ExitMode1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, window=SvariPercTone_id
 
 	Window	SvariNormalOct, sub=SvariNormalOct_SndVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariNormalOct_parent, child=SvariNormalOct_child
 		AcSndVari	SvariNormalOct_SndVari1, super=SvariNormalOct, next=SvariNormalOct_SndVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=1, fontcolor=CL_Black, caption=SvariNormalOct_SndVari1_caption, visible=SvariNormalOct_SndVari1_visible, selected=SvariNormalOct_SndVari1_selected, swvari=SvariNormalOct_SndVari1_swvari
@@ -20077,21 +20107,21 @@ ptrs_4846F9E0:
 data_4846FA70:
 .incbin_range "baserom/kn2400_program.rom", 0x06FA70, 0x06FAB0
 
-Str_empty_1083:	.asciz "     "
+Str_empty_1117:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FAB6, 0x06FAC2
-Str_empty_1082:	.asciz "  \x95  "
+Str_empty_1116:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FAC8, 0x06FAD4
-Str_empty_1081:	.asciz "  \x95  "
+Str_empty_1115:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FADA, 0x06FAE6
-Str_empty_1080:	.asciz "  \x95  "
+Str_empty_1105:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FAEC, 0x06FAF8
-Str_empty_1079:	.asciz "  \x95  "
+Str_empty_1099:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FAFE, 0x06FB0A
-Str_empty_1078:	.asciz "     "
+Str_empty_1098:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB10, 0x06FB1C
-Str_empty_1077:	.asciz "  \x95  "
+Str_empty_1096:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB22, 0x06FB2E
-Str_empty_1076:	.asciz "     "
+Str_empty_1095:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB34, 0x06FB40
 data_4846FB40:
 .incbin_range "baserom/kn2400_program.rom", 0x06FB40, 0x06FB46
@@ -20101,21 +20131,21 @@ data_4846FB52:
 .incbin_range "baserom/kn2400_program.rom", 0x06FB52, 0x06FB58
 Str_BASS2:	.asciz "BASS2"
 .incbin_range "baserom/kn2400_program.rom", 0x06FB5E, 0x06FB64
-Str_empty_1075:	.asciz "     "
+Str_empty_1094:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB6A, 0x06FB76
-Str_empty_1074:	.asciz "     "
+Str_empty_1093:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB7C, 0x06FB88
-Str_empty_1073:	.asciz "  \x95  "
+Str_empty_1083:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FB8E, 0x06FB9A
-Str_empty_1072:	.asciz "     "
+Str_empty_1082:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FBA0, 0x06FBAC
-Str_empty_1071:	.asciz "  \x95  "
+Str_empty_1081:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FBB2, 0x06FBBE
-Str_empty_1070:	.asciz "     "
+Str_empty_1080:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FBC4, 0x06FBD0
-Str_empty_1069:	.asciz "  \x95  "
+Str_empty_1079:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FBD6, 0x06FBE2
-Str_empty_1068:	.asciz "     "
+Str_empty_1078:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FBE8, 0x06FBF4
 data_4846FBF4:
 .incbin_range "baserom/kn2400_program.rom", 0x06FBF4, 0x06FBFA
@@ -20125,21 +20155,21 @@ data_4846FC06:
 .incbin_range "baserom/kn2400_program.rom", 0x06FC06, 0x06FC0C
 Str_BASS2_2:	.asciz "BASS2"
 .incbin_range "baserom/kn2400_program.rom", 0x06FC12, 0x06FC18
-Str_empty_1067:	.asciz "     "
+Str_empty_1077:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC1E, 0x06FC2A
-Str_empty_1066:	.asciz "     "
+Str_empty_1076:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC30, 0x06FC3C
-Str_empty_1065:	.asciz "  \x95  "
+Str_empty_1075:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC42, 0x06FC4E
-Str_empty_1064:	.asciz "  \x95  "
+Str_empty_1074:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC54, 0x06FC60
-Str_empty_1063:	.asciz "  \x95  "
+Str_empty_1073:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC66, 0x06FC72
-Str_empty_1062:	.asciz "     "
+Str_empty_1072:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC78, 0x06FC84
-Str_empty_1061:	.asciz "  \x95  "
+Str_empty_1071:	.asciz "  \x95  "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC8A, 0x06FC96
-Str_empty_1060:	.asciz "     "
+Str_empty_1070:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FC9C, 0x06FCA8
 data_4846FCA8:
 .incbin_range "baserom/kn2400_program.rom", 0x06FCA8, 0x06FCAE
@@ -20149,48 +20179,60 @@ data_4846FCBA:
 .incbin_range "baserom/kn2400_program.rom", 0x06FCBA, 0x06FCC0
 Str_BASS2_3:	.asciz "BASS2"
 .incbin_range "baserom/kn2400_program.rom", 0x06FCC6, 0x06FCCC
-Str_empty_1059:	.asciz "     "
+Str_empty_1069:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FCD2, 0x06FCDE
-Str_empty_1058:	.asciz "     "
+Str_empty_1068:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FCE4, 0x06FCF0
-Str_empty_1057:	.asciz "     "
+Str_empty_1067:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FCF6, 0x06FD02
-Str_empty_1056:	.asciz "     "
+Str_empty_1066:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD08, 0x06FD14
-Str_empty_1055:	.asciz "     "
+Str_empty_1065:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD1A, 0x06FD26
-Str_empty_1054:	.asciz "     "
+Str_empty_1064:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD2C, 0x06FD38
-Str_empty_1053:	.asciz "     "
+Str_empty_1063:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD3E, 0x06FD4A
-Str_empty_1052:	.asciz "     "
+Str_empty_1062:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD50, 0x06FD5C
-Str_empty_1051:	.asciz "     "
+Str_empty_1061:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD62, 0x06FD6E
-Str_empty_1050:	.asciz "     "
+Str_empty_1060:	.asciz "     "
 .incbin_range "baserom/kn2400_program.rom", 0x06FD74, 0x06FD80
 
 ptrs_4846FD80:
+	.long	Str_empty_1117
+	.long	Str_empty_1116
+	.long	Str_empty_1115
+	.long	Str_empty_1105
+	.long	Str_empty_1099
+	.long	Str_empty_1098
+	.long	Str_empty_1096
+	.long	Str_empty_1095
+	.long	data_4846FB40
+	.long	data_4846FB52
+	.long	Str_empty_1094
+	.long	Str_empty_1093
 	.long	Str_empty_1083
 	.long	Str_empty_1082
 	.long	Str_empty_1081
 	.long	Str_empty_1080
 	.long	Str_empty_1079
 	.long	Str_empty_1078
+	.long	data_4846FBF4
+	.long	data_4846FC06
 	.long	Str_empty_1077
 	.long	Str_empty_1076
-	.long	data_4846FB40
-	.long	data_4846FB52
 	.long	Str_empty_1075
 	.long	Str_empty_1074
 	.long	Str_empty_1073
 	.long	Str_empty_1072
 	.long	Str_empty_1071
 	.long	Str_empty_1070
+	.long	data_4846FCA8
+	.long	data_4846FCBA
 	.long	Str_empty_1069
 	.long	Str_empty_1068
-	.long	data_4846FBF4
-	.long	data_4846FC06
 	.long	Str_empty_1067
 	.long	Str_empty_1066
 	.long	Str_empty_1065
@@ -20199,18 +20241,6 @@ ptrs_4846FD80:
 	.long	Str_empty_1062
 	.long	Str_empty_1061
 	.long	Str_empty_1060
-	.long	data_4846FCA8
-	.long	data_4846FCBA
-	.long	Str_empty_1059
-	.long	Str_empty_1058
-	.long	Str_empty_1057
-	.long	Str_empty_1056
-	.long	Str_empty_1055
-	.long	Str_empty_1054
-	.long	Str_empty_1053
-	.long	Str_empty_1052
-	.long	Str_empty_1051
-	.long	Str_empty_1050
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "
@@ -20386,108 +20416,108 @@ FnName_TtCtFavorite:	.asciz "TtCtFavorite"
 Str_FAVORITES:	.asciz "FAVORITES"
 	.align	4, 0xFF
 
-	TtlScreen	TtFavorite, sub=TtFavorite_Favorite1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtFavorite_window, title=Str_FAVORITES, icon=189	# title "FAVORITES"
-		AcFavorite	TtFavorite_Favorite1, super=TtFavorite, next=TtFavorite_Favorite2, flag=VF_Const, X=4, Y=30, W=111, H=34, color=CL_Silver, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=TtFavorite_Favorite1_selected
-		AcFavorite	TtFavorite_Favorite2, super=TtFavorite, next=TtFavorite_Favorite3, prev=TtFavorite_Favorite1, flag=VF_Const, X=4, Y=73, W=111, H=34, color=CL_Silver, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=TtFavorite_Favorite2_selected
-		AcFavorite	TtFavorite_Favorite3, super=TtFavorite, next=TtFavorite_Favorite4, prev=TtFavorite_Favorite2, flag=VF_Const, X=4, Y=116, W=111, H=34, color=CL_Silver, index=2, font=4, fontcolor=CL_Black, editsw=ES_Left3, selected=TtFavorite_Favorite3_selected
-		AcFavorite	TtFavorite_Favorite4, super=TtFavorite, next=TtFavorite_Favorite5, prev=TtFavorite_Favorite3, flag=VF_Const, X=4, Y=159, W=111, H=34, color=CL_Silver, index=3, font=4, fontcolor=CL_Black, editsw=ES_Left4, selected=TtFavorite_Favorite4_selected
-		AcFavorite	TtFavorite_Favorite5, super=TtFavorite, next=TtFavorite_Favorite6, prev=TtFavorite_Favorite4, flag=VF_Const, X=4, Y=202, W=111, H=34, color=CL_Silver, index=4, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=TtFavorite_Favorite5_selected
-		AcFavorite	TtFavorite_Favorite6, super=TtFavorite, next=TtFavorite_Favorite7, prev=TtFavorite_Favorite5, flag=VF_Const, X=205, Y=30, W=111, H=34, color=CL_Silver, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=TtFavorite_Favorite6_selected
-		AcFavorite	TtFavorite_Favorite7, super=TtFavorite, next=TtFavorite_Favorite8, prev=TtFavorite_Favorite6, flag=VF_Const, X=205, Y=73, W=111, H=34, color=CL_Silver, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=TtFavorite_Favorite7_selected
-		AcFavorite	TtFavorite_Favorite8, super=TtFavorite, next=TtFavorite_Favorite9, prev=TtFavorite_Favorite7, flag=VF_Const, X=205, Y=116, W=111, H=34, color=CL_Silver, index=7, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=TtFavorite_Favorite8_selected
-		AcFavorite	TtFavorite_Favorite9, super=TtFavorite, next=TtFavorite_Favorite10, prev=TtFavorite_Favorite8, flag=VF_Const, X=205, Y=159, W=111, H=34, color=CL_Silver, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=TtFavorite_Favorite9_selected
-		AcFavorite	TtFavorite_Favorite10, super=TtFavorite, next=TtFavorite_IndexEditSw1, prev=TtFavorite_Favorite9, flag=VF_Const, X=205, Y=202, W=111, H=34, color=CL_Silver, index=9, font=4, fontcolor=CL_Black, editsw=ES_Right5, selected=TtFavorite_Favorite10_selected
-		AcIndexEditSw	TtFavorite_IndexEditSw1, super=TtFavorite, sub=TtFavorite_Label_1, next=TtFavorite_IndexEditSw2, prev=TtFavorite_Favorite10, flag=VF_Const, X=122, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7
+	TtlScreen	FAVORITE_TtFavorite, sub=FAVORITE_TtFavorite_Favorite1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=FAVORITE_TtFavorite_window, title=Str_FAVORITES, icon=189	# title "FAVORITES"
+		AcFavorite	FAVORITE_TtFavorite_Favorite1, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite2, flag=VF_Const, X=4, Y=30, W=111, H=34, color=CL_Silver, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=FAVORITE_TtFavorite_Favorite1_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite2, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite3, prev=FAVORITE_TtFavorite_Favorite1, flag=VF_Const, X=4, Y=73, W=111, H=34, color=CL_Silver, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=FAVORITE_TtFavorite_Favorite2_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite3, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite4, prev=FAVORITE_TtFavorite_Favorite2, flag=VF_Const, X=4, Y=116, W=111, H=34, color=CL_Silver, index=2, font=4, fontcolor=CL_Black, editsw=ES_Left3, selected=FAVORITE_TtFavorite_Favorite3_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite4, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite5, prev=FAVORITE_TtFavorite_Favorite3, flag=VF_Const, X=4, Y=159, W=111, H=34, color=CL_Silver, index=3, font=4, fontcolor=CL_Black, editsw=ES_Left4, selected=FAVORITE_TtFavorite_Favorite4_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite5, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite6, prev=FAVORITE_TtFavorite_Favorite4, flag=VF_Const, X=4, Y=202, W=111, H=34, color=CL_Silver, index=4, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=FAVORITE_TtFavorite_Favorite5_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite6, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite7, prev=FAVORITE_TtFavorite_Favorite5, flag=VF_Const, X=205, Y=30, W=111, H=34, color=CL_Silver, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=FAVORITE_TtFavorite_Favorite6_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite7, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite8, prev=FAVORITE_TtFavorite_Favorite6, flag=VF_Const, X=205, Y=73, W=111, H=34, color=CL_Silver, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=FAVORITE_TtFavorite_Favorite7_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite8, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite9, prev=FAVORITE_TtFavorite_Favorite7, flag=VF_Const, X=205, Y=116, W=111, H=34, color=CL_Silver, index=7, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=FAVORITE_TtFavorite_Favorite8_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite9, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Favorite10, prev=FAVORITE_TtFavorite_Favorite8, flag=VF_Const, X=205, Y=159, W=111, H=34, color=CL_Silver, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=FAVORITE_TtFavorite_Favorite9_selected
+		AcFavorite	FAVORITE_TtFavorite_Favorite10, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_IndexEditSw1, prev=FAVORITE_TtFavorite_Favorite9, flag=VF_Const, X=205, Y=202, W=111, H=34, color=CL_Silver, index=9, font=4, fontcolor=CL_Black, editsw=ES_Right5, selected=FAVORITE_TtFavorite_Favorite10_selected
+		AcIndexEditSw	FAVORITE_TtFavorite_IndexEditSw1, super=FAVORITE_TtFavorite, sub=FAVORITE_TtFavorite_Label_1, next=FAVORITE_TtFavorite_IndexEditSw2, prev=FAVORITE_TtFavorite_Favorite10, flag=VF_Const, X=122, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7
 
 Str_1:	.asciz "1"
 	.align	4, 0xFF
 
-			VwLabel	TtFavorite_Label_1, super=TtFavorite_IndexEditSw1, flag=VF_Const, X=126, Y=219, W=8, H=19, str=Str_1, font=4, fontcolor=CL_Black	# str "1"
-		AcIndexEditSw	TtFavorite_IndexEditSw2, super=TtFavorite, sub=TtFavorite_Label_2, next=TtFavorite_IndexEditSw3, prev=TtFavorite_IndexEditSw1, flag=VF_Const, X=142, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom8
+			VwLabel	FAVORITE_TtFavorite_Label_1, super=FAVORITE_TtFavorite_IndexEditSw1, flag=VF_Const, X=126, Y=219, W=8, H=19, str=Str_1, font=4, fontcolor=CL_Black	# str "1"
+		AcIndexEditSw	FAVORITE_TtFavorite_IndexEditSw2, super=FAVORITE_TtFavorite, sub=FAVORITE_TtFavorite_Label_2, next=FAVORITE_TtFavorite_IndexEditSw3, prev=FAVORITE_TtFavorite_IndexEditSw1, flag=VF_Const, X=142, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom8
 
 Str_2_4:	.asciz "2"
 	.align	4, 0xFF
 
-			VwLabel	TtFavorite_Label_2, super=TtFavorite_IndexEditSw2, flag=VF_Const, X=146, Y=219, W=8, H=19, str=Str_2_4, font=4, fontcolor=CL_Black	# str "2"
-		AcIndexEditSw	TtFavorite_IndexEditSw3, super=TtFavorite, sub=TtFavorite_Label_3, next=TtFavorite_IndexEditSw4, prev=TtFavorite_IndexEditSw2, flag=VF_Const, X=162, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9
+			VwLabel	FAVORITE_TtFavorite_Label_2, super=FAVORITE_TtFavorite_IndexEditSw2, flag=VF_Const, X=146, Y=219, W=8, H=19, str=Str_2_4, font=4, fontcolor=CL_Black	# str "2"
+		AcIndexEditSw	FAVORITE_TtFavorite_IndexEditSw3, super=FAVORITE_TtFavorite, sub=FAVORITE_TtFavorite_Label_3, next=FAVORITE_TtFavorite_IndexEditSw4, prev=FAVORITE_TtFavorite_IndexEditSw2, flag=VF_Const, X=162, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9
 
 Str_3:	.asciz "3"
 	.align	4, 0xFF
 
-			VwLabel	TtFavorite_Label_3, super=TtFavorite_IndexEditSw3, flag=VF_Const, X=166, Y=219, W=8, H=19, str=Str_3, font=4, fontcolor=CL_Black	# str "3"
-		AcIndexEditSw	TtFavorite_IndexEditSw4, super=TtFavorite, sub=TtFavorite_Label_4, next=TtFavorite_FavBank1, prev=TtFavorite_IndexEditSw3, flag=VF_Const, X=182, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10
+			VwLabel	FAVORITE_TtFavorite_Label_3, super=FAVORITE_TtFavorite_IndexEditSw3, flag=VF_Const, X=166, Y=219, W=8, H=19, str=Str_3, font=4, fontcolor=CL_Black	# str "3"
+		AcIndexEditSw	FAVORITE_TtFavorite_IndexEditSw4, super=FAVORITE_TtFavorite, sub=FAVORITE_TtFavorite_Label_4, next=FAVORITE_TtFavorite_FavBank1, prev=FAVORITE_TtFavorite_IndexEditSw3, flag=VF_Const, X=182, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10
 
 Str_4_3:	.asciz "4"
 	.align	4, 0xFF
 
-			VwLabel	TtFavorite_Label_4, super=TtFavorite_IndexEditSw4, flag=VF_Const, X=186, Y=219, W=8, H=19, str=Str_4_3, font=4, fontcolor=CL_Black	# str "4"
-		AcFavBank	TtFavorite_FavBank1, super=TtFavorite, next=TtFavorite_Label_BANK, prev=TtFavorite_IndexEditSw4, flag=VF_Const, X=118, Y=90, W=84, H=122, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=1, fontcolor=CL_White, row=4, selected=TtFavorite_FavBank1_selected
+			VwLabel	FAVORITE_TtFavorite_Label_4, super=FAVORITE_TtFavorite_IndexEditSw4, flag=VF_Const, X=186, Y=219, W=8, H=19, str=Str_4_3, font=4, fontcolor=CL_Black	# str "4"
+		AcFavBank	FAVORITE_TtFavorite_FavBank1, super=FAVORITE_TtFavorite, next=FAVORITE_TtFavorite_Label_BANK, prev=FAVORITE_TtFavorite_IndexEditSw4, flag=VF_Const, X=118, Y=90, W=84, H=122, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=1, fontcolor=CL_White, row=4, selected=FAVORITE_TtFavorite_FavBank1_selected
 
 Str_BANK:	.asciz "BANK"
 	.align	4, 0xFF
 
-		VwLabel	TtFavorite_Label_BANK, super=TtFavorite, prev=TtFavorite_FavBank1, flag=VF_Const, X=147, Y=70, W=24, H=19, str=Str_BANK, font=4, fontcolor=CL_Text	# str "BANK"
+		VwLabel	FAVORITE_TtFavorite_Label_BANK, super=FAVORITE_TtFavorite, prev=FAVORITE_TtFavorite_FavBank1, flag=VF_Const, X=147, Y=70, W=24, H=19, str=Str_BANK, font=4, fontcolor=CL_Text	# str "BANK"
 
 Str_FAVORITES_SETTING:	.asciz "FAVORITES SETTING"
 	.align	4, 0xFF
 
-	AcFavScreen	TtCtFavorite, sub=TtCtFavorite_FavBank1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtCtFavorite_window, title=Str_FAVORITES_SETTING, icon=189	# title "FAVORITES SETTING"
-		AcFavBank	TtCtFavorite_FavBank1, super=TtCtFavorite, next=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=6, Y=70, W=113, H=118, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, row=4, selected=TtCtFavorite_FavBank1_selected
-		AcIndexEditSw	TtCtFavorite_IndexEditSw1, super=TtCtFavorite, sub=TtCtFavorite_Label_1, next=TtCtFavorite_IndexEditSw2, prev=TtCtFavorite_FavBank1, flag=VF_Const, X=42, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom3
+	AcFavScreen	FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_FavBank1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=FAVORITE_TtCtFavorite_window, title=Str_FAVORITES_SETTING, icon=189	# title "FAVORITES SETTING"
+		AcFavBank	FAVORITE_TtCtFavorite_FavBank1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_IndexEditSw1, flag=VF_Const, X=6, Y=70, W=113, H=118, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, row=4, selected=FAVORITE_TtCtFavorite_FavBank1_selected
+		AcIndexEditSw	FAVORITE_TtCtFavorite_IndexEditSw1, super=FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_Label_1, next=FAVORITE_TtCtFavorite_IndexEditSw2, prev=FAVORITE_TtCtFavorite_FavBank1, flag=VF_Const, X=42, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom3
 
 Str_1_2:	.asciz "1"
 	.align	4, 0xFF
 
-			VwLabel	TtCtFavorite_Label_1, super=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=46, Y=219, W=8, H=19, str=Str_1_2, font=4, fontcolor=CL_Black	# str "1"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw2, super=TtCtFavorite, sub=TtCtFavorite_Label_2, next=TtCtFavorite_IndexEditSw3, prev=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=62, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4
+			VwLabel	FAVORITE_TtCtFavorite_Label_1, super=FAVORITE_TtCtFavorite_IndexEditSw1, flag=VF_Const, X=46, Y=219, W=8, H=19, str=Str_1_2, font=4, fontcolor=CL_Black	# str "1"
+		AcIndexEditSw	FAVORITE_TtCtFavorite_IndexEditSw2, super=FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_Label_2, next=FAVORITE_TtCtFavorite_IndexEditSw3, prev=FAVORITE_TtCtFavorite_IndexEditSw1, flag=VF_Const, X=62, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4
 
 Str_2_5:	.asciz "2"
 	.align	4, 0xFF
 
-			VwLabel	TtCtFavorite_Label_2, super=TtCtFavorite_IndexEditSw2, flag=VF_Const, X=66, Y=219, W=8, H=19, str=Str_2_5, font=4, fontcolor=CL_Black	# str "2"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw3, super=TtCtFavorite, sub=TtCtFavorite_Label_3, next=TtCtFavorite_IndexEditSw4, prev=TtCtFavorite_IndexEditSw2, flag=VF_Const, X=82, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5
+			VwLabel	FAVORITE_TtCtFavorite_Label_2, super=FAVORITE_TtCtFavorite_IndexEditSw2, flag=VF_Const, X=66, Y=219, W=8, H=19, str=Str_2_5, font=4, fontcolor=CL_Black	# str "2"
+		AcIndexEditSw	FAVORITE_TtCtFavorite_IndexEditSw3, super=FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_Label_3, next=FAVORITE_TtCtFavorite_IndexEditSw4, prev=FAVORITE_TtCtFavorite_IndexEditSw2, flag=VF_Const, X=82, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5
 
 Str_3_2:	.asciz "3"
 	.align	4, 0xFF
 
-			VwLabel	TtCtFavorite_Label_3, super=TtCtFavorite_IndexEditSw3, flag=VF_Const, X=86, Y=219, W=8, H=19, str=Str_3_2, font=4, fontcolor=CL_Black	# str "3"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw4, super=TtCtFavorite, sub=TtCtFavorite_Label_4, next=TtCtFavorite_ScreenMenu_BANK_NAMING, prev=TtCtFavorite_IndexEditSw3, flag=VF_Const, X=102, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom6
+			VwLabel	FAVORITE_TtCtFavorite_Label_3, super=FAVORITE_TtCtFavorite_IndexEditSw3, flag=VF_Const, X=86, Y=219, W=8, H=19, str=Str_3_2, font=4, fontcolor=CL_Black	# str "3"
+		AcIndexEditSw	FAVORITE_TtCtFavorite_IndexEditSw4, super=FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_Label_4, next=FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING, prev=FAVORITE_TtCtFavorite_IndexEditSw3, flag=VF_Const, X=102, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom6
 
 Str_4_4:	.asciz "4"
 	.align	4, 0xFF
 
-			VwLabel	TtCtFavorite_Label_4, super=TtCtFavorite_IndexEditSw4, flag=VF_Const, X=106, Y=219, W=8, H=19, str=Str_4_4, font=4, fontcolor=CL_Black	# str "4"
+			VwLabel	FAVORITE_TtCtFavorite_Label_4, super=FAVORITE_TtCtFavorite_IndexEditSw4, flag=VF_Const, X=106, Y=219, W=8, H=19, str=Str_4_4, font=4, fontcolor=CL_Black	# str "4"
 
 Str_BANK_NAMING:	.asciz "BANK NAMING"
 
-		AcScreenMenu	TtCtFavorite_ScreenMenu_BANK_NAMING, super=TtCtFavorite, next=TtCtFavorite_Label_BANK, prev=TtCtFavorite_IndexEditSw4, flag=VF_Const, X=4, Y=205, W=33, H=32, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Left5, selected=TtCtFavorite_ScreenMenu_BANK_NAMING_selected, str=Str_BANK_NAMING, screen=FavBankNaming_id	# str "BANK NAMING"
+		AcScreenMenu	FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_Label_BANK, prev=FAVORITE_TtCtFavorite_IndexEditSw4, flag=VF_Const, X=4, Y=205, W=33, H=32, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Left5, selected=FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING_selected, str=Str_BANK_NAMING, screen=FavBankNaming_id	# str "BANK NAMING"
 
 Str_BANK_2:	.asciz "BANK"
 	.align	4, 0xFF
 
-		VwLabel	TtCtFavorite_Label_BANK, super=TtCtFavorite, next=TtCtFavorite_FuncEditSw1, prev=TtCtFavorite_ScreenMenu_BANK_NAMING, flag=VF_Const, X=47, Y=50, W=24, H=19, str=Str_BANK_2, font=4, fontcolor=CL_Text	# str "BANK"
-		AcFuncEditSw	TtCtFavorite_FuncEditSw1, super=TtCtFavorite, next=TtCtFavorite_FuncEditSw2, prev=TtCtFavorite_Label_BANK, flag=VF_Const, X=296, Y=165, W=20, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_FavSetFunc
-		AcFuncEditSw	TtCtFavorite_FuncEditSw2, super=TtCtFavorite, sub=TtCtFavorite_Label_SET, next=TtCtFavorite_IndexWideES1, prev=TtCtFavorite_FuncEditSw1, flag=VF_Const, X=304, Y=189, W=16, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit, func=FN_FavSetFunc
+		VwLabel	FAVORITE_TtCtFavorite_Label_BANK, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_FuncEditSw1, prev=FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING, flag=VF_Const, X=47, Y=50, W=24, H=19, str=Str_BANK_2, font=4, fontcolor=CL_Text	# str "BANK"
+		AcFuncEditSw	FAVORITE_TtCtFavorite_FuncEditSw1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_FuncEditSw2, prev=FAVORITE_TtCtFavorite_Label_BANK, flag=VF_Const, X=296, Y=165, W=20, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_FavSetFunc
+		AcFuncEditSw	FAVORITE_TtCtFavorite_FuncEditSw2, super=FAVORITE_TtCtFavorite, sub=FAVORITE_TtCtFavorite_Label_SET, next=FAVORITE_TtCtFavorite_IndexWideES1, prev=FAVORITE_TtCtFavorite_FuncEditSw1, flag=VF_Const, X=304, Y=189, W=16, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit, func=FN_FavSetFunc
 
 Str_SET_2:	.asciz "SET"
 
-			VwLabel	TtCtFavorite_Label_SET, super=TtCtFavorite_FuncEditSw2, flag=VF_Const, X=300, Y=198, W=19, H=19, str=Str_SET_2, font=4, fontcolor=CL_White	# str "SET"
-		AcIndexWideES	TtCtFavorite_IndexWideES1, super=TtCtFavorite, next=TtCtFavorite_IndexWideES2, prev=TtCtFavorite_FuncEditSw2, flag=VF_Const, X=142, Y=216, W=56, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom10, style=14
-		AcIndexWideES	TtCtFavorite_IndexWideES2, super=TtCtFavorite, next=TtCtFavorite_FavCategory1, prev=TtCtFavorite_IndexWideES1, flag=VF_Const, X=222, Y=216, W=56, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=14
-		AcFavCategory	TtCtFavorite_FavCategory1, super=TtCtFavorite, next=TtCtFavorite_FavItem1, prev=TtCtFavorite_IndexWideES2, flag=VF_Const, X=138, Y=58, W=64, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=4, fontcolor=CL_White, align=1, row=8, selected=TtCtFavorite_FavCategory1_selected
-		AcFavItem	TtCtFavorite_FavItem1, super=TtCtFavorite, next=TtCtFavorite_Label_CATEGORY, prev=TtCtFavorite_FavCategory1, flag=VF_Const, X=206, Y=58, W=87, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=5, fontcolor=CL_White, align=1, row=8, selected=TtCtFavorite_FavItem1_selected
+			VwLabel	FAVORITE_TtCtFavorite_Label_SET, super=FAVORITE_TtCtFavorite_FuncEditSw2, flag=VF_Const, X=300, Y=198, W=19, H=19, str=Str_SET_2, font=4, fontcolor=CL_White	# str "SET"
+		AcIndexWideES	FAVORITE_TtCtFavorite_IndexWideES1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_IndexWideES2, prev=FAVORITE_TtCtFavorite_FuncEditSw2, flag=VF_Const, X=142, Y=216, W=56, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom10, style=14
+		AcIndexWideES	FAVORITE_TtCtFavorite_IndexWideES2, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_FavCategory1, prev=FAVORITE_TtCtFavorite_IndexWideES1, flag=VF_Const, X=222, Y=216, W=56, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=14
+		AcFavCategory	FAVORITE_TtCtFavorite_FavCategory1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_FavItem1, prev=FAVORITE_TtCtFavorite_IndexWideES2, flag=VF_Const, X=138, Y=58, W=64, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=4, fontcolor=CL_White, align=1, row=8, selected=FAVORITE_TtCtFavorite_FavCategory1_selected
+		AcFavItem	FAVORITE_TtCtFavorite_FavItem1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_Label_CATEGORY, prev=FAVORITE_TtCtFavorite_FavCategory1, flag=VF_Const, X=206, Y=58, W=87, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=5, fontcolor=CL_White, align=1, row=8, selected=FAVORITE_TtCtFavorite_FavItem1_selected
 
 Str_CATEGORY:	.asciz "CATEGORY"
 	.align	4, 0xFF
 
-		VwLabel	TtCtFavorite_Label_CATEGORY, super=TtCtFavorite, next=TtCtFavorite_Label_ITEM, prev=TtCtFavorite_FavItem1, flag=VF_Const, X=147, Y=38, W=46, H=19, str=Str_CATEGORY, font=4, fontcolor=CL_Text	# str "CATEGORY"
+		VwLabel	FAVORITE_TtCtFavorite_Label_CATEGORY, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_Label_ITEM, prev=FAVORITE_TtCtFavorite_FavItem1, flag=VF_Const, X=147, Y=38, W=46, H=19, str=Str_CATEGORY, font=4, fontcolor=CL_Text	# str "CATEGORY"
 
 Str_ITEM:	.asciz "ITEM"
 	.align	4, 0xFF
 
-		VwLabel	TtCtFavorite_Label_ITEM, super=TtCtFavorite, next=TtCtFavorite_Box1, prev=TtCtFavorite_Label_CATEGORY, flag=VF_Const, X=231, Y=38, W=24, H=19, str=Str_ITEM, font=4, fontcolor=CL_Text	# str "ITEM"
-		VwBox	TtCtFavorite_Box1, super=TtCtFavorite, next=TtCtFavorite_IndexPushSw1, prev=TtCtFavorite_Label_ITEM, flag=VF_Const, X=194, Y=45, W=36, H=2, color=CL_Text, index=0xFFFF
-		AcIndexPushSw	TtCtFavorite_IndexPushSw1, super=TtCtFavorite, prev=TtCtFavorite_Box1, flag=VF_Const, X=302, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=TtCtFavorite_IndexPushSw1_sw
+		VwLabel	FAVORITE_TtCtFavorite_Label_ITEM, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_Box1, prev=FAVORITE_TtCtFavorite_Label_CATEGORY, flag=VF_Const, X=231, Y=38, W=24, H=19, str=Str_ITEM, font=4, fontcolor=CL_Text	# str "ITEM"
+		VwBox	FAVORITE_TtCtFavorite_Box1, super=FAVORITE_TtCtFavorite, next=FAVORITE_TtCtFavorite_IndexPushSw1, prev=FAVORITE_TtCtFavorite_Label_ITEM, flag=VF_Const, X=194, Y=45, W=36, H=2, color=CL_Text, index=0xFFFF
+		AcIndexPushSw	FAVORITE_TtCtFavorite_IndexPushSw1, super=FAVORITE_TtCtFavorite, prev=FAVORITE_TtCtFavorite_Box1, flag=VF_Const, X=302, Y=216, W=16, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=FAVORITE_TtCtFavorite_IndexPushSw1_sw
 
 Str_FAVORITES_BANK_NAMING:	.asciz "FAVORITES BANK NAMING"
 	.align	4, 0xFF
@@ -21079,20 +21109,20 @@ Str_MUTE_KEYS_ON:	.asciz "MUTE KEYS : ON  "
 Str_MUTE_KEYS_OFF:	.asciz "MUTE KEYS : OFF "
 	.align	4, 0xFF
 Str_NX_SOUND_ON:	.asciz "NX SOUND ON   "
-Str_empty_1049:	.asciz "     --       "
+Str_empty_1059:	.asciz "     --       "
 Str_GM_LEVEL2_ON:	.asciz "GM LEVEL2 ON  "
-Str_empty_1048:	.asciz "     --       "
-Str_empty_1047:	.asciz "     --       "
-Str_empty_1046:	.asciz "     --       "
+Str_empty_1058:	.asciz "     --       "
+Str_empty_1057:	.asciz "     --       "
+Str_empty_1056:	.asciz "     --       "
 	.align	4, 0xFF
 
 ptrs_484779A8:
 	.long	Str_NX_SOUND_ON
-	.long	Str_empty_1049
+	.long	Str_empty_1059
 	.long	Str_GM_LEVEL2_ON
-	.long	Str_empty_1048
-	.long	Str_empty_1047
-	.long	Str_empty_1046
+	.long	Str_empty_1058
+	.long	Str_empty_1057
+	.long	Str_empty_1056
 data_484779C0:
 .incbin_range "baserom/kn2400_program.rom", 0x0779C0, 0x0779C4
 
@@ -21137,6 +21167,7 @@ ptrs_48477C38:
 	.long	Str_Press_one_of_the_button_to_the_left_or_r_3
 	.long	Str_Press_one_of_the_button_to_the_left_or_r_2
 	.long	Str_Press_one_of_the_button_to_the_left_or_r
+data_48477C54:
 .incbin_range "baserom/kn2400_program.rom", 0x077C54, 0x077D40
 data_48477D40:
 .incbin_range "baserom/kn2400_program.rom", 0x077D40, 0x077DC0
@@ -23659,7 +23690,7 @@ data_4847FC8C:
 .incbin_range "baserom/kn2400_program.rom", 0x07FC8C, 0x07FC98
 data_4847FC98:
 	.space	24, 0x00
-Str_OFF_140:	.asciz "  OFF  "
+Str_OFF_144:	.asciz "  OFF  "
 Str_DEFAULT_4:	.asciz "DEFAULT"
 Str_HOLD_2:	.asciz " HOLD  "
 Str_1_sec:	.asciz " 1 sec "
@@ -23674,7 +23705,7 @@ Str_9_sec:	.asciz " 9 sec "
 Str_10_sec:	.asciz "10 sec "
 
 ptrs_4847FD18:
-	.long	Str_OFF_140
+	.long	Str_OFF_144
 	.long	Str_DEFAULT_4
 	.long	Str_HOLD_2
 	.long	Str_1_sec
@@ -23772,12 +23803,12 @@ data_4848012C:
 data_48480138:
 .incbin_range "baserom/kn2400_program.rom", 0x080138, 0x080150
 
-Str_OFF_139:	.asciz "OFF"
-Str_ON_103:	.asciz "ON "
+Str_OFF_140:	.asciz "OFF"
+Str_ON_104:	.asciz "ON "
 
 ptrs_48480158:
-	.long	Str_OFF_139
-	.long	Str_ON_103
+	.long	Str_OFF_140
+	.long	Str_ON_104
 
 Str_s_50:	.asciz "%s"
 	.align	4, 0xFF
@@ -23803,12 +23834,12 @@ data_48480188:
 .incbin_range "baserom/kn2400_program.rom", 0x080188, 0x080194
 data_48480194:
 .incbin_range "baserom/kn2400_program.rom", 0x080194, 0x0801AC
-Str_OFF_138:	.asciz "OFF"
-Str_ON_102:	.asciz "ON "
+Str_OFF_139:	.asciz "OFF"
+Str_ON_103:	.asciz "ON "
 
 ptrs_484801B4:
-	.long	Str_OFF_138
-	.long	Str_ON_102
+	.long	Str_OFF_139
+	.long	Str_ON_103
 
 Str_s_40:	.asciz "%s"
 	.align	4, 0xFF
@@ -23923,12 +23954,12 @@ ptrs_48480744:
 	.long	Str_PAD1_4
 	.long	Str_PAD2_4
 
-Str_OFF_137:	.asciz "OFF"
-Str_ON_101:	.asciz "ON "
+Str_OFF_138:	.asciz "OFF"
+Str_ON_102:	.asciz "ON "
 
 ptrs_484807C8:
-	.long	Str_OFF_137
-	.long	Str_ON_101
+	.long	Str_OFF_138
+	.long	Str_ON_102
 
 Str_empty_1041:	.asciz "   "
 Str_empty_1040:	.asciz "     :       "
@@ -24705,7 +24736,7 @@ Str_3d_205:	.asciz "%3d"
 Str_3d_204:	.asciz "%3d"
 data_48483C04:
 	.space	256, 0x00
-Str_OFF_134:	.asciz "      OFF       "
+Str_OFF_137:	.asciz "      OFF       "
 Str_SOFT_PEDAL_3:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL_3:	.asciz "SOSTENUTO PEDAL "
 Str_P_MEM_INCREMENT_4:	.asciz "P.MEM INCREMENT "
@@ -24750,7 +24781,7 @@ Str_PART_EXPRESSION:	.asciz "PART EXPRESSION "
 	.align	4, 0xFF
 
 ptrs_48483FD0:
-	.long	Str_OFF_134
+	.long	Str_OFF_137
 	.long	Str_SOFT_PEDAL_3
 	.long	Str_SOSTENUTO_PEDAL_3
 	.long	Str_P_MEM_INCREMENT_4
@@ -24803,7 +24834,7 @@ Str_s_29:	.asciz "%s"
 	.align	4, 0xFF
 data_48484088:
 	.space	256, 0x00
-Str_OFF_133:	.asciz "      OFF       "
+Str_OFF_134:	.asciz "      OFF       "
 Str_SOFT_PEDAL_2:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL_2:	.asciz "SOSTENUTO PEDAL "
 Str_P_MEM_INCREMENT_3:	.asciz "P.MEM INCREMENT "
@@ -24845,7 +24876,7 @@ Str_TAP_TEMPO_2:	.asciz "   TAP TEMPO    "
 	.align	4, 0xFF
 
 ptrs_48484420:
-	.long	Str_OFF_133
+	.long	Str_OFF_134
 	.long	Str_SOFT_PEDAL_2
 	.long	Str_SOSTENUTO_PEDAL_2
 	.long	Str_P_MEM_INCREMENT_3
@@ -24895,7 +24926,7 @@ Str_s_25:	.asciz "%s"
 	.align	4, 0xFF
 data_484844CC:
 	.space	256, 0x00
-Str_OFF_132:	.asciz "      OFF       "
+Str_OFF_133:	.asciz "      OFF       "
 Str_SOFT_PEDAL:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL:	.asciz "SOSTENUTO PEDAL "
 Str_P_MEM_INCREMENT_2:	.asciz "P.MEM INCREMENT "
@@ -24931,7 +24962,7 @@ Str_TAP_TEMPO:	.asciz "   TAP TEMPO    "
 	.align	4, 0xFF
 
 ptrs_48484800:
-	.long	Str_OFF_132
+	.long	Str_OFF_133
 	.long	Str_SOFT_PEDAL
 	.long	Str_SOSTENUTO_PEDAL
 	.long	Str_P_MEM_INCREMENT_2
@@ -26126,12 +26157,12 @@ Str_RIGHT_1_INPUT_AUTO_PLAY_CHORD_INPUT_VELO_3:	.asciz " RIGHT 1 INPUT          
 	.align	4, 0xFF
 Str_RIGHT_1_INPUT_AUTO_PLAY_CHORD_INPUT_VELO_2:	.asciz " RIGHT 1 INPUT            :| AUTO PLAY CHORD INPUT    :| VELOCITY INPUT           :| VELOCITY FIXED VALUE     :|-| TECHNI-CHORD OUTPUT      :| TRANSPOSE OUTPUT         :| DRUM PATTERN OUTPUT      :| AUTO PLAY CHORD OUTPUT   :| AUTO OCTAVE SHIFT OUTPUT :"
 	.align	4, 0xFF
-Str_OFF_110:	.asciz " OFF "
-Str_ON_81:	.asciz " ON  "
+Str_OFF_132:	.asciz " OFF "
+Str_ON_101:	.asciz " ON  "
 
 ptrs_4848F5CC:
-	.long	Str_OFF_110
-	.long	Str_ON_81
+	.long	Str_OFF_132
+	.long	Str_ON_101
 
 Str_CONDUCTOR:	.asciz "CONDUCTOR"
 Str_DIRECT_3:	.asciz " DIRECT  "
@@ -26176,13 +26207,13 @@ Str_3d_198:	.asciz " %3d "
 	.align	4, 0xFF
 Str_PAGE:	.asciz "PAGE"
 	.align	4, 0xFF
-Str_empty_1029:	.asciz " "
+Str_empty_1055:	.asciz " "
 Str_NX_SOUND:	.asciz "NX SOUND "
 Str_GM_LEVEL2_2:	.asciz "GM LEVEL2"
 Str_GM_LEVEL2:	.asciz "GM LEVEL2"
 
 ptrs_4848F6A4:
-	.long	Str_empty_1029
+	.long	Str_empty_1055
 	.long	Str_NX_SOUND
 	.long	Str_GM_LEVEL2_2
 	.long	Str_GM_LEVEL2
@@ -31045,13 +31076,25 @@ Str_empty_991:	.asciz "      "
 Str_BAL_10:	.asciz "  BAL "
 	.align	4, 0xFF
 Str_DETUNE_7:	.asciz "DETUNE"
-.incbin_range "baserom/kn2400_program.rom", 0x09DEDF, 0x09DEF8
+	.align	4, 0xFF
+Str_empty_1054:	.asciz "       "
+Str_empty_1053:	.asciz "       "
+Str_empty_1052:	.asciz "     "
+	.align	4, 0xFF
 Str_DELAY_14:	.asciz "DELAY"
-.incbin_range "baserom/kn2400_program.rom", 0x09DEFE, 0x09DF10
+	.align	4, 0xFF
+Str_empty_1051:	.asciz "     "
+	.align	4, 0xFF
+Str_empty_1050:	.asciz "     "
+	.align	4, 0xFF
 Str_INTENS:	.asciz "INTENS"
-.incbin_range "baserom/kn2400_program.rom", 0x09DF17, 0x09DF20
+	.align	4, 0xFF
+Str_empty_1049:	.asciz "      "
+	.align	4, 0xFF
 Str_INTENS_2:	.asciz "INTENS"
-.incbin_range "baserom/kn2400_program.rom", 0x09DF27, 0x09DF30
+	.align	4, 0xFF
+Str_empty_1048:	.asciz "      "
+	.align	4, 0xFF
 Str_REVERB_11:	.asciz "REVERB"
 	.align	4, 0xFF
 Str_empty_990:	.asciz "      "
@@ -32091,7 +32134,13 @@ data_484A03CC:
 data_484A0400:
 .incbin_range "baserom/kn2400_program.rom", 0x0A0400, 0x0A0434
 data_484A0434:
-.incbin_range "baserom/kn2400_program.rom", 0x0A0434, 0x0A0504
+.incbin_range "baserom/kn2400_program.rom", 0x0A0434, 0x0A0468
+data_484A0468:
+.incbin_range "baserom/kn2400_program.rom", 0x0A0468, 0x0A049C
+data_484A049C:
+.incbin_range "baserom/kn2400_program.rom", 0x0A049C, 0x0A04D0
+data_484A04D0:
+.incbin_range "baserom/kn2400_program.rom", 0x0A04D0, 0x0A0504
 data_484A0504:
 .incbin_range "baserom/kn2400_program.rom", 0x0A0504, 0x0A0538
 data_484A0538:
@@ -33995,13 +34044,13 @@ Str_SOLO_50:	.asciz "-SOLO"
 Str_empty_851:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF
-Str_empty_850:	.asciz "    "
+Str_empty_1047:	.asciz "    "
 Str_MUTE:	.asciz "MUTE"
 Str_REC_8:	.asciz "REC"
 	.align	4, 0xFF
 
 ptrs_484A6CD4:
-	.long	Str_empty_850
+	.long	Str_empty_1047
 	.long	Str_MUTE
 	.long	Str_REC_8
 
@@ -34026,7 +34075,7 @@ Str_INTRO2_maj_5:	.asciz "INTRO2(maj)   "
 Str_INTRO2_min_5:	.asciz "INTRO2(min)   "
 Str_ENDING2_maj_5:	.asciz "ENDING2(maj)  "
 Str_ENDING2_min_5:	.asciz "ENDING2(min)  "
-Str_empty_849:	.asciz "              "
+Str_empty_1046:	.asciz "              "
 	.align	4, 0xFF
 
 ptrs_484A6E20:
@@ -34050,7 +34099,7 @@ ptrs_484A6E20:
 	.long	Str_INTRO2_min_5
 	.long	Str_ENDING2_maj_5
 	.long	Str_ENDING2_min_5
-	.long	Str_empty_849
+	.long	Str_empty_1046
 
 Str_SONG_30:	.asciz "SONG   :                 "
 	.align	4, 0xFF
@@ -34456,37 +34505,37 @@ Str_3s_2d_2d_v_3d_s:	.asciz "%3s.%2d.%2d.     v%3d  %s"
 Str_s_V_3d_5d:	.asciz "%s V%3d %5d"
 Str_empty_837:	.asciz "              "
 	.align	4, 0xFF
-Str_empty_836:	.asciz "   "
+Str_empty_1029:	.asciz "   "
 data_484A78CC:
 .incbin_range "baserom/kn2400_program.rom", 0x0A78CC, 0x0A78D0
-Str_empty_835:	.asciz " \xAD "
+Str_empty_850:	.asciz " \xAD "
 data_484A78D4:
 .incbin_range "baserom/kn2400_program.rom", 0x0A78D4, 0x0A78D8
-Str_empty_834:	.asciz " \xAC "
+Str_empty_849:	.asciz " \xAC "
 data_484A78DC:
 .incbin_range "baserom/kn2400_program.rom", 0x0A78DC, 0x0A78E0
-Str_empty_833:	.asciz " \xAB "
+Str_empty_836:	.asciz " \xAB "
 data_484A78E4:
 .incbin_range "baserom/kn2400_program.rom", 0x0A78E4, 0x0A78E8
-Str_empty_832:	.asciz " \xAA "
-Str_empty_831:	.asciz " \xA6 "
-Str_empty_830:	.asciz " \xA1 "
+Str_empty_835:	.asciz " \xAA "
+Str_empty_834:	.asciz " \xA6 "
+Str_empty_833:	.asciz " \xA1 "
 Str_x2:	.asciz "\xA1x2"
 Str_x3:	.asciz "\xA1x3"
 Str_x4:	.asciz "\xA1x4"
 
 ptrs_484A7900:
-	.long	Str_empty_836
+	.long	Str_empty_1029
 	.long	data_484A78CC
-	.long	Str_empty_835
+	.long	Str_empty_850
 	.long	data_484A78D4
-	.long	Str_empty_834
+	.long	Str_empty_849
 	.long	data_484A78DC
-	.long	Str_empty_833
+	.long	Str_empty_836
 	.long	data_484A78E4
-	.long	Str_empty_832
-	.long	Str_empty_831
-	.long	Str_empty_830
+	.long	Str_empty_835
+	.long	Str_empty_834
+	.long	Str_empty_833
 	.long	Str_x2
 	.long	Str_x3
 	.long	Str_x4
@@ -34782,7 +34831,7 @@ Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_815:	.asciz "             "
+Str_empty_832:	.asciz "             "
 
 ptrs_484A8E14:
 	.long	Str_TRANSPOSE_7fC
@@ -34810,7 +34859,7 @@ ptrs_484A8E14:
 	.long	Str_TRANSPOSE_B_a0_80
 	.long	Str_TRANSPOSE_B_80
 	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_815
+	.long	Str_empty_832
 
 Str_3s_s_s:	.asciz " %3s %s %s            "
 	.align	4, 0xFF
@@ -34907,7 +34956,9 @@ Str_empty_800:	.asciz "@"
 data_484A984C:
 .incbin_range "baserom/kn2400_program.rom", 0x0A984C, 0x0A98CC
 data_484A98CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0A98CC, 0x0A9A20
+.incbin_range "baserom/kn2400_program.rom", 0x0A98CC, 0x0A9998
+data_484A9998:
+.incbin_range "baserom/kn2400_program.rom", 0x0A9998, 0x0A9A20
 data_484A9A20:
 .incbin_range "baserom/kn2400_program.rom", 0x0A9A20, 0x0A9AFC
 data_484A9AFC:
@@ -34922,12 +34973,12 @@ data_484A9B8C:
 .incbin_range "baserom/kn2400_program.rom", 0x0A9B8C, 0x0A9B94
 data_484A9B94:
 .incbin_range "baserom/kn2400_program.rom", 0x0A9B94, 0x0A9BB5
-Str_empty_799:	.asciz "                                 "
+Str_empty_831:	.asciz "                                 "
 	.align	4, 0xFF
 
 ptrs_484A9BD8:
 	.long	data_484A9B94
-	.long	Str_empty_799
+	.long	Str_empty_831
 data_484A9BE0:
 .incbin_range "baserom/kn2400_program.rom", 0x0A9BE0, 0x0A9BF0
 data_484A9BF0:
@@ -37624,10 +37675,10 @@ Str_Ab_2:	.asciz "Ab"
 Str_A_21:	.asciz "A "
 Str_Bb_2:	.asciz "Bb"
 Str_B_9:	.asciz "B "
+Str_empty_830:	.asciz "  "
+Str_empty_815:	.asciz "  "
+Str_empty_799:	.asciz "  "
 Str_empty_793:	.asciz "  "
-Str_empty_792:	.asciz "  "
-Str_empty_791:	.asciz "  "
-Str_empty_790:	.asciz "  "
 
 ptrs_484B2A58:
 	.long	Str_C_19
@@ -37642,12 +37693,12 @@ ptrs_484B2A58:
 	.long	Str_A_21
 	.long	Str_Bb_2
 	.long	Str_B_9
+	.long	Str_empty_830
+	.long	Str_empty_815
+	.long	Str_empty_799
 	.long	Str_empty_793
-	.long	Str_empty_792
-	.long	Str_empty_791
-	.long	Str_empty_790
 
-Str_OFF_43:	.asciz "OFF"
+Str_OFF_110:	.asciz "OFF"
 Str_ad_b8_3:	.asciz " ~ad~b8"
 Str_ad_3:	.asciz " ~ad "
 Str_ac_b8_3:	.asciz " ~ac~b8"
@@ -37657,7 +37708,7 @@ Str_ab_3:	.asciz " ~ab "
 Str_aa_3:	.asciz " ~aa "
 
 ptrs_484B2ACC:
-	.long	Str_OFF_43
+	.long	Str_OFF_110
 	.long	Str_ad_b8_3
 	.long	Str_ad_3
 	.long	Str_ac_b8_3
@@ -37759,13 +37810,13 @@ Str_Vari4_PATTERN_3:	.asciz " Vari4 PATTERN "
 Str_Vari4_FILL_IN1_5:	.asciz " Vari4 FILL IN1"
 Str_Vari4_FILL_IN2_5:	.asciz " Vari4 FILL IN2"
 Str_INTRO1_maj_min:	.asciz " INTRO1 maj&min"
-Str_empty_788:	.asciz "    ------     "
+Str_empty_792:	.asciz "    ------     "
 Str_ENDING1_maj_min:	.asciz "ENDING1 maj&min"
-Str_empty_787:	.asciz "   -------     "
+Str_empty_791:	.asciz "   -------     "
 Str_INTRO2_maj_min:	.asciz " INTRO2 maj&min"
-Str_empty_786:	.asciz "    ------     "
+Str_empty_790:	.asciz "    ------     "
 Str_ENDING2_maj_min:	.asciz "ENDING2 maj&min"
-Str_empty_785:	.asciz "   -------     "
+Str_empty_788:	.asciz "   -------     "
 Str_ALL_36:	.asciz "      ALL      "
 Str_Vari1_PATTERN_2:	.asciz " Vari1 PATTERN "
 Str_Vari1_FILL_IN1_4:	.asciz " Vari1 FILL IN1"
@@ -37808,7 +37859,7 @@ Str_INTRO2_maj_3:	.asciz "INTRO2(maj)    "
 Str_INTRO2_min_3:	.asciz "INTRO2(min)    "
 Str_ENDING2_maj_3:	.asciz "ENDING2(maj)   "
 Str_ENDING2_min_3:	.asciz "ENDING2(min)   "
-Str_empty_784:	.asciz "               "
+Str_empty_787:	.asciz "               "
 
 ptrs_484B3078:
 	.long	Str_Vari1_PATTERN_3
@@ -37824,13 +37875,13 @@ ptrs_484B3078:
 	.long	Str_Vari4_FILL_IN1_5
 	.long	Str_Vari4_FILL_IN2_5
 	.long	Str_INTRO1_maj_min
-	.long	Str_empty_788
+	.long	Str_empty_792
 	.long	Str_ENDING1_maj_min
-	.long	Str_empty_787
+	.long	Str_empty_791
 	.long	Str_INTRO2_maj_min
-	.long	Str_empty_786
+	.long	Str_empty_790
 	.long	Str_ENDING2_maj_min
-	.long	Str_empty_785
+	.long	Str_empty_788
 	.long	Str_ALL_36
 	.long	Str_Vari1_PATTERN_2
 	.long	Str_Vari1_FILL_IN1_4
@@ -37873,7 +37924,7 @@ ptrs_484B3078:
 	.long	Str_INTRO2_min_3
 	.long	Str_ENDING2_maj_3
 	.long	Str_ENDING2_min_3
-	.long	Str_empty_784
+	.long	Str_empty_787
 
 Str_1c_13s:	.asciz "%1c:%13s"
 	.align	4, 0xFF
@@ -39778,7 +39829,7 @@ Str_TT_MSPGRPNAME:	.asciz "TT_MSPGRPNAME"
 	.align	4, 0xFF
 data_484B9E14:
 .incbin_range "baserom/kn2400_program.rom", 0x0B9E14, 0x0B9E1C
-Str_OFF_39:	.asciz "OFF"
+Str_OFF_43:	.asciz "OFF"
 Str_ad_b8_2:	.asciz " ~ad~b8"
 Str_ad_2:	.asciz " ~ad "
 Str_ac_b8_2:	.asciz " ~ac~b8"
@@ -39788,7 +39839,7 @@ Str_ab_2:	.asciz " ~ab "
 Str_aa_2:	.asciz " ~aa "
 
 ptrs_484B9E50:
-	.long	Str_OFF_39
+	.long	Str_OFF_43
 	.long	Str_ad_b8_2
 	.long	Str_ad_2
 	.long	Str_ac_b8_2
@@ -39809,10 +39860,10 @@ Str_Ab:	.asciz "Ab"
 Str_A_20:	.asciz "A "
 Str_Bb:	.asciz "Bb"
 Str_B_8:	.asciz "B "
+Str_empty_786:	.asciz "  "
+Str_empty_785:	.asciz "  "
+Str_empty_784:	.asciz "  "
 Str_empty_769:	.asciz "  "
-Str_empty_768:	.asciz "  "
-Str_empty_767:	.asciz "  "
-Str_empty_766:	.asciz "  "
 
 ptrs_484B9EA0:
 	.long	Str_C_18
@@ -39827,10 +39878,10 @@ ptrs_484B9EA0:
 	.long	Str_A_20
 	.long	Str_Bb
 	.long	Str_B_8
+	.long	Str_empty_786
+	.long	Str_empty_785
+	.long	Str_empty_784
 	.long	Str_empty_769
-	.long	Str_empty_768
-	.long	Str_empty_767
-	.long	Str_empty_766
 
 Str_USER_1c:	.asciz "USER %1c:"
 	.align	4, 0xFF
@@ -39886,7 +39937,8 @@ Str_ERROR_2:	.asciz "ERROR"
 	.align	4, 0xFF
 Str_SYNCHRO:	.asciz "SYNCHRO"
 Str_INSTANT:	.asciz "INSTANT"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA038, 0x0BA040
+Str_ON_81:	.asciz "ON "
+Str_OFF_39:	.asciz "OFF"
 data_484BA040:
 .incbin_range "baserom/kn2400_program.rom", 0x0BA040, 0x0BA042
 data_484BA042:

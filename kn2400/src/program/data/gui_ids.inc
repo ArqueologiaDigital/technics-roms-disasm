@@ -48,7 +48,7 @@
 .equ TT_NORMAL, 0x000F0001	# screen TtHomepage
 .equ TT_WELCOME, 0x000F0002	# screen PanelSimulator_TitleMenu_DEBUG_TOOLS
 .equ TT_MESSAGE, 0x000F0003	# screen MESSAGE_TtMessage
-.equ TT_SVARI, 0x000F0004	# screen TtSvari
+.equ TT_SVARI, 0x000F0004	# screen SNDRHY_TtSvari
 .equ TT_RVARI, 0x000F0005	# screen SNDRHY_TtRvari
 .equ TT_FAVORITE, 0x000F0006	# screen TtFavoritePR
 .equ TT_PROGRAM, 0x000F0007	# screen TtProgram
@@ -58,7 +58,7 @@
 .equ TT_SDKEYSCL, 0x000F000B	# screen SOUND_TtSdkeyscl
 .equ TT_SDMIXER, 0x000F000C	# screen SOUND_TtSdmixer
 .equ TT_SDTECD, 0x000F000D	# screen SOUND_TtSdtecd
-.equ TT_SEDRAWBAR, 0x000F000E	# screen TtSedrawbar
+.equ TT_SEDRAWBAR, 0x000F000E	# screen SNDRHY_TtSedrawbar
 .equ TT_CTFAVORITE, 0x000F0010	# screen TtCtFavoritePR
 .equ TT_SEMENU, 0x000F0011	# screen TtSeMenu
 .equ TT_SETONE, 0x000F0012	# screen TtSeTone
@@ -125,7 +125,7 @@
 .equ TT_MDTXPCG, 0x000F0059	# screen MdTxpcg
 .equ TT_MDCOMP, 0x000F005A	# screen MdComp
 .equ TT_MDPMLCTL, 0x000F005B	# screen MdPmlctl
-.equ TT_SSWRUN, 0x000F005F	# screen TtSswRun
+.equ TT_SSWRUN, 0x000F005F	# screen SLIDESHOW_TtSswRun
 .equ TT_DKMENU, 0x000F0060	# screen DiskMenu
 .equ TT_DKLD, 0x000F0061	# screen DiskLoad
 .equ TT_CMPLDSNGL, 0x000F0062	# screen CmpSingleLoad
@@ -237,7 +237,7 @@
 .equ TT_PMVIEW, 0x000F00D1	# screen PmView
 .equ TT_PMNAME, 0x000F00D2	# screen PmName
 .equ TT_PMBKNAME, 0x000F00D3	# screen PmBkName
-.equ TT_SSWLIST, 0x000F00D6	# screen TtSswList
+.equ TT_SSWLIST, 0x000F00D6	# screen SLIDESHOW_TtSswList
 .equ TT_SQMENUNAME, 0x000F00D7	# screen SeqSongNamingScreen
 .equ TT_MSPBKSL, 0x000F00D8	# screen MspBkslScreen
 .equ TT_MSPREAL, 0x000F00D9	# screen MspRealScreen
@@ -276,7 +276,7 @@
 .equ TT_NAMING, 0x000F00FD	# screen TtNaming
 .equ TT_SDMONITOR, 0x000F00FE	# screen TtSdmonitor
 .equ TT_DEBUG, 0x000F00FF	# screen TtDebug
-.equ TT_CONTRAST, 0x000F0100	# screen TtContrast
+.equ TT_CONTRAST, 0x000F0100	# screen CONTRAST_TtContrast
 .equ TT_CMPMSPCMN, 0x000F0101	# screen CmpMspStepScreen
 .equ TT_SDAPCREV, 0x000F0103	# screen SOUND_TtSdapcrev
 .equ TT_SDCMENU, 0x000F0104	# screen SdCardMenu

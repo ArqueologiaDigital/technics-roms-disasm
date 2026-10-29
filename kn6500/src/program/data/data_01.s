@@ -13630,7 +13630,7 @@ Str_ONE_TOUCH_PLAY:	.asciz "ONE TOUCH PLAY"
 	.align	4, 0xFF
 
 	TtlScreen	OneTouchPlay, sub=OneTouchPlay_OtpRamBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=Str_KN3000_SOUND_RAM+16, title=Str_ONE_TOUCH_PLAY, icon=179	# title "ONE TOUCH PLAY"
-		AcOtpRamBox	OneTouchPlay_OtpRamBox1, super=OneTouchPlay, next=OneTouchPlay_ExitMode1, flag=VF_Const, X=160, Y=62, W=320, H=120, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF, font_AcOtpRamBox=2, fontcolor=CL_White, func=FN_MssNameFunc, data=Str_KN3000_SOUND_RAM+20, font_AcOtpRamBox=2
+		AcOtpRamBox	OneTouchPlay_OtpRamBox1, super=OneTouchPlay, next=OneTouchPlay_ExitMode1, flag=VF_Const, X=160, Y=62, W=320, H=120, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF, font=2, fontcolor=CL_White, func=FN_MssNameFunc, data=Str_KN3000_SOUND_RAM+20, font_AcOtpRamBox=2
 		IvExitMode	OneTouchPlay_ExitMode1, super=OneTouchPlay, prev=OneTouchPlay_OtpRamBox1, flag=VF_Const|VF_InvisibleBox, X=4, Y=32, W=32, H=32, mode=MD_NORMAL
 
 Str_MUSIC_STYLIST:	.asciz "MUSIC STYLIST"
