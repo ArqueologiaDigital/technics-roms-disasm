@@ -194,11 +194,18 @@ reached by a symbol in code, never by an index.
 
 ⚠ Round 2 (2026-10-29, after the merge) closed most of this section. What is still open:
 
-- the 0xF3D3AD run is a fixed-stride array of 102 records, and nothing names an address in it after
-  0xF3D407 (`gen_f3d1b9_region.py --refs`), so how most of it is reached is open;
+- the 0xF3D3AD run of 102 fixed-stride records: records 0-5 are the three STEP RECORD measure rows
+  (`StepRecord_PrevRow_DL`, `_CurrentRow_DL`, `_NextRow_DL`; sub_F81C33 draws the previous / next row only
+  when (0x0F5E) / (0x0F62) is non-zero). Records 6-29 (`StepRecord_MarkGrid_DL`, 24 END/REP cells) and 30-101
+  (`StepRecord_ChordSymbolGrid_DL`, 24 chord symbols of three records each) have **no reader in either
+  image**, measured four ways in the region's header: no pointer, no stride-15 index into them, no list end
+  past `StepRecord_MarkGrid_DL`, and no other record using their tables. They read as an older build's grid
+  (an inference);
 - the record framed at y = 649 (below);
 - the three neutral RAM names of section 8;
-- the TODO fields.
+- the physical action behind key codes 0x11-0x19. Round 3 settled B opcodes 0x03 vs 0x08 (the same
+  behaviour, a fill / erase convention: `wsa1_gui.inc`) and `CombiPart_Flags` bit 6 (the MIDI OUT gate);
+- round 3 also re-framed the German message list at 0xF2F2FC (y = 649 is gone).
 
 The original text follows.
 
@@ -330,15 +337,15 @@ Six more pointers are spelled over names that already exist:
 `SoftKeyCol4_SineWaveCheckMode` states that "(0x76A7) = 0x76A2 + 5". Each field below is named at part 1.
 Part n + 1 is spelled `Name+n*0x40`.
 
-| address  | name                     | field   | what it holds                    | established by                                                                         |
-|----------|--------------------------|---------|----------------------------------|----------------------------------------------------------------------------------------|
-| `0x76A5` | `CombiPart_Volume`       | `+0x03` | VOL                              | `C0mbinati0nM0de_DrawPart1Vol`; `C0mbinati0nM0de_StepPartVol` steps it                 |
-| `0x76A7` | `CombiPart_Effect1Send`  | `+0x05` | EFFECT1 SEND                     | `Cpu2Query_ApplyPartRecordEffects` ("EFFECT1 SEND (0x76A7)")                           |
-| `0x76A8` | `CombiPart_Effect2OnOff` | `+0x06` | EFFECT2 ON/OFF                   | the same ("EFFECT2 ON/OFF (0x76A8)")                                                   |
-| `0x76A9` | `CombiPart_ReverbSend`   | `+0x07` | REVERB SEND                      | the same                                                                               |
-| `0x76AA` | `CombiPart_Pan`          | `+0x08` | PAN                              | `C0mbinati0nM0de_DrawPart1Pan`, `Msg0716_RepostPart0Pan`                               |
-| `0x76AF` | `CombiPart_Flags`        | `+0x0D` | bit 5 INT; bit 6 TODO            | `C0mbinati0nM0de_SetPartInt` (bit 5); `MidiOut_ParamGate_Part0` tests bit 6            |
-| `0x76DF` | `CombiPart_SoundBank`    | `+0x3D` | the sound's bank                 | `SoundGroup_LoadSelectionFromPart`: `(0x216A) = record +0x3D`                          |
+| address  | name                     | field   | what it holds                  | established by                                                                                                                                                             |
+|----------|--------------------------|---------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `0x76A5` | `CombiPart_Volume`       | `+0x03` | VOL                            | `C0mbinati0nM0de_DrawPart1Vol`; `C0mbinati0nM0de_StepPartVol` steps it                                                                                                     |
+| `0x76A7` | `CombiPart_Effect1Send`  | `+0x05` | EFFECT1 SEND                   | `Cpu2Query_ApplyPartRecordEffects` ("EFFECT1 SEND (0x76A7)")                                                                                                               |
+| `0x76A8` | `CombiPart_Effect2OnOff` | `+0x06` | EFFECT2 ON/OFF                 | the same ("EFFECT2 ON/OFF (0x76A8)")                                                                                                                                       |
+| `0x76A9` | `CombiPart_ReverbSend`   | `+0x07` | REVERB SEND                    | the same                                                                                                                                                                   |
+| `0x76AA` | `CombiPart_Pan`          | `+0x08` | PAN                            | `C0mbinati0nM0de_DrawPart1Pan`, `Msg0716_RepostPart0Pan`                                                                                                                   |
+| `0x76AF` | `CombiPart_Flags`        | `+0x0D` | bit 5 INT; bit 6 MIDI OUT gate | `C0mbinati0nM0de_SetPartInt` (bit 5); `MidiOut_ParamGate_Part0..2` (0xFA712A, ...) skip `MidiOut_DispatchByClass` while bit 6 is set and (0x60F007) bit 7 is clear (bit 6) |
+| `0x76DF` | `CombiPart_SoundBank`    | `+0x3D` | the sound's bank               | `SoundGroup_LoadSelectionFromPart`: `(0x216A) = record +0x3D`                                                                                                              |
 
 0x7659, 0x7679 and 0x7699 are `Combination_Current+0x39`, `+0x59` and `+0x79`.
 `CombinationNaming_WriteToUserMemory` and `SysExParam_SetCombinationWriteRequest` clear all three before a

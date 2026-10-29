@@ -6983,7 +6983,7 @@ MessageScreen_ListPairs:
 	.long DL_Error03TheFileThatYouTriedToLoad        ; F99139  [id 0x03] start
 	.long DL_Error05AnErrorHasOccuredWhileTheDisk    ; F9913D          end
 	.long DL_Error                                   ; F99141  [id 0x04] start
-	.long DL_F2E91A                                  ; F99145          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F99145          end
 	.long DL_Error05AnErrorHasOccuredWhileTheDisk    ; F99149  [id 0x05] start
 	.long DL_Error06TheDiskThatYouAreUsingIsWrite    ; F9914D          end
 	.long DL_Error06TheDiskThatYouAreUsingIsWrite    ; F99151  [id 0x06] start
@@ -6999,19 +6999,19 @@ MessageScreen_ListPairs:
 	.long DL_Error11ThePasswordThatYouEnteredIs      ; F99179  [id 0x0B] start
 	.long DL_CopyProtectedTheDataOnTheDiskIsCopy     ; F9917D          end
 	.long DL_Error                                   ; F99181  [id 0x0C] start
-	.long DL_F2E91A                                  ; F99185          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F99185          end
 	.long DL_Error                                   ; F99189  [id 0x0D] start
-	.long DL_F2E91A                                  ; F9918D          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F9918D          end
 	.long DL_Error20AProblemHasOccuredWithYour       ; F99191  [id 0x0E] start
 	.long DL_Error21MemoryFull                       ; F99195          end
 	.long DL_Error21MemoryFull                       ; F99199  [id 0x0F] start
 	.long DL_Error22ItIsNecessaryToPressPunchOut     ; F9919D          end
 	.long DL_Error                                   ; F991A1  [id 0x10] start
-	.long DL_F2E91A                                  ; F991A5          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F991A5          end
 	.long DL_Error                                   ; F991A9  [id 0x11] start
-	.long DL_F2E91A                                  ; F991AD          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F991AD          end
 	.long DL_Error                                   ; F991B1  [id 0x12] start
-	.long DL_F2E91A                                  ; F991B5          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F991B5          end
 	.long DL_Error30ItIsNotPossibleToChangeThe       ; F991B9  [id 0x13] start
 	.long DL_Error31TheTimeSignatureOfThePattern     ; F991BD          end
 	.long DL_CopyCompletedYourChosenPatternHasBeenCop ; F991C1  [id 0x14] start
@@ -7077,9 +7077,9 @@ MessageScreen_ListPairs:
 	.long DL_TheTimebasePpqResolution                ; F992B1  [id 0x32] start
 	.long DL_PMemSetHasBeenPushFor10Seconds          ; F992B5          end
 	.long DL_Error                                   ; F992B9  [id 0x33] start
-	.long DL_F2E91A                                  ; F992BD          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F992BD          end
 	.long DL_Error                                   ; F992C1  [id 0x34] start
-	.long DL_F2E91A                                  ; F992C5          end
+	.long DL_JpChordTrackAlreadyExists                                  ; F992C5          end
 	.long DL_Error46ItIsImpossibleToInsertFromOr     ; F992C9  [id 0x35] start
 	.long DL_Error28ThisSongIsTooLongToBeSaved       ; F992CD          end
 	.long DL_ErrorItIsNotPossibleToUse               ; F992D1  [id 0x36] start

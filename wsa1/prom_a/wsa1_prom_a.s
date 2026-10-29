@@ -535,7 +535,7 @@
 	.set MidiOutProgramChange_PaintBankSelect_DL, 0x00f0d02d
 	.set DL_OffOff,                               0x00f0d036
 	.set DL_F0D04B,                               0x00f0d04b
-	.set Data_F0D061,                             0x00f0d061
+	.set DLBoxes_F0D061,                          0x00f0d061
 	.set DL_SysexBulkDumpMidiTotalKeyboard,       0x00f0d6af
 	.set DL_SysexBulkDump_SequencerRow,           0x00f0d77f
 	.set DL_Sending,                              0x00f0d79c
@@ -822,7 +822,7 @@
 	.set ModeScreen_PaintDirtyFields2_DL6,        0x00f2880c
 	.set ModeScreen_PaintDirtyFields2_DL10,       0x00f28816
 	.set ModeScreen_PaintDirtyFields2_DL3,        0x00f28820
-	.set Data_F2882B,                             0x00f2882b
+	.set DLBoxes_F2882B,                          0x00f2882b
 	.set ModeScreen_PaintDirtyFields2_DL7,        0x00f2885b
 	.set Data_F28866,                             0x00f28866
 	.set ModeScreen_PaintDirtyFields2_DL11,       0x00f28896
@@ -849,7 +849,7 @@
 	.set DL_F296CC,                               0x00f296cc
 	.set DL_F29765,                               0x00f29765
 	.set Paint_C0mbinati0nM0dePage2Sound1_DL,     0x00f29783
-	.set Data_F297A0,                             0x00f297a0
+	.set DLText_PartCodes,                        0x00f297a0
 	.set Paint_C0mbinati0nM0dePage2Sound2_DL,     0x00f29863
 	.set Paint_C0mbinati0nM0dePage2Sound3_DL,     0x00f29880
 	.set Paint_C0mbinati0nM0dePage2Sound4_DL,     0x00f2989d
@@ -978,7 +978,7 @@
 	.set DL_TheTimebasePpqResolution,             0x00f2e883
 	.set DL_PMemSetHasBeenPushFor10Seconds,       0x00f2e8e2
 	.set DL_Error,                                0x00f2e910
-	.set DL_F2E91A,                               0x00f2e91a
+	.set DL_JpChordTrackAlreadyExists,            0x00f2e91a
 	.set DL_ErrorItIsNotPossibleToUse,            0x00f2e9e3
 	.set DL_ErrorItIsNotPossibleToRecord,         0x00f2ea8f
 	.set DL_PleaseSelectOneOfTheUser,             0x00f2eaeb
@@ -1021,7 +1021,7 @@
 	.set DL_N0teChangeTargetNoteTrack,            0x00f3aeaf
 	.set Paint_N0teChange_DL1,                    0x00f3afaf
 	.set DL_F3AFE7,                               0x00f3afe7
-	.set Data_F3B065,                             0x00f3b065
+	.set DLBoxes_F3B065,                          0x00f3b065
 	.set Paint_N0teChange_DL2,                    0x00f3b0c3
 	.set DL_Transp0seTrackFirstMeasure,           0x00f3b102
 	.set DL_F3B379,                               0x00f3b379
@@ -1029,12 +1029,12 @@
 	.set Paint_MeasureC0py_DL,                    0x00f3bc93
 	.set DL_F3BCCB,                               0x00f3bccb
 	.set DL_F3BD07,                               0x00f3bd07
-	.set Data_F3BD58,                             0x00f3bd58
+	.set DLBoxes_F3BD58,                          0x00f3bd58
 	.set DL_F3BD90,                               0x00f3bd90
 	.set DL_MeasureInsertFromTrackToTrack,        0x00f3bdcf
 	.set Paint_MeasureInsert_DL,                  0x00f3bebf
 	.set DL_F3BEF7,                               0x00f3bef7
-	.set Data_F3BF48,                             0x00f3bf48
+	.set DLBoxes_F3BF48,                          0x00f3bf48
 	.set DL_S0ngC0pyFromToSongSongOk,             0x00f3bf80
 	.set DL_FromToSongNoTrAllSongNoTrAll,         0x00f3bff8
 	.set DL_TrackTrack,                           0x00f3c133
@@ -1050,7 +1050,7 @@
 	.set DLTable_F3C37D,                          0x00f3c37d
 	.set DL_ACurrentTrackWillBeClearedAutomaticaly, 0x00f3c4d5
 	.set Paint_S0ngC0py_DL,                       0x00f3c530
-	.set Data_F3C53F,                             0x00f3c53f
+	.set DLText_ChordApcControlRhythm,            0x00f3c53f
 	.set DL_SequencerMedleyStartFirstS0ng,        0x00f3c562
 	.set DL_F3C6B3,                               0x00f3c6b3
 	.set DL_SelectIntFd,                          0x00f3c721
@@ -1071,18 +1071,18 @@
 	.set StepSelectAddrTable_F3D089,              0x00f3d089
 	.set DL_F3D1B9,                               0x00f3d1b9
 	.set DL_F3D245,                               0x00f3d245
-	.set DL_F3D353,                               0x00f3d353
-	.set DL_F3D35D,                               0x00f3d35d
-	.set DL_F3D367,                               0x00f3d367
-	.set DL_F3D371,                               0x00f3d371
-	.set DL_F3D376,                               0x00f3d376
-	.set DL_F3D37B,                               0x00f3d37b
+	.set StepRecord_PrevRowNumber_DL,             0x00f3d353
+	.set StepRecord_CurrentRowNumber_DL,          0x00f3d35d
+	.set StepRecord_NextRowNumber_DL,             0x00f3d367
+	.set StepRecord_PrevRowNoNumber_DL,           0x00f3d371
+	.set StepRecord_CurrentRowNoNumber_DL,        0x00f3d376
+	.set StepRecord_NextRowNoNumber_DL,           0x00f3d37b
 	.set DL_F3D380,                               0x00f3d380
-	.set DL_F3D38A,                               0x00f3d38a
-	.set DL_F3D3AD,                               0x00f3d3ad
-	.set DL_F3D3CB,                               0x00f3d3cb
-	.set DL_F3D3E9,                               0x00f3d3e9
-	.set DL_F3D407,                               0x00f3d407
+	.set StepRecord_MsgLine_DL,                   0x00f3d38a
+	.set StepRecord_PrevRow_DL,                   0x00f3d3ad
+	.set StepRecord_CurrentRow_DL,                0x00f3d3cb
+	.set StepRecord_NextRow_DL,                   0x00f3d3e9
+	.set StepRecord_MarkGrid_DL,                  0x00f3d407
 	.set DL_F3DA6F,                               0x00f3da6f
 	.set Data_F3DA77,                             0x00f3da77
 	.set Data_F3DAA2,                             0x00f3daa2
@@ -1093,83 +1093,83 @@
 	.set DL_F3DEB2,                               0x00f3deb2
 	.set DL_MasterTrackClearAttention,            0x00f3e06e
 	.set DL_F3E15C,                               0x00f3e15c
-	.set Rec_F3F400,                              0x00f3f400
-	.set Rec_F3F412,                              0x00f3f412
-	.set Rec_F3F420,                              0x00f3f420
-	.set Rec_F3F440,                              0x00f3f440
-	.set Rec_F3F460,                              0x00f3f460
-	.set Rec_F3F480,                              0x00f3f480
-	.set Rec_F3F4A0,                              0x00f3f4a0
-	.set Rec_F3F4C0,                              0x00f3f4c0
-	.set Rec_F3F4E0,                              0x00f3f4e0
-	.set Rec_F3F500,                              0x00f3f500
-	.set Rec_F3F520,                              0x00f3f520
-	.set Rec_F3F540,                              0x00f3f540
-	.set Rec_F3F560,                              0x00f3f560
-	.set Rec_F3F580,                              0x00f3f580
-	.set Rec_F3F5A0,                              0x00f3f5a0
-	.set Rec_F3F5C0,                              0x00f3f5c0
-	.set Rec_F3F5E0,                              0x00f3f5e0
-	.set Rec_F3F600,                              0x00f3f600
-	.set Rec_F3F620,                              0x00f3f620
-	.set Rec_F3F640,                              0x00f3f640
-	.set Rec_F3F660,                              0x00f3f660
-	.set Rec_F3F680,                              0x00f3f680
-	.set Rec_F3F690,                              0x00f3f690
-	.set Rec_F3F6C0,                              0x00f3f6c0
-	.set Rec_F3F6E0,                              0x00f3f6e0
-	.set Rec_F3F700,                              0x00f3f700
-	.set Rec_F3F720,                              0x00f3f720
-	.set Rec_F3F740,                              0x00f3f740
-	.set Rec_F3F760,                              0x00f3f760
-	.set Rec_F3F780,                              0x00f3f780
-	.set Rec_F3F7A0,                              0x00f3f7a0
-	.set Rec_F3F7C0,                              0x00f3f7c0
-	.set Rec_F3F7E0,                              0x00f3f7e0
-	.set Rec_F3F800,                              0x00f3f800
-	.set Rec_F3F820,                              0x00f3f820
-	.set Rec_F3F840,                              0x00f3f840
-	.set Rec_F3F860,                              0x00f3f860
-	.set Rec_F3F880,                              0x00f3f880
-	.set Rec_F3F8A0,                              0x00f3f8a0
-	.set Rec_F3F8C0,                              0x00f3f8c0
-	.set Rec_F3F8E0,                              0x00f3f8e0
-	.set Rec_F3F900,                              0x00f3f900
-	.set Rec_F3F920,                              0x00f3f920
-	.set Rec_F3F940,                              0x00f3f940
-	.set Rec_F3F960,                              0x00f3f960
-	.set Rec_F3F980,                              0x00f3f980
-	.set Rec_F3F9A0,                              0x00f3f9a0
-	.set Rec_F3F9C0,                              0x00f3f9c0
-	.set Rec_F3F9E0,                              0x00f3f9e0
-	.set Rec_F3FA00,                              0x00f3fa00
-	.set Rec_F3FA20,                              0x00f3fa20
-	.set Rec_F3FA40,                              0x00f3fa40
-	.set Rec_F3FA60,                              0x00f3fa60
-	.set Rec_F3FA80,                              0x00f3fa80
-	.set Rec_F3FAA0,                              0x00f3faa0
-	.set Rec_F3FAC0,                              0x00f3fac0
-	.set Rec_F3FAE0,                              0x00f3fae0
-	.set Rec_F3FB00,                              0x00f3fb00
-	.set Rec_F3FB20,                              0x00f3fb20
-	.set Rec_F3FB40,                              0x00f3fb40
-	.set Rec_F3FB60,                              0x00f3fb60
-	.set Rec_F3FB80,                              0x00f3fb80
-	.set Rec_F3FBA0,                              0x00f3fba0
-	.set Rec_F3FBC0,                              0x00f3fbc0
-	.set Rec_F3FBE0,                              0x00f3fbe0
-	.set Rec_F3FC00,                              0x00f3fc00
-	.set Rec_F3FC20,                              0x00f3fc20
-	.set Rec_F3FC40,                              0x00f3fc40
-	.set Rec_F3FC60,                              0x00f3fc60
-	.set Rec_F3FC80,                              0x00f3fc80
-	.set Rec_F3FCA0,                              0x00f3fca0
-	.set Rec_F3FCC0,                              0x00f3fcc0
-	.set Rec_F3FCE0,                              0x00f3fce0
-	.set Rec_F3FCF0,                              0x00f3fcf0
-	.set Rec_F3FD10,                              0x00f3fd10
-	.set Rec_F3FD28,                              0x00f3fd28
-	.set Rec_F3FD38,                              0x00f3fd38
+	.set Default_Record78,                        0x00f3f400
+	.set Default_Record60,                        0x00f3f412
+	.set Default_DspEffect1,                      0x00f3f420
+	.set Default_DspEffect2,                      0x00f3f440
+	.set Default_DspEffect3,                      0x00f3f460
+	.set Default_Part00_A,                        0x00f3f480
+	.set Default_Part00_B,                        0x00f3f4a0
+	.set Default_Part01_A,                        0x00f3f4c0
+	.set Default_Part01_B,                        0x00f3f4e0
+	.set Default_Part02_A,                        0x00f3f500
+	.set Default_Part02_B,                        0x00f3f520
+	.set Default_Part03_A,                        0x00f3f540
+	.set Default_Part03_B,                        0x00f3f560
+	.set Default_Part04_A,                        0x00f3f580
+	.set Default_Part04_B,                        0x00f3f5a0
+	.set Default_Part05_A,                        0x00f3f5c0
+	.set Default_Part05_B,                        0x00f3f5e0
+	.set Default_Part06_A,                        0x00f3f600
+	.set Default_Part06_B,                        0x00f3f620
+	.set Default_Part07_A,                        0x00f3f640
+	.set Default_Part07_B,                        0x00f3f660
+	.set Default_Record92,                        0x00f3f680
+	.set Default_Record79,                        0x00f3f690
+	.set Default_Part08_A,                        0x00f3f6c0
+	.set Default_Part08_B,                        0x00f3f6e0
+	.set Default_Part09_A,                        0x00f3f700
+	.set Default_Part09_B,                        0x00f3f720
+	.set Default_Part10_A,                        0x00f3f740
+	.set Default_Part10_B,                        0x00f3f760
+	.set Default_Part11_A,                        0x00f3f780
+	.set Default_Part11_B,                        0x00f3f7a0
+	.set Default_Part12_A,                        0x00f3f7c0
+	.set Default_Part12_B,                        0x00f3f7e0
+	.set Default_Part13_A,                        0x00f3f800
+	.set Default_Part13_B,                        0x00f3f820
+	.set Default_Part14_A,                        0x00f3f840
+	.set Default_Part14_B,                        0x00f3f860
+	.set Default_Part15_A,                        0x00f3f880
+	.set Default_Part15_B,                        0x00f3f8a0
+	.set Default_Part16_A,                        0x00f3f8c0
+	.set Default_Part16_B,                        0x00f3f8e0
+	.set Default_Part17_A,                        0x00f3f900
+	.set Default_Part17_B,                        0x00f3f920
+	.set Default_Part18_A,                        0x00f3f940
+	.set Default_Part18_B,                        0x00f3f960
+	.set Default_Part19_A,                        0x00f3f980
+	.set Default_Part19_B,                        0x00f3f9a0
+	.set Default_Part20_A,                        0x00f3f9c0
+	.set Default_Part20_B,                        0x00f3f9e0
+	.set Default_Part21_A,                        0x00f3fa00
+	.set Default_Part21_B,                        0x00f3fa20
+	.set Default_Part22_A,                        0x00f3fa40
+	.set Default_Part22_B,                        0x00f3fa60
+	.set Default_Part23_A,                        0x00f3fa80
+	.set Default_Part23_B,                        0x00f3faa0
+	.set Default_Part24_A,                        0x00f3fac0
+	.set Default_Part24_B,                        0x00f3fae0
+	.set Default_Part25_A,                        0x00f3fb00
+	.set Default_Part25_B,                        0x00f3fb20
+	.set Default_Part26_A,                        0x00f3fb40
+	.set Default_Part26_B,                        0x00f3fb60
+	.set Default_Part27_A,                        0x00f3fb80
+	.set Default_Part27_B,                        0x00f3fba0
+	.set Default_Part28_A,                        0x00f3fbc0
+	.set Default_Part28_B,                        0x00f3fbe0
+	.set Default_Part29_A,                        0x00f3fc00
+	.set Default_Part29_B,                        0x00f3fc20
+	.set Default_Part30_A,                        0x00f3fc40
+	.set Default_Part30_B,                        0x00f3fc60
+	.set Default_Part31_A,                        0x00f3fc80
+	.set Default_Part31_B,                        0x00f3fca0
+	.set Default_Record7A,                        0x00f3fcc0
+	.set Default_Record98,                        0x00f3fce0
+	.set Default_Record99,                        0x00f3fcf0
+	.set Default_Record80,                        0x00f3fd10
+	.set Default_Record91,                        0x00f3fd28
+	.set Default_Record93,                        0x00f3fd38
 	.set T_MainTask_PhaseVector,                  0x00f40000
 	.set T_Dev7F_WriteSlot8_Slot0,                0x00f40004
 	.set T_Dev7F_WriteSlot8_Slot1,                0x00f40008

@@ -7022,7 +7022,7 @@ ModeScreen_PaintDirtyFields2:
 	ld (UI_DrawScratch:16), a                                   ; F90FFA  f1 40 26 41
 	push XIY                                             ; F90FFE  3d
 	ld XIY,ModeScreen_PaintDirtyFields2_DL3                                     ; F90FFF  45 20 88 f2 00
-	ld XIX,Data_F2882B                                   ; F91004  44 2b 88 f2 00
+	ld XIX,DLBoxes_F2882B                                   ; F91004  44 2b 88 f2 00
 	call T_DisplayListB_Run                              ; F91009  1d f4 17 f4
 	pop XIY                                              ; F9100D  5d
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9100E  f1 40 25 00 00
@@ -8158,7 +8158,7 @@ Paint_C0mbinati0nM0dePage2Sound1:   ; entry: named by 1 `.long` operand, first a
 	inc 1,A                                              ; F91931  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91933  f1 40 26 41
 	ld XIY,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F91937  45 83 97 f2 00
-	ld XIX,Data_F297A0                                   ; F9193C  44 a0 97 f2 00
+	ld XIX,DLText_PartCodes                                   ; F9193C  44 a0 97 f2 00
 	call T_DisplayListB_Run                              ; F91941  1d f4 17 f4
 	ret                                                  ; F91945  0e
 ; Paint_C0mbinati0nM0dePage2Sound2 -- draw part 2's sound number in COMBINATION MODE page 2's SOUND row
