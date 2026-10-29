@@ -1863,7 +1863,7 @@ Msg0716_RepostPart0Volume:   ; entry: named by 1 `.long` operand, first at 0xFC0
 ; Msg0716_RepostPart0Pan: table 8 entry 19: Msg0716_PostCC0A_PanWithOffset for part 0 with (0x76AA) & 0x7F, byte +8 of part 0's 64-byte
 ;   record 0x76A2.
 Msg0716_RepostPart0Pan:   ; entry: named by 1 `.long` operand, first at 0xFC0B8E
-	ld a, (0x76aa:16)                                   ; FC0E36  c1 aa 76 21
+	ld a, (CombiPart_Pan:16)                                   ; FC0E36  c1 aa 76 21
 	and A,0x7f                                           ; FC0E3A  c9 cc 7f
 	ld XIX,0x00000716                                    ; FC0E3D  44 16 07 00 00
 	ld (XIX+0x01),0x00                                   ; FC0E42  bc 01 00 00
@@ -2385,13 +2385,13 @@ Cpu2Query_ApplyPartRecordEffects:
 .LFC1246:
 	ld D,W                                               ; FC1246  c8 8c
 .LFC1248:
-	ld (0x76a8:16), h                                   ; FC1248  f1 a8 76 46
+	ld (CombiPart_Effect2OnOff:16), h                                   ; FC1248  f1 a8 76 46
 	ld (0x76c5:16), e                                   ; FC124C  f1 c5 76 45
 	ld (0x76c6:16), d                                   ; FC1250  f1 c6 76 44
 	ld a, (xiy+)                                      ; FC1254  c5 f4 21
-	ld (0x76a7:16), a                                   ; FC1257  f1 a7 76 41
+	ld (CombiPart_Effect1Send:16), a                                   ; FC1257  f1 a7 76 41
 	ld a, (xiy+)                                      ; FC125B  c5 f4 21
-	ld (0x76a9:16), a                                   ; FC125E  f1 a9 76 41
+	ld (CombiPart_ReverbSend:16), a                                   ; FC125E  f1 a9 76 41
 	ld a, (xiy+)                                      ; FC1262  c5 f4 21
 	ld (0x78b7:16), a                                   ; FC1265  f1 b7 78 41
 	ldw bc, 0x01                                         ; FC1269  31 01 00
@@ -2414,17 +2414,17 @@ Cpu2Query_ApplyPartRecordEffects:
 	ld (XIX),0x00                                        ; FC12A1  b4 00 00
 	ld d, 0x05:opc                                          ; FC12A4  24 05
 	ld e, 0x00:opc                                          ; FC12A6  25 00
-	ld a, (0x76a7:16)                                   ; FC12A8  c1 a7 76 21
+	ld a, (CombiPart_Effect1Send:16)                                   ; FC12A8  c1 a7 76 21
 	ld w, 0x7f:opc                                          ; FC12AC  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC12AE  1d 3c 0f f4
 	ld d, 0x06:opc                                          ; FC12B2  24 06
 	ld e, 0x00:opc                                          ; FC12B4  25 00
-	ld a, (0x76a8:16)                                   ; FC12B6  c1 a8 76 21
+	ld a, (CombiPart_Effect2OnOff:16)                                   ; FC12B6  c1 a8 76 21
 	ld w, 0x7f:opc                                          ; FC12BA  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC12BC  1d 3c 0f f4
 	ld d, 0x07:opc                                          ; FC12C0  24 07
 	ld e, 0x00:opc                                          ; FC12C2  25 00
-	ld a, (0x76a9:16)                                   ; FC12C4  c1 a9 76 21
+	ld a, (CombiPart_ReverbSend:16)                                   ; FC12C4  c1 a9 76 21
 	ld w, 0x7f:opc                                          ; FC12C8  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC12CA  1d 3c 0f f4
 	ld d, 0x03:opc                                          ; FC12CE  24 03
@@ -2470,13 +2470,13 @@ Cpu2Query_ApplyPartRecordEffects:
 ;   pilot-2026-10-06/proposals_wave10_a10.json)
 Cpu2Query_ApplyToneRecordEffects:
 	ld XIY,0x00000860                                    ; FC1331  45 60 08 00 00
-	ld (0x76a8:16), 0x7f                                 ; FC1336  f1 a8 76 00 7f
+	ld (CombiPart_Effect2OnOff:16), 0x7f                                 ; FC1336  f1 a8 76 00 7f
 	ld (0x76c5:16), 0x01                                 ; FC133B  f1 c5 76 00 01
 	ld (0x76c6:16), 0x00                                 ; FC1340  f1 c6 76 00 00
 	ld a, 0x5a:opc                                          ; FC1345  21 5a
-	ld (0x76a7:16), a                                   ; FC1347  f1 a7 76 41
+	ld (CombiPart_Effect1Send:16), a                                   ; FC1347  f1 a7 76 41
 	ld a, 0x5a:opc                                          ; FC134B  21 5a
-	ld (0x76a9:16), a                                   ; FC134D  f1 a9 76 41
+	ld (CombiPart_ReverbSend:16), a                                   ; FC134D  f1 a9 76 41
 	ld a, (xiy+)                                      ; FC1351  c5 f4 21
 	ld (0x78b7:16), a                                   ; FC1354  f1 b7 78 41
 	ldw bc, 0x01                                         ; FC1358  31 01 00
@@ -2499,17 +2499,17 @@ Cpu2Query_ApplyToneRecordEffects:
 	ld (XIX),0x00                                        ; FC1390  b4 00 00
 	ld d, 0x05:opc                                          ; FC1393  24 05
 	ld e, 0x00:opc                                          ; FC1395  25 00
-	ld a, (0x76a7:16)                                   ; FC1397  c1 a7 76 21
+	ld a, (CombiPart_Effect1Send:16)                                   ; FC1397  c1 a7 76 21
 	ld w, 0x7f:opc                                          ; FC139B  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC139D  1d 3c 0f f4
 	ld d, 0x06:opc                                          ; FC13A1  24 06
 	ld e, 0x00:opc                                          ; FC13A3  25 00
-	ld a, (0x76a8:16)                                   ; FC13A5  c1 a8 76 21
+	ld a, (CombiPart_Effect2OnOff:16)                                   ; FC13A5  c1 a8 76 21
 	ld w, 0x7f:opc                                          ; FC13A9  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC13AB  1d 3c 0f f4
 	ld d, 0x07:opc                                          ; FC13AF  24 07
 	ld e, 0x00:opc                                          ; FC13B1  25 00
-	ld a, (0x76a9:16)                                   ; FC13B3  c1 a9 76 21
+	ld a, (CombiPart_ReverbSend:16)                                   ; FC13B3  c1 a9 76 21
 	ld w, 0x7f:opc                                          ; FC13B7  20 7f
 	call T_Queue2E00_AppendRegs                          ; FC13B9  1d 3c 0f f4
 	ld d, 0x03:opc                                          ; FC13BD  24 03

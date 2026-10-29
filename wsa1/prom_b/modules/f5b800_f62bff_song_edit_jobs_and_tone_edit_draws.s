@@ -1058,7 +1058,7 @@ TouchCurve_DrawCurrentSlot_Skip4:
 	call	T_DisplayList_Run	; F5BDE6  call 0xf417f0
 TouchCurve_DrawCurrentSlot_Join:
 	xor	xwa, xwa	; F5BDEA  xor XWA,XWA
-	ld	a, (10147:16)	; F5BDEC  ld A,(0x27a3)
+	ld	a, (ToneEdit_TouchCurveSlot:16)	; F5BDEC  ld A,(0x27a3)
 	sla	wa, 2	; F5BDF0  sla 0x02,WA
 	cp	(0x27f5:16), 0x01	; F5BDF3  cp (0x27f5),0x01
 	jr	nz, TouchCurve_DrawCurrentSlot_Skip	; F5BDF8  jr NZ,0xf5be01
@@ -1081,7 +1081,7 @@ TouchCurve_DrawCurrentSlot_Skip2:
 	ld	xiz, ModelingPage_Fields+8	; F5BE24  ld XIZ,0x000027ae
 TouchCurve_DrawCurrentSlot_Join3:
 	xor	xwa, xwa	; F5BE29  xor XWA,XWA
-	ld	a, (10147:16)	; F5BE2B  ld A,(0x27a3)
+	ld	a, (ToneEdit_TouchCurveSlot:16)	; F5BE2B  ld A,(0x27a3)
 	add	xiz, xwa	; F5BE2F  add XIZ,XWA
 	call	TouchCurve_DrawThumbnail	; F5BE31  call 0xf5be5a
 	pop	xwa	; F5BE35  pop XWA
@@ -2357,7 +2357,7 @@ SoundEditFilter_PaintHeader_Join:
 ;   same order. (wsa1/notes/naming-pilot-2026-10-06/proposals_prom_b.json)
 SoundEditFilter_PaintModeField:
 	ld	a, (UI_ScreenLatch:16)	; F5C94B  ld A,(0x207a)
-	ld	(10174:16), a	; F5C94F  ld (0x27be),A
+	ld	(SoundEditFilter_TypeShown:16), a	; F5C94F  ld (0x27be),A
 	ld	(LCD_CurrentLayer:16), 2	; F5C953  ld (0x2540),0x02
 	ld	xiy, SoundEditFilter_PaintModeField_DL1	; F5C958  ld XIY,0x00f04650
 	cp	(0x27f5:16), 0x01	; F5C95D  cp (0x27f5),0x01

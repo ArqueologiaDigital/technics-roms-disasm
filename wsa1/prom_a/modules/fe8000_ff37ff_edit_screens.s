@@ -5657,7 +5657,7 @@ DrumEdit_DrawRowNotes:
 ;   handler 0xF31C14) -- row 0's note number.
 DrumEdit_DrawRowNote0:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0A4  d2 71 1f 60 20
-	ld (0x26b0:16), wa                                  ; FEB0A9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0A9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote0_DL                            ; FEB0AD  45 bc b0 fe 00
 	ld XIX,DrumEdit_DrawRowNote1                                    ; FEB0B2  44 c8 b0 fe 00
 	call T_DisplayListB_Run                              ; FEB0B7  1d f4 17 f4
@@ -5667,7 +5667,7 @@ DrumEdit_DrawRowNote0:
 ; The length bytes walk from 0xFEB0BC and land exactly on 0xFEB0C8.
 DrumEdit_DrawRowNote0_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=43, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=43, digits=3
 ; DrumEdit_DrawRowNote1 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5689,7 +5689,7 @@ DrumEdit_DrawRowNote0_DL:
 DrumEdit_DrawRowNote1:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0C8  d2 71 1f 60 20
 	add WA,0x0001                                        ; FEB0CD  d8 c8 01 00
-	ld (0x26b0:16), wa                                  ; FEB0D1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0D1  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote1_DL                            ; FEB0D5  45 e4 b0 fe 00
 	ld XIX,DrumEdit_DrawRowNote2                                    ; FEB0DA  44 f0 b0 fe 00
 	call T_DisplayListB_Run                              ; FEB0DF  1d f4 17 f4
@@ -5699,7 +5699,7 @@ DrumEdit_DrawRowNote1:
 ; The length bytes walk from 0xFEB0E4 and land exactly on 0xFEB0F0.
 DrumEdit_DrawRowNote1_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=53, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=53, digits=3
 ; DrumEdit_DrawRowNote2 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5721,7 +5721,7 @@ DrumEdit_DrawRowNote1_DL:
 DrumEdit_DrawRowNote2:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB0F0  d2 71 1f 60 20
 	add WA,0x0002                                        ; FEB0F5  d8 c8 02 00
-	ld (0x26b0:16), wa                                  ; FEB0F9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB0F9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote2_DL                            ; FEB0FD  45 0c b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote3                                    ; FEB102  44 18 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB107  1d f4 17 f4
@@ -5731,7 +5731,7 @@ DrumEdit_DrawRowNote2:
 ; The length bytes walk from 0xFEB10C and land exactly on 0xFEB118.
 DrumEdit_DrawRowNote2_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=63, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=63, digits=3
 ; DrumEdit_DrawRowNote3 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5753,7 +5753,7 @@ DrumEdit_DrawRowNote2_DL:
 DrumEdit_DrawRowNote3:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB118  d2 71 1f 60 20
 	add WA,0x0003                                        ; FEB11D  d8 c8 03 00
-	ld (0x26b0:16), wa                                  ; FEB121  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB121  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote3_DL                            ; FEB125  45 34 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote4                                    ; FEB12A  44 40 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB12F  1d f4 17 f4
@@ -5763,7 +5763,7 @@ DrumEdit_DrawRowNote3:
 ; The length bytes walk from 0xFEB134 and land exactly on 0xFEB140.
 DrumEdit_DrawRowNote3_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=73, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=73, digits=3
 ; DrumEdit_DrawRowNote4 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5785,7 +5785,7 @@ DrumEdit_DrawRowNote3_DL:
 DrumEdit_DrawRowNote4:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB140  d2 71 1f 60 20
 	add WA,0x0004                                        ; FEB145  d8 c8 04 00
-	ld (0x26b0:16), wa                                  ; FEB149  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB149  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote4_DL                            ; FEB14D  45 5c b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote5                                    ; FEB152  44 68 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB157  1d f4 17 f4
@@ -5795,7 +5795,7 @@ DrumEdit_DrawRowNote4:
 ; The length bytes walk from 0xFEB15C and land exactly on 0xFEB168.
 DrumEdit_DrawRowNote4_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=83, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=83, digits=3
 ; DrumEdit_DrawRowNote5 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5817,7 +5817,7 @@ DrumEdit_DrawRowNote4_DL:
 DrumEdit_DrawRowNote5:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB168  d2 71 1f 60 20
 	add WA,0x0005                                        ; FEB16D  d8 c8 05 00
-	ld (0x26b0:16), wa                                  ; FEB171  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB171  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote5_DL                            ; FEB175  45 84 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote6                                    ; FEB17A  44 90 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB17F  1d f4 17 f4
@@ -5827,7 +5827,7 @@ DrumEdit_DrawRowNote5:
 ; The length bytes walk from 0xFEB184 and land exactly on 0xFEB190.
 DrumEdit_DrawRowNote5_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=93, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=93, digits=3
 ; DrumEdit_DrawRowNote6 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5849,7 +5849,7 @@ DrumEdit_DrawRowNote5_DL:
 DrumEdit_DrawRowNote6:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB190  d2 71 1f 60 20
 	add WA,0x0006                                        ; FEB195  d8 c8 06 00
-	ld (0x26b0:16), wa                                  ; FEB199  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB199  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote6_DL                            ; FEB19D  45 ac b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote7                                    ; FEB1A2  44 b8 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB1A7  1d f4 17 f4
@@ -5859,7 +5859,7 @@ DrumEdit_DrawRowNote6:
 ; The length bytes walk from 0xFEB1AC and land exactly on 0xFEB1B8.
 DrumEdit_DrawRowNote6_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=103, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=103, digits=3
 ; DrumEdit_DrawRowNote7 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5881,7 +5881,7 @@ DrumEdit_DrawRowNote6_DL:
 DrumEdit_DrawRowNote7:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB1B8  d2 71 1f 60 20
 	add WA,0x0007                                        ; FEB1BD  d8 c8 07 00
-	ld (0x26b0:16), wa                                  ; FEB1C1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB1C1  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote7_DL                            ; FEB1C5  45 d4 b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote8                                    ; FEB1CA  44 e0 b1 fe 00
 	call T_DisplayListB_Run                              ; FEB1CF  1d f4 17 f4
@@ -5891,7 +5891,7 @@ DrumEdit_DrawRowNote7:
 ; The length bytes walk from 0xFEB1D4 and land exactly on 0xFEB1E0.
 DrumEdit_DrawRowNote7_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=113, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=113, digits=3
 ; DrumEdit_DrawRowNote8 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5913,7 +5913,7 @@ DrumEdit_DrawRowNote7_DL:
 DrumEdit_DrawRowNote8:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB1E0  d2 71 1f 60 20
 	add WA,0x0008                                        ; FEB1E5  d8 c8 08 00
-	ld (0x26b0:16), wa                                  ; FEB1E9  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB1E9  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote8_DL                            ; FEB1ED  45 fc b1 fe 00
 	ld XIX,DrumEdit_DrawRowNote9                                    ; FEB1F2  44 08 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB1F7  1d f4 17 f4
@@ -5923,7 +5923,7 @@ DrumEdit_DrawRowNote8:
 ; The length bytes walk from 0xFEB1FC and land exactly on 0xFEB208.
 DrumEdit_DrawRowNote8_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=123, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=123, digits=3
 ; DrumEdit_DrawRowNote9 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5945,7 +5945,7 @@ DrumEdit_DrawRowNote8_DL:
 DrumEdit_DrawRowNote9:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB208  d2 71 1f 60 20
 	add WA,0x0009                                        ; FEB20D  d8 c8 09 00
-	ld (0x26b0:16), wa                                  ; FEB211  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB211  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote9_DL                            ; FEB215  45 24 b2 fe 00
 	ld XIX,DrumEdit_DrawRowNote10                                    ; FEB21A  44 30 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB21F  1d f4 17 f4
@@ -5955,7 +5955,7 @@ DrumEdit_DrawRowNote9:
 ; The length bytes walk from 0xFEB224 and land exactly on 0xFEB230.
 DrumEdit_DrawRowNote9_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=133, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=133, digits=3
 ; DrumEdit_DrawRowNote10 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -5977,7 +5977,7 @@ DrumEdit_DrawRowNote9_DL:
 DrumEdit_DrawRowNote10:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB230  d2 71 1f 60 20
 	add WA,0x000a                                        ; FEB235  d8 c8 0a 00
-	ld (0x26b0:16), wa                                  ; FEB239  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB239  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote10_DL                            ; FEB23D  45 4c b2 fe 00
 	ld XIX,DrumEdit_DrawRowNote11                                    ; FEB242  44 58 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB247  1d f4 17 f4
@@ -5987,7 +5987,7 @@ DrumEdit_DrawRowNote10:
 ; The length bytes walk from 0xFEB24C and land exactly on 0xFEB258.
 DrumEdit_DrawRowNote10_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=143, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=143, digits=3
 ; DrumEdit_DrawRowNote11 -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 7
@@ -6009,7 +6009,7 @@ DrumEdit_DrawRowNote10_DL:
 DrumEdit_DrawRowNote11:
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEB258  d2 71 1f 60 20
 	add WA,0x000b                                        ; FEB25D  d8 c8 0b 00
-	ld (0x26b0:16), wa                                  ; FEB261  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FEB261  f1 b0 26 50
 	ld XIY,DrumEdit_DrawRowNote11_DL                            ; FEB265  45 74 b2 fe 00
 	ld XIX,DrumEdit_DrawRowNames                                    ; FEB26A  44 80 b2 fe 00
 	call T_DisplayListB_Run                              ; FEB26F  1d f4 17 f4
@@ -6019,7 +6019,7 @@ DrumEdit_DrawRowNote11:
 ; The length bytes walk from 0xFEB274 and land exactly on 0xFEB280.
 DrumEdit_DrawRowNote11_DL:
 ; ; drawn (start operand) by DrumEdit_DrawRowNote11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16_xy	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=153, digits=3
+	dlb_number16_xy	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=2, y=153, digits=3
 ; DrumEdit_DrawRowNames: DrumEdit_DrawRowName for rows 0..11.
 DrumEdit_DrawRowNames:
 	xor DE,DE                                            ; FEB280  da d2
@@ -8765,7 +8765,7 @@ EditScreen_DrawMeasureNumbers:
 	sll xwa, 0x02                                        ; FEF9D2  e8 ee 02
 	add XIY,XWA                                          ; FEF9D5  e8 85
 	ld XIY,(XIY)                                         ; FEF9D7  a5 25
-	ld (0x26b0:16), bc                                  ; FEF9D9  f1 b0 26 51
+	ld (EditScreen_DrawNumber:16), bc                                  ; FEF9D9  f1 b0 26 51
 	pushw bc                                             ; FEF9DD  29
 	pushw de                                             ; FEF9DE  2a
 	push XIX                                             ; FEF9DF  3c
@@ -8829,9 +8829,9 @@ ScreenDrawPtrs_FEFA2A:
 ; EditScreen_MeasureNumberAt0: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 0 of 12 in address order; NOTE EDIT slot 0, NOTE EDIT slot 11, DRUM EDIT slot 8 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt0:   ; entry: named by 3 `.long` operands, first at 0xFEF9FA
-	cpw	(0x26b0:16), 0x03e7                          ; FEFA4E  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFA4E  d1 b0 26 3f e7 03
 	jr ule, .LFEFA6B                                     ; FEFA54  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFA56  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFA56  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt0_DL1                            ; FEFA5C  45 7a fa fe 00
 	ld XIX,EditScreen_MeasureNumberAt0_DL2                            ; FEFA61  44 89 fa fe 00
 	call T_DisplayListB_Run                              ; FEFA66  1d f4 17 f4
@@ -8846,19 +8846,19 @@ EditScreen_MeasureNumberAt0:   ; entry: named by 3 `.long` operands, first at 0x
 ; The length bytes walk from 0xFEFA7A and land exactly on 0xFEFA89.
 EditScreen_MeasureNumberAt0_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=0, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=0, y=20
 
 ; EditScreen_MeasureNumberAt0_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFA89 and land exactly on 0xFEFA93.
 EditScreen_MeasureNumberAt0_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt0 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=0, y=20, digits=3
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=0, y=20, digits=3
 ; EditScreen_MeasureNumberAt1: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 1 of 12 in address order; NOTE EDIT slot 1 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt1:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEF9FE
-	cpw	(0x26b0:16), 0x03e7                          ; FEFA93  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFA93  d1 b0 26 3f e7 03
 	jr ule, .LFEFAB0                                     ; FEFA99  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFA9B  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFA9B  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt1_DL1                            ; FEFAA1  45 bf fa fe 00
 	ld XIX,EditScreen_MeasureNumberAt1_DL2                            ; FEFAA6  44 ce fa fe 00
 	call T_DisplayListB_Run                              ; FEFAAB  1d f4 17 f4
@@ -8873,19 +8873,19 @@ EditScreen_MeasureNumberAt1:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFABF and land exactly on 0xFEFACE.
 EditScreen_MeasureNumberAt1_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=32, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=32, y=20
 
 ; EditScreen_MeasureNumberAt1_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFACE and land exactly on 0xFEFAD8.
 EditScreen_MeasureNumberAt1_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=32, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=32, y=20, digits=2
 ; EditScreen_MeasureNumberAt2: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 2 of 12 in address order; NOTE EDIT slot 2 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt2:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA02
-	cpw	(0x26b0:16), 0x03e7                          ; FEFAD8  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFAD8  d1 b0 26 3f e7 03
 	jr ule, .LFEFAF5                                     ; FEFADE  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFAE0  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFAE0  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt2_DL1                            ; FEFAE6  45 04 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt2_DL2                            ; FEFAEB  44 13 fb fe 00
 	call T_DisplayListB_Run                              ; FEFAF0  1d f4 17 f4
@@ -8900,19 +8900,19 @@ EditScreen_MeasureNumberAt2:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB04 and land exactly on 0xFEFB13.
 EditScreen_MeasureNumberAt2_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=56, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=56, y=20
 
 ; EditScreen_MeasureNumberAt2_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB13 and land exactly on 0xFEFB1D.
 EditScreen_MeasureNumberAt2_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=20, digits=2
 ; EditScreen_MeasureNumberAt3: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 3 of 12 in address order; NOTE EDIT slot 3 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt3:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA06
-	cpw	(0x26b0:16), 0x03e7                          ; FEFB1D  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFB1D  d1 b0 26 3f e7 03
 	jr ule, .LFEFB3A                                     ; FEFB23  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFB25  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFB25  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt3_DL1                            ; FEFB2B  45 49 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt3_DL2                            ; FEFB30  44 58 fb fe 00
 	call T_DisplayListB_Run                              ; FEFB35  1d f4 17 f4
@@ -8927,19 +8927,19 @@ EditScreen_MeasureNumberAt3:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB49 and land exactly on 0xFEFB58.
 EditScreen_MeasureNumberAt3_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=80, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=80, y=20
 
 ; EditScreen_MeasureNumberAt3_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB58 and land exactly on 0xFEFB62.
 EditScreen_MeasureNumberAt3_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=80, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=80, y=20, digits=2
 ; EditScreen_MeasureNumberAt4: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 4 of 12 in address order; DRUM EDIT slot 0 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt4:   ; entry: named by 2 `.long`/`ld` operands, first at 0xFEFA2A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFB62  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFB62  d1 b0 26 3f e7 03
 	jr ule, .LFEFB7F                                     ; FEFB68  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFB6A  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFB6A  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt4_DL1                            ; FEFB70  45 8e fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt4_DL2                            ; FEFB75  44 9d fb fe 00
 	call T_DisplayListB_Run                              ; FEFB7A  1d f4 17 f4
@@ -8954,19 +8954,19 @@ EditScreen_MeasureNumberAt4:   ; entry: named by 2 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFB8E and land exactly on 0xFEFB9D.
 EditScreen_MeasureNumberAt4_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=72, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=3, x=72, y=20
 
 ; EditScreen_MeasureNumberAt4_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFB9D and land exactly on 0xFEFBA7.
 EditScreen_MeasureNumberAt4_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=72, y=20, digits=3
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=72, y=20, digits=3
 ; EditScreen_MeasureNumberAt5: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 5 of 12 in address order; NOTE EDIT slot 4, DRUM EDIT slot 1 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt5:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA0A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFBA7  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFBA7  d1 b0 26 3f e7 03
 	jr ule, .LFEFBC4                                     ; FEFBAD  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFBAF  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFBAF  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt5_DL1                            ; FEFBB5  45 d3 fb fe 00
 	ld XIX,EditScreen_MeasureNumberAt5_DL2                            ; FEFBBA  44 e2 fb fe 00
 	call T_DisplayListB_Run                              ; FEFBBF  1d f4 17 f4
@@ -8981,19 +8981,19 @@ EditScreen_MeasureNumberAt5:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFBD3 and land exactly on 0xFEFBE2.
 EditScreen_MeasureNumberAt5_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=104, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=104, y=20
 
 ; EditScreen_MeasureNumberAt5_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFBE2 and land exactly on 0xFEFBEC.
 EditScreen_MeasureNumberAt5_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=104, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=104, y=20, digits=2
 ; EditScreen_MeasureNumberAt6: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 6 of 12 in address order; NOTE EDIT slot 5, DRUM EDIT slot 2 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt6:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA0E
-	cpw	(0x26b0:16), 0x03e7                          ; FEFBEC  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFBEC  d1 b0 26 3f e7 03
 	jr ule, .LFEFC09                                     ; FEFBF2  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFBF4  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFBF4  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt6_DL1                            ; FEFBFA  45 18 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt6_DL2                            ; FEFBFF  44 27 fc fe 00
 	call T_DisplayListB_Run                              ; FEFC04  1d f4 17 f4
@@ -9008,19 +9008,19 @@ EditScreen_MeasureNumberAt6:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFC18 and land exactly on 0xFEFC27.
 EditScreen_MeasureNumberAt6_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=128, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=128, y=20
 
 ; EditScreen_MeasureNumberAt6_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFC27 and land exactly on 0xFEFC31.
 EditScreen_MeasureNumberAt6_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=128, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=128, y=20, digits=2
 ; EditScreen_MeasureNumberAt7: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 7 of 12 in address order; NOTE EDIT slot 6, DRUM EDIT slot 3 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt7:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA12
-	cpw	(0x26b0:16), 0x03e7                          ; FEFC31  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFC31  d1 b0 26 3f e7 03
 	jr ule, .LFEFC4E                                     ; FEFC37  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFC39  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFC39  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt7_DL1                            ; FEFC3F  45 5d fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt7_DL2                            ; FEFC44  44 6c fc fe 00
 	call T_DisplayListB_Run                              ; FEFC49  1d f4 17 f4
@@ -9035,19 +9035,19 @@ EditScreen_MeasureNumberAt7:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFC5D and land exactly on 0xFEFC6C.
 EditScreen_MeasureNumberAt7_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=152, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=152, y=20
 
 ; EditScreen_MeasureNumberAt7_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFC6C and land exactly on 0xFEFC76.
 EditScreen_MeasureNumberAt7_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=152, y=20, digits=2
 ; EditScreen_MeasureNumberAt8: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 8 of 12 in address order; NOTE EDIT slot 7, DRUM EDIT slot 4 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt8:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA16
-	cpw	(0x26b0:16), 0x03e7                          ; FEFC76  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFC76  d1 b0 26 3f e7 03
 	jr ule, .LFEFC93                                     ; FEFC7C  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFC7E  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFC7E  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt8_DL1                            ; FEFC84  45 a2 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt8_DL2                            ; FEFC89  44 b1 fc fe 00
 	call T_DisplayListB_Run                              ; FEFC8E  1d f4 17 f4
@@ -9062,19 +9062,19 @@ EditScreen_MeasureNumberAt8:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFCA2 and land exactly on 0xFEFCB1.
 EditScreen_MeasureNumberAt8_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=176, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=176, y=20
 
 ; EditScreen_MeasureNumberAt8_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFCB1 and land exactly on 0xFEFCBB.
 EditScreen_MeasureNumberAt8_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt8 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=176, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=176, y=20, digits=2
 ; EditScreen_MeasureNumberAt9: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 9 of 12 in address order; NOTE EDIT slot 8, DRUM EDIT slot 5 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt9:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA1A
-	cpw	(0x26b0:16), 0x03e7                          ; FEFCBB  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFCBB  d1 b0 26 3f e7 03
 	jr ule, .LFEFCD8                                     ; FEFCC1  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFCC3  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFCC3  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt9_DL1                            ; FEFCC9  45 e7 fc fe 00
 	ld XIX,EditScreen_MeasureNumberAt9_DL2                            ; FEFCCE  44 f6 fc fe 00
 	call T_DisplayListB_Run                              ; FEFCD3  1d f4 17 f4
@@ -9089,19 +9089,19 @@ EditScreen_MeasureNumberAt9:   ; entry: named by 3 `.long`/`ld` operands, first 
 ; The length bytes walk from 0xFEFCE7 and land exactly on 0xFEFCF6.
 EditScreen_MeasureNumberAt9_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=200, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=200, y=20
 
 ; EditScreen_MeasureNumberAt9_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFCF6 and land exactly on 0xFEFD00.
 EditScreen_MeasureNumberAt9_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt9 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=200, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=200, y=20, digits=2
 ; EditScreen_MeasureNumberAt10: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 10 of 12 in address order; NOTE EDIT slot 9, DRUM EDIT slot 6 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt10:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA1E
-	cpw	(0x26b0:16), 0x03e7                          ; FEFD00  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFD00  d1 b0 26 3f e7 03
 	jr ule, .LFEFD1D                                     ; FEFD06  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFD08  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFD08  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt10_DL1                            ; FEFD0E  45 2c fd fe 00
 	ld XIX,EditScreen_MeasureNumberAt10_DL2                            ; FEFD13  44 3b fd fe 00
 	call T_DisplayListB_Run                              ; FEFD18  1d f4 17 f4
@@ -9116,19 +9116,19 @@ EditScreen_MeasureNumberAt10:   ; entry: named by 3 `.long`/`ld` operands, first
 ; The length bytes walk from 0xFEFD2C and land exactly on 0xFEFD3B.
 EditScreen_MeasureNumberAt10_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=224, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=224, y=20
 
 ; EditScreen_MeasureNumberAt10_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFD3B and land exactly on 0xFEFD45.
 EditScreen_MeasureNumberAt10_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt10 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=20, digits=2
 ; EditScreen_MeasureNumberAt11: draws the measure number in (0x26B0) -- cleared if above 999 -- at one fixed place of the
 ;   edit screen; place 11 of 12 in address order; NOTE EDIT slot 10, DRUM EDIT slot 7 (notes/prom_a_edit_screen_measure_numbers.py).
 EditScreen_MeasureNumberAt11:   ; entry: named by 3 `.long`/`ld` operands, first at 0xFEFA22
-	cpw	(0x26b0:16), 0x03e7                          ; FEFD45  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FEFD45  d1 b0 26 3f e7 03
 	jr ule, .LFEFD62                                     ; FEFD4B  63 15
-	ldw (0x26b0:16), 0x00                                ; FEFD4D  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FEFD4D  f1 b0 26 02 00 00
 	ld XIY,EditScreen_MeasureNumberAt11_DL1                            ; FEFD53  45 71 fd fe 00
 	ld XIX,EditScreen_MeasureNumberAt11_DL2                            ; FEFD58  44 80 fd fe 00
 	call T_DisplayListB_Run                              ; FEFD5D  1d f4 17 f4
@@ -9143,13 +9143,13 @@ EditScreen_MeasureNumberAt11:   ; entry: named by 3 `.long`/`ld` operands, first
 ; The length bytes walk from 0xFEFD71 and land exactly on 0xFEFD80.
 EditScreen_MeasureNumberAt11_DL1:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=248, y=20
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=2, x=248, y=20
 
 ; EditScreen_MeasureNumberAt11_DL2 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFEFD80 and land exactly on 0xFEFD8A.
 EditScreen_MeasureNumberAt11_DL2:
 ; ; drawn (start operand) by EditScreen_MeasureNumberAt11 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=248, y=20, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=248, y=20, digits=2
 ; EditScreen_RedrawCursorLayer: while the cursor is inside the measure: layer 1 erased, EditScreen_DrawSelectedEventBar,
 ;   EditScreen_DrawCursorTickMarker, the left rule, EditScreen_DrawDataEndMarker.
 EditScreen_RedrawCursorLayer:
@@ -9874,7 +9874,7 @@ EditScreen_DrawTrackNumber:
 	xor WA,WA                                            ; FF0363  d8 d0
 	ld a, (EditScreen_Part:24)                                 ; FF0365  c2 00 1f 60 21
 	inc 1,A                                              ; FF036A  c9 61
-	ld (0x26b0:16), wa                                  ; FF036C  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF036C  f1 b0 26 50
 	ld XIY,EditScreen_DrawTrackNumber_DL                            ; FF0370  45 7f 03 ff 00
 	ld XIX,EditScreen_DrawSongNumber                                    ; FF0375  44 89 03 ff 00
 	call T_DisplayListB_Run                              ; FF037A  1d f4 17 f4
@@ -9884,7 +9884,7 @@ EditScreen_DrawTrackNumber:
 ; The length bytes walk from 0xFF037F and land exactly on 0xFF0389.
 EditScreen_DrawTrackNumber_DL:
 ; ; drawn (start operand) by EditScreen_DrawTrackNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=152, y=3, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=152, y=3, digits=2
 ; EditScreen_DrawSongNumber -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 9
@@ -9907,7 +9907,7 @@ EditScreen_DrawSongNumber:
 	xor WA,WA                                            ; FF038E  d8 d0
 	ld a, (BStore_CurrentBank:16)                                   ; FF0390  c1 0a 36 21
 	inc 1,A                                              ; FF0394  c9 61
-	ld (0x26b0:16), wa                                  ; FF0396  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0396  f1 b0 26 50
 	ld XIY,EditScreen_DrawSongNumber_DL                            ; FF039A  45 a9 03 ff 00
 	ld XIX,EditScreen_DrawRulersAndLegend                                    ; FF039F  44 b3 03 ff 00
 	call T_DisplayListB_Run                              ; FF03A4  1d f4 17 f4
@@ -9917,7 +9917,7 @@ EditScreen_DrawSongNumber:
 ; The length bytes walk from 0xFF03A9 and land exactly on 0xFF03B3.
 EditScreen_DrawSongNumber_DL:
 ; ; drawn (start operand) by EditScreen_DrawSongNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=288, y=3, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=288, y=3, digits=2
 ; EditScreen_DrawRulersAndLegend: layer 2: EditScreen_DrawMeasureStartLines, NoteEdit_DrawKeyboardRuler, Screen_DrawKitCategoryLegend.
 EditScreen_DrawRulersAndLegend:
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FF03B3  f1 40 25 00 02
@@ -10525,18 +10525,18 @@ EditScreen_DrawMeasure:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0989  f1 40 25 00 00
 	cpw	(EditCursor_Measure:24), 0x03e8                        ; FF098E  d2 3f 1f 60 3f e8 03
 	jr c, .LFF09AC                                       ; FF0995  67 15
-	ldw (0x26b0:16), 0x00                                ; FF0997  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0997  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawMeasure_DL1                            ; FF099D  45 d8 09 ff 00
 	ld XIX,Str_EditMeasureOverflow                                    ; FF09A2  44 e7 09 ff 00
 	call T_DisplayListB_Run                              ; FF09A7  1d f4 17 f4
 	ret                                                  ; FF09AB  0e
 .LFF09AC:
 	ld wa, (EditCursor_Measure:24)                                ; FF09AC  d2 3f 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF09B1  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF09B1  f1 b0 26 50
 	ld XIY,EditScreen_DrawMeasure_DL2                            ; FF09B5  45 eb 09 ff 00
 	ld XIX,EditScreen_DrawMeasure_DL3                            ; FF09BA  44 f5 09 ff 00
 	call T_DisplayListB_Run                              ; FF09BF  1d f4 17 f4
-	ldw (0x26b0:16), 0x00                                ; FF09C3  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF09C3  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawMeasure_DL3                            ; FF09C9  45 f5 09 ff 00
 	ld XIX,EditScreen_DrawBeat                                    ; FF09CE  44 04 0a ff 00
 	call T_DisplayListB_Run                              ; FF09D3  1d f4 17 f4
@@ -10546,7 +10546,7 @@ EditScreen_DrawMeasure:
 ; The length bytes walk from 0xFF09D8 and land exactly on 0xFF09E7.
 EditScreen_DrawMeasure_DL1:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=4, x=8, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow, width=4, x=8, y=179
 ; The 4-character string EditScreen_DrawMeasure_DL1's op-02 record draws (string table, 4 bytes per entry, entry 0):
 ; EditScreen_DrawMeasure shows it instead of the measure number when EditCursor_Measure >= 1000.  It was decoded as
 ; `pushw de` x3 / `pushw iz`; it is also that list's end bound (XIX).  (2026-10-04)
@@ -10557,13 +10557,13 @@ Str_EditMeasureOverflow:
 ; The length bytes walk from 0xFF09EB and land exactly on 0xFF09F5.
 EditScreen_DrawMeasure_DL2:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=179, digits=3
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=179, digits=3
 
 ; EditScreen_DrawMeasure_DL3 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF09F5 and land exactly on 0xFF0A04.
 EditScreen_DrawMeasure_DL3:
 ; ; drawn (start operand) by EditScreen_DrawMeasure -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=32, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=32, y=179
 ; EditScreen_DrawBeat -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 2 time(s) in the 13
@@ -10587,11 +10587,11 @@ EditScreen_DrawBeat:
 	xor WA,WA                                            ; FF0A09  d8 d0
 	ld wa, (EditCursor_Beat:24)                                ; FF0A0B  d2 41 1f 60 20
 	inc 1,WA                                             ; FF0A10  d8 61
-	ld (0x26b0:16), wa                                  ; FF0A12  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A12  f1 b0 26 50
 	ld XIY,EditScreen_DrawBeat_DL1                            ; FF0A16  45 39 0a ff 00
 	ld XIX,EditScreen_DrawBeat_DL2                            ; FF0A1B  44 43 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A20  1d f4 17 f4
-	ldw (0x26b0:16), 0x00                                ; FF0A24  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0A24  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawBeat_DL2                            ; FF0A2A  45 43 0a ff 00
 	ld XIX,EditScreen_DrawTick                                    ; FF0A2F  44 52 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A34  1d f4 17 f4
@@ -10601,13 +10601,13 @@ EditScreen_DrawBeat:
 ; The length bytes walk from 0xFF0A39 and land exactly on 0xFF0A43.
 EditScreen_DrawBeat_DL1:
 ; ; drawn (start operand) by EditScreen_DrawBeat -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=179, digits=1
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=179, digits=1
 
 ; EditScreen_DrawBeat_DL2 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0A43 and land exactly on 0xFF0A52.
 EditScreen_DrawBeat_DL2:
 ; ; drawn (start operand) by EditScreen_DrawBeat -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=48, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_EditMeasureOverflow+0x3, width=1, x=48, y=179
 ; EditScreen_DrawTick -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 8
@@ -10629,7 +10629,7 @@ EditScreen_DrawTick:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0A52  f1 40 25 00 00
 	xor WA,WA                                            ; FF0A57  d8 d0
 	ld a, (EditCursor_Tick:24)                                 ; FF0A59  c2 43 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0A5E  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A5E  f1 b0 26 50
 	ld XIY,EditScreen_DrawTick_DL                            ; FF0A62  45 71 0a ff 00
 	ld XIX,EditScreen_DrawCursorNote                                    ; FF0A67  44 7b 0a ff 00
 	call T_DisplayListB_Run                              ; FF0A6C  1d f4 17 f4
@@ -10639,7 +10639,7 @@ EditScreen_DrawTick:
 ; The length bytes walk from 0xFF0A71 and land exactly on 0xFF0A7B.
 EditScreen_DrawTick_DL:
 ; ; drawn (start operand) by EditScreen_DrawTick -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=56, y=179, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=56, y=179, digits=2
 ; EditScreen_DrawCursorNote: layer 0: DrumEdit_DrawCursorNoteNumber in DRUM EDIT, NoteEdit_DrawCursorNoteName in NOTE EDIT.
 EditScreen_DrawCursorNote:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0A7B  f1 40 25 00 00
@@ -10670,7 +10670,7 @@ EditScreen_DrawCursorNote:
 DrumEdit_DrawCursorNoteNumber:
 	xor WA,WA                                            ; FF0A8F  d8 d0
 	ld a, (EditCursor_Note:24)                                 ; FF0A91  c2 44 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0A96  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0A96  f1 b0 26 50
 	ld XIY,DrumEdit_DrawCursorNoteNumber_DL                            ; FF0A9A  45 a9 0a ff 00
 	ld XIX,NoteEdit_DrawCursorNoteName                                    ; FF0A9F  44 b3 0a ff 00
 	call T_DisplayListB_Run                              ; FF0AA4  1d f4 17 f4
@@ -10680,7 +10680,7 @@ DrumEdit_DrawCursorNoteNumber:
 ; The length bytes walk from 0xFF0AA9 and land exactly on 0xFF0AB3.
 DrumEdit_DrawCursorNoteNumber_DL:
 ; ; drawn (start operand) by DrumEdit_DrawCursorNoteNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=96, y=179, digits=2
+	dlb_number	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=96, y=179, digits=2
 ; NoteEdit_DrawCursorNoteName -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 2 time(s) in the 17
@@ -10706,13 +10706,13 @@ NoteEdit_DrawCursorNoteName:
 	pushw wa                                             ; FF0ABD  28
 	ld A,W                                               ; FF0ABE  c8 89
 	xor W,W                                              ; FF0AC0  c8 d0
-	ld (0x26b0:16), wa                                  ; FF0AC2  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0AC2  f1 b0 26 50
 	ld XIY,NoteEdit_DrawCursorNoteName_DL1                            ; FF0AC6  45 ea 0a ff 00
 	ld XIX,NoteEdit_DrawCursorNoteName_DL2                            ; FF0ACB  44 f9 0a ff 00
 	call T_DisplayListB_Run                              ; FF0AD0  1d f4 17 f4
 	popw wa                                              ; FF0AD4  48
 	xor W,W                                              ; FF0AD5  c8 d0
-	ld (0x26b0:16), wa                                  ; FF0AD7  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0AD7  f1 b0 26 50
 	ld XIY,NoteEdit_DrawCursorNoteName_DL2                            ; FF0ADB  45 f9 0a ff 00
 	ld XIX,NoteNames                                     ; FF0AE0  44 08 0b ff 00
 	call T_DisplayListB_Run                              ; FF0AE5  1d f4 17 f4
@@ -10722,13 +10722,13 @@ NoteEdit_DrawCursorNoteName:
 ; The length bytes walk from 0xFF0AEA and land exactly on 0xFF0AF9.
 NoteEdit_DrawCursorNoteName_DL1:
 ; ; drawn (start operand) by NoteEdit_DrawCursorNoteName -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNames, width=2, x=88, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNames, width=2, x=88, y=179
 
 ; NoteEdit_DrawCursorNoteName_DL2 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0AF9 and land exactly on 0xFF0B08.
 NoteEdit_DrawCursorNoteName_DL2:
 ; ; drawn (start operand) by NoteEdit_DrawCursorNoteName -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=OctaveNames, width=2, x=104, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=OctaveNames, width=2, x=104, y=179
 ; ---------------------------------------------------------------------
 ; NoteNames -- 13 two-character chromatic note names
 ; " C" "D<88>" " D" "E<88>" " E" " F" "F<8C>" " G" "A<88>" " A"
@@ -10792,25 +10792,25 @@ EditScreen_DrawEventVelocity:
 	ld a, (0x601f19:24)                                 ; FF0B58  c2 19 1f 60 21
 	cp A,0x64                                            ; FF0B5D  c9 cf 64
 	jr nc, .LFF0B90                                      ; FF0B60  6f 2e
-	ldw (0x26b0:16), 0x00                                ; FF0B62  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0B62  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawEventVelocity_DL1                            ; FF0B68  45 d2 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL3                            ; FF0B6D  44 e1 0b ff 00
 	call T_DisplayListB_Run                              ; FF0B72  1d f4 17 f4
 	xor WA,WA                                            ; FF0B76  d8 d0
 	ld a, (0x601f19:24)                                 ; FF0B78  c2 19 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0B7D  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0B7D  f1 b0 26 50
 	ld XIY,EditScreen_DrawEventVelocity_DL2                            ; FF0B81  45 be 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL4                            ; FF0B86  44 c8 0b ff 00
 	call T_DisplayListB_Run                              ; FF0B8B  1d f4 17 f4
 	ret                                                  ; FF0B8F  0e
 .LFF0B90:
-	ldw (0x26b0:16), 0x00                                ; FF0B90  f1 b0 26 02 00 00
+	ldw (EditScreen_DrawNumber:16), 0x00                                ; FF0B90  f1 b0 26 02 00 00
 	ld XIY,EditScreen_DrawEventVelocity_DL3                            ; FF0B96  45 e1 0b ff 00
 	ld XIX,Str_v                                                          ; FF0B9B  44 f0 0b ff 00
 	call T_DisplayListB_Run                              ; FF0BA0  1d f4 17 f4
 	xor WA,WA                                            ; FF0BA4  d8 d0
 	ld a, (0x601f19:24)                                 ; FF0BA6  c2 19 1f 60 21
-	ld (0x26b0:16), wa                                  ; FF0BAB  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0BAB  f1 b0 26 50
 	ld XIY,EditScreen_DrawEventVelocity_DL4                            ; FF0BAF  45 c8 0b ff 00
 	ld XIX,EditScreen_DrawEventVelocity_DL1                            ; FF0BB4  44 d2 0b ff 00
 	call T_DisplayListB_Run                              ; FF0BB9  1d f4 17 f4
@@ -10820,25 +10820,25 @@ EditScreen_DrawEventVelocity:
 ; The length bytes walk from 0xFF0BBE and land exactly on 0xFF0BC8.
 EditScreen_DrawEventVelocity_DL2:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=136, y=179, digits=2
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=136, y=179, digits=2
 
 ; EditScreen_DrawEventVelocity_DL4 -- 1 record(s), 10 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BC8 and land exactly on 0xFF0BD2.
 EditScreen_DrawEventVelocity_DL4:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number16	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=128, y=179, digits=3
+	dlb_number16	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=128, y=179, digits=3
 
 ; EditScreen_DrawEventVelocity_DL1 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BD2 and land exactly on 0xFF0BE1.
 EditScreen_DrawEventVelocity_DL1:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=128, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=128, y=179
 
 ; EditScreen_DrawEventVelocity_DL3 -- 1 record(s), 15 bytes.  Run by interpreter B (0xF31AF0)
 ; The length bytes walk from 0xFF0BE1 and land exactly on 0xFF0BF0.
 EditScreen_DrawEventVelocity_DL3:
 ; ; drawn (start operand) by EditScreen_DrawEventVelocity -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=120, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Str_v, width=1, x=120, y=179
 ; Str_v -- a one-entry string table.  Both op-02 records above point at it (+7, entry width 1), and EditScreen_DrawEventVelocity
 ;          zeroes their index (0x26B0) before each run, so they draw "v" before the value's digits.  It is also
 ;          where EditScreen_DrawEventVelocity_DL3 ends (EditScreen_DrawEventVelocity's XIX).  Was decoded as `jrl z` with the routine below.
@@ -10848,8 +10848,8 @@ EditScreen_DrawEventLength:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0BF1  f1 40 25 00 00
 	calr EditScreen_EraseLengthCell                                          ; FF0BF6  1e 42 ec
 	ld wa, (EditField_Length:24)                                ; FF0BF9  d2 47 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0BFE  f1 b0 26 50
-	cpw	(0x26b0:16), 0x2710                          ; FF0C02  d1 b0 26 3f 10 27
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0BFE  f1 b0 26 50
+	cpw	(EditScreen_DrawNumber:16), 0x2710                          ; FF0C02  d1 b0 26 3f 10 27
 	jr nc, .LFF0C0E                                      ; FF0C08  6f 04
 	calr EditScreen_DrawLengthBelow10000                                      ; FF0C0A  1e 26 00
 	ret                                                  ; FF0C0D  0e
@@ -10861,8 +10861,8 @@ EditScreen_DrawNewNoteLength:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0C12  f1 40 25 00 00
 	calr EditScreen_EraseLengthCell                                          ; FF0C17  1e 21 ec
 	ld wa, (EditField_NewNoteLength:24)                                ; FF0C1A  d2 49 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0C1F  f1 b0 26 50
-	cpw	(0x26b0:16), 0x2710                          ; FF0C23  d1 b0 26 3f 10 27
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0C1F  f1 b0 26 50
+	cpw	(EditScreen_DrawNumber:16), 0x2710                          ; FF0C23  d1 b0 26 3f 10 27
 	jr nc, .LFF0C2F                                      ; FF0C29  6f 04
 	calr EditScreen_DrawLengthBelow10000                                      ; FF0C2B  1e 05 00
 	ret                                                  ; FF0C2E  0e
@@ -10871,10 +10871,10 @@ EditScreen_DrawNewNoteLength:
 	ret                                                  ; FF0C32  0e
 ; EditScreen_DrawLengthBelow10000: (0x26B0) as 1 + 3 digits (thousands at text cell 0x1C0C, the rest at 0x1C0D), or 3 digits below 1000.
 EditScreen_DrawLengthBelow10000:
-	cpw	(0x26b0:16), 0x03e7                          ; FF0C33  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FF0C33  d1 b0 26 3f e7 03
 	jr ule, .LFF0C81                                     ; FF0C39  63 46
 	xor XWA,XWA                                          ; FF0C3B  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0C3D  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C3D  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0C41  d8 0a e8 03
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0C45  1d f0 1a f4
 	ld XIY,Value_AsciiDigits+2                                    ; FF0C49  45 63 26 00 00
@@ -10883,9 +10883,9 @@ EditScreen_DrawLengthBelow10000:
 	ldw ix, 0x1c0c                                       ; FF0C54  34 0c 1c
 	ld a, 0x06:opc                                          ; FF0C57  21 06
 	swi 7                                                ; FF0C59  ff
-	ld wa, (0x26b0:16)                                 ; FF0C5A  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C5A  d1 b0 26 20
 	xor XWA,XWA                                          ; FF0C5E  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0C60  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C60  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0C64  d8 0a e8 03
 	ld WA,QWA                                            ; FF0C68  d7 e2 88
 	call T_Value_ToAsciiDigits3                          ; FF0C6B  1d 00 1b f4
@@ -10897,7 +10897,7 @@ EditScreen_DrawLengthBelow10000:
 	swi 7                                                ; FF0C7F  ff
 	ret                                                  ; FF0C80  0e
 .LFF0C81:
-	ld wa, (0x26b0:16)                                 ; FF0C81  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0C81  d1 b0 26 20
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0C85  1d f0 1a f4
 	ld XIY,Value_AsciiDigits                                    ; FF0C89  45 61 26 00 00
 	ldw hl, 0x00                                         ; FF0C8E  33 00 00
@@ -10908,10 +10908,10 @@ EditScreen_DrawLengthBelow10000:
 	ret                                                  ; FF0C9A  0e
 ; EditScreen_DrawLengthFrom10000: (0x26B0) as 2 + 3 digits (cells 0x1C0C / 0x1C0E).
 EditScreen_DrawLengthFrom10000:
-	cpw	(0x26b0:16), 0x03e7                          ; FF0C9B  d1 b0 26 3f e7 03
+	cpw	(EditScreen_DrawNumber:16), 0x03e7                          ; FF0C9B  d1 b0 26 3f e7 03
 	jr ule, .LFF0CE9                                     ; FF0CA1  63 46
 	xor XWA,XWA                                          ; FF0CA3  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0CA5  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CA5  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0CA9  d8 0a e8 03
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0CAD  1d f0 1a f4
 	ld XIY,Value_AsciiDigits+1                                    ; FF0CB1  45 62 26 00 00
@@ -10920,9 +10920,9 @@ EditScreen_DrawLengthFrom10000:
 	ldw ix, 0x1c0c                                       ; FF0CBC  34 0c 1c
 	ld a, 0x06:opc                                          ; FF0CBF  21 06
 	swi 7                                                ; FF0CC1  ff
-	ld wa, (0x26b0:16)                                 ; FF0CC2  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CC2  d1 b0 26 20
 	xor XWA,XWA                                          ; FF0CC6  e8 d0
-	ld wa, (0x26b0:16)                                 ; FF0CC8  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CC8  d1 b0 26 20
 	div WA,0x03e8                                        ; FF0CCC  d8 0a e8 03
 	ld WA,QWA                                            ; FF0CD0  d7 e2 88
 	call T_Value_ToAsciiDigits3                          ; FF0CD3  1d 00 1b f4
@@ -10934,7 +10934,7 @@ EditScreen_DrawLengthFrom10000:
 	swi 7                                                ; FF0CE7  ff
 	ret                                                  ; FF0CE8  0e
 .LFF0CE9:
-	ld wa, (0x26b0:16)                                 ; FF0CE9  d1 b0 26 20
+	ld wa, (EditScreen_DrawNumber:16)                                 ; FF0CE9  d1 b0 26 20
 	call T_Value_ToAsciiDigits3_RightJustified                                        ; FF0CED  1d f0 1a f4
 	ld XIY,Value_AsciiDigits                                    ; FF0CF1  45 61 26 00 00
 	ldw hl, 0x00                                         ; FF0CF6  33 00 00
@@ -10972,7 +10972,7 @@ EditScreen_DrawInc:
 ; NoteEdit_DrawIncNumber: EditField_Inc through NoteEdit_DrawIncNumber_DL (a number).
 NoteEdit_DrawIncNumber:
 	ld wa, (EditField_Inc:24)                                ; FF0D17  d2 4d 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0D1C  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0D1C  f1 b0 26 50
 	ld XIY,NoteEdit_DrawIncNumber_DL                            ; FF0D20  45 2f 0d ff 00
 	ld XIX,DrumEdit_DrawIncLabel                                    ; FF0D25  44 3e 0d ff 00
 	call T_DisplayListB_Run                              ; FF0D2A  1d f4 17 f4
@@ -10982,7 +10982,7 @@ NoteEdit_DrawIncNumber:
 ; The length bytes walk from 0xFF0D2F and land exactly on 0xFF0D3E.
 NoteEdit_DrawIncNumber_DL:
 ; ; drawn (start operand) by NoteEdit_DrawIncNumber -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=216, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=216, y=179
 ; DrumEdit_DrawIncLabel -- a display-list painter whose SCREEN IS NOT ESTABLISHED
 ;
 ; Its body reaches the display-list interpreters 1 time(s) in the 6
@@ -11002,7 +11002,7 @@ NoteEdit_DrawIncNumber_DL:
 ; DrumEdit_DrawIncLabel: EditField_Inc through DrumEdit_DrawIncLabel_DL and TickLabels (a label).
 DrumEdit_DrawIncLabel:
 	ld wa, (EditField_Inc:24)                                ; FF0D3E  d2 4d 1f 60 20
-	ld (0x26b0:16), wa                                  ; FF0D43  f1 b0 26 50
+	ld (EditScreen_DrawNumber:16), wa                                  ; FF0D43  f1 b0 26 50
 	ld XIY,DrumEdit_DrawIncLabel_DL                            ; FF0D47  45 56 0d ff 00
 	ld XIX,TickLabels                                    ; FF0D4C  44 65 0d ff 00
 	call T_DisplayListB_Run                              ; FF0D51  1d f4 17 f4
@@ -11012,7 +11012,7 @@ DrumEdit_DrawIncLabel:
 ; The length bytes walk from 0xFF0D56 and land exactly on 0xFF0D65.
 DrumEdit_DrawIncLabel_DL:
 ; ; drawn (start operand) by DrumEdit_DrawIncLabel -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x26b0, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=176, y=179
+	dlb_string	var=EditScreen_DrawNumber, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=TickLabels, width=2, x=176, y=179
 ; ---------------------------------------------------------------------
 ; TickLabels -- 99 two-character cells; 0..96 are labelled, 97 and 98 are blank
 ;

@@ -431,7 +431,7 @@ MIDI_RT_NotClock:
 	jr z, .LFA55C1                                ; FA55BC  66 03
 	calr SeqBuf_AppendMarker_XIX                                 ; FA55BE  1e 0a 01
 .LFA55C1:
-	bit	2, (0x7f34:16)                        ; FA55C1  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; FA55C1  f1 34 7f ca
 	jr z, .LFA55DB                                ; FA55C5  66 14
 	cp D,0xfc                                     ; FA55C7  cc cf fc
 	jr nz, .LFA55DB                               ; FA55CA  6e 0f
@@ -444,7 +444,7 @@ MIDI_RT_NotClock:
 .LFA55DB:
 	ret                                           ; FA55DB  0e
 .LFA55DC:
-	bit	2, (0x7f34:16)                        ; FA55DC  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; FA55DC  f1 34 7f ca
 	jr z, .LFA55D3                                ; FA55E0  66 f1
 	bit	2, (0x34bb:16)                        ; FA55E2  f1 bb 34 ca
 	jr nz, .LFA55F3                               ; FA55E6  6e 0b
@@ -543,7 +543,7 @@ MIDI_RT_ExternalOff:
 	and A,0x05                                    ; FA567B  c9 cc 05
 	popw wa                                       ; FA567E  48
 	jr z, .LFA569C                                ; FA567F  66 1b
-	bit	2, (0x7f34:16)                        ; FA5681  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; FA5681  f1 34 7f ca
 	jr z, .LFA569B                                ; FA5685  66 14
 	cp D,0xfc                                     ; FA5687  cc cf fc
 	jr nz, .LFA569B                               ; FA568A  6e 0f
@@ -555,7 +555,7 @@ MIDI_RT_ExternalOff:
 .LFA569B:
 	ret                                           ; FA569B  0e
 .LFA569C:
-	bit	2, (0x7f34:16)                        ; FA569C  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; FA569C  f1 34 7f ca
 	jr z, .LFA56B2                                ; FA56A0  66 10
 	bit	2, (0x34bb:16)                        ; FA56A2  f1 bb 34 ca
 	jr nz, .LFA56B2                               ; FA56A6  6e 0a

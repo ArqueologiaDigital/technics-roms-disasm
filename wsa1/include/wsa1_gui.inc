@@ -346,6 +346,13 @@
 ; ==============================================================================
 ; INTERPRETER B -- DisplayListB_Run (prom_b 0xF31AF0), DisplayListB_HandlerTable
 ;
+; length= (every dlb_* macro, default = the record's own length) is the +1 byte when
+; it is NOT the record's extent.  DisplayListB_Run advances by that byte without
+; looking at the opcode (`ld A,(XIY+0x01)`, 0xF31B15), while the handler reads only
+; the extent; the two differ in three records: TrackAssign_PaintTrackGroup_DL
+; (advance 11, extent 10 -- the loop's `cp XIX,XIY / jr ULE` stops on it) and two
+; entries of the fixed-stride run at DL_F3D3AD (0x0D and 0x14 where 15 is meant).
+;
 ; Common to every record: var = the 16-bit address the value is read from,
 ; mask / shift = the bit-field ((var) & mask) >> (shift & 7)
 ; (DisplayListB_ExtractField), and svc = the SWI7 service that draws it
@@ -353,12 +360,17 @@
 ; handler implies (FINDINGS-ui-display-list-interpreter-b.md).
 ; ==============================================================================
 
+; ---- var= of a record whose mask is 0: DisplayListB_ExtractField computes
+;      A = (var) & mask, so with mask 0 the field is 0 whatever var names and the
+;      record always draws value 0 / entry 0 -- the address is not a variable.
+	.equ DLB_NoVariable, 0x0000
+
 ; ---- the value as decimal digits at a display-RAM position -> DLB_Handler_Decimal
 ;      (T_Value_ToAsciiDigits3_RightJustified; digits = 3 / 2 / else 1 picks the
 ;      first of the three digits drawn).  10 bytes.  dlb_number16 reads the
 ;      variable as a 16-bit word instead of through the bit-field (`cp A,6`).
-.macro dlb_number var, mask, shift, svc, x, y, digits
-	.byte 0x00, 10
+.macro dlb_number var, mask, shift, svc, x, y, digits, length=10
+	.byte 0x00, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.if ((\x) % 8) <> 0
@@ -367,8 +379,8 @@
 	.short (\y) * 40 + (\x) / 8
 	.byte \digits
 .endm
-.macro dlb_number16 var, mask, shift, svc, x, y, digits
-	.byte 0x06, 10
+.macro dlb_number16 var, mask, shift, svc, x, y, digits, length=10
+	.byte 0x06, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.if ((\x) % 8) <> 0
@@ -379,8 +391,8 @@
 .endm
 ; ---- signed: one more character, the sign, unless bit 7 of signflag is set
 ;      (DisplayListB_ExtractFieldSigned).  11 bytes.
-.macro dlb_number_signed var, mask, shift, svc, x, y, digits, signflag
-	.byte 0x05, 11
+.macro dlb_number_signed var, mask, shift, svc, x, y, digits, signflag, length=11
+	.byte 0x05, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.if ((\x) % 8) <> 0
@@ -391,22 +403,22 @@
 .endm
 ; ---- the same at a pixel position (LCD_X0 / LCD_Y0) -> DLB_Handler_Decimal2Words
 ;      (opcode 0x0A: the 16-bit read) and DLB_Handler_DecimalSigned2Words.
-.macro dlb_number_xy var, mask, shift, svc, x, y, digits
-	.byte 0x09, 12
+.macro dlb_number_xy var, mask, shift, svc, x, y, digits, length=12
+	.byte 0x09, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.short \x, \y
 	.byte \digits
 .endm
-.macro dlb_number16_xy var, mask, shift, svc, x, y, digits
-	.byte 0x0a, 12
+.macro dlb_number16_xy var, mask, shift, svc, x, y, digits, length=12
+	.byte 0x0a, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.short \x, \y
 	.byte \digits
 .endm
-.macro dlb_number_signed_xy var, mask, shift, svc, x, y, digits, signflag
-	.byte 0x0b, 13
+.macro dlb_number_signed_xy var, mask, shift, svc, x, y, digits, signflag, length=13
+	.byte 0x0b, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.short \x, \y
@@ -415,8 +427,8 @@
 
 ; ---- entry [value] of a string table of <width>-character entries, at a
 ;      display-RAM position -> DLB_Handler_StringTable.  15 bytes.
-.macro dlb_string var, mask, shift, svc, table, width, x, y
-	.byte 0x02, 15
+.macro dlb_string var, mask, shift, svc, table, width, x, y, length=15
+	.byte 0x02, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.long \table
@@ -427,8 +439,8 @@
 	.short (\y) * 40 + (\x) / 8
 .endm
 ; ---- the same at a pixel position -> DLB_Handler_StringTable2.  17 bytes.
-.macro dlb_string_xy var, mask, shift, svc, table, width, x, y
-	.byte 0x07, 17
+.macro dlb_string_xy var, mask, shift, svc, table, width, x, y, length=17
+	.byte 0x07, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.long \table
@@ -439,30 +451,30 @@
 ;      service svc -> DLB_Handler_Array8.  11 bytes.  Opcodes 0x03 and 0x08 share
 ;      the handler.  TODO: what tells them apart -- nothing in DLB_Handler_Array8
 ;      reads the opcode.
-.macro dlb_rect_entry var, mask, shift, svc, table
-	.byte 0x03, 11
+.macro dlb_rect_entry var, mask, shift, svc, table, length=11
+	.byte 0x03, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.long \table
 .endm
-.macro dlb_rect_entry_op08 var, mask, shift, svc, table
-	.byte 0x08, 11
+.macro dlb_rect_entry_op08 var, mask, shift, svc, table, length=11
+	.byte 0x08, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.long \table
 .endm
 ; ---- entry [value] of a table of 6-byte (position, columns, rows) areas -> IY / BC
 ;      / HL -> DLB_Handler_Array6.  11 bytes.
-.macro dlb_area_entry var, mask, shift, svc, table
-	.byte 0x04, 11
+.macro dlb_area_entry var, mask, shift, svc, table, length=11
+	.byte 0x04, \length
 	.short \var
 	.byte \mask, \shift, \svc
 	.long \table
 .endm
 ; ---- a box whose top edge rises by value / 2 above y1 -> DLB_Handler_CentredSpan
 ;      (service 0x0A hard-coded).  12 bytes.
-.macro dlb_centred_span var, mask, shift, x0, x1, y1
-	.byte 0x01, 12
+.macro dlb_centred_span var, mask, shift, x0, x1, y1, length=12
+	.byte 0x01, \length
 	.short \var
 	.byte \mask, \shift
 	.short \x0, \x1, \y1

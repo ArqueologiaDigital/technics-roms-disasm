@@ -4056,7 +4056,7 @@ DiskLoad_MidiSetting:
 	ld H,A                                               ; FE1F17  c9 8e
 	cp a, 0x01:i3                                          ; FE1F19  c9 d9
 	jrl nz, .LFE1FA3                                         ; FE1F1B  7e 85 00
-	ldw ix, 0x76af                                       ; FE1F1E  34 af 76
+	ldw ix, CombiPart_Flags                                       ; FE1F1E  34 af 76
 	ldw de, 0x76d1                                       ; FE1F21  32 d1 76
 	ld h, 0x08:opc                                          ; FE1F24  26 08
 .LFE1F26:
@@ -5019,7 +5019,7 @@ DiskSave_MidiSetting:
 	push XIX                                             ; FE273C  3c
 	lda xix, (.LFE280F:24)                               ; FE273D  f2 0f 28 fe 34
 	ldw (0x1733:24), 0x00                               ; FE2742  f2 33 17 00 02 00 00
-	ldw hl, 0x76af                                       ; FE2749  33 af 76
+	ldw hl, CombiPart_Flags                                       ; FE2749  33 af 76
 	ldw de, 0x76d1                                       ; FE274C  32 d1 76
 	ld (xiz-1), 0x08                                     ; FE274F  be ff 00 08
 .LFE2753:

@@ -313,31 +313,32 @@ TrackAssign_DrawTrackRowHighlight_DL:
 
 
 ; ------------------------------------------------------------------
-; 0xF39737-0xF39853 -- 19 display-list records, 285 bytes -- interpreter A
+; 0xF39737-0xF39853 -- 19 display-list records, 285 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: TrackAssign_DrawSelectedPart (0xF7E312) runs entry [(0x0C03)] of it at a 15-byte stride through T_DLB_Handler_StringTable.
 ; Formerly Data_F39737 -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round2_module.py
 ; ------------------------------------------------------------------
 TrackAssign_DrawSelectedPart_DL:
 ; drawn (start operand) by TrackAssign_DrawSelectedPart -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=64	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=79	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=94	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=109	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=124	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=139	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=154	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=169	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=64	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=79	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=94	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=109	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=124	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=139	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=154	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=169	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0x9, width=2, x=48, y=110	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0xa9, width=7, x=112, y=110	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0xa9, width=7, x=192, y=110	; operand bytes the handler does not read
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=64
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=79
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=94
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=109
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=124
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=139
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=154
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=169
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=64
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=79
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=94
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=109
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=124
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=139
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=154
+	dlb_string	var=DisplayListB_Stage+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Data_F39559+0xa9, width=7, x=96, y=169
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0x9, width=2, x=48, y=110
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0xa9, width=7, x=112, y=110
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=Data_F39559+0xa9, width=7, x=192, y=110
 
 ; ------------------------------------------------------------------
 ; 0xF39854-0xF39879 -- 4 display-list records, 38 bytes -- interpreter A
@@ -397,7 +398,7 @@ DL_F3987A:
 ; ------------------------------------------------------------------
 Paint_SongClear_DL3:
 ; ; drawn (start operand) by Paint_SongClear -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=0x000012f7, width=6, x=128, y=86
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage+1, width=6, x=128, y=86
 	dlb_number16_xy	var=DisplayListB_Stage+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=248, y=73, digits=3
 	dlb_number_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=93, y=86, digits=2
 	dlb_number_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=238, y=86, digits=3
@@ -523,7 +524,7 @@ Paint_SongClear_DL4:
 	dl_erase_rect	x0=17, y0=40, x1=268, y1=81
 Paint_SongClear_DL6:
 ; ; drawn (start operand) by Paint_SongClear -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=0x000012f7, width=6, x=104, y=58
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage+1, width=6, x=104, y=58
 	dlb_number16_xy	var=DisplayListB_Stage+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=226, y=44, digits=3
 	dlb_number_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=72, y=58, digits=2
 	dlb_number_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=216, y=58, digits=3
@@ -2238,64 +2239,61 @@ Paint_TrackLabels9To16_DL:
 ; ------------------------------------------------------------------
 TrackAssign_PaintTrackGroup_DL:
 ; drawn (start operand) by TrackAssign_PaintTrackGroup -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	.byte 0x00, 0x0B	; B op 00, 10 bytes of data, advance byte says 11 -> handler 0xF31BA1 -- decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)
-	.short UI_DrawScratch	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift, low 3 bits
-	.byte 0x06	; +0x06 swi 7 function
-	.short 0x00C4	; +0x07 -> IX
-	.byte 0x02	; +0x09 digit count: 3 -> 0x2661, 2 -> 0x2662, else 0x2663
+	dlb_number	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=288, y=4, digits=2, length=11	; 10 bytes of data; the advance byte says 11 (see above)
 
 
 
 ; ------------------------------------------------------------------
-; 0xF3B65B-0xF3B6D2 -- 8 display-list records, 120 bytes -- interpreter A
+; 0xF3B65B-0xF3B6D2 -- 8 display-list records, 120 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: the length audit's call-site walk attributes all 8 records to B (rule 'audit').
 ; Formerly Data_F3B65B -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round3_module.py
 ; ------------------------------------------------------------------
 DL_F3B65B:
-	dlb_string	var=UI_DrawScratch+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=64	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+2, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=79	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=94	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=109	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=124	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=139	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=154	; operand bytes the handler does not read
-	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=169	; operand bytes the handler does not read
+	dlb_string	var=UI_DrawScratch+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=64
+	dlb_string	var=UI_DrawScratch+2, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=79
+	dlb_string	var=UI_DrawScratch+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=94
+	dlb_string	var=UI_DrawScratch+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=109
+	dlb_string	var=UI_DrawScratch+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=124
+	dlb_string	var=UI_DrawScratch+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=139
+	dlb_string	var=UI_DrawScratch+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=154
+	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x14, width=7, x=96, y=169
 
 
 ; ------------------------------------------------------------------
-; 0xF3B6D3-0xF3B74A -- 8 display-list records, 120 bytes -- interpreter A
+; 0xF3B6D3-0xF3B74A -- 8 display-list records, 120 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: each record's A reading is impossible and its length is B's op-02 length 15 (rule 'length').
 ; Formerly Data_F3B6D3 -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round3_module.py
 ; ------------------------------------------------------------------
 TrackAssign_DrawLocalControlColumn_DL:
 ; drawn (start operand) by TrackAssign_DrawLocalControlColumn -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=64	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=79	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=94	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=109	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=124	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=139	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=154	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=169	; operand bytes the handler does not read
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=64
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=79
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=94
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=109
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=124
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=139
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=154
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0x1c0, width=3, x=176, y=169
 
 
 ; ------------------------------------------------------------------
-; 0xF3B74B-0xF3B7C2 -- 8 display-list records, 120 bytes -- interpreter A
+; 0xF3B74B-0xF3B7C2 -- 8 display-list records, 120 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: each record's A reading is impossible and its length is B's op-02 length 15 (rule 'length').
 ; Formerly Data_F3B74B -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round3_module.py
 ; ------------------------------------------------------------------
 TrackAssign_DrawOutChannelColumn_DL:
 ; drawn (start operand) by TrackAssign_DrawOutChannelColumn -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=64	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=79	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=94	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=109	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=124	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=139	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=154	; operand bytes the handler does not read
-	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=169	; operand bytes the handler does not read
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=64
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=79
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=94
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=109
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=124
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=139
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=154
+	dlb_string	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=Table_F3B7D4+0xf4, width=6, x=224, y=169
 
 ; === END COVER-R1 0xF3B3B2-0xF3B7C3 ===
 
@@ -2857,10 +2855,10 @@ DL_AllAll:
 	dl_text8x16	x=192, y=123, text="  ALL   "
 S0ngC0py_DrawFromSong_DL2:
 ; ; drawn (start operand) by S0ngC0py_DrawFromSong -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=0x000012f8, width=6, x=64, y=87
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=DisplayListB_Stage+2, width=6, x=64, y=87
 S0ngC0py_DrawToSong_DL:
 ; ; drawn (start operand) by S0ngC0py_DrawToSong -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=0x000012fe, width=6, x=200, y=87
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=DisplayListB_Stage+8, width=6, x=200, y=87
 S0ngC0py_DrawTracks_DL:
 ; ; drawn (start operand) by S0ngC0py_DrawTracks -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dlb_string	var=DisplayListB_Stage+14, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_0To17All, width=3, x=96, y=123
@@ -2869,10 +2867,11 @@ S0ngC0py_DrawTracks_DL:
 ; --- 0xF3C199-0xF3C1AC: not converted ---
 
 ; ------------------------------------------------------------------
-; 0xF3C199-0xF3C1AC -- 2 display-list records, 20 bytes -- interpreter A
+; 0xF3C199-0xF3C1AC -- 2 display-list records, 20 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: their A readings put corners off the panel (x1 = 33799), their B readings do not (rule 'geometry').
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF3C199 lands with ZERO DRIFT exactly on 0xF3C1AD,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 S0ngC0py_DrawFromSong_DL1:
@@ -2934,7 +2933,7 @@ DL_S0ngSelectNameKbS0ngName:
 	dl_vline	x0=316, y0=186, x1=316, y1=191
 S0ngSelectName_DrawValues_DL:
 ; ; drawn (start operand) by S0ngSelectName_DrawValues -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage, width=6, x=128, y=61
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DisplayListB_Stage, width=6, x=128, y=61
 	dlb_number_xy	var=DisplayListB_Stage+6, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=92, y=61, digits=2
 	dlb_number16_xy	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=248, y=48, digits=3
 	dlb_number_xy	var=DisplayListB_Stage+9, mask=0xff, shift=0, svc=LCDSVC_DrawText16x16Packed, x=240, y=61, digits=3
@@ -2942,15 +2941,16 @@ S0ngSelectName_DrawValues_DL:
 ; --- 0xF3C351-0xF3C366: not converted ---
 
 ; ------------------------------------------------------------------
-; 0xF3C351-0xF3C366 -- 2 display-list records, 22 bytes -- interpreter A
+; 0xF3C351-0xF3C366 -- 2 display-list records, 22 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: prom_a runs it through T_DLB_Handler_Array8 (3 sites); the A reading is impossible (rule 'length').
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF3C351 lands with ZERO DRIFT exactly on 0xF3C367,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 DL_F3C351:
-	dlb_rect_entry	var=DisplayListB_Stage+11, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F3C37D	; operand bytes the handler does not read
-	dlb_rect_entry	var=DisplayListB_Stage+12, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F3C3AD	; operand bytes the handler does not read
+	dlb_rect_entry	var=DisplayListB_Stage+11, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F3C37D
+	dlb_rect_entry	var=DisplayListB_Stage+12, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F3C3AD
 
 ; ------------------------------------------------------------------
 ; 0xF3C367-0xF3C37C -- 2 display-list records, 22 bytes -- interpreter B
@@ -3215,7 +3215,7 @@ DL_SequencerMedleyStartFirstS0ng:
 ; 0xF3C6B3-0xF3C720 -- 13 display-list records, 110 bytes -- interpreter A
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF3C6B3 lands with ZERO DRIFT exactly on 0xF3C721,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 DL_F3C6B3:
@@ -3277,15 +3277,16 @@ DL_FirstS0ngLastS0ng:
 ; --- 0xF3C7AD-0xF3C7C2: not converted ---
 
 ; ------------------------------------------------------------------
-; 0xF3C7AD-0xF3C7C2 -- 2 display-list records, 22 bytes -- interpreter A
+; 0xF3C7AD-0xF3C7C2 -- 2 display-list records, 22 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: rules 'length' and 'adjacent'; prom_a runs it through T_DLB_Handler_Array8.
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF3C7AD lands with ZERO DRIFT exactly on 0xF3C7C3,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 SequencerMedley_DrawPlayState_DL4:
 ; ; drawn (start operand) by SequencerMedley_DrawPlayState -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=DisplayListB_Stage+15, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F3C7E3+0x40	; operand bytes the handler does not read
+	dlb_rect_entry	var=DisplayListB_Stage+15, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F3C7E3+0x40
 	dlb_rect_entry_op08	var=DisplayListB_Stage+12, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=Data_F3C7E3+0x50
 
 ; ------------------------------------------------------------------
@@ -3310,7 +3311,7 @@ SequencerMedley_DrawSourceBox_DL:
 ; 0xF3C7CD-0xF3C7E2 -- 2 display-list records, 22 bytes -- interpreter A
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF3C7CD lands with ZERO DRIFT exactly on 0xF3C7E3,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 SequencerMedley_DrawFileTypeBox_DL:
@@ -3354,7 +3355,8 @@ SequencerMedley_DrawPlayState_DL1:
 
 
 ; ------------------------------------------------------------------
-; 0xF3C873-0xF3C89C -- 3 display-list records, 42 bytes -- interpreter A
+; 0xF3C873-0xF3C89C -- 3 display-list records, 42 bytes -- interpreter A (2 records) and B (1)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  The third record is B: its A reading is impossible (B op-02 length 15).
 ; Formerly Data_F3C873 -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round4_module.py
 ; ------------------------------------------------------------------
@@ -3362,7 +3364,7 @@ SequencerMedley_DrawPlayState_DL2:
 ; ; drawn (start operand) by SequencerMedley_DrawPlayState -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dl_text8x16	x=32, y=37, text="N0W PLAYING S0NG "
 	dl_text8x16	x=192, y=37, text=" :"
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Medley_DisplayName, width=11, x=208, y=37	; operand bytes the handler does not read
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Medley_DisplayName, width=11, x=208, y=37
 
 ; ------------------------------------------------------------------
 ; 0xF3C89D-0xF3C946 -- 9 display-list records, 170 bytes -- interpreter A (8 records) and B (1)
@@ -3781,1003 +3783,203 @@ StepSelectAddrTable_F3D089:
 	.long DL_StepRecordTrackTrackClrMeas	; [75] cond2 end[18]
 
 ; ------------------------------------------------------------------
-; 0xF3D1B9-0xF3D5E4 -- 88 display-list records, 1068 bytes -- interpreter A
+; 0xF3D1B9-0xF3D9A6 -- the step-record screen's lists, read from the code that enters them
+;
+; Re-framed 2026-10-29 (lane gui-wsa1).  An earlier walk read 0xF3D1B9-0xF3D5E4 as ONE
+; interpreter-A list of 88 records, and 0xF3D5E5 as '2 unlabelled bytes' before a 64-entry
+; array.  The addresses prom_a names in this span -- a byte scan of both images finds 15
+; prom_a immediates, plus the 24 +0x07 pointers of the records below to DLTable_BlankEndRep;
+; --refs lists them -- give this layout instead:
+;   DL_F3D1B9   4 x 35 bytes, A: sub_F81EF3 runs [here, here + 35 * min(4, n))
+;   DL_F3D245   3 x 90 bytes, A: sub_F81F1A runs [base, base + 10 + 20 * count),
+;               base = here + 0 / 0x5A / 0xB4
+;   DL_F3D353.. single records that sub_F81C90, 0xF81B65 and sub_F81C15 hand to one
+;               interpreter handler each (T_DLB_Handler_Decimal_2, T_DLHandler_IX_Text,
+;               T_DLB_Handler_Decimal, T_DLB_Handler_StringTable)
+;   DLTable_BlankEndRep   the 5 x 4-character table the 15-byte records name
+;   DL_F3D3AD.. 102 interpreter-B op-02 records at a FIXED 15-byte stride to 0xF3D9A6.
+;               sub_F81C33 runs [DL_F3D3AD or DL_F3D3CB, DL_F3D3E9 or DL_F3D407) through
+;               T_DisplayListB_Run; nothing in either image names an address after
+;               0xF3D407, so how the rest is reached is open (TODO).  Two records' +1 bytes
+;               are not 15 -- 0x0D at 0xF3D5D9, 0x14 at 0xF3D7E6 -- and are written with
+;               length=; the old walk stopped at the first of them, and the '2 unlabelled
+;               bytes' it left at 0xF3D5E5 are that record's own +0x0D position.
+; Generated by notes/gui-data-2026-10-29-probes/gen_f3d1b9_region.py (--refs: the scan).
 ; ------------------------------------------------------------------
 DL_F3D1B9:
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x000A
-	.short 0x0023
-	.short 0x0046
-	.short 0x0023
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x000A
-	.short 0x0024
-	.short 0x000A
-	.short 0x0028
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0046
-	.short 0x0024
-	.short 0x0046
-	.short 0x0028
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x04B5
-	.byte 0x15	; character codes below 0x20
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x0023
-	.short 0x0086
-	.short 0x0023
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x0024
-	.short 0x004A
-	.short 0x0028
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0086
-	.short 0x0024
-	.short 0x0086
-	.short 0x0028
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x04BD
-	.byte 0x15	; character codes below 0x20
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008A
-	.short 0x0023
-	.short 0x00C6
-	.short 0x0023
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x008A
-	.short 0x0024
-	.short 0x008A
-	.short 0x0028
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C6
-	.short 0x0024
-	.short 0x00C6
-	.short 0x0028
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x04C5
-	.byte 0x15	; character codes below 0x20
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CA
-	.short 0x0023
-	.short 0x0106
-	.short 0x0023
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00CA
-	.short 0x0024
-	.short 0x00CA
-	.short 0x0028
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0106
-	.short 0x0024
-	.short 0x0106
-	.short 0x0028
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x04CD
-	.byte 0x15	; character codes below 0x20
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x004B
-	.short 0x0005
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x0050
-	.short 0x0049
-	.short 0x0050
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x004B
-	.short 0x0049
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x0050
-	.short 0x0089
-	.short 0x0050
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0089
-	.short 0x004B
-	.short 0x0089
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008A
-	.short 0x0050
-	.short 0x00C9
-	.short 0x0050
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C9
-	.short 0x004B
-	.short 0x00C9
-	.short 0x004F
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CA
-	.short 0x0050
-	.short 0x0109
-	.short 0x0050
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0109
-	.short 0x004B
-	.short 0x0109
-	.short 0x004F
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x0078
-	.short 0x0005
-	.short 0x007C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x007D
-	.short 0x0049
-	.short 0x007D
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x0078
-	.short 0x0049
-	.short 0x007C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x007D
-	.short 0x0089
-	.short 0x007D
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0089
-	.short 0x0078
-	.short 0x0089
-	.short 0x007C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008A
-	.short 0x007D
-	.short 0x00C9
-	.short 0x007D
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C9
-	.short 0x0078
-	.short 0x00C9
-	.short 0x007C
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CA
-	.short 0x007D
-	.short 0x0109
-	.short 0x007D
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0109
-	.short 0x0078
-	.short 0x0109
-	.short 0x007C
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x00A5
-	.short 0x0005
-	.short 0x00A9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x0005
-	.short 0x00AA
-	.short 0x0049
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0049
-	.short 0x00A5
-	.short 0x0049
-	.short 0x00A9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x004A
-	.short 0x00AA
-	.short 0x0089
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0089
-	.short 0x00A5
-	.short 0x0089
-	.short 0x00A9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x008A
-	.short 0x00AA
-	.short 0x00C9
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x00C9
-	.short 0x00A5
-	.short 0x00C9
-	.short 0x00A9
-	.byte 0x01, 0x0A	; op 01, 10 bytes -> handler 0xF31A75
-	.short 0x00CA
-	.short 0x00AA
-	.short 0x0109
-	.short 0x00AA
-	.byte 0x02, 0x0A	; op 02, 10 bytes -> handler 0xF31A75
-	.short 0x0109
-	.short 0x00A5
-	.short 0x0109
-	.short 0x00A9
-	.byte 0x06, 0x0A	; op 06, 10 bytes -> handler 0xF31A3A
-	.short 0x12F6
-	.byte 0x00, 0x00, 0x06	; character codes below 0x20
-	.ascii "A"
-	.byte 0x06, 0x03	; character codes below 0x20
-	.byte 0x06, 0x0A	; op 06, 10 bytes -> handler 0xF31A3A
-	.short 0x12F8
-	.byte 0x00, 0x00, 0x06	; character codes below 0x20
-	.ascii "I"
-	.byte 0x0D, 0x03	; character codes below 0x20
-	.byte 0x06, 0x0A	; op 06, 10 bytes -> handler 0xF31A3A
-	.short 0x12FA
-	.byte 0x00, 0x00, 0x06	; character codes below 0x20
-	.ascii "Q"
-	.byte 0x14, 0x03	; character codes below 0x20
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x0641
-	.ascii "-"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x0D49
-	.ascii "-"
-	.byte 0x06, 0x05	; op 06, 5 bytes -> handler 0xF31A3A
-	.short 0x1451
-	.ascii "-"
-	.byte 0x00, 0x0A	; op 00, 10 bytes -> handler 0xF31A75
-	.short 0x12FD
-	.short 0x00FF
-	.short 0x9506
-	.short 0x0202
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x0000
-	.short 0x0000
-	.short 0xE406
-	.short 0x000F
-	.byte 0x00, 0x1E, 0x00, 0x21, 0x1C	; operand bytes the handler does not read
-	.byte 0x20, 0x20	; op 20, 32 bytes -> handler 0xF31A3A
-	.short 0x2020
-	.ascii "END REP "
-	.byte 0x1B	; character codes below 0x20
-	.ascii "   "
-	.byte 0x1C	; character codes below 0x20
-	.ascii "   "
-	.byte 0x02, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x06, 0x12, 0x10, 0x00, 0x00, 0x1E	; character codes below 0x20
-	.byte 0x00, 0x21	; op 00, 33 bytes -> handler 0xF31A75
-	.short 0x0208
-	.short 0x000F
-	.short 0x0313
-	.short 0x0600
-	.byte 0x23, 0xDE, 0xF3, 0x00, 0x01, 0x00, 0x51, 0x0A, 0x02, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x06, 0x30, 0x10, 0x00, 0x00, 0x1E, 0x00, 0x29, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x1301
-	.short 0x820C
-	.short 0x2306
-	.short 0xF3DE
-	.byte 0x00, 0x01, 0x00, 0x59, 0x11	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x0000
-	.short 0x0000
-	.short 0x4E06
-	.short 0x0010
-	.byte 0x00, 0x1E, 0x00, 0x31, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x1302
-	.short 0x8430
-	.short 0x2306
-	.short 0xF3DE
-	.byte 0x00, 0x01, 0x00, 0x61, 0x18	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2640
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x21, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2641
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x25, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2642
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x29, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2643
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x2D, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2644
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x31, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2645
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x35, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2646
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x39, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2647
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x3D, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2648
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x29, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2649
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x2D, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264A
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x31, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264B
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x35, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264C
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x39, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264D
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x3D, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264E
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x41, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264F
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x45, 0x0F	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2650
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x31, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2651
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x35, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2652
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x39, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2653
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x3D, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2654
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x41, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2655
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x45, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2656
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x49, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2657
-	.short 0x00FF
-	.short 0x9906
-	.short 0xF3D3
-	.byte 0x00, 0x04, 0x00, 0x4D, 0x16	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2648
-	.short 0x00FF
-	.short 0xA706
-	.short 0xF3D9
-	.byte 0x00, 0x02, 0x00, 0x21, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2649
-	.short 0x00FF
-	.short 0xC706
-	.short 0xF3D9
-	.byte 0x00, 0x05, 0x00, 0x23, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2658
-	.short 0x0003
-	.short 0x6706
-	.short 0xF3DA
-	.byte 0x00, 0x02, 0x00, 0x23, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264A
-	.short 0x00FF
-	.short 0xA706
-	.short 0xF3D9
-	.byte 0x00, 0x02, 0x00, 0x25, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264B
-	.short 0x00FF
-	.short 0xC706
-	.short 0xF3D9
-	.byte 0x00, 0x05, 0x00, 0x27, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x2658
-	.short 0x0003
-	.short 0x6706
-	.short 0xF3DA
-	.byte 0x00, 0x02, 0x00, 0x27, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0F	; op 02, 15 bytes -> handler 0xF31A75
-	.short 0x264C
-	.short 0x00FF
-	.short 0xA706
-	.short 0xF3D9
-	.byte 0x00, 0x02, 0x00, 0x29, 0x08	; operand bytes the handler does not read
-	.byte 0x02, 0x0D	; op 02, 13 bytes -> handler 0xF31A75
-	.short 0x264D
-	.short 0x00FF
-	.short 0xC706
-	.short 0xF3D9
-	.byte 0x00, 0x05, 0x00	; operand bytes the handler does not read
-
-; ------------------------------------------------------------------
-; 0xF3D5E5-0xF3DA6E -- 2 unlabelled bytes then a 64-entry FIXED-STRIDE
-; array (15 bytes/entry, 960 bytes) of the SAME field-and-pointer
-; record already used just above this span, plus the three small
-; string tables its own pointer fields name.  The array's per-entry
-; +01 byte is NOT a length (proved by the fixed-stride walk landing
-; exactly on the first table despite one entry's +01 reading 0x14
-; instead of the usual 0x0F) -- wave 1's length-directed walk read
-; that byte as an opcode and stopped here.  Full proof in
-; notes/gen_prom_b_f3d5e5_module.py.
-; ------------------------------------------------------------------
-Data_F3D5E5:
-	.short 0x082B	; == record[0]'s own +0x0D screen position below; role undetermined
-
+	dl_hline	x0=10, y0=35, x1=70, y1=35
+	dl_vline	x0=10, y0=36, x1=10, y1=40
+	dl_vline	x0=70, y0=36, x1=70, y1=40
+	dl_text8x14	x=40, y=30, text="\025"
+	dl_hline	x0=74, y0=35, x1=134, y1=35
+	dl_vline	x0=74, y0=36, x1=74, y1=40
+	dl_vline	x0=134, y0=36, x1=134, y1=40
+	dl_text8x14	x=104, y=30, text="\025"
+	dl_hline	x0=138, y0=35, x1=198, y1=35
+	dl_vline	x0=138, y0=36, x1=138, y1=40
+	dl_vline	x0=198, y0=36, x1=198, y1=40
+	dl_text8x14	x=168, y=30, text="\025"
+	dl_hline	x0=202, y0=35, x1=262, y1=35
+	dl_vline	x0=202, y0=36, x1=202, y1=40
+	dl_vline	x0=262, y0=36, x1=262, y1=40
+	dl_text8x14	x=232, y=30, text="\025"
+DL_F3D245:
+	dl_vline	x0=5, y0=75, x1=5, y1=79
+	dl_hline	x0=5, y0=80, x1=73, y1=80
+	dl_vline	x0=73, y0=75, x1=73, y1=79
+	dl_hline	x0=74, y0=80, x1=137, y1=80
+	dl_vline	x0=137, y0=75, x1=137, y1=79
+	dl_hline	x0=138, y0=80, x1=201, y1=80
+	dl_vline	x0=201, y0=75, x1=201, y1=79
+	dl_hline	x0=202, y0=80, x1=265, y1=80
+	dl_vline	x0=265, y0=75, x1=265, y1=79
+	dl_vline	x0=5, y0=120, x1=5, y1=124
+	dl_hline	x0=5, y0=125, x1=73, y1=125
+	dl_vline	x0=73, y0=120, x1=73, y1=124
+	dl_hline	x0=74, y0=125, x1=137, y1=125
+	dl_vline	x0=137, y0=120, x1=137, y1=124
+	dl_hline	x0=138, y0=125, x1=201, y1=125
+	dl_vline	x0=201, y0=120, x1=201, y1=124
+	dl_hline	x0=202, y0=125, x1=265, y1=125
+	dl_vline	x0=265, y0=120, x1=265, y1=124
+	dl_vline	x0=5, y0=165, x1=5, y1=169
+	dl_hline	x0=5, y0=170, x1=73, y1=170
+	dl_vline	x0=73, y0=165, x1=73, y1=169
+	dl_hline	x0=74, y0=170, x1=137, y1=170
+	dl_vline	x0=137, y0=165, x1=137, y1=169
+	dl_hline	x0=138, y0=170, x1=201, y1=170
+	dl_vline	x0=201, y0=165, x1=201, y1=169
+	dl_hline	x0=202, y0=170, x1=265, y1=170
+	dl_vline	x0=265, y0=165, x1=265, y1=169
+DL_F3D353:
+	dlb_number16	var=DisplayListB_Stage, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=40, digits=3
+DL_F3D35D:
+	dlb_number16	var=DisplayListB_Stage+2, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=85, digits=3
+DL_F3D367:
+	dlb_number16	var=DisplayListB_Stage+4, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, x=8, y=130, digits=3
+DL_F3D371:
+	dl_text8x14	x=8, y=40, text="-"
+DL_F3D376:
+	dl_text8x14	x=8, y=85, text="-"
+DL_F3D37B:
+	dl_text8x14	x=8, y=130, text="-"
+DL_F3D380:
+	dlb_number	var=DisplayListB_Stage+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, x=168, y=16, digits=2
+DL_F3D38A:
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=MsgLine_Text, width=30, x=8, y=180
+DLTable_BlankEndRep:
+	.ascii	"    "
+	.ascii	"END "
+	.ascii	"REP "
+	.ascii	"\033   "
+	.ascii	"\034   "
+DL_F3D3AD:
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_PrevRowText, width=30, x=8, y=52
+	dlb_string	var=DisplayListB_Stage+10, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=66
+DL_F3D3CB:
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_CurrentRowText, width=30, x=8, y=97
+	dlb_string	var=DisplayListB_Stage+11, mask=0x0c, shift=130, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=111
+DL_F3D3E9:
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=StepRecord_NextRowText, width=30, x=8, y=142
+	dlb_string	var=DisplayListB_Stage+12, mask=0x30, shift=132, svc=LCDSVC_DrawText8x14, table=DLTable_F3DE23, width=1, x=8, y=156
+DL_F3D407:
+	dlb_string	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=8, y=52
+	dlb_string	var=UI_DrawScratch+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=40, y=52
+	dlb_string	var=UI_DrawScratch+2, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=72, y=52
+	dlb_string	var=UI_DrawScratch+3, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=104, y=52
+	dlb_string	var=UI_DrawScratch+4, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=136, y=52
+	dlb_string	var=UI_DrawScratch+5, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=168, y=52
+	dlb_string	var=UI_DrawScratch+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=200, y=52
+	dlb_string	var=UI_DrawScratch+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=232, y=52
+	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=8, y=97
+	dlb_string	var=UI_DrawScratch+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=40, y=97
+	dlb_string	var=UI_DrawScratch+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=72, y=97
+	dlb_string	var=UI_DrawScratch+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=104, y=97
+	dlb_string	var=UI_DrawScratch+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=136, y=97
+	dlb_string	var=UI_DrawScratch+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=168, y=97
+	dlb_string	var=UI_DrawScratch+14, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=200, y=97
+	dlb_string	var=UI_DrawScratch+15, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=232, y=97
+	dlb_string	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=8, y=142
+	dlb_string	var=UI_DrawScratch+17, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=40, y=142
+	dlb_string	var=UI_DrawScratch+18, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=72, y=142
+	dlb_string	var=UI_DrawScratch+19, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=104, y=142
+	dlb_string	var=UI_DrawScratch+20, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=136, y=142
+	dlb_string	var=UI_DrawScratch+21, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=168, y=142
+	dlb_string	var=UI_DrawScratch+22, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=200, y=142
+	dlb_string	var=UI_DrawScratch+23, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=DL_F3D1B9+0x1e0, width=4, x=232, y=142
+	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=8, y=52
+	dlb_string	var=UI_DrawScratch+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=24, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=24, y=52
+	dlb_string	var=UI_DrawScratch+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=40, y=52
+	dlb_string	var=UI_DrawScratch+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=56, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=56, y=52
+	dlb_string	var=UI_DrawScratch+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=72, y=52
+	dlb_string	var=UI_DrawScratch+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=88, y=52, length=13
 StepRecordChordFieldArray_F3D5E7:
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x082B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+14	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x082D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+15	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x082F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x082F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+16	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0831	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+17	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0833	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0833	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+18	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0835	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+19	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0837	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0837	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+20	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0839	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+21	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x083B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x083B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+22	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x083D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+23	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x083F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x083F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+8	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F29	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+9	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F2B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F2B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+10	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F2D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+11	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F2F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F2F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+12	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F31	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+13	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F33	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F33	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+14	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F35	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+15	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F37	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F37	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+16	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F39	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+17	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F3B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F3B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+18	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F3D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+19	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F3F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F3F	; +0x0D screen position
-	.byte 0x02, 0x14	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+20	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F41	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+21	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F43	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F43	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+22	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F45	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+23	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x0F47	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x0F47	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+8	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1631	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+9	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x1633	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1633	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+10	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1635	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+11	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x1637	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1637	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+12	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1639	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+13	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x163B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x163B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+14	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x163D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+15	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x163F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x163F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+16	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1641	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+17	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x1643	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1643	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+18	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1645	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+19	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x1647	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1647	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+20	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x1649	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+21	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x164B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x164B	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+22	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long NoteNameTable_F3D9A7	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x164D	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+23	; +0x02 source variable, 16-bit address
-	.byte 0xFF	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordQualityTable_F3D9C7	; +0x07 -> one of this span's own tables, below
-	.short 0x0005	; +0x0B entry width of that table
-	.short 0x164F	; +0x0D screen position
-	.byte 0x02, 0x0F	; tag 0x02; +0x01 (NOT a length here, see header)
-	.short UI_DrawScratch+24	; +0x02 source variable, 16-bit address
-	.byte 0x03	; +0x04 AND mask
-	.byte 0x00	; +0x05 right shift
-	.byte 0x06	; +0x06 swi 7 function
-	.long ChordTailTable_F3DA67	; +0x07 -> one of this span's own tables, below
-	.short 0x0002	; +0x0B entry width of that table
-	.short 0x164F	; +0x0D screen position
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=88, y=52
+	dlb_string	var=UI_DrawScratch+14, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=104, y=52
+	dlb_string	var=UI_DrawScratch+15, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=120, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=120, y=52
+	dlb_string	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=136, y=52
+	dlb_string	var=UI_DrawScratch+17, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=152, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=152, y=52
+	dlb_string	var=UI_DrawScratch+18, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=168, y=52
+	dlb_string	var=UI_DrawScratch+19, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=184, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=184, y=52
+	dlb_string	var=UI_DrawScratch+20, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=200, y=52
+	dlb_string	var=UI_DrawScratch+21, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=216, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=216, y=52
+	dlb_string	var=UI_DrawScratch+22, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=232, y=52
+	dlb_string	var=UI_DrawScratch+23, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=248, y=52
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=248, y=52
+	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=8, y=97
+	dlb_string	var=UI_DrawScratch+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=24, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=24, y=97
+	dlb_string	var=UI_DrawScratch+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=40, y=97
+	dlb_string	var=UI_DrawScratch+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=56, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=56, y=97
+	dlb_string	var=UI_DrawScratch+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=72, y=97
+	dlb_string	var=UI_DrawScratch+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=88, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=88, y=97
+	dlb_string	var=UI_DrawScratch+14, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=104, y=97
+	dlb_string	var=UI_DrawScratch+15, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=120, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=120, y=97
+	dlb_string	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=136, y=97
+	dlb_string	var=UI_DrawScratch+17, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=152, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=152, y=97
+	dlb_string	var=UI_DrawScratch+18, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=168, y=97
+	dlb_string	var=UI_DrawScratch+19, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=184, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=184, y=97
+	dlb_string	var=UI_DrawScratch+20, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=200, y=97, length=20
+	dlb_string	var=UI_DrawScratch+21, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=216, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=216, y=97
+	dlb_string	var=UI_DrawScratch+22, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=232, y=97
+	dlb_string	var=UI_DrawScratch+23, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=248, y=97
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=248, y=97
+	dlb_string	var=UI_DrawScratch+8, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=8, y=142
+	dlb_string	var=UI_DrawScratch+9, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=24, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=24, y=142
+	dlb_string	var=UI_DrawScratch+10, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=40, y=142
+	dlb_string	var=UI_DrawScratch+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=56, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=56, y=142
+	dlb_string	var=UI_DrawScratch+12, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=72, y=142
+	dlb_string	var=UI_DrawScratch+13, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=88, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=88, y=142
+	dlb_string	var=UI_DrawScratch+14, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=104, y=142
+	dlb_string	var=UI_DrawScratch+15, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=120, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=120, y=142
+	dlb_string	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=136, y=142
+	dlb_string	var=UI_DrawScratch+17, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=152, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=152, y=142
+	dlb_string	var=UI_DrawScratch+18, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=168, y=142
+	dlb_string	var=UI_DrawScratch+19, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=184, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=184, y=142
+	dlb_string	var=UI_DrawScratch+20, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=200, y=142
+	dlb_string	var=UI_DrawScratch+21, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=216, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=216, y=142
+	dlb_string	var=UI_DrawScratch+22, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=NoteNameTable_F3D9A7, width=2, x=232, y=142
+	dlb_string	var=UI_DrawScratch+23, mask=0xff, shift=0, svc=LCDSVC_DrawText8x14, table=ChordQualityTable_F3D9C7, width=5, x=248, y=142
+	dlb_string	var=UI_DrawScratch+24, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=ChordTailTable_F3DA67, width=2, x=248, y=142
 
 ; NoteNameTable_F3D9A7 -- 16 entries, 2 bytes each, named by the +0x07/
 ; +0x0B fields above (0xF3D9A7).  0x88/0x8C are non-ASCII glyph bytes

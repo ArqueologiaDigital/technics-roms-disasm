@@ -105,7 +105,7 @@ DL_F328DC:
 	dlb_number	var=ModelingPage_Fields+3, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=118, digits=2
 	dlb_number	var=ModelingPage_Fields+4, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=149, digits=2
 	dlb_number	var=ModelingPage_Fields+5, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=136, y=181, digits=2
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32A87
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32A87
 DL_F3294B:
 	dlb_string	var=ModelingPage_Fields+11, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=85
 	dlb_string	var=ModelingPage_Fields+11, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=118
@@ -113,7 +113,7 @@ DL_F3294B:
 	dlb_string	var=ModelingPage_Fields+11, mask=0xc0, shift=6, svc=LCDSVC_DrawText8x14, table=DLText_CtrLRRdm, width=3, x=80, y=181
 SoundEditToneLayerPanning_RepaintField_DL2:
 ; ; drawn (start operand) by SoundEditToneLayerPanning_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32AAF
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F32AAF
 
 ; === COVER-R1 0xF32992-0xF32A7D ===
 ; 0xF32992-0xF32A7C, coverage round 1: 158 of this span's 235 bytes are
@@ -345,7 +345,7 @@ SoundEditToneLayerKeyLayer_Paint_DL2:
 	dlb_string	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=128, y=221
 	dlb_string	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=168, y=221
 	dlb_string	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=208, y=221
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
 
 ; === COVER-R1 0xF32B1E-0xF32B32 ===
 ; 0xF32B1E-0xF32B31, coverage round 1: 9 of this span's 20 bytes are reachable
@@ -434,7 +434,7 @@ SoundEditToneLayerVelocityLayer_Paint_DL2:
 	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=120, y=221, digits=3
 	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=168, y=221, digits=3
 	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=208, y=221, digits=3
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F32B3C
 
 ; === COVER-R1 0xF32B97-0xF32BAB ===
 ; 0xF32B97-0xF32BAA, coverage round 1: 20 of this span's 20 bytes are
@@ -995,7 +995,7 @@ DLRecordPtrs_F33508:
 DL_F33538:
 	dlb_string_xy	var=ModelingPage_Fields, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DLText_NoteNamesCm2ToG8, width=3, x=32, y=214
 	dlb_string_xy	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=88, y=214
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DiskSave_PasswordEntry, width=13, x=112, y=214
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DiskSave_PasswordEntry, width=13, x=112, y=214
 
 ; === COVER-R1 0xF3356B-0xF33573 ===
 ; 0xF3356B-0xF33572, coverage round 1: 8 of this span's 8 bytes are reachable
@@ -1118,7 +1118,7 @@ DL_F33796:
 	dlb_number	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, x=56, y=117, digits=2
 	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=88, y=85, digits=3
 	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=88, y=117, digits=3
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F33840
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLBoxes_F33840
 
 ; === COVER-R1 0xF3380E-0xF33836 ===
 ; 0xF3380E-0xF33835, coverage round 1: 40 of this span's 40 bytes are
@@ -1281,26 +1281,27 @@ DL_F338EB:
 SoundEditModelingDriverWaveform_PaintRows_DL2:
 ; drawn (start operand) by SoundEditModelingDriverWaveform_PaintRows -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dlb_string	var=ModelingPage_Fields+8, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=119
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=80, y=119
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=80, y=119
 	dlb_number	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=119, digits=3
 
 
 ; ------------------------------------------------------------------
-; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter A
+; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: 6 records' A readings are impossible (B op-02 length 15) and 6 lie off the panel (rules 'length', 'geometry').
 ; Formerly Data_F3391E -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round2_module.py
 ; ------------------------------------------------------------------
 DL_F3391E:
-	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=135	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002300, width=13, x=80, y=135	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=135
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot2, width=13, x=80, y=135
 	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=135, digits=3
 	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=135, digits=3
-	dlb_string	var=ModelingPage_Fields+10, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=151	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002310, width=13, x=80, y=151	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+10, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=151
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot3, width=13, x=80, y=151
 	dlb_number	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=151, digits=3
 	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=151, digits=3
-	dlb_string	var=ModelingPage_Fields+11, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=167	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002320, width=13, x=80, y=167	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+11, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=167
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot4, width=13, x=80, y=167
 	dlb_number	var=ModelingPage_Fields+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=167, digits=3
 	dlb_number	var=ModelingPage_Fields+7, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=167, digits=3
 
@@ -1425,16 +1426,16 @@ Draw_ToneTemplateLevelKeyTune_DL3:
 Draw_ToneTemplateLevelKeyTune_DL4:
 ; ; drawn (start operand) by Draw_ToneTemplateLevelKeyTune -- derivative name (notes/wsa1_display_list_drawer_names.py)
 	dlb_string	var=ModelingPage_Fields+14, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=85
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=64, y=85
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=64, y=85
 	dlb_string	var=ModelingPage_Fields+15, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=117
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002300, width=13, x=64, y=117
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot2, width=13, x=64, y=117
 	dlb_string	var=ModelingPage_Fields+16, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=149
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002310, width=13, x=64, y=149
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot3, width=13, x=64, y=149
 	dlb_string	var=ModelingPage_Fields+17, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_ABCDEFGHIJKLMNOPQRSU, width=1, x=48, y=181
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002320, width=13, x=64, y=181
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=SoundEditText_Slot4, width=13, x=64, y=181
 Draw_ToneTemplateLevelKeyTune_DL5:
 ; ; drawn (start operand) by Draw_ToneTemplateLevelKeyTune -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x27a3, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTable_F04CE8
+	dlb_rect_entry	var=ToneEdit_TouchCurveSlot, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTable_F04CE8
 
 ; === COVER-R1 0xF33B8C-0xF33BD8 ===
 ; 0xF33B8C-0xF33BD7, coverage round 1: 41 of this span's 76 bytes are

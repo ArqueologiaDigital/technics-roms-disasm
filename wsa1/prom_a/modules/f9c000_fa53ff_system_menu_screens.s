@@ -685,7 +685,7 @@ ReMapEdit_LoadNameBuffers:
 	pushw hl                                             ; F9C52D  2b
 	pushw de                                             ; F9C52E  2a
 	push XIX                                             ; F9C52F  3c
-	lda xbc, (0x2940:16)                                ; F9C530  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; F9C530  f1 40 29 31
 	push XBC                                             ; F9C534  39
 	ld a, (0x26f3:16)                                   ; F9C535  c1 f3 26 21
 	and A,0x01                                           ; F9C539  c9 cc 01
@@ -711,7 +711,7 @@ ReMapEdit_LoadNameBuffers:
 	calr SoundGroup_MaxMemberIndex_ByStack                                          ; F9C573  1e 3c 31
 	ld H,A                                               ; F9C576  c9 8e
 	ld l, 0x00:opc                                          ; F9C578  27 00
-	lda xix, (0x2950:16)                                ; F9C57A  f1 50 29 34
+	lda xix, (NameList_SourceMembers:16)                                ; F9C57A  f1 50 29 34
 	inc 8,XSP                                            ; F9C57E  ef 60
 	inc 4,XSP                                            ; F9C580  ef 64
 	jr .LF9C5AC                                          ; F9C582  68 28
@@ -739,7 +739,7 @@ ReMapEdit_LoadNameBuffers:
 	mul bc, h                                          ; F9C5B4  ce 43
 	ld DE,BC                                             ; F9C5B6  d9 8a
 	add DE,0x0010                                        ; F9C5B8  da c8 10 00
-	ldw bc, 0x2950                                       ; F9C5BC  31 50 29
+	ldw bc, NameList_SourceMembers                                       ; F9C5BC  31 50 29
 	add BC,DE                                            ; F9C5BF  da 81
 	extz XBC                                             ; F9C5C1  e9 12
 	ld XIX,XBC                                           ; F9C5C3  e9 8c
@@ -846,7 +846,7 @@ ReMapEdit_LoadNameBuffers:
 	calr CombiGroup_MaxMemberIndex_ByStack                                          ; F9C6B0  1e 05 31
 	ld H,A                                               ; F9C6B3  c9 8e
 	ld l, 0x00:opc                                          ; F9C6B5  27 00
-	lda xix, (0x2950:16)                                ; F9C6B7  f1 50 29 34
+	lda xix, (NameList_SourceMembers:16)                                ; F9C6B7  f1 50 29 34
 	inc 8,XSP                                            ; F9C6BB  ef 60
 	inc 4,XSP                                            ; F9C6BD  ef 64
 	jr .LF9C6E9                                          ; F9C6BF  68 28
@@ -874,7 +874,7 @@ ReMapEdit_LoadNameBuffers:
 	mul bc, h                                          ; F9C6F1  ce 43
 	ld DE,BC                                             ; F9C6F3  d9 8a
 	add DE,0x0010                                        ; F9C6F5  da c8 10 00
-	ldw bc, 0x2950                                       ; F9C6F9  31 50 29
+	ldw bc, NameList_SourceMembers                                       ; F9C6F9  31 50 29
 	add BC,DE                                            ; F9C6FC  da 81
 	extz XBC                                             ; F9C6FE  e9 12
 	ld XIX,XBC                                           ; F9C700  e9 8c
@@ -1688,7 +1688,7 @@ LcdKeyRow1_SoundGroupNaming:
 	ld c, 0x10:opc                                          ; F9CCCB  23 10
 	mul	bc, (SoundGroupNaming_Group:16)                              ; F9CCCD  c1 96 26 43
 	ld HL,BC                                             ; F9CCD1  d9 8b
-	ldw wa, 0x2940                                       ; F9CCD3  30 40 29
+	ldw wa, NameList_SourceGroup                                       ; F9CCD3  30 40 29
 	add WA,BC                                            ; F9CCD6  d9 80
 	extz XWA                                             ; F9CCD8  e8 12
 	ld (xiz-4), xwa                                      ; F9CCDA  be fc 60
@@ -1895,7 +1895,7 @@ SoundGroupNaming_LoadGroupNames:
 	pushw hl                                             ; F9CE33  2b
 	push XIX                                             ; F9CE34  3c
 	ld h, 0x00:opc                                          ; F9CE35  26 00
-	lda xix, (0x2940:16)                                ; F9CE37  f1 40 29 34
+	lda xix, (NameList_SourceGroup:16)                                ; F9CE37  f1 40 29 34
 .LF9CE3B:
 	push XIX                                             ; F9CE3B  3c
 	ld bc, (SoundGroupNaming_Bank:16)                                 ; F9CE3C  d1 95 26 21
@@ -2369,7 +2369,7 @@ LcdKeyRow1_CombinationGroupNaming:
 	ld c, 0x10:opc                                          ; F9D133  23 10
 	mul	bc, (CombinationGroupNaming_Group:16)                              ; F9D135  c1 99 26 43
 	ld HL,BC                                             ; F9D139  d9 8b
-	ldw wa, 0x2940                                       ; F9D13B  30 40 29
+	ldw wa, NameList_SourceGroup                                       ; F9D13B  30 40 29
 	add WA,BC                                            ; F9D13E  d9 80
 	extz XWA                                             ; F9D140  e8 12
 	ld (xiz-4), xwa                                      ; F9D142  be fc 60
@@ -2576,7 +2576,7 @@ CombinationGroupNaming_LoadGroupNames:
 	pushw hl                                             ; F9D29B  2b
 	push XIX                                             ; F9D29C  3c
 	ld h, 0x00:opc                                          ; F9D29D  26 00
-	lda xix, (0x2940:16)                                ; F9D29F  f1 40 29 34
+	lda xix, (NameList_SourceGroup:16)                                ; F9D29F  f1 40 29 34
 .LF9D2A3:
 	push XIX                                             ; F9D2A3  3c
 	ld bc, (CombinationGroupNaming_Bank:16)                                 ; F9D2A4  d1 98 26 21
@@ -3476,7 +3476,7 @@ SoundCopy_LoadNameBuffers:
 	ld h, 0x0f:opc                                          ; F9DA42  26 0f
 .LF9DA44:
 	ld l, 0x00:opc                                          ; F9DA44  27 00
-	lda xix, (0x2940:16)                                ; F9DA46  f1 40 29 34
+	lda xix, (NameList_SourceGroup:16)                                ; F9DA46  f1 40 29 34
 	jr .LF9DA6C                                          ; F9DA4A  68 20
 .LF9DA4C:
 	push XIX                                             ; F9DA4C  3c
@@ -3499,7 +3499,7 @@ SoundCopy_LoadNameBuffers:
 	mul bc, h                                          ; F9DA74  ce 43
 	ld DE,BC                                             ; F9DA76  d9 8a
 	add DE,0x0010                                        ; F9DA78  da c8 10 00
-	ldw bc, 0x2940                                       ; F9DA7C  31 40 29
+	ldw bc, NameList_SourceGroup                                       ; F9DA7C  31 40 29
 	add BC,DE                                            ; F9DA7F  da 81
 	extz XBC                                             ; F9DA81  e9 12
 	ld XIX,XBC                                           ; F9DA83  e9 8c
@@ -3535,7 +3535,7 @@ SoundCopy_LoadNameBuffers:
 	jr c, .LF9DAA2                                       ; F9DAC5  67 db
 	jrl .LF9DBC2                                         ; F9DAC7  78 f8 00
 .LF9DACA:
-	lda xbc, (0x2940:16)                                ; F9DACA  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; F9DACA  f1 40 29 31
 	push XBC                                             ; F9DACE  39
 	ld wa, (SoundCopy_SourceBank:16)                                 ; F9DACF  d1 9b 26 20
 	extz WA                                              ; F9DAD3  d8 12
@@ -3558,7 +3558,7 @@ SoundCopy_LoadNameBuffers:
 	calr SoundGroup_MaxMemberIndex_ByStack                                          ; F9DB03  1e ac 1b
 	ld H,A                                               ; F9DB06  c9 8e
 	ld l, 0x00:opc                                          ; F9DB08  27 00
-	lda xix, (0x2950:16)                                ; F9DB0A  f1 50 29 34
+	lda xix, (NameList_SourceMembers:16)                                ; F9DB0A  f1 50 29 34
 	inc 8,XSP                                            ; F9DB0E  ef 60
 	inc 4,XSP                                            ; F9DB10  ef 64
 	jr .LF9DB3C                                          ; F9DB12  68 28
@@ -3586,7 +3586,7 @@ SoundCopy_LoadNameBuffers:
 	mul bc, h                                          ; F9DB44  ce 43
 	ld DE,BC                                             ; F9DB46  d9 8a
 	add DE,0x0010                                        ; F9DB48  da c8 10 00
-	ldw bc, 0x2950                                       ; F9DB4C  31 50 29
+	ldw bc, NameList_SourceMembers                                       ; F9DB4C  31 50 29
 	add BC,DE                                            ; F9DB4F  da 81
 	extz XBC                                             ; F9DB51  e9 12
 	ld XIX,XBC                                           ; F9DB53  e9 8c
@@ -4799,7 +4799,7 @@ CombinationCopy_LoadNameBuffers:
 	ld h, 0x0f:opc                                          ; F9E62F  26 0f
 .LF9E631:
 	ld l, 0x00:opc                                          ; F9E631  27 00
-	lda xix, (0x2940:16)                                ; F9E633  f1 40 29 34
+	lda xix, (NameList_SourceGroup:16)                                ; F9E633  f1 40 29 34
 	jr .LF9E659                                          ; F9E637  68 20
 .LF9E639:
 	push XIX                                             ; F9E639  3c
@@ -4822,7 +4822,7 @@ CombinationCopy_LoadNameBuffers:
 	mul bc, h                                          ; F9E661  ce 43
 	ld DE,BC                                             ; F9E663  d9 8a
 	add DE,0x0010                                        ; F9E665  da c8 10 00
-	ldw bc, 0x2940                                       ; F9E669  31 40 29
+	ldw bc, NameList_SourceGroup                                       ; F9E669  31 40 29
 	add BC,DE                                            ; F9E66C  da 81
 	extz XBC                                             ; F9E66E  e9 12
 	ld XIX,XBC                                           ; F9E670  e9 8c
@@ -4858,7 +4858,7 @@ CombinationCopy_LoadNameBuffers:
 	jr c, .LF9E68F                                       ; F9E6B2  67 db
 	jrl .LF9E7AF                                         ; F9E6B4  78 f8 00
 .LF9E6B7:
-	lda xbc, (0x2940:16)                                ; F9E6B7  f1 40 29 31
+	lda xbc, (NameList_SourceGroup:16)                                ; F9E6B7  f1 40 29 31
 	push XBC                                             ; F9E6BB  39
 	ld wa, (CombinationCopy_SourceBank:16)                                 ; F9E6BC  d1 06 27 20
 	extz WA                                              ; F9E6C0  d8 12
@@ -4881,7 +4881,7 @@ CombinationCopy_LoadNameBuffers:
 	calr CombiGroup_MaxMemberIndex_ByStack                                          ; F9E6F0  1e c5 10
 	ld H,A                                               ; F9E6F3  c9 8e
 	ld l, 0x00:opc                                          ; F9E6F5  27 00
-	lda xix, (0x2950:16)                                ; F9E6F7  f1 50 29 34
+	lda xix, (NameList_SourceMembers:16)                                ; F9E6F7  f1 50 29 34
 	inc 8,XSP                                            ; F9E6FB  ef 60
 	inc 4,XSP                                            ; F9E6FD  ef 64
 	jr .LF9E729                                          ; F9E6FF  68 28
@@ -4909,7 +4909,7 @@ CombinationCopy_LoadNameBuffers:
 	mul bc, h                                          ; F9E731  ce 43
 	ld DE,BC                                             ; F9E733  d9 8a
 	add DE,0x0010                                        ; F9E735  da c8 10 00
-	ldw bc, 0x2950                                       ; F9E739  31 50 29
+	ldw bc, NameList_SourceMembers                                       ; F9E739  31 50 29
 	add BC,DE                                            ; F9E73C  da 81
 	extz XBC                                             ; F9E73E  e9 12
 	ld XIX,XBC                                           ; F9E740  e9 8c
@@ -6680,7 +6680,7 @@ DrumsMap_LoadRowFields:
 	cp h, 0x04:i3                                          ; F9F4DB  ce dc
 	jr c, .LF9F4BD                                       ; F9F4DD  67 de
 .LF9F4DF:
-	lda xix, (0x2940:16)                                ; F9F4DF  f1 40 29 34
+	lda xix, (NameList_SourceGroup:16)                                ; F9F4DF  f1 40 29 34
 	cp	(DrumsMap_Map:16), 0x00                            ; F9F4E3  c1 02 27 3f 00
 	jr nz, .LF9F4FD                                      ; F9F4E8  6e 13
 	ld h, 0x04:opc                                          ; F9F4EA  26 04
@@ -9329,9 +9329,9 @@ SystemTest_SplitNotesForDisplay:
 	push XIX                                             ; FA0BA9  3c
 	lda xbc, (0x26a8:16)                                ; FA0BAA  f1 a8 26 31
 	ld (xiz-4), xbc                                      ; FA0BAE  be fc 61
-	lda xwa, (0x2940:16)                                ; FA0BB1  f1 40 29 30
+	lda xwa, (NameList_SourceGroup:16)                                ; FA0BB1  f1 40 29 30
 	ld (xiz-8), xwa                                      ; FA0BB5  be f8 60
-	lda xix, (0x2950:16)                                ; FA0BB8  f1 50 29 34
+	lda xix, (NameList_SourceMembers:16)                                ; FA0BB8  f1 50 29 34
 	ld h, 0x04:opc                                          ; FA0BBC  26 04
 .LFA0BBE:
 	ld xbc, (xiz-4)                                      ; FA0BBE  ae fc 21
@@ -15565,7 +15565,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	add XWA,XIX                                          ; FA4FC4  ec 80
 	ld XBC,(XIZ+0x08)                                    ; FA4FC6  ae 08 21
 	ld (XBC),XWA                                         ; FA4FC9  b1 60
-	ld bc, (0x2738:16)                                 ; FA4FCB  d1 38 27 21
+	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA4FCB  d1 38 27 21
 	extz BC                                              ; FA4FCF  d9 12
 	mul BC,0x02c0                                        ; FA4FD1  d9 08 c0 02
 	ld (xiz-12), xbc                                     ; FA4FD5  be f4 61
@@ -15676,10 +15676,10 @@ SystemTest_SplitNotesForDisplay_DL3:
 	push 0x00                                            ; FA50D3  09 00
 	push	(0x2737:16)                          ; FA50D5  c1 37 27 04
 	push 0x00                                            ; FA50D9  09 00
-	push	(0x2736:16)                          ; FA50DB  c1 36 27 04
+	push	(LoadSingle_BankB:16)                          ; FA50DB  c1 36 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA50DF  1e ab 01
 	ld XIX,XIY                                           ; FA50E2  ed 8c
-	ld bc, (0x2738:16)                                 ; FA50E4  d1 38 27 21
+	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA50E4  d1 38 27 21
 	extz BC                                              ; FA50E8  d9 12
 	mul BC,0x02c9                                        ; FA50EA  d9 08 c9 02
 	add XIY,XBC                                          ; FA50EE  e9 85
@@ -15691,7 +15691,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	jrl .LFA5287                                         ; FA5100  78 84 01
 	pushw hl                                             ; FA5103  2b
 	push 0x00                                            ; FA5104  09 00
-	push	(0x2728:16)                          ; FA5106  c1 28 27 04
+	push	(LoadSingle_BankA:16)                          ; FA5106  c1 28 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA510A  1e 80 01
 	ld XIX,XIY                                           ; FA510D  ed 8c
 	ld C,D                                               ; FA510F  cc 8b
@@ -15704,10 +15704,10 @@ SystemTest_SplitNotesForDisplay_DL3:
 	push 0x00                                            ; FA511F  09 00
 	push	(0x2737:16)                          ; FA5121  c1 37 27 04
 	push 0x00                                            ; FA5125  09 00
-	push	(0x2736:16)                          ; FA5127  c1 36 27 04
+	push	(LoadSingle_BankB:16)                          ; FA5127  c1 36 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA512B  1e 5f 01
 	ld XIX,XIY                                           ; FA512E  ed 8c
-	ld bc, (0x2738:16)                                 ; FA5130  d1 38 27 21
+	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA5130  d1 38 27 21
 	extz BC                                              ; FA5134  d9 12
 	extz XBC                                             ; FA5136  e9 12
 	sll xbc, 16                                        ; FA5138  e9 ee 00
@@ -15803,7 +15803,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	add XWA,XIX                                          ; FA5257  ec 80
 	ld XBC,(XIZ+0x08)                                    ; FA5259  ae 08 21
 	ld (XBC),XWA                                         ; FA525C  b1 60
-	ld bc, (0x2738:16)                                 ; FA525E  d1 38 27 21
+	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA525E  d1 38 27 21
 	extz BC                                              ; FA5262  d9 12
 	mul BC,0x02c0                                        ; FA5264  d9 08 c0 02
 	ld (xiz-12), xbc                                     ; FA5268  be f4 61

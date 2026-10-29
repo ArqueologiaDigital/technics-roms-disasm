@@ -348,7 +348,7 @@ sub_F38A79:
 	push	xix	; F38A7F  push XIX
 	lda	xix, (sub_F38B3A:24)	; F38A80  lda XIX,0xf38b3a
 	ldw	(6328580:24), 0	; F38A85  ld (0x609104),0x0000
-	ldw	hl, 30383	; F38A8C  ld HL,0x76af
+	ldw	hl, CombiPart_Flags	; F38A8C  ld HL,0x76af
 	ldw	de, 30417	; F38A8F  ld DE,0x76d1
 	ld	(xiz-1), 8	; F38A92  ld (XIZ+0xff),0x08
 sub_F38A79_Loop:
@@ -471,7 +471,7 @@ sub_F38B8E:
 	push	xix	; F38B94  push XIX
 	lda	xix, (Unclaimed_F38C4F:24)	; F38B95  lda XIX,0xf38c4f
 	ldw	(6328580:24), 0	; F38B9A  ld (0x609104),0x0000
-	ldw	hl, 30383	; F38BA1  ld HL,0x76af
+	ldw	hl, CombiPart_Flags	; F38BA1  ld HL,0x76af
 	ldw	de, 30417	; F38BA4  ld DE,0x76d1
 	ld	(xiz-1), 8	; F38BA7  ld (XIZ+0xff),0x08
 sub_F38B8E_Loop:
