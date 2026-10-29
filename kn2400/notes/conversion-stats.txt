@@ -1,6 +1,6 @@
 image bytes                 3761619
 code-range bytes            1778507
-entries                     15797 (2959 named, 845 derived <name>_entry, 11993 func_)
+entries                     15811 (2993 named, 848 derived <name>_entry, 11970 func_)
 bytes emitted as code       1759156 (46.77% of image, 98.91% of code ranges)
 instructions                664654 (+93 .byte escapes)
 nop padding bytes           5

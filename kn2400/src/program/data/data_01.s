@@ -2960,7 +2960,7 @@ Str_DPCT:	.asciz "DPCT"
 	.align	4, 0xFF
 Str_WiCt:	.asciz "WiCt"
 	.align	4, 0xFF
-Str_empty_748:	.asciz "             "
+Str_empty_768:	.asciz "             "
 Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
 Str_PANEL_MEMORY_9:	.asciz "PANEL MEMORY "
 Str_SEQUENCER_12:	.asciz "SEQUENCER    "
@@ -2972,7 +2972,7 @@ Str_MIDI_FAVORITE:	.asciz "MIDI&FAVORITE"
 	.align	4, 0xFF
 
 ptrs_484C5C3C:
-	.long	Str_empty_748
+	.long	Str_empty_768
 	.long	Str_CURRENT_PANEL_5
 	.long	Str_PANEL_MEMORY_9
 	.long	Str_SEQUENCER_12
@@ -2983,7 +2983,7 @@ ptrs_484C5C3C:
 	.long	Str_MIDI_FAVORITE
 
 Str_NEXT_PAGE:	.asciz "   NEXT PAGE    "
-Str_empty_747:	.asciz "   ---------    "
+Str_empty_767:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
@@ -2991,7 +2991,7 @@ Str_message:	.asciz "    message.    "
 
 ptrs_484C5CB8:
 	.long	Str_NEXT_PAGE
-	.long	Str_empty_747
+	.long	Str_empty_767
 	.long	Str_This_is
 	.long	Str_temporary
 	.long	Str_message
@@ -3016,8 +3016,8 @@ data_484C5F64:
 .incbin_range "baserom/kn2400_program.rom", 0x0C5F64, 0x0C5FE4
 data_484C5FE4:
 .incbin_range "baserom/kn2400_program.rom", 0x0C5FE4, 0x0C5FE9
-Str_empty_746:	.asciz "---"
-Str_empty_745:	.asciz "---"
+Str_empty_766:	.asciz "---"
+Str_empty_748:	.asciz "---"
 Str_2DD_2:	.asciz "2DD"
 Str_2HD:	.asciz "2HD"
 Str_2DD:	.asciz "2DD"
@@ -3027,8 +3027,8 @@ Str_DOC_2:	.asciz "DOC"
 	.align	4, 0xFF
 
 ptrs_484C600C:
-	.long	Str_empty_746
-	.long	Str_empty_745
+	.long	Str_empty_766
+	.long	Str_empty_748
 	.long	Str_2DD_2
 	.long	Str_2HD
 	.long	Str_2DD
@@ -3041,7 +3041,7 @@ Str_SEQUENCER_11:	.asciz "  SEQUENCER  "
 Str_COMPOSER_10:	.asciz "  COMPOSER   "
 Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY "
 Str_EFFECT_MEMORY_5:	.asciz "EFFECT MEMORY"
-Str_empty_744:	.asciz "             "
+Str_empty_747:	.asciz "             "
 
 ptrs_484C6080:
 	.long	Str_PANEL_MEMORY_8
@@ -3049,23 +3049,23 @@ ptrs_484C6080:
 	.long	Str_COMPOSER_10
 	.long	Str_SOUND_MEMORY_5
 	.long	Str_EFFECT_MEMORY_5
-	.long	Str_empty_744
+	.long	Str_empty_747
 
 Str_BANK_28:	.asciz "BANK"
-Str_empty_743:	.asciz "----"
+Str_empty_746:	.asciz "----"
 Str_BANK_27:	.asciz "BANK"
 Str_BANK_26:	.asciz "BANK"
 Str_BANK_25:	.asciz "BANK"
-Str_empty_742:	.asciz "----"
+Str_empty_745:	.asciz "----"
 	.align	4, 0xFF
 
 ptrs_484C60B8:
 	.long	Str_BANK_28
-	.long	Str_empty_743
+	.long	Str_empty_746
 	.long	Str_BANK_27
 	.long	Str_BANK_26
 	.long	Str_BANK_25
-	.long	Str_empty_742
+	.long	Str_empty_745
 
 Str_MEMORY_26:	.asciz " MEMORY "
 Str_SONG_29:	.asciz "  SONG  "
@@ -3167,13 +3167,13 @@ Str_GM2_3:	.asciz "GM2"
 Str_NX_3:	.asciz " NX "
 	.space	4, 0x00
 Str_PREV_TEC_2:	.asciz "PREV.TEC"
-Str_empty_734:	.asciz "        "
+Str_empty_744:	.asciz "        "
 
 ptrs_484C62C4:
 	.long	Str_GM2_3
 	.long	Str_NX_3
 	.long	Str_PREV_TEC_2
-	.long	Str_empty_734
+	.long	Str_empty_744
 
 Str_MID_12:	.asciz "________.MID"
 	.align	4, 0xFF
@@ -3373,7 +3373,9 @@ ptrs_484C6760:
 	.long	func_486C7A95
 	.long	func_486C80C0
 data_484C6778:
-.incbin_range "baserom/kn2400_program.rom", 0x0C6778, 0x0C6780
+.incbin_range "baserom/kn2400_program.rom", 0x0C6778, 0x0C677C
+data_484C677C:
+.incbin_range "baserom/kn2400_program.rom", 0x0C677C, 0x0C6780
 data_484C6780:
 .incbin_range "baserom/kn2400_program.rom", 0x0C6780, 0x0C67AC
 data_484C67AC:
@@ -9783,15 +9785,18 @@ Str_PART_16_4:	.asciz " PART 16 "
 Str_RIGHT1_3:	.asciz " RIGHT1  "
 Str_RIGHT2_4:	.asciz " RIGHT2  "
 Str_LEFT_7:	.asciz " LEFT    "
+Str_empty_743:	.asciz "         "
+Str_empty_742:	.asciz "         "
+Str_empty_734:	.asciz "         "
 Str_empty_709:	.asciz "         "
 Str_empty_708:	.asciz "         "
 Str_empty_707:	.asciz "         "
 Str_empty_706:	.asciz "         "
 Str_empty_705:	.asciz "         "
+Str_CHORD_8:	.asciz " CHORD   "
 Str_empty_704:	.asciz "         "
 Str_empty_703:	.asciz "         "
 Str_empty_702:	.asciz "         "
-Str_CHORD_8:	.asciz " CHORD   "
 Str_empty_701:	.asciz "         "
 Str_empty_700:	.asciz "         "
 Str_empty_699:	.asciz "         "
@@ -9825,9 +9830,6 @@ Str_empty_672:	.asciz "         "
 Str_empty_671:	.asciz "         "
 Str_empty_670:	.asciz "         "
 Str_empty_669:	.asciz "         "
-Str_empty_668:	.asciz "         "
-Str_empty_667:	.asciz "         "
-Str_empty_666:	.asciz "         "
 Str_APC_8:	.asciz " APC     "
 Str_CONTROL_7:	.asciz " CONTROL "
 Str_RHYTHM_14:	.asciz " RHYTHM  "
@@ -9853,15 +9855,18 @@ ptrs_484DA1A4:
 	.long	Str_RIGHT1_3
 	.long	Str_RIGHT2_4
 	.long	Str_LEFT_7
+	.long	Str_empty_743
+	.long	Str_empty_742
+	.long	Str_empty_734
 	.long	Str_empty_709
 	.long	Str_empty_708
 	.long	Str_empty_707
 	.long	Str_empty_706
 	.long	Str_empty_705
+	.long	Str_CHORD_8
 	.long	Str_empty_704
 	.long	Str_empty_703
 	.long	Str_empty_702
-	.long	Str_CHORD_8
 	.long	Str_empty_701
 	.long	Str_empty_700
 	.long	Str_empty_699
@@ -9895,9 +9900,6 @@ ptrs_484DA1A4:
 	.long	Str_empty_671
 	.long	Str_empty_670
 	.long	Str_empty_669
-	.long	Str_empty_668
-	.long	Str_empty_667
-	.long	Str_empty_666
 	.long	Str_APC_8
 	.long	Str_CONTROL_7
 	.long	Str_RHYTHM_14
@@ -9923,15 +9925,18 @@ data_484DA330:
 data_484DA338:
 .incbin_range "baserom/kn2400_program.rom", 0x0DA338, 0x0DA340
 Str_LEFT_6:	.asciz " LEFT  "
+Str_empty_668:	.asciz "       "
+Str_empty_667:	.asciz "       "
+Str_empty_666:	.asciz "       "
 Str_empty_665:	.asciz "       "
 Str_empty_664:	.asciz "       "
 Str_empty_663:	.asciz "       "
 Str_empty_662:	.asciz "       "
 Str_empty_661:	.asciz "       "
+Str_CHORD_7:	.asciz " CHORD "
 Str_empty_660:	.asciz "       "
 Str_empty_659:	.asciz "       "
 Str_empty_658:	.asciz "       "
-Str_CHORD_7:	.asciz " CHORD "
 Str_empty_657:	.asciz "       "
 Str_empty_656:	.asciz "       "
 Str_empty_655:	.asciz "       "
@@ -9965,9 +9970,6 @@ Str_empty_628:	.asciz "       "
 Str_empty_627:	.asciz "       "
 Str_empty_626:	.asciz "       "
 Str_empty_625:	.asciz "       "
-Str_empty_624:	.asciz "       "
-Str_empty_623:	.asciz "       "
-Str_empty_622:	.asciz "       "
 Str_APC_7:	.asciz "  APC  "
 Str_CONTROL_6:	.asciz "CONTROL"
 Str_RHYTHM_13:	.asciz "RHYTHM "
@@ -9992,15 +9994,18 @@ ptrs_484DA4C8:
 	.long	data_484DA330
 	.long	data_484DA338
 	.long	Str_LEFT_6
+	.long	Str_empty_668
+	.long	Str_empty_667
+	.long	Str_empty_666
 	.long	Str_empty_665
 	.long	Str_empty_664
 	.long	Str_empty_663
 	.long	Str_empty_662
 	.long	Str_empty_661
+	.long	Str_CHORD_7
 	.long	Str_empty_660
 	.long	Str_empty_659
 	.long	Str_empty_658
-	.long	Str_CHORD_7
 	.long	Str_empty_657
 	.long	Str_empty_656
 	.long	Str_empty_655
@@ -10034,9 +10039,6 @@ ptrs_484DA4C8:
 	.long	Str_empty_627
 	.long	Str_empty_626
 	.long	Str_empty_625
-	.long	Str_empty_624
-	.long	Str_empty_623
-	.long	Str_empty_622
 	.long	Str_APC_7
 	.long	Str_CONTROL_6
 	.long	Str_RHYTHM_13
@@ -10116,14 +10118,14 @@ Str_Dieser_Song_ist_zu_lang_um_im_SMF_Format:	.asciz "Dieser Song ist zu lang, u
 Str_Ce_morceau_est_trop_long_pour_pouvoir_tr:	.asciz "Ce morceau est trop long pour pouvoir \xEAtre charg\xE9 en format SMF. Utilisez le format TECHNICS."
 Str_Esta_canci_n_es_demasiado_larga_para_car:	.asciz "Esta canci\xF3n es demasiado larga para cargar en el formato SMF. Utilice el formato TECHNICS."
 	.align	4, 0xFF
-Str_empty_621:	.asciz "    "
+Str_empty_624:	.asciz "    "
 Str_PLAY_5:	.asciz "PLAY"
 Str_REC_7:	.asciz "REC"
 Str_PUNCH:	.asciz "PUNCH"
 Str_CLR_6:	.asciz "CLR"
 
 ptrs_484DB9BC:
-	.long	Str_empty_621
+	.long	Str_empty_624
 	.long	Str_PLAY_5
 	.long	Str_REC_7
 	.long	Str_PUNCH
@@ -10909,60 +10911,60 @@ FnName_TtDemoMenu:	.asciz "TtDemoMenu"
 Str_DEMONSTRATION:	.asciz "DEMONSTRATION"
 	.align	4, 0xFF
 
-	AcDemoScreen	TtDemoMenu, sub=TtDemoMenu_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtDemoMenu_window, title=Str_DEMONSTRATION, icon=169	# title "DEMONSTRATION"
-		IvExitMode	TtDemoMenu_ExitMode1, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const|VF_InvisibleBox, X=100, Y=0, W=16, H=32, mode=MD_NORMAL
+	AcDemoScreen	DEMO_TtDemoMenu, sub=DEMO_TtDemoMenu_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=DEMO_TtDemoMenu_window, title=Str_DEMONSTRATION, icon=169	# title "DEMONSTRATION"
+		IvExitMode	DEMO_TtDemoMenu_ExitMode1, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const|VF_InvisibleBox, X=100, Y=0, W=16, H=32, mode=MD_NORMAL
 
 Str_OVERTURE:	.asciz "OVERTURE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_OVERTURE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SD_CARD, prev=TtDemoMenu_ExitMode1, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left1, selected=TtDemoMenu_DemoSelect_OVERTURE_selected, str=Str_OVERTURE	# str "OVERTURE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_OVERTURE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SD_CARD, prev=DEMO_TtDemoMenu_ExitMode1, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left1, selected=DEMO_TtDemoMenu_DemoSelect_OVERTURE_selected, str=Str_OVERTURE	# str "OVERTURE"
 
 Str_SD_CARD:	.asciz "SD CARD"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SD_CARD, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_VINTAGE_ORGAN, prev=TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left2, selected=TtDemoMenu_DemoSelect_SD_CARD_selected, tag=1, str=Str_SD_CARD	# str "SD CARD"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SD_CARD, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, prev=DEMO_TtDemoMenu_DemoSelect_OVERTURE, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left2, selected=DEMO_TtDemoMenu_DemoSelect_SD_CARD_selected, tag=1, str=Str_SD_CARD	# str "SD CARD"
 
 Str_VINTAGE_ORGAN:	.asciz "VINTAGE ORGAN"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_VINTAGE_ORGAN, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, prev=TtDemoMenu_DemoSelect_SD_CARD, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left3, selected=TtDemoMenu_DemoSelect_VINTAGE_ORGAN_selected, tag=2, str=Str_VINTAGE_ORGAN	# str "VINTAGE ORGAN"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, prev=DEMO_TtDemoMenu_DemoSelect_SD_CARD, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left3, selected=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN_selected, tag=2, str=Str_VINTAGE_ORGAN	# str "VINTAGE ORGAN"
 
 Str_SOUND_EXCELLENCE:	.asciz "SOUND EXCELLENCE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_RHYTHM_STYLE, prev=TtDemoMenu_DemoSelect_VINTAGE_ORGAN, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left4, selected=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE_selected, tag=3, str=Str_SOUND_EXCELLENCE	# str "SOUND EXCELLENCE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, prev=DEMO_TtDemoMenu_DemoSelect_VINTAGE_ORGAN, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left4, selected=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE_selected, tag=3, str=Str_SOUND_EXCELLENCE	# str "SOUND EXCELLENCE"
 
 Str_RHYTHM_STYLE:	.asciz "RHYTHM&STYLE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_RHYTHM_STYLE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_MULTI_MEDIA, prev=TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, flag=VF_Const, X=12, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left5, selected=TtDemoMenu_DemoSelect_RHYTHM_STYLE_selected, tag=4, str=Str_RHYTHM_STYLE	# str "RHYTHM&STYLE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, prev=DEMO_TtDemoMenu_DemoSelect_SOUND_EXCELLENCE, flag=VF_Const, X=12, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=1, editsw=ES_Left5, selected=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE_selected, tag=4, str=Str_RHYTHM_STYLE	# str "RHYTHM&STYLE"
 
 Str_MULTI_MEDIA:	.asciz "MULTI MEDIA"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_MULTI_MEDIA, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_SEQUENCER, prev=TtDemoMenu_DemoSelect_RHYTHM_STYLE, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right1, selected=TtDemoMenu_DemoSelect_MULTI_MEDIA_selected, tag=5, str=Str_MULTI_MEDIA	# str "MULTI MEDIA"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_SEQUENCER, prev=DEMO_TtDemoMenu_DemoSelect_RHYTHM_STYLE, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right1, selected=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA_selected, tag=5, str=Str_MULTI_MEDIA	# str "MULTI MEDIA"
 
 Str_SEQUENCER_7:	.asciz "SEQUENCER"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_SEQUENCER, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_NETWORKING, prev=TtDemoMenu_DemoSelect_MULTI_MEDIA, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=TtDemoMenu_DemoSelect_SEQUENCER_selected, tag=6, str=Str_SEQUENCER_7	# str "SEQUENCER"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_SEQUENCER, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_NETWORKING, prev=DEMO_TtDemoMenu_DemoSelect_MULTI_MEDIA, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=DEMO_TtDemoMenu_DemoSelect_SEQUENCER_selected, tag=6, str=Str_SEQUENCER_7	# str "SEQUENCER"
 
 Str_NETWORKING:	.asciz "NETWORKING"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_NETWORKING, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_EASE_OF_USE, prev=TtDemoMenu_DemoSelect_SEQUENCER, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right3, selected=TtDemoMenu_DemoSelect_NETWORKING_selected, tag=7, str=Str_NETWORKING	# str "NETWORKING"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_NETWORKING, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, prev=DEMO_TtDemoMenu_DemoSelect_SEQUENCER, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right3, selected=DEMO_TtDemoMenu_DemoSelect_NETWORKING_selected, tag=7, str=Str_NETWORKING	# str "NETWORKING"
 
 Str_EASE_OF_USE:	.asciz "EASE OF USE"
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_EASE_OF_USE, super=TtDemoMenu, next=TtDemoMenu_DemoSelect_CUSTOMIZE, prev=TtDemoMenu_DemoSelect_NETWORKING, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=TtDemoMenu_DemoSelect_EASE_OF_USE_selected, tag=8, str=Str_EASE_OF_USE	# str "EASE OF USE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, prev=DEMO_TtDemoMenu_DemoSelect_NETWORKING, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE_selected, tag=8, str=Str_EASE_OF_USE	# str "EASE OF USE"
 
 Str_CUSTOMIZE_3:	.asciz "CUSTOMIZE"
 	.align	4, 0xFF
 
-		AcDemoSelect	TtDemoMenu_DemoSelect_CUSTOMIZE, super=TtDemoMenu, next=TtDemoMenu_DemoFdSelect_External_Demo_Song, prev=TtDemoMenu_DemoSelect_EASE_OF_USE, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right5, selected=TtDemoMenu_DemoSelect_CUSTOMIZE_selected, tag=9, str=Str_CUSTOMIZE_3	# str "CUSTOMIZE"
+		AcDemoSelect	DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, super=DEMO_TtDemoMenu, next=DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song, prev=DEMO_TtDemoMenu_DemoSelect_EASE_OF_USE, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_WallPattern, fontcolor=CL_White, align=2, editsw=ES_Right5, selected=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE_selected, tag=9, str=Str_CUSTOMIZE_3	# str "CUSTOMIZE"
 
 Str_External_Demo_Song:	.asciz "External Demo Song"
 	.align	4, 0xFF
 
-		AcDemoFdSelect	TtDemoMenu_DemoFdSelect_External_Demo_Song, super=TtDemoMenu, prev=TtDemoMenu_DemoSelect_CUSTOMIZE, flag=VF_Const, X=134, Y=221, W=154, H=19, color=CL_WallPattern, fontcolor=CL_White, editsw=ES_Bottom8, selected=TtDemoMenu_DemoFdSelect_External_Demo_Song_selected, tag=12, str=Str_External_Demo_Song	# str "External Demo Song"
+		AcDemoFdSelect	DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song, super=DEMO_TtDemoMenu, prev=DEMO_TtDemoMenu_DemoSelect_CUSTOMIZE, flag=VF_Const, X=134, Y=221, W=154, H=19, color=CL_WallPattern, fontcolor=CL_White, editsw=ES_Bottom8, selected=DEMO_TtDemoMenu_DemoFdSelect_External_Demo_Song_selected, tag=12, str=Str_External_Demo_Song	# str "External Demo Song"
 
 Str_DEMONSTRATION_2:	.asciz "DEMONSTRATION"
 	.align	4, 0xFF
@@ -11312,9 +11314,9 @@ ptrs_484E23CC:
 	.long	Str_SSW_ACT_V01_ACTION_ACTION
 
 Jpeg_484E2408:	# a JPG file, 7277 bytes, 240 x 200
-	.incbin	"src/data/media/Jpeg_484E2408.jpg"
+	.incbin	"src/program/data/media/Jpeg_484E2408.jpg"
 Bmp_484E4075:	# a BMP file, 24070 bytes, 240 x 200, 4 bpp
-	.incbin	"src/data/media/Bmp_484E4075.bmp"
+	.incbin	"src/program/data/media/Bmp_484E4075.bmp"
 	.align	4, 0xFF
 
 Field_AcContrastEdit_end:	.asciz ""
@@ -11337,19 +11339,19 @@ FnName_ContrastMessage:	.asciz "ContrastMessage"
 FnName_TtContrast:	.asciz "TtContrast"
 	.align	4, 0x00
 
-	IvScreen	TtContrast, sub=TtContrast_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtContrast_window
-		VwBox	TtContrast_Box1, super=TtContrast, sub=TtContrast_Box2, next=TtContrast_EditSwBox1, flag=VF_Const, X=0, Y=0, W=320, H=240, color=CL_WallPattern, index=0xFFFF
-			VwBox	TtContrast_Box2, super=TtContrast_Box1, sub=TtContrast_ContrastEdit_CONTRAST, flag=VF_Const, X=76, Y=90, W=168, H=28, color=CL_WallPattern, index=0xFFFF
+	IvScreen	CONTRAST_TtContrast, sub=CONTRAST_TtContrast_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CONTRAST_TtContrast_window
+		VwBox	CONTRAST_TtContrast_Box1, super=CONTRAST_TtContrast, sub=CONTRAST_TtContrast_Box2, next=CONTRAST_TtContrast_EditSwBox1, flag=VF_Const, X=0, Y=0, W=320, H=240, color=CL_WallPattern, index=0xFFFF
+			VwBox	CONTRAST_TtContrast_Box2, super=CONTRAST_TtContrast_Box1, sub=CONTRAST_TtContrast_ContrastEdit_CONTRAST, flag=VF_Const, X=76, Y=90, W=168, H=28, color=CL_WallPattern, index=0xFFFF
 
 Str_CONTRAST_3:	.asciz "CONTRAST :"
 	.align	4, 0xFF
 
-				AcContrastEdit	TtContrast_ContrastEdit_CONTRAST, super=TtContrast_Box2, flag=VF_Const, X=77, Y=91, W=166, H=26, color=CL_SilverB, border=BD_3D_UP2, index=1, caption=Str_CONTRAST_3, font=4, fontcolor=CL_BlackW, align=1, length=4, editsw=ES_None, dial=1, selected=TtContrast_ContrastEdit_CONTRAST_selected	# caption "CONTRAST :"
+				AcContrastEdit	CONTRAST_TtContrast_ContrastEdit_CONTRAST, super=CONTRAST_TtContrast_Box2, flag=VF_Const, X=77, Y=91, W=166, H=26, color=CL_SilverB, border=BD_3D_UP2, index=1, caption=Str_CONTRAST_3, font=4, fontcolor=CL_BlackW, align=1, length=4, editsw=ES_None, dial=1, selected=CONTRAST_TtContrast_ContrastEdit_CONTRAST_selected	# caption "CONTRAST :"
 
 Str_empty_281:	.asciz ""
 	.align	4, 0xFF
 
-		VwEditSwBox	TtContrast_EditSwBox1, super=TtContrast, prev=TtContrast_Box1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, str=Str_empty_281	# str ""
+		VwEditSwBox	CONTRAST_TtContrast_EditSwBox1, super=CONTRAST_TtContrast, prev=CONTRAST_TtContrast_Box1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, str=Str_empty_281	# str ""
 
 RN_TtContrast:	.asciz "TtContrast"
 RN_empty_4622:	.asciz ""
@@ -12427,7 +12429,9 @@ Str_TT_FXDSPSEL:	.asciz "TT_FXDSPSEL"
 Str_TT_FXEQSEL:	.asciz "TT_FXEQSEL"
 	.align	4, 0xFF
 Str_TT_FXMIC:	.asciz "TT_FXMIC"
-.incbin_range "baserom/kn2400_program.rom", 0x0EDEDD, 0x0EDFA0
+	.align	4, 0xFF
+data_484EDEE0:
+.incbin_range "baserom/kn2400_program.rom", 0x0EDEE0, 0x0EDFA0
 	.space	64, 0xF9
 .incbin_range "baserom/kn2400_program.rom", 0x0EDFE0, 0x0EE0A0
 data_484EE0A0:
@@ -14154,43 +14158,43 @@ FnName_TtSswRun:	.asciz "TtSswRun"
 FnName_TtSswList:	.asciz "TtSswList"
 	.align	4, 0x00
 
-	AcSswScreen	TtSswRun, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswRun_window
+	AcSswScreen	SLIDESHOW_TtSswRun, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SLIDESHOW_TtSswRun_window
 
 Str_PICTURE_LIST:	.asciz "PICTURE LIST"
 	.align	4, 0xFF
 
-	TtlScreen	TtSswList, sub=TtSswList_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswList_window, title=Str_PICTURE_LIST, icon=228	# title "PICTURE LIST"
-		AcIndexWideES	TtSswList_IndexWideES1, super=TtSswList, next=TtSswList_IndexWideES2, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
-		AcIndexWideES	TtSswList_IndexWideES2, super=TtSswList, next=TtSswList_IndexWideES3, prev=TtSswList_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=15
-		AcIndexWideES	TtSswList_IndexWideES3, super=TtSswList, next=TtSswList_IndexEditSw1, prev=TtSswList_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
-		AcIndexEditSw	TtSswList_IndexEditSw1, super=TtSswList, sub=TtSswList_Label_DEL, next=TtSswList_SswImgLoad_PICTURE_LOAD, prev=TtSswList_IndexWideES3, flag=VF_Const, X=8, Y=36, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, fontcolor=CL_Black, editsw=ES_Left1
+	TtlScreen	SLIDESHOW_TtSswList, sub=SLIDESHOW_TtSswList_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SLIDESHOW_TtSswList_window, title=Str_PICTURE_LIST, icon=228	# title "PICTURE LIST"
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexWideES2, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES2, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexWideES3, prev=SLIDESHOW_TtSswList_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=15
+		AcIndexWideES	SLIDESHOW_TtSswList_IndexWideES3, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_IndexEditSw1, prev=SLIDESHOW_TtSswList_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
+		AcIndexEditSw	SLIDESHOW_TtSswList_IndexEditSw1, super=SLIDESHOW_TtSswList, sub=SLIDESHOW_TtSswList_Label_DEL, next=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, prev=SLIDESHOW_TtSswList_IndexWideES3, flag=VF_Const, X=8, Y=36, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, fontcolor=CL_Black, editsw=ES_Left1
 
 Str_DEL_14:	.asciz "DEL"
 
-			VwLabel	TtSswList_Label_DEL, super=TtSswList_IndexEditSw1, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_DEL_14, fontcolor=CL_BlackW	# str "DEL"
+			VwLabel	SLIDESHOW_TtSswList_Label_DEL, super=SLIDESHOW_TtSswList_IndexEditSw1, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_DEL_14, fontcolor=CL_BlackW	# str "DEL"
 
 Str_PICTURE_LOAD_3:	.asciz "PICTURE LOAD"
 	.align	4, 0xFF
 
-		AcSswImgLoad	TtSswList_SswImgLoad_PICTURE_LOAD, super=TtSswList, next=TtSswList_Label_User_Picture, prev=TtSswList_IndexEditSw1, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=TtSswList_SswImgLoad_PICTURE_LOAD_selected, str=Str_PICTURE_LOAD_3, title=TT_PS	# str "PICTURE LOAD"
+		AcSswImgLoad	SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_Label_User_Picture, prev=SLIDESHOW_TtSswList_IndexEditSw1, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD_selected, str=Str_PICTURE_LOAD_3, title=TT_PS	# str "PICTURE LOAD"
 
 Str_User_Picture:	.asciz "User Picture#"
 	.align	4, 0xFF
 
-		VwLabel	TtSswList_Label_User_Picture, super=TtSswList, next=TtSswList_SswMemBox1, prev=TtSswList_SswImgLoad_PICTURE_LOAD, flag=VF_Const, X=22, Y=94, W=108, H=19, str=Str_User_Picture, fontcolor=CL_White	# str "User Picture#"
-		AcSswMemBox	TtSswList_SswMemBox1, super=TtSswList, next=TtSswList_SswImgList1, prev=TtSswList_Label_User_Picture, flag=VF_Const, X=220, Y=70, W=196, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
-		AcSswImgList	TtSswList_SswImgList1, super=TtSswList, next=TtSswList_SswImgRename_RENAME, prev=TtSswList_SswMemBox1, flag=VF_Const, X=20, Y=110, W=600, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+		VwLabel	SLIDESHOW_TtSswList_Label_User_Picture, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswMemBox1, prev=SLIDESHOW_TtSswList_SswImgLoad_PICTURE_LOAD, flag=VF_Const, X=22, Y=94, W=108, H=19, str=Str_User_Picture, fontcolor=CL_White	# str "User Picture#"
+		AcSswMemBox	SLIDESHOW_TtSswList_SswMemBox1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswImgList1, prev=SLIDESHOW_TtSswList_Label_User_Picture, flag=VF_Const, X=220, Y=70, W=196, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
+		AcSswImgList	SLIDESHOW_TtSswList_SswImgList1, super=SLIDESHOW_TtSswList, next=SLIDESHOW_TtSswList_SswImgRename_RENAME, prev=SLIDESHOW_TtSswList_SswMemBox1, flag=VF_Const, X=20, Y=110, W=600, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
 
 Str_RENAME_6:	.asciz "RENAME"
 	.align	4, 0xFF
 
-		AcSswImgRename	TtSswList_SswImgRename_RENAME, super=TtSswList, prev=TtSswList_SswImgList1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=TtSswList_SswImgRename_RENAME_selected, str=Str_RENAME_6, screen=TtSswListRename_id	# str "RENAME"
+		AcSswImgRename	SLIDESHOW_TtSswList_SswImgRename_RENAME, super=SLIDESHOW_TtSswList, prev=SLIDESHOW_TtSswList_SswImgList1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=SLIDESHOW_TtSswList_SswImgRename_RENAME_selected, str=Str_RENAME_6, screen=TtSswListRename_id	# str "RENAME"
 
 Str_PICTURE_RENAME:	.asciz "PICTURE RENAME"
 	.align	4, 0xFF
 
 	TtlScreen	TtSswListRename, sub=TtSswListRename_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtSswListRename_window, title=Str_PICTURE_RENAME, icon=228	# title "PICTURE RENAME"
-		IvExitScreen	TtSswListRename_ExitScreen1, super=TtSswListRename, next=TtSswListRename_Naming1, flag=VF_Const|VF_InvisibleBox, X=316, Y=0, W=32, H=32, screen=TtSswList_id
+		IvExitScreen	TtSswListRename_ExitScreen1, super=TtSswListRename, next=TtSswListRename_Naming1, flag=VF_Const|VF_InvisibleBox, X=316, Y=0, W=32, H=32, screen=SLIDESHOW_TtSswList_id
 		IvNaming	TtSswListRename_Naming1, super=TtSswListRename, next=TtSswListRename_FuncEditSw1, prev=TtSswListRename_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=352, Y=0, W=32, H=32, func=FN_NamingSswImg
 		AcFuncEditSw	TtSswListRename_FuncEditSw1, super=TtSswListRename, prev=TtSswListRename_Naming1, flag=VF_Const, X=601, Y=165, W=31, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_NamingSswImg
 
@@ -15719,9 +15723,9 @@ Str_Technics_Sound_Quality_Sets_The_Standard:	.asciz "Technics Sound Quality Set
 Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab:	.asciz "TECHNICS-Klangqualit\xE4t setzt den Ma\xDFstab, nach dem sich andere richten"
 Str_La_qualit_sonore_TECHNICS_tablit_la_norm:	.asciz "La qualit\xE9 sonore TECHNICS \xE9tablit la norme que les autres suivent"
 Str_La_calidad_de_sonido_TECHNICS_es_la_norm:	.asciz "La calidad de sonido TECHNICS es la norma adoptada por los dem\xE1s"
-Str_empty_580:	.asciz "="
-Str_empty_579:	.asciz "="
-Str_empty_578:	.asciz "="
+Str_empty_623:	.asciz "="
+Str_empty_622:	.asciz "="
+Str_empty_621:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513338:
@@ -15729,17 +15733,17 @@ ptrs_48513338:
 	.long	Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab
 	.long	Str_La_qualit_sonore_TECHNICS_tablit_la_norm
 	.long	Str_La_calidad_de_sonido_TECHNICS_es_la_norm
-	.long	Str_empty_580
-	.long	Str_empty_579
-	.long	Str_empty_578
+	.long	Str_empty_623
+	.long	Str_empty_622
+	.long	Str_empty_621
 
 Str_Bring_Your_Favourite_Songs_To_Life:	.asciz "Bring Your Favourite Songs To Life!"
 Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb:	.asciz "Erwecken Sie Ihre Lieblingssongs zum Leben!"
 Str_Donnez_vie_vos_morceaux_favoris:	.asciz "Donnez vie \xE0 vos morceaux favoris!"
 Str_D_vida_a_sus_canciones_favoritas:	.asciz "\xA1D\xE9 vida a sus canciones favoritas!"
-Str_empty_577:	.asciz "="
-Str_empty_576:	.asciz "="
-Str_empty_575:	.asciz "="
+Str_empty_580:	.asciz "="
+Str_empty_579:	.asciz "="
+Str_empty_578:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485133F4:
@@ -15747,34 +15751,34 @@ ptrs_485133F4:
 	.long	Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb
 	.long	Str_Donnez_vie_vos_morceaux_favoris
 	.long	Str_D_vida_a_sus_canciones_favoritas
-	.long	Str_empty_577
-	.long	Str_empty_576
-	.long	Str_empty_575
+	.long	Str_empty_580
+	.long	Str_empty_579
+	.long	Str_empty_578
 
 Str_The_KN_s_Digital_Drawbars_Give_You_True:	.asciz "The KN's Digital Drawbars Give You True Tonewheel Sound!"
 Str_Die_digitalen_Registerz_ge_des_KN_geben:	.asciz "Die digitalen Registerz\xFCge des KN geben Ihnen echten Tonradklang!"
 Str_Les_drawbars_num_riques_du_KN_vous_offre:	.asciz "Les drawbars num\xE9riques du KN vous offrent les sonorit\xE9s naturelles authentiques!"
 Str_Las_barras_de_tiro_digital_de_KN_dan_un:	.asciz "\xA1Las barras de tiro digital de KN dan un sonido de verdadera rueda de tonos!"
-Str_empty_574:	.asciz "="
-Str_empty_573:	.asciz "="
-Str_empty_572:	.asciz "="
+Str_empty_577:	.asciz "="
+Str_empty_576:	.asciz "="
+Str_empty_575:	.asciz "="
 
 ptrs_48513530:
 	.long	Str_The_KN_s_Digital_Drawbars_Give_You_True
 	.long	Str_Die_digitalen_Registerz_ge_des_KN_geben
 	.long	Str_Les_drawbars_num_riques_du_KN_vous_offre
 	.long	Str_Las_barras_de_tiro_digital_de_KN_dan_un
-	.long	Str_empty_574
-	.long	Str_empty_573
-	.long	Str_empty_572
+	.long	Str_empty_577
+	.long	Str_empty_576
+	.long	Str_empty_575
 
 Str_Great_For_Gospel:	.asciz "Great For Gospel!"
 Str_Ausgezeichnet_f_r_Gospel:	.asciz "Ausgezeichnet f\xFCr Gospel!"
 Str_Id_al_pour_le_Gospel:	.asciz "Id\xE9al pour le Gospel!"
 Str_Ideal_para_coros_de_iglesial:	.asciz "\xA1Ideal para coros de iglesial!"
-Str_empty_571:	.asciz "="
-Str_empty_570:	.asciz "="
-Str_empty_569:	.asciz "="
+Str_empty_574:	.asciz "="
+Str_empty_573:	.asciz "="
+Str_empty_572:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485135B4:
@@ -15782,17 +15786,17 @@ ptrs_485135B4:
 	.long	Str_Ausgezeichnet_f_r_Gospel
 	.long	Str_Id_al_pour_le_Gospel
 	.long	Str_Ideal_para_coros_de_iglesial
-	.long	Str_empty_571
-	.long	Str_empty_570
-	.long	Str_empty_569
+	.long	Str_empty_574
+	.long	Str_empty_573
+	.long	Str_empty_572
 
 Str_Re_Live_The_Sixties:	.asciz "Re-Live The Sixties!"
 Str_Erleben_Sie_die_Sechziger_noch_einmal:	.asciz "Erleben Sie die Sechziger noch einmal!"
 Str_Revivez_les_Ann_es_Soixante:	.asciz "Revivez les Ann\xE9es Soixante!"
 Str_Vuelva_a_vivir_los_a_os_sesenta:	.asciz "\xA1Vuelva a vivir los a\xF1os sesenta!"
-Str_empty_568:	.asciz "="
-Str_empty_567:	.asciz "="
-Str_empty_566:	.asciz "="
+Str_empty_571:	.asciz "="
+Str_empty_570:	.asciz "="
+Str_empty_569:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513654:
@@ -15800,17 +15804,17 @@ ptrs_48513654:
 	.long	Str_Erleben_Sie_die_Sechziger_noch_einmal
 	.long	Str_Revivez_les_Ann_es_Soixante
 	.long	Str_Vuelva_a_vivir_los_a_os_sesenta
-	.long	Str_empty_568
-	.long	Str_empty_567
-	.long	Str_empty_566
+	.long	Str_empty_571
+	.long	Str_empty_570
+	.long	Str_empty_569
 
 Str_Or_Try_Heavy_Rock:	.asciz "Or Try Heavy Rock"
 Str_Oder_probieren_Sie_Heavy_Rock:	.asciz "Oder probieren Sie Heavy Rock"
 Str_Ou_essayez_le_Heavy_Rock:	.asciz "Ou essayez le Heavy Rock"
 Str_O_pruebe_el_Rock_pesado:	.asciz "O pruebe el Rock pesado"
-Str_empty_565:	.asciz "="
-Str_empty_564:	.asciz "="
-Str_empty_563:	.asciz "="
+Str_empty_568:	.asciz "="
+Str_empty_567:	.asciz "="
+Str_empty_566:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485136D8:
@@ -15818,51 +15822,51 @@ ptrs_485136D8:
 	.long	Str_Oder_probieren_Sie_Heavy_Rock
 	.long	Str_Ou_essayez_le_Heavy_Rock
 	.long	Str_O_pruebe_el_Rock_pesado
-	.long	Str_empty_565
-	.long	Str_empty_564
-	.long	Str_empty_563
+	.long	Str_empty_568
+	.long	Str_empty_567
+	.long	Str_empty_566
 
 Str_Or_Try_Brass_Rock:	.asciz "Or Try Brass Rock"
 Str_Oder_probieren_Sie_Brass_Rock:	.asciz "Oder probieren Sie Brass Rock"
 Str_Ou_essayez_le_Brass_Rock:	.asciz "Ou essayez le Brass Rock"
 Str_O_Brass_Rock:	.asciz "O Brass Rock"
-Str_empty_562:	.asciz "="
-Str_empty_561:	.asciz "="
-Str_empty_560:	.asciz "="
+Str_empty_565:	.asciz "="
+Str_empty_564:	.asciz "="
+Str_empty_563:	.asciz "="
 
 ptrs_48513750:
 	.long	Str_Or_Try_Brass_Rock
 	.long	Str_Oder_probieren_Sie_Brass_Rock
 	.long	Str_Ou_essayez_le_Brass_Rock
 	.long	Str_O_Brass_Rock
-	.long	Str_empty_562
-	.long	Str_empty_561
-	.long	Str_empty_560
+	.long	Str_empty_565
+	.long	Str_empty_564
+	.long	Str_empty_563
 
 Str_For_True_Drawbar_Performance_It_Doesn_t:	.asciz "For True Drawbar Performance It Doesn't Get Any More Real Than This!"
 Str_Die_Registerzugdarbietung_ist_so_echt_ec:	.asciz "Die Registerzugdarbietung ist so echt, echter geht's nicht!"
 Str_Pour_une_vraie_performance_de_drawbar_im:	.asciz "Pour une vraie performance de drawbar, impossible de faire plus r\xE9el que ceci!"
 Str_Para_una_verdadera_ejecuci_n_de_Barra_de:	.asciz "Para una verdadera ejecuci\xF3n de Barra de Tiro \xA1no puede ser m\xE1s real!"
-Str_empty_559:	.asciz "="
-Str_empty_558:	.asciz "="
-Str_empty_557:	.asciz "="
+Str_empty_562:	.asciz "="
+Str_empty_561:	.asciz "="
+Str_empty_560:	.asciz "="
 
 ptrs_48513888:
 	.long	Str_For_True_Drawbar_Performance_It_Doesn_t
 	.long	Str_Die_Registerzugdarbietung_ist_so_echt_ec
 	.long	Str_Pour_une_vraie_performance_de_drawbar_im
 	.long	Str_Para_una_verdadera_ejecuci_n_de_Barra_de
-	.long	Str_empty_559
-	.long	Str_empty_558
-	.long	Str_empty_557
+	.long	Str_empty_562
+	.long	Str_empty_561
+	.long	Str_empty_560
 
 Str_The_KN_Joins_The_Creative_Network:	.asciz "The KN Joins The Creative Network!"
 Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw:	.asciz "Das KN schlie\xDFt sich dem kreativen Netzwerk an!"
 Str_Le_KN_rejoint_le_r_seau_cr_atif:	.asciz "Le KN rejoint le r\xE9seau cr\xE9atif!"
 Str_El_KN_se_integra_a_la_red_creativa:	.asciz "\xA1El KN se integra a la red creativa!"
-Str_empty_556:	.asciz "="
-Str_empty_555:	.asciz "="
-Str_empty_554:	.asciz "="
+Str_empty_559:	.asciz "="
+Str_empty_558:	.asciz "="
+Str_empty_557:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513944:
@@ -15870,17 +15874,17 @@ ptrs_48513944:
 	.long	Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw
 	.long	Str_Le_KN_rejoint_le_r_seau_cr_atif
 	.long	Str_El_KN_se_integra_a_la_red_creativa
-	.long	Str_empty_556
-	.long	Str_empty_555
-	.long	Str_empty_554
+	.long	Str_empty_559
+	.long	Str_empty_558
+	.long	Str_empty_557
 
 Str_No_Complex_Wiring:	.asciz "No Complex Wiring!"
 Str_Keine_komplizierte_Verdrahtung:	.asciz "Keine komplizierte Verdrahtung!"
 Str_Pas_de_c_blage_compliqu:	.asciz "Pas de c\xE2blage compliqu\xE9!"
 Str_Sin_cables_complejos:	.asciz "\xA1Sin cables complejos!"
-Str_empty_553:	.asciz "="
-Str_empty_552:	.asciz "="
-Str_empty_551:	.asciz "="
+Str_empty_556:	.asciz "="
+Str_empty_555:	.asciz "="
+Str_empty_554:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485139CC:
@@ -15888,17 +15892,17 @@ ptrs_485139CC:
 	.long	Str_Keine_komplizierte_Verdrahtung
 	.long	Str_Pas_de_c_blage_compliqu
 	.long	Str_Sin_cables_complejos
-	.long	Str_empty_553
-	.long	Str_empty_552
-	.long	Str_empty_551
+	.long	Str_empty_556
+	.long	Str_empty_555
+	.long	Str_empty_554
 
 Str_One_Simple_Connection_Does_It_All:	.asciz "One Simple Connection Does It All!"
 Str_Ein_einfacher_Anschluss_erledigt_alles:	.asciz "Ein einfacher Anschluss erledigt alles!"
 Str_Une_seule_connexion_suffit:	.asciz "Une seule connexion suffit!"
 Str_Una_simple_conexi_n_lo_puede_todo:	.asciz "\xA1Una simple conexi\xF3n lo puede todo!"
-Str_empty_550:	.asciz "="
-Str_empty_549:	.asciz "="
-Str_empty_548:	.asciz "="
+Str_empty_553:	.asciz "="
+Str_empty_552:	.asciz "="
+Str_empty_551:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48513A7C:
@@ -15906,68 +15910,68 @@ ptrs_48513A7C:
 	.long	Str_Ein_einfacher_Anschluss_erledigt_alles
 	.long	Str_Une_seule_connexion_suffit
 	.long	Str_Una_simple_conexi_n_lo_puede_todo
-	.long	Str_empty_550
-	.long	Str_empty_549
-	.long	Str_empty_548
+	.long	Str_empty_553
+	.long	Str_empty_552
+	.long	Str_empty_551
 
 Str_File_And_Compile_Hundreds_Of_Performance:	.asciz "File And Compile Hundreds Of Performance Files Using the Included Song Manager Software"
 Str_Mit_der_mitgelieferten_Song_Manager_Soft:	.asciz "Mit der mitgelieferten Song Manager-Software k\xF6nnen Sie Hunderte von Darbietungsdateien archivieren und kompilieren"
 Str_Classez_et_compilez_des_centaines_de_fic:	.asciz "Classez et compilez des centaines de fichiers d'interpr\xE9tations en utilisant le logiciel Gestionnaire de morceaux inclus"
 Str_Archive_y_compile_cientos_de_archivos_de:	.asciz "Archive y compile cientos de archivos de ejecuciones con el software de administraci\xF3n de canciones incluido"
-Str_empty_547:	.asciz "="
-Str_empty_546:	.asciz "="
-Str_empty_545:	.asciz "="
+Str_empty_550:	.asciz "="
+Str_empty_549:	.asciz "="
+Str_empty_548:	.asciz "="
 
 ptrs_48513C50:
 	.long	Str_File_And_Compile_Hundreds_Of_Performance
 	.long	Str_Mit_der_mitgelieferten_Song_Manager_Soft
 	.long	Str_Classez_et_compilez_des_centaines_de_fic
 	.long	Str_Archive_y_compile_cientos_de_archivos_de
-	.long	Str_empty_547
-	.long	Str_empty_546
-	.long	Str_empty_545
+	.long	Str_empty_550
+	.long	Str_empty_549
+	.long	Str_empty_548
 
 Str_Connect_Directly_To_A_PC_And_Use_Any_MID:	.asciz "Connect Directly To A PC And Use Any MIDI Sequencing Software"
 Str_Direkter_Anschluss_an_einen_PC_und_Verwe:	.asciz "Direkter Anschluss an einen PC und Verwendung jeder MIDI-Sequencing-Software"
 Str_Connectez_directement_un_PC_et_utilisez:	.asciz "Connectez directement \xE0 un PC et utilisez n'importe quel logiciel de s\xE9quence MIDI"
 Str_Conecte_directamente_a_un_PC_y_utilice_c:	.asciz "Conecte directamente a un PC y utilice cualquier software de secuencia MIDI"
-Str_empty_544:	.asciz "="
-Str_empty_543:	.asciz "="
-Str_empty_542:	.asciz "="
+Str_empty_547:	.asciz "="
+Str_empty_546:	.asciz "="
+Str_empty_545:	.asciz "="
 
 ptrs_48513D9C:
 	.long	Str_Connect_Directly_To_A_PC_And_Use_Any_MID
 	.long	Str_Direkter_Anschluss_an_einen_PC_und_Verwe
 	.long	Str_Connectez_directement_un_PC_et_utilisez
 	.long	Str_Conecte_directamente_a_un_PC_y_utilice_c
-	.long	Str_empty_544
-	.long	Str_empty_543
-	.long	Str_empty_542
+	.long	Str_empty_547
+	.long	Str_empty_546
+	.long	Str_empty_545
 
 Str_Record_Digital_Audio_Into_the_Included_A:	.asciz "Record Digital Audio Into the Included Audio Recorder or Your Favourite Recording Software!"
 Str_Nehmen_Sie_digitale_Audiosignale_mit_dem:	.asciz "Nehmen Sie digitale Audiosignale mit dem mitgelieferten Audio Recorder oder Ihrer bevorzugten Aufnahme-Software auf!"
 Str_Enregistrez_des_donn_es_audio_num_riques:	.asciz "Enregistrez des donn\xE9es audio num\xE9riques dans le magn\xE9tophone audio inclus ou dans votre logiciel d'enregistrement favori!"
 Str_Grabe_el_audio_digital_en_el_grabador_de:	.asciz "\xA1Grabe el audio digital en el grabador de audio incluido o su software de grabaci\xF3n favorito!"
-Str_empty_541:	.asciz "="
-Str_empty_540:	.asciz "="
-Str_empty_539:	.asciz "="
+Str_empty_544:	.asciz "="
+Str_empty_543:	.asciz "="
+Str_empty_542:	.asciz "="
 
 ptrs_48513F68:
 	.long	Str_Record_Digital_Audio_Into_the_Included_A
 	.long	Str_Nehmen_Sie_digitale_Audiosignale_mit_dem
 	.long	Str_Enregistrez_des_donn_es_audio_num_riques
 	.long	Str_Grabe_el_audio_digital_en_el_grabador_de
-	.long	Str_empty_541
-	.long	Str_empty_540
-	.long	Str_empty_539
+	.long	Str_empty_544
+	.long	Str_empty_543
+	.long	Str_empty_542
 
 Str_Mix_the_Line_In_Microphone_Inputs_of_the:	.asciz "Mix the Line In & Microphone Inputs of the KN With Your Recording"
 Str_Mischen_Sie_den_Line_In_und_Mikrofoneing:	.asciz "Mischen Sie den Line In und Mikrofoneingang des KN mit Ihrer Aufnahme"
 Str_Mixez_les_entr_es_Line_In_et_Microphone:	.asciz "Mixez les entr\xE9es Line In et Microphone du KN avec votre enregistrement"
 Str_Mezcle_la_entrada_de_l_nea_y_las_entrada:	.asciz "Mezcle la entrada de l\xEDnea y las entradas de micr\xF3fono del KN con su grabaci\xF3n"
-Str_empty_538:	.asciz "="
-Str_empty_537:	.asciz "="
-Str_empty_536:	.asciz "="
+Str_empty_541:	.asciz "="
+Str_empty_540:	.asciz "="
+Str_empty_539:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485140AC:
@@ -15975,17 +15979,17 @@ ptrs_485140AC:
 	.long	Str_Mischen_Sie_den_Line_In_und_Mikrofoneing
 	.long	Str_Mixez_les_entr_es_Line_In_et_Microphone
 	.long	Str_Mezcle_la_entrada_de_l_nea_y_las_entrada
-	.long	Str_empty_538
-	.long	Str_empty_537
-	.long	Str_empty_536
+	.long	Str_empty_541
+	.long	Str_empty_540
+	.long	Str_empty_539
 
 Str_Save_as_a_WAVE_file_or_convert_to_MP3_or:	.asciz "Save as a WAVE file or convert to MP3 or WMA, The Most Suitable Formats To Send By Email!"
 Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o:	.asciz "Speichern Sie die Daten als WAVE-Datei oder konvertieren Sie sie zu MP3 oder WMA, den am besten geeigneten Formaten f\xFCr die Versendung per E-Mail!"
 Str_Sauvegardez_comme_fichier_WAVE_ou_conver:	.asciz "Sauvegardez comme fichier WAVE ou convertissez en formats MP3 ou WMA, les mieux adapt\xE9s \xE0 l'envoi par e-mail!"
 Str_Memorice_un_archivo_WAVE_o_convierta_a_M:	.asciz "Memorice un archivo WAVE o convierta a MP3 o WMA, \xA1los formatos m\xE1s adecuados para enviar sus correos electr\xF3nicos!"
-Str_empty_535:	.asciz "="
-Str_empty_534:	.asciz "="
-Str_empty_533:	.asciz "="
+Str_empty_538:	.asciz "="
+Str_empty_537:	.asciz "="
+Str_empty_536:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485142A0:
@@ -15993,17 +15997,17 @@ ptrs_485142A0:
 	.long	Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o
 	.long	Str_Sauvegardez_comme_fichier_WAVE_ou_conver
 	.long	Str_Memorice_un_archivo_WAVE_o_convierta_a_M
-	.long	Str_empty_535
-	.long	Str_empty_534
-	.long	Str_empty_533
+	.long	Str_empty_538
+	.long	Str_empty_537
+	.long	Str_empty_536
 
 Str_Burn_An_Audio_CD_Of_Your_Final_Mix_On_Yo:	.asciz "Burn An Audio CD Of Your Final Mix On Your PC!"
 Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm:	.asciz "Brennen Sie eine Audio-CD von Ihrer Endmischung auf Ihrem PC!"
 Str_Gravez_un_CD_audio_de_votre_mixage_final:	.asciz "Gravez un CD audio de votre mixage final sur votre PC!"
 Str_Grabe_un_CD_de_audio_de_su_mezcla_final:	.asciz "\xA1Grabe un CD de audio de su mezcla final en su PC!"
-Str_empty_532:	.asciz "="
-Str_empty_531:	.asciz "="
-Str_empty_530:	.asciz "="
+Str_empty_535:	.asciz "="
+Str_empty_534:	.asciz "="
+Str_empty_533:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_4851439C:
@@ -16011,17 +16015,17 @@ ptrs_4851439C:
 	.long	Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm
 	.long	Str_Gravez_un_CD_audio_de_votre_mixage_final
 	.long	Str_Grabe_un_CD_de_audio_de_su_mezcla_final
-	.long	Str_empty_532
-	.long	Str_empty_531
-	.long	Str_empty_530
+	.long	Str_empty_535
+	.long	Str_empty_534
+	.long	Str_empty_533
 
 Str_The_KN_Is_Your_Guide_To_Decades_Of_Pop_M:	.asciz "The KN Is Your Guide To Decades Of Pop Music!"
 Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P:	.asciz "Das KN erschlie\xDFt Ihnen Jahrzehnte der Popmusik!"
 Str_Le_KN_est_votre_guide_pour_des_d_cades_d:	.asciz "Le KN est votre guide pour des d\xE9cades de musique pop!"
 Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s:	.asciz "\xA1El KN es su gu\xEDa para las d\xE9cadas de m\xFAsica Pop!"
-Str_empty_529:	.asciz "="
-Str_empty_528:	.asciz "="
-Str_empty_527:	.asciz "="
+Str_empty_532:	.asciz "="
+Str_empty_531:	.asciz "="
+Str_empty_530:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514488:
@@ -16029,17 +16033,17 @@ ptrs_48514488:
 	.long	Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P
 	.long	Str_Le_KN_est_votre_guide_pour_des_d_cades_d
 	.long	Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s
-	.long	Str_empty_529
-	.long	Str_empty_528
-	.long	Str_empty_527
+	.long	Str_empty_532
+	.long	Str_empty_531
+	.long	Str_empty_530
 
 Str_The_KN_s_Music_Stylist_Will_Even_Set_A_S:	.asciz "The KN's Music Stylist Will Even Set A Suitable Tempo, Sounds, TechniChord, Balance, Pad Banks...."
 Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e:	.asciz "Der MUSIC STYLIST des KN liefert sogar ein geeignetes Tempo, Kl\xE4nge, TECHNICHORD, Balance, Pad Banks...."
 Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t:	.asciz "Le MUSIC STYLIST du KN r\xE8glera m\xEAme le tempo appropri\xE9, les sonorit\xE9s, le TECHNICHORD, la balance, les banques de pads..."
 Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo:	.asciz "El MUSIC STYLIST de KN ajusta un tiempo, sonido adecuados, TECHNICHORD, Balance, Bancos de teclas...."
-Str_empty_526:	.asciz "="
-Str_empty_525:	.asciz "="
-Str_empty_524:	.asciz "="
+Str_empty_529:	.asciz "="
+Str_empty_528:	.asciz "="
+Str_empty_527:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514658:
@@ -16047,17 +16051,17 @@ ptrs_48514658:
 	.long	Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e
 	.long	Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t
 	.long	Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo
-	.long	Str_empty_526
-	.long	Str_empty_525
-	.long	Str_empty_524
+	.long	Str_empty_529
+	.long	Str_empty_528
+	.long	Str_empty_527
 
 Str_In_Fact_Everything_You_Need_For_A_Profes:	.asciz "In Fact Everything You Need For A Professional Performance!"
 Str_In_der_Tat_alles_was_Sie_f_r_eine_profes:	.asciz "In der Tat, alles, was Sie f\xFCr eine professionelle Darbietung brauchen!"
 Str_En_fait_tout_ce_dont_vous_avez_besoin_po:	.asciz "En fait, tout ce dont vous avez besoin pour une interpr\xE9tation professionnelle!"
 Str_De_hecho_todo_lo_que_necesita_para_una_e:	.asciz "De hecho \xA1todo lo que necesita para una ejecuci\xF3n profesional!"
-Str_empty_523:	.asciz "="
-Str_empty_522:	.asciz "="
-Str_empty_521:	.asciz "="
+Str_empty_526:	.asciz "="
+Str_empty_525:	.asciz "="
+Str_empty_524:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514790:
@@ -16065,17 +16069,17 @@ ptrs_48514790:
 	.long	Str_In_der_Tat_alles_was_Sie_f_r_eine_profes
 	.long	Str_En_fait_tout_ce_dont_vous_avez_besoin_po
 	.long	Str_De_hecho_todo_lo_que_necesita_para_una_e
-	.long	Str_empty_523
-	.long	Str_empty_522
-	.long	Str_empty_521
+	.long	Str_empty_526
+	.long	Str_empty_525
+	.long	Str_empty_524
 
 Str_Choose_From_a_huge_range_of_Music_Styles:	.asciz "Choose From a huge range of Music Styles, Produced for You by Top Musicians"
 Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC:	.asciz "W\xE4hlen Sie aus einer Vielzahl von MUSIC STYLES, die von Spitzenmusikern f\xFCr Sie produziert wurden"
 Str_Choisissez_parmi_une_vari_t_incroyable_d:	.asciz "Choisissez parmi une vari\xE9t\xE9 incroyable de MUSIC STYLES, cr\xE9\xE9s pour vous par des musiciens du plus haut niveau"
 Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL:	.asciz "Elija entre la enorme gama de MUSIC STYLES, producidos para usted por los mejores m\xFAsicos"
-Str_empty_520:	.asciz "="
-Str_empty_519:	.asciz "="
-Str_empty_518:	.asciz "="
+Str_empty_523:	.asciz "="
+Str_empty_522:	.asciz "="
+Str_empty_521:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_4851492C:
@@ -16083,17 +16087,17 @@ ptrs_4851492C:
 	.long	Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC
 	.long	Str_Choisissez_parmi_une_vari_t_incroyable_d
 	.long	Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL
-	.long	Str_empty_520
-	.long	Str_empty_519
-	.long	Str_empty_518
+	.long	Str_empty_523
+	.long	Str_empty_522
+	.long	Str_empty_521
 
 Str_Ready_to_create_your_own_song:	.asciz "Ready to create your own song?"
 Str_Sind_Sie_bereit_zu_musizieren:	.asciz "Sind Sie bereit zu musizieren?"
 Str_Pr_t_composer:	.asciz "Pr\xEAt \xE0 composer ?"
 Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
-Str_empty_517:	.asciz "="
-Str_empty_516:	.asciz "="
-Str_empty_515:	.asciz "="
+Str_empty_520:	.asciz "="
+Str_empty_519:	.asciz "="
+Str_empty_518:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485149BC:
@@ -16101,17 +16105,17 @@ ptrs_485149BC:
 	.long	Str_Sind_Sie_bereit_zu_musizieren
 	.long	Str_Pr_t_composer
 	.long	Str_Listo_para_crear_la_m_sica
-	.long	Str_empty_517
-	.long	Str_empty_516
-	.long	Str_empty_515
+	.long	Str_empty_520
+	.long	Str_empty_519
+	.long	Str_empty_518
 
 Str_Create_8_Part_Accompaniment_Patterns_Wit:	.asciz "Create 8 Part Accompaniment Patterns With The Composer"
 Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste:	.asciz "Erzeugen Sie 8-stimmige Begleitungsmuster mit dem COMPOSER"
 Str_Cr_ez_des_motifs_d_accompagnement_8_part:	.asciz "Cr\xE9ez des motifs d'accompagnement \xE0 8 parties avec le COMPOSER"
 Str_Cree_8_patrones_de_acompa_amiento_de_par:	.asciz "Cree 8 patrones de acompa\xF1amiento de partes con el COMPOSER"
-Str_empty_514:	.asciz "="
-Str_empty_513:	.asciz "="
-Str_empty_512:	.asciz "="
+Str_empty_517:	.asciz "="
+Str_empty_516:	.asciz "="
+Str_empty_515:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514ACC:
@@ -16119,51 +16123,51 @@ ptrs_48514ACC:
 	.long	Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste
 	.long	Str_Cr_ez_des_motifs_d_accompagnement_8_part
 	.long	Str_Cree_8_patrones_de_acompa_amiento_de_par
-	.long	Str_empty_514
-	.long	Str_empty_513
-	.long	Str_empty_512
+	.long	Str_empty_517
+	.long	Str_empty_516
+	.long	Str_empty_515
 
 Str_Create_Your_Own_Full_Orchestra_With_The:	.asciz "Create Your Own Full Orchestra With The Built In 16 Track Sequencer!"
 Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste:	.asciz "Erzeugen Sie Ihr eigenes volles Orchester mit dem eingebauten 16-Spur-SEQUENCER"
 Str_Cr_ez_votre_propre_orchestre_complet_ave:	.asciz "Cr\xE9ez votre propre orchestre complet avec le SEQUENCER \xE0 16 pistes incorpor\xE9!"
 Str_Cree_su_propia_orquesta_completa_con_el:	.asciz "\xA1Cree su propia orquesta completa con el SEQUENCER integrado de 16 pistas!"
-Str_empty_511:	.asciz "="
-Str_empty_510:	.asciz "="
-Str_empty_509:	.asciz "="
+Str_empty_514:	.asciz "="
+Str_empty_513:	.asciz "="
+Str_empty_512:	.asciz "="
 
 ptrs_48514C1C:
 	.long	Str_Create_Your_Own_Full_Orchestra_With_The
 	.long	Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste
 	.long	Str_Cr_ez_votre_propre_orchestre_complet_ave
 	.long	Str_Cree_su_propia_orquesta_completa_con_el
-	.long	Str_empty_511
-	.long	Str_empty_510
-	.long	Str_empty_509
+	.long	Str_empty_514
+	.long	Str_empty_513
+	.long	Str_empty_512
 
 Str_Use_The_Full_Sound_Edit_Functions_To_Cre:	.asciz "Use The Full Sound Edit Functions To Create Your Own Sounds From The Huge Wave ROM!"
 Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk:	.asciz "Verwenden Sie die vollen SOUND EDIT-Funktionen, um Ihre eigenen Sounds vom enormen Wave-ROM zu erzeugen!"
 Str_Utilisez_les_fonctions_SOUND_EDIT_compl:	.asciz "Utilisez les fonctions SOUND EDIT compl\xE8tes pour cr\xE9er vos propres sonorit\xE9s \xE0 partir du ROM de Wave \xE9norme!"
 Str_Utilice_las_funciones_del_SOUND_EDIT_tot:	.asciz "\xA1Utilice las funciones del SOUND EDIT total para crear sus propios sonidos del ROM de gran ola!"
-Str_empty_508:	.asciz "="
-Str_empty_507:	.asciz "="
-Str_empty_506:	.asciz "="
+Str_empty_511:	.asciz "="
+Str_empty_510:	.asciz "="
+Str_empty_509:	.asciz "="
 
 ptrs_48514DC8:
 	.long	Str_Use_The_Full_Sound_Edit_Functions_To_Cre
 	.long	Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk
 	.long	Str_Utilisez_les_fonctions_SOUND_EDIT_compl
 	.long	Str_Utilice_las_funciones_del_SOUND_EDIT_tot
-	.long	Str_empty_508
-	.long	Str_empty_507
-	.long	Str_empty_506
+	.long	Str_empty_511
+	.long	Str_empty_510
+	.long	Str_empty_509
 
 Str_Sing_Along_To_Any_Standard_Midi_File_Son:	.asciz "Sing Along To Any Standard Midi File Songs With Lyrics!"
 Str_Singen_Sie_zu_allen_Standard_MIDI_Datei:	.asciz "Singen Sie zu allen Standard-MIDI-Datei-Songs mit Texten mit!"
 Str_Chantez_sur_n_importe_quel_morceau_fichi:	.asciz "Chantez sur n'importe quel morceau \xE0 fichier midi standard avec paroles affich\xE9es!"
 Str_Cante_con_la_letra_de_canciones_de_archi:	.asciz "\xA1Cante con la letra de canciones de archivo Midi normales!"
-Str_empty_505:	.asciz "="
-Str_empty_504:	.asciz "="
-Str_empty_503:	.asciz "="
+Str_empty_508:	.asciz "="
+Str_empty_507:	.asciz "="
+Str_empty_506:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48514EF0:
@@ -16171,34 +16175,34 @@ ptrs_48514EF0:
 	.long	Str_Singen_Sie_zu_allen_Standard_MIDI_Datei
 	.long	Str_Chantez_sur_n_importe_quel_morceau_fichi
 	.long	Str_Cante_con_la_letra_de_canciones_de_archi
-	.long	Str_empty_505
-	.long	Str_empty_504
-	.long	Str_empty_503
+	.long	Str_empty_508
+	.long	Str_empty_507
+	.long	Str_empty_506
 
 Str_Load_Data_from_other_Technics_Instrument:	.asciz "Load Data from other Technics Instruments With Great Compatibility of NX-sound"
 Str_Laden_Sie_Daten_anderer_Technics_Keyboar:	.asciz "Laden Sie Daten anderer Technics Keyboards dank gro\xDFer Kompatibilit\xE4t"
 Str_Vous_pouvez_utiliser_des_disquettes_enre:	.asciz "Vous pouvez utiliser des disquettes enregistr\xE9es sur d'autres instruments Technics"
 Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros instrumentos Technics altamente compatibles"
-Str_empty_502:	.asciz "="
-Str_empty_501:	.asciz "="
-Str_empty_500:	.asciz "="
+Str_empty_505:	.asciz "="
+Str_empty_504:	.asciz "="
+Str_empty_503:	.asciz "="
 
 ptrs_4851503C:
 	.long	Str_Load_Data_from_other_Technics_Instrument
 	.long	Str_Laden_Sie_Daten_anderer_Technics_Keyboar
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_enre
 	.long	Str_Cargue_datos_de_otros_instrumentos_Techn
-	.long	Str_empty_502
-	.long	Str_empty_501
-	.long	Str_empty_500
+	.long	Str_empty_505
+	.long	Str_empty_504
+	.long	Str_empty_503
 
 Str_NX_Sound_Is_Also_Compatible_with_GM_Leve:	.asciz "NX Sound Is Also Compatible with GM Level 2 Standard Midi Files And More!"
 Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM:	.asciz "NX Sounds sind ebenso kompatibel mit GM Level 2 Standard-MIDI-Files und mehr!"
 Str_des_instruments_compatibles_GM_niveau_2:	.asciz "des instruments compatibles GM niveau 2, des s\xE9quences SMF et bien d'autres encore!"
 Str_El_sonido_NX_es_tambi_n_compatible_con_l:	.asciz "El sonido NX es tambi\xE9n compatible con los archivos MIDI est\xE1ndar GM nivel 2..~0d \xA1y otros m\xE1s!"
-Str_empty_499:	.asciz "="
-Str_empty_498:	.asciz "="
-Str_empty_497:	.asciz "="
+Str_empty_502:	.asciz "="
+Str_empty_501:	.asciz "="
+Str_empty_500:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485151AC:
@@ -16206,17 +16210,17 @@ ptrs_485151AC:
 	.long	Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM
 	.long	Str_des_instruments_compatibles_GM_niveau_2
 	.long	Str_El_sonido_NX_es_tambi_n_compatible_con_l
-	.long	Str_empty_499
-	.long	Str_empty_498
-	.long	Str_empty_497
+	.long	Str_empty_502
+	.long	Str_empty_501
+	.long	Str_empty_500
 
 Str_SD_is_The_Perfect_Solution_For_The_KN260:	.asciz "SD is The Perfect Solution For The KN2600 !"
 Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260:	.asciz "SD ist die perfekte L\xF6sung f\xFCr das KN2600!"
 Str_Le_SD_est_la_solution_parfaite_pour_le_K:	.asciz "Le SD est la solution parfaite pour le KN2600!"
 Str_El_SD_es_la_soluci_n_perfecta_para_el_KN:	.asciz "\xA1El SD es la soluci\xF3n perfecta para el KN2600!"
-Str_empty_496:	.asciz "="
-Str_empty_495:	.asciz "="
-Str_empty_494:	.asciz "="
+Str_empty_499:	.asciz "="
+Str_empty_498:	.asciz "="
+Str_empty_497:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515284:
@@ -16224,34 +16228,34 @@ ptrs_48515284:
 	.long	Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260
 	.long	Str_Le_SD_est_la_solution_parfaite_pour_le_K
 	.long	Str_El_SD_es_la_soluci_n_perfecta_para_el_KN
-	.long	Str_empty_496
-	.long	Str_empty_495
-	.long	Str_empty_494
+	.long	Str_empty_499
+	.long	Str_empty_498
+	.long	Str_empty_497
 
 Str_Store_Sort_Hundreds_Of_Files_On_One_Card:	.asciz "Store&Sort Hundreds Of Files On One Card, No Bigger Than A Postage Stamp!"
 Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine:	.asciz "Sie k\xF6nnen Hunderte von Dateien auf einer Karte speichern und sortieren, die nicht gr\xF6\xDFer als eine Briefmarke ist!"
 Str_M_morisez_et_triez_des_centaines_de_fich:	.asciz "M\xE9morisez et triez des centaines de fichiers sur une seule carte grande comme un timbre-poste!"
 Str_Guarda_y_clasifica_cientos_de_archivos_e:	.asciz "\xA1Guarda y clasifica cientos de archivos en una tarjeta del tama\xF1o de sello de correo!"
-Str_empty_493:	.asciz "="
-Str_empty_492:	.asciz "="
-Str_empty_491:	.asciz "="
+Str_empty_496:	.asciz "="
+Str_empty_495:	.asciz "="
+Str_empty_494:	.asciz "="
 
 ptrs_48515418:
 	.long	Str_Store_Sort_Hundreds_Of_Files_On_One_Card
 	.long	Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine
 	.long	Str_M_morisez_et_triez_des_centaines_de_fich
 	.long	Str_Guarda_y_clasifica_cientos_de_archivos_e
-	.long	Str_empty_493
-	.long	Str_empty_492
-	.long	Str_empty_491
+	.long	Str_empty_496
+	.long	Str_empty_495
+	.long	Str_empty_494
 
 Str_Huge_Capacity_Quick_Loading_Shock_Proof:	.asciz "Huge Capacity!  /  Quick Loading!  /  Shock Proof!"
 Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe:	.asciz "Riesige Kapazit\xE4t!  /  Schnelles Laden!  /  Sto\xDFfest!"
 Str_Capacit_norme_Chargement_rapide_Antichoc:	.asciz "Capacit\xE9 \xE9norme! / Chargement rapide! / Antichocs!"
 Str_Capacidad_gigante_R_pida_carga_A_prueba:	.asciz "\xA1Capacidad gigante! / \xA1R\xE1pida carga! / \xA1A prueba de choques!"
-Str_empty_490:	.asciz "="
-Str_empty_489:	.asciz "="
-Str_empty_488:	.asciz "="
+Str_empty_493:	.asciz "="
+Str_empty_492:	.asciz "="
+Str_empty_491:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515514:
@@ -16259,17 +16263,17 @@ ptrs_48515514:
 	.long	Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe
 	.long	Str_Capacit_norme_Chargement_rapide_Antichoc
 	.long	Str_Capacidad_gigante_R_pida_carga_A_prueba
-	.long	Str_empty_490
-	.long	Str_empty_489
-	.long	Str_empty_488
+	.long	Str_empty_493
+	.long	Str_empty_492
+	.long	Str_empty_491
 
 Str_Never_Lose_A_Song_File_Again:	.asciz "Never Lose A Song File Again!"
 Str_Sie_brauchen_nie_wieder_eine_Songdatei_z:	.asciz "Sie brauchen nie wieder eine Songdatei zu verlieren!"
 Str_Ne_perdez_plus_jamais_un_fichier_de_morc:	.asciz "Ne perdez plus jamais un fichier de morceaux!"
 Str_Ya_no_tendr_que_perder_archivos_de_canci:	.asciz "\xA1Ya no tendr\xE1 que perder archivos de canciones!"
-Str_empty_487:	.asciz "="
-Str_empty_486:	.asciz "="
-Str_empty_485:	.asciz "="
+Str_empty_490:	.asciz "="
+Str_empty_489:	.asciz "="
+Str_empty_488:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_485155E8:
@@ -16277,51 +16281,51 @@ ptrs_485155E8:
 	.long	Str_Sie_brauchen_nie_wieder_eine_Songdatei_z
 	.long	Str_Ne_perdez_plus_jamais_un_fichier_de_morc
 	.long	Str_Ya_no_tendr_que_perder_archivos_de_canci
-	.long	Str_empty_487
-	.long	Str_empty_486
-	.long	Str_empty_485
+	.long	Str_empty_490
+	.long	Str_empty_489
+	.long	Str_empty_488
 
 Str_The_KN2600_Brings_You_The_New_SD_Sound_S:	.asciz "The KN2600 Brings You The New SD Sound (SMF) Format!"
 Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN:	.asciz "Das KN2600 bringt Ihnen das neue SD SOUND (SMF)-Format!"
 Str_Le_KN2600_vous_offre_le_nouveau_format_S:	.asciz "Le KN2600 vous offre le nouveau format SD SOUND (SMF)!"
 Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN:	.asciz "\xA1El KN2600 le da el nuevo formato SD SOUND (SMF)!"
-Str_empty_484:	.asciz "="
-Str_empty_483:	.asciz "="
-Str_empty_482:	.asciz "="
+Str_empty_487:	.asciz "="
+Str_empty_486:	.asciz "="
+Str_empty_485:	.asciz "="
 
 ptrs_485156E0:
 	.long	Str_The_KN2600_Brings_You_The_New_SD_Sound_S
 	.long	Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN
 	.long	Str_Le_KN2600_vous_offre_le_nouveau_format_S
 	.long	Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN
-	.long	Str_empty_484
-	.long	Str_empty_483
-	.long	Str_empty_482
+	.long	Str_empty_487
+	.long	Str_empty_486
+	.long	Str_empty_485
 
 Str_Play_Along_With_SD_Audio_Tracks:	.asciz "Play Along With SD Audio Tracks!"
 Str_Spielen_Sie_zusammen_mit_SD_Audiospuren:	.asciz "Spielen Sie zusammen mit SD-Audiospuren!"
 Str_Jouez_simultan_ment_avec_les_pistes_SD_A:	.asciz "Jouez simultan\xE9ment avec les pistes SD Audio!"
 Str_Ejecute_con_las_pistas_SD_Audio:	.asciz "\xA1Ejecute con las pistas SD Audio!"
-Str_empty_481:	.asciz "="
-Str_empty_480:	.asciz "="
-Str_empty_479:	.asciz "="
+Str_empty_484:	.asciz "="
+Str_empty_483:	.asciz "="
+Str_empty_482:	.asciz "="
 
 ptrs_4851579C:
 	.long	Str_Play_Along_With_SD_Audio_Tracks
 	.long	Str_Spielen_Sie_zusammen_mit_SD_Audiospuren
 	.long	Str_Jouez_simultan_ment_avec_les_pistes_SD_A
 	.long	Str_Ejecute_con_las_pistas_SD_Audio
-	.long	Str_empty_481
-	.long	Str_empty_480
-	.long	Str_empty_479
+	.long	Str_empty_484
+	.long	Str_empty_483
+	.long	Str_empty_482
 
 Str_The_Storage_Medium_Of_The_Future:	.asciz "The Storage Medium Of The Future! "
 Str_Das_Speichermedium_der_Zukunft:	.asciz "Das Speichermedium der Zukunft! "
 Str_Le_support_de_stockage_de_l_avenir:	.asciz "Le support de stockage de l'avenir! "
 Str_El_medio_de_memorizaci_n_del_futuro:	.asciz "\xA1El medio de memorizaci\xF3n del futuro! "
-Str_empty_478:	.asciz "="
-Str_empty_477:	.asciz "="
-Str_empty_476:	.asciz "="
+Str_empty_481:	.asciz "="
+Str_empty_480:	.asciz "="
+Str_empty_479:	.asciz "="
 	.align	4, 0xFF
 
 ptrs_48515850:
@@ -16329,9 +16333,9 @@ ptrs_48515850:
 	.long	Str_Das_Speichermedium_der_Zukunft
 	.long	Str_Le_support_de_stockage_de_l_avenir
 	.long	Str_El_medio_de_memorizaci_n_del_futuro
-	.long	Str_empty_478
-	.long	Str_empty_477
-	.long	Str_empty_476
+	.long	Str_empty_481
+	.long	Str_empty_480
+	.long	Str_empty_479
 data_4851586C:
 .incbin_range "baserom/kn2400_program.rom", 0x11586C, 0x115934
 
@@ -20181,7 +20185,13 @@ Str_ALL_SONG_FOLDER:	.asciz "ALL SONG <FOLDER "
 Str_empty_402:	.asciz "> "
 	.align	4, 0xFF
 Str_empty_401:	.asciz "      "
-.incbin_range "baserom/kn2400_program.rom", 0x1240AF, 0x1240C8
+	.align	4, 0xFF
+Str_empty_478:	.asciz "      "
+	.align	4, 0xFF
+Str_empty_477:	.asciz "      "
+	.align	4, 0xFF
+Str_empty_476:	.asciz "      "
+	.align	4, 0xFF
 Str_TO_SONG:	.asciz "TO SONG : "
 	.align	4, 0xFF
 Str_GM_GM2_8dGM2:	.asciz "GM/GM2~8dGM2 "
@@ -24758,7 +24768,9 @@ data_4854643E:
 data_48546440:
 .incbin_range "baserom/kn2400_program.rom", 0x146440, 0x14647C
 data_4854647C:
-.incbin_range "baserom/kn2400_program.rom", 0x14647C, 0x14657C
+.incbin_range "baserom/kn2400_program.rom", 0x14647C, 0x14652B
+data_4854652B:
+.incbin_range "baserom/kn2400_program.rom", 0x14652B, 0x14657C
 data_4854657C:
 .incbin_range "baserom/kn2400_program.rom", 0x14657C, 0x14657D
 	.space	95, 0x02
@@ -33913,8 +33925,8 @@ APSTYLE_ApFunctionNames:
 
 # 2 MainFunction procedures; a function id is (0x153 << 16) | its index (the names are the parallel table at slot 0x15b)
 APSTYLE_MainFunctions:
-	IDNAME	FN_OneTchFUNC, 0x4864188D, APSTYLE_MainFunctions, 0x153
-	IDNAME	FN_StyleOutCall, 0x486417A3, APSTYLE_MainFunctions, 0x153
+	IDNAME	FN_OneTchFUNC, OneTchFUNC, APSTYLE_MainFunctions, 0x153
+	IDNAME	FN_StyleOutCall, StyleOutCall, APSTYLE_MainFunctions, 0x153
 	.space	4, 0x00
 
 APSTYLE_MainFunctionNames:
@@ -34088,7 +34100,7 @@ APSTYLE_ResNames:
 .incbin_range "baserom/kn2400_program.rom", 0x16D054, 0x16D058
 
 Jpeg_4856D058:	# a JPG file, 9399 bytes, 300 x 190
-	.incbin	"src/data/media/Jpeg_4856D058.jpg"
+	.incbin	"src/program/data/media/Jpeg_4856D058.jpg"
 	.align	4, 0xFF
 
 ptrs_4856F510:
@@ -35961,7 +35973,7 @@ DEBUG_FunctionNames:
 
 # 1 ApFunction procedures; a function id is (0x12 << 16) | its index (the names are the parallel table at slot 0x1a)
 DEBUG_ApFunctions:
-	IDNAME	FN_CaptureLcdCheck, 0x4864A1BE, DEBUG_ApFunctions, 0x12
+	IDNAME	FN_CaptureLcdCheck, CaptureLcdCheck, DEBUG_ApFunctions, 0x12
 	.space	4, 0x00
 
 DEBUG_ApFunctionNames:
@@ -36129,7 +36141,7 @@ NAMING_FunctionNames:
 
 # 1 ApFunction procedures; a function id is (0x22 << 16) | its index (the names are the parallel table at slot 0x2a)
 NAMING_ApFunctions:
-	IDNAME	FN_NamingCheck, 0x4864BC4E, NAMING_ApFunctions, 0x22
+	IDNAME	FN_NamingCheck, NamingCheck, NAMING_ApFunctions, 0x22
 	.space	4, 0x00
 
 NAMING_ApFunctionNames:
@@ -36199,7 +36211,7 @@ NAMING_ResNames:
 .equ MESSAGE_Classes_SLOT, 0x54
 MESSAGE_Classes:
 	CLASS	Class_IvMessage, CLASS_IvMessage, MESSAGE_Classes, proc=IvMessageProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_IvMessage, sig=ClassSig_IvMessage, fields=ClassFields_IvMessage
-	CLASS	Class_AcPleaseWait, CLASS_AcPleaseWait, MESSAGE_Classes, proc=func_4864C015, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPleaseWait, sig=ClassSig_AcPleaseWait, fields=ClassFields_AcPleaseWait
+	CLASS	Class_AcPleaseWait, CLASS_AcPleaseWait, MESSAGE_Classes, proc=AcPleaseWaitProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcPleaseWait, sig=ClassSig_AcPleaseWait, fields=ClassFields_AcPleaseWait
 	.space	24, 0x00
 MESSAGE_Events:
 	.space	4, 0x00
@@ -36209,7 +36221,7 @@ MESSAGE_Methods:
 # 2 Function procedures; a function id is (0x51 << 16) | its index (the names are the parallel table at slot 0x59)
 MESSAGE_Functions:
 	IDNAME	FN_IvMessageProc, IvMessageProc, MESSAGE_Functions, 0x51
-	IDNAME	FN_AcPleaseWaitProc, func_4864C015, MESSAGE_Functions, 0x51
+	IDNAME	FN_AcPleaseWaitProc, AcPleaseWaitProc, MESSAGE_Functions, 0x51
 	.space	4, 0x00
 
 MESSAGE_FunctionNames:
@@ -36310,7 +36322,7 @@ MESSAGE_ResNames:
 .equ WELCOME_Classes_SLOT, 0x44
 WELCOME_Classes:
 	CLASS	Class_AcWelcomeScreen, CLASS_AcWelcomeScreen, WELCOME_Classes, proc=AcWelcomeScreenProc, parent=CLASS_Screen, allsize=40, selfsize=0, cname=ClassName_AcWelcomeScreen, sig=ClassSig_AcWelcomeScreen, fields=ClassFields_AcWelcomeScreen
-	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=func_4864C89A, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
+	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=AcMPVerProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
 	.space	24, 0x00
 WELCOME_Events:
 	.space	4, 0x00
@@ -36320,7 +36332,7 @@ WELCOME_Methods:
 # 2 Function procedures; a function id is (0x41 << 16) | its index (the names are the parallel table at slot 0x49)
 WELCOME_Functions:
 	IDNAME	FN_AcWelcomeScreenProc, AcWelcomeScreenProc, WELCOME_Functions, 0x41
-	IDNAME	FN_AcMPVerProc, func_4864C89A, WELCOME_Functions, 0x41
+	IDNAME	FN_AcMPVerProc, AcMPVerProc, WELCOME_Functions, 0x41
 	.space	4, 0x00
 
 WELCOME_FunctionNames:
@@ -37600,8 +37612,8 @@ SNDRHY_FunctionNames:
 
 # 2 ApFunction procedures; a function id is (0x62 << 16) | its index (the names are the parallel table at slot 0x6a)
 SNDRHY_ApFunctions:
-	IDNAME	FN_SVariR12OctaveFunc, func_4865D00F, SNDRHY_ApFunctions, 0x62
-	IDNAME	FN_BitmapDrawsw, 0x4865D140, SNDRHY_ApFunctions, 0x62
+	IDNAME	FN_SVariR12OctaveFunc, SVariR12OctaveFunc, SNDRHY_ApFunctions, 0x62
+	IDNAME	FN_BitmapDrawsw, BitmapDrawsw, SNDRHY_ApFunctions, 0x62
 	.space	4, 0x00
 
 SNDRHY_ApFunctionNames:
@@ -37612,8 +37624,8 @@ SNDRHY_ApFunctionNames:
 # 3 MainFunction procedures; a function id is (0x63 << 16) | its index (the names are the parallel table at slot 0x6b)
 SNDRHY_MainFunctions:
 	IDNAME	FN_TtRvari, TtRvari, SNDRHY_MainFunctions, 0x63
-	IDNAME	FN_TtSvari, func_48659511, SNDRHY_MainFunctions, 0x63
-	IDNAME	FN_TtSedrawbar, 0x4865CAF2, SNDRHY_MainFunctions, 0x63
+	IDNAME	FN_TtSvari, TtSvari, SNDRHY_MainFunctions, 0x63
+	IDNAME	FN_TtSedrawbar, TtSedrawbar, SNDRHY_MainFunctions, 0x63
 	.space	4, 0x00
 
 SNDRHY_MainFunctionNames:
@@ -37624,10 +37636,10 @@ SNDRHY_MainFunctionNames:
 
 # 177 objects of block SNDRHY; object <name> is index <name>_ix, id <name>_id = (0x60 << 16) | <name>_ix
 SNDRHY_Viewables:
-	OBJ	TtSvari, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_SndPage1, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_PartSelect1, SNDRHY_Viewables, 0x60
-	OBJ	TtSvari_SndGroup1, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSvari, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSvari_SndPage1, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSvari_PartSelect1, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSvari_SndGroup1, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormal, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormal_SndVari1, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormal_SndVari2, SNDRHY_Viewables, 0x60
@@ -37748,9 +37760,9 @@ SNDRHY_Viewables:
 	OBJ	RvariMemory_RhyCmpVari2, SNDRHY_Viewables, 0x60
 	OBJ	RvariMemory_RhyCmpVari3, SNDRHY_Viewables, 0x60
 	OBJ	RvariMemory_RhyCmpVari4, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar_ExitMode1, SNDRHY_Viewables, 0x60
-	OBJ	TtSedrawbar_FixWin1, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSedrawbar, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSedrawbar_ExitMode1, SNDRHY_Viewables, 0x60
+	OBJ	SNDRHY_TtSedrawbar_FixWin1, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormalOct, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormalOct_SndVari1, SNDRHY_Viewables, 0x60
 	OBJ	SvariNormalOct_SndVari2, SNDRHY_Viewables, 0x60
@@ -37804,10 +37816,10 @@ SNDRHY_Viewables:
 	.space	4, 0x00
 
 SNDRHY_ResNames:
-	.long	RN_TtSvari	# TtSvari
-	.long	RN_empty_174	# TtSvari_SndPage1
-	.long	RN_empty_175	# TtSvari_PartSelect1
-	.long	RN_empty_176	# TtSvari_SndGroup1
+	.long	RN_TtSvari	# SNDRHY_TtSvari
+	.long	RN_empty_174	# SNDRHY_TtSvari_SndPage1
+	.long	RN_empty_175	# SNDRHY_TtSvari_PartSelect1
+	.long	RN_empty_176	# SNDRHY_TtSvari_SndGroup1
 	.long	RN_SvariNormal	# SvariNormal
 	.long	RN_empty_177	# SvariNormal_SndVari1
 	.long	RN_empty_178	# SvariNormal_SndVari2
@@ -37928,9 +37940,9 @@ SNDRHY_ResNames:
 	.long	RN_empty_280	# RvariMemory_RhyCmpVari2
 	.long	RN_empty_281	# RvariMemory_RhyCmpVari3
 	.long	RN_empty_282	# RvariMemory_RhyCmpVari4
-	.long	RN_TtSedrawbar	# TtSedrawbar
-	.long	RN_empty_283	# TtSedrawbar_ExitMode1
-	.long	RN_empty_284	# TtSedrawbar_FixWin1
+	.long	RN_TtSedrawbar	# SNDRHY_TtSedrawbar
+	.long	RN_empty_283	# SNDRHY_TtSedrawbar_ExitMode1
+	.long	RN_empty_284	# SNDRHY_TtSedrawbar_FixWin1
 	.long	RN_SvariNormalOct	# SvariNormalOct
 	.long	RN_empty_285	# SvariNormalOct_SndVari1
 	.long	RN_empty_286	# SvariNormalOct_SndVari2
@@ -38043,8 +38055,8 @@ FAVORITE_ApFunctionNames:
 
 # 2 MainFunction procedures; a function id is (0x83 << 16) | its index (the names are the parallel table at slot 0x8b)
 FAVORITE_MainFunctions:
-	IDNAME	FN_TtFavorite, func_4865D3C2, FAVORITE_MainFunctions, 0x83
-	IDNAME	FN_TtCtFavorite, 0x4865EA4E, FAVORITE_MainFunctions, 0x83
+	IDNAME	FN_TtFavorite, TtFavorite, FAVORITE_MainFunctions, 0x83
+	IDNAME	FN_TtCtFavorite, TtCtFavorite, FAVORITE_MainFunctions, 0x83
 	.space	4, 0x00
 
 FAVORITE_MainFunctionNames:
@@ -38054,50 +38066,50 @@ FAVORITE_MainFunctionNames:
 
 # 87 objects of block FAVORITE; object <name> is index <name>_ix, id <name>_id = (0x80 << 16) | <name>_ix
 FAVORITE_Viewables:
-	OBJ	TtFavorite, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite5, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite6, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite7, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite8, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite9, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Favorite10, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_2, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_3, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_4, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_FavBank1, FAVORITE_Viewables, 0x80
-	OBJ	TtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavBank1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_3, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_4, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_ScreenMenu_BANK_NAMING, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FuncEditSw1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FuncEditSw2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_SET, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexWideES1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexWideES2, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavCategory1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_FavItem1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_CATEGORY, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Label_ITEM, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_Box1, FAVORITE_Viewables, 0x80
-	OBJ	TtCtFavorite_IndexPushSw1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite3, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite4, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite5, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite6, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite7, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite8, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite9, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Favorite10, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Label_1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Label_2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Label_3, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Label_4, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_FavBank1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_FavBank1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexEditSw1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexEditSw2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexEditSw3, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_3, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexEditSw4, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_4, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_BANK, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_FuncEditSw1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_FuncEditSw2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_SET, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexWideES1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexWideES2, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_FavCategory1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_FavItem1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_CATEGORY, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Label_ITEM, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_Box1, FAVORITE_Viewables, 0x80
+	OBJ	FAVORITE_TtCtFavorite_IndexPushSw1, FAVORITE_Viewables, 0x80
 	OBJ	FavBankNaming, FAVORITE_Viewables, 0x80
 	OBJ	FavBankNaming_Naming1, FAVORITE_Viewables, 0x80
 	OBJ	FavBankNaming_FuncEditSw1, FAVORITE_Viewables, 0x80
@@ -38144,50 +38156,50 @@ FAVORITE_Viewables:
 	.space	4, 0x00
 
 FAVORITE_ResNames:
-	.long	RN_TtFavorite	# TtFavorite
-	.long	RN_empty_595	# TtFavorite_Favorite1
-	.long	RN_empty_596	# TtFavorite_Favorite2
-	.long	RN_empty_597	# TtFavorite_Favorite3
-	.long	RN_empty_598	# TtFavorite_Favorite4
-	.long	RN_empty_599	# TtFavorite_Favorite5
-	.long	RN_empty_600	# TtFavorite_Favorite6
-	.long	RN_empty_601	# TtFavorite_Favorite7
-	.long	RN_empty_602	# TtFavorite_Favorite8
-	.long	RN_empty_603	# TtFavorite_Favorite9
-	.long	RN_empty_604	# TtFavorite_Favorite10
-	.long	RN_empty_605	# TtFavorite_IndexEditSw1
-	.long	RN_empty_606	# TtFavorite_Label_1
-	.long	RN_empty_607	# TtFavorite_IndexEditSw2
-	.long	RN_empty_608	# TtFavorite_Label_2
-	.long	RN_empty_609	# TtFavorite_IndexEditSw3
-	.long	RN_empty_610	# TtFavorite_Label_3
-	.long	RN_empty_611	# TtFavorite_IndexEditSw4
-	.long	RN_empty_612	# TtFavorite_Label_4
-	.long	RN_empty_613	# TtFavorite_FavBank1
-	.long	RN_empty_614	# TtFavorite_Label_BANK
-	.long	RN_TtCtFavorite	# TtCtFavorite
-	.long	RN_empty_615	# TtCtFavorite_FavBank1
-	.long	RN_empty_616	# TtCtFavorite_IndexEditSw1
-	.long	RN_empty_617	# TtCtFavorite_Label_1
-	.long	RN_empty_618	# TtCtFavorite_IndexEditSw2
-	.long	RN_empty_619	# TtCtFavorite_Label_2
-	.long	RN_empty_620	# TtCtFavorite_IndexEditSw3
-	.long	RN_empty_621	# TtCtFavorite_Label_3
-	.long	RN_empty_622	# TtCtFavorite_IndexEditSw4
-	.long	RN_empty_623	# TtCtFavorite_Label_4
-	.long	RN_empty_624	# TtCtFavorite_ScreenMenu_BANK_NAMING
-	.long	RN_empty_625	# TtCtFavorite_Label_BANK
-	.long	RN_empty_626	# TtCtFavorite_FuncEditSw1
-	.long	RN_empty_627	# TtCtFavorite_FuncEditSw2
-	.long	RN_empty_628	# TtCtFavorite_Label_SET
-	.long	RN_empty_629	# TtCtFavorite_IndexWideES1
-	.long	RN_empty_630	# TtCtFavorite_IndexWideES2
-	.long	RN_empty_631	# TtCtFavorite_FavCategory1
-	.long	RN_empty_632	# TtCtFavorite_FavItem1
-	.long	RN_empty_633	# TtCtFavorite_Label_CATEGORY
-	.long	RN_empty_634	# TtCtFavorite_Label_ITEM
-	.long	RN_empty_635	# TtCtFavorite_Box1
-	.long	RN_empty_636	# TtCtFavorite_IndexPushSw1
+	.long	RN_TtFavorite	# FAVORITE_TtFavorite
+	.long	RN_empty_595	# FAVORITE_TtFavorite_Favorite1
+	.long	RN_empty_596	# FAVORITE_TtFavorite_Favorite2
+	.long	RN_empty_597	# FAVORITE_TtFavorite_Favorite3
+	.long	RN_empty_598	# FAVORITE_TtFavorite_Favorite4
+	.long	RN_empty_599	# FAVORITE_TtFavorite_Favorite5
+	.long	RN_empty_600	# FAVORITE_TtFavorite_Favorite6
+	.long	RN_empty_601	# FAVORITE_TtFavorite_Favorite7
+	.long	RN_empty_602	# FAVORITE_TtFavorite_Favorite8
+	.long	RN_empty_603	# FAVORITE_TtFavorite_Favorite9
+	.long	RN_empty_604	# FAVORITE_TtFavorite_Favorite10
+	.long	RN_empty_605	# FAVORITE_TtFavorite_IndexEditSw1
+	.long	RN_empty_606	# FAVORITE_TtFavorite_Label_1
+	.long	RN_empty_607	# FAVORITE_TtFavorite_IndexEditSw2
+	.long	RN_empty_608	# FAVORITE_TtFavorite_Label_2
+	.long	RN_empty_609	# FAVORITE_TtFavorite_IndexEditSw3
+	.long	RN_empty_610	# FAVORITE_TtFavorite_Label_3
+	.long	RN_empty_611	# FAVORITE_TtFavorite_IndexEditSw4
+	.long	RN_empty_612	# FAVORITE_TtFavorite_Label_4
+	.long	RN_empty_613	# FAVORITE_TtFavorite_FavBank1
+	.long	RN_empty_614	# FAVORITE_TtFavorite_Label_BANK
+	.long	RN_TtCtFavorite	# FAVORITE_TtCtFavorite
+	.long	RN_empty_615	# FAVORITE_TtCtFavorite_FavBank1
+	.long	RN_empty_616	# FAVORITE_TtCtFavorite_IndexEditSw1
+	.long	RN_empty_617	# FAVORITE_TtCtFavorite_Label_1
+	.long	RN_empty_618	# FAVORITE_TtCtFavorite_IndexEditSw2
+	.long	RN_empty_619	# FAVORITE_TtCtFavorite_Label_2
+	.long	RN_empty_620	# FAVORITE_TtCtFavorite_IndexEditSw3
+	.long	RN_empty_621	# FAVORITE_TtCtFavorite_Label_3
+	.long	RN_empty_622	# FAVORITE_TtCtFavorite_IndexEditSw4
+	.long	RN_empty_623	# FAVORITE_TtCtFavorite_Label_4
+	.long	RN_empty_624	# FAVORITE_TtCtFavorite_ScreenMenu_BANK_NAMING
+	.long	RN_empty_625	# FAVORITE_TtCtFavorite_Label_BANK
+	.long	RN_empty_626	# FAVORITE_TtCtFavorite_FuncEditSw1
+	.long	RN_empty_627	# FAVORITE_TtCtFavorite_FuncEditSw2
+	.long	RN_empty_628	# FAVORITE_TtCtFavorite_Label_SET
+	.long	RN_empty_629	# FAVORITE_TtCtFavorite_IndexWideES1
+	.long	RN_empty_630	# FAVORITE_TtCtFavorite_IndexWideES2
+	.long	RN_empty_631	# FAVORITE_TtCtFavorite_FavCategory1
+	.long	RN_empty_632	# FAVORITE_TtCtFavorite_FavItem1
+	.long	RN_empty_633	# FAVORITE_TtCtFavorite_Label_CATEGORY
+	.long	RN_empty_634	# FAVORITE_TtCtFavorite_Label_ITEM
+	.long	RN_empty_635	# FAVORITE_TtCtFavorite_Box1
+	.long	RN_empty_636	# FAVORITE_TtCtFavorite_IndexPushSw1
 	.long	RN_FavBankNaming	# FavBankNaming
 	.long	RN_empty_637	# FavBankNaming_Naming1
 	.long	RN_empty_638	# FavBankNaming_FuncEditSw1
