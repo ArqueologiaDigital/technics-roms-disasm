@@ -174,38 +174,40 @@ ScreenButton_Sequencer:
 ; ---------------------------------------------------------------------
 
 Sequencer_ButtonTable:
-	.long ScreenLeave_Sequencer                      ; FE8077  [  0]
-	.long ScreenLeave_Sequencer                      ; FE807B  [  1]
-	.long ScreenLeave_Sequencer                      ; FE807F  [  2]
-	.long ScreenLeave_Sequencer                      ; FE8083  [  3]
-	.long ScreenLeave_Sequencer                      ; FE8087  [  4]
-	.long ScreenLeave_Sequencer                      ; FE808B  [  5]
-	.long ScreenLeave_Sequencer                      ; FE808F  [  6]
-	.long ScreenLeave_Sequencer                      ; FE8093  [  7]
-	.long LcdKeyRow1_Sequencer                                 ; FE8097  [  8]
-	.long LcdKeyRow2_Sequencer                                 ; FE809B  [  9]
-	.long LcdKeyRow3_Sequencer                                 ; FE809F  [ 10]
-	.long LcdKeyRow4_Sequencer                                 ; FE80A3  [ 11]
-	.long LcdKeyRow5_Sequencer                                 ; FE80A7  [ 12]
-	.long Sequencer_ButtonTable_Nop13                                 ; FE80AB  [ 13]
-	.long Sequencer_ButtonTable_Nop13                                 ; FE80AF  [ 14]
-	.long ExitKey_Sequencer                                 ; FE80B3  [ 15]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80B7  [ 16]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80BB  [ 17]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80BF  [ 18]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80C3  [ 19]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80C7  [ 20]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80CB  [ 21]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80CF  [ 22]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80D3  [ 23]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80D7  [ 24]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80DB  [ 25]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80DF  [ 26]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80E3  [ 27]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80E7  [ 28]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80EB  [ 29]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80EF  [ 30]
-	.long Sequencer_ButtonTable_Nop16                                 ; FE80F3  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol2,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol3,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol4,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol5,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol6,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol7,	ScreenLeave_Sequencer
+	on_key	KEY_SoftKeyCol8,	ScreenLeave_Sequencer
+	on_key	KEY_LcdRow1,		LcdKeyRow1_Sequencer
+	on_key	KEY_LcdRow2,		LcdKeyRow2_Sequencer
+	on_key	KEY_LcdRow3,		LcdKeyRow3_Sequencer
+	on_key	KEY_LcdRow4,		LcdKeyRow4_Sequencer
+	on_key	KEY_LcdRow5,		LcdKeyRow5_Sequencer
+	on_key	KEY_MinusPlus,		Sequencer_ButtonTable_Nop13
+	on_key	KEY_Code0E,		Sequencer_ButtonTable_Nop13
+	on_key	KEY_Exit,		ExitKey_Sequencer
+	on_key	KEY_Page,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code11,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code12,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code13,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code14,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code15,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code16,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code17,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code18,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code19,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1A,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_NumberPad,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1C,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1D,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Compare,		Sequencer_ButtonTable_Nop16
+	on_key	KEY_Code1F,		Sequencer_ButtonTable_Nop16
+	keymap_end
 ; ---------------------------------------------------------------------
 ; LCD_ScreenRedraw_Begin_Copy -- a second, byte-identical copy of LCD_ScreenRedraw_Begin
 ;
@@ -1060,38 +1062,40 @@ ScreenButton_EditPartSelect:
 ; ---------------------------------------------------------------------
 
 EditPartSelect_ButtonTable:
-	.long SoftKeyCol1_EditPartSelect                                 ; FE857C  [  0]
-	.long SoftKeyCol2_EditPartSelect                                 ; FE8580  [  1]
-	.long SoftKeyCol3_EditPartSelect                                 ; FE8584  [  2]
-	.long SoftKeyCol4_EditPartSelect                                 ; FE8588  [  3]
-	.long SoftKeyCol5_EditPartSelect                                 ; FE858C  [  4]
-	.long SoftKeyCol6_EditPartSelect                                 ; FE8590  [  5]
-	.long SoftKeyCol7_EditPartSelect                                 ; FE8594  [  6]
-	.long SoftKeyCol8_EditPartSelect                                 ; FE8598  [  7]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE859C  [  8]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A0  [  9]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A4  [ 10]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85A8  [ 11]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85AC  [ 12]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85B0  [ 13]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85B4  [ 14]
-	.long ExitKey_EditPartSelect                                 ; FE85B8  [ 15]
-	.long SoftKeyCol8_EditPartSelect_Nop8                                 ; FE85BC  [ 16]
-	.long SoftKeyCol1_EditPartSelect                                 ; FE85C0  [ 17]
-	.long SoftKeyCol2_EditPartSelect                                 ; FE85C4  [ 18]
-	.long SoftKeyCol3_EditPartSelect                                 ; FE85C8  [ 19]
-	.long SoftKeyCol4_EditPartSelect                                 ; FE85CC  [ 20]
-	.long SoftKeyCol5_EditPartSelect                                 ; FE85D0  [ 21]
-	.long SoftKeyCol6_EditPartSelect                                 ; FE85D4  [ 22]
-	.long SoftKeyCol7_EditPartSelect                                 ; FE85D8  [ 23]
-	.long SoftKeyCol8_EditPartSelect                                 ; FE85DC  [ 24]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E0  [ 25]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E4  [ 26]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85E8  [ 27]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85EC  [ 28]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F0  [ 29]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F4  [ 30]
-	.long ExitKey_EditPartSelect_Nop25                                 ; FE85F8  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_EditPartSelect
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_EditPartSelect
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_EditPartSelect
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_EditPartSelect
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_EditPartSelect
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_EditPartSelect
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_EditPartSelect
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_EditPartSelect
+	on_key	KEY_LcdRow1,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow2,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow3,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow4,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_LcdRow5,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_MinusPlus,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_Code0E,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_Exit,		ExitKey_EditPartSelect
+	on_key	KEY_Page,		SoftKeyCol8_EditPartSelect_Nop8
+	on_key	KEY_Code11,		SoftKeyCol1_EditPartSelect
+	on_key	KEY_Code12,		SoftKeyCol2_EditPartSelect
+	on_key	KEY_Code13,		SoftKeyCol3_EditPartSelect
+	on_key	KEY_Code14,		SoftKeyCol4_EditPartSelect
+	on_key	KEY_Code15,		SoftKeyCol5_EditPartSelect
+	on_key	KEY_Code16,		SoftKeyCol6_EditPartSelect
+	on_key	KEY_Code17,		SoftKeyCol7_EditPartSelect
+	on_key	KEY_Code18,		SoftKeyCol8_EditPartSelect
+	on_key	KEY_Code19,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1A,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_NumberPad,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1C,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1D,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Compare,		ExitKey_EditPartSelect_Nop25
+	on_key	KEY_Code1F,		ExitKey_EditPartSelect_Nop25
+	keymap_end
 ; EditPartSelect_PartRefused_Always0(part): `xor A,A / ret` -- every SoftKeyCol<n>_EditPartSelect asks it before EditPartSelect_OpenEditor and
 ;   opens the editor only on A == 0, so in this build no part is ever refused.
 EditPartSelect_PartRefused_Always0:
@@ -3223,38 +3227,40 @@ ScreenButton_NoteEdit:
 ; ---------------------------------------------------------------------
 
 NoteEdit_ButtonTable:
-	.long SoftKeyCol1_NoteEdit                                 ; FE9A4A  [  0]
-	.long SoftKeyCol2_NoteEdit                                 ; FE9A4E  [  1]
-	.long SoftKeyCol3_NoteEdit                                 ; FE9A52  [  2]
-	.long SoftKeyCol4_NoteEdit                                 ; FE9A56  [  3]
-	.long SoftKeyCol5_NoteEdit                                 ; FE9A5A  [  4]
-	.long SoftKeyCol6_NoteEdit                                 ; FE9A5E  [  5]
-	.long SoftKeyCol7_NoteEdit                                 ; FE9A62  [  6]
-	.long SoftKeyCol8_NoteEdit                                 ; FE9A66  [  7]
-	.long LcdKeyRow1_NoteEdit                                 ; FE9A6A  [  8]
-	.long LcdKeyRow2_NoteEdit                                 ; FE9A6E  [  9]
-	.long LcdKeyRow3_NoteEdit                                 ; FE9A72  [ 10]
-	.long LcdKeyRow4_NoteEdit                                 ; FE9A76  [ 11]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A7A  [ 12]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A7E  [ 13]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A82  [ 14]
-	.long ExitKey_NoteEdit                                 ; FE9A86  [ 15]
-	.long LcdKeyRow4_NoteEdit_Nop12                                 ; FE9A8A  [ 16]
-	.long NoteEdit_Button17                                 ; FE9A8E  [ 17]
-	.long NoteEdit_Button18                                 ; FE9A92  [ 18]
-	.long NoteEdit_Button19                                 ; FE9A96  [ 19]
-	.long NoteEdit_Button20                                 ; FE9A9A  [ 20]
-	.long NoteEdit_Button21                                 ; FE9A9E  [ 21]
-	.long NoteEdit_Button22                                 ; FE9AA2  [ 22]
-	.long NoteEdit_Button23                                 ; FE9AA6  [ 23]
-	.long NoteEdit_Button24                                 ; FE9AAA  [ 24]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AAE  [ 25]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AB2  [ 26]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AB6  [ 27]
-	.long NoteEdit_Button24_Nop25                                 ; FE9ABA  [ 28]
-	.long NoteEdit_Button24_Nop25                                 ; FE9ABE  [ 29]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AC2  [ 30]
-	.long NoteEdit_Button24_Nop25                                 ; FE9AC6  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_NoteEdit
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_NoteEdit
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_NoteEdit
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_NoteEdit
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_NoteEdit
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_NoteEdit
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_NoteEdit
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_NoteEdit
+	on_key	KEY_LcdRow1,		LcdKeyRow1_NoteEdit
+	on_key	KEY_LcdRow2,		LcdKeyRow2_NoteEdit
+	on_key	KEY_LcdRow3,		LcdKeyRow3_NoteEdit
+	on_key	KEY_LcdRow4,		LcdKeyRow4_NoteEdit
+	on_key	KEY_LcdRow5,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_MinusPlus,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_Code0E,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_Exit,		ExitKey_NoteEdit
+	on_key	KEY_Page,		LcdKeyRow4_NoteEdit_Nop12
+	on_key	KEY_Code11,		NoteEdit_Button17
+	on_key	KEY_Code12,		NoteEdit_Button18
+	on_key	KEY_Code13,		NoteEdit_Button19
+	on_key	KEY_Code14,		NoteEdit_Button20
+	on_key	KEY_Code15,		NoteEdit_Button21
+	on_key	KEY_Code16,		NoteEdit_Button22
+	on_key	KEY_Code17,		NoteEdit_Button23
+	on_key	KEY_Code18,		NoteEdit_Button24
+	on_key	KEY_Code19,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1A,		NoteEdit_Button24_Nop25
+	on_key	KEY_NumberPad,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1C,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1D,		NoteEdit_Button24_Nop25
+	on_key	KEY_Compare,		NoteEdit_Button24_Nop25
+	on_key	KEY_Code1F,		NoteEdit_Button24_Nop25
+	keymap_end
 ; SoftKeyCol1_NoteEdit: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; NoteEdit_ButtonTable slot 0x00.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol1_NoteEdit:   ; entry: named by 1 `.long` operand, first at 0xFE9A4A
 	ld (PanelDial_UpButton:16), 0x00                                 ; FE9ACA  f1 9c 20 00 00
@@ -3398,38 +3404,40 @@ ScreenButton_DrumEdit:
 ; ---------------------------------------------------------------------
 
 DrumEdit_ButtonTable:
-	.long SoftKeyCol1_DrumEdit                                 ; FE9BA4  [  0]
-	.long SoftKeyCol2_DrumEdit                                 ; FE9BA8  [  1]
-	.long SoftKeyCol3_DrumEdit                                 ; FE9BAC  [  2]
-	.long SoftKeyCol4_DrumEdit                                 ; FE9BB0  [  3]
-	.long SoftKeyCol5_DrumEdit                                 ; FE9BB4  [  4]
-	.long SoftKeyCol6_DrumEdit                                 ; FE9BB8  [  5]
-	.long SoftKeyCol7_DrumEdit                                 ; FE9BBC  [  6]
-	.long SoftKeyCol8_DrumEdit                                 ; FE9BC0  [  7]
-	.long LcdKeyRow1_DrumEdit                                 ; FE9BC4  [  8]
-	.long LcdKeyRow2_DrumEdit                                 ; FE9BC8  [  9]
-	.long LcdKeyRow3_DrumEdit                                 ; FE9BCC  [ 10]
-	.long LcdKeyRow4_DrumEdit                                 ; FE9BD0  [ 11]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BD4  [ 12]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BD8  [ 13]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BDC  [ 14]
-	.long ExitKey_DrumEdit                                 ; FE9BE0  [ 15]
-	.long LcdKeyRow4_DrumEdit_Nop12                                 ; FE9BE4  [ 16]
-	.long DrumEdit_Button17                                 ; FE9BE8  [ 17]
-	.long DrumEdit_Button18                                 ; FE9BEC  [ 18]
-	.long DrumEdit_Button19                                 ; FE9BF0  [ 19]
-	.long DrumEdit_Button20                                 ; FE9BF4  [ 20]
-	.long DrumEdit_Button21                                 ; FE9BF8  [ 21]
-	.long DrumEdit_Button22                                 ; FE9BFC  [ 22]
-	.long DrumEdit_Button23                                 ; FE9C00  [ 23]
-	.long DrumEdit_Button23_Nop24                                 ; FE9C04  [ 24]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C08  [ 25]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C0C  [ 26]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C10  [ 27]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C14  [ 28]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C18  [ 29]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C1C  [ 30]
-	.long DrumEdit_Button23_Nop25                                 ; FE9C20  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_DrumEdit
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_DrumEdit
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_DrumEdit
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DrumEdit
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_DrumEdit
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_DrumEdit
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_DrumEdit
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_DrumEdit
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DrumEdit
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DrumEdit
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DrumEdit
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DrumEdit
+	on_key	KEY_LcdRow5,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_MinusPlus,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_Code0E,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_Exit,		ExitKey_DrumEdit
+	on_key	KEY_Page,		LcdKeyRow4_DrumEdit_Nop12
+	on_key	KEY_Code11,		DrumEdit_Button17
+	on_key	KEY_Code12,		DrumEdit_Button18
+	on_key	KEY_Code13,		DrumEdit_Button19
+	on_key	KEY_Code14,		DrumEdit_Button20
+	on_key	KEY_Code15,		DrumEdit_Button21
+	on_key	KEY_Code16,		DrumEdit_Button22
+	on_key	KEY_Code17,		DrumEdit_Button23
+	on_key	KEY_Code18,		DrumEdit_Button23_Nop24
+	on_key	KEY_Code19,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1A,		DrumEdit_Button23_Nop25
+	on_key	KEY_NumberPad,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1C,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1D,		DrumEdit_Button23_Nop25
+	on_key	KEY_Compare,		DrumEdit_Button23_Nop25
+	on_key	KEY_Code1F,		DrumEdit_Button23_Nop25
+	keymap_end
 ; SoftKeyCol1_DrumEdit: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; DrumEdit_ButtonTable slot 0x00.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol1_DrumEdit:   ; entry: named by 1 `.long` operand, first at 0xFE9BA4
 	ld (PanelDial_UpButton:16), 0x00                                 ; FE9C24  f1 9c 20 00 00

@@ -652,38 +652,40 @@ Fwd_F558AA:		; <- T_F40DFC
 ; ScreenButtons_RealtimeRecordScreen: the 32-slot button table of RealtimeRecordScreen (view-B screen 0x06), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_RealtimeRecordScreen:
-	.long	SoftKeyCol1_SeqPlayAndRealtimeRecord	; F558AE  [ 0] -> SoftKeyCol1_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol2_SeqPlayAndRealtimeRecord	; F558B2  [ 1] -> SoftKeyCol2_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol3_SeqPlayAndRealtimeRecord	; F558B6  [ 2] -> SoftKeyCol3_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol4_SeqPlayAndRealtimeRecord	; F558BA  [ 3] -> SoftKeyCol4_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol5_SeqPlayAndRealtimeRecord	; F558BE  [ 4] -> SoftKeyCol5_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol6_SeqPlayAndRealtimeRecord	; F558C2  [ 5] -> SoftKeyCol6_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol7_SeqPlayAndRealtimeRecord	; F558C6  [ 6] -> SoftKeyCol7_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol8_SeqPlayAndRealtimeRecord	; F558CA  [ 7] -> SoftKeyCol8_SeqPlayAndRealtimeRecord
-	.long	LcdKeyRow1_RealtimeRecordScreen	; F558CE  [ 8] -> LcdKeyRow1_RealtimeRecordScreen
-	.long	LcdKeyRow2_RealtimeRecordScreen	; F558D2  [ 9] -> LcdKeyRow2_RealtimeRecordScreen
-	.long	LcdKeyRow3_RealtimeRecordScreen	; F558D6  [10] -> LcdKeyRow3_RealtimeRecordScreen
-	.long	Nop_Ret_F56510	; F558DA  [11] -> Nop_Ret_F56510
-	.long	Nop_Ret_F56510	; F558DE  [12] -> Nop_Ret_F56510
-	.long	Nop_Ret_F56510	; F558E2  [13] -> Nop_Ret_F56510
-	.long	Nop_Ret_F56510	; F558E6  [14] -> Nop_Ret_F56510
-	.long	ExitKey_RealtimeRecordScreen	; F558EA  [15] -> ExitKey_RealtimeRecordScreen
-	.long	Nop_Ret_F56524	; F558EE  [16] -> Nop_Ret_F56524
-	.long	SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; F558F2  [17] -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; F558F6  [18] -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; F558FA  [19] -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; F558FE  [20] -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; F55902  [21] -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; F55906  [22] -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; F5590A  [23] -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; F5590E  [24] -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
-	.long	Nop_Ret_F56524	; F55912  [25] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F55916  [26] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F5591A  [27] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F5591E  [28] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F55922  [29] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F55926  [30] -> Nop_Ret_F56524
-	.long	Nop_Ret_F56524	; F5592A  [31] -> Nop_Ret_F56524
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8_SeqPlayAndRealtimeRecord
+	on_key	KEY_LcdRow1,		LcdKeyRow1_RealtimeRecordScreen	; -> LcdKeyRow1_RealtimeRecordScreen
+	on_key	KEY_LcdRow2,		LcdKeyRow2_RealtimeRecordScreen	; -> LcdKeyRow2_RealtimeRecordScreen
+	on_key	KEY_LcdRow3,		LcdKeyRow3_RealtimeRecordScreen	; -> LcdKeyRow3_RealtimeRecordScreen
+	on_key	KEY_LcdRow4,		Nop_Ret_F56510	; -> Nop_Ret_F56510
+	on_key	KEY_LcdRow5,		Nop_Ret_F56510	; -> Nop_Ret_F56510
+	on_key	KEY_MinusPlus,		Nop_Ret_F56510	; -> Nop_Ret_F56510
+	on_key	KEY_Code0E,		Nop_Ret_F56510	; -> Nop_Ret_F56510
+	on_key	KEY_Exit,		ExitKey_RealtimeRecordScreen	; -> ExitKey_RealtimeRecordScreen
+	on_key	KEY_Page,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Code11,		SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code12,		SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code13,		SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code14,		SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code15,		SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code16,		SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code17,		SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code18,		SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code19,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Code1A,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_NumberPad,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Code1C,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Code1D,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Compare,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	on_key	KEY_Code1F,		Nop_Ret_F56524	; -> Nop_Ret_F56524
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -711,38 +713,40 @@ ScreenButtons_RealtimeRecordScreen:
 ; ScreenButtons_MetronomeBalanceScreen: the 32-slot button table of MetronomeBalanceScreen (view-B screen 0x0C), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_MetronomeBalanceScreen:
-	.long	Nop_Ret_F56649	; F5592E  [ 0] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55932  [ 1] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55936  [ 2] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5593A  [ 3] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5593E  [ 4] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55942  [ 5] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55946  [ 6] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5594A  [ 7] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5594E  [ 8] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55952  [ 9] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55956  [10] -> Nop_Ret_F56649
-	.long	LcdKeyRow4_MetronomeBalanceScreen	; F5595A  [11] -> LcdKeyRow4_MetronomeBalanceScreen
-	.long	LcdKeyRow5_MetronomeBalanceScreen	; F5595E  [12] -> LcdKeyRow5_MetronomeBalanceScreen
-	.long	Nop_Ret_F56649	; F55962  [13] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55966  [14] -> Nop_Ret_F56649
-	.long	ExitKey_MetronomeBalanceScreen	; F5596A  [15] -> ExitKey_MetronomeBalanceScreen
-	.long	Nop_Ret_F56649	; F5596E  [16] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55972  [17] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55976  [18] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5597A  [19] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5597E  [20] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55982  [21] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55986  [22] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5598A  [23] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5598E  [24] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55992  [25] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F55996  [26] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5599A  [27] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F5599E  [28] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F559A2  [29] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F559A6  [30] -> Nop_Ret_F56649
-	.long	Nop_Ret_F56649	; F559AA  [31] -> Nop_Ret_F56649
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol2,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol3,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol4,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol5,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol6,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol7,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_SoftKeyCol8,	Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_LcdRow1,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_LcdRow2,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_LcdRow3,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MetronomeBalanceScreen	; -> LcdKeyRow4_MetronomeBalanceScreen
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MetronomeBalanceScreen	; -> LcdKeyRow5_MetronomeBalanceScreen
+	on_key	KEY_MinusPlus,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code0E,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Exit,		ExitKey_MetronomeBalanceScreen	; -> ExitKey_MetronomeBalanceScreen
+	on_key	KEY_Page,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code11,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code12,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code13,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code14,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code15,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code16,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code17,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code18,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code19,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code1A,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_NumberPad,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code1C,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code1D,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Compare,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	on_key	KEY_Code1F,		Nop_Ret_F56649	; -> Nop_Ret_F56649
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -771,38 +775,40 @@ ScreenButtons_MetronomeBalanceScreen:
 ; ScreenButtons_CycleRecordScreen: the 32-slot button table of CycleRecordScreen (view-B screen 0x08), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_CycleRecordScreen:
-	.long	Nop_Ret_F5672A	; F559AE  [ 0] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559B2  [ 1] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559B6  [ 2] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559BA  [ 3] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559BE  [ 4] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559C2  [ 5] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559C6  [ 6] -> Nop_Ret_F5672A
-	.long	Nop_Ret_F5672A	; F559CA  [ 7] -> Nop_Ret_F5672A
-	.long	LcdKeyRow1_CycleRecordScreen	; F559CE  [ 8] -> LcdKeyRow1_CycleRecordScreen
-	.long	LcdKeyRow2_CycleRecordScreen	; F559D2  [ 9] -> LcdKeyRow2_CycleRecordScreen
-	.long	LcdKeyRow3_CycleRecordScreen	; F559D6  [10] -> LcdKeyRow3_CycleRecordScreen
-	.long	LcdKeyRow4_CycleRecordScreen	; F559DA  [11] -> LcdKeyRow4_CycleRecordScreen
-	.long	LcdKeyRow5_CycleRecordScreen	; F559DE  [12] -> LcdKeyRow5_CycleRecordScreen
-	.long	Nop_Ret_F567C8	; F559E2  [13] -> Nop_Ret_F567C8
-	.long	Nop_Ret_F567C8	; F559E6  [14] -> Nop_Ret_F567C8
-	.long	ExitKey_CycleRecordScreen	; F559EA  [15] -> ExitKey_CycleRecordScreen
-	.long	Nop_Ret_F568AA	; F559EE  [16] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F559F2  [17] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F559F6  [18] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F559FA  [19] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F559FE  [20] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A02  [21] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A06  [22] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A0A  [23] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A0E  [24] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A12  [25] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A16  [26] -> Nop_Ret_F568AA
-	.long	NumberPadKey_CycleRecordScreen	; F55A1A  [27] -> NumberPadKey_CycleRecordScreen
-	.long	Nop_Ret_F568AA	; F55A1E  [28] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A22  [29] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A26  [30] -> Nop_Ret_F568AA
-	.long	Nop_Ret_F568AA	; F55A2A  [31] -> Nop_Ret_F568AA
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol2,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol3,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol4,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol5,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol6,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol7,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_SoftKeyCol8,	Nop_Ret_F5672A	; -> Nop_Ret_F5672A
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CycleRecordScreen	; -> LcdKeyRow1_CycleRecordScreen
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CycleRecordScreen	; -> LcdKeyRow2_CycleRecordScreen
+	on_key	KEY_LcdRow3,		LcdKeyRow3_CycleRecordScreen	; -> LcdKeyRow3_CycleRecordScreen
+	on_key	KEY_LcdRow4,		LcdKeyRow4_CycleRecordScreen	; -> LcdKeyRow4_CycleRecordScreen
+	on_key	KEY_LcdRow5,		LcdKeyRow5_CycleRecordScreen	; -> LcdKeyRow5_CycleRecordScreen
+	on_key	KEY_MinusPlus,		Nop_Ret_F567C8	; -> Nop_Ret_F567C8
+	on_key	KEY_Code0E,		Nop_Ret_F567C8	; -> Nop_Ret_F567C8
+	on_key	KEY_Exit,		ExitKey_CycleRecordScreen	; -> ExitKey_CycleRecordScreen
+	on_key	KEY_Page,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code11,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code12,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code13,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code14,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code15,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code16,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code17,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code18,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code19,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code1A,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_NumberPad,		NumberPadKey_CycleRecordScreen	; -> NumberPadKey_CycleRecordScreen
+	on_key	KEY_Code1C,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code1D,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Compare,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	on_key	KEY_Code1F,		Nop_Ret_F568AA	; -> Nop_Ret_F568AA
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -831,38 +837,40 @@ ScreenButtons_CycleRecordScreen:
 ; ScreenButtons_SeqPlayScreen: the 32-slot button table of SeqPlayScreen (view-B screen 0x12), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_SeqPlayScreen:
-	.long	SoftKeyCol1_SeqPlayAndRealtimeRecord	; F55A2E  [ 0] -> SoftKeyCol1_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol2_SeqPlayAndRealtimeRecord	; F55A32  [ 1] -> SoftKeyCol2_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol3_SeqPlayAndRealtimeRecord	; F55A36  [ 2] -> SoftKeyCol3_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol4_SeqPlayAndRealtimeRecord	; F55A3A  [ 3] -> SoftKeyCol4_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol5_SeqPlayAndRealtimeRecord	; F55A3E  [ 4] -> SoftKeyCol5_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol6_SeqPlayAndRealtimeRecord	; F55A42  [ 5] -> SoftKeyCol6_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol7_SeqPlayAndRealtimeRecord	; F55A46  [ 6] -> SoftKeyCol7_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol8_SeqPlayAndRealtimeRecord	; F55A4A  [ 7] -> SoftKeyCol8_SeqPlayAndRealtimeRecord
-	.long	LcdKeyRow1_SeqPlayScreen	; F55A4E  [ 8] -> LcdKeyRow1_SeqPlayScreen
-	.long	LcdKeyRow2_SeqPlayScreen	; F55A52  [ 9] -> LcdKeyRow2_SeqPlayScreen
-	.long	LcdKeyRow3_SeqPlayScreen	; F55A56  [10] -> LcdKeyRow3_SeqPlayScreen
-	.long	Nop_Ret_F56DD8	; F55A5A  [11] -> Nop_Ret_F56DD8
-	.long	Nop_Ret_F56DD8	; F55A5E  [12] -> Nop_Ret_F56DD8
-	.long	Nop_Ret_F56DD8	; F55A62  [13] -> Nop_Ret_F56DD8
-	.long	Nop_Ret_F56DD8	; F55A66  [14] -> Nop_Ret_F56DD8
-	.long	ExitKey_SeqPlayScreen	; F55A6A  [15] -> ExitKey_SeqPlayScreen
-	.long	Nop_Ret_F56DF0	; F55A6E  [16] -> Nop_Ret_F56DF0
-	.long	SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; F55A72  [17] -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; F55A76  [18] -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; F55A7A  [19] -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; F55A7E  [20] -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; F55A82  [21] -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; F55A86  [22] -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; F55A8A  [23] -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
-	.long	SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; F55A8E  [24] -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
-	.long	Nop_Ret_F56DF0	; F55A92  [25] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55A96  [26] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55A9A  [27] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55A9E  [28] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55AA2  [29] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55AA6  [30] -> Nop_Ret_F56DF0
-	.long	Nop_Ret_F56DF0	; F55AAA  [31] -> Nop_Ret_F56DF0
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7_SeqPlayAndRealtimeRecord
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8_SeqPlayAndRealtimeRecord
+	on_key	KEY_LcdRow1,		LcdKeyRow1_SeqPlayScreen	; -> LcdKeyRow1_SeqPlayScreen
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SeqPlayScreen	; -> LcdKeyRow2_SeqPlayScreen
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SeqPlayScreen	; -> LcdKeyRow3_SeqPlayScreen
+	on_key	KEY_LcdRow4,		Nop_Ret_F56DD8	; -> Nop_Ret_F56DD8
+	on_key	KEY_LcdRow5,		Nop_Ret_F56DD8	; -> Nop_Ret_F56DD8
+	on_key	KEY_MinusPlus,		Nop_Ret_F56DD8	; -> Nop_Ret_F56DD8
+	on_key	KEY_Code0E,		Nop_Ret_F56DD8	; -> Nop_Ret_F56DD8
+	on_key	KEY_Exit,		ExitKey_SeqPlayScreen	; -> ExitKey_SeqPlayScreen
+	on_key	KEY_Page,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Code11,		SoftKeyCol1Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol1Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code12,		SoftKeyCol2Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol2Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code13,		SoftKeyCol3Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol3Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code14,		SoftKeyCol4Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol4Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code15,		SoftKeyCol5Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol5Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code16,		SoftKeyCol6Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol6Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code17,		SoftKeyCol7Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol7Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code18,		SoftKeyCol8Held_SeqPlayAndRealtimeRecord	; -> SoftKeyCol8Held_SeqPlayAndRealtimeRecord
+	on_key	KEY_Code19,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Code1A,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_NumberPad,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Code1C,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Code1D,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Compare,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	on_key	KEY_Code1F,		Nop_Ret_F56DF0	; -> Nop_Ret_F56DF0
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -890,38 +898,40 @@ ScreenButtons_SeqPlayScreen:
 ; ScreenButtons_CyclePlayScreen: the 32-slot button table of CyclePlayScreen (view-B screen 0x14), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_CyclePlayScreen:
-	.long	Nop_Ret_F56EB7	; F55AAE  [ 0] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55AB2  [ 1] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55AB6  [ 2] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55ABA  [ 3] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55ABE  [ 4] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55AC2  [ 5] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55AC6  [ 6] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55ACA  [ 7] -> Nop_Ret_F56EB7
-	.long	Nop_Ret_F56EB7	; F55ACE  [ 8] -> Nop_Ret_F56EB7
-	.long	LcdKeyRow2_CyclePlayScreen	; F55AD2  [ 9] -> LcdKeyRow2_CyclePlayScreen
-	.long	LcdKeyRow3_CyclePlayScreen	; F55AD6  [10] -> LcdKeyRow3_CyclePlayScreen
-	.long	LcdKeyRow4_CyclePlayScreen	; F55ADA  [11] -> LcdKeyRow4_CyclePlayScreen
-	.long	LcdKeyRow5_CyclePlayScreen	; F55ADE  [12] -> LcdKeyRow5_CyclePlayScreen
-	.long	Nop_Ret_F56EF3	; F55AE2  [13] -> Nop_Ret_F56EF3
-	.long	Nop_Ret_F56EF3	; F55AE6  [14] -> Nop_Ret_F56EF3
-	.long	ExitKey_CyclePlayScreen	; F55AEA  [15] -> ExitKey_CyclePlayScreen
-	.long	Nop_Ret_F56FD5	; F55AEE  [16] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55AF2  [17] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55AF6  [18] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55AFA  [19] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55AFE  [20] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B02  [21] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B06  [22] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B0A  [23] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B0E  [24] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B12  [25] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B16  [26] -> Nop_Ret_F56FD5
-	.long	NumberPadKey_CyclePlayScreen	; F55B1A  [27] -> NumberPadKey_CyclePlayScreen
-	.long	Nop_Ret_F56FD5	; F55B1E  [28] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B22  [29] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B26  [30] -> Nop_Ret_F56FD5
-	.long	Nop_Ret_F56FD5	; F55B2A  [31] -> Nop_Ret_F56FD5
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol2,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol3,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol4,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol5,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol6,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol7,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_SoftKeyCol8,	Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_LcdRow1,		Nop_Ret_F56EB7	; -> Nop_Ret_F56EB7
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CyclePlayScreen	; -> LcdKeyRow2_CyclePlayScreen
+	on_key	KEY_LcdRow3,		LcdKeyRow3_CyclePlayScreen	; -> LcdKeyRow3_CyclePlayScreen
+	on_key	KEY_LcdRow4,		LcdKeyRow4_CyclePlayScreen	; -> LcdKeyRow4_CyclePlayScreen
+	on_key	KEY_LcdRow5,		LcdKeyRow5_CyclePlayScreen	; -> LcdKeyRow5_CyclePlayScreen
+	on_key	KEY_MinusPlus,		Nop_Ret_F56EF3	; -> Nop_Ret_F56EF3
+	on_key	KEY_Code0E,		Nop_Ret_F56EF3	; -> Nop_Ret_F56EF3
+	on_key	KEY_Exit,		ExitKey_CyclePlayScreen	; -> ExitKey_CyclePlayScreen
+	on_key	KEY_Page,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code11,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code12,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code13,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code14,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code15,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code16,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code17,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code18,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code19,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code1A,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_NumberPad,		NumberPadKey_CyclePlayScreen	; -> NumberPadKey_CyclePlayScreen
+	on_key	KEY_Code1C,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code1D,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Compare,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	on_key	KEY_Code1F,		Nop_Ret_F56FD5	; -> Nop_Ret_F56FD5
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -949,38 +959,40 @@ ScreenButtons_CyclePlayScreen:
 ; ScreenButtons_CyclePlayEditScreen: the 32-slot button table of CyclePlayEditScreen (view-B screen 0x26), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_CyclePlayEditScreen:
-	.long	Nop_Ret_F57337	; F55B2E  [ 0] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B32  [ 1] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B36  [ 2] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B3A  [ 3] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B3E  [ 4] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B42  [ 5] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B46  [ 6] -> Nop_Ret_F57337
-	.long	Nop_Ret_F57337	; F55B4A  [ 7] -> Nop_Ret_F57337
-	.long	LcdKeyRow1_CyclePlayEditScreen	; F55B4E  [ 8] -> LcdKeyRow1_CyclePlayEditScreen
-	.long	LcdKeyRow2_CyclePlayEditScreen	; F55B52  [ 9] -> LcdKeyRow2_CyclePlayEditScreen
-	.long	LcdKeyRow3_CyclePlayEditScreen	; F55B56  [10] -> LcdKeyRow3_CyclePlayEditScreen
-	.long	LcdKeyRow4_CyclePlayEditScreen	; F55B5A  [11] -> LcdKeyRow4_CyclePlayEditScreen
-	.long	Nop_Ret_F5736A	; F55B5E  [12] -> Nop_Ret_F5736A
-	.long	Nop_Ret_F5736A	; F55B62  [13] -> Nop_Ret_F5736A
-	.long	Nop_Ret_F5736A	; F55B66  [14] -> Nop_Ret_F5736A
-	.long	ExitKey_CyclePlayEditScreen	; F55B6A  [15] -> ExitKey_CyclePlayEditScreen
-	.long	Nop_Ret_F57381	; F55B6E  [16] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B72  [17] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B76  [18] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B7A  [19] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B7E  [20] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B82  [21] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B86  [22] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B8A  [23] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B8E  [24] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B92  [25] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55B96  [26] -> Nop_Ret_F57381
-	.long	Fwd_F5737D	; F55B9A  [27] -> Fwd_F5737D
-	.long	Nop_Ret_F57381	; F55B9E  [28] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55BA2  [29] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55BA6  [30] -> Nop_Ret_F57381
-	.long	Nop_Ret_F57381	; F55BAA  [31] -> Nop_Ret_F57381
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol2,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol3,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol4,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol5,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol6,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol7,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_SoftKeyCol8,	Nop_Ret_F57337	; -> Nop_Ret_F57337
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CyclePlayEditScreen	; -> LcdKeyRow1_CyclePlayEditScreen
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CyclePlayEditScreen	; -> LcdKeyRow2_CyclePlayEditScreen
+	on_key	KEY_LcdRow3,		LcdKeyRow3_CyclePlayEditScreen	; -> LcdKeyRow3_CyclePlayEditScreen
+	on_key	KEY_LcdRow4,		LcdKeyRow4_CyclePlayEditScreen	; -> LcdKeyRow4_CyclePlayEditScreen
+	on_key	KEY_LcdRow5,		Nop_Ret_F5736A	; -> Nop_Ret_F5736A
+	on_key	KEY_MinusPlus,		Nop_Ret_F5736A	; -> Nop_Ret_F5736A
+	on_key	KEY_Code0E,		Nop_Ret_F5736A	; -> Nop_Ret_F5736A
+	on_key	KEY_Exit,		ExitKey_CyclePlayEditScreen	; -> ExitKey_CyclePlayEditScreen
+	on_key	KEY_Page,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code11,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code12,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code13,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code14,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code15,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code16,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code17,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code18,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code19,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code1A,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_NumberPad,		Fwd_F5737D	; -> Fwd_F5737D
+	on_key	KEY_Code1C,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code1D,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Compare,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	on_key	KEY_Code1F,		Nop_Ret_F57381	; -> Nop_Ret_F57381
+	keymap_end
 
 
 ; --------------------------------------------------------------------------
@@ -1008,38 +1020,40 @@ ScreenButtons_CyclePlayEditScreen:
 ; ScreenButtons_CyclePlayEditScreen29: the 32-slot button table of CyclePlayEditScreen29 (view-B screen 0x29), indexed by panel
 ;   button code through T_PanelButton_CallTableEntry (notes/prom_b_sequencer_screen_buttons.py).
 ScreenButtons_CyclePlayEditScreen29:
-	.long	Nop_Ret_F57418	; F55BAE  [ 0] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BB2  [ 1] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BB6  [ 2] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BBA  [ 3] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BBE  [ 4] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BC2  [ 5] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BC6  [ 6] -> Nop_Ret_F57418
-	.long	Nop_Ret_F57418	; F55BCA  [ 7] -> Nop_Ret_F57418
-	.long	LcdKeyRow1_CyclePlayEditScreen29	; F55BCE  [ 8] -> LcdKeyRow1_CyclePlayEditScreen29
-	.long	LcdKeyRow2_CyclePlayEditScreen29	; F55BD2  [ 9] -> LcdKeyRow2_CyclePlayEditScreen29
-	.long	LcdKeyRow3_CyclePlayEditScreen29	; F55BD6  [10] -> LcdKeyRow3_CyclePlayEditScreen29
-	.long	LcdKeyRow4_CyclePlayEditScreen29	; F55BDA  [11] -> LcdKeyRow4_CyclePlayEditScreen29
-	.long	Nop_Ret_F57429	; F55BDE  [12] -> Nop_Ret_F57429
-	.long	Nop_Ret_F57429	; F55BE2  [13] -> Nop_Ret_F57429
-	.long	Nop_Ret_F57429	; F55BE6  [14] -> Nop_Ret_F57429
-	.long	ExitKey_CyclePlayEditScreen29	; F55BEA  [15] -> ExitKey_CyclePlayEditScreen29
-	.long	Nop_Ret_F57432	; F55BEE  [16] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55BF2  [17] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55BF6  [18] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55BFA  [19] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55BFE  [20] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C02  [21] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C06  [22] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C0A  [23] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C0E  [24] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C12  [25] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C16  [26] -> Nop_Ret_F57432
-	.long	Fwd_F5742E	; F55C1A  [27] -> Fwd_F5742E
-	.long	Nop_Ret_F57432	; F55C1E  [28] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C22  [29] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C26  [30] -> Nop_Ret_F57432
-	.long	Nop_Ret_F57432	; F55C2A  [31] -> Nop_Ret_F57432
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol2,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol3,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol4,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol5,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol6,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol7,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_SoftKeyCol8,	Nop_Ret_F57418	; -> Nop_Ret_F57418
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CyclePlayEditScreen29	; -> LcdKeyRow1_CyclePlayEditScreen29
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CyclePlayEditScreen29	; -> LcdKeyRow2_CyclePlayEditScreen29
+	on_key	KEY_LcdRow3,		LcdKeyRow3_CyclePlayEditScreen29	; -> LcdKeyRow3_CyclePlayEditScreen29
+	on_key	KEY_LcdRow4,		LcdKeyRow4_CyclePlayEditScreen29	; -> LcdKeyRow4_CyclePlayEditScreen29
+	on_key	KEY_LcdRow5,		Nop_Ret_F57429	; -> Nop_Ret_F57429
+	on_key	KEY_MinusPlus,		Nop_Ret_F57429	; -> Nop_Ret_F57429
+	on_key	KEY_Code0E,		Nop_Ret_F57429	; -> Nop_Ret_F57429
+	on_key	KEY_Exit,		ExitKey_CyclePlayEditScreen29	; -> ExitKey_CyclePlayEditScreen29
+	on_key	KEY_Page,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code11,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code12,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code13,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code14,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code15,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code16,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code17,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code18,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code19,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code1A,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_NumberPad,		Fwd_F5742E	; -> Fwd_F5742E
+	on_key	KEY_Code1C,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code1D,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Compare,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	on_key	KEY_Code1F,		Nop_Ret_F57432	; -> Nop_Ret_F57432
+	keymap_end
 
 
 ; --------------------------------------------------------------------------

@@ -123,38 +123,40 @@
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3800:
-	.long DispatchMatrix_NoAction                                 ; FF3800  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3804  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3808  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF380C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3810  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3814  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3818  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF381C  [  7]
-	.long LcdKeyRow1_DiskMenu                        ; FF3820  [  8]
-	.long LcdKeyRow2_DiskMenu                        ; FF3824  [  9]
-	.long LcdKeyRow3_DiskMenu                        ; FF3828  [ 10]
-	.long LcdKeyRow4_DiskMenu                        ; FF382C  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3830  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3834  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3838  [ 14]
-	.long ExitKey_DiskMenu                           ; FF383C  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3840  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF3844  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF3848  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF384C  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF3850  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF3854  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3858  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF385C  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3860  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3864  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3868  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF386C  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3870  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3874  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3878  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF387C  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskMenu
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskMenu
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskMenu
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskMenu
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskMenu
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3880 -- 32 handler pointers.  Read by 0xFF4596, whose bound is the
 ; same `cp H,0x20 / jr NC` at 0xFF459E.  As Dispatch_FF3800 in every other way.
@@ -192,38 +194,40 @@ Dispatch_FF3800:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3880:
-	.long DispatchMatrix_NoAction                                 ; FF3880  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3884  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3888  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF388C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3890  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3894  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3898  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF389C  [  7]
-	.long LcdKeyRow1_MidiFileDirectPlay              ; FF38A0  [  8]
-	.long LcdKeyRow2_MidiFileDirectPlay              ; FF38A4  [  9]
-	.long LcdKeyRow3_MidiFileDirectPlay              ; FF38A8  [ 10]
-	.long LcdKeyRow4_MidiFileDirectPlay              ; FF38AC  [ 11]
-	.long LcdKeyRow5_MidiFileDirectPlay              ; FF38B0  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF38B4  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF38B8  [ 14]
-	.long ExitKey_MidiFileDirectPlay                 ; FF38BC  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF38C0  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF38C4  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF38C8  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF38CC  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF38D0  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF38D4  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF38D8  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF38DC  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF38E0  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF38E4  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF38E8  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF38EC  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF38F0  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF38F4  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF38F8  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF38FC  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileDirectPlay
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileDirectPlay
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileDirectPlay
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileDirectPlay
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileDirectPlay
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileDirectPlay
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3900 -- 32 handler pointers.  Read by 0xFF4995 (`cp H,0x20` at
 ; 0xFF499D).
@@ -261,38 +265,40 @@ Dispatch_FF3880:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3900:
-	.long DispatchMatrix_NoAction                                 ; FF3900  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3904  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3908  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF390C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3910  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3914  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3918  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF391C  [  7]
-	.long LcdKeyRow1_DiskL0adFile                    ; FF3920  [  8]
-	.long LcdKeyRow2_DiskL0adFile                    ; FF3924  [  9]
-	.long LcdKeyRow3_DiskL0adFile                    ; FF3928  [ 10]
-	.long LcdKeyRow4_DiskL0adFile                    ; FF392C  [ 11]
-	.long LcdKeyRow5_DiskL0adFile                    ; FF3930  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3934  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3938  [ 14]
-	.long ExitKey_DiskL0adFile                       ; FF393C  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3940  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF3944  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF3948  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF394C  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF3950  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF3954  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3958  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF395C  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3960  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3964  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3968  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF396C  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3970  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3974  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3978  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF397C  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskL0adFile
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskL0adFile
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskL0adFile
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskL0adFile
+	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskL0adFile
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskL0adFile
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Dispatch_FF3980 -- 32 handler pointers.  Read by 0xFF522F (`cp H,0x20` at
 ; 0xFF5237).
@@ -330,38 +336,40 @@ Dispatch_FF3900:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3980:
-	.long DispatchMatrix_NoAction                                 ; FF3980  [  0]
-	.long DispatchMatrix_NoAction                                 ; FF3984  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3988  [  2]
-	.long DispatchMatrix_NoAction                                 ; FF398C  [  3]
-	.long DispatchMatrix_NoAction                                 ; FF3990  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3994  [  5]
-	.long DispatchMatrix_NoAction                                 ; FF3998  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF399C  [  7]
-	.long LcdKeyRow1_MidiFileL0ad                    ; FF39A0  [  8]
-	.long LcdKeyRow2_MidiFileL0ad                    ; FF39A4  [  9]
-	.long LcdKeyRow3_MidiFileL0ad                    ; FF39A8  [ 10]
-	.long LcdKeyRow4_MidiFileL0ad                    ; FF39AC  [ 11]
-	.long LcdKeyRow5_MidiFileL0ad                    ; FF39B0  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF39B4  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF39B8  [ 14]
-	.long ExitKey_MidiFileL0ad                       ; FF39BC  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF39C0  [ 16]
-	.long DispatchMatrix_NoAction                                 ; FF39C4  [ 17]
-	.long DispatchMatrix_NoAction                                 ; FF39C8  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF39CC  [ 19]
-	.long DispatchMatrix_NoAction                                 ; FF39D0  [ 20]
-	.long DispatchMatrix_NoAction                                 ; FF39D4  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF39D8  [ 22]
-	.long DispatchMatrix_NoAction                                 ; FF39DC  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF39E0  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF39E4  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF39E8  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF39EC  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF39F0  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF39F4  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF39F8  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF39FC  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileL0ad
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileL0ad
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileL0ad
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileL0ad
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileL0ad
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileL0ad
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; ScreenEnterPages_DiskSaveFile -- SIX handler pointers, indexed by the page byte (0x2229)
 ;
@@ -444,198 +452,216 @@ Text_FF3A18:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3A29:
-	.long SoftKeyCol1_DiskSaveFile_Page0                                 ; FF3A29  [  0]
-	.long SoftKeyCol2_DiskSaveFile_Page0                                 ; FF3A2D  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3A31  [  2]
-	.long SoftKeyCol4_DiskSaveFile_Page0                                 ; FF3A35  [  3]
-	.long SoftKeyCol5_DiskSaveFile_Page0                                 ; FF3A39  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3A3D  [  5]
-	.long SoftKeyCol7_DiskSaveFile_Page0                                 ; FF3A41  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF3A45  [  7]
-	.long LcdKeyRow1_DiskSaveFile_Page0              ; FF3A49  [  8]
-	.long DispatchMatrix_NoAction                                 ; FF3A4D  [  9]
-	.long DispatchMatrix_NoAction                                 ; FF3A51  [ 10]
-	.long LcdKeyRow4_DiskSaveFile_Page0              ; FF3A55  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3A59  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3A5D  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3A61  [ 14]
-	.long ExitKey_DiskSaveFile_Page0                 ; FF3A65  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3A69  [ 16]
-	.long SoftKeyCol1_DiskSaveFile_Page0                                 ; FF3A6D  [ 17]
-	.long SoftKeyCol2_DiskSaveFile_Page0                                 ; FF3A71  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF3A75  [ 19]
-	.long SoftKeyCol4_DiskSaveFile_Page0                                 ; FF3A79  [ 20]
-	.long SoftKeyCol5_DiskSaveFile_Page0                                 ; FF3A7D  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3A81  [ 22]
-	.long SoftKeyCol7_DiskSaveFile_Page0                                 ; FF3A85  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3A89  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3A8D  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3A91  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF3A95  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3A99  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3A9D  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3AA1  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF3AA5  [ 31]
-	.long DispatchMatrix_NoAction                                 ; FF3AA9  [ 32]
-	.long DispatchMatrix_NoAction                                 ; FF3AAD  [ 33]
-	.long DispatchMatrix_NoAction                                 ; FF3AB1  [ 34]
-	.long SoftKeyCol4_DiskSaveFile_Page1                                 ; FF3AB5  [ 35]
-	.long DispatchMatrix_NoAction                                 ; FF3AB9  [ 36]
-	.long DispatchMatrix_NoAction                                 ; FF3ABD  [ 37]
-	.long DispatchMatrix_NoAction                                 ; FF3AC1  [ 38]
-	.long DispatchMatrix_NoAction                                 ; FF3AC5  [ 39]
-	.long LcdKeyRow1_DiskSaveFile_Page1              ; FF3AC9  [ 40]
-	.long LcdKeyRow2_DiskSaveFile_Page1              ; FF3ACD  [ 41]
-	.long LcdKeyRow3_DiskSaveFile_Page1              ; FF3AD1  [ 42]
-	.long LcdKeyRow4_DiskSaveFile_Page1              ; FF3AD5  [ 43]
-	.long LcdKeyRow5_DiskSaveFile_Page1              ; FF3AD9  [ 44]
-	.long DispatchMatrix_NoAction                                 ; FF3ADD  [ 45]
-	.long DispatchMatrix_NoAction                                 ; FF3AE1  [ 46]
-	.long ExitKey_DiskSaveFile_Page1                 ; FF3AE5  [ 47]
-	.long DispatchMatrix_NoAction                                 ; FF3AE9  [ 48]
-	.long DispatchMatrix_NoAction                                 ; FF3AED  [ 49]
-	.long DispatchMatrix_NoAction                                 ; FF3AF1  [ 50]
-	.long DispatchMatrix_NoAction                                 ; FF3AF5  [ 51]
-	.long SoftKeyCol4_DiskSaveFile_Page1                                 ; FF3AF9  [ 52]
-	.long DispatchMatrix_NoAction                                 ; FF3AFD  [ 53]
-	.long DispatchMatrix_NoAction                                 ; FF3B01  [ 54]
-	.long DispatchMatrix_NoAction                                 ; FF3B05  [ 55]
-	.long DispatchMatrix_NoAction                                 ; FF3B09  [ 56]
-	.long DispatchMatrix_NoAction                                 ; FF3B0D  [ 57]
-	.long DispatchMatrix_NoAction                                 ; FF3B11  [ 58]
-	.long DispatchMatrix_NoAction                                 ; FF3B15  [ 59]
-	.long DispatchMatrix_NoAction                                 ; FF3B19  [ 60]
-	.long DispatchMatrix_NoAction                                 ; FF3B1D  [ 61]
-	.long DispatchMatrix_NoAction                                 ; FF3B21  [ 62]
-	.long DispatchMatrix_NoAction                                 ; FF3B25  [ 63]
-	.long DispatchMatrix_NoAction                                 ; FF3B29  [ 64]
-	.long DispatchMatrix_NoAction                                 ; FF3B2D  [ 65]
-	.long DispatchMatrix_NoAction                                 ; FF3B31  [ 66]
-	.long DispatchMatrix_NoAction                                 ; FF3B35  [ 67]
-	.long DispatchMatrix_NoAction                                 ; FF3B39  [ 68]
-	.long DispatchMatrix_NoAction                                 ; FF3B3D  [ 69]
-	.long DispatchMatrix_NoAction                                 ; FF3B41  [ 70]
-	.long DispatchMatrix_NoAction                                 ; FF3B45  [ 71]
-	.long DispatchMatrix_NoAction                                 ; FF3B49  [ 72]
-	.long DispatchMatrix_NoAction                                 ; FF3B4D  [ 73]
-	.long LcdKeyRow3_DiskSaveFile_Page2              ; FF3B51  [ 74]
-	.long LcdKeyRow4_DiskSaveFile_Page2              ; FF3B55  [ 75]
-	.long DispatchMatrix_NoAction                                 ; FF3B59  [ 76]
-	.long DispatchMatrix_NoAction                                 ; FF3B5D  [ 77]
-	.long DispatchMatrix_NoAction                                 ; FF3B61  [ 78]
-	.long ExitKey_DiskSaveFile_Page2                 ; FF3B65  [ 79]
-	.long DispatchMatrix_NoAction                                 ; FF3B69  [ 80]
-	.long DispatchMatrix_NoAction                                 ; FF3B6D  [ 81]
-	.long DispatchMatrix_NoAction                                 ; FF3B71  [ 82]
-	.long DispatchMatrix_NoAction                                 ; FF3B75  [ 83]
-	.long DispatchMatrix_NoAction                                 ; FF3B79  [ 84]
-	.long DispatchMatrix_NoAction                                 ; FF3B7D  [ 85]
-	.long DispatchMatrix_NoAction                                 ; FF3B81  [ 86]
-	.long DispatchMatrix_NoAction                                 ; FF3B85  [ 87]
-	.long DispatchMatrix_NoAction                                 ; FF3B89  [ 88]
-	.long DispatchMatrix_NoAction                                 ; FF3B8D  [ 89]
-	.long DispatchMatrix_NoAction                                 ; FF3B91  [ 90]
-	.long DispatchMatrix_NoAction                                 ; FF3B95  [ 91]
-	.long DispatchMatrix_NoAction                                 ; FF3B99  [ 92]
-	.long DispatchMatrix_NoAction                                 ; FF3B9D  [ 93]
-	.long DispatchMatrix_NoAction                                 ; FF3BA1  [ 94]
-	.long DispatchMatrix_NoAction                                 ; FF3BA5  [ 95]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3BA9  [ 96]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3BAD  [ 97]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3BB1  [ 98]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3BB5  [ 99]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3BB9  [100]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3BBD  [101]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3BC1  [102]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3BC5  [103]
-	.long LcdKeyRow1_DiskSaveFile_Page3              ; FF3BC9  [104]
-	.long DispatchMatrix_NoAction                                 ; FF3BCD  [105]
-	.long DispatchMatrix_NoAction                                 ; FF3BD1  [106]
-	.long DispatchMatrix_NoAction                                 ; FF3BD5  [107]
-	.long DispatchMatrix_NoAction                                 ; FF3BD9  [108]
-	.long DispatchMatrix_NoAction                                 ; FF3BDD  [109]
-	.long DispatchMatrix_NoAction                                 ; FF3BE1  [110]
-	.long ExitKey_DiskSaveFile_Pages3_4              ; FF3BE5  [111]
-	.long DispatchMatrix_NoAction                                 ; FF3BE9  [112]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3BED  [113]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3BF1  [114]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3BF5  [115]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3BF9  [116]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3BFD  [117]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C01  [118]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C05  [119]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C09  [120]
-	.long DispatchMatrix_NoAction                                 ; FF3C0D  [121]
-	.long DispatchMatrix_NoAction                                 ; FF3C11  [122]
-	.long DispatchMatrix_NoAction                                 ; FF3C15  [123]
-	.long DispatchMatrix_NoAction                                 ; FF3C19  [124]
-	.long DispatchMatrix_NoAction                                 ; FF3C1D  [125]
-	.long DispatchMatrix_NoAction                                 ; FF3C21  [126]
-	.long DispatchMatrix_NoAction                                 ; FF3C25  [127]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3C29  [128]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3C2D  [129]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3C31  [130]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3C35  [131]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3C39  [132]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C3D  [133]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C41  [134]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C45  [135]
-	.long LcdKeyRow1_DiskSaveFile_Page4              ; FF3C49  [136]
-	.long DispatchMatrix_NoAction                                 ; FF3C4D  [137]
-	.long DispatchMatrix_NoAction                                 ; FF3C51  [138]
-	.long DispatchMatrix_NoAction                                 ; FF3C55  [139]
-	.long DispatchMatrix_NoAction                                 ; FF3C59  [140]
-	.long DispatchMatrix_NoAction                                 ; FF3C5D  [141]
-	.long DispatchMatrix_NoAction                                 ; FF3C61  [142]
-	.long ExitKey_DiskSaveFile_Pages3_4              ; FF3C65  [143]
-	.long DispatchMatrix_NoAction                                 ; FF3C69  [144]
-	.long T_SoundEditNaming_SoftKeyCol1                                   ; FF3C6D  [145]
-	.long T_SoundEditNaming_SoftKeyCol2                                   ; FF3C71  [146]
-	.long T_SoundEditNaming_SoftKeyCol3                                   ; FF3C75  [147]
-	.long T_SoundEditNaming_SoftKeyCol4                                   ; FF3C79  [148]
-	.long T_SoundEditNaming_SoftKeyCol5                                   ; FF3C7D  [149]
-	.long T_SoundEditNaming_SoftKeyCol6                                   ; FF3C81  [150]
-	.long T_SoundEditNaming_SoftKeyCol7                                   ; FF3C85  [151]
-	.long T_SoundEditNaming_SoftKeyCol8                                   ; FF3C89  [152]
-	.long DispatchMatrix_NoAction                                 ; FF3C8D  [153]
-	.long DispatchMatrix_NoAction                                 ; FF3C91  [154]
-	.long DispatchMatrix_NoAction                                 ; FF3C95  [155]
-	.long DispatchMatrix_NoAction                                 ; FF3C99  [156]
-	.long DispatchMatrix_NoAction                                 ; FF3C9D  [157]
-	.long DispatchMatrix_NoAction                                 ; FF3CA1  [158]
-	.long DispatchMatrix_NoAction                                 ; FF3CA5  [159]
-	.long DispatchMatrix_NoAction                                 ; FF3CA9  [160]
-	.long DispatchMatrix_NoAction                                 ; FF3CAD  [161]
-	.long DispatchMatrix_NoAction                                 ; FF3CB1  [162]
-	.long DispatchMatrix_NoAction                                 ; FF3CB5  [163]
-	.long DispatchMatrix_NoAction                                 ; FF3CB9  [164]
-	.long DispatchMatrix_NoAction                                 ; FF3CBD  [165]
-	.long DispatchMatrix_NoAction                                 ; FF3CC1  [166]
-	.long DispatchMatrix_NoAction                                 ; FF3CC5  [167]
-	.long DispatchMatrix_NoAction                                 ; FF3CC9  [168]
-	.long DispatchMatrix_NoAction                                 ; FF3CCD  [169]
-	.long LcdKeyRow3_DiskSaveFile_Page5              ; FF3CD1  [170]
-	.long LcdKeyRow4_DiskSaveFile_Page5              ; FF3CD5  [171]
-	.long DispatchMatrix_NoAction                                 ; FF3CD9  [172]
-	.long DispatchMatrix_NoAction                                 ; FF3CDD  [173]
-	.long DispatchMatrix_NoAction                                 ; FF3CE1  [174]
-	.long ExitKey_DiskSaveFile_Page5                 ; FF3CE5  [175]
-	.long DispatchMatrix_NoAction                                 ; FF3CE9  [176]
-	.long DispatchMatrix_NoAction                                 ; FF3CED  [177]
-	.long DispatchMatrix_NoAction                                 ; FF3CF1  [178]
-	.long DispatchMatrix_NoAction                                 ; FF3CF5  [179]
-	.long DispatchMatrix_NoAction                                 ; FF3CF9  [180]
-	.long DispatchMatrix_NoAction                                 ; FF3CFD  [181]
-	.long DispatchMatrix_NoAction                                 ; FF3D01  [182]
-	.long DispatchMatrix_NoAction                                 ; FF3D05  [183]
-	.long DispatchMatrix_NoAction                                 ; FF3D09  [184]
-	.long DispatchMatrix_NoAction                                 ; FF3D0D  [185]
-	.long DispatchMatrix_NoAction                                 ; FF3D11  [186]
-	.long DispatchMatrix_NoAction                                 ; FF3D15  [187]
-	.long DispatchMatrix_NoAction                                 ; FF3D19  [188]
-	.long DispatchMatrix_NoAction                                 ; FF3D1D  [189]
-	.long DispatchMatrix_NoAction                                 ; FF3D21  [190]
-	.long DispatchMatrix_NoAction                                 ; FF3D25  [191]
+; row 0 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_DiskSaveFile_Page0
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page0
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page0
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page0
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		SoftKeyCol1_DiskSaveFile_Page0
+	on_key	KEY_Code12,		SoftKeyCol2_DiskSaveFile_Page0
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		SoftKeyCol4_DiskSaveFile_Page0
+	on_key	KEY_Code15,		SoftKeyCol5_DiskSaveFile_Page0
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		SoftKeyCol7_DiskSaveFile_Page0
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 1 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_DiskSaveFile_Page1
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskSaveFile_Page1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskSaveFile_Page1
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page1
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		SoftKeyCol4_DiskSaveFile_Page1
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 2 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page2
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page2
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 3 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page3
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 4 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskSaveFile_Page4
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Pages3_4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1
+	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2
+	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3
+	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4
+	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5
+	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6
+	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7
+	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 5 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskSaveFile_Page5
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskSaveFile_Page5
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_DiskSaveFile_Page5
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; ScreenEnterPages_MidiFileSave -- FOUR handler pointers, indexed by the page byte (0x2229)
 ;
@@ -699,198 +725,216 @@ ScreenEnterPages_MidiFileSave:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF3D39:
-	.long SoftKeyCol1_MidiFileSave_Page0                                 ; FF3D39  [  0]
-	.long SoftKeyCol2_MidiFileSave_Page0                                 ; FF3D3D  [  1]
-	.long DispatchMatrix_NoAction                                 ; FF3D41  [  2]
-	.long SoftKeyCol4_MidiFileSave_Page0                                 ; FF3D45  [  3]
-	.long SoftKeyCol5_MidiFileSave_Page0                                 ; FF3D49  [  4]
-	.long DispatchMatrix_NoAction                                 ; FF3D4D  [  5]
-	.long SoftKeyCol7_MidiFileSave_Page0                                 ; FF3D51  [  6]
-	.long DispatchMatrix_NoAction                                 ; FF3D55  [  7]
-	.long LcdKeyRow1_MidiFileSave_Page0              ; FF3D59  [  8]
-	.long DispatchMatrix_NoAction                                 ; FF3D5D  [  9]
-	.long DispatchMatrix_NoAction                                 ; FF3D61  [ 10]
-	.long LcdKeyRow4_MidiFileSave_Page0              ; FF3D65  [ 11]
-	.long DispatchMatrix_NoAction                                 ; FF3D69  [ 12]
-	.long DispatchMatrix_NoAction                                 ; FF3D6D  [ 13]
-	.long DispatchMatrix_NoAction                                 ; FF3D71  [ 14]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3D75  [ 15]
-	.long DispatchMatrix_NoAction                                 ; FF3D79  [ 16]
-	.long SoftKeyCol1_MidiFileSave_Page0                                 ; FF3D7D  [ 17]
-	.long SoftKeyCol2_MidiFileSave_Page0                                 ; FF3D81  [ 18]
-	.long DispatchMatrix_NoAction                                 ; FF3D85  [ 19]
-	.long SoftKeyCol4_MidiFileSave_Page0                                 ; FF3D89  [ 20]
-	.long SoftKeyCol5_MidiFileSave_Page0                                 ; FF3D8D  [ 21]
-	.long DispatchMatrix_NoAction                                 ; FF3D91  [ 22]
-	.long SoftKeyCol7_MidiFileSave_Page0                                 ; FF3D95  [ 23]
-	.long DispatchMatrix_NoAction                                 ; FF3D99  [ 24]
-	.long DispatchMatrix_NoAction                                 ; FF3D9D  [ 25]
-	.long DispatchMatrix_NoAction                                 ; FF3DA1  [ 26]
-	.long DispatchMatrix_NoAction                                 ; FF3DA5  [ 27]
-	.long DispatchMatrix_NoAction                                 ; FF3DA9  [ 28]
-	.long DispatchMatrix_NoAction                                 ; FF3DAD  [ 29]
-	.long DispatchMatrix_NoAction                                 ; FF3DB1  [ 30]
-	.long DispatchMatrix_NoAction                                 ; FF3DB5  [ 31]
-	.long DispatchMatrix_NoAction                                 ; FF3DB9  [ 32]
-	.long DispatchMatrix_NoAction                                 ; FF3DBD  [ 33]
-	.long DispatchMatrix_NoAction                                 ; FF3DC1  [ 34]
-	.long DispatchMatrix_NoAction                                 ; FF3DC5  [ 35]
-	.long DispatchMatrix_NoAction                                 ; FF3DC9  [ 36]
-	.long DispatchMatrix_NoAction                                 ; FF3DCD  [ 37]
-	.long DispatchMatrix_NoAction                                 ; FF3DD1  [ 38]
-	.long DispatchMatrix_NoAction                                 ; FF3DD5  [ 39]
-	.long LcdKeyRow1_MidiFileSave_Page1              ; FF3DD9  [ 40]
-	.long LcdKeyRow2_MidiFileSave_Page1              ; FF3DDD  [ 41]
-	.long LcdKeyRow3_MidiFileSave_Page1              ; FF3DE1  [ 42]
-	.long LcdKeyRow4_MidiFileSave_Page1              ; FF3DE5  [ 43]
-	.long LcdKeyRow5_MidiFileSave_Page1              ; FF3DE9  [ 44]
-	.long DispatchMatrix_NoAction                                 ; FF3DED  [ 45]
-	.long DispatchMatrix_NoAction                                 ; FF3DF1  [ 46]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3DF5  [ 47]
-	.long DispatchMatrix_NoAction                                 ; FF3DF9  [ 48]
-	.long DispatchMatrix_NoAction                                 ; FF3DFD  [ 49]
-	.long DispatchMatrix_NoAction                                 ; FF3E01  [ 50]
-	.long DispatchMatrix_NoAction                                 ; FF3E05  [ 51]
-	.long DispatchMatrix_NoAction                                 ; FF3E09  [ 52]
-	.long DispatchMatrix_NoAction                                 ; FF3E0D  [ 53]
-	.long DispatchMatrix_NoAction                                 ; FF3E11  [ 54]
-	.long DispatchMatrix_NoAction                                 ; FF3E15  [ 55]
-	.long DispatchMatrix_NoAction                                 ; FF3E19  [ 56]
-	.long DispatchMatrix_NoAction                                 ; FF3E1D  [ 57]
-	.long DispatchMatrix_NoAction                                 ; FF3E21  [ 58]
-	.long DispatchMatrix_NoAction                                 ; FF3E25  [ 59]
-	.long DispatchMatrix_NoAction                                 ; FF3E29  [ 60]
-	.long DispatchMatrix_NoAction                                 ; FF3E2D  [ 61]
-	.long DispatchMatrix_NoAction                                 ; FF3E31  [ 62]
-	.long DispatchMatrix_NoAction                                 ; FF3E35  [ 63]
-	.long DispatchMatrix_NoAction                                 ; FF3E39  [ 64]
-	.long DispatchMatrix_NoAction                                 ; FF3E3D  [ 65]
-	.long DispatchMatrix_NoAction                                 ; FF3E41  [ 66]
-	.long DispatchMatrix_NoAction                                 ; FF3E45  [ 67]
-	.long DispatchMatrix_NoAction                                 ; FF3E49  [ 68]
-	.long DispatchMatrix_NoAction                                 ; FF3E4D  [ 69]
-	.long DispatchMatrix_NoAction                                 ; FF3E51  [ 70]
-	.long DispatchMatrix_NoAction                                 ; FF3E55  [ 71]
-	.long DispatchMatrix_NoAction                                 ; FF3E59  [ 72]
-	.long DispatchMatrix_NoAction                                 ; FF3E5D  [ 73]
-	.long LcdKeyRow3_MidiFileSave_Page2              ; FF3E61  [ 74]
-	.long LcdKeyRow4_MidiFileSave_Page2              ; FF3E65  [ 75]
-	.long DispatchMatrix_NoAction                                 ; FF3E69  [ 76]
-	.long DispatchMatrix_NoAction                                 ; FF3E6D  [ 77]
-	.long DispatchMatrix_NoAction                                 ; FF3E71  [ 78]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3E75  [ 79]
-	.long DispatchMatrix_NoAction                                 ; FF3E79  [ 80]
-	.long DispatchMatrix_NoAction                                 ; FF3E7D  [ 81]
-	.long DispatchMatrix_NoAction                                 ; FF3E81  [ 82]
-	.long DispatchMatrix_NoAction                                 ; FF3E85  [ 83]
-	.long DispatchMatrix_NoAction                                 ; FF3E89  [ 84]
-	.long DispatchMatrix_NoAction                                 ; FF3E8D  [ 85]
-	.long DispatchMatrix_NoAction                                 ; FF3E91  [ 86]
-	.long DispatchMatrix_NoAction                                 ; FF3E95  [ 87]
-	.long DispatchMatrix_NoAction                                 ; FF3E99  [ 88]
-	.long DispatchMatrix_NoAction                                 ; FF3E9D  [ 89]
-	.long DispatchMatrix_NoAction                                 ; FF3EA1  [ 90]
-	.long DispatchMatrix_NoAction                                 ; FF3EA5  [ 91]
-	.long DispatchMatrix_NoAction                                 ; FF3EA9  [ 92]
-	.long DispatchMatrix_NoAction                                 ; FF3EAD  [ 93]
-	.long DispatchMatrix_NoAction                                 ; FF3EB1  [ 94]
-	.long DispatchMatrix_NoAction                                 ; FF3EB5  [ 95]
-	.long DispatchMatrix_NoAction                                 ; FF3EB9  [ 96]
-	.long DispatchMatrix_NoAction                                 ; FF3EBD  [ 97]
-	.long DispatchMatrix_NoAction                                 ; FF3EC1  [ 98]
-	.long DispatchMatrix_NoAction                                 ; FF3EC5  [ 99]
-	.long DispatchMatrix_NoAction                                 ; FF3EC9  [100]
-	.long DispatchMatrix_NoAction                                 ; FF3ECD  [101]
-	.long DispatchMatrix_NoAction                                 ; FF3ED1  [102]
-	.long DispatchMatrix_NoAction                                 ; FF3ED5  [103]
-	.long DispatchMatrix_NoAction                                 ; FF3ED9  [104]
-	.long DispatchMatrix_NoAction                                 ; FF3EDD  [105]
-	.long LcdKeyRow3_MidiFileSave_Page3              ; FF3EE1  [106]
-	.long LcdKeyRow4_MidiFileSave_Page3              ; FF3EE5  [107]
-	.long DispatchMatrix_NoAction                                 ; FF3EE9  [108]
-	.long DispatchMatrix_NoAction                                 ; FF3EED  [109]
-	.long DispatchMatrix_NoAction                                 ; FF3EF1  [110]
-	.long ExitKey_MidiFileSave_Pages0_1_2_3          ; FF3EF5  [111]
-	.long DispatchMatrix_NoAction                                 ; FF3EF9  [112]
-	.long DispatchMatrix_NoAction                                 ; FF3EFD  [113]
-	.long DispatchMatrix_NoAction                                 ; FF3F01  [114]
-	.long DispatchMatrix_NoAction                                 ; FF3F05  [115]
-	.long DispatchMatrix_NoAction                                 ; FF3F09  [116]
-	.long DispatchMatrix_NoAction                                 ; FF3F0D  [117]
-	.long DispatchMatrix_NoAction                                 ; FF3F11  [118]
-	.long DispatchMatrix_NoAction                                 ; FF3F15  [119]
-	.long DispatchMatrix_NoAction                                 ; FF3F19  [120]
-	.long DispatchMatrix_NoAction                                 ; FF3F1D  [121]
-	.long DispatchMatrix_NoAction                                 ; FF3F21  [122]
-	.long DispatchMatrix_NoAction                                 ; FF3F25  [123]
-	.long DispatchMatrix_NoAction                                 ; FF3F29  [124]
-	.long DispatchMatrix_NoAction                                 ; FF3F2D  [125]
-	.long DispatchMatrix_NoAction                                 ; FF3F31  [126]
-	.long DispatchMatrix_NoAction                                 ; FF3F35  [127]
-	.long DispatchMatrix_NoAction                                 ; FF3F39  [128]
-	.long DispatchMatrix_NoAction                                 ; FF3F3D  [129]
-	.long DispatchMatrix_NoAction                                 ; FF3F41  [130]
-	.long sub_FF657B                                 ; FF3F45  [131]
-	.long DispatchMatrix_NoAction                                 ; FF3F49  [132]
-	.long DispatchMatrix_NoAction                                 ; FF3F4D  [133]
-	.long DispatchMatrix_NoAction                                 ; FF3F51  [134]
-	.long DispatchMatrix_NoAction                                 ; FF3F55  [135]
-	.long DispatchMatrix_NoAction                                 ; FF3F59  [136]
-	.long DispatchMatrix_NoAction                                 ; FF3F5D  [137]
-	.long LcdKeyRow3_MidiFileSave_Page4              ; FF3F61  [138]
-	.long LcdKeyRow4_MidiFileSave_Page4              ; FF3F65  [139]
-	.long DispatchMatrix_NoAction                                 ; FF3F69  [140]
-	.long DispatchMatrix_NoAction                                 ; FF3F6D  [141]
-	.long DispatchMatrix_NoAction                                 ; FF3F71  [142]
-	.long ExitKey_MidiFileSave_Page4                 ; FF3F75  [143]
-	.long DispatchMatrix_NoAction                                 ; FF3F79  [144]
-	.long DispatchMatrix_NoAction                                 ; FF3F7D  [145]
-	.long DispatchMatrix_NoAction                                 ; FF3F81  [146]
-	.long DispatchMatrix_NoAction                                 ; FF3F85  [147]
-	.long DispatchMatrix_NoAction                                 ; FF3F89  [148]
-	.long sub_FF657B                                 ; FF3F8D  [149]
-	.long DispatchMatrix_NoAction                                 ; FF3F91  [150]
-	.long DispatchMatrix_NoAction                                 ; FF3F95  [151]
-	.long DispatchMatrix_NoAction                                 ; FF3F99  [152]
-	.long DispatchMatrix_NoAction                                 ; FF3F9D  [153]
-	.long DispatchMatrix_NoAction                                 ; FF3FA1  [154]
-	.long DispatchMatrix_NoAction                                 ; FF3FA5  [155]
-	.long DispatchMatrix_NoAction                                 ; FF3FA9  [156]
-	.long DispatchMatrix_NoAction                                 ; FF3FAD  [157]
-	.long DispatchMatrix_NoAction                                 ; FF3FB1  [158]
-	.long DispatchMatrix_NoAction                                 ; FF3FB5  [159]
-	.long DispatchMatrix_NoAction                                 ; FF3FB9  [160]
-	.long DispatchMatrix_NoAction                                 ; FF3FBD  [161]
-	.long DispatchMatrix_NoAction                                 ; FF3FC1  [162]
-	.long DispatchMatrix_NoAction                                 ; FF3FC5  [163]
-	.long DispatchMatrix_NoAction                                 ; FF3FC9  [164]
-	.long DispatchMatrix_NoAction                                 ; FF3FCD  [165]
-	.long DispatchMatrix_NoAction                                 ; FF3FD1  [166]
-	.long DispatchMatrix_NoAction                                 ; FF3FD5  [167]
-	.long DispatchMatrix_NoAction                                 ; FF3FD9  [168]
-	.long DispatchMatrix_NoAction                                 ; FF3FDD  [169]
-	.long LcdKeyRow3_MidiFileSave_Page5              ; FF3FE1  [170]
-	.long LcdKeyRow4_MidiFileSave_Page5              ; FF3FE5  [171]
-	.long DispatchMatrix_NoAction                                 ; FF3FE9  [172]
-	.long DispatchMatrix_NoAction                                 ; FF3FED  [173]
-	.long DispatchMatrix_NoAction                                 ; FF3FF1  [174]
-	.long ExitKey_MidiFileSave_Page5                 ; FF3FF5  [175]
-	.long DispatchMatrix_NoAction                                 ; FF3FF9  [176]
-	.long DispatchMatrix_NoAction                                 ; FF3FFD  [177]
-	.long DispatchMatrix_NoAction                                 ; FF4001  [178]
-	.long DispatchMatrix_NoAction                                 ; FF4005  [179]
-	.long DispatchMatrix_NoAction                                 ; FF4009  [180]
-	.long DispatchMatrix_NoAction                                 ; FF400D  [181]
-	.long DispatchMatrix_NoAction                                 ; FF4011  [182]
-	.long DispatchMatrix_NoAction                                 ; FF4015  [183]
-	.long DispatchMatrix_NoAction                                 ; FF4019  [184]
-	.long DispatchMatrix_NoAction                                 ; FF401D  [185]
-	.long DispatchMatrix_NoAction                                 ; FF4021  [186]
-	.long DispatchMatrix_NoAction                                 ; FF4025  [187]
-	.long DispatchMatrix_NoAction                                 ; FF4029  [188]
-	.long DispatchMatrix_NoAction                                 ; FF402D  [189]
-	.long DispatchMatrix_NoAction                                 ; FF4031  [190]
-	.long DispatchMatrix_NoAction                                 ; FF4035  [191]
+; row 0 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_MidiFileSave_Page0
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileSave_Page0
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page0
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		SoftKeyCol1_MidiFileSave_Page0
+	on_key	KEY_Code12,		SoftKeyCol2_MidiFileSave_Page0
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		SoftKeyCol4_MidiFileSave_Page0
+	on_key	KEY_Code15,		SoftKeyCol5_MidiFileSave_Page0
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		SoftKeyCol7_MidiFileSave_Page0
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 1 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileSave_Page1
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileSave_Page1
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page1
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page1
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileSave_Page1
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 2 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page2
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page2
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 3 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page3
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page3
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Pages0_1_2_3
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 4 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	sub_FF657B
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page4
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page4
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page4
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		sub_FF657B
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
+; row 5 of 6
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol4,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
+	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
+	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page5
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page5
+	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
+	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
+	on_key	KEY_Code0E,		DispatchMatrix_NoAction
+	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page5
+	on_key	KEY_Page,		DispatchMatrix_NoAction
+	on_key	KEY_Code11,		DispatchMatrix_NoAction
+	on_key	KEY_Code12,		DispatchMatrix_NoAction
+	on_key	KEY_Code13,		DispatchMatrix_NoAction
+	on_key	KEY_Code14,		DispatchMatrix_NoAction
+	on_key	KEY_Code15,		DispatchMatrix_NoAction
+	on_key	KEY_Code16,		DispatchMatrix_NoAction
+	on_key	KEY_Code17,		DispatchMatrix_NoAction
+	on_key	KEY_Code18,		DispatchMatrix_NoAction
+	on_key	KEY_Code19,		DispatchMatrix_NoAction
+	on_key	KEY_Code1A,		DispatchMatrix_NoAction
+	on_key	KEY_NumberPad,		DispatchMatrix_NoAction
+	on_key	KEY_Code1C,		DispatchMatrix_NoAction
+	on_key	KEY_Code1D,		DispatchMatrix_NoAction
+	on_key	KEY_Compare,		DispatchMatrix_NoAction
+	on_key	KEY_Code1F,		DispatchMatrix_NoAction
+	keymap_end
 ; ---------------------------------------------------------------------
 ; Table_FF4039 -- FOUR 16-bit values: 0x0008, 0x0009, 0x0028, 0x0029
 ;

@@ -22227,38 +22227,40 @@ Record_F1B1A7:
 ; --------------------------------------------------------------------------
 ; ScreenButtons_CombinationNamingWrite: screen 0x36's 32-slot button table, indexed by the raw button code in ScreenButtonBody_CombinationNaming.
 ScreenButtons_CombinationNamingWrite:
-	.long T_SoundEditNaming_SoftKeyCol1                       ; F1B1B0  [0]   -> prom_b 0xF42F84
-	.long T_SoundEditNaming_SoftKeyCol2                       ; F1B1B4  [1]   -> prom_b 0xF42F88
-	.long T_SoundEditNaming_SoftKeyCol3                       ; F1B1B8  [2]   -> prom_b 0xF42F8C
-	.long T_SoundEditNaming_SoftKeyCol4                       ; F1B1BC  [3]   -> prom_b 0xF42F90
-	.long T_SoundEditNaming_SoftKeyCol5                       ; F1B1C0  [4]   -> prom_b 0xF42F94
-	.long T_SoundEditNaming_SoftKeyCol6                       ; F1B1C4  [5]   -> prom_b 0xF42F98
-	.long T_SoundEditNaming_SoftKeyCol7                       ; F1B1C8  [6]   -> prom_b 0xF42F9C
-	.long T_SoundEditNaming_SoftKeyCol8                       ; F1B1CC  [7]   -> prom_b 0xF42FA0
-	.long LcdKeyRow1_CombinationNamingWrite                       ; F1B1D0  [8]   -> prom_a 0xFBF274
-	.long LcdKeyRow2_CombinationNamingWrite                       ; F1B1D4  [9]   -> prom_a 0xFBF295
-	.long CombinationNamingWrite_NoAction                       ; F1B1D8  [10]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1DC  [11]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E0  [12]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E4  [13]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B1E8  [14]   -> prom_a 0xFBF235
-	.long ExitKey_CombinationNamingWrite                       ; F1B1EC  [15]   -> prom_a 0xFBF2AB
-	.long CombinationNamingWrite_NoAction                       ; F1B1F0  [16]   -> prom_a 0xFBF235
-	.long T_SoundEditNaming_SoftKeyCol1                       ; F1B1F4  [17]   -> prom_b 0xF42F84
-	.long T_SoundEditNaming_SoftKeyCol2                       ; F1B1F8  [18]   -> prom_b 0xF42F88
-	.long T_SoundEditNaming_SoftKeyCol3                       ; F1B1FC  [19]   -> prom_b 0xF42F8C
-	.long T_SoundEditNaming_SoftKeyCol4                       ; F1B200  [20]   -> prom_b 0xF42F90
-	.long T_SoundEditNaming_SoftKeyCol5                       ; F1B204  [21]   -> prom_b 0xF42F94
-	.long T_SoundEditNaming_SoftKeyCol6                       ; F1B208  [22]   -> prom_b 0xF42F98
-	.long T_SoundEditNaming_SoftKeyCol7                       ; F1B20C  [23]   -> prom_b 0xF42F9C
-	.long T_SoundEditNaming_SoftKeyCol8                       ; F1B210  [24]   -> prom_b 0xF42FA0
-	.long CombinationNamingWrite_NoAction                       ; F1B214  [25]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B218  [26]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B21C  [27]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B220  [28]   -> prom_a 0xFBF235
-	.long CombinationNamingWrite_NoAction                       ; F1B224  [29]   -> prom_a 0xFBF235
-	.long CompareKey_CombiEdit                       ; F1B228  [30]   -> prom_a 0xFBEDBE
-	.long CombinationNamingWrite_NoAction                       ; F1B22C  [31]   -> prom_a 0xFBF235
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
+	on_key	KEY_SoftKeyCol2,	T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
+	on_key	KEY_SoftKeyCol3,	T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
+	on_key	KEY_SoftKeyCol4,	T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
+	on_key	KEY_SoftKeyCol5,	T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
+	on_key	KEY_SoftKeyCol6,	T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
+	on_key	KEY_SoftKeyCol7,	T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
+	on_key	KEY_SoftKeyCol8,	T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CombinationNamingWrite	; -> prom_a 0xFBF274
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CombinationNamingWrite	; -> prom_a 0xFBF295
+	on_key	KEY_LcdRow3,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_LcdRow4,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_LcdRow5,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_MinusPlus,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code0E,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Exit,		ExitKey_CombinationNamingWrite	; -> prom_a 0xFBF2AB
+	on_key	KEY_Page,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code11,		T_SoundEditNaming_SoftKeyCol1	; -> prom_b 0xF42F84
+	on_key	KEY_Code12,		T_SoundEditNaming_SoftKeyCol2	; -> prom_b 0xF42F88
+	on_key	KEY_Code13,		T_SoundEditNaming_SoftKeyCol3	; -> prom_b 0xF42F8C
+	on_key	KEY_Code14,		T_SoundEditNaming_SoftKeyCol4	; -> prom_b 0xF42F90
+	on_key	KEY_Code15,		T_SoundEditNaming_SoftKeyCol5	; -> prom_b 0xF42F94
+	on_key	KEY_Code16,		T_SoundEditNaming_SoftKeyCol6	; -> prom_b 0xF42F98
+	on_key	KEY_Code17,		T_SoundEditNaming_SoftKeyCol7	; -> prom_b 0xF42F9C
+	on_key	KEY_Code18,		T_SoundEditNaming_SoftKeyCol8	; -> prom_b 0xF42FA0
+	on_key	KEY_Code19,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1A,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_NumberPad,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1C,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Code1D,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	on_key	KEY_Compare,		CompareKey_CombiEdit	; -> prom_a 0xFBEDBE
+	on_key	KEY_Code1F,		CombinationNamingWrite_NoAction	; -> prom_a 0xFBF235
+	keymap_end
 
 ; --------------------------------------------------------------------------
 ; IndexMap_F1B230 -- index map, 0xF1B230-0xF1B238 (9 bytes)

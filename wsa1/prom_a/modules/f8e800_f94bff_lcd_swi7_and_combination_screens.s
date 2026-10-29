@@ -10417,38 +10417,40 @@ sub_F92C62:
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; ---------------------------------------------------------------------
 ScreenButtonHandlers_GroupSoundDisplayHold:
-	.long SoftKeyCol1_GroupSoundDisplayHold                                 ; F92C66  [  0]
-	.long SoftKeyCol2_GroupSoundDisplayHold                                 ; F92C6A  [  1]
-	.long SoftKeyCol3_GroupSoundDisplayHold                                 ; F92C6E  [  2]
-	.long SoftKeyCol4_GroupSoundDisplayHold                                 ; F92C72  [  3]
-	.long SoftKeyCol5_GroupSoundDisplayHold                                 ; F92C76  [  4]
-	.long SoftKeyCol6_GroupSoundDisplayHold                                 ; F92C7A  [  5]
-	.long SoftKeyCol7_GroupSoundDisplayHold                                 ; F92C7E  [  6]
-	.long SoftKeyCol8_GroupSoundDisplayHold                                 ; F92C82  [  7]
-	.long LcdKeyRow1_GroupSoundDisplayHold                                 ; F92C86  [  8]
-	.long LcdKeyRow2_GroupSoundDisplayHold                                 ; F92C8A  [  9]
-	.long LcdKeyRow3_GroupSoundDisplayHold                                 ; F92C8E  [ 10]
-	.long LcdKeyRow4_GroupSoundDisplayHold                                 ; F92C92  [ 11]
-	.long .LF92FC6                                   ; F92C96  [ 12]
-	.long ScreenButtonHandlers_GroupSoundDisplayHold_Nop13                                 ; F92C9A  [ 13]
-	.long ScreenButtonHandlers_GroupSoundDisplayHold_Nop14                                 ; F92C9E  [ 14]
-	.long ExitKey_GroupSoundDisplayHold                                 ; F92CA2  [ 15]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CA6  [ 16]
-	.long SoftKeyCol1_GroupSoundDisplayHold                                 ; F92CAA  [ 17]
-	.long SoftKeyCol2_GroupSoundDisplayHold                                 ; F92CAE  [ 18]
-	.long SoftKeyCol3_GroupSoundDisplayHold                                 ; F92CB2  [ 19]
-	.long SoftKeyCol4_GroupSoundDisplayHold                                 ; F92CB6  [ 20]
-	.long SoftKeyCol5_GroupSoundDisplayHold                                 ; F92CBA  [ 21]
-	.long SoftKeyCol6_GroupSoundDisplayHold                                 ; F92CBE  [ 22]
-	.long SoftKeyCol7_GroupSoundDisplayHold                                 ; F92CC2  [ 23]
-	.long SoftKeyCol8_GroupSoundDisplayHold                                 ; F92CC6  [ 24]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CCA  [ 25]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CCE  [ 26]
-	.long NumberPadKey_GroupSoundDisplayHold                                 ; F92CD2  [ 27]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CD6  [ 28]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CDA  [ 29]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CDE  [ 30]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F92CE2  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_GroupSoundDisplayHold
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_GroupSoundDisplayHold
+	on_key	KEY_LcdRow1,		LcdKeyRow1_GroupSoundDisplayHold
+	on_key	KEY_LcdRow2,		LcdKeyRow2_GroupSoundDisplayHold
+	on_key	KEY_LcdRow3,		LcdKeyRow3_GroupSoundDisplayHold
+	on_key	KEY_LcdRow4,		LcdKeyRow4_GroupSoundDisplayHold
+	on_key	KEY_LcdRow5,		.LF92FC6
+	on_key	KEY_MinusPlus,		ScreenButtonHandlers_GroupSoundDisplayHold_Nop13
+	on_key	KEY_Code0E,		ScreenButtonHandlers_GroupSoundDisplayHold_Nop14
+	on_key	KEY_Exit,		ExitKey_GroupSoundDisplayHold
+	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code11,		SoftKeyCol1_GroupSoundDisplayHold
+	on_key	KEY_Code12,		SoftKeyCol2_GroupSoundDisplayHold
+	on_key	KEY_Code13,		SoftKeyCol3_GroupSoundDisplayHold
+	on_key	KEY_Code14,		SoftKeyCol4_GroupSoundDisplayHold
+	on_key	KEY_Code15,		SoftKeyCol5_GroupSoundDisplayHold
+	on_key	KEY_Code16,		SoftKeyCol6_GroupSoundDisplayHold
+	on_key	KEY_Code17,		SoftKeyCol7_GroupSoundDisplayHold
+	on_key	KEY_Code18,		SoftKeyCol8_GroupSoundDisplayHold
+	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_NumberPad,		NumberPadKey_GroupSoundDisplayHold
+	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1D,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Compare,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1F,		DisplayListPtrs_F914FB_Nop8
+	keymap_end
 DisplayListPtrs_F914FB_Nop8:   ; entry: named by 67 `.long` operands, first at 0xF9151B
 	ret                                                  ; F92CE6  0e
 ; InstallPainter_GroupSoundDisplayHold -- paints the screen whose own text reads "GROUP:", "SOUND", "DISPLAY"
@@ -11589,38 +11591,40 @@ sub_F93553:
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.
 ; ---------------------------------------------------------------------
 ScreenButtonHandlers_CombinationGroupMenu:
-	.long SoftKeyCol1_CombinationGroupMenu                                 ; F93557  [  0]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop1                                 ; F9355B  [  1]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop2                                 ; F9355F  [  2]
-	.long SoftKeyCol4_CombinationGroupMenu                                 ; F93563  [  3]
-	.long SoftKeyCol5_CombinationGroupMenu                                 ; F93567  [  4]
-	.long SoftKeyCol6_CombinationGroupMenu                                 ; F9356B  [  5]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop6                                 ; F9356F  [  6]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop7                                 ; F93573  [  7]
-	.long LcdKeyRow1_CombinationGroupMenu                                 ; F93577  [  8]
-	.long LcdKeyRow2_CombinationGroupMenu                                 ; F9357B  [  9]
-	.long LcdKeyRow3_CombinationGroupMenu                                 ; F9357F  [ 10]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop11                                 ; F93583  [ 11]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop12                                 ; F93587  [ 12]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop13                                 ; F9358B  [ 13]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop14                                 ; F9358F  [ 14]
-	.long ExitKey_CombinationGroupMenu                                 ; F93593  [ 15]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F93597  [ 16]
-	.long SoftKeyCol1_CombinationGroupMenu                                 ; F9359B  [ 17]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop1                                 ; F9359F  [ 18]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop2                                 ; F935A3  [ 19]
-	.long SoftKeyCol4_CombinationGroupMenu                                 ; F935A7  [ 20]
-	.long SoftKeyCol5_CombinationGroupMenu                                 ; F935AB  [ 21]
-	.long SoftKeyCol6_CombinationGroupMenu                                 ; F935AF  [ 22]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop6                                 ; F935B3  [ 23]
-	.long ScreenButtonHandlers_CombinationGroupMenu_Nop7                                 ; F935B7  [ 24]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935BB  [ 25]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935BF  [ 26]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935C3  [ 27]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935C7  [ 28]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935CB  [ 29]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935CF  [ 30]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F935D3  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol2,	ScreenButtonHandlers_CombinationGroupMenu_Nop1
+	on_key	KEY_SoftKeyCol3,	ScreenButtonHandlers_CombinationGroupMenu_Nop2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_CombinationGroupMenu
+	on_key	KEY_SoftKeyCol7,	ScreenButtonHandlers_CombinationGroupMenu_Nop6
+	on_key	KEY_SoftKeyCol8,	ScreenButtonHandlers_CombinationGroupMenu_Nop7
+	on_key	KEY_LcdRow1,		LcdKeyRow1_CombinationGroupMenu
+	on_key	KEY_LcdRow2,		LcdKeyRow2_CombinationGroupMenu
+	on_key	KEY_LcdRow3,		LcdKeyRow3_CombinationGroupMenu
+	on_key	KEY_LcdRow4,		ScreenButtonHandlers_CombinationGroupMenu_Nop11
+	on_key	KEY_LcdRow5,		ScreenButtonHandlers_CombinationGroupMenu_Nop12
+	on_key	KEY_MinusPlus,		ScreenButtonHandlers_CombinationGroupMenu_Nop13
+	on_key	KEY_Code0E,		ScreenButtonHandlers_CombinationGroupMenu_Nop14
+	on_key	KEY_Exit,		ExitKey_CombinationGroupMenu
+	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code11,		SoftKeyCol1_CombinationGroupMenu
+	on_key	KEY_Code12,		ScreenButtonHandlers_CombinationGroupMenu_Nop1
+	on_key	KEY_Code13,		ScreenButtonHandlers_CombinationGroupMenu_Nop2
+	on_key	KEY_Code14,		SoftKeyCol4_CombinationGroupMenu
+	on_key	KEY_Code15,		SoftKeyCol5_CombinationGroupMenu
+	on_key	KEY_Code16,		SoftKeyCol6_CombinationGroupMenu
+	on_key	KEY_Code17,		ScreenButtonHandlers_CombinationGroupMenu_Nop6
+	on_key	KEY_Code18,		ScreenButtonHandlers_CombinationGroupMenu_Nop7
+	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_NumberPad,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1D,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Compare,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1F,		DisplayListPtrs_F914FB_Nop8
+	keymap_end
 ; InstallPainter_CombinationGroupMenu -- paints the screen whose own text reads "COMBINATION GROUP MENU", "1.", "9."
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
@@ -11996,38 +12000,40 @@ sub_F93835:
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.
 ; ---------------------------------------------------------------------
 ScreenButtonHandlers_GroupCombiDisplayHold:
-	.long SoftKeyCol1_GroupCombiDisplayHold                                 ; F93839  [  0]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop1                                 ; F9383D  [  1]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop2                                 ; F93841  [  2]
-	.long SoftKeyCol4_GroupCombiDisplayHold                                 ; F93845  [  3]
-	.long SoftKeyCol5_GroupCombiDisplayHold                                 ; F93849  [  4]
-	.long SoftKeyCol6_GroupCombiDisplayHold                                 ; F9384D  [  5]
-	.long SoftKeyCol7_GroupCombiDisplayHold                                 ; F93851  [  6]
-	.long SoftKeyCol8_GroupCombiDisplayHold                                 ; F93855  [  7]
-	.long LcdKeyRow1_GroupCombiDisplayHold                                 ; F93859  [  8]
-	.long LcdKeyRow2_GroupCombiDisplayHold                                 ; F9385D  [  9]
-	.long LcdKeyRow3_GroupCombiDisplayHold                                 ; F93861  [ 10]
-	.long LcdKeyRow4_GroupCombiDisplayHold                                 ; F93865  [ 11]
-	.long .LF93B75                                   ; F93869  [ 12]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop13                                 ; F9386D  [ 13]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop14                                 ; F93871  [ 14]
-	.long ExitKey_GroupCombiDisplayHold                                 ; F93875  [ 15]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F93879  [ 16]
-	.long SoftKeyCol1_GroupCombiDisplayHold                                 ; F9387D  [ 17]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop1                                 ; F93881  [ 18]
-	.long ScreenButtonHandlers_GroupCombiDisplayHold_Nop2                                 ; F93885  [ 19]
-	.long SoftKeyCol4_GroupCombiDisplayHold                                 ; F93889  [ 20]
-	.long SoftKeyCol5_GroupCombiDisplayHold                                 ; F9388D  [ 21]
-	.long SoftKeyCol6_GroupCombiDisplayHold                                 ; F93891  [ 22]
-	.long SoftKeyCol7_GroupCombiDisplayHold                                 ; F93895  [ 23]
-	.long SoftKeyCol8_GroupCombiDisplayHold                                 ; F93899  [ 24]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F9389D  [ 25]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F938A1  [ 26]
-	.long NumberPadKey_GroupCombiDisplayHold                                 ; F938A5  [ 27]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F938A9  [ 28]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F938AD  [ 29]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F938B1  [ 30]
-	.long DisplayListPtrs_F914FB_Nop8                                 ; F938B5  [ 31]
+	keymap_begin
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol2,	ScreenButtonHandlers_GroupCombiDisplayHold_Nop1
+	on_key	KEY_SoftKeyCol3,	ScreenButtonHandlers_GroupCombiDisplayHold_Nop2
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_GroupCombiDisplayHold
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_GroupCombiDisplayHold
+	on_key	KEY_LcdRow1,		LcdKeyRow1_GroupCombiDisplayHold
+	on_key	KEY_LcdRow2,		LcdKeyRow2_GroupCombiDisplayHold
+	on_key	KEY_LcdRow3,		LcdKeyRow3_GroupCombiDisplayHold
+	on_key	KEY_LcdRow4,		LcdKeyRow4_GroupCombiDisplayHold
+	on_key	KEY_LcdRow5,		.LF93B75
+	on_key	KEY_MinusPlus,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop13
+	on_key	KEY_Code0E,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop14
+	on_key	KEY_Exit,		ExitKey_GroupCombiDisplayHold
+	on_key	KEY_Page,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code11,		SoftKeyCol1_GroupCombiDisplayHold
+	on_key	KEY_Code12,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop1
+	on_key	KEY_Code13,		ScreenButtonHandlers_GroupCombiDisplayHold_Nop2
+	on_key	KEY_Code14,		SoftKeyCol4_GroupCombiDisplayHold
+	on_key	KEY_Code15,		SoftKeyCol5_GroupCombiDisplayHold
+	on_key	KEY_Code16,		SoftKeyCol6_GroupCombiDisplayHold
+	on_key	KEY_Code17,		SoftKeyCol7_GroupCombiDisplayHold
+	on_key	KEY_Code18,		SoftKeyCol8_GroupCombiDisplayHold
+	on_key	KEY_Code19,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1A,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_NumberPad,		NumberPadKey_GroupCombiDisplayHold
+	on_key	KEY_Code1C,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1D,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Compare,		DisplayListPtrs_F914FB_Nop8
+	on_key	KEY_Code1F,		DisplayListPtrs_F914FB_Nop8
+	keymap_end
 ; InstallPainter_GroupCombiDisplayHold -- paints the screen whose own text reads "GROUP:", "COMBI.", "DISPLAY"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)

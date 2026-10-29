@@ -468,4 +468,72 @@
 	.short \x0, \x1, \y1
 .endm
 
+; ==============================================================================
+; PANEL KEY MAPS -- a screen's Button method: 32 handlers, one per panel key code
+;
+; PanelButton_Route (prom_a 0xF8621E) reduces a panel event to a 5-bit KEY CODE
+; (`and L,0x1f` at 0xF861AE) and calls the current screen object's +8 Button
+; method (PanelScreen_VtableTable), which indexes its key map with that code --
+; `cp BC,0x1F / sll 2,BC / add XBC,<map> / ld XBC,(XBC) / jp (XBC)`, or the same
+; through T_F41B08 / T_F41B0C (`cp HL,0x001F`).  The key behind each code is
+; re-derived from the ROM by notes/prom_a_panel_control_map.py (the wire -> group
+; map and the group event lists, composed with the service manual's switch
+; matrix) and agrees with prom_b's round-12 SLOT_CONTROL slot for slot:
+; FINDINGS-prom_a-panel-control-map.md section 1.  The handler receives the pair
+; position in bit 7 of the delivered code (W).
+;
+;	keymap_begin
+;	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_TrackClear_StageZero
+;	...				(all 32, in code order -- the macros refuse a gap)
+;	keymap_end
+; ==============================================================================
+	.equ KEY_SoftKeyCol1,	0x00	; SOFT KEY column 1; the column's lower and upper key share the code (pair position 0 = lower, 1 = upper)
+	.equ KEY_SoftKeyCol2,	0x01	; SOFT KEY column 2
+	.equ KEY_SoftKeyCol3,	0x02	; SOFT KEY column 3
+	.equ KEY_SoftKeyCol4,	0x03	; SOFT KEY column 4
+	.equ KEY_SoftKeyCol5,	0x04	; SOFT KEY column 5
+	.equ KEY_SoftKeyCol6,	0x05	; SOFT KEY column 6
+	.equ KEY_SoftKeyCol7,	0x06	; SOFT KEY column 7
+	.equ KEY_SoftKeyCol8,	0x07	; SOFT KEY column 8
+	.equ KEY_LcdRow1,	0x08	; LCD-row key pair 1, top to bottom; position 0 = the left (CP2) key, 1 = the right (CP1) key
+	.equ KEY_LcdRow2,	0x09	; LCD-row key pair 2
+	.equ KEY_LcdRow3,	0x0a	; LCD-row key pair 3
+	.equ KEY_LcdRow4,	0x0b	; LCD-row key pair 4
+	.equ KEY_LcdRow5,	0x0c	; LCD-row key pair 5
+	.equ KEY_MinusPlus,	0x0d	; the -1 / +1 pair; position 0 = -1, 1 = +1
+	.equ KEY_Code0E,	0x0e	; TODO: nothing on this panel raises code 0x0E (no template emits it)
+	.equ KEY_Exit,		0x0f	; EXIT (position 1 only); the one slot all 32 prom_b ButtonTable_* maps fill, with an ExitKey_* handler
+	.equ KEY_Page,		0x10	; the PAGE v / PAGE ^ pair; position 0 = v, 1 = ^
+	.equ KEY_Code11,	0x11	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code12,	0x12	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound; round 12 lists the number pad's remapped slot here
+	.equ KEY_Code13,	0x13	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code14,	0x14	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code15,	0x15	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code16,	0x16	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code17,	0x17	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code18,	0x18	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code19,	0x19	; TODO: no prom_a panel template emits this code, yet some screen's key map fills it (prom_b ButtonTable_* header, notes/prom_b_screens_round8.py); its producer is unfound
+	.equ KEY_Code1A,	0x1a	; TODO: no template emits this code and no control is known for it
+	.equ KEY_NumberPad,	0x1b	; the number pad, the whole field
+	.equ KEY_Code1C,	0x1c	; TODO: no template emits this code and no control is known for it
+	.equ KEY_Code1D,	0x1d	; TODO: no template emits this code and no control is known for it
+	.equ KEY_Compare,	0x1e	; COMPARE (position 1); no screen's key map handles it
+	.equ KEY_Code1F,	0x1f	; TODO: no template emits this code and no control is known for it
+
+.macro keymap_begin
+	.set _keymap_next, 0
+.endm
+.macro on_key key, handler
+	.if (\key) <> _keymap_next
+	.error "on_key: a key map lists every key code once, in code order (KEY_* above)"
+	.endif
+	.set _keymap_next, _keymap_next + 1
+	.long \handler
+.endm
+.macro keymap_end
+	.if _keymap_next <> 32
+	.error "keymap_end: a key map has exactly 32 entries, one per key code"
+	.endif
+.endm
+
 .endif

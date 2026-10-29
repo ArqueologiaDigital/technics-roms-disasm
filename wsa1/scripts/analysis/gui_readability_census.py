@@ -128,6 +128,8 @@ def census():
                     continue
                 name = m.group(1)
                 j = i + 1
+                while j < len(lines) and re.match(r'^\s*;', lines[j]):
+                    j += 1
                 if j < len(lines) and re.match(r'^\s*keymap_begin\b', lines[j]):
                     while j < len(lines) and re.match(r'^\s*(keymap_begin|keymap_end|on_key)\b|^\s*;', lines[j]):
                         mm = re.match(r'^\s*on_key\s+\w+\s*,\s*(\S+)', lines[j])
@@ -144,7 +146,7 @@ def census():
                     j += 1
                 if name in ("PanelScreen_VtableTable", "PanelScreen_VtableTable_ViewB"):
                     c["screen_numeric"] += sum(1 for v in longs if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', v))
-                elif longs and len(longs) % 32 == 0 and KEYMAP_NAME.search(name):
+                elif longs and len(longs) % 32 == 0 and KEYMAP_NAME.search(name) and "Mask" not in name:
                     c["keymap_indexed"] += len(longs)
                     c["keymap_numeric"] += sum(1 for v in longs if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', v))
                 i = j if j > i + 1 else i + 1
