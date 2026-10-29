@@ -59,22 +59,32 @@ sum comparison always passes. No checksum is stored in the ROM.
 `RhythmROM_BankProgramLocators` (program ROM 0xE45142, 8 banks x 128 programs x {u16 hi, u16 lo}) gives
 `record = (hi & 0xff) << 16 | lo`. `AccVoice_ComputeChannelIndex` and `AccVoice_LookupWithOffset` read it for the
 style (ACC_STYLE_GROUP = bank, ACC_STYLE_NUMBER = program), and `Rhythm_LoadCurrentTimeSig` reads it for PANEL_STYLE
-(0xFC5A program, 0xFC5B bank). 201 of the 1,024 slots are used, each pointing to a different record. The record at
-0x000000 (`8br86d`) is pointed to by no slot, in any of v5, v6, v7, v8, v9, v10 (the table is byte-identical in
-all six, `probes/locator_selection_probe.py`).
+(0xFC5A program, 0xFC5B bank). The pending style first goes through `VoiceParam_BankProgramWords`
+(`SeqTick_ReadControlState` -> `VoiceParam_ClampAndStore`), which remaps every (bank, program).
 
-Record labels name that selection: `Style_B<bank>P<program>_<id>`, e.g. `Style_B3P090_8br27k`, and
-`Style_Unlocated_8br86d`. `<id>` is the record's own 8-character id at +0x3DB without its `1n` / `1v` suffix.
-The (bank, program) to record map is printed by the locator probe. Programs group related styles: program 90
-holds `8br97g`, `8br17r`, `8br27k`, `8br37p` and `8br75d` in banks 1, 2, 3, 4 and 7.
+201 of the 1,024 locators are non-zero, each pointing to a different record. **A zero locator is a valid pointer
+to offset 0**, the same trap `docs/accompaniment-style-format.md` records for IC19. The remap sends (0, 89) and
+(0, 90) to (0, 90), whose locator is 0, so the record at 0x000000 (`8br86d`) is the style of bank 0, program 90.
+Every other pair is remapped to a slot with a non-zero locator. The remap reaches no pair of two records, `8beats`
+(bank 3, program 24) and `6beats` (bank 2, program 8). Their two halves are identical, and their panel entries are
+shared with `dxi97p` and `wzs87e` (below). Only a reader that indexes the locators without the remap could select
+them. The locator and remap tables are byte-identical in v5, v6, v7, v8, v9 and v10
+(`probes/locator_selection_probe.py`).
 
-**Not connected: the names the panel shows.** The firmware's 13-character style names are
-`AccVoice_RomRecords13` (280 = 14 groups x 20: "8Bt Standard", "Simple 8 Beat", ...), read by
-`AccVoice_ComputedCopy` at `group * 20 + number`, with per-group counts in `AccVoice_GetChannelCount_Lookup_Data`.
-No table mapping that UI (group, number) to the locators' (bank, program) was found. A brute-force search of the v10
-program ROM for a 280-entry pair table found only `VoiceParam_BankProgramWords`, which is dense with valid pairs
-anyway. The labels therefore carry the locator selection and the record id, not a display name. This is an open
-question below.
+**The names the panel shows.** `AccStyle_VelocityTableMain` (0xE4935F, `[program 128][bank 8]` of u16) is
+misnamed: `AccStyle_LookupVelocityTable` reads it at RAM 0x90ea (program) and 0x90eb (bank) and stores the low byte
+at 0x90ee and the high byte at 0x90ef. `RhythmROM_PatternDisp_Handle90` and `SndParam_ResolveVoiceEntry` then pass
+those to `AccVoice_DispatchEntry` as L = rhythm group and H = number. For groups 0..13 that reaches
+`AccVoice_ComputedCopy`, which copies `AccVoice_RomRecords13[group * 20 + number]`. `MainGetRhyGrpName` takes the
+group name from `AccVoice_RomRecords16[group]`. So every record has a panel name: `8br86d` is STANDARD ROCK 0 "8Bt
+Standard", `8br27k` is STANDARD ROCK 1 "Simple 8 Beat", and so on for 14 groups. `AccVoice_GetChannelCount_Lookup_Data`
+holds each group's highest number. The per-record comment in `style_records.s` gives the name, and the locator
+probe prints the whole list.
+
+Record labels name the selection: `Style_B<bank>P<program>_<id>`, e.g. `Style_B3P090_8br27k`. `<id>` is the
+record's own 8-character id at +0x3DB without its `1n` / `1v` suffix. The display names are not in the labels:
+they repeat across records (both German Waltz entries) and contain spaces and quotes. Programs group related
+styles: program 90 holds `8br86d`, `8br97g`, `8br17r`, `8br27k`, `8br37p` and `8br75d` in banks 0, 1, 2, 3, 4 and 7.
 
 ## Style record (2 KB = two 1 KB halves)
 
@@ -146,6 +156,13 @@ The controller counts are 0xD1 2,540, 0xD2 10,496, 0xD3 9,402, 0xD4 6 and 0xD5 1
 IC14 uses all five selectors. Selector meanings are taken from the IC19 analysis of the shared performance
 dispatcher. That the IC14 path (`AccCh*_DTypeEntry` ring buffers) ends in the same dispatcher is an **inference**.
 
+## Size
+
+The typed text is 14,958,378 bytes for 3,552,111 bytes of non-fill data (records + tracks): 4.2x, under the
+integrator's 6x limit for typed sequence data (3.6x of the whole 4 MB image). Assembling it takes about 9 s.
+Tracks are grouped one include file per 64 KB pattern bank, not one per style, because a bank's tracks are
+shared between the 2..7 styles stored in it (46,056 slot references to 28,400 tracks).
+
 ## Census
 
 `data_incbin_census.py` row `kn5000-rhythm` (`rhythm_data/`): no `.incbin` / `.incbin_range` at all, so
@@ -153,18 +170,17 @@ generic = 0, opaque = 0 and generated = 0. The tree has no binary include to cla
 
 ## Open questions
 
-1. The UI-name connection: which table maps the panel's (rhythm group, number), `AccVoice_RomRecords13`, onto the
-   locators' (bank, program)? Leads: `AccVoice_Dispatch` (L = group 0..15, H = number 0..0x4f; groups 14 and 15
-   take other paths), `MainGetRhyGrpName`, `RVari_Paint`, `CmpSet_StepRhythmBank` (it clamps 0xFC5B with
-   `AccVoice_GetChannelCount`, which suggests 0xFC5A is also used as a UI group index).
+1. Rename `AccStyle_VelocityTableMain` / `AccStyle_LookupVelocityTable` in v10/v9/v7 (and their siblings
+   `_Ext` / `_High`): they map (program, bank) to the panel's (rhythm group, number). This was left alone here
+   because it is outside this lane's tree.
 2. +0x3E3..+0x3F2: no reader. Tried: a displacement search over v10 sequencer and UI code for 0x3e3..0x3f2 /
    995..1010; and comparing the four u16 with per-part sums of distinct-track bytes, note counts and beats for five
    records (no match). It may be authoring metadata.
 3. Slots 8..11: no reader traced.
 4. `part_sound` bytes +4..+6: copied to RAM 0x3246.. with the rest; consumer not traced.
 5. Does the board cross A19/A21, or is the dump wrong? (See above; it decides the MAME fix.)
-6. The record at 0x000000 (`8br86d`) is pointed to by no locator in any firmware. Is it a leftover, or the target
-   of some other path?
+6. `8beats` and `6beats`: the remap reaches neither. Are they leftovers, or are they selected by a path that skips
+   `VoiceParam_BankProgramWords`?
 
 ## Reproduce
 
@@ -194,9 +210,12 @@ gives the layout the firmware's pointers address, and all 46,056 of them land on
 *Layout.* 0x400000-0x464FFF holds the style records, 2 KB each. 0x465000-0x77FFFF holds the tracks, in banks
 6..0x37, each bank filled with FF after its last track. 0x780000-0x7FFFFF is erased.
 
-*Selecting a style.* `RhythmROM_BankProgramLocators` in the program ROM (8 banks x 128 programs) points to 201
-of the records. A style is chosen by (bank, program); the panel stores them at 0xFC5B / 0xFC5A. The 12 bytes the
-firmware checks at boot (`00 01 04 05 83 00 01 04 05 83 00 01`) are the start of the first record.
+*Selecting a style.* A style is chosen by (bank, program); the panel stores them at 0xFC5B / 0xFC5A. In the
+program ROM, `VoiceParam_BankProgramWords` remaps the pair and `RhythmROM_BankProgramLocators` (8 banks x 128
+programs) gives the record. A zero locator means offset 0: bank 0, program 90 is the first record, "8Bt Standard".
+`AccStyle_VelocityTableMain` gives the panel's rhythm group and number for each pair, and the names come from
+`AccVoice_RomRecords16` / `AccVoice_RomRecords13` ("STANDARD ROCK", "Simple 8 Beat", ...). The 12 bytes the firmware
+checks at boot (`00 01 04 05 83 00 01 04 05 83 00 01`) are the start of the first record.
 
 *Style record.* Two 1 KB halves, sections 0-3 and 4-7. Each half holds:
 

@@ -51,7 +51,11 @@ N_SLOTS = 19
 
 
 # AccVoice_LocatorTable is not in this ROM: the (bank, program) -> record map comes from the program ROM.
-LOCATOR_SYM = 0xE45142
+LOCATOR_SYM = 0xE45142      # RhythmROM_BankProgramLocators [bank 8][program 128] {u16 hi, u16 lo}
+REMAP_SYM = 0xE4638A        # VoiceParam_BankProgramWords [bank 8][program 128] -> u16 bank << 8 | program
+PANEL_MAP_SYM = 0xE4935F    # AccStyle_VelocityTableMain [program 128][bank 8] -> u16 number << 8 | group
+NAMES13_SYM = 0xE47147      # AccVoice_RomRecords13 [group * 20 + number] 13-char style names
+GROUPS16_SYM = 0xE47047     # AccVoice_RomRecords16 [group] 16-char rhythm-group names
 
 
 MACROS = """\
@@ -307,13 +311,31 @@ def main():
     prog = open(a.program, "rb").read()
 
     # ---- (bank, program) selection of each record, from RhythmROM_BankProgramLocators (v10 = v9 = v7)
-    sel = collections.defaultdict(list)
+    # A zero locator is a valid pointer: it addresses the record at offset 0.  VoiceParam_BankProgramWords (the
+    # remap VoiceParam_ClampAndStore applies to the pending style) sends every (bank, program) to a slot with a
+    # non-zero locator except (0, 89) and (0, 90), which it sends to (0, 90), whose locator is 0.
+    P = lambda a: a - 0xE00000
+    loc = {}
     for bank in range(8):
         for pr in range(128):
-            o = LOCATOR_SYM - 0xE00000 + (bank * 128 + pr) * 4
-            hi, lo = u16(prog, o), u16(prog, o + 2)
-            if hi or lo:
-                sel[((hi & 0xff) << 16) | lo].append((bank, pr))
+            o = P(LOCATOR_SYM) + (bank * 128 + pr) * 4
+            loc[(bank, pr)] = ((u16(prog, o) & 0xff) << 16) | u16(prog, o + 2)
+    reached = set()
+    for i in range(1024):
+        w = u16(prog, P(REMAP_SYM) + 2 * i)
+        reached.add((w >> 8, w & 0x7f))
+    sel = collections.defaultdict(list)
+    for key in sorted(loc):
+        if loc[key] or key in reached:
+            sel[loc[key]].append(key)
+    unremapped = {o for o, keys in sel.items() if not any(k in reached for k in keys)}
+
+    def panel(bank, pr):
+        w = u16(prog, P(PANEL_MAP_SYM) + (pr * 8 + bank) * 2)
+        g, n = w & 0xff, w >> 8
+        name = prog[P(NAMES13_SYM) + (g * 20 + n) * 13:][:13].decode("latin-1").strip()
+        grp = prog[P(GROUPS16_SYM) + g * 16:][:16].decode("latin-1").strip()
+        return '%s %d "%s"' % (grp, n, name)
 
     # ---- tracks
     regions = [(N_RECORD_BYTES, (FIRST_BANK + 1) * BANK)] + \
@@ -401,24 +423,31 @@ def main():
     L.append("; KN5000 RHYTHM DATA ROM IC14 -- STYLE RECORDS (0x400000-0x464FFF)")
     L.append("; =============================================================================")
     L.append(gen_note.rstrip())
-    L.append("; 202 records of 2 KB.  RhythmROM_BankProgramLocators (program ROM, 8 banks x 128 programs)")
-    L.append("; points 201 of them; the record at 0x400000 (8br86d) is pointed at by no locator in v5..v10:")
-    L.append("; its first 12 bytes are what RhythmROM_ValidateHeader checks (every record starts with them).")
-    L.append("; Labels: Style_B<bank>P<program>_<id>, the (bank, program) the locator table selects it by;")
-    L.append("; <id> is the record's own 8-character id at +0x3DB without its trailing \"1n\" / \"1v\".")
+    L.append("; 202 records of 2 KB, one per style.  A style is selected by (bank, program) (panel bytes 0xFC5B /")
+    L.append("; 0xFC5A): VoiceParam_BankProgramWords remaps the pair, RhythmROM_BankProgramLocators gives the record.")
+    L.append("; 201 records have a non-zero locator; the record at 0x400000 (8br86d, \"8Bt Standard\") is the one")
+    L.append("; that locator [bank 0][program 90] = 0 addresses.  Its first 12 bytes are what RhythmROM_ValidateHeader")
+    L.append("; checks (every record starts with them).")
+    L.append("; Labels: Style_B<bank>P<program>_<id>, the (bank, program) that selects the record; <id> is the")
+    L.append("; record's own id at +0x3DB without its trailing \"1n\" / \"1v\".  The comment above each record gives")
+    L.append("; the panel's name for it: AccStyle_VelocityTableMain maps (program, bank) to (rhythm group, number),")
+    L.append("; AccVoice_RomRecords16 names the group and AccVoice_RomRecords13 the style (AccVoice_ComputedCopy).")
     L.append("; Each record is two halves (style_half); half 0 serves sections 0-3, half 1 sections 4-7")
     L.append("; (AccStyle_ReadParamOffset_Data: slot offsets 0..19, then 0x400..0x413).  Record layout:")
     L.append("; rhythm_macros.inc.")
     L.append("")
     for r, sid, halves in recs:
         who = sel.get(r, [])
-        if who:
-            label = "Style_" + "_".join("B%dP%03d" % (b, p) for b, p in who) + "_" + sid
-            L.append("; %s: locator [bank %s][program %s]" % (sid, "/".join(str(b) for b, _ in who),
-                                                              "/".join(str(p) for _, p in who)))
-        else:
-            label = "Style_Unlocated_" + sid
-            L.append("; %s: no locator selects this record (v5..v10); it is the ROM's signature record" % sid)
+        if not who:
+            sys.exit("record 0x%06X (%s) is selected by no (bank, program)" % (r, sid))
+        label = "Style_" + "_".join("B%dP%03d" % (b, p) for b, p in who) + "_" + sid
+        for b, p in who:
+            L.append("; %s: bank %d, program %d%s -> panel %s" % (sid, b, p, " (locator 0)" if r == 0 else "",
+                                                                 panel(b, p)))
+        if r in unremapped:
+            L.append("; (no entry of VoiceParam_BankProgramWords, the remap SeqTick_ReadControlState applies through")
+            L.append(";  VoiceParam_ClampAndStore, leads here; a reader that indexes the locators without it, such as")
+            L.append(";  Rhythm_LoadCurrentTimeSig, would reach it)")
         for h, x in enumerate(halves):
             lab = label if h == 0 else label + "_V"
             bank = x[0x3d1]
