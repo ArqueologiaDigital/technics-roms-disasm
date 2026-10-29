@@ -136,251 +136,251 @@ NakaData_SoundMenuDrawbar:	.incbin "includes/generated/naka_sound_menu_drawbar.b
 ; [nakarest] naka_sound_menu_drawbar+0x100  +0x100..+0x102 (0xe810e2, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 30 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): VwUserBitmapSp "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x100, 0x2
+ClassPropdata_VwUserBitmapSp:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x100, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x102  +0x102..+0x112 (0xe810e4, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 30 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): VwUserBitmapSp.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x102, 0x10
+ClassName_VwUserBitmapSp:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x102, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x112  +0x112..+0x118 (0xe810f4, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 29 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPresentationBox "XemA".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x112, 0x6
+ClassPropdata_AcPresentationBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x112, 0x6
 ; [nakarest] naka_sound_menu_drawbar+0x118  +0x118..+0x12a (0xe810fa, 18 B)
 ; [nakarest] class-name strings (the +12 name) of classes 29 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPresentationBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x118, 0x12
+ClassName_AcPresentationBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x118, 0x12
 ; [nakarest] naka_sound_menu_drawbar+0x12a  +0x12a..+0x12e (0xe8110c, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 28 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcLswPartPan "jn".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x12A, 0x4
+ClassPropdata_AcLswPartPan:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x12A, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0x12e  +0x12e..+0x13c (0xe81110, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 28 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcLswPartPan.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x12E, 0xE
+ClassName_AcLswPartPan:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x12E, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x13c  +0x13c..+0x13e (0xe8111e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 27 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawEditBox "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x13C, 0x2
+ClassPropdata_AcDrawEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x13C, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x13e  +0x13e..+0x14c (0xe81120, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 27 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawEditBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x13E, 0xE
+ClassName_AcDrawEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x13E, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x14c  +0x14c..+0x14e (0xe8112e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 26 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDemofeature2 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x14C, 0x2
+ClassPropdata_IvDemofeature2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x14C, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x14e  +0x14e..+0x15e (0xe81130, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 26 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDemofeature2.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x14E, 0x10
+ClassName_IvDemofeature2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x14E, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x15e  +0x15e..+0x160 (0xe81140, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 25 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDemofeature1 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x15E, 0x2
+ClassPropdata_IvDemofeature1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x15E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x160  +0x160..+0x170 (0xe81142, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 25 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDemofeature1.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x160, 0x10
+ClassName_IvDemofeature1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x160, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x170  +0x170..+0x172 (0xe81152, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 24 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPresentationControl "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x170, 0x2
+ClassPropdata_AcPresentationControl:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x170, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x172  +0x172..+0x188 (0xe81154, 22 B)
 ; [nakarest] class-name strings (the +12 name) of classes 24 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPresentationControl.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x172, 0x16
+ClassName_AcPresentationControl:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x172, 0x16
 ; [nakarest] naka_sound_menu_drawbar+0x188  +0x188..+0x18e (0xe8116a, 6 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 23 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): PsVariBox "c^dem".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x188, 0x6
+ClassPropdata_PsVariBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x188, 0x6
 ; [nakarest] naka_sound_menu_drawbar+0x18e  +0x18e..+0x198 (0xe81170, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 23 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): PsVariBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x18E, 0xA
+ClassName_PsVariBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x18E, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x198  +0x198..+0x19a (0xe8117a, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 22 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcResetPage "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x198, 0x2
+ClassPropdata_AcResetPage:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x198, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x19a  +0x19a..+0x1a6 (0xe8117c, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 22 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcResetPage.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x19A, 0xC
+ClassName_AcResetPage:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x19A, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x1a6  +0x1a6..+0x1a8 (0xe81188, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 21 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbarSndE "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1A6, 0x2
+ClassPropdata_IvDrawbarSndE:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1A6, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x1a8  +0x1a8..+0x1b6 (0xe8118a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 21 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbarSndE.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1A8, 0xE
+ClassName_IvDrawbarSndE:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1A8, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x1b6  +0x1b6..+0x1b8 (0xe81198, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 20 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbarNorm "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1B6, 0x2
+ClassPropdata_IvDrawbarNorm:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1B6, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x1b8  +0x1b8..+0x1c6 (0xe8119a, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 20 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbarNorm.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1B8, 0xE
+ClassName_IvDrawbarNorm:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1B8, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x1c6  +0x1c6..+0x1c8 (0xe811a8, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 19 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar2 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1C6, 0x2
+ClassPropdata_IvDrawbar2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1C6, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x1c8  +0x1c8..+0x1d4 (0xe811aa, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 19 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar2.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1C8, 0xC
+ClassName_IvDrawbar2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1C8, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x1d4  +0x1d4..+0x1d6 (0xe811b6, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 18 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar1 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1D4, 0x2
+ClassPropdata_IvDrawbar1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1D4, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x1d6  +0x1d6..+0x1e2 (0xe811b8, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 18 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar1.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1D6, 0xC
+ClassName_IvDrawbar1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1D6, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x1e2  +0x1e2..+0x1e4 (0xe811c4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 17 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1E2, 0x2
+ClassPropdata_IvDrawbar:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1E2, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x1e4  +0x1e4..+0x1ee (0xe811c6, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 17 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvDrawbar.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1E4, 0xA
+ClassName_IvDrawbar:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1E4, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x1ee  +0x1ee..+0x1f2 (0xe811d0, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 16 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvPageOverWrite "At".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1EE, 0x4
+ClassPropdata_IvPageOverWrite:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1EE, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0x1f2  +0x1f2..+0x202 (0xe811d4, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 16 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvPageOverWrite.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1F2, 0x10
+ClassName_IvPageOverWrite:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x1F2, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x202  +0x202..+0x204 (0xe811e4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 15 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSoftver "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x202, 0x2
+ClassPropdata_IvSoftver:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x202, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x204  +0x204..+0x20e (0xe811e6, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 15 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSoftver.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x204, 0xA
+ClassName_IvSoftver:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x204, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x20e  +0x20e..+0x210 (0xe811f0, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 14 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcTrackMixer "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x20E, 0x2
+ClassPropdata_AcTrackMixer:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x20E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x210  +0x210..+0x21e (0xe811f2, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 14 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcTrackMixer.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x210, 0xE
+ClassName_AcTrackMixer:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x210, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x21e  +0x21e..+0x220 (0xe81200, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 13 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPartMixer "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x21E, 0x2
+ClassPropdata_AcPartMixer:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x21E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x220  +0x220..+0x22c (0xe81202, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 13 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPartMixer.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x220, 0xC
+ClassName_AcPartMixer:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x220, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x22c  +0x22c..+0x22e (0xe8120e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 12 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): PsMixerControl "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x22C, 0x2
+ClassPropdata_PsMixerControl:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x22C, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x22e  +0x22e..+0x23e (0xe81210, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 12 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): PsMixerControl.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x22E, 0x10
+ClassName_PsMixerControl:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x22E, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x23e  +0x23e..+0x240 (0xe81220, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 11 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcWelcomScreen "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x23E, 0x2
+ClassPropdata_AcWelcomScreen:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x23E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x240  +0x240..+0x250 (0xe81222, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 11 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcWelcomScreen.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x240, 0x10
+ClassName_AcWelcomScreen:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x240, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x250  +0x250..+0x252 (0xe81232, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 10 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSdscltyp2 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x250, 0x2
+ClassPropdata_IvSdscltyp2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x250, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x252  +0x252..+0x25e (0xe81234, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 10 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSdscltyp2.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x252, 0xC
+ClassName_IvSdscltyp2:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x252, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x25e  +0x25e..+0x260 (0xe81240, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 9 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSdtecd1 "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x25E, 0x2
+ClassPropdata_IvSdtecd1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x25E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x260  +0x260..+0x26a (0xe81242, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 9 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvSdtecd1.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x260, 0xA
+ClassName_IvSdtecd1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x260, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x26a  +0x26a..+0x26c (0xe8124c, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 8 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSdtecd "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x26A, 0x2
+ClassPropdata_IvSdtecd:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x26A, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x26c  +0x26c..+0x276 (0xe8124e, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 8 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvSdtecd.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x26C, 0xA
+ClassName_IvSdtecd:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x26C, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x276  +0x276..+0x27e (0xe81258, 8 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 7 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): PsLabelBox "Xc^dmm".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x276, 0x8
+ClassPropdata_PsLabelBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x276, 0x8
 ; [nakarest] naka_sound_menu_drawbar+0x27e  +0x27e..+0x28a (0xe81260, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 7 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): PsLabelBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x27E, 0xC
+ClassName_PsLabelBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x27E, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x28a  +0x28a..+0x28e (0xe8126c, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 6 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcAccordionTab "XX".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x28A, 0x4
+ClassPropdata_AcAccordionTab:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x28A, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0x28e  +0x28e..+0x29e (0xe81270, 16 B)
 ; [nakarest] class-name strings (the +12 name) of classes 6 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): AcAccordionTab.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x28E, 0x10
+ClassName_AcAccordionTab:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x28E, 0x10
 ; [nakarest] naka_sound_menu_drawbar+0x29e  +0x29e..+0x2a0 (0xe81280, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 5 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvAccordionX "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x29E, 0x2
+ClassPropdata_IvAccordionX:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x29E, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x2a0  +0x2a0..+0x2ae (0xe81282, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 5 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvAccordionX.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2A0, 0xE
+ClassName_IvAccordionX:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2A0, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0x2ae  +0x2ae..+0x2b0 (0xe81290, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 4 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvAccordion "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2AE, 0x2
+ClassPropdata_IvAccordion:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2AE, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x2b0  +0x2b0..+0x2bc (0xe81292, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 4 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvAccordion.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2B0, 0xC
+ClassName_IvAccordion:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2B0, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0x2bc  +0x2bc..+0x2be (0xe8129e, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 3 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvMesage "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2BC, 0x2
+ClassPropdata_IvMesage:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2BC, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x2be  +0x2be..+0x2c8 (0xe812a0, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 3 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvMesage.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2BE, 0xA
+ClassName_IvMesage:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2BE, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x2c8  +0x2c8..+0x2cc (0xe812aa, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 2 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcVolPartEditBox "jjn".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2C8, 0x4
+ClassPropdata_AcVolPartEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2C8, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0x2cc  +0x2cc..+0x2de (0xe812ae, 18 B)
 ; [nakarest] class-name strings (the +12 name) of classes 2 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): AcVolPartEditBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2CC, 0x12
+ClassName_AcVolPartEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2CC, 0x12
 ; [nakarest] naka_sound_menu_drawbar+0x2de  +0x2de..+0x2e2 (0xe812c0, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 1 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcLswPartEditBox "jn".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2DE, 0x4
+ClassPropdata_AcLswPartEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2DE, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0x2e2  +0x2e2..+0x2f4 (0xe812c4, 18 B)
 ; [nakarest] class-name strings (the +12 name) of classes 1 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): AcLswPartEditBox.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2E2, 0x12
+ClassName_AcLswPartEditBox:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2E2, 0x12
 ; [nakarest] naka_sound_menu_drawbar+0x2f4  +0x2f4..+0x2f6 (0xe812d6, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 0 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): IvSdpart "".
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2F4, 0x2
+ClassPropdata_IvSdpart:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2F4, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x2f6  +0x2f6..+0x300 (0xe812d8, 10 B)
 ; [nakarest] class-name strings (the +12 name) of classes 0 of Class slot 0x161 (table 0xe80cf6,
 ; [nakarest] 37 entries, InitializeMurai): IvSdpart.
-	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2F6, 0xA
+ClassName_IvSdpart:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x2F6, 0xA
 ; [nakarest] naka_sound_menu_drawbar+0x300  +0x300..+0x302 (0xe812e2, 2 B)
 ; [nakarest] Text (2 B at 0xe812e2), first string "%"; no registered NAKA table points into it;
 ; [nakarest] reached through source references InitializeMurai (ui/drawbar_panel_ui.s: `ld wa,

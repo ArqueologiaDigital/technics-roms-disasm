@@ -406,6 +406,14 @@ extern const char NakaWidget_SqMdlyPly;
 extern const char NakaWidget_SqTrAsPs;
 extern const char NakaWidget_StepPartBal;
 extern const char NakaWidget_YokoView074_0_TtlScreen;
+extern const char ClassName_AcEntertainerGridBox;
+extern const char ClassName_AccIll;
+extern const char ClassName_IvSongCopyExit;
+extern const char ClassName_SngSel;
+extern const char ClassName_SngSel2;
+extern const char ClassName_SqedtFix;
+extern const char ClassName_SqedtVal3;
+extern const char ClassName_SqplyVal;
 
 #define BASE  0x00E24056u
 
@@ -3838,14 +3846,14 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
         { NAKA_ADDR(EqualizerBoxProc), NAKA_CLASS(VwBox), 34, 6, 0x00E27578, NAKA_ADDR(NakaInst_SqedtVal_B), SELF(ClassProps_EqualizerBox) },
         { NAKA_ADDR(SqedtValProc), NAKA_CLASS(Viewable), 32, 10, 0x00E2756A, NAKA_ADDR(NakaInst_SqedtVal), SELF(ClassProps_SqedtVal) },
         { NAKA_ADDR(SqedtVal2Proc), NAKA_CLASS(Viewable), 30, 8, 0x00E2755A, NAKA_ADDR(NakaInst_SqedtVal2_End), SELF(ClassProps_SqedtVal2) },
-        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, 0x00E2754C, NAKA_ADDR(NakaInst_SqedtFix), SELF(ClassProps_SqedtFix) },
-        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, 0x00E27538, NAKA_ADDR(NakaInst_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
-        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, 0x00E2752C, NAKA_ADDR(NakaInst_SqplyVal), SELF(ClassProps_SqplyVal) },
-        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, 0x00E2751C, NAKA_ADDR(NakaInst_SqedtVal3), SELF(ClassProps_SqedtVal3) },
-        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, 0x00E27510, NAKA_ADDR(NakaInst_AccIll), SELF(ClassProps_AccIll) },
-        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E274F4, NAKA_ADDR(NakaInst_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
-        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, 0x00E274E8, NAKA_ADDR(NakaInst_SngSel), SELF(ClassProps_SngSel) },
-        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, 0x00E274DA, NAKA_ADDR(NakaInst_SngSel2), SELF(ClassProps_SngSel2) },
+        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, NAKA_ADDR(ClassName_SqedtFix), NAKA_ADDR(NakaInst_SqedtFix), SELF(ClassProps_SqedtFix) },
+        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, NAKA_ADDR(ClassName_IvSongCopyExit), NAKA_ADDR(NakaInst_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
+        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_SqplyVal), NAKA_ADDR(NakaInst_SqplyVal), SELF(ClassProps_SqplyVal) },
+        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, NAKA_ADDR(ClassName_SqedtVal3), NAKA_ADDR(NakaInst_SqedtVal3), SELF(ClassProps_SqedtVal3) },
+        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_AccIll), NAKA_ADDR(NakaInst_AccIll), SELF(ClassProps_AccIll) },
+        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcEntertainerGridBox), NAKA_ADDR(NakaInst_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
+        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, NAKA_ADDR(ClassName_SngSel), NAKA_ADDR(NakaInst_SngSel), SELF(ClassProps_SngSel) },
+        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, NAKA_ADDR(ClassName_SngSel2), NAKA_ADDR(NakaInst_SngSel2), SELF(ClassProps_SngSel2) },
     },
 
     .Kubo_ClassTable_168_Desc12Head = {
