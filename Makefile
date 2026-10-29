@@ -1316,6 +1316,51 @@ rebuilt_ROMs/kn5000_custom_data.llvm.elf: rebuilt_ROMs/kn5000_custom_data.llvm.o
 rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- Waveform ROM IC307 (waveform/, lane kn5000-waveform 2026-10-29) ---
+# The reference image is not committed (a private dump, kept out of this public
+# repository like v8's).  `make` copies it, git-ignored, from the private romset
+# and refuses a copy whose SHA-1 differs; override the source with
+#   make KN5000_IC307_REF=/path/to/kn5000_waveform_rom.ic307 ...
+# The PCM bodies are `.incbin`s of that copy (census: opaque -- pcm); the
+# directory, the parameter records, the alignment and the 0xFF tails are typed
+# source.  Notes: notes/waveform-ic307-2026-10-29/README.md.
+KN5000_IC307_REF  ?= $(PROJECTS_ROOT)/technics_romsets/kn5000/kn5000_waveform_rom.ic307
+KN5000_IC307_SHA1 := 4b511bff6625f4655cabd96a263bf548d2ef4bf7
+WAVEFORM_SRC = $(wildcard waveform/*.s waveform/*.inc)
+
+original_ROMs/kn5000_waveform_rom.ic307:
+	@if [ ! -f "$(KN5000_IC307_REF)" ]; then \
+	  echo "ERROR: the KN5000 waveform ROM IC307 reference image is missing: $(KN5000_IC307_REF)"; \
+	  echo "       Point KN5000_IC307_REF at a copy whose SHA-1 is $(KN5000_IC307_SHA1)"; \
+	  exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_IC307_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_IC307_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_IC307_REF) has SHA-1 $$got, expected $(KN5000_IC307_SHA1)"; exit 1; fi
+	cp "$(KN5000_IC307_REF)" $@.tmp
+	mv $@.tmp $@
+
+verify-ic307-reference: original_ROMs/kn5000_waveform_rom.ic307
+	@got=$$(sha1sum < $< | cut -d' ' -f1); \
+	 if [ "$$got" = "$(KN5000_IC307_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_IC307_SHA1)"; \
+	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_IC307_SHA1)"; exit 1; fi
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.o: $(WAVEFORM_SRC) original_ROMs/kn5000_waveform_rom.ic307 $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I waveform -I original_ROMs -o $@ waveform/kn5000_waveform_ic307.s
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.elf: rebuilt_ROMs/kn5000_waveform_ic307.llvm.o waveform/waveform.ld
+	$(LLVM_LLD) -T waveform/waveform.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom: rebuilt_ROMs/kn5000_waveform_ic307.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+llvm-all: original_ROMs/kn5000_waveform_rom.ic307 rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom
+gate: verify-ic307-reference
+clean: clean-waveform
+clean-waveform:
+	rm -f rebuilt_ROMs/kn5000_waveform_ic307.llvm.*
+.PHONY: verify-ic307-reference clean-waveform
+
 # ============================================================================
 # LLVM conversion targets (regenerate .s from ASL sources)
 # ============================================================================

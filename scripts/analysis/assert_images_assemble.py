@@ -68,6 +68,8 @@ IMAGES = [
     ("hdae5000_v2_01i", "hdae5000_v2_01i/hd-ae5000_v2_01i.s", (), ("-I", "hdae5000")),
     ("table_data",   "table_data/kn5000_table_data.s"),
     ("custom_data",  "custom_data/kn5000_custom_data.s"),
+    # the waveform ROM's PCM is .incbin'd from the reference copy in original_ROMs/
+    ("waveform",     "waveform/kn5000_waveform_ic307.s", (), ("-I", "original_ROMs")),
 ]
 
 
