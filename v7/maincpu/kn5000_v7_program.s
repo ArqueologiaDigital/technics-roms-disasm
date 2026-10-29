@@ -10,6 +10,7 @@
 	.include "shared/sfr_tmp94c241.s"
 	.include "shared/vga_constants.s"
 	.include "shared/event_codes.s"
+	.include "shared/naka_gui.s"
 	.include "fdc_constants.s"
 	.include "gui_constants.s"
 	.include "cpanel_constants.s"

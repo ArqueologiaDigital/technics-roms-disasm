@@ -85,19 +85,6 @@ extern const char NakaWidget_PanelSimulator;
 /* NakaInst_AlignmentID_EnumTable's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaInst_MainFuncID_EnumTable's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaInst_UserID_EnumTable's element (scripts/converters/nakarest_reviewed_slices.py). */
-/* NakaWidget_CheckTitle_8_IvExitScreen's element (scripts/converters/nakarest_reviewed_slices.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t screen_entry;
-    uint16_t screen_slot;
-} NakaWidget_CheckTitle_8_IvExitScreen_t;
-
 typedef struct __attribute__((packed)) {
     uint32_t name_ptr;
     int32_t value;
@@ -466,7 +453,8 @@ typedef struct __attribute__((packed)) {
     naka_cls_Screen_t CheckWall;
     /* zero padding */
     /* IvExitScreen view record: EXIT on CheckWall returns to view 0xFF0000 (CheckTitle); screen = {entry 0, slot 0xFF} */
-    NakaWidget_CheckTitle_8_IvExitScreen_t NakaWidget_CheckTitle_8_IvExitScreen;
+    /* element 8 of Viewable slot 0xFF: IvExitScreen (class id 0x01600049) */
+    naka_cls_IvExitScreen_t NakaWidget_CheckTitle_8_IvExitScreen;
     /* Root_ViewableTable_000: 23 pointers (cut from ptrs_2 by split_naka_pointer_arrays.py) */
     uint32_t Root_ViewableTable_000[23];
     uint16_t field_08d2;
@@ -1036,7 +1024,7 @@ _Static_assert(sizeof(naka_debug_naming_t) == 18112,
 #define Root_ViewableTable_000_SLOT 0x000u
 enum Root_ViewableTable_000_objects {
     OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
-      OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap, record outside the C sources (NakaDbg_PanelSimBitmap) */
+      OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap, record in naka_widget_names_charmap.c */
       OBJ_PanelSimulatorForHk_Label,                /*  2 Label */
       OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu */
       OBJ_NakaWidget_PanelSimulator_4_IvExitMode,   /*  4 IvExitMode */
@@ -1058,9 +1046,9 @@ enum Root_ViewableTable_000_objects {
       OBJ_NamingWindow_AcIndexEditSw_6,             /* 20 AcIndexEditSw */
       OBJ_Position_Label,                           /* 21 Label */
       OBJ_NamingCursorBox,                          /* 22 PsCursorBox "NamingCursorBox" */
-      OBJ_Root_NamingUpperCaseToggleView,           /* 23 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingUpperCaseToggleView) */
-      OBJ_Root_NamingLowerCaseToggleView,           /* 24 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingLowerCaseToggleView) */
-      OBJ_Root_NamingSymbolToggleView,              /* 25 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingSymbolToggleView) */
+      OBJ_Root_NamingUpperCaseToggleView,           /* 23 AcIndexToggle, record in naka_sequencer_channels.c */
+      OBJ_Root_NamingLowerCaseToggleView,           /* 24 AcIndexToggle, record in naka_sequencer_channels.c */
+      OBJ_Root_NamingSymbolToggleView,              /* 25 AcIndexToggle, record in naka_sequencer_channels.c */
       OBJ_NamingWindow_AcIndexEditSw_7,             /* 26 AcIndexEditSw */
       OBJ_NamingWindow_AcIndexEditSw_8,             /* 27 AcIndexEditSw */
       OBJ_NamingWindow_AcIndexEditSw_9,             /* 28 AcIndexEditSw */
@@ -1103,7 +1091,7 @@ enum Root_ViewableTable_0FF_objects {
       OBJ_CheckNaming_IvNaming,                 /*  5 IvNaming */
       OBJ_CheckNaming_IvExitScreen,             /*  6 IvExitScreen */
     OBJ_CheckWall,                              /*  7 Screen "CheckWall" */
-      OBJ_NakaWidget_CheckTitle_8_IvExitScreen, /*  8 IvExitScreen, record outside the C sources (NakaWidget_CheckTitle_8_IvExitScreen) */
+      OBJ_NakaWidget_CheckTitle_8_IvExitScreen, /*  8 IvExitScreen */
 };
 
 const naka_debug_naming_t naka_debug_naming_data
@@ -1978,7 +1966,16 @@ const naka_debug_naming_t naka_debug_naming_data
         .window = RAM_CheckWall_Window,
     },
 
-    .NakaWidget_CheckTitle_8_IvExitScreen = { NAKA_CLASS(IvExitScreen), 0x0007, 0xFFFF, 0xFFFF, 0xFFFF, 0x0018, { 0, 0, 31, 31 }, 0x0000, 0x00FF },
+    .NakaWidget_CheckTitle_8_IvExitScreen = {
+        .class_ = NAKA_CLASS(IvExitScreen),
+        .super = OBJ_CheckWall,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckTitle),
+    },
 
     .Root_ViewableTable_000 = {
         NAKA_ADDR(NakaWidget_PanelSimulator),

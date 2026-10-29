@@ -26,47 +26,6 @@ extern const char WidgetCharMap_DataEntry1;
 
 #define BASE  0x00ED3EE6u
 
-/* NakaWidget_SVARI's element (scripts/converters/nakarest_reviewed_slices.py). */
-/* NakaWidget_PMBKNAME's element (scripts/converters/nakarest_reviewed_slices.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint32_t exit;
-    uint32_t window;
-    uint32_t title;
-    uint32_t icon;
-} NakaWidget_PMBKNAME_t;
-
-typedef struct __attribute__((packed)) {
-    uint32_t class_;
-    uint16_t super;
-    uint16_t sub;
-    uint16_t next;
-    uint16_t prev;
-    uint16_t flag;
-    int16_t rect[4];
-    uint16_t color;
-    uint16_t border;
-    uint32_t exit;
-    uint32_t window;
-    uint32_t func;
-    uint32_t font;
-    uint16_t fontcolor;
-    uint32_t page;
-    uint32_t part;
-    uint32_t varisu;
-    uint32_t nowswno;
-    uint32_t nowvari;
-    uint32_t oldvari;
-} NakaWidget_SVARI_t;
-
 typedef struct __attribute__((packed)) {
     /* element 0 of Viewable slot 0x41 "ControlIni": TtlScreen (class id 0x01600034) */
     naka_cls_TtlScreen_t ControlIni;
@@ -553,12 +512,14 @@ typedef struct __attribute__((packed)) {
     /* element 5 of Viewable slot 0xD2: EditSw (class id 0x01600030) */
     naka_cls_EditSw_t PMNAME_EditSw;
     uint8_t bytes_2418[4];
-    uint8_t bytes_241c[22];  /* 0x47 */
+    /* element 6 of Viewable slot 0xD2: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_PMNAME_6_IvExit;
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* TtlScreen view record "PMBKNAME": the panel-memory bank NAMING screen */
-    NakaWidget_PMBKNAME_t NakaWidget_PMBKNAME;
+    /* element 0 of Viewable slot 0xD3: TtlScreen (class id 0x01600034) */
+    naka_cls_TtlScreen_t NakaWidget_PMBKNAME;
     /* "NAMING": title of the TtlScreen NakaWidget_PMBKNAME */
     char NakaStr_PmBkNameTitle[8];
     /* element 1 of Viewable slot 0xD3: IvNaming (class id 0x0160004D) */
@@ -573,13 +534,15 @@ typedef struct __attribute__((packed)) {
     /* element 5 of Viewable slot 0xD3: EditSw (class id 0x01600030) */
     naka_cls_EditSw_t vD3_e5;
     uint8_t bytes_2522[4];
-    uint8_t bytes_2526[22];  /* 0x47 */
+    /* element 6 of Viewable slot 0xD3: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_PMBKNAME_6_IvExit;
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* zero padding */
     /* VariScreen view record "SVARI": full-screen variation screen, cells page/part/varisu/nowswno/nowvari/oldvari in work RAM */
-    NakaWidget_SVARI_t NakaWidget_SVARI;
+    /* element 0 of Viewable slot 0xE8: VariScreen (class id 0x01620001) */
+    naka_cls_VariScreen_t NakaWidget_SVARI;
     /* element 1 of Viewable slot 0xE8: IvIntVari (class id 0x01600062) */
     naka_cls_IvIntVari_t NakaWidget_SVARI_1_IvIntVari;
     /* element 0 of Viewable slot 0xE9 "RVARI": RVariScreen (class id 0x01620002) */
@@ -948,7 +911,7 @@ enum Toshi_Viewable_PMNAME_objects {
       OBJ_PMemMemory_Label,           /*  3 Label */
       OBJ_PMNAME_PmBkNoBox,           /*  4 PmBkNoBox */
       OBJ_PMNAME_EditSw,              /*  5 EditSw */
-      OBJ_NakaWidget_PMNAME_6_IvExit, /*  6 IvExit, record outside the C sources (NakaWidget_PMNAME_6_IvExit) */
+      OBJ_NakaWidget_PMNAME_6_IvExit, /*  6 IvExit */
 };
 
 /* Viewable table Toshi_Viewable_PMBKNAME, registry slot 0xD3, 7 elements.
@@ -958,13 +921,13 @@ enum Toshi_Viewable_PMNAME_objects {
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_PMBKNAME, OBJ_x). */
 #define Toshi_Viewable_PMBKNAME_SLOT 0x0D3u
 enum Toshi_Viewable_PMBKNAME_objects {
-    OBJ_NakaWidget_PMBKNAME,                  /*  0 TtlScreen, record outside the C sources (NakaWidget_PMBKNAME) */
+    OBJ_NakaWidget_PMBKNAME,                  /*  0 TtlScreen */
       OBJ_NakaWidget_PMBKNAME_1_IvNaming,     /*  1 IvNaming */
       OBJ_NakaWidget_PMBKNAME_2_AcFuncEditSw, /*  2 AcFuncEditSw */
       OBJ_PMemBank_Label,                     /*  3 Label */
       OBJ_NakaWidget_PMBKNAME_4_BkNoBox,      /*  4 BkNoBox */
       OBJ_vD3_e5,                             /*  5 EditSw */
-      OBJ_NakaWidget_PMBKNAME_6_IvExit,       /*  6 IvExit, record outside the C sources (NakaWidget_PMBKNAME_6_IvExit) */
+      OBJ_NakaWidget_PMBKNAME_6_IvExit,       /*  6 IvExit */
 };
 
 /* Viewable table Toshi_Viewable_SVARI, registry slot 0xE8, 2 elements.
@@ -974,7 +937,7 @@ enum Toshi_Viewable_PMBKNAME_objects {
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Toshi_Viewable_SVARI, OBJ_x). */
 #define Toshi_Viewable_SVARI_SLOT 0x0E8u
 enum Toshi_Viewable_SVARI_objects {
-    OBJ_NakaWidget_SVARI,               /*  0 VariScreen, record outside the C sources (NakaWidget_SVARI) */
+    OBJ_NakaWidget_SVARI,               /*  0 VariScreen */
       OBJ_NakaWidget_SVARI_1_IvIntVari, /*  1 IvIntVari */
 };
 
@@ -4347,9 +4310,35 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .bytes_2418 = { 0x7E, 0x38, 0x30, 0x00 },
 
-    .bytes_241c = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x05, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },
+    .NakaWidget_PMNAME_6_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_PMNAME,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_PMNAME_EditSw,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+    },
 
-    .NakaWidget_PMBKNAME = { NAKA_CLASS(TtlScreen), 0xFFFF, 0x0001, 0xFFFF, 0xFFFF, 0x000A, { 0, 0, 319, 239 }, 0x00FF, 0x0000, 0x01A00000, 0x0003F60A, SELF(NakaStr_PmBkNameTitle), 0x00000099 },
+    /* ==== SCREEN TITLE_PMBKNAME "NAMING" -- "TT_PMBKNAME", title id 0xD3, function NAKA_APFUNC_DefaultFunction ====
+     * What: the panel-memory bank-name page.
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
+    .NakaWidget_PMBKNAME = {
+        .class_ = NAKA_CLASS(TtlScreen),
+        .super = NAKA_NONE,
+        .sub = OBJ_NakaWidget_PMBKNAME_1_IvNaming,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_None,
+        .exit = TITLE_PS,
+        .window = 0x0003F60A,
+        .title = SELF(NakaStr_PmBkNameTitle),
+        .icon = idICON_i151,
+    },
 
     .NakaStr_PmBkNameTitle = "NAMING\x00\xFF",
 
@@ -4432,9 +4421,43 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .bytes_2522 = { 0x7E, 0x38, 0x30, 0x00 },
 
-    .bytes_2526 = { 0x47, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x05, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },
+    .NakaWidget_PMBKNAME_6_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_NakaWidget_PMBKNAME,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_vD3_e5,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+    },
 
-    .NakaWidget_SVARI = { NAKA_CLASS(VariScreen), 0xFFFF, 0x0001, 0xFFFF, 0xFFFF, 0x000A, { 0, 0, 319, 239 }, 0x00FF, 0x0001, 0x01A00000, 0x0003F60E, 0x01200000, 0x00000000, 0x0000, 0x0003F612, 0x0003F614, 0x0003F616, 0x0003F618, 0x0003F61A, 0x0003F61C },
+    /* ==== SCREEN TITLE_SVARI -- "TT_SVARI", title id 0xE8, function NAKA_APFUNC_DefaultFunction ====
+     * What: Title id 0xE8, "TT_SVARI". It is opened from a panel handler when the sound category
+     *       byte (0xC07E) is neither 12 (drawbar) nor 13 (accordion). What ...
+     * Path: none found (no data entry, and no traced code, opens it)
+     * EXIT -> TITLE_PS */
+    .NakaWidget_SVARI = {
+        .class_ = NAKA_CLASS(VariScreen),
+        .super = NAKA_NONE,
+        .sub = OBJ_NakaWidget_SVARI_1_IvIntVari,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_White,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = 0x0003F60E,
+        .func = NAKA_APFUNC_DefaultFunction,
+        .font = idCHARA1,
+        .fontcolor = CL_Black,
+        .page = 0x0003F612,
+        .part = 0x0003F614,
+        .varisu = 0x0003F616,
+        .nowswno = 0x0003F618,
+        .nowvari = 0x0003F61A,
+        .oldvari = 0x0003F61C,
+    },
 
     .NakaWidget_SVARI_1_IvIntVari = {
         .class_ = NAKA_CLASS(IvIntVari),

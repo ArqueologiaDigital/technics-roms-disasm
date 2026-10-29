@@ -2829,8 +2829,8 @@ enum Kubo_ViewableTable_085_objects {
       OBJ_RealtimeRecord_SngSel,           /* 16 SngSel */
       OBJ_RealtimeRecord_AcFuncEditSw_2,   /* 17 AcFuncEditSw */
       OBJ_Mixer_Label_2,                   /* 18 Label */
-      OBJ_CycRec_ClearSwitchView,          /* 19 AcFuncEditSw, RAM record initialised from the work-RAM image (CycRec_ClearSwitchView) */
-        OBJ_CycRec_ClearLabelView,         /* 20 Label, RAM record initialised from the work-RAM image (CycRec_ClearLabelView) */
+      OBJ_CycRec_ClearSwitchView,          /* 19 AcFuncEditSw, record in naka_sequencer_channels.c */
+        OBJ_CycRec_ClearLabelView,         /* 20 Label, record in naka_sequencer_channels.c */
       OBJ_RealtimeRecord_IvRealRecExit,    /* 21 IvRealRecExit */
     OBJ_CycClrSw,                          /* 22 Window "CycClrSw" */
       OBJ_CycClrSw_AcFuncEditSw,           /* 23 AcFuncEditSw */
@@ -3459,10 +3459,10 @@ enum Kubo_ViewableTable_0D6_objects {
     OBJ_EnterTainerScr,                          /*  0 TtlScreen "EnterTainerScr" */
       OBJ_EnterTainerScr_AcEntertainerGridBox,   /*  1 AcEntertainerGridBox */
         OBJ_VocalReverb_Label,                   /*  2 Label */
-      OBJ_Kubo_VocWorkMenuView,                  /*  3 AcTitleMenu, RAM record initialised from the work-RAM image (Kubo_VocWorkMenuView) */
-      OBJ_Kubo_FadeInOutMenuView,                /*  4 AcTitleMenu, RAM record initialised from the work-RAM image (Kubo_FadeInOutMenuView) */
-      OBJ_Kubo_MixerMenuView,                    /*  5 AcTitleMenu, RAM record initialised from the work-RAM image (Kubo_MixerMenuView) */
-      OBJ_Kubo_DiskLoadMenuView,                 /*  6 AcTitleMenu, RAM record initialised from the work-RAM image (Kubo_DiskLoadMenuView) */
+      OBJ_Kubo_VocWorkMenuView,                  /*  3 AcTitleMenu, record in naka_sequencer_channels.c */
+      OBJ_Kubo_FadeInOutMenuView,                /*  4 AcTitleMenu, record in naka_sequencer_channels.c */
+      OBJ_Kubo_MixerMenuView,                    /*  5 AcTitleMenu, record in naka_sequencer_channels.c */
+      OBJ_Kubo_DiskLoadMenuView,                 /*  6 AcTitleMenu, record in naka_sequencer_channels.c */
       OBJ_EnterTainerScr_AcIndexWideES,          /*  7 AcIndexWideES */
       OBJ_EnterTainerScr_AcIndexWideES_2,        /*  8 AcIndexWideES */
       OBJ_Item_Label,                            /*  9 Label */
@@ -13048,10 +13048,10 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_ETMENU "ENTERTAINER" -- "TT_ETMENU", title id 0xD6, function NAKA_MAINFUNC_EtmenuTitleFunc ====
      * What: the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007).
      * Path: ENTERTAINER button (mode MD_ENTERTAINER)
-     * Menu: "VOCALIST WORKSTATION" -> TITLE_ETVOCAL
-     * Menu: "FADE IN/OUT SETTING" -> TITLE_ETFADEIN
-     * Menu: "MIXER" -> TITLE_SDMIXER
-     * Menu: "DISK LOAD" -> TITLE_DKLD
+     * Menu: "?" -> TITLE_ETVOCAL
+     * Menu: "?" -> TITLE_ETFADEIN
+     * Menu: "?" -> TITLE_SDMIXER
+     * Menu: "?" -> TITLE_DKLD
      * EXIT -> TITLE_PS */
     .EnterTainerScr = {
         .class_ = NAKA_CLASS(TtlScreen),

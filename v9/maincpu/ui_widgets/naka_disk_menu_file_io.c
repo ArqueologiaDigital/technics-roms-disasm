@@ -2118,7 +2118,7 @@ _Static_assert(sizeof(naka_disk_menu_file_io_t) == 30944,
 enum Cheap_ViewableTable_060_objects {
     OBJ_DiskMenu,                               /*  0 TtlScreen "DiskMenu" */
       OBJ_StyleConvert_AcTitleMenu,             /*  1 AcTitleMenu */
-      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu, RAM record initialised from the work-RAM image (Cheap_HardDiskMenuView) */
+      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu, record in naka_sequencer_channels.c */
       OBJ_Preferences_AcTitleMenu,              /*  3 AcTitleMenu */
       OBJ_Save_AcTitleMenu,                     /*  4 AcTitleMenu */
       OBJ_DiskTools_AcTtlJgBox,                 /*  5 AcTtlJgBox */
@@ -2273,7 +2273,7 @@ enum Cheap_ViewableTable_061_objects {
       OBJ_DiskLoadP3_PsFileNameBox_5,              /* 71 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_6,              /* 72 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_7,              /* 73 PsFileNameBox */
-      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle, RAM record initialised from the work-RAM image (Cheap_SingleBankToggleView) */
+      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle, record in naka_sequencer_channels.c */
     OBJ_DiskLoadSMF,                               /* 75 TtlScreen "DiskLoadSMF" */
       OBJ_Tech_AcTitleMenu,                        /* 76 AcTitleMenu */
       OBJ_DiskLoadSMF_AcIndexWideES,               /* 77 AcIndexWideES */
@@ -2727,7 +2727,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
      * Menu: "STYLE CONVERT" -> TITLE_STYLCNVWAIT
      * Menu: "PREFERENCES" -> TITLE_DKSETUP
      * Menu: "SAVE" -> TITLE_DKSVMENU
-     * Menu: "HARD DISK MAIN MENU" -> TITLE_HDDEXT
+     * Menu: "?" -> TITLE_HDDEXT
      * Menu: "DISK TOOLS" -> by code, NAKA_MAINFUNC_UtilityTtlJgFunc (TITLE_DKUT, TITLE_DKUTFRMT,
      *       TITLE_DKUTSMF, TITLE_MESAGE)
      * Menu: "LOAD" -> by code, NAKA_MAINFUNC_LoadTtlJgFunc (TITLE_DKLD, TITLE_DKLDSMF,
@@ -4054,7 +4054,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
      * Procedure: FmmLoadTitleFunc opens TITLE_DKLDSMF, TITLE_DKMENU, TITLE_DKUTFRMT, TITLE_ETMENU,
      *       TITLE_MESAGE
      * EXIT -> TITLE_DKMENU
-     * Opened from: TITLE_DKLDSMF ("TECH"), TITLE_ETMENU ("DISK LOAD") */
+     * Opened from: TITLE_DKLDSMF ("TECH"), TITLE_ETMENU */
     .DiskLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

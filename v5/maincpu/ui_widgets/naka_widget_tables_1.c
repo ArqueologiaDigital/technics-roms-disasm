@@ -427,7 +427,8 @@ typedef struct __attribute__((packed)) {
      * 0xF29E43), sequencer/sequencer_ui.s:65): it begins with class id
      * 0x1600029 = IvMainEditSw, whose descriptor gives record_size 26.
      * --------------------------------------------------------------------- */
-    uint8_t NakaHdr_Perf2MeasureBoxData[26];
+    /* element 10 of Viewable slot 0xE3: IvMainEditSw (class id 0x01600029) */
+    naka_cls_IvMainEditSw_t NakaHdr_Perf2MeasureBoxData;
     /* ---------------------------------------------------------------------
      * NakaHdr_Perf2FileListData -- widget record, entry 11 of
      * Yoko_ViewTable_0E3 (registered by InitializeYoko (v10/v9 0xF29E6D, v7
@@ -435,7 +436,8 @@ typedef struct __attribute__((packed)) {
      * 0x1670014 = AcDemoMedleyDispBox, whose descriptor gives record_size
      * 36.
      * --------------------------------------------------------------------- */
-    uint8_t NakaHdr_Perf2FileListData[36];
+    /* element 11 of Viewable slot 0xE3: AcDemoMedleyDispBox (class id 0x01670014) */
+    naka_cls_AcDemoMedleyDispBox_t NakaHdr_Perf2FileListData;
     /* ---------------------------------------------------------------------
      * Yoko_ViewTable_06F -- object table: InitializeYoko (v10/v9 0xF29E6D,
      * v7 0xF29E43) (sequencer/sequencer_ui.s:21) registers it with
@@ -1631,6 +1633,29 @@ typedef struct __attribute__((packed)) {
 _Static_assert(sizeof(naka_widget_tables_1_t) == 12878,
     "naka_widget_tables_1 must be exactly 12878 bytes");
 
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Yoko_ViewTable_0E3, registry slot 0xE3, 12 elements.
+ * InitializeYoko registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 12, Yoko_ViewTable_0E3, 0xE3`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Yoko_ViewTable_0E3, OBJ_x). */
+#define Yoko_ViewTable_0E3_SLOT 0x0E3u
+enum Yoko_ViewTable_0E3_objects {
+    OBJ_DemoRhy,                       /*  0 TtlScreen, record in naka_direct_play.c */
+      OBJ_DemoSong12,                  /*  1 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong13,                  /*  2 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong14,                  /*  3 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong15,                  /*  4 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong16,                  /*  5 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoSong17,                  /*  6 AcDemoSongBox, record in naka_direct_play.c */
+      OBJ_DemoRhy_PsWideToggle,        /*  7 PsWideToggle, record in naka_direct_play.c */
+      OBJ_DemoRhy_PsWideToggle_2,      /*  8 PsWideToggle, record in naka_direct_play.c */
+      OBJ_NakaWidget_Perf3RhythmSel,   /*  9 PsWideToggle, record outside the C sources (NakaWidget_Perf3RhythmSel) */
+      OBJ_NakaHdr_Perf2MeasureBoxData, /* 10 IvMainEditSw */
+      OBJ_NakaHdr_Perf2FileListData,   /* 11 AcDemoMedleyDispBox */
+};
+
 const naka_widget_tables_1_t naka_widget_tables_1_data
     __attribute__((section(".text"), used)) = {
 
@@ -1641,14 +1666,30 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
     .txt_RHYTHM_off = ALIGNED_STRING("RHYTHM"),
 
     .NakaHdr_Perf2MeasureBoxData = {
-        0x29, 0x00, 0x60, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x0B, 0x00, 0x09, 0x00, 0x18, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00, 0x1B, 0x00, 0x47, 0x01,
+        .class_ = NAKA_CLASS(IvMainEditSw),
+        .super = OBJ_DemoRhy,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaHdr_Perf2FileListData,
+        .prev = OBJ_NakaWidget_Perf3RhythmSel,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
+        .func = NAKA_MAINFUNC_DemoRhyTtlFunc,
     },
 
     .NakaHdr_Perf2FileListData = {
-        0x14, 0x00, 0x67, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x0A, 0x00, 0x08, 0x00, 0x64, 0x00,
-        0x28, 0x00, 0xD5, 0x00, 0x3A, 0x00, 0xF5, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x04, 0x00, 0x00, 0x00,
-        0xFF, 0x00, 0x00, 0x00,
+        .class_ = NAKA_CLASS(AcDemoMedleyDispBox),
+        .super = OBJ_DemoRhy,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_NakaHdr_Perf2MeasureBoxData,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(100, 40, 114, 19),
+        .color = CL_WallPattern,
+        .border = BD_None,
+        .index = 0xFFFF,
+        .font = idCHARA5,
+        .fontcolor = CL_White,
+        .align = AL_Center,
     },
 
     .Yoko_ViewTable_06F = {

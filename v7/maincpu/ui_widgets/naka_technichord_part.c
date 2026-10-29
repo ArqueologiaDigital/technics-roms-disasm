@@ -4319,7 +4319,7 @@ const naka_technichord_part_t naka_technichord_part_data
     /* ==== SCREEN TITLE_SDMIXER "MIXER" -- "TT_SDMIXER", title id 0x8, function NAKA_APFUNC_DefaultFunction ====
      * Path: MENU SOUND button (mode MD_SOUND) > "MIXER"
      * EXIT -> TITLE_SDMENU
-     * Opened from: TITLE_ETMENU ("MIXER"), TITLE_SDMENU ("MIXER") */
+     * Opened from: TITLE_ETMENU, TITLE_SDMENU ("MIXER") */
     .Sdmixer = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

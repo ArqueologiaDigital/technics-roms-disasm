@@ -13,7 +13,7 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (130 with a path), 21 modes, 3206 widget records in 15 C files, 99 menu entries, 93 code transitions and 267 EXIT links.
+211 titles (130 with a path), 21 modes, 3242 widget records in 18 C files, 99 menu entries, 93 code transitions and 267 EXIT links.
 
 ## Modes
 
@@ -120,14 +120,14 @@ the demo menu. It is the home title of mode 0x13, MD_DEMO.
 - Path: MENU DISK button (mode MD_DISK)
 - Registered: `"TT_DKMENU"`, title id 0x60, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
 - View: `OBJ_DiskMenu` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Menu entries: "STYLE CONVERT" -> `TITLE_STYLCNVWAIT`, "PREFERENCES" -> `TITLE_DKSETUP`, "SAVE" -> `TITLE_DKSVMENU`, "HARD DISK MAIN MENU" -> `TITLE_HDDEXT`
+- Menu entries: "STYLE CONVERT" -> `TITLE_STYLCNVWAIT`, "PREFERENCES" -> `TITLE_DKSETUP`, "SAVE" -> `TITLE_DKSVMENU`, "?" -> `TITLE_HDDEXT`
 - Entries that open a title by code: "DISK TOOLS" -> `NAKA_MAINFUNC_UtilityTtlJgFunc` (`TITLE_DKUT`, `TITLE_DKUTFRMT`, `TITLE_DKUTSMF`, `TITLE_MESAGE`), "LOAD" -> `NAKA_MAINFUNC_LoadTtlJgFunc` (`TITLE_DKLD`, `TITLE_DKLDSMF`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`), "DIRECT PLAY" -> `NAKA_MAINFUNC_DirectPlayTtlJgFunc` (`TITLE_DKDPDOC`, `TITLE_DKDPPD`, `TITLE_DKDPSMF`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`), "SONG MEDLEY" -> `NAKA_MAINFUNC_SongMedleyTtlJgFunc` (`TITLE_DKMDLY`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`)
 - EXIT -> `TITLE_PS`
 - Widgets:
 
   - `OBJ_DiskMenu` TtlScreen "DISK MENU" [0,0 320x240]
     - `OBJ_StyleConvert_AcTitleMenu` AcTitleMenu "STYLE CONVERT" [8,114 149x26] -> `TITLE_STYLCNVWAIT`
-    - `Cheap_HardDiskMenuView` AcTitleMenu "HARD DISK MAIN MENU", record outside the C sources -> `TITLE_HDDEXT`
+    - `OBJ_Cheap_HardDiskMenuView` AcTitleMenu [163,198 149x26] -> `TITLE_HDDEXT`
     - `OBJ_Preferences_AcTitleMenu` AcTitleMenu "PREFERENCES" [8,72 149x26] -> `TITLE_DKSETUP`
     - `OBJ_Save_AcTitleMenu` AcTitleMenu "SAVE" [163,72 149x26] -> `TITLE_DKSVMENU`
     - `OBJ_DiskTools_AcTtlJgBox` AcTtlJgBox "DISK TOOLS" [8,30 149x26] -> by code, `NAKA_MAINFUNC_UtilityTtlJgFunc`
@@ -143,17 +143,17 @@ the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007
 - Path: ENTERTAINER button (mode MD_ENTERTAINER)
 - Registered: `"TT_ETMENU"`, title id 0xD6, function `NAKA_MAINFUNC_EtmenuTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_EnterTainerScr` (TtlScreen) in `naka_effects_seq.c`
-- Menu entries: "VOCALIST WORKSTATION" -> `TITLE_ETVOCAL`, "FADE IN/OUT SETTING" -> `TITLE_ETFADEIN`, "MIXER" -> `TITLE_SDMIXER`, "DISK LOAD" -> `TITLE_DKLD`
+- Menu entries: "?" -> `TITLE_ETVOCAL`, "?" -> `TITLE_ETFADEIN`, "?" -> `TITLE_SDMIXER`, "?" -> `TITLE_DKLD`
 - EXIT -> `TITLE_PS`
 - Widgets:
 
   - `OBJ_EnterTainerScr` TtlScreen "ENTERTAINER" [0,0 320x240]
     - `OBJ_EnterTainerScr_AcEntertainerGridBox` AcEntertainerGridBox [110,30 208x170]
       - `OBJ_VocalReverb_Label` Label "VOCAL REVERB" [115,58 100x19]
-    - `Kubo_VocWorkMenuView` AcTitleMenu "VOCALIST WORKSTATION", record outside the C sources -> `TITLE_ETVOCAL`
-    - `Kubo_FadeInOutMenuView` AcTitleMenu "FADE IN/OUT SETTING", record outside the C sources -> `TITLE_ETFADEIN`
-    - `Kubo_MixerMenuView` AcTitleMenu "MIXER", record outside the C sources -> `TITLE_SDMIXER`
-    - `Kubo_DiskLoadMenuView` AcTitleMenu "DISK LOAD", record outside the C sources -> `TITLE_DKLD`
+    - `OBJ_Kubo_VocWorkMenuView` AcTitleMenu [8,30 149x26] -> `TITLE_ETVOCAL`
+    - `OBJ_Kubo_FadeInOutMenuView` AcTitleMenu [8,72 149x26] -> `TITLE_ETFADEIN`
+    - `OBJ_Kubo_MixerMenuView` AcTitleMenu [8,114 149x26] -> `TITLE_SDMIXER`
+    - `OBJ_Kubo_DiskLoadMenuView` AcTitleMenu [8,156 149x26] -> `TITLE_DKLD`
     - `OBJ_EnterTainerScr_AcIndexWideES` AcIndexWideES [124,216 72x23]
     - `OBJ_EnterTainerScr_AcIndexWideES_2` AcIndexWideES [244,216 72x23]
     - `OBJ_Item_Label` Label "ITEM" [142,202 36x19]
@@ -268,7 +268,7 @@ the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
     - `OBJ_normal_IvPageOverWr_4` IvPageOverWr [0,0 32x32]
     - `OBJ_normal_IvPageOverWr_5` IvPageOverWr [0,0 32x32]
     - `OBJ_normal_IvPageOverWr_6` IvPageOverWr [0,0 32x32]
-    - `NakaWidget_Normal_23_IvExit` IvExit, record outside the C sources
+    - `OBJ_NakaWidget_Normal_23_IvExit` IvExit [0,0 32x32]
 
 ### `TITLE_ONETCH`
 
@@ -419,8 +419,8 @@ the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
     - `OBJ_RealtimeRecord_SngSel` SngSel [62,33 200x48]
     - `OBJ_RealtimeRecord_AcFuncEditSw_2` AcFuncEditSw [8,118 31x18]
     - `OBJ_Mixer_Label_2` Label "MIXER" [10,119 44x19]
-    - `CycRec_ClearSwitchView` AcFuncEditSw, record outside the C sources
-      - `CycRec_ClearLabelView` Label "CLEAR", record outside the C sources
+    - `OBJ_CycRec_ClearSwitchView` AcFuncEditSw [8,76 50x18]
+      - `OBJ_CycRec_ClearLabelView` Label [10,77 44x19]
     - `OBJ_RealtimeRecord_IvRealRecExit` IvRealRecExit [0,0 32x32]
 
 ### `TITLE_SQTRSEL` -- "STEP RECORD       "
@@ -1054,7 +1054,7 @@ Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirma
 - Menu entries: "SMF" -> `TITLE_DKLDSMF`
 - Its procedure `FmmLoadTitleFunc` opens: `TITLE_DKLDSMF`, `TITLE_DKMENU`, `TITLE_DKUTFRMT`, `TITLE_ETMENU`, `TITLE_MESAGE`
 - EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKLDSMF` ("TECH"), `TITLE_ETMENU` ("DISK LOAD")
+- Opened from: `TITLE_DKLDSMF` ("TECH"), `TITLE_ETMENU`
 - Widgets:
 
   - `OBJ_DiskLoad` TtlScreen [0,0 320x240]
@@ -1132,11 +1132,23 @@ Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirma
 
 the hard-disk / extension title. The main CPU registers it in InitializeHama, and the HD-AE5000 re-registers it with its ...
 
-- Path: MENU DISK button (mode MD_DISK) > "HARD DISK MAIN MENU"
+- Path: MENU DISK button (mode MD_DISK) > (unlabelled entry)
 - Registered: `"TT_HDDEXT"`, title id 0x7F, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
-- View: element 0 of Viewable slot 0xFC (record outside the C sources)
+- View: `OBJ_FDTest_ScreenView` (TtlScreen) in `naka_sequencer_channels.c`
 - EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKMENU` ("HARD DISK MAIN MENU")
+- Opened from: `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_FDTest_ScreenView` TtlScreen [0,0 320x240]
+    - `FDTest_DiagList_Total` PsNumEditBox " TOTAL :", record outside the C sources
+    - `FDTest_DiagList_NG` PsNumEditBox "    NG :", record outside the C sources
+    - `FDTest_DiagList_OK` PsNumEditBox "    OK :", record outside the C sources
+    - `FDTest_Separator1` IvMainEditSw, record outside the C sources
+    - `FDTest_Panel_Param` PsEditSwBox, record outside the C sources
+      - `FDTest_Label_Tilde80` Label "~80", record outside the C sources
+    - `FDTest_Panel_SubElements` PsEditSwBox, record outside the C sources
+      - `FDTest_Group_OnOff` Box, record outside the C sources
+    - `FDTest_Label_RunningTest` Label "RUNNING TEST", record outside the C sources
 
 ### `TITLE_DKSETUP` -- "PREFERENCES"
 
@@ -1184,13 +1196,28 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_StylCnvWaitScreen_VwBox` VwBox [44,88 230x70]
       - `OBJ_StylCnvWaitScreen_AcLanguageText` AcLanguageText [47,92 222x62]
 
+### `TITLE_ETVOCAL` -- "VOCALIST WORKSTATION"
+
+- Path: ENTERTAINER button (mode MD_ENTERTAINER) > (unlabelled entry)
+- Registered: `"TT_ETVOCAL"`, title id 0xD7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_EntertainerVocal` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_ETMENU`
+- Opened from: `TITLE_ETMENU`
+- Widgets:
+
+  - `OBJ_EntertainerVocal` TtlScreen "VOCALIST WORKSTATION" [0,0 320x240]
+    - `OBJ_EntertainerVocal_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_EntertainerVocal_IvPageControl_2` IvPageControl [32,0 32x32]
+    - `OBJ_VocalistPage` AcWindowPage [245,6 71x18]
+    - `OBJ_EntertainerVocal_IvShowHide` IvShowHide [0,32 32x32]
+
 ### `TITLE_ETFADEIN` -- "FADE IN/OUT SETTING"
 
-- Path: ENTERTAINER button (mode MD_ENTERTAINER) > "FADE IN/OUT SETTING"
+- Path: ENTERTAINER button (mode MD_ENTERTAINER) > (unlabelled entry)
 - Registered: `"TT_ETFADEIN"`, title id 0xD8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_EntertainerFade` (TtlScreen) in `naka_midi_reverb.c`
 - EXIT -> `TITLE_ETMENU`
-- Opened from: `TITLE_ETMENU` ("FADE IN/OUT SETTING")
+- Opened from: `TITLE_ETMENU`
 - Widgets:
 
   - `OBJ_EntertainerFade` TtlScreen "FADE IN/OUT SETTING" [0,0 320x240]
@@ -1201,21 +1228,6 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_EntertainerFade_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
     - `OBJ_EntertainerFade_IvIntEasySet` IvIntEasySet [0,0 32x32]
     - `OBJ_EntertainerFade_IvShowHide` IvShowHide [32,0 32x32]
-
-### `TITLE_ETVOCAL` -- "VOCALIST WORKSTATION"
-
-- Path: ENTERTAINER button (mode MD_ENTERTAINER) > "VOCALIST WORKSTATION"
-- Registered: `"TT_ETVOCAL"`, title id 0xD7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_EntertainerVocal` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_ETMENU`
-- Opened from: `TITLE_ETMENU` ("VOCALIST WORKSTATION")
-- Widgets:
-
-  - `OBJ_EntertainerVocal` TtlScreen "VOCALIST WORKSTATION" [0,0 320x240]
-    - `OBJ_EntertainerVocal_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_EntertainerVocal_IvPageControl_2` IvPageControl [32,0 32x32]
-    - `OBJ_VocalistPage` AcWindowPage [245,6 71x18]
-    - `OBJ_EntertainerVocal_IvShowHide` IvShowHide [0,32 32x32]
 
 ### `TITLE_MDCOM` -- "COMMON SETTING"
 
@@ -1388,7 +1400,7 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_PcgOutGridBox` AcPcgOutGridBox [20,30 241x181]
     - `OBJ_MidiPcgOutput_AcIndexWideES` AcIndexWideES [44,216 72x23]
     - `OBJ_MidiPcgOutput_AcIndexWideES_2` AcIndexWideES [164,216 72x23]
-    - `East_SendSwitchView` AcSendEditSw "SEND", record outside the C sources
+    - `OBJ_East_SendSwitchView` AcSendEditSw [270,160 39x18]
     - `OBJ_MidiPcgOutput_IvShowHide` IvShowHide [0,0 32x32]
 
 ### `TITLE_MDREAL` -- "REALTIME MESSAGES"
@@ -1949,7 +1961,7 @@ the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008
 - Registered: `"TT_SDMIXER"`, title id 0x8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Sdmixer` (TtlScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_SDMENU`
-- Opened from: `TITLE_ETMENU` ("MIXER"), `TITLE_SDMENU` ("MIXER")
+- Opened from: `TITLE_ETMENU`, `TITLE_SDMENU` ("MIXER")
 - Widgets:
 
   - `OBJ_Sdmixer` TtlScreen "MIXER" [0,0 320x240]
@@ -2176,8 +2188,8 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_DemoRhy_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
     - `OBJ_DemoRhy_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
     - `NakaWidget_Perf3RhythmSel` PsWideToggle "RHYTHM", record outside the C sources
-    - `NakaHdr_Perf2MeasureBoxData` IvMainEditSw, record outside the C sources
-    - `NakaHdr_Perf2FileListData` AcDemoMedleyDispBox, record outside the C sources
+    - `OBJ_NakaHdr_Perf2MeasureBoxData` IvMainEditSw [0,0 32x32]
+    - `OBJ_NakaHdr_Perf2FileListData` AcDemoMedleyDispBox [100,40 114x19]
 
 ### `TITLE_DPSMF` -- "SMF DIRECT PLAY  "
 
@@ -2225,8 +2237,8 @@ the Composer (mode 0xE, MD_CMP) real-time page.
       - `OBJ_Skip_Label_2` Label "SKIP" [10,203 36x19]
     - `OBJ_DpMdlySmf_AcRamEditBox` AcRamEditBox " " [240,161 76x32]
     - `OBJ_DpMdlySmf_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_SmfMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SMFMedMuteSw` AcMuteToggleBox "ON", record outside the C sources
+    - `OBJ_NakaWidget_SmfMdlyOffOnSel` IvExit [0,32 32x32]
+    - `OBJ_NakaWidget_SMFMedMuteSw` AcMuteToggleBox "ON" [244,216 32x23]
     - `OBJ_MIXER_VwMenuBox_4` VwMenuBox "MIXER" [8,114 50x26]
     - `OBJ_MIC_VwMenuBox_5` VwMenuBox "MIC" [8,72 34x26]
     - `OBJ_MuteCh_Label_2` Label "-MUTE CH-" [240,200 76x19]
@@ -2270,8 +2282,8 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_DpMdlyDoc_VwEditSwBox` VwEditSwBox [8,202 42x18]
       - `OBJ_Skip_Label_3` Label "SKIP" [10,203 36x19]
     - `OBJ_DpMdlyDoc_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_DocMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_DOCMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
+    - `OBJ_NakaWidget_DocMdlyOffOnSel` IvExit [0,32 32x32]
+    - `OBJ_NakaWidget_DOCMedR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
     - `OBJ_DOCMedR2Sw` AcMuteToggleBox "RT2" [270,160 42x18]
     - `OBJ_DOCMedOrchSw` AcMuteToggleBox "ORCH" [270,202 42x18]
     - `OBJ_MIXER_VwMenuBox_5` VwMenuBox "MIXER" [8,114 50x26]
@@ -2297,8 +2309,8 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_DkMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
     - `OBJ_DkMdlyPly_AcDiskFileNameBox` AcDiskFileNameBox [210,8 108x19]
     - `OBJ_Skip_Label_6` Label "SKIP" [272,119 36x19]
-    - `NakaWidget_SongMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SongMdlyMixer` VwMenuBox "MIXER", record outside the C sources
+    - `OBJ_NakaWidget_SongMdlyOffOnSel` IvExit [0,64 32x32]
+    - `OBJ_NakaWidget_SongMdlyMixer` VwMenuBox "MIXER" [8,114 50x26]
 
 ### `TITLE_DKSVSMF` -- "SMF SAVE"
 
@@ -2512,13 +2524,13 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
   - `OBJ_SqTrAs` TtlScreen "TRACK ASSIGN   " [0,0 320x240]
     - `OBJ_Preset_AcTitleMenu` AcTitleMenu "PRESET" [254,30 58x26] -> `TITLE_SQTRASPS`
     - `OBJ_SqTrAs_AcCurrentSongBox` AcCurrentSongBox [256,10 52x19]
-    - `TrAs_OkSwitchView` VwEditSwBox, record outside the C sources
+    - `OBJ_TrAs_OkSwitchView` VwEditSwBox [281,160 31x18]
     - `OBJ_TrAsGrid` AcTrAsGridBox [2,34 240x206]
       - `OBJ_TrAsGrid_TextBox` TextBox "TRACK~0DASSIGN" [83,38 76x20]
       - `OBJ_TrAsGrid_TextBox_2` TextBox "LOCAL~0DCONT." [161,38 38x20]
       - `OBJ_TrAsGrid_TextBox_3` TextBox "MIDI~0DOUT" [200,38 40x20]
       - `OBJ_TrAsGrid_AcIndexWideES` AcIndexWideES [7,216 72x23]
-      - `TrAs_PartSelectSwitchView` AcIndexWideES, record outside the C sources
+      - `OBJ_TrAs_PartSelectSwitchView` AcIndexWideES [86,216 72x23]
       - `OBJ_TrAsGrid_AcIndexEditSw` AcIndexEditSw [164,216 32x23]
       - `OBJ_TrAsGrid_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
     - `OBJ_SqTrAs_IvMainEditSw` IvMainEditSw [0,0 32x32]
@@ -2682,8 +2694,8 @@ the direct-play medley SMF page with lyrics.
     - `OBJ_DpMdlySmfLyr_VwEditSwBox` VwEditSwBox [8,202 42x18]
       - `OBJ_Skip_Label_5` Label "SKIP" [10,203 36x19]
     - `OBJ_DpMdlySmfLyr_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_SmfMdly2OffOnSel` IvExit, record outside the C sources
-      - `NakaWidget_SmfMdly2MicWidget` VwMenuBox "MIC", record outside the C sources
+    - `OBJ_NakaWidget_SmfMdly2OffOnSel` IvExit [0,32 32x32]
+      - `OBJ_NakaWidget_SmfMdly2MicWidget` VwMenuBox "MIC" [8,30 34x26]
     - `OBJ_NakaWidget_SmfMdly2OrchSel` IvFixWin [0,64 32x32]
 
 ### `TITLE_SQMIXER` -- "TRACK MIXER"
@@ -3125,8 +3137,8 @@ the sequencer song-name page.
     - `OBJ_DpMdlyPd_VwEditSwBox` VwEditSwBox [8,202 42x18]
       - `OBJ_Skip_Label_4` Label "SKIP" [10,203 36x19]
     - `OBJ_DpMdlyPd_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_PdMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_PDMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
+    - `OBJ_NakaWidget_PdMdlyOffOnSel` IvExit [0,32 32x32]
+    - `OBJ_NakaWidget_PDMedR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
     - `OBJ_PDMedOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
     - `OBJ_MIXER_VwMenuBox_6` VwMenuBox "MIXER" [8,114 50x26]
     - `OBJ_MIC_VwMenuBox_7` VwMenuBox "MIC" [8,72 34x26]
@@ -3175,8 +3187,8 @@ the sequencer song-name page.
     - `OBJ_SqMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
     - `OBJ_SqMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
     - `OBJ_SqMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
-    - `NakaWidget_SongMdly2OffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER", record outside the C sources
+    - `OBJ_NakaWidget_SongMdly2OffOnSel` IvExit [0,64 32x32]
+    - `OBJ_NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER" [8,114 50x26]
 
 ### `TITLE_SQCYCPLY` -- "CYCLE PLAY"
 
@@ -3570,16 +3582,25 @@ the panel-memory name page.
     - `OBJ_PMemMemory_Label` Label "P.MEM Memory" [54,54 100x19]
     - `OBJ_PMNAME_PmBkNoBox` PmBkNoBox [155,54 62x16]
     - `OBJ_PMNAME_EditSw` EditSw [-3492,173 12x19]
-    - `NakaWidget_PMNAME_6_IvExit` IvExit, record outside the C sources
+    - `OBJ_NakaWidget_PMNAME_6_IvExit` IvExit [0,0 32x32]
 
-### `TITLE_PMBKNAME`
+### `TITLE_PMBKNAME` -- "NAMING"
 
 the panel-memory bank-name page.
 
 - Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_PMBKNAME"`, title id 0xD3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: element 0 of Viewable slot 0xD3 (record outside the C sources)
+- View: `OBJ_NakaWidget_PMBKNAME` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_NakaWidget_PMBKNAME` TtlScreen "NAMING" [0,0 320x240]
+    - `OBJ_NakaWidget_PMBKNAME_1_IvNaming` IvNaming [0,0 32x32]
+    - `OBJ_NakaWidget_PMBKNAME_2_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_PMemBank_Label` Label "P.MEM Bank" [55,54 84x19]
+    - `OBJ_NakaWidget_PMBKNAME_4_BkNoBox` BkNoBox [142,55 34x14]
+    - `OBJ_vD3_e5` EditSw [-3492,173 12x19]
+    - `OBJ_NakaWidget_PMBKNAME_6_IvExit` IvExit [0,0 32x32]
 
 ### `TITLE_SVARI`
 
@@ -3587,8 +3608,12 @@ Title id 0xE8, "TT_SVARI". It is opened from a panel handler when the sound cate
 
 - Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SVARI"`, title id 0xE8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: element 0 of Viewable slot 0xE8 (record outside the C sources)
+- View: `OBJ_NakaWidget_SVARI` (VariScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_NakaWidget_SVARI` VariScreen [0,0 320x240]
+    - `OBJ_NakaWidget_SVARI_1_IvIntVari` IvIntVari [0,0 32x32]
 
 ### `TITLE_RVARI`
 
@@ -3809,8 +3834,20 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 - Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_EXTAPR"`, title id 0xFC, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
-- View: element 0 of Viewable slot 0xFC (record outside the C sources)
+- View: `OBJ_FDTest_ScreenView` (TtlScreen) in `naka_sequencer_channels.c`
 - EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_FDTest_ScreenView` TtlScreen [0,0 320x240]
+    - `FDTest_DiagList_Total` PsNumEditBox " TOTAL :", record outside the C sources
+    - `FDTest_DiagList_NG` PsNumEditBox "    NG :", record outside the C sources
+    - `FDTest_DiagList_OK` PsNumEditBox "    OK :", record outside the C sources
+    - `FDTest_Separator1` IvMainEditSw, record outside the C sources
+    - `FDTest_Panel_Param` PsEditSwBox, record outside the C sources
+      - `FDTest_Label_Tilde80` Label "~80", record outside the C sources
+    - `FDTest_Panel_SubElements` PsEditSwBox, record outside the C sources
+      - `FDTest_Group_OnOff` Box, record outside the C sources
+    - `FDTest_Label_RunningTest` Label "RUNNING TEST", record outside the C sources
 
 ### `TITLE_FDMSP`
 

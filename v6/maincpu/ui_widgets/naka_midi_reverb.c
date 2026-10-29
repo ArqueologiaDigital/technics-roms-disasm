@@ -1272,7 +1272,7 @@ enum East_ViewableTable_059_objects {
       OBJ_PcgOutGridBox,                 /*  1 AcPcgOutGridBox "PcgOutGridBox" */
       OBJ_MidiPcgOutput_AcIndexWideES,   /*  2 AcIndexWideES */
       OBJ_MidiPcgOutput_AcIndexWideES_2, /*  3 AcIndexWideES */
-      OBJ_East_SendSwitchView,           /*  4 AcSendEditSw, RAM record initialised from the work-RAM image (East_SendSwitchView) */
+      OBJ_East_SendSwitchView,           /*  4 AcSendEditSw, record in naka_sequencer_channels.c */
       OBJ_MidiPcgOutput_IvShowHide,      /*  5 IvShowHide */
 };
 
@@ -6071,9 +6071,9 @@ const naka_midi_reverb_t naka_midi_reverb_data
     },
 
     /* ==== SCREEN TITLE_ETVOCAL "VOCALIST WORKSTATION" -- "TT_ETVOCAL", title id 0xD7, function NAKA_APFUNC_DefaultFunction ====
-     * Path: ENTERTAINER button (mode MD_ENTERTAINER) > "VOCALIST WORKSTATION"
+     * Path: ENTERTAINER button (mode MD_ENTERTAINER) > (unlabelled entry)
      * EXIT -> TITLE_ETMENU
-     * Opened from: TITLE_ETMENU ("VOCALIST WORKSTATION") */
+     * Opened from: TITLE_ETMENU */
     .EntertainerVocal = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6483,9 +6483,9 @@ const naka_midi_reverb_t naka_midi_reverb_data
     },
 
     /* ==== SCREEN TITLE_ETFADEIN "FADE IN/OUT SETTING" -- "TT_ETFADEIN", title id 0xD8, function NAKA_APFUNC_DefaultFunction ====
-     * Path: ENTERTAINER button (mode MD_ENTERTAINER) > "FADE IN/OUT SETTING"
+     * Path: ENTERTAINER button (mode MD_ENTERTAINER) > (unlabelled entry)
      * EXIT -> TITLE_ETMENU
-     * Opened from: TITLE_ETMENU ("FADE IN/OUT SETTING") */
+     * Opened from: TITLE_ETMENU */
     .EntertainerFade = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
