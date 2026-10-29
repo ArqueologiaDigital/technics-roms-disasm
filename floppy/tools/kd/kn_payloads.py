@@ -23,6 +23,7 @@ import kn_tcmp  # noqa: E402
 import kn_sqt  # noqa: E402
 import kn_panel  # noqa: E402
 import kn_soundram  # noqa: E402
+import kn_cst  # noqa: E402
 
 
 
@@ -30,7 +31,7 @@ def _lsw(ctx, part, p, ref, lab):
     return kn_panel.lsw1(ctx, part, p, ref, lab) if part == 1 else kn_panel.lsw2(ctx, part, p, ref, lab)
 
 
-TYPERS = {'CMP': kn_tcmp.typer, 'SQT': kn_sqt.typer, 'PMT': kn_panel.pmt, 'LSW': _lsw, 'TM': kn_soundram.typer}
+TYPERS = {'CMP': kn_tcmp.typer, 'SQT': kn_sqt.typer, 'PMT': kn_panel.pmt, 'LSW': _lsw, 'TM': kn_soundram.typer, 'CST': kn_cst.typer}
 
 
 def note(ctx, ext):
