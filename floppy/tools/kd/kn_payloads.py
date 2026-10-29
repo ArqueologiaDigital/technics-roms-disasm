@@ -20,8 +20,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kn_tcmp  # noqa: E402
+import kn_sqt  # noqa: E402
 
-TYPERS = {'CMP': kn_tcmp.typer}
+TYPERS = {'CMP': kn_tcmp.typer, 'SQT': kn_sqt.typer}
 
 
 def note(ctx, ext):
