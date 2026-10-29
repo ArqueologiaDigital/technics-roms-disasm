@@ -117,20 +117,20 @@
 	TtlScreenR	HDDMENU, x=0, y=0, w=320, h=240, exit=TITLE_DKMENU, window=HdaeUiVar_HDDMENU_window, icon=131, title="HD-AE5000"
 	.set	HDAE5000_UI_Descriptors, HdaeUi_HDDMENU + 0x02	; MISNOMER kept for cross-reference: inside this record
 	ui_sub
-		AcScreenMenu	HDDMENU_SETUP_TOOLS, x=8, y=72, w=149, h=26, editsw=0x89, selected=HdaeUiVar_HDDMENU_SETUP_TOOLS_selected, screen=HDAE5000_OBJ_SETUPS_TOOLS, icon=8, str="SETUP & TOOLS  "
-		AcScreenMenu	HDDMENU_Go_LOAD_BY_NUM, x=163, y=114, w=149, h=26, editsw=0x0a, selected=HdaeUiVar_HDDMENU_Go_LOAD_BY_NUM_selected, screen=HDAE5000_OBJ_LOAD_BY_NUM, icon=174, str=""
+		AcScreenMenu	HDDMENU_SETUP_TOOLS, x=8, y=72, w=149, h=26, editsw=EDITSW_LEFT2, selected=HdaeUiVar_HDDMENU_SETUP_TOOLS_selected, screen=HDAE5000_OBJ_SETUPS_TOOLS, icon=8, str="SETUP & TOOLS  "
+		AcScreenMenu	HDDMENU_Go_LOAD_BY_NUM, x=163, y=114, w=149, h=26, editsw=EDITSW_RIGHT3, selected=HdaeUiVar_HDDMENU_Go_LOAD_BY_NUM_selected, screen=HDAE5000_OBJ_LOAD_BY_NUM, icon=174, str=""
 		ui_sub
 			AcLanguageText1	HDDMENU_Go_LOAD_BY_NUM_Text6, x=170, y=114, w=112, h=32, index=6, font=0, fontcolor=0xff, alignment=1, lines=2
 		ui_endsub
-		AcScreenMenu	HDDMENU_Go_FLS_SELECT, x=163, y=156, w=149, h=26, align=2, editsw=0x0b, selected=HdaeUiVar_HDDMENU_Go_FLS_SELECT_selected, screen=HDAE5000_OBJ_FLS_SELECT, icon=175, str=""
+		AcScreenMenu	HDDMENU_Go_FLS_SELECT, x=163, y=156, w=149, h=26, align=2, editsw=EDITSW_RIGHT4, selected=HdaeUiVar_HDDMENU_Go_FLS_SELECT_selected, screen=HDAE5000_OBJ_FLS_SELECT, icon=175, str=""
 		ui_sub
 			AcLanguageText1	HDDMENU_Go_FLS_SELECT_Text7, x=170, y=156, w=112, h=32, index=7, font=0, fontcolor=0xff, alignment=1, lines=2
 		ui_endsub
-		AcScreenMenu	HDDMENU_AcScreenMenu, x=8, y=114, w=149, h=26, editsw=0x8a, selected=HdaeUiVar_HDDMENU_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=115, str=""
+		AcScreenMenu	HDDMENU_AcScreenMenu, x=8, y=114, w=149, h=26, editsw=EDITSW_LEFT3, selected=HdaeUiVar_HDDMENU_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=115, str=""
 		ui_sub
 			AcLanguageText1	HDDMENU_AcScreenMenu_Text3, x=36, y=114, w=125, h=32, index=3, font=0, fontcolor=0xff, alignment=1, lines=2
 		ui_endsub
-		AcScreenMenu	HDDMENU_Go_OUTPUT_SETTING, x=8, y=156, w=149, h=26, editsw=0x8b, selected=HdaeUiVar_HDDMENU_Go_OUTPUT_SETTING_selected, screen=HDAE5000_OBJ_OUTPUT_SETTING, icon=33, str=""
+		AcScreenMenu	HDDMENU_Go_OUTPUT_SETTING, x=8, y=156, w=149, h=26, editsw=EDITSW_LEFT4, selected=HdaeUiVar_HDDMENU_Go_OUTPUT_SETTING_selected, screen=HDAE5000_OBJ_OUTPUT_SETTING, icon=33, str=""
 		ui_sub
 			AcLanguageText1	HDDMENU_Go_OUTPUT_SETTING_Text4, x=36, y=156, w=125, h=32, index=4, font=0, fontcolor=0xff, alignment=1, lines=1
 		ui_endsub
@@ -138,14 +138,14 @@
 		IvCatchEvent	HDDMENU_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_HdTitleEventCatch
 		IvMainEditSw	HDDMENU_IvMainEditSw, x=32, y=0, w=32, h=32, func=NAKA_MAINFUNC_HDDTitleSwCatch
 		VwUserBitmap	HDDMENU_VwUserBitmap, x=93, y=1, w=27, h=27
-		AcScreenMenu	HDDMENU_Go_SELECT_DIR, x=163, y=72, w=149, h=26, align=1, editsw=0x09, selected=HdaeUiVar_HDDMENU_Go_SELECT_DIR_selected, screen=HDAE5000_OBJ_SELECT_DIR, icon=173, str=""
+		AcScreenMenu	HDDMENU_Go_SELECT_DIR, x=163, y=72, w=149, h=26, align=1, editsw=EDITSW_RIGHT2, selected=HdaeUiVar_HDDMENU_Go_SELECT_DIR_selected, screen=HDAE5000_OBJ_SELECT_DIR, icon=173, str=""
 		ui_sub
 			AcLanguageText1	HDDMENU_Go_SELECT_DIR_Text5, x=170, y=72, w=112, h=32, index=5, font=0, fontcolor=0xff, alignment=1, lines=2
 			ui_sub
 				AcLanguageText1	HDDMENU_Go_SELECT_DIR_Text5_Text5, x=170, y=72, w=112, h=32, index=5, font=0, fontcolor=0xff, alignment=1, lines=2
 			ui_endsub
 		ui_endsub
-		AcScreenMenu	HDDMENU_Go_Tech_lyrics, x=163, y=30, w=149, h=26, align=1, editsw=0x08, selected=HdaeUiVar_HDDMENU_Go_Tech_lyrics_selected, screen=HDAE5000_OBJ_Tech_lyrics, icon=60, str=""
+		AcScreenMenu	HDDMENU_Go_Tech_lyrics, x=163, y=30, w=149, h=26, align=1, editsw=EDITSW_RIGHT1, selected=HdaeUiVar_HDDMENU_Go_Tech_lyrics_selected, screen=HDAE5000_OBJ_Tech_lyrics, icon=60, str=""
 		TextBox	HDDMENU_LYRICS_WINDOW, x=170, y=30, w=60, h=32, color=0xf7, border=0x00, font=0, fontcolor=0xff, alignment=1, lines=2, text="LYRICS WINDOW"
 		.set	HDAE5000_UI_Page_Titles, HdaeUi_HDDMENU_LYRICS_WINDOW_text	; MISNOMER kept for cross-reference: inside this record
 	ui_endsub
@@ -180,7 +180,7 @@
 		IvExitScreen	SELECT_FILE_Exit_SELECT_DIR, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_SELECT_DIR
 		IvPageControl	HD_FILE_LOAD, x=0, y=32, w=32, h=32, page=1, window=HDAE5000_OBJ_HD_FILE_LOAD_P1
 		IvPageControl	HD_LOAD_OPTION, x=0, y=64, w=32, h=32, page=2, window=HDAE5000_OBJ_HD_FILE_LOAD_P2
-		AcIndexEditSw	SELECT_FILE_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=0x08, style=0
+		AcIndexEditSw	SELECT_FILE_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	SELECT_FILE_AcIndexEditSw_LOAD, x=270, y=40, w=36, h=19, font=0, fontcolor=0x00, str="LOAD"
 		ui_endsub
@@ -202,11 +202,11 @@
 		IvMainEditSw	SELECT_DIR_IvMainEditSw, x=0, y=0, w=32, h=32, func=NAKA_MAINFUNC_SEL_DIR_Screen
 		SelectList	SEL_DIR, x=8, y=35, w=256, h=176, color=0x08, index=0, main_func=NAKA_MAINFUNC_SEL_DIR_Screen, str_adr=HdaeUiVar_SEL_DIR_str_adr, column=2, row=12, sel_num=HdaeUiVar_SEL_DIR_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_SEL_DIR_en_paradraw
 		VwEditSwBox	SELECT_DIR_97_120, x=281, y=222, w=38, h=18, color=0xf5, str="97-120"
-		VwEditSwBox	SELECT_DIR_01_24, x=1, y=222, w=38, h=18, color=0xf5, editsw=0x00, str="01-24"
+		VwEditSwBox	SELECT_DIR_01_24, x=1, y=222, w=38, h=18, color=0xf5, editsw=EDITSW_COL1, str="01-24"
 		VwEditSwBox	SELECT_DIR_25_48, x=43, y=222, w=38, h=18, color=0xf5, str="25-48"
 		VwEditSwBox	SELECT_DIR_49_72, x=199, y=222, w=38, h=18, color=0xf5, str="49-72"
 		VwEditSwBox	SELECT_DIR_73_96, x=240, y=222, w=38, h=18, color=0xf5, str="73-96"
-		AcIndexEditSw	SELECT_DIR_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=3, editsw=0x08, style=6
+		AcIndexEditSw	SELECT_DIR_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=6
 		ui_ram_object	SELECT_DIR_SW_EDIT, AcIndexEditSw
 		ui_sub
 			Label	SELECT_DIR_SW_EDIT_EDIT, x=271, y=202, w=36, h=19, font=0, fontcolor=0x00, str="EDIT"
@@ -221,18 +221,18 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	SELECT_DIR2, x=0, y=0, w=320, h=240, window=HdaeUiVar_SELECT_DIR2_window, icon=131, title=" DIRECTORY SELECT   "
 	ui_sub
-		AcScreenMenu	SELECT_DIR2_Go_SELECT_FILE, x=266, y=38, w=46, h=24, color=0x07, border=0xc0, editsw=0x08, selected=HdaeUiVar_SELECT_DIR2_Go_SELECT_FILE_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
+		AcScreenMenu	SELECT_DIR2_Go_SELECT_FILE, x=266, y=38, w=46, h=24, color=0x07, border=0xc0, editsw=EDITSW_RIGHT1, selected=HdaeUiVar_SELECT_DIR2_Go_SELECT_FILE_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
 		ui_sub
 			Label	SELECT_DIR2_Go_SELECT_FILE_OK, x=278, y=42, w=20, h=19, font=0, fontcolor=0x00, str="OK"
 		ui_endsub
 		AcIndexWideES	SELECT_DIR2_AcIndexWideES, x=84, y=220, w=112, h=18, index=1
-		AcIndexEditSw	SELECT_DIR2_AcIndexEditSw, x=44, y=220, w=32, h=18, index=3, editsw=0x01, style=15
-		AcScreenMenu	SELECT_DIR2_Go_SELECT_FILE_2, x=266, y=77, w=40, h=32, color=0xf5, editsw=0x09, selected=HdaeUiVar_SELECT_DIR2_Go_SELECT_FILE_2_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
+		AcIndexEditSw	SELECT_DIR2_AcIndexEditSw, x=44, y=220, w=32, h=18, index=3, editsw=EDITSW_COL2, style=15
+		AcScreenMenu	SELECT_DIR2_Go_SELECT_FILE_2, x=266, y=77, w=40, h=32, color=0xf5, editsw=EDITSW_RIGHT2, selected=HdaeUiVar_SELECT_DIR2_Go_SELECT_FILE_2_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
 		ui_sub
 			Label	SELECT_DIR2_Go_SELECT_FILE_2_OK, x=278, y=42, w=20, h=19, font=0, fontcolor=0x00, str="OK"
 		ui_endsub
 		Line	SELECT_DIR2_Line, x=313, y=44, w=1, h=40
-		AcIndexEditSw	SELECT_DIR2_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=2, editsw=0x05, style=16
+		AcIndexEditSw	SELECT_DIR2_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=2, editsw=EDITSW_COL6, style=16
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -240,16 +240,16 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	FD_FILE_SELECT, x=0, y=0, w=320, h=240, exit=TITLE_HDDEXT, window=HdaeUiVar_FD_FILE_SELECT_window, icon=131, title=" FD FILE SELECT   "
 	ui_sub
-		AcScreenMenu	FD_FILE_SELECT_Go_SELECT_FILE, x=266, y=38, w=46, h=24, color=0x07, border=0xc0, editsw=0x08, selected=HdaeUiVar_FD_FILE_SELECT_Go_SELECT_FILE_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
+		AcScreenMenu	FD_FILE_SELECT_Go_SELECT_FILE, x=266, y=38, w=46, h=24, color=0x07, border=0xc0, editsw=EDITSW_RIGHT1, selected=HdaeUiVar_FD_FILE_SELECT_Go_SELECT_FILE_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
 		ui_sub
 			Label	FD_FILE_SELECT_Go_SELECT_FILE_COPY, x=270, y=41, w=36, h=19, font=0, fontcolor=0x00, str="COPY"
 		ui_endsub
 		AcIndexWideES	FD_FILE_SELECT_AcIndexWideES, x=84, y=220, w=112, h=18, index=1
-		AcIndexEditSw	FD_FILE_SELECT_AcIndexEditSw, x=44, y=220, w=32, h=18, index=3, editsw=0x01, style=15
-		AcScreenMenu	FD_FILE_SELECT_Go_SELECT_FILE_2, x=266, y=77, w=40, h=32, color=0xf5, editsw=0x09, selected=HdaeUiVar_FD_FILE_SELECT_Go_SELECT_FILE_2_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
+		AcIndexEditSw	FD_FILE_SELECT_AcIndexEditSw, x=44, y=220, w=32, h=18, index=3, editsw=EDITSW_COL2, style=15
+		AcScreenMenu	FD_FILE_SELECT_Go_SELECT_FILE_2, x=266, y=77, w=40, h=32, color=0xf5, editsw=EDITSW_RIGHT2, selected=HdaeUiVar_FD_FILE_SELECT_Go_SELECT_FILE_2_selected, screen=HDAE5000_OBJ_SELECT_FILE, icon=0, str=""
 		Line	FD_FILE_SELECT_Line, x=313, y=44, w=1, h=40
-		AcIndexEditSw	FD_FILE_SELECT_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=2, editsw=0x05, style=16
-		AcIndexWideES	FD_FILE_SELECT_AcIndexWideES_2, x=244, y=220, w=72, h=18, index=4, editsw=0x06, editsw2=0x07, style=0
+		AcIndexEditSw	FD_FILE_SELECT_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=2, editsw=EDITSW_COL6, style=16
+		AcIndexWideES	FD_FILE_SELECT_AcIndexWideES_2, x=244, y=220, w=72, h=18, index=4, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, style=0
 		ui_sub
 			Label	FD_FILE_SELECT_AcIndexWideES_2_SELECT, x=254, y=221, w=52, h=19, font=0, fontcolor=0x00, str="SELECT"
 		ui_endsub
@@ -266,11 +266,11 @@
 			IvCatchEvent	HARD_TEST_Exit_HDDMENU_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_HardTestPage
 		ui_endsub
 		IvExitScreen	HARD_TEST_Exit_HDDMENU_2, x=32, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDDMENU
-		PsToggleBox	RUN_STOP, x=265, y=202, w=47, h=18, onoff=HdaeUiVar_RUN_STOP_onoff, editsw=0x0c, stron="STOP", stroff="RUN"
+		PsToggleBox	RUN_STOP, x=265, y=202, w=47, h=18, onoff=HdaeUiVar_RUN_STOP_onoff, editsw=EDITSW_RIGHT5, stron="STOP", stroff="RUN"
 		DbMemoCl	HARD_TEST_DbMemoCl, x=0, y=32, w=231, h=208, flag=0x0008, color=0x00, fontcolor=0xff
-		PsToggleBox	PPORT_SW, x=265, y=76, w=47, h=18, onoff=HdaeUiVar_PPORT_SW_onoff, editsw=0x09, stron="PPORT", stroff="PPORT"
-		PsToggleBox	FD_SW, x=281, y=160, w=31, h=18, onoff=HdaeUiVar_FD_SW_onoff, editsw=0x0b, stron="FD", stroff="FD"
-		PsToggleBox	HDD_SW, x=281, y=118, w=31, h=18, onoff=HdaeUiVar_HDD_SW_onoff, editsw=0x0a, stron="HDD", stroff="HDD"
+		PsToggleBox	PPORT_SW, x=265, y=76, w=47, h=18, onoff=HdaeUiVar_PPORT_SW_onoff, editsw=EDITSW_RIGHT2, stron="PPORT", stroff="PPORT"
+		PsToggleBox	FD_SW, x=281, y=160, w=31, h=18, onoff=HdaeUiVar_FD_SW_onoff, editsw=EDITSW_RIGHT4, stron="FD", stroff="FD"
+		PsToggleBox	HDD_SW, x=281, y=118, w=31, h=18, onoff=HdaeUiVar_HDD_SW_onoff, editsw=EDITSW_RIGHT3, stron="HDD", stroff="HDD"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -281,14 +281,14 @@
 	TtlScreenR	HDD_FILE_NAMING, x=0, y=0, w=320, h=240, exit=TITLE_HDDEXT, window=HdaeUiVar_HDD_FILE_NAMING_window, icon=173, title="EDIT FILE NAME"
 	ui_sub
 		IvMainEditSw	HDD_FILE_NAMING_IvMainEditSw, x=32, y=0, w=32, h=32, func=NAKA_MAINFUNC_FILE_Naming_Screen
-		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=0x0b, style=6, func=NAKA_APFUNC_HDDNamingCheck
+		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT4, style=6, func=NAKA_APFUNC_HDDNamingCheck
 		IvExitScreen	HDD_FILE_NAMING_Exit_SELECT_FILE, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_SELECT_FILE
-		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_2, x=281, y=118, w=31, h=18, color=0xf2, editsw=0x0a, style=0, func=NAKA_APFUNC_HDDNamingCheck
+		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_2, x=281, y=118, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT3, style=0, func=NAKA_APFUNC_HDDNamingCheck
 		ui_sub
 			Label	HDD_FILE_NAMING_AcFuncEditSw_2_OPT, x=282, y=119, w=28, h=19, font=0, fontcolor=0x00, str="OPT"
 		ui_endsub
 		IvHddNaming	HDD_FILE_NAMING_IvHddNaming, x=0, y=0, w=32, h=32, flag=0x0018, func=NAKA_APFUNC_HDDNamingCheck
-		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_3, x=8, y=118, w=31, h=18, color=0x07, editsw=0x8a, style=0, func=NAKA_APFUNC_HDDNamingCheck
+		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_3, x=8, y=118, w=31, h=18, color=0x07, editsw=EDITSW_LEFT3, style=0, func=NAKA_APFUNC_HDDNamingCheck
 		ui_sub
 			Label	HDD_FILE_NAMING_AcFuncEditSw_3_LST, x=9, y=119, w=28, h=19, font=0, fontcolor=0xf9, str="LST"
 		ui_endsub
@@ -306,9 +306,9 @@
 	TtlScreenR	HDD_DIR_NAMING, x=0, y=0, w=320, h=240, exit=TITLE_HDDEXT, window=HdaeUiVar_HDD_DIR_NAMING_window, icon=173, title="EDIT DIRECTORY NAME"
 	ui_sub
 		IvNaming	HDD_DIR_NAMING_IvNaming, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_HDD_DIRNAMECheck
-		AcFuncEditSw	HDD_DIR_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=0x0b, style=6, func=NAKA_APFUNC_HDD_DIRNAMECheck
+		AcFuncEditSw	HDD_DIR_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT4, style=6, func=NAKA_APFUNC_HDD_DIRNAMECheck
 		IvExitScreen	HDD_DIR_NAMING_Exit_SELECT_DIR, x=0, y=32, w=32, h=32, screen=HDAE5000_OBJ_SELECT_DIR
-		AcFuncEditSw	HDD_DIR_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=0x8a, style=0, func=NAKA_APFUNC_HDD_DIRNAMECheck
+		AcFuncEditSw	HDD_DIR_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=EDITSW_LEFT3, style=0, func=NAKA_APFUNC_HDD_DIRNAMECheck
 		ui_sub
 			Label	HDD_DIR_NAMING_AcFuncEditSw_2_LST, x=9, y=119, w=28, h=19, font=0, fontcolor=0xf9, str="LST"
 		ui_endsub
@@ -330,8 +330,8 @@
 		IvExitScreen	HD_UTIL_Exit_SETUPS_TOOLS, x=32, y=0, w=32, h=32, screen=HDAE5000_OBJ_SETUPS_TOOLS
 		IvCatchEvent	HD_UTIL_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_HDD_UTIL_PAGE
 		DbMemo	HD_UTIL_DbMemo, x=0, y=32, w=171, h=208
-		VwMenuBox	HD_UTIL_FORMAT, x=163, y=72, w=149, h=26, editsw=0x09, selected=HdaeUiVar_HD_UTIL_FORMAT_selected, str="FORMAT"
-		VwMenuBox	HD_UTIL_READ_ID, x=163, y=156, w=149, h=26, editsw=0x0b, selected=HdaeUiVar_HD_UTIL_READ_ID_selected, str="READ ID"
+		VwMenuBox	HD_UTIL_FORMAT, x=163, y=72, w=149, h=26, editsw=EDITSW_RIGHT2, selected=HdaeUiVar_HD_UTIL_FORMAT_selected, str="FORMAT"
+		VwMenuBox	HD_UTIL_READ_ID, x=163, y=156, w=149, h=26, editsw=EDITSW_RIGHT4, selected=HdaeUiVar_HD_UTIL_READ_ID_selected, str="READ ID"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -342,11 +342,11 @@
 	ui_sub
 		IvCatchEvent	PC_DATA_LINK_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_PC_DATA_LINK_PAGE
 		SelectList	PP_STATUS, x=20, y=84, w=280, h=48, color=0xf5, index=0xffff, font=0, str_adr=HdaeUiVar_PP_STATUS_str_adr, row=1, sel_num=HdaeUiVar_PP_STATUS_sel_num, en_paradraw=HdaeUiVar_PP_STATUS_en_paradraw
-		AcIndexWideES	PC_DATA_LINK_AcIndexWideES, x=244, y=216, w=72, h=23, border=0xc0, index=0xffff, editsw=0x06, editsw2=0x07, style=0
+		AcIndexWideES	PC_DATA_LINK_AcIndexWideES, x=244, y=216, w=72, h=23, border=0xc0, index=0xffff, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, style=0
 		ui_sub
 			Label	PC_DATA_LINK_AcIndexWideES_CANCEL, x=254, y=219, w=52, h=19, font=0, fontcolor=0x00, str="CANCEL"
 		ui_endsub
-		AcIndexWideES	PC_DATA_LINK_AcIndexWideES_2, x=4, y=216, w=72, h=23, border=0xc0, index=0xffff, editsw=0x00, editsw2=0x01, style=0
+		AcIndexWideES	PC_DATA_LINK_AcIndexWideES_2, x=4, y=216, w=72, h=23, border=0xc0, index=0xffff, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, style=0
 		ui_sub
 			Label	PC_DATA_LINK_AcIndexWideES_2_START, x=18, y=219, w=44, h=19, font=0, fontcolor=0x00, str="START"
 		ui_endsub
@@ -359,23 +359,23 @@
 ; -----------------------------------------------------------------------------
 	Window	SETUP_TOOLS_P1, x=64, y=90, w=219, h=100, color=0xf7, border=0x00, parent=HdaeUiVar_SETUP_TOOLS_P1_parent, child=HdaeUiVar_SETUP_TOOLS_P1_child
 	ui_sub
-		AcScreenMenu	SETUP_TOOLS_P1_PC_DATA_LINK, x=163, y=156, w=149, h=26, editsw=0x0b, selected=HdaeUiVar_SETUP_TOOLS_P1_PC_DATA_LINK_selected, screen=HDAE5000_OBJ_PC_DATA_LINK, icon=131, str="PC DATA LINK"
+		AcScreenMenu	SETUP_TOOLS_P1_PC_DATA_LINK, x=163, y=156, w=149, h=26, editsw=EDITSW_RIGHT4, selected=HdaeUiVar_SETUP_TOOLS_P1_PC_DATA_LINK_selected, screen=HDAE5000_OBJ_PC_DATA_LINK, icon=131, str="PC DATA LINK"
 		ui_sub
 			VwUserBitmap	SETUP_TOOLS_P1_PC_DATA_LINK_VwUserBitmap, x=283, y=155, w=27, h=27
 		ui_endsub
-		AcIndexWideES	SETUP_TOOLS_P1_AcIndexWideES, x=244, y=216, w=72, h=23, index=0, editsw=0x06, editsw2=0x07
-		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox, x=8, y=72, w=156, h=26, index=0, align=2, length=4, editsw=0x89, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_selected, func=NAKA_APFUNC_WriteProtectEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_data, caption=""
+		AcIndexWideES	SETUP_TOOLS_P1_AcIndexWideES, x=244, y=216, w=72, h=23, index=0, editsw=EDITSW_COL7, editsw2=EDITSW_COL8
+		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox, x=8, y=72, w=156, h=26, index=0, align=2, length=4, editsw=EDITSW_LEFT2, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_selected, func=NAKA_APFUNC_WriteProtectEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_data, caption=""
 		ui_sub
 			AcLanguageText1	SETUP_TOOLS_P1_AcRamEditBox_Text8, x=8, y=72, w=121, h=32, index=8, font=0, fontcolor=0xff, alignment=1, lines=1
 		ui_endsub
-		AcRamEditBox	SETUP_TOOLS_P1_QUICK_LD_MODE, x=8, y=156, w=149, h=26, index=0, length=2, editsw=0x8b, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_selected, func=NAKA_APFUNC_QuickLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_data, caption="QUICK LD MODE:"
-		AcRamEditBox	SETUP_TOOLS_P1_JUMP_AFTER_LD, x=163, y=72, w=149, h=26, index=0, length=2, editsw=0x09, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_selected, func=NAKA_APFUNC_JumpAfterLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_data, caption="JUMP AFTER LD.:"
-		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox_2, x=8, y=114, w=156, h=26, index=0, align=2, length=4, editsw=0x8a, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_selected, func=NAKA_APFUNC_WriteConfirmEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_data, caption=""
+		AcRamEditBox	SETUP_TOOLS_P1_QUICK_LD_MODE, x=8, y=156, w=149, h=26, index=0, length=2, editsw=EDITSW_LEFT4, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_selected, func=NAKA_APFUNC_QuickLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_data, caption="QUICK LD MODE:"
+		AcRamEditBox	SETUP_TOOLS_P1_JUMP_AFTER_LD, x=163, y=72, w=149, h=26, index=0, length=2, editsw=EDITSW_RIGHT2, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_selected, func=NAKA_APFUNC_JumpAfterLoadModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_data, caption="JUMP AFTER LD.:"
+		AcRamEditBox	SETUP_TOOLS_P1_AcRamEditBox_2, x=8, y=114, w=156, h=26, index=0, align=2, length=4, editsw=EDITSW_LEFT3, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_selected, func=NAKA_APFUNC_WriteConfirmEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_data, caption=""
 		ui_sub
 			AcLanguageText1	SETUP_TOOLS_P1_AcRamEditBox_2_Text9, x=8, y=114, w=121, h=32, index=9, font=0, fontcolor=0xff, alignment=1, lines=1
 		ui_endsub
-		AcRamEditBox	SETUP_TOOLS_P1_LD_BY_NUM_M, x=8, y=198, w=149, h=26, index=0, length=2, editsw=0x8c, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_selected, func=NAKA_APFUNC_LoadByNumberModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_data, caption="LD BY NUM. M.:"
-		AcScreenMenu	SETUP_TOOLS_P1_LYRICS_OPTIONS, x=163, y=114, w=149, h=26, editsw=0x0a, selected=HdaeUiVar_SETUP_TOOLS_P1_LYRICS_OPTIONS_selected, screen=HDAE5000_OBJ_LyrSettings, icon=60, str="LYRICS OPTIONS"
+		AcRamEditBox	SETUP_TOOLS_P1_LD_BY_NUM_M, x=8, y=198, w=149, h=26, index=0, length=2, editsw=EDITSW_LEFT5, dial=1, selected=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_selected, func=NAKA_APFUNC_LoadByNumberModeEditCheck, data=HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_data, caption="LD BY NUM. M.:"
+		AcScreenMenu	SETUP_TOOLS_P1_LYRICS_OPTIONS, x=163, y=114, w=149, h=26, editsw=EDITSW_RIGHT3, selected=HdaeUiVar_SETUP_TOOLS_P1_LYRICS_OPTIONS_selected, screen=HDAE5000_OBJ_LyrSettings, icon=60, str="LYRICS OPTIONS"
 	ui_endsub
 
 ; -----------------------------------------------------------------------------
@@ -384,11 +384,11 @@
 ; -----------------------------------------------------------------------------
 	Window	SETUP_TOOLS_P2, x=60, y=84, w=200, h=48, color=0xf7, border=0x00, parent=HdaeUiVar_SETUP_TOOLS_P2_parent, child=HdaeUiVar_SETUP_TOOLS_P2_child
 	ui_sub
-		AcScreenMenu	SETUP_TOOLS_P2_AcScreenMenu, x=8, y=198, w=120, h=26, color=0x07, border=0xc0, fontcolor=0x00, editsw=0x8c, selected=HdaeUiVar_SETUP_TOOLS_P2_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=0, str=""
+		AcScreenMenu	SETUP_TOOLS_P2_AcScreenMenu, x=8, y=198, w=120, h=26, color=0x07, border=0xc0, fontcolor=0x00, editsw=EDITSW_LEFT5, selected=HdaeUiVar_SETUP_TOOLS_P2_AcScreenMenu_selected, screen=NAKA_NO_OBJECT, icon=0, str=""
 		ui_sub
 			AcLanguageText1	SETUP_TOOLS_P2_AcScreenMenu_Text11, x=6, y=198, w=124, h=32, index=11, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		AcScreenMenu	SETUP_TOOLS_P2_HD_AE_INFOS, x=163, y=198, w=149, h=26, editsw=0x0c, selected=HdaeUiVar_SETUP_TOOLS_P2_HD_AE_INFOS_selected, screen=NAKA_NO_OBJECT, icon=1, str="HD-AE INFOS  "
+		AcScreenMenu	SETUP_TOOLS_P2_HD_AE_INFOS, x=163, y=198, w=149, h=26, editsw=EDITSW_RIGHT5, selected=HdaeUiVar_SETUP_TOOLS_P2_HD_AE_INFOS_selected, screen=NAKA_NO_OBJECT, icon=1, str="HD-AE INFOS  "
 		ui_sub
 			VwUserBitmap	SETUP_TOOLS_P2_HD_AE_INFOS_VwUserBitmap, x=283, y=197, w=27, h=27
 		ui_endsub
@@ -398,7 +398,7 @@
 		ui_sub
 			VwUserBitmap	SW_HD_FORMAT_VwUserBitmap, x=283, y=71, w=27, h=27
 		ui_endsub
-		AcScreenMenu	SETUP_TOOLS_P2_Go_ABOUT_HELP, x=163, y=156, w=149, h=26, editsw=0x0b, selected=HdaeUiVar_SETUP_TOOLS_P2_Go_ABOUT_HELP_selected, screen=HDAE5000_OBJ_ABOUT_HELP, icon=1, str=""
+		AcScreenMenu	SETUP_TOOLS_P2_Go_ABOUT_HELP, x=163, y=156, w=149, h=26, editsw=EDITSW_RIGHT4, selected=HdaeUiVar_SETUP_TOOLS_P2_Go_ABOUT_HELP_selected, screen=HDAE5000_OBJ_ABOUT_HELP, icon=1, str=""
 		ui_sub
 			VwUserBitmap	SETUP_TOOLS_P2_Go_ABOUT_HELP_VwUserBitmap, x=283, y=155, w=27, h=27
 			AcLanguageText1	SETUP_TOOLS_P2_Go_ABOUT_HELP_Text10, x=169, y=156, w=125, h=32, index=10, font=0, fontcolor=0xff, alignment=1, lines=1
@@ -412,10 +412,10 @@
 	TtlScreenR	OUTPUT_SETTING, x=0, y=0, w=320, h=240, window=HdaeUiVar_OUTPUT_SETTING_window, icon=33, title="OUTPUT SETTING"
 	ui_sub
 		IvExitScreen	OUTPUT_SETTING_Exit_HDDMENU, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDDMENU
-		AcIndexWideES	OUTPUT_SETTING_AcIndexWideES, x=244, y=216, w=72, h=23, index=0, editsw=0x06, editsw2=0x07
-		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox, x=12, y=72, w=300, h=26, index=0, align=2, length=16, editsw=0x89, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_selected, func=NAKA_APFUNC_SeparateOutputModeCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_data, caption=""
-		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_2, x=12, y=114, w=300, h=26, index=0, align=2, length=6, editsw=0x8a, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_selected, func=NAKA_APFUNC_SeparateDrumPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_data, caption=""
-		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_3, x=12, y=156, w=300, h=26, index=0, align=2, length=6, editsw=0x8b, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_selected, func=NAKA_APFUNC_SeparateBassPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_data, caption=""
+		AcIndexWideES	OUTPUT_SETTING_AcIndexWideES, x=244, y=216, w=72, h=23, index=0, editsw=EDITSW_COL7, editsw2=EDITSW_COL8
+		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox, x=12, y=72, w=300, h=26, index=0, align=2, length=16, editsw=EDITSW_LEFT2, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_selected, func=NAKA_APFUNC_SeparateOutputModeCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_data, caption=""
+		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_2, x=12, y=114, w=300, h=26, index=0, align=2, length=6, editsw=EDITSW_LEFT3, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_selected, func=NAKA_APFUNC_SeparateDrumPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_2_data, caption=""
+		AcRamEditBox	OUTPUT_SETTING_AcRamEditBox_3, x=12, y=156, w=300, h=26, index=0, align=2, length=6, editsw=EDITSW_LEFT4, dial=1, selected=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_selected, func=NAKA_APFUNC_SeparateBassPartCheck, data=HdaeUiVar_OUTPUT_SETTING_AcRamEditBox_3_data, caption=""
 		AcLanguageText1	OUTPUT_SETTING_Text13, x=12, y=72, w=190, h=32, index=13, font=0, fontcolor=0xff, alignment=1, lines=1
 		AcLanguageText1	OUTPUT_SETTING_Text14, x=12, y=114, w=252, h=32, index=14, font=0, fontcolor=0xff, alignment=1, lines=1
 		AcLanguageText1	OUTPUT_SETTING_Text15, x=12, y=156, w=252, h=32, index=15, font=0, fontcolor=0xff, alignment=1, lines=1
@@ -442,12 +442,12 @@
 ; -----------------------------------------------------------------------------
 	Window	LBN_P1, x=60, y=84, w=200, h=48, color=0xf7, border=0x00, parent=HdaeUiVar_LBN_P1_parent, child=HdaeUiVar_LBN_P1_child
 	ui_sub
-		PsMenuBox	LBN_P1_PsMenuBox, x=263, y=203, w=49, h=18, flag=0x0008, color=0x07, border=0xc0, index=0xffff, font=0, fontcolor=0x00, align=0, editsw=0x0c, selected=HdaeUiVar_LBN_P1_PsMenuBox_selected
+		PsMenuBox	LBN_P1_PsMenuBox, x=263, y=203, w=49, h=18, flag=0x0008, color=0x07, border=0xc0, index=0xffff, font=0, fontcolor=0x00, align=0, editsw=EDITSW_RIGHT5, selected=HdaeUiVar_LBN_P1_PsMenuBox_selected
 		ui_sub
 			Label	LBN_P1_PsMenuBox_CLEAR, x=265, y=204, w=44, h=19, font=0, fontcolor=0x00, str="CLEAR"
 		ui_endsub
 		SelectList	LBN_OPTION, x=236, y=91, w=84, h=111, color=0xf5, index=100, str_adr=HdaeUiVar_LBN_OPTION_str_adr, row=9, sel_num=HdaeUiVar_LBN_OPTION_sel_num, en_paradraw=HdaeUiVar_LBN_OPTION_en_paradraw
-		AcIndexEditSw	LBN_P1_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=0x08, style=0
+		AcIndexEditSw	LBN_P1_AcIndexEditSw, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	LBN_P1_AcIndexEditSw_LOAD, x=270, y=41, w=36, h=19, font=0, fontcolor=0x00, str="LOAD"
 		ui_endsub
@@ -471,7 +471,7 @@
 		SelectList	LBN_FILENO_BOX, x=6, y=68, w=30, h=22, color=0xf5, index=100, font=0, str_adr=HdaeUiVar_LBN_FILENO_BOX_str_adr, row=1, sel_num=HdaeUiVar_LBN_FILENO_BOX_sel_num, en_paradraw=HdaeUiVar_LBN_FILENO_BOX_en_paradraw
 		SelectList	LBN_FILENAME_BOX, x=34, y=68, w=216, h=22, color=0xf5, index=100, font=0, fontcolor=0xf2, str_adr=HdaeUiVar_LBN_FILENAME_BOX_str_adr, row=1, sel_num=HdaeUiVar_LBN_FILENAME_BOX_sel_num, en_paradraw=HdaeUiVar_LBN_FILENAME_BOX_en_paradraw
 		IvCatchEvent	LBN_P1_IvCatchEvent, x=0, y=96, w=32, h=32, func=NAKA_APFUNC_LBNPage1SwCatch
-		AcIndexWideES	LBN_P1_AcIndexWideES, x=204, y=221, w=112, h=19, index=0xffff, editsw=0x05, editsw2=0x07
+		AcIndexWideES	LBN_P1_AcIndexWideES, x=204, y=221, w=112, h=19, index=0xffff, editsw=EDITSW_COL6, editsw2=EDITSW_COL8
 		AcLanguageText1	LBN_P1_Text21, x=2, y=116, w=210, h=54, index=21, font=7, fontcolor=0xf1, alignment=1, lines=3
 	ui_endsub
 
@@ -497,14 +497,14 @@
 		Line	LBN_P2_Line, x=40, y=74, w=224, h=1
 		Line	LBN_P2_Line_2, x=263, y=74, w=1, h=125
 		Line	LBN_P2_Line_3, x=40, y=198, w=224, h=1
-		AcIndexEditSw	LBN_P2_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=0x00, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=0x02, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=0x03, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=0x04, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_6, x=244, y=216, w=32, h=23, index=7, editsw=0x06, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_7, x=284, y=216, w=32, h=23, index=8, editsw=0x07, style=3
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_8, x=204, y=216, w=32, h=23, index=6, editsw=0x05, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=EDITSW_COL1, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=EDITSW_COL3, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=EDITSW_COL4, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=EDITSW_COL5, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_6, x=244, y=216, w=32, h=23, index=7, editsw=EDITSW_COL7, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_7, x=284, y=216, w=32, h=23, index=8, editsw=EDITSW_COL8, style=3
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_8, x=204, y=216, w=32, h=23, index=6, editsw=EDITSW_COL6, style=3
 		Label	LBN_P2_PNL, x=9, y=202, w=22, h=11, font=3, fontcolor=0xff, str="PNL"
 		Label	LBN_P2_P_MEM, x=42, y=202, w=34, h=11, font=3, fontcolor=0xff, str="P.MEM"
 		Label	LBN_P2_SEQ, x=88, y=202, w=22, h=11, font=3, fontcolor=0xff, str="SEQ"
@@ -514,7 +514,7 @@
 		Label	LBN_P2_CUSTOM, x=239, y=202, w=40, h=11, font=3, fontcolor=0xff, str="CUSTOM"
 		Label	LBN_P2_MIDI, x=286, y=202, w=28, h=11, font=3, fontcolor=0xff, str="MIDI"
 		Line	LBN_P2_Line_4, x=215, y=74, w=1, h=124
-		AcIndexEditSw	LBN_P2_AcIndexEditSw_9, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=0x08, style=0
+		AcIndexEditSw	LBN_P2_AcIndexEditSw_9, x=265, y=36, w=47, h=26, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	LBN_P2_AcIndexEditSw_9_LOAD, x=270, y=41, w=36, h=19, font=0, fontcolor=0x00, str="LOAD"
 		ui_endsub
@@ -531,8 +531,8 @@
 	TtlScreenR2	CP_FD, x=0, y=0, w=320, h=240, window=HdaeUiVar_CP_FD_window, icon=115, title="COPY TECH TO HD"
 	ui_sub
 		IvExitScreen	CP_FD_Exit_HDDMENU, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDDMENU
-		AcIndexEditSw	CP_FD_AcIndexEditSw, x=204, y=216, w=32, h=23, index=1, editsw=0x05, style=16
-		AcIndexEditSw	CP_FD_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=15
+		AcIndexEditSw	CP_FD_AcIndexEditSw, x=204, y=216, w=32, h=23, index=1, editsw=EDITSW_COL6, style=16
+		AcIndexEditSw	CP_FD_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=15
 		AcIndexWideES	CP_FD_AcIndexWideES, x=84, y=216, w=112, h=23, index=0
 		SelectList	CP_FD_LIST, x=40, y=58, w=200, h=157, color=0x07, index=0, font=0, fontcolor=0x00, main_func=NAKA_MAINFUNC_CopyToHDScreen, str_adr=HdaeUiVar_CP_FD_LIST_str_adr, column=2, row=10, sel_num=HdaeUiVar_CP_FD_LIST_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_CP_FD_LIST_en_paradraw, sel_type=1
 		Line	CP_FD_LINE2, x=215, y=60, w=1, h=152
@@ -562,18 +562,18 @@
 	TtlScreenR2	CP_FD_DIRSEL, x=0, y=0, w=320, h=240, window=HdaeUiVar_CP_FD_DIRSEL_window, icon=115, title="HD DIR SELECT"
 	ui_sub
 		IvExitScreen	CP_FD_DIRSEL_Exit_CP_FD, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_CP_FD
-		AcIndexEditSw	CP_FD_DIRSEL_AcIndexEditSw, x=269, y=30, w=43, h=26, border=0xc0, index=3, editsw=0x08, style=0
+		AcIndexEditSw	CP_FD_DIRSEL_AcIndexEditSw, x=269, y=30, w=43, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	CP_FD_DIRSEL_AcIndexEditSw_COPY, x=272, y=35, w=36, h=19, font=0, fontcolor=0x00, str="COPY"
 		ui_endsub
 		SelectList	CP_FD_DIRBOX, x=8, y=35, w=256, h=176, color=0xf5, border=0xc1, index=0, main_func=NAKA_MAINFUNC_CopyToHDDirSelScreen, str_adr=HdaeUiVar_CP_FD_DIRBOX_str_adr, column=2, row=12, sel_num=HdaeUiVar_CP_FD_DIRBOX_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_CP_FD_DIRBOX_en_paradraw
-		VwEditSwBox	CP_FD_DIRSEL_01_24, x=1, y=222, w=38, h=18, color=0xf5, editsw=0x00, str="01-24"
+		VwEditSwBox	CP_FD_DIRSEL_01_24, x=1, y=222, w=38, h=18, color=0xf5, editsw=EDITSW_COL1, str="01-24"
 		VwEditSwBox	CP_FD_DIRSEL_25_48, x=43, y=222, w=38, h=18, color=0xf5, str="25-48"
 		AcIndexWideES	CP_FD_DIRSEL_AcIndexWideES, x=84, y=222, w=112, h=18, index=0
 		VwEditSwBox	CP_FD_DIRSEL_49_72, x=199, y=222, w=38, h=18, color=0xf5, str="49-72"
 		VwEditSwBox	CP_FD_DIRSEL_73_96, x=240, y=222, w=38, h=18, color=0xf5, str="73-96"
 		VwEditSwBox	CP_FD_DIRSEL_97_120, x=281, y=222, w=38, h=18, color=0xf5, str="97-120"
-		AcIndexEditSw	CP_FD_DIRSEL_AcIndexEditSw_2, x=269, y=194, w=43, h=26, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
+		AcIndexEditSw	CP_FD_DIRSEL_AcIndexEditSw_2, x=269, y=194, w=43, h=26, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
 		ui_sub
 			Label	CP_FD_DIRSEL_AcIndexEditSw_2_EDIT, x=273, y=199, w=36, h=19, font=0, fontcolor=0x00, str="EDIT"
 		ui_endsub
@@ -588,13 +588,13 @@
 	TtlScreenR2	FLS_SELECT, x=0, y=0, w=320, h=240, window=HdaeUiVar_FLS_SELECT_window, icon=175, title=" F.L.S. SELECT"
 	ui_sub
 		IvExitScreen	FLS_SELECT_Exit_HDDMENU, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDDMENU
-		VwEditSwBox	FLS_SELECT_01_24, x=1, y=222, w=38, h=18, editsw=0x00, str="01-24"
+		VwEditSwBox	FLS_SELECT_01_24, x=1, y=222, w=38, h=18, editsw=EDITSW_COL1, str="01-24"
 		VwEditSwBox	FLS_SELECT_25_48, x=43, y=222, w=38, h=18, str="25-48"
 		AcIndexWideES	FLS_SELECT_AcIndexWideES, x=84, y=222, w=112, h=18, index=0
 		VwEditSwBox	FLS_SELECT_49_72, x=199, y=222, w=38, h=18, str="49-72"
 		VwEditSwBox	FLS_SELECT_73_96, x=240, y=222, w=38, h=18, str="73-96"
 		VwEditSwBox	FLS_SELECT_97_120, x=281, y=222, w=38, h=18, str="97-120"
-		AcIndexEditSw	FLS_SEL, x=265, y=35, w=47, h=26, border=0xc0, index=3, editsw=0x08, style=6
+		AcIndexEditSw	FLS_SEL, x=265, y=35, w=47, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=6
 		ui_ram_object	FLS_SELECT_SW_EDIT, AcIndexEditSw
 		ui_sub
 			Label	FLS_SELECT_SW_EDIT_EDIT, x=270, y=202, w=36, h=19, font=0, fontcolor=0x00, str="EDIT"
@@ -618,9 +618,9 @@
 		SelectList	HD_FILE_OPTION, x=236, y=95, w=85, h=103, color=0x08, index=100, str_adr=HdaeUiVar_HD_FILE_OPTION_str_adr, row=9, sel_num=HdaeUiVar_HD_FILE_OPTION_sel_num, en_paradraw=HdaeUiVar_HD_FILE_OPTION_en_paradraw
 		SelectList	HD_FILE_LIST, x=44, y=52, w=192, h=164, color=0x08, index=0, main_func=NAKA_MAINFUNC_FILE_LOAD_Screen, str_adr=HdaeUiVar_HD_FILE_LIST_str_adr, row=16, sel_num=HdaeUiVar_HD_FILE_LIST_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_HD_FILE_LIST_en_paradraw
 		SelectList	FILE_LOAD_DIRBOX, x=44, y=35, w=192, h=16, color=0x08, index=100, str_adr=HdaeUiVar_FILE_LOAD_DIRBOX_str_adr, row=1, sel_num=HdaeUiVar_FILE_LOAD_DIRBOX_sel_num, en_paradraw=HdaeUiVar_FILE_LOAD_DIRBOX_en_paradraw
-		AcIndexEditSw	HD_FILE_LOAD_P1_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=0x01, style=15
+		AcIndexEditSw	HD_FILE_LOAD_P1_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=EDITSW_COL2, style=15
 		AcIndexWideES	HD_FILE_LOAD_P1_AcIndexWideES, x=84, y=220, w=112, h=18, index=0
-		AcIndexEditSw	HD_FILE_LOAD_P1_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=0x05, style=16
+		AcIndexEditSw	HD_FILE_LOAD_P1_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=EDITSW_COL6, style=16
 		Icon	HD_FILE_LOAD_P1_Icon, x=44, y=0, w=28, h=28
 		Label	HD_FILE_LOAD_P1_HD_FILE_SELECT, x=78, y=6, w=158, h=19, font=4, fontcolor=0xff, str="HD FILE SELECT"
 		ui_ram_object	HD_FILE_LOAD_SW_DEL, AcIndexEditSw
@@ -644,15 +644,15 @@
 		Label	HD_FILE_LOAD_P2_HD_LOAD_OPTION, x=78, y=6, w=158, h=19, font=4, fontcolor=0xff, str="HD LOAD OPTION"
 		Icon	HD_FILE_LOAD_P2_Icon, x=44, y=0, w=28, h=28
 		AcRamEditBox	HD_FILE_LOAD_P2_CURRENT_PANEL, x=48, y=52, w=212, h=16, index=1, selected=HdaeUiVar_HD_FILE_LOAD_P2_CURRENT_PANEL_selected, func=NAKA_APFUNC_SfxLswBitCheck, data=HdaeUiVar_HD_FILE_LOAD_P2_CURRENT_PANEL_data, caption="CURRENT PANEL          "
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=0x00, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=EDITSW_COL1, style=3
 		Label	HD_FILE_LOAD_P2_PNL, x=9, y=202, w=22, h=11, font=3, fontcolor=0xff, str="PNL"
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=0x02, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=0x03, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=0x04, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=0x05, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=0x06, style=3
-		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=0x07, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=EDITSW_COL3, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=EDITSW_COL4, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=EDITSW_COL5, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=EDITSW_COL6, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=EDITSW_COL7, style=3
+		AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=EDITSW_COL8, style=3
 		Label	HD_FILE_LOAD_P2_P_MEM, x=42, y=202, w=34, h=11, font=3, fontcolor=0xff, str="P.MEM"
 		Label	HD_FILE_LOAD_P2_SEQ, x=88, y=202, w=22, h=11, font=3, fontcolor=0xff, str="SEQ"
 		Label	HD_FILE_LOAD_P2_COMP, x=126, y=202, w=28, h=11, font=3, fontcolor=0xff, str="COMP"
@@ -686,8 +686,8 @@
 	ui_sub
 		IvNaming	HDD_FLS_NAMING_IvNaming, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsNamingCheck
 		IvExitScreen	HDD_FLS_NAMING_Exit_FLS_SELECT, x=32, y=0, w=32, h=32, screen=HDAE5000_OBJ_FLS_SELECT
-		AcFuncEditSw	HDD_FLS_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=0x0b, style=6, func=NAKA_APFUNC_FlsNamingCheck
-		AcFuncEditSw	HDD_FLS_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=0x8a, style=0, func=NAKA_APFUNC_FlsNamingCheck
+		AcFuncEditSw	HDD_FLS_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT4, style=6, func=NAKA_APFUNC_FlsNamingCheck
+		AcFuncEditSw	HDD_FLS_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=EDITSW_LEFT3, style=0, func=NAKA_APFUNC_FlsNamingCheck
 		ui_sub
 			Label	HDD_FLS_NAMING_AcFuncEditSw_2_LST, x=9, y=119, w=28, h=19, font=0, fontcolor=0xf9, str="LST"
 		ui_endsub
@@ -702,7 +702,7 @@
 	TtlScreenR2	FLS_FILE_LOAD, x=0, y=0, w=320, h=240, window=HdaeUiVar_FLS_FILE_LOAD_window, icon=175, title="F.L.S. FILE LOAD"
 	ui_sub
 		IvExitScreen	FLS_FILE_LOAD_Exit_FLS_SELECT, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_FLS_SELECT
-		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw, x=266, y=32, w=46, h=24, border=0xc0, index=3, editsw=0x08, style=0
+		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw, x=266, y=32, w=46, h=24, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	FLS_FILE_LOAD_AcIndexEditSw_LOAD, x=270, y=36, w=36, h=19, font=0, fontcolor=0x00, str="LOAD"
 		ui_endsub
@@ -711,8 +711,8 @@
 			Label	FLS_FILE_LOAD_SW_EDIT_EDIT, x=270, y=202, w=36, h=19, font=0, fontcolor=0x00, str="EDIT"
 		ui_endsub
 		AcIndexWideES	FLS_FILE_LOAD_AcIndexWideES, x=84, y=220, w=112, h=18, index=0
-		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw_2, x=44, y=220, w=32, h=18, index=2, editsw=0x01, style=15
-		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw_3, x=204, y=220, w=32, h=18, index=1, editsw=0x05, style=16
+		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw_2, x=44, y=220, w=32, h=18, index=2, editsw=EDITSW_COL2, style=15
+		AcIndexEditSw	FLS_FILE_LOAD_AcIndexEditSw_3, x=204, y=220, w=32, h=18, index=1, editsw=EDITSW_COL6, style=16
 		SelectList	FLS_OPT_BOX, x=236, y=80, w=84, h=112, color=0x08, index=100, str_adr=HdaeUiVar_FLS_OPT_BOX_str_adr, row=9, sel_num=HdaeUiVar_FLS_OPT_BOX_sel_num, en_paradraw=HdaeUiVar_FLS_OPT_BOX_en_paradraw
 		SelectList	FLS_LOC_BOX, x=236, y=58, w=84, h=18, color=0x08, index=100, fontcolor=0x0a, str_adr=HdaeUiVar_FLS_LOC_BOX_str_adr, row=1, sel_num=HdaeUiVar_FLS_LOC_BOX_sel_num, en_paradraw=HdaeUiVar_FLS_LOC_BOX_en_paradraw
 		SelectList	FLS_NAME_BOX, x=8, y=32, w=190, h=18, color=0x08, index=100, str_adr=HdaeUiVar_FLS_NAME_BOX_str_adr, row=1, sel_num=HdaeUiVar_FLS_NAME_BOX_sel_num, en_paradraw=HdaeUiVar_FLS_NAME_BOX_en_paradraw
@@ -726,7 +726,7 @@
 			Line	FLS_LOAD_LINE2, x=214, y=52, w=1, h=165
 		ui_endsub
 		IvCatchEvent	FLS_FILE_LOAD_IvCatchEvent, x=288, y=0, w=32, h=32, func=NAKA_APFUNC_FlsFileLoadSwCatch
-		AcIndexWideES	FLS_FILE_LOAD_AcIndexWideES_2, x=244, y=220, w=72, h=18, border=0x09, index=0xffff, editsw=0x06, editsw2=0x07, style=0
+		AcIndexWideES	FLS_FILE_LOAD_AcIndexWideES_2, x=244, y=220, w=72, h=18, border=0x09, index=0xffff, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, style=0
 		ui_sub
 			Label	FLS_FILE_LOAD_AcIndexWideES_2_PANIC, x=258, y=221, w=44, h=19, font=0, fontcolor=0xf9, str="PANIC"
 		ui_endsub
@@ -739,9 +739,9 @@
 	TtlScreenR2	FLS_DIR_SEL, x=0, y=0, w=320, h=240, window=HdaeUiVar_FLS_DIR_SEL_window, icon=175, title="F.L.S. DIR SELECT"
 	ui_sub
 		IvExitScreen	FLS_DIR_SEL_Exit_FLS_FILE_LOAD, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_FLS_FILE_LOAD
-		AcIndexEditSw	FLS_DIR_SEL_AcIndexEditSw, x=269, y=30, w=43, h=26, border=0xc0, index=3, editsw=0x08, style=6
+		AcIndexEditSw	FLS_DIR_SEL_AcIndexEditSw, x=269, y=30, w=43, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=6
 		SelectList	FLS_DIR_BOX, x=8, y=35, w=256, h=176, color=0x08, border=0xc1, index=0, main_func=NAKA_MAINFUNC_FlsDirSelScreen, str_adr=HdaeUiVar_FLS_DIR_BOX_str_adr, column=2, row=12, sel_num=HdaeUiVar_FLS_DIR_BOX_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_FLS_DIR_BOX_en_paradraw
-		VwEditSwBox	FLS_DIR_SEL_01_24, x=1, y=222, w=38, h=18, editsw=0x00, str="01-24"
+		VwEditSwBox	FLS_DIR_SEL_01_24, x=1, y=222, w=38, h=18, editsw=EDITSW_COL1, str="01-24"
 		VwEditSwBox	FLS_DIR_SEL_25_48, x=43, y=222, w=38, h=18, str="25-48"
 		AcIndexWideES	FLS_DIR_SEL_AcIndexWideES, x=84, y=222, w=112, h=18, index=0
 		VwEditSwBox	FLS_DIR_SEL_49_72, x=199, y=222, w=38, h=18, str="49-72"
@@ -760,10 +760,10 @@
 		SelectList	FLS_FILE_SEL_DIRBOX, x=44, y=32, w=192, h=16, color=0x08, index=100, str_adr=HdaeUiVar_FLS_FILE_SEL_DIRBOX_str_adr, row=1, sel_num=HdaeUiVar_FLS_FILE_SEL_DIRBOX_sel_num, en_paradraw=HdaeUiVar_FLS_FILE_SEL_DIRBOX_en_paradraw
 		SelectList	FLS_FILE_SEL_LISTBOX, x=44, y=48, w=192, h=168, color=0x08, index=0, main_func=NAKA_MAINFUNC_FlsFileSelScreen, str_adr=HdaeUiVar_FLS_FILE_SEL_LISTBOX_str_adr, row=16, sel_num=HdaeUiVar_FLS_FILE_SEL_LISTBOX_sel_num, dial=1, auto_inc=1, en_paradraw=HdaeUiVar_FLS_FILE_SEL_LISTBOX_en_paradraw
 		AcIndexWideES	FLS_FILE_SEL_AcIndexWideES, x=84, y=220, w=112, h=18, index=0
-		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=0x01, style=15
-		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=0x05, style=16
+		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=EDITSW_COL2, style=15
+		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=EDITSW_COL6, style=16
 		SelectList	FLS_FILE_SEL_OPTBOX, x=236, y=68, w=84, h=120, color=0xf5, index=100, str_adr=HdaeUiVar_FLS_FILE_SEL_OPTBOX_str_adr, row=9, sel_num=HdaeUiVar_FLS_FILE_SEL_OPTBOX_sel_num, en_paradraw=HdaeUiVar_FLS_FILE_SEL_OPTBOX_en_paradraw
-		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw_3, x=258, y=30, w=54, h=26, border=0xc0, index=3, editsw=0x08, style=0
+		AcIndexEditSw	FLS_FILE_SEL_AcIndexEditSw_3, x=258, y=30, w=54, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	FLS_FILE_SEL_AcIndexEditSw_3_SELECT, x=259, y=35, w=52, h=19, font=0, fontcolor=0x00, str="SELECT"
 		ui_endsub
@@ -792,19 +792,19 @@
 			Line	FLS_EDIT_LINE2, x=214, y=52, w=1, h=164, color=0x00
 			Line	FLS_EDIT_LINE1, x=197, y=52, w=1, h=164, color=0x00
 		ui_endsub
-		AcIndexEditSw	FLS_EDIT_AcIndexEditSw, x=255, y=30, w=57, h=26, border=0xc0, index=3, editsw=0x08, style=0
+		AcIndexEditSw	FLS_EDIT_AcIndexEditSw, x=255, y=30, w=57, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	FLS_EDIT_AcIndexEditSw_SEARCH, x=257, y=35, w=52, h=19, font=0, fontcolor=0x00, str="SEARCH"
 		ui_endsub
-		AcIndexEditSw	FLS_EDIT_AcIndexEditSw_2, x=256, y=192, w=55, h=26, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
+		AcIndexEditSw	FLS_EDIT_AcIndexEditSw_2, x=256, y=192, w=55, h=26, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
 		ui_sub
 			Label	FLS_EDIT_AcIndexEditSw_2_SAVE, x=268, y=195, w=28, h=11, font=3, fontcolor=0xff, str="SAVE"
 			Label	FLS_EDIT_AcIndexEditSw_2_F_L_S, x=266, y=206, w=40, h=11, font=3, fontcolor=0xff, str="F.L.S."
 		ui_endsub
-		VwEditSwBox	FLS_EDIT_DEL1, x=4, y=222, w=32, h=18, editsw=0x00, str="DEL1"
-		VwEditSwBox	FLS_EDIT_DEL2, x=44, y=222, w=33, h=18, editsw=0x01, str="DEL2"
-		VwEditSwBox	FLS_EDIT_INS, x=204, y=222, w=33, h=18, editsw=0x05, str="INS"
-		VwEditSwBox	FLS_EDIT_A_S, x=244, y=222, w=32, h=18, editsw=0x06, str="A.S."
+		VwEditSwBox	FLS_EDIT_DEL1, x=4, y=222, w=32, h=18, editsw=EDITSW_COL1, str="DEL1"
+		VwEditSwBox	FLS_EDIT_DEL2, x=44, y=222, w=33, h=18, editsw=EDITSW_COL2, str="DEL2"
+		VwEditSwBox	FLS_EDIT_INS, x=204, y=222, w=33, h=18, editsw=EDITSW_COL6, str="INS"
+		VwEditSwBox	FLS_EDIT_A_S, x=244, y=222, w=32, h=18, editsw=EDITSW_COL7, str="A.S."
 		VwEditSwBox	FLS_EDIT_A_L, x=284, y=222, w=32, h=18, str="A.L."
 		SelectList	FLS_EDIT_LOC_BOX, x=236, y=58, w=84, h=18, color=0xf5, index=100, fontcolor=0xf2, str_adr=HdaeUiVar_FLS_EDIT_LOC_BOX_str_adr, row=1, sel_num=HdaeUiVar_FLS_EDIT_LOC_BOX_sel_num, en_paradraw=HdaeUiVar_FLS_EDIT_LOC_BOX_en_paradraw
 		SelectList	FLS_EDIT_OPT_BOX, x=236, y=78, w=84, h=111, color=0xf5, index=100, str_adr=HdaeUiVar_FLS_EDIT_OPT_BOX_str_adr, row=9, sel_num=HdaeUiVar_FLS_EDIT_OPT_BOX_sel_num, en_paradraw=HdaeUiVar_FLS_EDIT_OPT_BOX_en_paradraw
@@ -821,8 +821,8 @@
 	ui_sub
 		IvExitScreen	CP_FD_DIR_NAMING_Exit_CP_FD_DIRSEL, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_CP_FD_DIRSEL
 		IvNaming	CP_FD_DIR_NAMING_IvNaming, x=0, y=32, w=32, h=32, func=NAKA_APFUNC_CP_FD_DIRNAMECheck
-		AcFuncEditSw	CP_FD_DIR_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=0x0b, style=6, func=NAKA_APFUNC_CP_FD_DIRNAMECheck
-		AcFuncEditSw	CP_FD_DIR_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=0x8a, style=0, func=NAKA_APFUNC_CP_FD_DIRNAMECheck
+		AcFuncEditSw	CP_FD_DIR_NAMING_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT4, style=6, func=NAKA_APFUNC_CP_FD_DIRNAMECheck
+		AcFuncEditSw	CP_FD_DIR_NAMING_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=EDITSW_LEFT3, style=0, func=NAKA_APFUNC_CP_FD_DIRNAMECheck
 		Label	CP_FD_DIR_NAMING_LST, x=9, y=119, w=28, h=19, font=0, fontcolor=0xf9, str="LST"
 	ui_endsub
 
@@ -838,14 +838,14 @@
 	TtlScreenR2	SAVE_OPT_SCREEN, x=0, y=0, w=320, h=240, window=HdaeUiVar_SAVE_OPT_SCREEN_window, icon=173, title="SAVE OPTION"
 	ui_sub
 		IvExitScreen	SAVE_OPT_SCREEN_Exit_HDD_FILE_NAMING, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDD_FILE_NAMING
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=0x00, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=0x02, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=0x03, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=0x04, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=0x05, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=0x06, style=3
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=0x07, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=EDITSW_COL1, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=EDITSW_COL3, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=EDITSW_COL4, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=EDITSW_COL5, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=EDITSW_COL6, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=EDITSW_COL7, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=EDITSW_COL8, style=3
 		Label	SAVE_OPT_SCREEN_PNL, x=9, y=202, w=22, h=11, font=3, fontcolor=0xff, str="PNL"
 		Label	SAVE_OPT_SCREEN_P_MEM, x=42, y=202, w=34, h=11, font=3, fontcolor=0xff, str="P.MEM"
 		Label	SAVE_OPT_SCREEN_SEQ, x=88, y=202, w=22, h=11, font=3, fontcolor=0xff, str="SEQ"
@@ -868,24 +868,24 @@
 		Line	SAVE_OPT_SCREEN_Line_3, x=259, y=58, w=1, h=141
 		Line	SAVE_OPT_SCREEN_Line_4, x=40, y=58, w=1, h=141
 		IvCatchEvent	SAVE_OPT_SCREEN_IvCatchEvent, x=32, y=0, w=32, h=32, func=NAKA_APFUNC_SaveOptSwEventCatch
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_9, x=269, y=30, w=43, h=26, color=0xf2, border=0xc0, index=0xffff, editsw=0x08, style=0
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_9, x=269, y=30, w=43, h=26, color=0xf2, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	SAVE_OPT_SCREEN_AcIndexEditSw_9_SAVE, x=272, y=35, w=36, h=19, font=0, fontcolor=0x00, str="SAVE"
 		ui_endsub
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_10, x=263, y=76, w=49, h=18, border=0xc0, index=0xffff, editsw=0x09, style=0
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_10, x=263, y=76, w=49, h=18, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT2, style=0
 		ui_sub
 			Label	SAVE_OPT_SCREEN_AcIndexEditSw_10_PERFORM, x=265, y=80, w=46, h=11, font=3, fontcolor=0x00, str="PERFORM"
 		ui_endsub
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_11, x=263, y=160, w=49, h=18, border=0xc0, index=0xffff, editsw=0x0b, style=0
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_11, x=263, y=160, w=49, h=18, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT4, style=0
 		ui_sub
 			Label	SAVE_OPT_SCREEN_AcIndexEditSw_11_ALL_OFF, x=265, y=164, w=46, h=11, font=3, fontcolor=0x00, str="ALL OFF"
 		ui_endsub
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_12, x=263, y=118, w=49, h=18, border=0xc0, index=0xffff, editsw=0x0a, style=0
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_12, x=263, y=118, w=49, h=18, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT3, style=0
 		ui_sub
 			Label	SAVE_OPT_SCREEN_AcIndexEditSw_12_BACKUP, x=265, y=122, w=40, h=11, font=3, fontcolor=0x00, str="BACKUP"
 		ui_endsub
 		AcRamEditBox	RAM_EDIT_TLX, x=44, y=181, w=212, h=16, index=9, selected=HdaeUiVar_RAM_EDIT_TLX_selected, func=NAKA_APFUNC_SfxTlxBitCheck, data=HdaeUiVar_RAM_EDIT_TLX_data, caption="TECHNICS LYRICS        "
-		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_13, x=8, y=158, w=32, h=22, index=9, editsw=0x8b, style=3
+		AcIndexEditSw	SAVE_OPT_SCREEN_AcIndexEditSw_13, x=8, y=158, w=32, h=22, index=9, editsw=EDITSW_LEFT4, style=3
 		Label	SAVE_OPT_SCREEN_LYRIC, x=6, y=147, w=34, h=11, font=3, fontcolor=0xff, str="LYRIC"
 		Line	SAVE_OPT_SCREEN_Line_5, x=209, y=58, w=1, h=141
 	ui_endsub
@@ -899,24 +899,24 @@
 ; -----------------------------------------------------------------------------
 	AcHddNamingWindow	HddNamingWindow, x=44, y=108, w=232, h=88, flag=0x0008, color=0xf5, border=0xc0, modal=0, parent=HdaeUiVar_HddNamingWindow_parent, child=HdaeUiVar_HddNamingWindow_child
 	ui_sub
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw, x=8, y=76, w=31, h=18, border=0xc1, index=7, editsw=0x89, style=0
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw, x=8, y=76, w=31, h=18, border=0xc1, index=7, editsw=EDITSW_LEFT2, style=0
 		ui_sub
 			Label	HddNamingWindow_AcIndexEditSw_DEL, x=9, y=77, w=28, h=19, font=0, fontcolor=0x00, str="DEL"
 		ui_endsub
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_2, x=8, y=34, w=31, h=18, border=0xc1, index=6, editsw=0x88, style=0
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_2, x=8, y=34, w=31, h=18, border=0xc1, index=6, editsw=EDITSW_LEFT1, style=0
 		ui_sub
 			Label	HddNamingWindow_AcIndexEditSw_2_INS, x=9, y=35, w=28, h=19, font=0, fontcolor=0x00, str="INS"
 		ui_endsub
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_3, x=281, y=34, w=31, h=18, border=0xc1, index=9, editsw=0x08, style=0
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_3, x=281, y=34, w=31, h=18, border=0xc1, index=9, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	HddNamingWindow_AcIndexEditSw_3_CLR, x=282, y=35, w=28, h=19, font=0, fontcolor=0x00, str="CLR"
 		ui_endsub
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_4, x=281, y=76, w=31, h=18, border=0xc1, index=8, editsw=0x09, style=0
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_4, x=281, y=76, w=31, h=18, border=0xc1, index=8, editsw=EDITSW_RIGHT2, style=0
 		ui_sub
 			Label	HddNamingWindow_AcIndexEditSw_4_8d_8b, x=282, y=77, w=28, h=19, font=0, fontcolor=0x00, str="~8d ~8b"
 		ui_endsub
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_5, x=4, y=216, w=32, h=23, index=1, editsw=0x00, style=15
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_6, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=16
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_5, x=4, y=216, w=32, h=23, index=1, editsw=EDITSW_COL1, style=15
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_6, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=16
 		Label	HddNamingWindow_POSITION, x=6, y=201, w=68, h=19, font=0, fontcolor=0xff, str="POSITION"
 		PsCursorBox	HddNamingCursorBox, x=44, y=72, w=232, h=32, flag=0x0008, color=0xf5, border=0xc0, index=0xffff, font=0, fontcolor=0xff, align=0, cursor=HdaeUiVar_HddNamingCursorBox_cursor
 		HDAE5000_Str_CharSet_Upper_1:	.asciz	"ABC"
@@ -928,9 +928,9 @@
 		ui_ram_object	HddNamingABC, AcIndexToggle
 		ui_ram_object	HddNamingabc, AcIndexToggle
 		ui_ram_object	HddNamingSymbol, AcIndexToggle
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_7, x=204, y=216, w=32, h=23, index=3, editsw=0x05, style=15
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_8, x=244, y=216, w=32, h=23, index=4, editsw=0x06, style=14
-		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_9, x=284, y=216, w=32, h=23, index=5, editsw=0x07, style=16
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_7, x=204, y=216, w=32, h=23, index=3, editsw=EDITSW_COL6, style=15
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_8, x=244, y=216, w=32, h=23, index=4, editsw=EDITSW_COL7, style=14
+		AcIndexEditSw	HddNamingWindow_AcIndexEditSw_9, x=284, y=216, w=32, h=23, index=5, editsw=EDITSW_COL8, style=16
 		PsParaBox	HddNamingLabel, x=204, y=201, w=112, h=15, color=0xf5, font=0
 	ui_endsub
 
@@ -960,29 +960,29 @@
 		AcRamEditBox	DEL_EDIT_MSP, x=48, y=136, w=210, h=16, index=6, selected=HdaeUiVar_DEL_EDIT_MSP_selected, func=NAKA_APFUNC_DelMspEditCheck, data=HdaeUiVar_DEL_EDIT_MSP_data, caption="MSP               "
 		AcRamEditBox	DEL_EDIT_RCM, x=48, y=151, w=210, h=16, index=7, selected=HdaeUiVar_DEL_EDIT_RCM_selected, func=NAKA_APFUNC_DelRcmEditCheck, data=HdaeUiVar_DEL_EDIT_RCM_data, caption="RHYTHM CUSTOM     "
 		AcRamEditBox	DEL_EDIT_MD, x=48, y=166, w=210, h=16, index=8, selected=HdaeUiVar_DEL_EDIT_MD_selected, func=NAKA_APFUNC_DelMdEditCheck, data=HdaeUiVar_DEL_EDIT_MD_data, caption="USER MIDI SETTINGS"
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=0x00, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=0x01, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=0x02, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=0x03, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=0x04, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=0x05, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=0x06, style=3
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=0x07, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw, x=4, y=216, w=32, h=23, index=1, editsw=EDITSW_COL1, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_2, x=44, y=216, w=32, h=23, index=2, editsw=EDITSW_COL2, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_3, x=84, y=216, w=32, h=23, index=3, editsw=EDITSW_COL3, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_4, x=124, y=216, w=32, h=23, index=4, editsw=EDITSW_COL4, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_5, x=164, y=216, w=32, h=23, index=5, editsw=EDITSW_COL5, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_6, x=204, y=216, w=32, h=23, index=6, editsw=EDITSW_COL6, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_7, x=244, y=216, w=32, h=23, index=7, editsw=EDITSW_COL7, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_8, x=284, y=216, w=32, h=23, index=8, editsw=EDITSW_COL8, style=3
 		IvCatchEvent	FILE_DEL_SCREEN_IvCatchEvent, x=32, y=0, w=32, h=32, func=NAKA_APFUNC_DelOptSwEventCatch
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_9, x=269, y=30, w=43, h=26, color=0xf2, border=0xc0, index=0xffff, editsw=0x08, style=0
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_9, x=269, y=30, w=43, h=26, color=0xf2, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT1, style=0
 		ui_sub
 			Label	FILE_DEL_SCREEN_AcIndexEditSw_9_DEL, x=276, y=35, w=28, h=19, font=0, fontcolor=0x00, str="DEL"
 		ui_endsub
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_10, x=253, y=118, w=59, h=18, border=0xc0, index=0xffff, editsw=0x0a, style=0
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_10, x=253, y=118, w=59, h=18, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT3, style=0
 		ui_sub
 			Label	FILE_DEL_SCREEN_AcIndexEditSw_10_ALL_DEL, x=253, y=119, w=60, h=19, font=0, fontcolor=0x00, str="ALL DEL"
 		ui_endsub
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_11, x=253, y=160, w=59, h=18, border=0xc0, index=0xffff, editsw=0x0b, style=0
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_11, x=253, y=160, w=59, h=18, border=0xc0, index=0xffff, editsw=EDITSW_RIGHT4, style=0
 		ui_sub
 			Label	FILE_DEL_SCREEN_AcIndexEditSw_11_ALL_OFF, x=253, y=161, w=60, h=19, font=0, fontcolor=0x00, str="ALL OFF"
 		ui_endsub
 		AcRamEditBox	FILE_DEL_SCREEN_AcRamEditBox, x=42, y=32, w=211, h=26, border=0xc1, index=0xffff, font=5, length=4, dial=1, selected=HdaeUiVar_FILE_DEL_SCREEN_AcRamEditBox_selected, func=NAKA_APFUNC_DelOptNameCheck, data=HdaeUiVar_FILE_DEL_SCREEN_AcRamEditBox_data, caption=""
-		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_12, x=8, y=158, w=32, h=22, index=9, editsw=0x8b, style=3
+		AcIndexEditSw	FILE_DEL_SCREEN_AcIndexEditSw_12, x=8, y=158, w=32, h=22, index=9, editsw=EDITSW_LEFT4, style=3
 		Label	FILE_DEL_SCREEN_LYRIC, x=6, y=147, w=34, h=11, font=3, fontcolor=0xff, str="LYRIC"
 		AcRamEditBox	DEL_EDIT_TLX, x=48, y=181, w=210, h=16, index=9, selected=HdaeUiVar_DEL_EDIT_TLX_selected, func=NAKA_APFUNC_DelTlxEditCheck, data=HdaeUiVar_DEL_EDIT_TLX_data, caption="TECHNICS LYRICS   "
 		Line	FILE_DEL_SCREEN_Line_4, x=205, y=59, w=1, h=140
@@ -1009,11 +1009,11 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	ATTEN_DEL_DIR, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_DIR_window, icon=0, title=""
 	ui_sub
-		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_DIR_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_DIR_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=0, fontcolor=0x00, lines=1
 		ui_endsub
@@ -1041,9 +1041,9 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	ATTEN_DEL_FILE, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_FILE_window, icon=0, title=""
 	ui_sub
-		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		IvCatchEvent	ATTEN_DEL_FILE_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenDelFileSwCatch
-		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_DEL_FILE_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		AcLanguageText1	ATTEN_DEL_FILE_Text210, x=40, y=76, w=240, h=130, color=0x07, border=0xc9, index=210, font=2, fontcolor=0x00, lines=4
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FILE_Text210_Text211, x=44, y=155, w=232, h=50, index=211, font=7, fontcolor=0x00, lines=3
@@ -1060,11 +1060,11 @@
 	TtlScreenR	ATTEN_OVER_FLS, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_OVER_FLS_window, icon=0, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_OVER_FLS_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsOverWrSwCatch
-		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_OVER_FLS_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_OVER_FLS_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=0, fontcolor=0x00, lines=1
 		ui_endsub
@@ -1082,11 +1082,11 @@
 	TtlScreenR	ATTEN_DEL_FLS2, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_FLS2_window, icon=0, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_DEL_FLS2_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsDel2SwCatch
-		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FLS2_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FLS2_VwWideESBox_2_Text201, x=248, y=220, w=68, h=20, index=201, font=0, fontcolor=0x00, lines=1
 		ui_endsub
@@ -1124,7 +1124,7 @@
 			AcLanguageText1	ATTEN_HD_FORMAT_TextBox_Text210, x=38, y=46, w=244, h=24, index=210, font=2, fontcolor=0x00, lines=1
 		ui_endsub
 		VwUserBitmap	ATTEN_HD_FORMAT_VwUserBitmap, x=93, y=1, w=27, h=27
-		VwWideESBox	ATTEN_HD_FORMAT_CANCEL, x=244, y=216, w=72, h=23, border=0xc0, editsw=0x06, editsw2=0x07, str="CANCEL"
+		VwWideESBox	ATTEN_HD_FORMAT_CANCEL, x=244, y=216, w=72, h=23, border=0xc0, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str="CANCEL"
 		IvCatchEvent	HD_FORMAT_CATCH, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenHDFormatSwCatch
 	ui_endsub
 
@@ -1175,15 +1175,15 @@
 			AcLanguageText1	ATTEN_DEL_FLS1_Text210_Text27, x=44, y=76, w=232, h=48, index=27, font=7, fontcolor=0x0a, lines=3
 			AcLanguageText1	ATTEN_DEL_FLS1_Text210_Text60, x=44, y=124, w=232, h=36, index=60, font=7, fontcolor=0xfb, lines=2
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_2, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_2, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_2_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_3, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_3, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_3_Text201, x=248, y=220, w=68, h=20, index=201, font=0, fontcolor=0x00, lines=1
 		ui_endsub
@@ -1196,11 +1196,11 @@
 	TtlScreenR	ATTEN_OVER_FILE, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_OVER_FILE_window, icon=0, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_OVER_FILE_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_WrConfirmEventCatch
-		VwWideESBox	ATTEN_OVER_FILE_VwWideESBox, x=4, y=216, w=72, h=23, editsw=0x00, editsw2=0x01, str=""
+		VwWideESBox	ATTEN_OVER_FILE_VwWideESBox, x=4, y=216, w=72, h=23, editsw=EDITSW_COL1, editsw2=EDITSW_COL2, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_OVER_FILE_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=0, fontcolor=0x00, lines=1
 		ui_endsub
-		VwWideESBox	ATTEN_OVER_FILE_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_OVER_FILE_VwWideESBox_2, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		AcLanguageText1	ATTEN_OVER_FILE_Text201, x=248, y=220, w=68, h=20, index=201, font=0, fontcolor=0x00, lines=1
 		AcLanguageText1	ATTEN_OVER_FILE_Text210, x=40, y=52, w=240, h=154, color=0x07, border=0xc9, index=210, font=2, fontcolor=0x00, lines=3
 		ui_sub
@@ -1217,8 +1217,8 @@
 	ui_sub
 		IvNaming	HDD_FLS_NAMING2_IvNaming, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsNamingCheck2
 		IvExitScreen	HDD_FLS_NAMING2_Exit_FLS_EDIT, x=32, y=0, w=32, h=32, screen=HDAE5000_OBJ_FLS_EDIT
-		AcFuncEditSw	HDD_FLS_NAMING2_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=0x0b, style=6, func=NAKA_APFUNC_FlsNamingCheck
-		AcFuncEditSw	HDD_FLS_NAMING2_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=0x8a, style=0, func=NAKA_APFUNC_FlsNamingCheck
+		AcFuncEditSw	HDD_FLS_NAMING2_AcFuncEditSw, x=281, y=160, w=31, h=18, color=0xf2, editsw=EDITSW_RIGHT4, style=6, func=NAKA_APFUNC_FlsNamingCheck
+		AcFuncEditSw	HDD_FLS_NAMING2_AcFuncEditSw_2, x=8, y=118, w=31, h=18, color=0x07, editsw=EDITSW_LEFT3, style=0, func=NAKA_APFUNC_FlsNamingCheck
 		ui_sub
 			Label	HDD_FLS_NAMING2_AcFuncEditSw_2_LST, x=9, y=119, w=28, h=19, font=0, fontcolor=0xf9, str="LST"
 		ui_endsub
@@ -1231,7 +1231,7 @@
 	TtlScreenR	ATTEN_CPHD_WR, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_CPHD_WR_window, icon=0, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_CPHD_WR_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenCpToHDSwCatch
-		VwWideESBox	ATTEN_CPHD_WR_VwWideESBox, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_CPHD_WR_VwWideESBox, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		TextBox	ATTEN_CPHD_WR_TextBox, x=40, y=84, w=240, h=116, color=0xf0, border=0xc9, font=2, lines=3, text=""
 		ui_sub
 			AcLanguageText1	ATTEN_CPHD_WR_TextBox_Text29, x=42, y=120, w=244, h=38, index=29, font=7, fontcolor=0xf9, lines=2
@@ -1348,7 +1348,7 @@
 	TtlScreenR	ATTEN_CPFD_MARK, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_CPFD_MARK_window, icon=0, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_CPFD_MARK_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_AttenCpToMarkSwCatch
-		VwWideESBox	ATTEN_CPFD_MARK_VwWideESBox, x=244, y=216, w=72, h=23, editsw=0x06, editsw2=0x07, str=""
+		VwWideESBox	ATTEN_CPFD_MARK_VwWideESBox, x=244, y=216, w=72, h=23, editsw=EDITSW_COL7, editsw2=EDITSW_COL8, str=""
 		ui_sub
 			AcLanguageText1	ATTEN_CPFD_MARK_VwWideESBox_Text203, x=248, y=220, w=68, h=20, index=203, font=0, fontcolor=0x00, lines=1
 		ui_endsub
@@ -1576,13 +1576,13 @@
 ; -----------------------------------------------------------------------------
 	Window	FILE_LOAD_A_Z, x=0, y=0, w=320, h=240, color=0xf7, border=0x00, parent=HdaeUiVar_FILE_LOAD_A_Z_parent, child=HdaeUiVar_FILE_LOAD_A_Z_child
 	ui_sub
-		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=0x01, style=7
+		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw, x=44, y=220, w=32, h=18, index=2, editsw=EDITSW_COL2, style=7
 		AcIndexWideES	FILE_LOAD_A_Z_AcIndexWideES, x=84, y=220, w=112, h=18, index=0xffff
 		SelectList	FILE_LOAD_A_Z_SelectList, x=44, y=52, w=192, h=164, color=0x08, index=0xffff, str_adr=HdaeUiVar_FILE_LOAD_A_Z_SelectList_str_adr, row=16, sel_num=HdaeUiVar_FILE_LOAD_A_Z_SelectList_sel_num, en_paradraw=HdaeUiVar_FILE_LOAD_A_Z_SelectList_en_paradraw
-		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=0x05, style=8
+		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw_2, x=204, y=220, w=32, h=18, index=1, editsw=EDITSW_COL6, style=8
 		Icon	FILE_LOAD_A_Z_Icon, x=42, y=0, w=28, h=28
 		Label	FILE_LOAD_A_Z_FILE_SELECT_A_Z, x=70, y=7, w=169, h=19, font=4, fontcolor=0xff, str="FILE SELECT A-Z"
-		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw_3, x=265, y=36, w=47, h=26, border=0xc0, index=3, editsw=0x08, style=6
+		AcIndexEditSw	FILE_LOAD_A_Z_AcIndexEditSw_3, x=265, y=36, w=47, h=26, border=0xc0, index=3, editsw=EDITSW_RIGHT1, style=6
 		EditSw	FILE_LOAD_A_Z_80, x=310, y=77, w=10, h=19, index=6, str="~80"
 		Line	FILE_LOAD_A_Z_Line, x=313, y=40, w=1, h=40, color=0xf4
 		SelectList	FILE_LOAD_A_Z_SelectList_2, x=44, y=30, w=192, h=18, color=0x08, index=100, str_adr=HdaeUiVar_FILE_LOAD_A_Z_SelectList_2_str_adr, row=1, sel_num=HdaeUiVar_FILE_LOAD_A_Z_SelectList_2_sel_num, en_paradraw=HdaeUiVar_FILE_LOAD_A_Z_SelectList_2_en_paradraw
@@ -1675,15 +1675,15 @@
 	TtlScreenR2	LyrSettings, x=0, y=0, w=320, h=240, window=HdaeUiVar_LyrSettings_window, icon=60, title="LYRICS OPTIONS"
 	ui_sub
 		IvExitScreen	LyrSettings_Exit_SETUPS_TOOLS, x=0, y=0, w=32, h=32, screen=HDAE5000_OBJ_SETUPS_TOOLS
-		AcRamEditBox	LyrSettings_AcRamEditBox, x=8, y=72, w=190, h=26, index=0, align=2, length=4, editsw=0x89, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_selected, func=NAKA_APFUNC_LyricJumpEditCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_data, caption=""
+		AcRamEditBox	LyrSettings_AcRamEditBox, x=8, y=72, w=190, h=26, index=0, align=2, length=4, editsw=EDITSW_LEFT2, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_selected, func=NAKA_APFUNC_LyricJumpEditCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_data, caption=""
 		ui_sub
 			AcLanguageText1	LyrSettings_AcRamEditBox_Text64, x=8, y=72, w=135, h=32, index=64, font=0, fontcolor=0xff, alignment=1, lines=1
 		ui_endsub
-		AcRamEditBox	LyrSettings_AcRamEditBox_2, x=8, y=114, w=190, h=26, index=0, align=2, length=4, editsw=0x8a, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_2_selected, func=NAKA_APFUNC_LyricForeColorCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_2_data, caption=""
+		AcRamEditBox	LyrSettings_AcRamEditBox_2, x=8, y=114, w=190, h=26, index=0, align=2, length=4, editsw=EDITSW_LEFT3, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_2_selected, func=NAKA_APFUNC_LyricForeColorCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_2_data, caption=""
 		ui_sub
 			AcLanguageText1	LyrSettings_AcRamEditBox_2_Text65, x=8, y=114, w=135, h=32, index=65, font=0, fontcolor=0xff, alignment=1, lines=1
 		ui_endsub
-		AcRamEditBox	LyrSettings_AcRamEditBox_3, x=8, y=156, w=190, h=26, index=0, align=2, length=4, editsw=0x8b, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_3_selected, func=NAKA_APFUNC_LyricBackColorCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_3_data, caption=""
+		AcRamEditBox	LyrSettings_AcRamEditBox_3, x=8, y=156, w=190, h=26, index=0, align=2, length=4, editsw=EDITSW_LEFT4, dial=1, selected=HdaeUiVar_LyrSettings_AcRamEditBox_3_selected, func=NAKA_APFUNC_LyricBackColorCheck, data=HdaeUiVar_LyrSettings_AcRamEditBox_3_data, caption=""
 		AcLanguageText1	LyrSettings_Text66, x=8, y=156, w=135, h=32, index=66, font=0, fontcolor=0xff, alignment=1, lines=1
 	ui_endsub
 

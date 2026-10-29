@@ -397,6 +397,8 @@ class Version:
             return "0x%08x" % val
         if ch in T_RAMVAR:
             return self.varname[self.ram2rom(val)]
+        if ch == "e" and val in EDITSW:
+            return EDITSW[val]
         if ch in "^_e]":
             return "0x%02x" % val if val < 0x100 else "0x%04x" % val
         if val in (0xFFFF, 0xFFFFFFFF):
@@ -466,6 +468,14 @@ class Version:
             return None
         fail("string pointer 0x%06x has no label" % val)
 
+
+# LCD edit switches (propdata type 'e'): the main CPU's numbering (GetEditSwPoint,
+# SeTitle_DecodeSwitch); notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py shows
+# every HD-AE5000 object that carries one sitting next to that switch
+EDITSW = {0xFF: "EDITSW_NONE"}
+EDITSW.update({k: "EDITSW_COL%d" % (k + 1) for k in range(8)})
+EDITSW.update({8 + k: "EDITSW_RIGHT%d" % (k + 1) for k in range(5)})
+EDITSW.update({0x88 + k: "EDITSW_LEFT%d" % (k + 1) for k in range(5)})
 
 # the constants shared/event_codes.s defines (the tree file defines the HD-AE5000's other
 # function ids itself)
@@ -565,6 +575,14 @@ def macro_text(classes, hd_cids):
     w("")
     w("\t.equ\tNAKA_NONE, 0xffff\t\t; no object (a Viewable link)")
     w("\t.equ\tNAKA_NO_OBJECT, 0xffffffff\t; no object (a 32-bit object id field)")
+    w("; LCD edit switches, the values of every `editsw` field (main CPU numbering: GetEditSwPoint /")
+    w("; SeTitle_DecodeSwitch, technics-docs ui-framework.md): COL1-8 the eight buttons under the")
+    w("; display, RIGHT1-5 / LEFT1-5 the side rows top to bottom (LEFT = RIGHT | 0x80).  Every")
+    w("; HD-AE5000 object with one sits next to it (notes/data-gui-hdae5000-2026-10-29/probes/")
+    w("; editsw_geometry.py).")
+    for k, n in sorted(EDITSW.items()):
+        w("\t.equ\t%s, 0x%02x" % (n, k))
+    w("")
     w("; class ids: shared/event_codes.s names the main CPU's most used ones; the rest, and the")
     w("; HD-AE5000's own 13 (class table 0x16A, HDAE5000_RECORD_TABLE), are defined here")
     for name, c in sorted(classes.items(), key=lambda kv: kv[1]["cid"]):

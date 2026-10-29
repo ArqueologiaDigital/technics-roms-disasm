@@ -769,20 +769,20 @@ HdaeUiVar_WriteIn_child:	.long	0xffffffff
 ; table points at the RAM copy).  Same class macros as the ROM pool.
 ; ----------------------------------------------------------------------------
 	ui_ram_records
-	AcIndexEditSw	SELECT_DIR_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
-	AcScreenMenu	SW_HD_FORMAT, x=163, y=72, w=149, h=26, flag=0x0000, editsw=0x09, selected=HdaeUiVar_SW_HD_FORMAT_selected, screen=NAKA_NO_OBJECT, icon=1, str_at=HDAE5000_Str_Alert_HDFormat
-	AcIndexEditSw	CP_FD_HDSWTO, x=271, y=34, w=41, h=18, flag=0x0000, border=0xc1, index=3, editsw=0x08, style=0
-	AcIndexEditSw	CP_FD_HDSWSEL, x=262, y=202, w=50, h=18, flag=0x0000, color=0xf2, border=0xc1, index=4, font=3, editsw=0x0c, style=0
-	AcIndexEditSw	CP_FD_HDALLSEL, x=262, y=160, w=50, h=18, flag=0x0000, color=0xf2, border=0xc1, index=8, font=3, editsw=0x0b, style=0
-	AcIndexEditSw	FLS_SELECT_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
-	AcIndexEditSw	HD_FILE_LOAD_SW_SAVE, x=265, y=203, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
-	AcIndexEditSw	HD_FILE_LOAD_SW_DEL, x=8, y=30, w=34, h=26, flag=0x0000, color=0xf2, border=0xc2, index=7, editsw=0x88, style=0
-	AcIndexEditSw	HD_FILE_LOAD_SW_DELFILE, x=8, y=114, w=34, h=26, flag=0x0000, color=0xf2, border=0xc2, index=5, editsw=0x8a, style=0
-	AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_9, x=9, y=160, w=32, h=23, flag=0x0000, index=9, editsw=0x8b, style=3
-	AcIndexEditSw	FLS_FILE_LOAD_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=0x0c, style=0
-	AcIndexToggle	HddNamingABC, x=84, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingABC_onoff, editsw=0x02, tag=0, stron_at=HDAE5000_Str_CharSet_Upper_2, stroff_at=HDAE5000_Str_CharSet_Upper_1
-	AcIndexToggle	HddNamingabc, x=124, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingabc_onoff, editsw=0x03, tag=1, stron_at=HDAE5000_Str_CharSet_Lower_2, stroff_at=HDAE5000_Str_CharSet_Lower_1
-	AcIndexToggle	HddNamingSymbol, x=164, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingSymbol_onoff, editsw=0x04, tag=2, stron_at=HDAE5000_Str_CharSet_Symbol_2, stroff_at=HDAE5000_Str_CharSet_Symbol_1
+	AcIndexEditSw	SELECT_DIR_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
+	AcScreenMenu	SW_HD_FORMAT, x=163, y=72, w=149, h=26, flag=0x0000, editsw=EDITSW_RIGHT2, selected=HdaeUiVar_SW_HD_FORMAT_selected, screen=NAKA_NO_OBJECT, icon=1, str_at=HDAE5000_Str_Alert_HDFormat
+	AcIndexEditSw	CP_FD_HDSWTO, x=271, y=34, w=41, h=18, flag=0x0000, border=0xc1, index=3, editsw=EDITSW_RIGHT1, style=0
+	AcIndexEditSw	CP_FD_HDSWSEL, x=262, y=202, w=50, h=18, flag=0x0000, color=0xf2, border=0xc1, index=4, font=3, editsw=EDITSW_RIGHT5, style=0
+	AcIndexEditSw	CP_FD_HDALLSEL, x=262, y=160, w=50, h=18, flag=0x0000, color=0xf2, border=0xc1, index=8, font=3, editsw=EDITSW_RIGHT4, style=0
+	AcIndexEditSw	FLS_SELECT_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
+	AcIndexEditSw	HD_FILE_LOAD_SW_SAVE, x=265, y=203, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
+	AcIndexEditSw	HD_FILE_LOAD_SW_DEL, x=8, y=30, w=34, h=26, flag=0x0000, color=0xf2, border=0xc2, index=7, editsw=EDITSW_LEFT1, style=0
+	AcIndexEditSw	HD_FILE_LOAD_SW_DELFILE, x=8, y=114, w=34, h=26, flag=0x0000, color=0xf2, border=0xc2, index=5, editsw=EDITSW_LEFT3, style=0
+	AcIndexEditSw	HD_FILE_LOAD_P2_AcIndexEditSw_9, x=9, y=160, w=32, h=23, flag=0x0000, index=9, editsw=EDITSW_LEFT4, style=3
+	AcIndexEditSw	FLS_FILE_LOAD_SW_EDIT, x=265, y=201, w=47, h=18, flag=0x0000, color=0xf2, border=0xc0, index=4, editsw=EDITSW_RIGHT5, style=0
+	AcIndexToggle	HddNamingABC, x=84, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingABC_onoff, editsw=EDITSW_COL3, tag=0, stron_at=HDAE5000_Str_CharSet_Upper_2, stroff_at=HDAE5000_Str_CharSet_Upper_1
+	AcIndexToggle	HddNamingabc, x=124, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingabc_onoff, editsw=EDITSW_COL4, tag=1, stron_at=HDAE5000_Str_CharSet_Lower_2, stroff_at=HDAE5000_Str_CharSet_Lower_1
+	AcIndexToggle	HddNamingSymbol, x=164, y=216, w=32, h=23, onoff=HdaeUiVar_HddNamingSymbol_onoff, editsw=EDITSW_COL5, tag=2, stron_at=HDAE5000_Str_CharSet_Symbol_2, stroff_at=HDAE5000_Str_CharSet_Symbol_1
 	IvExitScreen	ERR_SAVE_EXIT, x=0, y=0, w=32, h=32, flag=0x0010, screen=NAKA_NO_OBJECT
 	IvExitScreen	ERR_LOAD_EXIT, x=0, y=0, w=32, h=32, flag=0x0010, screen=NAKA_NO_OBJECT
 	PsParaBox	ChordinLyric, x=0, y=209, w=80, h=16, flag=0x0000

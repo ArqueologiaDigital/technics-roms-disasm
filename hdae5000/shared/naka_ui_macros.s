@@ -33,6 +33,31 @@
 
 	.equ	NAKA_NONE, 0xffff		; no object (a Viewable link)
 	.equ	NAKA_NO_OBJECT, 0xffffffff	; no object (a 32-bit object id field)
+; LCD edit switches, the values of every `editsw` field (main CPU numbering: GetEditSwPoint /
+; SeTitle_DecodeSwitch, technics-docs ui-framework.md): COL1-8 the eight buttons under the
+; display, RIGHT1-5 / LEFT1-5 the side rows top to bottom (LEFT = RIGHT | 0x80).  Every
+; HD-AE5000 object with one sits next to it (notes/data-gui-hdae5000-2026-10-29/probes/
+; editsw_geometry.py).
+	.equ	EDITSW_COL1, 0x00
+	.equ	EDITSW_COL2, 0x01
+	.equ	EDITSW_COL3, 0x02
+	.equ	EDITSW_COL4, 0x03
+	.equ	EDITSW_COL5, 0x04
+	.equ	EDITSW_COL6, 0x05
+	.equ	EDITSW_COL7, 0x06
+	.equ	EDITSW_COL8, 0x07
+	.equ	EDITSW_RIGHT1, 0x08
+	.equ	EDITSW_RIGHT2, 0x09
+	.equ	EDITSW_RIGHT3, 0x0a
+	.equ	EDITSW_RIGHT4, 0x0b
+	.equ	EDITSW_RIGHT5, 0x0c
+	.equ	EDITSW_LEFT1, 0x88
+	.equ	EDITSW_LEFT2, 0x89
+	.equ	EDITSW_LEFT3, 0x8a
+	.equ	EDITSW_LEFT4, 0x8b
+	.equ	EDITSW_LEFT5, 0x8c
+	.equ	EDITSW_NONE, 0xff
+
 ; class ids: shared/event_codes.s names the main CPU's most used ones; the rest, and the
 ; HD-AE5000's own 13 (class table 0x16A, HDAE5000_RECORD_TABLE), are defined here
 	.ifndef	NAKA_CLASS_Viewable
@@ -433,7 +458,7 @@ HdaeUiName_\obj:
 ;     +46  selected     RAM variable (m)
 ;     +50  func         ApFunction id (j)
 ;     +54  data         RAM variable (r)
-	.macro	AcRamEditBox obj, x, y, w, h, flag=0x0008, color=0xf5, border=0x00, index, caption, caption_at, font=0, fontcolor=0xff, align=1, length=5, editsw=0xff, dial=0, selected, func, data
+	.macro	AcRamEditBox obj, x, y, w, h, flag=0x0008, color=0xf5, border=0x00, index, caption, caption_at, font=0, fontcolor=0xff, align=1, length=5, editsw=EDITSW_NONE, dial=0, selected, func, data
 	_ui_head	\obj, AcRamEditBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -538,7 +563,7 @@ HdaeUiName_\obj:
 ;     +36  editsw       edit-switch number (e)
 ;     +38  editsw2      edit-switch number (e)
 ;     +40  style        style (f)
-	.macro	AcIndexWideES obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc9, index, font=0, fontcolor=0x00, align=0, editsw=0x02, editsw2=0x04, style=3
+	.macro	AcIndexWideES obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc9, index, font=0, fontcolor=0x00, align=0, editsw=EDITSW_COL3, editsw2=EDITSW_COL5, style=3
 	_ui_head	\obj, AcIndexWideES, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -640,7 +665,7 @@ HdaeUiName_\obj:
 ;     +32  editsw       edit-switch number (e)
 ;     +34  func         ApFunction id (j)
 ;     +38  index        number (A)
-	.macro	EditSw obj, x, y, w, h, flag=0x0008, str, str_at, font=0, fontcolor=0xf4, editsw=0x09, func=NAKA_APFUNC_DefaultFunction, index
+	.macro	EditSw obj, x, y, w, h, flag=0x0008, str, str_at, font=0, fontcolor=0xf4, editsw=EDITSW_RIGHT2, func=NAKA_APFUNC_DefaultFunction, index
 	_ui_head	\obj, EditSw, \flag, \x, \y, \w, \h
 	_ui_strp	\obj, str, \str_at
 	.long	\font
@@ -771,7 +796,7 @@ HdaeUiName_\obj:
 ;     +36  editsw       edit-switch number (e)
 ;     +38  style        style (f)
 ;     +40  str          string (X)
-	.macro	VwEditSwBox obj, x, y, w, h, flag=0x0008, color=0x08, border=0xc0, index=0xffff, font=3, fontcolor=0xff, align=0, editsw=0x07, style=0, str, str_at
+	.macro	VwEditSwBox obj, x, y, w, h, flag=0x0008, color=0x08, border=0xc0, index=0xffff, font=3, fontcolor=0xff, align=0, editsw=EDITSW_COL8, style=0, str, str_at
 	_ui_head	\obj, VwEditSwBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
