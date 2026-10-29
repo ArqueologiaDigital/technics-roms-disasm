@@ -41,30 +41,34 @@ def item(kind, body, lines):
     return 'tm/' + name
 
 
+def v(b):
+    return ', '.join(str(x) for x in b)
+
+
 def sound(r):
-    L = ['; A SOUND EDIT record, 0x2C8 bytes (kn_soundram.py docstring).', '',
-         '\t.ascii\t%s\t; name' % s_esc(r[:16]), '; header +0x10..+0x53'] + rows(r[16:0x54], 17)
+    L = ['; A SOUND EDIT record, 0x2C8 bytes (SOUND_HEAD / SOUND_MOD / VOICE_ELEM, kn7000/src/include/voice_record.inc).', '',
+         '\t.ascii\t%s' % s_esc(r[:16]), '\tSOUND_HEAD\t%s' % v(r[16:0x54])]
     for u in range(4):
-        L += ['; mod unit %d (+0x%X, 0x7A bytes)' % (u + 1, 0x54 + 0x7A * u)] + rows(r[0x54 + 0x7A * u:0x54 + 0x7A * (u + 1)], 61)
+        L.append('\tSOUND_MOD\t%s\t; mod unit %d' % (v(r[0x54 + 0x7A * u:0x54 + 0x7A * (u + 1)]), u + 1))
     for e in range(4):
-        L += ['; element %d (+0x%X, 0x23 bytes)' % (e + 1, 0x23C + 0x23 * e)] + rows(r[0x23C + 0x23 * e:0x23C + 0x23 * (e + 1)], 35)
+        L.append('\tVOICE_ELEM\t%s\t; element %d' % (v(r[0x23C + 0x23 * e:0x23C + 0x23 * (e + 1)]), e + 1))
     return item('sound', r, L)
 
 
 def voice(r):
-    L = ['; A custom-sound voice record, 0x8E bytes (kn_soundram.py docstring).', '',
-         '\t.ascii\t%s\t; name' % s_esc(r[:13]), '\t.byte\t' + ', '.join(str(x) for x in r[13:16])]
+    L = ['; A voice record, 0x8E bytes (VOICE_HEAD / VOICE_SUB / VOICE_ELEM, kn7000/src/include/voice_record.inc).', '',
+         '\t.ascii\t%s' % s_esc(r[:13]), '\tVOICE_HEAD_TAIL\t%s' % v(r[13:16])]
     for u in range(2):
-        L += ['; sub-record %d (+0x%X, 0x1C bytes)' % (u + 1, 0x10 + 0x1C * u)] + rows(r[0x10 + 0x1C * u:0x2C + 0x1C * u], 28)
+        L.append('\tVOICE_SUB\t%s\t; sub-record %d' % (v(r[0x10 + 0x1C * u:0x2C + 0x1C * u]), u + 1))
     for e in range(2):
-        L += ['; element %d (+0x%X, 0x23 bytes)' % (e + 1, 0x48 + 0x23 * e)] + rows(r[0x48 + 0x23 * e:0x6B + 0x23 * e], 35)
+        L.append('\tVOICE_ELEM\t%s\t; element %d' % (v(r[0x48 + 0x23 * e:0x6B + 0x23 * e]), e + 1))
     return item('voice', r, L)
 
 
 def typer(ctx, part, p, ref, lab):
     if part != 1 or p[:16] != b'KN6000 SOUND RAM' or len(p) != 0x10 + 40 * 0x2C8 + 0x1A7 + 128 * 0x8E + 3:
         return None
-    L = ['', lab + ':', '\t.ascii\t"KN6000 SOUND RAM"\t; SoundRamHeaderModelGet: model 1']
+    L = ['\t.include\t"voice_record.inc"', '', lab + ':', '\t.ascii\t"KN6000 SOUND RAM"\t; SoundRamHeaderModelGet: model 1']
     for k in range(40):
         r = p[0x10 + 0x2C8 * k:0x10 + 0x2C8 * (k + 1)]
         L.append('\t.include\t"%s"\t; sound %d: %s' % (sound(r), k + 1, r[:16].decode('latin-1').strip()))

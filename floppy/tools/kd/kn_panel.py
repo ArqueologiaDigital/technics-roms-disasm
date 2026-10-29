@@ -36,16 +36,30 @@ def block(p, o):
     return None, None
 
 
+import gen_panel_macros  # noqa: E402
+
+PARTS = set(range(0x13)) | {0x1B, 0x1C, 0x1F}
+OTHER = set(gen_panel_macros.OTHER)
+
+
 def block_lines(p, recs, what):
+    """One PMR_* line per record (kn7000/src/include/panel_memory.inc, shared with the CUSTOM banks)."""
     L = ['; %s: %d records' % (what, len(recs))]
     for q, t, n in recs:
         pay = p[q + 2:q + 2 + n]
+        v = ', '.join(str(x) for x in pay)
         if t == 0x40 and n == 18:
-            L.append('\tkp_name\t%s, %d, %d' % (s_esc(pay[:16]), pay[16], pay[17]))
+            L += ['\tPMR_NAME_HEAD', '\t.ascii\t%s' % s_esc(pay[:16]), '\tPMR_NAME_TAIL\t%d, %d' % (pay[16], pay[17])]
+        elif t in PARTS and n == 72:
+            L.append('\tPMR_PART\t0x%02x, %s' % (t, v))
+        elif 0x13 <= t <= 0x1A and n == 4:
+            L.append('\tPMR_ENTRY\t0x%02x, %s' % (t, v))
+        elif (t, n) in OTHER:
+            L.append('\tPMR_%02X_%d\t%s' % (t, n, v))
         else:
             L.append('\tkp_tlv\t0x%02x, %d' % (t, n))
             L += rows(pay)
-    L.append('\tkp_end')
+    L.append('\tPMR_END')
     return L
 
 
@@ -53,7 +67,7 @@ def pmt(ctx, part, p, ref, lab):
     if part != 1 or len(p) < 0x40 or p[1:4] != b'K \0':
         return None
     n = p[0x0E] | p[0x0F] << 8
-    L = ['\t.include\t"kn_panel.inc"', '', lab + ':',
+    L = ['\t.include\t"kn_panel.inc"', '\t.include\t"panel_memory.inc"', '', lab + ':',
          '\t.ascii\t%s\t; signature' % s_esc(p[:4]), '\t.byte\t' + ', '.join(str(x) for x in p[4:12]),
          '\t.byte\t0x%02x, %d\t; model byte, 7' % (p[12], p[13]), '\t.short\t%d\t; memories' % n]
     o, k = 0x10, 0
@@ -79,6 +93,6 @@ def lsw1(ctx, part, p, ref, lab):
     r1, e1 = block(p, e0) if r0 is not None else (None, None)
     if r1 is None or e1 != len(p):
         return None
-    return (['\t.include\t"kn_panel.inc"', '', lab + ':', '\t.ascii\t"ZZ"', '\t.byte\t0, 0',
+    return (['\t.include\t"kn_panel.inc"', '\t.include\t"panel_memory.inc"', '', lab + ':', '\t.ascii\t"ZZ"', '\t.byte\t0, 0',
              '\t.ascii\t%s\t; the panel-memory signature' % s_esc(p[4:8]), '\t.fill\t24, 1, 0']
             + block_lines(p, r0, 'the current panel') + block_lines(p, r1, 'the second block'))
